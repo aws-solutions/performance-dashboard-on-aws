@@ -1,3 +1,10 @@
+## Requirements
+
+- NodeJS v12+ (https://nodejs.org/en/download)
+- CDK (npm install -g aws-cdk)
+- Yarn (brew install yarn)
+- AWS Credentials ([How to setup local credentials](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html))
+
 ## Frontend
 
 Install dependencies

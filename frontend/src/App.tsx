@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from './containers/Home';
 import Dashboard from './containers/Dashboard';
+import AdminHome from './containers/AdminHome';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
       <Switch>
           <Route path="/dashboard/:dashboardId">
             <Dashboard />
+          </Route>
+          <Route path="/admin">
+            <AdminHome />
           </Route>
           <Route path="/">
             <Home />

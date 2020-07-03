@@ -1,21 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Amplify from 'aws-amplify';
-import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import environment from './env.json';
+import App from './App';
+import './index.css';
 
-Amplify.configure({
-  API: {
-    endpoints: [
-      {
-        name: 'BadgerApi',
-        // endpoint: 'https://usf0dn10i4.execute-api.us-west-2.amazonaws.com/prod'
-        endpoint: 'http://localhost:8080'
-      }
-    ],
-  }
-});
+Amplify.configure(environment);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -31,7 +31,7 @@ Then go into cdk folder and deploy from there:
 ```
 cd ../cdk
 npm install
-npm run deploy Frontend
+npm run deploy:personal Frontend
 ```
 
 ## Backend
@@ -54,7 +54,7 @@ To deploy the backend to your AWS account the first time:
 ```
 cd ../cdk
 npm install
-npm run deploy Backend
+npm run deploy:personal Backend
 ```
 
 ## Debugging on VSCode

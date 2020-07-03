@@ -9,7 +9,6 @@
       "esModuleInterop": true,
       "inlineSourceMap": true,
       "resolveJsonModule": true,
-      "sourceMap": true,
       "types": [
         "node",
         "jest",

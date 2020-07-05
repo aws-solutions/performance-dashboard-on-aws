@@ -8,6 +8,8 @@ interface BackendStackProps extends cdk.StackProps {
 };
 
 export class BackendStack extends cdk.Stack {
+    public readonly apiGatewayEndpoint : string;
+
     constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
         super(scope, id, props);
 
@@ -90,6 +92,6 @@ export class BackendStack extends cdk.Stack {
         /**
          * Outputs
          */
-        new cdk.CfnOutput(this, 'ApiEndpoint', { value: api.url });
+        this.apiGatewayEndpoint = api.url;
     }
 }

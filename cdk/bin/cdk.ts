@@ -19,13 +19,13 @@ class Badger extends cdk.Construct {
             stackName: prefix.concat('-Auth'),
         });
 
-        new FrontendStack(app, 'Frontend', {
-            stackName: prefix.concat('-Frontend'),
-        });
-
-        new BackendStack(app, 'Backend', {
+        const backend = new BackendStack(app, 'Backend', {
             stackName: prefix.concat('-Backend'),
             userPoolArn: auth.userPoolArn,
+        });
+
+        new FrontendStack(app, 'Frontend', {
+            stackName: prefix.concat('-Frontend'),
         });
     }
 }

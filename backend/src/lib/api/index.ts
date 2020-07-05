@@ -1,14 +1,28 @@
 import express from 'express';
+import middleware from 'aws-serverless-express/middleware';
 import dashboard from '../dashboard';
 
 const app = express();
 const router = express.Router();
+router.use(middleware.eventContext());
 
 /**
  * @GET
  * List all dashboards
  */
 router.get('/dashboard', async (req, res) => {
+    const dashboards = await dashboard.listDashboards();
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.json(dashboards);
+});
+
+/**
+ * @GET
+ * Admin
+ * List all dashboards
+ */
+router.get('/admin/dashboard', async (req, res) => {
+    console.log('req-api', req.apiGateway);
     const dashboards = await dashboard.listDashboards();
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.json(dashboards);
@@ -26,4 +40,5 @@ router.get('/dashboard/:dashboardId', async (req, res) => {
 });
 
 app.use('/', router);
+
 export default app;

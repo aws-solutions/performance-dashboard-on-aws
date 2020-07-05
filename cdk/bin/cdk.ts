@@ -14,16 +14,18 @@ class Badger extends cdk.Construct {
         super(scope, id);
 
         const prefix = "Badger-".concat(props.envName)
+
+        const auth = new AuthStack(app, 'Auth', {
+            stackName: prefix.concat('-Auth'),
+        });
+
         new FrontendStack(app, 'Frontend', {
             stackName: prefix.concat('-Frontend'),
         });
 
         new BackendStack(app, 'Backend', {
             stackName: prefix.concat('-Backend'),
-        });
-
-        new AuthStack(app, 'Auth', {
-            stackName: prefix.concat('-Auth'),
+            userPoolArn: auth.userPoolArn,
         });
     }
 }

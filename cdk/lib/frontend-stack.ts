@@ -23,6 +23,11 @@ export class FrontendStack extends cdk.Stack {
      */
     const originAccess = new cloudFront.OriginAccessIdentity(this, 'CloudFrontOriginAccess');
     const distribution = new cloudFront.CloudFrontWebDistribution(this, 'CloudFrontDistribution', {
+      errorConfigurations: [{
+        errorCode: 404,
+        responseCode: 200,
+        responsePagePath: '/index.html',
+      }],
       originConfigs: [
         {
           behaviors: [{ isDefaultBehavior: true }],

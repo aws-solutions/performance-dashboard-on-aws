@@ -3,8 +3,12 @@ import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
 
+interface BackendStackProps extends cdk.StackProps {
+    userPoolArn: string,
+};
+
 export class BackendStack extends cdk.Stack {
-    constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+    constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
         super(scope, id, props);
 
         /**
@@ -60,6 +64,28 @@ export class BackendStack extends cdk.Stack {
          */
         const dashboard = dashboards.addResource('{dashboardId}');
         dashboard.addMethod("GET", apiIntegration);
+
+        /**
+         * Admin API
+         */
+
+         /**
+         * Cognito Authorizer
+         */
+        const authorizer = new apigateway.CfnAuthorizer(this, 'CognitoAuth', {
+            type: apigateway.AuthorizationType.COGNITO,
+            name: 'cognito-authorizer',
+            restApiId: api.restApiId,
+            providerArns: [props.userPoolArn],
+            identitySource: 'method.request.header.Authorization',
+        });
+
+        const admin = api.root.addResource('admin');
+        const adminDashboards = admin.addResource("dashboard");
+        adminDashboards.addMethod("GET", apiIntegration, {
+            authorizationType: apigateway.AuthorizationType.COGNITO,
+            authorizer: { authorizerId: authorizer.ref },
+        });
 
         /**
          * Outputs

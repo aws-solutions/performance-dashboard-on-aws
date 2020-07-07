@@ -2,11 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Amplify from 'aws-amplify';
 import * as serviceWorker from './serviceWorker';
-import environment from './env.json';
 import App from './App';
 import './index.css';
 
-Amplify.configure(environment);
+Amplify.configure({
+  API: {
+    endpoints: [
+      {
+        name: "BadgerApi",
+        endpoint: process.env.REACT_APP_BADGER_API,
+      }
+    ]
+  },
+  Auth: {
+    region: process.env.REACT_APP_AWS_REGION,
+    userPoolId: process.env.REACT_APP_USER_POOL_ID,
+    userPoolWebClientId: process.env.REACT_APP_APP_CLIENT_ID,
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>

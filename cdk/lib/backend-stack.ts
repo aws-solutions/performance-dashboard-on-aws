@@ -93,5 +93,6 @@ export class BackendStack extends cdk.Stack {
          * Outputs
          */
         this.apiGatewayEndpoint = api.url;
+        new cdk.CfnOutput(this, 'ApiGatewayEndpoint', { value: this.apiGatewayEndpoint });
     }
 }

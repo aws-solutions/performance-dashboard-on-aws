@@ -2,14 +2,13 @@
   "name": "badger-cdk",
   "version": "0.1.0",
   "bin": {
-    "cdk": "bin/cdk.js"
+    "cdk": "bin/badger.js"
   },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk",
-    "deploy:personal": "BADGER_ENV=$(whoami) cdk deploy"
+    "cdk": "cdk"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.46.0",

@@ -1,63 +1,75 @@
-## Requirements
+# Badger
 
-- NodeJS v12+ (https://nodejs.org/en/download)
-- CDK (npm install -g aws-cdk)
-- Yarn (brew install yarn)
-- AWS Credentials ([How to setup local credentials](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html))
+Badger is an AWS solution for governments to build and deploy Performance Dashboards on AWS. This solution will set the framework and infrastructure to create and manage a webpage similar to UK’s performance dashboard: https://www.gov.uk/performance.
 
-## Frontend
+## Setup development environment
 
-Install dependencies
+This repository is a monorepo that includes 3 different applications: Backend, Frontend and CDK. The three of them are written in Typescript but each has it's own set of dependencies (package.json) and they get built, packaged and deployed independently. The only reason for having them in a monorepo is because this code will be published on GitHub and it will be easier for customers to find all related packages in the same repo rather than keeping track of multiple repositories. 
 
-```
-cd frontend
-yarn install
-```
+### Requirements
 
-To run the frontend app locally:
+Install NodeJS v12+ from https://nodejs.org/en/download.
+Install AWS CDK by running `npm install -g aws-cdk`.
+Install Yarn by running `brew install yarn`.
 
-```
-yarn start
-```
+The following instructions assume that you have local AWS credentials in your `~/.aws/credentials` file for your personal Isengard account.
 
-To deploy the frontend to your AWS account, build it first:
+### Setup
 
-```
-npm run build
-```
+You can clone this repo using Brazil by running the following commands: 
 
-Then go into cdk folder and deploy from there:
-
-```
-cd ../cdk
-npm install
-npm run deploy:personal Frontend
+```bash
+brazil ws create --name badger
+cd badger
+brazil ws use --package AWS-WWPS-GTT-Badger
+cd src/AWS-WWPS-GTT-Badger
 ```
 
-## Backend
+Make the scripts executable: 
 
-Install dependencies
-
+```bash
+chmod +x install.sh
+chmod +x build.sh
+chmod +x deploy.sh
 ```
+
+### Install
+
+Run the install script to download npm dependencies for each application.
+
+```bash
+./install.sh
+```
+
+### Deploy
+
+The deploy command will use the AWS CDK CLI to deploy 3 CloudFormation stacks named: `Badger-env-Backend`, `Badger-env-Frontend` and `Badger-env-Auth` in the default AWS region that you have configured in your `~/.aws/config` file. If you want CDK to deploy to a specific region, you can set the environment variable `export AWS_REGION=us-west-2` before running the following command:
+
+```bash
+./deploy.sh fdingler # Replace with your alias, it will be taken as the environment name
+```
+
+### Run locally
+
+To run the backend server locally: 
+
+```bash
 cd backend
-npm install
+npm run local # It starts an express.js server locally
+
+# You should see Listening on port 8080
 ```
 
-To run the backend locally: 
+To run the React frontend locally, first create a `.env.local` file in the root of the `frontend` folder. This will contain the environment variables for the React app, you can copy the contents of the file from the `.env.yourAlias` file that got created after deploying your personal stack.
 
-```
-npm run local
-```
+```bash
+cd frontend
+yarn start
 
-To deploy the backend to your AWS account the first time:
-
-```
-cd ../cdk
-npm install
-npm run deploy:personal Backend
+# You can now open the app on http://localhost:3000
 ```
 
-## Debugging on VSCode
+### Debugging on VSCode
 
 Create a directory in the root of this project called `.vscode` and then a file inside called `launch.json`. Add the following content to the file: 
 

@@ -59,7 +59,7 @@ npm run local # It starts an express.js server locally
 # You should see Listening on port 8080
 ```
 
-To run the React frontend locally, first create a `.env.local` file in the root of the `frontend` folder. This will contain the environment variables for the React app, you can copy the contents of the file from the `.env.yourAlias` file that got created after deploying your personal stack.
+To run the React frontend locally, first create a `.env.local` file in the root of the `frontend` folder. This will contain the environment variables for the React app, you can copy the contents of the file from the `.env.production` file that got created after deploying your personal stack.
 
 ```bash
 cd frontend

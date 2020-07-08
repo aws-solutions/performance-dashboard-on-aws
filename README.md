@@ -1,6 +1,6 @@
 # Badger
 
-Badger is an AWS solution for governments to build and deploy Performance Dashboards on AWS. This solution will set the framework and infrastructure to create and manage a webpage similar to UK’s performance dashboard: https://www.gov.uk/performance.
+Badger is an AWS solution for governments to build and deploy Performance Dashboards on AWS. It sets the framework and infrastructure to create and manage a webpage similar to UK’s performance dashboard: https://www.gov.uk/performance. This project will be open sourced on GitHub and is being built by the GTT team: https://w.amazon.com/index.php/WWPS_Government_TransformationTeam.
 
 ## Setup development environment
 
@@ -8,9 +8,9 @@ This repository is a monorepo that includes 3 different applications: Backend, F
 
 ### Requirements
 
-Install NodeJS v12+ from https://nodejs.org/en/download.
-Install AWS CDK by running `npm install -g aws-cdk`.
-Install Yarn by running `brew install yarn`.
+- Install NodeJS v12+ from https://nodejs.org/en/download.  
+- Install AWS CDK by running `npm install -g aws-cdk`.  
+- Install Yarn by running `brew install yarn`.  
 
 The following instructions assume that you have local AWS credentials in your `~/.aws/credentials` file for your personal Isengard account.
 
@@ -29,7 +29,6 @@ Make the scripts executable:
 
 ```bash
 chmod +x install.sh
-chmod +x build.sh
 chmod +x deploy.sh
 ```
 

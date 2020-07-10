@@ -8,10 +8,11 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "deploy:pipeline": "cdk deploy --app 'npx ts-node bin/pipeline.ts'"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.46.0",
+    "@aws-cdk/assert": "1.50.0",
     "@types/jest": "^25.2.1",
     "@types/node": "10.17.5",
     "jest": "^25.5.0",
@@ -21,14 +22,18 @@
     "typescript": "~3.7.2"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "1.46.0",
-    "@aws-cdk/aws-cloudfront": "1.46.0",
-    "@aws-cdk/aws-dynamodb": "1.46.0",
-    "@aws-cdk/aws-lambda": "1.46.0",
-    "@aws-cdk/aws-s3": "1.46.0",
-    "@aws-cdk/aws-s3-deployment": "1.46.0",
-    "@aws-cdk/aws-cognito": "1.46.0",
-    "@aws-cdk/core": "1.46.0",
+    "@aws-cdk/aws-apigateway": "1.50.0",
+    "@aws-cdk/aws-cloudfront": "1.50.0",
+    "@aws-cdk/aws-dynamodb": "1.50.0",
+    "@aws-cdk/aws-lambda": "1.50.0",
+    "@aws-cdk/aws-s3": "1.50.0",
+    "@aws-cdk/aws-s3-deployment": "1.50.0",
+    "@aws-cdk/aws-cognito": "1.50.0",
+    "@aws-cdk/aws-codecommit": "1.50.0",
+    "@aws-cdk/aws-codepipeline": "1.50.0",
+    "@aws-cdk/aws-codepipeline-actions": "1.50.0",
+    "@aws-cdk/aws-codebuild": "1.50.0",
+    "@aws-cdk/core": "1.50.0",
     "source-map-support": "^0.5.16"
   }
 }

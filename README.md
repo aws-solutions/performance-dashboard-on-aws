@@ -32,6 +32,12 @@ chmod +x install.sh
 chmod +x deploy.sh
 ```
 
+Bootstrap AWS CDK for the first time:
+
+```
+cdk bootstrap
+```
+
 ### Install
 
 Run the install script to download npm dependencies for each application.

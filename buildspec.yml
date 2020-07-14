@@ -1,0 +1,58 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      # For debugging purposes
+      - ls -al
+      - npm --version
+      - node --version
+      # Install backend dependencies
+      - cd backend
+      - npm install
+      - cd ..
+      # Install frontend dependencies
+      - cd frontend
+      - npm install
+      - cd ..
+      # Install cdk dependencies
+      - cd cdk
+      - npm install
+      - cd ..
+  
+  pre_build:
+    commands:
+      # Run backend tests
+      - cd backend
+      - npm run test
+      # Run cdk tests
+      - cd ../cdk
+    # - npm run test
+      - cd ..
+
+  build:
+    commands:
+      # Build backend
+      - cd backend
+      - npm run build
+      - cd ..
+      # Build frontend
+      - cd frontend
+      - npm run build
+      - cd ..
+      # Build CDK
+      - cd cdk
+      - npm run build
+      - cd ..
+
+  post_build:
+    commands:
+        - cd cdk
+        - export CDK_ENV_NAME=gamma
+        - npm run cdk synth -- -o cdk.out
+
+artifacts: 
+    base-directory: cdk/cdk.out
+    files: 
+        - '**/*'

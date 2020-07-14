@@ -2,8 +2,12 @@ import * as cdk from "@aws-cdk/core";
 import s3 = require("@aws-cdk/aws-s3");
 import codecommit = require("@aws-cdk/aws-codecommit");
 import codepipeline = require("@aws-cdk/aws-codepipeline");
-import codepipeline_actions = require("@aws-cdk/aws-codepipeline-actions");
 import codebuild = require("@aws-cdk/aws-codebuild");
+import {
+  CodeCommitSourceAction,
+  CodeBuildAction,
+  CloudFormationCreateUpdateStackAction,
+} from "@aws-cdk/aws-codepipeline-actions";
 
 interface Props extends cdk.StackProps {
   repoName: string;
@@ -25,14 +29,13 @@ export class PipelineStack extends cdk.Stack {
     });
 
     const sourceOutput = new codepipeline.Artifact();
-    const buildCdkOutput = new codepipeline.Artifact();
-    const buildBackendOutput = new codepipeline.Artifact();
+    const buildOutput = new codepipeline.Artifact();
 
     pipeline.addStage({
       stageName: "Source",
       actions: [
-        new codepipeline_actions.CodeCommitSourceAction({
-          actionName: "CodeCommit_Source",
+        new CodeCommitSourceAction({
+          actionName: "Source",
           repository: codeRepo,
           branch: "mainline",
           output: sourceOutput,
@@ -40,21 +43,11 @@ export class PipelineStack extends cdk.Stack {
       ],
     });
 
-    // Declare a new CodeBuild project for the CDK app
-    const buildCdk = new codebuild.PipelineProject(this, "BuildCdk", {
-      environment: { buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_2 },
-      buildSpec: codebuild.BuildSpec.fromSourceFilename("cdk/buildspec.yml"),
-      environmentVariables: {
-        PACKAGE_BUCKET: {
-          value: artifactsBucket.bucketName,
-        },
+    const build = new codebuild.PipelineProject(this, "BuildBadger", {
+      environment: {
+        buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_2,
+        computeType: codebuild.ComputeType.LARGE,
       },
-    });
-
-    // Declare a new CodeBuild project for the Backend app
-    const buildBackend = new codebuild.PipelineProject(this, "BuildBackend", {
-      environment: { buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_2 },
-      buildSpec: codebuild.BuildSpec.fromSourceFilename("backend/buildspec.yml"),
       environmentVariables: {
         PACKAGE_BUCKET: {
           value: artifactsBucket.bucketName,
@@ -65,17 +58,32 @@ export class PipelineStack extends cdk.Stack {
     pipeline.addStage({
       stageName: "Build",
       actions: [
-        new codepipeline_actions.CodeBuildAction({
-          actionName: "BuildCDK",
-          project: buildCdk,
+        new CodeBuildAction({
+          actionName: "Build",
+          project: build,
           input: sourceOutput,
-          outputs: [buildCdkOutput],
+          outputs: [buildOutput],
+          runOrder: 1,
         }),
-        new codepipeline_actions.CodeBuildAction({
-          actionName: "BuildBackend",
-          project: buildBackend,
-          input: sourceOutput,
-          outputs: [buildBackendOutput],
+      ],
+    });
+
+    pipeline.addStage({
+      stageName: 'Gamma',
+      actions: [
+        new CloudFormationCreateUpdateStackAction({
+          actionName: 'DeployAuth',
+          templatePath: buildOutput.atPath("Auth.template.json"),
+          stackName: 'Badger-gamma-Auth',
+          adminPermissions: true,
+          runOrder: 1
+        }),
+        new CloudFormationCreateUpdateStackAction({
+          actionName: 'DeployBackend',
+          templatePath: buildOutput.atPath("Backend.template.json"),
+          stackName: 'Badger-gamma-Backend',
+          adminPermissions: true,
+          runOrder: 2
         }),
       ],
     });

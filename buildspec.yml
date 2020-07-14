@@ -9,17 +9,7 @@ phases:
       - npm --version
       - node --version
       # Install backend dependencies
-      - cd backend
-      - npm install
-      - cd ..
-      # Install frontend dependencies
-      - cd frontend
-      - npm install
-      - cd ..
-      # Install cdk dependencies
-      - cd cdk
-      - npm install
-      - cd ..
+      - ./install.sh
   
   pre_build:
     commands:
@@ -28,29 +18,13 @@ phases:
       - npm run test
       # Run cdk tests
       - cd ../cdk
-    # - npm run test
+      - npm run test
       - cd ..
 
   build:
     commands:
-      # Build backend
-      - cd backend
-      - npm run build
-      - cd ..
-      # Build frontend
-      - cd frontend
-      - npm run build
-      - cd ..
-      # Build CDK
-      - cd cdk
-      - npm run build
-      - cd ..
-
-  post_build:
-    commands:
-        - cd cdk
-        - export CDK_ENV_NAME=gamma
-        - npm run cdk synth -- -o cdk.out
+      # Deploy
+      ./deploy.sh $ENVIRONMENT
 
 artifacts: 
     base-directory: cdk/cdk.out

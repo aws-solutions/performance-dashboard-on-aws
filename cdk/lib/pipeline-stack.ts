@@ -43,47 +43,27 @@ export class PipelineStack extends cdk.Stack {
       ],
     });
 
-    const build = new codebuild.PipelineProject(this, "BuildBadger", {
+    const build = new codebuild.PipelineProject(this, "BadgerGamma", {
       environment: {
         buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_2,
         computeType: codebuild.ComputeType.LARGE,
       },
       environmentVariables: {
-        PACKAGE_BUCKET: {
-          value: artifactsBucket.bucketName,
+        ENVIRONMENT: {
+          value: "Gamma",
         },
       },
     });
 
     pipeline.addStage({
-      stageName: "Build",
+      stageName: "Gamma",
       actions: [
         new CodeBuildAction({
-          actionName: "Build",
+          actionName: "Build.and.Deploy",
           project: build,
           input: sourceOutput,
           outputs: [buildOutput],
           runOrder: 1,
-        }),
-      ],
-    });
-
-    pipeline.addStage({
-      stageName: 'Gamma',
-      actions: [
-        new CloudFormationCreateUpdateStackAction({
-          actionName: 'DeployAuth',
-          templatePath: buildOutput.atPath("Auth.template.json"),
-          stackName: 'Badger-gamma-Auth',
-          adminPermissions: true,
-          runOrder: 1
-        }),
-        new CloudFormationCreateUpdateStackAction({
-          actionName: 'DeployBackend',
-          templatePath: buildOutput.atPath("Backend.template.json"),
-          stackName: 'Badger-gamma-Backend',
-          adminPermissions: true,
-          runOrder: 2
         }),
       ],
     });

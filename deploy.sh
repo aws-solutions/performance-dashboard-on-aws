@@ -42,7 +42,7 @@ deploy_auth() {
     # Auth stack definition is in cdk/lib/auth-stack.ts
     echo "Deploying auth stack"
     cd $CDK_DIR
-    cdk deploy Auth
+    cdk deploy Auth --require-approval never
 }
 
 deploy_backend() {
@@ -52,7 +52,7 @@ deploy_backend() {
 
     cd $CDK_DIR
     echo "Deploying backend stack"
-    cdk deploy Backend --outputs-file outputs-backend.json
+    cdk deploy Backend --require-approval never --outputs-file outputs-backend.json
 }
 
 deploy_frontend() {
@@ -75,7 +75,7 @@ deploy_frontend() {
     yarn build
 
     cd $CDK_DIR
-    cdk deploy Frontend
+    cdk deploy Frontend --require-approval never
     echo "Deploying frontend stack"
 }
 

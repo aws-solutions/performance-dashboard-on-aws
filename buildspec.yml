@@ -8,7 +8,8 @@ phases:
       - ls -al
       - npm --version
       - node --version
-      # Install backend dependencies
+      # Install dependencies
+      - npm install -g aws-cdk
       - ./install.sh
   
   pre_build:

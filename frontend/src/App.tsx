@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from './containers/Home';
@@ -28,4 +29,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);

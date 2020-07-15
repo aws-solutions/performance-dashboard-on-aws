@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { AmplifySignOut } from '@aws-amplify/ui-react';
 import BadgerService from '../../services/badger-service';
 import HomepageLayout from '../../layouts/Homepage';
 
@@ -35,4 +35,4 @@ function AdminHome() {
   );
 }
 
-export default withAuthenticator(AdminHome);
+export default AdminHome;

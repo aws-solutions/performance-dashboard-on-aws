@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import lo from 'lodash';
-import './index.css';
+import './DashboardList.css';
 
 type Department = {
     id: string,

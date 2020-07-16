@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { AmplifySignOut } from '@aws-amplify/ui-react';
-import BadgerService from '../../services/badger-service';
-import HomepageLayout from '../../layouts/Homepage';
+import BadgerService from '../services/BadgerService';
+import MainLayout from '../layouts/Main';
+import PageHeader from '../components/PageHeader';
 
 type User = {
   username: string,
@@ -26,12 +27,15 @@ function AdminHome() {
   }
 
   return (
-    <HomepageLayout title="Admin Portal">
+    <MainLayout>
+      <PageHeader>
+        <PageHeader.Title>Admin Portal</PageHeader.Title>
+      </PageHeader>
       <p>Welcome to the admin portal <b>{user.username}</b></p>
       <p><b>Bearer Token</b> <code>{token}</code></p>
       <br />
       <AmplifySignOut />
-    </HomepageLayout>
+    </MainLayout>
   );
 }
 

@@ -17,8 +17,15 @@ phases:
       # Run backend tests
       - cd backend
       - npm run test
+      - cd ..
+      # Run frontend tests
+      - cd frontend
+      # Avoid interactive mode on tests
+      - export CI=true
+      - npm run test
+      - cd ..
       # Run cdk tests
-      - cd ../cdk
+      - cd cdk
       - npm run test
       - cd ..
 

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render a header with subtitle 1`] = `
+<div>
+  <div
+    class="Header"
+  >
+    <h1>
+      Some title
+    </h1>
+    <p>
+      This is a subtitle
+    </p>
+  </div>
+</div>
+`;

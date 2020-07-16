@@ -9,8 +9,9 @@ import {
   BarChart, Bar, XAxis, YAxis, LineChart, Line, Legend, ResponsiveContainer
 } from 'recharts';
 
-import BadgerService from '../../services/badger-service';
-import MainLayout from '../../layouts/Main';
+import PageHeader from '../components/PageHeader';
+import BadgerService from '../services/BadgerService';
+import MainLayout from '../layouts/Main';
 
 const data = [
   { name: 'Jan', suv: 1.54, sedan: 3.3 },
@@ -53,7 +54,10 @@ function Dashboard() {
   }
 
   return (
-    <MainLayout title={dashboard.name}>
+    <MainLayout>
+      <PageHeader>
+        <PageHeader.Title>{dashboard.name}</PageHeader.Title>
+      </PageHeader>
       <Row style={{ marginBottom: 20 }}>
         <Col>
           <Card>

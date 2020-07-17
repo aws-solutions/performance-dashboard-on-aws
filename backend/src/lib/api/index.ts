@@ -1,44 +1,17 @@
-import express from 'express';
-import middleware from 'aws-serverless-express/middleware';
-import dashboard from '../dashboard';
+import express from "express";
+import middleware from "aws-serverless-express/middleware";
+import cors from "cors";
+
+import dashboard from "./dashboard";
+import topicarea from "./topicarea";
 
 const app = express();
-const router = express.Router();
-router.use(middleware.eventContext());
 
-/**
- * @GET
- * List all dashboards
- */
-router.get('/dashboard', async (req, res) => {
-    const dashboards = await dashboard.listDashboards();
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.json(dashboards);
-});
+app.use(middleware.eventContext());
+app.use(express.json());
+app.use(cors());
 
-/**
- * @GET
- * Admin
- * List all dashboards
- */
-router.get('/admin/dashboard', async (req, res) => {
-    console.log('req-api', req.apiGateway);
-    const dashboards = await dashboard.listDashboards();
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.json(dashboards);
-});
-
-/**
- * @GET
- * Get dashboard by Id
- */
-router.get('/dashboard/:dashboardId', async (req, res) => {
-    const { dashboardId } = req.params;
-    const dash = await dashboard.getDashboardById(dashboardId);
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    return res.json(dash);
-});
-
-app.use('/', router);
+app.use("/dashboard", dashboard);
+app.use("/topicarea", topicarea);
 
 export default app;

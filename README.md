@@ -87,6 +87,11 @@ Create a directory in the root of this project called `.vscode` and then a file 
         "type": "node",
         "request": "launch",
         "runtimeArgs": ["-r", "ts-node/register"],
+        "env": {
+          "AWS_PROFILE": "dev",
+          "AWS_REGION": "us-west-2",
+          "BADGER_TABLE": "Badger-fdingler-Backend-BadgerTable5C9794C7-EQ1MXUVO76UZ"
+        },
         "args": ["${workspaceRoot}/backend/src/local/server.ts"],
         "cwd": "${workspaceRoot}/backend",
         "skipFiles": ["<node_internals>/**", "node_modules/**"]

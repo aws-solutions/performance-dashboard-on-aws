@@ -13,7 +13,7 @@ async function listDashboards() : Promise<DashboardList> {
         }
     ];
 
-    return [];
+    return dashboards;
 }
 
 async function getDashboardById(dashboardId: string) : Promise<Dashboard> {

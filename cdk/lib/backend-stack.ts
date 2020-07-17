@@ -9,6 +9,7 @@ interface BackendStackProps extends cdk.StackProps {
 
 export class BackendStack extends cdk.Stack {
     public readonly apiGatewayEndpoint : string;
+    public readonly dynamodbTableName  : string;
 
     constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
         super(scope, id, props);
@@ -82,9 +83,13 @@ export class BackendStack extends cdk.Stack {
             identitySource: 'method.request.header.Authorization',
         });
 
-        const admin = api.root.addResource('admin');
-        const adminDashboards = admin.addResource("dashboard");
-        adminDashboards.addMethod("GET", apiIntegration, {
+        const topicarea = api.root.addResource('topicarea');
+
+        /**
+         * POST
+         * /topicarea
+         */
+        topicarea.addMethod("POST", apiIntegration, {
             authorizationType: apigateway.AuthorizationType.COGNITO,
             authorizer: { authorizerId: authorizer.ref },
         });
@@ -93,6 +98,8 @@ export class BackendStack extends cdk.Stack {
          * Outputs
          */
         this.apiGatewayEndpoint = api.url;
+        this.dynamodbTableName = table.tableName;
         new cdk.CfnOutput(this, 'ApiGatewayEndpoint', { value: this.apiGatewayEndpoint });
+        new cdk.CfnOutput(this, 'DynamoDbTableName', { value: this.dynamodbTableName });
     }
 }

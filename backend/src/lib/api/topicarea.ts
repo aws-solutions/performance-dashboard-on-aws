@@ -23,8 +23,13 @@ router.post("/", async (req: Request, res: Response) => {
     return;
   }
 
-  const createRes = await controller.createTopicArea({ name });
-  return res.json(createRes);
+  try {
+    const createRes = await controller.createTopicArea({ name });
+    return res.json(createRes);
+  } catch (err) {
+    console.error('Error creating topic area', err);
+    res.status(500).send("Internal server error");
+  }
 });
 
 export default router;

@@ -2,6 +2,7 @@ import * as cdk from '@aws-cdk/core';
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
+import * as iam from '@aws-cdk/aws-iam'; 
 
 interface BackendStackProps extends cdk.StackProps {
     userPoolArn: string,
@@ -40,6 +41,24 @@ export class BackendStack extends cdk.Stack {
                 BADGER_TABLE: table.tableName,
             }
         });
+
+        handler.addToRolePolicy(new iam.PolicyStatement({
+            effect: iam.Effect.ALLOW,
+            resources: [table.tableArn],
+            actions: [
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:BatchGetItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:UpdateItem",
+            ]
+        }));
 
         /**
          * Badger API

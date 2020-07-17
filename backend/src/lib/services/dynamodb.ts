@@ -19,10 +19,7 @@ class DynamoDbService {
             TableName: this.tableName,
             Item: item,
         }).promise();
-        
-        console.log(result);
     }
-
 }
 
 export default DynamoDbService;

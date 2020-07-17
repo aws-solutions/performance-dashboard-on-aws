@@ -1,4 +1,4 @@
-import { TopicArea } from './topicarea';
+import { TopicArea } from './topicarea-models';
 
 export type Dashboard = {
     id: string,

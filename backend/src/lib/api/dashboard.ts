@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import publicController from "../controllers/public";
+import dashboardController from "../controllers/dashboard";
 
 const router = Router();
 
@@ -8,7 +8,7 @@ const router = Router();
  * List dashboards
  */
 router.get("/", async (req: Request, res: Response) => {
-  const dashboards = await publicController.listDashboards();
+  const dashboards = await dashboardController.listDashboards();
   return res.json(dashboards);
 });
 
@@ -18,7 +18,7 @@ router.get("/", async (req: Request, res: Response) => {
  */
 router.get("/:dashboardId", async (req: Request, res: Response) => {
   const { dashboardId } = req.params;
-  const dashboards = await publicController.getDashboardById(dashboardId);
+  const dashboards = await dashboardController.getDashboardById(dashboardId);
   return res.json(dashboards);
 });
 

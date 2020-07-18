@@ -90,7 +90,8 @@ Create a directory in the root of this project called `.vscode` and then a file 
         "env": {
           "AWS_PROFILE": "dev",
           "AWS_REGION": "us-west-2",
-          "BADGER_TABLE": "Badger-fdingler-Backend-BadgerTable5C9794C7-EQ1MXUVO76UZ"
+          "BADGER_TABLE": "BadgerTable5C9794C7-EQ1MXUVO76UZ",
+          "BADGER_LOCAL": "true",
         },
         "args": ["${workspaceRoot}/backend/src/local/server.ts"],
         "cwd": "${workspaceRoot}/backend",
@@ -98,6 +99,7 @@ Create a directory in the root of this project called `.vscode` and then a file 
       }
     ]
 }
+
 ```
 
 You will be able to run the local backend server from vscode so you can set breakpoints.

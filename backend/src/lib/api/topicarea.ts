@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import controller from "../controllers/topicarea";
+import authService from "../services/auth";
 
 const router = Router();
 
@@ -16,7 +17,14 @@ router.get("/", async (req: Request, res: Response) => {
  * Create a new topic area
  */
 router.post("/", async (req: Request, res: Response) => {
+  
   const { name } = req.body;
+  const user = authService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
 
   if (!name) {
     res.status(400).send("Missing required field `name`");

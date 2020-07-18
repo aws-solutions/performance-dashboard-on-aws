@@ -4,13 +4,14 @@ import { User } from '../models/user-models';
 const local = !!process.env.BADGER_LOCAL || false;
 
 /**
- * Gets the logged-in user from the http request headers
+ * Gets the logged-in user from the http request headers.
+ * Returns null if no user is found. 
+ * Returns dummy user if running in local mode.
  */
 function getCurrentUser(req: Request) : User | null {
 
   if (local) {
-    // When running locally, return a dummy user
-    return userFromClaims(localUser());
+    return userFromClaims(dummyUser());
   }
 
   /**
@@ -32,22 +33,19 @@ function getCurrentUser(req: Request) : User | null {
   return userFromClaims(claims);
 }
 
-/**
- * Claims include the standard OIDC claims plus additional ones
- * added by Cognito with the prefix cognito:{attribute}.
- * 
- * https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
- */
 function userFromClaims(claims: any) : User {
+  /**
+   * Claims include the standard OIDC claims plus additional ones
+   * added by Cognito with the prefix cognito:{attribute}.
+   * 
+   * https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+   */
   return {
     userId: claims["cognito:username"],
   };
 }
 
-/**
- * Dummy user claims for localhost
- */
-function localUser(): any {
+function dummyUser(): any {
   return {
     sub: "c077a68a-de21-47c6-a119-9e3449b52edd",
     aud: "1nscgv46llpouam1cvnskjrl42",

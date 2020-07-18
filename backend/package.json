@@ -7,7 +7,7 @@
     "build": "npm run clean && tsc && npm run install:prod",
     "copy:package": "cp package.json build/",
     "install:prod": "npm run copy:package && npm install --production --prefix build",
-    "local": "BADGER_LOCAL=true ts-node src/local/server.ts",
+    "local": "echo 'Run by using visual studio code instead'",
     "clean": "rm -rf build"
   },
   "devDependencies": {

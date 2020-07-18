@@ -9,6 +9,7 @@ async function listDashboards() : Promise<DashboardList> {
             topicArea: {
                 id: '123',
                 name: 'Environmental Impact',
+                createdBy: 'johndoe',
             }
         }
     ];
@@ -23,6 +24,7 @@ async function getDashboardById(dashboardId: string) : Promise<Dashboard> {
         topicArea: {
             id: '123',
             name: 'Environmental Impact',
+            createdBy: 'johndoe',
         }
     }
 }

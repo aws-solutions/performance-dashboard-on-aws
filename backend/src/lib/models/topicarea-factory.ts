@@ -8,6 +8,7 @@ function createNew(createRequest: CreateTopicAreaRequest): TopicArea {
   return {
     id: uuidv4(),
     name: createRequest.name,
+    createdBy: createRequest.user.userId,
   };
 }
 
@@ -20,6 +21,7 @@ function toItem(topicArea: TopicArea): TopicAreaItem {
     sk: "TopicArea-".concat(topicArea.id),
     type: "TopicArea",
     name: topicArea.name,
+    createdBy: topicArea.createdBy,
   };
 }
 

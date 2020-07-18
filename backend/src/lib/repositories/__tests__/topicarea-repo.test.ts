@@ -11,7 +11,12 @@ import factory from '../../models/topicarea-factory';
 describe('TopicAreaRepository.create', () => {
 
   it('should convert a topicArea to a dynamodb item', async () => {
-    const topicArea: TopicArea = { id: '123', name: 'AWS' };
+    const topicArea: TopicArea = {
+      id: '123',
+      name: 'AWS',
+      createdBy: 'johndoe',
+    };
+
     await repo.create(topicArea);
     expect(factory.toItem).toHaveBeenCalledWith(topicArea);
   });
@@ -23,10 +28,11 @@ describe('TopicAreaRepository.create', () => {
       sk: 'TopicArea-123',
       type: 'TopicArea',
       name: 'AWS',
+      createdBy: 'johndoe',
     };
 
     factory.toItem = jest.fn().mockReturnValue(item);
-    await repo.create({ id: '123', name: 'AWS' });
+    await repo.create({ id: '123', name: 'AWS', createdBy: 'johndoe' });
  
     expect(dynamodb.putItem).toHaveBeenCalledWith(item);
   });

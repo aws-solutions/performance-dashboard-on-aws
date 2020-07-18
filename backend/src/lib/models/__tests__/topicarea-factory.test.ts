@@ -1,16 +1,26 @@
 import factory from '../topicarea-factory';
 import { TopicArea } from '../topicarea-models';
+import { User } from '../user-models';
+
+const user: User = {
+  userId: 'johndoe',
+};
 
 describe('TopicAreaFactory.createNew', () => {
   it('should create a new topic area with unique id', () => {
-    const topicarea1 = factory.createNew({ name: 'Banana' });
-    const topicarea2 = factory.createNew({ name: 'Strawberries' });
+    const topicarea1 = factory.createNew({ name: 'Banana', user });
+    const topicarea2 = factory.createNew({ name: 'Strawberry', user });
     expect(topicarea1.id).not.toEqual(topicarea2.id);
   });
 
   it('should create a new topic area with name', () => {
-    const topicarea = factory.createNew({ name: 'AWS' });
+    const topicarea = factory.createNew({ name: 'AWS', user });
     expect(topicarea.name).toEqual('AWS');
+  });
+
+  it('should create a new topic area with createdBy', () => {
+    const topicarea = factory.createNew({ name: 'AWS', user });
+    expect(topicarea.createdBy).toEqual(user.userId);
   });
 });
 
@@ -18,6 +28,7 @@ describe('TopicAreaFactory.toItem', () => {
   const topicarea : TopicArea = {
     id: '123',
     name: 'Banana',
+    createdBy: user.userId,
   };
 
   it('should have a pk that starts with TopicArea', () => {
@@ -38,5 +49,6 @@ describe('TopicAreaFactory.toItem', () => {
   it('should include all other attributes of topic area', () => {
     const item = factory.toItem(topicarea);
     expect(item.name).toEqual('Banana');
+    expect(item.createdBy).toEqual(user.userId);
   });
 });

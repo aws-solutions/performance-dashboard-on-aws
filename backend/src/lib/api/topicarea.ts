@@ -32,8 +32,8 @@ router.post("/", async (req: Request, res: Response) => {
   }
 
   try {
-    const createRes = await controller.createTopicArea({ name });
-    return res.json(createRes);
+    const topicarea = await controller.createTopicArea({ name, user });
+    return res.json(topicarea);
   } catch (err) {
     console.error('Error creating topic area', err);
     res.status(500).send("Internal server error");

@@ -1,6 +1,6 @@
-import AWS from "aws-sdk";
-import TopicAreaFactory from "../models/topicarea-factory";
 import { User } from "../models/user-models";
+import DynamoDBService from "../services/dynamodb";
+import TopicAreaFactory from "../models/topicarea-factory";
 import {
   TopicArea,
   TopicAreaList,
@@ -8,20 +8,27 @@ import {
 } from "../models/topicarea-models";
 
 class TopicAreaRepository {
-  private dynamodb: AWS.DynamoDB.DocumentClient;
+  private dynamodb: DynamoDBService;
   private tableName: string;
   private static instance: TopicAreaRepository;
 
+  /**
+   * Repo is a Singleton, hence private constructor
+   * to prevent direct constructions calls with new operator.
+   */
   private constructor() {
     if (!process.env.BADGER_TABLE) {
       throw new Error("Environment variable BADGER_TABLE not found");
     }
 
-    this.dynamodb = new AWS.DynamoDB.DocumentClient();
+    this.dynamodb = DynamoDBService.getInstance();
     this.tableName = process.env.BADGER_TABLE;
   }
 
-  static getInstance() {
+  /**
+   * Controls access to the singleton instance.
+   */
+  static getInstance(): TopicAreaRepository {
     if (!TopicAreaRepository.instance) {
       TopicAreaRepository.instance = new TopicAreaRepository();
     }
@@ -29,30 +36,38 @@ class TopicAreaRepository {
     return TopicAreaRepository.instance;
   }
 
-  async create(topicArea: TopicArea) {
-    const item = TopicAreaFactory.toItem(topicArea);
-    await this.dynamodb
-      .put({
-        TableName: this.tableName,
-        Item: item,
-      })
-      .promise();
+  /**
+   * Performs a putItem request to DynamoDB to create a new
+   * topic area item.
+   *
+   * @param topicArea TopicArea
+   */
+  public async create(topicArea: TopicArea) {
+    await this.dynamodb.put({
+      TableName: this.tableName,
+      Item: TopicAreaFactory.toItem(topicArea),
+    });
   }
 
-  async list(): Promise<TopicAreaList> {
-    const result = await this.dynamodb
-      .query({
-        TableName: this.tableName,
-        IndexName: "byType",
-        KeyConditionExpression: "#type = :type",
-        ExpressionAttributeNames: {
-          "#type": "type",
-        },
-        ExpressionAttributeValues: {
-          ":type": "TopicArea",
-        },
-      })
-      .promise();
+  /**
+   * Returns a list of TopicAreas by performing a query
+   * operation against the `byType` Global Secondary Index
+   * on the DynamoDB table.
+   *
+   * TODO: Implement pagination
+   */
+  public async list(): Promise<TopicAreaList> {
+    const result = await this.dynamodb.query({
+      TableName: this.tableName,
+      IndexName: "byType",
+      KeyConditionExpression: "#type = :type",
+      ExpressionAttributeNames: {
+        "#type": "type",
+      },
+      ExpressionAttributeValues: {
+        ":type": "TopicArea",
+      },
+    });
 
     if (!result.Items) {
       return [];
@@ -63,37 +78,41 @@ class TopicAreaRepository {
     );
   }
 
-  async updateName(id: string, name: string, user: User) {
-    await this.dynamodb
-      .update({
-        TableName: this.tableName,
-        Key: {
-          pk: TopicAreaFactory.itemId(id),
-          sk: TopicAreaFactory.itemId(id),
-        },
-        UpdateExpression: "set #name = :name, #updatedBy = :userId",
-        ExpressionAttributeValues: {
-          ":name": name,
-          ":userId": user.userId,
-        },
-        ExpressionAttributeNames: {
-          "#name": "name",
-          "#updatedBy": "updatedBy",
-        },
-      })
-      .promise();
+  /**
+   * Updates the name of an existing TopicArea identified
+   * by the param `id`. Sets the `updatedBy` field to the userId
+   * doing the update action.
+   */
+  public async updateName(id: string, name: string, user: User) {
+    await this.dynamodb.update({
+      TableName: this.tableName,
+      Key: {
+        pk: TopicAreaFactory.itemId(id),
+        sk: TopicAreaFactory.itemId(id),
+      },
+      UpdateExpression: "set #name = :name, #updatedBy = :userId",
+      ExpressionAttributeValues: {
+        ":name": name,
+        ":userId": user.userId,
+      },
+      ExpressionAttributeNames: {
+        "#name": "name",
+        "#updatedBy": "updatedBy",
+      },
+    });
   }
 
-  async delete(id: string) {
-    await this.dynamodb
-      .delete({
-        TableName: this.tableName,
-        Key: {
-          pk: TopicAreaFactory.itemId(id),
-          sk: TopicAreaFactory.itemId(id),
-        },
-      })
-      .promise();
+  /**
+   * Deletes the TopicArea identified by the param `id`.
+   */
+  public async delete(id: string) {
+    await this.dynamodb.delete({
+      TableName: this.tableName,
+      Key: {
+        pk: TopicAreaFactory.itemId(id),
+        sk: TopicAreaFactory.itemId(id),
+      },
+    });
   }
 }
 

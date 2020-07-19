@@ -57,7 +57,12 @@ export class BackendStack extends cdk.Stack {
 
         handler.addToRolePolicy(new iam.PolicyStatement({
             effect: iam.Effect.ALLOW,
-            resources: [table.tableArn],
+            resources: [
+                // Grant permissions to table itself
+                table.tableArn,
+                // Grant permissions to GSI indexes
+                table.tableArn.concat("/index/*")
+            ],
             actions: [
                 "dynamodb:PutItem",
                 "dynamodb:GetItem",
@@ -99,7 +104,7 @@ export class BackendStack extends cdk.Stack {
             authorizer: { authorizerId: authorizer.ref },
         });
 
-        const dashboard = dashboards.addResource('{id}');
+        const dashboard = dashboards.addResource('{dashboardId}');
         dashboard.addMethod("GET", apiIntegration, {
             authorizationType: apigateway.AuthorizationType.COGNITO,
             authorizer: { authorizerId: authorizer.ref },

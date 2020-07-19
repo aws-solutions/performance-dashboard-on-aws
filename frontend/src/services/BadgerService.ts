@@ -9,17 +9,23 @@ async function getAuthToken() {
 }
 
 async function fetchDashboards() {
-    return await API.get(apiName, '/dashboard', {});
+    const token = await getAuthToken();
+    return await API.get(apiName, '/dashboard', {
+        headers: { Authorization: 'Bearer '.concat(token) }
+    });
 }
 
 async function fetchDashboardById(dashboardId: string) {
-    return await API.get(apiName, '/dashboard/'.concat(dashboardId), {});
+    const token = await getAuthToken();
+    return await API.get(apiName, '/dashboard/'.concat(dashboardId), {
+        headers: { Authorization: 'Bearer '.concat(token) }
+    });
 }
 
 async function fetchDashboardsAdmin() {
     const token = await getAuthToken();
     return await API.get(apiName, '/admin/dashboard', {
-        Authorization: 'Bearer '.concat(token),
+        headers: { Authorization: 'Bearer '.concat(token) }
     });
 }
 

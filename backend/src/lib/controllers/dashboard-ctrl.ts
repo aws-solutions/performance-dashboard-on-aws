@@ -1,8 +1,7 @@
-import { Dashboard, DashboardList } from '../models/dashboard';
+import { Request, Response } from "express";
 
-async function listDashboards() : Promise<DashboardList> {
-
-    const dashboards : DashboardList = [
+async function listDashboards(req: Request, res: Response) {
+    return res.json([
         {
             id: 'abc',
             name: 'Safer Streets for Cycling and Pedestrians',
@@ -12,13 +11,11 @@ async function listDashboards() : Promise<DashboardList> {
                 createdBy: 'johndoe',
             }
         }
-    ];
-
-    return dashboards;
+    ]);
 }
 
-async function getDashboardById(dashboardId: string) : Promise<Dashboard> {
-    return {
+async function getDashboardById(req: Request, res: Response) {
+    res.json({
         id: 'abc',
         name: 'Safer Streets for Cycling and Pedestrians',
         topicArea: {
@@ -26,7 +23,7 @@ async function getDashboardById(dashboardId: string) : Promise<Dashboard> {
             name: 'Environmental Impact',
             createdBy: 'johndoe',
         }
-    }
+    })
 }
 
 export default {

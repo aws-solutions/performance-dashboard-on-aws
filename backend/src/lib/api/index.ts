@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 
-import dashboard from "./dashboard";
-import topicarea from "./topicarea";
+import dashboard from "./dashboard-api";
+import topicarea from "./topicarea-api";
 
 const app = express();
 app.use(express.json());

@@ -1,22 +1,23 @@
 import { Request, Response } from "express";
-import factory from "../models/topicarea-factory";
-import repo from "../repositories/topicarea-repo";
-import authService from "../services/auth";
+import TopicAreaFactory from "../models/topicarea-factory";
+import AuthService from "../services/auth";
+import TopicAreaRepository from "../repositories/topicarea-repo";
 
 async function listTopicAreas(req: Request, res: Response) {
-  const user = authService.getCurrentUser(req);
+  const user = AuthService.getCurrentUser(req);
 
   if (!user) {
     res.status(401).send("Unauthorized");
     return;
   }
 
+  const repo = TopicAreaRepository.getInstance();
   const topicareas = await repo.list();
   res.json(topicareas);
 }
 
 async function createTopicArea(req: Request, res: Response) {
-  const user = authService.getCurrentUser(req);
+  const user = AuthService.getCurrentUser(req);
   const { name } = req.body;
 
   if (!user) {
@@ -28,13 +29,15 @@ async function createTopicArea(req: Request, res: Response) {
     res.status(400).send("Missing required field `name`");
   }
 
-  const topicarea = factory.createNew(name, user);
+  const topicarea = TopicAreaFactory.createNew(name, user);
+
+  const repo = TopicAreaRepository.getInstance();
   await repo.create(topicarea);
   res.json(topicarea);
 }
 
 async function updateTopicArea(req: Request, res: Response) {
-  const user = authService.getCurrentUser(req);
+  const user = AuthService.getCurrentUser(req);
   const { id } = req.params;
   const { name } = req.body;
 
@@ -48,12 +51,13 @@ async function updateTopicArea(req: Request, res: Response) {
     return;
   }
 
+  const repo = TopicAreaRepository.getInstance();
   await repo.updateName(id, name, user);
   res.status(201).send();
 }
 
 async function deleteTopicArea(req: Request, res: Response) {
-  const user = authService.getCurrentUser(req);
+  const user = AuthService.getCurrentUser(req);
   const { id } = req.params;
 
   if (!user) {
@@ -66,7 +70,8 @@ async function deleteTopicArea(req: Request, res: Response) {
     return;
   }
 
-  await repo.remove(id);
+  const repo = TopicAreaRepository.getInstance();
+  await repo.delete(id);
   res.status(201).send();
 }
 

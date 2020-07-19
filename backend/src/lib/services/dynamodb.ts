@@ -20,6 +20,10 @@ class DynamoDbService {
             Item: item,
         }).promise();
     }
+
+    getClient() : AWS.DynamoDB.DocumentClient {
+        return this.client;
+    }
 }
 
 export default DynamoDbService;

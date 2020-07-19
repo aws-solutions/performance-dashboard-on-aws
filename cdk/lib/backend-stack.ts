@@ -30,6 +30,19 @@ export class BackendStack extends cdk.Stack {
             },
         });
 
+        table.addGlobalSecondaryIndex({
+            indexName: 'byType',
+            projectionType: dynamodb.ProjectionType.ALL,
+            partitionKey: {
+                name: 'type',
+                type: dynamodb.AttributeType.STRING,
+            },
+            sortKey: {
+                name: 'sk',
+                type: dynamodb.AttributeType.STRING
+            },
+        });
+
         /**
          * Lambda functions
          */

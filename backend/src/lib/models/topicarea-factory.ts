@@ -25,7 +25,20 @@ function toItem(topicArea: TopicArea): TopicAreaItem {
   };
 }
 
+/**
+ * Converts a DynamoDB item into a TopicArea object
+ */
+function fromItem(item: TopicAreaItem): TopicArea {
+  const id = item.pk.split("TopicArea-")[1];
+  return {
+    id,
+    name: item.name,
+    createdBy: item.createdBy,
+  }
+}
+
 export default {
   toItem,
   createNew,
+  fromItem,
 };

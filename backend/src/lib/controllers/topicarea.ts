@@ -1,6 +1,10 @@
 import factory from '../models/topicarea-factory';
 import repo from '../repositories/topicarea-repo';
-import { TopicArea, CreateTopicAreaRequest } from '../models/topicarea-models';
+import {
+    TopicArea,
+    TopicAreaList,
+    CreateTopicAreaRequest,
+} from '../models/topicarea-models';
 
 async function createTopicArea(createRequest: CreateTopicAreaRequest) : Promise<TopicArea> {
     const topicArea = factory.createNew(createRequest);
@@ -8,6 +12,11 @@ async function createTopicArea(createRequest: CreateTopicAreaRequest) : Promise<
     return topicArea;
 }
 
+async function listTopicAreas() : Promise<TopicAreaList> {
+    return repo.list();
+}
+
 export default {
     createTopicArea,
+    listTopicAreas,
 }

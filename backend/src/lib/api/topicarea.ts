@@ -9,7 +9,8 @@ const router = Router();
  * List topic areas
  */
 router.get("/", async (req: Request, res: Response) => {
-  return res.json([]);
+  const list = await controller.listTopicAreas();
+  return res.json(list);
 });
 
 /**

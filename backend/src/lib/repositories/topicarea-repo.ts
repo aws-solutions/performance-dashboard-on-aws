@@ -1,6 +1,6 @@
 import AWS from "aws-sdk";
 import factory from "../models/topicarea-factory";
-import DynamoDbService from "../services/dynamodb";
+import { User } from "../models/user-models";
 import {
   TopicArea,
   TopicAreaList,
@@ -52,7 +52,47 @@ async function list(): Promise<TopicAreaList> {
   return result.Items.map((item) => factory.fromItem(item as TopicAreaItem));
 }
 
+async function updateName(id: string, name: string, user: User) {
+  const dynamodb = new AWS.DynamoDB.DocumentClient();
+  const tableName = getTableName();
+
+  await dynamodb
+    .update({
+      TableName: tableName,
+      Key: {
+        pk: factory.itemId(id),
+        sk: factory.itemId(id),
+      },
+      UpdateExpression: "set #name = :name, #updatedBy = :userId",
+      ExpressionAttributeValues: {
+        ":name": name,
+        ":userId": user.userId,
+      },
+      ExpressionAttributeNames: {
+        "#name": "name",
+        "#updatedBy": "updatedBy",
+      },
+    })
+    .promise();
+}
+
+async function remove(id: string) {
+  const dynamodb = new AWS.DynamoDB.DocumentClient();
+  const tableName = getTableName();
+  await dynamodb
+    .delete({
+      TableName: tableName,
+      Key: {
+        pk: factory.itemId(id),
+        sk: factory.itemId(id),
+      },
+    })
+    .promise();
+}
+
 export default {
   create,
   list,
+  updateName,
+  remove,
 };

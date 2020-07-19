@@ -1,5 +1,3 @@
-import { User } from './user-models';
-
 export type TopicArea = {
     id: string,
     name: string,
@@ -14,9 +12,4 @@ export interface TopicAreaItem {
     type: string,
     name: string,
     createdBy: string,
-};
-
-export type CreateTopicAreaRequest = {
-    name: string,
-    user: User,
 };

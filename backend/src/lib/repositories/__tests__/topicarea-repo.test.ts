@@ -1,39 +1,37 @@
 import { mocked } from 'ts-jest/utils';
 import repo from '../topicarea-repo';
-import { TopicArea, TopicAreaItem } from '../../models/topicarea-models';
+import { User } from '../../models/user-models';
+// import { TopicArea, TopicAreaItem } from '../../models/topicarea-models';
+import topicareaFactory from '../../models/topicarea-factory';
 
-jest.mock('../../services/dynamodb');
-import DynamoDbService from '../../services/dynamodb';
+jest.mock('aws-sdk');
+import AWS from 'aws-sdk';
 
-jest.mock('../../models/topicarea-factory');
-import factory from '../../models/topicarea-factory';
+// DynamoDB functions always return an object
+// that has a promise function within it. 
+function mockDynamoOperation() {
+  return jest.fn().mockReturnValue({
+    promise: jest.fn(),
+  });
+}
+
+let user: User;
+let tableName;
+
+beforeEach(() => {
+  user = { userId: 'johndoe' };
+  tableName = "BadgerTable";
+  process.env.BADGER_TABLE = tableName;
+});
 
 describe('TopicAreaRepository.create', () => {
-
-  it('should convert a topicArea to a dynamodb item', async () => {
-    const topicArea: TopicArea = {
-      id: '123',
-      name: 'AWS',
-      createdBy: 'johndoe',
-    };
-
-    await repo.create(topicArea);
-    expect(factory.toItem).toHaveBeenCalledWith(topicArea);
-  });
-
   it('should call putItem on dynamodb', async () => {
-    const dynamodb = mocked(DynamoDbService.prototype);
-    const item: TopicAreaItem = {
-      pk: 'TopicArea-123',
-      sk: 'TopicArea-123',
-      type: 'TopicArea',
-      name: 'AWS',
-      createdBy: 'johndoe',
-    };
+    const dynamodb = mocked(AWS.DynamoDB.DocumentClient.prototype);
+    dynamodb.put = mockDynamoOperation();
 
-    factory.toItem = jest.fn().mockReturnValue(item);
-    await repo.create({ id: '123', name: 'AWS', createdBy: 'johndoe' });
- 
-    expect(dynamodb.putItem).toHaveBeenCalledWith(item);
+    const topicarea = topicareaFactory.createNew('Banana', user);
+    await repo.create(topicarea);
+
+    expect(dynamodb.put).toHaveBeenCalled();
   });
 });

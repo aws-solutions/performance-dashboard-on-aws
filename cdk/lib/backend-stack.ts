@@ -85,28 +85,6 @@ export class BackendStack extends cdk.Stack {
         });
 
         const apiIntegration = new apigateway.LambdaIntegration(handler);
-        
-        /**
-         * GET
-         * /dashboard
-         */
-        const dashboards = api.root.addResource('dashboard');
-        dashboards.addMethod("GET", apiIntegration);
-
-        /**
-         * GET
-         * /dashboard/{dashboardId}
-         */
-        const dashboard = dashboards.addResource('{dashboardId}');
-        dashboard.addMethod("GET", apiIntegration);
-
-        /**
-         * Admin API
-         */
-
-         /**
-         * Cognito Authorizer
-         */
         const authorizer = new apigateway.CfnAuthorizer(this, 'CognitoAuth', {
             type: apigateway.AuthorizationType.COGNITO,
             name: 'cognito-authorizer',
@@ -114,14 +92,37 @@ export class BackendStack extends cdk.Stack {
             providerArns: [props.userPoolArn],
             identitySource: 'method.request.header.Authorization',
         });
+        
+        const dashboards = api.root.addResource('dashboard');
+        dashboards.addMethod("GET", apiIntegration, {
+            authorizationType: apigateway.AuthorizationType.COGNITO,
+            authorizer: { authorizerId: authorizer.ref },
+        });
+
+        const dashboard = dashboards.addResource('{id}');
+        dashboard.addMethod("GET", apiIntegration, {
+            authorizationType: apigateway.AuthorizationType.COGNITO,
+            authorizer: { authorizerId: authorizer.ref },
+        });
 
         const topicarea = api.root.addResource('topicarea');
-
-        /**
-         * POST
-         * /topicarea
-         */
         topicarea.addMethod("POST", apiIntegration, {
+            authorizationType: apigateway.AuthorizationType.COGNITO,
+            authorizer: { authorizerId: authorizer.ref },
+        });
+
+        topicarea.addMethod("GET", apiIntegration, {
+            authorizationType: apigateway.AuthorizationType.COGNITO,
+            authorizer: { authorizerId: authorizer.ref },
+        });
+
+        const topicareaId = topicarea.addResource('{id}');
+        topicareaId.addMethod("PUT", apiIntegration, {
+            authorizationType: apigateway.AuthorizationType.COGNITO,
+            authorizer: { authorizerId: authorizer.ref },
+        });
+
+        topicareaId.addMethod("DELETE", apiIntegration, {
             authorizationType: apigateway.AuthorizationType.COGNITO,
             authorizer: { authorizerId: authorizer.ref },
         });

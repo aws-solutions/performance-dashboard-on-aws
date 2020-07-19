@@ -8,18 +8,18 @@ const user: User = {
 
 describe('TopicAreaFactory.createNew', () => {
   it('should create a new topic area with unique id', () => {
-    const topicarea1 = factory.createNew({ name: 'Banana', user });
-    const topicarea2 = factory.createNew({ name: 'Strawberry', user });
+    const topicarea1 = factory.createNew('Banana', user);
+    const topicarea2 = factory.createNew('Strawberry', user);
     expect(topicarea1.id).not.toEqual(topicarea2.id);
   });
 
   it('should create a new topic area with name', () => {
-    const topicarea = factory.createNew({ name: 'AWS', user });
+    const topicarea = factory.createNew('AWS', user);
     expect(topicarea.name).toEqual('AWS');
   });
 
   it('should create a new topic area with createdBy', () => {
-    const topicarea = factory.createNew({ name: 'AWS', user });
+    const topicarea = factory.createNew('AWS', user);
     expect(topicarea.createdBy).toEqual(user.userId);
   });
 });

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { AmplifySignOut } from '@aws-amplify/ui-react';
 import BadgerService from '../services/BadgerService';
-import MainLayout from '../layouts/Main';
+import AdminLayout from '../layouts/Admin';
 import PageHeader from '../components/PageHeader';
 
 type User = {
@@ -27,7 +27,7 @@ function AdminHome() {
   }
 
   return (
-    <MainLayout>
+    <AdminLayout>
       <PageHeader>
         <PageHeader.Title>Admin Portal</PageHeader.Title>
       </PageHeader>
@@ -35,7 +35,7 @@ function AdminHome() {
       <p><b>Bearer Token</b> <code>{token}</code></p>
       <br />
       <AmplifySignOut />
-    </MainLayout>
+    </AdminLayout>
   );
 }
 

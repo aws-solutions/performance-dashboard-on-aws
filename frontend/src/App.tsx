@@ -5,7 +5,6 @@ import {
   Route,
 } from "react-router-dom";
 import { withAuthenticator } from '@aws-amplify/ui-react';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from './containers/Home';
 import Dashboard from './containers/Dashboard';

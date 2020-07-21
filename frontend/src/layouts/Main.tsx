@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
+import { Layout, Row, Col } from 'antd';
 import "./Main.css";
+
+const { Header, Content } = Layout;
 
 interface LayoutProps {
   children: ReactNode;
@@ -9,12 +10,18 @@ interface LayoutProps {
 
 function MainLayout(props: LayoutProps) {
   return (
-    <>
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand>badger.aws</Navbar.Brand>
-      </Navbar>
-      <Container className="Body">{props.children}</Container>
-    </>
+    <Layout className="MainLayout">
+      <Header>
+        <div className="Logo">badger.aws</div>
+      </Header>
+      <Content className="MainContent">
+        <Row justify="center">
+          <Col span={16}>
+            {props.children}
+          </Col>
+        </Row>
+      </Content>
+    </Layout>
   );
 }
 

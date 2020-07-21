@@ -1,6 +1,11 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
-import { SettingOutlined, UserOutlined, AreaChartOutlined, DatabaseOutlined } from '@ant-design/icons';
+import {
+  SettingOutlined,
+  UserOutlined,
+  AreaChartOutlined,
+  DatabaseOutlined
+} from '@ant-design/icons';
 import { Link } from "react-router-dom";
 import './Sidebar.css';
 

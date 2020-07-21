@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
-import Spinner from 'react-bootstrap/Spinner';
+import { Card, Row, Col } from 'antd';
 import {
   BarChart, Bar, XAxis, YAxis, LineChart, Line, Legend, ResponsiveContainer
 } from 'recharts';
@@ -46,11 +42,7 @@ function Dashboard() {
   }, [dashboardId]);
 
   if(dashboard === null) {
-    return (
-      <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    );
+    return (<span>Loading</span>);
   }
 
   return (
@@ -58,60 +50,42 @@ function Dashboard() {
       <PageHeader>
         <PageHeader.Title>{dashboard.name}</PageHeader.Title>
       </PageHeader>
-      <Row style={{ marginBottom: 20 }}>
-        <Col>
-          <Card>
-            <Card.Body>
-              <Card.Title><h2>691m</h2></Card.Title>
-              This is some important metric
-            </Card.Body>
+      <Row gutter={16}>
+        <Col span={8}>
+          <Card title="Bananas">
+            $1,500
           </Card>
         </Col>
-        <Col>
-          <Card>
-            <Card.Body>
-              <Card.Title><h2>20m</h2></Card.Title>
-              This is some important metric
-            </Card.Body>
+        <Col span={8}>
+          <Card title="691m">
+            This is some important metric
           </Card>
         </Col>
-        <Col>
-          <Card>
-            <Card.Body>
-              <Card.Title><h2>100k</h2></Card.Title>
-              Very relevant data
-            </Card.Body>
+        <Col span={8}>
+          <Card title="691m">
+            This is some important metric
           </Card>
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <Card>
-            <Card.Body>
-              <Card.Title><h2>$1,500</h2></Card.Title>
-              Bananas
-            </Card.Body>
+      <Row gutter={16} style={{ marginTop: 15 }}>
+        <Col span={8}>
+          <Card title="691m">
+            This is some important metric
           </Card>
         </Col>
-        <Col>
-          <Card>
-            <Card.Body>
-              <Card.Title><h2>800</h2></Card.Title>
-              This is some important metric
-            </Card.Body>
+        <Col span={8}>
+          <Card title="691m">
+            This is some important metric
           </Card>
         </Col>
-        <Col>
-          <Card>
-            <Card.Body>
-              <Card.Title><h2>1.1M</h2></Card.Title>
-              This is some important metric
-            </Card.Body>
+        <Col span={8}>
+         <Card title="691m">
+            This is some important metric
           </Card>
         </Col>
       </Row>
-      <Row style={{ marginTop: 60 }}>
-        <Col>
+      <Row gutter={16} style={{ marginTop: 60 }}>
+        <Col span={24}>
           <h3>Renewals by Vehicle Type</h3>
           <hr />
           <ResponsiveContainer width="100%" height={450}>
@@ -125,8 +99,8 @@ function Dashboard() {
           </ResponsiveContainer>
         </Col>
       </Row>
-      <Row style={{ marginTop: 60 }}>
-        <Col>
+      <Row style={{ marginTop: 60 }} gutter={16}>
+        <Col span={24}>
           <h3>Registrations by Month</h3>
           <hr />
           <ResponsiveContainer width="100%" height={450}>
@@ -138,55 +112,6 @@ function Dashboard() {
               <Line dataKey="suv" fill="#82ca9d" />
             </LineChart>
           </ResponsiveContainer>
-        </Col>
-      </Row>
-      <Row style={{ marginTop: 60, marginBottom: 50 }}>
-        <Col>
-          <h3>Cost per Transaction</h3>
-          <hr />
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Transaction</th>
-                <th>Cost per unit</th>
-                <th>Total transactions</th>
-                <th>Total cost</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Vehicle Registration</td>
-                <td>$25</td>
-                <td>1,756</td>
-                <td>$43,900</td>
-              </tr>
-              <tr>
-              <td>Renewals</td>
-                <td>$30</td>
-                <td>2,321</td>
-                <td>$83,900</td>
-              </tr>
-              <tr>
-              <td>Citations</td>
-                <td>$81</td>
-                <td>5,100</td>
-                <td>$123,392</td>
-              </tr>
-              <tr>
-              <td>Something Else</td>
-                <td>$12</td>
-                <td>678</td>
-                <td>$6,780</td>
-              </tr>
-              <tr>
-              <td>Banana</td>
-                <td>$16</td>
-                <td>342</td>
-                <td>$5,472</td>
-              </tr>
-            </tbody>
-          </Table>
-          <br />
         </Col>
       </Row>
     </MainLayout>

@@ -31,7 +31,7 @@ function AdminHome() {
       <PageHeader>
         <PageHeader.Title>Admin Portal</PageHeader.Title>
       </PageHeader>
-      <p>Welcome to the admin portal <b>{user.username}</b></p>
+      <p>Welcome {user.username}</p>
       <p><b>Bearer Token</b> <code>{token}</code></p>
       <br />
       <AmplifySignOut />

@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
+import { Layout } from 'antd';
 import Sidebar from '../components/Sidebar';
 import './Admin.css';
+
+const { Header, Content } = Layout;
 
 interface LayoutProps {
     children: ReactNode,
@@ -9,17 +11,17 @@ interface LayoutProps {
 
 function AdminLayout(props: LayoutProps) {
   return (
-    <div className="Wrapper">
+    <Layout className="AdminLayout">
       <Sidebar />
-      <div className="Content">
-        <Navbar bg="light">
-          <Navbar.Brand>&nbsp;</Navbar.Brand>
-        </Navbar>
-        <div className="Body">
-          {props.children}
-        </div>
-      </div>
-    </div>
+      <Layout>
+        <Header className="Topbar" />
+        <Content className="AdminContent">
+          <div className="ContentBox">
+            {props.children}
+          </div>
+        </Content>
+      </Layout>
+    </Layout>
   );
 }
 

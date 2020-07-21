@@ -1,26 +1,20 @@
-/*!
- * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/templates/simple-sidebar)
- * Copyright 2013-2020 Start Bootstrap
- * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/LICENSE)
- */
-
- .Wrapper {
-  overflow-x: hidden;
-  display: flex;
+.AdminLayout {
+  min-height: 100vh !important;
 }
 
-.Content {
-  min-width: 100vw;
+.AdminLayout .ant-layout-header {
+  padding: 0;
+  height: 55px;
+  background-color: #fff;
+  box-shadow: rgba(40, 42, 49, 0.16) 0px 1px 2px 0px;
 }
 
-.Body {
-  padding-left: 50px;
-  padding-right: 50px;
+.AdminContent {
+  margin: 20px;
 }
 
-@media (min-width: 768px) {
-  .Content {
-    min-width: 0;
-    width: 100%;
-  }
+.ContentBox {
+  padding: 24px;
+  min-height: 350px;
+  background-color: #fff;
 }

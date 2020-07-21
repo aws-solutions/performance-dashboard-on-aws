@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Amplify from 'aws-amplify';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
+import 'antd/dist/antd.css';
 import './index.css';
 
 Amplify.configure({

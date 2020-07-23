@@ -15,12 +15,12 @@ function Sidebar() {
   return (
     <Sider breakpoint="lg" collapsedWidth="0">
       <div className="SidebarHeader">badger.aws</div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+      <Menu theme="dark" mode="inline">
         <Menu.Item key="1" icon={<DatabaseOutlined />}>
           <Link to="/admin">Topic Areas</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<AreaChartOutlined />}>
-          <Link to="/admin">Dashboards</Link>
+          <Link to="/admin/dashboards">Dashboards</Link>
         </Menu.Item>
         <Menu.Item key="3" icon={<UserOutlined />}>
           <Link to="/admin">Roles & Permissions</Link>

@@ -18,3 +18,12 @@
   min-height: 350px;
   background-color: #fff;
 }
+
+.ContentBox .ant-page-header-heading-title {
+  font-size: 1.6rem;
+}
+
+.ContentBox .ant-page-header {
+  padding: 0;
+  margin-bottom: 15px;
+}

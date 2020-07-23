@@ -9,6 +9,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import Home from './containers/Home';
 import Dashboard from './containers/Dashboard';
 import AdminHome from './containers/AdminHome';
+import DashboardListing from './containers/DashboardListing';
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
       <Switch>
           <Route path="/dashboard/:dashboardId">
             <Dashboard />
+          </Route>
+          <Route path="/admin/dashboards">
+            <DashboardListing />
           </Route>
           <Route path="/admin">
             <AdminHome />

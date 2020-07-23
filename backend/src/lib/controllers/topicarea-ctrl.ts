@@ -36,6 +36,25 @@ async function createTopicArea(req: Request, res: Response) {
   res.json(topicarea);
 }
 
+async function getTopicAreaById(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+      res.status(401).send("Unauthorized");
+      return;
+  }
+
+  const { id } = req.params;
+
+  if (!id) {
+      res.status(400).send("Missing required field `id`");
+  }
+
+  const repo = TopicAreaRepository.getInstance();
+  const topicArea = await repo.getTopicAreaById(id);
+  res.json(topicArea);
+}
+
 async function updateTopicArea(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
   const { id } = req.params;
@@ -78,6 +97,7 @@ async function deleteTopicArea(req: Request, res: Response) {
 export default {
   createTopicArea,
   listTopicAreas,
+  getTopicAreaById,
   updateTopicArea,
   deleteTopicArea,
 };

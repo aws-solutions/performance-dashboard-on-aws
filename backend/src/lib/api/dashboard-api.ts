@@ -5,5 +5,6 @@ const router = Router();
 
 router.get("/", DashboardCtrl.listDashboards);
 router.get("/:dashboardId", DashboardCtrl.getDashboardById);
+router.post("/", DashboardCtrl.createDashboard);
 
 export default router;

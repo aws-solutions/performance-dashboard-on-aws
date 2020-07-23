@@ -8,18 +8,21 @@ const user: User = {
 
 describe('dashboardFactory.createNew', () => {
   it('should create a new dashboard with unique id', () => {
-    const dashboard1 = factory.createNew('Dashboard1', '123', 'Topic1', 'descrption test', user);
-    const dashboard2 = factory.createNew('Dashboard2', '123', 'Topic1', 'descrption test', user);
+    const dashboard1 = factory.createNew('Dashboard1', '123', 'Topic1', 'description test', user);
+    const dashboard2 = factory.createNew('Dashboard2', '123', 'Topic1', 'description test', user);
     expect(dashboard1.id).not.toEqual(dashboard2.id);
   });
 
-  it('should create a new topic area with name', () => {
-    const dashboard1 = factory.createNew('Dashboard1', '123', 'Topic1', 'descrption test', user);
+  it('should create a new dashboard with name, topicAreaId, topicAreaName and description', () => {
+    const dashboard1 = factory.createNew('Dashboard1', '123', 'Topic1', 'description test', user);
     expect(dashboard1.name).toEqual('Dashboard1');
+    expect(dashboard1.topicAreaId).toEqual('123');
+    expect(dashboard1.topicAreaName).toEqual('Topic1');
+    expect(dashboard1.description).toEqual('description test');
   });
 
-  it('should create a new topic area with createdBy', () => {
-    const dashboard1 = factory.createNew('Dashboard1', '123', 'Topic1', 'descrption test', user);
+  it('should create a new dashboard with createdBy', () => {
+    const dashboard1 = factory.createNew('Dashboard1', '123', 'Topic1', 'description test', user);
     expect(dashboard1.createdBy).toEqual(user.userId);
   });
 });

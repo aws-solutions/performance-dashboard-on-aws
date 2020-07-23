@@ -86,7 +86,7 @@ class DashboardRepository {
     });
 
     if (!result.Items) {
-      return [{id: '1', topicAreaId: '2', topicAreaName: 'hi', createdBy: '4', description: '5', name: 'hello'}];
+      return [];
     }
 
     return result.Items.map((item) =>

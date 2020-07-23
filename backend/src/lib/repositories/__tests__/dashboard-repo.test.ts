@@ -74,7 +74,7 @@ describe("DashboardRepository.listDashboards", () => {
     );
   });
 
-  it("returns a list of topic areas", async () => {
+  it("returns a list of dashboards", async () => {
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({
       Items: [{

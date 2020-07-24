@@ -29,6 +29,10 @@ class DynamoDBService {
     return DynamoDBService.instance;
   }
 
+  async get(input: DocumentClient.GetItemInput) {
+    return this.client.get(input).promise();
+  }
+
   async put(input: DocumentClient.PutItemInput) {
     return this.client.put(input).promise();
   }

@@ -50,6 +50,20 @@ class TopicAreaRepository {
   }
 
   /**
+   * Get a topicArea specifiying the topicArea id.
+   */
+  public async getTopicAreaById(id: string) : Promise<TopicArea> {
+    const result = await this.dynamodb.get({
+      TableName: this.tableName,
+      Key: {
+        pk: TopicAreaFactory.itemId(id),
+        sk: TopicAreaFactory.itemId(id),
+      },
+    });
+    return TopicAreaFactory.fromItem(result.Item as TopicAreaItem);
+  }
+
+  /**
    * Returns a list of TopicAreas by performing a query
    * operation against the `byType` Global Secondary Index
    * on the DynamoDB table.

@@ -1,37 +1,51 @@
-import { API, Auth } from 'aws-amplify';
+import { API, Auth } from "aws-amplify";
 
 const apiName = "BadgerApi";
 
+async function authHeaders() {
+  const token = await getAuthToken();
+  return {
+    Authorization: "Bearer ".concat(token),
+  };
+}
+
 async function getAuthToken() {
-    const session = await Auth.currentSession();
-    const idToken = await session.getIdToken();
-    return idToken.getJwtToken();
+  const session = await Auth.currentSession();
+  const idToken = session.getIdToken();
+  return idToken.getJwtToken();
 }
 
 async function fetchDashboards() {
-    const token = await getAuthToken();
-    return await API.get(apiName, '/dashboard', {
-        headers: { Authorization: 'Bearer '.concat(token) }
-    });
+  const headers = await authHeaders();
+  return await API.get(apiName, "/dashboard", { headers });
 }
 
 async function fetchDashboardById(dashboardId: string) {
-    const token = await getAuthToken();
-    return await API.get(apiName, '/dashboard/'.concat(dashboardId), {
-        headers: { Authorization: 'Bearer '.concat(token) }
-    });
+  const headers = await authHeaders();
+  return await API.get(apiName, "/dashboard/".concat(dashboardId), { headers });
 }
 
-async function fetchDashboardsAdmin() {
-    const token = await getAuthToken();
-    return await API.get(apiName, '/admin/dashboard', {
-        headers: { Authorization: 'Bearer '.concat(token) }
-    });
+async function fetchTopicAreas() {
+  const headers = await authHeaders();
+  return await API.get(apiName, "/topicarea", { headers });
+}
+
+async function createDashboard(name: string, description: string, topicAreaId: string) {
+  const headers = await authHeaders();
+  return await API.post(apiName, "/dashboard", {
+    headers,
+    body: {
+      name,
+      description,
+      topicAreaId,
+    }
+  });
 }
 
 export default {
-    fetchDashboards,
-    fetchDashboardById,
-    fetchDashboardsAdmin,
-    getAuthToken,
-}
+  fetchDashboards,
+  fetchDashboardById,
+  fetchTopicAreas,
+  createDashboard,
+  getAuthToken,
+};

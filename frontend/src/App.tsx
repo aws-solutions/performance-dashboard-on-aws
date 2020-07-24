@@ -10,6 +10,7 @@ import Home from './containers/Home';
 import Dashboard from './containers/Dashboard';
 import AdminHome from './containers/AdminHome';
 import DashboardListing from './containers/DashboardListing';
+import CreateDashboard from './containers/CreateDashboard';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route path="/admin/dashboards">
             <DashboardListing />
+          </Route>
+          <Route path="/admin/dashboard/create">
+            <CreateDashboard />
           </Route>
           <Route path="/admin">
             <AdminHome />

@@ -33,7 +33,7 @@ describe("DashboardRepository.create", () => {
     const dashboard = DashboardFactory.createNew('Dashboard1', '123', 'Topic1', 'descrption test', user);
     const item = DashboardFactory.toItem(dashboard);
 
-    await repo.createDashboard(dashboard);
+    await repo.putDashboard(dashboard);
 
     expect(dynamodb.put).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -90,6 +90,30 @@ describe("DashboardRepository.listDashboards", () => {
     const list = await repo.listDashboards();
     expect(list.length).toEqual(1);
     expect(list[0]).toEqual({
+      id: '123',
+      name: 'Test name',
+      topicAreaId: '456',
+      topicAreaName: 'Topic 1',
+      description: 'description test',
+      createdBy: 'test',
+    });
+  });
+
+  it("returns a dashboard by id", async () => {
+    // Mock query response
+    dynamodb.get = jest.fn().mockReturnValue({
+      Item: {
+        pk: 'TopicArea-456',
+        sk: 'Dashboard-123',
+        topicAreaName: 'Topic 1',
+        dashboardName: 'Test name',
+        description: 'description test',
+        createdBy: 'test',
+      },
+    });
+
+    const item = await repo.getDashboardById('123', '456');
+    expect(item).toEqual({
       id: '123',
       name: 'Test name',
       topicAreaId: '456',

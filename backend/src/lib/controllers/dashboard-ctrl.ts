@@ -43,7 +43,7 @@ async function createDashboard(req: Request, res: Response) {
     const dashboard = DashboardFactory.createNew(name, topicAreaId, topicArea.name, description, user);
 
     const repo = DashboardRepository.getInstance();
-    await repo.createDashboard(dashboard);
+    await repo.putDashboard(dashboard);
     res.json(dashboard);
 }
 

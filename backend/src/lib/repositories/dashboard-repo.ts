@@ -53,12 +53,12 @@ class DashboardRepository {
   }
 
   /**
-   * Performs a putItem request to DynamoDB to create a new
-   * dashboard item.
+   * Performs a putItem request to DynamoDB to create
+   * a new dashboard item or replace an old one.
    *
    * @param dashboard Dashboard
    */
-  public async createDashboard(dashboard: Dashboard) {
+  public async putDashboard(dashboard: Dashboard) {
     await this.dynamodb.put({
       TableName: this.tableName,
       Item: DashboardFactory.toItem(dashboard),
@@ -115,30 +115,6 @@ class DashboardRepository {
     return result.Items.map((item) =>
       DashboardFactory.fromItem(item as DashboardItem)
     );
-  }
-
-  /**
-   * Updates the name of an existing Dashboard identified
-   * by the param `id` and `topicAreaId`. Sets the `updatedBy`
-   * field to the userId doing the update action.
-   */
-  public async updateName(id: string, topicAreaId: string, name: string, user: User) {
-    await this.dynamodb.update({
-      TableName: this.tableName,
-      Key: {
-        pk: TopicAreaFactory.itemId(topicAreaId),
-        sk: DashboardFactory.itemId(id),
-      },
-      UpdateExpression: "set #name = :name, #updatedBy = :userId",
-      ExpressionAttributeValues: {
-        ":name": name,
-        ":userId": user.userId,
-      },
-      ExpressionAttributeNames: {
-        "#name": "name",
-        "#updatedBy": "updatedBy",
-      },
-    });
   }
 
   /**

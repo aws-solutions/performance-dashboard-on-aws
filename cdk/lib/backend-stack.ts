@@ -104,6 +104,11 @@ export class BackendStack extends cdk.Stack {
             authorizer: { authorizerId: authorizer.ref },
         });
 
+        dashboards.addMethod("POST", apiIntegration, {
+            authorizationType: apigateway.AuthorizationType.COGNITO,
+            authorizer: { authorizerId: authorizer.ref },
+        });
+
         const dashboard = dashboards.addResource('{dashboardId}');
         dashboard.addMethod("GET", apiIntegration, {
             authorizationType: apigateway.AuthorizationType.COGNITO,

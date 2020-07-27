@@ -16,7 +16,7 @@ test("createDashboard should make a POST request with payload", async () => {
 
   await BadgerService.createDashboard(name, description, topicAreaId);
 
-  expect(API.post).toHaveBeenCalledWith("BadgerApi", "/dashboard", expect.objectContaining({
+  expect(API.post).toHaveBeenCalledWith("BadgerApi", "dashboard", expect.objectContaining({
     body: {
       name,
       description,

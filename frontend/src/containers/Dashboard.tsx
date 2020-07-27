@@ -31,15 +31,15 @@ type dashboard = {
 
 function Dashboard() {
   const [dashboard, setDashboard] = useState<dashboard | null>(null);
-  const { dashboardId } = useParams();
+  const { topicAreaId, dashboardId } = useParams();
 
   useEffect(() => {
     async function fetchDashboard() {
-      const data = await BadgerService.fetchDashboardById(dashboardId);
+      const data = await BadgerService.fetchDashboardById(topicAreaId, dashboardId);
       setDashboard(data);
     }
     fetchDashboard();
-  }, [dashboardId]);
+  }, [topicAreaId, dashboardId]);
 
   if(dashboard === null) {
     return (<span>Loading</span>);

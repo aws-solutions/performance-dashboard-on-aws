@@ -17,22 +17,22 @@ async function getAuthToken() {
 
 async function fetchDashboards() {
   const headers = await authHeaders();
-  return await API.get(apiName, "/dashboard", { headers });
+  return await API.get(apiName, "dashboard", { headers });
 }
 
-async function fetchDashboardById(dashboardId: string) {
+async function fetchDashboardById(topicAreaId: string, dashboardId: string) {
   const headers = await authHeaders();
-  return await API.get(apiName, "/dashboard/".concat(dashboardId), { headers });
+  return await API.get(apiName, `dashboard/${topicAreaId}/${dashboardId}`, { headers });
 }
 
 async function fetchTopicAreas() {
   const headers = await authHeaders();
-  return await API.get(apiName, "/topicarea", { headers });
+  return await API.get(apiName, "topicarea", { headers });
 }
 
 async function createDashboard(name: string, description: string, topicAreaId: string) {
   const headers = await authHeaders();
-  return await API.post(apiName, "/dashboard", {
+  return await API.post(apiName, "dashboard", {
     headers,
     body: {
       name,

@@ -122,4 +122,48 @@ describe("DashboardRepository.listDashboards", () => {
       createdBy: 'test',
     });
   });
+
+  it("returns a list of dashboards within a topic area", async () => {
+    // Mock query response
+    dynamodb.query = jest.fn().mockReturnValue({});
+
+    const topicAreaId = '456';
+
+    await repo.listDashboardsWithinTopicArea(topicAreaId);
+
+    expect(dynamodb.query).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableName: tableName,
+        KeyConditionExpression: "pk = :topicAreaId AND begin_with (sk, :dashboard)",
+        ExpressionAttributeValues: {
+          ":topicAreaId": topicAreaId,
+          ":dashboard": "Dashboard",
+        }
+      })
+    );
+
+    // Mock query response
+    dynamodb.query = jest.fn().mockReturnValue({
+      Items: [{
+        pk: `TopicArea-${topicAreaId}`,
+        sk: 'Dashboard-123',
+        topicAreaName: 'Topic 1',
+        dashboardName: 'Test name',
+        description: 'description test',
+        createdBy: 'test',
+      }],
+    });
+
+    const list = await repo.listDashboardsWithinTopicArea(topicAreaId);
+    expect(list.length).toEqual(1);
+    expect(list[0]).toEqual({
+      id: '123',
+      name: 'Test name',
+      topicAreaId: topicAreaId,
+      topicAreaName: 'Topic 1',
+      description: 'description test',
+      createdBy: 'test',
+    });
+  });
+
 });

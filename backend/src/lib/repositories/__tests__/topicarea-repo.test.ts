@@ -120,4 +120,23 @@ describe("TopicAreaRepository.list", () => {
       createdBy: 'johndoe',
     });
   });
+
+  it("returns topic area by id", async () => {
+    // Mock query response
+    dynamodb.get = jest.fn().mockReturnValue({
+      Item: {
+        pk: 'TopicArea-213',
+        sk: 'TopicArea-213',
+        name: 'Serverless is more',
+        createdBy: 'johndoe',
+      },
+    });
+
+    const item = await repo.getTopicAreaById('213');
+    expect(item).toEqual({
+      id: '213',
+      name: 'Serverless is more',
+      createdBy: 'johndoe',
+    });
+  });
 });

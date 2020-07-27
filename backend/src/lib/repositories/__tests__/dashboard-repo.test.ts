@@ -44,6 +44,34 @@ describe("DashboardRepository.create", () => {
   });
 });
 
+describe("DashboardRepository.updateOverview", () => {
+    it("should call updateItem with the correct keys", async () => {
+      await repo.updateOverview("123", "456", "Test", user);
+      expect(dynamodb.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          TableName: tableName,
+          Key: {
+            pk: TopicAreaFactory.itemId("456"),
+            sk: DashboardFactory.itemId("123"),
+          },
+        })
+      );
+    });
+  
+    it("should set overview and updatedBy fields", async () => {
+      await repo.updateOverview("123", "456", "Test", user);
+      expect(dynamodb.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          UpdateExpression: "set #overview = :overview, #updatedBy = :userId",
+          ExpressionAttributeValues: {
+            ":overview": "Test",
+            ":userId": user.userId,
+          },
+        })
+      );
+    });
+  });
+
 describe("DashboardRepository.delete", () => {
   it("should call delete with the correct key", async () => {
     await repo.delete("123", "456");

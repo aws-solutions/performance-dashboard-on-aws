@@ -1,5 +1,5 @@
 import factory from '../dashboard-factory';
-import { Dashboard } from '../dashboard-models';
+import { Dashboard, DashboardItem } from '../dashboard-models';
 import { User } from '../user-models';
 
 const user: User = {
@@ -52,11 +52,55 @@ describe('DashboardFactory.toItem', () => {
     expect(item.type).toEqual('Dashboard');
   });
 
-  it('should include all other attributes of topic area', () => {
+  it('should not have a overview attribute', () => {
+    const item = factory.toItem(dashboard);
+    expect(item.overview).toEqual(undefined);
+  });
+
+  it('should  have a overview attribute', () => {
+    const dashboardWithOverview = {...dashboard, overview: "test"};
+    const item = factory.toItem(dashboardWithOverview);
+    expect(item.overview).toEqual("test");
+  });
+
+  it('should include all other attributes of DashboardItem', () => {
     const item = factory.toItem(dashboard);
     expect(item.dashboardName).toEqual('Dashboard 1');
     expect(item.description).toEqual('description test');
     expect(item.topicAreaName).toEqual('Topic 1');
     expect(item.createdBy).toEqual(user.userId);
+  });
+});
+
+describe('DashboardFactory.fromItem', () => {
+  const item : DashboardItem = {
+    pk: 'TopicArea-456',
+    sk: 'Dashboard#123',
+    type: 'Dashboard',
+    dashboardName: 'Dashboard 1',
+    topicAreaName: 'Topic 1',
+    description: 'description test',
+    createdBy: user.userId,
+  };
+
+  it('should include all attributes of Dashboard', () => {
+    const dashboard = factory.fromItem(item);
+    expect(dashboard.id).toEqual('123');
+    expect(dashboard.topicAreaId).toEqual('456');
+    expect(dashboard.name).toEqual('Dashboard 1');
+    expect(dashboard.description).toEqual('description test');
+    expect(dashboard.topicAreaName).toEqual('Topic 1');
+    expect(dashboard.createdBy).toEqual(user.userId);
+  });
+
+  it('should not have a overview attribute', () => {
+    const dashboard = factory.fromItem(item);
+    expect(dashboard.overview).toEqual(undefined);
+  });
+
+  it('should  have a overview attribute', () => {
+    const itemWithOverview = {...item, overview: "test"};
+    const dashboard = factory.fromItem(itemWithOverview);
+    expect(dashboard.overview).toEqual("test");
   });
 });

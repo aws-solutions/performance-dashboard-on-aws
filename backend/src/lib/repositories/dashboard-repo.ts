@@ -41,12 +41,12 @@ class DashboardRepository {
    * Get a dashboard specifiying the dashboard id
    * and the topicArea id.
    */
-  public async getDashboardById(id: string, topicAreaId: string) {
+  public async getDashboardById(dashboardId: string, topicAreaId: string) {
     const result = await this.dynamodb.get({
       TableName: this.tableName,
       Key: {
         pk: TopicAreaFactory.itemId(topicAreaId),
-        sk: DashboardFactory.itemId(id),
+        sk: DashboardFactory.itemId(dashboardId),
       },
     });
     return DashboardFactory.fromItem(result.Item as DashboardItem);
@@ -118,15 +118,39 @@ class DashboardRepository {
   }
 
   /**
-   * Deletes the Dashboard identified by the param `id`
-   * and `topicAreaId`.
+   * Updates the overview of an existing Dashboard identified
+   * by the params `dashboardId` and `topicAreaId`. Sets the 
+   * `updatedBy` field to the userId doing the update action.
    */
-  public async delete(id: string, topicAreaId: string) {
+  public async updateOverview(dashboardId: string, topicAreaId: string, overview: string, user: User) {
+    await this.dynamodb.update({
+      TableName: this.tableName,
+      Key: {
+        pk: TopicAreaFactory.itemId(topicAreaId),
+        sk: DashboardFactory.itemId(dashboardId),
+      },
+      UpdateExpression: "set #overview = :overview, #updatedBy = :userId",
+      ExpressionAttributeValues: {
+        ":overview": overview,
+        ":userId": user.userId,
+      },
+      ExpressionAttributeNames: {
+        "#overview": "overview",
+        "#updatedBy": "updatedBy",
+      },
+    });
+  }
+
+  /**
+   * Deletes the Dashboard identified by the params
+   * `dashboardId` and `topicAreaId`.
+   */
+  public async delete(dashboardId: string, topicAreaId: string) {
     await this.dynamodb.delete({
       TableName: this.tableName,
       Key: {
         pk: TopicAreaFactory.itemId(topicAreaId),
-        sk: DashboardFactory.itemId(id),
+        sk: DashboardFactory.itemId(dashboardId),
       },
     });
   }

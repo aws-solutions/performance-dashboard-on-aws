@@ -70,8 +70,63 @@ async function getDashboardById(req: Request, res: Response) {
     res.json(dashboard);
 }
 
+async function updateDashboard(req: Request, res: Response) {
+    const user = AuthService.getCurrentUser(req);
+  
+    if (!user) {
+      res.status(401).send("Unauthorized");
+      return;
+    }
+  
+    const { topicAreaId, dashboardId} = req.params;
+
+    if (!topicAreaId) {
+        res.status(400).send("Missing required field `topicAreaId`");
+    }
+
+    if (!dashboardId) {
+        res.status(400).send("Missing required field `dashboardId`");
+    }
+
+    const { overview } = req.body; 
+
+    if (!overview) {
+      res.status(400).send("Missing required body `overview`");
+      return;
+    }
+  
+    const repo = DashboardRepository.getInstance();
+    await repo.updateOverview(dashboardId, topicAreaId, overview, user);
+    res.status(201).send();
+  }
+  
+  async function deleteDashboard(req: Request, res: Response) {
+    const user = AuthService.getCurrentUser(req);
+  
+    if (!user) {
+      res.status(401).send("Unauthorized");
+      return;
+    }
+  
+    const { topicAreaId, dashboardId} = req.params;
+
+    if (!topicAreaId) {
+        res.status(400).send("Missing required field `topicAreaId`");
+    }
+
+    if (!dashboardId) {
+        res.status(400).send("Missing required field `dashboardId`");
+    }
+  
+    const repo = DashboardRepository.getInstance();
+    await repo.delete(dashboardId, topicAreaId);
+    res.status(201).send();
+  }
+
 export default {
     listDashboards,
     createDashboard,
     getDashboardById,
+    updateDashboard,
+    deleteDashboard,
 }

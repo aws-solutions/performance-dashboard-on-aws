@@ -20,7 +20,7 @@ function createNew(name: string, topicAreaId: string, topicAreaName: string, des
  * Converts a Dashboard to a DynamoDB item.
  */
 function toItem(dashboard: Dashboard): DashboardItem {
-  return {
+  let item: DashboardItem = {
     pk: topicareaFactory.itemId(dashboard.topicAreaId),
     sk: itemId(dashboard.id),
     type: DASHBOARD,
@@ -29,6 +29,10 @@ function toItem(dashboard: Dashboard): DashboardItem {
     description: dashboard.description,
     createdBy: dashboard.createdBy,
   };
+  if (dashboard.overview) {
+    item = {...item, overview: dashboard.overview};
+  }
+  return item;
 }
 
 /**
@@ -37,7 +41,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
 function fromItem(item: DashboardItem): Dashboard {
   const topicAreaId = item.pk.substring(10);
   const id = item.sk.substring(10);
-  return {
+  let dashboard: Dashboard = {
     id,
     name: item.dashboardName,
     topicAreaId,
@@ -45,6 +49,10 @@ function fromItem(item: DashboardItem): Dashboard {
     description: item.description,
     createdBy: item.createdBy,
   }
+  if (item.overview) {
+    dashboard = {...dashboard, overview: item.overview};
+  }
+  return dashboard;
 }
 
 function itemId(id: string): string { return `${DASHBOARD}#${id}` }

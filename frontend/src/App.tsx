@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <Switch>
-          <Route path="/dashboard/:dashboardId">
+          <Route path="/dashboard/:topicAreaId/:dashboardId">
             <Dashboard />
           </Route>
           <Route path="/admin/dashboards">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TopicArea } from "../models";
+import { TopicArea, Dashboard } from "../models";
 import BadgerService from "../services/BadgerService";
 
 /**
@@ -36,5 +36,33 @@ export function useTopicAreas(): UseTopicAreasHook {
   return {
     loading,
     topicareas,
+  };
+}
+
+/**
+ * Hook to fetch a dashboard by topicAreaId and dashboardId
+ */
+type UseDashboardHook = {
+  loading: boolean;
+  dashboard?: Dashboard,
+}
+
+export function useDashboard(topicAreaId: string, dashId: string): UseDashboardHook {
+  const [loading, setLoading] = useState(false);
+  const [dashboard, setTopicAreas] = useState(undefined);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const data = await BadgerService.fetchDashboardById(topicAreaId, dashId);
+      setTopicAreas(data);
+      setLoading(false);
+    };
+    fetchData();
+  }, [topicAreaId, dashId]);
+
+  return {
+    loading,
+    dashboard,
   };
 }

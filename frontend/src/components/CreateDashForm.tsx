@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Select, Input, Button } from "antd";
 import { useTopicAreas } from "../hooks";
-import "./CreateDashForm.css";
 
 interface Props {
   onSubmit: Function;
@@ -39,7 +38,7 @@ function CreateDashboardForm(props: Props) {
         <Input.TextArea rows={5} />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" className="SubmitButton" htmlType="submit">
+        <Button type="primary" htmlType="submit">
           Save
         </Button>
         <Button onClick={() => props.onCancel()}>Cancel</Button>

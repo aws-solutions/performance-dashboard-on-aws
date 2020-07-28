@@ -11,6 +11,7 @@ import Dashboard from './containers/Dashboard';
 import AdminHome from './containers/AdminHome';
 import DashboardListing from './containers/DashboardListing';
 import CreateDashboard from './containers/CreateDashboard';
+import EditDashboard from './containers/EditDashboard';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
       <Switch>
           <Route path="/dashboard/:topicAreaId/:dashboardId">
             <Dashboard />
+          </Route>
+          <Route path="/admin/dashboard/edit/:topicAreaId/:dashboardId">
+            <EditDashboard />
           </Route>
           <Route path="/admin/dashboards">
             <DashboardListing />

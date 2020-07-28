@@ -9,11 +9,15 @@ function CreateDashboard() {
   const history = useHistory();
 
   const onSubmit = async (dashboard: any) => {
-    await BadgerService.createDashboard(
+    const newDashboard = await BadgerService.createDashboard(
       dashboard.name,
       dashboard.description,
       dashboard.topicAreaId
     );
+
+    const dashboardId = newDashboard.id;
+    const topicAreaId = newDashboard.topicAreaId;
+    history.push(`/admin/dashboard/edit/${topicAreaId}/${dashboardId}`);
   };
 
   const onCancel = () => {

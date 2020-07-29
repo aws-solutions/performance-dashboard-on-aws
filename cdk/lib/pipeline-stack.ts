@@ -4,10 +4,11 @@ import codecommit = require("@aws-cdk/aws-codecommit");
 import iam = require("@aws-cdk/aws-iam");
 import codepipeline = require("@aws-cdk/aws-codepipeline");
 import codebuild = require("@aws-cdk/aws-codebuild");
+import * as codestarnotifications from "@aws-cdk/aws-codestarnotifications";
+import sns = require("@aws-cdk/aws-sns");
 import {
   CodeCommitSourceAction,
   CodeBuildAction,
-  CloudFormationCreateUpdateStackAction,
 } from "@aws-cdk/aws-codepipeline-actions";
 
 interface Props extends cdk.StackProps {
@@ -18,6 +19,7 @@ export class PipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id, props);
 
+    const notificationsTopic = new sns.Topic(this, "NotificationsTopic");
     const artifactsBucket = new s3.Bucket(this, "ArtifactsBucket");
     const codeRepo = codecommit.Repository.fromRepositoryName(
       this,
@@ -56,11 +58,13 @@ export class PipelineStack extends cdk.Stack {
       },
     });
 
-    build.addToRolePolicy(new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      actions: ["*"],
-      resources: ["*"]
-    }));
+    build.addToRolePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["*"],
+        resources: ["*"],
+      })
+    );
 
     pipeline.addStage({
       stageName: "Gamma",
@@ -74,5 +78,28 @@ export class PipelineStack extends cdk.Stack {
         }),
       ],
     });
+
+    /**
+     * CodeBuild notification configuration taken from documentation:
+     * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codestarnotifications-notificationrule.html
+     */
+    new codestarnotifications.CfnNotificationRule(
+      this,
+      "BuildNotificationRule",
+      {
+        detailType: "BASIC",
+        resource: build.projectArn,
+        name: "BadgerBuildNotifications",
+        eventTypeIds: [
+          "codebuild-project-build-state-failed",
+        ],
+        targets: [
+          {
+            targetType: "SNS",
+            targetAddress: notificationsTopic.topicArn,
+          },
+        ],
+      }
+    );
   }
 }

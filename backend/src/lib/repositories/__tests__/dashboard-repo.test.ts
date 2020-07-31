@@ -30,7 +30,7 @@ describe("DashboardRepository", () => {
 
 describe("DashboardRepository.create", () => {
   it("should call putItem on dynamodb", async () => {
-    const dashboard = DashboardFactory.createNew('Dashboard1', '123', 'Topic1', 'descrption test', user);
+    const dashboard = DashboardFactory.createNew('Dashboard1', '123', 'Topic1', user);
     const item = DashboardFactory.toItem(dashboard);
 
     await repo.putDashboard(dashboard);

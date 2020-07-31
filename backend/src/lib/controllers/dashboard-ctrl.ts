@@ -25,7 +25,7 @@ async function createDashboard(req: Request, res: Response) {
         return;
     }
 
-    const { topicAreaId, name, description } = req.body;
+    const { topicAreaId, name } = req.body;
 
     if (!topicAreaId) {
         res.status(400).send("Missing required field `topicAreaId`");
@@ -35,12 +35,8 @@ async function createDashboard(req: Request, res: Response) {
         res.status(400).send("Missing required field `name`");
     }
 
-    if (!description) {
-        res.status(400).send("Missing required field `description`");
-    }
-
     const topicArea = await TopicAreaRepository.getInstance().getTopicAreaById(topicAreaId);
-    const dashboard = DashboardFactory.createNew(name, topicAreaId, topicArea.name, description, user);
+    const dashboard = DashboardFactory.createNew(name, topicAreaId, topicArea.name, user);
 
     const repo = DashboardRepository.getInstance();
     await repo.putDashboard(dashboard);

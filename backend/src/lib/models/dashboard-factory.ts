@@ -5,14 +5,13 @@ import topicareaFactory from "./topicarea-factory";
 
 const DASHBOARD: string = 'Dashboard';
 
-function createNew(name: string, topicAreaId: string, topicAreaName: string, description: string, user: User): Dashboard {
+function createNew(name: string, topicAreaId: string, topicAreaName: string, user: User): Dashboard {
   return {
     id: uuidv4(),
     name,
     topicAreaId,
     topicAreaName,
     createdBy: user.userId,
-    description,
   };
 }
 

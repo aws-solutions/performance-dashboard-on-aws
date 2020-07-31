@@ -8,5 +8,5 @@ export type Dashboard = {
   name: string;
   topicAreaId: string;
   topicAreaName: string;
-  description: string;
+  description?: string;
 };

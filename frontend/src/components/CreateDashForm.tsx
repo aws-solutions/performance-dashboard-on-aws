@@ -23,23 +23,20 @@ function CreateDashboardForm(props: Props) {
       >
         <Input />
       </Form.Item>
-      <Form.Item label="Topic Area" name="topicAreaId">
-        <Select loading={loading}>
+      <Form.Item label="Topic Area" name="topicAreaId" rules={[{ required: true }]}>
+        <Select loading={loading} data-testid="topicAreaId">
           {topicareas.map((topic) => {
             return (
-              <Select.Option value={topic.id} key={topic.id}>
+              <Select.Option value={topic.id} key={topic.id} data-testid="topicAreaOption">
                 {topic.name}
               </Select.Option>
             );
           })}
         </Select>
       </Form.Item>
-      <Form.Item label="Description" name="description">
-        <Input.TextArea rows={5} />
-      </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Save
+          Create
         </Button>
         <Button onClick={() => props.onCancel()}>Cancel</Button>
       </Form.Item>

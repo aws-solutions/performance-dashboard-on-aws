@@ -15,20 +15,19 @@ jest.mock("../../hooks", () => ({
       name: "My AWS Dashboard",
       topicAreaId: "abc",
       topicAreaName: "Bananas",
-      description: "Dashboard that talks about bananas",
     },
   })
 }));
 
-test("renders the name and description of the dashboard", async () => {
+test("renders the name of the dashboard", async () => {
   const { findByText } = render(<EditDashboard />, { wrapper: MemoryRouter });
   const name = await findByText("My AWS Dashboard");
   expect(name).toBeInTheDocument();
 });
 
-test("renders the topic area and description as subtitle", async () => {
+test("renders the topic area as subtitle", async () => {
   const { findByText } = render(<EditDashboard />, { wrapper: MemoryRouter });
-  const subtitle = await findByText("Bananas | Dashboard that talks about bananas");
+  const subtitle = await findByText("Bananas");
   expect(subtitle).toBeInTheDocument();
 });
 

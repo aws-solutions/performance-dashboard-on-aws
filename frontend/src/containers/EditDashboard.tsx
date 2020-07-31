@@ -18,15 +18,13 @@ function EditDashboard() {
   };
 
   const topicarea = dashboard?.topicAreaName;
-  const description = dashboard?.description;
-  const subtitle = `${topicarea} | ${description}`;
 
   return (
     <AdminLayout>
       <PageHeader
         ghost={false}
         title={dashboard?.name}
-        subTitle={subtitle}
+        subTitle={topicarea}
         extra={<Tag>Draft</Tag>}
       />
       <Row>

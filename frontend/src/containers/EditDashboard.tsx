@@ -6,8 +6,8 @@ import AdminLayout from "../layouts/Admin";
 
 function EditDashboard() {
   const history = useHistory();
-  const { dashboardId, topicAreaId } = useParams();
-  const { dashboard } = useDashboard(topicAreaId, dashboardId);
+  const { dashboardId } = useParams();
+  const { dashboard } = useDashboard(dashboardId);
 
   const onSubmit = async () => {
     history.push("/admin/dashboards");

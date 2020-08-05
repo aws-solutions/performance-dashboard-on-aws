@@ -47,19 +47,19 @@ type UseDashboardHook = {
   dashboard?: Dashboard,
 }
 
-export function useDashboard(topicAreaId: string, dashId: string): UseDashboardHook {
+export function useDashboard(dashboardId: string): UseDashboardHook {
   const [loading, setLoading] = useState(false);
-  const [dashboard, setTopicAreas] = useState(undefined);
+  const [dashboard, setDashboard] = useState(undefined);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await BadgerService.fetchDashboardById(topicAreaId, dashId);
-      setTopicAreas(data);
+      const data = await BadgerService.fetchDashboardById(dashboardId);
+      setDashboard(data);
       setLoading(false);
     };
     fetchData();
-  }, [topicAreaId, dashId]);
+  }, [dashboardId]);
 
   return {
     loading,

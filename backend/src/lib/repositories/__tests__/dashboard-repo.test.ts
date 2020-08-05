@@ -2,7 +2,6 @@ import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user-models";
 import DashboardRepository from "../dashboard-repo";
 import DashboardFactory from "../../models/dashboard-factory";
-import TopicAreaFactory from "../../models/topicarea-factory";
 
 jest.mock("../../services/dynamodb");
 import DynamoDBService from "../../services/dynamodb";
@@ -46,12 +45,12 @@ describe("DashboardRepository.create", () => {
 
 describe("DashboardRepository.updateOverview", () => {
     it("should call updateItem with the correct keys", async () => {
-      await repo.updateOverview("123", "456", "Test", user);
+      await repo.updateOverview("123", "Test", user);
       expect(dynamodb.update).toHaveBeenCalledWith(
         expect.objectContaining({
           TableName: tableName,
           Key: {
-            pk: TopicAreaFactory.itemId("456"),
+            pk: DashboardFactory.itemId("123"),
             sk: DashboardFactory.itemId("123"),
           },
         })
@@ -59,7 +58,7 @@ describe("DashboardRepository.updateOverview", () => {
     });
   
     it("should set overview and updatedBy fields", async () => {
-      await repo.updateOverview("123", "456", "Test", user);
+      await repo.updateOverview("123", "Test", user);
       expect(dynamodb.update).toHaveBeenCalledWith(
         expect.objectContaining({
           UpdateExpression: "set #overview = :overview, #updatedBy = :userId",
@@ -74,12 +73,12 @@ describe("DashboardRepository.updateOverview", () => {
 
 describe("DashboardRepository.delete", () => {
   it("should call delete with the correct key", async () => {
-    await repo.delete("123", "456");
+    await repo.delete("123");
     expect(dynamodb.delete).toHaveBeenCalledWith(
       expect.objectContaining({
         TableName: tableName,
         Key: {
-          pk: TopicAreaFactory.itemId("456"),
+          pk: DashboardFactory.itemId("123"),
           sk: DashboardFactory.itemId("123"),
         },
       })
@@ -106,8 +105,9 @@ describe("DashboardRepository.listDashboards", () => {
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({
       Items: [{
-        pk: 'TopicArea-456',
-        sk: 'Dashboard-123',
+        pk: 'Dashboard#123',
+        sk: 'Dashboard#123',
+        topicAreaId: 'TopicArea#456',
         topicAreaName: 'Topic 1',
         dashboardName: 'Test name',
         description: 'description test',
@@ -131,8 +131,9 @@ describe("DashboardRepository.listDashboards", () => {
     // Mock query response
     dynamodb.get = jest.fn().mockReturnValue({
       Item: {
-        pk: 'TopicArea-456',
-        sk: 'Dashboard-123',
+        pk: 'Dashboard#123',
+        sk: 'Dashboard#123',
+        topicAreaId: 'TopicArea#456',
         topicAreaName: 'Topic 1',
         dashboardName: 'Test name',
         description: 'description test',
@@ -140,7 +141,7 @@ describe("DashboardRepository.listDashboards", () => {
       },
     });
 
-    const item = await repo.getDashboardById('123', '456');
+    const item = await repo.getDashboardById('123');
     expect(item).toEqual({
       id: '123',
       name: 'Test name',
@@ -173,8 +174,9 @@ describe("DashboardRepository.listDashboards", () => {
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({
       Items: [{
-        pk: `TopicArea-${topicAreaId}`,
-        sk: 'Dashboard-123',
+        pk: 'Dashboard#123',
+        sk: 'Dashboard#123',
+        topicAreaId: `TopicArea#${topicAreaId}`,
         topicAreaName: 'Topic 1',
         dashboardName: 'Test name',
         description: 'description test',

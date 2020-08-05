@@ -33,7 +33,7 @@ describe('TopicAreaFactory.toItem', () => {
 
   it('should have a pk that starts with TopicArea', () => {
     const item = factory.toItem(topicarea);
-    expect(item.pk).toEqual('TopicArea-123');
+    expect(item.pk).toEqual('TopicArea#123');
   });
 
   it('should have an sk equal to pk', () => {

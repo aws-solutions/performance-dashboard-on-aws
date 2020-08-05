@@ -20,17 +20,16 @@ function createNew(name: string, topicAreaId: string, topicAreaName: string, use
  */
 function toItem(dashboard: Dashboard): DashboardItem {
   let item: DashboardItem = {
-    pk: topicareaFactory.itemId(dashboard.topicAreaId),
+    pk: itemId(dashboard.id),
     sk: itemId(dashboard.id),
     type: DASHBOARD,
     dashboardName: dashboard.name,
     topicAreaName: dashboard.topicAreaName,
+    topicAreaId: topicareaFactory.itemId(dashboard.topicAreaId),
     description: dashboard.description,
+    overview: dashboard.overview,
     createdBy: dashboard.createdBy,
   };
-  if (dashboard.overview) {
-    item = {...item, overview: dashboard.overview};
-  }
   return item;
 }
 
@@ -38,18 +37,15 @@ function toItem(dashboard: Dashboard): DashboardItem {
  * Converts a DynamoDB item into a Dashboard object
  */
 function fromItem(item: DashboardItem): Dashboard {
-  const topicAreaId = item.pk.substring(10);
-  const id = item.sk.substring(10);
+  const id = item.pk.substring(10);
   let dashboard: Dashboard = {
     id,
     name: item.dashboardName,
-    topicAreaId,
+    topicAreaId: item.topicAreaId.substring(10),
     topicAreaName: item.topicAreaName,
     description: item.description,
+    overview: item.overview,
     createdBy: item.createdBy,
-  }
-  if (item.overview) {
-    dashboard = {...dashboard, overview: item.overview};
   }
   return dashboard;
 }

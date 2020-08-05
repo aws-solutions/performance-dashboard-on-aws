@@ -11,7 +11,6 @@ function CreateDashboard() {
   const onSubmit = async (dashboard: any) => {
     const newDashboard = await BadgerService.createDashboard(
       dashboard.name,
-      dashboard.description,
       dashboard.topicAreaId
     );
 

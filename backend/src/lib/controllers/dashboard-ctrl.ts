@@ -51,18 +51,14 @@ async function getDashboardById(req: Request, res: Response) {
         return;
     }
 
-    const { topicAreaId, dashboardId} = req.params;
+    const { id } = req.params;
 
-    if (!topicAreaId) {
-        res.status(400).send("Missing required field `topicAreaId`");
-    }
-
-    if (!dashboardId) {
-        res.status(400).send("Missing required field `dashboardId`");
+    if (!id) {
+        res.status(400).send("Missing required field `id`");
     }
 
     const repo = DashboardRepository.getInstance();
-    const dashboard = await repo.getDashboardById(dashboardId, topicAreaId);
+    const dashboard = await repo.getDashboardById(id);
     res.json(dashboard);
 }
 
@@ -74,14 +70,10 @@ async function updateDashboard(req: Request, res: Response) {
       return;
     }
   
-    const { topicAreaId, dashboardId} = req.params;
+    const { id } = req.params;
 
-    if (!topicAreaId) {
-        res.status(400).send("Missing required field `topicAreaId`");
-    }
-
-    if (!dashboardId) {
-        res.status(400).send("Missing required field `dashboardId`");
+    if (!id) {
+        res.status(400).send("Missing required field `id`");
     }
 
     const { overview } = req.body; 
@@ -92,7 +84,7 @@ async function updateDashboard(req: Request, res: Response) {
     }
   
     const repo = DashboardRepository.getInstance();
-    await repo.updateOverview(dashboardId, topicAreaId, overview, user);
+    await repo.updateOverview(id, overview, user);
     res.status(201).send();
   }
   
@@ -104,18 +96,14 @@ async function updateDashboard(req: Request, res: Response) {
       return;
     }
   
-    const { topicAreaId, dashboardId} = req.params;
+    const {id} = req.params;
 
-    if (!topicAreaId) {
-        res.status(400).send("Missing required field `topicAreaId`");
-    }
-
-    if (!dashboardId) {
-        res.status(400).send("Missing required field `dashboardId`");
+    if (!id) {
+        res.status(400).send("Missing required field `id`");
     }
   
     const repo = DashboardRepository.getInstance();
-    await repo.delete(dashboardId, topicAreaId);
+    await repo.delete(id);
     res.status(201).send();
   }
 

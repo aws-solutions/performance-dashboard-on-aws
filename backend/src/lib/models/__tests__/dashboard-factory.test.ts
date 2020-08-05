@@ -38,7 +38,7 @@ describe('DashboardFactory.toItem', () => {
 
   it('should have a pk that starts with TopicArea', () => {
     const item = factory.toItem(dashboard);
-    expect(item.pk).toEqual('TopicArea-456');
+    expect(item.pk).toEqual('Dashboard#123');
   });
 
   it('should have a sk that starts with Dashboard', () => {
@@ -56,7 +56,7 @@ describe('DashboardFactory.toItem', () => {
     expect(item.overview).toEqual(undefined);
   });
 
-  it('should  have a overview attribute', () => {
+  it('should have a overview attribute', () => {
     const dashboardWithOverview = {...dashboard, overview: "test"};
     const item = factory.toItem(dashboardWithOverview);
     expect(item.overview).toEqual("test");
@@ -66,6 +66,7 @@ describe('DashboardFactory.toItem', () => {
     const item = factory.toItem(dashboard);
     expect(item.dashboardName).toEqual('Dashboard 1');
     expect(item.description).toEqual('description test');
+    expect(item.topicAreaId).toEqual('TopicArea#456');
     expect(item.topicAreaName).toEqual('Topic 1');
     expect(item.createdBy).toEqual(user.userId);
   });
@@ -73,10 +74,11 @@ describe('DashboardFactory.toItem', () => {
 
 describe('DashboardFactory.fromItem', () => {
   const item : DashboardItem = {
-    pk: 'TopicArea-456',
+    pk: 'Dashboard#123',
     sk: 'Dashboard#123',
     type: 'Dashboard',
     dashboardName: 'Dashboard 1',
+    topicAreaId: 'TopicArea-456',
     topicAreaName: 'Topic 1',
     description: 'description test',
     createdBy: user.userId,

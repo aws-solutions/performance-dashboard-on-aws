@@ -14,12 +14,11 @@ test("createDashboard should make a POST request with payload", async () => {
   const description = "Alexa, how is the weather?";
   const topicAreaId = "xyz";
 
-  await BadgerService.createDashboard(name, description, topicAreaId);
+  await BadgerService.createDashboard(name, topicAreaId);
 
   expect(API.post).toHaveBeenCalledWith("BadgerApi", "dashboard", expect.objectContaining({
     body: {
       name,
-      description,
       topicAreaId,
     }
   }));

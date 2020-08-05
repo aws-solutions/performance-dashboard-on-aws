@@ -1,7 +1,6 @@
 import { User } from "../models/user-models";
 import DynamoDBService from "../services/dynamodb";
 import DashboardFactory from "../models/dashboard-factory";
-import TopicAreaFactory from "../models/topicarea-factory";
 import {
   Dashboard,
   DashboardList,
@@ -41,11 +40,11 @@ class DashboardRepository {
    * Get a dashboard specifiying the dashboard id
    * and the topicArea id.
    */
-  public async getDashboardById(dashboardId: string, topicAreaId: string) {
+  public async getDashboardById(dashboardId: string) {
     const result = await this.dynamodb.get({
       TableName: this.tableName,
       Key: {
-        pk: TopicAreaFactory.itemId(topicAreaId),
+        pk: DashboardFactory.itemId(dashboardId),
         sk: DashboardFactory.itemId(dashboardId),
       },
     });
@@ -122,11 +121,11 @@ class DashboardRepository {
    * by the params `dashboardId` and `topicAreaId`. Sets the 
    * `updatedBy` field to the userId doing the update action.
    */
-  public async updateOverview(dashboardId: string, topicAreaId: string, overview: string, user: User) {
+  public async updateOverview(dashboardId: string, overview: string, user: User) {
     await this.dynamodb.update({
       TableName: this.tableName,
       Key: {
-        pk: TopicAreaFactory.itemId(topicAreaId),
+        pk: DashboardFactory.itemId(dashboardId),
         sk: DashboardFactory.itemId(dashboardId),
       },
       UpdateExpression: "set #overview = :overview, #updatedBy = :userId",
@@ -145,11 +144,11 @@ class DashboardRepository {
    * Deletes the Dashboard identified by the params
    * `dashboardId` and `topicAreaId`.
    */
-  public async delete(dashboardId: string, topicAreaId: string) {
+  public async delete(dashboardId: string) {
     await this.dynamodb.delete({
       TableName: this.tableName,
       Key: {
-        pk: TopicAreaFactory.itemId(topicAreaId),
+        pk: DashboardFactory.itemId(dashboardId),
         sk: DashboardFactory.itemId(dashboardId),
       },
     });

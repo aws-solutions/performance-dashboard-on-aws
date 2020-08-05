@@ -105,8 +105,8 @@ describe("TopicAreaRepository.list", () => {
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({
       Items: [{
-        pk: 'TopicArea-213',
-        sk: 'TopicArea-213',
+        pk: 'TopicArea#213',
+        sk: 'TopicArea#213',
         name: 'Serverless is more',
         createdBy: 'johndoe',
       }],
@@ -125,8 +125,8 @@ describe("TopicAreaRepository.list", () => {
     // Mock query response
     dynamodb.get = jest.fn().mockReturnValue({
       Item: {
-        pk: 'TopicArea-213',
-        sk: 'TopicArea-213',
+        pk: 'TopicArea#213',
+        sk: 'TopicArea#213',
         name: 'Serverless is more',
         createdBy: 'johndoe',
       },

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Row, Col } from 'antd';
 import {
   BarChart, Bar, XAxis, YAxis, LineChart, Line, Legend, ResponsiveContainer
 } from 'recharts';
-
+import { useDashboard } from "../hooks";
 import PageHeader from '../components/PageHeader';
-import BadgerService from '../services/BadgerService';
 import MainLayout from '../layouts/Main';
 
 const data = [
@@ -24,22 +23,9 @@ const data = [
   { name: 'Dec', suv: 2.58, sedan: 3.35 },
 ];
 
-type dashboard = {
-  id: string,
-  name: string,
-};
-
 function Dashboard() {
-  const [dashboard, setDashboard] = useState<dashboard | null>(null);
-  const { topicAreaId, dashboardId } = useParams();
-
-  useEffect(() => {
-    async function fetchDashboard() {
-      const data = await BadgerService.fetchDashboardById(topicAreaId, dashboardId);
-      setDashboard(data);
-    }
-    fetchDashboard();
-  }, [topicAreaId, dashboardId]);
+  const { dashboardId } = useParams();
+  const { dashboard } = useDashboard(dashboardId);
 
   if(dashboard === null) {
     return (<span>Loading</span>);
@@ -48,7 +34,7 @@ function Dashboard() {
   return (
     <MainLayout>
       <PageHeader>
-        <PageHeader.Title>{dashboard.name}</PageHeader.Title>
+        <PageHeader.Title>{dashboard?.name}</PageHeader.Title>
       </PageHeader>
       <Row gutter={16}>
         <Col span={8}>

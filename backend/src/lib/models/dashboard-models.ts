@@ -15,6 +15,7 @@ export interface DashboardItem {
     sk: string,
     type: string,
     dashboardName: string,
+    topicAreaId: string,
     topicAreaName: string,
     description?: string,
     overview?: string,

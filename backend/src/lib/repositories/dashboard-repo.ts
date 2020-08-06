@@ -1,6 +1,7 @@
 import { User } from "../models/user-models";
 import DynamoDBService from "../services/dynamodb";
 import DashboardFactory from "../models/dashboard-factory";
+import TopicAreaFactory from "../models/topicarea-factory";
 import {
   Dashboard,
   DashboardList,
@@ -105,7 +106,7 @@ class DashboardRepository {
         "#topicAreaId": "topicAreaId",
       },
       ExpressionAttributeValues: {
-        ":topicAreaId": topicAreaId,
+        ":topicAreaId": TopicAreaFactory.itemId(topicAreaId),
       },
     });
 
@@ -132,7 +133,7 @@ class DashboardRepository {
       UpdateExpression: "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
       ExpressionAttributeValues: {
         ":dashboardName": dashboard.name,
-        ":topicAreaId": dashboard.topicAreaId,
+        ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
         ":topicAreaName": dashboard.topicAreaName,
         ":description": dashboard.description,
         ":userId": user.userId,

@@ -2,6 +2,7 @@ import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user-models";
 import DashboardRepository from "../dashboard-repo";
 import DashboardFactory from "../../models/dashboard-factory";
+import TopicAreaFactory from "../../models/topicarea-factory";
 
 jest.mock("../../services/dynamodb");
 import DynamoDBService from "../../services/dynamodb";
@@ -82,7 +83,7 @@ describe("DashboardRepository.updateDashboard", () => {
           UpdateExpression: "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
           ExpressionAttributeValues: {
             ":dashboardName": dashboard.name,
-            ":topicAreaId": dashboard.topicAreaId,
+            ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
             ":topicAreaName": dashboard.topicAreaName,
             ":description": dashboard.description,
             ":userId": user.userId,
@@ -186,7 +187,7 @@ describe("DashboardRepository.listDashboards", () => {
         TableName: tableName,
         KeyConditionExpression: "#topicAreaId = :topicAreaId",
         ExpressionAttributeValues: {
-          ":topicAreaId": topicAreaId,
+          ":topicAreaId": TopicAreaFactory.itemId(topicAreaId),
         }
       })
     );

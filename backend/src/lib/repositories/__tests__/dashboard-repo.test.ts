@@ -29,7 +29,7 @@ describe("DashboardRepository", () => {
 
 describe("DashboardRepository.create", () => {
   it("should call putItem on dynamodb", async () => {
-    const dashboard = DashboardFactory.createNew('Dashboard1', '123', 'Topic1', user);
+    const dashboard = DashboardFactory.create('123', 'Dashboard1', '456', 'Topic1', 'Description Test', user);
     const item = DashboardFactory.toItem(dashboard);
 
     await repo.putDashboard(dashboard);
@@ -43,9 +43,26 @@ describe("DashboardRepository.create", () => {
   });
 });
 
-describe("DashboardRepository.updateOverview", () => {
+describe("DashboardRepository.createNew", () => {
+  it("should call putItem on dynamodb", async () => {
+    const dashboard = DashboardFactory.createNew('Dashboard1', '456', 'Topic1', 'Description Test', user);
+    const item = DashboardFactory.toItem(dashboard);
+
+    await repo.putDashboard(dashboard);
+
+    expect(dynamodb.put).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableName: tableName,
+        Item: item,
+      })
+    );
+  });
+});
+
+describe("DashboardRepository.updateDashboard", () => {
     it("should call updateItem with the correct keys", async () => {
-      await repo.updateOverview("123", "Test", user);
+      const dashboard = DashboardFactory.create('123', 'Dashboard1', '456', 'Topic1', 'Description Test', user);
+      await repo.updateDashboard(dashboard, user);
       expect(dynamodb.update).toHaveBeenCalledWith(
         expect.objectContaining({
           TableName: tableName,
@@ -57,13 +74,17 @@ describe("DashboardRepository.updateOverview", () => {
       );
     });
   
-    it("should set overview and updatedBy fields", async () => {
-      await repo.updateOverview("123", "Test", user);
+    it("should call update with all the fields", async () => {
+      const dashboard = DashboardFactory.create('123', 'Dashboard1', '456', 'Topic1', 'Description Test', user);
+      await repo.updateDashboard(dashboard, user);
       expect(dynamodb.update).toHaveBeenCalledWith(
         expect.objectContaining({
-          UpdateExpression: "set #overview = :overview, #updatedBy = :userId",
+          UpdateExpression: "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
           ExpressionAttributeValues: {
-            ":overview": "Test",
+            ":dashboardName": dashboard.name,
+            ":topicAreaId": dashboard.topicAreaId,
+            ":topicAreaName": dashboard.topicAreaName,
+            ":description": dashboard.description,
             ":userId": user.userId,
           },
         })
@@ -163,10 +184,9 @@ describe("DashboardRepository.listDashboards", () => {
     expect(dynamodb.query).toHaveBeenCalledWith(
       expect.objectContaining({
         TableName: tableName,
-        KeyConditionExpression: "pk = :topicAreaId AND begin_with (sk, :dashboard)",
+        KeyConditionExpression: "#topicAreaId = :topicAreaId",
         ExpressionAttributeValues: {
           ":topicAreaId": topicAreaId,
-          ":dashboard": "Dashboard",
         }
       })
     );
@@ -195,5 +215,4 @@ describe("DashboardRepository.listDashboards", () => {
       createdBy: 'test',
     });
   });
-
 });

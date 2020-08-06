@@ -94,16 +94,18 @@ class DashboardRepository {
   }
 
   /**
-   * Returns the list of Dashboards within
-   * an specified topic area.
+   * Returns the list of Dashboards within an specified topic area.
    */
   public async listDashboardsWithinTopicArea(topicAreaId: string): Promise<DashboardList> {
     const result = await this.dynamodb.query({
       TableName: this.tableName,
-      KeyConditionExpression: "pk = :topicAreaId AND begin_with (sk, :dashboard)",
+      IndexName: "byTopicAreaId",
+      KeyConditionExpression: "#topicAreaId = :topicAreaId",
+      ExpressionAttributeNames: {
+        "#topicAreaId": "topicAreaId",
+      },
       ExpressionAttributeValues: {
         ":topicAreaId": topicAreaId,
-        ":dashboard": "Dashboard",
       },
     });
 
@@ -117,24 +119,29 @@ class DashboardRepository {
   }
 
   /**
-   * Updates the overview of an existing Dashboard identified
-   * by the params `dashboardId` and `topicAreaId`. Sets the 
-   * `updatedBy` field to the userId doing the update action.
+   * Updates a Dashboard identified by the param `dashboard`. Sets
+   * the `updatedBy` field to the userId doing the update action.
    */
-  public async updateOverview(dashboardId: string, overview: string, user: User) {
+  public async updateDashboard(dashboard: Dashboard, user: User) {
     await this.dynamodb.update({
       TableName: this.tableName,
       Key: {
-        pk: DashboardFactory.itemId(dashboardId),
-        sk: DashboardFactory.itemId(dashboardId),
+        pk: DashboardFactory.itemId(dashboard.id),
+        sk: DashboardFactory.itemId(dashboard.id),
       },
-      UpdateExpression: "set #overview = :overview, #updatedBy = :userId",
+      UpdateExpression: "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
       ExpressionAttributeValues: {
-        ":overview": overview,
+        ":dashboardName": dashboard.name,
+        ":topicAreaId": dashboard.topicAreaId,
+        ":topicAreaName": dashboard.topicAreaName,
+        ":description": dashboard.description,
         ":userId": user.userId,
       },
       ExpressionAttributeNames: {
-        "#overview": "overview",
+        "#dashboardName": "dashboardName",
+        "#topicAreaId": "topicAreaId",
+        "#topicAreaName": "topicAreaName",
+        "#description": "description",
         "#updatedBy": "updatedBy",
       },
     });

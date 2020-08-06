@@ -5,12 +5,24 @@ import topicareaFactory from "./topicarea-factory";
 
 const DASHBOARD: string = 'Dashboard';
 
-function createNew(name: string, topicAreaId: string, topicAreaName: string, user: User): Dashboard {
+function create(id: string, name: string, topicAreaId: string, topicAreaName: string, description: string, user: User): Dashboard {
+  return {
+    id,
+    name,
+    topicAreaId,
+    topicAreaName,
+    description,
+    createdBy: user.userId,
+  };
+}
+
+function createNew(name: string, topicAreaId: string, topicAreaName: string, description: string, user: User): Dashboard {
   return {
     id: uuidv4(),
     name,
     topicAreaId,
     topicAreaName,
+    description,
     createdBy: user.userId,
   };
 }
@@ -27,7 +39,6 @@ function toItem(dashboard: Dashboard): DashboardItem {
     topicAreaName: dashboard.topicAreaName,
     topicAreaId: topicareaFactory.itemId(dashboard.topicAreaId),
     description: dashboard.description,
-    overview: dashboard.overview,
     createdBy: dashboard.createdBy,
   };
   return item;
@@ -44,7 +55,6 @@ function fromItem(item: DashboardItem): Dashboard {
     topicAreaId: item.topicAreaId.substring(10),
     topicAreaName: item.topicAreaName,
     description: item.description,
-    overview: item.overview,
     createdBy: item.createdBy,
   }
   return dashboard;
@@ -53,8 +63,9 @@ function fromItem(item: DashboardItem): Dashboard {
 function itemId(id: string): string { return `${DASHBOARD}#${id}` }
 
 export default {
-  toItem,
+  create,
   createNew,
+  toItem,
   fromItem,
   itemId,
 };

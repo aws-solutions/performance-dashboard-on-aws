@@ -1,29 +1,17 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AdminLayout from "../layouts/Admin";
-import { PageHeader, Button, Skeleton, Divider } from "antd";
+import { useDashboards } from "../hooks";
 
 function DashboardListing() {
-  const history = useHistory();
-
+  const { dashboards } = useDashboards();
   return (
     <AdminLayout>
-      <PageHeader
-        ghost={false}
-        title="Dashboards"
-        extra={[
-          <Button
-            key="1"
-            type="primary"
-            onClick={() => history.push("/admin/dashboard/create")}
-          >
-            Create dashboard
-          </Button>,
-        ]}
-      />
-      <Skeleton />
-      <Divider />
-      <Skeleton />
+      <h1>Dashboards</h1>
+      <Link to="/admin/dashboard/create">Create new dashboard</Link>
+      <ul className="ds-c-list">
+        {dashboards.map(dashboard => (<li key={dashboard.id}>{dashboard.name}</li>))}
+      </ul>
     </AdminLayout>
   );
 }

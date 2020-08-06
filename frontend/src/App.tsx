@@ -8,7 +8,6 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 
 import Home from './containers/Home';
 import Dashboard from './containers/Dashboard';
-import AdminHome from './containers/AdminHome';
 import DashboardListing from './containers/DashboardListing';
 import CreateDashboard from './containers/CreateDashboard';
 import EditDashboard from './containers/EditDashboard';
@@ -30,7 +29,7 @@ function App() {
             <CreateDashboard />
           </Route>
           <Route path="/admin">
-            <AdminHome />
+            <DashboardListing />
           </Route>
           <Route path="/">
             <Home />

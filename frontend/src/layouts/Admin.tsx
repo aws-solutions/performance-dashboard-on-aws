@@ -1,9 +1,4 @@
 import React, { ReactNode } from 'react';
-import { Layout } from 'antd';
-import Sidebar from '../components/Sidebar';
-import './Admin.css';
-
-const { Header, Content } = Layout;
 
 interface LayoutProps {
     children: ReactNode,
@@ -11,17 +6,16 @@ interface LayoutProps {
 
 function AdminLayout(props: LayoutProps) {
   return (
-    <Layout className="AdminLayout">
-      <Sidebar />
-      <Layout>
-        <Header className="Topbar" />
-        <Content className="AdminContent">
-          <div className="ContentBox">
-            {props.children}
-          </div>
-        </Content>
-      </Layout>
-    </Layout>
+    <div className="ds-base">
+      <header className="ds-base--inverse ds-u-padding--2 ds-u-display--flex">
+        <h1 className="ds-h3">Badger</h1>
+      </header>
+      <main>
+        <section className="ds-l-container">
+          {props.children}
+        </section>
+      </main>
+    </div>
   );
 }
 

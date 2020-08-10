@@ -16,7 +16,8 @@ async function listTopicAreas(req: Request, res: Response) {
         const topicareas = await repo.list();
         res.json(topicareas); 
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
 }
 
@@ -40,7 +41,8 @@ async function createTopicArea(req: Request, res: Response) {
         await repo.create(topicarea);
         res.json(topicarea);
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
 }
 
@@ -63,7 +65,8 @@ async function getTopicAreaById(req: Request, res: Response) {
         const topicArea = await repo.getTopicAreaById(id);
         res.json(topicArea);
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
 }
 
@@ -89,7 +92,8 @@ async function updateTopicArea(req: Request, res: Response) {
         await repo.updateTopicArea(topicArea, user);
         res.status(201).send();
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
 }
 
@@ -112,7 +116,8 @@ async function deleteTopicArea(req: Request, res: Response) {
         await repo.delete(id);
         res.status(201).send();
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
 }
 

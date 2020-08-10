@@ -17,7 +17,8 @@ async function listDashboards(req: Request, res: Response) {
         const dashboards = await repo.listDashboards();
         res.json(dashboards);    
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
 }
 
@@ -47,7 +48,8 @@ async function createDashboard(req: Request, res: Response) {
         await repo.putDashboard(dashboard);
         res.json(dashboard);    
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
 }
 
@@ -70,7 +72,8 @@ async function getDashboardById(req: Request, res: Response) {
         const dashboard = await repo.getDashboardById(id);
         res.json(dashboard);  
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
 }
 
@@ -108,7 +111,8 @@ async function updateDashboard(req: Request, res: Response) {
         await repo.updateDashboard(dashboard, user);
         res.status(201).send();   
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
   }
   
@@ -131,7 +135,8 @@ async function updateDashboard(req: Request, res: Response) {
         await repo.delete(id);
         res.status(201).send();   
     } catch (error) {
-        res.status(500).json({ message: error.toString() });
+        console.log(error);
+        res.status(500);
     }
   }
 

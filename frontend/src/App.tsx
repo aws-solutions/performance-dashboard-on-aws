@@ -19,7 +19,7 @@ function App() {
           <Route path="/dashboard/:topicAreaId/:dashboardId">
             <Dashboard />
           </Route>
-          <Route path="/admin/dashboard/edit/:topicAreaId/:dashboardId">
+          <Route path="/admin/dashboard/edit/:dashboardId">
             <EditDashboard />
           </Route>
           <Route path="/admin/dashboards">

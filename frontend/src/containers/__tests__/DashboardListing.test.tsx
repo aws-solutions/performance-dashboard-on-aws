@@ -7,6 +7,6 @@ jest.mock("../../hooks");
 
 test("renders a button to create dashboard", async () => {
   const { getByRole } = render(<DashboardListing />, { wrapper: MemoryRouter });
-  const button = getByRole("link");
+  const button = getByRole("link", { name: "Create new dashboard" });
   expect(button).toHaveTextContent("Create new dashboard");
 });

@@ -6,13 +6,23 @@ interface LayoutProps {
 
 function AdminLayout(props: LayoutProps) {
   return (
-    <div className="ds-base">
-      <header className="ds-base--inverse ds-u-padding--2 ds-u-display--flex">
-        <h1 className="ds-h3">Badger</h1>
+    <div>
+      <header className="usa-header usa-header--basic">
+        <div className="usa-nav-container">
+          <div className="usa-logo" id="basic-logo">
+            <em className="usa-logo__text">
+              <a href="/admin" title="Home" aria-label="Home">
+                Badger
+              </a>
+            </em>
+          </div>
+        </div>
       </header>
       <main>
-        <section className="ds-l-container">
-          {props.children}
+        <section className="padding-top-3">
+          <div className="grid-container">
+            {props.children}
+          </div>
         </section>
       </main>
     </div>

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Amplify from 'aws-amplify';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import '@cmsgov/design-system/dist/css/index.css';
+import "uswds/dist/css/uswds.css";
 import './index.css';
 
 Amplify.configure({

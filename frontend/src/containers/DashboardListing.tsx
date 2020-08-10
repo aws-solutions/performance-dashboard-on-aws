@@ -9,7 +9,7 @@ function DashboardListing() {
     <AdminLayout>
       <h1>Dashboards</h1>
       <Link to="/admin/dashboard/create">Create new dashboard</Link>
-      <ul className="ds-c-list">
+      <ul>
         {dashboards.map(dashboard => (<li key={dashboard.id}>{dashboard.name}</li>))}
       </ul>
     </AdminLayout>

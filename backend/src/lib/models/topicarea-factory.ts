@@ -4,10 +4,18 @@ import { User } from "./user-models";
 
 const TOPICAREA: string = 'TopicArea';
 
+function create(id: string, name: string, user: User): TopicArea {
+  return {
+    id,
+    name,
+    createdBy: user.userId,
+  };
+}
+
 function createNew(name: string, user: User): TopicArea {
   return {
     id: uuidv4(),
-    name: name,
+    name,
     createdBy: user.userId,
   };
 }
@@ -40,8 +48,9 @@ function fromItem(item: TopicAreaItem): TopicArea {
 function itemId(id: string): string { return `${TOPICAREA}#${id}` }
 
 export default {
-  toItem,
+  create,
   createNew,
+  toItem,
   fromItem,
   itemId,
 };

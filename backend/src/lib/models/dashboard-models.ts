@@ -3,8 +3,7 @@ export type Dashboard = {
     name: string,
     topicAreaId: string,
     topicAreaName: string,
-    description?: string,
-    overview?: string,
+    description: string,
     createdBy: string,
 };
 
@@ -17,7 +16,6 @@ export interface DashboardItem {
     dashboardName: string,
     topicAreaId: string,
     topicAreaName: string,
-    description?: string,
-    overview?: string,
+    description: string,
     createdBy: string,
 };

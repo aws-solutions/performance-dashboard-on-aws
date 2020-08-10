@@ -29,6 +29,22 @@ describe("TopicAreaRepository", () => {
 
 describe("TopicAreaRepository.create", () => {
   it("should call putItem on dynamodb", async () => {
+    const topicarea = TopicAreaFactory.create("123", "Banana", user);
+    const item = TopicAreaFactory.toItem(topicarea);
+
+    await repo.create(topicarea);
+
+    expect(dynamodb.put).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableName: tableName,
+        Item: item,
+      })
+    );
+  });
+});
+
+describe("TopicAreaRepository.createNew", () => {
+  it("should call putItem on dynamodb", async () => {
     const topicarea = TopicAreaFactory.createNew("Banana", user);
     const item = TopicAreaFactory.toItem(topicarea);
 
@@ -43,9 +59,10 @@ describe("TopicAreaRepository.create", () => {
   });
 });
 
-describe("TopicAreaRepository.updateName", () => {
+describe("TopicAreaRepository.updateTopicArea", () => {
   it("should call updateItem with the correct key", async () => {
-    await repo.updateName("123", "Banana", user);
+    const topicarea = TopicAreaFactory.create("123", "Banana", user);
+    await repo.updateTopicArea(topicarea, user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         TableName: tableName,
@@ -58,7 +75,8 @@ describe("TopicAreaRepository.updateName", () => {
   });
 
   it("should set name and updatedBy fields", async () => {
-    await repo.updateName("123", "Banana", user);
+    const topicarea = TopicAreaFactory.create("123", "Banana", user);
+    await repo.updateTopicArea(topicarea, user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression: "set #name = :name, #updatedBy = :userId",

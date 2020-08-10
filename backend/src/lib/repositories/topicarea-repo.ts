@@ -97,16 +97,16 @@ class TopicAreaRepository {
    * by the param `id`. Sets the `updatedBy` field to the userId
    * doing the update action.
    */
-  public async updateName(id: string, name: string, user: User) {
+  public async updateTopicArea(topicArea: TopicArea, user: User) {
     await this.dynamodb.update({
       TableName: this.tableName,
       Key: {
-        pk: TopicAreaFactory.itemId(id),
-        sk: TopicAreaFactory.itemId(id),
+        pk: TopicAreaFactory.itemId(topicArea.id),
+        sk: TopicAreaFactory.itemId(topicArea.id),
       },
       UpdateExpression: "set #name = :name, #updatedBy = :userId",
       ExpressionAttributeValues: {
-        ":name": name,
+        ":name": topicArea.name,
         ":userId": user.userId,
       },
       ExpressionAttributeNames: {

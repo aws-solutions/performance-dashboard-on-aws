@@ -31,7 +31,7 @@ test("renders the topic area as subtitle", async () => {
   expect(subtitle).toBeInTheDocument();
 });
 
-test("cancel button takes you back to dashboard home page", async () => {
+test("edit details link takes you to details screen", async () => {
   const history = createMemoryHistory();
   jest.spyOn(history, "push");
 
@@ -41,7 +41,7 @@ test("cancel button takes you back to dashboard home page", async () => {
     </Router>
   );
 
-  const cancelButton = await findByRole("button", { name: "Cancel" });
+  const cancelButton = await findByRole("link", { name: "Edit details" });
   fireEvent.click(cancelButton)
-  expect(history.push).toHaveBeenCalledWith("/admin/dashboards");
+  expect(history.push).toHaveBeenCalledWith("/admin/dashboard/edit/123/details");
 });

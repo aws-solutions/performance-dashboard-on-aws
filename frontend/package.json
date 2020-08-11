@@ -4,9 +4,7 @@
   "private": true,
   "description": "Badger Frontend",
   "dependencies": {
-    "@ant-design/icons": "^4.2.1",
     "@aws-amplify/ui-react": "^0.2.9",
-    "@cmsgov/design-system": "^2.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -17,7 +15,6 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/recharts": "^1.8.13",
-    "antd": "^4.4.3",
     "aws-amplify": "^3.0.18",
     "chart.js": "^2.9.3",
     "lodash": "^4.17.15",

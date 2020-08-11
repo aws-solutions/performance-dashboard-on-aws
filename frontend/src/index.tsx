@@ -4,6 +4,7 @@ import Amplify from 'aws-amplify';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
 import "uswds/dist/css/uswds.css";
+import "uswds/dist/js/uswds.js";
 import './index.css';
 
 Amplify.configure({

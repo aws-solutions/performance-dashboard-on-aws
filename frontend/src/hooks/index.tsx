@@ -16,9 +16,6 @@ type UseTopicAreasHook = {
   topicareas: Array<TopicArea>;
 };
 
-/**
- * Custom React hook to fetch a list of topic areas.
- */
 export function useTopicAreas(): UseTopicAreasHook {
   const [loading, setLoading] = useState(false);
   const [topicareas, setTopicAreas] = useState([]);
@@ -39,9 +36,6 @@ export function useTopicAreas(): UseTopicAreasHook {
   };
 }
 
-/**
- * Hook to fetch a dashboard by topicAreaId and dashboardId
- */
 type UseDashboardHook = {
   loading: boolean;
   dashboard?: Dashboard,
@@ -64,5 +58,30 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
   return {
     loading,
     dashboard,
+  };
+}
+
+type UseDashboardsHook = {
+  loading: boolean;
+  dashboards: Array<Dashboard>,
+}
+
+export function useDashboards(): UseDashboardsHook {
+  const [loading, setLoading] = useState(false);
+  const [dashboards, setDashboards] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const data = await BadgerService.fetchDashboards();
+      setDashboards(data);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  return {
+    loading,
+    dashboards,
   };
 }

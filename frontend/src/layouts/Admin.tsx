@@ -1,27 +1,32 @@
-import React, { ReactNode } from 'react';
-import { Layout } from 'antd';
-import Sidebar from '../components/Sidebar';
-import './Admin.css';
-
-const { Header, Content } = Layout;
+import React, { ReactNode } from "react";
 
 interface LayoutProps {
-    children: ReactNode,
+  children: ReactNode;
 }
 
 function AdminLayout(props: LayoutProps) {
   return (
-    <Layout className="AdminLayout">
-      <Sidebar />
-      <Layout>
-        <Header className="Topbar" />
-        <Content className="AdminContent">
-          <div className="ContentBox">
-            {props.children}
+    <>
+      <div className="usa-overlay"></div>
+      <header className="usa-header usa-header--basic">
+        <div className="usa-nav-container">
+          <div className="usa-navbar">
+            <div className="usa-logo" id="basic-logo">
+              <em className="usa-logo__text">
+                <a href="/admin" title="Home" aria-label="Home">
+                  Badger
+                </a>
+              </em>
+            </div>
           </div>
-        </Content>
-      </Layout>
-    </Layout>
+        </div>
+      </header>
+      <main className="padding-top-3">
+        <div className="grid-container">
+          {props.children}
+        </div>
+      </main>
+    </>
   );
 }
 

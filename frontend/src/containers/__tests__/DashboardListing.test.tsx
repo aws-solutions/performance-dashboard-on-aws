@@ -1,13 +1,12 @@
 import React from "react";
-import { render, waitFor, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import DashboardListing from "../DashboardListing";
 
-jest.mock("../../services/BadgerService");
-import BadgerService from "../../services/BadgerService";
+jest.mock("../../hooks");
 
 test("renders a button to create dashboard", async () => {
   const { getByRole } = render(<DashboardListing />, { wrapper: MemoryRouter });
-  const button = getByRole("button");
-  expect(button).toHaveTextContent("Create dashboard");
+  const button = getByRole("link", { name: "Create new dashboard" });
+  expect(button).toHaveTextContent("Create new dashboard");
 });

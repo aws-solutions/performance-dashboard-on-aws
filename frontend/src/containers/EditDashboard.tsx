@@ -1,5 +1,4 @@
 import React from "react";
-import { PageHeader, Row, Col, Divider, Skeleton, Button, Tag } from "antd";
 import { useHistory, useParams } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import AdminLayout from "../layouts/Admin";
@@ -17,27 +16,37 @@ function EditDashboard() {
     history.push("/admin/dashboards");
   };
 
-  const topicarea = dashboard?.topicAreaName;
-
   return (
     <AdminLayout>
-      <PageHeader
-        ghost={false}
-        title={dashboard?.name}
-        subTitle={topicarea}
-        extra={<Tag>Draft</Tag>}
-      />
-      <Row>
-        <Col span={24}>
-          <Divider orientation="left">Overview</Divider>
-          <Skeleton />
-          <Divider orientation="left">Dashboard Content</Divider>
-          <Skeleton />
-          <Divider />
-          <Button type="primary" onClick={() => onSubmit()}>Save & Close</Button>
-          <Button onClick={() => onCancel()}>Cancel</Button>
-        </Col>
-      </Row>
+      <ul className="usa-button-group">
+        <li className="usa-button-group__item">
+          <span className="usa-tag">DRAFT</span>
+        </li>
+        <li className="usa-button-group__item">
+          <a className="usa-link" href="/">
+            Share draft URL
+          </a>
+        </li>
+        <li className="usa-button-group__item">
+          <a className="usa-link" href="/">
+            Preview
+          </a>
+        </li>
+      </ul>
+      <h1 className="margin-bottom-0">{dashboard?.name}</h1>
+      <span className="text-base">{dashboard?.topicAreaName}</span>
+      <div className="padding-6 margin-top-3 margin-bottom-3 border border-dashed bg-base-lightest">
+        This dashboard is empty
+      </div>
+      <button className="usa-button" onClick={() => onSubmit()}>
+        Save & Close
+      </button>
+      <button
+        className="usa-button usa-button--unstyled"
+        onClick={() => onCancel()}
+      >
+        Cancel
+      </button>
     </AdminLayout>
   );
 }

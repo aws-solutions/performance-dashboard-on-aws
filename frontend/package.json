@@ -4,7 +4,6 @@
   "private": true,
   "description": "Badger Frontend",
   "dependencies": {
-    "@ant-design/icons": "^4.2.1",
     "@aws-amplify/ui-react": "^0.2.9",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -16,17 +15,18 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/recharts": "^1.8.13",
-    "antd": "^4.4.3",
     "aws-amplify": "^3.0.18",
     "chart.js": "^2.9.3",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.3.1",
     "react-markdown": "^4.3.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "recharts": "^1.8.5",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "uswds": "^2.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -48,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "mutationobserver-shim": "^0.3.7"
   }
 }

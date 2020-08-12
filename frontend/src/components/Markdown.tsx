@@ -3,14 +3,16 @@ import ReactMarkdown from "react-markdown";
 import "./Markdown.css";
 
 type MarkdownProps = {
+  text: string;
   title: string;
   subtitle: string;
+  onChange: Function;
 };
 
 const Markdown = (props: MarkdownProps) => {
   const [disabled, toggle] = useState(true);
   const [boxHeight, setBoxHeight] = useState(142);
-  const [text, setText] = useState("");
+  const [text, setText] = useState(props.text);
 
   useEffect(() => {
     const height = document.querySelector("textarea")?.clientHeight || 142;
@@ -19,6 +21,7 @@ const Markdown = (props: MarkdownProps) => {
 
   const textChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
+    props.onChange(event);
   };
 
   return (

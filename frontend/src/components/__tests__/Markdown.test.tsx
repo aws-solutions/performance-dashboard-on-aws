@@ -3,9 +3,18 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Markdown from "../Markdown";
 
+test("renders the text of the markdown component", async () => {
+  const { findByText } = render(
+    <Markdown text="text test" title="Test" subtitle="Subtitle test." onChange={()=>{}} />,
+    { wrapper: MemoryRouter }
+  );
+  const title = await findByText("text test");
+  expect(title).toBeInTheDocument();
+});
+
 test("renders the title of the markdown component", async () => {
   const { findByText } = render(
-    <Markdown title="Test" subtitle="Subtitle test" />,
+    <Markdown text="" title="Test" subtitle="Subtitle test." onChange={()=>{}} />,
     { wrapper: MemoryRouter }
   );
   const title = await findByText("Test");
@@ -14,7 +23,7 @@ test("renders the title of the markdown component", async () => {
 
 test("renders the subtitle of the markdown component", async () => {
   const { findByText } = render(
-    <Markdown title="Test" subtitle="Subtitle test." />,
+    <Markdown text="" title="Test" subtitle="Subtitle test." onChange={()=>{}} />,
     { wrapper: MemoryRouter }
   );
   const subtitle = await findByText(
@@ -25,7 +34,7 @@ test("renders the subtitle of the markdown component", async () => {
 
 test("renders the placeholder of the markdown component", async () => {
   const { findByPlaceholderText } = render(
-    <Markdown title="Test" subtitle="Subtitle test." />,
+    <Markdown text="" title="Test" subtitle="Subtitle test." onChange={()=>{}} />,
     { wrapper: MemoryRouter }
   );
   const subtitle = await findByPlaceholderText("Enter overview text here");

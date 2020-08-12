@@ -1,11 +1,11 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import AdminLayout from "../layouts/Admin";
 import BadgerService from "../services/BadgerService";
 import { useTopicAreas } from "../hooks";
 import Markdown from "../components/Markdown";
-import "./CreateDashboard.css";
+import "./EditDetails.css";
 
 interface FormValues {
   name: string;
@@ -13,43 +13,75 @@ interface FormValues {
   description: string;
 }
 
-function CreateDashboard() {
+function EditDetails() {
   const history = useHistory();
   const { topicareas } = useTopicAreas();
+  const { dashboardId } = useParams();
+  const [ id, setId ] = useState(dashboardId);
+  const [ name, setName ] = useState("");
+  const [ topicAreaId, setTopicAreaId ] = useState("");
+  const [ description, setDescription ] = useState("");
   const { register, errors, handleSubmit, setValue } = useForm<FormValues>();
 
   const onSubmit = async (values: FormValues) => {
-    const dashboard = await BadgerService.createDashboard(
+    await BadgerService.editDashboard(
+      id,
       values.name,
       values.topicAreaId,
       values.description || ''
     );
-    history.push(`/admin/dashboard/edit/${dashboard.id}`);
+    history.push(`/admin/dashboard/edit/${id}`);
   };
 
   const onCancel = () => {
-    history.push("/admin/dashboards");
+    history.push(`/admin/dashboard/edit/${id}`);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+    setValue("name", event.target.value);
+  }
+
+  const handleTopicAreaIdChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setTopicAreaId(event.target.value);
+    setValue("topicAreaId", event.target.value);
+  }
+
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue("description", event.target.value);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
+    register("name");
+    register("topicAreaId");
     register("description");
-  }, [register])
+  }, [register]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await BadgerService.fetchDashboardById(dashboardId);
+      setId(data.id);
+      setName(data.name);
+      setValue("name", data.name);
+      setTopicAreaId(data.topicAreaId);
+      setValue("topicAreaId", data.topicAreaId);
+      setDescription(data.description);
+      setValue("description", data.description);
+    };
+    fetchData();
+  }, [dashboardId, setValue]);
 
   return (
     <AdminLayout>
-      <h1>Create new dashboard</h1>
+      <h1>Edit Details</h1>
       <div className="grid-row">
         <div className="grid-col-12">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="create-new-dashboard-form usa-form"
-            data-testid="CreateDashboardForm"
+            className="edit-details-form usa-form"
+            data-testid="EditDetailsForm"
           >
-            <div className="create-new-dashboard-form-group-dashboard-name usa-form-group">
+            <div className="edit-details-form-group-dashboard-name usa-form-group">
               <label htmlFor="name" className="usa-label">
                 Dashboard Name
               </label>
@@ -66,11 +98,12 @@ function CreateDashboard() {
                 id="name"
                 className="usa-input"
                 name="name"
-                ref={register({ required: true })}
+                value={name}
+                onChange={handleNameChange}
               />
             </div>
 
-            <div className="create-new-dashboard-form-group-topicarea-id usa-form-group">
+            <div className="edit-details-form-group-topicarea-id usa-form-group">
               <label htmlFor="topicAreaId" className="usa-label">
                 Topic Area
               </label>
@@ -88,7 +121,8 @@ function CreateDashboard() {
               )}
               <select
                 id="topicAreaId"
-                ref={register({ required: true })}
+                value={topicAreaId}
+                onChange={handleTopicAreaIdChange}
                 name="topicAreaId"
                 className="usa-select"
               >
@@ -107,11 +141,11 @@ function CreateDashboard() {
               </select>
             </div>
 
-            <Markdown text="" title="Description - optional" subtitle="Give your dashboard an description to explain it in more depth." onChange={handleChange} />
+            {description && <Markdown text={description} title="Description - optional" subtitle="Give your dashboard an description to explain it in more depth." onChange={handleDescriptionChange} />}
 
             <br />
             <button className="usa-button" type="submit">
-              Create
+              Edit
             </button>
             <button
               className="usa-button usa-button--unstyled"
@@ -126,4 +160,4 @@ function CreateDashboard() {
   );
 }
 
-export default CreateDashboard;
+export default EditDetails;

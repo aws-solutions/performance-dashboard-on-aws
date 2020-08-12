@@ -42,7 +42,8 @@ describe("CreateDashboardForm", () => {
 
     expect(BadgerService.createDashboard).toBeCalledWith(
       "AWS Dashboard",
-      "123456789"
+      "123456789",
+      ""
     );
   });
 

@@ -30,13 +30,26 @@ async function fetchTopicAreas() {
   return await API.get(apiName, "topicarea", { headers });
 }
 
-async function createDashboard(name: string, topicAreaId: string) {
+async function createDashboard(name: string, topicAreaId: string, description: string) {
   const headers = await authHeaders();
   return await API.post(apiName, "dashboard", {
     headers,
     body: {
       name,
       topicAreaId,
+      description
+    }
+  });
+}
+
+async function editDashboard(dashboardId: string, name: string, topicAreaId: string, description: string) {
+  const headers = await authHeaders();
+  return await API.put(apiName, `dashboard/${dashboardId}`, {
+    headers,
+    body: {
+      name,
+      topicAreaId,
+      description
     }
   });
 }
@@ -46,5 +59,6 @@ export default {
   fetchDashboardById,
   fetchTopicAreas,
   createDashboard,
+  editDashboard,
   getAuthToken,
 };

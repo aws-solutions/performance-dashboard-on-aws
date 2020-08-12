@@ -61,12 +61,12 @@ function EditDetails() {
     const fetchData = async () => {
       const data = await BadgerService.fetchDashboardById(dashboardId);
       setId(data.id);
+      setDescription(data.description);
+      setValue("description", data.description);
       setName(data.name);
       setValue("name", data.name);
       setTopicAreaId(data.topicAreaId);
       setValue("topicAreaId", data.topicAreaId);
-      setDescription(data.description);
-      setValue("description", data.description);
     };
     fetchData();
   }, [dashboardId, setValue]);
@@ -141,7 +141,7 @@ function EditDetails() {
               </select>
             </div>
 
-            {description && <Markdown text={description} title="Description - optional" subtitle="Give your dashboard an description to explain it in more depth." onChange={handleDescriptionChange} />}
+            {name && <Markdown text={description} title="Description - optional" subtitle="Give your dashboard an description to explain it in more depth." onChange={handleDescriptionChange} />}
 
             <br />
             <button className="usa-button" type="submit">

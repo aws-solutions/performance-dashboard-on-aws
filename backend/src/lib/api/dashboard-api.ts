@@ -5,11 +5,11 @@ import withErrorHandler from "./middleware/error-handler"
 
 const router = Router();
 
-router.get("/", DashboardCtrl.listDashboards);
-router.get("/:id", DashboardCtrl.getDashboardById);
-router.post("/", DashboardCtrl.createDashboard);
-router.put("/:id", DashboardCtrl.updateDashboard);
-router.delete("/:id", DashboardCtrl.deleteDashboard);
+router.get("/", withErrorHandler(DashboardCtrl.listDashboards));
+router.get("/:id", withErrorHandler(DashboardCtrl.getDashboardById));
+router.post("/", withErrorHandler(DashboardCtrl.createDashboard));
+router.put("/:id", withErrorHandler(DashboardCtrl.updateDashboard));
+router.delete("/:id", withErrorHandler(DashboardCtrl.deleteDashboard));
 
 router.post("/:id/widget", withErrorHandler(WidgetCtrl.createWidget));
 

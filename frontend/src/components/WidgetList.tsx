@@ -1,6 +1,6 @@
 import React from "react";
 import { Widget } from "../models";
-import "./EmptyContentBox.css";
+import "./WidgetList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   widgets: Array<Widget>;
 }
 
-function EmptyContentBox(props: Props) {
+function WidgetList(props: Props) {
   return (
     <div>
       {props.widgets && props.widgets.length ? (
@@ -98,4 +98,4 @@ function EmptyContentBox(props: Props) {
   );
 }
 
-export default EmptyContentBox;
+export default WidgetList;

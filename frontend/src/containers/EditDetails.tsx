@@ -149,7 +149,7 @@ function EditDetails() {
               <Markdown
                 text={description}
                 title="Description - optional"
-                subtitle="Give your dashboard an description to explain it in more depth."
+                subtitle="Give your dashboard a description to explain it in more depth."
                 onChange={handleDescriptionChange}
               />
             )}

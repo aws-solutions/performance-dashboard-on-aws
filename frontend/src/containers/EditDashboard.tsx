@@ -3,7 +3,7 @@ import { useHistory, useParams, Link } from "react-router-dom";
 import { useDashboard, useWidgets } from "../hooks";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
-import EmptyContentBox from "../components/EmptyContentBox";
+import WidgetList from "../components/WidgetList";
 import ReactMarkdown from "react-markdown";
 import BadgerService from "../services/BadgerService";
 
@@ -19,7 +19,7 @@ function EditDashboard() {
       widget = await BadgerService.createWidget(
         dashboardId,
         "Correlation of COVID cases to deaths",
-        "Line Chart",
+        "Text",
         {}
       );
     } catch (error) {
@@ -27,7 +27,7 @@ function EditDashboard() {
       widget = {
         id: "123",
         name: "Correlation of COVID cases to deaths",
-        widgetType: "Line Chart",
+        widgetType: "Text",
         content: {},
       };
     }
@@ -95,7 +95,7 @@ function EditDashboard() {
         )}
       </div>
       <hr />
-      <EmptyContentBox widgets={widgets} onClick={onAddContent} />
+      <WidgetList widgets={widgets} onClick={onAddContent} />
     </AdminLayout>
   );
 }

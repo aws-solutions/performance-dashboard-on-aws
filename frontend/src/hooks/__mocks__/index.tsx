@@ -59,7 +59,7 @@ export function useWidgets(dashboardId: string) {
       {
         id: "123",
         name: "Correlation of COVID cases to deaths",
-        widgetType: "Line Chart",
+        widgetType: "Text",
       },
     ],
     setWidgets: () => {},

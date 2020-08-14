@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useParams, Link } from "react-router-dom";
-import { useDashboard, useWidgets } from "../hooks";
+import { useDashboard } from "../hooks";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
@@ -10,28 +10,17 @@ import BadgerService from "../services/BadgerService";
 function EditDashboard() {
   const history = useHistory();
   const { dashboardId } = useParams();
-  const { dashboard } = useDashboard(dashboardId);
-  const { widgets, setWidgets } = useWidgets(dashboardId);
+  const { dashboard, setDashboard } = useDashboard(dashboardId);
 
   const onAddContent = async () => {
-    let widget;
-    try {
-      widget = await BadgerService.createWidget(
+    await BadgerService.createWidget(
         dashboardId,
         "Correlation of COVID cases to deaths",
         "Text",
         {}
       );
-    } catch (error) {
-      //remove this when the API is finished
-      widget = {
-        id: "123",
-        name: "Correlation of COVID cases to deaths",
-        widgetType: "Text",
-        content: {},
-      };
-    }
-    setWidgets([...widgets, widget]);
+      const data = await BadgerService.fetchDashboardById(dashboardId);
+      setDashboard(data);
   };
 
   const onSubmit = async () => {
@@ -95,7 +84,7 @@ function EditDashboard() {
         )}
       </div>
       <hr />
-      <WidgetList widgets={widgets} onClick={onAddContent} />
+      <WidgetList widgets={dashboard ? dashboard.widgets : []} onClick={onAddContent} />
     </AdminLayout>
   );
 }

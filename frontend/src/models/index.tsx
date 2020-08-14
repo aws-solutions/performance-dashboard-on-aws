@@ -9,6 +9,7 @@ export type Dashboard = {
   topicAreaId: string;
   topicAreaName: string;
   description?: string;
+  widgets: Array<Widget>;
 };
 
 export type Widget = {

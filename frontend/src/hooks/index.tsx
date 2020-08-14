@@ -39,6 +39,7 @@ export function useTopicAreas(): UseTopicAreasHook {
 type UseDashboardHook = {
   loading: boolean;
   dashboard?: Dashboard;
+  setDashboard: Function;
 };
 
 export function useDashboard(dashboardId: string): UseDashboardHook {
@@ -58,6 +59,7 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
   return {
     loading,
     dashboard,
+    setDashboard,
   };
 }
 

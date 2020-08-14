@@ -30,7 +30,14 @@ describe("DashboardRepository", () => {
 
 describe("DashboardRepository.create", () => {
   it("should call putItem on dynamodb", async () => {
-    const dashboard = DashboardFactory.create('123', 'Dashboard1', '456', 'Topic1', 'Description Test', user);
+    const dashboard = DashboardFactory.create(
+      "123",
+      "Dashboard1",
+      "456",
+      "Topic1",
+      "Description Test",
+      user
+    );
     const item = DashboardFactory.toItem(dashboard);
 
     await repo.putDashboard(dashboard);
@@ -46,7 +53,13 @@ describe("DashboardRepository.create", () => {
 
 describe("DashboardRepository.createNew", () => {
   it("should call putItem on dynamodb", async () => {
-    const dashboard = DashboardFactory.createNew('Dashboard1', '456', 'Topic1', 'Description Test', user);
+    const dashboard = DashboardFactory.createNew(
+      "Dashboard1",
+      "456",
+      "Topic1",
+      "Description Test",
+      user
+    );
     const item = DashboardFactory.toItem(dashboard);
 
     await repo.putDashboard(dashboard);
@@ -61,37 +74,52 @@ describe("DashboardRepository.createNew", () => {
 });
 
 describe("DashboardRepository.updateDashboard", () => {
-    it("should call updateItem with the correct keys", async () => {
-      const dashboard = DashboardFactory.create('123', 'Dashboard1', '456', 'Topic1', 'Description Test', user);
-      await repo.updateDashboard(dashboard, user);
-      expect(dynamodb.update).toHaveBeenCalledWith(
-        expect.objectContaining({
-          TableName: tableName,
-          Key: {
-            pk: DashboardFactory.itemId("123"),
-            sk: DashboardFactory.itemId("123"),
-          },
-        })
-      );
-    });
-  
-    it("should call update with all the fields", async () => {
-      const dashboard = DashboardFactory.create('123', 'Dashboard1', '456', 'Topic1', 'Description Test', user);
-      await repo.updateDashboard(dashboard, user);
-      expect(dynamodb.update).toHaveBeenCalledWith(
-        expect.objectContaining({
-          UpdateExpression: "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
-          ExpressionAttributeValues: {
-            ":dashboardName": dashboard.name,
-            ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
-            ":topicAreaName": dashboard.topicAreaName,
-            ":description": dashboard.description,
-            ":userId": user.userId,
-          },
-        })
-      );
-    });
+  it("should call updateItem with the correct keys", async () => {
+    const dashboard = DashboardFactory.create(
+      "123",
+      "Dashboard1",
+      "456",
+      "Topic1",
+      "Description Test",
+      user
+    );
+    await repo.updateDashboard(dashboard, user);
+    expect(dynamodb.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableName: tableName,
+        Key: {
+          pk: DashboardFactory.itemId("123"),
+          sk: DashboardFactory.itemId("123"),
+        },
+      })
+    );
   });
+
+  it("should call update with all the fields", async () => {
+    const dashboard = DashboardFactory.create(
+      "123",
+      "Dashboard1",
+      "456",
+      "Topic1",
+      "Description Test",
+      user
+    );
+    await repo.updateDashboard(dashboard, user);
+    expect(dynamodb.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        UpdateExpression:
+          "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
+        ExpressionAttributeValues: {
+          ":dashboardName": dashboard.name,
+          ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
+          ":topicAreaName": dashboard.topicAreaName,
+          ":description": dashboard.description,
+          ":userId": user.userId,
+        },
+      })
+    );
+  });
+});
 
 describe("DashboardRepository.delete", () => {
   it("should call delete with the correct key", async () => {
@@ -126,26 +154,28 @@ describe("DashboardRepository.listDashboards", () => {
   it("returns a list of dashboards", async () => {
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({
-      Items: [{
-        pk: 'Dashboard#123',
-        sk: 'Dashboard#123',
-        topicAreaId: 'TopicArea#456',
-        topicAreaName: 'Topic 1',
-        dashboardName: 'Test name',
-        description: 'description test',
-        createdBy: 'test',
-      }],
+      Items: [
+        {
+          pk: "Dashboard#123",
+          sk: "Dashboard#123",
+          topicAreaId: "TopicArea#456",
+          topicAreaName: "Topic 1",
+          dashboardName: "Test name",
+          description: "description test",
+          createdBy: "test",
+        },
+      ],
     });
 
     const list = await repo.listDashboards();
     expect(list.length).toEqual(1);
     expect(list[0]).toEqual({
-      id: '123',
-      name: 'Test name',
-      topicAreaId: '456',
-      topicAreaName: 'Topic 1',
-      description: 'description test',
-      createdBy: 'test',
+      id: "123",
+      name: "Test name",
+      topicAreaId: "456",
+      topicAreaName: "Topic 1",
+      description: "description test",
+      createdBy: "test",
     });
   });
 
@@ -153,24 +183,24 @@ describe("DashboardRepository.listDashboards", () => {
     // Mock query response
     dynamodb.get = jest.fn().mockReturnValue({
       Item: {
-        pk: 'Dashboard#123',
-        sk: 'Dashboard#123',
-        topicAreaId: 'TopicArea#456',
-        topicAreaName: 'Topic 1',
-        dashboardName: 'Test name',
-        description: 'description test',
-        createdBy: 'test',
+        pk: "Dashboard#123",
+        sk: "Dashboard#123",
+        topicAreaId: "TopicArea#456",
+        topicAreaName: "Topic 1",
+        dashboardName: "Test name",
+        description: "description test",
+        createdBy: "test",
       },
     });
 
-    const item = await repo.getDashboardById('123');
+    const item = await repo.getDashboardById("123");
     expect(item).toEqual({
-      id: '123',
-      name: 'Test name',
-      topicAreaId: '456',
-      topicAreaName: 'Topic 1',
-      description: 'description test',
-      createdBy: 'test',
+      id: "123",
+      name: "Test name",
+      topicAreaId: "456",
+      topicAreaName: "Topic 1",
+      description: "description test",
+      createdBy: "test",
     });
   });
 
@@ -178,7 +208,7 @@ describe("DashboardRepository.listDashboards", () => {
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({});
 
-    const topicAreaId = '456';
+    const topicAreaId = "456";
 
     await repo.listDashboardsWithinTopicArea(topicAreaId);
 
@@ -188,32 +218,84 @@ describe("DashboardRepository.listDashboards", () => {
         KeyConditionExpression: "#topicAreaId = :topicAreaId",
         ExpressionAttributeValues: {
           ":topicAreaId": TopicAreaFactory.itemId(topicAreaId),
-        }
+        },
       })
     );
 
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({
-      Items: [{
-        pk: 'Dashboard#123',
-        sk: 'Dashboard#123',
-        topicAreaId: `TopicArea#${topicAreaId}`,
-        topicAreaName: 'Topic 1',
-        dashboardName: 'Test name',
-        description: 'description test',
-        createdBy: 'test',
-      }],
+      Items: [
+        {
+          pk: "Dashboard#123",
+          sk: "Dashboard#123",
+          topicAreaId: `TopicArea#${topicAreaId}`,
+          topicAreaName: "Topic 1",
+          dashboardName: "Test name",
+          description: "description test",
+          createdBy: "test",
+        },
+      ],
     });
 
     const list = await repo.listDashboardsWithinTopicArea(topicAreaId);
     expect(list.length).toEqual(1);
     expect(list[0]).toEqual({
-      id: '123',
-      name: 'Test name',
+      id: "123",
+      name: "Test name",
       topicAreaId: topicAreaId,
-      topicAreaName: 'Topic 1',
-      description: 'description test',
-      createdBy: 'test',
+      topicAreaName: "Topic 1",
+      description: "description test",
+      createdBy: "test",
     });
+  });
+});
+
+describe("DashboardRepository.getDashboardWithWidgets", () => {
+  it("throws an error when dashboardId is not found", () => {
+    dynamodb.query = jest.fn().mockReturnValue({ Items: [] });
+    return expect(repo.getDashboardWithWidgets("123")).rejects.toThrowError();
+  });
+
+  it("returns a dashboard with no widgets", async () => {
+    dynamodb.query = jest.fn().mockReturnValue({
+      Items: [
+        {
+          pk: "Dashboard#123",
+          sk: "Dashboard#123",
+          name: "AWS Dashboard",
+          type: "Dashboard",
+          topicAreaId: "TopicArea#cb9ad",
+        },
+      ],
+    });
+
+    const dashboard = await repo.getDashboardWithWidgets("123");
+    expect(dashboard.id).toEqual("123");
+    expect(dashboard.widgets).toHaveLength(0);
+  });
+
+  it("returns a dashboard with widgets", async () => {
+    dynamodb.query = jest.fn().mockReturnValue({
+      Items: [
+        {
+          pk: "Dashboard#123",
+          sk: "Dashboard#123",
+          name: "AWS Dashboard",
+          type: "Dashboard",
+          topicAreaId: "TopicArea#cb9ad",
+        },
+        {
+          pk: "Dashboard#123",
+          sk: "Widget#abc",
+          type: "Widget",
+          name: "Some name",
+          widgetType: "Text",
+          content: {},
+        },
+      ],
+    });
+
+    const dashboard = await repo.getDashboardWithWidgets("123");
+    expect(dashboard.widgets).toHaveLength(1);
   });
 });

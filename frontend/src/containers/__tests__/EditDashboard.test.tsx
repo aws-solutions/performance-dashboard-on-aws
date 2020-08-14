@@ -4,20 +4,16 @@ import { createMemoryHistory } from "history";
 import { MemoryRouter, Router } from "react-router-dom";
 import EditDashboard from "../EditDashboard";
 
-/**
- * Mock useDashboard hook to return a dummy dashboard
- */
-jest.mock("../../hooks", () => ({
-  useDashboard: jest.fn().mockReturnValue({
-    loading: false,
-    dashboard: {
-      id: "123",
-      name: "My AWS Dashboard",
-      topicAreaId: "abc",
-      topicAreaName: "Bananas",
-    },
-  })
-}));
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faGripLinesVertical,
+  faCaretUp,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(faGripLinesVertical, faCaretUp, faCaretDown);
+
+jest.mock("../../hooks");
 
 test("renders the name of the dashboard", async () => {
   const { findByText } = render(<EditDashboard />, { wrapper: MemoryRouter });
@@ -42,6 +38,8 @@ test("edit details link takes you to details screen", async () => {
   );
 
   const cancelButton = await findByRole("link", { name: "Edit details" });
-  fireEvent.click(cancelButton)
-  expect(history.push).toHaveBeenCalledWith("/admin/dashboard/edit/123/details");
+  fireEvent.click(cancelButton);
+  expect(history.push).toHaveBeenCalledWith(
+    "/admin/dashboard/edit/123/details"
+  );
 });

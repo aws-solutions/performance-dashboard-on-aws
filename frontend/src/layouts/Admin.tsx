@@ -22,9 +22,7 @@ function AdminLayout(props: LayoutProps) {
         </div>
       </header>
       <main className="padding-top-3">
-        <div className="grid-container">
-          {props.children}
-        </div>
+        <div className="grid-container">{props.children}</div>
       </main>
     </>
   );

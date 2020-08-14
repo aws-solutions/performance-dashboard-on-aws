@@ -1,15 +1,38 @@
 import React from "react";
 import { useHistory, useParams, Link } from "react-router-dom";
-import { useDashboard } from "../hooks";
+import { useDashboard, useWidgets } from "../hooks";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import EmptyContentBox from "../components/EmptyContentBox";
 import ReactMarkdown from "react-markdown";
+import BadgerService from "../services/BadgerService";
 
 function EditDashboard() {
   const history = useHistory();
   const { dashboardId } = useParams();
   const { dashboard } = useDashboard(dashboardId);
+  const { widgets, setWidgets } = useWidgets(dashboardId);
+
+  const onAddContent = async () => {
+    let widget;
+    try {
+      widget = await BadgerService.createWidget(
+        dashboardId,
+        "Correlation of COVID cases to deaths",
+        "Line Chart",
+        {}
+      );
+    } catch (error) {
+      //remove this when the API is finished
+      widget = {
+        id: "123",
+        name: "Correlation of COVID cases to deaths",
+        widgetType: "Line Chart",
+        content: {},
+      };
+    }
+    setWidgets([...widgets, widget]);
+  };
 
   const onSubmit = async () => {
     history.push("/admin/dashboards");
@@ -23,7 +46,7 @@ function EditDashboard() {
     <AdminLayout>
       <Breadcrumbs />
       <div className="grid-row">
-        <div className="grid-col text-middle">
+        <div className="grid-col text-left">
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
               <span className="usa-tag">DRAFT</span>
@@ -72,7 +95,7 @@ function EditDashboard() {
         )}
       </div>
       <hr />
-      <EmptyContentBox />
+      <EmptyContentBox widgets={widgets} onClick={onAddContent} />
     </AdminLayout>
   );
 }

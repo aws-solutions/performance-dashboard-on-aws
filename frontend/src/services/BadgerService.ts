@@ -30,27 +30,60 @@ async function fetchTopicAreas() {
   return await API.get(apiName, "topicarea", { headers });
 }
 
-async function createDashboard(name: string, topicAreaId: string, description: string) {
+async function fetchWidgets(dashboardId: string) {
+  const headers = await authHeaders();
+  return await API.get(apiName, `dashboard/${dashboardId}/widgets`, {
+    headers,
+  });
+}
+
+async function createDashboard(
+  name: string,
+  topicAreaId: string,
+  description: string
+) {
   const headers = await authHeaders();
   return await API.post(apiName, "dashboard", {
     headers,
     body: {
       name,
       topicAreaId,
-      description
-    }
+      description,
+    },
   });
 }
 
-async function editDashboard(dashboardId: string, name: string, topicAreaId: string, description: string) {
+async function editDashboard(
+  dashboardId: string,
+  name: string,
+  topicAreaId: string,
+  description: string
+) {
   const headers = await authHeaders();
   return await API.put(apiName, `dashboard/${dashboardId}`, {
     headers,
     body: {
       name,
       topicAreaId,
-      description
-    }
+      description,
+    },
+  });
+}
+
+async function createWidget(
+  dashboardId: string,
+  name: string,
+  widgetType: string,
+  content: object
+) {
+  const headers = await authHeaders();
+  return await API.post(apiName, `dashboard/${dashboardId}/widget`, {
+    headers,
+    body: {
+      name,
+      widgetType,
+      content,
+    },
   });
 }
 
@@ -58,7 +91,9 @@ export default {
   fetchDashboards,
   fetchDashboardById,
   fetchTopicAreas,
+  fetchWidgets,
   createDashboard,
   editDashboard,
+  createWidget,
   getAuthToken,
 };

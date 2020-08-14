@@ -15,7 +15,7 @@ export function useTopicAreas() {
       {
         id: "987654321",
         name: "Topic Area Grapes",
-      }
+      },
     ],
   };
 }
@@ -28,14 +28,40 @@ export function useDashboards() {
         id: "abc",
         name: "Dashboard One",
         topicAreaId: "123456789",
-        topicAreaName: "Topic Area Bananas"
+        topicAreaName: "Topic Area Bananas",
       },
       {
         id: "xyz",
         name: "Dashboard Two",
         topicAreaId: "987654321",
-        topicAreaName: "Topic Area Grapes"
-      }
+        topicAreaName: "Topic Area Grapes",
+      },
     ],
+  };
+}
+
+export function useDashboard(dashboardId: string) {
+  return {
+    loading: false,
+    dashboard: {
+      id: "123",
+      name: "My AWS Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "Bananas",
+    },
+  };
+}
+
+export function useWidgets(dashboardId: string) {
+  return {
+    loading: false,
+    widgets: [
+      {
+        id: "123",
+        name: "Correlation of COVID cases to deaths",
+        widgetType: "Line Chart",
+      },
+    ],
+    setWidgets: () => {},
   };
 }

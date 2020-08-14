@@ -11,9 +11,7 @@ function MainLayout(props: LayoutProps) {
       <section className="usa-hero">
         <div className="grid-container">
           <div className="usa-hero__callout">
-            <h1 className="usa-hero__heading">
-              Performance Dashboard
-            </h1>
+            <h1 className="usa-hero__heading">Performance Dashboard</h1>
             <p>Find information about your government digital services</p>
           </div>
         </div>
@@ -23,9 +21,7 @@ function MainLayout(props: LayoutProps) {
       </main>
       <footer className="usa-footer">
         <div className="usa-footer__secondary-section">
-          <div className="grid-container">
-            Amazon Web Services
-          </div>
+          <div className="grid-container">Amazon Web Services</div>
         </div>
       </footer>
     </>

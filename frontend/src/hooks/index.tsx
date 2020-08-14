@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TopicArea, Dashboard } from "../models";
+import { TopicArea, Dashboard, Widget } from "../models";
 import BadgerService from "../services/BadgerService";
 
 /**
@@ -38,8 +38,8 @@ export function useTopicAreas(): UseTopicAreasHook {
 
 type UseDashboardHook = {
   loading: boolean;
-  dashboard?: Dashboard,
-}
+  dashboard?: Dashboard;
+};
 
 export function useDashboard(dashboardId: string): UseDashboardHook {
   const [loading, setLoading] = useState(false);
@@ -63,8 +63,8 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
 
 type UseDashboardsHook = {
   loading: boolean;
-  dashboards: Array<Dashboard>,
-}
+  dashboards: Array<Dashboard>;
+};
 
 export function useDashboards(): UseDashboardsHook {
   const [loading, setLoading] = useState(false);
@@ -83,5 +83,32 @@ export function useDashboards(): UseDashboardsHook {
   return {
     loading,
     dashboards,
+  };
+}
+
+type UseWidgetsHook = {
+  loading: boolean;
+  widgets: Array<Widget>;
+  setWidgets: Function;
+};
+
+export function useWidgets(dashboardId: string): UseWidgetsHook {
+  const [loading, setLoading] = useState(false);
+  const [widgets, setWidgets] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const data = await BadgerService.fetchWidgets(dashboardId);
+      setWidgets(data);
+      setLoading(false);
+    };
+    fetchData();
+  }, [dashboardId]);
+
+  return {
+    loading,
+    widgets,
+    setWidgets,
   };
 }

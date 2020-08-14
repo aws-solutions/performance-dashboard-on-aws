@@ -1,6 +1,6 @@
 export type TopicArea = {
-  id: string,
-  name: string,
+  id: string;
+  name: string;
 };
 
 export type Dashboard = {
@@ -9,4 +9,11 @@ export type Dashboard = {
   topicAreaId: string;
   topicAreaName: string;
   description?: string;
+};
+
+export type Widget = {
+  id: string;
+  name: string;
+  widgetType: string;
+  content?: object;
 };

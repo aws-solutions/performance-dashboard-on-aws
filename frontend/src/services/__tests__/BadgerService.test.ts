@@ -16,13 +16,17 @@ test("createDashboard should make a POST request with payload", async () => {
 
   await BadgerService.createDashboard(name, topicAreaId, description);
 
-  expect(API.post).toHaveBeenCalledWith("BadgerApi", "dashboard", expect.objectContaining({
-    body: {
-      name,
-      topicAreaId,
-      description
-    }
-  }));
+  expect(API.post).toHaveBeenCalledWith(
+    "BadgerApi",
+    "dashboard",
+    expect.objectContaining({
+      body: {
+        name,
+        topicAreaId,
+        description,
+      },
+    })
+  );
 });
 
 test("editDashboard should make a POST request with payload", async () => {
@@ -31,13 +35,22 @@ test("editDashboard should make a POST request with payload", async () => {
   const description = "Alexa, how is the weather?";
   const topicAreaId = "xyz";
 
-  await BadgerService.editDashboard(dashboardId, name, topicAreaId, description);
+  await BadgerService.editDashboard(
+    dashboardId,
+    name,
+    topicAreaId,
+    description
+  );
 
-  expect(API.put).toHaveBeenCalledWith("BadgerApi", `dashboard/${dashboardId}`, expect.objectContaining({
-    body: {
-      name,
-      topicAreaId,
-      description
-    }
-  }));
+  expect(API.put).toHaveBeenCalledWith(
+    "BadgerApi",
+    `dashboard/${dashboardId}`,
+    expect.objectContaining({
+      body: {
+        name,
+        topicAreaId,
+        description,
+      },
+    })
+  );
 });

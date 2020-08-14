@@ -22,7 +22,7 @@ function CreateDashboard() {
     const dashboard = await BadgerService.createDashboard(
       values.name,
       values.topicAreaId,
-      values.description || ''
+      values.description || ""
     );
     history.push(`/admin/dashboard/edit/${dashboard.id}`);
   };
@@ -33,11 +33,11 @@ function CreateDashboard() {
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue("description", event.target.value);
-  }
+  };
 
   React.useEffect(() => {
     register("description");
-  }, [register])
+  }, [register]);
 
   return (
     <AdminLayout>
@@ -107,7 +107,12 @@ function CreateDashboard() {
               </select>
             </div>
 
-            <Markdown text="" title="Description - optional" subtitle="Give your dashboard an description to explain it in more depth." onChange={handleChange} />
+            <Markdown
+              text=""
+              title="Description - optional"
+              subtitle="Give your dashboard an description to explain it in more depth."
+              onChange={handleChange}
+            />
 
             <br />
             <button className="usa-button" type="submit">

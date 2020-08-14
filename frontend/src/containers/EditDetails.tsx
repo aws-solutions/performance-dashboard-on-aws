@@ -17,10 +17,10 @@ function EditDetails() {
   const history = useHistory();
   const { topicareas } = useTopicAreas();
   const { dashboardId } = useParams();
-  const [ id, setId ] = useState(dashboardId);
-  const [ name, setName ] = useState("");
-  const [ topicAreaId, setTopicAreaId ] = useState("");
-  const [ description, setDescription ] = useState("");
+  const [id, setId] = useState(dashboardId);
+  const [name, setName] = useState("");
+  const [topicAreaId, setTopicAreaId] = useState("");
+  const [description, setDescription] = useState("");
   const { register, errors, handleSubmit, setValue } = useForm<FormValues>();
 
   const onSubmit = async (values: FormValues) => {
@@ -28,7 +28,7 @@ function EditDetails() {
       id,
       values.name,
       values.topicAreaId,
-      values.description || ''
+      values.description || ""
     );
     history.push(`/admin/dashboard/edit/${id}`);
   };
@@ -40,16 +40,20 @@ function EditDetails() {
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
     setValue("name", event.target.value);
-  }
+  };
 
-  const handleTopicAreaIdChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTopicAreaIdChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setTopicAreaId(event.target.value);
     setValue("topicAreaId", event.target.value);
-  }
+  };
 
-  const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setValue("description", event.target.value);
-  }
+  };
 
   useEffect(() => {
     register("name");
@@ -141,7 +145,14 @@ function EditDetails() {
               </select>
             </div>
 
-            {name && <Markdown text={description} title="Description - optional" subtitle="Give your dashboard an description to explain it in more depth." onChange={handleDescriptionChange} />}
+            {name && (
+              <Markdown
+                text={description}
+                title="Description - optional"
+                subtitle="Give your dashboard an description to explain it in more depth."
+                onChange={handleDescriptionChange}
+              />
+            )}
 
             <br />
             <button className="usa-button" type="submit">
@@ -149,6 +160,7 @@ function EditDetails() {
             </button>
             <button
               className="usa-button usa-button--unstyled"
+              type="button"
               onClick={onCancel}
             >
               Cancel

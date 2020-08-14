@@ -5,7 +5,12 @@ import Markdown from "../Markdown";
 
 test("renders the text of the markdown component", async () => {
   const { findByText } = render(
-    <Markdown text="text test" title="Test" subtitle="Subtitle test." onChange={()=>{}} />,
+    <Markdown
+      text="text test"
+      title="Test"
+      subtitle="Subtitle test."
+      onChange={() => {}}
+    />,
     { wrapper: MemoryRouter }
   );
   const title = await findByText("text test");
@@ -14,7 +19,12 @@ test("renders the text of the markdown component", async () => {
 
 test("renders the title of the markdown component", async () => {
   const { findByText } = render(
-    <Markdown text="" title="Test" subtitle="Subtitle test." onChange={()=>{}} />,
+    <Markdown
+      text=""
+      title="Test"
+      subtitle="Subtitle test."
+      onChange={() => {}}
+    />,
     { wrapper: MemoryRouter }
   );
   const title = await findByText("Test");
@@ -23,7 +33,12 @@ test("renders the title of the markdown component", async () => {
 
 test("renders the subtitle of the markdown component", async () => {
   const { findByText } = render(
-    <Markdown text="" title="Test" subtitle="Subtitle test." onChange={()=>{}} />,
+    <Markdown
+      text=""
+      title="Test"
+      subtitle="Subtitle test."
+      onChange={() => {}}
+    />,
     { wrapper: MemoryRouter }
   );
   const subtitle = await findByText(
@@ -34,7 +49,12 @@ test("renders the subtitle of the markdown component", async () => {
 
 test("renders the placeholder of the markdown component", async () => {
   const { findByPlaceholderText } = render(
-    <Markdown text="" title="Test" subtitle="Subtitle test." onChange={()=>{}} />,
+    <Markdown
+      text=""
+      title="Test"
+      subtitle="Subtitle test."
+      onChange={() => {}}
+    />,
     { wrapper: MemoryRouter }
   );
   const subtitle = await findByPlaceholderText("Enter overview text here");

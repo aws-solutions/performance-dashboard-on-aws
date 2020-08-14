@@ -2,19 +2,25 @@
 
 exports[`EmptyContentBox renders an empty box 1`] = `
 <div>
-  <div
-    class="text-center radius-lg padding-5 margin-y-3 border-base border-dashed bg-base-lightest border"
-  >
-    <p>
-      This dashboard is empty. Build the dashboard by adding 
-      <br />
-      charts, tables, metrics and text as content.
-    </p>
-    <button
-      class="usa-button usa-button--base margin-top-1"
+  <div>
+    <div
+      class="text-center radius-lg padding-5 margin-y-3 border-base border-dashed bg-base-lightest border"
     >
-      + Add content
-    </button>
+      <p>
+        This dashboard is empty. Build the dashboard by adding 
+        <br />
+        charts, tables, metrics and text as content.
+      </p>
+    </div>
+    <div
+      class="text-center margin-top-2"
+    >
+      <button
+        class="usa-button usa-button--base margin-top-1"
+      >
+        + Add content
+      </button>
+    </div>
   </div>
 </div>
 `;

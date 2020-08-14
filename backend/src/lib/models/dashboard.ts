@@ -1,3 +1,5 @@
+import { Widget } from "./widget";
+
 export type Dashboard = {
     id: string,
     name: string,
@@ -5,6 +7,7 @@ export type Dashboard = {
     topicAreaName: string,
     description: string,
     createdBy: string,
+    widgets?: Array<Widget>
 };
 
 export type DashboardList = Array<Dashboard>;

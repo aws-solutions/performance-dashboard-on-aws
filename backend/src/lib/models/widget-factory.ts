@@ -38,6 +38,10 @@ function fromItem(item: WidgetItem): Widget {
   }
 }
 
+function fromItems(items: Array<WidgetItem>): Array<Widget> {
+  return items.map(item => fromItem(item));
+}
+
 function toItem(widget: Widget): WidgetItem {
   return {
     pk: DASHBOARD_PREFIX.concat(widget.dashboardId),
@@ -68,5 +72,6 @@ function createTextWidget(
 export default {
   createWidget,
   fromItem,
+  fromItems,
   toItem,
 };

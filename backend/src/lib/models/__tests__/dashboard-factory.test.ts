@@ -1,5 +1,5 @@
 import factory from '../dashboard-factory';
-import { Dashboard, DashboardItem } from '../dashboard-models';
+import { Dashboard, DashboardItem } from '../dashboard';
 import { User } from '../user-models';
 
 const user: User = {

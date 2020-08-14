@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { Dashboard, DashboardItem } from "./dashboard-models";
+import { Dashboard, DashboardItem } from "./dashboard";
 import { User } from "./user-models";
 import topicareaFactory from "./topicarea-factory";
 

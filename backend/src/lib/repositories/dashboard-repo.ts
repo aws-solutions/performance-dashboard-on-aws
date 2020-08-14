@@ -2,11 +2,9 @@ import { User } from "../models/user-models";
 import DynamoDBService from "../services/dynamodb";
 import DashboardFactory from "../models/dashboard-factory";
 import TopicAreaFactory from "../models/topicarea-factory";
-import {
-  Dashboard,
-  DashboardList,
-  DashboardItem,
-} from "../models/dashboard-models";
+import WidgetFactory from "../models/widget-factory";
+import { WidgetItem } from "../models/widget";
+import { Dashboard, DashboardList, DashboardItem } from "../models/dashboard";
 
 class DashboardRepository {
   private dynamodb: DynamoDBService;
@@ -31,7 +29,7 @@ class DashboardRepository {
    */
   static getInstance(): DashboardRepository {
     if (!DashboardRepository.instance) {
-        DashboardRepository.instance = new DashboardRepository();
+      DashboardRepository.instance = new DashboardRepository();
     }
 
     return DashboardRepository.instance;
@@ -97,7 +95,9 @@ class DashboardRepository {
   /**
    * Returns the list of Dashboards within an specified topic area.
    */
-  public async listDashboardsWithinTopicArea(topicAreaId: string): Promise<DashboardList> {
+  public async listDashboardsWithinTopicArea(
+    topicAreaId: string
+  ): Promise<DashboardList> {
     const result = await this.dynamodb.query({
       TableName: this.tableName,
       IndexName: "byTopicAreaId",
@@ -130,7 +130,8 @@ class DashboardRepository {
         pk: DashboardFactory.itemId(dashboard.id),
         sk: DashboardFactory.itemId(dashboard.id),
       },
-      UpdateExpression: "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
+      UpdateExpression:
+        "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
       ExpressionAttributeValues: {
         ":dashboardName": dashboard.name,
         ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
@@ -160,6 +161,33 @@ class DashboardRepository {
         sk: DashboardFactory.itemId(dashboardId),
       },
     });
+  }
+
+  public async getDashboardWithWidgets(
+    dashboardId: string
+  ): Promise<Dashboard> {
+    const result = await this.dynamodb.query({
+      TableName: this.tableName,
+      KeyConditionExpression: "pk = :dashboardId",
+      ExpressionAttributeValues: {
+        ":dashboardId": DashboardFactory.itemId(dashboardId),
+      },
+    });
+
+    if (!result.Items || result.Items.length === 0) {
+      throw new Error("Dashboard not found");
+    }
+
+    // Query returns multiple items, one of them is the master record
+    // that represents the Dashboard item.
+    const item = result.Items.find((item) => item.type === "Dashboard");
+    const dashboard = DashboardFactory.fromItem(item as DashboardItem);
+
+    // Parse the widgets and add them to the dashboard
+    const items = result.Items.filter((item) => item.type === "Widget");
+    dashboard.widgets = WidgetFactory.fromItems(items as Array<WidgetItem>);
+
+    return dashboard;
   }
 }
 

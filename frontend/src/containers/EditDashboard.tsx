@@ -19,8 +19,8 @@ function EditDashboard() {
         "Text",
         {}
       );
-      const data = await BadgerService.fetchDashboardById(dashboardId);
-      setDashboard(data);
+    const data = await BadgerService.fetchDashboardById(dashboardId);
+    setDashboard(data);
   };
 
   const onSubmit = async () => {

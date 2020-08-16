@@ -156,7 +156,7 @@ function EditDetails() {
 
             <br />
             <button className="usa-button" type="submit">
-              Edit
+              Save
             </button>
             <button
               className="usa-button usa-button--unstyled"

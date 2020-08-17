@@ -14,16 +14,15 @@ export class BadgerApi extends cdk.Construct {
     super(scope, id);
 
     const apiIntegration = new apigateway.LambdaIntegration(props.apiFunction);
-    this.api = new apigateway.RestApi(this, "ApiGateway", {
+    this.api = new apigateway.RestApi(scope, "ApiGateway", {
       description: "Badger API",
-      defaultIntegration: apiIntegration,
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,
       },
     });
 
-    const authorizer = new apigateway.CfnAuthorizer(this, "CognitoAuth", {
+    const authorizer = new apigateway.CfnAuthorizer(scope, "CognitoAuth", {
       type: apigateway.AuthorizationType.COGNITO,
       name: "cognito-authorizer",
       restApiId: this.api.restApiId,
@@ -33,32 +32,30 @@ export class BadgerApi extends cdk.Construct {
 
     // Defined resource props to the top level resources and they automatically
     // get applied recursively to their children endpoints.
-    const resourceProps: apigateway.ResourceOptions = {
-      defaultMethodOptions: {
-        authorizationType: apigateway.AuthorizationType.COGNITO,
-        authorizer: { authorizerId: authorizer.ref },
-      }
+    const methodProps: apigateway.MethodOptions = {
+      authorizationType: apigateway.AuthorizationType.COGNITO,
+      authorizer: { authorizerId: authorizer.ref },
     };
 
-    const dashboards = this.api.root.addResource("dashboard", resourceProps);
-    dashboards.addMethod("GET");
-    dashboards.addMethod("POST");
+    const dashboards = this.api.root.addResource("dashboard");
+    dashboards.addMethod("GET", apiIntegration, methodProps);
+    dashboards.addMethod("POST", apiIntegration, methodProps);
 
     const dashboard = dashboards.addResource("{id}");
-    dashboard.addMethod("GET");
-    dashboard.addMethod("PUT");
-    dashboard.addMethod("DELETE");
+    dashboard.addMethod("GET", apiIntegration, methodProps);
+    dashboard.addMethod("PUT", apiIntegration, methodProps);
+    dashboard.addMethod("DELETE", apiIntegration, methodProps);
 
     const widgets = dashboard.addResource("widget");
-    widgets.addMethod("POST");
+    widgets.addMethod("POST", apiIntegration, methodProps);
 
-    const topicareas = this.api.root.addResource("topicarea", resourceProps);
-    topicareas.addMethod("GET");
-    topicareas.addMethod("POST");
+    const topicareas = this.api.root.addResource("topicarea");
+    topicareas.addMethod("GET", apiIntegration, methodProps);
+    topicareas.addMethod("POST", apiIntegration, methodProps);
 
     const topicarea = topicareas.addResource("{id}");
-    topicarea.addMethod("GET");
-    topicarea.addMethod("PUT");
-    topicarea.addMethod("DELETE");
+    topicarea.addMethod("GET", apiIntegration, methodProps);
+    topicarea.addMethod("PUT", apiIntegration, methodProps);
+    topicarea.addMethod("DELETE", apiIntegration, methodProps);
   }
 }

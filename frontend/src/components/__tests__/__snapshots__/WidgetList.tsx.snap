@@ -11,15 +11,15 @@ exports[`WidgetList renders an empty box 1`] = `
         <br />
         charts, tables, metrics and text as content.
       </p>
-    </div>
-    <div
-      class="text-center margin-top-2"
-    >
-      <button
-        class="usa-button usa-button--base margin-top-1"
+      <div
+        class="text-center margin-top-4"
       >
-        + Add content
-      </button>
+        <button
+          class="usa-button usa-button--base margin-top-1"
+        >
+          + Add content
+        </button>
+      </div>
     </div>
   </div>
 </div>

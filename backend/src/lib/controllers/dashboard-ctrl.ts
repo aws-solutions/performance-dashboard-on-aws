@@ -84,10 +84,10 @@ async function updateDashboard(req: Request, res: Response) {
     res.status(400).send("Missing required field `id`");
   }
 
-  const { dashboardName, topicAreaId, description } = req.body;
+  const { name, topicAreaId, description } = req.body;
 
-  if (!dashboardName) {
-    res.status(400).send("Missing required body `dashboardName`");
+  if (!name) {
+    res.status(400).send("Missing required body `name`");
     return;
   }
 
@@ -101,7 +101,7 @@ async function updateDashboard(req: Request, res: Response) {
   );
   const dashboard = DashboardFactory.create(
     id,
-    dashboardName,
+    name,
     topicAreaId,
     topicArea.name,
     description,

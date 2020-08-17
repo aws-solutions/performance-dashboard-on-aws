@@ -20,6 +20,17 @@ export class PipelineStack extends cdk.Stack {
     super(scope, id, props);
 
     const notificationsTopic = new sns.Topic(this, "NotificationsTopic");
+    notificationsTopic.addToResourcePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["SNS:Publish"],
+        resources: [notificationsTopic.topicArn],
+        principals: [
+          new iam.ServicePrincipal("codestar-notifications.amazonaws.com"),
+        ],
+      })
+    );
+
     const artifactsBucket = new s3.Bucket(this, "ArtifactsBucket");
     const codeRepo = codecommit.Repository.fromRepositoryName(
       this,
@@ -90,9 +101,7 @@ export class PipelineStack extends cdk.Stack {
         detailType: "BASIC",
         resource: build.projectArn,
         name: "BadgerBuildNotifications",
-        eventTypeIds: [
-          "codebuild-project-build-state-failed",
-        ],
+        eventTypeIds: ["codebuild-project-build-state-failed"],
         targets: [
           {
             targetType: "SNS",

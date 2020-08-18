@@ -50,6 +50,8 @@ export class BackendStack extends cdk.Stack {
             runtime: lambda.Runtime.NODEJS_12_X,
             code: lambda.Code.asset("../backend/build"),
             handler: "lambda/api.handler",
+            tracing: lambda.Tracing.ACTIVE,
+            memorySize: 256,
             environment: {
                 BADGER_TABLE: table.tableName,
             }

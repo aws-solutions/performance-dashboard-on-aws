@@ -16,6 +16,7 @@ export class BadgerApi extends cdk.Construct {
     const apiIntegration = new apigateway.LambdaIntegration(props.apiFunction);
     this.api = new apigateway.RestApi(scope, "ApiGateway", {
       description: "Badger API",
+      deployOptions: { tracingEnabled: true },
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,

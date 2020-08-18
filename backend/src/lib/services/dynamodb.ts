@@ -1,3 +1,4 @@
+import AWSXRay from "aws-xray-sdk";
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 
 /**
@@ -16,6 +17,8 @@ class DynamoDBService {
    */
   private constructor() {
     this.client = new DocumentClient();
+    AWSXRay.setContextMissingStrategy(() => {});
+    AWSXRay.captureAWSClient((this.client as any).service);
   }
 
   /**

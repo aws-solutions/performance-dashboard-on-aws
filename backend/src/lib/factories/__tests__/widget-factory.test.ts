@@ -5,6 +5,15 @@ const dummyWidgetName = "Some widget";
 const dashboardId = "123";
 
 describe("createWidget", () => {
+  it("throw an error for invalid widget types", () => {
+    expect(() => {
+      const bananaType = "BananaType" as WidgetType;
+      WidgetFactory.createWidget("BananaWidget", "123", bananaType, {});
+    }).toThrowError("Invalid widget type");
+  });
+});
+
+describe("createTextWidget", () => {
   it("builds a text widget", () => {
     const content = { text: "Text can include markdown syntax" };
     const widget = WidgetFactory.createWidget(
@@ -20,6 +29,20 @@ describe("createWidget", () => {
     expect(widget.content.text).toEqual("Text can include markdown syntax");
   });
 
+  it("throws an error if text is undefined", () => {
+    const content = {};
+    expect(() => {
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Text,
+        content
+      );
+    }).toThrowError("Text widget must have `content.text` field");
+  });
+});
+
+describe("createChartWidget", () => {
   it("builds a chart widget", () => {
     const content = {
       title: "Correlation of COVID cases to deaths",
@@ -40,11 +63,28 @@ describe("createWidget", () => {
     expect(widget.content.chartType).toEqual("LineChart");
   });
 
-  it("throw an error for invalid widget types", () => {
+  it("throws an error if chart title is undefined", () => {
+    const content = { chartType: "LineChart" };
     expect(() => {
-      const bananaType = "BananaType" as WidgetType;
-      WidgetFactory.createWidget("BananaWidget", "123", bananaType, {});
-    }).toThrowError();
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Chart,
+        content
+      );
+    }).toThrowError("Chart widget must have `content.title` field");
+  });
+
+  it("throws an error if chart type is undefined", () => {
+    const content = { title: "My chart title" };
+    expect(() => {
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Chart,
+        content
+      );
+    }).toThrowError("Chart widget must have `content.chartType` field");
   });
 });
 

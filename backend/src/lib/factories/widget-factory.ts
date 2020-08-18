@@ -68,6 +68,11 @@ function createTextWidget(
   dashboardId: string,
   content: any
 ): TextWidget {
+
+  if(!content.text) {
+    throw new Error("Text widget must have `content.text` field");
+  }
+
   return {
     id: uuidv4(),
     name,
@@ -84,6 +89,15 @@ function createChartWidget(
   dashboardId: string,
   content: any
 ): ChartWidget {
+
+  if(!content.title) {
+    throw new Error("Chart widget must have `content.title` field");
+  }
+
+  if(!content.chartType) {
+    throw new Error("Chart widget must have `content.chartType` field");
+  }
+
   return {
     id: uuidv4(),
     name,

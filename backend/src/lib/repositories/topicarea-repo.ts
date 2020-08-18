@@ -1,6 +1,6 @@
 import { User } from "../models/user";
 import DynamoDBService from "../services/dynamodb";
-import TopicAreaFactory from "../models/topicarea-factory";
+import TopicAreaFactory from "../factories/topicarea-factory";
 import {
   TopicArea,
   TopicAreaList,

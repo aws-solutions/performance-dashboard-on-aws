@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import DashboardFactory from "../models/dashboard-factory";
+import DashboardFactory from "../factories/dashboard-factory";
 import AuthService from "../services/auth";
 import DashboardRepository from "../repositories/dashboard-repo";
 import TopicAreaRepository from "../repositories/topicarea-repo";

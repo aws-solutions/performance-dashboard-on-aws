@@ -2,10 +2,10 @@ import { mocked } from "ts-jest/utils";
 import DynamoDBService from "../../services/dynamodb";
 import WidgetRepository from "../widget-repo";
 import { WidgetType, Widget } from "../../models/widget";
-import WidgetFactory from "../../models/widget-factory";
+import WidgetFactory from "../../factories/widget-factory";
 
 jest.mock("../../services/dynamodb");
-jest.mock("../../models/widget-factory");
+jest.mock("../../factories/widget-factory");
 
 let tableName: string;
 let repo: WidgetRepository;

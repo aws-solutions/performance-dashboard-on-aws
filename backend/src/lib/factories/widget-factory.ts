@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { Widget, WidgetType, WidgetItem, TextWidget } from "./widget";
+import { Widget, WidgetType, WidgetItem, TextWidget } from "../models/widget";
 
 const WIDGET_ITEM_TYPE = "Widget";
 const WIDGET_PREFIX = "Widget#";

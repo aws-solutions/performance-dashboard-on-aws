@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import { Dashboard, DashboardItem } from "./dashboard";
-import { User } from "./user";
+import { Dashboard, DashboardItem } from "../models/dashboard";
+import { User } from "../models/user";
 import topicareaFactory from "./topicarea-factory";
 
 const DASHBOARD: string = 'Dashboard';

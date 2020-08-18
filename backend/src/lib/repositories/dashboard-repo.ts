@@ -1,8 +1,8 @@
 import { User } from "../models/user";
 import DynamoDBService from "../services/dynamodb";
-import DashboardFactory from "../models/dashboard-factory";
-import TopicAreaFactory from "../models/topicarea-factory";
-import WidgetFactory from "../models/widget-factory";
+import DashboardFactory from "../factories/dashboard-factory";
+import TopicAreaFactory from "../factories/topicarea-factory";
+import WidgetFactory from "../factories/widget-factory";
 import { WidgetItem } from "../models/widget";
 import { Dashboard, DashboardList, DashboardItem } from "../models/dashboard";
 

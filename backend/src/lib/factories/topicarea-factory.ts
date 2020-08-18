@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import { TopicArea, TopicAreaItem } from "./topicarea";
-import { User } from "./user";
+import { TopicArea, TopicAreaItem } from "../models/topicarea";
+import { User } from "../models/user";
 
 const TOPICAREA: string = 'TopicArea';
 

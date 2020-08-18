@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import AuthService from "../services/auth";
-import WidgetFactory from "../models/widget-factory";
+import WidgetFactory from "../factories/widget-factory";
 import WidgetRepository from "../repositories/widget-repo";
 
 async function createWidget(req: Request, res: Response) {

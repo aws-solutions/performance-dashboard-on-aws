@@ -1,6 +1,6 @@
 import DynamoDBService from "../services/dynamodb";
 import { Widget } from "../models/widget";
-import WidgetFactory from "../models/widget-factory";
+import WidgetFactory from "../factories/widget-factory";
 
 class WidgetRepository {
   private dynamodb: DynamoDBService;

@@ -1,5 +1,5 @@
 import WidgetFactory from "../widget-factory";
-import { WidgetType, WidgetItem, TextWidget } from "../widget";
+import { WidgetType, WidgetItem, TextWidget } from "../../models/widget";
 
 const dummyWidgetName = "Some widget";
 const dashboardId = "123";

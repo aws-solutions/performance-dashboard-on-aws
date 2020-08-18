@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import TopicAreaFactory from "../models/topicarea-factory";
+import TopicAreaFactory from "../factories/topicarea-factory";
 import AuthService from "../services/auth";
 import TopicAreaRepository from "../repositories/topicarea-repo";
 

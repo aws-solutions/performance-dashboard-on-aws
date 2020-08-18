@@ -1,7 +1,7 @@
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
 import TopicAreaRepository from "../topicarea-repo";
-import TopicAreaFactory from "../../models/topicarea-factory";
+import TopicAreaFactory from "../../factories/topicarea-factory";
 
 jest.mock("../../services/dynamodb");
 import DynamoDBService from "../../services/dynamodb";

@@ -1,5 +1,5 @@
 import WidgetFactory from "../widget-factory";
-import { WidgetType, WidgetItem, TextWidget } from "../../models/widget";
+import { WidgetType, WidgetItem, TextWidget, ChartWidget, ChartType } from "../../models/widget";
 
 const dummyWidgetName = "Some widget";
 const dashboardId = "123";
@@ -18,6 +18,26 @@ describe("createWidget", () => {
     expect(widget.dashboardId).toEqual(dashboardId);
     expect(widget.widgetType).toEqual(WidgetType.Text);
     expect(widget.content.text).toEqual("Text can include markdown syntax");
+  });
+
+  it("builds a chart widget", () => {
+    const content = {
+      title: "Correlation of COVID cases to deaths",
+      chartType: "LineChart",
+    };
+
+    const widget = WidgetFactory.createWidget(
+      dummyWidgetName,
+      dashboardId,
+      WidgetType.Chart,
+      content,
+    ) as ChartWidget;
+
+    expect(widget.name).toEqual(dummyWidgetName);
+    expect(widget.dashboardId).toEqual(dashboardId);
+    expect(widget.widgetType).toEqual(WidgetType.Chart);
+    expect(widget.content.title).toEqual("Correlation of COVID cases to deaths");
+    expect(widget.content.chartType).toEqual("LineChart");
   });
 
   it("throw an error for invalid widget types", () => {
@@ -48,6 +68,29 @@ describe("fromItem", () => {
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Text);
     expect(widget.content.text).toEqual("Random text");
+  });
+
+  it("converts a dynamodb item into a ChartWidget object", () => {
+    const item: WidgetItem = {
+      pk: "Dashboard#abc",
+      sk: "Widget#xyz",
+      name: "Random name",
+      widgetType: "Chart",
+      type: "Widget",
+      content: {
+        title: "Correlation of COVID cases to deaths",
+        chartType: "LineChart",
+      },
+    };
+
+    const widget = WidgetFactory.fromItem(item) as ChartWidget;
+
+    expect(widget.id).toEqual("xyz");
+    expect(widget.dashboardId).toEqual("abc");
+    expect(widget.name).toEqual("Random name");
+    expect(widget.widgetType).toEqual(WidgetType.Chart);
+    expect(widget.content.title).toEqual("Correlation of COVID cases to deaths");
+    expect(widget.content.chartType).toEqual("LineChart");
   });
 
   it("handles an invalid widget type gracefully", () => {
@@ -95,6 +138,31 @@ describe("toItem", () => {
     expect(item.type).toEqual("Widget");
     expect(item.content).toEqual({
       text: "Pizza and Beer",
+    });
+  });
+
+  it("converts a ChartWidget into a dynamodb item", () => {
+    const widget: ChartWidget = {
+      id: "abc",
+      name: dummyWidgetName,
+      dashboardId: dashboardId,
+      widgetType: WidgetType.Chart,
+      content: {
+        title: "Correlation of COVID cases to deaths",
+        chartType: ChartType.LineChart,
+      },
+    };
+
+    const item = WidgetFactory.toItem(widget);
+
+    expect(item.pk).toEqual("Dashboard#".concat(dashboardId));
+    expect(item.sk).toEqual("Widget#abc");
+    expect(item.name).toEqual(dummyWidgetName);
+    expect(item.widgetType).toEqual("Chart");
+    expect(item.type).toEqual("Widget");
+    expect(item.content).toEqual({
+      title: "Correlation of COVID cases to deaths",
+      chartType: "LineChart",
     });
   });
 });

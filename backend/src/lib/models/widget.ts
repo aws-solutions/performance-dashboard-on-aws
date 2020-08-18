@@ -1,5 +1,10 @@
 export enum WidgetType {
   Text = "Text",
+  Chart = "Chart",
+}
+
+export enum ChartType {
+  LineChart = "LineChart",
 }
 
 export interface Widget {
@@ -22,5 +27,12 @@ export interface WidgetItem {
 export interface TextWidget extends Widget {
   content: {
     text: string,
+  }
+}
+
+export interface ChartWidget extends Widget {
+  content: {
+    title: string,
+    chartType: ChartType,
   }
 }

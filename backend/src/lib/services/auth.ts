@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { User } from '../models/user-models';
+import { User } from '../models/user';
 
 const local = !!process.env.BADGER_LOCAL || false;
 

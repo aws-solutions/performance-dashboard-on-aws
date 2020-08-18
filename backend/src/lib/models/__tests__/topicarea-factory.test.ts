@@ -1,6 +1,6 @@
 import factory from '../topicarea-factory';
-import { TopicArea } from '../topicarea-models';
-import { User } from '../user-models';
+import { TopicArea } from '../topicarea';
+import { User } from '../user';
 
 const user: User = {
   userId: 'johndoe',

@@ -1,11 +1,11 @@
-import { User } from "../models/user-models";
+import { User } from "../models/user";
 import DynamoDBService from "../services/dynamodb";
 import TopicAreaFactory from "../models/topicarea-factory";
 import {
   TopicArea,
   TopicAreaList,
   TopicAreaItem,
-} from "../models/topicarea-models";
+} from "../models/topicarea";
 
 class TopicAreaRepository {
   private dynamodb: DynamoDBService;

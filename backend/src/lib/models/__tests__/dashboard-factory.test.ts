@@ -1,6 +1,6 @@
 import factory from '../dashboard-factory';
 import { Dashboard, DashboardItem } from '../dashboard';
-import { User } from '../user-models';
+import { User } from '../user';
 
 const user: User = {
   userId: 'johndoe',

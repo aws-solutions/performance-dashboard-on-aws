@@ -1,5 +1,5 @@
 import { mocked } from "ts-jest/utils";
-import { User } from "../../models/user-models";
+import { User } from "../../models/user";
 import TopicAreaRepository from "../topicarea-repo";
 import TopicAreaFactory from "../../models/topicarea-factory";
 

@@ -1,4 +1,4 @@
-import { User } from "../models/user-models";
+import { User } from "../models/user";
 import DynamoDBService from "../services/dynamodb";
 import DashboardFactory from "../models/dashboard-factory";
 import TopicAreaFactory from "../models/topicarea-factory";

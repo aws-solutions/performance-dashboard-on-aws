@@ -16,7 +16,7 @@ phases:
     commands:
       # Run backend tests
       - cd backend
-      - npm run test
+      - npm run test:ci
       - cd ..
       # Run frontend tests
       - cd frontend

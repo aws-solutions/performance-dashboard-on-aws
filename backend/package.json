@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Badger Backend",
   "scripts": {
-    "test": "jest --coverage --no-cache",
+    "test": "jest --coverage --watchAll",
+    "test:ci": "jest --coverage --ci",
     "build": "npm run clean && tsc && npm run install:prod",
     "copy:package": "cp package.json build/",
     "install:prod": "npm run copy:package && npm install --production --prefix build",

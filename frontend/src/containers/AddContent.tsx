@@ -40,13 +40,13 @@ function AddContent() {
   return (
     <AdminLayout>
       <Breadcrumbs />
-      <div className="display-inline-block text-semibold font-sans-2xl margin-y-2">
+      <h1 className="display-inline-block text-normal font-sans-2xl margin-y-3">
         Add content
-      </div>
+      </h1>
       <div className="text-base text-italic">Step 1 of 2</div>
-      <h2 className="margin-top-0 display-inline-block">
+      <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Select the type of content you want to add
-      </h2>
+      </div>
 
       <div className="grid-col-12">
         <form className="usa-form" onSubmit={handleSubmit(onSubmit)}>

@@ -1,10 +1,19 @@
 import WidgetFactory from "../widget-factory";
-import { WidgetType, WidgetItem, TextWidget } from "../../models/widget";
+import { WidgetType, WidgetItem, TextWidget, ChartWidget, ChartType } from "../../models/widget";
 
 const dummyWidgetName = "Some widget";
 const dashboardId = "123";
 
 describe("createWidget", () => {
+  it("throw an error for invalid widget types", () => {
+    expect(() => {
+      const bananaType = "BananaType" as WidgetType;
+      WidgetFactory.createWidget("BananaWidget", "123", bananaType, {});
+    }).toThrowError("Invalid widget type");
+  });
+});
+
+describe("createTextWidget", () => {
   it("builds a text widget", () => {
     const content = { text: "Text can include markdown syntax" };
     const widget = WidgetFactory.createWidget(
@@ -20,11 +29,62 @@ describe("createWidget", () => {
     expect(widget.content.text).toEqual("Text can include markdown syntax");
   });
 
-  it("throw an error for invalid widget types", () => {
+  it("throws an error if text is undefined", () => {
+    const content = {};
     expect(() => {
-      const bananaType = "BananaType" as WidgetType;
-      WidgetFactory.createWidget("BananaWidget", "123", bananaType, {});
-    }).toThrowError();
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Text,
+        content
+      );
+    }).toThrowError("Text widget must have `content.text` field");
+  });
+});
+
+describe("createChartWidget", () => {
+  it("builds a chart widget", () => {
+    const content = {
+      title: "Correlation of COVID cases to deaths",
+      chartType: "LineChart",
+    };
+
+    const widget = WidgetFactory.createWidget(
+      dummyWidgetName,
+      dashboardId,
+      WidgetType.Chart,
+      content,
+    ) as ChartWidget;
+
+    expect(widget.name).toEqual(dummyWidgetName);
+    expect(widget.dashboardId).toEqual(dashboardId);
+    expect(widget.widgetType).toEqual(WidgetType.Chart);
+    expect(widget.content.title).toEqual("Correlation of COVID cases to deaths");
+    expect(widget.content.chartType).toEqual("LineChart");
+  });
+
+  it("throws an error if chart title is undefined", () => {
+    const content = { chartType: "LineChart" };
+    expect(() => {
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Chart,
+        content
+      );
+    }).toThrowError("Chart widget must have `content.title` field");
+  });
+
+  it("throws an error if chart type is undefined", () => {
+    const content = { title: "My chart title" };
+    expect(() => {
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Chart,
+        content
+      );
+    }).toThrowError("Chart widget must have `content.chartType` field");
   });
 });
 
@@ -48,6 +108,29 @@ describe("fromItem", () => {
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Text);
     expect(widget.content.text).toEqual("Random text");
+  });
+
+  it("converts a dynamodb item into a ChartWidget object", () => {
+    const item: WidgetItem = {
+      pk: "Dashboard#abc",
+      sk: "Widget#xyz",
+      name: "Random name",
+      widgetType: "Chart",
+      type: "Widget",
+      content: {
+        title: "Correlation of COVID cases to deaths",
+        chartType: "LineChart",
+      },
+    };
+
+    const widget = WidgetFactory.fromItem(item) as ChartWidget;
+
+    expect(widget.id).toEqual("xyz");
+    expect(widget.dashboardId).toEqual("abc");
+    expect(widget.name).toEqual("Random name");
+    expect(widget.widgetType).toEqual(WidgetType.Chart);
+    expect(widget.content.title).toEqual("Correlation of COVID cases to deaths");
+    expect(widget.content.chartType).toEqual("LineChart");
   });
 
   it("handles an invalid widget type gracefully", () => {
@@ -95,6 +178,31 @@ describe("toItem", () => {
     expect(item.type).toEqual("Widget");
     expect(item.content).toEqual({
       text: "Pizza and Beer",
+    });
+  });
+
+  it("converts a ChartWidget into a dynamodb item", () => {
+    const widget: ChartWidget = {
+      id: "abc",
+      name: dummyWidgetName,
+      dashboardId: dashboardId,
+      widgetType: WidgetType.Chart,
+      content: {
+        title: "Correlation of COVID cases to deaths",
+        chartType: ChartType.LineChart,
+      },
+    };
+
+    const item = WidgetFactory.toItem(widget);
+
+    expect(item.pk).toEqual("Dashboard#".concat(dashboardId));
+    expect(item.sk).toEqual("Widget#abc");
+    expect(item.name).toEqual(dummyWidgetName);
+    expect(item.widgetType).toEqual("Chart");
+    expect(item.type).toEqual("Widget");
+    expect(item.content).toEqual({
+      title: "Correlation of COVID cases to deaths",
+      chartType: "LineChart",
     });
   });
 });

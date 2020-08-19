@@ -29,12 +29,18 @@ async function createWidget(req: Request, res: Response) {
     res.status(400).send("Missing required field `widgetType`");
   }
 
-  const widget = WidgetFactory.createWidget(
-    name,
-    dashboardId,
-    widgetType,
-    content
-  );
+  let widget;
+  try {
+    widget = WidgetFactory.createWidget(
+      name,
+      dashboardId,
+      widgetType,
+      content
+    );
+  } catch(err) {
+    console.log("Invalid request to create widget", err);
+    return res.status(400).send(err.message);
+  }
 
   const repo = WidgetRepository.getInstance();
   await repo.saveWidget(widget);

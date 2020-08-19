@@ -119,7 +119,7 @@ function CreateDashboard() {
               Create
             </button>
             <button
-              className="usa-button usa-button--unstyled"
+              className="usa-button usa-button--unstyled margin-left-1"
               onClick={onCancel}
             >
               Cancel

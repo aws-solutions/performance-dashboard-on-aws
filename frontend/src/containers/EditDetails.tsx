@@ -159,7 +159,7 @@ function EditDetails() {
               Save
             </button>
             <button
-              className="usa-button usa-button--unstyled"
+              className="usa-button usa-button--unstyled margin-left-1"
               type="button"
               onClick={onCancel}
             >

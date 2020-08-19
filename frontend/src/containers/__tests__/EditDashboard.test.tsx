@@ -37,8 +37,8 @@ test("edit details link takes you to details screen", async () => {
     </Router>
   );
 
-  const cancelButton = await findByRole("link", { name: "Edit details" });
-  fireEvent.click(cancelButton);
+  const editDetails = await findByRole("link", { name: "Edit details" });
+  fireEvent.click(editDetails);
   expect(history.push).toHaveBeenCalledWith(
     "/admin/dashboard/edit/123/details"
   );

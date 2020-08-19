@@ -5,22 +5,23 @@ import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
 import ReactMarkdown from "react-markdown";
-import BadgerService from "../services/BadgerService";
+//import BadgerService from "../services/BadgerService";
 
 function EditDashboard() {
   const history = useHistory();
   const { dashboardId } = useParams();
-  const { dashboard, setDashboard } = useDashboard(dashboardId);
+  const { dashboard, /*setDashboard*/ } = useDashboard(dashboardId);
 
   const onAddContent = async () => {
-    await BadgerService.createWidget(
+    /*await BadgerService.createWidget(
         dashboardId,
         "Correlation of COVID cases to deaths",
         "Text",
         {}
       );
     const data = await BadgerService.fetchDashboardById(dashboardId);
-    setDashboard(data);
+    setDashboard(data);*/
+    history.push(`/admin/dashboard/edit/${dashboardId}/add-content-1`);
   };
 
   const onSubmit = async () => {

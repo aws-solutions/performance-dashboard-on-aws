@@ -21,7 +21,7 @@ function EditDashboard() {
       );
     const data = await BadgerService.fetchDashboardById(dashboardId);
     setDashboard(data);*/
-    history.push(`/admin/dashboard/edit/${dashboardId}/add-content-1`);
+    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const onSubmit = async () => {

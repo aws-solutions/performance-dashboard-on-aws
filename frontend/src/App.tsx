@@ -8,6 +8,7 @@ import CreateDashboard from "./containers/CreateDashboard";
 import EditDetails from "./containers/EditDetails";
 import AddContent from "./containers/AddContent";
 import EditDashboard from "./containers/EditDashboard";
+import AddChart from "./containers/AddChart";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -22,8 +23,11 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/admin/dashboard/edit/:dashboardId/add-content-1">
+        <Route path="/admin/dashboard/:dashboardId/add-content">
           <AddContent />
+        </Route>
+        <Route path="/admin/dashboard/:dashboardId/add-chart">
+          <AddChart />
         </Route>
         <Route path="/admin/dashboard/edit/:dashboardId/details">
           <EditDetails />

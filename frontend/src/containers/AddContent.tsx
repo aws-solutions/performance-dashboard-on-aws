@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useForm } from "react-hook-form";
-import "./AddContent.css";
+import Button from "../components/Button";
 
 interface FormValues {
   widgetType: string;
@@ -14,14 +14,9 @@ function AddContent() {
   const { dashboardId } = useParams();
   const { register, handleSubmit } = useForm<FormValues>();
   const [widgetType, setWidgetType] = useState("");
-  const [textHovered, setTextHovered] = useState(false);
-  const [metricsHovered, setMetricsHovered] = useState(false);
-  const [chartHovered, setChartHovered] = useState(false);
-  const [tableHovered, setTableHovered] = useState(false);
 
   const onSubmit = async (values: FormValues) => {
-    console.log(values);
-    history.push(`/admin/dashboard/edit/${dashboardId}`);
+    history.push(`/admin/dashboard/${dashboardId}/add-chart`);
   };
 
   const onCancel = () => {
@@ -32,36 +27,26 @@ function AddContent() {
     setWidgetType((event.target as HTMLInputElement).value);
   };
 
-  const toggleTextHover = () => setTextHovered(!textHovered);
-  const toggleMetricsHover = () => setMetricsHovered(!metricsHovered);
-  const toggleChartHover = () => setChartHovered(!chartHovered);
-  const toggleTableHover = () => setTableHovered(!tableHovered);
-
   return (
     <AdminLayout>
       <Breadcrumbs />
-      <h1 className="display-inline-block text-normal font-sans-2xl margin-y-3">
-        Add content
-      </h1>
+      <h1>Add content</h1>
       <div className="text-base text-italic">Step 1 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Select the type of content you want to add
       </div>
 
       <div className="grid-col-12">
-        <form className="usa-form" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="usa-form usa-form--large"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <fieldset className="usa-fieldset" onChange={handleChange}>
             <legend className="usa-sr-only">Widget types</legend>
-            <div
-              className="usa-radio"
-              onMouseEnter={toggleTextHover}
-              onMouseLeave={toggleTextHover}
-            >
+            <div className="usa-radio">
               <div
-                className={`grid-row flex-column border-base${
-                  textHovered || widgetType === "text"
-                    ? " bg-base-lightest"
-                    : "-lighter"
+                className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
+                  widgetType === "text" ? " bg-base-lightest" : "-lighter"
                 } border-2px padding-2 margin-y-1`}
               >
                 <div className="grid-col flex-5">
@@ -85,16 +70,10 @@ function AddContent() {
                 </div>
               </div>
             </div>
-            <div
-              className="usa-radio"
-              onMouseEnter={toggleMetricsHover}
-              onMouseLeave={toggleMetricsHover}
-            >
+            <div className="usa-radio">
               <div
-                className={`grid-row flex-column border-base${
-                  metricsHovered || widgetType === "metrics"
-                    ? " bg-base-lightest"
-                    : "-lighter"
+                className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
+                  widgetType === "metrics" ? " bg-base-lightest" : "-lighter"
                 } border-2px padding-2 margin-y-1`}
               >
                 <div className="grid-col flex-5">
@@ -118,16 +97,10 @@ function AddContent() {
                 </div>
               </div>
             </div>
-            <div
-              className="usa-radio"
-              onMouseEnter={toggleChartHover}
-              onMouseLeave={toggleChartHover}
-            >
+            <div className="usa-radio">
               <div
-                className={`grid-row flex-column border-base${
-                  chartHovered || widgetType === "chart"
-                    ? " bg-base-lightest"
-                    : "-lighter"
+                className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
+                  widgetType === "chart" ? " bg-base-lightest" : "-lighter"
                 } border-2px padding-2 margin-y-1`}
               >
                 <div className="grid-col flex-5">
@@ -151,16 +124,10 @@ function AddContent() {
                 </div>
               </div>
             </div>
-            <div
-              className="usa-radio"
-              onMouseEnter={toggleTableHover}
-              onMouseLeave={toggleTableHover}
-            >
+            <div className="usa-radio">
               <div
-                className={`grid-row flex-column border-base${
-                  tableHovered || widgetType === "table"
-                    ? " bg-base-lightest"
-                    : "-lighter"
+                className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
+                  widgetType === "table" ? " bg-base-lightest" : "-lighter"
                 } border-2px padding-2 margin-y-1`}
               >
                 <div className="grid-col flex-5">
@@ -185,23 +152,18 @@ function AddContent() {
               </div>
             </div>
           </fieldset>
-
           <br />
-          <hr className="margin-bottom-0" />
-          <button
-            className="usa-button usa-button--base"
-            disabled={!widgetType}
-            type="submit"
-          >
+          <hr />
+          <Button variant="base" disabled={!widgetType} type="submit">
             Continue
-          </button>
-          <button
-            className="usa-button usa-button--unstyled margin-left-1"
-            type="button"
+          </Button>
+          <Button
+            variant="unstyled"
             onClick={onCancel}
+            className="margin-left-1"
           >
             Cancel
-          </button>
+          </Button>
         </form>
       </div>
     </AdminLayout>

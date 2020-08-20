@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a base button 1`] = `
+<div>
+  <button
+    class="usa-button usa-button--base"
+  >
+    Ok
+  </button>
+</div>
+`;
+
+exports[`renders a button with additional classNames 1`] = `
+<div>
+  <button
+    class="usa-button banana"
+  >
+    Ok
+  </button>
+</div>
+`;
+
+exports[`renders a default button 1`] = `
+<div>
+  <button
+    class="usa-button"
+  >
+    Ok
+  </button>
+</div>
+`;
+
+exports[`renders a disabled button 1`] = `
+<div>
+  <button
+    class="usa-button"
+    disabled=""
+  >
+    Ok
+  </button>
+</div>
+`;
+
+exports[`renders a reset button 1`] = `
+<div>
+  <button
+    class="usa-button"
+    type="reset"
+  >
+    Ok
+  </button>
+</div>
+`;
+
+exports[`renders a secondary button 1`] = `
+<div>
+  <button
+    class="usa-button usa-button--secondary"
+  >
+    Ok
+  </button>
+</div>
+`;
+
+exports[`renders a submit button 1`] = `
+<div>
+  <button
+    class="usa-button"
+    type="submit"
+  >
+    Ok
+  </button>
+</div>
+`;
+
+exports[`renders an accent button 1`] = `
+<div>
+  <button
+    class="usa-button usa-button--accent-cool"
+  >
+    Ok
+  </button>
+</div>
+`;
+
+exports[`renders an outline button 1`] = `
+<div>
+  <button
+    class="usa-button usa-button--outline"
+  >
+    Ok
+  </button>
+</div>
+`;
+
+exports[`renders an unstyled button 1`] = `
+<div>
+  <button
+    class="usa-button usa-button--unstyled"
+  >
+    Ok
+  </button>
+</div>
+`;

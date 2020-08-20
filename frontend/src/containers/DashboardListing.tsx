@@ -13,7 +13,12 @@ function DashboardListing() {
       </Link>
       <ul className="usa-list">
         {dashboards.map((dashboard) => (
-          <li key={dashboard.id}>{dashboard.name}</li>
+          <li key={dashboard.id}>
+            {dashboard.name}
+            <span className="margin-left-1">
+              <Link to={`/admin/dashboard/edit/${dashboard.id}`}>Edit</Link>
+            </span>
+          </li>
         ))}
       </ul>
     </AdminLayout>

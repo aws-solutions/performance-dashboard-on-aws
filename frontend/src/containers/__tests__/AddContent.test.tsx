@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { MemoryRouter, Router } from "react-router-dom";
 import AddContent from "../AddContent";
@@ -26,8 +26,11 @@ test("cancel link takes you to Edit Dashboard screen", async () => {
     </Router>
   );
 
-  const cancelButton = await findByRole("button", { name: "Cancel" });
-  fireEvent.click(cancelButton);
+  await act(async () => {
+    const cancelButton = await findByRole("button", { name: "Cancel" });
+    fireEvent.click(cancelButton);
+  });
+
   expect(history.push).toHaveBeenCalledWith(
     "/admin/dashboard/edit/undefined"
   );

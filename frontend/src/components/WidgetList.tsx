@@ -2,6 +2,7 @@ import React from "react";
 import { Widget } from "../models";
 import "./WidgetList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "./Button";
 
 interface Props {
   onClick: Function;
@@ -93,8 +94,9 @@ function WidgetList(props: Props) {
             charts, tables, metrics and text as content.
           </p>
           <div className="text-center margin-top-4">
-            <button
-              className="usa-button usa-button--base margin-top-1"
+            <Button
+              className="margin-top-1"
+              variant="base"
               onClick={() => {
                 if (props.onClick) {
                   props.onClick();
@@ -102,7 +104,7 @@ function WidgetList(props: Props) {
               }}
             >
               + Add content
-            </button>
+            </Button>
           </div>
         </div>
       )}

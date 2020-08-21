@@ -5,6 +5,7 @@ import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
 import ReactMarkdown from "react-markdown";
+import Button from "../components/Button";
 //import BadgerService from "../services/BadgerService";
 
 function EditDashboard() {
@@ -54,15 +55,8 @@ function EditDashboard() {
           </ul>
         </div>
         <div className="grid-col text-right">
-          <button className="usa-button" onClick={() => onSubmit()}>
-            Save draft
-          </button>
-          <button
-            className="usa-button usa-button--base"
-            onClick={() => onCancel()}
-          >
-            Publish
-          </button>
+          <Button onClick={() => onSubmit()}>Save draft</Button>
+          <Button variant="base" onClick={() => onCancel()}>Publish</Button>
         </div>
       </div>
       <div>

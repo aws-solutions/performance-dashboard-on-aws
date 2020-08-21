@@ -1,11 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useTopicAreas } from "../hooks";
 import AdminLayout from "../layouts/Admin";
 import BadgerService from "../services/BadgerService";
-import { useTopicAreas } from "../hooks";
 import Markdown from "../components/Markdown";
-import "./CreateDashboard.css";
+import TextField from "../components/TextField";
+import Dropdown from "../components/Dropdown";
+import Button from "../components/Button";
 
 interface FormValues {
   name: string;
@@ -16,7 +18,7 @@ interface FormValues {
 function CreateDashboard() {
   const history = useHistory();
   const { topicareas } = useTopicAreas();
-  const { register, errors, handleSubmit, setValue } = useForm<FormValues>();
+  const { register, errors, handleSubmit } = useForm<FormValues>();
 
   const onSubmit = async (values: FormValues) => {
     const dashboard = await BadgerService.createDashboard(
@@ -31,14 +33,6 @@ function CreateDashboard() {
     history.push("/admin/dashboards");
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue("description", event.target.value);
-  };
-
-  React.useEffect(() => {
-    register("description");
-  }, [register]);
-
   return (
     <AdminLayout>
       <h1>Create new dashboard</h1>
@@ -46,84 +40,47 @@ function CreateDashboard() {
         <div className="grid-col-12">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="create-new-dashboard-form usa-form"
+            className="usa-form usa-form--large"
             data-testid="CreateDashboardForm"
           >
-            <div className="create-new-dashboard-form-group-dashboard-name usa-form-group">
-              <label htmlFor="name" className="usa-label">
-                Dashboard Name
-              </label>
-              {errors.name && (
-                <span
-                  className="usa-error-message"
-                  id="input-error-message"
-                  role="alert"
-                >
-                  Please specify a name
-                </span>
-              )}
-              <input
-                id="name"
-                className="usa-input"
-                name="name"
-                ref={register({ required: true })}
-              />
-            </div>
+            <TextField
+              id="name"
+              name="name"
+              label="Dashboard Name"
+              register={register}
+              error={errors.name && "Please specify a name"}
+              required
+            />
 
-            <div className="create-new-dashboard-form-group-topicarea-id usa-form-group">
-              <label htmlFor="topicAreaId" className="usa-label">
-                Topic Area
-              </label>
-              <div className="usa-hint" id="event-date-start-hint">
-                Select an existing topic area
-              </div>
-              {errors.topicAreaId && (
-                <span
-                  className="usa-error-message"
-                  id="input-error-message"
-                  role="alert"
-                >
-                  Please select a topic area
-                </span>
-              )}
-              <select
-                id="topicAreaId"
-                ref={register({ required: true })}
-                name="topicAreaId"
-                className="usa-select"
-              >
-                <option value="">- Select -</option>
-                {topicareas.map((topicarea) => {
-                  return (
-                    <option
-                      data-testid="topicAreaOption"
-                      key={topicarea.id}
-                      value={topicarea.id}
-                    >
-                      {topicarea.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+            <Dropdown
+              id="topicAreaId"
+              name="topicAreaId"
+              label="Topic Area"
+              hint="Select an existing topic area"
+              register={register}
+              options={topicareas.map((topicarea) => ({
+                value: topicarea.id,
+                label: topicarea.name,
+              }))}
+            />
 
             <Markdown
-              text=""
-              title="Description - optional"
-              subtitle="Give your dashboard a description to explain it in more depth."
-              onChange={handleChange}
+              id="description"
+              name="description"
+              label="Description - optional"
+              hint="Give your dashboard a description to explain it in more depth."
+              register={register}
             />
 
             <br />
-            <button className="usa-button" type="submit">
-              Create
-            </button>
-            <button
-              className="usa-button usa-button--unstyled margin-left-1"
+            <Button type="submit">Create</Button>
+            <Button
+              className="margin-left-1"
+              variant="unstyled"
               onClick={onCancel}
             >
               Cancel
-            </button>
+            </Button>
           </form>
         </div>
       </div>

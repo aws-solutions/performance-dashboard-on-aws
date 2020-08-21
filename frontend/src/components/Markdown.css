@@ -8,6 +8,9 @@ textarea {
     border-radius: 2px;
     margin-top: 1rem;
     font-weight: 400;
-    padding: 4px 11px;
     overflow: auto;
+}
+
+.markdown-box p {
+    margin: 5px;
 }

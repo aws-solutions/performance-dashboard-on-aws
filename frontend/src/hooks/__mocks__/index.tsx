@@ -48,6 +48,7 @@ export function useDashboard(dashboardId: string) {
       name: "My AWS Dashboard",
       topicAreaId: "abc",
       topicAreaName: "Bananas",
+      description: "Some description",
     },
   };
 }

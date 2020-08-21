@@ -32,8 +32,7 @@ test("sets the default value", async () => {
   const { getByRole } = render(
     <TextField id="x" name="x" label="Hello" defaultValue="Banana" />
   );
-  const input = getByRole("textbox");
-  expect(input.value).toEqual("Banana");
+  expect(getByRole("textbox")).toHaveValue("Banana");
 });
 
 test("shows an error message", async () => {

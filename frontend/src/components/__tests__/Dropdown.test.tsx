@@ -37,7 +37,7 @@ test("renders a dropdown with options", async () => {
 
 test("calls register function", async () => {
   const register = jest.fn();
-  const wrapper = render(
+  render(
     <Dropdown
       id="aws-service"
       name="aws-service"

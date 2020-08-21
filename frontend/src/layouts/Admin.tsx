@@ -21,7 +21,7 @@ function AdminLayout(props: LayoutProps) {
           </div>
         </div>
       </header>
-      <main className="padding-top-3">
+      <main className="padding-y-3">
         <div className="grid-container">{props.children}</div>
       </main>
     </>

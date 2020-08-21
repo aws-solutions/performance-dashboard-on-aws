@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import { MemoryRouter, Route, Router } from "react-router-dom";
+import { Route, Router } from "react-router-dom";
 import BadgerService from "../../services/BadgerService";
 import EditDetails from "../EditDetails";
 

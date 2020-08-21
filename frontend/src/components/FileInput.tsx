@@ -5,6 +5,7 @@ interface Props {
   name: string;
   label: string;
   hint?: string;
+  onFileProcessed?: Function;
 }
 
 /**
@@ -32,6 +33,11 @@ function FileInput(props: Props) {
             className="usa-file-input__input"
             type="file"
             name={props.name}
+            onChange={() => {
+              if(props.onFileProcessed) {
+                props.onFileProcessed({});
+              }
+            }}
           />
         </div>
       </div>

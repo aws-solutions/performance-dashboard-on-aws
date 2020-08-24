@@ -8,6 +8,7 @@ import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import RadioButtons from "../components/RadioButtons";
+import LineChartPreview from "../components/LineChartPreview";
 
 interface FormValues {
   title: string;
@@ -19,6 +20,7 @@ function AddChart() {
   const { dashboardId } = useParams();
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [dataset, setDataset] = useState<object | null>(null);
+  const [title, setTitle] = useState("");
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -39,6 +41,10 @@ function AddChart() {
 
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
+  };
+
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setTitle((event.target as HTMLInputElement).value);
   };
 
   return (
@@ -62,6 +68,7 @@ function AddChart() {
                 label="Chart title"
                 hint="Give your chart a descriptive title."
                 error={errors.title && "Please specify a chart title"}
+                onChange={handleChange}
                 required
                 register={register}
               />
@@ -120,8 +127,15 @@ function AddChart() {
           </form>
         </div>
         <div className="grid-col-6">
-          <div hidden={!dataset} className="text-center">
-            Chart placeholder
+          <div hidden={!dataset} className="margin-left-4">
+            <h4>Preview</h4>
+            <LineChartPreview
+              title={title}
+              lines={[
+                { name: "cc", color: "#1c94c7" },
+                { name: "cd", color: "#db0030" },
+              ]}
+            />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import TextField from "../TextField";
 
 test("renders a text input", async () => {
@@ -33,6 +33,21 @@ test("sets the default value", async () => {
     <TextField id="x" name="x" label="Hello" defaultValue="Banana" />
   );
   expect(getByRole("textbox")).toHaveValue("Banana");
+});
+
+test("check onChange event is invoked", async () => {
+  const onChange = jest.fn();
+  const { getByLabelText } = render(
+    <TextField id="x" name="x" label="Hello" defaultValue="Banana" onChange={onChange} />
+  );
+  
+  fireEvent.input(getByLabelText("Hello"), {
+    target: {
+      value: "Test",
+    },
+  });
+
+  await waitFor(() => expect(onChange).toHaveBeenCalled());
 });
 
 test("shows an error message", async () => {

@@ -25,13 +25,13 @@ type LineProps = {
   color: string;
 };
 
-type LineChartPreviewProps = {
+type Props = {
   title: string;
   lines: Array<LineProps>;
   data?: object;
 };
 
-const LineChartPreview = (props: LineChartPreviewProps) => {
+const LineChartPreview = (props: Props) => {
   return (
     <div className="text-center">
       <h3>{props.title}</h3>

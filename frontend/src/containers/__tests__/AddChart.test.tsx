@@ -25,7 +25,7 @@ test("renders a file upload input", async () => {
 
 test("submit calls createWidget api", async () => {
   BadgerService.createWidget = jest.fn();
-  const { getByRole, getByLabelText } = render(<AddChart />, {
+  const { getByRole, getByText, getByLabelText } = render(<AddChart />, {
     wrapper: MemoryRouter,
   });
 
@@ -43,6 +43,11 @@ test("submit calls createWidget api", async () => {
 
   const submitButton = getByRole("button", { name: "Add chart" });
   await waitFor(() => expect(submitButton).toBeEnabled());
+
+  await waitFor(() => {
+    expect(getByText("Preview")).toBeInTheDocument();
+    expect(getByText("COVID Cases")).toBeInTheDocument();
+  });
 
   await act(async () => {
     fireEvent.click(submitButton);

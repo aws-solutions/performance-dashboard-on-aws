@@ -9,6 +9,7 @@ interface Props {
   required?: boolean;
   defaultValue?: string;
   error?: string;
+  onChange?: Function;
 }
 
 function TextField(props: Props) {
@@ -16,6 +17,12 @@ function TextField(props: Props) {
   if (props.error) {
     formGroupClassName += " usa-form-group--error";
   }
+
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    if (props.onChange) {
+      props.onChange(event);
+    }
+  };
 
   return (
     <div className={formGroupClassName}>
@@ -39,6 +46,7 @@ function TextField(props: Props) {
         type="text"
         defaultValue={props.defaultValue}
         ref={props.register && props.register({ required: props.required })}
+        onChange={handleChange}
       />
     </div>
   );

@@ -27,13 +27,17 @@ if(!authOutputs || !backendOutputs) {
 
 const userPoolId = authOutputs["UserPoolId"];
 const appClientId = authOutputs["AppClientId"];
+const identityPoolId = authOutputs["IdentityPoolId"];
 const apiEndpoint = backendOutputs["ApiGatewayEndpoint"];
+const datasetsBucket = backendOutputs["DatasetsBucketName"];
 const awsRegion = userPoolId.split("_")[0];
 
 const envData = `ENVIRONMENT=${environment}
 REACT_APP_AWS_REGION=${awsRegion}
 REACT_APP_BADGER_API=${apiEndpoint}
 REACT_APP_USER_POOL_ID=${userPoolId}
-REACT_APP_APP_CLIENT_ID=${appClientId}`;
+REACT_APP_APP_CLIENT_ID=${appClientId}
+REACT_APP_DATASETS_BUCKET=${datasetsBucket}
+REACT_APP_IDENTITY_POOL_ID=${identityPoolId}`;
 
 fs.writeFileSync(destFile, envData);

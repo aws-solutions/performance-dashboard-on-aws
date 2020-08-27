@@ -1,17 +1,10 @@
 import * as cdk from '@aws-cdk/core';
-import * as fs from 'fs';
 import s3 = require('@aws-cdk/aws-s3');
 import s3Deploy = require('@aws-cdk/aws-s3-deployment');
 import cloudFront = require('@aws-cdk/aws-cloudfront');
 
-interface Props extends cdk.StackProps {
-  appClientId: string,
-  userPoolId: string,
-  apiEndpoint: string,
-}
-
 export class FrontendStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props: Props) {
+  constructor(scope: cdk.Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
 
     /**

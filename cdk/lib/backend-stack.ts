@@ -1,37 +1,51 @@
-import * as cdk from '@aws-cdk/core';
-import * as lambda from "@aws-cdk/aws-lambda";
-import * as iam from '@aws-cdk/aws-iam'; 
-import { BadgerApi } from './constructs/api';
-import { BadgerDatabase } from './constructs/database';
-import { BadgerLambdas } from './constructs/lambdas';
+import * as cdk from "@aws-cdk/core";
+import { BadgerApi } from "./constructs/api";
+import { BadgerDatabase } from "./constructs/database";
+import { BadgerLambdas } from "./constructs/lambdas";
+import { BadgerDataStorage } from "./constructs/datastorage";
 
 interface BackendStackProps extends cdk.StackProps {
-    userPoolArn: string,
-};
+  userPoolArn: string;
+  datasetsBucketName: string;
+}
 
 export class BackendStack extends cdk.Stack {
-    public readonly apiGatewayEndpoint : string;
-    public readonly dynamodbTableName  : string;
+  public readonly apiGatewayEndpoint: string;
+  public readonly dynamodbTableName: string;
 
-    constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
-        super(scope, id, props);
+  constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
+    super(scope, id, props);
 
-        const database = new BadgerDatabase(this, "Database");
-        const lambdas = new BadgerLambdas(this, "Compute", {
-            mainTable: database.mainTable,
-        });
+    const dataStorage = new BadgerDataStorage(this, "DataStorage", {
+      datasetsBucketName: props.datasetsBucketName,
+    });
 
-        const badgerApi = new BadgerApi(this, "Api", {
-            cognitoUserPoolArn: props.userPoolArn,
-            apiFunction: lambdas.apiHandler,
-        });
+    const database = new BadgerDatabase(this, "Database");
+    const lambdas = new BadgerLambdas(this, "Compute", {
+      mainTable: database.mainTable,
+    });
 
-        /**
-         * Outputs
-         */
-        this.apiGatewayEndpoint = badgerApi.api.url;
-        this.dynamodbTableName = database.mainTable.tableName;
-        new cdk.CfnOutput(this, 'ApiGatewayEndpoint', { value: this.apiGatewayEndpoint });
-        new cdk.CfnOutput(this, 'DynamoDbTableName', { value: this.dynamodbTableName });
-    }
+    const badgerApi = new BadgerApi(this, "Api", {
+      cognitoUserPoolArn: props.userPoolArn,
+      apiFunction: lambdas.apiHandler,
+    });
+
+    /**
+     * Outputs
+     */
+    this.apiGatewayEndpoint = badgerApi.api.url;
+    this.dynamodbTableName = database.mainTable.tableName;
+
+    new cdk.CfnOutput(this, "ApiGatewayEndpoint", {
+      value: this.apiGatewayEndpoint,
+    });
+
+    new cdk.CfnOutput(this, "DynamoDbTableName", {
+      value: this.dynamodbTableName,
+    });
+
+    new cdk.CfnOutput(this, "DatasetsBucketName", {
+      value: dataStorage.datasetsBucket.bucketName,
+    });
+  }
 }

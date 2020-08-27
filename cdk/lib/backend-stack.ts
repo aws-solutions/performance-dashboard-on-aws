@@ -1,8 +1,9 @@
 import * as cdk from '@aws-cdk/core';
 import * as lambda from "@aws-cdk/aws-lambda";
-import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as iam from '@aws-cdk/aws-iam'; 
 import { BadgerApi } from './constructs/api';
+import { BadgerDatabase } from './constructs/database';
+import { BadgerLambdas } from './constructs/lambdas';
 
 interface BackendStackProps extends cdk.StackProps {
     userPoolArn: string,
@@ -15,81 +16,21 @@ export class BackendStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
         super(scope, id, props);
 
-        /**
-         * DynamoDB Tables
-         */
-        const table = new dynamodb.Table(this, 'BadgerTable', {
-            billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-            partitionKey: {
-                name: 'pk',
-                type: dynamodb.AttributeType.STRING
-            },
-            sortKey: {
-                name: 'sk',
-                type: dynamodb.AttributeType.STRING
-            },
+        const database = new BadgerDatabase(this, "Database");
+        const lambdas = new BadgerLambdas(this, "Compute", {
+            mainTable: database.mainTable,
         });
 
-        table.addGlobalSecondaryIndex({
-            indexName: 'byType',
-            projectionType: dynamodb.ProjectionType.ALL,
-            partitionKey: {
-                name: 'type',
-                type: dynamodb.AttributeType.STRING,
-            },
-            sortKey: {
-                name: 'sk',
-                type: dynamodb.AttributeType.STRING
-            },
-        });
-
-        /**
-         * Lambda functions
-         */
-        const handler = new lambda.Function(this, "ApiLambda", {
-            runtime: lambda.Runtime.NODEJS_12_X,
-            code: lambda.Code.asset("../backend/build"),
-            handler: "lambda/api.handler",
-            tracing: lambda.Tracing.ACTIVE,
-            memorySize: 256,
-            environment: {
-                BADGER_TABLE: table.tableName,
-            }
-        });
-
-        handler.addToRolePolicy(new iam.PolicyStatement({
-            effect: iam.Effect.ALLOW,
-            resources: [
-                // Grant permissions to table itself
-                table.tableArn,
-                // Grant permissions to GSI indexes
-                table.tableArn.concat("/index/*")
-            ],
-            actions: [
-                "dynamodb:PutItem",
-                "dynamodb:GetItem",
-                "dynamodb:DeleteItem",
-                "dynamodb:BatchGetItem",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:ConditionCheckItem",
-                "dynamodb:GetRecords",
-                "dynamodb:GetShardIterator",
-                "dynamodb:Query",
-                "dynamodb:Scan",
-                "dynamodb:UpdateItem",
-            ]
-        }));
-
-        const badgerApi = new BadgerApi(this, "BadgerApi", {
+        const badgerApi = new BadgerApi(this, "Api", {
             cognitoUserPoolArn: props.userPoolArn,
-            apiFunction: handler,
+            apiFunction: lambdas.apiHandler,
         });
 
         /**
          * Outputs
          */
         this.apiGatewayEndpoint = badgerApi.api.url;
-        this.dynamodbTableName = table.tableName;
+        this.dynamodbTableName = database.mainTable.tableName;
         new cdk.CfnOutput(this, 'ApiGatewayEndpoint', { value: this.apiGatewayEndpoint });
         new cdk.CfnOutput(this, 'DynamoDbTableName', { value: this.dynamodbTableName });
     }

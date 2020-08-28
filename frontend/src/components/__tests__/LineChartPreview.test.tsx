@@ -7,10 +7,7 @@ test("renders the title of the line chart preview component", async () => {
   const { getByText } = render(
     <LineChartPreview
       title="test title"
-      lines={[
-        { name: "cc", color: "#1c94c7" },
-        { name: "cd", color: "#db0030" },
-      ]}
+      lines={["test"]}
     />,
     { wrapper: MemoryRouter }
   );

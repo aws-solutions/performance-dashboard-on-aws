@@ -3,8 +3,10 @@ import { render, fireEvent, act, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BadgerService from "../../services/BadgerService";
 import AddChart from "../AddChart";
+import papaparse from "papaparse";
 
 jest.mock("../../services/BadgerService");
+jest.mock("papaparse");
 
 test("renders title and subtitles", async () => {
   const { getByText } = render(<AddChart />, { wrapper: MemoryRouter });
@@ -25,9 +27,12 @@ test("renders a file upload input", async () => {
 
 test("submit calls createWidget api", async () => {
   BadgerService.createWidget = jest.fn();
+  const parseSpy = jest.spyOn(papaparse, "parse");
   const { getByRole, getByText, getByLabelText } = render(<AddChart />, {
     wrapper: MemoryRouter,
   });
+
+  const submitButton = getByRole("button", { name: "Add chart" });
 
   fireEvent.input(getByLabelText("Chart title"), {
     target: {
@@ -41,7 +46,11 @@ test("submit calls createWidget api", async () => {
     },
   });
 
-  const submitButton = getByRole("button", { name: "Add chart" });
+  await waitFor(() => {
+    expect(parseSpy).toHaveBeenCalled();
+    submitButton.removeAttribute("disabled");
+  });
+
   await waitFor(() => expect(submitButton).toBeEnabled());
 
   await waitFor(() => {

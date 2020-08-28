@@ -9,6 +9,7 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import RadioButtons from "../components/RadioButtons";
 import LineChartPreview from "../components/LineChartPreview";
+import { parse, ParseResult } from "papaparse";
 
 interface FormValues {
   title: string;
@@ -19,7 +20,11 @@ function AddChart() {
   const history = useHistory();
   const { dashboardId } = useParams();
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const [dataset, setDataset] = useState<object | null>(null);
+  const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
+  const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
+    undefined
+  );
+  const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
 
   const onSubmit = async (values: FormValues) => {
@@ -45,6 +50,26 @@ function AddChart() {
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setTitle((event.target as HTMLInputElement).value);
+  };
+
+  const onFileProcessed = (data: File) => {
+    if (!data) {
+      return;
+    }
+    parse(data, {
+      header: true,
+      dynamicTyping: true,
+      complete: function (results: ParseResult<object>) {
+        if (results.errors.length) {
+          setCsvErrors(results.errors);
+          setDataset(undefined);
+        } else {
+          setCsvErrors(undefined);
+          setDataset(results.data);
+        }
+      },
+    });
+    setCsvFile(data);
   };
 
   return (
@@ -77,8 +102,12 @@ function AddChart() {
                 id="dataset"
                 name="dataset"
                 label="File upload"
+                accept=".csv"
+                chartTitle={title}
+                errors={csvErrors}
                 hint="Must be a CSV file. [Link] How do I format my CSV?"
-                onFileProcessed={(data: object) => setDataset(data)}
+                fileName={csvFile && csvFile.name}
+                onFileProcessed={onFileProcessed}
               />
 
               <div hidden={!dataset}>
@@ -131,10 +160,12 @@ function AddChart() {
             <h4>Preview</h4>
             <LineChartPreview
               title={title}
-              lines={[
-                { name: "cc", color: "#1c94c7" },
-                { name: "cd", color: "#db0030" },
-              ]}
+              lines={
+                dataset && dataset.length
+                  ? Object.keys(dataset[0]).filter((d) => d !== "xAxis")
+                  : []
+              }
+              data={dataset}
             />
           </div>
         </div>

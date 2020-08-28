@@ -4,7 +4,7 @@ interface Props {
   id: string;
   name: string;
   label: string;
-  chartTitle: string;
+  disabled?: boolean;
   fileName?: string;
   hint?: string;
   accept?: string;
@@ -29,12 +29,12 @@ function FileInput(props: Props) {
           id="file-input-error-alert"
           role="alert"
         >
-          Invalid CSV file
+          Invalid file format
         </span>
       )}
       <div
         className={`usa-file-input${
-          props.chartTitle ? "" : " usa-file-input--disabled"
+          props.disabled ? " usa-file-input--disabled" : ""
         }`}
       >
         <div
@@ -63,7 +63,7 @@ function FileInput(props: Props) {
             type="file"
             name={props.name}
             accept={props.accept}
-            disabled={!props.chartTitle}
+            disabled={props.disabled}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               if (props.onFileProcessed) {
                 props.onFileProcessed(

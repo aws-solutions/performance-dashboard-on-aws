@@ -52,6 +52,9 @@ function AddChart() {
     setTitle((event.target as HTMLInputElement).value);
   };
 
+  const getLineNames = (dataset: Array<string>): Array<string> =>
+    Object.keys(dataset).filter((d) => d !== "xAxis");
+
   const onFileProcessed = (data: File) => {
     if (!data) {
       return;
@@ -103,7 +106,7 @@ function AddChart() {
                 name="dataset"
                 label="File upload"
                 accept=".csv"
-                chartTitle={title}
+                disabled={!title}
                 errors={csvErrors}
                 hint="Must be a CSV file. [Link] How do I format my CSV?"
                 fileName={csvFile && csvFile.name}
@@ -162,7 +165,7 @@ function AddChart() {
               title={title}
               lines={
                 dataset && dataset.length
-                  ? Object.keys(dataset[0]).filter((d) => d !== "xAxis")
+                  ? getLineNames(dataset[0] as Array<string>)
                   : []
               }
               data={dataset}

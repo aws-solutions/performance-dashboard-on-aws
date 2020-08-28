@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   XAxis,
   YAxis,
@@ -18,8 +18,8 @@ type Props = {
 const LineChartPreview = (props: Props) => {
   const colors = useColors(props.lines.length);
   return (
-    <div className="text-center">
-      <h3>{props.title}</h3>
+    <div>
+      <h3 className="margin-left-1">{props.title}</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={props.data}>
           <CartesianGrid vertical={false} />

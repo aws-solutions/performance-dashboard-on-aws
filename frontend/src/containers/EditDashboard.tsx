@@ -14,14 +14,6 @@ function EditDashboard() {
   const { dashboard, /*setDashboard*/ } = useDashboard(dashboardId);
 
   const onAddContent = async () => {
-    /*await BadgerService.createWidget(
-        dashboardId,
-        "Correlation of COVID cases to deaths",
-        "Text",
-        {}
-      );
-    const data = await BadgerService.fetchDashboardById(dashboardId);
-    setDashboard(data);*/
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 

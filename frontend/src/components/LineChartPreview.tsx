@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   XAxis,
   YAxis,
@@ -7,6 +7,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import { useColors } from "../hooks";
 
 type Props = {
   title: string;
@@ -14,12 +15,8 @@ type Props = {
   data?: Array<object>;
 };
 
-const getRandomColor = () =>
-  `#${Math.floor(Math.random() * 65535)
-    .toString(16)
-    .padStart(6, "0")}`;
-
 const LineChartPreview = (props: Props) => {
+  const colors = useColors(props.lines.length);
   return (
     <div className="text-center">
       <h3>{props.title}</h3>
@@ -36,7 +33,7 @@ const LineChartPreview = (props: Props) => {
             return (
               <Line
                 dataKey={line}
-                stroke={getRandomColor()}
+                stroke={colors[index]}
                 key={index}
                 dot={false}
                 strokeWidth="2"

@@ -114,3 +114,28 @@ export function useWidgets(dashboardId: string): UseWidgetsHook {
     setWidgets,
   };
 }
+
+const getRandomColor = () => {
+  let randomColor = `${Math.floor(Math.random() * 65535).toString(16).padEnd(4, "0")}`;
+  const randomPosition = Math.floor(Math.random()*3) * 2;
+  randomColor = `#${randomColor.substring(0, randomPosition)}00${randomColor.substring(randomPosition)}`;
+  return randomColor;
+};
+
+const getRandomColors = (numberOfColors: number): Array<string> => {
+  const randomColors = new Array<string>();
+  for (let i = 0; i < numberOfColors; i++) {
+    randomColors.push(getRandomColor());
+  }
+  return randomColors;
+};
+
+export function useColors(numberOfColors: number): Array<string> {
+  const [colors, setColors] = useState<Array<string>>([]);
+
+  useEffect(() => {
+    setColors(getRandomColors(numberOfColors));
+  }, [numberOfColors]);
+
+  return colors;
+}

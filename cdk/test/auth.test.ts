@@ -7,7 +7,9 @@ describe('Auth stack', () => {
   let stack:AuthStack;
   beforeAll(() => {
     const app = new cdk.App();
-    stack = new AuthStack(app, 'MyAuthStack');
+    stack = new AuthStack(app, 'MyAuthStack', {
+      datasetsBucketName: "badger-123-datasets"
+    });
   });
 
   test('has a UserPool', () => {

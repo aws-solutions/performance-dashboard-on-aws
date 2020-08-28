@@ -11,11 +11,7 @@ describe('Frontend stack', () => {
   beforeAll(() => {
     const app = new cdk.App();
     s3Deploy.Source = { asset: jest.fn() };
-    stack = new FrontendStack(app, 'MyFrontendStack', {
-      apiEndpoint: 'http://apigateway.com',
-      appClientId: 'abc12309812309823',
-      userPoolId: 'us_west_2-abc123',
-    });
+    stack = new FrontendStack(app, 'MyFrontendStack', {});
   });
 
   test('has an S3 Bucket', () => {

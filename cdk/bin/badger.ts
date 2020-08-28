@@ -14,7 +14,7 @@ if (!envName) {
 const app = new cdk.App();
 const stackPrefix = "Badger-".concat(envName);
 const accountId = cdk.Aws.ACCOUNT_ID;
-const datasetsBucketName = `badger-${envName}-${accountId}-datasets`;
+const datasetsBucketName = `badger-${envName.toLowerCase()}-${accountId}-datasets`;
 
 const auth = new AuthStack(app, "Auth", {
   stackName: stackPrefix.concat("-Auth"),

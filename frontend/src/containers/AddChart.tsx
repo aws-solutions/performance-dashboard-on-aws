@@ -14,7 +14,6 @@ import { parse, ParseResult } from "papaparse";
 interface FormValues {
   title: string;
   chartType: string;
-  dataset: FileList;
 }
 
 function AddChart() {
@@ -31,8 +30,7 @@ function AddChart() {
   const onSubmit = async (values: FormValues) => {
     try {
       await BadgerService.createWidget(dashboardId, values.title, "Chart", {
-        title:
-          values.dataset && values.dataset.length ? values.dataset[0].name : "",
+        title: values.title,
         chartType: values.chartType,
       });
     } catch (err) {

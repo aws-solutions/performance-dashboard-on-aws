@@ -11,7 +11,6 @@ import { parse, ParseResult } from "papaparse";
 
 interface FormValues {
   title: string;
-  dataset: FileList;
 }
 
 function AddTable() {
@@ -28,8 +27,7 @@ function AddTable() {
   const onSubmit = async (values: FormValues) => {
     try {
       await BadgerService.createWidget(dashboardId, values.title, "Table", {
-        title:
-          values.dataset && values.dataset.length ? values.dataset[0].name : "",
+        title: values.title,
       });
     } catch (err) {
       console.log("Failed to save widget", err);

@@ -5,6 +5,7 @@ import {
   WidgetItem,
   TextWidget,
   ChartWidget,
+  TableWidget,
 } from "../models/widget";
 
 const WIDGET_ITEM_TYPE = "Widget";
@@ -22,6 +23,8 @@ function createWidget(
       return createTextWidget(name, dashboardId, content);
     case WidgetType.Chart:
       return createChartWidget(name, dashboardId, content);
+    case WidgetType.Table:
+      return createTableWidget(name, dashboardId, content);
     default:
       throw new Error("Invalid widget type");
   }
@@ -43,6 +46,8 @@ function fromItem(item: WidgetItem): Widget {
       return widget as TextWidget;
     case WidgetType.Chart:
       return widget as ChartWidget;
+    case WidgetType.Table:
+      return widget as TableWidget;
     default:
       return widget;
   }
@@ -68,8 +73,7 @@ function createTextWidget(
   dashboardId: string,
   content: any
 ): TextWidget {
-
-  if(!content.text) {
+  if (!content.text) {
     throw new Error("Text widget must have `content.text` field");
   }
 
@@ -89,12 +93,11 @@ function createChartWidget(
   dashboardId: string,
   content: any
 ): ChartWidget {
-
-  if(!content.title) {
+  if (!content.title) {
     throw new Error("Chart widget must have `content.title` field");
   }
 
-  if(!content.chartType) {
+  if (!content.chartType) {
     throw new Error("Chart widget must have `content.chartType` field");
   }
 
@@ -106,6 +109,26 @@ function createChartWidget(
     content: {
       title: content.title,
       chartType: content.chartType,
+    },
+  };
+}
+
+function createTableWidget(
+  name: string,
+  dashboardId: string,
+  content: any
+): TableWidget {
+  if (!content.title) {
+    throw new Error("Table widget must have `content.title` field");
+  }
+
+  return {
+    id: uuidv4(),
+    name,
+    dashboardId,
+    widgetType: WidgetType.Table,
+    content: {
+      title: content.title,
     },
   };
 }

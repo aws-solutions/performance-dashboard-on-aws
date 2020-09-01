@@ -7,17 +7,14 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
-import RadioButtons from "../components/RadioButtons";
-import LineChartPreview from "../components/LineChartPreview";
 import { parse, ParseResult } from "papaparse";
 
 interface FormValues {
   title: string;
-  chartType: string;
   dataset: FileList;
 }
 
-function AddChart() {
+function AddTable() {
   const history = useHistory();
   const { dashboardId } = useParams();
   const { register, errors, handleSubmit } = useForm<FormValues>();
@@ -30,10 +27,9 @@ function AddChart() {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      await BadgerService.createWidget(dashboardId, values.title, "Chart", {
+      await BadgerService.createWidget(dashboardId, values.title, "Table", {
         title:
           values.dataset && values.dataset.length ? values.dataset[0].name : "",
-        chartType: values.chartType,
       });
     } catch (err) {
       console.log("Failed to save widget", err);
@@ -53,9 +49,6 @@ function AddChart() {
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setTitle((event.target as HTMLInputElement).value);
   };
-
-  const getLineNames = (dataset: Array<string>): Array<string> =>
-    Object.keys(dataset).filter((d) => d !== "xAxis");
 
   const onFileProcessed = (data: File) => {
     if (!data) {
@@ -83,7 +76,7 @@ function AddChart() {
       <h1>Add content</h1>
       <div className="text-base text-italic">Step 2 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-        Configure chart
+        Configure table
       </div>
       <div className="grid-row">
         <div className="grid-col-6">
@@ -95,9 +88,9 @@ function AddChart() {
               <TextField
                 id="title"
                 name="title"
-                label="Chart title"
-                hint="Give your chart a descriptive title."
-                error={errors.title && "Please specify a chart title"}
+                label="Table title"
+                hint="Give your table a descriptive title."
+                error={errors.title && "Please specify a table title"}
                 onChange={handleChange}
                 required
                 register={register}
@@ -116,36 +109,7 @@ function AddChart() {
                 onFileProcessed={onFileProcessed}
               />
 
-              <div hidden={!dataset}>
-                <RadioButtons
-                  id="chartType"
-                  name="chartType"
-                  label="Chart type"
-                  hint="Choose a chart type. [Link] Which chart is right for my data?"
-                  register={register}
-                  error={errors.chartType && "Please select a chart type"}
-                  defaultValue="LineChart"
-                  required
-                  options={[
-                    {
-                      value: "BarChart",
-                      label: "Bar",
-                    },
-                    {
-                      value: "ColumnChart",
-                      label: "Column",
-                    },
-                    {
-                      value: "LineChart",
-                      label: "Line",
-                    },
-                    {
-                      value: "PartWholeChart",
-                      label: "Part-to-whole",
-                    },
-                  ]}
-                />
-              </div>
+              <div hidden={!dataset}></div>
             </fieldset>
             <br />
             <br />
@@ -154,7 +118,7 @@ function AddChart() {
               Back
             </Button>
             <Button disabled={!dataset} type="submit">
-              Add chart
+              Add table
             </Button>
             <Button variant="unstyled" onClick={onCancel}>
               Cancel
@@ -164,15 +128,6 @@ function AddChart() {
         <div className="grid-col-6">
           <div hidden={!dataset} className="margin-left-4">
             <h4>Preview</h4>
-            <LineChartPreview
-              title={title}
-              lines={
-                dataset && dataset.length
-                  ? getLineNames(dataset[0] as Array<string>)
-                  : []
-              }
-              data={dataset}
-            />
           </div>
         </div>
       </div>
@@ -180,4 +135,4 @@ function AddChart() {
   );
 }
 
-export default AddChart;
+export default AddTable;

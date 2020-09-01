@@ -1,5 +1,12 @@
 import WidgetFactory from "../widget-factory";
-import { WidgetType, WidgetItem, TextWidget, ChartWidget, ChartType } from "../../models/widget";
+import {
+  WidgetType,
+  WidgetItem,
+  TextWidget,
+  ChartWidget,
+  TableWidget,
+  ChartType,
+} from "../../models/widget";
 
 const dummyWidgetName = "Some widget";
 const dashboardId = "123";
@@ -53,13 +60,15 @@ describe("createChartWidget", () => {
       dummyWidgetName,
       dashboardId,
       WidgetType.Chart,
-      content,
+      content
     ) as ChartWidget;
 
     expect(widget.name).toEqual(dummyWidgetName);
     expect(widget.dashboardId).toEqual(dashboardId);
     expect(widget.widgetType).toEqual(WidgetType.Chart);
-    expect(widget.content.title).toEqual("Correlation of COVID cases to deaths");
+    expect(widget.content.title).toEqual(
+      "Correlation of COVID cases to deaths"
+    );
     expect(widget.content.chartType).toEqual("LineChart");
   });
 
@@ -85,6 +94,40 @@ describe("createChartWidget", () => {
         content
       );
     }).toThrowError("Chart widget must have `content.chartType` field");
+  });
+});
+
+describe("createTableWidget", () => {
+  it("builds a table widget", () => {
+    const content = {
+      title: "Correlation of COVID cases to deaths",
+    };
+
+    const widget = WidgetFactory.createWidget(
+      dummyWidgetName,
+      dashboardId,
+      WidgetType.Table,
+      content
+    ) as TableWidget;
+
+    expect(widget.name).toEqual(dummyWidgetName);
+    expect(widget.dashboardId).toEqual(dashboardId);
+    expect(widget.widgetType).toEqual(WidgetType.Table);
+    expect(widget.content.title).toEqual(
+      "Correlation of COVID cases to deaths"
+    );
+  });
+
+  it("throws an error if table title is undefined", () => {
+    const content = {};
+    expect(() => {
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Table,
+        content
+      );
+    }).toThrowError("Table widget must have `content.title` field");
   });
 });
 
@@ -129,8 +172,33 @@ describe("fromItem", () => {
     expect(widget.dashboardId).toEqual("abc");
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Chart);
-    expect(widget.content.title).toEqual("Correlation of COVID cases to deaths");
+    expect(widget.content.title).toEqual(
+      "Correlation of COVID cases to deaths"
+    );
     expect(widget.content.chartType).toEqual("LineChart");
+  });
+
+  it("converts a dynamodb item into a TableWidget object", () => {
+    const item: WidgetItem = {
+      pk: "Dashboard#abc",
+      sk: "Widget#xyz",
+      name: "Random name",
+      widgetType: "Table",
+      type: "Widget",
+      content: {
+        title: "Correlation of COVID cases to deaths",
+      },
+    };
+
+    const widget = WidgetFactory.fromItem(item) as TableWidget;
+
+    expect(widget.id).toEqual("xyz");
+    expect(widget.dashboardId).toEqual("abc");
+    expect(widget.name).toEqual("Random name");
+    expect(widget.widgetType).toEqual(WidgetType.Table);
+    expect(widget.content.title).toEqual(
+      "Correlation of COVID cases to deaths"
+    );
   });
 
   it("handles an invalid widget type gracefully", () => {
@@ -203,6 +271,29 @@ describe("toItem", () => {
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
+    });
+  });
+
+  it("converts a ChartWidget into a dynamodb item", () => {
+    const widget: TableWidget = {
+      id: "abc",
+      name: dummyWidgetName,
+      dashboardId: dashboardId,
+      widgetType: WidgetType.Table,
+      content: {
+        title: "Correlation of COVID cases to deaths",
+      },
+    };
+
+    const item = WidgetFactory.toItem(widget);
+
+    expect(item.pk).toEqual("Dashboard#".concat(dashboardId));
+    expect(item.sk).toEqual("Widget#abc");
+    expect(item.name).toEqual(dummyWidgetName);
+    expect(item.widgetType).toEqual("Table");
+    expect(item.type).toEqual("Widget");
+    expect(item.content).toEqual({
+      title: "Correlation of COVID cases to deaths",
     });
   });
 });

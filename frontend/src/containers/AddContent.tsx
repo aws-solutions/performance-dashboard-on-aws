@@ -16,7 +16,11 @@ function AddContent() {
   const [widgetType, setWidgetType] = useState("");
 
   const onSubmit = async (values: FormValues) => {
-    history.push(`/admin/dashboard/${dashboardId}/add-chart`);
+    if (values.widgetType === "chart") {
+      history.push(`/admin/dashboard/${dashboardId}/add-chart`);
+    } else if (values.widgetType === "table") {
+      history.push(`/admin/dashboard/${dashboardId}/add-table`);
+    }
   };
 
   const onCancel = () => {

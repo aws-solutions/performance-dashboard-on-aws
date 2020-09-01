@@ -1,6 +1,7 @@
 export enum WidgetType {
   Text = "Text",
   Chart = "Chart",
+  Table = "Table",
 }
 
 export enum ChartType {
@@ -26,13 +27,19 @@ export interface WidgetItem {
 
 export interface TextWidget extends Widget {
   content: {
-    text: string,
-  }
+    text: string;
+  };
 }
 
 export interface ChartWidget extends Widget {
   content: {
-    title: string,
-    chartType: ChartType,
-  }
+    title: string;
+    chartType: ChartType;
+  };
+}
+
+export interface TableWidget extends Widget {
+  content: {
+    title: string;
+  };
 }

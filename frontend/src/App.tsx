@@ -9,6 +9,7 @@ import EditDetails from "./containers/EditDetails";
 import AddContent from "./containers/AddContent";
 import EditDashboard from "./containers/EditDashboard";
 import AddChart from "./containers/AddChart";
+import AddTable from "./containers/AddTable";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/admin/dashboard/:dashboardId/add-chart">
           <AddChart />
+        </Route>
+        <Route path="/admin/dashboard/:dashboardId/add-table">
+          <AddTable />
         </Route>
         <Route path="/admin/dashboard/edit/:dashboardId/details">
           <EditDetails />

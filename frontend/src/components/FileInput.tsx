@@ -4,6 +4,7 @@ interface Props {
   id: string;
   name: string;
   label: string;
+  register?: Function;
   disabled?: boolean;
   fileName?: string;
   hint?: string;
@@ -64,6 +65,7 @@ function FileInput(props: Props) {
             name={props.name}
             accept={props.accept}
             disabled={props.disabled}
+            ref={props.register && props.register()}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               if (props.onFileProcessed) {
                 props.onFileProcessed(

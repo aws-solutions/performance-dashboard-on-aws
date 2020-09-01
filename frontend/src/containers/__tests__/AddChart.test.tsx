@@ -2,11 +2,17 @@ import React from "react";
 import { render, fireEvent, act, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BadgerService from "../../services/BadgerService";
+import StorageService from "../../services/StorageService";
 import AddChart from "../AddChart";
 import papaparse from "papaparse";
 
 jest.mock("../../services/BadgerService");
 jest.mock("papaparse");
+
+beforeEach(() => {
+  BadgerService.createWidget = jest.fn();
+  StorageService.uploadDataset = jest.fn();
+});
 
 test("renders title and subtitles", async () => {
   const { getByText } = render(<AddChart />, { wrapper: MemoryRouter });
@@ -26,7 +32,6 @@ test("renders a file upload input", async () => {
 });
 
 test("submit calls createWidget api", async () => {
-  BadgerService.createWidget = jest.fn();
   const parseSpy = jest.spyOn(papaparse, "parse");
   const { getByRole, getByText, getByLabelText } = render(<AddChart />, {
     wrapper: MemoryRouter,
@@ -63,4 +68,5 @@ test("submit calls createWidget api", async () => {
   });
 
   expect(BadgerService.createWidget).toHaveBeenCalled();
+  expect(StorageService.uploadDataset).toHaveBeenCalled();
 });

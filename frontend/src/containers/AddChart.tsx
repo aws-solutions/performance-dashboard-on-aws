@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
+import { parse, ParseResult } from "papaparse";
+import StorageService from "../services/StorageService";
 import BadgerService from "../services/BadgerService";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -9,7 +11,6 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import RadioButtons from "../components/RadioButtons";
 import LineChartPreview from "../components/LineChartPreview";
-import { parse, ParseResult } from "papaparse";
 
 interface FormValues {
   title: string;
@@ -27,8 +28,15 @@ function AddChart() {
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
 
+  const uploadDataset = async () => {
+    if (csvFile) {
+      await StorageService.uploadDataset(csvFile, JSON.stringify(dataset));
+    }
+  };
+
   const onSubmit = async (values: FormValues) => {
     try {
+      await uploadDataset();
       await BadgerService.createWidget(dashboardId, values.title, "Chart", {
         title: values.title,
         chartType: values.chartType,

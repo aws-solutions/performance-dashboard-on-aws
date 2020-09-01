@@ -58,5 +58,8 @@ export class BadgerApi extends cdk.Construct {
     topicarea.addMethod("GET", apiIntegration, methodProps);
     topicarea.addMethod("PUT", apiIntegration, methodProps);
     topicarea.addMethod("DELETE", apiIntegration, methodProps);
+
+    const datasets = this.api.root.addResource("dataset");
+    datasets.addMethod("POST", apiIntegration, methodProps);
   }
 }

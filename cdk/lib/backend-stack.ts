@@ -23,6 +23,7 @@ export class BackendStack extends cdk.Stack {
     const database = new BadgerDatabase(this, "Database");
     const lambdas = new BadgerLambdas(this, "Compute", {
       mainTable: database.mainTable,
+      datasetsBucket: dataStorage.datasetsBucket,
     });
 
     const badgerApi = new BadgerApi(this, "Api", {

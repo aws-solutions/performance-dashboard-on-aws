@@ -2,9 +2,11 @@ import * as cdk from "@aws-cdk/core";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as iam from "@aws-cdk/aws-iam";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
+import * as s3 from "@aws-cdk/aws-s3";
 
 interface Props {
-  mainTable: dynamodb.Table; 
+  mainTable: dynamodb.Table;
+  datasetsBucket: s3.Bucket;
 }
 
 export class BadgerLambdas extends cdk.Construct {
@@ -21,6 +23,7 @@ export class BadgerLambdas extends cdk.Construct {
       memorySize: 256,
       environment: {
         BADGER_TABLE: props.mainTable.tableName,
+        BADGER_DATASETS_BUCKET: props.datasetsBucket.bucketName,
       },
     });
 
@@ -46,6 +49,14 @@ export class BadgerLambdas extends cdk.Construct {
           "dynamodb:Scan",
           "dynamodb:UpdateItem",
         ],
+      })
+    );
+
+    this.apiHandler.addToRolePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        resources: [props.datasetsBucket.arnForObjects("*")],
+        actions: ["s3:GetObject", "s3:PutObject"],
       })
     );
   }

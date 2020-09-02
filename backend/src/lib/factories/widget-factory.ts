@@ -101,6 +101,10 @@ function createChartWidget(
     throw new Error("Chart widget must have `content.chartType` field");
   }
 
+  if (!content.datasetId) {
+    throw new Error("Chart widget must have `content.datasetId` field");
+  }
+
   return {
     id: uuidv4(),
     name,
@@ -109,6 +113,7 @@ function createChartWidget(
     content: {
       title: content.title,
       chartType: content.chartType,
+      datasetId: content.datasetId,
     },
   };
 }
@@ -122,6 +127,10 @@ function createTableWidget(
     throw new Error("Table widget must have `content.title` field");
   }
 
+  if (!content.datasetId) {
+    throw new Error("Table widget must have `content.datasetId` field");
+  }
+
   return {
     id: uuidv4(),
     name,
@@ -129,6 +138,7 @@ function createTableWidget(
     widgetType: WidgetType.Table,
     content: {
       title: content.title,
+      datasetId: content.datasetId,
     },
   };
 }

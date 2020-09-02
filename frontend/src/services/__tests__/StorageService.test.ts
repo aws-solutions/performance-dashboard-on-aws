@@ -19,7 +19,6 @@ const rawFile = {
 } as File;
 
 describe("uploadDataset", () => {
-
   beforeEach(() => {
     jest.spyOn(uuid, "v4").mockReturnValue("abc");
   });
@@ -35,7 +34,7 @@ describe("uploadDataset", () => {
     expect(Storage.put).toBeCalledWith("abc.csv", rawFile, {
       level: "public",
       contentType: "text/csv",
-      contentDisposition: "attachment; filename=\"dataset.csv\"",
+      contentDisposition: 'attachment; filename="dataset.csv"',
       serverSideEncryption: "aws:kms",
     });
   });
@@ -51,7 +50,7 @@ describe("uploadDataset", () => {
 
   test("returns the s3Key for the raw and the json files", async () => {
     const response = await StorageService.uploadDataset(rawFile, jsonFile);
-    expect(response.rawS3Key).toEqual("abc.csv");
-    expect(response.jsonS3Key).toEqual("abc.json");
+    expect(response.s3Keys.raw).toEqual("abc.csv");
+    expect(response.s3Keys.json).toEqual("abc.json");
   });
 });

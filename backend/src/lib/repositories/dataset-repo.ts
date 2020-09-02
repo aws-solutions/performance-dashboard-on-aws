@@ -8,6 +8,7 @@ class DatasetRepository {
   private s3Service: S3Service;
   private tableName: string;
   private bucketName: string;
+  private s3Prefix: string;
   private static instance: DatasetRepository;
 
   private constructor() {
@@ -23,6 +24,7 @@ class DatasetRepository {
     this.s3Service = S3Service.getInstance();
     this.tableName = process.env.BADGER_TABLE;
     this.bucketName = process.env.BADGER_DATASETS_BUCKET;
+    this.s3Prefix = "public/";
   }
 
   static getInstance(): DatasetRepository {
@@ -36,13 +38,15 @@ class DatasetRepository {
     const { raw, json } = dataset.s3Key;
 
     // Avoid creating datasets for which there aren't corresponding files on S3.
-    let fileExists = await this.s3Service.objectExists(this.bucketName, raw);
+    const rawKey = this.s3Prefix.concat(raw);
+    let fileExists = await this.s3Service.objectExists(this.bucketName, rawKey);
     if (!fileExists) {
       console.error("Raw file not found for dataset=", dataset);
       throw new Error("Raw file for dataset not found on S3");
     }
 
-    fileExists = await this.s3Service.objectExists(this.bucketName, json);
+    const jsonKey = this.s3Prefix.concat(json);
+    fileExists = await this.s3Service.objectExists(this.bucketName, jsonKey);
     if (!fileExists) {
       console.error("JSON file not found for dataset=", dataset);
       throw new Error("JSON file for dataset not found on S3");

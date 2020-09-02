@@ -24,22 +24,23 @@ const LineChartPreview = (props: Props) => {
         <LineChart data={props.data}>
           <CartesianGrid vertical={false} />
           <XAxis
-            dataKey="xAxis"
+            dataKey={props.lines.length ? props.lines[0] : ""}
             type="category"
             padding={{ left: 20, right: 20 }}
           />
           <YAxis type="number" />
-          {props.lines.map((line, index) => {
-            return (
-              <Line
-                dataKey={line}
-                stroke={colors[index]}
-                key={index}
-                dot={false}
-                strokeWidth="2"
-              />
-            );
-          })}
+          {props.lines.length &&
+            props.lines.slice(1).map((line, index) => {
+              return (
+                <Line
+                  dataKey={line}
+                  stroke={colors[index]}
+                  key={index}
+                  dot={false}
+                  strokeWidth="2"
+                />
+              );
+            })}
         </LineChart>
       </ResponsiveContainer>
     </div>

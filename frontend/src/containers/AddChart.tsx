@@ -60,9 +60,6 @@ function AddChart() {
     setTitle((event.target as HTMLInputElement).value);
   };
 
-  const getLineNames = (dataset: Array<string>): Array<string> =>
-    Object.keys(dataset).filter((d) => d !== "xAxis");
-
   const onFileProcessed = (data: File) => {
     if (!data) {
       return;
@@ -70,6 +67,8 @@ function AddChart() {
     parse(data, {
       header: true,
       dynamicTyping: true,
+      skipEmptyLines: true,
+      comments: "#",
       complete: function (results: ParseResult<object>) {
         if (results.errors.length) {
           setCsvErrors(results.errors);
@@ -174,7 +173,7 @@ function AddChart() {
               title={title}
               lines={
                 dataset && dataset.length
-                  ? getLineNames(dataset[0] as Array<string>)
+                  ? (Object.keys(dataset[0]) as Array<string>)
                   : []
               }
               data={dataset}

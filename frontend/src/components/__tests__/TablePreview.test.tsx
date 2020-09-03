@@ -15,3 +15,11 @@ test("renders the title of the table preview component", async () => {
   );
   expect(getByText("test title")).toBeInTheDocument();
 });
+
+test("table preview should match snapshot", async () => {
+  const wrapper = render(
+    <TablePreview title="test title" headers={["test"]} />,
+    { wrapper: MemoryRouter }
+  );
+  expect(wrapper.container).toMatchSnapshot();
+});

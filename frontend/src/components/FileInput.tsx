@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   id: string;
@@ -10,10 +12,33 @@ interface Props {
   hint?: string;
   accept?: string;
   errors?: Array<object>;
+  loading?: boolean;
   onFileProcessed?: Function;
 }
 
 function FileInput(props: Props) {
+  let content = (
+    <div className="usa-file-input__instructions" aria-hidden="true">
+      <span className="usa-file-input__drag-text">Drag file here or </span>
+      <span className="usa-file-input__choose">choose from folder</span>
+    </div>
+  );
+
+  if (props.loading) {
+    content = (
+      <div className="usa-file-input__instructions" aria-hidden="true">
+        <FontAwesomeIcon icon={faSpinner} spin pulse size="lg" />
+        <span className="margin-left-1">Uploading file</span>
+      </div>
+    );
+  } else if (props.fileName) {
+    content = (
+      <div className="usa-file-input__instructions" aria-hidden="true">
+        {props.fileName}
+      </div>
+    );
+  }
+
   return (
     <div
       className={`usa-form-group${
@@ -45,18 +70,7 @@ function FileInput(props: Props) {
               : ""
           }usa-file-input__target`}
         >
-          {props.fileName ? (
-            <div className="usa-file-input__instructions" aria-hidden="true">
-              {props.fileName}
-            </div>
-          ) : (
-            <div className="usa-file-input__instructions" aria-hidden="true">
-              <span className="usa-file-input__drag-text">
-                Drag file here or{" "}
-              </span>
-              <span className="usa-file-input__choose">choose from folder</span>
-            </div>
-          )}
+          {content}
           <div className="usa-file-input__box"></div>
           <input
             id={props.id}

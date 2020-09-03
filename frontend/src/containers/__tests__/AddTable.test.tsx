@@ -2,11 +2,24 @@ import React from "react";
 import { render, fireEvent, act, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BadgerService from "../../services/BadgerService";
+import StorageService from "../../services/StorageService";
 import AddTable from "../AddTable";
 import papaparse from "papaparse";
 
 jest.mock("../../services/BadgerService");
+jest.mock("../../services/StorageService");
 jest.mock("papaparse");
+
+beforeEach(() => {
+  BadgerService.createWidget = jest.fn();
+  BadgerService.createDataset = jest.fn().mockReturnValue({ id: "1244" });
+  StorageService.uploadDataset = jest.fn().mockReturnValue({
+    s3Keys: {
+      raw: "abc.csv",
+      json: "abc.json",
+    },
+  });
+});
 
 test("renders title and subtitles", async () => {
   const { getByText } = render(<AddTable />, { wrapper: MemoryRouter });
@@ -25,8 +38,7 @@ test("renders a file upload input", async () => {
   expect(getByLabelText("File upload")).toBeInTheDocument();
 });
 
-test("submit calls createWidget api", async () => {
-  BadgerService.createWidget = jest.fn();
+test("on submit, it calls createWidget api and uploads dataset", async () => {
   const parseSpy = jest.spyOn(papaparse, "parse");
   const { getByRole, getByText, getByLabelText } = render(<AddTable />, {
     wrapper: MemoryRouter,
@@ -62,4 +74,6 @@ test("submit calls createWidget api", async () => {
   });
 
   expect(BadgerService.createWidget).toHaveBeenCalled();
+  expect(StorageService.uploadDataset).toHaveBeenCalled();
+  expect(BadgerService.createDataset).toHaveBeenCalled();
 });

@@ -7,11 +7,18 @@ import AddChart from "../AddChart";
 import papaparse from "papaparse";
 
 jest.mock("../../services/BadgerService");
+jest.mock("../../services/StorageService");
 jest.mock("papaparse");
 
 beforeEach(() => {
   BadgerService.createWidget = jest.fn();
-  StorageService.uploadDataset = jest.fn();
+  BadgerService.createDataset = jest.fn().mockReturnValue({ id: "1244" });
+  StorageService.uploadDataset = jest.fn().mockReturnValue({
+    s3Keys: {
+      raw: "abc.csv",
+      json: "abc.json",
+    },
+  });
 });
 
 test("renders title and subtitles", async () => {
@@ -31,7 +38,7 @@ test("renders a file upload input", async () => {
   expect(getByLabelText("File upload")).toBeInTheDocument();
 });
 
-test("submit calls createWidget api", async () => {
+test("on submit, it calls createWidget api and uploads dataset", async () => {
   const parseSpy = jest.spyOn(papaparse, "parse");
   const { getByRole, getByText, getByLabelText } = render(<AddChart />, {
     wrapper: MemoryRouter,
@@ -57,7 +64,6 @@ test("submit calls createWidget api", async () => {
   });
 
   await waitFor(() => expect(submitButton).toBeEnabled());
-
   await waitFor(() => {
     expect(getByText("Preview")).toBeInTheDocument();
     expect(getByText("COVID Cases")).toBeInTheDocument();
@@ -69,4 +75,5 @@ test("submit calls createWidget api", async () => {
 
   expect(BadgerService.createWidget).toHaveBeenCalled();
   expect(StorageService.uploadDataset).toHaveBeenCalled();
+  expect(BadgerService.createDataset).toHaveBeenCalled();
 });

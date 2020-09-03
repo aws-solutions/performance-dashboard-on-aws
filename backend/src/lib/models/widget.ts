@@ -35,11 +35,13 @@ export interface ChartWidget extends Widget {
   content: {
     title: string;
     chartType: ChartType;
+    datasetId: string;
   };
 }
 
 export interface TableWidget extends Widget {
   content: {
     title: string;
+    datasetId: string;
   };
 }

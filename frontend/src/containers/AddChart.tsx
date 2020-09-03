@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
+import { Dataset } from "../models";
 import StorageService from "../services/StorageService";
 import BadgerService from "../services/BadgerService";
 import AdminLayout from "../layouts/Admin";
@@ -28,18 +29,29 @@ function AddChart() {
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
 
-  const uploadDataset = async () => {
-    if (csvFile) {
-      await StorageService.uploadDataset(csvFile, JSON.stringify(dataset));
+  const uploadDataset = async (): Promise<Dataset> => {
+    if (!csvFile) {
+      throw new Error("CSV file not specified");
     }
+
+    const uploadResponse = await StorageService.uploadDataset(
+      csvFile,
+      JSON.stringify(dataset)
+    );
+
+    return await BadgerService.createDataset(csvFile.name, {
+      raw: uploadResponse.s3Keys.raw,
+      json: uploadResponse.s3Keys.json,
+    });
   };
 
   const onSubmit = async (values: FormValues) => {
     try {
-      await uploadDataset();
+      const newDataset = await uploadDataset();
       await BadgerService.createWidget(dashboardId, values.title, "Chart", {
         title: values.title,
         chartType: values.chartType,
+        datasetId: newDataset.id,
       });
     } catch (err) {
       console.log("Failed to save widget", err);

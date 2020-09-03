@@ -1,4 +1,5 @@
 import { API, Auth } from "aws-amplify";
+import { Dataset } from "../models";
 
 const apiName = "BadgerApi";
 
@@ -87,13 +88,31 @@ async function createWidget(
   });
 }
 
+async function createDataset(
+  fileName: string,
+  s3Keys: { raw: string; json: string }
+): Promise<Dataset> {
+  const headers = await authHeaders();
+  return await API.post(apiName, "dataset", {
+    headers,
+    body: {
+      fileName,
+      s3Key: {
+        raw: s3Keys.raw,
+        json: s3Keys.json,
+      },
+    },
+  });
+}
+
 export default {
   fetchDashboards,
   fetchDashboardById,
   fetchTopicAreas,
   fetchWidgets,
-  createDashboard,
   editDashboard,
+  createDashboard,
   createWidget,
+  createDataset,
   getAuthToken,
 };

@@ -2,8 +2,10 @@ import { Storage } from "aws-amplify";
 import { v4 as uuidv4 } from "uuid";
 
 type UploadDatasetResult = {
-  rawS3Key: string;
-  jsonS3Key: string;
+  s3Keys: {
+    raw: string;
+    json: string;
+  };
 };
 
 type ValidFileTypes = {
@@ -54,8 +56,10 @@ async function uploadDataset(
   });
 
   return {
-    rawS3Key,
-    jsonS3Key,
+    s3Keys: {
+      raw: rawS3Key,
+      json: jsonS3Key,
+    },
   };
 }
 

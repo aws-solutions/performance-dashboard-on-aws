@@ -31,13 +31,8 @@ async function createWidget(req: Request, res: Response) {
 
   let widget;
   try {
-    widget = WidgetFactory.createWidget(
-      name,
-      dashboardId,
-      widgetType,
-      content
-    );
-  } catch(err) {
+    widget = WidgetFactory.createWidget(name, dashboardId, widgetType, content);
+  } catch (err) {
     console.log("Invalid request to create widget", err);
     return res.status(400).send(err.message);
   }

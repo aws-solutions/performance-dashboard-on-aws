@@ -18,3 +18,12 @@ export type Widget = {
   widgetType: string;
   content?: object;
 };
+
+export type Dataset = {
+  id: string;
+  fileName: string;
+  s3Key: {
+    raw: string;
+    json: string;
+  };
+};

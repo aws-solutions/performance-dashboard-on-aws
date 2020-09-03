@@ -54,6 +54,7 @@ describe("createChartWidget", () => {
     const content = {
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
+      datasetId: "090b0410",
     };
 
     const widget = WidgetFactory.createWidget(
@@ -85,6 +86,18 @@ describe("createChartWidget", () => {
   });
 
   it("throws an error if chart type is undefined", () => {
+    const content = { title: "My chart title", chartType: "LineChart" };
+    expect(() => {
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Chart,
+        content
+      );
+    }).toThrowError("Chart widget must have `content.datasetId` field");
+  });
+
+  it("throws an error if datasetId is undefined", () => {
     const content = { title: "My chart title" };
     expect(() => {
       WidgetFactory.createWidget(
@@ -101,6 +114,7 @@ describe("createTableWidget", () => {
   it("builds a table widget", () => {
     const content = {
       title: "Correlation of COVID cases to deaths",
+      datasetId: "090b0410",
     };
 
     const widget = WidgetFactory.createWidget(
@@ -128,6 +142,18 @@ describe("createTableWidget", () => {
         content
       );
     }).toThrowError("Table widget must have `content.title` field");
+  });
+
+  it("throws an error if datasetId is undefined", () => {
+    const content = { title: "COVID cases" };
+    expect(() => {
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Table,
+        content
+      );
+    }).toThrowError("Table widget must have `content.datasetId` field");
   });
 });
 
@@ -163,6 +189,7 @@ describe("fromItem", () => {
       content: {
         title: "Correlation of COVID cases to deaths",
         chartType: "LineChart",
+        datasetId: "090b0410",
       },
     };
 
@@ -172,6 +199,7 @@ describe("fromItem", () => {
     expect(widget.dashboardId).toEqual("abc");
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Chart);
+    expect(widget.content.datasetId).toEqual("090b0410");
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
@@ -187,6 +215,7 @@ describe("fromItem", () => {
       type: "Widget",
       content: {
         title: "Correlation of COVID cases to deaths",
+        datasetId: "090b0410",
       },
     };
 
@@ -196,6 +225,7 @@ describe("fromItem", () => {
     expect(widget.dashboardId).toEqual("abc");
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Table);
+    expect(widget.content.datasetId).toEqual("090b0410");
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
@@ -258,6 +288,7 @@ describe("toItem", () => {
       content: {
         title: "Correlation of COVID cases to deaths",
         chartType: ChartType.LineChart,
+        datasetId: "090b0410",
       },
     };
 
@@ -271,10 +302,11 @@ describe("toItem", () => {
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
+      datasetId: "090b0410",
     });
   });
 
-  it("converts a ChartWidget into a dynamodb item", () => {
+  it("converts a Table into a dynamodb item", () => {
     const widget: TableWidget = {
       id: "abc",
       name: dummyWidgetName,
@@ -282,6 +314,7 @@ describe("toItem", () => {
       widgetType: WidgetType.Table,
       content: {
         title: "Correlation of COVID cases to deaths",
+        datasetId: "090b0410",
       },
     };
 
@@ -294,6 +327,7 @@ describe("toItem", () => {
     expect(item.type).toEqual("Widget");
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
+      datasetId: "090b0410",
     });
   });
 });

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
+import { Dataset } from "../models";
 import BadgerService from "../services/BadgerService";
+import StorageService from "../services/StorageService";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
@@ -25,10 +27,28 @@ function AddTable() {
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
 
+  const uploadDataset = async (): Promise<Dataset> => {
+    if (!csvFile) {
+      throw new Error("CSV file not specified");
+    }
+
+    const uploadResponse = await StorageService.uploadDataset(
+      csvFile,
+      JSON.stringify(dataset)
+    );
+
+    return await BadgerService.createDataset(csvFile.name, {
+      raw: uploadResponse.s3Keys.raw,
+      json: uploadResponse.s3Keys.json,
+    });
+  };
+
   const onSubmit = async (values: FormValues) => {
     try {
+      const newDataset = await uploadDataset();
       await BadgerService.createWidget(dashboardId, values.title, "Table", {
         title: values.title,
+        datasetId: newDataset.id,
       });
     } catch (err) {
       console.log("Failed to save widget", err);

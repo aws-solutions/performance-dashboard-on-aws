@@ -43,7 +43,10 @@ describe("saveDataset", () => {
       await repo.saveDataset(dataset);
       expect.hasAssertions();
     } catch (err) {
-      expect(s3Service.objectExists).toBeCalledWith(datasetsBucket, "abc.csv");
+      expect(s3Service.objectExists).toBeCalledWith(
+        datasetsBucket,
+        "public/abc.csv"
+      );
     }
   });
 
@@ -57,7 +60,9 @@ describe("saveDataset", () => {
       expect.hasAssertions();
     } catch (err) {
       expect(s3Service.objectExists.mock.calls[1][0]).toEqual(datasetsBucket);
-      expect(s3Service.objectExists.mock.calls[1][1]).toEqual("abc.json");
+      expect(s3Service.objectExists.mock.calls[1][1]).toEqual(
+        "public/abc.json"
+      );
     }
   });
 

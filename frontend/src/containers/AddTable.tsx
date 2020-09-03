@@ -8,6 +8,7 @@ import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
+import TablePreview from "../components/TablePreview";
 
 interface FormValues {
   title: string;
@@ -55,6 +56,8 @@ function AddTable() {
     parse(data, {
       header: true,
       dynamicTyping: true,
+      skipEmptyLines: true,
+      comments: "#",
       complete: function (results: ParseResult<object>) {
         if (results.errors.length) {
           setCsvErrors(results.errors);
@@ -76,7 +79,7 @@ function AddTable() {
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Configure table
       </div>
-      <div className="grid-row">
+      <div className="grid-row width-desktop">
         <div className="grid-col-6">
           <form
             className="usa-form usa-form--large"
@@ -107,9 +110,23 @@ function AddTable() {
                 onFileProcessed={onFileProcessed}
               />
 
-              <div hidden={!dataset}></div>
+              <div hidden={!dataset}>
+                {dataset &&
+                dataset.length &&
+                (Object.keys(dataset[0]) as Array<string>).length >= 8 ? (
+                  <div className="usa-alert usa-alert--warning margin-top-3">
+                    <div className="usa-alert__body">
+                      <p className="usa-alert__text">
+                        It is recommended that tables have less than 8 columns.
+                        You can still continue.
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </fieldset>
-            <br />
             <br />
             <hr />
             <Button variant="outline" onClick={goBack}>
@@ -126,6 +143,15 @@ function AddTable() {
         <div className="grid-col-6">
           <div hidden={!dataset} className="margin-left-4">
             <h4>Preview</h4>
+            <TablePreview
+              title={title}
+              headers={
+                dataset && dataset.length
+                  ? (Object.keys(dataset[0]) as Array<string>)
+                  : []
+              }
+              data={dataset}
+            />
           </div>
         </div>
       </div>

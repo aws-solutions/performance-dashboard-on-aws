@@ -90,7 +90,7 @@ function AddChart() {
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Configure chart
       </div>
-      <div className="grid-row">
+      <div className="grid-row width-desktop">
         <div className="grid-col-6">
           <form
             className="usa-form usa-form--large"

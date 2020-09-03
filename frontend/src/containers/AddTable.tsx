@@ -25,21 +25,26 @@ function AddTable() {
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
       throw new Error("CSV file not specified");
     }
 
+    setLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
       JSON.stringify(dataset)
     );
 
-    return await BadgerService.createDataset(csvFile.name, {
+    const newDataset = await BadgerService.createDataset(csvFile.name, {
       raw: uploadResponse.s3Keys.raw,
       json: uploadResponse.s3Keys.json,
     });
+
+    setLoading(false);
+    return newDataset;
   };
 
   const onSubmit = async (values: FormValues) => {
@@ -120,6 +125,7 @@ function AddTable() {
                 label="File upload"
                 accept=".csv"
                 disabled={!title}
+                loading={loading}
                 errors={csvErrors}
                 register={register}
                 hint="Must be a CSV file. [Link] How do I format my CSV?"
@@ -135,7 +141,7 @@ function AddTable() {
             <Button variant="outline" onClick={goBack}>
               Back
             </Button>
-            <Button disabled={!dataset} type="submit">
+            <Button disabled={!dataset || loading} type="submit">
               Add table
             </Button>
             <Button variant="unstyled" onClick={onCancel}>

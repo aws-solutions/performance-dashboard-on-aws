@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a search input 1`] = `
+<div>
+  <form
+    class="usa-search usa-search--small"
+    role="search"
+  >
+    <label
+      class="usa-sr-only"
+      for="query"
+    >
+      Search
+    </label>
+    <input
+      class="usa-input"
+      id="search"
+      name="query"
+      style="height: 37px;"
+      type="search"
+    />
+    <button
+      class="usa-button"
+      style="height: 37px;"
+      type="submit"
+    >
+      <span
+        class="usa-sr-only"
+      >
+        Search
+      </span>
+    </button>
+  </form>
+</div>
+`;

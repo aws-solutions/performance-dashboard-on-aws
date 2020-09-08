@@ -32,7 +32,7 @@ function WidgetList(props: Props) {
             return (
               <div
                 key={index}
-                className="grid-row radius-lg border-base border"
+                className="grid-row radius-lg border-base border margin-y-1"
               >
                 <div className="grid-row grid-col flex-1 padding-1">
                   <div className="grid-col flex-4 text-center display-flex flex-align-center flex-justify-center">

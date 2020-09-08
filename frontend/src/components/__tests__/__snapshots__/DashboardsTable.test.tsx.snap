@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a table with dashboards 1`] = `
+<div>
+  <table
+    class="usa-table usa-table--borderless"
+    width="100%"
+  >
+    <thead>
+      <tr>
+        <th
+          style="padding: 0.5rem 1rem;"
+        >
+          <input
+            type="checkbox"
+          />
+        </th>
+        <th>
+          Dashboard name
+        </th>
+        <th>
+          Topic area
+        </th>
+        <th>
+          Last updated
+        </th>
+        <th>
+          Created by
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+          />
+        </td>
+        <td>
+          <a
+            href="/admin/dashboard/edit/abc"
+          >
+            USWDS
+          </a>
+        </td>
+        <td>
+          Public Safety
+        </td>
+        <td>
+          2020-07-31 21:20
+        </td>
+        <td>
+          johndoe
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`renders an empty table 1`] = `
+<div>
+  <table
+    class="usa-table usa-table--borderless"
+    width="100%"
+  >
+    <thead>
+      <tr>
+        <th
+          style="padding: 0.5rem 1rem;"
+        >
+          <input
+            type="checkbox"
+          />
+        </th>
+        <th>
+          Dashboard name
+        </th>
+        <th>
+          Topic area
+        </th>
+        <th>
+          Last updated
+        </th>
+        <th>
+          Created by
+        </th>
+      </tr>
+    </thead>
+    <tbody />
+  </table>
+</div>
+`;

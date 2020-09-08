@@ -36,6 +36,7 @@ describe("DashboardRepository.create", () => {
       "456",
       "Topic1",
       "Description Test",
+      "Draft",
       user
     );
     const item = DashboardFactory.toItem(dashboard);
@@ -81,6 +82,7 @@ describe("DashboardRepository.updateDashboard", () => {
       "456",
       "Topic1",
       "Description Test",
+      "Draft",
       user
     );
     await repo.updateDashboard(dashboard, user);
@@ -102,6 +104,7 @@ describe("DashboardRepository.updateDashboard", () => {
       "456",
       "Topic1",
       "Description Test",
+      "Draft",
       user
     );
     await repo.updateDashboard(dashboard, user);
@@ -163,6 +166,7 @@ describe("DashboardRepository.listDashboards", () => {
           dashboardName: "Test name",
           description: "description test",
           createdBy: "test",
+          state: "Draft",
         },
       ],
     });
@@ -176,6 +180,7 @@ describe("DashboardRepository.listDashboards", () => {
       topicAreaName: "Topic 1",
       description: "description test",
       createdBy: "test",
+      state: "Draft",
     });
   });
 
@@ -190,6 +195,7 @@ describe("DashboardRepository.listDashboards", () => {
         dashboardName: "Test name",
         description: "description test",
         createdBy: "test",
+        state: "Draft",
       },
     });
 
@@ -201,6 +207,7 @@ describe("DashboardRepository.listDashboards", () => {
       topicAreaName: "Topic 1",
       description: "description test",
       createdBy: "test",
+      state: "Draft",
     });
   });
 
@@ -233,6 +240,7 @@ describe("DashboardRepository.listDashboards", () => {
           dashboardName: "Test name",
           description: "description test",
           createdBy: "test",
+          state: "Draft",
         },
       ],
     });
@@ -246,6 +254,7 @@ describe("DashboardRepository.listDashboards", () => {
       topicAreaName: "Topic 1",
       description: "description test",
       createdBy: "test",
+      state: "Draft",
     });
   });
 });

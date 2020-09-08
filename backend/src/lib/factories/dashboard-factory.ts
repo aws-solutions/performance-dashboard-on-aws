@@ -3,26 +3,42 @@ import { Dashboard, DashboardItem } from "../models/dashboard";
 import { User } from "../models/user";
 import topicareaFactory from "./topicarea-factory";
 
-const DASHBOARD: string = 'Dashboard';
+const DASHBOARD: string = "Dashboard";
 
-function create(id: string, name: string, topicAreaId: string, topicAreaName: string, description: string, user: User): Dashboard {
+function create(
+  id: string,
+  name: string,
+  topicAreaId: string,
+  topicAreaName: string,
+  description: string,
+  state: string,
+  user: User
+): Dashboard {
   return {
     id,
     name,
     topicAreaId,
     topicAreaName,
     description,
+    state,
     createdBy: user.userId,
   };
 }
 
-function createNew(name: string, topicAreaId: string, topicAreaName: string, description: string, user: User): Dashboard {
+function createNew(
+  name: string,
+  topicAreaId: string,
+  topicAreaName: string,
+  description: string,
+  user: User
+): Dashboard {
   return {
     id: uuidv4(),
     name,
     topicAreaId,
     topicAreaName,
     description,
+    state: "Draft",
     createdBy: user.userId,
   };
 }
@@ -39,6 +55,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
     topicAreaName: dashboard.topicAreaName,
     topicAreaId: topicareaFactory.itemId(dashboard.topicAreaId),
     description: dashboard.description,
+    state: dashboard.state,
     createdBy: dashboard.createdBy,
   };
   return item;
@@ -56,11 +73,14 @@ function fromItem(item: DashboardItem): Dashboard {
     topicAreaName: item.topicAreaName,
     description: item.description,
     createdBy: item.createdBy,
-  }
+    state: item.state || "Draft",
+  };
   return dashboard;
 }
 
-function itemId(id: string): string { return `${DASHBOARD}#${id}` }
+function itemId(id: string): string {
+  return `${DASHBOARD}#${id}`;
+}
 
 export default {
   create,

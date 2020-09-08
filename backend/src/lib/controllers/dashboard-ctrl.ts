@@ -105,6 +105,7 @@ async function updateDashboard(req: Request, res: Response) {
     topicAreaId,
     topicArea.name,
     description,
+    "Draft",
     user
   );
 

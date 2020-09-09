@@ -17,6 +17,7 @@ test("renders a table with dashboards", async () => {
       topicAreaId: "123",
       topicAreaName: "Public Safety",
       createdBy: "johndoe",
+      updatedAt: new Date(),
       widgets: [],
     },
   ];

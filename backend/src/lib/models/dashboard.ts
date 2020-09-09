@@ -7,6 +7,7 @@ export type Dashboard = {
   topicAreaName: string;
   description: string;
   createdBy: string;
+  updatedAt: Date;
   state: string;
   widgets?: Array<Widget>;
 };
@@ -22,5 +23,6 @@ export interface DashboardItem {
   topicAreaName: string;
   description: string;
   createdBy: string;
+  updatedAt: string;
   state: string;
 }

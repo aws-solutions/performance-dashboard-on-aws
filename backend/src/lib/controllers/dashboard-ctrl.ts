@@ -43,6 +43,7 @@ async function createDashboard(req: Request, res: Response) {
     topicAreaId,
     topicArea.name,
     description,
+    new Date(),
     user
   );
 
@@ -106,6 +107,7 @@ async function updateDashboard(req: Request, res: Response) {
     topicArea.name,
     description,
     "Draft",
+    new Date(),
     user
   );
 

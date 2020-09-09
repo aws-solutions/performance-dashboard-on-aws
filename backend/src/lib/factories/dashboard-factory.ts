@@ -12,6 +12,7 @@ function create(
   topicAreaName: string,
   description: string,
   state: string,
+  updatedAt: Date,
   user: User
 ): Dashboard {
   return {
@@ -22,6 +23,7 @@ function create(
     description,
     state,
     createdBy: user.userId,
+    updatedAt,
   };
 }
 
@@ -30,6 +32,7 @@ function createNew(
   topicAreaId: string,
   topicAreaName: string,
   description: string,
+  updatedAt: Date,
   user: User
 ): Dashboard {
   return {
@@ -40,6 +43,7 @@ function createNew(
     description,
     state: "Draft",
     createdBy: user.userId,
+    updatedAt,
   };
 }
 
@@ -57,6 +61,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
     description: dashboard.description,
     state: dashboard.state,
     createdBy: dashboard.createdBy,
+    updatedAt: dashboard.updatedAt.toISOString(),
   };
   return item;
 }
@@ -73,6 +78,7 @@ function fromItem(item: DashboardItem): Dashboard {
     topicAreaName: item.topicAreaName,
     description: item.description,
     createdBy: item.createdBy,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
     state: item.state || "Draft",
   };
   return dashboard;

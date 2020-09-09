@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Dashboard } from "../models";
+import moment from "moment";
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -32,7 +33,7 @@ function DashboardsTable(props: Props) {
               </Link>
             </td>
             <td>{dashboard.topicAreaName}</td>
-            <td>2020-07-31 21:20</td>
+            <td>{moment(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}</td>
             <td>{dashboard.createdBy}</td>
           </tr>
         ))}

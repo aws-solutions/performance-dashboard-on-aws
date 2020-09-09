@@ -131,12 +131,13 @@ class DashboardRepository {
         sk: DashboardFactory.itemId(dashboard.id),
       },
       UpdateExpression:
-        "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
+        "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedAt = :updatedAt, #updatedBy = :userId",
       ExpressionAttributeValues: {
         ":dashboardName": dashboard.name,
         ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
         ":topicAreaName": dashboard.topicAreaName,
         ":description": dashboard.description,
+        ":updatedAt": new Date().toISOString(),
         ":userId": user.userId,
       },
       ExpressionAttributeNames: {
@@ -145,6 +146,30 @@ class DashboardRepository {
         "#topicAreaName": "topicAreaName",
         "#description": "description",
         "#updatedBy": "updatedBy",
+        "#updatedAt": "updatedAt",
+      },
+    });
+  }
+
+  /**
+   * Updates the updatedAt field. Sets the `updatedBy` field
+   * to the userId doing the update action.
+   */
+  public async updateAt(dashboardId: string, updatedAt: Date, user: User) {
+    await this.dynamodb.update({
+      TableName: this.tableName,
+      Key: {
+        pk: DashboardFactory.itemId(dashboardId),
+        sk: DashboardFactory.itemId(dashboardId),
+      },
+      UpdateExpression: "set #updatedAt = :updatedAt, #updatedBy = :userId",
+      ExpressionAttributeValues: {
+        ":updatedAt": updatedAt.toISOString(),
+        ":userId": user.userId,
+      },
+      ExpressionAttributeNames: {
+        "#updatedBy": "updatedBy",
+        "#updatedAt": "updatedAt",
       },
     });
   }

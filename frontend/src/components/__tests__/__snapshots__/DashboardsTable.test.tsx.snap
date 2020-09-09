@@ -11,28 +11,122 @@ exports[`renders a table with dashboards 1`] = `
         <th
           style="padding: 0.5rem 1rem;"
         >
+          <label
+            class="usa-sr-only"
+            for="selectAll"
+          >
+            Select all dashboards
+          </label>
           <input
+            id="selectAll"
             type="checkbox"
           />
         </th>
-        <th>
+        <th
+          style="width: 30%;"
+        >
           Dashboard name
+          <button
+            class="usa-button usa-button--unstyled margin-left-1"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-sort fa-w-10 "
+              data-icon="sort"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 320 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
         </th>
-        <th>
+        <th
+          style="width: 30%;"
+        >
           Topic area
+          <button
+            class="usa-button usa-button--unstyled margin-left-1"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-sort fa-w-10 "
+              data-icon="sort"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 320 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
         </th>
         <th>
           Last updated
+          <button
+            class="usa-button usa-button--unstyled margin-left-1"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-sort fa-w-10 "
+              data-icon="sort"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 320 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
         </th>
         <th>
           Created by
+          <button
+            class="usa-button usa-button--unstyled margin-left-1"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-sort fa-w-10 "
+              data-icon="sort"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 320 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
         </th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>
+          <label
+            class="usa-sr-only"
+            for="abc"
+          >
+            USWDS
+          </label>
           <input
+            id="abc"
             type="checkbox"
           />
         </td>
@@ -69,21 +163,108 @@ exports[`renders an empty table 1`] = `
         <th
           style="padding: 0.5rem 1rem;"
         >
+          <label
+            class="usa-sr-only"
+            for="selectAll"
+          >
+            Select all dashboards
+          </label>
           <input
+            id="selectAll"
             type="checkbox"
           />
         </th>
-        <th>
+        <th
+          style="width: 30%;"
+        >
           Dashboard name
+          <button
+            class="usa-button usa-button--unstyled margin-left-1"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-sort fa-w-10 "
+              data-icon="sort"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 320 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
         </th>
-        <th>
+        <th
+          style="width: 30%;"
+        >
           Topic area
+          <button
+            class="usa-button usa-button--unstyled margin-left-1"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-sort fa-w-10 "
+              data-icon="sort"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 320 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
         </th>
         <th>
           Last updated
+          <button
+            class="usa-button usa-button--unstyled margin-left-1"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-sort fa-w-10 "
+              data-icon="sort"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 320 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
         </th>
         <th>
           Created by
+          <button
+            class="usa-button usa-button--unstyled margin-left-1"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-sort fa-w-10 "
+              data-icon="sort"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 320 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
         </th>
       </tr>
     </thead>

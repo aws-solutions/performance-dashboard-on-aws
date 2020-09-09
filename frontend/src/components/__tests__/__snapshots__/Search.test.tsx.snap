@@ -8,7 +8,7 @@ exports[`renders a search input 1`] = `
   >
     <label
       class="usa-sr-only"
-      for="query"
+      for="search"
     >
       Search
     </label>

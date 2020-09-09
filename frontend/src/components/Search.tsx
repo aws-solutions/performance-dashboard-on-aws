@@ -25,7 +25,7 @@ function Search(props: Props) {
       role="search"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <label className="usa-sr-only" htmlFor="query">
+      <label className="usa-sr-only" htmlFor={props.id}>
         Search
       </label>
       <input

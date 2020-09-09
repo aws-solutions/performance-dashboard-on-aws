@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Dashboard } from "../../models";
 import DashboardsTable from "../DashboardsTable";
@@ -25,4 +25,30 @@ test("renders a table with dashboards", async () => {
     wrapper: MemoryRouter,
   });
   expect(wrapper.container).toMatchSnapshot();
+});
+
+test("onSelect function is called when user selects dashboard", async () => {
+  const dashboard: Dashboard = {
+    id: "abc",
+    name: "USWDS",
+    topicAreaId: "123",
+    topicAreaName: "Public Safety",
+    createdBy: "johndoe",
+    widgets: [],
+  };
+
+  const onSelect = jest.fn();
+  const { getByLabelText } = render(
+    <DashboardsTable onSelect={onSelect} dashboards={[dashboard]} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+
+  await act(async () => {
+    const checkbox = getByLabelText("USWDS");
+    fireEvent.click(checkbox);
+  });
+
+  expect(onSelect).toBeCalledWith(expect.arrayContaining([dashboard]));
 });

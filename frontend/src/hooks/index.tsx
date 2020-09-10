@@ -115,26 +115,34 @@ export function useWidgets(dashboardId: string): UseWidgetsHook {
   };
 }
 
-const getRandomColor = () => {
-  let randomColor = `${Math.floor(Math.random() * 65535).toString(16).padEnd(4, "0")}`;
-  const randomPosition = Math.floor(Math.random()*3) * 2;
-  randomColor = `#${randomColor.substring(0, randomPosition)}00${randomColor.substring(randomPosition)}`;
-  return randomColor;
-};
+const sprectrumColors = [
+  "#29B4BB",
+  "#3F29C8",
+  "#E17316",
+  "#CE167E",
+  "#7D70F9",
+  "#40E15D",
+  "#2168E5",
+  "#5B20A2",
+  "#D7B40A",
+  "#BE5B0F",
+  "#217C59",
+  "#8DED43",
+];
 
-const getRandomColors = (numberOfColors: number): Array<string> => {
-  const randomColors = new Array<string>();
+const getColors = (numberOfColors: number): Array<string> => {
+  const colors = new Array<string>();
   for (let i = 0; i < numberOfColors; i++) {
-    randomColors.push(getRandomColor());
+    colors.push(sprectrumColors[i % sprectrumColors.length]);
   }
-  return randomColors;
+  return colors;
 };
 
 export function useColors(numberOfColors: number): Array<string> {
   const [colors, setColors] = useState<Array<string>>([]);
 
   useEffect(() => {
-    setColors(getRandomColors(numberOfColors));
+    setColors(getColors(numberOfColors));
   }, [numberOfColors]);
 
   return colors;

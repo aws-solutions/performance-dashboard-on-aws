@@ -29,7 +29,7 @@ function DashboardListing() {
   const filterDashboards = (dashboards: Array<Dashboard>): Array<Dashboard> => {
     return dashboards.filter((dashboard) => {
       const name = dashboard.name.toLowerCase().trim();
-      const query = filter.toLowerCase().trim();
+      const query = filter.toLowerCase();
       return name.includes(query);
     });
   };

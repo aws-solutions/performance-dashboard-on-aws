@@ -12,7 +12,6 @@ function create(
   topicAreaName: string,
   description: string,
   state: string,
-  updatedAt: Date,
   user: User
 ): Dashboard {
   return {
@@ -23,7 +22,7 @@ function create(
     description,
     state,
     createdBy: user.userId,
-    updatedAt,
+    updatedAt: new Date(),
   };
 }
 
@@ -32,7 +31,6 @@ function createNew(
   topicAreaId: string,
   topicAreaName: string,
   description: string,
-  updatedAt: Date,
   user: User
 ): Dashboard {
   return {
@@ -43,7 +41,7 @@ function createNew(
     description,
     state: "Draft",
     createdBy: user.userId,
-    updatedAt,
+    updatedAt: new Date(),
   };
 }
 

@@ -8,7 +8,6 @@ const user: User = {
 
 describe("dashboardFactory.create", () => {
   it("should create a dashboard with id, name, topicAreaId, topicAreaName, updatedAt and description", () => {
-    const now = new Date();
     const dashboard1 = factory.create(
       "123",
       "Dashboard1",
@@ -16,19 +15,16 @@ describe("dashboardFactory.create", () => {
       "Topic1",
       "Description Test",
       "Draft",
-      now,
       user
     );
     expect(dashboard1.id).toEqual("123");
     expect(dashboard1.name).toEqual("Dashboard1");
     expect(dashboard1.topicAreaId).toEqual("456");
     expect(dashboard1.topicAreaName).toEqual("Topic1");
-    expect(dashboard1.updatedAt.getTime()).toEqual(now.getTime());
     expect(dashboard1.description).toEqual("Description Test");
   });
 
   it("should create a dashboard with createdBy", () => {
-    const now = new Date();
     const dashboard1 = factory.create(
       "123",
       "Dashboard1",
@@ -36,7 +32,6 @@ describe("dashboardFactory.create", () => {
       "Topic1",
       "Description Test",
       "Draft",
-      now,
       user
     );
     expect(dashboard1.createdBy).toEqual(user.userId);
@@ -45,13 +40,11 @@ describe("dashboardFactory.create", () => {
 
 describe("dashboardFactory.createNew", () => {
   it("should create a new dashboard with unique id", () => {
-    const now = new Date();
     const dashboard1 = factory.createNew(
       "Dashboard1",
       "123",
       "Topic1",
       "Description Test",
-      now,
       user
     );
     const dashboard2 = factory.createNew(
@@ -59,37 +52,31 @@ describe("dashboardFactory.createNew", () => {
       "123",
       "Topic1",
       "Description Test",
-      now,
       user
     );
     expect(dashboard1.id).not.toEqual(dashboard2.id);
   });
 
   it("should create a new dashboard with name, topicAreaId, topicAreaName, updatedAt and description", () => {
-    const now = new Date();
     const dashboard1 = factory.createNew(
       "Dashboard1",
       "123",
       "Topic1",
       "Description Test",
-      now,
       user
     );
     expect(dashboard1.name).toEqual("Dashboard1");
     expect(dashboard1.topicAreaId).toEqual("123");
     expect(dashboard1.topicAreaName).toEqual("Topic1");
-    expect(dashboard1.updatedAt.getTime()).toEqual(now.getTime());
     expect(dashboard1.description).toEqual("Description Test");
   });
 
   it("should create a new dashboard with createdBy", () => {
-    const now = new Date();
     const dashboard1 = factory.createNew(
       "Dashboard1",
       "123",
       "Topic1",
       "Description Test",
-      now,
       user
     );
     expect(dashboard1.createdBy).toEqual(user.userId);

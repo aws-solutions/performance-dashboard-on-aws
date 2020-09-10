@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import AuthService from "../services/auth";
 import WidgetFactory from "../factories/widget-factory";
 import WidgetRepository from "../repositories/widget-repo";
+import DashboardRepository from "../repositories/dashboard-repo";
 
 async function createWidget(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
@@ -38,7 +39,9 @@ async function createWidget(req: Request, res: Response) {
   }
 
   const repo = WidgetRepository.getInstance();
+  const dashboardRepo = DashboardRepository.getInstance();
   await repo.saveWidget(widget);
+  await dashboardRepo.updateAt(dashboardId, new Date(), user);
   return res.json(widget);
 }
 

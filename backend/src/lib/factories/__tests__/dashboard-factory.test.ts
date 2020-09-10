@@ -7,7 +7,7 @@ const user: User = {
 };
 
 describe("dashboardFactory.create", () => {
-  it("should create a dashboard with id, name, topicAreaId, topicAreaName and description", () => {
+  it("should create a dashboard with id, name, topicAreaId, topicAreaName, updatedAt and description", () => {
     const dashboard1 = factory.create(
       "123",
       "Dashboard1",
@@ -57,7 +57,7 @@ describe("dashboardFactory.createNew", () => {
     expect(dashboard1.id).not.toEqual(dashboard2.id);
   });
 
-  it("should create a new dashboard with name, topicAreaId, topicAreaName and description", () => {
+  it("should create a new dashboard with name, topicAreaId, topicAreaName, updatedAt and description", () => {
     const dashboard1 = factory.createNew(
       "Dashboard1",
       "123",
@@ -84,6 +84,7 @@ describe("dashboardFactory.createNew", () => {
 });
 
 describe("DashboardFactory.toItem", () => {
+  const now = new Date();
   const dashboard: Dashboard = {
     id: "123",
     name: "Dashboard 1",
@@ -91,6 +92,7 @@ describe("DashboardFactory.toItem", () => {
     topicAreaName: "Topic 1",
     description: "Description test",
     createdBy: user.userId,
+    updatedAt: now,
     state: "Draft",
   };
 
@@ -116,10 +118,13 @@ describe("DashboardFactory.toItem", () => {
     expect(item.topicAreaId).toEqual("TopicArea#456");
     expect(item.topicAreaName).toEqual("Topic 1");
     expect(item.createdBy).toEqual(user.userId);
+    expect(item.updatedAt).toEqual(now.toISOString());
+    expect(item.state).toEqual("Draft");
   });
 });
 
 describe("DashboardFactory.fromItem", () => {
+  const now = new Date().toISOString();
   const item: DashboardItem = {
     pk: "Dashboard#123",
     sk: "Dashboard#123",
@@ -129,6 +134,7 @@ describe("DashboardFactory.fromItem", () => {
     topicAreaName: "Topic 1",
     description: "Description test",
     createdBy: user.userId,
+    updatedAt: now,
     state: "Draft",
   };
 
@@ -140,5 +146,7 @@ describe("DashboardFactory.fromItem", () => {
     expect(dashboard.description).toEqual("Description test");
     expect(dashboard.topicAreaName).toEqual("Topic 1");
     expect(dashboard.createdBy).toEqual(user.userId);
+    expect(dashboard.updatedAt).toEqual(new Date(now));
+    expect(dashboard.state).toEqual("Draft");
   });
 });

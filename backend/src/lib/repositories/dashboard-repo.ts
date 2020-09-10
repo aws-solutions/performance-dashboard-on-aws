@@ -124,27 +124,63 @@ class DashboardRepository {
    * the `updatedBy` field to the userId doing the update action.
    */
   public async updateDashboard(dashboard: Dashboard, user: User) {
+    try {
+      await this.dynamodb.update({
+        TableName: this.tableName,
+        Key: {
+          pk: DashboardFactory.itemId(dashboard.id),
+          sk: DashboardFactory.itemId(dashboard.id),
+        },
+        UpdateExpression:
+          "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedAt = :updatedAt, #updatedBy = :userId",
+        ConditionExpression:
+          "attribute_not_exists(#updatedAt) OR #updatedAt <= :updatedAt",
+        ExpressionAttributeValues: {
+          ":dashboardName": dashboard.name,
+          ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
+          ":topicAreaName": dashboard.topicAreaName,
+          ":description": dashboard.description,
+          ":updatedAt": new Date().toISOString(),
+          ":userId": user.userId,
+        },
+        ExpressionAttributeNames: {
+          "#dashboardName": "dashboardName",
+          "#topicAreaId": "topicAreaId",
+          "#topicAreaName": "topicAreaName",
+          "#description": "description",
+          "#updatedBy": "updatedBy",
+          "#updatedAt": "updatedAt",
+        },
+      });
+    } catch (error) {
+      if (error.code === "ConditionalCheckFailedException") {
+        console.log("Someone else updated the item before us");
+        return;
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  /**
+   * Updates the updatedAt field. Sets the `updatedBy` field
+   * to the userId doing the update action.
+   */
+  public async updateAt(dashboardId: string, updatedAt: Date, user: User) {
     await this.dynamodb.update({
       TableName: this.tableName,
       Key: {
-        pk: DashboardFactory.itemId(dashboard.id),
-        sk: DashboardFactory.itemId(dashboard.id),
+        pk: DashboardFactory.itemId(dashboardId),
+        sk: DashboardFactory.itemId(dashboardId),
       },
-      UpdateExpression:
-        "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
+      UpdateExpression: "set #updatedAt = :updatedAt, #updatedBy = :userId",
       ExpressionAttributeValues: {
-        ":dashboardName": dashboard.name,
-        ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
-        ":topicAreaName": dashboard.topicAreaName,
-        ":description": dashboard.description,
+        ":updatedAt": updatedAt.toISOString(),
         ":userId": user.userId,
       },
       ExpressionAttributeNames: {
-        "#dashboardName": "dashboardName",
-        "#topicAreaId": "topicAreaId",
-        "#topicAreaName": "topicAreaName",
-        "#description": "description",
         "#updatedBy": "updatedBy",
+        "#updatedAt": "updatedAt",
       },
     });
   }

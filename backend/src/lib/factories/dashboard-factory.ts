@@ -22,6 +22,7 @@ function create(
     description,
     state,
     createdBy: user.userId,
+    updatedAt: new Date(),
   };
 }
 
@@ -40,6 +41,7 @@ function createNew(
     description,
     state: "Draft",
     createdBy: user.userId,
+    updatedAt: new Date(),
   };
 }
 
@@ -57,6 +59,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
     description: dashboard.description,
     state: dashboard.state,
     createdBy: dashboard.createdBy,
+    updatedAt: dashboard.updatedAt.toISOString(),
   };
   return item;
 }
@@ -73,6 +76,7 @@ function fromItem(item: DashboardItem): Dashboard {
     topicAreaName: item.topicAreaName,
     description: item.description,
     createdBy: item.createdBy,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
     state: item.state || "Draft",
   };
   return dashboard;

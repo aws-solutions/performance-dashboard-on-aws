@@ -111,12 +111,13 @@ describe("DashboardRepository.updateDashboard", () => {
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedBy = :userId",
+          "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedAt = :updatedAt, #updatedBy = :userId",
         ExpressionAttributeValues: {
           ":dashboardName": dashboard.name,
           ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
           ":topicAreaName": dashboard.topicAreaName,
           ":description": dashboard.description,
+          ":updatedAt": dashboard.updatedAt.toISOString(),
           ":userId": user.userId,
         },
       })
@@ -156,6 +157,7 @@ describe("DashboardRepository.listDashboards", () => {
 
   it("returns a list of dashboards", async () => {
     // Mock query response
+    const now = new Date();
     dynamodb.query = jest.fn().mockReturnValue({
       Items: [
         {
@@ -166,6 +168,7 @@ describe("DashboardRepository.listDashboards", () => {
           dashboardName: "Test name",
           description: "description test",
           createdBy: "test",
+          updatedAt: now.toISOString(),
           state: "Draft",
         },
       ],
@@ -180,12 +183,14 @@ describe("DashboardRepository.listDashboards", () => {
       topicAreaName: "Topic 1",
       description: "description test",
       createdBy: "test",
+      updatedAt: now,
       state: "Draft",
     });
   });
 
   it("returns a dashboard by id", async () => {
     // Mock query response
+    const now = new Date();
     dynamodb.get = jest.fn().mockReturnValue({
       Item: {
         pk: "Dashboard#123",
@@ -195,6 +200,7 @@ describe("DashboardRepository.listDashboards", () => {
         dashboardName: "Test name",
         description: "description test",
         createdBy: "test",
+        updatedAt: now.toISOString(),
         state: "Draft",
       },
     });
@@ -207,6 +213,7 @@ describe("DashboardRepository.listDashboards", () => {
       topicAreaName: "Topic 1",
       description: "description test",
       createdBy: "test",
+      updatedAt: now,
       state: "Draft",
     });
   });
@@ -229,6 +236,7 @@ describe("DashboardRepository.listDashboards", () => {
       })
     );
 
+    const now = new Date();
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({
       Items: [
@@ -240,6 +248,7 @@ describe("DashboardRepository.listDashboards", () => {
           dashboardName: "Test name",
           description: "description test",
           createdBy: "test",
+          updatedAt: now.toISOString(),
           state: "Draft",
         },
       ],
@@ -254,6 +263,7 @@ describe("DashboardRepository.listDashboards", () => {
       topicAreaName: "Topic 1",
       description: "description test",
       createdBy: "test",
+      updatedAt: now,
       state: "Draft",
     });
   });

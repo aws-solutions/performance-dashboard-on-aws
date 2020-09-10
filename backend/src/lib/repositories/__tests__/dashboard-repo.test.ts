@@ -30,7 +30,6 @@ describe("DashboardRepository", () => {
 
 describe("DashboardRepository.create", () => {
   it("should call putItem on dynamodb", async () => {
-    const now = new Date();
     const dashboard = DashboardFactory.create(
       "123",
       "Dashboard1",
@@ -38,7 +37,6 @@ describe("DashboardRepository.create", () => {
       "Topic1",
       "Description Test",
       "Draft",
-      now,
       user
     );
     const item = DashboardFactory.toItem(dashboard);
@@ -56,13 +54,11 @@ describe("DashboardRepository.create", () => {
 
 describe("DashboardRepository.createNew", () => {
   it("should call putItem on dynamodb", async () => {
-    const now = new Date();
     const dashboard = DashboardFactory.createNew(
       "Dashboard1",
       "456",
       "Topic1",
       "Description Test",
-      now,
       user
     );
     const item = DashboardFactory.toItem(dashboard);
@@ -80,7 +76,6 @@ describe("DashboardRepository.createNew", () => {
 
 describe("DashboardRepository.updateDashboard", () => {
   it("should call updateItem with the correct keys", async () => {
-    const now = new Date();
     const dashboard = DashboardFactory.create(
       "123",
       "Dashboard1",
@@ -88,7 +83,6 @@ describe("DashboardRepository.updateDashboard", () => {
       "Topic1",
       "Description Test",
       "Draft",
-      now,
       user
     );
     await repo.updateDashboard(dashboard, user);
@@ -104,7 +98,6 @@ describe("DashboardRepository.updateDashboard", () => {
   });
 
   it("should call update with all the fields", async () => {
-    const now = new Date();
     const dashboard = DashboardFactory.create(
       "123",
       "Dashboard1",
@@ -112,7 +105,6 @@ describe("DashboardRepository.updateDashboard", () => {
       "Topic1",
       "Description Test",
       "Draft",
-      now,
       user
     );
     await repo.updateDashboard(dashboard, user);

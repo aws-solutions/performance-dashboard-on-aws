@@ -14,8 +14,8 @@
 						"id": "3a0e8288-450b-4657-91f8-a02a4e7900c2",
 						"exec": [
 							"const testId = new Date().getTime();",
-							"pm.variables.set(\"testId\", testId);",
-							"pm.variables.set(\"topicarea.name\", testId);"
+							"pm.collectionVariables.set(\"testId\", testId);",
+							"pm.collectionVariables.set(\"topicarea.name\", testId);"
 						],
 						"type": "text/javascript"
 					}
@@ -328,6 +328,163 @@
 			"response": []
 		},
 		{
+			"name": "Create text widget",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e77998a4-c5a5-405e-9953-925281075536",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns the widget id\", () => {",
+							"    const textwidget = pm.response.json();",
+							"    pm.expect(textwidget.id).to.exist;",
+							"    pm.collectionVariables.set(\"textwidget.id\", textwidget.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Text widget\",\n    \"widgetType\": \"Text\",\n    \"content\": {\n        \"text\": \"Lorem _ipsum_ **with markdown**\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"widget"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify widget is in dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "245faeae-c4f6-4582-a482-b4d70e7e1f90",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"text widget is included in dashboard\", () => {",
+							"    const dashboard = pm.response.json();",
+							"    const textwidgetId = pm.collectionVariables.get(\"textwidget.id\");",
+							"    pm.expect(dashboard.widgets).to.exist;",
+							"",
+							"    const widgets = dashboard.widgets.filter(widget => widget.id === textwidgetId);",
+							"    pm.expect(widgets.length).to.equal(1);",
+							"",
+							"    const textwidget = widgets[0];",
+							"    pm.expect(textwidget.id).to.equal(textwidgetId);",
+							"    pm.expect(textwidget.widgetType).to.equal(\"Text\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete text widget",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1f9b8a5-2e04-4c3f-88ed-e40beb882ff3",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget/{{textwidget.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"widget",
+						"{{textwidget.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete dashboard",
 			"event": [
 				{
@@ -437,28 +594,43 @@
 	],
 	"variable": [
 		{
-			"id": "99887cf3-319d-46b1-9cf2-e5873461818c",
+			"id": "f41f0e57-1a9c-4f87-be5c-933284905c45",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "df514314-5d3f-49ed-8404-937897489097",
+			"id": "26677933-7c4f-4d57-a80a-03b1a8233066",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "7b2954af-9686-42a9-b2eb-faf9a7a47d6b",
+			"id": "495d68cd-d2a3-42b2-aa03-84c77e2fd191",
+			"key": "testId",
+			"value": ""
+		},
+		{
+			"id": "6ff7ed97-6783-4968-90bc-58f124c4e95b",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "9fc453d6-fb6b-45df-b33d-25495825d4c4",
+			"id": "ac39bd23-6e55-4ac0-9561-2c6cf2856201",
+			"key": "topicarea.name",
+			"value": ""
+		},
+		{
+			"id": "66512ce0-4783-471f-89d0-89737f9df8df",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "cd813db8-c94a-436b-9672-57ac3c1198b3",
+			"id": "0171d561-c4ef-4add-b5ea-15b3d4c4399a",
 			"key": "dashboard.name",
+			"value": ""
+		},
+		{
+			"id": "d4ad72c3-c073-4d70-b46b-ef2336d4f215",
+			"key": "textwidget.id",
 			"value": ""
 		}
 	],

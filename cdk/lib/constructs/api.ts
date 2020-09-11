@@ -50,6 +50,9 @@ export class BadgerApi extends cdk.Construct {
     const widgets = dashboard.addResource("widget");
     widgets.addMethod("POST", apiIntegration, methodProps);
 
+    const widget = widgets.addResource("{widgetId}");
+    widget.addMethod("DELETE", apiIntegration, methodProps);
+
     const topicareas = this.api.root.addResource("topicarea");
     topicareas.addMethod("GET", apiIntegration, methodProps);
     topicareas.addMethod("POST", apiIntegration, methodProps);

@@ -37,3 +37,17 @@ it("saves a new widget", async () => {
     Item: item,
   });
 });
+
+it("deletes a widget", async () => {
+  WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
+  WidgetFactory.itemSk = jest.fn().mockReturnValue("Widget#abc");
+
+  await repo.deleteWidget("123", "abc");
+  expect(dynamodb.delete).toBeCalledWith({
+    TableName: tableName,
+    Key: {
+      pk: "Dashboard#123",
+      sk: "Widget#abc",
+    },
+  });
+});

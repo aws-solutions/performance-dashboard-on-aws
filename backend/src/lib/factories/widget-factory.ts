@@ -59,8 +59,8 @@ function fromItems(items: Array<WidgetItem>): Array<Widget> {
 
 function toItem(widget: Widget): WidgetItem {
   return {
-    pk: DASHBOARD_PREFIX.concat(widget.dashboardId),
-    sk: WIDGET_PREFIX.concat(widget.id),
+    pk: itemPk(widget.dashboardId),
+    sk: itemSk(widget.id),
     name: widget.name,
     widgetType: widget.widgetType.toString(),
     type: WIDGET_ITEM_TYPE,
@@ -143,9 +143,21 @@ function createTableWidget(
   };
 }
 
+// Returns the PK for a widget item in DynamoDB
+function itemPk(dashboardId: string): string {
+  return DASHBOARD_PREFIX.concat(dashboardId);
+}
+
+// Returns the SK for a widget item in DynamoDB
+function itemSk(widgetId: string): string {
+  return WIDGET_PREFIX.concat(widgetId);
+}
+
 export default {
   createWidget,
   fromItem,
   fromItems,
   toItem,
+  itemPk,
+  itemSk,
 };

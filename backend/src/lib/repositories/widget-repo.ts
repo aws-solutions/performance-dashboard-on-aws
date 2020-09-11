@@ -30,6 +30,16 @@ class WidgetRepository {
       Item: WidgetFactory.toItem(widget),
     });
   }
+
+  public async deleteWidget(dashboardId: string, widgetId: string) {
+    await this.dynamodb.delete({
+      TableName: this.tableName,
+      Key: {
+        pk: WidgetFactory.itemPk(dashboardId),
+        sk: WidgetFactory.itemSk(widgetId),
+      },
+    });
+  }
 }
 
 export default WidgetRepository;

@@ -15,3 +15,24 @@ newman run IntegrationTestSuite.postman_collection.json --delay-request 500
 ```
 
 More configuration options here: https://learning.postman.com/docs/running-collections/using-newman-cli/command-line-integration-with-newman.
+
+### Test Scenario
+
+The integration test suite runs a happy path scenario that simulates a user performing the following workflow:
+
+1. Create a topic area
+2. Create a dashboard within topic area
+3. Edit dashboard name and description
+4. Create a text widget in dashboard
+5. Delete text widget
+6. Delete dashboard
+7. Delete topic area
+
+It uses Postman test scripts to perform checks on each request. For example, after editing a dashboard description, it verifies that the description matches the updated one:
+
+```js
+pm.test("dashboard description matches", () => {
+  const dashboard = pm.response.json();
+  pm.expect(dashboard.description).to.equal("Updated markdown **here**");
+});
+```

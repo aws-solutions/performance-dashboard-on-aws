@@ -1,7 +1,7 @@
 import { Router } from "express";
 import DashboardCtrl from "../controllers/dashboard-ctrl";
 import WidgetCtrl from "../controllers/widget-ctrl";
-import withErrorHandler from "./middleware/error-handler"
+import withErrorHandler from "./middleware/error-handler";
 
 const router = Router();
 
@@ -12,5 +12,9 @@ router.put("/:id", withErrorHandler(DashboardCtrl.updateDashboard));
 router.delete("/:id", withErrorHandler(DashboardCtrl.deleteDashboard));
 
 router.post("/:id/widget", withErrorHandler(WidgetCtrl.createWidget));
+router.delete(
+  "/:id/widget/:widgetId",
+  withErrorHandler(WidgetCtrl.deleteWidget)
+);
 
 export default router;

@@ -45,6 +45,32 @@ async function createWidget(req: Request, res: Response) {
   return res.json(widget);
 }
 
+async function deleteWidget(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const dashboardId = req.params.id;
+  const widgetId = req.params.widgetId;
+
+  if (!dashboardId) {
+    res.status(400);
+    return res.send("Missing required path param `id`");
+  }
+
+  if (!widgetId) {
+    res.status(400);
+    return res.send("Missing required path param `widgetId`");
+  }
+
+  const repo = WidgetRepository.getInstance();
+  await repo.deleteWidget(dashboardId, widgetId);
+  return res.send(201);
+}
+
 export default {
   createWidget,
+  deleteWidget,
 };

@@ -331,3 +331,15 @@ describe("toItem", () => {
     });
   });
 });
+
+describe("itemPk", () => {
+  it("returns the partition key for a dynamodb widget item", () => {
+    expect(WidgetFactory.itemPk("123")).toEqual("Dashboard#123");
+  });
+});
+
+describe("itemSk", () => {
+  it("returns the sort key for a dynamodb widget item", () => {
+    expect(WidgetFactory.itemSk("abc")).toEqual("Widget#abc");
+  });
+});

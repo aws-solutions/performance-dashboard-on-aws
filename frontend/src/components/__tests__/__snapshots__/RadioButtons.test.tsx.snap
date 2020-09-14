@@ -5,47 +5,51 @@ exports[`renders an error 1`] = `
   <div
     class="usa-form-group usa-form-group--error"
   >
-    <legend
-      class="usa-sr-only"
+    <fieldset
+      class="usa-fieldset"
     >
-      Historical Figures
-    </legend>
-    <span
-      class="usa-label text-bold"
-    >
-      Historical Figures
-    </span>
-    <div
-      class="usa-hint"
-    />
-    <span
-      class="usa-error-message"
-      id="input-error-message"
-      role="alert"
-    >
-      Something went wrong
-    </span>
-    <div
-      class="margin-top-2"
-    >
-      <div
-        class="usa-radio"
+      <legend
+        class="usa-sr-only"
       >
-        <input
-          class="usa-radio__input"
-          id="1"
-          name="historical-figures"
-          type="radio"
-          value="1"
-        />
-        <label
-          class="usa-radio__label"
-          for="1"
+        Historical Figures
+      </legend>
+      <span
+        class="usa-label text-bold"
+      >
+        Historical Figures
+      </span>
+      <div
+        class="usa-hint"
+      />
+      <span
+        class="usa-error-message"
+        id="input-error-message"
+        role="alert"
+      >
+        Something went wrong
+      </span>
+      <div
+        class="margin-top-2"
+      >
+        <div
+          class="usa-radio"
         >
-          Harriet Tubman
-        </label>
+          <input
+            class="usa-radio__input"
+            id="1"
+            name="historical-figures"
+            type="radio"
+            value="1"
+          />
+          <label
+            class="usa-radio__label"
+            for="1"
+          >
+            Harriet Tubman
+          </label>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
@@ -55,76 +59,80 @@ exports[`renders radio buttons 1`] = `
   <div
     class="usa-form-group"
   >
-    <legend
-      class="usa-sr-only"
+    <fieldset
+      class="usa-fieldset"
     >
-      Historical Figures
-    </legend>
-    <span
-      class="usa-label text-bold"
-    >
-      Historical Figures
-    </span>
-    <div
-      class="usa-hint"
-    >
-      Select a historical figure
-    </div>
-    <div
-      class="margin-top-2"
-    >
-      <div
-        class="usa-radio"
+      <legend
+        class="usa-sr-only"
       >
-        <input
-          class="usa-radio__input"
-          id="1"
-          name="historical-figures"
-          type="radio"
-          value="1"
-        />
-        <label
-          class="usa-radio__label"
-          for="1"
-        >
-          Harriet Tubman
-        </label>
+        Historical Figures
+      </legend>
+      <span
+        class="usa-label text-bold"
+      >
+        Historical Figures
+      </span>
+      <div
+        class="usa-hint"
+      >
+        Select a historical figure
       </div>
       <div
-        class="usa-radio"
+        class="margin-top-2"
       >
-        <input
-          class="usa-radio__input"
-          id="2"
-          name="historical-figures"
-          type="radio"
-          value="2"
-        />
-        <label
-          class="usa-radio__label"
-          for="2"
+        <div
+          class="usa-radio"
         >
-          Susan B. Anthony
-        </label>
-      </div>
-      <div
-        class="usa-radio"
-      >
-        <input
-          class="usa-radio__input"
-          id="3"
-          name="historical-figures"
-          type="radio"
-          value="3"
-        />
-        <label
-          class="usa-radio__label"
-          for="3"
+          <input
+            class="usa-radio__input"
+            id="1"
+            name="historical-figures"
+            type="radio"
+            value="1"
+          />
+          <label
+            class="usa-radio__label"
+            for="1"
+          >
+            Harriet Tubman
+          </label>
+        </div>
+        <div
+          class="usa-radio"
         >
-          Elizabeth Cady Stanton
-        </label>
+          <input
+            class="usa-radio__input"
+            id="2"
+            name="historical-figures"
+            type="radio"
+            value="2"
+          />
+          <label
+            class="usa-radio__label"
+            for="2"
+          >
+            Susan B. Anthony
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+        >
+          <input
+            class="usa-radio__input"
+            id="3"
+            name="historical-figures"
+            type="radio"
+            value="3"
+          />
+          <label
+            class="usa-radio__label"
+            for="3"
+          >
+            Elizabeth Cady Stanton
+          </label>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;

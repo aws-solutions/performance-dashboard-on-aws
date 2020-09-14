@@ -74,7 +74,7 @@ describe("createChartWidget", () => {
   });
 
   it("throws an error if chart title is undefined", () => {
-    const content = { chartType: "LineChart" };
+    const content = { datasetId: "090b0410", chartType: "LineChart" };
     expect(() => {
       WidgetFactory.createWidget(
         dummyWidgetName,
@@ -85,8 +85,11 @@ describe("createChartWidget", () => {
     }).toThrowError("Chart widget must have `content.title` field");
   });
 
-  it("throws an error if chart type is undefined", () => {
-    const content = { title: "My chart title", chartType: "LineChart" };
+  it("throws an error if datasetId is undefined", () => {
+    const content = {
+      title: "My chart title",
+      chartType: "LineChart",
+    };
     expect(() => {
       WidgetFactory.createWidget(
         dummyWidgetName,
@@ -97,7 +100,7 @@ describe("createChartWidget", () => {
     }).toThrowError("Chart widget must have `content.datasetId` field");
   });
 
-  it("throws an error if datasetId is undefined", () => {
+  it("throws an error if chartType is undefined", () => {
     const content = { title: "My chart title" };
     expect(() => {
       WidgetFactory.createWidget(
@@ -107,6 +110,18 @@ describe("createChartWidget", () => {
         content
       );
     }).toThrowError("Chart widget must have `content.chartType` field");
+  });
+
+  it("throws an error if chart type does not exist in ChartType", () => {
+    const content = { title: "My chart title", chartType: "TestChart" };
+    expect(() => {
+      WidgetFactory.createWidget(
+        dummyWidgetName,
+        dashboardId,
+        WidgetType.Chart,
+        content
+      );
+    }).toThrowError("Invalid chart type");
   });
 });
 

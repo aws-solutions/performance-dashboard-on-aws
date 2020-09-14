@@ -6,6 +6,7 @@ import {
   TextWidget,
   ChartWidget,
   TableWidget,
+  ChartType,
 } from "../models/widget";
 
 const WIDGET_ITEM_TYPE = "Widget";
@@ -99,6 +100,10 @@ function createChartWidget(
 
   if (!content.chartType) {
     throw new Error("Chart widget must have `content.chartType` field");
+  }
+
+  if (!(content.chartType in ChartType)) {
+    throw new Error("Invalid chart type");
   }
 
   if (!content.datasetId) {

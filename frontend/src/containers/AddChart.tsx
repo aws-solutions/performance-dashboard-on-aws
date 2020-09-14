@@ -12,6 +12,7 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import RadioButtons from "../components/RadioButtons";
 import LineChartPreview from "../components/LineChartPreview";
+import ColumnChartPreview from "../components/ColumnChartPreview";
 
 interface FormValues {
   title: string;
@@ -28,6 +29,7 @@ function AddChart() {
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
+  const [chartType, setChartType] = useState("LineChart");
   const [loading, setLoading] = useState(false);
 
   const uploadDataset = async (): Promise<Dataset> => {
@@ -73,8 +75,14 @@ function AddChart() {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setTitle((event.target as HTMLInputElement).value);
+  };
+
+  const handleChartTypeChange = (
+    event: React.FormEvent<HTMLFieldSetElement>
+  ) => {
+    setChartType((event.target as HTMLInputElement).value);
   };
 
   const onFileProcessed = (data: File) => {
@@ -120,7 +128,7 @@ function AddChart() {
                 label="Chart title"
                 hint="Give your chart a descriptive title."
                 error={errors.title && "Please specify a chart title"}
-                onChange={handleChange}
+                onChange={handleTitleChange}
                 required
                 register={register}
               />
@@ -147,6 +155,7 @@ function AddChart() {
                   hint="Choose a chart type. [Link] Which chart is right for my data?"
                   register={register}
                   error={errors.chartType && "Please select a chart type"}
+                  onChange={handleChartTypeChange}
                   defaultValue="LineChart"
                   required
                   options={[
@@ -187,15 +196,28 @@ function AddChart() {
         <div className="grid-col-6">
           <div hidden={!dataset} className="margin-left-4">
             <h4>Preview</h4>
-            <LineChartPreview
-              title={title}
-              lines={
-                dataset && dataset.length
-                  ? (Object.keys(dataset[0]) as Array<string>)
-                  : []
-              }
-              data={dataset}
-            />
+            {chartType === "LineChart" && (
+              <LineChartPreview
+                title={title}
+                lines={
+                  dataset && dataset.length
+                    ? (Object.keys(dataset[0]) as Array<string>)
+                    : []
+                }
+                data={dataset}
+              />
+            )}
+            {chartType === "ColumnChart" && (
+              <ColumnChartPreview
+                title={title}
+                columns={
+                  dataset && dataset.length
+                    ? (Object.keys(dataset[0]) as Array<string>)
+                    : []
+                }
+                data={dataset}
+              />
+            )}
           </div>
         </div>
       </div>

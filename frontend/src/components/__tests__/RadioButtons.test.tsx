@@ -21,7 +21,7 @@ test("renders radio buttons", async () => {
         {
           label: "Elizabeth Cady Stanton",
           value: "3",
-        }
+        },
       ]}
     />
   );
@@ -65,7 +65,7 @@ test("calls register function", async () => {
         {
           label: "Harriet Tubman",
           value: "1",
-        }
+        },
       ]}
     />
   );
@@ -83,7 +83,7 @@ test("renders an error", async () => {
         {
           label: "Harriet Tubman",
           value: "1",
-        }
+        },
       ]}
     />
   );

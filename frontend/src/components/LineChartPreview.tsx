@@ -4,6 +4,7 @@ import {
   YAxis,
   LineChart,
   Line,
+  Legend,
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
@@ -29,6 +30,7 @@ const LineChartPreview = (props: Props) => {
             padding={{ left: 20, right: 20 }}
           />
           <YAxis type="number" />
+          <Legend />
           {props.lines.length &&
             props.lines.slice(1).map((line, index) => {
               return (

@@ -94,7 +94,7 @@ function AddText() {
               Back
             </Button>
             <Button disabled={loading} type="submit">
-              Add content
+              Add text
             </Button>
             <Button variant="unstyled" onClick={onCancel}>
               Cancel

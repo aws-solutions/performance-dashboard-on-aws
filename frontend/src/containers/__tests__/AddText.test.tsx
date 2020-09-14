@@ -30,7 +30,7 @@ test("renders a text input for content", async () => {
 });
 
 test("on submit, it calls createWidget api", async () => {
-  const { getByRole, getByText, getByLabelText } = render(<AddText />, {
+  const { getByRole, getByLabelText } = render(<AddText />, {
     wrapper: MemoryRouter,
   });
 
@@ -47,7 +47,7 @@ test("on submit, it calls createWidget api", async () => {
   });
 
   await act(async () => {
-    fireEvent.click(getByRole("button", { name: "Add content" }));
+    fireEvent.click(getByRole("button", { name: "Add text" }));
   });
 
   expect(BadgerService.createWidget).toHaveBeenCalled();

@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`renders a multiline textarea 1`] = `
+<div>
+  <div
+    class="usa-form-group"
+  >
+    <label
+      class="usa-label text-bold"
+      for="x"
+    >
+      Hello
+    </label>
+    <div
+      class="usa-hint"
+    />
+    <textarea
+      class="usa-textarea"
+      id="x"
+      name="x"
+      rows="10"
+      style="height: auto;"
+    />
+  </div>
+</div>
+`;
+
 exports[`renders a text input 1`] = `
 <div>
   <div

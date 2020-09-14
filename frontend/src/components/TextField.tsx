@@ -10,6 +10,8 @@ interface Props {
   defaultValue?: string;
   error?: string;
   onChange?: Function;
+  multiline?: boolean;
+  rows?: number;
 }
 
 function TextField(props: Props) {
@@ -18,7 +20,9 @@ function TextField(props: Props) {
     formGroupClassName += " usa-form-group--error";
   }
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     if (props.onChange) {
       props.onChange(event);
     }
@@ -39,15 +43,28 @@ function TextField(props: Props) {
           {props.error}
         </span>
       )}
-      <input
-        id={props.id}
-        className="usa-input"
-        name={props.name}
-        type="text"
-        defaultValue={props.defaultValue}
-        ref={props.register && props.register({ required: props.required })}
-        onChange={handleChange}
-      />
+      {props.multiline ? (
+        <textarea
+          id={props.id}
+          name={props.name}
+          className="usa-textarea"
+          defaultValue={props.defaultValue}
+          onChange={handleChange}
+          rows={props.rows || 10}
+          style={{ height: "auto" }}
+          ref={props.register && props.register({ required: props.required })}
+        />
+      ) : (
+        <input
+          id={props.id}
+          className="usa-input"
+          name={props.name}
+          type="text"
+          defaultValue={props.defaultValue}
+          ref={props.register && props.register({ required: props.required })}
+          onChange={handleChange}
+        />
+      )}
     </div>
   );
 }

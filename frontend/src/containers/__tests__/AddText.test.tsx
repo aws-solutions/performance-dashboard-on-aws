@@ -1,11 +1,10 @@
 import React from "react";
-import { render, fireEvent, act, waitFor } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BadgerService from "../../services/BadgerService";
 import AddText from "../AddText";
 
 jest.mock("../../services/BadgerService");
-jest.mock("papaparse");
 
 beforeEach(() => {
   BadgerService.createWidget = jest.fn();

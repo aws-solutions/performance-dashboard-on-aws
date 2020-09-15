@@ -38,9 +38,15 @@ test("sets the default value", async () => {
 test("check onChange event is invoked", async () => {
   const onChange = jest.fn();
   const { getByLabelText } = render(
-    <TextField id="x" name="x" label="Hello" defaultValue="Banana" onChange={onChange} />
+    <TextField
+      id="x"
+      name="x"
+      label="Hello"
+      defaultValue="Banana"
+      onChange={onChange}
+    />
   );
-  
+
   fireEvent.input(getByLabelText("Hello"), {
     target: {
       value: "Test",
@@ -59,6 +65,13 @@ test("shows an error message", async () => {
       error="Something went wrong"
       hint="Also displays hint"
     />
+  );
+  expect(wrapper.container).toMatchSnapshot();
+});
+
+test("renders a multiline textarea", async () => {
+  const wrapper = render(
+    <TextField id="x" name="x" label="Hello" multiline rows={10} />
   );
   expect(wrapper.container).toMatchSnapshot();
 });

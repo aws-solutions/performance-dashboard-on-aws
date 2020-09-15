@@ -20,6 +20,8 @@ function AddContent() {
       history.push(`/admin/dashboard/${dashboardId}/add-chart`);
     } else if (values.widgetType === "table") {
       history.push(`/admin/dashboard/${dashboardId}/add-table`);
+    } else if (values.widgetType === "text") {
+      history.push(`/admin/dashboard/${dashboardId}/add-text`);
     }
   };
 

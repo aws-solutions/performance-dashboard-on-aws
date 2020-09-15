@@ -123,6 +123,23 @@ describe("createChartWidget", () => {
       );
     }).toThrowError("Invalid chart type");
   });
+
+  it("builds a chart widget with BarChart", () => {
+    const content = {
+      title: "Correlation of COVID cases to deaths",
+      chartType: "BarChart",
+      datasetId: "090b0410",
+    };
+
+    const widget = WidgetFactory.createWidget(
+      dummyWidgetName,
+      dashboardId,
+      WidgetType.Chart,
+      content
+    ) as ChartWidget;
+
+    expect(widget.content.chartType).toEqual("BarChart");
+  });
 });
 
 describe("createTableWidget", () => {

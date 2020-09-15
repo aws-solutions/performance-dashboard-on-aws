@@ -13,6 +13,7 @@ import Button from "../components/Button";
 import RadioButtons from "../components/RadioButtons";
 import LineChartPreview from "../components/LineChartPreview";
 import ColumnChartPreview from "../components/ColumnChartPreview";
+import BarChartPreview from "../components/BarChartPreview";
 
 interface FormValues {
   title: string;
@@ -211,6 +212,17 @@ function AddChart() {
               <ColumnChartPreview
                 title={title}
                 columns={
+                  dataset && dataset.length
+                    ? (Object.keys(dataset[0]) as Array<string>)
+                    : []
+                }
+                data={dataset}
+              />
+            )}
+            {chartType === "BarChart" && (
+              <BarChartPreview
+                title={title}
+                bars={
                   dataset && dataset.length
                     ? (Object.keys(dataset[0]) as Array<string>)
                     : []

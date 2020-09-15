@@ -7,6 +7,7 @@ export enum WidgetType {
 export enum ChartType {
   LineChart = "LineChart",
   ColumnChart = "ColumnChart",
+  BarChart = "BarChart",
 }
 
 export interface Widget {

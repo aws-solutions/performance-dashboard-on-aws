@@ -42,7 +42,10 @@ type UseDashboardHook = {
   setDashboard: Function;
 };
 
-export function useDashboard(dashboardId: string): UseDashboardHook {
+export function useDashboard(
+  dashboardId: string,
+  deps?: React.DependencyList
+): UseDashboardHook {
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState(undefined);
 
@@ -54,7 +57,7 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
       setLoading(false);
     };
     fetchData();
-  }, [dashboardId]);
+  }, [dashboardId, deps]);
 
   return {
     loading,

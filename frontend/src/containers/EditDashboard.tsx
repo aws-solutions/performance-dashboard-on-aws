@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useDashboard } from "../hooks";
+import { Widget } from "../models";
+import BadgerService from "../services/BadgerService";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
 import ReactMarkdown from "react-markdown";
 import Button from "../components/Button";
-//import BadgerService from "../services/BadgerService";
 
 function EditDashboard() {
   const history = useHistory();
   const { dashboardId } = useParams();
-  const { dashboard, /*setDashboard*/ } = useDashboard(dashboardId);
+  const [loading, setLoading] = useState(false);
+  const { dashboard } = useDashboard(dashboardId, [loading]);
 
   const onAddContent = async () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
@@ -23,6 +25,18 @@ function EditDashboard() {
 
   const onCancel = () => {
     history.push("/admin/dashboards");
+  };
+
+  const onDeleteWidget = async (widget: Widget) => {
+    if (
+      window.confirm(
+        `Deleting ${widget.widgetType} content "${widget.name}" cannot be undone. Are you sure you want to continue?`
+      )
+    ) {
+      setLoading(true);
+      await BadgerService.deleteWidget(dashboardId, widget.id);
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,7 +62,9 @@ function EditDashboard() {
         </div>
         <div className="grid-col text-right">
           <Button onClick={() => onSubmit()}>Save draft</Button>
-          <Button variant="base" onClick={() => onCancel()}>Publish</Button>
+          <Button variant="base" onClick={() => onCancel()}>
+            Publish
+          </Button>
         </div>
       </div>
       <div>
@@ -71,7 +87,11 @@ function EditDashboard() {
         )}
       </div>
       <hr />
-      <WidgetList widgets={dashboard ? dashboard.widgets : []} onClick={onAddContent} />
+      <WidgetList
+        widgets={dashboard ? dashboard.widgets : []}
+        onClick={onAddContent}
+        onDelete={onDeleteWidget}
+      />
     </AdminLayout>
   );
 }

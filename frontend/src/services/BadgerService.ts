@@ -105,6 +105,14 @@ async function createDataset(
   });
 }
 
+async function deleteWidget(dashboardId: string, widgetId: string) {
+  const headers = await authHeaders();
+  const url = `dashboard/${dashboardId}/widget/${widgetId}`;
+  return await API.del(apiName, url, {
+    headers,
+  });
+}
+
 export default {
   fetchDashboards,
   fetchDashboardById,
@@ -113,6 +121,7 @@ export default {
   editDashboard,
   createDashboard,
   createWidget,
+  deleteWidget,
   createDataset,
   getAuthToken,
 };

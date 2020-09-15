@@ -1,15 +1,27 @@
 import React from "react";
 import { Widget } from "../models";
-import "./WidgetList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGripLinesVertical,
+  faCaretUp,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
+import "./WidgetList.css";
 
 interface Props {
   onClick: Function;
+  onDelete?: Function;
   widgets: Array<Widget>;
 }
 
 function WidgetList(props: Props) {
+  const onDelete = (widget: Widget) => {
+    if (props.onDelete) {
+      props.onDelete(widget);
+    }
+  };
+
   return (
     <div>
       {props.widgets && props.widgets.length ? (
@@ -36,17 +48,17 @@ function WidgetList(props: Props) {
               >
                 <div className="grid-row grid-col flex-1 padding-1">
                   <div className="grid-col flex-4 text-center display-flex flex-align-center flex-justify-center">
-                    <FontAwesomeIcon icon="grip-lines-vertical" />
+                    <FontAwesomeIcon icon={faGripLinesVertical} />
                   </div>
                   <div className="grid-col flex-4 text-center display-flex flex-align-center flex-justify-center">
                     {index + 1}
                   </div>
                   <div className="grid-col flex-4 grid-row flex-column text-center">
                     <div className="grid-col flex-6">
-                      <FontAwesomeIcon icon="caret-up" />
+                      <FontAwesomeIcon icon={faCaretUp} />
                     </div>
                     <div className="grid-col flex-6">
-                      <FontAwesomeIcon icon="caret-down" />
+                      <FontAwesomeIcon icon={faCaretDown} />
                     </div>
                   </div>
                 </div>
@@ -66,9 +78,9 @@ function WidgetList(props: Props) {
                     <a className="usa-link margin-right-2" href="/">
                       Edit
                     </a>
-                    <a className="usa-link" href="/">
+                    <Button variant="unstyled" onClick={() => onDelete(widget)}>
                       Delete
-                    </a>
+                    </Button>
                   </div>
                 </div>
               </div>

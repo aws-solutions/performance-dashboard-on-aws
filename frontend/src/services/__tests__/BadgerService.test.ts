@@ -54,3 +54,15 @@ test("editDashboard should make a POST request with payload", async () => {
     })
   );
 });
+
+test("deleteWidget makes a DELETE request to widget API", async () => {
+  const dashboardId = "123";
+  const widgetId = "abc";
+
+  await BadgerService.deleteWidget(dashboardId, widgetId);
+  expect(API.del).toHaveBeenCalledWith(
+    "BadgerApi",
+    `dashboard/${dashboardId}/widget/${widgetId}`,
+    expect.anything()
+  );
+});

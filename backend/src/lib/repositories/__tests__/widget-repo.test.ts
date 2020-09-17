@@ -24,6 +24,8 @@ it("saves a new widget", async () => {
     id: "123",
     dashboardId: "abc",
     widgetType: WidgetType.Text,
+    order: 1,
+    updatedAt: new Date(),
     name: "AWS",
     content: {},
   };
@@ -49,5 +51,49 @@ it("deletes a widget", async () => {
       pk: "Dashboard#123",
       sk: "Widget#abc",
     },
+  });
+});
+
+it("sets widget order as transactions", async () => {
+  WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
+  WidgetFactory.itemSk = jest.fn().mockReturnValue("Widget#abc");
+
+  const widgets = [
+    {
+      id: "abc",
+      order: 10,
+      updatedAt: "2020-09-10T19:27:48",
+    },
+  ];
+
+  const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
+
+  await repo.setWidgetOrder("123", widgets);
+  expect(dynamodb.transactWrite).toBeCalledWith({
+    TransactItems: expect.arrayContaining([
+      {
+        Update: {
+          TableName: tableName,
+          Key: {
+            pk: WidgetFactory.itemPk("Dashboard#123"),
+            sk: WidgetFactory.itemSk("Widget#abc"),
+          },
+          UpdateExpression: "set #order = :order, #updatedAt = :now",
+          ConditionExpression:
+            "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdated",
+          ExpressionAttributeNames: {
+            "#order": "order",
+            "#updatedAt": "updatedAt",
+          },
+          ExpressionAttributeValues: {
+            ":order": 10,
+            ":now": now.toISOString(),
+            ":lastUpdated": "2020-09-10T19:27:48",
+          },
+        },
+      },
+    ]),
   });
 });

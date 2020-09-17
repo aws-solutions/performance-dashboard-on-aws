@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import { Widget } from "../models";
@@ -12,8 +12,7 @@ import Button from "../components/Button";
 function EditDashboard() {
   const history = useHistory();
   const { dashboardId } = useParams();
-  const [loading, setLoading] = useState(false);
-  const { dashboard } = useDashboard(dashboardId, [loading]);
+  const { dashboard, setDashboard } = useDashboard(dashboardId);
 
   const onAddContent = async () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
@@ -33,9 +32,15 @@ function EditDashboard() {
         `Deleting ${widget.widgetType} content "${widget.name}" cannot be undone. Are you sure you want to continue?`
       )
     ) {
-      setLoading(true);
-      await BadgerService.deleteWidget(dashboardId, widget.id);
-      setLoading(false);
+      if (dashboard) {
+        const widgetList = dashboard.widgets.filter((w) => w.id !== widget.id);
+        setDashboard({
+          ...dashboard,
+          widgets: [...widgetList],
+        });
+
+        await BadgerService.deleteWidget(dashboardId, widget.id);
+      }
     }
   };
 

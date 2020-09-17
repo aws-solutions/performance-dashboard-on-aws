@@ -16,6 +16,8 @@ export interface Widget {
   name: string;
   widgetType: WidgetType;
   dashboardId: string;
+  order: number;
+  updatedAt: Date;
   content: any;
 }
 
@@ -25,6 +27,8 @@ export interface WidgetItem {
   type: string;
   name: string;
   widgetType: string;
+  order: number;
+  updatedAt: string;
   content: any;
 }
 

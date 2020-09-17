@@ -33,6 +33,7 @@ describe("createTextWidget", () => {
     expect(widget.name).toEqual(dummyWidgetName);
     expect(widget.dashboardId).toEqual(dashboardId);
     expect(widget.widgetType).toEqual(WidgetType.Text);
+    expect(widget.order).toEqual(0);
     expect(widget.content.text).toEqual("Text can include markdown syntax");
   });
 
@@ -214,6 +215,8 @@ describe("fromItem", () => {
       name: "Random name",
       widgetType: "Text",
       type: "Widget",
+      order: 1,
+      updatedAt: "2020-09-17T00:24:35.000Z",
       content: {
         text: "Random text",
       },
@@ -225,6 +228,8 @@ describe("fromItem", () => {
     expect(widget.dashboardId).toEqual("abc");
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Text);
+    expect(widget.order).toEqual(1);
+    expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
     expect(widget.content.text).toEqual("Random text");
   });
 
@@ -235,6 +240,8 @@ describe("fromItem", () => {
       name: "Random name",
       widgetType: "Chart",
       type: "Widget",
+      order: 1,
+      updatedAt: "2020-09-17T00:24:35.000Z",
       content: {
         title: "Correlation of COVID cases to deaths",
         chartType: "LineChart",
@@ -249,6 +256,8 @@ describe("fromItem", () => {
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Chart);
     expect(widget.content.datasetId).toEqual("090b0410");
+    expect(widget.order).toEqual(1);
+    expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
@@ -262,6 +271,8 @@ describe("fromItem", () => {
       name: "Random name",
       widgetType: "Table",
       type: "Widget",
+      order: 1,
+      updatedAt: "2020-09-17T00:24:35.000Z",
       content: {
         title: "Correlation of COVID cases to deaths",
         datasetId: "090b0410",
@@ -275,6 +286,8 @@ describe("fromItem", () => {
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Table);
     expect(widget.content.datasetId).toEqual("090b0410");
+    expect(widget.order).toEqual(1);
+    expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
@@ -287,6 +300,8 @@ describe("fromItem", () => {
       name: "Random name",
       widgetType: "Banana", // Invalid widget type
       type: "Widget",
+      order: 1,
+      updatedAt: "2020-09-17T00:24:35",
       content: {},
     };
 
@@ -306,11 +321,14 @@ describe("fromItem", () => {
 
 describe("toItem", () => {
   it("converts a TextWidget into a dynamodb item", () => {
+    const now = new Date();
     const widget: TextWidget = {
       id: "abc",
       name: dummyWidgetName,
       dashboardId: dashboardId,
       widgetType: WidgetType.Text,
+      order: 5,
+      updatedAt: now,
       content: {
         text: "Pizza and Beer",
       },
@@ -323,17 +341,22 @@ describe("toItem", () => {
     expect(item.name).toEqual(dummyWidgetName);
     expect(item.widgetType).toEqual("Text");
     expect(item.type).toEqual("Widget");
+    expect(item.order).toEqual(5);
+    expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.content).toEqual({
       text: "Pizza and Beer",
     });
   });
 
   it("converts a ChartWidget into a dynamodb item", () => {
+    const now = new Date();
     const widget: ChartWidget = {
       id: "abc",
       name: dummyWidgetName,
       dashboardId: dashboardId,
       widgetType: WidgetType.Chart,
+      order: 5,
+      updatedAt: now,
       content: {
         title: "Correlation of COVID cases to deaths",
         chartType: ChartType.LineChart,
@@ -348,6 +371,8 @@ describe("toItem", () => {
     expect(item.name).toEqual(dummyWidgetName);
     expect(item.widgetType).toEqual("Chart");
     expect(item.type).toEqual("Widget");
+    expect(item.order).toEqual(5);
+    expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
@@ -356,11 +381,14 @@ describe("toItem", () => {
   });
 
   it("converts a Table into a dynamodb item", () => {
+    const now = new Date();
     const widget: TableWidget = {
       id: "abc",
       name: dummyWidgetName,
       dashboardId: dashboardId,
       widgetType: WidgetType.Table,
+      order: 1,
+      updatedAt: now,
       content: {
         title: "Correlation of COVID cases to deaths",
         datasetId: "090b0410",
@@ -374,6 +402,8 @@ describe("toItem", () => {
     expect(item.name).toEqual(dummyWidgetName);
     expect(item.widgetType).toEqual("Table");
     expect(item.type).toEqual("Widget");
+    expect(item.order).toEqual(1);
+    expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
       datasetId: "090b0410",

@@ -51,6 +51,10 @@ class DynamoDBService {
   async delete(input: DocumentClient.DeleteItemInput) {
     return this.client.delete(input).promise();
   }
+
+  async transactWrite(input: DocumentClient.TransactWriteItemsInput) {
+    return this.client.transactWrite(input).promise();
+  }
 }
 
 export default DynamoDBService;

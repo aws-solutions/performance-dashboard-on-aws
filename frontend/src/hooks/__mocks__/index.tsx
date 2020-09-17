@@ -43,12 +43,29 @@ export function useDashboards() {
 export function useDashboard(dashboardId: string) {
   return {
     loading: false,
+    reloadDashboard: jest.fn(),
     dashboard: {
       id: "123",
       name: "My AWS Dashboard",
       topicAreaId: "abc",
       topicAreaName: "Bananas",
       description: "Some description",
+      widgets: [
+        {
+          id: "abc",
+          name: "Dummy text widget",
+          widgetType: "Text",
+          order: 0,
+          updatedAt: "",
+        },
+        {
+          id: "xyz",
+          name: "Dummy chart widget",
+          widgetType: "Chart",
+          order: 1,
+          updatedAt: "",
+        },
+      ],
     },
   };
 }
@@ -61,6 +78,8 @@ export function useWidgets(dashboardId: string) {
         id: "123",
         name: "Correlation of COVID cases to deaths",
         widgetType: "Text",
+        order: 1,
+        updatedAt: "",
       },
     ],
     setWidgets: () => {},

@@ -1,5 +1,5 @@
 import { API, Auth } from "aws-amplify";
-import { Dataset } from "../models";
+import { Dataset, Widget } from "../models";
 
 const apiName = "BadgerApi";
 
@@ -113,6 +113,24 @@ async function deleteWidget(dashboardId: string, widgetId: string) {
   });
 }
 
+async function setWidgetOrder(
+  dashboardId: string,
+  widgets: Array<Widget>
+): Promise<Dataset> {
+  const headers = await authHeaders();
+  const payload = widgets.map((widget) => ({
+    id: widget.id,
+    updatedAt: widget.updatedAt,
+    order: widget.order,
+  }));
+  return await API.put(apiName, `dashboard/${dashboardId}/widgetorder`, {
+    headers,
+    body: {
+      widgets: payload,
+    },
+  });
+}
+
 export default {
   fetchDashboards,
   fetchDashboardById,
@@ -122,6 +140,7 @@ export default {
   createDashboard,
   createWidget,
   deleteWidget,
+  setWidgetOrder,
   createDataset,
   getAuthToken,
 };

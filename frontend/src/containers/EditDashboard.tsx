@@ -3,6 +3,7 @@ import { useHistory, useParams, Link } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import { Widget } from "../models";
 import BadgerService from "../services/BadgerService";
+import WidgetOrderingService from "../services/WidgetOrdering";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
@@ -12,7 +13,7 @@ import Button from "../components/Button";
 function EditDashboard() {
   const history = useHistory();
   const { dashboardId } = useParams();
-  const { dashboard, setDashboard } = useDashboard(dashboardId);
+  const { dashboard, reloadDashboard } = useDashboard(dashboardId);
 
   const onAddContent = async () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
@@ -33,13 +34,38 @@ function EditDashboard() {
       )
     ) {
       if (dashboard) {
-        const widgetList = dashboard.widgets.filter((w) => w.id !== widget.id);
-        setDashboard({
-          ...dashboard,
-          widgets: [...widgetList],
-        });
-
         await BadgerService.deleteWidget(dashboardId, widget.id);
+        await reloadDashboard();
+      }
+    }
+  };
+
+  const sortWidgetsByOrder = (widgets: Array<Widget>): Array<Widget> => {
+    return [...widgets].sort((a, b) => {
+      return a.order > b.order ? -1 : 1;
+    });
+  };
+
+  const onMoveWidgetUp = async (widget: Widget) => {
+    setWidgetOrder(widget, widget.order + 1);
+  };
+
+  const onMoveWidgetDown = async (widget: Widget) => {
+    setWidgetOrder(widget, widget.order - 1);
+  };
+
+  const setWidgetOrder = async (widgetToMove: Widget, newPosition: number) => {
+    if (dashboard) {
+      const widgets = WidgetOrderingService.moveAndReOrder(
+        dashboard.widgets,
+        widgetToMove,
+        newPosition
+      );
+
+      // Only do the API call if ordering changed
+      if (widgets !== dashboard.widgets) {
+        await BadgerService.setWidgetOrder(dashboardId, widgets);
+        await reloadDashboard();
       }
     }
   };
@@ -93,9 +119,11 @@ function EditDashboard() {
       </div>
       <hr />
       <WidgetList
-        widgets={dashboard ? dashboard.widgets : []}
+        widgets={dashboard ? sortWidgetsByOrder(dashboard.widgets) : []}
         onClick={onAddContent}
         onDelete={onDeleteWidget}
+        onMoveUp={onMoveWidgetUp}
+        onMoveDown={onMoveWidgetDown}
       />
     </AdminLayout>
   );

@@ -18,6 +18,8 @@ export type Widget = {
   id: string;
   name: string;
   widgetType: string;
+  order: number;
+  updatedAt: string;
   content?: object;
 };
 

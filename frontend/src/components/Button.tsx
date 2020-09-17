@@ -14,7 +14,8 @@ interface Props {
   variant?: Variant;
   className?: string;
   disabled?: boolean;
-  type?: 'submit' | 'reset' | 'button';
+  type?: "submit" | "reset" | "button";
+  ariaLabel?: string;
 }
 
 function Button(props: Props) {
@@ -40,12 +41,13 @@ function Button(props: Props) {
   }
 
   let additionalClasses = "";
-  if(props.className) {
+  if (props.className) {
     additionalClasses = ` ${props.className}`;
   }
 
   return (
     <button
+      aria-label={props.ariaLabel}
       className={`usa-button${variantClassName}${additionalClasses}`}
       disabled={props.disabled}
       type={props.type}

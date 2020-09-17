@@ -52,6 +52,11 @@ test("renders a reset button", async () => {
   expect(wrapper.container).toMatchSnapshot();
 });
 
+test("renders aria-label attribute in button", async () => {
+  const wrapper = render(<Button ariaLabel="For screen readers">Ok</Button>);
+  expect(wrapper.container).toMatchSnapshot();
+});
+
 test("calls onClick function", async () => {
   const onClick = jest.fn();
   const { getByRole } = render(<Button onClick={onClick}>Ok</Button>);

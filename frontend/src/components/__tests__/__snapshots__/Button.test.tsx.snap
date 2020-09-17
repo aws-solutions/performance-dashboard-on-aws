@@ -102,3 +102,14 @@ exports[`renders an unstyled button 1`] = `
   </button>
 </div>
 `;
+
+exports[`renders aria-label attribute in button 1`] = `
+<div>
+  <button
+    aria-label="For screen readers"
+    class="usa-button"
+  >
+    Ok
+  </button>
+</div>
+`;

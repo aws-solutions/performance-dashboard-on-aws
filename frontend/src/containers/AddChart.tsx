@@ -14,6 +14,7 @@ import RadioButtons from "../components/RadioButtons";
 import LineChartPreview from "../components/LineChartPreview";
 import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
+import PartWholeChartPreview from "../components/PartWholeChartPreview";
 
 interface FormValues {
   title: string;
@@ -223,6 +224,17 @@ function AddChart() {
               <BarChartPreview
                 title={title}
                 bars={
+                  dataset && dataset.length
+                    ? (Object.keys(dataset[0]) as Array<string>)
+                    : []
+                }
+                data={dataset}
+              />
+            )}
+            {chartType === "PartWholeChart" && (
+              <PartWholeChartPreview
+                title={title}
+                parts={
                   dataset && dataset.length
                     ? (Object.keys(dataset[0]) as Array<string>)
                     : []

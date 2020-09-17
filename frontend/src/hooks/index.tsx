@@ -57,7 +57,7 @@ export function useDashboard(
       setLoading(false);
     };
     fetchData();
-  }, [dashboardId, deps]);
+  }, [dashboardId]);
 
   return {
     loading,

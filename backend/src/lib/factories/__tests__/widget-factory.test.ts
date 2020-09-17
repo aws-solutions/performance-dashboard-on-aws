@@ -140,6 +140,23 @@ describe("createChartWidget", () => {
 
     expect(widget.content.chartType).toEqual("BarChart");
   });
+
+  it("builds a chart widget with PartWholeChart", () => {
+    const content = {
+      title: "Correlation of COVID cases to deaths",
+      chartType: "PartWholeChart",
+      datasetId: "090b0410",
+    };
+
+    const widget = WidgetFactory.createWidget(
+      dummyWidgetName,
+      dashboardId,
+      WidgetType.Chart,
+      content
+    ) as ChartWidget;
+
+    expect(widget.content.chartType).toEqual("PartWholeChart");
+  });
 });
 
 describe("createTableWidget", () => {

@@ -70,7 +70,39 @@ async function deleteWidget(req: Request, res: Response) {
   return res.send(201);
 }
 
+async function setWidgetOrder(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const dashboardId = req.params.id;
+  const { widgets } = req.body;
+
+  if (!dashboardId) {
+    res.status(400);
+    return res.send("Missing required path param `id`");
+  }
+
+  if (!widgets) {
+    res.status(400);
+    return res.send("Missing required field `widgets`");
+  }
+
+  try {
+    const repo = WidgetRepository.getInstance();
+    await repo.setWidgetOrder(dashboardId, widgets);
+    return res.send(201);
+  } catch (err) {
+    console.log("Failed to set widget order", err);
+    res.status(409);
+    return res.send("Unable to reorder widgets, please refetch them and retry");
+  }
+}
+
 export default {
   createWidget,
   deleteWidget,
+  setWidgetOrder,
 };

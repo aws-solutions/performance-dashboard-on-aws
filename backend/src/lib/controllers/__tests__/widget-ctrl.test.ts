@@ -58,3 +58,55 @@ describe("deleteWidget", () => {
     expect(repository.deleteWidget).toBeCalledWith("090b0410", "14507073");
   });
 });
+
+describe("setWidgetOrder", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = ({
+      params: { id: "090b0410" },
+      body: {
+        widgets: [
+          {
+            id: "abc",
+            order: 1,
+            updatedAt: "2020-09-17T00:24:35",
+          },
+          {
+            id: "xyz",
+            order: 2,
+            updatedAt: "2020-09-17T00:24:35",
+          },
+        ],
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await WidgetCtrl.setWidgetOrder(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when dashboardId is missing", async () => {
+    delete req.params.id;
+    await WidgetCtrl.setWidgetOrder(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required path param `id`");
+  });
+
+  it("returns a 400 error when widgets field is missing", async () => {
+    delete req.body.widgets;
+    await WidgetCtrl.setWidgetOrder(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `widgets`");
+  });
+
+  it("sets widget order", async () => {
+    await WidgetCtrl.setWidgetOrder(req, res);
+    expect(repository.setWidgetOrder).toBeCalledWith(
+      "090b0410",
+      req.body.widgets
+    );
+  });
+});

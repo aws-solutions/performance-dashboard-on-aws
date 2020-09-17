@@ -1,3 +1,4 @@
+import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import DynamoDBService from "../services/dynamodb";
 import { Widget } from "../models/widget";
 import WidgetFactory from "../factories/widget-factory";
@@ -39,6 +40,37 @@ class WidgetRepository {
         sk: WidgetFactory.itemSk(widgetId),
       },
     });
+  }
+
+  public async setWidgetOrder(
+    dashboardId: string,
+    widgets: Array<{ id: string; order: number; updatedAt: string }>
+  ) {
+    const transactions: DocumentClient.TransactWriteItemList = widgets.map(
+      (widget) => ({
+        Update: {
+          TableName: this.tableName,
+          Key: {
+            pk: WidgetFactory.itemPk(dashboardId),
+            sk: WidgetFactory.itemSk(widget.id),
+          },
+          UpdateExpression: "set #order = :order, #updatedAt = :now",
+          ConditionExpression:
+            "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdated",
+          ExpressionAttributeNames: {
+            "#order": "order",
+            "#updatedAt": "updatedAt",
+          },
+          ExpressionAttributeValues: {
+            ":order": widget.order,
+            ":now": new Date().toISOString(),
+            ":lastUpdated": widget.updatedAt,
+          },
+        },
+      })
+    );
+
+    await this.dynamodb.transactWrite({ TransactItems: transactions });
   }
 }
 

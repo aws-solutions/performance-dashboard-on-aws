@@ -34,11 +34,14 @@ function createWidget(
 function fromItem(item: WidgetItem): Widget {
   const id = item.sk.substring(WIDGET_PREFIX.length);
   const dashboardId = item.pk.substring(DASHBOARD_PREFIX.length);
+  const updatedAt = item.updatedAt ? new Date(item.updatedAt) : new Date();
   const widget: Widget = {
     id,
     dashboardId,
     name: item.name,
     widgetType: item.widgetType as WidgetType,
+    order: item.order || 0,
+    updatedAt,
     content: item.content,
   };
 
@@ -65,6 +68,8 @@ function toItem(widget: Widget): WidgetItem {
     name: widget.name,
     widgetType: widget.widgetType.toString(),
     type: WIDGET_ITEM_TYPE,
+    order: widget.order,
+    updatedAt: widget.updatedAt?.toISOString(),
     content: widget.content,
   };
 }
@@ -83,6 +88,8 @@ function createTextWidget(
     name,
     dashboardId,
     widgetType: WidgetType.Text,
+    order: 0,
+    updatedAt: new Date(),
     content: {
       text: content.text,
     },
@@ -115,6 +122,8 @@ function createChartWidget(
     name,
     dashboardId,
     widgetType: WidgetType.Chart,
+    order: 0,
+    updatedAt: new Date(),
     content: {
       title: content.title,
       chartType: content.chartType,
@@ -141,6 +150,8 @@ function createTableWidget(
     name,
     dashboardId,
     widgetType: WidgetType.Table,
+    order: 0,
+    updatedAt: new Date(),
     content: {
       title: content.title,
       datasetId: content.datasetId,

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import _ from "lodash";
 import { TopicArea, Dashboard, Widget } from "../models";
 import BadgerService from "../services/BadgerService";
 
@@ -39,27 +40,31 @@ export function useTopicAreas(): UseTopicAreasHook {
 type UseDashboardHook = {
   loading: boolean;
   dashboard?: Dashboard;
-  setDashboard: Function;
+  reloadDashboard: Function;
 };
 
 export function useDashboard(dashboardId: string): UseDashboardHook {
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState<Dashboard | undefined>(undefined);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const data = await BadgerService.fetchDashboardById(dashboardId);
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const data = await BadgerService.fetchDashboardById(dashboardId);
+    setLoading(false);
+    if (data) {
+      data.widgets = _.sortBy(data.widgets, "order");
       setDashboard(data);
-      setLoading(false);
-    };
-    fetchData();
+    }
   }, [dashboardId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return {
     loading,
     dashboard,
-    setDashboard,
+    reloadDashboard: fetchData,
   };
 }
 

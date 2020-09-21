@@ -3,16 +3,21 @@ import { useHistory, useParams, Link } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import { Widget } from "../models";
 import BadgerService from "../services/BadgerService";
+import WidgetOrderingService from "../services/WidgetOrdering";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
 import ReactMarkdown from "react-markdown";
 import Button from "../components/Button";
 
+interface PathParams {
+  dashboardId: string;
+}
+
 function EditDashboard() {
   const history = useHistory();
-  const { dashboardId } = useParams();
-  const { dashboard, setDashboard } = useDashboard(dashboardId);
+  const { dashboardId } = useParams<PathParams>();
+  const { dashboard, reloadDashboard } = useDashboard(dashboardId);
 
   const onAddContent = async () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
@@ -33,13 +38,32 @@ function EditDashboard() {
       )
     ) {
       if (dashboard) {
-        const widgetList = dashboard.widgets.filter((w) => w.id !== widget.id);
-        setDashboard({
-          ...dashboard,
-          widgets: [...widgetList],
-        });
-
         await BadgerService.deleteWidget(dashboardId, widget.id);
+        await reloadDashboard();
+      }
+    }
+  };
+
+  const onMoveWidgetUp = async (index: number) => {
+    return setWidgetOrder(index, index - 1);
+  };
+
+  const onMoveWidgetDown = async (index: number) => {
+    return setWidgetOrder(index, index + 1);
+  };
+
+  const setWidgetOrder = async (index: number, newIndex: number) => {
+    if (dashboard) {
+      const widgets = WidgetOrderingService.moveWidget(
+        dashboard.widgets,
+        index,
+        newIndex
+      );
+
+      // Only do the API call if ordering changed
+      if (widgets !== dashboard.widgets) {
+        await BadgerService.setWidgetOrder(dashboardId, widgets);
+        await reloadDashboard();
       }
     }
   };
@@ -96,6 +120,8 @@ function EditDashboard() {
         widgets={dashboard ? dashboard.widgets : []}
         onClick={onAddContent}
         onDelete={onDeleteWidget}
+        onMoveUp={onMoveWidgetUp}
+        onMoveDown={onMoveWidgetDown}
       />
     </AdminLayout>
   );

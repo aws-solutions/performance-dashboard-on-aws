@@ -12,6 +12,8 @@ import "./WidgetList.css";
 interface Props {
   onClick: Function;
   onDelete?: Function;
+  onMoveUp?: Function;
+  onMoveDown?: Function;
   widgets: Array<Widget>;
 }
 
@@ -19,6 +21,18 @@ function WidgetList(props: Props) {
   const onDelete = (widget: Widget) => {
     if (props.onDelete) {
       props.onDelete(widget);
+    }
+  };
+
+  const onMoveDown = (index: number) => {
+    if (props.onMoveDown) {
+      props.onMoveDown(index);
+    }
+  };
+
+  const onMoveUp = (index: number) => {
+    if (props.onMoveUp) {
+      props.onMoveUp(index);
     }
   };
 
@@ -55,10 +69,25 @@ function WidgetList(props: Props) {
                   </div>
                   <div className="grid-col flex-4 grid-row flex-column text-center">
                     <div className="grid-col flex-6">
-                      <FontAwesomeIcon icon={faCaretUp} />
+                      <Button
+                        variant="unstyled"
+                        ariaLabel={`Move ${widget.name} up`}
+                        onClick={() => onMoveUp(index)}
+                      >
+                        <FontAwesomeIcon icon={faCaretUp} />
+                      </Button>
                     </div>
                     <div className="grid-col flex-6">
-                      <FontAwesomeIcon icon={faCaretDown} />
+                      <Button
+                        variant="unstyled"
+                        ariaLabel={`Move ${widget.name} down`}
+                        onClick={() => onMoveDown(index)}
+                      >
+                        <FontAwesomeIcon
+                          id={`${widget.id}-move-down`}
+                          icon={faCaretDown}
+                        />
+                      </Button>
                     </div>
                   </div>
                 </div>

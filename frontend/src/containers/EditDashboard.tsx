@@ -10,9 +10,13 @@ import WidgetList from "../components/WidgetList";
 import ReactMarkdown from "react-markdown";
 import Button from "../components/Button";
 
+interface PathParams {
+  dashboardId: string;
+}
+
 function EditDashboard() {
   const history = useHistory();
-  const { dashboardId } = useParams();
+  const { dashboardId } = useParams<PathParams>();
   const { dashboard, reloadDashboard } = useDashboard(dashboardId);
 
   const onAddContent = async () => {
@@ -40,26 +44,20 @@ function EditDashboard() {
     }
   };
 
-  const sortWidgetsByOrder = (widgets: Array<Widget>): Array<Widget> => {
-    return [...widgets].sort((a, b) => {
-      return a.order > b.order ? -1 : 1;
-    });
+  const onMoveWidgetUp = async (index: number) => {
+    return setWidgetOrder(index, index - 1);
   };
 
-  const onMoveWidgetUp = async (widget: Widget) => {
-    setWidgetOrder(widget, widget.order + 1);
+  const onMoveWidgetDown = async (index: number) => {
+    return setWidgetOrder(index, index + 1);
   };
 
-  const onMoveWidgetDown = async (widget: Widget) => {
-    setWidgetOrder(widget, widget.order - 1);
-  };
-
-  const setWidgetOrder = async (widgetToMove: Widget, newPosition: number) => {
+  const setWidgetOrder = async (index: number, newIndex: number) => {
     if (dashboard) {
-      const widgets = WidgetOrderingService.moveAndReOrder(
+      const widgets = WidgetOrderingService.moveWidget(
         dashboard.widgets,
-        widgetToMove,
-        newPosition
+        index,
+        newIndex
       );
 
       // Only do the API call if ordering changed
@@ -119,7 +117,7 @@ function EditDashboard() {
       </div>
       <hr />
       <WidgetList
-        widgets={dashboard ? sortWidgetsByOrder(dashboard.widgets) : []}
+        widgets={dashboard ? dashboard.widgets : []}
         onClick={onAddContent}
         onDelete={onDeleteWidget}
         onMoveUp={onMoveWidgetUp}

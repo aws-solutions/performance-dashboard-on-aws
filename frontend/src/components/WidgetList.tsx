@@ -24,15 +24,15 @@ function WidgetList(props: Props) {
     }
   };
 
-  const onMoveDown = (widget: Widget) => {
+  const onMoveDown = (index: number) => {
     if (props.onMoveDown) {
-      props.onMoveDown(widget);
+      props.onMoveDown(index);
     }
   };
 
-  const onMoveUp = (widget: Widget) => {
+  const onMoveUp = (index: number) => {
     if (props.onMoveUp) {
-      props.onMoveUp(widget);
+      props.onMoveUp(index);
     }
   };
 
@@ -72,7 +72,7 @@ function WidgetList(props: Props) {
                       <Button
                         variant="unstyled"
                         ariaLabel={`Move ${widget.name} up`}
-                        onClick={() => onMoveUp(widget)}
+                        onClick={() => onMoveUp(index)}
                       >
                         <FontAwesomeIcon icon={faCaretUp} />
                       </Button>
@@ -81,7 +81,7 @@ function WidgetList(props: Props) {
                       <Button
                         variant="unstyled"
                         ariaLabel={`Move ${widget.name} down`}
-                        onClick={() => onMoveDown(widget)}
+                        onClick={() => onMoveDown(index)}
                       >
                         <FontAwesomeIcon
                           id={`${widget.id}-move-down`}

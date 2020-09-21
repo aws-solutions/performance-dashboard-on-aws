@@ -46,7 +46,7 @@ test("edit details link takes you to details screen", async () => {
   );
 });
 
-test("moving up a widget calls api to set widget order", async () => {
+test("moving down a widget calls api to set widget order", async () => {
   const history = createMemoryHistory();
   BadgerService.setWidgetOrder = jest.fn();
 
@@ -58,7 +58,9 @@ test("moving up a widget calls api to set widget order", async () => {
 
   await act(async () => {
     // Dummy text widget is defined in hooks/__mocks__/index.tsx
-    fireEvent.click(getByRole("button", { name: "Move Dummy text widget up" }));
+    fireEvent.click(
+      getByRole("button", { name: "Move Dummy text widget down" })
+    );
   });
 
   expect(BadgerService.setWidgetOrder).toBeCalled();

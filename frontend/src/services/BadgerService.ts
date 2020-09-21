@@ -1,5 +1,5 @@
 import { API, Auth } from "aws-amplify";
-import { Dataset, Widget } from "../models";
+import { Dashboard, Dataset, Widget } from "../models";
 
 const apiName = "BadgerApi";
 
@@ -21,7 +21,7 @@ async function fetchDashboards() {
   return await API.get(apiName, "dashboard", { headers });
 }
 
-async function fetchDashboardById(dashboardId: string) {
+async function fetchDashboardById(dashboardId: string): Promise<Dashboard> {
   const headers = await authHeaders();
   return await API.get(apiName, `dashboard/${dashboardId}`, { headers });
 }

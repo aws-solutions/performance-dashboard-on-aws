@@ -9,9 +9,9 @@ import {
   ChartType,
 } from "../models/widget";
 
-const WIDGET_ITEM_TYPE = "Widget";
-const WIDGET_PREFIX = "Widget#";
-const DASHBOARD_PREFIX = "Dashboard#";
+export const WIDGET_ITEM_TYPE = "Widget";
+export const WIDGET_PREFIX = "Widget#";
+export const DASHBOARD_PREFIX = "Dashboard#";
 
 function createWidget(
   name: string,

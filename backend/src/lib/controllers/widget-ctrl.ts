@@ -40,8 +40,10 @@ async function createWidget(req: Request, res: Response) {
 
   const repo = WidgetRepository.getInstance();
   const dashboardRepo = DashboardRepository.getInstance();
+
   await repo.saveWidget(widget);
   await dashboardRepo.updateAt(dashboardId, new Date(), user);
+
   return res.json(widget);
 }
 
@@ -67,7 +69,7 @@ async function deleteWidget(req: Request, res: Response) {
 
   const repo = WidgetRepository.getInstance();
   await repo.deleteWidget(dashboardId, widgetId);
-  return res.send(201);
+  return res.send();
 }
 
 async function setWidgetOrder(req: Request, res: Response) {
@@ -93,7 +95,7 @@ async function setWidgetOrder(req: Request, res: Response) {
   try {
     const repo = WidgetRepository.getInstance();
     await repo.setWidgetOrder(dashboardId, widgets);
-    return res.send(201);
+    return res.send();
   } catch (err) {
     console.log("Failed to set widget order", err);
     res.status(409);

@@ -37,6 +37,24 @@ describe("createTextWidget", () => {
     expect(widget.content.text).toEqual("Text can include markdown syntax");
   });
 
+  it("builds a text widget with id", () => {
+    const content = { text: "Text can include markdown syntax" };
+    const widget = WidgetFactory.createWidget(
+      dummyWidgetName,
+      dashboardId,
+      WidgetType.Text,
+      content,
+      "123"
+    ) as TextWidget;
+
+    expect(widget.name).toEqual(dummyWidgetName);
+    expect(widget.dashboardId).toEqual(dashboardId);
+    expect(widget.widgetType).toEqual(WidgetType.Text);
+    expect(widget.order).toEqual(0);
+    expect(widget.content.text).toEqual("Text can include markdown syntax");
+    expect(widget.id).toEqual("123");
+  });
+
   it("throws an error if text is undefined", () => {
     const content = {};
     expect(() => {
@@ -72,6 +90,31 @@ describe("createChartWidget", () => {
       "Correlation of COVID cases to deaths"
     );
     expect(widget.content.chartType).toEqual("LineChart");
+  });
+
+  it("builds a chart widget with id", () => {
+    const content = {
+      title: "Correlation of COVID cases to deaths",
+      chartType: "LineChart",
+      datasetId: "090b0410",
+    };
+
+    const widget = WidgetFactory.createWidget(
+      dummyWidgetName,
+      dashboardId,
+      WidgetType.Chart,
+      content,
+      "123"
+    ) as ChartWidget;
+
+    expect(widget.name).toEqual(dummyWidgetName);
+    expect(widget.dashboardId).toEqual(dashboardId);
+    expect(widget.widgetType).toEqual(WidgetType.Chart);
+    expect(widget.content.title).toEqual(
+      "Correlation of COVID cases to deaths"
+    );
+    expect(widget.content.chartType).toEqual("LineChart");
+    expect(widget.id).toEqual("123");
   });
 
   it("throws an error if chart title is undefined", () => {
@@ -180,6 +223,29 @@ describe("createTableWidget", () => {
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
+  });
+
+  it("builds a table widget", () => {
+    const content = {
+      title: "Correlation of COVID cases to deaths",
+      datasetId: "090b0410",
+    };
+
+    const widget = WidgetFactory.createWidget(
+      dummyWidgetName,
+      dashboardId,
+      WidgetType.Table,
+      content,
+      "123"
+    ) as TableWidget;
+
+    expect(widget.name).toEqual(dummyWidgetName);
+    expect(widget.dashboardId).toEqual(dashboardId);
+    expect(widget.widgetType).toEqual(WidgetType.Table);
+    expect(widget.content.title).toEqual(
+      "Correlation of COVID cases to deaths"
+    );
+    expect(widget.id).toEqual("123");
   });
 
   it("throws an error if table title is undefined", () => {

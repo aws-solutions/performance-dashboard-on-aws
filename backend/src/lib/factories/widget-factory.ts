@@ -17,15 +17,16 @@ function createWidget(
   name: string,
   dashboardId: string,
   widgetType: WidgetType,
-  content: any
+  content: any,
+  id = uuidv4()
 ): Widget {
   switch (widgetType) {
     case WidgetType.Text:
-      return createTextWidget(name, dashboardId, content);
+      return createTextWidget(id, name, dashboardId, content);
     case WidgetType.Chart:
-      return createChartWidget(name, dashboardId, content);
+      return createChartWidget(id, name, dashboardId, content);
     case WidgetType.Table:
-      return createTableWidget(name, dashboardId, content);
+      return createTableWidget(id, name, dashboardId, content);
     default:
       throw new Error("Invalid widget type");
   }
@@ -75,6 +76,7 @@ function toItem(widget: Widget): WidgetItem {
 }
 
 function createTextWidget(
+  id: string,
   name: string,
   dashboardId: string,
   content: any
@@ -84,7 +86,7 @@ function createTextWidget(
   }
 
   return {
-    id: uuidv4(),
+    id,
     name,
     dashboardId,
     widgetType: WidgetType.Text,
@@ -97,6 +99,7 @@ function createTextWidget(
 }
 
 function createChartWidget(
+  id: string,
   name: string,
   dashboardId: string,
   content: any
@@ -118,7 +121,7 @@ function createChartWidget(
   }
 
   return {
-    id: uuidv4(),
+    id,
     name,
     dashboardId,
     widgetType: WidgetType.Chart,
@@ -133,6 +136,7 @@ function createChartWidget(
 }
 
 function createTableWidget(
+  id: string,
   name: string,
   dashboardId: string,
   content: any
@@ -146,7 +150,7 @@ function createTableWidget(
   }
 
   return {
-    id: uuidv4(),
+    id,
     name,
     dashboardId,
     widgetType: WidgetType.Table,

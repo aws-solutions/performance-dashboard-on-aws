@@ -98,6 +98,7 @@ describe("DashboardRepository.updateDashboard", () => {
   });
 
   it("should call update with all the fields", async () => {
+    const now = new Date();
     const dashboard = DashboardFactory.create(
       "123",
       "Dashboard1",
@@ -105,7 +106,8 @@ describe("DashboardRepository.updateDashboard", () => {
       "Topic1",
       "Description Test",
       "Draft",
-      user
+      user,
+      now
     );
     await repo.updateDashboard(dashboard, user);
     expect(dynamodb.update).toHaveBeenCalledWith(
@@ -117,7 +119,8 @@ describe("DashboardRepository.updateDashboard", () => {
           ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
           ":topicAreaName": dashboard.topicAreaName,
           ":description": dashboard.description,
-          ":updatedAt": dashboard.updatedAt.toISOString(),
+          ":lastUpdatedAt": dashboard.updatedAt.toISOString(),
+          ":updatedAt": now.toISOString(),
           ":userId": user.userId,
         },
       })

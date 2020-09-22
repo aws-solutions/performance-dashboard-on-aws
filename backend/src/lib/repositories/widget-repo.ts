@@ -1,6 +1,7 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import DynamoDBService from "../services/dynamodb";
 import { Widget, WidgetItem } from "../models/widget";
+
 import WidgetFactory, {
   WIDGET_PREFIX,
   WIDGET_ITEM_TYPE,
@@ -46,6 +47,21 @@ class WidgetRepository {
     return WidgetFactory.fromItems(items as Array<WidgetItem>);
   }
 
+  /**
+   * Get a widget specifiying the widget id
+   * and the dashboardId id.
+   */
+  public async getWidgetById(dashboardId: string, widgetId: string) {
+    const result = await this.dynamodb.get({
+      TableName: this.tableName,
+      Key: {
+        pk: WidgetFactory.itemPk(dashboardId),
+        sk: WidgetFactory.itemSk(widgetId),
+      },
+    });
+    return WidgetFactory.fromItem(result.Item as WidgetItem);
+  }
+
   public async saveWidget(widget: Widget) {
     // Before saving new widget, need to determine the proper `order` for it.
     // by finding the last widget sorted by order.
@@ -59,6 +75,46 @@ class WidgetRepository {
       TableName: this.tableName,
       Item: WidgetFactory.toItem(widget),
     });
+  }
+
+  public async updateWidget(
+    dashboardId: string,
+    widgetId: string,
+    name: string,
+    content: any,
+    updatedAt: Date
+  ) {
+    try {
+      await this.dynamodb.update({
+        TableName: this.tableName,
+        Key: {
+          pk: WidgetFactory.itemPk(dashboardId),
+          sk: WidgetFactory.itemSk(widgetId),
+        },
+        UpdateExpression:
+          "set #name = :name, #content = :content, #updatedAt = :updatedAt",
+        ConditionExpression: "#updatedAt <= :lastUpdatedAt",
+        ExpressionAttributeValues: {
+          ":name": name,
+          ":content": content,
+          ":lastUpdatedAt": updatedAt.toISOString(),
+          ":updatedAt": new Date().toISOString(),
+        },
+        ExpressionAttributeNames: {
+          "#name": "name",
+          "#widgetType": "widgetType",
+          "#content": "content",
+          "#updatedAt": "updatedAt",
+        },
+      });
+    } catch (error) {
+      if (error.code === "ConditionalCheckFailedException") {
+        console.log("Someone else updated the item before us");
+        return;
+      } else {
+        throw error;
+      }
+    }
   }
 
   public async deleteWidget(dashboardId: string, widgetId: string) {
@@ -84,8 +140,7 @@ class WidgetRepository {
             sk: WidgetFactory.itemSk(widget.id),
           },
           UpdateExpression: "set #order = :order, #updatedAt = :now",
-          ConditionExpression:
-            "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdated",
+          ConditionExpression: "#updatedAt <= :lastUpdated",
           ExpressionAttributeNames: {
             "#order": "order",
             "#updatedAt": "updatedAt",

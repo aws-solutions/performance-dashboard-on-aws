@@ -4,6 +4,29 @@ import WidgetFactory from "../factories/widget-factory";
 import WidgetRepository from "../repositories/widget-repo";
 import DashboardRepository from "../repositories/dashboard-repo";
 
+async function getWidgetById(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const { id, widgetId } = req.params;
+
+  if (!id) {
+    res.status(400).send("Missing required field `id`");
+  }
+
+  if (!widgetId) {
+    res.status(400).send("Missing required field `widgetId`");
+  }
+
+  const repo = WidgetRepository.getInstance();
+  const widget = await repo.getWidgetById(id, widgetId);
+  res.json(widget);
+}
+
 async function createWidget(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
   if (!user) {
@@ -45,6 +68,50 @@ async function createWidget(req: Request, res: Response) {
   await dashboardRepo.updateAt(dashboardId, new Date(), user);
 
   return res.json(widget);
+}
+
+async function updateWidget(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const dashboardId = req.params.id;
+  if (!dashboardId) {
+    res.status(400).send("Missing required field `id`");
+  }
+
+  const widgetId = req.params.widgetId;
+  if (!widgetId) {
+    res.status(400).send("Missing required field `widgetId`");
+  }
+
+  const { name, content, updatedAt } = req.body;
+
+  if (!name) {
+    res.status(400).send("Missing required field `name`");
+  }
+
+  if (!content) {
+    res.status(400).send("Missing required field `content`");
+  }
+
+  if (!updatedAt) {
+    res.status(400).send("Missing required field `updatedAt`");
+  }
+
+  const repo = WidgetRepository.getInstance();
+  const dashboardRepo = DashboardRepository.getInstance();
+  await repo.updateWidget(
+    dashboardId,
+    widgetId,
+    name,
+    content,
+    new Date(updatedAt)
+  );
+  await dashboardRepo.updateAt(dashboardId, new Date(), user);
+  return res.send();
 }
 
 async function deleteWidget(req: Request, res: Response) {
@@ -104,7 +171,9 @@ async function setWidgetOrder(req: Request, res: Response) {
 }
 
 export default {
+  getWidgetById,
   createWidget,
+  updateWidget,
   deleteWidget,
   setWidgetOrder,
 };

@@ -34,7 +34,8 @@ test("submits form with the entered values", async () => {
     "123",
     "My AWS Dashboard",
     "123456789",
-    "Some description"
+    "Some description",
+    ""
   );
 });
 

@@ -44,6 +44,7 @@ export function useDashboard(dashboardId: string) {
   return {
     loading: false,
     reloadDashboard: jest.fn(),
+    setDashboard: jest.fn(),
     dashboard: {
       id: "123",
       name: "My AWS Dashboard",

@@ -13,6 +13,8 @@ router.put("/:id", withErrorHandler(DashboardCtrl.updateDashboard));
 router.delete("/:id", withErrorHandler(DashboardCtrl.deleteDashboard));
 
 router.post("/:id/widget", withErrorHandler(WidgetCtrl.createWidget));
+router.get("/:id/widget/:widgetId", withErrorHandler(WidgetCtrl.getWidgetById));
+router.put("/:id/widget/:widgetId", withErrorHandler(WidgetCtrl.updateWidget));
 router.delete(
   "/:id/widget/:widgetId",
   withErrorHandler(WidgetCtrl.deleteWidget)

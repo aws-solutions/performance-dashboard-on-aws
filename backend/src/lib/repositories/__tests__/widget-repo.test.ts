@@ -5,7 +5,6 @@ import { WidgetType, Widget } from "../../models/widget";
 import WidgetFactory from "../../factories/widget-factory";
 
 jest.mock("../../services/dynamodb");
-jest.mock("../../factories/widget-factory");
 
 let tableName: string;
 let repo: WidgetRepository;
@@ -20,20 +19,23 @@ beforeEach(() => {
   repo = WidgetRepository.getInstance();
 });
 
-it("saves a new widget", async () => {
-  const widget: Widget = {
-    id: "123",
-    dashboardId: "abc",
-    widgetType: WidgetType.Text,
-    order: 1,
-    updatedAt: new Date(),
-    name: "AWS",
-    content: {},
-  };
+describe("Widget Repository", () => {
+  it("returns a widget by id", async () => {
+    // Mock query response
+    const now = new Date();
+    dynamodb.get = jest.fn().mockReturnValue({
+      Item: {
+        pk: "Dashboard#abc",
+        sk: "Widget#123",
+        widgetType: WidgetType.Text,
+        order: 1,
+        updatedAt: now.toISOString(),
+        name: "AWS",
+        content: { text: "test" },
+      },
+    });
 
-  const item = {};
-  WidgetFactory.toItem = jest.fn().mockReturnValue(item);
-
+<<<<<<< HEAD
   const getWidgets = jest.spyOn(repo, "getWidgets");
   getWidgets.mockResolvedValue([]);
 
@@ -80,62 +82,97 @@ it("saves a new widget with the proper `order`", async () => {
 
   getWidgets.mockRestore();
 });
-
-it("deletes a widget", async () => {
-  WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
-  WidgetFactory.itemSk = jest.fn().mockReturnValue("Widget#abc");
-
-  await repo.deleteWidget("123", "abc");
-  expect(dynamodb.delete).toBeCalledWith({
-    TableName: tableName,
-    Key: {
-      pk: "Dashboard#123",
-      sk: "Widget#abc",
-    },
+=======
+    const item = await repo.getWidgetById("123", "abc");
+    expect(item).toEqual({
+      id: "123",
+      dashboardId: "abc",
+      widgetType: WidgetType.Text,
+      order: 1,
+      updatedAt: now,
+      name: "AWS",
+      content: { text: "test" },
+    });
   });
-});
+>>>>>>> 2cffb49... Backend changes for editing a widget
 
-it("sets widget order as transactions", async () => {
-  WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
-  WidgetFactory.itemSk = jest.fn().mockReturnValue("Widget#abc");
+  it("saves a new widget", async () => {
+    const widget: Widget = {
+      id: "123",
+      dashboardId: "abc",
+      widgetType: WidgetType.Text,
+      order: 1,
+      updatedAt: new Date(),
+      name: "AWS",
+      content: {},
+    };
 
-  const widgets = [
-    {
-      id: "abc",
-      order: 10,
-      updatedAt: "2020-09-10T19:27:48",
-    },
-  ];
+    const item = {};
+    WidgetFactory.toItem = jest.fn().mockReturnValue(item);
 
-  const now = new Date();
-  jest.useFakeTimers("modern");
-  jest.setSystemTime(now);
+    await repo.saveWidget(widget);
+    expect(dynamodb.put).toBeCalledWith({
+      TableName: tableName,
+      Item: item,
+    });
+  });
 
-  await repo.setWidgetOrder("123", widgets);
-  expect(dynamodb.transactWrite).toBeCalledWith({
-    TransactItems: expect.arrayContaining([
+  it("deletes a widget", async () => {
+    WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
+    WidgetFactory.itemSk = jest.fn().mockReturnValue("Widget#abc");
+
+    await repo.deleteWidget("123", "abc");
+    expect(dynamodb.delete).toBeCalledWith({
+      TableName: tableName,
+      Key: {
+        pk: "Dashboard#123",
+        sk: "Widget#abc",
+      },
+    });
+  });
+
+  it("sets widget order as transactions", async () => {
+    WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
+    WidgetFactory.itemSk = jest.fn().mockReturnValue("Widget#abc");
+
+    const widgets = [
       {
-        Update: {
-          TableName: tableName,
-          Key: {
-            pk: WidgetFactory.itemPk("Dashboard#123"),
-            sk: WidgetFactory.itemSk("Widget#abc"),
-          },
-          UpdateExpression: "set #order = :order, #updatedAt = :now",
-          ConditionExpression:
-            "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdated",
-          ExpressionAttributeNames: {
-            "#order": "order",
-            "#updatedAt": "updatedAt",
-          },
-          ExpressionAttributeValues: {
-            ":order": 10,
-            ":now": now.toISOString(),
-            ":lastUpdated": "2020-09-10T19:27:48",
+        id: "abc",
+        order: 10,
+        updatedAt: "2020-09-10T19:27:48",
+      },
+    ];
+
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+
+    await repo.setWidgetOrder("123", widgets);
+    expect(dynamodb.transactWrite).toBeCalledWith({
+      TransactItems: expect.arrayContaining([
+        {
+          Update: {
+            TableName: tableName,
+            Key: {
+              pk: WidgetFactory.itemPk("Dashboard#123"),
+              sk: WidgetFactory.itemSk("Widget#abc"),
+            },
+            UpdateExpression: "set #order = :order, #updatedAt = :now",
+            ConditionExpression:
+              "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdated",
+            ExpressionAttributeNames: {
+              "#order": "order",
+              "#updatedAt": "updatedAt",
+            },
+            ExpressionAttributeValues: {
+              ":order": 10,
+              ":now": now.toISOString(),
+              ":lastUpdated": "2020-09-10T19:27:48",
+            },
           },
         },
-      },
-    ]),
+      ]),
+    });
   });
 });
 

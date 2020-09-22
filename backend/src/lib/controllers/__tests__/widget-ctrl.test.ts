@@ -2,14 +2,20 @@ import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
 import WidgetCtrl from "../widget-ctrl";
+import WidgetFactory from "../../factories/widget-factory";
 import WidgetRepository from "../../repositories/widget-repo";
+import { WidgetType } from "../../models/widget";
 import AuthService from "../../services/auth";
+import DashboardRepository from "../../repositories/dashboard-repo";
+import widgetFactory from "../../factories/widget-factory";
 
 jest.mock("../../services/auth");
 jest.mock("../../repositories/widget-repo");
+jest.mock("../../repositories/dashboard-repo");
 
 const user: User = { userId: "johndoe" };
 const repository = mocked(WidgetRepository.prototype);
+const dashboardRepository = mocked(DashboardRepository.prototype);
 const res = ({
   send: jest.fn().mockReturnThis(),
   status: jest.fn().mockReturnThis(),
@@ -19,6 +25,154 @@ const res = ({
 beforeEach(() => {
   AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   WidgetRepository.getInstance = jest.fn().mockReturnValue(repository);
+  DashboardRepository.getInstance = jest
+    .fn()
+    .mockReturnValue(dashboardRepository);
+});
+
+describe("createWidget", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = ({
+      params: {
+        id: "090b0410",
+      },
+      body: {
+        name: "test",
+        widgetType: "Text",
+        content: {
+          text: "123",
+        },
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await WidgetCtrl.createWidget(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when dashboardId is missing", async () => {
+    delete req.params.id;
+    await WidgetCtrl.createWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `id`");
+  });
+
+  it("returns a 400 error when name is missing", async () => {
+    delete req.body.name;
+    await WidgetCtrl.createWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `name`");
+  });
+
+  it("returns a 400 error when widgetType is missing", async () => {
+    delete req.body.widgetType;
+    widgetFactory.createWidget = jest.fn().mockReturnThis();
+    await WidgetCtrl.createWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `widgetType`");
+  });
+
+  it("returns a 400 error when content is missing", async () => {
+    delete req.body.content;
+    await WidgetCtrl.createWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `content`");
+  });
+
+  it("create the widget", async () => {
+    const widget = WidgetFactory.createWidget(
+      "test",
+      "090b0410",
+      WidgetType.Text,
+      {
+        text: "123",
+      }
+    );
+    WidgetFactory.createWidget = jest.fn().mockReturnValue(widget);
+    await WidgetCtrl.createWidget(req, res);
+    expect(repository.saveWidget).toBeCalledWith(widget);
+  });
+});
+
+describe("updateWidget", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = ({
+      params: {
+        id: "090b0410",
+        widgetId: "14507073",
+      },
+      body: {
+        name: "test",
+        widgetType: "Text",
+        content: {
+          text: "123",
+        },
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await WidgetCtrl.updateWidget(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when dashboardId is missing", async () => {
+    delete req.params.id;
+    await WidgetCtrl.updateWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `id`");
+  });
+
+  it("returns a 400 error when widgetId is missing", async () => {
+    delete req.params.widgetId;
+    await WidgetCtrl.updateWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `widgetId`");
+  });
+
+  it("returns a 400 error when name is missing", async () => {
+    delete req.body.name;
+    await WidgetCtrl.updateWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `name`");
+  });
+
+  it("returns a 400 error when widgetType is missing", async () => {
+    delete req.body.widgetType;
+    widgetFactory.createWidget = jest.fn().mockReturnThis();
+    await WidgetCtrl.updateWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `widgetType`");
+  });
+
+  it("returns a 400 error when content is missing", async () => {
+    delete req.body.content;
+    await WidgetCtrl.updateWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `content`");
+  });
+
+  it("update the widget", async () => {
+    const widget = WidgetFactory.createWidget(
+      "test",
+      "090b0410",
+      WidgetType.Text,
+      {
+        text: "123",
+      },
+      "66787608"
+    );
+    WidgetFactory.createWidget = jest.fn().mockReturnValue(widget);
+    await WidgetCtrl.updateWidget(req, res);
+    expect(repository.saveWidget).toBeCalledWith(widget);
+  });
 });
 
 describe("deleteWidget", () => {

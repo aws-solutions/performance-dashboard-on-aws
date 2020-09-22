@@ -4,6 +4,29 @@ import WidgetFactory from "../factories/widget-factory";
 import WidgetRepository from "../repositories/widget-repo";
 import DashboardRepository from "../repositories/dashboard-repo";
 
+async function getWidgetById(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const { id, widgetId } = req.params;
+
+  if (!id) {
+    res.status(400).send("Missing required field `id`");
+  }
+
+  if (!widgetId) {
+    res.status(400).send("Missing required field `dashboardId`");
+  }
+
+  const repo = WidgetRepository.getInstance();
+  const dashboard = await repo.getWidgetById(widgetId, id);
+  res.json(dashboard);
+}
+
 async function createWidget(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
   if (!user) {
@@ -44,6 +67,58 @@ async function createWidget(req: Request, res: Response) {
   await repo.saveWidget(widget);
   await dashboardRepo.updateAt(dashboardId, new Date(), user);
 
+  return res.json(widget);
+}
+
+async function updateWidget(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const dashboardId = req.params.id;
+  if (!dashboardId) {
+    res.status(400).send("Missing required field `id`");
+  }
+
+  const widgetId = req.params.widgetId;
+  if (!widgetId) {
+    res.status(400).send("Missing required field `widgetId`");
+  }
+
+  const { name, content, widgetType } = req.body;
+
+  if (!name) {
+    res.status(400).send("Missing required field `name`");
+  }
+
+  if (!content) {
+    res.status(400).send("Missing required field `content`");
+  }
+
+  if (!widgetType) {
+    res.status(400).send("Missing required field `widgetType`");
+  }
+
+  let widget;
+  try {
+    widget = WidgetFactory.createWidget(
+      name,
+      dashboardId,
+      widgetType,
+      content,
+      widgetId
+    );
+  } catch (err) {
+    console.log("Invalid request to create widget", err);
+    return res.status(400).send(err.message);
+  }
+
+  const repo = WidgetRepository.getInstance();
+  const dashboardRepo = DashboardRepository.getInstance();
+  await repo.saveWidget(widget);
+  await dashboardRepo.updateAt(dashboardId, new Date(), user);
   return res.json(widget);
 }
 
@@ -104,7 +179,9 @@ async function setWidgetOrder(req: Request, res: Response) {
 }
 
 export default {
+  getWidgetById,
   createWidget,
+  updateWidget,
   deleteWidget,
   setWidgetOrder,
 };

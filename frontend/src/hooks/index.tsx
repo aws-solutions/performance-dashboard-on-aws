@@ -41,6 +41,7 @@ type UseDashboardHook = {
   loading: boolean;
   dashboard?: Dashboard;
   reloadDashboard: Function;
+  setDashboard: Function;
 };
 
 export function useDashboard(dashboardId: string): UseDashboardHook {
@@ -64,6 +65,7 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
   return {
     loading,
     dashboard,
+    setDashboard,
     reloadDashboard: fetchData,
   };
 }

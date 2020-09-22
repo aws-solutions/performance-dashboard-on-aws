@@ -17,14 +17,12 @@ interface PathParams {
 function EditDashboard() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard, reloadDashboard } = useDashboard(dashboardId);
+  const { dashboard, reloadDashboard, setDashboard } = useDashboard(
+    dashboardId
+  );
 
   const onAddContent = async () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
-  };
-
-  const onSubmit = async () => {
-    history.push("/admin/dashboards");
   };
 
   const onCancel = () => {
@@ -60,9 +58,15 @@ function EditDashboard() {
         newIndex
       );
 
-      // Only do the API call if ordering changed
-      if (widgets !== dashboard.widgets) {
+      // if no change in order ocurred, exit
+      if (widgets === dashboard.widgets) {
+        return;
+      }
+
+      try {
+        setDashboard({ ...dashboard, widgets }); // optimistic ui
         await BadgerService.setWidgetOrder(dashboardId, widgets);
+      } finally {
         await reloadDashboard();
       }
     }
@@ -90,7 +94,6 @@ function EditDashboard() {
           </ul>
         </div>
         <div className="grid-col text-right">
-          <Button onClick={() => onSubmit()}>Save draft</Button>
           <Button variant="base" onClick={() => onCancel()}>
             Publish
           </Button>

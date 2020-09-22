@@ -133,13 +133,13 @@ class DashboardRepository {
         },
         UpdateExpression:
           "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedAt = :updatedAt, #updatedBy = :userId",
-        ConditionExpression:
-          "attribute_not_exists(#updatedAt) OR #updatedAt <= :updatedAt",
+        ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":dashboardName": dashboard.name,
           ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
           ":topicAreaName": dashboard.topicAreaName,
           ":description": dashboard.description,
+          ":lastUpdatedAt": dashboard.updatedAt.toISOString(),
           ":updatedAt": new Date().toISOString(),
           ":userId": user.userId,
         },

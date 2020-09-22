@@ -27,7 +27,8 @@ function EditDetails() {
       dashboardId,
       values.name,
       values.topicAreaId,
-      values.description || ""
+      values.description || "",
+      dashboard ? dashboard.updatedAt : new Date()
     );
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };

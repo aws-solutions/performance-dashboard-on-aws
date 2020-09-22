@@ -51,6 +51,7 @@ export function useDashboard(dashboardId: string) {
       topicAreaId: "abc",
       topicAreaName: "Bananas",
       description: "Some description",
+      updatedAt: "",
       widgets: [
         {
           id: "abc",

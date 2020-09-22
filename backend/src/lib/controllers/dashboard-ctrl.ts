@@ -84,7 +84,7 @@ async function updateDashboard(req: Request, res: Response) {
     res.status(400).send("Missing required field `id`");
   }
 
-  const { name, topicAreaId, description } = req.body;
+  const { name, topicAreaId, description, updatedAt } = req.body;
 
   if (!name) {
     res.status(400).send("Missing required body `name`");
@@ -93,6 +93,11 @@ async function updateDashboard(req: Request, res: Response) {
 
   if (!topicAreaId) {
     res.status(400).send("Missing required body `topicAreaId`");
+    return;
+  }
+
+  if (!updatedAt) {
+    res.status(400).send("Missing required body `updatedAt`");
     return;
   }
 
@@ -106,7 +111,8 @@ async function updateDashboard(req: Request, res: Response) {
     topicArea.name,
     description,
     "Draft",
-    user
+    user,
+    new Date(updatedAt)
   );
 
   const repo = DashboardRepository.getInstance();

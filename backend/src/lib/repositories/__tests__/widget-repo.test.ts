@@ -10,7 +10,7 @@ let tableName: string;
 let repo: WidgetRepository;
 let dynamodb = mocked(DynamoDBService.prototype);
 
-beforeEach(() => {
+beforeAll(() => {
   tableName = "BadgerTable";
   process.env.BADGER_TABLE = tableName;
 
@@ -35,59 +35,7 @@ describe("Widget Repository", () => {
       },
     });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const getWidgets = jest.spyOn(repo, "getWidgets");
-  getWidgets.mockResolvedValue([]);
-
-  await repo.saveWidget(widget);
-  expect(dynamodb.put).toBeCalledWith({
-    TableName: tableName,
-    Item: item,
-  });
-
-  getWidgets.mockRestore();
-});
-
-it("saves a new widget with the proper `order`", async () => {
-  const widget: Widget = {
-    id: "123",
-    dashboardId: "abc",
-    widgetType: WidgetType.Text,
-    order: 0,
-    updatedAt: new Date(),
-    name: "AWS",
-    content: {},
-  };
-
-  // Scenario: Other widget is already created with `order=0`
-  const getWidgets = jest.spyOn(repo, "getWidgets");
-  getWidgets.mockResolvedValue([
-    {
-      id: "xyz",
-      dashboardId: "123",
-      name: "Existing widget",
-      widgetType: WidgetType.Text,
-      order: 0,
-      updatedAt: new Date(),
-      content: {},
-    },
-  ]);
-
-  await repo.saveWidget(widget);
-  expect(WidgetFactory.toItem).toBeCalledWith(
-    expect.objectContaining({
-      order: 1, // should be in position 1
-    })
-  );
-
-  getWidgets.mockRestore();
-});
-=======
-    const item = await repo.getWidgetById("123", "abc");
-=======
     const item = await repo.getWidgetById("abc", "123");
->>>>>>> a975a80... Change update Widget to use update instead of put
     expect(item).toEqual({
       id: "123",
       dashboardId: "abc",
@@ -98,7 +46,6 @@ it("saves a new widget with the proper `order`", async () => {
       content: { text: "test" },
     });
   });
->>>>>>> 2cffb49... Backend changes for editing a widget
 
   it("saves a new widget", async () => {
     const widget: Widget = {
@@ -114,6 +61,9 @@ it("saves a new widget with the proper `order`", async () => {
     const item = {};
     WidgetFactory.toItem = jest.fn().mockReturnValue(item);
 
+    const getWidgets = jest.spyOn(repo, "getWidgets");
+    getWidgets.mockResolvedValue([]);
+
     await repo.saveWidget(widget);
     expect(dynamodb.put).toBeCalledWith({
       TableName: tableName,
@@ -121,18 +71,74 @@ it("saves a new widget with the proper `order`", async () => {
     });
   });
 
+  it("update a widget", async () => {
+    const name = "AWS";
+    const content = {};
+    const now = new Date();
+    const updatedAt = now;
+
+    await repo.updateWidget("abc", "123", name, content, updatedAt);
+    expect(dynamodb.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        UpdateExpression:
+          "set #name = :name, #content = :content, #updatedAt = :updatedAt",
+        ExpressionAttributeValues: {
+          ":name": name,
+          ":content": content,
+          ":lastUpdatedAt": updatedAt.toISOString(),
+          ":updatedAt": updatedAt.toISOString(),
+        },
+      })
+    );
+  });
+
   it("deletes a widget", async () => {
     WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
     WidgetFactory.itemSk = jest.fn().mockReturnValue("Widget#abc");
 
     await repo.deleteWidget("123", "abc");
-    expect(dynamodb.delete).toBeCalledWith({
+    expect(dynamodb.delete).toHaveBeenCalledWith({
       TableName: tableName,
       Key: {
         pk: "Dashboard#123",
         sk: "Widget#abc",
       },
     });
+  });
+
+  it("saves a new widget with the proper `order`", async () => {
+    const widget: Widget = {
+      id: "123",
+      dashboardId: "abc",
+      widgetType: WidgetType.Text,
+      order: 0,
+      updatedAt: new Date(),
+      name: "AWS",
+      content: {},
+    };
+
+    // Scenario: Other widget is already created with `order=0`
+    const getWidgets = jest.spyOn(repo, "getWidgets");
+    getWidgets.mockResolvedValue([
+      {
+        id: "xyz",
+        dashboardId: "123",
+        name: "Existing widget",
+        widgetType: WidgetType.Text,
+        order: 0,
+        updatedAt: new Date(),
+        content: {},
+      },
+    ]);
+
+    await repo.saveWidget(widget);
+    expect(WidgetFactory.toItem).toBeCalledWith(
+      expect.objectContaining({
+        order: 1, // should be in position 1
+      })
+    );
+
+    getWidgets.mockRestore();
   });
 
   it("sets widget order as transactions", async () => {
@@ -162,8 +168,7 @@ it("saves a new widget with the proper `order`", async () => {
               sk: WidgetFactory.itemSk("Widget#abc"),
             },
             UpdateExpression: "set #order = :order, #updatedAt = :now",
-            ConditionExpression:
-              "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdated",
+            ConditionExpression: "#updatedAt <= :lastUpdated",
             ExpressionAttributeNames: {
               "#order": "order",
               "#updatedAt": "updatedAt",
@@ -178,19 +183,19 @@ it("saves a new widget with the proper `order`", async () => {
       ]),
     });
   });
-});
 
-it("retrieves a list of widgets for a given dashboardId", async () => {
-  WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
-  dynamodb.query = jest.fn().mockReturnValue({ Items: [] });
+  it("retrieves a list of widgets for a given dashboardId", async () => {
+    WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
+    dynamodb.query = jest.fn().mockReturnValue({ Items: [] });
 
-  await repo.getWidgets("123");
-  expect(dynamodb.query).toBeCalledWith({
-    TableName: tableName,
-    KeyConditionExpression: "pk = :dashboardId and begins_with(sk, :sortKey)",
-    ExpressionAttributeValues: {
-      ":dashboardId": WidgetFactory.itemPk("123"),
-      ":sortKey": "Widget#",
-    },
+    await repo.getWidgets("123");
+    expect(dynamodb.query).toBeCalledWith({
+      TableName: tableName,
+      KeyConditionExpression: "pk = :dashboardId and begins_with(sk, :sortKey)",
+      ExpressionAttributeValues: {
+        ":dashboardId": WidgetFactory.itemPk("123"),
+        ":sortKey": "Widget#",
+      },
+    });
   });
 });

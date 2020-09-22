@@ -87,7 +87,7 @@ async function updateWidget(req: Request, res: Response) {
     res.status(400).send("Missing required field `widgetId`");
   }
 
-  const { name, content, widgetType } = req.body;
+  const { name, content, updatedAt } = req.body;
 
   if (!name) {
     res.status(400).send("Missing required field `name`");
@@ -97,29 +97,21 @@ async function updateWidget(req: Request, res: Response) {
     res.status(400).send("Missing required field `content`");
   }
 
-  if (!widgetType) {
-    res.status(400).send("Missing required field `widgetType`");
-  }
-
-  let widget;
-  try {
-    widget = WidgetFactory.createWidget(
-      name,
-      dashboardId,
-      widgetType,
-      content,
-      widgetId
-    );
-  } catch (err) {
-    console.log("Invalid request to create widget", err);
-    return res.status(400).send(err.message);
+  if (!updatedAt) {
+    res.status(400).send("Missing required field `updatedAt`");
   }
 
   const repo = WidgetRepository.getInstance();
   const dashboardRepo = DashboardRepository.getInstance();
-  await repo.updateWidget(widget);
+  await repo.updateWidget(
+    dashboardId,
+    widgetId,
+    name,
+    content,
+    new Date(updatedAt)
+  );
   await dashboardRepo.updateAt(dashboardId, new Date(), user);
-  return res.json(widget);
+  return res.send();
 }
 
 async function deleteWidget(req: Request, res: Response) {

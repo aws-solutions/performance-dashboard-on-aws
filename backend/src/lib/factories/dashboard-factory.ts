@@ -12,7 +12,8 @@ function create(
   topicAreaName: string,
   description: string,
   state: string,
-  user: User
+  user: User,
+  updatedAt?: Date
 ): Dashboard {
   return {
     id,
@@ -22,7 +23,7 @@ function create(
     description,
     state,
     createdBy: user.userId,
-    updatedAt: new Date(),
+    updatedAt: updatedAt || new Date(),
   };
 }
 

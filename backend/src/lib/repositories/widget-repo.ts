@@ -1,14 +1,11 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import DynamoDBService from "../services/dynamodb";
 import { Widget, WidgetItem } from "../models/widget";
-<<<<<<< HEAD
+
 import WidgetFactory, {
   WIDGET_PREFIX,
   WIDGET_ITEM_TYPE,
 } from "../factories/widget-factory";
-=======
-import WidgetFactory from "../factories/widget-factory";
->>>>>>> 2cffb49... Backend changes for editing a widget
 
 class WidgetRepository {
   private dynamodb: DynamoDBService;
@@ -32,7 +29,6 @@ class WidgetRepository {
     return WidgetRepository.instance;
   }
 
-<<<<<<< HEAD
   public async getWidgets(dashboardId: string): Promise<Array<Widget>> {
     const result = await this.dynamodb.query({
       TableName: this.tableName,
@@ -49,7 +45,8 @@ class WidgetRepository {
 
     const items = result.Items.filter((item) => item.type === WIDGET_ITEM_TYPE);
     return WidgetFactory.fromItems(items as Array<WidgetItem>);
-=======
+  }
+
   /**
    * Get a widget specifiying the widget id
    * and the dashboardId id.
@@ -63,7 +60,6 @@ class WidgetRepository {
       },
     });
     return WidgetFactory.fromItem(result.Item as WidgetItem);
->>>>>>> 2cffb49... Backend changes for editing a widget
   }
 
   public async saveWidget(widget: Widget) {
@@ -81,22 +77,27 @@ class WidgetRepository {
     });
   }
 
-  public async updateWidget(widget: Widget) {
+  public async updateWidget(
+    dashboardId: string,
+    widgetId: string,
+    name: string,
+    content: any,
+    updatedAt: Date
+  ) {
     try {
       await this.dynamodb.update({
         TableName: this.tableName,
         Key: {
-          pk: WidgetFactory.itemPk(widget.dashboardId),
-          sk: WidgetFactory.itemSk(widget.id),
+          pk: WidgetFactory.itemPk(dashboardId),
+          sk: WidgetFactory.itemSk(widgetId),
         },
         UpdateExpression:
-          "set #name = :name, #widgetType = :widgetType, #content = :content, #updatedAt = :updatedAt",
-        ConditionExpression:
-          "attribute_not_exists(#updatedAt) OR #updatedAt <= :updatedAt",
+          "set #name = :name, #content = :content, #updatedAt = :updatedAt",
+        ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
-          ":name": widget.name,
-          ":widgetType": widget.widgetType,
-          ":content": widget.content,
+          ":name": name,
+          ":content": content,
+          ":lastUpdatedAt": updatedAt.toISOString(),
           ":updatedAt": new Date().toISOString(),
         },
         ExpressionAttributeNames: {
@@ -139,8 +140,7 @@ class WidgetRepository {
             sk: WidgetFactory.itemSk(widget.id),
           },
           UpdateExpression: "set #order = :order, #updatedAt = :now",
-          ConditionExpression:
-            "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdated",
+          ConditionExpression: "#updatedAt <= :lastUpdated",
           ExpressionAttributeNames: {
             "#order": "order",
             "#updatedAt": "updatedAt",

@@ -111,7 +111,7 @@ async function updateDashboard(req: Request, res: Response) {
 
   const repo = DashboardRepository.getInstance();
   await repo.updateDashboard(dashboard, user);
-  res.status(201).send();
+  res.send();
 }
 
 async function deleteDashboard(req: Request, res: Response) {
@@ -130,7 +130,7 @@ async function deleteDashboard(req: Request, res: Response) {
 
   const repo = DashboardRepository.getInstance();
   await repo.delete(id);
-  res.status(201).send();
+  return res.send();
 }
 
 export default {

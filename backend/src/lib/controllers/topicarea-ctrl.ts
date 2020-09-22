@@ -74,7 +74,7 @@ async function updateTopicArea(req: Request, res: Response) {
 
   const repo = TopicAreaRepository.getInstance();
   await repo.updateTopicArea(topicArea, user);
-  res.status(201).send();
+  res.send();
 }
 
 async function deleteTopicArea(req: Request, res: Response) {
@@ -93,7 +93,7 @@ async function deleteTopicArea(req: Request, res: Response) {
 
   const repo = TopicAreaRepository.getInstance();
   await repo.delete(id);
-  res.status(201).send();
+  res.send();
 }
 
 export default {

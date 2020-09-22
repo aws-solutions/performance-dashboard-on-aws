@@ -11,10 +11,11 @@ let tableName: string;
 let repo: WidgetRepository;
 let dynamodb = mocked(DynamoDBService.prototype);
 
-beforeAll(() => {
+beforeEach(() => {
   tableName = "BadgerTable";
   process.env.BADGER_TABLE = tableName;
 
+  dynamodb = mocked(DynamoDBService.prototype);
   DynamoDBService.getInstance = jest.fn().mockReturnValue(dynamodb);
   repo = WidgetRepository.getInstance();
 });
@@ -33,11 +34,51 @@ it("saves a new widget", async () => {
   const item = {};
   WidgetFactory.toItem = jest.fn().mockReturnValue(item);
 
+  const getWidgets = jest.spyOn(repo, "getWidgets");
+  getWidgets.mockResolvedValue([]);
+
   await repo.saveWidget(widget);
   expect(dynamodb.put).toBeCalledWith({
     TableName: tableName,
     Item: item,
   });
+
+  getWidgets.mockRestore();
+});
+
+it("saves a new widget with the proper `order`", async () => {
+  const widget: Widget = {
+    id: "123",
+    dashboardId: "abc",
+    widgetType: WidgetType.Text,
+    order: 0,
+    updatedAt: new Date(),
+    name: "AWS",
+    content: {},
+  };
+
+  // Scenario: Other widget is already created with `order=0`
+  const getWidgets = jest.spyOn(repo, "getWidgets");
+  getWidgets.mockResolvedValue([
+    {
+      id: "xyz",
+      dashboardId: "123",
+      name: "Existing widget",
+      widgetType: WidgetType.Text,
+      order: 0,
+      updatedAt: new Date(),
+      content: {},
+    },
+  ]);
+
+  await repo.saveWidget(widget);
+  expect(WidgetFactory.toItem).toBeCalledWith(
+    expect.objectContaining({
+      order: 1, // should be in position 1
+    })
+  );
+
+  getWidgets.mockRestore();
 });
 
 it("deletes a widget", async () => {
@@ -95,5 +136,20 @@ it("sets widget order as transactions", async () => {
         },
       },
     ]),
+  });
+});
+
+it("retrieves a list of widgets for a given dashboardId", async () => {
+  WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
+  dynamodb.query = jest.fn().mockReturnValue({ Items: [] });
+
+  await repo.getWidgets("123");
+  expect(dynamodb.query).toBeCalledWith({
+    TableName: tableName,
+    KeyConditionExpression: "pk = :dashboardId and begins_with(sk, :sortKey)",
+    ExpressionAttributeValues: {
+      ":dashboardId": WidgetFactory.itemPk("123"),
+      ":sortKey": "Widget#",
+    },
   });
 });

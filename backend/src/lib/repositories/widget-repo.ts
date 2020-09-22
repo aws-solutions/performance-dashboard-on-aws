@@ -54,7 +54,7 @@ class WidgetRepository {
    * Get a widget specifiying the widget id
    * and the dashboardId id.
    */
-  public async getWidgetById(widgetId: string, dashboardId: string) {
+  public async getWidgetById(dashboardId: string, widgetId: string) {
     const result = await this.dynamodb.get({
       TableName: this.tableName,
       Key: {
@@ -79,6 +79,41 @@ class WidgetRepository {
       TableName: this.tableName,
       Item: WidgetFactory.toItem(widget),
     });
+  }
+
+  public async updateWidget(widget: Widget) {
+    try {
+      await this.dynamodb.update({
+        TableName: this.tableName,
+        Key: {
+          pk: WidgetFactory.itemPk(widget.dashboardId),
+          sk: WidgetFactory.itemSk(widget.id),
+        },
+        UpdateExpression:
+          "set #name = :name, #widgetType = :widgetType, #content = :content, #updatedAt = :updatedAt",
+        ConditionExpression:
+          "attribute_not_exists(#updatedAt) OR #updatedAt <= :updatedAt",
+        ExpressionAttributeValues: {
+          ":name": widget.name,
+          ":widgetType": widget.widgetType,
+          ":content": widget.content,
+          ":updatedAt": new Date().toISOString(),
+        },
+        ExpressionAttributeNames: {
+          "#name": "name",
+          "#widgetType": "widgetType",
+          "#content": "content",
+          "#updatedAt": "updatedAt",
+        },
+      });
+    } catch (error) {
+      if (error.code === "ConditionalCheckFailedException") {
+        console.log("Someone else updated the item before us");
+        return;
+      } else {
+        throw error;
+      }
+    }
   }
 
   public async deleteWidget(dashboardId: string, widgetId: string) {

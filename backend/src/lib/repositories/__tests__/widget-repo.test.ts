@@ -36,6 +36,7 @@ describe("Widget Repository", () => {
     });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const getWidgets = jest.spyOn(repo, "getWidgets");
   getWidgets.mockResolvedValue([]);
 
@@ -84,6 +85,9 @@ it("saves a new widget with the proper `order`", async () => {
 });
 =======
     const item = await repo.getWidgetById("123", "abc");
+=======
+    const item = await repo.getWidgetById("abc", "123");
+>>>>>>> a975a80... Change update Widget to use update instead of put
     expect(item).toEqual({
       id: "123",
       dashboardId: "abc",

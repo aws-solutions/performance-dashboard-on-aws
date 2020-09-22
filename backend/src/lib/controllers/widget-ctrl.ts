@@ -19,12 +19,12 @@ async function getWidgetById(req: Request, res: Response) {
   }
 
   if (!widgetId) {
-    res.status(400).send("Missing required field `dashboardId`");
+    res.status(400).send("Missing required field `widgetId`");
   }
 
   const repo = WidgetRepository.getInstance();
-  const dashboard = await repo.getWidgetById(widgetId, id);
-  res.json(dashboard);
+  const widget = await repo.getWidgetById(id, widgetId);
+  res.json(widget);
 }
 
 async function createWidget(req: Request, res: Response) {
@@ -117,7 +117,7 @@ async function updateWidget(req: Request, res: Response) {
 
   const repo = WidgetRepository.getInstance();
   const dashboardRepo = DashboardRepository.getInstance();
-  await repo.saveWidget(widget);
+  await repo.updateWidget(widget);
   await dashboardRepo.updateAt(dashboardId, new Date(), user);
   return res.json(widget);
 }

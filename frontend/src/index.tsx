@@ -1,11 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import Amplify from "aws-amplify";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
 import "uswds/dist/css/uswds.css";
 import "uswds/dist/js/uswds.js";
 import "./index.css";
+
+dayjs.extend(relativeTime);
 
 Amplify.configure({
   API: {
@@ -26,8 +30,8 @@ Amplify.configure({
     AWSS3: {
       bucket: process.env.REACT_APP_DATASETS_BUCKET,
       region: process.env.REACT_APP_AWS_REGION,
-    }
-  }
+    },
+  },
 });
 
 ReactDOM.render(

@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from "react";
-import _ from "lodash";
 import { TopicArea, Dashboard, Widget } from "../models";
 import BadgerService from "../services/BadgerService";
 
@@ -53,7 +52,7 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
     const data = await BadgerService.fetchDashboardById(dashboardId);
     setLoading(false);
     if (data) {
-      data.widgets = _.sortBy(data.widgets, "order");
+      data.widgets.sort((a, b) => a.order - b.order);
       setDashboard(data);
     }
   }, [dashboardId]);

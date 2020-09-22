@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import { Widget } from "../models";
@@ -94,6 +95,9 @@ function EditDashboard() {
           </ul>
         </div>
         <div className="grid-col text-right">
+          <span className="text-base margin-right-1">
+            {dashboard && `Last saved ${dayjs(dashboard.updatedAt).fromNow()}`}
+          </span>
           <Button variant="base" onClick={() => onCancel()}>
             Publish
           </Button>

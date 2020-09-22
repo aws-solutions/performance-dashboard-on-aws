@@ -9,7 +9,14 @@ const widgets: Array<Widget> = [
     name: "The benefits of bananas",
     widgetType: "Text",
     order: 1,
-    updatedAt: "",
+    updatedAt: "2020-09-22T20:13:08Z",
+  },
+  {
+    id: "456",
+    name: "The benefits of wine",
+    widgetType: "Text",
+    order: 2,
+    updatedAt: "2020-09-22T20:13:08Z",
   },
 ];
 
@@ -34,7 +41,7 @@ test("calls onDelete when user clicks delete button", async () => {
   );
 
   await act(async () => {
-    fireEvent.click(wrapper.getByRole("button", { name: "Delete" }));
+    fireEvent.click(wrapper.getByLabelText("Delete The benefits of bananas"));
   });
 
   expect(onDelete).toBeCalled();
@@ -50,7 +57,7 @@ test("calls onMoveUp when user clicks up arrow", async () => {
   await act(async () => {
     fireEvent.click(
       wrapper.getByRole("button", {
-        name: "Move The benefits of bananas up",
+        name: "Move The benefits of wine up",
       })
     );
   });
@@ -58,7 +65,7 @@ test("calls onMoveUp when user clicks up arrow", async () => {
   expect(onMoveUp).toBeCalled();
 });
 
-test("calls onMoveUp when user clicks down arrow", async () => {
+test("calls onMoveDown when user clicks down arrow", async () => {
   const onMoveDown = jest.fn();
   const onClick = jest.fn();
   const wrapper = render(

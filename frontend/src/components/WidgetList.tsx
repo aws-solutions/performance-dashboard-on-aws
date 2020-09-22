@@ -69,25 +69,29 @@ function WidgetList(props: Props) {
                   </div>
                   <div className="grid-col flex-4 grid-row flex-column text-center">
                     <div className="grid-col flex-6">
-                      <Button
-                        variant="unstyled"
-                        ariaLabel={`Move ${widget.name} up`}
-                        onClick={() => onMoveUp(index)}
-                      >
-                        <FontAwesomeIcon icon={faCaretUp} />
-                      </Button>
+                      {index > 0 && (
+                        <Button
+                          variant="unstyled"
+                          ariaLabel={`Move ${widget.name} up`}
+                          onClick={() => onMoveUp(index)}
+                        >
+                          <FontAwesomeIcon icon={faCaretUp} />
+                        </Button>
+                      )}
                     </div>
                     <div className="grid-col flex-6">
-                      <Button
-                        variant="unstyled"
-                        ariaLabel={`Move ${widget.name} down`}
-                        onClick={() => onMoveDown(index)}
-                      >
-                        <FontAwesomeIcon
-                          id={`${widget.id}-move-down`}
-                          icon={faCaretDown}
-                        />
-                      </Button>
+                      {index < props.widgets.length - 1 && (
+                        <Button
+                          variant="unstyled"
+                          ariaLabel={`Move ${widget.name} down`}
+                          onClick={() => onMoveDown(index)}
+                        >
+                          <FontAwesomeIcon
+                            id={`${widget.id}-move-down`}
+                            icon={faCaretDown}
+                          />
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -107,7 +111,11 @@ function WidgetList(props: Props) {
                     <a className="usa-link margin-right-2" href="/">
                       Edit
                     </a>
-                    <Button variant="unstyled" onClick={() => onDelete(widget)}>
+                    <Button
+                      variant="unstyled"
+                      onClick={() => onDelete(widget)}
+                      ariaLabel={`Delete ${widget.name}`}
+                    >
                       Delete
                     </Button>
                   </div>

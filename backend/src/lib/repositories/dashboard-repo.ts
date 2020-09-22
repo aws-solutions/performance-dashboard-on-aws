@@ -166,7 +166,7 @@ class DashboardRepository {
    * Updates the updatedAt field. Sets the `updatedBy` field
    * to the userId doing the update action.
    */
-  public async updateAt(dashboardId: string, updatedAt: Date, user: User) {
+  public async updateAt(dashboardId: string, user: User) {
     await this.dynamodb.update({
       TableName: this.tableName,
       Key: {
@@ -175,7 +175,7 @@ class DashboardRepository {
       },
       UpdateExpression: "set #updatedAt = :updatedAt, #updatedBy = :userId",
       ExpressionAttributeValues: {
-        ":updatedAt": updatedAt.toISOString(),
+        ":updatedAt": new Date().toISOString(),
         ":userId": user.userId,
       },
       ExpressionAttributeNames: {

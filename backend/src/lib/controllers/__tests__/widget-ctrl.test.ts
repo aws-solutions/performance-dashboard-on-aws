@@ -15,7 +15,7 @@ jest.mock("../../repositories/dashboard-repo");
 
 const user: User = { userId: "johndoe" };
 const repository = mocked(WidgetRepository.prototype);
-const dashboardRepository = mocked(DashboardRepository.prototype);
+const dashboardRepo = mocked(DashboardRepository.prototype);
 const res = ({
   send: jest.fn().mockReturnThis(),
   status: jest.fn().mockReturnThis(),
@@ -25,9 +25,7 @@ const res = ({
 beforeEach(() => {
   AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   WidgetRepository.getInstance = jest.fn().mockReturnValue(repository);
-  DashboardRepository.getInstance = jest
-    .fn()
-    .mockReturnValue(dashboardRepository);
+  DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
 });
 
 describe("createWidget", () => {
@@ -254,8 +252,9 @@ describe("setWidgetOrder", () => {
     expect(res.send).toBeCalledWith("Missing required field `widgets`");
   });
 
-  it("sets widget order", async () => {
+  it("sets widget order and updates updatedAt in dashboard", async () => {
     await WidgetCtrl.setWidgetOrder(req, res);
+    expect(dashboardRepo.updateAt).toBeCalledWith("090b0410", user);
     expect(repository.setWidgetOrder).toBeCalledWith(
       "090b0410",
       req.body.widgets

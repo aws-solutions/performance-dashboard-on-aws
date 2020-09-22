@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import moment from "moment";
+import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
@@ -140,7 +140,7 @@ function DashboardsTable(props: Props) {
               </Link>
             </td>
             <td>{dashboard.topicAreaName}</td>
-            <td>{moment(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}</td>
+            <td>{dayjs(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}</td>
             <td>{dashboard.createdBy}</td>
           </tr>
         ))}

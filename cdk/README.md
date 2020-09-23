@@ -1,14 +1,3 @@
-# Welcome to your CDK TypeScript project!
+# CDK Deployment Package
 
-This is a blank project for TypeScript development with CDK.
-
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+This is the CDK source code for deploying Performance Dashboard on AWS. It defines the infrastructure for the Frontend, Backend and Authentication components of the project. Please refer to the deployment instructions in the README file to properly deploy the project.

@@ -1,18 +1,23 @@
 import * as cdk from "@aws-cdk/core";
-import s3 = require("@aws-cdk/aws-s3");
-import codecommit = require("@aws-cdk/aws-codecommit");
-import iam = require("@aws-cdk/aws-iam");
-import codepipeline = require("@aws-cdk/aws-codepipeline");
-import codebuild = require("@aws-cdk/aws-codebuild");
+import * as s3 from "@aws-cdk/aws-s3";
+import { Repository } from "@aws-cdk/aws-codecommit";
+import * as iam from "@aws-cdk/aws-iam";
+import * as codepipeline from "@aws-cdk/aws-codepipeline";
+import * as codebuild from "@aws-cdk/aws-codebuild";
 import * as codestarnotifications from "@aws-cdk/aws-codestarnotifications";
-import sns = require("@aws-cdk/aws-sns");
+import * as sns from "@aws-cdk/aws-sns";
 import {
   CodeCommitSourceAction,
   CodeBuildAction,
+  GitHubSourceAction,
 } from "@aws-cdk/aws-codepipeline-actions";
 
 interface Props extends cdk.StackProps {
   repoName: string;
+  sourceProvider: "GitHub" | "CodeCommit";
+  branch: string;
+  githubOwner?: string;
+  githubOAuthToken?: string;
 }
 
 export class PipelineStack extends cdk.Stack {
@@ -32,29 +37,17 @@ export class PipelineStack extends cdk.Stack {
     );
 
     const artifactsBucket = new s3.Bucket(this, "ArtifactsBucket");
-    const codeRepo = codecommit.Repository.fromRepositoryName(
-      this,
-      "Repository",
-      props.repoName
-    );
-
     const pipeline = new codepipeline.Pipeline(this, "Pipeline", {
       artifactBucket: artifactsBucket,
     });
 
     const sourceOutput = new codepipeline.Artifact();
     const buildOutput = new codepipeline.Artifact();
+    const sourceAction = createSourceAction(scope, props, sourceOutput);
 
     pipeline.addStage({
       stageName: "Source",
-      actions: [
-        new CodeCommitSourceAction({
-          actionName: "Source",
-          repository: codeRepo,
-          branch: "mainline",
-          output: sourceOutput,
-        }),
-      ],
+      actions: [sourceAction],
     });
 
     const build = new codebuild.PipelineProject(this, "Build", {
@@ -111,4 +104,63 @@ export class PipelineStack extends cdk.Stack {
       }
     );
   }
+}
+
+function createSourceAction(
+  scope: cdk.Construct,
+  props: Props,
+  output: codepipeline.Artifact
+): codepipeline.IAction {
+  if (props.sourceProvider === "CodeCommit") {
+    return createCodeCommitSourceAction(
+      scope,
+      props.repoName,
+      props.branch,
+      output
+    );
+  }
+
+  if (!props.githubOAuthToken || !props.githubOwner) {
+    throw new Error("Missing GitHub props owner and/or oauthtoken");
+  }
+
+  return createGitHubSourceAction(
+    props.repoName,
+    props.githubOwner,
+    props.branch,
+    props.githubOAuthToken,
+    output
+  );
+}
+
+function createGitHubSourceAction(
+  repo: string,
+  owner: string,
+  branch: string,
+  oauthToken: string,
+  sourceOutput: codepipeline.Artifact
+): GitHubSourceAction {
+  return new GitHubSourceAction({
+    actionName: "Source",
+    repo: repo,
+    output: sourceOutput,
+    owner,
+    branch,
+    oauthToken: cdk.SecretValue.secretsManager(oauthToken),
+  });
+}
+
+function createCodeCommitSourceAction(
+  scope: cdk.Construct,
+  repo: string,
+  branch: string,
+  sourceOutput: codepipeline.Artifact
+): CodeCommitSourceAction {
+  const codeRepo = Repository.fromRepositoryName(scope, "Repository", repo);
+  return new CodeCommitSourceAction({
+    actionName: "Source",
+    repository: codeRepo,
+    branch,
+    output: sourceOutput,
+  });
 }

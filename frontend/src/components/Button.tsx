@@ -18,7 +18,7 @@ interface Props {
   ariaLabel?: string;
 }
 
-function Button(props: Props) {
+const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   let variantClassName = "";
   switch (props.variant) {
     case "base":
@@ -50,6 +50,7 @@ function Button(props: Props) {
       aria-label={props.ariaLabel}
       className={`usa-button${variantClassName}${additionalClasses}`}
       disabled={props.disabled}
+      ref={ref}
       type={props.type}
       onClick={() => {
         if (props.onClick) {
@@ -60,6 +61,6 @@ function Button(props: Props) {
       {props.children}
     </button>
   );
-}
+});
 
 export default Button;

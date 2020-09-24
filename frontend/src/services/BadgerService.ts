@@ -31,6 +31,16 @@ async function fetchTopicAreas() {
   return await API.get(apiName, "topicarea", { headers });
 }
 
+async function fetchWidgetById(
+  dashboardId: string,
+  widgetId: string
+): Promise<Widget> {
+  const headers = await authHeaders();
+  return await API.get(apiName, `dashboard/${dashboardId}/widget/${widgetId}`, {
+    headers,
+  });
+}
+
 async function fetchWidgets(dashboardId: string) {
   const headers = await authHeaders();
   return await API.get(apiName, `dashboard/${dashboardId}/widgets`, {
@@ -90,6 +100,24 @@ async function createWidget(
   });
 }
 
+async function editWidget(
+  dashboardId: string,
+  widgetId: string,
+  name: string,
+  content: object,
+  updatedAt: Date
+) {
+  const headers = await authHeaders();
+  return await API.put(apiName, `dashboard/${dashboardId}/widget/${widgetId}`, {
+    headers,
+    body: {
+      name,
+      content,
+      updatedAt,
+    },
+  });
+}
+
 async function createDataset(
   fileName: string,
   s3Keys: { raw: string; json: string }
@@ -137,10 +165,12 @@ export default {
   fetchDashboards,
   fetchDashboardById,
   fetchTopicAreas,
+  fetchWidgetById,
   fetchWidgets,
   editDashboard,
   createDashboard,
   createWidget,
+  editWidget,
   deleteWidget,
   setWidgetOrder,
   createDataset,

@@ -41,7 +41,7 @@ function fromItem(item: WidgetItem): Widget {
     dashboardId,
     name: item.name,
     widgetType: item.widgetType as WidgetType,
-    order: item.order || 0,
+    order: item.order,
     updatedAt,
     content: item.content,
   };
@@ -120,6 +120,10 @@ function createChartWidget(
     throw new Error("Chart widget must have `content.datasetId` field");
   }
 
+  if (!content.s3Key) {
+    throw new Error("Chart widget must have `content.s3Key` field");
+  }
+
   return {
     id,
     name,
@@ -131,6 +135,7 @@ function createChartWidget(
       title: content.title,
       chartType: content.chartType,
       datasetId: content.datasetId,
+      s3Key: content.s3Key,
     },
   };
 }
@@ -149,6 +154,10 @@ function createTableWidget(
     throw new Error("Table widget must have `content.datasetId` field");
   }
 
+  if (!content.s3Key) {
+    throw new Error("Table widget must have `content.s3Key` field");
+  }
+
   return {
     id,
     name,
@@ -159,6 +168,7 @@ function createTableWidget(
     content: {
       title: content.title,
       datasetId: content.datasetId,
+      s3Key: content.s3Key,
     },
   };
 }

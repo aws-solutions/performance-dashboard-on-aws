@@ -19,8 +19,9 @@ export type Widget = {
   name: string;
   widgetType: string;
   order: number;
-  updatedAt: string;
-  content?: object;
+  updatedAt: Date;
+  dashboardId: string;
+  content?: any;
 };
 
 export type Dataset = {

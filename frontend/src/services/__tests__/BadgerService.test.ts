@@ -42,11 +42,14 @@ test("editDashboard should make a POST request with payload", async () => {
   const description = "Alexa, how is the weather?";
   const topicAreaId = "xyz";
 
+  const updatedAt = new Date("2020-09-17T21:01:00.780Z");
+
   await BadgerService.editDashboard(
     dashboardId,
     name,
     topicAreaId,
-    description
+    description,
+    updatedAt
   );
 
   expect(API.put).toHaveBeenCalledWith(
@@ -57,6 +60,7 @@ test("editDashboard should make a POST request with payload", async () => {
         name,
         topicAreaId,
         description,
+        updatedAt,
       },
     })
   );
@@ -76,13 +80,15 @@ test("deleteWidget makes a DELETE request to widget API", async () => {
 
 test("setWidgetOrder makes a PUT request to widget API", async () => {
   const dashboardId = "123";
+  const updatedAt = new Date("2020-09-17T21:01:00.780Z");
   const widgets: Array<Widget> = [
     {
-      id: "abc",
+      id: "123",
       name: "Apple",
       order: 1,
       widgetType: "Table",
-      updatedAt: "2020-09-17T21:01:00.780Z",
+      dashboardId: "abc",
+      updatedAt,
     },
   ];
 
@@ -94,8 +100,8 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
       body: {
         widgets: [
           {
-            id: "abc",
-            updatedAt: "2020-09-17T21:01:00.780Z",
+            id: "123",
+            updatedAt,
             order: 1,
           },
         ],

@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import "./WidgetList.css";
+import { Link } from "react-router-dom";
 
 interface Props {
   onClick: Function;
@@ -108,9 +109,14 @@ function WidgetList(props: Props) {
                     {widget.widgetType}
                   </div>
                   <div className="grid-col flex-3 text-no-wrap overflow-hidden text-overflow-ellipsis text-right">
-                    <a className="usa-link margin-right-2" href="/">
+                    <Link
+                      className="usa-link margin-right-2"
+                      to={`/admin/dashboard/${
+                        widget.dashboardId
+                      }/edit-${widget.widgetType.toLowerCase()}/${widget.id}`}
+                    >
                       Edit
-                    </a>
+                    </Link>
                     <Button
                       variant="unstyled"
                       onClick={() => onDelete(widget)}

@@ -99,6 +99,8 @@ describe("DashboardRepository.updateDashboard", () => {
 
   it("should call update with all the fields", async () => {
     const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
     const dashboard = DashboardFactory.create(
       "123",
       "Dashboard1",
@@ -119,7 +121,7 @@ describe("DashboardRepository.updateDashboard", () => {
           ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
           ":topicAreaName": dashboard.topicAreaName,
           ":description": dashboard.description,
-          ":lastUpdatedAt": dashboard.updatedAt.toISOString(),
+          ":lastUpdatedAt": now.toISOString(),
           ":updatedAt": now.toISOString(),
           ":userId": user.userId,
         },

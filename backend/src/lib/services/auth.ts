@@ -1,15 +1,14 @@
-import { Request } from 'express';
-import { User } from '../models/user';
+import { Request } from "express";
+import { User } from "../models/user";
 
 const local = !!process.env.BADGER_LOCAL || false;
 
 /**
  * Gets the logged-in user from the http request headers.
- * Returns null if no user is found. 
+ * Returns null if no user is found.
  * Returns dummy user if running in local mode.
  */
-function getCurrentUser(req: Request) : User | null {
-
+function getCurrentUser(req: Request): User | null {
   if (local) {
     return userFromClaims(dummyUser());
   }
@@ -18,11 +17,13 @@ function getCurrentUser(req: Request) : User | null {
    * When running on Lambda behind API Gateway, Cognito user claims
    * are in the x-apigateway-event header inside requestContext.authorizer.
    */
-  const event = req.headers['x-apigateway-event'] as string;
+  const event = req.headers["x-apigateway-event"] as string;
   if (!event) {
-    throw new Error("Unable to find current user due to missing x-apigateway-event header");
+    throw new Error(
+      "Unable to find current user due to missing x-apigateway-event header"
+    );
   }
-  
+
   const apigw = JSON.parse(decodeURIComponent(event));
   const requestContext = apigw.requestContext;
   if (!requestContext.authorizer) {
@@ -33,11 +34,11 @@ function getCurrentUser(req: Request) : User | null {
   return userFromClaims(claims);
 }
 
-function userFromClaims(claims: any) : User {
+function userFromClaims(claims: any): User {
   /**
    * Claims include the standard OIDC claims plus additional ones
    * added by Cognito with the prefix cognito:{attribute}.
-   * 
+   *
    * https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
    */
   return {
@@ -63,4 +64,4 @@ function dummyUser(): any {
 
 export default {
   getCurrentUser,
-}
+};

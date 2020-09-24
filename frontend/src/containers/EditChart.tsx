@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
@@ -15,15 +15,16 @@ import LineChartPreview from "../components/LineChartPreview";
 import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
+import { useWidget } from "../hooks";
 
 interface FormValues {
   title: string;
   chartType: string;
 }
 
-function AddChart() {
+function EditChart() {
   const history = useHistory();
-  const { dashboardId } = useParams();
+  const { dashboardId, widgetId } = useParams();
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
@@ -31,12 +32,49 @@ function AddChart() {
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
-  const [chartType, setChartType] = useState("LineChart");
+  const [chartType, setChartType] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const onFileProcessed = useCallback(
+    async (data: File, title: string, chartType: string) => {
+      if (!data) {
+        return;
+      }
+      parse(data, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true,
+        comments: "#",
+        complete: function (results: ParseResult<object>) {
+          if (results.errors.length) {
+            setCsvErrors(results.errors);
+            setDataset(undefined);
+          } else {
+            setCsvErrors(undefined);
+            title && setTitle(title);
+            chartType && setChartType(chartType);
+            setDataset(results.data);
+          }
+        },
+      });
+      setCsvFile(data);
+    },
+    []
+  );
+
+  const { widget } = useWidget(dashboardId, widgetId, onFileProcessed);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
       throw new Error("CSV file not specified");
+    }
+
+    if (!csvFile.lastModified) {
+      return {
+        id: widget?.content.datasetId,
+        fileName: csvFile.name,
+        s3Key: widget?.content.s3Key,
+      };
     }
 
     setLoading(true);
@@ -57,21 +95,23 @@ function AddChart() {
   const onSubmit = async (values: FormValues) => {
     try {
       const newDataset = await uploadDataset();
-      await BadgerService.createWidget(dashboardId, values.title, "Chart", {
-        title: values.title,
-        chartType: values.chartType,
-        datasetId: newDataset.id,
-        s3Key: newDataset.s3Key,
-      });
+      await BadgerService.editWidget(
+        dashboardId,
+        widgetId,
+        values.title,
+        {
+          title: values.title,
+          chartType: values.chartType,
+          datasetId: newDataset.id,
+          s3Key: newDataset.s3Key,
+        },
+        widget ? widget.updatedAt : new Date()
+      );
     } catch (err) {
-      console.log("Failed to save widget", err);
+      console.log("Failed to edit widget", err);
     }
 
     history.push(`/admin/dashboard/edit/${dashboardId}`);
-  };
-
-  const goBack = () => {
-    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const onCancel = () => {
@@ -88,36 +128,10 @@ function AddChart() {
     setChartType((event.target as HTMLInputElement).value);
   };
 
-  const onFileProcessed = (data: File) => {
-    if (!data) {
-      return;
-    }
-    parse(data, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true,
-      comments: "#",
-      complete: function (results: ParseResult<object>) {
-        if (results.errors.length) {
-          setCsvErrors(results.errors);
-          setDataset(undefined);
-        } else {
-          setCsvErrors(undefined);
-          setDataset(results.data);
-        }
-      },
-    });
-    setCsvFile(data);
-  };
-
   return (
     <AdminLayout>
       <Breadcrumbs />
-      <h1>Add content</h1>
-      <div className="text-base text-italic">Step 2 of 2</div>
-      <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-        Configure chart
-      </div>
+      <h1>Edit content item</h1>
       <div className="grid-row width-desktop">
         <div className="grid-col-6">
           <form
@@ -132,16 +146,15 @@ function AddChart() {
                 hint="Give your chart a descriptive title."
                 error={errors.title && "Please specify a chart title"}
                 onChange={handleTitleChange}
+                defaultValue={widget?.name}
                 required
                 register={register}
               />
-
               <FileInput
                 id="dataset"
                 name="dataset"
                 label="File upload"
                 accept=".csv"
-                disabled={!title}
                 loading={loading}
                 errors={csvErrors}
                 register={register}
@@ -149,47 +162,47 @@ function AddChart() {
                 fileName={csvFile && csvFile.name}
                 onFileProcessed={onFileProcessed}
               />
-
-              <div hidden={!dataset}>
-                <RadioButtons
-                  id="chartType"
-                  name="chartType"
-                  label="Chart type"
-                  hint="Choose a chart type. [Link] Which chart is right for my data?"
-                  register={register}
-                  error={errors.chartType && "Please select a chart type"}
-                  onChange={handleChartTypeChange}
-                  defaultValue="LineChart"
-                  required
-                  options={[
-                    {
-                      value: "BarChart",
-                      label: "Bar",
-                    },
-                    {
-                      value: "ColumnChart",
-                      label: "Column",
-                    },
-                    {
-                      value: "LineChart",
-                      label: "Line",
-                    },
-                    {
-                      value: "PartWholeChart",
-                      label: "Part-to-whole",
-                    },
-                  ]}
-                />
-              </div>
+              {chartType ? (
+                <div hidden={!dataset}>
+                  <RadioButtons
+                    id="chartType"
+                    name="chartType"
+                    label="Chart type"
+                    hint="Choose a chart type. [Link] Which chart is right for my data?"
+                    register={register}
+                    error={errors.chartType && "Please select a chart type"}
+                    onChange={handleChartTypeChange}
+                    defaultValue={chartType}
+                    required
+                    options={[
+                      {
+                        value: "BarChart",
+                        label: "Bar",
+                      },
+                      {
+                        value: "ColumnChart",
+                        label: "Column",
+                      },
+                      {
+                        value: "LineChart",
+                        label: "Line",
+                      },
+                      {
+                        value: "PartWholeChart",
+                        label: "Part-to-whole",
+                      },
+                    ]}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
             </fieldset>
             <br />
             <br />
             <hr />
-            <Button variant="outline" onClick={goBack}>
-              Back
-            </Button>
             <Button disabled={!dataset || loading} type="submit">
-              Add chart
+              Save
             </Button>
             <Button variant="unstyled" onClick={onCancel}>
               Cancel
@@ -250,4 +263,4 @@ function AddChart() {
   );
 }
 
-export default AddChart;
+export default EditChart;

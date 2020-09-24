@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { Dataset } from "../models";
@@ -11,14 +11,15 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
 import TablePreview from "../components/TablePreview";
+import { useWidget } from "../hooks";
 
 interface FormValues {
   title: string;
 }
 
-function AddTable() {
+function EditTable() {
   const history = useHistory();
-  const { dashboardId } = useParams();
+  const { dashboardId, widgetId } = useParams();
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
@@ -28,9 +29,42 @@ function AddTable() {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const onFileProcessed = useCallback(async (data: File, title: string) => {
+    if (!data) {
+      return;
+    }
+    parse(data, {
+      header: true,
+      dynamicTyping: true,
+      skipEmptyLines: true,
+      comments: "#",
+      complete: function (results: ParseResult<object>) {
+        if (results.errors.length) {
+          setCsvErrors(results.errors);
+          setDataset(undefined);
+        } else {
+          setCsvErrors(undefined);
+          title && setTitle(title);
+          setDataset(results.data);
+        }
+      },
+    });
+    setCsvFile(data);
+  }, []);
+
+  const { widget } = useWidget(dashboardId, widgetId, onFileProcessed);
+
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
       throw new Error("CSV file not specified");
+    }
+
+    if (!csvFile.lastModified) {
+      return {
+        id: widget?.content.datasetId,
+        fileName: csvFile.name,
+        s3Key: widget?.content.s3Key,
+      };
     }
 
     setLoading(true);
@@ -51,20 +85,22 @@ function AddTable() {
   const onSubmit = async (values: FormValues) => {
     try {
       const newDataset = await uploadDataset();
-      await BadgerService.createWidget(dashboardId, values.title, "Table", {
-        title: values.title,
-        datasetId: newDataset.id,
-        s3Key: newDataset.s3Key,
-      });
+      await BadgerService.editWidget(
+        dashboardId,
+        widgetId,
+        values.title,
+        {
+          title: values.title,
+          datasetId: newDataset.id,
+          s3Key: newDataset.s3Key,
+        },
+        widget ? widget.updatedAt : new Date()
+      );
     } catch (err) {
-      console.log("Failed to save widget", err);
+      console.log("Failed to edit widget", err);
     }
 
     history.push(`/admin/dashboard/edit/${dashboardId}`);
-  };
-
-  const goBack = () => {
-    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const onCancel = () => {
@@ -75,36 +111,10 @@ function AddTable() {
     setTitle((event.target as HTMLInputElement).value);
   };
 
-  const onFileProcessed = (data: File) => {
-    if (!data) {
-      return;
-    }
-    parse(data, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true,
-      comments: "#",
-      complete: function (results: ParseResult<object>) {
-        if (results.errors.length) {
-          setCsvErrors(results.errors);
-          setDataset(undefined);
-        } else {
-          setCsvErrors(undefined);
-          setDataset(results.data);
-        }
-      },
-    });
-    setCsvFile(data);
-  };
-
   return (
     <AdminLayout>
       <Breadcrumbs />
-      <h1>Add content</h1>
-      <div className="text-base text-italic">Step 2 of 2</div>
-      <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-        Configure table
-      </div>
+      <h1>Edit content item</h1>
       <div className="grid-row width-desktop">
         <div className="grid-col-6">
           <form
@@ -119,6 +129,7 @@ function AddTable() {
                 hint="Give your table a descriptive title."
                 error={errors.title && "Please specify a table title"}
                 onChange={handleChange}
+                defaultValue={widget?.name}
                 required
                 register={register}
               />
@@ -128,7 +139,6 @@ function AddTable() {
                 name="dataset"
                 label="File upload"
                 accept=".csv"
-                disabled={!title}
                 loading={loading}
                 errors={csvErrors}
                 register={register}
@@ -156,11 +166,8 @@ function AddTable() {
             </fieldset>
             <br />
             <hr />
-            <Button variant="outline" onClick={goBack}>
-              Back
-            </Button>
             <Button disabled={!dataset || loading} type="submit">
-              Add table
+              Save
             </Button>
             <Button variant="unstyled" onClick={onCancel}>
               Cancel
@@ -186,4 +193,4 @@ function AddTable() {
   );
 }
 
-export default AddTable;
+export default EditTable;

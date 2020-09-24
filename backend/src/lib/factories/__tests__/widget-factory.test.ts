@@ -74,6 +74,10 @@ describe("createChartWidget", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
       datasetId: "090b0410",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
     };
 
     const widget = WidgetFactory.createWidget(
@@ -97,6 +101,10 @@ describe("createChartWidget", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
       datasetId: "090b0410",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
     };
 
     const widget = WidgetFactory.createWidget(
@@ -173,6 +181,10 @@ describe("createChartWidget", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "BarChart",
       datasetId: "090b0410",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
     };
 
     const widget = WidgetFactory.createWidget(
@@ -190,6 +202,10 @@ describe("createChartWidget", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "PartWholeChart",
       datasetId: "090b0410",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
     };
 
     const widget = WidgetFactory.createWidget(
@@ -208,6 +224,10 @@ describe("createTableWidget", () => {
     const content = {
       title: "Correlation of COVID cases to deaths",
       datasetId: "090b0410",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
     };
 
     const widget = WidgetFactory.createWidget(
@@ -225,10 +245,14 @@ describe("createTableWidget", () => {
     );
   });
 
-  it("builds a table widget", () => {
+  it("builds a table widget with id", () => {
     const content = {
       title: "Correlation of COVID cases to deaths",
       datasetId: "090b0410",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
     };
 
     const widget = WidgetFactory.createWidget(
@@ -427,6 +451,10 @@ describe("toItem", () => {
         title: "Correlation of COVID cases to deaths",
         chartType: ChartType.LineChart,
         datasetId: "090b0410",
+        s3Key: {
+          raw: "abc.csv",
+          json: "abc.json",
+        },
       },
     };
 
@@ -443,6 +471,10 @@ describe("toItem", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
       datasetId: "090b0410",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
     });
   });
 
@@ -458,6 +490,10 @@ describe("toItem", () => {
       content: {
         title: "Correlation of COVID cases to deaths",
         datasetId: "090b0410",
+        s3Key: {
+          raw: "abc.csv",
+          json: "abc.json",
+        },
       },
     };
 
@@ -473,6 +509,10 @@ describe("toItem", () => {
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
       datasetId: "090b0410",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
     });
   });
 });

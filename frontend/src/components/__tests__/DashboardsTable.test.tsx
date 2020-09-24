@@ -35,6 +35,7 @@ test("onSelect function is called when user selects dashboard", async () => {
     topicAreaName: "Public Safety",
     createdBy: "johndoe",
     widgets: [],
+    updatedAt: new Date(),
   };
 
   const onSelect = jest.fn();

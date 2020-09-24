@@ -25,6 +25,19 @@ const rawFileTypes: ValidFileTypes = {
   "text/csv": ".csv",
 };
 
+async function downloadDataset(filename: string, title: string): Promise<File> {
+  const data: any = await Storage.get(filename, {
+    download: true,
+    level: accessLevel,
+    serverSideEncryption,
+  });
+  if (!data || !data.Body) {
+    throw new Error("The filename is invalid");
+  }
+  data.Body.name = `${title}.csv`;
+  return data.Body as File;
+}
+
 async function uploadDataset(
   rawFile: File,
   jsonFile: string
@@ -64,5 +77,6 @@ async function uploadDataset(
 }
 
 export default {
+  downloadDataset,
   uploadDataset,
 };

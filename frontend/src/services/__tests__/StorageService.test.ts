@@ -54,3 +54,17 @@ describe("uploadDataset", () => {
     expect(response.s3Keys.json).toEqual("abc.json");
   });
 });
+
+describe("downloadDataset", () => {
+  test("download file", async () => {
+    try {
+      await StorageService.downloadDataset("123.csv", "abc");
+    } catch (error) {
+      expect(Storage.get).toBeCalledWith("123.csv", {
+        download: true,
+        level: "public",
+        serverSideEncryption: "aws:kms",
+      });
+    }
+  });
+});

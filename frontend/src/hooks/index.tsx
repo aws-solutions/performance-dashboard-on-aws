@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { TopicArea, Dashboard, Widget } from "../models";
 import BadgerService from "../services/BadgerService";
+import StorageService from "../services/StorageService";
 
 /**
  * No unit tests for custom hooks?
@@ -91,6 +92,50 @@ export function useDashboards(): UseDashboardsHook {
   return {
     loading,
     dashboards,
+  };
+}
+
+type UseWidgetHook = {
+  loading: boolean;
+  widget?: Widget;
+};
+
+export function useWidget(
+  dashboardId: string,
+  widgetId: string,
+  onWidgetFetched: Function
+): UseWidgetHook {
+  const [loading, setLoading] = useState(false);
+  const [widget, setWidget] = useState<Widget | undefined>(undefined);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const data = await BadgerService.fetchWidgetById(dashboardId, widgetId);
+    let fileDownloaded;
+    if (data.widgetType === "Chart" || data.widgetType === "Table") {
+      fileDownloaded = await StorageService.downloadDataset(
+        data.content.s3Key.raw,
+        data.content.title
+      );
+    }
+    setLoading(false);
+    if (data) {
+      setWidget(data);
+    }
+    if (fileDownloaded && onWidgetFetched) {
+      onWidgetFetched(fileDownloaded, data.name, data.content.chartType);
+    } else if (onWidgetFetched) {
+      onWidgetFetched(data.name, data.content.text);
+    }
+  }, [dashboardId, widgetId, onWidgetFetched]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return {
+    loading,
+    widget,
   };
 }
 

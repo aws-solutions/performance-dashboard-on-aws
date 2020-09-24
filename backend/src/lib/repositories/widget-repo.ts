@@ -102,7 +102,6 @@ class WidgetRepository {
         },
         ExpressionAttributeNames: {
           "#name": "name",
-          "#widgetType": "widgetType",
           "#content": "content",
           "#updatedAt": "updatedAt",
         },

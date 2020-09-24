@@ -72,6 +72,24 @@ export function useDashboard(dashboardId: string) {
   };
 }
 
+export function useWidget(
+  dashboardId: string,
+  widgetId: string,
+  onWidgetFetched: Function
+) {
+  return {
+    loading: false,
+    widget: {
+      id: "123",
+      name: "Correlation of COVID cases to deaths",
+      widgetType: "Text",
+      order: 1,
+      updatedAt: "",
+      content: { text: "test" },
+    },
+  };
+}
+
 export function useWidgets(dashboardId: string) {
   return {
     loading: false,

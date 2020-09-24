@@ -75,9 +75,10 @@ describe("Widget Repository", () => {
     const name = "AWS";
     const content = {};
     const now = new Date();
-    const updatedAt = now;
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
 
-    await repo.updateWidget("abc", "123", name, content, updatedAt);
+    await repo.updateWidget("abc", "123", name, content, now);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
@@ -85,8 +86,8 @@ describe("Widget Repository", () => {
         ExpressionAttributeValues: {
           ":name": name,
           ":content": content,
-          ":lastUpdatedAt": updatedAt.toISOString(),
-          ":updatedAt": updatedAt.toISOString(),
+          ":lastUpdatedAt": now.toISOString(),
+          ":updatedAt": now.toISOString(),
         },
       })
     );

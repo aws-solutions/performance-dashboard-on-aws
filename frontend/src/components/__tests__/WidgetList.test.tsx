@@ -2,33 +2,40 @@ import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { Widget } from "../../models";
 import WidgetList from "../WidgetList";
+import { MemoryRouter } from "react-router-dom";
 
 const widgets: Array<Widget> = [
   {
+    dashboardId: "abc",
     id: "123",
     name: "The benefits of bananas",
     widgetType: "Text",
     order: 1,
-    updatedAt: "2020-09-22T20:13:08Z",
+    updatedAt: new Date("2020-09-22T20:13:08Z"),
   },
   {
+    dashboardId: "abc",
     id: "456",
     name: "The benefits of wine",
     widgetType: "Text",
     order: 2,
-    updatedAt: "2020-09-22T20:13:08Z",
+    updatedAt: new Date("2020-09-22T20:13:08Z"),
   },
 ];
 
 test("renders an empty box", async () => {
   const onClick = jest.fn();
-  const wrapper = render(<WidgetList widgets={[]} onClick={onClick} />);
+  const wrapper = render(<WidgetList widgets={[]} onClick={onClick} />, {
+    wrapper: MemoryRouter,
+  });
   expect(wrapper.container).toMatchSnapshot();
 });
 
 test("calls the onClick callback when button is pressed", async () => {
   const onClick = jest.fn();
-  const wrapper = render(<WidgetList widgets={[]} onClick={onClick} />);
+  const wrapper = render(<WidgetList widgets={[]} onClick={onClick} />, {
+    wrapper: MemoryRouter,
+  });
   fireEvent.click(wrapper.getByRole("button"));
   expect(onClick).toBeCalled();
 });
@@ -37,7 +44,10 @@ test("calls onDelete when user clicks delete button", async () => {
   const onDelete = jest.fn();
   const onClick = jest.fn();
   const wrapper = render(
-    <WidgetList widgets={widgets} onClick={onClick} onDelete={onDelete} />
+    <WidgetList widgets={widgets} onClick={onClick} onDelete={onDelete} />,
+    {
+      wrapper: MemoryRouter,
+    }
   );
 
   await act(async () => {
@@ -51,7 +61,10 @@ test("calls onMoveUp when user clicks up arrow", async () => {
   const onMoveUp = jest.fn();
   const onClick = jest.fn();
   const wrapper = render(
-    <WidgetList widgets={widgets} onClick={onClick} onMoveUp={onMoveUp} />
+    <WidgetList widgets={widgets} onClick={onClick} onMoveUp={onMoveUp} />,
+    {
+      wrapper: MemoryRouter,
+    }
   );
 
   await act(async () => {
@@ -69,7 +82,10 @@ test("calls onMoveDown when user clicks down arrow", async () => {
   const onMoveDown = jest.fn();
   const onClick = jest.fn();
   const wrapper = render(
-    <WidgetList widgets={widgets} onClick={onClick} onMoveDown={onMoveDown} />
+    <WidgetList widgets={widgets} onClick={onClick} onMoveDown={onMoveDown} />,
+    {
+      wrapper: MemoryRouter,
+    }
   );
 
   await act(async () => {

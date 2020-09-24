@@ -146,6 +146,7 @@ function WidgetList(props: Props) {
                   <div className="grid-col flex-3 text-no-wrap overflow-hidden text-overflow-ellipsis text-right">
                     <Link
                       className="usa-link margin-right-2"
+                      aria-label={`Edit ${widget.name}`}
                       to={`/admin/dashboard/${
                         widget.dashboardId
                       }/edit-${widget.widgetType.toLowerCase()}/${widget.id}`}

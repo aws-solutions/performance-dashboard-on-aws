@@ -1,7 +1,7 @@
 {
   "name": "badger-backend",
-  "version": "0.1.0",
-  "description": "Badger Backend",
+  "version": "1.0.0",
+  "description": "Performance Dashboard on AWS Backend",
   "scripts": {
     "test": "jest --coverage --watchAll",
     "test:ci": "jest --coverage --ci",

@@ -6,6 +6,8 @@ import { PipelineStack } from "../lib/pipeline-stack";
 const app = new cdk.App();
 
 new PipelineStack(app, "Pipeline", {
-    stackName: "Badger-Pipeline",
-    repoName: 'AWS-WWPS-GTT-Badger',
+  stackName: "Badger-Pipeline",
+  repoName: "AWS-WWPS-GTT-Badger",
+  sourceProvider: "CodeCommit",
+  branch: "mainline",
 });

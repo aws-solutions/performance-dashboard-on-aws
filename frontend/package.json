@@ -1,8 +1,8 @@
 {
   "name": "badger-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Badger Frontend",
+  "description": "Performance Dashboard on AWS Frontend",
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.9",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",

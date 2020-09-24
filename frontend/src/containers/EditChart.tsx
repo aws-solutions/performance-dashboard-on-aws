@@ -22,9 +22,14 @@ interface FormValues {
   chartType: string;
 }
 
+interface PathParams {
+  dashboardId: string;
+  widgetId: string;
+}
+
 function EditChart() {
   const history = useHistory();
-  const { dashboardId, widgetId } = useParams();
+  const { dashboardId, widgetId } = useParams<PathParams>();
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(

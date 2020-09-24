@@ -14,9 +14,14 @@ interface FormValues {
   text: string;
 }
 
+interface PathParams {
+  dashboardId: string;
+  widgetId: string;
+}
+
 function EditText() {
   const history = useHistory();
-  const { dashboardId, widgetId } = useParams();
+  const { dashboardId, widgetId } = useParams<PathParams>();
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
 
   const [loading, setLoading] = useState(false);

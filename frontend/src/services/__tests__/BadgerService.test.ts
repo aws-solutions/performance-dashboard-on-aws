@@ -16,6 +16,17 @@ beforeEach(() => {
   API.get = jest.fn();
 });
 
+test("fetchDashboardById makes a GET request to dashboard API", async () => {
+  const dashboardId = "123";
+
+  await BadgerService.fetchDashboardById(dashboardId);
+  expect(API.get).toHaveBeenCalledWith(
+    "BadgerApi",
+    `dashboard/${dashboardId}`,
+    expect.anything()
+  );
+});
+
 test("createDashboard should make a POST request with payload", async () => {
   const name = "One Pretty Dashboard";
   const description = "Alexa, how is the weather?";
@@ -63,6 +74,18 @@ test("editDashboard should make a POST request with payload", async () => {
         updatedAt,
       },
     })
+  );
+});
+
+test("fetchWidgetById makes a GET request to widget API", async () => {
+  const dashboardId = "123";
+  const widgetId = "abc";
+
+  await BadgerService.fetchWidgetById(dashboardId, widgetId);
+  expect(API.get).toHaveBeenCalledWith(
+    "BadgerApi",
+    `dashboard/${dashboardId}/widget/${widgetId}`,
+    expect.anything()
   );
 });
 

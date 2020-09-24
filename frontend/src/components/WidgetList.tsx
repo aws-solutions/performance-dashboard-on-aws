@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import { Widget } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,6 +19,9 @@ interface Props {
 }
 
 function WidgetList(props: Props) {
+  const caretUpRefs = props.widgets.map(() => createRef<HTMLButtonElement>());
+  const caretDownRefs = props.widgets.map(() => createRef<HTMLButtonElement>());
+
   const onDelete = (widget: Widget) => {
     if (props.onDelete) {
       props.onDelete(widget);
@@ -27,13 +30,43 @@ function WidgetList(props: Props) {
 
   const onMoveDown = (index: number) => {
     if (props.onMoveDown) {
+      setNextFocus(index, "Down");
       props.onMoveDown(index);
     }
   };
 
   const onMoveUp = (index: number) => {
     if (props.onMoveUp) {
+      setNextFocus(index, "Up");
       props.onMoveUp(index);
+    }
+  };
+
+  const setNextFocus = (index: number, direction: "Up" | "Down") => {
+    let ref;
+    /**
+     * When moving a widget up or down, the focus should follow the
+     * widget to its new position in the list. Determining the new
+     * position depends on whether the widget is moving up or down
+     * and if the widget has reached a boundary (i.e. beginning or
+     * end of the list), in which case the focus should swap to the
+     * opposite caret (careUp vs caretDown).
+     *
+     * We may not need this logic when we implement drag-n-drop
+     * because most of the existing libraries already handle browser
+     * focus when moving DOM objects.
+     */
+    if (direction === "Up") {
+      const next = index - 1;
+      ref = next === 0 ? caretDownRefs[0] : caretUpRefs[next];
+    } else {
+      const next = index + 1;
+      const last = props.widgets.length - 1;
+      ref = next === last ? caretUpRefs[last] : caretDownRefs[next];
+    }
+
+    if (ref.current) {
+      ref.current.focus();
     }
   };
 
@@ -75,6 +108,7 @@ function WidgetList(props: Props) {
                           variant="unstyled"
                           ariaLabel={`Move ${widget.name} up`}
                           onClick={() => onMoveUp(index)}
+                          ref={caretUpRefs[index]}
                         >
                           <FontAwesomeIcon icon={faCaretUp} />
                         </Button>
@@ -86,6 +120,7 @@ function WidgetList(props: Props) {
                           variant="unstyled"
                           ariaLabel={`Move ${widget.name} down`}
                           onClick={() => onMoveDown(index)}
+                          ref={caretDownRefs[index]}
                         >
                           <FontAwesomeIcon
                             id={`${widget.id}-move-down`}

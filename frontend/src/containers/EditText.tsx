@@ -68,10 +68,6 @@ function EditText() {
     <AdminLayout>
       <Breadcrumbs />
       <h1>Edit content item</h1>
-      <div className="text-base text-italic">Step 2 of 2</div>
-      <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-        Configure text content
-      </div>
       <div className="grid-row width-desktop">
         <div className="grid-col-6">
           <form

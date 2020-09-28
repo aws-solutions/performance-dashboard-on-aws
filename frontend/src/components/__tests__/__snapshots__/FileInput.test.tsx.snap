@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a disabled file input 1`] = `
+<div>
+  <div
+    class="usa-form-group"
+  >
+    <label
+      class="usa-label text-bold"
+      for="data"
+    >
+      Select a file
+    </label>
+    <div
+      class="usa-hint"
+    />
+    <div
+      class="usa-file-input usa-file-input--disabled"
+    >
+      <div
+        class="usa-file-input__target"
+      >
+        <div
+          aria-hidden="true"
+          class="usa-file-input__instructions"
+        >
+          <span
+            class="usa-file-input__drag-text"
+          >
+            Drag file here or 
+          </span>
+          <span
+            class="usa-file-input__choose"
+          >
+            choose from folder
+          </span>
+        </div>
+        <div
+          class="usa-file-input__box"
+        />
+        <input
+          class="usa-file-input__input"
+          disabled=""
+          id="data"
+          name="data"
+          type="file"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a file input element 1`] = `
+<div>
+  <div
+    class="usa-form-group"
+  >
+    <label
+      class="usa-label text-bold"
+      for="data"
+    >
+      Select a file
+    </label>
+    <div
+      class="usa-hint"
+    />
+    <div
+      class="usa-file-input"
+    >
+      <div
+        class="usa-file-input__target"
+      >
+        <div
+          aria-hidden="true"
+          class="usa-file-input__instructions"
+        >
+          <span
+            class="usa-file-input__drag-text"
+          >
+            Drag file here or 
+          </span>
+          <span
+            class="usa-file-input__choose"
+          >
+            choose from folder
+          </span>
+        </div>
+        <div
+          class="usa-file-input__box"
+        />
+        <input
+          class="usa-file-input__input"
+          id="data"
+          name="data"
+          type="file"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a file input with loading state 1`] = `
+<div>
+  <div
+    class="usa-form-group"
+  >
+    <label
+      class="usa-label text-bold"
+      for="data"
+    >
+      Select a file
+    </label>
+    <div
+      class="usa-hint"
+    />
+    <div
+      class="usa-file-input"
+    >
+      <div
+        class="usa-file-input__target"
+      >
+        <div
+          aria-hidden="true"
+          class="usa-file-input__instructions"
+        >
+          <svg
+            aria-hidden="true"
+            class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-pulse fa-lg "
+            data-icon="spinner"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"
+              fill="currentColor"
+            />
+          </svg>
+          <span
+            class="margin-left-1"
+          >
+            Uploading file
+          </span>
+        </div>
+        <div
+          class="usa-file-input__box"
+        />
+        <input
+          class="usa-file-input__input"
+          id="data"
+          name="data"
+          type="file"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

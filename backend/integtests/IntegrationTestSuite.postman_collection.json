@@ -1,0 +1,835 @@
+{
+	"info": {
+		"_postman_id": "0c2b1ed7-c894-40bd-a226-c5603d0269f6",
+		"name": "Badger Integration Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create topic area",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3a0e8288-450b-4657-91f8-a02a4e7900c2",
+						"exec": [
+							"const testId = new Date().getTime();",
+							"pm.collectionVariables.set(\"testId\", testId);",
+							"pm.collectionVariables.set(\"topicarea.name\", testId);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "fb1b2722-1596-49ad-b991-8f862835f3f9",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns the topic area id\", () => {",
+							"    const topicarea = pm.response.json();",
+							"    pm.expect(topicarea.id).to.exist;",
+							"    pm.collectionVariables.set(\"topicarea.id\", topicarea.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{topicarea.name}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/topicarea",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"topicarea"
+					]
+				},
+				"description": "Create new topic area for testing purposes"
+			},
+			"response": []
+		},
+		{
+			"name": "List topic areas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39525d4e-e72e-442d-94eb-892d0d40a715",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"created topic area is listed\", () => {",
+							"    const expectedId = pm.collectionVariables.get(\"topicarea.id\");",
+							"    const topicareas = pm.response.json();",
+							"    const filtered = topicareas.filter(topicarea => topicarea.id === expectedId);",
+							"    const expectedTopicarea = filtered[0];",
+							"    pm.expect(expectedTopicarea).to.not.be.undefined;",
+							"    pm.expect(expectedTopicarea.id).to.equal(expectedId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c35f1760-d4c7-48de-af7d-6c96a4feb471",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/topicarea",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"topicarea"
+					]
+				},
+				"description": "List topic areas to verify the newly created topic area shows up correctly. "
+			},
+			"response": []
+		},
+		{
+			"name": "Create dashboard",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "690d1ff3-dfe2-48e4-beee-722a4aef386f",
+						"exec": [
+							"const testId = pm.variables.get(\"testId\");",
+							"pm.collectionVariables.set(\"dashboard.name\", testId);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d60c016d-cf63-43aa-87c2-0687022353d2",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns the dashboard\", () => {",
+							"    const dashboard = pm.response.json();",
+							"    pm.expect(dashboard.id).to.exist;",
+							"    pm.collectionVariables.set(\"dashboard.id\", dashboard.id);",
+							"",
+							"    pm.expect(dashboard.updatedAt).to.exist;",
+							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{dashboard.name}}\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"description\": \"Some markdown for [testing](https://www.google.com)\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard"
+					]
+				},
+				"description": "Creates a dashboard in the newly created topic area"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a0aeba4a-c087-4a13-9f35-4d32818a4aae",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "43acbc34-b6e6-48d6-b68a-1c1b4d836d30",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{dashboard.name}} modified\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"description\": \"Updated markdown **here**\",\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}"
+					]
+				},
+				"description": "Changes the name of the test dashboard"
+			},
+			"response": []
+		},
+		{
+			"name": "Get dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9f783919-4748-496b-b719-971726d2c2f8",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"dashboard name matches\", () => {",
+							"    const dashboard = pm.response.json();",
+							"    const name = pm.collectionVariables.get(\"dashboard.name\");",
+							"    const newName = name + \" modified\";",
+							"    pm.expect(dashboard.name).to.equal(newName);",
+							"    pm.collectionVariables.set(\"dashboard.name\", newName);",
+							"});",
+							"",
+							"pm.test(\"dashboard description matches\", () => {",
+							"    const dashboard = pm.response.json();",
+							"    pm.expect(dashboard.description).to.equal(\"Updated markdown **here**\");",
+							"});",
+							"",
+							"pm.test(\"dashboard topicarea matches\", () => {",
+							"    const dashboard = pm.response.json();",
+							"    const topicAreaId = pm.collectionVariables.get(\"topicarea.id\");",
+							"    pm.expect(dashboard.topicAreaId).to.equal(topicAreaId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}"
+					]
+				},
+				"description": "Get dashboard by id to verify if new name has been set and dashboard can be retrieved properly."
+			},
+			"response": []
+		},
+		{
+			"name": "Create text widget",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e77998a4-c5a5-405e-9953-925281075536",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns the widget id\", () => {",
+							"    const textwidget = pm.response.json();",
+							"    pm.expect(textwidget.id).to.exist;",
+							"    pm.collectionVariables.set(\"textwidget.id\", textwidget.id);",
+							"",
+							"    pm.expect(textwidget.updatedAt).to.exist;",
+							"    pm.collectionVariables.set(\"textwidget.updatedAt\", textwidget.updatedAt);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Text widget\",\n    \"widgetType\": \"Text\",\n    \"content\": {\n        \"text\": \"Lorem _ipsum_ **with markdown**\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"widget"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create 2nd text widget",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "671b73bc-aceb-4fe4-a57f-b48fd3e35ec2",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns the widget id\", () => {",
+							"    const textwidget = pm.response.json();",
+							"    pm.expect(textwidget.id).to.exist;",
+							"    pm.collectionVariables.set(\"textwidget2.id\", textwidget.id);",
+							"",
+							"    pm.expect(textwidget.updatedAt).to.exist;",
+							"    pm.collectionVariables.set(\"textwidget2.updatedAt\", textwidget.updatedAt);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Another text widget\",\n    \"widgetType\": \"Text\",\n    \"content\": {\n        \"text\": \"Basic text\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"widget"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check text widgets are in dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "245faeae-c4f6-4582-a482-b4d70e7e1f90",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"text widget is included in dashboard\", () => {",
+							"    const dashboard = pm.response.json();",
+							"    const textwidgetId = pm.collectionVariables.get(\"textwidget.id\");",
+							"    pm.expect(dashboard.widgets).to.exist;",
+							"",
+							"    const widgets = dashboard.widgets.filter(widget => widget.id === textwidgetId);",
+							"    pm.expect(widgets.length).to.equal(1);",
+							"",
+							"    const textwidget = widgets[0];",
+							"    pm.expect(textwidget.id).to.equal(textwidgetId);",
+							"    pm.expect(textwidget.widgetType).to.equal(\"Text\");",
+							"});",
+							"",
+							"pm.test(\"2nd text widget is included in dashboard\", () => {",
+							"    const dashboard = pm.response.json();",
+							"    const textwidgetId = pm.collectionVariables.get(\"textwidget2.id\");",
+							"    pm.expect(dashboard.widgets).to.exist;",
+							"",
+							"    const widgets = dashboard.widgets.filter(widget => widget.id === textwidgetId);",
+							"    pm.expect(widgets.length).to.equal(1);",
+							"",
+							"    const textwidget = widgets[0];",
+							"    pm.expect(textwidget.id).to.equal(textwidgetId);",
+							"    pm.expect(textwidget.widgetType).to.equal(\"Text\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Re-order widgets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3da8adfd-cfd0-48d3-aded-55a8c26a397d",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"widgets\": [\n        {\n            \"id\": \"{{textwidget.id}}\",\n            \"order\": 2,\n            \"updatedAt\": \"{{textwidget.updatedAt}}\"\n        },\n        {\n            \"id\": \"{{textwidget2.id}}\",\n            \"order\": 1,\n            \"updatedAt\": \"{{textwidget2.updatedAt}}\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widgetorder",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"widgetorder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete text widget",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1f9b8a5-2e04-4c3f-88ed-e40beb882ff3",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget/{{textwidget.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"widget",
+						"{{textwidget.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete 2nd text widget",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "618148a2-ecfb-4adb-a930-c905d931f0f3",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget/{{textwidget2.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"widget",
+						"{{textwidget2.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b68cb0d-1cc1-434b-ba9a-f5054aaa1780",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}"
+					]
+				},
+				"description": "Deletes the test dashboard"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete topic area",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f04c7f2f-e4c2-4bf1-b159-da6a4d2c4205",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/topicarea/{{topicarea.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"topicarea",
+						"{{topicarea.id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c7d4e318-982f-42df-beaf-98c626b8b6b0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5b6a60f0-22bb-4299-ac0b-987ab8b035fc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "110ef54a-b379-4d90-8d67-658dcca29e3d",
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"id": "deb9d0e9-ea17-4899-b381-628c63df9fd9",
+			"key": "token",
+			"value": ""
+		},
+		{
+			"id": "740e5bfd-a2a6-45d3-856f-e9eb079a45f6",
+			"key": "testId",
+			"value": ""
+		},
+		{
+			"id": "98c949d2-5d99-4005-9eda-e48e569553ff",
+			"key": "topicarea.id",
+			"value": ""
+		},
+		{
+			"id": "39373946-f194-4e7b-951a-66e0e347a12d",
+			"key": "topicarea.name",
+			"value": ""
+		},
+		{
+			"id": "9c801046-3810-4296-ad95-79dc745a6bd5",
+			"key": "dashboard.id",
+			"value": ""
+		},
+		{
+			"id": "b0e801de-79bd-4da4-b56c-b40053f1fb84",
+			"key": "dashboard.name",
+			"value": ""
+		},
+		{
+			"id": "fcfaf1cf-bc81-45ff-9231-e7f67d0a848d",
+			"key": "dashboard.updatedAt",
+			"value": ""
+		},
+		{
+			"id": "e3051986-dd7c-489c-ae75-c50478e3f116",
+			"key": "textwidget.id",
+			"value": ""
+		},
+		{
+			"id": "fb508f2d-fdfd-406a-b9d0-cdc6ce2851a8",
+			"key": "textwidget.updatedAt",
+			"value": ""
+		},
+		{
+			"id": "b26014d3-e6a2-4c12-98cc-6c071376b59f",
+			"key": "textwidget2.id",
+			"value": ""
+		},
+		{
+			"id": "58dc0eda-8d08-4505-8719-845b6fc0c7d5",
+			"key": "textwidget2.updatedAt",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}

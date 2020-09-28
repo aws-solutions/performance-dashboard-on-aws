@@ -1,0 +1,36 @@
+{
+  "name": "badger-backend",
+  "version": "1.0.0",
+  "description": "Performance Dashboard on AWS Backend",
+  "scripts": {
+    "test": "jest --coverage --watchAll",
+    "test:ci": "jest --coverage --ci",
+    "build": "npm run clean && tsc && npm run install:prod",
+    "copy:package": "cp package.json build/",
+    "install:prod": "npm run copy:package && npm install --production --prefix build",
+    "local": "echo 'Run by using visual studio code instead'",
+    "clean": "rm -rf build"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.57",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/aws-serverless-express": "^3.3.3",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/jest": "^26.0.3",
+    "@types/node": "^14.0.14",
+    "@types/uuid": "^8.0.0",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.714.0",
+    "aws-serverless-express": "^3.3.8",
+    "aws-xray-sdk": "^3.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "uuid": "^8.2.0"
+  }
+}

@@ -1,0 +1,40 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      # For debugging purposes
+      - ls -al
+      - npm --version
+      - node --version
+      # Install dependencies
+      - npm install -g aws-cdk
+      - ./install.sh
+  
+  pre_build:
+    commands:
+      # Run backend tests
+      - cd backend
+      - npm run test:ci
+      - cd ..
+      # Run frontend tests
+      - cd frontend
+      # Avoid interactive mode on tests
+      - export CI=true
+      - npm run test
+      - cd ..
+      # Run cdk tests
+      - cd cdk
+      - npm run test
+      - cd ..
+
+  build:
+    commands:
+      # Deploy
+      ./deploy.sh $ENVIRONMENT
+
+artifacts: 
+    base-directory: cdk/cdk.out
+    files: 
+        - '**/*'

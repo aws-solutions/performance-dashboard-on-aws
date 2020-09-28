@@ -69,5 +69,10 @@ export class BadgerApi extends cdk.Construct {
 
     const datasets = this.api.root.addResource("dataset");
     datasets.addMethod("POST", apiIntegration, methodProps);
+
+    // Public endpoints that do not require authentication.
+    // Not passing `methodProps` is what makes the endpoint public.
+    const homepage = this.api.root.addResource("homepage");
+    homepage.addMethod("GET", apiIntegration);
   }
 }

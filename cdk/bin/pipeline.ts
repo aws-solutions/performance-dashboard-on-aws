@@ -7,7 +7,9 @@ const app = new cdk.App();
 
 new PipelineStack(app, "Pipeline", {
   stackName: "Badger-Pipeline",
-  repoName: "AWS-WWPS-GTT-Badger",
-  sourceProvider: "CodeCommit",
+  repoName: "performance-dashboard-on-aws",
+  sourceProvider: "GitHub",
   branch: "mainline",
+  githubOwner: "awslabs",
+  githubOAuthToken: "github-oauth-token-secret",
 });

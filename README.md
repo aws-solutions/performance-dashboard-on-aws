@@ -1,6 +1,6 @@
 # Performance Dashboard on AWS
 
-One simple, cost-effective and adaptable metrics visualization service that consolidates citizen services data and makes it available to the public; The dashboard offers an easy-to-use web interface to consume and display data about government service performance, making it easier for governments to drive purposeful, data-driven change.
+One whatever simple, cost-effective and adaptable metrics visualization service that consolidates citizen services data and makes it available to the public; The dashboard offers an easy-to-use web interface to consume and display data about government service performance, making it easier for governments to drive purposeful, data-driven change.
 
 <p align="center">
   <img src="architecture.svg" alt="Architecture diagram">

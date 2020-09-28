@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders an empty box 1`] = `
+<div>
+  <div>
+    <div
+      class="text-center radius-lg padding-5 margin-y-3 border-base border-dashed bg-base-lightest border"
+    >
+      <p>
+        This dashboard is empty. Build the dashboard by adding 
+        <br />
+        charts, tables, metrics and text as content.
+      </p>
+      <div
+        class="text-center margin-top-4"
+      >
+        <button
+          class="usa-button usa-button--base margin-top-1"
+        >
+          + Add content
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

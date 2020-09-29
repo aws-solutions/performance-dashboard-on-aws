@@ -6,6 +6,47 @@
 	},
 	"item": [
 		{
+			"name": "Homepage",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c5ae5e31-4849-4fd8-82bf-4316834cbf68",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"homepage contains title and description\", () => {",
+							"    const homepage = pm.response.json();",
+							"    pm.expect(homepage.title).to.not.be.undefined;",
+							"    pm.expect(homepage.description).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/homepage",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"homepage"
+					]
+				},
+				"description": "Verify that homepage information loads successfully without authentication."
+			},
+			"response": []
+		},
+		{
 			"name": "Create topic area",
 			"event": [
 				{
@@ -771,62 +812,62 @@
 	],
 	"variable": [
 		{
-			"id": "110ef54a-b379-4d90-8d67-658dcca29e3d",
+			"id": "bbc3dff7-7f8a-46a4-8860-4744f8c119d0",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "deb9d0e9-ea17-4899-b381-628c63df9fd9",
+			"id": "f3eeea8d-abcb-4ab2-b16f-5d3baa364218",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "740e5bfd-a2a6-45d3-856f-e9eb079a45f6",
+			"id": "9c706b4b-f11b-4e8f-8336-9830df890073",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "98c949d2-5d99-4005-9eda-e48e569553ff",
+			"id": "e614752f-4f45-4eb7-99c1-9fbce1cfdc56",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "39373946-f194-4e7b-951a-66e0e347a12d",
+			"id": "38dd474e-0cf8-49fa-a1a3-c9d9d41ee328",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "9c801046-3810-4296-ad95-79dc745a6bd5",
+			"id": "7ccfe4aa-c191-4f83-8d61-d9518d24d9d7",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "b0e801de-79bd-4da4-b56c-b40053f1fb84",
+			"id": "e704af74-69d4-4864-92d1-058943e24601",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "fcfaf1cf-bc81-45ff-9231-e7f67d0a848d",
+			"id": "fd6d7552-bbd6-4624-8cca-ed378c21e932",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "e3051986-dd7c-489c-ae75-c50478e3f116",
+			"id": "3bcdcd02-8c78-46cd-8c45-0f3cfd8ceba2",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "fb508f2d-fdfd-406a-b9d0-cdc6ce2851a8",
+			"id": "d81ef5e4-9aea-4c86-88d9-b67ed7584e56",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "b26014d3-e6a2-4c12-98cc-6c071376b59f",
+			"id": "5bd1a6bf-a5d3-4b4a-9ee2-ba270a116b90",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "58dc0eda-8d08-4505-8719-845b6fc0c7d5",
+			"id": "71492d5e-0be6-4961-9add-7c6d3e9d38c5",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		}

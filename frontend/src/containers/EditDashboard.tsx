@@ -88,9 +88,9 @@ function EditDashboard() {
               </a>
             </li>
             <li className="usa-button-group__item">
-              <a className="usa-link" href="/">
+              <Link to={`/admin/dashboard/${dashboard?.id}/preview`}>
                 Preview
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -114,7 +114,7 @@ function EditDashboard() {
           Edit details
         </Link>
       </div>
-      <div className="text-base">{dashboard?.topicAreaName}</div>
+      <div className="text-base text-italic">{dashboard?.topicAreaName}</div>
       <div>
         {dashboard?.description ? (
           <ReactMarkdown source={dashboard.description} />

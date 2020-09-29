@@ -1,0 +1,7 @@
+.gradient {
+  background: linear-gradient(#eee, #fff);
+}
+
+.z-index-on-top {
+  z-index: 99999;
+}

@@ -105,3 +105,13 @@ export function useWidgets(dashboardId: string) {
     setWidgets: () => {},
   };
 }
+
+export function useHomepage() {
+  return {
+    loading: false,
+    homepage: {
+      title: "Kingdom of Wakanda",
+      description: "Welcome to our dashboard",
+    },
+  };
+}

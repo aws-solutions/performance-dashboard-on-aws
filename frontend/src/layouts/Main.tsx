@@ -8,22 +8,22 @@ function MainLayout(props: LayoutProps) {
   return (
     <>
       <div className="usa-overlay"></div>
-      <section className="usa-hero">
-        <div className="grid-container">
-          <div className="usa-hero__callout">
-            <h1 className="usa-hero__heading">Performance Dashboard</h1>
-            <p>Find information about your government digital services</p>
+      <header className="usa-header usa-header--basic">
+        <div className="usa-nav-container">
+          <div className="usa-navbar">
+            <div className="usa-logo" id="basic-logo">
+              <em className="usa-logo__text">
+                <a href="/" title="Home" aria-label="Home">
+                  Performance Dashboard
+                </a>
+              </em>
+            </div>
           </div>
         </div>
-      </section>
-      <main className="minh-mobile">
+      </header>
+      <main className="padding-y-3">
         <div className="grid-container">{props.children}</div>
       </main>
-      <footer className="usa-footer">
-        <div className="usa-footer__secondary-section">
-          <div className="grid-container">Amazon Web Services</div>
-        </div>
-      </footer>
     </>
   );
 }

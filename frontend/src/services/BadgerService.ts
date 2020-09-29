@@ -161,6 +161,10 @@ async function setWidgetOrder(
   });
 }
 
+async function fetchHomepage() {
+  return API.get(apiName, "/homepage", {});
+}
+
 export default {
   fetchDashboards,
   fetchDashboardById,
@@ -175,4 +179,5 @@ export default {
   setWidgetOrder,
   createDataset,
   getAuthToken,
+  fetchHomepage,
 };

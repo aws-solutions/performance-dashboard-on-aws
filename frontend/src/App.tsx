@@ -15,61 +15,88 @@ import EditTable from "./containers/EditTable";
 import AddText from "./containers/AddText";
 import EditText from "./containers/EditText";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faGripLinesVertical,
-  faCaretUp,
-  faCaretDown,
-} from "@fortawesome/free-solid-svg-icons";
+interface BadgerRoute {
+  path: string;
+  component: React.FunctionComponent<any>;
+  public?: boolean;
+}
 
-library.add(faGripLinesVertical, faCaretUp, faCaretDown);
+const routes: Array<BadgerRoute> = [
+  {
+    path: "/",
+    component: Home,
+    public: true,
+  },
+  {
+    path: "/admin",
+    component: DashboardListing,
+  },
+  {
+    path: "/admin/dashboards",
+    component: DashboardListing,
+  },
+  {
+    path: "/admin/dashboard/create",
+    component: CreateDashboard,
+  },
+  {
+    path: "/admin/dashboard/edit/:dashboardId",
+    component: EditDashboard,
+  },
+  {
+    path: "/admin/dashboard/edit/:dashboardId/details",
+    component: EditDetails,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/edit-table/:widgetId",
+    component: EditTable,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/add-table",
+    component: AddTable,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/edit-chart/:widgetId",
+    component: EditChart,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/add-chart",
+    component: AddChart,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/edit-text/:widgetId",
+    component: EditText,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/add-text",
+    component: AddText,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/add-content",
+    component: AddContent,
+  },
+];
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/admin/dashboard/:dashboardId/add-content">
-          <AddContent />
-        </Route>
-        <Route path="/admin/dashboard/:dashboardId/add-text">
-          <AddText />
-        </Route>
-        <Route path="/admin/dashboard/:dashboardId/edit-text/:widgetId">
-          <EditText />
-        </Route>
-        <Route path="/admin/dashboard/:dashboardId/add-chart">
-          <AddChart />
-        </Route>
-        <Route path="/admin/dashboard/:dashboardId/edit-chart/:widgetId">
-          <EditChart />
-        </Route>
-        <Route path="/admin/dashboard/:dashboardId/add-table">
-          <AddTable />
-        </Route>
-        <Route path="/admin/dashboard/:dashboardId/edit-table/:widgetId">
-          <EditTable />
-        </Route>
-        <Route path="/admin/dashboard/edit/:dashboardId/details">
-          <EditDetails />
-        </Route>
-        <Route path="/admin/dashboard/edit/:dashboardId">
-          <EditDashboard />
-        </Route>
-        <Route path="/admin/dashboards">
-          <DashboardListing />
-        </Route>
-        <Route path="/admin/dashboard/create">
-          <CreateDashboard />
-        </Route>
-        <Route path="/admin">
-          <DashboardListing />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
+        {routes.map((route) => {
+          const component = route.public
+            ? route.component
+            : withAuthenticator(route.component);
+          return (
+            <Route
+              exact
+              key={route.path}
+              component={component}
+              path={route.path}
+            />
+          );
+        })}
       </Switch>
     </Router>
   );
 }
 
-export default withAuthenticator(App);
+export default App;

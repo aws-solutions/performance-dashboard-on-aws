@@ -32,3 +32,8 @@ export type Dataset = {
     json: string;
   };
 };
+
+export type Homepage = {
+  title: string;
+  description: string;
+};

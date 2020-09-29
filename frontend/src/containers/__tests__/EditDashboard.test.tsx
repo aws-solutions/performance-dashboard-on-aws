@@ -2,17 +2,9 @@ import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { MemoryRouter, Router } from "react-router-dom";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faGripLinesVertical,
-  faCaretUp,
-  faCaretDown,
-} from "@fortawesome/free-solid-svg-icons";
 
 import EditDashboard from "../EditDashboard";
 import BadgerService from "../../services/BadgerService";
-
-library.add(faGripLinesVertical, faCaretUp, faCaretDown);
 
 jest.mock("../../hooks");
 jest.mock("../../services/BadgerService");

@@ -132,3 +132,8 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
     })
   );
 });
+
+test("fetchHomepage makes a GET request to widget API", async () => {
+  await BadgerService.fetchHomepage();
+  expect(API.get).toHaveBeenCalledWith("BadgerApi", "/homepage", {});
+});

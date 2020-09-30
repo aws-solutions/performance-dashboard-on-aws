@@ -160,7 +160,7 @@ class DashboardRepository extends BaseRepository {
    */
   public async publishDashboard(
     dashboardId: string,
-    updatedAt: string,
+    lastUpdatedAt: string,
     user: User
   ) {
     try {
@@ -174,8 +174,8 @@ class DashboardRepository extends BaseRepository {
           "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
-          ":state": "Published",
-          ":lastUpdatedAt": updatedAt,
+          ":state": DashboardState.Published,
+          ":lastUpdatedAt": lastUpdatedAt,
           ":updatedAt": new Date().toISOString(),
           ":userId": user.userId,
         },

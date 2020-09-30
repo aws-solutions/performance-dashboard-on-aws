@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 interface Props {
   id: string;
   onSubmit?: Function;
+  size: "big" | "small";
 }
 
 interface FormValues {
@@ -19,9 +20,14 @@ function Search(props: Props) {
     }
   };
 
+  const style: React.CSSProperties = {};
+  if (props.size === "small") {
+    style.height = "37px";
+  }
+
   return (
     <form
-      className="usa-search usa-search--small"
+      className={`usa-search usa-search--${props.size}`}
       role="search"
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -34,10 +40,16 @@ function Search(props: Props) {
         type="search"
         ref={register}
         name="query"
-        style={{ height: "37px" }}
+        style={style}
       />
-      <button className="usa-button" type="submit" style={{ height: "37px" }}>
-        <span className="usa-sr-only">Search</span>
+      <button className="usa-button" type="submit" style={style}>
+        <span
+          className={
+            props.size === "small" ? "usa-sr-only" : "usa-search__submit-text"
+          }
+        >
+          Search
+        </span>
       </button>
     </form>
   );

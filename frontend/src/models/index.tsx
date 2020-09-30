@@ -1,6 +1,7 @@
 export type TopicArea = {
   id: string;
   name: string;
+  dashboards?: Array<Dashboard | PublicDashboard>;
 };
 
 export type Dashboard = {
@@ -12,6 +13,16 @@ export type Dashboard = {
   widgets: Array<Widget>;
   updatedAt: Date;
   createdBy: string;
+};
+
+export type PublicDashboard = {
+  id: string;
+  name: string;
+  topicAreaId: string;
+  topicAreaName: string;
+  description?: string;
+  widgets: Array<Widget>;
+  updatedAt: Date;
 };
 
 export type Widget = {
@@ -36,4 +47,5 @@ export type Dataset = {
 export type Homepage = {
   title: string;
   description: string;
+  dashboards: Array<PublicDashboard>;
 };

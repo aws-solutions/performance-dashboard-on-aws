@@ -102,6 +102,20 @@ export function useHomepage() {
     homepage: {
       title: "Kingdom of Wakanda",
       description: "Welcome to our dashboard",
+      dashboards: [
+        {
+          id: "abc",
+          name: "Dashboard One",
+          topicAreaId: "123456789",
+          topicAreaName: "Topic Area Bananas",
+        },
+        {
+          id: "xyz",
+          name: "Dashboard Two",
+          topicAreaId: "987654321",
+          topicAreaName: "Topic Area Grapes",
+        },
+      ],
     },
   };
 }

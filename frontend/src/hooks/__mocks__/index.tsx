@@ -94,7 +94,6 @@ export function useWidget(
 
 export function useWidgets(dashboardId: string) {
   return;
-<<<<<<< HEAD
 }
 
 export function useHomepage() {
@@ -105,6 +104,4 @@ export function useHomepage() {
       description: "Welcome to our dashboard",
     },
   };
-=======
->>>>>>> 1936ca05d2d9c6d570e6d11624fed47705e1fc2e
 }

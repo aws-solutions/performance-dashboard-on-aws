@@ -21,6 +21,11 @@
 							"    const homepage = pm.response.json();",
 							"    pm.expect(homepage.title).to.not.be.undefined;",
 							"    pm.expect(homepage.description).to.not.be.undefined;",
+							"});",
+							"",
+							"pm.test(\"homepage contains list of dashboards\", () => {",
+							"    const homepage = pm.response.json();",
+							"    pm.expect(homepage.dashboards).to.not.be.undefined;",
 							"});"
 						],
 						"type": "text/javascript"
@@ -812,62 +817,62 @@
 	],
 	"variable": [
 		{
-			"id": "20512d28-4515-42ef-9a00-4d8d9ed606ce",
+			"id": "31fed45e-2264-4bc3-a648-14ee78a4bbe3",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "f47ceee2-345f-44b8-a88c-77e781c1208f",
+			"id": "81a97223-fc21-4e7b-9c37-a779d6969742",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "a4063ef4-ae01-432c-aec8-5057a29f6b82",
+			"id": "05d6b319-733d-429b-bcdb-78c40b2d6937",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "d097e825-f862-4261-9ed1-fa595566502d",
+			"id": "a6bf7cd7-85fe-4bf2-bfc2-3c3dc1c10355",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "d568bd65-17e0-4b96-939e-0558c089d5d2",
+			"id": "6a3fdede-4abf-4f9f-80b4-c0cebad962f2",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "f6885ab2-9b6e-4f2f-a245-64614a05037a",
+			"id": "43a622da-4743-4c4a-a8e3-97b4a299f2f9",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "4052de1a-368a-45ca-bf94-cabc2b901044",
+			"id": "a95d8c46-394a-4ce6-a223-f342e6501f27",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "f25b63d2-8e7e-41e9-a51d-ad54e49ec13d",
+			"id": "9cc88c18-c8f3-4a22-9b8c-8f03486a2ad3",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "3f62a3f4-feab-4e1e-8d5a-b8fe82754dae",
+			"id": "3dbaa323-3062-45c2-91f6-dd5da6aa0820",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "a1c8f1bb-eb64-4aea-b8ea-7fae4dda9ff6",
+			"id": "dd1c6998-4ad8-4e3f-80e5-79fda99129b9",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "cf494c50-cfc4-4897-a11d-108cdfbd3df0",
+			"id": "15c7ba16-f717-46fb-a785-3ea5c95cf689",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "770518ab-c8bc-4d21-a2a5-f42dbb0be5eb",
+			"id": "bd72cc6d-4ead-4232-89be-c2eecddb80a9",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		}

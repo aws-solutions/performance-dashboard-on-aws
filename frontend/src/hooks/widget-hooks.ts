@@ -47,31 +47,33 @@ export function useWidget(
   };
 }
 
-type UseWidgetsHook = {
-  loading: boolean;
-  widgets: Array<Widget>;
-  setWidgets: Function;
-};
-
-export function useWidgets(dashboardId: string): UseWidgetsHook {
-  const [loading, setLoading] = useState(false);
-  const [widgets, setWidgets] = useState([]);
+export function useWidgets(
+  widgets: Array<Widget>,
+  onWidgetsFetched: Function
+): void {
+  const fetchData = useCallback(async () => {
+    let filesDownloaded = new Array<{ widget: Widget; file: File }>();
+    for (const widget of widgets) {
+      if (widget.widgetType === "Chart" || widget.widgetType === "Table") {
+        filesDownloaded.push({
+          widget,
+          file: await StorageService.downloadDataset(
+            widget.content.s3Key.raw,
+            widget.content.title
+          ),
+        });
+      }
+    }
+    if (filesDownloaded.length && onWidgetsFetched) {
+      onWidgetsFetched(filesDownloaded);
+    }
+  }, [widgets, onWidgetsFetched]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const data = await BadgerService.fetchWidgets(dashboardId);
-      setWidgets(data);
-      setLoading(false);
-    };
     fetchData();
-  }, [dashboardId]);
+  }, [fetchData]);
 
-  return {
-    loading,
-    widgets,
-    setWidgets,
-  };
+  return;
 }
 
 const sprectrumColors = [

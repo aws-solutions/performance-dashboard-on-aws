@@ -86,6 +86,7 @@ function App() {
   return (
     <Router>
       <Switch>
+<<<<<<< HEAD
         {routes.map((route) => {
           const component = route.public
             ? route.component
@@ -99,6 +100,50 @@ function App() {
             />
           );
         })}
+=======
+        <Route path="/admin/dashboard/:dashboardId/preview">
+          <DashboardPreview />
+        </Route>
+        <Route path="/admin/dashboard/:dashboardId/add-content">
+          <AddContent />
+        </Route>
+        <Route path="/admin/dashboard/:dashboardId/add-text">
+          <AddText />
+        </Route>
+        <Route path="/admin/dashboard/:dashboardId/edit-text/:widgetId">
+          <EditText />
+        </Route>
+        <Route path="/admin/dashboard/:dashboardId/add-chart">
+          <AddChart />
+        </Route>
+        <Route path="/admin/dashboard/:dashboardId/edit-chart/:widgetId">
+          <EditChart />
+        </Route>
+        <Route path="/admin/dashboard/:dashboardId/add-table">
+          <AddTable />
+        </Route>
+        <Route path="/admin/dashboard/:dashboardId/edit-table/:widgetId">
+          <EditTable />
+        </Route>
+        <Route path="/admin/dashboard/edit/:dashboardId/details">
+          <EditDetails />
+        </Route>
+        <Route path="/admin/dashboard/edit/:dashboardId">
+          <EditDashboard />
+        </Route>
+        <Route path="/admin/dashboards">
+          <DashboardListing />
+        </Route>
+        <Route path="/admin/dashboard/create">
+          <CreateDashboard />
+        </Route>
+        <Route path="/admin">
+          <DashboardListing />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+>>>>>>> 1936ca05d2d9c6d570e6d11624fed47705e1fc2e
       </Switch>
     </Router>
   );

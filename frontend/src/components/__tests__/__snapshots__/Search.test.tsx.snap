@@ -1,6 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders a search input 1`] = `
+exports[`renders a big input 1`] = `
+<div>
+  <form
+    class="usa-search usa-search--big"
+    role="search"
+  >
+    <label
+      class="usa-sr-only"
+      for="search"
+    >
+      Search
+    </label>
+    <input
+      class="usa-input"
+      id="search"
+      name="query"
+      type="search"
+    />
+    <button
+      class="usa-button"
+      type="submit"
+    >
+      <span
+        class="usa-search__submit-text"
+      >
+        Search
+      </span>
+    </button>
+  </form>
+</div>
+`;
+
+exports[`renders a small search input 1`] = `
 <div>
   <form
     class="usa-search usa-search--small"

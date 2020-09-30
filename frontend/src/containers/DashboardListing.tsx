@@ -49,7 +49,7 @@ function DashboardListing() {
       </p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-3 padding-top-1px">
-          <Search id="search" onSubmit={onSearch} />
+          <Search id="search" onSubmit={onSearch} size="small" />
         </div>
         <div className="tablet:grid-col-9 text-right">
           <span>

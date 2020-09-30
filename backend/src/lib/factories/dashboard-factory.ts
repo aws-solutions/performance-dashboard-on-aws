@@ -1,7 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
-import { Dashboard, DashboardItem } from "../models/dashboard";
 import { User } from "../models/user";
-import topicareaFactory from "./topicarea-factory";
+import {
+  Dashboard,
+  DashboardItem,
+  DashboardState,
+  PublicDashboard,
+} from "../models/dashboard";
+import TopicareaFactory from "./topicarea-factory";
 
 const DASHBOARD: string = "Dashboard";
 
@@ -21,7 +26,7 @@ function create(
     topicAreaId,
     topicAreaName,
     description,
-    state,
+    state: state as DashboardState,
     createdBy: user.userId,
     updatedAt: updatedAt || new Date(),
   };
@@ -40,7 +45,7 @@ function createNew(
     topicAreaId,
     topicAreaName,
     description,
-    state: "Draft",
+    state: DashboardState.Draft,
     createdBy: user.userId,
     updatedAt: new Date(),
   };
@@ -56,7 +61,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
     type: DASHBOARD,
     dashboardName: dashboard.name,
     topicAreaName: dashboard.topicAreaName,
-    topicAreaId: topicareaFactory.itemId(dashboard.topicAreaId),
+    topicAreaId: TopicareaFactory.itemId(dashboard.topicAreaId),
     description: dashboard.description,
     state: dashboard.state,
     createdBy: dashboard.createdBy,
@@ -65,9 +70,6 @@ function toItem(dashboard: Dashboard): DashboardItem {
   return item;
 }
 
-/**
- * Converts a DynamoDB item into a Dashboard object
- */
 function fromItem(item: DashboardItem): Dashboard {
   const id = item.pk.substring(10);
   let dashboard: Dashboard = {
@@ -78,7 +80,7 @@ function fromItem(item: DashboardItem): Dashboard {
     description: item.description,
     createdBy: item.createdBy,
     updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
-    state: item.state || "Draft",
+    state: (item.state as DashboardState) || DashboardState.Draft,
   };
   return dashboard;
 }
@@ -87,10 +89,23 @@ function itemId(id: string): string {
   return `${DASHBOARD}#${id}`;
 }
 
+function toPublic(dashboard: Dashboard): PublicDashboard {
+  return {
+    id: dashboard.id,
+    name: dashboard.name,
+    topicAreaId: dashboard.topicAreaId,
+    topicAreaName: dashboard.topicAreaName,
+    description: dashboard.description,
+    updatedAt: dashboard.updatedAt,
+    widgets: dashboard.widgets,
+  };
+}
+
 export default {
   create,
   createNew,
   toItem,
   fromItem,
   itemId,
+  toPublic,
 };

@@ -1,27 +1,20 @@
 import { User } from "../models/user";
-import DynamoDBService from "../services/dynamodb";
 import DashboardFactory from "../factories/dashboard-factory";
 import TopicAreaFactory from "../factories/topicarea-factory";
 import WidgetFactory from "../factories/widget-factory";
 import { WidgetItem } from "../models/widget";
-import { Dashboard, DashboardList, DashboardItem } from "../models/dashboard";
+import {
+  Dashboard,
+  DashboardList,
+  DashboardItem,
+  DashboardState,
+} from "../models/dashboard";
+import BaseRepository from "./base";
 
-class DashboardRepository {
-  private dynamodb: DynamoDBService;
-  private tableName: string;
+class DashboardRepository extends BaseRepository {
   private static instance: DashboardRepository;
-
-  /**
-   * Repo is a Singleton, hence private constructor
-   * to prevent direct constructions calls with new operator.
-   */
   private constructor() {
-    if (!process.env.BADGER_TABLE) {
-      throw new Error("Environment variable BADGER_TABLE not found");
-    }
-
-    this.dynamodb = DynamoDBService.getInstance();
-    this.tableName = process.env.BADGER_TABLE;
+    super();
   }
 
   /**
@@ -224,6 +217,31 @@ class DashboardRepository {
     dashboard.widgets = WidgetFactory.fromItems(items as Array<WidgetItem>);
 
     return dashboard;
+  }
+
+  public async listPublishedDashboards(): Promise<Array<Dashboard>> {
+    const result = await this.dynamodb.query({
+      TableName: this.tableName,
+      IndexName: "byType",
+      KeyConditionExpression: "#type = :type",
+      FilterExpression: "#state = :state",
+      ExpressionAttributeNames: {
+        "#type": "type",
+        "#state": "state",
+      },
+      ExpressionAttributeValues: {
+        ":type": "Dashboard",
+        ":state": DashboardState.Published,
+      },
+    });
+
+    if (!result.Items) {
+      return [];
+    }
+
+    return result.Items.map((item) =>
+      DashboardFactory.fromItem(item as DashboardItem)
+    );
   }
 }
 

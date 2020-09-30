@@ -1,11 +1,12 @@
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
+import { DashboardState } from "../../models/dashboard";
+import DynamoDBService from "../../services/dynamodb";
 import DashboardRepository from "../dashboard-repo";
 import DashboardFactory from "../../factories/dashboard-factory";
 import TopicAreaFactory from "../../factories/topicarea-factory";
 
 jest.mock("../../services/dynamodb");
-import DynamoDBService from "../../services/dynamodb";
 
 let user: User;
 let tableName: string;
@@ -28,7 +29,7 @@ describe("DashboardRepository", () => {
   });
 });
 
-describe("DashboardRepository.create", () => {
+describe("create", () => {
   it("should call putItem on dynamodb", async () => {
     const dashboard = DashboardFactory.create(
       "123",
@@ -52,7 +53,7 @@ describe("DashboardRepository.create", () => {
   });
 });
 
-describe("DashboardRepository.createNew", () => {
+describe("createNew", () => {
   it("should call putItem on dynamodb", async () => {
     const dashboard = DashboardFactory.createNew(
       "Dashboard1",
@@ -74,7 +75,7 @@ describe("DashboardRepository.createNew", () => {
   });
 });
 
-describe("DashboardRepository.updateDashboard", () => {
+describe("updateDashboard", () => {
   it("should call updateItem with the correct keys", async () => {
     const dashboard = DashboardFactory.create(
       "123",
@@ -130,7 +131,7 @@ describe("DashboardRepository.updateDashboard", () => {
   });
 });
 
-describe("DashboardRepository.delete", () => {
+describe("delete", () => {
   it("should call delete with the correct key", async () => {
     await repo.delete("123");
     expect(dynamodb.delete).toHaveBeenCalledWith(
@@ -145,7 +146,7 @@ describe("DashboardRepository.delete", () => {
   });
 });
 
-describe("DashboardRepository.listDashboards", () => {
+describe("listDashboards", () => {
   it("should query using the correct GSI", async () => {
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({});
@@ -274,7 +275,7 @@ describe("DashboardRepository.listDashboards", () => {
   });
 });
 
-describe("DashboardRepository.getDashboardWithWidgets", () => {
+describe("getDashboardWithWidgets", () => {
   it("throws an error when dashboardId is not found", () => {
     dynamodb.query = jest.fn().mockReturnValue({ Items: [] });
     return expect(repo.getDashboardWithWidgets("123")).rejects.toThrowError();
@@ -321,5 +322,31 @@ describe("DashboardRepository.getDashboardWithWidgets", () => {
 
     const dashboard = await repo.getDashboardWithWidgets("123");
     expect(dashboard.widgets).toHaveLength(1);
+  });
+});
+
+describe("listPublishedDashboards", () => {
+  it("returns empty array when no published dashboards found", async () => {
+    dynamodb.query = jest.fn().mockReturnValue({ Items: [] });
+    const dashboards = await repo.listPublishedDashboards();
+    expect(dashboards.length).toEqual(0);
+  });
+
+  it("performs a query and filters by state=Published", async () => {
+    await repo.listPublishedDashboards();
+    expect(dynamodb.query).toBeCalledWith({
+      TableName: tableName,
+      IndexName: "byType",
+      KeyConditionExpression: "#type = :type",
+      FilterExpression: "#state = :state",
+      ExpressionAttributeNames: {
+        "#type": "type",
+        "#state": "state",
+      },
+      ExpressionAttributeValues: {
+        ":type": "Dashboard",
+        ":state": DashboardState.Published,
+      },
+    });
   });
 });

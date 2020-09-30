@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   title: string;
@@ -23,10 +24,10 @@ const TablePreview = (props: Props) => {
                       <div className="display-inline">{header}</div>
                       <div className="grid-row flex-column display-inline-block height-1 text-center margin-left-1">
                         <div className="grid-col flex-6 height-1">
-                          <FontAwesomeIcon icon="caret-up" size="sm" />
+                          <FontAwesomeIcon icon={faCaretUp} size="sm" />
                         </div>
                         <div className="grid-col flex-6">
-                          <FontAwesomeIcon icon="caret-down" size="sm" />
+                          <FontAwesomeIcon icon={faCaretDown} size="sm" />
                         </div>
                       </div>
                     </th>

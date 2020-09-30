@@ -59,6 +59,7 @@ export function useDashboard(dashboardId: string) {
           widgetType: "Text",
           order: 0,
           updatedAt: "",
+          content: { text: "test" },
         },
         {
           id: "xyz",
@@ -66,6 +67,7 @@ export function useDashboard(dashboardId: string) {
           widgetType: "Chart",
           order: 1,
           updatedAt: "",
+          content: {},
         },
       ],
     },
@@ -91,19 +93,7 @@ export function useWidget(
 }
 
 export function useWidgets(dashboardId: string) {
-  return {
-    loading: false,
-    widgets: [
-      {
-        id: "123",
-        name: "Correlation of COVID cases to deaths",
-        widgetType: "Text",
-        order: 1,
-        updatedAt: "",
-      },
-    ],
-    setWidgets: () => {},
-  };
+  return;
 }
 
 export function useHomepage() {

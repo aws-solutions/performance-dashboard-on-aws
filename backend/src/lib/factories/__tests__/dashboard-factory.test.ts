@@ -1,12 +1,16 @@
 import factory from "../dashboard-factory";
-import { Dashboard, DashboardItem } from "../../models/dashboard";
+import {
+  Dashboard,
+  DashboardItem,
+  DashboardState,
+} from "../../models/dashboard";
 import { User } from "../../models/user";
 
 const user: User = {
   userId: "johndoe",
 };
 
-describe("dashboardFactory.create", () => {
+describe("create", () => {
   it("should create a dashboard with id, name, topicAreaId, topicAreaName, updatedAt and description", () => {
     const dashboard1 = factory.create(
       "123",
@@ -38,7 +42,7 @@ describe("dashboardFactory.create", () => {
   });
 });
 
-describe("dashboardFactory.createNew", () => {
+describe("createNew", () => {
   it("should create a new dashboard with unique id", () => {
     const dashboard1 = factory.createNew(
       "Dashboard1",
@@ -83,7 +87,7 @@ describe("dashboardFactory.createNew", () => {
   });
 });
 
-describe("DashboardFactory.toItem", () => {
+describe("toItem", () => {
   const now = new Date();
   const dashboard: Dashboard = {
     id: "123",
@@ -93,7 +97,7 @@ describe("DashboardFactory.toItem", () => {
     description: "Description test",
     createdBy: user.userId,
     updatedAt: now,
-    state: "Draft",
+    state: DashboardState.Draft,
   };
 
   it("should have a pk that starts with TopicArea", () => {
@@ -123,7 +127,7 @@ describe("DashboardFactory.toItem", () => {
   });
 });
 
-describe("DashboardFactory.fromItem", () => {
+describe("fromItem", () => {
   const now = new Date().toISOString();
   const item: DashboardItem = {
     pk: "Dashboard#123",
@@ -147,6 +151,30 @@ describe("DashboardFactory.fromItem", () => {
     expect(dashboard.topicAreaName).toEqual("Topic 1");
     expect(dashboard.createdBy).toEqual(user.userId);
     expect(dashboard.updatedAt).toEqual(new Date(now));
-    expect(dashboard.state).toEqual("Draft");
+    expect(dashboard.state).toEqual(DashboardState.Draft);
+  });
+});
+
+describe("toPublic", () => {
+  const now = new Date();
+  const dashboard: Dashboard = {
+    id: "123",
+    name: "Dashboard 1",
+    topicAreaId: "456",
+    topicAreaName: "Topic 1",
+    description: "Description test",
+    createdBy: user.userId,
+    updatedAt: now,
+    state: DashboardState.Draft,
+  };
+
+  it("should expose fields that are not sensitive", () => {
+    const publicDashboard = factory.toPublic(dashboard);
+    expect(publicDashboard.id).toEqual(dashboard.id);
+    expect(publicDashboard.name).toEqual(dashboard.name);
+    expect(publicDashboard.topicAreaId).toEqual(dashboard.topicAreaId);
+    expect(publicDashboard.topicAreaName).toEqual(dashboard.topicAreaName);
+    expect(publicDashboard.description).toEqual(dashboard.description);
+    expect(publicDashboard.updatedAt).toEqual(dashboard.updatedAt);
   });
 });

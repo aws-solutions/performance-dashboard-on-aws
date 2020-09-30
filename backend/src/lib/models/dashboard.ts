@@ -1,6 +1,12 @@
 import { Widget } from "./widget";
 
-export type Dashboard = {
+export enum DashboardState {
+  Draft = "Draft",
+  Published = "Published",
+  Archived = "Archived",
+}
+
+export interface Dashboard {
   id: string;
   name: string;
   topicAreaId: string;
@@ -8,9 +14,9 @@ export type Dashboard = {
   description: string;
   createdBy: string;
   updatedAt: Date;
-  state: string;
+  state: DashboardState;
   widgets?: Array<Widget>;
-};
+}
 
 export type DashboardList = Array<Dashboard>;
 
@@ -25,4 +31,17 @@ export interface DashboardItem {
   createdBy: string;
   updatedAt: string;
   state: string;
+}
+
+// Public representation of a dashboard. Hides some fields
+// like createdBy and state, which should not be exposed
+// on public endpoints.
+export interface PublicDashboard {
+  id: string;
+  name: string;
+  topicAreaId: string;
+  topicAreaName: string;
+  description: string;
+  updatedAt: Date;
+  widgets?: Array<Widget>;
 }

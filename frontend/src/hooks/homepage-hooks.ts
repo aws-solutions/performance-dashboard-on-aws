@@ -12,6 +12,7 @@ export function useHomepage(): UseHomepageHook {
   const [homepage, setHomepage] = useState<Homepage>({
     title: "",
     description: "",
+    dashboards: [],
   });
 
   useEffect(() => {

@@ -27,6 +27,7 @@ async function createTopicArea(req: Request, res: Response) {
 
   if (!name) {
     res.status(400).send("Missing required field `name`");
+    return;
   }
 
   const topicarea = TopicAreaFactory.createNew(name, user);
@@ -48,6 +49,7 @@ async function getTopicAreaById(req: Request, res: Response) {
 
   if (!id) {
     res.status(400).send("Missing required field `id`");
+    return;
   }
 
   const repo = TopicAreaRepository.getInstance();

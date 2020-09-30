@@ -99,6 +99,8 @@ describe("createWidget", () => {
 describe("updateWidget", () => {
   let req: Request;
   const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
   beforeEach(() => {
     req = ({
       params: {

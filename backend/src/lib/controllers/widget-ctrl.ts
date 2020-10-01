@@ -16,10 +16,12 @@ async function getWidgetById(req: Request, res: Response) {
 
   if (!id) {
     res.status(400).send("Missing required field `id`");
+    return;
   }
 
   if (!widgetId) {
     res.status(400).send("Missing required field `widgetId`");
+    return;
   }
 
   const repo = WidgetRepository.getInstance();
@@ -37,20 +39,24 @@ async function createWidget(req: Request, res: Response) {
   const dashboardId = req.params.id;
   if (!dashboardId) {
     res.status(400).send("Missing required field `id`");
+    return;
   }
 
   const { name, content, widgetType } = req.body;
 
   if (!name) {
     res.status(400).send("Missing required field `name`");
+    return;
   }
 
   if (!content) {
     res.status(400).send("Missing required field `content`");
+    return;
   }
 
   if (!widgetType) {
     res.status(400).send("Missing required field `widgetType`");
+    return;
   }
 
   let widget;
@@ -80,25 +86,30 @@ async function updateWidget(req: Request, res: Response) {
   const dashboardId = req.params.id;
   if (!dashboardId) {
     res.status(400).send("Missing required field `id`");
+    return;
   }
 
   const widgetId = req.params.widgetId;
   if (!widgetId) {
     res.status(400).send("Missing required field `widgetId`");
+    return;
   }
 
   const { name, content, updatedAt } = req.body;
 
   if (!name) {
     res.status(400).send("Missing required field `name`");
+    return;
   }
 
   if (!content) {
     res.status(400).send("Missing required field `content`");
+    return;
   }
 
   if (!updatedAt) {
     res.status(400).send("Missing required field `updatedAt`");
+    return;
   }
 
   const repo = WidgetRepository.getInstance();

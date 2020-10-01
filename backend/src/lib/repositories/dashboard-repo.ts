@@ -156,6 +156,46 @@ class DashboardRepository extends BaseRepository {
   }
 
   /**
+   * Publish a Dashboard identified by the param `dashboardId`.
+   */
+  public async publishDashboard(
+    dashboardId: string,
+    lastUpdatedAt: string,
+    user: User
+  ) {
+    try {
+      await this.dynamodb.update({
+        TableName: this.tableName,
+        Key: {
+          pk: DashboardFactory.itemId(dashboardId),
+          sk: DashboardFactory.itemId(dashboardId),
+        },
+        UpdateExpression:
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+        ConditionExpression: "#updatedAt <= :lastUpdatedAt",
+        ExpressionAttributeValues: {
+          ":state": DashboardState.Published,
+          ":lastUpdatedAt": lastUpdatedAt,
+          ":updatedAt": new Date().toISOString(),
+          ":userId": user.userId,
+        },
+        ExpressionAttributeNames: {
+          "#state": "state",
+          "#updatedBy": "updatedBy",
+          "#updatedAt": "updatedAt",
+        },
+      });
+    } catch (error) {
+      if (error.code === "ConditionalCheckFailedException") {
+        console.log("Someone else updated the item before us");
+        return;
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  /**
    * Updates the updatedAt field. Sets the `updatedBy` field
    * to the userId doing the update action.
    */

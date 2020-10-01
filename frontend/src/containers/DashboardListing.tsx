@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import Search from "../components/Search";
 import DashboardsTable from "../components/DashboardsTable";
 import ScrollTop from "../components/ScrollTop";
+import AlertContainer from "./AlertContainer";
 
 function DashboardListing() {
   const { dashboards } = useDashboards();
@@ -67,6 +68,7 @@ function DashboardListing() {
           </span>
         </div>
       </div>
+      <AlertContainer />
       <DashboardsTable
         dashboards={sortDashboards(filterDashboards(dashboards))}
         onSelect={onSelect}

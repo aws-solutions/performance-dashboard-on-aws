@@ -71,7 +71,7 @@ function DashboardPreview() {
     ) {
       if (dashboard) {
         await BadgerService.publishDashboard(
-          dashboard?.id,
+          dashboard.id,
           dashboard ? dashboard.updatedAt : new Date()
         );
         history.push(`/admin/dashboard/edit/${dashboard?.id}`);

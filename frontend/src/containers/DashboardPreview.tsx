@@ -11,6 +11,7 @@ import PartWholeChartPreview from "../components/PartWholeChartPreview";
 import TablePreview from "../components/TablePreview";
 import { Widget } from "../models";
 import Button from "../components/Button";
+import BadgerService from "../services/BadgerService";
 import "./DashboardPreview.css";
 
 interface PathParams {
@@ -62,6 +63,22 @@ function DashboardPreview() {
 
   useWidgets(dashboard?.widgets || [], onFilesProcessed);
 
+  const onPublish = async () => {
+    if (
+      window.confirm(
+        "Are you sure you want to publish this dashboard? After publishing, the dashboard will be viewable on the external dashboard website."
+      )
+    ) {
+      if (dashboard) {
+        await BadgerService.publishDashboard(
+          dashboard?.id,
+          dashboard ? dashboard.updatedAt : new Date()
+        );
+        history.push(`/admin/dashboard/edit/${dashboard?.id}`);
+      }
+    }
+  };
+
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboard?.id}`);
   };
@@ -83,7 +100,7 @@ function DashboardPreview() {
             <span className="usa-tag text-middle">Preview</span>
           </div>
           <div className="grid-col text-right">
-            <Button variant="base" onClick={() => {}}>
+            <Button variant="base" onClick={onPublish}>
               Publish
             </Button>
             <Button variant="outline" onClick={onCancel}>

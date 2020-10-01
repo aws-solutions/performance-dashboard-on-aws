@@ -77,6 +77,23 @@ test("editDashboard should make a POST request with payload", async () => {
   );
 });
 
+test("publishDashboard should make a POST request with payload", async () => {
+  const dashboardId = "123";
+  const updatedAt = new Date("2020-09-17T21:01:00.780Z");
+
+  await BadgerService.publishDashboard(dashboardId, updatedAt);
+
+  expect(API.put).toHaveBeenCalledWith(
+    "BadgerApi",
+    `dashboard/${dashboardId}/publish`,
+    expect.objectContaining({
+      body: {
+        updatedAt,
+      },
+    })
+  );
+});
+
 test("fetchWidgetById makes a GET request to widget API", async () => {
   const dashboardId = "123";
   const widgetId = "abc";
@@ -135,5 +152,5 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
 
 test("fetchHomepage makes a GET request to widget API", async () => {
   await BadgerService.fetchHomepage();
-  expect(API.get).toHaveBeenCalledWith("BadgerApi", "/homepage", {});
+  expect(API.get).toHaveBeenCalledWith("BadgerApi", "homepage", {});
 });

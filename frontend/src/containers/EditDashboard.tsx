@@ -26,8 +26,20 @@ function EditDashboard() {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
-  const onCancel = () => {
-    history.push("/admin/dashboards");
+  const onPublish = async () => {
+    if (
+      window.confirm(
+        "Are you sure you want to publish this dashboard? After publishing, the dashboard will be viewable on the external dashboard website."
+      )
+    ) {
+      if (dashboard) {
+        await BadgerService.publishDashboard(
+          dashboard?.id,
+          dashboard ? dashboard.updatedAt : new Date()
+        );
+        await reloadDashboard();
+      }
+    }
   };
 
   const onDeleteWidget = async (widget: Widget) => {
@@ -80,7 +92,7 @@ function EditDashboard() {
         <div className="grid-col text-left">
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
-              <span className="usa-tag">DRAFT</span>
+              <span className="usa-tag">{dashboard?.state}</span>
             </li>
             <li className="usa-button-group__item">
               <a className="usa-link" href="/">
@@ -98,7 +110,7 @@ function EditDashboard() {
           <span className="text-base margin-right-1">
             {dashboard && `Last saved ${dayjs(dashboard.updatedAt).fromNow()}`}
           </span>
-          <Button variant="base" onClick={() => onCancel()}>
+          <Button variant="base" onClick={onPublish}>
             Publish
           </Button>
         </div>

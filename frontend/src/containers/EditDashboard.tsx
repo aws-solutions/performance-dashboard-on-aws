@@ -33,10 +33,7 @@ function EditDashboard() {
       )
     ) {
       if (dashboard) {
-        await BadgerService.publishDashboard(
-          dashboard.id,
-          dashboard ? dashboard.updatedAt : new Date()
-        );
+        await BadgerService.publishDashboard(dashboard.id, dashboard.updatedAt);
         await reloadDashboard();
       }
     }

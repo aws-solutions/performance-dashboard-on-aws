@@ -70,11 +70,8 @@ function DashboardPreview() {
       )
     ) {
       if (dashboard) {
-        await BadgerService.publishDashboard(
-          dashboard.id,
-          dashboard ? dashboard.updatedAt : new Date()
-        );
-        history.push(`/admin/dashboard/edit/${dashboard?.id}`);
+        await BadgerService.publishDashboard(dashboard.id, dashboard.updatedAt);
+        history.push(`/admin/dashboard/edit/${dashboard.id}`);
       }
     }
   };

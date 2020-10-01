@@ -83,6 +83,16 @@ async function editDashboard(
   });
 }
 
+async function publishDashboard(dashboardId: string, updatedAt: Date) {
+  const headers = await authHeaders();
+  return await API.put(apiName, `dashboard/${dashboardId}/publish`, {
+    headers,
+    body: {
+      updatedAt,
+    },
+  });
+}
+
 async function createWidget(
   dashboardId: string,
   name: string,
@@ -162,7 +172,7 @@ async function setWidgetOrder(
 }
 
 async function fetchHomepage() {
-  return API.get(apiName, "/homepage", {});
+  return API.get(apiName, "homepage", {});
 }
 
 export default {
@@ -172,6 +182,7 @@ export default {
   fetchWidgetById,
   fetchWidgets,
   editDashboard,
+  publishDashboard,
   createDashboard,
   createWidget,
   editWidget,

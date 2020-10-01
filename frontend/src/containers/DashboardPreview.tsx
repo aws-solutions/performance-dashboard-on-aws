@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { parse } from "papaparse";
 import { useHistory, useParams } from "react-router-dom";
 import { useDashboard, useWidgets } from "../hooks";
-import { Widget } from "../models";
+import { Widget, LocationState } from "../models";
 import AdminLayout from "../layouts/Admin";
 import ReactMarkdown from "react-markdown";
 import LineChartPreview from "../components/LineChartPreview";
@@ -20,7 +20,7 @@ interface PathParams {
 }
 
 function DashboardPreview() {
-  const history = useHistory();
+  const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard } = useDashboard(dashboardId);
   const [allFilesProcessed, setAllFilesProcessed] = useState<boolean>(false);
@@ -72,7 +72,12 @@ function DashboardPreview() {
     ) {
       if (dashboard) {
         await BadgerService.publishDashboard(dashboard.id, dashboard.updatedAt);
-        history.push(`/admin/dashboard/edit/${dashboard.id}`);
+        history.push("/admin/dashboards", {
+          alert: {
+            type: "success",
+            message: `${dashboard.name} dashboard was successfully published`,
+          },
+        });
       }
     }
   };

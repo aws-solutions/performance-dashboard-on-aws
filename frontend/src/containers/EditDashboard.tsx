@@ -2,7 +2,7 @@ import React from "react";
 import dayjs from "dayjs";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useDashboard } from "../hooks";
-import { Widget } from "../models";
+import { Widget, LocationState } from "../models";
 import BadgerService from "../services/BadgerService";
 import WidgetOrderingService from "../services/WidgetOrdering";
 import AdminLayout from "../layouts/Admin";
@@ -16,7 +16,7 @@ interface PathParams {
 }
 
 function EditDashboard() {
-  const history = useHistory();
+  const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, reloadDashboard, setDashboard } = useDashboard(
     dashboardId
@@ -34,7 +34,12 @@ function EditDashboard() {
     ) {
       if (dashboard) {
         await BadgerService.publishDashboard(dashboard.id, dashboard.updatedAt);
-        await reloadDashboard();
+        history.push("/admin/dashboards", {
+          alert: {
+            type: "success",
+            message: `${dashboard.name} dashboard was successfully published`,
+          },
+        });
       }
     }
   };

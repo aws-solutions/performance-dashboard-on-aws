@@ -50,3 +50,13 @@ export type Homepage = {
   description: string;
   dashboards: Array<PublicDashboard>;
 };
+
+// Type for the History object in react-router. Defines the
+// location state that is common across all routes.
+// Usage in a component: useHistory<LocationState>();
+export type LocationState = {
+  alert?: {
+    type: "success" | "warning" | "info" | "error";
+    message: string;
+  };
+};

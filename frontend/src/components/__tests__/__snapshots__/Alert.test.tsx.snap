@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a info alert 1`] = `
+<div>
+  <div
+    class="usa-alert usa-alert--info"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <p
+        class="usa-alert__text"
+      >
+        Hello world
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a slim alert 1`] = `
+<div>
+  <div
+    class="usa-alert usa-alert--success usa-alert--slim"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <p
+        class="usa-alert__text"
+      >
+        Hello world
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a slim alert ignoring title 1`] = `
+<div>
+  <div
+    class="usa-alert usa-alert--success usa-alert--slim"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <p
+        class="usa-alert__text"
+      >
+        Hello world
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a success alert 1`] = `
+<div>
+  <div
+    class="usa-alert usa-alert--success"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <p
+        class="usa-alert__text"
+      >
+        Hello world
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a warning alert 1`] = `
+<div>
+  <div
+    class="usa-alert usa-alert--warning"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <p
+        class="usa-alert__text"
+      >
+        Hello world
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders an alert with title 1`] = `
+<div>
+  <div
+    class="usa-alert usa-alert--success"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <h3
+        class="usa-alert__heading"
+      >
+        Informative status
+      </h3>
+      <p
+        class="usa-alert__text"
+      >
+        Hello world
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders an error alert 1`] = `
+<div>
+  <div
+    class="usa-alert usa-alert--error"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <p
+        class="usa-alert__text"
+      >
+        Hello world
+      </p>
+    </div>
+  </div>
+</div>
+`;

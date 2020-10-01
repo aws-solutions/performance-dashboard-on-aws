@@ -1,17 +1,18 @@
 import React, { useCallback, useState } from "react";
+import { parse } from "papaparse";
 import { useHistory, useParams } from "react-router-dom";
 import { useDashboard, useWidgets } from "../hooks";
+import { Widget } from "../models";
 import AdminLayout from "../layouts/Admin";
 import ReactMarkdown from "react-markdown";
-import { parse } from "papaparse";
 import LineChartPreview from "../components/LineChartPreview";
 import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
 import TablePreview from "../components/TablePreview";
-import { Widget } from "../models";
 import Button from "../components/Button";
 import BadgerService from "../services/BadgerService";
+import Alert from "../components/Alert";
 import "./DashboardPreview.css";
 
 interface PathParams {
@@ -83,15 +84,12 @@ function DashboardPreview() {
   return (
     <AdminLayout>
       <div className="position-sticky top-0 bg-white z-index-on-top">
-        <div className="usa-alert usa-alert--info">
-          <div className="usa-alert__body">
-            <p className="usa-alert__text">
-              Below is a preview of what the published dashboard will look like.
+        <Alert
+          type="info"
+          message="Below is a preview of what the published dashboard will look like.
               If everything looks right, you can publish the dashboard to be
-              viewable on the external site.
-            </p>
-          </div>
-        </div>
+              viewable on the external site."
+        />
         <div className="grid-row margin-top-2">
           <div className="grid-col text-left">
             <span className="usa-tag text-middle">Preview</span>

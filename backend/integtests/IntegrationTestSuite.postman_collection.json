@@ -6,52 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "Homepage",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c5ae5e31-4849-4fd8-82bf-4316834cbf68",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"homepage contains title and description\", () => {",
-							"    const homepage = pm.response.json();",
-							"    pm.expect(homepage.title).to.not.be.undefined;",
-							"    pm.expect(homepage.description).to.not.be.undefined;",
-							"});",
-							"",
-							"pm.test(\"homepage contains list of dashboards\", () => {",
-							"    const homepage = pm.response.json();",
-							"    pm.expect(homepage.dashboards).to.not.be.undefined;",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/homepage",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"homepage"
-					]
-				},
-				"description": "Verify that homepage information loads successfully without authentication."
-			},
-			"response": []
-		},
-		{
 			"name": "Create topic area",
 			"event": [
 				{
@@ -620,6 +574,153 @@
 			"response": []
 		},
 		{
+			"name": "Fetch latest dashboard updatedAt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "20dd8e9a-2268-4337-9bc7-5a7626e14bfd",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"    const dashboard = pm.response.json();",
+							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fc4beae0-0650-498a-b269-2de3667179b2",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publish",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify dashboard shows in homepage",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c5ae5e31-4849-4fd8-82bf-4316834cbf68",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"homepage contains title and description\", () => {",
+							"    const homepage = pm.response.json();",
+							"    pm.expect(homepage.title).to.not.be.undefined;",
+							"    pm.expect(homepage.description).to.not.be.undefined;",
+							"});",
+							"",
+							"pm.test(\"homepage contains dashboard\", () => {",
+							"    const homepage = pm.response.json();",
+							"    pm.expect(homepage.dashboards).to.not.be.undefined;",
+							"    ",
+							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
+							"    const dashboards = homepage.dashboards;",
+							"    const dashboard = homepage.dashboards.find(dash => dash.id === id);",
+							"    pm.expect(dashboard).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/homepage",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"homepage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete text widget",
 			"event": [
 				{
@@ -817,62 +918,62 @@
 	],
 	"variable": [
 		{
-			"id": "31fed45e-2264-4bc3-a648-14ee78a4bbe3",
+			"id": "b2c87120-3c47-45c9-97f2-29a52ade58e1",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "81a97223-fc21-4e7b-9c37-a779d6969742",
+			"id": "cdf30322-8da9-4f8a-99be-4da921384e63",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "05d6b319-733d-429b-bcdb-78c40b2d6937",
+			"id": "867bd36d-7930-4012-a2db-83541e4d0e2c",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "a6bf7cd7-85fe-4bf2-bfc2-3c3dc1c10355",
+			"id": "ed6142b6-e17e-439c-889a-3b16b47c3f3f",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "6a3fdede-4abf-4f9f-80b4-c0cebad962f2",
+			"id": "11254015-0fb4-4ab0-9909-ea4c3161c199",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "43a622da-4743-4c4a-a8e3-97b4a299f2f9",
+			"id": "d5f620d4-886f-4fed-b1d8-d73f211dde48",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "a95d8c46-394a-4ce6-a223-f342e6501f27",
+			"id": "e89869ad-6ea3-4076-987a-6dfd0743a85f",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "9cc88c18-c8f3-4a22-9b8c-8f03486a2ad3",
+			"id": "8e3bf944-edb0-4845-b8cb-45d916eaed5a",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "3dbaa323-3062-45c2-91f6-dd5da6aa0820",
+			"id": "805b0b7e-f24a-4d0e-a111-f64cbc79083b",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "dd1c6998-4ad8-4e3f-80e5-79fda99129b9",
+			"id": "c42eb11e-1607-4040-852d-e934dc76d14a",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "15c7ba16-f717-46fb-a785-3ea5c95cf689",
+			"id": "bc9db4bc-6916-4aaf-af17-0bee50fb7c39",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "bd72cc6d-4ead-4232-89be-c2eecddb80a9",
+			"id": "95ec70f3-224a-4141-b5a3-fb2cd155251f",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		}

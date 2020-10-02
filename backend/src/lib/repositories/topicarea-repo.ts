@@ -1,33 +1,14 @@
 import { User } from "../models/user";
-import DynamoDBService from "../services/dynamodb";
 import TopicAreaFactory from "../factories/topicarea-factory";
-import {
-  TopicArea,
-  TopicAreaList,
-  TopicAreaItem,
-} from "../models/topicarea";
+import BaseRepository from "./base";
+import { TopicArea, TopicAreaList, TopicAreaItem } from "../models/topicarea";
 
-class TopicAreaRepository {
-  private dynamodb: DynamoDBService;
-  private tableName: string;
+class TopicAreaRepository extends BaseRepository {
   private static instance: TopicAreaRepository;
-
-  /**
-   * Repo is a Singleton, hence private constructor
-   * to prevent direct constructions calls with new operator.
-   */
   private constructor() {
-    if (!process.env.BADGER_TABLE) {
-      throw new Error("Environment variable BADGER_TABLE not found");
-    }
-
-    this.dynamodb = DynamoDBService.getInstance();
-    this.tableName = process.env.BADGER_TABLE;
+    super();
   }
 
-  /**
-   * Controls access to the singleton instance.
-   */
   static getInstance(): TopicAreaRepository {
     if (!TopicAreaRepository.instance) {
       TopicAreaRepository.instance = new TopicAreaRepository();
@@ -36,12 +17,6 @@ class TopicAreaRepository {
     return TopicAreaRepository.instance;
   }
 
-  /**
-   * Performs a putItem request to DynamoDB to create a new
-   * topic area item.
-   *
-   * @param topicArea TopicArea
-   */
   public async create(topicArea: TopicArea) {
     await this.dynamodb.put({
       TableName: this.tableName,
@@ -49,10 +24,7 @@ class TopicAreaRepository {
     });
   }
 
-  /**
-   * Get a topicArea specifiying the topicArea id.
-   */
-  public async getTopicAreaById(id: string) : Promise<TopicArea> {
+  public async getTopicAreaById(id: string): Promise<TopicArea> {
     const result = await this.dynamodb.get({
       TableName: this.tableName,
       Key: {
@@ -63,13 +35,6 @@ class TopicAreaRepository {
     return TopicAreaFactory.fromItem(result.Item as TopicAreaItem);
   }
 
-  /**
-   * Returns a list of TopicAreas by performing a query
-   * operation against the `byType` Global Secondary Index
-   * on the DynamoDB table.
-   *
-   * TODO: Implement pagination
-   */
   public async list(): Promise<TopicAreaList> {
     const result = await this.dynamodb.query({
       TableName: this.tableName,
@@ -92,11 +57,6 @@ class TopicAreaRepository {
     );
   }
 
-  /**
-   * Updates the name of an existing TopicArea identified
-   * by the param `id`. Sets the `updatedBy` field to the userId
-   * doing the update action.
-   */
   public async updateTopicArea(topicArea: TopicArea, user: User) {
     await this.dynamodb.update({
       TableName: this.tableName,
@@ -116,9 +76,6 @@ class TopicAreaRepository {
     });
   }
 
-  /**
-   * Deletes the TopicArea identified by the param `id`.
-   */
   public async delete(id: string) {
     await this.dynamodb.delete({
       TableName: this.tableName,

@@ -16,39 +16,47 @@ function Home() {
 
   return (
     <MainLayout>
-      <h1 className="font-sans-3xl width-tablet">{homepage.title}</h1>
-      <p className="font-sans-lg measure-3 usa-prose">{homepage.description}</p>
-      <div className="margin-y-4 width-mobile-lg">
-        <Search id="search" onSubmit={onSearch} size="big" />
+      <div className="grid-row">
+        <div className="grid-col-12 tablet:grid-col-8">
+          <h1 className="font-sans-3xl">{homepage.title}</h1>
+          <p className="font-sans-lg usa-prose">{homepage.description}</p>
+        </div>
       </div>
-      <div className="width-tablet">
-        <Accordion>
-          {topicareas.map((topicarea) => (
-            <Accordion.Item
-              id={topicarea.id}
-              key={topicarea.id}
-              title={topicarea.name}
-            >
-              {topicarea.dashboards?.map((dashboard) => {
-                const updatedAt = dayjs(dashboard.updatedAt).format(
-                  "YYYY-MM-DD hh:mm"
-                );
-                return (
-                  <div
-                    key={dashboard.id}
-                    className="border-bottom border-base-light padding-2"
-                  >
-                    <a href="/dashboard">{dashboard.name}</a>
-                    <br />
-                    <span className="text-base text-italic">
-                      Last updated {updatedAt}
-                    </span>
-                  </div>
-                );
-              })}
-            </Accordion.Item>
-          ))}
-        </Accordion>
+      <div className="grid-row">
+        <div className="grid-col-12 tablet:grid-col-8 padding-bottom-3">
+          <Search id="search" onSubmit={onSearch} size="big" />
+        </div>
+      </div>
+      <div className="grid-row">
+        <div className="grid-col-12 tablet:grid-col-8">
+          <Accordion>
+            {topicareas.map((topicarea) => (
+              <Accordion.Item
+                id={topicarea.id}
+                key={topicarea.id}
+                title={topicarea.name}
+              >
+                {topicarea.dashboards?.map((dashboard) => {
+                  const updatedAt = dayjs(dashboard.updatedAt).format(
+                    "YYYY-MM-DD hh:mm"
+                  );
+                  return (
+                    <div
+                      key={dashboard.id}
+                      className="border-bottom border-base-light padding-2"
+                    >
+                      <a href="/dashboard">{dashboard.name}</a>
+                      <br />
+                      <span className="text-base text-italic">
+                        Last updated {updatedAt}
+                      </span>
+                    </div>
+                  );
+                })}
+              </Accordion.Item>
+            ))}
+          </Accordion>
+        </div>
       </div>
     </MainLayout>
   );

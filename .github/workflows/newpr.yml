@@ -1,0 +1,45 @@
+# Workflow that runs unit tests on a new pull request to mainline.
+
+name: Unit Tests on PR
+
+on:
+  pull_request:
+    branches:
+      - mainline
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # Install npm dependencies
+      - run: ls -al
+      - run: ./install.sh
+
+      # Run backend tests
+      - run: cd backend
+      - run: npm run test
+      - run: cd ..
+
+      # Run frontend tests
+      - run: cd frontend
+      - run: export CI=true
+      - run: yarn test
+      - run: cd ..
+
+      # Run CDK tests
+      - run: cd cdk
+      - run: npm run test
+      - run: cd ..

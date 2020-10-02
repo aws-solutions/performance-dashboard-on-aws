@@ -1,24 +1,15 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import DynamoDBService from "../services/dynamodb";
 import { Widget, WidgetItem } from "../models/widget";
-
+import BaseRepository from "./base";
 import WidgetFactory, {
   WIDGET_PREFIX,
   WIDGET_ITEM_TYPE,
 } from "../factories/widget-factory";
 
-class WidgetRepository {
-  private dynamodb: DynamoDBService;
-  private tableName: string;
+class WidgetRepository extends BaseRepository {
   private static instance: WidgetRepository;
-
   private constructor() {
-    if (!process.env.BADGER_TABLE) {
-      throw new Error("Environment variable BADGER_TABLE not found");
-    }
-
-    this.dynamodb = DynamoDBService.getInstance();
-    this.tableName = process.env.BADGER_TABLE;
+    super();
   }
 
   static getInstance(): WidgetRepository {
@@ -47,10 +38,6 @@ class WidgetRepository {
     return WidgetFactory.fromItems(items as Array<WidgetItem>);
   }
 
-  /**
-   * Get a widget specifiying the widget id
-   * and the dashboardId id.
-   */
   public async getWidgetById(dashboardId: string, widgetId: string) {
     const result = await this.dynamodb.get({
       TableName: this.tableName,

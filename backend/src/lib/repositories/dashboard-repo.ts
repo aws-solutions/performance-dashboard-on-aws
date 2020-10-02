@@ -17,9 +17,6 @@ class DashboardRepository extends BaseRepository {
     super();
   }
 
-  /**
-   * Controls access to the singleton instance.
-   */
   static getInstance(): DashboardRepository {
     if (!DashboardRepository.instance) {
       DashboardRepository.instance = new DashboardRepository();
@@ -28,10 +25,6 @@ class DashboardRepository extends BaseRepository {
     return DashboardRepository.instance;
   }
 
-  /**
-   * Get a dashboard specifiying the dashboard id
-   * and the topicArea id.
-   */
   public async getDashboardById(dashboardId: string) {
     const result = await this.dynamodb.get({
       TableName: this.tableName,
@@ -43,12 +36,6 @@ class DashboardRepository extends BaseRepository {
     return DashboardFactory.fromItem(result.Item as DashboardItem);
   }
 
-  /**
-   * Performs a putItem request to DynamoDB to create
-   * a new dashboard item or replace an old one.
-   *
-   * @param dashboard Dashboard
-   */
   public async putDashboard(dashboard: Dashboard) {
     await this.dynamodb.put({
       TableName: this.tableName,
@@ -187,11 +174,12 @@ class DashboardRepository extends BaseRepository {
       });
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.log("Someone else updated the item before us");
-        return;
-      } else {
-        throw error;
+        console.error(
+          "ConditionalCheckFailed when publishing dashboard",
+          dashboardId
+        );
       }
+      throw error;
     }
   }
 

@@ -1,28 +1,22 @@
-import DynamoDBService from "../services/dynamodb";
 import S3Service from "../services/s3";
 import { Dataset } from "../models/dataset";
 import DatasetFactory from "../factories/dataset-factory";
+import BaseRepository from "./base";
 
-class DatasetRepository {
-  private dynamodb: DynamoDBService;
+class DatasetRepository extends BaseRepository {
   private s3Service: S3Service;
-  private tableName: string;
   private bucketName: string;
   private s3Prefix: string;
   private static instance: DatasetRepository;
 
   private constructor() {
-    if (!process.env.BADGER_TABLE) {
-      throw new Error("Environment variable BADGER_TABLE not found");
-    }
+    super();
 
     if (!process.env.BADGER_DATASETS_BUCKET) {
       throw new Error("Environment variable BADGER_DATASETS_BUCKET not found");
     }
 
-    this.dynamodb = DynamoDBService.getInstance();
     this.s3Service = S3Service.getInstance();
-    this.tableName = process.env.BADGER_TABLE;
     this.bucketName = process.env.BADGER_DATASETS_BUCKET;
     this.s3Prefix = "public/";
   }

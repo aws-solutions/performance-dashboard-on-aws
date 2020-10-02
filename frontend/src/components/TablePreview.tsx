@@ -13,8 +13,8 @@ const getKeyValue = (key: string) => (obj: Record<string, any>) => obj[key];
 const TablePreview = (props: Props) => {
   return (
     <div>
-      <h2 className="margin-left-3">{props.title}</h2>
-      <table className="usa-table usa-table--borderless margin-left-3">
+      <h2 className="margin-left-2px">{props.title}</h2>
+      <table className="usa-table usa-table--borderless margin-left-2px">
         <thead>
           <tr>
             {props.headers.length

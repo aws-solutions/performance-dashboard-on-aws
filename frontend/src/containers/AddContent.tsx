@@ -165,6 +165,7 @@ function AddContent() {
           </Button>
           <Button
             variant="unstyled"
+            type="button"
             onClick={onCancel}
             className="margin-left-1"
           >

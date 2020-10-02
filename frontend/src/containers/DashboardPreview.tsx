@@ -36,7 +36,6 @@ function DashboardPreview() {
           (file) =>
             new Promise((resolve, reject) => {
               return {
-                id: file.widget,
                 data: parse(file.file, {
                   header: true,
                   dynamicTyping: true,
@@ -103,7 +102,7 @@ function DashboardPreview() {
             <Button variant="base" onClick={onPublish}>
               Publish
             </Button>
-            <Button variant="outline" onClick={onCancel}>
+            <Button variant="outline" type="button" onClick={onCancel}>
               Close Preview
             </Button>
           </div>
@@ -124,83 +123,84 @@ function DashboardPreview() {
         )}
       </div>
       <hr />
-      <div hidden={!allFilesProcessed}>
-        {dashboard?.widgets.map((widget, index) => {
-          const keys =
-            widget &&
-            widget.content &&
-            widget.content.data &&
-            widget.content.data.length
-              ? (Object.keys(widget.content.data[0]) as Array<string>)
-              : [];
-          if (widget.widgetType === "Chart") {
-            if (widget.content.chartType === "LineChart") {
+
+      {allFilesProcessed
+        ? dashboard?.widgets.map((widget, index) => {
+            if (widget.widgetType === "Text") {
               return (
                 <div className="margin-top-5" key={index}>
-                  <LineChartPreview
+                  <h2>{widget.name}</h2>
+                  <ReactMarkdown source={widget.content.text} />
+                </div>
+              );
+            }
+            const keys =
+              widget &&
+              widget.content &&
+              widget.content.data &&
+              widget.content.data.length
+                ? (Object.keys(widget.content.data[0]) as Array<string>)
+                : [];
+            if (widget.widgetType === "Chart") {
+              if (widget.content.chartType === "LineChart") {
+                return (
+                  <div className="margin-top-5" key={index}>
+                    <LineChartPreview
+                      title={widget.content.title}
+                      lines={keys}
+                      data={widget.content.data}
+                    />
+                  </div>
+                );
+              }
+              if (widget.content.chartType === "ColumnChart") {
+                return (
+                  <div className="margin-top-5" key={index}>
+                    <ColumnChartPreview
+                      title={widget.content.title}
+                      columns={keys}
+                      data={widget.content.data}
+                    />
+                  </div>
+                );
+              }
+              if (widget.content.chartType === "BarChart") {
+                return (
+                  <div className="margin-top-5" key={index}>
+                    <BarChartPreview
+                      title={widget.content.title}
+                      bars={keys}
+                      data={widget.content.data}
+                    />
+                  </div>
+                );
+              }
+              if (widget.content.chartType === "PartWholeChart") {
+                return (
+                  <div className="margin-top-5" key={index}>
+                    <PartWholeChartPreview
+                      title={widget.content.title}
+                      parts={keys}
+                      data={widget.content.data}
+                    />
+                  </div>
+                );
+              }
+            }
+            if (widget.widgetType === "Table") {
+              return (
+                <div className="margin-top-5" key={index}>
+                  <TablePreview
                     title={widget.content.title}
-                    lines={keys}
+                    headers={keys}
                     data={widget.content.data}
                   />
                 </div>
               );
             }
-            if (widget.content.chartType === "ColumnChart") {
-              return (
-                <div className="margin-top-5" key={index}>
-                  <ColumnChartPreview
-                    title={widget.content.title}
-                    columns={keys}
-                    data={widget.content.data}
-                  />
-                </div>
-              );
-            }
-            if (widget.content.chartType === "BarChart") {
-              return (
-                <div className="margin-top-5" key={index}>
-                  <BarChartPreview
-                    title={widget.content.title}
-                    bars={keys}
-                    data={widget.content.data}
-                  />
-                </div>
-              );
-            }
-            if (widget.content.chartType === "PartWholeChart") {
-              return (
-                <div className="margin-top-5" key={index}>
-                  <PartWholeChartPreview
-                    title={widget.content.title}
-                    parts={keys}
-                    data={widget.content.data}
-                  />
-                </div>
-              );
-            }
-          }
-          if (widget.widgetType === "Table") {
-            return (
-              <div className="margin-top-5" key={index}>
-                <TablePreview
-                  title={widget.content.title}
-                  headers={keys}
-                  data={widget.content.data}
-                />
-              </div>
-            );
-          }
-          if (widget.widgetType === "Text") {
-            return (
-              <div className="margin-top-5" key={index}>
-                <h3>{widget.name}</h3>
-                <ReactMarkdown source={widget.content.text} />
-              </div>
-            );
-          }
-          return "";
-        })}
-      </div>
+            return "";
+          })
+        : ""}
     </AdminLayout>
   );
 }

@@ -20,9 +20,9 @@ const ColumnChartPreview = (props: Props) => {
   const colors = useColors(props.columns.length);
   return (
     <div>
-      <h3 className="margin-left-1">{props.title}</h3>
+      <h2 className="margin-left-2px">{props.title}</h2>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={props.data}>
+        <BarChart data={props.data} margin={{ right: 0, left: 0 }}>
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey={props.columns.length ? props.columns[0] : ""}

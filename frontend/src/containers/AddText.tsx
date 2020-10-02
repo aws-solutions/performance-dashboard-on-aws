@@ -96,15 +96,21 @@ function AddText() {
             <Button disabled={loading} type="submit">
               Add text
             </Button>
-            <Button variant="unstyled" onClick={onCancel}>
+            <Button variant="unstyled" type="button" onClick={onCancel}>
               Cancel
             </Button>
           </form>
         </div>
         <div className="grid-col-6">
-          <label className="text-bold">Preview</label>
-          <h3>{title}</h3>
-          <ReactMarkdown source={text} />
+          <h4 className="margin-top-4">Preview</h4>
+          <h2 className="margin-top-4 margin-left-2px">{title}</h2>
+          {text ? (
+            <div className="border padding-left-05">
+              <ReactMarkdown source={text} />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </AdminLayout>

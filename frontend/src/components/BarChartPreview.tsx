@@ -21,9 +21,13 @@ const BarChartPreview = (props: Props) => {
   const colors = useColors(props.bars.length);
   return (
     <div>
-      <h3 className="margin-left-1">{props.title}</h3>
+      <h2 className="margin-left-2px">{props.title}</h2>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={props.data} layout="vertical">
+        <BarChart
+          data={props.data}
+          layout="vertical"
+          margin={{ right: 0, left: 0 }}
+        >
           <CartesianGrid horizontal={false} />
           <XAxis type="number" />
           <YAxis

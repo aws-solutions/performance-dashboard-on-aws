@@ -174,7 +174,7 @@ function EditTable() {
             <Button disabled={!dataset || loading} type="submit">
               Save
             </Button>
-            <Button variant="unstyled" onClick={onCancel}>
+            <Button variant="unstyled" type="button" onClick={onCancel}>
               Cancel
             </Button>
           </form>

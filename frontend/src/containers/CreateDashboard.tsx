@@ -77,6 +77,7 @@ function CreateDashboard() {
             <Button
               className="margin-left-1"
               variant="unstyled"
+              type="button"
               onClick={onCancel}
             >
               Cancel

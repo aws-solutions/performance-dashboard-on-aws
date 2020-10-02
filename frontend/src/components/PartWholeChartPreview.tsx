@@ -44,18 +44,22 @@ const PartWholeChartPreview = (props: Props) => {
     const label = value.substring(0, index);
     const amount = value.substring(index + 1);
     return (
-      <div className="margin-bottom-3">
-        <span>{label}</span>
-        <span className="margin-left-1 text-bold">{amount}</span>
-      </div>
+      <span className="">
+        <span className="margin-left-1 font-sans-md text-bottom">{label}</span>
+        <div className="margin-left-6 margin-bottom-2 text-bold">{amount}</div>
+      </span>
     );
   };
 
   return (
     <div>
-      <h3 className="margin-left-1">{props.title}</h3>
+      <h2 className="margin-left-2px">{props.title}</h2>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={partWholeData} layout="vertical">
+        <BarChart
+          data={partWholeData}
+          layout="vertical"
+          margin={{ right: -50, left: -50 }}
+        >
           <CartesianGrid horizontal={false} vertical={false} />
           <XAxis
             tickLine={false}
@@ -84,7 +88,7 @@ const PartWholeChartPreview = (props: Props) => {
           <Legend
             verticalAlign="top"
             formatter={renderLegendText}
-            iconSize={30}
+            iconSize={24}
           />
           {partWholeParts.map((part, index) => {
             return (

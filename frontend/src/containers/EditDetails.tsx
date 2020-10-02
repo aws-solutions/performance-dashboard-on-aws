@@ -83,6 +83,7 @@ function EditDetails() {
             <Button type="submit">Save</Button>
             <Button
               variant="unstyled"
+              type="button"
               className="margin-left-1"
               onClick={onCancel}
             >

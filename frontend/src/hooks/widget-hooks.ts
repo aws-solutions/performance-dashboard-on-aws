@@ -64,7 +64,7 @@ export function useWidgets(
         });
       }
     }
-    if (filesDownloaded.length && onWidgetsFetched) {
+    if (onWidgetsFetched) {
       onWidgetsFetched(filesDownloaded);
     }
   }, [widgets, onWidgetsFetched]);

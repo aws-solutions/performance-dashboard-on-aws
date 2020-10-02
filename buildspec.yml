@@ -11,30 +11,17 @@ phases:
       # Install dependencies
       - npm install -g aws-cdk
       - ./install.sh
-  
+
   pre_build:
     commands:
-      # Run backend tests
-      - cd backend
-      - npm run test:ci
-      - cd ..
-      # Run frontend tests
-      - cd frontend
-      # Avoid interactive mode on tests
-      - export CI=true
-      - npm run test
-      - cd ..
-      # Run cdk tests
-      - cd cdk
-      - npm run test
-      - cd ..
+      - ./test.sh
 
   build:
     commands:
       # Deploy
       ./deploy.sh $ENVIRONMENT
 
-artifacts: 
-    base-directory: cdk/cdk.out
-    files: 
-        - '**/*'
+artifacts:
+  base-directory: cdk/cdk.out
+  files:
+    - "**/*"

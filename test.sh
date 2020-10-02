@@ -1,9 +1,11 @@
+# Runs unit tests for all 3 packages. 
+
 #
 # Backend
 #
 cd backend
 echo "Running backend unit tests"
-npm run test
+npm run test:ci # Avoid interactive mode on tests
 cd ..
 
 #
@@ -11,7 +13,7 @@ cd ..
 #
 cd frontend
 echo "Running frontend unit tests"
-CI=true yarn test
+CI=true yarn test # Avoid interactive mode on tests
 cd ..
 
 #

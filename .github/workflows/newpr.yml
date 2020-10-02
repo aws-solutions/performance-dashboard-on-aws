@@ -25,21 +25,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       # Install npm dependencies
-      - run: ls -al
       - run: ./install.sh
 
       # Run backend tests
-      - run: cd backend
-      - run: npm run test
-      - run: cd ..
-
-      # Run frontend tests
-      - run: cd frontend
-      - run: export CI=true
-      - run: yarn test
-      - run: cd ..
-
-      # Run CDK tests
-      - run: cd cdk
-      - run: npm run test
-      - run: cd ..
+      - run: ./test.sh

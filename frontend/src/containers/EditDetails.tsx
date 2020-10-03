@@ -15,11 +15,15 @@ interface FormValues {
   description: string;
 }
 
+interface PathParams {
+  dashboardId: string;
+}
+
 function EditDetails() {
   const history = useHistory();
   const { topicareas } = useTopicAreas();
-  const { dashboardId } = useParams();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboardId } = useParams<PathParams>();
+  const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
 
   const onSubmit = async (values: FormValues) => {
@@ -36,6 +40,10 @@ function EditDetails() {
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
+
+  if (!dashboard || !topicareas || topicareas.length === 0) {
+    return null;
+  }
 
   return (
     <AdminLayout>
@@ -62,8 +70,8 @@ function EditDetails() {
               name="topicAreaId"
               label="Topic Area"
               hint="Select an existing topic area"
-              register={register}
               defaultValue={dashboard?.topicAreaId}
+              register={register}
               options={topicareas.map((topicarea) => ({
                 value: topicarea.id,
                 label: topicarea.name,
@@ -80,7 +88,9 @@ function EditDetails() {
             />
 
             <br />
-            <Button type="submit">Save</Button>
+            <Button type="submit" disabled={loading}>
+              Save
+            </Button>
             <Button
               variant="unstyled"
               type="button"

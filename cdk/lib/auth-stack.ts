@@ -16,100 +16,21 @@ export class AuthStack extends cdk.Stack {
 
     const pool = new cognito.UserPool(this, "BadgerUserPool");
     const client = pool.addClient("BadgerFrontend");
-    const identityPool = new cognito.CfnIdentityPool(
-      this,
-      "BadgerIdentityPool",
-      {
-        allowUnauthenticatedIdentities: false,
-        cognitoIdentityProviders: [
-          {
-            clientId: client.userPoolClientId,
-            providerName: pool.userPoolProviderName,
-            serverSideTokenCheck: true,
-          },
-        ],
-      }
-    );
+    const identityPool = this.buildIdentityPool(pool, client);
 
-    const authenticatedRole = new iam.Role(this, "CognitoAuthRole", {
-      assumedBy: new iam.FederatedPrincipal(
-        "cognito-identity.amazonaws.com",
-        {
-          StringEquals: {
-            "cognito-identity.amazonaws.com:aud": identityPool.ref,
-          },
-          "ForAnyValue:StringLike": {
-            "cognito-identity.amazonaws.com:amr": "authenticated",
-          },
-        },
-        "sts:AssumeRoleWithWebIdentity"
-      ),
-    });
+    const stack = cdk.Stack.of(this);
+    const bucketArn = `arn:${stack.partition}:s3:::${props.datasetsBucketName}`;
+
+    const authenticatedRole = this.buildAuthRole(identityPool, bucketArn);
+    const publicRole = this.buildPublicRole(identityPool, bucketArn);
 
     new cognito.CfnIdentityPoolRoleAttachment(this, "AuthRoleAttachment", {
       identityPoolId: identityPool.ref,
       roles: {
         authenticated: authenticatedRole.roleArn,
+        unauthenticated: publicRole.roleArn,
       },
     });
-
-    authenticatedRole.addToPolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: [
-          "cognito-sync:*",
-          "cognito-identity:*",
-        ],
-        resources: ["*"],
-      })
-    );
-
-    // The following policy gives Badger user's access to the datasets S3 bucket
-    // to upload files. The permissions on this policy are taken from the Amplify docs:
-    // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#using-amazon-s3
-
-    const stack = cdk.Stack.of(this);
-    const bucketArn = `arn:${stack.partition}:s3:::${props.datasetsBucketName}`;
-    authenticatedRole.addToPolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: [
-          "s3:GetObject",
-          "s3:PutObject",
-        ],
-        resources: [
-          bucketArn.concat("/public/*"),
-          bucketArn.concat("/protected/${cognito-identity.amazonaws.com:sub}/*"),
-          bucketArn.concat("/private/${cognito-identity.amazonaws.com:sub}/*"),
-        ]
-      })
-    );
-
-    authenticatedRole.addToPolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: [
-          "s3:PutObject",
-        ],
-        resources: [
-          bucketArn.concat("/uploads/*"),
-        ]
-      })
-    );
-
-    authenticatedRole.addToPolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: [
-          "s3:GetObject",
-        ],
-        resources: [
-          bucketArn.concat("/protected/*"),
-        ]
-      })
-    );
-
-    
 
     /**
      * Outputs
@@ -123,6 +44,124 @@ export class AuthStack extends cdk.Stack {
     new cdk.CfnOutput(this, "UserPoolId", { value: this.userPoolId });
     new cdk.CfnOutput(this, "IdentityPoolId", {
       value: identityPool.ref,
+    });
+  }
+
+  private buildIdentityPool(
+    userPool: cognito.UserPool,
+    client: cognito.UserPoolClient
+  ) {
+    return new cognito.CfnIdentityPool(this, "BadgerIdentityPool", {
+      allowUnauthenticatedIdentities: true,
+      cognitoIdentityProviders: [
+        {
+          clientId: client.userPoolClientId,
+          providerName: userPool.userPoolProviderName,
+          serverSideTokenCheck: true,
+        },
+      ],
+    });
+  }
+
+  private buildPublicRole(
+    identityPool: cognito.CfnIdentityPool,
+    bucketArn: string
+  ): iam.Role {
+    const publicRole = this.buildIdentityPoolRole(
+      "CognitoPublicRole",
+      "unauthenticated",
+      identityPool
+    );
+
+    // The public role is assumed by unauthenticated identities in Badger. Which means,
+    // any user that lands on the public-facing website that does not have a login.
+    // Need to be careful with what permissions you give to this role. It should be as
+    // restricted as possible.
+
+    publicRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["s3:GetObject"],
+        resources: [bucketArn.concat("/public/*.json")],
+      })
+    );
+
+    return publicRole;
+  }
+
+  private buildAuthRole(
+    identityPool: cognito.CfnIdentityPool,
+    bucketArn: string
+  ): iam.Role {
+    const authRole = this.buildIdentityPoolRole(
+      "CognitoAuthRole",
+      "authenticated",
+      identityPool
+    );
+
+    // The following policy gives Badger user's access to the datasets S3 bucket
+    // to upload files. The permissions on this policy are taken from the Amplify docs:
+    // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#using-amazon-s3
+
+    authRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["s3:GetObject", "s3:PutObject"],
+        resources: [
+          bucketArn.concat("/public/*"),
+          bucketArn.concat(
+            "/protected/${cognito-identity.amazonaws.com:sub}/*"
+          ),
+          bucketArn.concat("/private/${cognito-identity.amazonaws.com:sub}/*"),
+        ],
+      })
+    );
+
+    authRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["s3:PutObject"],
+        resources: [bucketArn.concat("/uploads/*")],
+      })
+    );
+
+    authRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["s3:GetObject"],
+        resources: [bucketArn.concat("/protected/*")],
+      })
+    );
+
+    authRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["cognito-sync:*", "cognito-identity:*"],
+        resources: ["*"],
+      })
+    );
+
+    return authRole;
+  }
+
+  private buildIdentityPoolRole(
+    name: string,
+    type: "authenticated" | "unauthenticated",
+    identityPool: cognito.CfnIdentityPool
+  ): iam.Role {
+    return new iam.Role(this, name, {
+      assumedBy: new iam.FederatedPrincipal(
+        "cognito-identity.amazonaws.com",
+        {
+          StringEquals: {
+            "cognito-identity.amazonaws.com:aud": identityPool.ref,
+          },
+          "ForAnyValue:StringLike": {
+            "cognito-identity.amazonaws.com:amr": type,
+          },
+        },
+        "sts:AssumeRoleWithWebIdentity"
+      ),
     });
   }
 }

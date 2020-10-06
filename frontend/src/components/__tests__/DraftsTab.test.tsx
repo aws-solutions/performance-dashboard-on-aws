@@ -1,27 +1,36 @@
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import DashboardListing from "../DashboardListing";
+import DraftsTab from "../DraftsTab";
+import { Dashboard } from "../../models";
 
 jest.mock("../../hooks");
 
-test("renders a textfield Dashboards", async () => {
-  const { getByText } = render(<DashboardListing />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Dashboards")).toBeInTheDocument();
-});
-
-test("renders the tabs", async () => {
-  const { getByText } = render(<DashboardListing />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Drafts (1)")).toBeInTheDocument();
-  expect(getByText("Published (1)")).toBeInTheDocument();
-});
+const dashboards: Array<Dashboard> = [
+  {
+    id: "abc",
+    name: "Dashboard One",
+    topicAreaId: "123456789",
+    topicAreaName: "Topic Area Bananas",
+    createdBy: "test user",
+    state: "Draft",
+    updatedAt: new Date(),
+    widgets: [],
+  },
+  {
+    id: "xyz",
+    name: "Dashboard Two",
+    topicAreaId: "987654321",
+    topicAreaName: "Topic Area Grapes",
+    createdBy: "test user",
+    state: "Draft",
+    updatedAt: new Date(),
+    widgets: [],
+  },
+];
 
 test("renders a button to delete", async () => {
-  const { getByRole } = render(<DashboardListing />, {
+  const { getByRole } = render(<DraftsTab dashboards={[]} />, {
     wrapper: MemoryRouter,
   });
   const button = getByRole("button", { name: "Delete" });
@@ -29,7 +38,7 @@ test("renders a button to delete", async () => {
 });
 
 test("renders a button to publish", async () => {
-  const { getByRole } = render(<DashboardListing />, {
+  const { getByRole } = render(<DraftsTab dashboards={[]} />, {
     wrapper: MemoryRouter,
   });
   const button = getByRole("button", { name: "Publish" });
@@ -37,7 +46,7 @@ test("renders a button to publish", async () => {
 });
 
 test("renders a button to create dashboard", async () => {
-  const { getByRole } = render(<DashboardListing />, {
+  const { getByRole } = render(<DraftsTab dashboards={[]} />, {
     wrapper: MemoryRouter,
   });
   const button = getByRole("button", { name: "Create dashboard" });
@@ -45,23 +54,31 @@ test("renders a button to create dashboard", async () => {
 });
 
 test("renders a dashboard table", async () => {
-  const { getByRole } = render(<DashboardListing />, {
+  const { getByRole } = render(<DraftsTab dashboards={dashboards} />, {
     wrapper: MemoryRouter,
   });
 
   const dashboard1 = getByRole("link", { name: "Dashboard One" });
   expect(dashboard1).toBeInTheDocument();
+
+  const dashboard2 = getByRole("link", { name: "Dashboard Two" });
+  expect(dashboard2).toBeInTheDocument();
 });
 
 test("filters dashboards based on search input", async () => {
-  const { getByLabelText, getByRole } = render(<DashboardListing />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByLabelText, getByRole } = render(
+    <DraftsTab dashboards={dashboards} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
 
   const dashboard1 = getByRole("link", { name: "Dashboard One" });
+  const dashboard2 = getByRole("link", { name: "Dashboard Two" });
 
   // Make sure both dashboards show up in the table
   expect(dashboard1).toBeInTheDocument();
+  expect(dashboard2).toBeInTheDocument();
 
   // Use search input to filter
   const search = getByLabelText("Search");
@@ -78,4 +95,5 @@ test("filters dashboards based on search input", async () => {
 
   // Dashboard one should dissapear
   expect(dashboard1).not.toBeInTheDocument();
+  expect(dashboard2).toBeInTheDocument();
 });

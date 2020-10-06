@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Tabs component 1`] = `
+<div>
+  <div
+    class="tabs"
+  >
+    <ol
+      class="border-base-lighter border-bottom padding-left-0"
+    >
+      <li
+        class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md bg-white border-base-dark border-x-0 border-top-0 border-bottom-05"
+      >
+        Tab 1
+      </li>
+      <li
+        class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+      >
+        Tab 2
+      </li>
+    </ol>
+    <div
+      class="tab-content"
+    >
+      Tab 1
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders the Tabs component with default tab 2 selected 1`] = `
+<div>
+  <div
+    class="tabs"
+  >
+    <ol
+      class="border-base-lighter border-bottom padding-left-0"
+    >
+      <li
+        class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+      >
+        Tab 1
+      </li>
+      <li
+        class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md bg-white border-base-dark border-x-0 border-top-0 border-bottom-05"
+      >
+        Tab 2
+      </li>
+    </ol>
+    <div
+      class="tab-content"
+    >
+      Tab 2
+    </div>
+  </div>
+</div>
+`;

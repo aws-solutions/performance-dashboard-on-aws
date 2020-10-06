@@ -9,6 +9,13 @@ import "uswds/dist/css/uswds.css";
 import "uswds/dist/js/uswds.js";
 import "./index.css";
 
+declare module "react" {
+  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+    // extends React's HTMLAttributes
+    label?: string;
+  }
+}
+
 dayjs.extend(relativeTime);
 
 Amplify.configure({

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders markdown text 1`] = `
+<div>
+  <div>
+    <h2>
+      Benefits of Bananas
+    </h2>
+    <p>
+      This 
+      <strong>
+        text
+      </strong>
+       has 
+      <em>
+        markdown
+      </em>
+    </p>
+  </div>
+</div>
+`;

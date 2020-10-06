@@ -38,16 +38,28 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
 type UseDashboardsHook = {
   loading: boolean;
   dashboards: Array<Dashboard>;
+  draftsDashboards: Array<Dashboard> | null;
+  publishedDashboards: Array<Dashboard> | null;
 };
 
 export function useDashboards(): UseDashboardsHook {
   const [loading, setLoading] = useState(false);
   const [dashboards, setDashboards] = useState([]);
+  const [draftsDashboards, setDraftsDashboards] = useState<Array<
+    Dashboard
+  > | null>(null);
+  const [publishedDashboards, setPublishedDashboards] = useState<Array<
+    Dashboard
+  > | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       const data = await BadgerService.fetchDashboards();
+      setDraftsDashboards(data.filter((d: Dashboard) => d.state === "Draft"));
+      setPublishedDashboards(
+        data.filter((d: Dashboard) => d.state === "Published")
+      );
       setDashboards(data);
       setLoading(false);
     };
@@ -57,5 +69,7 @@ export function useDashboards(): UseDashboardsHook {
   return {
     loading,
     dashboards,
+    draftsDashboards,
+    publishedDashboards,
   };
 }

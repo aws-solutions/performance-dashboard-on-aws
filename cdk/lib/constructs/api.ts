@@ -31,6 +31,14 @@ export class BadgerApi extends cdk.Construct {
       identitySource: "method.request.header.Authorization",
     });
 
+    this.addPrivateEndpoints(apiIntegration, authorizer);
+    this.addPublicEndpoints(apiIntegration);
+  }
+
+  private addPrivateEndpoints(
+    apiIntegration: apigateway.LambdaIntegration,
+    authorizer: apigateway.CfnAuthorizer
+  ) {
     // Defined resource props to the top level resources and they automatically
     // get applied recursively to their children endpoints.
     const methodProps: apigateway.MethodOptions = {
@@ -72,10 +80,18 @@ export class BadgerApi extends cdk.Construct {
 
     const datasets = this.api.root.addResource("dataset");
     datasets.addMethod("POST", apiIntegration, methodProps);
+  }
 
+  private addPublicEndpoints(apiIntegration: apigateway.LambdaIntegration) {
     // Public endpoints that do not require authentication.
     // Not passing `methodProps` is what makes the endpoint public.
     const homepage = this.api.root.addResource("homepage");
     homepage.addMethod("GET", apiIntegration);
+
+    const publicapi = this.api.root.addResource("public");
+    const dashboards = publicapi.addResource("dashboard");
+
+    const dashboard = dashboards.addResource("{id}");
+    dashboard.addMethod("GET", apiIntegration);
   }
 }

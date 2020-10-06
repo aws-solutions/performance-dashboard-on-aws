@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { ItemNotFound } from "../errors";
+import { Dashboard, DashboardState } from "../models/dashboard";
 import DashboardFactory from "../factories/dashboard-factory";
 import AuthService from "../services/auth";
 import DashboardRepository from "../repositories/dashboard-repo";
@@ -55,22 +57,49 @@ async function createDashboard(req: Request, res: Response) {
 
 async function getDashboardById(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
-
   if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
+    res.status(401);
+    return res.send("Unauthorized");
   }
 
   const { id } = req.params;
+  const repo = DashboardRepository.getInstance();
 
-  if (!id) {
-    res.status(400).send("Missing required field `id`");
-    return;
+  try {
+    const dashboard = await repo.getDashboardWithWidgets(id);
+    return res.json(dashboard);
+  } catch (err) {
+    if (err instanceof ItemNotFound) {
+      res.status(404);
+      return res.send("Dashboard not found");
+    }
+    throw err;
   }
+}
+
+async function getPublicDashboardById(req: Request, res: Response) {
+  const { id } = req.params;
 
   const repo = DashboardRepository.getInstance();
-  const dashboard = await repo.getDashboardWithWidgets(id);
-  res.json(dashboard);
+  let dashboard: Dashboard;
+
+  try {
+    dashboard = await repo.getDashboardWithWidgets(id);
+  } catch (err) {
+    if (err instanceof ItemNotFound) {
+      res.status(404);
+      return res.send("Dashboard not found");
+    }
+    throw err;
+  }
+
+  if (dashboard.state !== DashboardState.Published) {
+    res.status(404);
+    return res.send("Dashboard not found");
+  }
+
+  const publicDashboard = DashboardFactory.toPublic(dashboard);
+  return res.json(publicDashboard);
 }
 
 async function updateDashboard(req: Request, res: Response) {
@@ -82,12 +111,6 @@ async function updateDashboard(req: Request, res: Response) {
   }
 
   const { id } = req.params;
-
-  if (!id) {
-    res.status(400).send("Missing required field `id`");
-    return;
-  }
-
   const { name, topicAreaId, description, updatedAt } = req.body;
 
   if (!name) {
@@ -114,7 +137,7 @@ async function updateDashboard(req: Request, res: Response) {
     topicAreaId,
     topicArea.name,
     description,
-    "Draft",
+    DashboardState.Draft,
     user,
     new Date(updatedAt)
   );
@@ -133,12 +156,6 @@ async function publishDashboard(req: Request, res: Response) {
   }
 
   const { id } = req.params;
-
-  if (!id) {
-    res.status(400).send("Missing required field `id`");
-    return;
-  }
-
   const { updatedAt } = req.body;
 
   if (!updatedAt) {
@@ -161,11 +178,6 @@ async function deleteDashboard(req: Request, res: Response) {
 
   const { id } = req.params;
 
-  if (!id) {
-    res.status(400).send("Missing required field `id`");
-    return;
-  }
-
   const repo = DashboardRepository.getInstance();
   await repo.delete(id);
   return res.send();
@@ -178,4 +190,5 @@ export default {
   updateDashboard,
   publishDashboard,
   deleteDashboard,
+  getPublicDashboardById,
 };

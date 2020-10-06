@@ -618,6 +618,48 @@
 			"response": []
 		},
 		{
+			"name": "Verify draft dashboard is not yet public",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c0542246-51bb-43f4-b933-fbf17f1d69dd",
+						"exec": [
+							"pm.test(\"returns 404 not found\", () => {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/public/dashboard/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"public",
+						"dashboard",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{dashboard.id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Publish dashboard",
 			"event": [
 				{
@@ -715,6 +757,54 @@
 					],
 					"path": [
 						"homepage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify dashboard using public api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "45e2b3e4-32c0-48f0-9bf3-1b02ce594256",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"response contains dashboard\", () => {",
+							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
+							"    const dashboard = pm.response.json();",
+							"    pm.expect(dashboard.id).to.equal(id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/public/dashboard/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"public",
+						"dashboard",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{dashboard.id}}"
+						}
 					]
 				}
 			},
@@ -918,62 +1008,62 @@
 	],
 	"variable": [
 		{
-			"id": "b2c87120-3c47-45c9-97f2-29a52ade58e1",
+			"id": "ba463f4a-5d45-4e00-8e57-d6ba99040175",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "cdf30322-8da9-4f8a-99be-4da921384e63",
+			"id": "b01e4128-4bed-4539-9dc1-19e2f19829b4",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "867bd36d-7930-4012-a2db-83541e4d0e2c",
+			"id": "987cacd2-9994-40c8-98e1-73facdd1c418",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "ed6142b6-e17e-439c-889a-3b16b47c3f3f",
+			"id": "48ce4077-9b53-42e5-9ca1-c495f5414033",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "11254015-0fb4-4ab0-9909-ea4c3161c199",
+			"id": "14c596b8-27a2-4378-b35d-3edef1c23c5b",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "d5f620d4-886f-4fed-b1d8-d73f211dde48",
+			"id": "e2a05d42-c773-4fd3-a831-8916629ffb65",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "e89869ad-6ea3-4076-987a-6dfd0743a85f",
+			"id": "e23ff7f6-ac89-44ea-afdc-623acca3beee",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "8e3bf944-edb0-4845-b8cb-45d916eaed5a",
+			"id": "c87c412e-e257-4b71-8a27-b5b2481eaef6",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "805b0b7e-f24a-4d0e-a111-f64cbc79083b",
+			"id": "09cb5c5f-3796-4c93-a439-0142ca9d250d",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "c42eb11e-1607-4040-852d-e934dc76d14a",
+			"id": "3301b462-eaee-4b83-881b-6d344f6db562",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "bc9db4bc-6916-4aaf-af17-0bee50fb7c39",
+			"id": "e751055c-b071-48bb-94ea-fa3d4cc19fa9",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "95ec70f3-224a-4141-b5a3-fb2cd155251f",
+			"id": "0b30fe78-92e7-428b-8c32-b4529bf6164d",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		}

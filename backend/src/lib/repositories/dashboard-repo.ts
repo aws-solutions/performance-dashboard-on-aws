@@ -3,6 +3,7 @@ import DashboardFactory from "../factories/dashboard-factory";
 import TopicAreaFactory from "../factories/topicarea-factory";
 import WidgetFactory from "../factories/widget-factory";
 import { WidgetItem } from "../models/widget";
+import { ItemNotFound } from "../errors";
 import {
   Dashboard,
   DashboardList,
@@ -232,7 +233,7 @@ class DashboardRepository extends BaseRepository {
     });
 
     if (!result.Items || result.Items.length === 0) {
-      throw new Error("Dashboard not found");
+      throw new ItemNotFound();
     }
 
     // Query returns multiple items, one of them is the master record

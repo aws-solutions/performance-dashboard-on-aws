@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
+import { DashboardState, Dashboard } from "../../models/dashboard";
+import { ItemNotFound } from "../../errors";
 import DashboardCtrl from "../dashboard-ctrl";
 import DashboardFactory from "../../factories/dashboard-factory";
 import DashboardRepository from "../../repositories/dashboard-repo";
@@ -101,13 +103,6 @@ describe("updateDashboard", () => {
     expect(res.send).toBeCalledWith("Unauthorized");
   });
 
-  it("returns a 400 error when id is missing", async () => {
-    delete req.params.id;
-    await DashboardCtrl.updateDashboard(req, res);
-    expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Missing required field `id`");
-  });
-
   it("returns a 400 error when name is missing", async () => {
     delete req.body.name;
     await DashboardCtrl.updateDashboard(req, res);
@@ -170,13 +165,6 @@ describe("publishDashboard", () => {
     expect(res.send).toBeCalledWith("Unauthorized");
   });
 
-  it("returns a 400 error when id is missing", async () => {
-    delete req.params.id;
-    await DashboardCtrl.publishDashboard(req, res);
-    expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Missing required field `id`");
-  });
-
   it("returns a 400 error when updatedAt is missing", async () => {
     delete req.body.updatedAt;
     await DashboardCtrl.publishDashboard(req, res);
@@ -211,15 +199,75 @@ describe("deleteDashboard", () => {
     expect(res.send).toBeCalledWith("Unauthorized");
   });
 
-  it("returns a 400 error when id is missing", async () => {
-    delete req.params.id;
-    await DashboardCtrl.deleteDashboard(req, res);
-    expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Missing required field `id`");
-  });
-
   it("deletes the dashboard", async () => {
     await DashboardCtrl.deleteDashboard(req, res);
     expect(repository.delete).toBeCalledWith("090b0410");
+  });
+});
+
+describe("getPublicDashboardById", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = ({
+      params: {
+        id: "090b0410",
+      },
+    } as any) as Request;
+  });
+
+  it("returns the public representation of a dashboard", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      widgets: [],
+    };
+
+    repository.getDashboardWithWidgets = jest.fn().mockReturnValue(dashboard);
+    const publicDashboard = DashboardFactory.toPublic(dashboard);
+
+    await DashboardCtrl.getPublicDashboardById(req, res);
+    expect(res.json).toBeCalledWith(expect.objectContaining(publicDashboard));
+  });
+
+  it("returns a 404 error when dashboard not found", async () => {
+    repository.getDashboardWithWidgets = jest
+      .fn()
+      .mockImplementationOnce(() => {
+        throw new ItemNotFound();
+      });
+
+    await DashboardCtrl.getPublicDashboardById(req, res);
+    expect(res.status).toBeCalledWith(404);
+    expect(res.send).toBeCalledWith("Dashboard not found");
+  });
+
+  it("returns a 404 error when dashboard is draft", async () => {
+    repository.getDashboardWithWidgets = jest.fn().mockReturnValueOnce({
+      id: "123",
+      name: "My Dashboard",
+      state: DashboardState.Draft,
+    });
+
+    await DashboardCtrl.getPublicDashboardById(req, res);
+    expect(res.status).toBeCalledWith(404);
+    expect(res.send).toBeCalledWith("Dashboard not found");
+  });
+
+  it("returns a 404 error when dashboard is archived", async () => {
+    repository.getDashboardWithWidgets = jest.fn().mockReturnValueOnce({
+      id: "123",
+      name: "My Dashboard",
+      state: DashboardState.Archived,
+    });
+
+    await DashboardCtrl.getPublicDashboardById(req, res);
+    expect(res.status).toBeCalledWith(404);
+    expect(res.send).toBeCalledWith("Dashboard not found");
   });
 });

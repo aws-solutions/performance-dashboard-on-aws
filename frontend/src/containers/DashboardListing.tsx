@@ -4,7 +4,6 @@ import AdminLayout from "../layouts/Admin";
 import Tabs from "../components/Tabs";
 import DraftsTab from "../components/DraftsTab";
 import PublishedTab from "../components/PublishedTab";
-import qs from "qs";
 import { useLocation } from "react-router-dom";
 
 function DashboardListing() {
@@ -20,8 +19,8 @@ function DashboardListing() {
 
   let defaultActive = draftsTab;
 
-  const queryString = qs.parse(search);
-  if (queryString["?tab"] === "published") {
+  const queryString = search.split("=");
+  if (queryString.length > 1 && queryString[1] === "published") {
     defaultActive = publishedTab;
   }
 

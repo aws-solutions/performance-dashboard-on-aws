@@ -1,5 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 import { useHomepage } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import MainLayout from "../layouts/Main";
@@ -45,7 +46,7 @@ function Home() {
                       key={dashboard.id}
                       className="border-bottom border-base-light padding-2"
                     >
-                      <a href="/dashboard">{dashboard.name}</a>
+                      <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
                       <br />
                       <span className="text-base text-italic">
                         Last updated {updatedAt}

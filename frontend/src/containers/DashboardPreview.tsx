@@ -5,14 +5,10 @@ import { useDashboard, useWidgets } from "../hooks";
 import { Widget, LocationState } from "../models";
 import AdminLayout from "../layouts/Admin";
 import ReactMarkdown from "react-markdown";
-import LineChartPreview from "../components/LineChartPreview";
-import ColumnChartPreview from "../components/ColumnChartPreview";
-import BarChartPreview from "../components/BarChartPreview";
-import PartWholeChartPreview from "../components/PartWholeChartPreview";
-import TablePreview from "../components/TablePreview";
 import Button from "../components/Button";
 import BadgerService from "../services/BadgerService";
 import Alert from "../components/Alert";
+import WidgetRender from "../components/WidgetRender";
 import "./DashboardPreview.css";
 
 interface PathParams {
@@ -124,83 +120,14 @@ function DashboardPreview() {
       </div>
       <hr />
 
-      {allFilesProcessed
-        ? dashboard?.widgets.map((widget, index) => {
-            if (widget.widgetType === "Text") {
-              return (
-                <div className="margin-top-5" key={index}>
-                  <h2>{widget.name}</h2>
-                  <ReactMarkdown source={widget.content.text} />
-                </div>
-              );
-            }
-            const keys =
-              widget &&
-              widget.content &&
-              widget.content.data &&
-              widget.content.data.length
-                ? (Object.keys(widget.content.data[0]) as Array<string>)
-                : [];
-            if (widget.widgetType === "Chart") {
-              if (widget.content.chartType === "LineChart") {
-                return (
-                  <div className="margin-top-5" key={index}>
-                    <LineChartPreview
-                      title={widget.content.title}
-                      lines={keys}
-                      data={widget.content.data}
-                    />
-                  </div>
-                );
-              }
-              if (widget.content.chartType === "ColumnChart") {
-                return (
-                  <div className="margin-top-5" key={index}>
-                    <ColumnChartPreview
-                      title={widget.content.title}
-                      columns={keys}
-                      data={widget.content.data}
-                    />
-                  </div>
-                );
-              }
-              if (widget.content.chartType === "BarChart") {
-                return (
-                  <div className="margin-top-5" key={index}>
-                    <BarChartPreview
-                      title={widget.content.title}
-                      bars={keys}
-                      data={widget.content.data}
-                    />
-                  </div>
-                );
-              }
-              if (widget.content.chartType === "PartWholeChart") {
-                return (
-                  <div className="margin-top-5" key={index}>
-                    <PartWholeChartPreview
-                      title={widget.content.title}
-                      parts={keys}
-                      data={widget.content.data}
-                    />
-                  </div>
-                );
-              }
-            }
-            if (widget.widgetType === "Table") {
-              return (
-                <div className="margin-top-5" key={index}>
-                  <TablePreview
-                    title={widget.content.title}
-                    headers={keys}
-                    data={widget.content.data}
-                  />
-                </div>
-              );
-            }
-            return "";
-          })
-        : ""}
+      {allFilesProcessed &&
+        dashboard?.widgets.map((widget, index) => {
+          return (
+            <div className="margin-top-5">
+              <WidgetRender key={index} widget={widget} />
+            </div>
+          );
+        })}
     </AdminLayout>
   );
 }

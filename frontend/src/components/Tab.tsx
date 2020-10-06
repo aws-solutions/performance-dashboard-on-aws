@@ -1,8 +1,5 @@
 import React from "react";
-<<<<<<< HEAD
 import "./Tab.css";
-=======
->>>>>>> d4f0481e73a92bcfa412727851bf2babdd7df514
 
 interface Props {
   activeTab: string;

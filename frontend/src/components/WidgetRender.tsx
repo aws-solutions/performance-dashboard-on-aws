@@ -51,27 +51,27 @@ function WidgetRender(props: Props) {
       case "ColumnChart":
         return (
           <ColumnChartPreview
-            title={widget.content.title}
+            title={content.title}
             columns={keys}
-            data={widget.content.data}
+            data={content.data}
           />
         );
 
       case "BarChart":
         return (
           <BarChartPreview
-            title={widget.content.title}
+            title={content.title}
             bars={keys}
-            data={widget.content.data}
+            data={content.data}
           />
         );
 
       case "PartWholeChart":
         return (
           <PartWholeChartPreview
-            title={widget.content.title}
+            title={content.title}
             parts={keys}
-            data={widget.content.data}
+            data={content.data}
           />
         );
     }

@@ -26,25 +26,21 @@ function WidgetRender(props: Props) {
       ? (Object.keys(widget.content.data[0]) as Array<string>)
       : [];
 
+  const { content } = widget;
   if (widget.widgetType === "Table") {
     return (
-      <TablePreview
-        title={widget.content.title}
-        headers={keys}
-        data={widget.content.data}
-      />
+      <TablePreview title={content.title} headers={keys} data={content.data} />
     );
   }
 
   if (widget.widgetType === "Chart") {
-    const { content } = widget;
     switch (content.chartType) {
       case "LineChart":
         return (
           <LineChartPreview
-            title={widget.content.title}
+            title={content.title}
             lines={keys}
-            data={widget.content.data}
+            data={content.data}
           />
         );
 

@@ -37,6 +37,22 @@ export function useDashboards() {
         topicAreaName: "Topic Area Grapes",
       },
     ],
+    draftsDashboards: [
+      {
+        id: "abc",
+        name: "Dashboard One",
+        topicAreaId: "123456789",
+        topicAreaName: "Topic Area Bananas",
+      },
+    ],
+    publishedDashboards: [
+      {
+        id: "xyz",
+        name: "Dashboard Two",
+        topicAreaId: "987654321",
+        topicAreaName: "Topic Area Grapes",
+      },
+    ],
   };
 }
 

@@ -4,6 +4,33 @@
  * calls to happen and instead returns dummy data.
  */
 
+const dummyDashboard = {
+  id: "123",
+  name: "My AWS Dashboard",
+  topicAreaId: "abc",
+  topicAreaName: "Bananas",
+  description: "Some description",
+  updatedAt: "",
+  widgets: [
+    {
+      id: "abc",
+      name: "Dummy text widget",
+      widgetType: "Text",
+      order: 0,
+      updatedAt: "",
+      content: { text: "test" },
+    },
+    {
+      id: "xyz",
+      name: "Dummy chart widget",
+      widgetType: "Chart",
+      order: 1,
+      updatedAt: "",
+      content: {},
+    },
+  ],
+};
+
 export function useTopicAreas() {
   return {
     loading: false,
@@ -61,32 +88,7 @@ export function useDashboard(dashboardId: string) {
     loading: false,
     reloadDashboard: jest.fn(),
     setDashboard: jest.fn(),
-    dashboard: {
-      id: "123",
-      name: "My AWS Dashboard",
-      topicAreaId: "abc",
-      topicAreaName: "Bananas",
-      description: "Some description",
-      updatedAt: "",
-      widgets: [
-        {
-          id: "abc",
-          name: "Dummy text widget",
-          widgetType: "Text",
-          order: 0,
-          updatedAt: "",
-          content: { text: "test" },
-        },
-        {
-          id: "xyz",
-          name: "Dummy chart widget",
-          widgetType: "Chart",
-          order: 1,
-          updatedAt: "",
-          content: {},
-        },
-      ],
-    },
+    dashboard: dummyDashboard,
   };
 }
 
@@ -133,5 +135,13 @@ export function useHomepage() {
         },
       ],
     },
+  };
+}
+
+export function usePublicDashboard(dashboardId: string) {
+  return {
+    loading: false,
+    dashboard: dummyDashboard,
+    reloadDashboard: jest.fn(),
   };
 }

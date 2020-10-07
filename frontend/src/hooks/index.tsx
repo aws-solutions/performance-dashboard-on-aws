@@ -1,4 +1,8 @@
-import { useDashboard, useDashboards } from "./dashboard-hooks";
+import {
+  useDashboard,
+  useDashboards,
+  usePublicDashboard,
+} from "./dashboard-hooks";
 import { useWidget, useWidgets, useColors } from "./widget-hooks";
 import { useTopicAreas } from "./topicarea-hooks";
 import { useHomepage } from "./homepage-hooks";
@@ -14,6 +18,7 @@ import { useHomepage } from "./homepage-hooks";
 
 export {
   useDashboard,
+  usePublicDashboard,
   useDashboards,
   useWidget,
   useWidgets,

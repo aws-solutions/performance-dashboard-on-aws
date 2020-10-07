@@ -23,6 +23,7 @@ const accessLevel = "public";
 const serverSideEncryption = "aws:kms";
 const rawFileTypes: ValidFileTypes = {
   "text/csv": ".csv",
+  "application/vnd.ms-excel": ".csv",
 };
 
 async function downloadDataset(filename: string, title: string): Promise<File> {

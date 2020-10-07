@@ -47,10 +47,7 @@ function Dropdown(props: Props) {
       >
         {props.options.map((option) => {
           return (
-            <option
-              key={option.value}
-              value={option.value}
-            >
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           );

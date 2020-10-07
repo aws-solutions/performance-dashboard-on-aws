@@ -34,7 +34,7 @@ function EditDashboard() {
     ) {
       if (dashboard) {
         await BadgerService.publishDashboard(dashboard.id, dashboard.updatedAt);
-        history.push("/admin/dashboards", {
+        history.push("/admin/dashboards?tab=published", {
           alert: {
             type: "success",
             message: `${dashboard.name} dashboard was successfully published`,

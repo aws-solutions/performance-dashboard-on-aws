@@ -1,81 +1,40 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import { useDashboards } from "../hooks";
-import { Dashboard } from "../models";
 import AdminLayout from "../layouts/Admin";
-import Button from "../components/Button";
-import Search from "../components/Search";
-import DashboardsTable from "../components/DashboardsTable";
-import ScrollTop from "../components/ScrollTop";
-import AlertContainer from "./AlertContainer";
+import Tabs from "../components/Tabs";
+import DraftsTab from "../components/DraftsTab";
+import PublishedTab from "../components/PublishedTab";
+import { useLocation } from "react-router-dom";
 
 function DashboardListing() {
-  const { dashboards } = useDashboards();
-  const [filter, setFilter] = useState("");
-  const [selected, setSelected] = useState<Array<Dashboard>>([]);
-  const history = useHistory();
+  const { search } = useLocation();
+  const { draftsDashboards, publishedDashboards } = useDashboards();
 
-  const createDashboard = () => {
-    history.push("/admin/dashboard/create");
-  };
+  if (!draftsDashboards || !publishedDashboards) {
+    return null;
+  }
 
-  const onSearch = (query: string) => {
-    setFilter(query);
-  };
+  const draftsTab = `Drafts (${draftsDashboards.length})`;
+  const publishedTab = `Published (${publishedDashboards.length})`;
 
-  const onSelect = (selectedDashboards: Array<Dashboard>) => {
-    setSelected(selectedDashboards);
-  };
+  let defaultActive = draftsTab;
 
-  const filterDashboards = (dashboards: Array<Dashboard>): Array<Dashboard> => {
-    return dashboards.filter((dashboard) => {
-      const name = dashboard.name.toLowerCase().trim();
-      const query = filter.toLowerCase();
-      return name.includes(query);
-    });
-  };
-
-  const sortDashboards = (dashboards: Array<Dashboard>): Array<Dashboard> => {
-    return [...dashboards].sort((a, b) => {
-      return a.updatedAt > b.updatedAt ? -1 : 1;
-    });
-  };
+  const queryString = search.split("=");
+  if (queryString.length > 1 && queryString[1] === "published") {
+    defaultActive = publishedTab;
+  }
 
   return (
     <AdminLayout>
       <h1>Dashboards</h1>
-      <p>
-        You have access to view, edit, and/or publish the draft dashboards in
-        this table.
-      </p>
-      <div className="grid-row margin-y-3">
-        <div className="tablet:grid-col-3 padding-top-1px">
-          <Search id="search" onSubmit={onSearch} size="small" />
+      <Tabs defaultActive={defaultActive}>
+        <div label={draftsTab}>
+          <DraftsTab dashboards={draftsDashboards} />
         </div>
-        <div className="tablet:grid-col-9 text-right">
-          <span>
-            <Button variant="base" disabled={selected.length === 0}>
-              Delete
-            </Button>
-          </span>
-          <span>
-            <Button variant="base" disabled={selected.length === 0}>
-              Publish
-            </Button>
-          </span>
-          <span>
-            <Button onClick={createDashboard}>Create dashboard</Button>
-          </span>
+        <div label={publishedTab}>
+          <PublishedTab dashboards={publishedDashboards} />
         </div>
-      </div>
-      <AlertContainer />
-      <DashboardsTable
-        dashboards={sortDashboards(filterDashboards(dashboards))}
-        onSelect={onSelect}
-      />
-      <div className="text-right">
-        <ScrollTop />
-      </div>
+      </Tabs>
     </AdminLayout>
   );
 }

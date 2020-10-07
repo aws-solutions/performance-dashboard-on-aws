@@ -1,5 +1,5 @@
 import { API, Auth } from "aws-amplify";
-import { Dashboard, Dataset, Widget } from "../models";
+import { Dashboard, Dataset, PublicDashboard, Widget } from "../models";
 
 const apiName = "BadgerApi";
 
@@ -175,6 +175,12 @@ async function fetchHomepage() {
   return API.get(apiName, "homepage", {});
 }
 
+async function fetchPublicDashboard(
+  dashboardId: string
+): Promise<PublicDashboard> {
+  return API.get(apiName, `public/dashboard/${dashboardId}`, {});
+}
+
 export default {
   fetchDashboards,
   fetchDashboardById,
@@ -191,4 +197,5 @@ export default {
   createDataset,
   getAuthToken,
   fetchHomepage,
+  fetchPublicDashboard,
 };

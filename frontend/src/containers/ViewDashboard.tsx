@@ -4,7 +4,7 @@ import { parse } from "papaparse";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useDashboard, useWidgets } from "../hooks";
+import { usePublicDashboard, useWidgets } from "../hooks";
 import { Widget } from "../models";
 import MainLayout from "../layouts/Main";
 import WidgetRender from "../components/WidgetRender";
@@ -15,7 +15,7 @@ interface PathParams {
 
 function ViewDashboard() {
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard } = usePublicDashboard(dashboardId);
   const [allFilesProcessed, setAllFilesProcessed] = useState<boolean>(false);
 
   const onFilesProcessed = useCallback(

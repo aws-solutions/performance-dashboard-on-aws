@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { Dashboard } from "../models";
+import { Dashboard, PublicDashboard } from "../models";
 import BadgerService from "../services/BadgerService";
 
 type UseDashboardHook = {
@@ -71,5 +71,40 @@ export function useDashboards(): UseDashboardsHook {
     dashboards,
     draftsDashboards,
     publishedDashboards,
+  };
+}
+
+type UsePublicDashboardHook = {
+  loading: boolean;
+  dashboard?: PublicDashboard;
+  reloadDashboard: Function;
+};
+
+export function usePublicDashboard(
+  dashboardId: string
+): UsePublicDashboardHook {
+  const [loading, setLoading] = useState(false);
+  const [dashboard, setDashboard] = useState<PublicDashboard | undefined>(
+    undefined
+  );
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const data = await BadgerService.fetchPublicDashboard(dashboardId);
+    setLoading(false);
+    if (data) {
+      data.widgets.sort((a, b) => a.order - b.order);
+      setDashboard(data);
+    }
+  }, [dashboardId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return {
+    loading,
+    dashboard,
+    reloadDashboard: fetchData,
   };
 }

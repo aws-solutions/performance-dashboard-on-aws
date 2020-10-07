@@ -154,3 +154,8 @@ test("fetchHomepage makes a GET request to widget API", async () => {
   await BadgerService.fetchHomepage();
   expect(API.get).toHaveBeenCalledWith("BadgerApi", "homepage", {});
 });
+
+test("fetchPublicDashboard makes a GET request to public API", async () => {
+  await BadgerService.fetchPublicDashboard("123");
+  expect(API.get).toHaveBeenCalledWith("BadgerApi", "public/dashboard/123", {});
+});

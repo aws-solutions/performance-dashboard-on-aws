@@ -38,6 +38,30 @@ async function downloadDataset(filename: string, title: string): Promise<File> {
   return data.Body as File;
 }
 
+async function downloadJson(s3Key: string): Promise<Array<any>> {
+  const data: any = await Storage.get(s3Key, {
+    download: true,
+    level: accessLevel,
+    serverSideEncryption,
+  });
+
+  if (!data || !data.Body) {
+    // Default to empty array rather than throwing exception
+    // and making the entire dashboard crash because of a single
+    // malformed dataset.
+    return [];
+  }
+
+  try {
+    const body: Blob = data.Body;
+    const content = await new Response(body).text();
+    return JSON.parse(content);
+  } catch (err) {
+    // Same, defaulting to empty array.
+    return [];
+  }
+}
+
 async function uploadDataset(
   rawFile: File,
   jsonFile: string
@@ -78,5 +102,6 @@ async function uploadDataset(
 
 export default {
   downloadDataset,
+  downloadJson,
   uploadDataset,
 };

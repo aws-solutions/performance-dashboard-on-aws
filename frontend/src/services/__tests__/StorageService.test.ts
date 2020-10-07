@@ -68,3 +68,35 @@ describe("downloadDataset", () => {
     }
   });
 });
+
+describe("downloadJson", () => {
+  test("downloads a JSON file from S3", async () => {
+    await StorageService.downloadJson("123.json");
+    expect(Storage.get).toBeCalledWith("123.json", {
+      download: true,
+      level: "public",
+      serverSideEncryption: "aws:kms",
+    });
+  });
+
+  test("returns the parsed file as a JSON array", async () => {
+    const blob = new Blob(["[1, 2, 3]"]);
+    Storage.get = jest.fn().mockReturnValue({ Body: blob });
+
+    const json = await StorageService.downloadJson("123.json");
+    expect(json).toEqual([1, 2, 3]);
+  });
+
+  test("returns an empty array when file not found", async () => {
+    Storage.get = jest.fn().mockReturnValue({ Body: null });
+    const json = await StorageService.downloadJson("123.json");
+    expect(json).toEqual([]);
+  });
+
+  test("returns an empty array when invalid JSON", async () => {
+    const blob = new Blob(["this is invalid json"]);
+    Storage.get = jest.fn().mockReturnValue({ Body: blob });
+    const json = await StorageService.downloadJson("123.json");
+    expect(json).toEqual([]);
+  });
+});

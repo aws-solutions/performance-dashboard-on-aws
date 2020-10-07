@@ -1,5 +1,6 @@
 import React from "react";
 import { Widget } from "../models";
+import { useJsonDataset } from "../hooks";
 import LineChartPreview from "../components/LineChartPreview";
 import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
@@ -13,35 +14,36 @@ interface Props {
 
 function WidgetRender(props: Props) {
   const widget = props.widget;
+  switch (widget.widgetType) {
+    case "Text":
+      return <TextWidget widget={widget} />;
+    case "Chart":
+      return <WidgetWithDataset widget={widget} />;
+    case "Table":
+      return <WidgetWithDataset widget={widget} />;
+    default:
+      return null;
+  }
+}
 
-  if (widget.widgetType === "Text") {
-    return <TextWidget widget={widget} />;
+function WidgetWithDataset(props: Props) {
+  const { content, widgetType } = props.widget;
+  const { json } = useJsonDataset(content.s3Key.json);
+
+  if (!json || json.length === 0) {
+    return null;
   }
 
-  const keys =
-    widget &&
-    widget.content &&
-    widget.content.data &&
-    widget.content.data.length
-      ? (Object.keys(widget.content.data[0]) as Array<string>)
-      : [];
-
-  const { content } = widget;
-  if (widget.widgetType === "Table") {
-    return (
-      <TablePreview title={content.title} headers={keys} data={content.data} />
-    );
+  const keys = Object.keys(json[0] as Array<string>);
+  if (widgetType === "Table") {
+    return <TablePreview title={content.title} headers={keys} data={json} />;
   }
 
-  if (widget.widgetType === "Chart") {
+  if (widgetType === "Chart") {
     switch (content.chartType) {
       case "LineChart":
         return (
-          <LineChartPreview
-            title={content.title}
-            lines={keys}
-            data={content.data}
-          />
+          <LineChartPreview title={content.title} lines={keys} data={json} />
         );
 
       case "ColumnChart":
@@ -49,17 +51,13 @@ function WidgetRender(props: Props) {
           <ColumnChartPreview
             title={content.title}
             columns={keys}
-            data={content.data}
+            data={json}
           />
         );
 
       case "BarChart":
         return (
-          <BarChartPreview
-            title={content.title}
-            bars={keys}
-            data={content.data}
-          />
+          <BarChartPreview title={content.title} bars={keys} data={json} />
         );
 
       case "PartWholeChart":
@@ -67,7 +65,7 @@ function WidgetRender(props: Props) {
           <PartWholeChartPreview
             title={content.title}
             parts={keys}
-            data={content.data}
+            data={json}
           />
         );
     }

@@ -26,7 +26,11 @@ const dummyDashboard = {
       widgetType: "Chart",
       order: 1,
       updatedAt: "",
-      content: {},
+      content: {
+        s3Key: {
+          json: "xyz.json",
+        },
+      },
     },
   ],
 };
@@ -143,5 +147,12 @@ export function usePublicDashboard(dashboardId: string) {
     loading: false,
     dashboard: dummyDashboard,
     reloadDashboard: jest.fn(),
+  };
+}
+
+export function useJsonDataset(s3Key: string) {
+  return {
+    loading: false,
+    json: [],
   };
 }

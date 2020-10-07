@@ -1,11 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
-import { parse } from "papaparse";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { usePublicDashboard, useWidgets } from "../hooks";
-import { Widget } from "../models";
+import { usePublicDashboard } from "../hooks";
 import MainLayout from "../layouts/Main";
 import WidgetRender from "../components/WidgetRender";
 
@@ -16,45 +14,6 @@ interface PathParams {
 function ViewDashboard() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard } = usePublicDashboard(dashboardId);
-  const [allFilesProcessed, setAllFilesProcessed] = useState<boolean>(false);
-
-  const onFilesProcessed = useCallback(
-    async (files: Array<{ widget: Widget; file: File }>) => {
-      if (!files) {
-        return;
-      }
-
-      Promise.all(
-        [...files].map(
-          (file) =>
-            new Promise((resolve, reject) => {
-              return {
-                data: parse(file.file, {
-                  header: true,
-                  dynamicTyping: true,
-                  skipEmptyLines: true,
-                  comments: "#",
-                  complete: (results) => {
-                    file.widget.content.data = results.data;
-                    resolve(results);
-                  },
-                  error: reject,
-                }),
-              };
-            })
-        )
-      )
-        .then(() => {
-          setAllFilesProcessed(true);
-        })
-        .catch((err) => {
-          console.log("Something went wrong:", err);
-        });
-    },
-    []
-  );
-
-  useWidgets(dashboard?.widgets || [], onFilesProcessed);
 
   return (
     <MainLayout>
@@ -78,14 +37,13 @@ function ViewDashboard() {
         )}
       </div>
       <hr />
-      {allFilesProcessed &&
-        dashboard?.widgets.map((widget, index) => {
-          return (
-            <div className="margin-top-5">
-              <WidgetRender key={index} widget={widget} />
-            </div>
-          );
-        })}
+      {dashboard?.widgets.map((widget, index) => {
+        return (
+          <div className="margin-top-5" key={index}>
+            <WidgetRender widget={widget} />
+          </div>
+        );
+      })}
     </MainLayout>
   );
 }

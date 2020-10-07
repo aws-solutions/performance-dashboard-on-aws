@@ -3002,11 +3002,6 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
 
-"@types/qs@^6.9.5":
-  version "6.9.5"
-  resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.5.tgz#434711bdd49eb5ee69d90c1d67c354a9a8ecb18b"
-  integrity sha512-/JHkVHtx/REVG0VVToGRGH2+23hsYLHdyG+GrvoUGlGAd0ErauXDyvHtRI/7H7mzLm+tBCKA7pfcpkQ1lf58iQ==
-
 "@types/react-dom@^16.9.0":
   version "16.9.8"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.8.tgz#fe4c1e11dfc67155733dfa6aa65108b4971cb423"
@@ -10610,11 +10605,6 @@ qs@6.7.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
-qs@^6.9.4:
-  version "6.9.4"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
-  integrity sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ==
-
 qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
@@ -11525,7 +11515,7 @@ select-hose@^2.0.0:
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
   integrity sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=
 
-selfsigned@^1.10.7:
+selfsigned@1.10.8, selfsigned@^1.10.7:
   version "1.10.8"
   resolved "https://registry.yarnpkg.com/selfsigned/-/selfsigned-1.10.8.tgz#0d17208b7d12c33f8eac85c41835f27fc3d81a30"
   integrity sha512-2P4PtieJeEwVgTU9QEcwIRDQ/mXJLX8/+I3ur+Pg16nS8oNbrGxEso9NyYWy8NAmXiNl4dlAp5MwoNeCWzON4w==

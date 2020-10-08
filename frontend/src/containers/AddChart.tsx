@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
-import { Dataset } from "../models";
+import { Dataset, ChartType, WidgetType } from "../models";
 import StorageService from "../services/StorageService";
 import BadgerService from "../services/BadgerService";
 import AdminLayout from "../layouts/Admin";
@@ -21,9 +21,13 @@ interface FormValues {
   chartType: string;
 }
 
+interface PathParams {
+  dashboardId: string;
+}
+
 function AddChart() {
   const history = useHistory();
-  const { dashboardId } = useParams();
+  const { dashboardId } = useParams<PathParams>();
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
@@ -31,7 +35,7 @@ function AddChart() {
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
-  const [chartType, setChartType] = useState("LineChart");
+  const [chartType, setChartType] = useState<ChartType>(ChartType.LineChart);
   const [loading, setLoading] = useState(false);
 
   const uploadDataset = async (): Promise<Dataset> => {
@@ -57,12 +61,17 @@ function AddChart() {
   const onSubmit = async (values: FormValues) => {
     try {
       const newDataset = await uploadDataset();
-      await BadgerService.createWidget(dashboardId, values.title, "Chart", {
-        title: values.title,
-        chartType: values.chartType,
-        datasetId: newDataset.id,
-        s3Key: newDataset.s3Key,
-      });
+      await BadgerService.createWidget(
+        dashboardId,
+        values.title,
+        WidgetType.Chart,
+        {
+          title: values.title,
+          chartType: values.chartType,
+          datasetId: newDataset.id,
+          s3Key: newDataset.s3Key,
+        }
+      );
     } catch (err) {
       console.log("Failed to save widget", err);
     }
@@ -85,7 +94,7 @@ function AddChart() {
   const handleChartTypeChange = (
     event: React.FormEvent<HTMLFieldSetElement>
   ) => {
-    setChartType((event.target as HTMLInputElement).value);
+    setChartType((event.target as HTMLInputElement).value as ChartType);
   };
 
   const onFileProcessed = (data: File) => {
@@ -159,23 +168,23 @@ function AddChart() {
                   register={register}
                   error={errors.chartType && "Please select a chart type"}
                   onChange={handleChartTypeChange}
-                  defaultValue="LineChart"
+                  defaultValue={ChartType.LineChart}
                   required
                   options={[
                     {
-                      value: "BarChart",
+                      value: ChartType.BarChart,
                       label: "Bar",
                     },
                     {
-                      value: "ColumnChart",
+                      value: ChartType.ColumnChart,
                       label: "Column",
                     },
                     {
-                      value: "LineChart",
+                      value: ChartType.LineChart,
                       label: "Line",
                     },
                     {
-                      value: "PartWholeChart",
+                      value: ChartType.PartWholeChart,
                       label: "Part-to-whole",
                     },
                   ]}
@@ -199,7 +208,7 @@ function AddChart() {
         <div className="grid-col-6">
           <div hidden={!dataset} className="margin-left-4">
             <h4>Preview</h4>
-            {chartType === "LineChart" && (
+            {chartType === ChartType.LineChart && (
               <LineChartPreview
                 title={title}
                 lines={
@@ -210,7 +219,7 @@ function AddChart() {
                 data={dataset}
               />
             )}
-            {chartType === "ColumnChart" && (
+            {chartType === ChartType.ColumnChart && (
               <ColumnChartPreview
                 title={title}
                 columns={
@@ -221,7 +230,7 @@ function AddChart() {
                 data={dataset}
               />
             )}
-            {chartType === "BarChart" && (
+            {chartType === ChartType.BarChart && (
               <BarChartPreview
                 title={title}
                 bars={
@@ -232,7 +241,7 @@ function AddChart() {
                 data={dataset}
               />
             )}
-            {chartType === "PartWholeChart" && (
+            {chartType === ChartType.PartWholeChart && (
               <PartWholeChartPreview
                 title={title}
                 parts={

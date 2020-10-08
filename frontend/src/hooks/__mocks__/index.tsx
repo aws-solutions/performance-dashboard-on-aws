@@ -103,6 +103,9 @@ export function useWidget(
 ) {
   return {
     loading: false,
+    json: [],
+    setJson: jest.fn(),
+    setWidget: jest.fn(),
     widget: {
       id: "123",
       name: "Correlation of COVID cases to deaths",

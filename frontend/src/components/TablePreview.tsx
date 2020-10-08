@@ -37,23 +37,23 @@ const TablePreview = (props: Props) => {
           </tr>
         </thead>
         <tbody>
-          {props.data &&
-            props.data.length &&
-            props.data.map((data, indexData) => {
-              return (
-                <tr key={indexData}>
-                  {props.headers.map((header, index) => {
-                    return index === 0 ? (
-                      <th key={index} scope="row">
-                        {getKeyValue(header)(data)}
-                      </th>
-                    ) : (
-                      <td key={index}>{getKeyValue(header)(data)}</td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+          {props.data
+            ? props.data.map((data, indexData) => {
+                return (
+                  <tr key={indexData}>
+                    {props.headers.map((header, index) => {
+                      return index === 0 ? (
+                        <th key={index} scope="row">
+                          {getKeyValue(header)(data)}
+                        </th>
+                      ) : (
+                        <td key={index}>{getKeyValue(header)(data)}</td>
+                      );
+                    })}
+                  </tr>
+                );
+              })
+            : null}
         </tbody>
       </table>
     </div>

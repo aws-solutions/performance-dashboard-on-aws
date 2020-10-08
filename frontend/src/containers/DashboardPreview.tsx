@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
-import { parse } from "papaparse";
+import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useDashboard, useWidgets } from "../hooks";
-import { Widget, LocationState } from "../models";
+import { useDashboard } from "../hooks";
+import { LocationState } from "../models";
 import AdminLayout from "../layouts/Admin";
 import ReactMarkdown from "react-markdown";
 import Button from "../components/Button";
@@ -19,45 +18,6 @@ function DashboardPreview() {
   const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard } = useDashboard(dashboardId);
-  const [allFilesProcessed, setAllFilesProcessed] = useState<boolean>(false);
-
-  const onFilesProcessed = useCallback(
-    async (files: Array<{ widget: Widget; file: File }>) => {
-      if (!files) {
-        return;
-      }
-
-      Promise.all(
-        [...files].map(
-          (file) =>
-            new Promise((resolve, reject) => {
-              return {
-                data: parse(file.file, {
-                  header: true,
-                  dynamicTyping: true,
-                  skipEmptyLines: true,
-                  comments: "#",
-                  complete: (results) => {
-                    file.widget.content.data = results.data;
-                    resolve(results);
-                  },
-                  error: reject,
-                }),
-              };
-            })
-        )
-      )
-        .then(() => {
-          setAllFilesProcessed(true);
-        })
-        .catch((err) => {
-          console.log("Something went wrong:", err);
-        });
-    },
-    []
-  );
-
-  useWidgets(dashboard?.widgets || [], onFilesProcessed);
 
   const onPublish = async () => {
     if (
@@ -120,14 +80,13 @@ function DashboardPreview() {
       </div>
       <hr />
 
-      {allFilesProcessed &&
-        dashboard?.widgets.map((widget, index) => {
-          return (
-            <div className="margin-top-5">
-              <WidgetRender key={index} widget={widget} />
-            </div>
-          );
-        })}
+      {dashboard?.widgets.map((widget, index) => {
+        return (
+          <div className="margin-top-5" key={index}>
+            <WidgetRender widget={widget} />
+          </div>
+        );
+      })}
     </AdminLayout>
   );
 }

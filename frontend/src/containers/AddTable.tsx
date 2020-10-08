@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { Dataset } from "../models";
+import { Dataset, WidgetType } from "../models";
 import BadgerService from "../services/BadgerService";
 import StorageService from "../services/StorageService";
 import AdminLayout from "../layouts/Admin";
@@ -16,9 +16,13 @@ interface FormValues {
   title: string;
 }
 
+interface PathParams {
+  dashboardId: string;
+}
+
 function AddTable() {
   const history = useHistory();
-  const { dashboardId } = useParams();
+  const { dashboardId } = useParams<PathParams>();
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
@@ -51,11 +55,16 @@ function AddTable() {
   const onSubmit = async (values: FormValues) => {
     try {
       const newDataset = await uploadDataset();
-      await BadgerService.createWidget(dashboardId, values.title, "Table", {
-        title: values.title,
-        datasetId: newDataset.id,
-        s3Key: newDataset.s3Key,
-      });
+      await BadgerService.createWidget(
+        dashboardId,
+        values.title,
+        WidgetType.Table,
+        {
+          title: values.title,
+          datasetId: newDataset.id,
+          s3Key: newDataset.s3Key,
+        }
+      );
     } catch (err) {
       console.log("Failed to save widget", err);
     }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
+import { WidgetType } from "../models";
 import BadgerService from "../services/BadgerService";
 import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -13,9 +14,13 @@ interface FormValues {
   text: string;
 }
 
+interface PathParams {
+  dashboardId: string;
+}
+
 function AddText() {
   const history = useHistory();
-  const { dashboardId } = useParams();
+  const { dashboardId } = useParams<PathParams>();
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
 
   const [loading, setLoading] = useState(false);
@@ -25,9 +30,14 @@ function AddText() {
   const onSubmit = async (values: FormValues) => {
     try {
       setLoading(true);
-      await BadgerService.createWidget(dashboardId, values.title, "Text", {
-        text: values.text,
-      });
+      await BadgerService.createWidget(
+        dashboardId,
+        values.title,
+        WidgetType.Text,
+        {
+          text: values.text,
+        }
+      );
       history.push(`/admin/dashboard/edit/${dashboardId}`);
     } catch (err) {
       console.log("Failed to save widget", err);

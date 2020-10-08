@@ -3,7 +3,7 @@ import {
   useDashboards,
   usePublicDashboard,
 } from "./dashboard-hooks";
-import { useWidget, useWidgets, useColors } from "./widget-hooks";
+import { useWidget, useColors } from "./widget-hooks";
 import { useTopicAreas } from "./topicarea-hooks";
 import { useHomepage } from "./homepage-hooks";
 import { useJsonDataset } from "./dataset-hooks";
@@ -22,7 +22,6 @@ export {
   usePublicDashboard,
   useDashboards,
   useWidget,
-  useWidgets,
   useColors,
   useTopicAreas,
   useHomepage,

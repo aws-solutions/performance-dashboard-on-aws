@@ -6,36 +6,34 @@ import StorageService from "../services/StorageService";
 type UseWidgetHook = {
   loading: boolean;
   widget?: Widget;
+  json: Array<any>;
+  setJson: Function;
+  setWidget: Function;
 };
 
 export function useWidget(
   dashboardId: string,
   widgetId: string,
-  onWidgetFetched: Function
+  onWidgetFetched?: Function
 ): UseWidgetHook {
   const [loading, setLoading] = useState(false);
   const [widget, setWidget] = useState<Widget | undefined>(undefined);
+  const [json, setJson] = useState<Array<any>>([]);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     const data = await BadgerService.fetchWidgetById(dashboardId, widgetId);
-    let fileDownloaded;
+    setWidget(data);
+
     if (data.widgetType === "Chart" || data.widgetType === "Table") {
-      fileDownloaded = await StorageService.downloadDataset(
-        data.content.s3Key.raw,
-        data.content.title
-      );
+      const { s3Key } = data.content;
+      if (s3Key.json) {
+        const dataset = await StorageService.downloadJson(s3Key.json);
+        setJson(dataset);
+      }
     }
     setLoading(false);
-    if (data) {
-      setWidget(data);
-    }
-    if (fileDownloaded && onWidgetFetched) {
-      onWidgetFetched(fileDownloaded, data.name, data.content.chartType);
-    } else if (onWidgetFetched) {
-      onWidgetFetched(data.name, data.content.text);
-    }
-  }, [dashboardId, widgetId, onWidgetFetched]);
+  }, [dashboardId, widgetId]);
 
   useEffect(() => {
     fetchData();
@@ -44,6 +42,9 @@ export function useWidget(
   return {
     loading,
     widget,
+    json,
+    setJson,
+    setWidget,
   };
 }
 

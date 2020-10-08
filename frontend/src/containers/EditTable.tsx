@@ -26,42 +26,42 @@ function EditTable() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
     undefined
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
-  const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
+  const { widget, json, setJson, setWidget } = useWidget(dashboardId, widgetId);
 
-  const onFileProcessed = useCallback(async (data: File, title: string) => {
-    if (!data) {
-      return;
-    }
-    parse(data, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true,
-      comments: "#",
-      complete: function (results: ParseResult<object>) {
-        if (results.errors.length) {
-          setCsvErrors(results.errors);
-          setDataset(undefined);
-        } else {
-          setCsvErrors(undefined);
-          title && setTitle(title);
-          setDataset(results.data);
-        }
-      },
-    });
-    setCsvFile(data);
-  }, []);
+  const onFileProcessed = useCallback(
+    async (data: File) => {
+      if (!data) {
+        return;
+      }
+      parse(data, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true,
+        comments: "#",
+        complete: function (results: ParseResult<object>) {
+          if (results.errors.length) {
+            setCsvErrors(results.errors);
+          } else {
+            setCsvErrors(undefined);
+            setJson(results.data);
+          }
+        },
+      });
+      setCsvFile(data);
+    },
+    [setJson]
+  );
 
-  const { widget } = useWidget(dashboardId, widgetId, onFileProcessed);
-
-  const uploadDataset = async (): Promise<Dataset> => {
+  const uploadDataset = async (): Promise<Dataset | null> => {
     if (!csvFile) {
-      throw new Error("CSV file not specified");
+      // User did not select a new dataset.
+      // No need to upload anything.
+      return null;
     }
 
     if (!csvFile.lastModified) {
@@ -75,7 +75,7 @@ function EditTable() {
     setLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(dataset)
+      JSON.stringify(json)
     );
 
     const newDataset = await BadgerService.createDataset(csvFile.name, {
@@ -88,33 +88,48 @@ function EditTable() {
   };
 
   const onSubmit = async (values: FormValues) => {
+    if (!widget) {
+      return;
+    }
+
     try {
       const newDataset = await uploadDataset();
+      const datasetId = newDataset ? newDataset.id : widget.content?.datasetId;
+      const s3Key = newDataset ? newDataset.s3Key : widget.content?.s3Key;
+
       await BadgerService.editWidget(
         dashboardId,
         widgetId,
         values.title,
         {
           title: values.title,
-          datasetId: newDataset.id,
-          s3Key: newDataset.s3Key,
+          datasetId,
+          s3Key,
         },
-        widget ? widget.updatedAt : new Date()
+        widget.updatedAt
       );
+      history.push(`/admin/dashboard/edit/${dashboardId}`);
     } catch (err) {
       console.log("Failed to edit widget", err);
     }
-
-    history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setTitle((event.target as HTMLInputElement).value);
+  const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    if (widget) {
+      setWidget({
+        ...widget,
+        name: (event.target as HTMLInputElement).value,
+      });
+    }
   };
+
+  if (!widget) {
+    return null;
+  }
 
   return (
     <AdminLayout>
@@ -133,8 +148,8 @@ function EditTable() {
                 label="Table title"
                 hint="Give your table a descriptive title."
                 error={errors.title && "Please specify a table title"}
-                onChange={handleChange}
-                defaultValue={widget?.name}
+                onChange={handleTitleChange}
+                defaultValue={widget.name}
                 required
                 register={register}
               />
@@ -148,14 +163,13 @@ function EditTable() {
                 errors={csvErrors}
                 register={register}
                 hint="Must be a CSV file. [Link] How do I format my CSV?"
-                fileName={csvFile && csvFile.name}
+                fileName={`${widget.content?.title}.csv`}
                 onFileProcessed={onFileProcessed}
               />
 
-              <div hidden={!dataset}>
-                {dataset &&
-                dataset.length &&
-                (Object.keys(dataset[0]) as Array<string>).length >= 8 ? (
+              <div hidden={!json}>
+                {json.length > 0 &&
+                (Object.keys(json[0]) as Array<string>).length >= 8 ? (
                   <div className="usa-alert usa-alert--warning margin-top-3">
                     <div className="usa-alert__body">
                       <p className="usa-alert__text">
@@ -171,7 +185,7 @@ function EditTable() {
             </fieldset>
             <br />
             <hr />
-            <Button disabled={!dataset || loading} type="submit">
+            <Button disabled={!json || loading} type="submit">
               Save
             </Button>
             <Button variant="unstyled" type="button" onClick={onCancel}>
@@ -180,16 +194,14 @@ function EditTable() {
           </form>
         </div>
         <div className="grid-col-6">
-          <div hidden={!dataset} className="margin-left-4">
+          <div hidden={!json} className="margin-left-4">
             <h4>Preview</h4>
             <TablePreview
-              title={title}
+              title={widget.name}
               headers={
-                dataset && dataset.length
-                  ? (Object.keys(dataset[0]) as Array<string>)
-                  : []
+                json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
               }
-              data={dataset}
+              data={json}
             />
           </div>
         </div>

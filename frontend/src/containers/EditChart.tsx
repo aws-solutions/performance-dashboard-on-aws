@@ -31,17 +31,15 @@ function EditChart() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
     undefined
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
-  const [title, setTitle] = useState("");
-  const [chartType, setChartType] = useState("");
   const [loading, setLoading] = useState(false);
+  const { widget, json, setJson, setWidget } = useWidget(dashboardId, widgetId);
 
   const onFileProcessed = useCallback(
-    async (data: File, title: string, chartType: string) => {
+    async (data: File) => {
       if (!data) {
         return;
       }
@@ -53,25 +51,22 @@ function EditChart() {
         complete: function (results: ParseResult<object>) {
           if (results.errors.length) {
             setCsvErrors(results.errors);
-            setDataset(undefined);
           } else {
             setCsvErrors(undefined);
-            title && setTitle(title);
-            chartType && setChartType(chartType);
-            setDataset(results.data);
+            setJson(results.data);
           }
         },
       });
       setCsvFile(data);
     },
-    []
+    [setJson]
   );
 
-  const { widget } = useWidget(dashboardId, widgetId, onFileProcessed);
-
-  const uploadDataset = async (): Promise<Dataset> => {
+  const uploadDataset = async (): Promise<Dataset | null> => {
     if (!csvFile) {
-      throw new Error("CSV file not specified");
+      // User did not select a new dataset.
+      // No need to upload anything.
+      return null;
     }
 
     if (!csvFile.lastModified) {
@@ -85,7 +80,7 @@ function EditChart() {
     setLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(dataset)
+      JSON.stringify(json)
     );
 
     const newDataset = await BadgerService.createDataset(csvFile.name, {
@@ -98,8 +93,15 @@ function EditChart() {
   };
 
   const onSubmit = async (values: FormValues) => {
+    if (!widget) {
+      return;
+    }
+
     try {
       const newDataset = await uploadDataset();
+      const datasetId = newDataset ? newDataset.id : widget.content?.datasetId;
+      const s3Key = newDataset ? newDataset.s3Key : widget.content?.s3Key;
+
       await BadgerService.editWidget(
         dashboardId,
         widgetId,
@@ -107,16 +109,16 @@ function EditChart() {
         {
           title: values.title,
           chartType: values.chartType,
-          datasetId: newDataset.id,
-          s3Key: newDataset.s3Key,
+          datasetId,
+          s3Key,
         },
-        widget ? widget.updatedAt : new Date()
+        widget.updatedAt
       );
+
+      history.push(`/admin/dashboard/edit/${dashboardId}`);
     } catch (err) {
       console.log("Failed to edit widget", err);
     }
-
-    history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
   const onCancel = () => {
@@ -124,14 +126,32 @@ function EditChart() {
   };
 
   const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setTitle((event.target as HTMLInputElement).value);
+    if (widget) {
+      setWidget({
+        ...widget,
+        name: (event.target as HTMLInputElement).value,
+      });
+    }
   };
 
   const handleChartTypeChange = (
     event: React.FormEvent<HTMLFieldSetElement>
   ) => {
-    setChartType((event.target as HTMLInputElement).value);
+    const selectedType = (event.target as HTMLInputElement).value;
+    if (widget) {
+      setWidget({
+        ...widget,
+        content: {
+          ...widget.content,
+          chartType: selectedType,
+        },
+      });
+    }
   };
+
+  if (!widget) {
+    return null;
+  }
 
   return (
     <AdminLayout>
@@ -151,7 +171,7 @@ function EditChart() {
                 hint="Give your chart a descriptive title."
                 error={errors.title && "Please specify a chart title"}
                 onChange={handleTitleChange}
-                defaultValue={widget?.name}
+                defaultValue={widget.name}
                 required
                 register={register}
               />
@@ -164,11 +184,11 @@ function EditChart() {
                 errors={csvErrors}
                 register={register}
                 hint="Must be a CSV file. [Link] How do I format my CSV?"
-                fileName={csvFile && csvFile.name}
+                fileName={`${widget.content?.title}.csv`}
                 onFileProcessed={onFileProcessed}
               />
-              {chartType ? (
-                <div hidden={!dataset}>
+              {widget ? (
+                <div hidden={!json}>
                   <RadioButtons
                     id="chartType"
                     name="chartType"
@@ -177,7 +197,7 @@ function EditChart() {
                     register={register}
                     error={errors.chartType && "Please select a chart type"}
                     onChange={handleChartTypeChange}
-                    defaultValue={chartType}
+                    defaultValue={widget.content?.chartType}
                     required
                     options={[
                       {
@@ -206,7 +226,7 @@ function EditChart() {
             <br />
             <br />
             <hr />
-            <Button disabled={!dataset || loading} type="submit">
+            <Button disabled={!json || loading} type="submit">
               Save
             </Button>
             <Button variant="unstyled" type="button" onClick={onCancel}>
@@ -215,50 +235,42 @@ function EditChart() {
           </form>
         </div>
         <div className="grid-col-6">
-          <div hidden={!dataset} className="margin-left-4">
+          <div hidden={!json} className="margin-left-4">
             <h4>Preview</h4>
-            {chartType === "LineChart" && (
+            {widget.content?.chartType === "LineChart" && (
               <LineChartPreview
-                title={title}
+                title={widget.name}
                 lines={
-                  dataset && dataset.length
-                    ? (Object.keys(dataset[0]) as Array<string>)
-                    : []
+                  json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
                 }
-                data={dataset}
+                data={json}
               />
             )}
-            {chartType === "ColumnChart" && (
+            {widget.content?.chartType === "ColumnChart" && (
               <ColumnChartPreview
-                title={title}
+                title={widget.name}
                 columns={
-                  dataset && dataset.length
-                    ? (Object.keys(dataset[0]) as Array<string>)
-                    : []
+                  json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
                 }
-                data={dataset}
+                data={json}
               />
             )}
-            {chartType === "BarChart" && (
+            {widget.content?.chartType === "BarChart" && (
               <BarChartPreview
-                title={title}
+                title={widget.name}
                 bars={
-                  dataset && dataset.length
-                    ? (Object.keys(dataset[0]) as Array<string>)
-                    : []
+                  json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
                 }
-                data={dataset}
+                data={json}
               />
             )}
-            {chartType === "PartWholeChart" && (
+            {widget.content?.chartType === "PartWholeChart" && (
               <PartWholeChartPreview
-                title={title}
+                title={widget.name}
                 parts={
-                  dataset && dataset.length
-                    ? (Object.keys(dataset[0]) as Array<string>)
-                    : []
+                  json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
                 }
-                data={dataset}
+                data={json}
               />
             )}
           </div>

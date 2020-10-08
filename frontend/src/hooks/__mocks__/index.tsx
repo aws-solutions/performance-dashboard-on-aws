@@ -156,6 +156,32 @@ export function usePublicDashboard(dashboardId: string) {
 export function useJsonDataset(s3Key: string) {
   return {
     loading: false,
-    json: [],
+    json: [
+      {
+        City: "Seattle",
+        Jobs: 300,
+      },
+      {
+        City: "San Francisco",
+        Jobs: 150,
+      },
+    ],
   };
+}
+
+export function useColors(numberOfColors: number) {
+  return [
+    "#29B4BB",
+    "#3F29C8",
+    "#E17316",
+    "#CE167E",
+    "#7D70F9",
+    "#40E15D",
+    "#2168E5",
+    "#5B20A2",
+    "#D7B40A",
+    "#BE5B0F",
+    "#217C59",
+    "#8DED43",
+  ];
 }

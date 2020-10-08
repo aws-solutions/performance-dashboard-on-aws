@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { Widget } from "../models";
+import { Widget, WidgetType } from "../models";
 import BadgerService from "../services/BadgerService";
 import StorageService from "../services/StorageService";
 
@@ -13,8 +13,7 @@ type UseWidgetHook = {
 
 export function useWidget(
   dashboardId: string,
-  widgetId: string,
-  onWidgetFetched?: Function
+  widgetId: string
 ): UseWidgetHook {
   const [loading, setLoading] = useState(false);
   const [widget, setWidget] = useState<Widget | undefined>(undefined);
@@ -25,7 +24,10 @@ export function useWidget(
     const data = await BadgerService.fetchWidgetById(dashboardId, widgetId);
     setWidget(data);
 
-    if (data.widgetType === "Chart" || data.widgetType === "Table") {
+    if (
+      data.widgetType === WidgetType.Chart ||
+      data.widgetType === WidgetType.Table
+    ) {
       const { s3Key } = data.content;
       if (s3Key.json) {
         const dataset = await StorageService.downloadJson(s3Key.json);
@@ -46,35 +48,6 @@ export function useWidget(
     setJson,
     setWidget,
   };
-}
-
-export function useWidgets(
-  widgets: Array<Widget>,
-  onWidgetsFetched: Function
-): void {
-  const fetchData = useCallback(async () => {
-    let filesDownloaded = new Array<{ widget: Widget; file: File }>();
-    for (const widget of widgets) {
-      if (widget.widgetType === "Chart" || widget.widgetType === "Table") {
-        filesDownloaded.push({
-          widget,
-          file: await StorageService.downloadDataset(
-            widget.content.s3Key.raw,
-            widget.content.title
-          ),
-        });
-      }
-    }
-    if (widgets.length && onWidgetsFetched) {
-      onWidgetsFetched(filesDownloaded);
-    }
-  }, [widgets, onWidgetsFetched]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  return;
 }
 
 const sprectrumColors = [

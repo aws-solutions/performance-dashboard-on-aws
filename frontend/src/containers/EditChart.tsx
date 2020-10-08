@@ -99,8 +99,8 @@ function EditChart() {
 
     try {
       const newDataset = await uploadDataset();
-      const datasetId = newDataset ? newDataset.id : widget.content?.datasetId;
-      const s3Key = newDataset ? newDataset.s3Key : widget.content?.s3Key;
+      const datasetId = newDataset ? newDataset.id : widget.content.datasetId;
+      const s3Key = newDataset ? newDataset.s3Key : widget.content.s3Key;
 
       await BadgerService.editWidget(
         dashboardId,
@@ -184,7 +184,7 @@ function EditChart() {
                 errors={csvErrors}
                 register={register}
                 hint="Must be a CSV file. [Link] How do I format my CSV?"
-                fileName={`${widget.content?.title}.csv`}
+                fileName={`${widget.content.title}.csv`}
                 onFileProcessed={onFileProcessed}
               />
               {widget ? (
@@ -197,7 +197,7 @@ function EditChart() {
                     register={register}
                     error={errors.chartType && "Please select a chart type"}
                     onChange={handleChartTypeChange}
-                    defaultValue={widget.content?.chartType}
+                    defaultValue={widget.content.chartType}
                     required
                     options={[
                       {
@@ -237,7 +237,7 @@ function EditChart() {
         <div className="grid-col-6">
           <div hidden={!json} className="margin-left-4">
             <h4>Preview</h4>
-            {widget.content?.chartType === "LineChart" && (
+            {widget.content.chartType === ChartType.LineChart && (
               <LineChartPreview
                 title={widget.name}
                 lines={
@@ -246,7 +246,7 @@ function EditChart() {
                 data={json}
               />
             )}
-            {widget.content?.chartType === "ColumnChart" && (
+            {widget.content.chartType === ChartType.ColumnChart && (
               <ColumnChartPreview
                 title={widget.name}
                 columns={
@@ -255,7 +255,7 @@ function EditChart() {
                 data={json}
               />
             )}
-            {widget.content?.chartType === "BarChart" && (
+            {widget.content.chartType === ChartType.BarChart && (
               <BarChartPreview
                 title={widget.name}
                 bars={
@@ -264,7 +264,7 @@ function EditChart() {
                 data={json}
               />
             )}
-            {widget.content?.chartType === "PartWholeChart" && (
+            {widget.content.chartType === ChartType.PartWholeChart && (
               <PartWholeChartPreview
                 title={widget.name}
                 parts={

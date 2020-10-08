@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import BadgerService from "../services/BadgerService";
@@ -23,19 +23,14 @@ function EditText() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
-
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
-
-  const onLoaded = useCallback(async (title: string, text: string) => {
-    setTitle(title);
-    setText(text);
-  }, []);
-
-  const { widget } = useWidget(dashboardId, widgetId, onLoaded);
+  const { widget, setWidget } = useWidget(dashboardId, widgetId);
 
   const onSubmit = async (values: FormValues) => {
+    if (!widget) {
+      return;
+    }
+
     try {
       setLoading(true);
       await BadgerService.editWidget(
@@ -45,7 +40,7 @@ function EditText() {
         {
           text: values.text,
         },
-        widget ? widget.updatedAt : new Date()
+        widget.updatedAt
       );
       history.push(`/admin/dashboard/edit/${dashboardId}`);
     } catch (err) {
@@ -60,9 +55,19 @@ function EditText() {
 
   const onFormChange = () => {
     const { title, text } = getValues();
-    setTitle(title);
-    setText(text);
+    setWidget({
+      ...widget,
+      name: title,
+      content: {
+        ...widget?.content,
+        text,
+      },
+    });
   };
+
+  if (!widget) {
+    return null;
+  }
 
   return (
     <AdminLayout>
@@ -82,7 +87,7 @@ function EditText() {
                 label="Text title"
                 hint="Give your content a descriptive title."
                 error={errors.title && "Please specify a content title"}
-                defaultValue={widget?.name}
+                defaultValue={widget.name}
                 required
                 register={register}
               />
@@ -95,7 +100,7 @@ function EditText() {
                 error={errors.text && "Please specify a text content"}
                 required
                 register={register}
-                defaultValue={widget?.content.text}
+                defaultValue={widget.content.text}
                 multiline
                 rows={10}
               />
@@ -113,10 +118,10 @@ function EditText() {
         </div>
         <div className="grid-col-6">
           <h4 className="margin-top-4">Preview</h4>
-          <h2 className="margin-top-4 margin-left-2px">{title}</h2>
-          {text ? (
+          <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>
+          {widget.content.text ? (
             <div className="border padding-left-05">
-              <ReactMarkdown source={text} />
+              <ReactMarkdown source={widget.content.text} />
             </div>
           ) : (
             ""

@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
 interface LayoutProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 function MainLayout(props: LayoutProps) {

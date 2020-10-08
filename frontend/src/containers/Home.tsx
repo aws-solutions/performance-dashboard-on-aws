@@ -8,12 +8,16 @@ import Accordion from "../components/Accordion";
 import Search from "../components/Search";
 
 function Home() {
-  const { homepage } = useHomepage();
+  const { homepage, loading } = useHomepage();
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   const onSearch = () => {
     console.log("Searching");
   };
+
+  if (loading) {
+    return <MainLayout />;
+  }
 
   return (
     <MainLayout>

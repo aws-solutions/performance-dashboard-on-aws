@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
-import { Dataset } from "../models";
+import { Dataset, ChartType } from "../models";
 import StorageService from "../services/StorageService";
 import BadgerService from "../services/BadgerService";
 import AdminLayout from "../layouts/Admin";
@@ -201,19 +201,19 @@ function EditChart() {
                     required
                     options={[
                       {
-                        value: "BarChart",
+                        value: ChartType.BarChart,
                         label: "Bar",
                       },
                       {
-                        value: "ColumnChart",
+                        value: ChartType.ColumnChart,
                         label: "Column",
                       },
                       {
-                        value: "LineChart",
+                        value: ChartType.LineChart,
                         label: "Line",
                       },
                       {
-                        value: "PartWholeChart",
+                        value: ChartType.PartWholeChart,
                         label: "Part-to-whole",
                       },
                     ]}

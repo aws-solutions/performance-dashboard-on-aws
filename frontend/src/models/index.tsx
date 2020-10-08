@@ -26,15 +26,51 @@ export type PublicDashboard = {
   updatedAt: Date;
 };
 
-export type Widget = {
+export enum WidgetType {
+  Text = "Text",
+  Chart = "Chart",
+  Table = "Table",
+}
+
+export enum ChartType {
+  LineChart = "LineChart",
+  ColumnChart = "ColumnChart",
+  BarChart = "BarChart",
+  PartWholeChart = "PartWholeChart",
+}
+
+export interface Widget {
   id: string;
   name: string;
   widgetType: string;
   order: number;
   updatedAt: Date;
   dashboardId: string;
-  content?: any;
-};
+  content: any;
+}
+
+export interface ChartWidget extends Widget {
+  content: {
+    title: string;
+    chartType: ChartType;
+    datasetId: string;
+    s3Key: {
+      raw: string;
+      json: string;
+    };
+  };
+}
+
+export interface TableWidget extends Widget {
+  content: {
+    title: string;
+    datasetId: string;
+    s3Key: {
+      raw: string;
+      json: string;
+    };
+  };
+}
 
 export type Dataset = {
   id: string;

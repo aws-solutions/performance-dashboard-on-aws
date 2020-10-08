@@ -94,8 +94,8 @@ function EditTable() {
 
     try {
       const newDataset = await uploadDataset();
-      const datasetId = newDataset ? newDataset.id : widget.content?.datasetId;
-      const s3Key = newDataset ? newDataset.s3Key : widget.content?.s3Key;
+      const datasetId = newDataset ? newDataset.id : widget.content.datasetId;
+      const s3Key = newDataset ? newDataset.s3Key : widget.content.s3Key;
 
       await BadgerService.editWidget(
         dashboardId,
@@ -163,7 +163,7 @@ function EditTable() {
                 errors={csvErrors}
                 register={register}
                 hint="Must be a CSV file. [Link] How do I format my CSV?"
-                fileName={`${widget.content?.title}.csv`}
+                fileName={`${widget.content.title}.csv`}
                 onFileProcessed={onFileProcessed}
               />
 

@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Amplify from "aws-amplify";
 import * as serviceWorker from "./serviceWorker";
+import envConfig from "./env-config";
 import App from "./App";
 import "uswds/dist/css/uswds.css";
 import "uswds/dist/js/uswds.js";
@@ -17,29 +18,7 @@ declare module "react" {
 }
 
 dayjs.extend(relativeTime);
-
-Amplify.configure({
-  API: {
-    endpoints: [
-      {
-        name: "BadgerApi",
-        endpoint: process.env.REACT_APP_BADGER_API,
-      },
-    ],
-  },
-  Auth: {
-    region: process.env.REACT_APP_AWS_REGION,
-    userPoolId: process.env.REACT_APP_USER_POOL_ID,
-    userPoolWebClientId: process.env.REACT_APP_APP_CLIENT_ID,
-    identityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID,
-  },
-  Storage: {
-    AWSS3: {
-      bucket: process.env.REACT_APP_DATASETS_BUCKET,
-      region: process.env.REACT_APP_AWS_REGION,
-    },
-  },
-});
+Amplify.configure(envConfig);
 
 ReactDOM.render(
   <React.StrictMode>

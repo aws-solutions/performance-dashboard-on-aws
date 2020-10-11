@@ -10,6 +10,7 @@ export class AuthStack extends cdk.Stack {
   public readonly userPoolArn: string;
   public readonly appClientId: string;
   public readonly userPoolId: string;
+  public readonly identityPoolId: string;
 
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id, props);
@@ -38,6 +39,7 @@ export class AuthStack extends cdk.Stack {
     this.userPoolArn = pool.userPoolArn;
     this.appClientId = client.userPoolClientId;
     this.userPoolId = pool.userPoolId;
+    this.identityPoolId = identityPool.ref;
 
     new cdk.CfnOutput(this, "UserPoolArn", { value: this.userPoolArn });
     new cdk.CfnOutput(this, "AppClientId", { value: this.appClientId });

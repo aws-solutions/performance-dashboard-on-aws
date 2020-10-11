@@ -13,3 +13,4 @@ outputs-*.json
 # Parcel build directories
 .cache
 .build
+build/

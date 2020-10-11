@@ -65,10 +65,10 @@ deploy_frontend() {
     # 
     # This process is based on the create-react-app documentation:
     # https://create-react-app.dev/docs/adding-custom-environment-variables
-    echo "Creating .env file for frontend"
-    dest=$FRONTEND_DIR/.env.production
-    source=$CDK_DIR/outputs-backend.json
-    node $CDK_DIR/scripts/createEnvFile.js $environment $source $dest
+    # echo "Creating .env file for frontend"
+    # dest=$FRONTEND_DIR/.env.production
+    # source=$CDK_DIR/outputs-backend.json
+    # node $CDK_DIR/scripts/createEnvFile.js $environment $source $dest
 
     echo "Building frontend application"
     cd $FRONTEND_DIR

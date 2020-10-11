@@ -21,7 +21,7 @@ const auth = new AuthStack(app, "Auth", {
   datasetsBucketName: datasetsBucketName,
 });
 
-new BackendStack(app, "Backend", {
+const backend = new BackendStack(app, "Backend", {
   stackName: stackPrefix.concat("-Backend"),
   userPoolArn: auth.userPoolArn,
   datasetsBucketName: datasetsBucketName,
@@ -29,4 +29,9 @@ new BackendStack(app, "Backend", {
 
 new FrontendStack(app, "Frontend", {
   stackName: stackPrefix.concat("-Frontend"),
+  datasetsBucket: datasetsBucketName,
+  userPoolId: auth.userPoolId,
+  identityPoolId: auth.identityPoolId,
+  appClientId: auth.appClientId,
+  badgerApiUrl: backend.apiGatewayEndpoint,
 });

@@ -91,7 +91,7 @@ export class FrontendStack extends cdk.Stack {
 
     const lambdaFunction = new lambda.Function(this, "EnvConfigLambda", {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset("lib/envconfig"),
+      code: lambda.Code.fromAsset("build/lib/envconfig"),
       handler: "index.handler",
       timeout: cdk.Duration.seconds(60),
       memorySize: 128,

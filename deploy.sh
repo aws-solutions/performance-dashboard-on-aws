@@ -79,9 +79,15 @@ deploy_frontend() {
     echo "Deploying frontend stack"
 }
 
+build_cdk() {
+    cd $CDK_DIR
+    npm run build
+}
+
 # Start execution
 verify_prereqs
 create_build_directories
+build_cdk
 deploy_auth
 deploy_backend
 deploy_frontend

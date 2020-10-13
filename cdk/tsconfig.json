@@ -20,5 +20,10 @@
     "outDir": "build",
     "typeRoots": ["./node_modules/@types"]
   },
-  "exclude": ["cdk.out"]
+  "exclude": ["cdk.out"],
+  "include": [
+    "./lib/**/*.ts",
+    "./bin/**/*.ts",
+    "./test/**/*.ts"
+  ]
 }

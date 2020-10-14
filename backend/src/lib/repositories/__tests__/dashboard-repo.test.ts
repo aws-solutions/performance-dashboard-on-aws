@@ -1,6 +1,6 @@
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
-import { DashboardState } from "../../models/dashboard";
+import { Dashboard, DashboardState } from "../../models/dashboard";
 import DynamoDBService from "../../services/dynamodb";
 import DashboardRepository from "../dashboard-repo";
 import DashboardFactory from "../../factories/dashboard-factory";
@@ -31,15 +31,19 @@ describe("DashboardRepository", () => {
 
 describe("create", () => {
   it("should call putItem on dynamodb", async () => {
-    const dashboard = DashboardFactory.create(
-      "123",
-      "Dashboard1",
-      "456",
-      "Topic1",
-      "Description Test",
-      "Draft",
-      user
-    );
+    const now = new Date();
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      name: "Dashboard1",
+      topicAreaId: "456",
+      topicAreaName: "Topic1",
+      description: "Description Test",
+      state: DashboardState.Draft,
+      parentDashboardId: "123",
+      createdBy: user.userId,
+      updatedAt: now,
+    };
     const item = DashboardFactory.toItem(dashboard);
 
     await repo.putDashboard(dashboard);
@@ -77,16 +81,16 @@ describe("createNew", () => {
 
 describe("updateDashboard", () => {
   it("should call updateItem with the correct keys", async () => {
-    const dashboard = DashboardFactory.create(
+    const now = new Date();
+    await repo.updateDashboard(
       "123",
       "Dashboard1",
       "456",
       "Topic1",
       "Description Test",
-      "Draft",
+      now.toISOString(),
       user
     );
-    await repo.updateDashboard(dashboard, user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         TableName: tableName,
@@ -102,26 +106,24 @@ describe("updateDashboard", () => {
     const now = new Date();
     jest.useFakeTimers("modern");
     jest.setSystemTime(now);
-    const dashboard = DashboardFactory.create(
+    await repo.updateDashboard(
       "123",
       "Dashboard1",
       "456",
       "Topic1",
       "Description Test",
-      "Draft",
-      user,
-      now
+      now.toISOString(),
+      user
     );
-    await repo.updateDashboard(dashboard, user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
           "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedAt = :updatedAt, #updatedBy = :userId",
         ExpressionAttributeValues: {
-          ":dashboardName": dashboard.name,
-          ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
-          ":topicAreaName": dashboard.topicAreaName,
-          ":description": dashboard.description,
+          ":dashboardName": "Dashboard1",
+          ":topicAreaId": TopicAreaFactory.itemId("456"),
+          ":topicAreaName": "Topic1",
+          ":description": "Description Test",
           ":lastUpdatedAt": now.toISOString(),
           ":updatedAt": now.toISOString(),
           ":userId": user.userId,

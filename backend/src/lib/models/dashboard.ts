@@ -9,8 +9,8 @@ export enum DashboardState {
 export interface Dashboard {
   id: string;
   name: string;
-  version?: number;
-  parentDashboardId?: string;
+  version: number;
+  parentDashboardId: string;
   topicAreaId: string;
   topicAreaName: string;
   description: string;
@@ -26,8 +26,8 @@ export interface DashboardItem {
   pk: string;
   sk: string;
   type: string;
-  version?: number;
-  parentDashboardId?: string;
+  version: number;
+  parentDashboardId: string;
   dashboardName: string;
   topicAreaId: string;
   topicAreaName: string;

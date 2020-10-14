@@ -104,23 +104,31 @@ class DashboardRepository extends BaseRepository {
    * Updates a Dashboard identified by the param `dashboard`. Sets
    * the `updatedBy` field to the userId doing the update action.
    */
-  public async updateDashboard(dashboard: Dashboard, user: User) {
+  public async updateDashboard(
+    dashboardId: string,
+    name: string,
+    topicAreaId: string,
+    topicAreaName: string,
+    description: string,
+    lastUpdatedAt: string,
+    user: User
+  ) {
     try {
       await this.dynamodb.update({
         TableName: this.tableName,
         Key: {
-          pk: DashboardFactory.itemId(dashboard.id),
-          sk: DashboardFactory.itemId(dashboard.id),
+          pk: DashboardFactory.itemId(dashboardId),
+          sk: DashboardFactory.itemId(dashboardId),
         },
         UpdateExpression:
           "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedAt = :updatedAt, #updatedBy = :userId",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
-          ":dashboardName": dashboard.name,
-          ":topicAreaId": TopicAreaFactory.itemId(dashboard.topicAreaId),
-          ":topicAreaName": dashboard.topicAreaName,
-          ":description": dashboard.description,
-          ":lastUpdatedAt": dashboard.updatedAt.toISOString(),
+          ":dashboardName": name,
+          ":topicAreaId": TopicAreaFactory.itemId(topicAreaId),
+          ":topicAreaName": topicAreaName,
+          ":description": description,
+          ":lastUpdatedAt": lastUpdatedAt,
           ":updatedAt": new Date().toISOString(),
           ":userId": user.userId,
         },

@@ -125,20 +125,19 @@ describe("updateDashboard", () => {
   });
 
   it("update the dashboard", async () => {
-    const dashboard = DashboardFactory.create(
+    topicareaRepo.getTopicAreaById = jest
+      .fn()
+      .mockReturnValue({ id: "abc", name: "abc name" });
+    await DashboardCtrl.updateDashboard(req, res);
+    expect(repository.updateDashboard).toHaveBeenCalledWith(
       "123",
       "123 name",
       "abc",
       "abc name",
       "description test",
-      "Draft",
-      user,
-      now
+      now.toISOString(),
+      user
     );
-    topicareaRepo.getTopicAreaById = jest.fn().mockReturnThis();
-    dashboardFactory.create = jest.fn().mockReturnValue(dashboard);
-    await DashboardCtrl.updateDashboard(req, res);
-    expect(repository.updateDashboard).toHaveBeenCalledWith(dashboard, user);
   });
 });
 
@@ -218,6 +217,8 @@ describe("getPublicDashboardById", () => {
   it("returns the public representation of a dashboard", async () => {
     const dashboard: Dashboard = {
       id: "123",
+      version: 1,
+      parentDashboardId: "123",
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",

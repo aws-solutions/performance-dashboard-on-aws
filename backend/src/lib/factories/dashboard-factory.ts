@@ -10,28 +10,6 @@ import TopicareaFactory from "./topicarea-factory";
 
 const DASHBOARD: string = "Dashboard";
 
-function create(
-  id: string,
-  name: string,
-  topicAreaId: string,
-  topicAreaName: string,
-  description: string,
-  state: string,
-  user: User,
-  updatedAt?: Date
-): Dashboard {
-  return {
-    id,
-    name,
-    topicAreaId,
-    topicAreaName,
-    description,
-    state: state as DashboardState,
-    createdBy: user.userId,
-    updatedAt: updatedAt || new Date(),
-  };
-}
-
 function createNew(
   name: string,
   topicAreaId: string,
@@ -39,9 +17,12 @@ function createNew(
   description: string,
   user: User
 ): Dashboard {
+  const id = uuidv4();
   return {
-    id: uuidv4(),
+    id,
     name,
+    version: 1,
+    parentDashboardId: id,
     topicAreaId,
     topicAreaName,
     description,
@@ -59,6 +40,8 @@ function toItem(dashboard: Dashboard): DashboardItem {
     pk: itemId(dashboard.id),
     sk: itemId(dashboard.id),
     type: DASHBOARD,
+    version: dashboard.version,
+    parentDashboardId: dashboard.parentDashboardId,
     dashboardName: dashboard.name,
     topicAreaName: dashboard.topicAreaName,
     topicAreaId: TopicareaFactory.itemId(dashboard.topicAreaId),
@@ -74,11 +57,13 @@ function fromItem(item: DashboardItem): Dashboard {
   const id = item.pk.substring(10);
   let dashboard: Dashboard = {
     id,
+    version: item.version,
     name: item.dashboardName,
     topicAreaId: item.topicAreaId.substring(10),
     topicAreaName: item.topicAreaName,
     description: item.description,
     createdBy: item.createdBy,
+    parentDashboardId: item.parentDashboardId,
     updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
     state: (item.state as DashboardState) || DashboardState.Draft,
   };
@@ -102,7 +87,6 @@ function toPublic(dashboard: Dashboard): PublicDashboard {
 }
 
 export default {
-  create,
   createNew,
   toItem,
   fromItem,

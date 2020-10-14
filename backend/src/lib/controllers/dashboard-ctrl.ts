@@ -131,19 +131,17 @@ async function updateDashboard(req: Request, res: Response) {
   const topicArea = await TopicAreaRepository.getInstance().getTopicAreaById(
     topicAreaId
   );
-  const dashboard = DashboardFactory.create(
+
+  const repo = DashboardRepository.getInstance();
+  await repo.updateDashboard(
     id,
     name,
     topicAreaId,
     topicArea.name,
     description,
-    DashboardState.Draft,
-    user,
-    new Date(updatedAt)
+    updatedAt,
+    user
   );
-
-  const repo = DashboardRepository.getInstance();
-  await repo.updateDashboard(dashboard, user);
   res.send();
 }
 

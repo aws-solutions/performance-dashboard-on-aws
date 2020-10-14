@@ -10,38 +10,6 @@ const user: User = {
   userId: "johndoe",
 };
 
-describe("create", () => {
-  it("should create a dashboard with id, name, topicAreaId, topicAreaName, updatedAt and description", () => {
-    const dashboard1 = factory.create(
-      "123",
-      "Dashboard1",
-      "456",
-      "Topic1",
-      "Description Test",
-      "Draft",
-      user
-    );
-    expect(dashboard1.id).toEqual("123");
-    expect(dashboard1.name).toEqual("Dashboard1");
-    expect(dashboard1.topicAreaId).toEqual("456");
-    expect(dashboard1.topicAreaName).toEqual("Topic1");
-    expect(dashboard1.description).toEqual("Description Test");
-  });
-
-  it("should create a dashboard with createdBy", () => {
-    const dashboard1 = factory.create(
-      "123",
-      "Dashboard1",
-      "456",
-      "Topic1",
-      "Description Test",
-      "Draft",
-      user
-    );
-    expect(dashboard1.createdBy).toEqual(user.userId);
-  });
-});
-
 describe("createNew", () => {
   it("should create a new dashboard with unique id", () => {
     const dashboard1 = factory.createNew(
@@ -61,7 +29,7 @@ describe("createNew", () => {
     expect(dashboard1.id).not.toEqual(dashboard2.id);
   });
 
-  it("should create a new dashboard with name, topicAreaId, topicAreaName, updatedAt and description", () => {
+  it("should create a new dashboard with name, topicAreaId, topicAreaName, updatedAt and description, version, parentDashboardId", () => {
     const dashboard1 = factory.createNew(
       "Dashboard1",
       "123",
@@ -73,6 +41,8 @@ describe("createNew", () => {
     expect(dashboard1.topicAreaId).toEqual("123");
     expect(dashboard1.topicAreaName).toEqual("Topic1");
     expect(dashboard1.description).toEqual("Description Test");
+    expect(dashboard1.version).toEqual(1);
+    expect(dashboard1.parentDashboardId).toEqual(dashboard1.id);
   });
 
   it("should create a new dashboard with createdBy", () => {
@@ -91,16 +61,18 @@ describe("toItem", () => {
   const now = new Date();
   const dashboard: Dashboard = {
     id: "123",
+    version: 1,
     name: "Dashboard 1",
     topicAreaId: "456",
     topicAreaName: "Topic 1",
     description: "Description test",
+    parentDashboardId: "123",
     createdBy: user.userId,
     updatedAt: now,
     state: DashboardState.Draft,
   };
 
-  it("should have a pk that starts with TopicArea", () => {
+  it("should have a pk that starts with Dashboard", () => {
     const item = factory.toItem(dashboard);
     expect(item.pk).toEqual("Dashboard#123");
   });
@@ -124,6 +96,8 @@ describe("toItem", () => {
     expect(item.createdBy).toEqual(user.userId);
     expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.state).toEqual("Draft");
+    expect(item.version).toEqual(1);
+    expect(item.parentDashboardId).toEqual("123");
   });
 });
 
@@ -133,11 +107,13 @@ describe("fromItem", () => {
     pk: "Dashboard#123",
     sk: "Dashboard#123",
     type: "Dashboard",
+    version: 1,
     dashboardName: "Dashboard 1",
     topicAreaId: "TopicArea-456",
     topicAreaName: "Topic 1",
     description: "Description test",
     createdBy: user.userId,
+    parentDashboardId: "123",
     updatedAt: now,
     state: "Draft",
   };
@@ -152,6 +128,8 @@ describe("fromItem", () => {
     expect(dashboard.createdBy).toEqual(user.userId);
     expect(dashboard.updatedAt).toEqual(new Date(now));
     expect(dashboard.state).toEqual(DashboardState.Draft);
+    expect(dashboard.version).toEqual(1);
+    expect(dashboard.parentDashboardId).toEqual("123");
   });
 });
 
@@ -159,6 +137,8 @@ describe("toPublic", () => {
   const now = new Date();
   const dashboard: Dashboard = {
     id: "123",
+    version: 1,
+    parentDashboardId: "123",
     name: "Dashboard 1",
     topicAreaId: "456",
     topicAreaName: "Topic 1",

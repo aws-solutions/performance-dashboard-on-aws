@@ -39,9 +39,12 @@ function createNew(
   description: string,
   user: User
 ): Dashboard {
+  const id = uuidv4();
   return {
-    id: uuidv4(),
+    id,
     name,
+    version: 1,
+    parentDashboardId: id,
     topicAreaId,
     topicAreaName,
     description,
@@ -59,6 +62,8 @@ function toItem(dashboard: Dashboard): DashboardItem {
     pk: itemId(dashboard.id),
     sk: itemId(dashboard.id),
     type: DASHBOARD,
+    version: dashboard.version,
+    parentDashboardId: dashboard.parentDashboardId,
     dashboardName: dashboard.name,
     topicAreaName: dashboard.topicAreaName,
     topicAreaId: TopicareaFactory.itemId(dashboard.topicAreaId),

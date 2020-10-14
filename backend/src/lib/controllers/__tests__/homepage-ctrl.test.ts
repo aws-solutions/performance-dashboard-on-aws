@@ -75,6 +75,8 @@ describe("getHomepage", () => {
       {
         id: "123",
         name: "Banana",
+        version: 1,
+        parentDashboardId: "123",
         description: "Something",
         createdBy: "johndoe",
         updatedAt: now,

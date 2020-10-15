@@ -166,6 +166,27 @@ async function publishDashboard(req: Request, res: Response) {
   res.send();
 }
 
+async function publishPendingDashboard(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const { id } = req.params;
+  const { updatedAt } = req.body;
+
+  if (!updatedAt) {
+    res.status(400).send("Missing required body `updatedAt`");
+    return;
+  }
+
+  const repo = DashboardRepository.getInstance();
+  await repo.publishPendingDashboard(id, updatedAt, user);
+  res.send();
+}
+
 async function deleteDashboard(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
 
@@ -214,6 +235,7 @@ export default {
   getDashboardById,
   updateDashboard,
   publishDashboard,
+  publishPendingDashboard,
   deleteDashboard,
   getPublicDashboardById,
   createNewDraft,

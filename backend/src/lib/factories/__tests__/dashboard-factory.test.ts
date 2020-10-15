@@ -5,6 +5,7 @@ import {
   DashboardState,
 } from "../../models/dashboard";
 import { User } from "../../models/user";
+import dashboardFactory from "../dashboard-factory";
 
 const user: User = {
   userId: "johndoe",
@@ -156,5 +157,52 @@ describe("toPublic", () => {
     expect(publicDashboard.topicAreaName).toEqual(dashboard.topicAreaName);
     expect(publicDashboard.description).toEqual(dashboard.description);
     expect(publicDashboard.updatedAt).toEqual(dashboard.updatedAt);
+  });
+});
+
+describe("createDraftFromDashboard", () => {
+  const dashboard: Dashboard = {
+    id: "123",
+    version: 1,
+    parentDashboardId: "123",
+    name: "Dashboard 1",
+    topicAreaId: "456",
+    topicAreaName: "Topic 1",
+    description: "Description test",
+    createdBy: user.userId,
+    updatedAt: new Date(),
+    state: DashboardState.Draft,
+  };
+
+  it("should create a dashboard with same parentDashboardId", () => {
+    const draft = factory.createDraftFromDashboard(dashboard, user);
+    expect(draft.parentDashboardId).toEqual(dashboard.parentDashboardId);
+  });
+
+  it("should create a dashboard on Draft state", () => {
+    const draft = factory.createDraftFromDashboard(dashboard, user);
+    expect(draft.state).toEqual(DashboardState.Draft);
+  });
+
+  it("should create a dashboard with a new id", () => {
+    const draft = factory.createDraftFromDashboard(dashboard, user);
+    expect(draft.id).not.toEqual(dashboard.id);
+  });
+
+  it("should increment the version number", () => {
+    const draft = factory.createDraftFromDashboard(dashboard, user);
+    expect(draft.version).toEqual(dashboard.version + 1);
+  });
+
+  it("should create a dashboard with all other attributes", () => {
+    const draft = factory.createDraftFromDashboard(dashboard, user);
+    expect(draft).toEqual(
+      expect.objectContaining({
+        name: "Dashboard 1",
+        topicAreaId: "456",
+        topicAreaName: "Topic 1",
+        description: "Description test",
+      })
+    );
   });
 });

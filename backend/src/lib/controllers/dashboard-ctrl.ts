@@ -181,6 +181,33 @@ async function deleteDashboard(req: Request, res: Response) {
   return res.send();
 }
 
+async function createNewDraft(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const { id } = req.params;
+  const repo = DashboardRepository.getInstance();
+
+  const dashboard = await repo.getDashboardById(id);
+  if (dashboard.state !== DashboardState.Published) {
+    res.status(409);
+    return res.send("Dashboard must be Published to create a new draft");
+  }
+
+  const existingDraft = await repo.getCurrentDraft(dashboard.parentDashboardId);
+  if (existingDraft) {
+    return res.json(existingDraft);
+  }
+
+  const draft = DashboardFactory.createDraftFromDashboard(dashboard, user);
+  await repo.putDashboard(draft);
+  return res.json(draft);
+}
+
 export default {
   listDashboards,
   createDashboard,
@@ -189,4 +216,5 @@ export default {
   publishDashboard,
   deleteDashboard,
   getPublicDashboardById,
+  createNewDraft,
 };

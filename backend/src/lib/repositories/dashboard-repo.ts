@@ -280,6 +280,30 @@ class DashboardRepository extends BaseRepository {
       DashboardFactory.fromItem(item as DashboardItem)
     );
   }
+
+  public async getCurrentDraft(
+    parentDashboardId: string
+  ): Promise<Dashboard | null> {
+    const result = await this.dynamodb.query({
+      TableName: this.tableName,
+      IndexName: "byParentDashboard",
+      KeyConditionExpression: "parentDashboardId = :parentDashboardId",
+      FilterExpression: "#state = :state",
+      ExpressionAttributeNames: {
+        "#state": "state",
+      },
+      ExpressionAttributeValues: {
+        ":parentDashboardId": parentDashboardId,
+        ":state": DashboardState.Draft,
+      },
+    });
+
+    if (!result.Items || result.Items.length === 0) {
+      return null;
+    }
+
+    return DashboardFactory.fromItem(result.Items[0] as DashboardItem);
+  }
 }
 
 export default DashboardRepository;

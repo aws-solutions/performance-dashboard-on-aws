@@ -1,6 +1,10 @@
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
-import { Dashboard, DashboardState } from "../../models/dashboard";
+import {
+  Dashboard,
+  DashboardState,
+  DashboardItem,
+} from "../../models/dashboard";
 import DynamoDBService from "../../services/dynamodb";
 import DashboardRepository from "../dashboard-repo";
 import DashboardFactory from "../../factories/dashboard-factory";
@@ -387,5 +391,53 @@ describe("listPublishedDashboards", () => {
         ":state": DashboardState.Published,
       },
     });
+  });
+});
+
+describe("getCurrentDraft", () => {
+  it("returns null when there is no draft", async () => {
+    dynamodb.query = jest.fn().mockReturnValue({ Items: [] });
+    const draft = await repo.getCurrentDraft("123");
+    expect(draft).toBeNull();
+  });
+
+  it("performs a query using GSI and a filter by state", async () => {
+    await repo.getCurrentDraft("123");
+    expect(dynamodb.query).toBeCalledWith({
+      TableName: tableName,
+      IndexName: "byParentDashboard",
+      KeyConditionExpression: "parentDashboardId = :parentDashboardId",
+      FilterExpression: "#state = :state",
+      ExpressionAttributeNames: {
+        "#state": "state",
+      },
+      ExpressionAttributeValues: {
+        ":parentDashboardId": "123",
+        ":state": DashboardState.Draft,
+      },
+    });
+  });
+
+  it("returns a dashboard when a draft is found", async () => {
+    const existingDraft: DashboardItem = {
+      pk: "Dashboard#xyz",
+      sk: "Dashboard#xyz",
+      type: "Dashboard",
+      version: 2,
+      parentDashboardId: "123",
+      topicAreaId: "TopicArea#abc",
+      topicAreaName: "Health",
+      dashboardName: "My Health Dashboard",
+      description: "A relevant description",
+      createdBy: "johndoe",
+      updatedAt: new Date().toISOString(),
+      state: "Draft",
+    };
+
+    dynamodb.query = jest.fn().mockReturnValue({ Items: [existingDraft] });
+    const dashboard = DashboardFactory.fromItem(existingDraft);
+
+    const draft = await repo.getCurrentDraft("123");
+    expect(draft).toEqual(dashboard);
   });
 });

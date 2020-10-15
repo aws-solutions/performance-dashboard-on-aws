@@ -32,6 +32,19 @@ export class BadgerDatabase extends cdk.Construct {
       },
     });
 
+    table.addGlobalSecondaryIndex({
+      indexName: "byParentDashboard",
+      projectionType: dynamodb.ProjectionType.ALL,
+      partitionKey: {
+        name: "parentDashboardId",
+        type: dynamodb.AttributeType.STRING,
+      },
+      sortKey: {
+        name: "version",
+        type: dynamodb.AttributeType.NUMBER,
+      },
+    });
+
     this.mainTable = table;
   }
 }

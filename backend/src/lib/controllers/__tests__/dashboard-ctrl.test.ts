@@ -272,3 +272,64 @@ describe("getPublicDashboardById", () => {
     expect(res.send).toBeCalledWith("Dashboard not found");
   });
 });
+
+describe("createNewDraft", () => {
+  let req: Request;
+  let dashboard: Dashboard;
+  beforeEach(() => {
+    req = ({
+      params: {
+        id: "090b0410",
+      },
+    } as any) as Request;
+
+    dashboard = {
+      id: "090b0410",
+      version: 1,
+      parentDashboardId: "090b0410",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      widgets: [],
+    };
+  });
+
+  it("creates a new dashboard in draft state", async () => {
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    repository.getCurrentDraft = jest.fn().mockReturnValue(null);
+
+    await DashboardCtrl.createNewDraft(req, res);
+
+    expect(repository.putDashboard).toBeCalledWith(
+      expect.objectContaining({
+        parentDashboardId: dashboard.parentDashboardId,
+        state: DashboardState.Draft,
+      })
+    );
+  });
+
+  it("returns a 409 Conflict status code if dashboard is not Published", async () => {
+    dashboard.state = DashboardState.Draft; // not published
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+
+    await DashboardCtrl.createNewDraft(req, res);
+
+    expect(res.status).toBeCalledWith(409);
+    expect(res.send).toBeCalledWith(
+      "Dashboard must be Published to create a new draft"
+    );
+  });
+
+  it("returns existing Draft if there is already one created", async () => {
+    const existingDraft = {};
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    repository.getCurrentDraft = jest.fn().mockReturnValue(existingDraft);
+
+    await DashboardCtrl.createNewDraft(req, res);
+    expect(res.json).toBeCalledWith(existingDraft);
+  });
+});

@@ -32,6 +32,22 @@ function createNew(
   };
 }
 
+function createDraftFromDashboard(dashboard: Dashboard, user: User): Dashboard {
+  const id = uuidv4();
+  return {
+    id,
+    name: dashboard.name,
+    version: dashboard.version + 1,
+    parentDashboardId: dashboard.parentDashboardId,
+    topicAreaId: dashboard.topicAreaId,
+    topicAreaName: dashboard.topicAreaName,
+    description: dashboard.description,
+    state: DashboardState.Draft,
+    createdBy: user.userId,
+    updatedAt: new Date(),
+  };
+}
+
 /**
  * Converts a Dashboard to a DynamoDB item.
  */
@@ -88,6 +104,7 @@ function toPublic(dashboard: Dashboard): PublicDashboard {
 
 export default {
   createNew,
+  createDraftFromDashboard,
   toItem,
   fromItem,
   itemId,

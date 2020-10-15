@@ -7,6 +7,7 @@ const router = Router();
 
 router.get("/", withErrorHandler(DashboardCtrl.listDashboards));
 router.get("/:id", withErrorHandler(DashboardCtrl.getDashboardById));
+router.post("/:id", withErrorHandler(DashboardCtrl.createNewDraft));
 router.post("/", withErrorHandler(DashboardCtrl.createDashboard));
 router.put("/:id/publish", withErrorHandler(DashboardCtrl.publishDashboard));
 router.put("/:id/widgetorder", withErrorHandler(WidgetCtrl.setWidgetOrder));

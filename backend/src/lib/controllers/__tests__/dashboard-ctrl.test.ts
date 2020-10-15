@@ -210,7 +210,41 @@ describe("publishPendingDashboard", () => {
     expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
   });
 
+  it("returns a 409 error when dashboard state is not Draft", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "123",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      widgets: [],
+    };
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    await DashboardCtrl.publishPendingDashboard(req, res);
+    expect(res.status).toBeCalledWith(409);
+    expect(res.send).toBeCalledWith("Dashboard must be in draft state");
+  });
+
   it("update the dashboard", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "123",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Draft,
+      description: "",
+      widgets: [],
+    };
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishPendingDashboard(req, res);
     expect(repository.publishPendingDashboard).toHaveBeenCalledWith(
       "123",

@@ -183,6 +183,13 @@ async function publishPendingDashboard(req: Request, res: Response) {
   }
 
   const repo = DashboardRepository.getInstance();
+
+  const dashboard = await repo.getDashboardById(id);
+  if (dashboard.state !== DashboardState.Draft) {
+    res.status(409);
+    return res.send("Dashboard must be in draft state");
+  }
+
   await repo.publishPendingDashboard(id, updatedAt, user);
   res.send();
 }

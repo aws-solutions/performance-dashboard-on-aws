@@ -811,6 +811,71 @@
 			"response": []
 		},
 		{
+			"name": "Create draft from Published dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ba904eb-2243-4513-a6e6-cb99c7625234",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns new draft dashboard\", () => {",
+							"    const draft = pm.response.json();",
+							"    pm.expect(draft.id).to.exist;",
+							"    pm.expect(draft.state).to.equal(\"Draft\");",
+							"    pm.collectionVariables.set(\"dashboard2.id\", draft.id);",
+							"});",
+							"",
+							"pm.test(\"new draft dashboard has a new id\", () => {",
+							"    const dashboardId = pm.collectionVariables.get(\"dashboard.id\");",
+							"    const draft = pm.response.json();",
+							"    pm.expect(draft.id).not.to.equal(dashboardId);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete text widget",
 			"event": [
 				{
@@ -942,6 +1007,49 @@
 			"response": []
 		},
 		{
+			"name": "Delete draft dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0eb24190-8204-4438-a514-ed06b503ead4",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard2.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard2.id}}"
+					]
+				},
+				"description": "Deletes the test dashboard"
+			},
+			"response": []
+		},
+		{
 			"name": "Delete topic area",
 			"event": [
 				{
@@ -1008,62 +1116,67 @@
 	],
 	"variable": [
 		{
-			"id": "ba463f4a-5d45-4e00-8e57-d6ba99040175",
+			"id": "f64fbb2a-83f3-484d-92e3-542c01695570",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "b01e4128-4bed-4539-9dc1-19e2f19829b4",
+			"id": "3e231cbc-8aa3-48ac-81b4-108e8a7f11ae",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "987cacd2-9994-40c8-98e1-73facdd1c418",
+			"id": "709ec3ef-1ef7-4c0f-baed-86e19356dfcb",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "48ce4077-9b53-42e5-9ca1-c495f5414033",
+			"id": "1e342875-513f-40c2-a6ff-dcdfc74518da",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "14c596b8-27a2-4378-b35d-3edef1c23c5b",
+			"id": "518ef0fe-5401-40ba-a5a0-ed54428f7d04",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "e2a05d42-c773-4fd3-a831-8916629ffb65",
+			"id": "dc5021da-2e19-4481-91ac-ed1aedc9e575",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "e23ff7f6-ac89-44ea-afdc-623acca3beee",
+			"id": "7af15d01-0783-43c9-8203-08ce5ac76231",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "c87c412e-e257-4b71-8a27-b5b2481eaef6",
+			"id": "81fa390d-6690-4df3-9ca9-6380d2f0ac11",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "09cb5c5f-3796-4c93-a439-0142ca9d250d",
+			"id": "b7c2d068-e4b9-474c-8324-535f7bb66827",
+			"key": "dashboard2.id",
+			"value": ""
+		},
+		{
+			"id": "b2601d2a-8793-45fd-b547-2d5235fc9491",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "3301b462-eaee-4b83-881b-6d344f6db562",
+			"id": "361279c8-a4ec-4ab8-b0ba-56fb351cdd68",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "e751055c-b071-48bb-94ea-fa3d4cc19fa9",
+			"id": "bed01595-2c05-45e9-ae6b-763906a4a472",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "0b30fe78-92e7-428b-8c32-b4529bf6164d",
+			"id": "9ef3cd84-277b-4b53-abe3-ff59b4fd63bd",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		}

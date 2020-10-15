@@ -6,16 +6,19 @@ This is a React application that serves as the frontend for the Performance Dasb
 
 ### Run locally
 
-To run the frontend locally against your deployed instance on AWS, create a file called `.env.local` in the root of this folder and add the following content to it. Enter the corresponding values for each environment variable. You can get these values from the Outputs of the CloudFormation stacks that got created when you deployed the Performance Dashboard.
+To run the frontend locally against your deployed instance on AWS, create the file `public/env.js` and add the following content to it. Replace the values for each variable with your corresponding values for your environment. You can get these values from the Outputs of the CloudFormation stacks that got created when you deployed the Performance Dashboard.
 
-```
-ENVIRONMENT=your_environment_name
-REACT_APP_AWS_REGION=enter_region_where_you_deployed
-REACT_APP_BADGER_API=enter_your_backend_api_gateway_endpoint
-REACT_APP_USER_POOL_ID=enter_your_user_pool_id
-REACT_APP_APP_CLIENT_ID=enter_your_app_client
-REACT_APP_DATASETS_BUCKET=enter_your_dataset_bucket
-REACT_APP_IDENTITY_POOL_ID=enter_your_identity_pool_id
+```js
+const env = {
+  region: "us-west-2",
+  badgerApi: "https://123.execute-api.us-west-2.amazonaws.com/prod/",
+  userPoolId: "us-west-2_abcd",
+  appClientId: "123456789",
+  datasetsBucket: "badger-fdingler-000000000000-datasets",
+  identityPoolId: "us-west-2:123456-123-1234-123456-1234566789",
+};
+
+window.BadgerEnv = env;
 ```
 
 Then run the following command:

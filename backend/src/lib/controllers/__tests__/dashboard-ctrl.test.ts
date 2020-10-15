@@ -377,7 +377,7 @@ describe("createNewDraft", () => {
 
     await DashboardCtrl.createNewDraft(req, res);
 
-    expect(repository.putDashboard).toBeCalledWith(
+    expect(repository.saveDashboardAndWidgets).toBeCalledWith(
       expect.objectContaining({
         parentDashboardId: dashboard.parentDashboardId,
         state: DashboardState.Draft,

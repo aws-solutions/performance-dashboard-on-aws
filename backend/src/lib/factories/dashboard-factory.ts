@@ -1,12 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 import { User } from "../models/user";
+import TopicareaFactory from "./topicarea-factory";
+import WidgetFactory from "./widget-factory";
+import { Widget } from "../models/widget";
 import {
   Dashboard,
   DashboardItem,
   DashboardState,
   PublicDashboard,
 } from "../models/dashboard";
-import TopicareaFactory from "./topicarea-factory";
 
 const DASHBOARD: string = "Dashboard";
 
@@ -34,6 +36,15 @@ function createNew(
 
 function createDraftFromDashboard(dashboard: Dashboard, user: User): Dashboard {
   const id = uuidv4();
+
+  let widgets: Array<Widget> = [];
+  if (dashboard.widgets) {
+    // Duplicate all widgets related to this dashboard
+    widgets = dashboard.widgets.map((widget) =>
+      WidgetFactory.createFromWidget(id, widget)
+    );
+  }
+
   return {
     id,
     name: dashboard.name,
@@ -45,6 +56,7 @@ function createDraftFromDashboard(dashboard: Dashboard, user: User): Dashboard {
     state: DashboardState.Draft,
     createdBy: user.userId,
     updatedAt: new Date(),
+    widgets,
   };
 }
 

@@ -1,4 +1,5 @@
 import { User } from "../models/user";
+import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import DashboardFactory from "../factories/dashboard-factory";
 import TopicAreaFactory from "../factories/topicarea-factory";
 import WidgetFactory from "../factories/widget-factory";
@@ -344,6 +345,34 @@ class DashboardRepository extends BaseRepository {
     }
 
     return DashboardFactory.fromItem(result.Items[0] as DashboardItem);
+  }
+
+  public async saveDashboardAndWidgets(dashboard: Dashboard) {
+    const transactions: DocumentClient.TransactWriteItemList = [];
+
+    // Add the dashboard item to the transactions
+    transactions.push({
+      Put: {
+        TableName: this.tableName,
+        Item: DashboardFactory.toItem(dashboard),
+      },
+    });
+
+    // Add widgets, if any
+    if (dashboard.widgets) {
+      dashboard.widgets.forEach((widget) => {
+        transactions.push({
+          Put: {
+            TableName: this.tableName,
+            Item: WidgetFactory.toItem(widget),
+          },
+        });
+      });
+    }
+
+    await this.dynamodb.transactWrite({
+      TransactItems: transactions,
+    });
   }
 }
 

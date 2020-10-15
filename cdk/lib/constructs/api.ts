@@ -62,6 +62,9 @@ export class BadgerApi extends cdk.Construct {
     const publish = dashboard.addResource("publish");
     publish.addMethod("PUT", apiIntegration, methodProps);
 
+    const publishPending = dashboard.addResource("publishPending");
+    publishPending.addMethod("PUT", apiIntegration, methodProps);
+
     const widgets = dashboard.addResource("widget");
     widgets.addMethod("POST", apiIntegration, methodProps);
 

@@ -56,20 +56,6 @@ deploy_backend() {
 }
 
 deploy_frontend() {
-    # We need to create a .env.production file in the frontend folder
-    # with values exported from the backend and auth CDK stacks. 
-    # The file createEnvFile.js maps the CDK outputs-backend.json file to 
-    # the .env.production file necessary format. The file needs
-    # to be called production just because react-scripts treats this
-    # as a production build (does minification, transpile, etc).
-    # 
-    # This process is based on the create-react-app documentation:
-    # https://create-react-app.dev/docs/adding-custom-environment-variables
-    # echo "Creating .env file for frontend"
-    # dest=$FRONTEND_DIR/.env.production
-    # source=$CDK_DIR/outputs-backend.json
-    # node $CDK_DIR/scripts/createEnvFile.js $environment $source $dest
-
     echo "Building frontend application"
     cd $FRONTEND_DIR
     yarn build

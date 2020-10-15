@@ -61,17 +61,24 @@ export class FrontendStack extends cdk.Stack {
       }
     );
 
-    this.deployEnvironmentConfig(props);
-
     /**
      * S3 Deploy
      * Uploads react built code to the S3 bucket and invalidates CloudFront
      */
-    new s3Deploy.BucketDeployment(this, "DeployWithInvalidation", {
-      sources: [s3Deploy.Source.asset("../frontend/build")],
-      destinationBucket: this.frontendBucket,
-      distribution,
-    });
+    const frontendDeploy = new s3Deploy.BucketDeployment(
+      this,
+      "DeployWithInvalidation",
+      {
+        sources: [s3Deploy.Source.asset("../frontend/build")],
+        destinationBucket: this.frontendBucket,
+        distribution,
+      }
+    );
+
+    const deployConfig = this.deployEnvironmentConfig(props);
+    // Make sure env.js gets deployed after the React code so
+    // it doesn't get overwritten.
+    deployConfig.node.addDependency(frontendDeploy);
 
     /**
      * Stack Outputs
@@ -84,7 +91,7 @@ export class FrontendStack extends cdk.Stack {
     });
   }
 
-  private deployEnvironmentConfig(props: Props) {
+  private deployEnvironmentConfig(props: Props): cdk.CustomResource {
     // This CustomResource is a Lambda function that generates the `env.js`
     // with environment values. This file is uploaded to the bucket where
     // the React code is deployed.
@@ -118,7 +125,7 @@ export class FrontendStack extends cdk.Stack {
       onEventHandler: lambdaFunction,
     });
 
-    new cdk.CustomResource(this, "EnvConfigDeployment", {
+    return new cdk.CustomResource(this, "EnvConfigDeployment", {
       serviceToken: provider.serviceToken,
     });
   }

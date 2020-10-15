@@ -232,7 +232,7 @@ async function createNewDraft(req: Request, res: Response) {
   }
 
   const draft = DashboardFactory.createDraftFromDashboard(dashboard, user);
-  await repo.putDashboard(draft);
+  await repo.saveDashboardAndWidgets(draft);
   return res.json(draft);
 }
 

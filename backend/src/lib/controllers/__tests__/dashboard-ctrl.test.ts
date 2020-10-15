@@ -8,7 +8,6 @@ import DashboardFactory from "../../factories/dashboard-factory";
 import DashboardRepository from "../../repositories/dashboard-repo";
 import TopicAreaRepository from "../../repositories/topicarea-repo";
 import AuthService from "../../services/auth";
-import dashboardFactory from "../../factories/dashboard-factory";
 
 jest.mock("../../services/auth");
 jest.mock("../../repositories/dashboard-repo");
@@ -174,6 +173,46 @@ describe("publishDashboard", () => {
   it("update the dashboard", async () => {
     await DashboardCtrl.publishDashboard(req, res);
     expect(repository.publishDashboard).toHaveBeenCalledWith(
+      "123",
+      now.toISOString(),
+      user
+    );
+  });
+});
+
+describe("publishPendingDashboard", () => {
+  let req: Request;
+  const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
+  beforeEach(() => {
+    req = ({
+      params: {
+        id: "123",
+      },
+      body: {
+        updatedAt: now.toISOString(),
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await DashboardCtrl.publishPendingDashboard(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when updatedAt is missing", async () => {
+    delete req.body.updatedAt;
+    await DashboardCtrl.publishPendingDashboard(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
+  });
+
+  it("update the dashboard", async () => {
+    await DashboardCtrl.publishPendingDashboard(req, res);
+    expect(repository.publishPendingDashboard).toHaveBeenCalledWith(
       "123",
       now.toISOString(),
       user

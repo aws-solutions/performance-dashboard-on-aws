@@ -193,6 +193,47 @@ class DashboardRepository extends BaseRepository {
   }
 
   /**
+   * Set a Dashboard identified by the param `dashboardId` to publish pending state.
+   */
+  public async publishPendingDashboard(
+    dashboardId: string,
+    lastUpdatedAt: string,
+    user: User
+  ) {
+    try {
+      await this.dynamodb.update({
+        TableName: this.tableName,
+        Key: {
+          pk: DashboardFactory.itemId(dashboardId),
+          sk: DashboardFactory.itemId(dashboardId),
+        },
+        UpdateExpression:
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+        ConditionExpression: "#updatedAt <= :lastUpdatedAt",
+        ExpressionAttributeValues: {
+          ":state": DashboardState.PublishPending,
+          ":lastUpdatedAt": lastUpdatedAt,
+          ":updatedAt": new Date().toISOString(),
+          ":userId": user.userId,
+        },
+        ExpressionAttributeNames: {
+          "#state": "state",
+          "#updatedBy": "updatedBy",
+          "#updatedAt": "updatedAt",
+        },
+      });
+    } catch (error) {
+      if (error.code === "ConditionalCheckFailedException") {
+        console.error(
+          "ConditionalCheckFailed when publishing dashboard",
+          dashboardId
+        );
+      }
+      throw error;
+    }
+  }
+
+  /**
    * Updates the updatedAt field. Sets the `updatedBy` field
    * to the userId doing the update action.
    */

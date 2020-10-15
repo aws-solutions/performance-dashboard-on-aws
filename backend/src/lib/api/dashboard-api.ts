@@ -10,6 +10,10 @@ router.get("/:id", withErrorHandler(DashboardCtrl.getDashboardById));
 router.post("/:id", withErrorHandler(DashboardCtrl.createNewDraft));
 router.post("/", withErrorHandler(DashboardCtrl.createDashboard));
 router.put("/:id/publish", withErrorHandler(DashboardCtrl.publishDashboard));
+router.put(
+  "/:id/publishpending",
+  withErrorHandler(DashboardCtrl.publishPendingDashboard)
+);
 router.put("/:id/widgetorder", withErrorHandler(WidgetCtrl.setWidgetOrder));
 router.put("/:id", withErrorHandler(DashboardCtrl.updateDashboard));
 router.delete("/:id", withErrorHandler(DashboardCtrl.deleteDashboard));

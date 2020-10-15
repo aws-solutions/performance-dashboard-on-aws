@@ -4,6 +4,7 @@ export enum DashboardState {
   Draft = "Draft",
   Published = "Published",
   Archived = "Archived",
+  PublishPending = "PublishPending",
 }
 
 export interface Dashboard {

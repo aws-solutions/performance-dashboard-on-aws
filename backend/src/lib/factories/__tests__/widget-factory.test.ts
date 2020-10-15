@@ -1,5 +1,6 @@
 import WidgetFactory from "../widget-factory";
 import {
+  Widget,
   WidgetType,
   WidgetItem,
   TextWidget,
@@ -526,5 +527,44 @@ describe("itemPk", () => {
 describe("itemSk", () => {
   it("returns the sort key for a dynamodb widget item", () => {
     expect(WidgetFactory.itemSk("abc")).toEqual("Widget#abc");
+  });
+});
+
+describe("createFromWidget", () => {
+  const dashboardId = "001";
+  const widget: Widget = {
+    id: "abc",
+    name: "Text Widget",
+    widgetType: WidgetType.Text,
+    dashboardId: "123",
+    order: 1,
+    updatedAt: new Date(),
+    content: {
+      text: "Hello",
+    },
+  };
+
+  it("returns a new widget with a new id", () => {
+    const newWidget = WidgetFactory.createFromWidget(dashboardId, widget);
+    expect(newWidget.id).not.toEqual("abc");
+  });
+
+  it("returns a new widget associated to the given dashboard", () => {
+    const newWidget = WidgetFactory.createFromWidget(dashboardId, widget);
+    expect(newWidget.dashboardId).toEqual("001");
+  });
+
+  it("returns a new widget with all other attributes", () => {
+    const newWidget = WidgetFactory.createFromWidget(dashboardId, widget);
+    expect(newWidget).toEqual(
+      expect.objectContaining({
+        name: "Text Widget",
+        widgetType: WidgetType.Text,
+        order: 1,
+        content: {
+          text: "Hello",
+        },
+      })
+    );
   });
 });

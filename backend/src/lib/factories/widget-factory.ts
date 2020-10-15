@@ -32,6 +32,19 @@ function createWidget(
   }
 }
 
+function createFromWidget(dashboardId: string, widget: Widget): Widget {
+  // Creates a new Widget based on an existing one.
+  return {
+    id: uuidv4(),
+    name: widget.name,
+    widgetType: widget.widgetType,
+    dashboardId, // associate new widget to the given dashboardId
+    order: widget.order,
+    updatedAt: new Date(),
+    content: widget.content,
+  };
+}
+
 function fromItem(item: WidgetItem): Widget {
   const id = item.sk.substring(WIDGET_PREFIX.length);
   const dashboardId = item.pk.substring(DASHBOARD_PREFIX.length);
@@ -185,6 +198,7 @@ function itemSk(widgetId: string): string {
 
 export default {
   createWidget,
+  createFromWidget,
   fromItem,
   fromItems,
   toItem,

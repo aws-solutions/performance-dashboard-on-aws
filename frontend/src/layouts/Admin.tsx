@@ -17,8 +17,6 @@ async function signOut(event: React.MouseEvent) {
 }
 
 function AdminLayout(props: LayoutProps) {
-  //const history = useHistory();
-
   return (
     <>
       <div className="usa-overlay"></div>

@@ -162,7 +162,7 @@ async function publishDashboard(req: Request, res: Response) {
   }
 
   const repo = DashboardRepository.getInstance();
-  await repo.publishDashboard(id, updatedAt, releaseNotes, user);
+  await repo.publishDashboard(id, updatedAt, releaseNotes || "", user);
   res.send();
 }
 

@@ -225,6 +225,7 @@ describe("publishPendingDashboard", () => {
       state: DashboardState.Published,
       description: "",
       widgets: [],
+      releaseNotes: "release note test",
     };
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishPendingDashboard(req, res);
@@ -245,6 +246,7 @@ describe("publishPendingDashboard", () => {
       state: DashboardState.Draft,
       description: "",
       widgets: [],
+      releaseNotes: "release note test",
     };
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishPendingDashboard(req, res);
@@ -302,6 +304,7 @@ describe("getPublicDashboardById", () => {
       state: DashboardState.Published,
       description: "",
       widgets: [],
+      releaseNotes: "release note test",
     };
 
     repository.getDashboardWithWidgets = jest.fn().mockReturnValue(dashboard);
@@ -370,6 +373,7 @@ describe("createNewDraft", () => {
       state: DashboardState.Published,
       description: "",
       widgets: [],
+      releaseNotes: "release note test",
     };
   });
 

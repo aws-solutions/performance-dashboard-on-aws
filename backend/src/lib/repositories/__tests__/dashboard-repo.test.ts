@@ -47,6 +47,7 @@ describe("create", () => {
       parentDashboardId: "123",
       createdBy: user.userId,
       updatedAt: now,
+      releaseNotes: "",
     };
     const item = DashboardFactory.toItem(dashboard);
 
@@ -480,6 +481,7 @@ describe("getCurrentDraft", () => {
       createdBy: "johndoe",
       updatedAt: new Date().toISOString(),
       state: "Draft",
+      releaseNotes: "",
     };
 
     dynamodb.query = jest.fn().mockReturnValue({ Items: [existingDraft] });

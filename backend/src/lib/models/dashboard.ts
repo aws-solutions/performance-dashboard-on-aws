@@ -18,8 +18,8 @@ export interface Dashboard {
   createdBy: string;
   updatedAt: Date;
   state: DashboardState;
-  widgets?: Array<Widget>;
   releaseNotes?: string;
+  widgets?: Array<Widget>;
 }
 
 export type DashboardList = Array<Dashboard>;

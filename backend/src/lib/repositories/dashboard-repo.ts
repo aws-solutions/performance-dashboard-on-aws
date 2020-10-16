@@ -162,10 +162,6 @@ class DashboardRepository extends BaseRepository {
     user: User
   ) {
     try {
-      const dashboard = await this.getDashboardById(dashboardId);
-      dashboard.releaseNotes = "";
-      await this.putDashboard(dashboard);
-      console.log(dashboard);
       await this.dynamodb.update({
         TableName: this.tableName,
         Key: {
@@ -174,7 +170,8 @@ class DashboardRepository extends BaseRepository {
         },
         UpdateExpression:
           "set #state = :state, #updatedAt = :updatedAt, #releaseNotes = :releaseNotes, #updatedBy = :userId",
-        ConditionExpression: "#updatedAt <= :lastUpdatedAt",
+        ConditionExpression:
+          "attribute_not_exists(#releaseNotes) and #updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":state": DashboardState.Published,
           ":lastUpdatedAt": lastUpdatedAt,
@@ -185,8 +182,8 @@ class DashboardRepository extends BaseRepository {
         ExpressionAttributeNames: {
           "#state": "state",
           "#updatedBy": "updatedBy",
-          "#updatedAt": "updatedAt",
           "#releaseNotes": "releaseNotes",
+          "#updatedAt": "updatedAt",
         },
       });
     } catch (error) {

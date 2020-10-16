@@ -170,8 +170,7 @@ class DashboardRepository extends BaseRepository {
         },
         UpdateExpression:
           "set #state = :state, #updatedAt = :updatedAt, #releaseNotes = :releaseNotes, #updatedBy = :userId",
-        ConditionExpression:
-          "attribute_not_exists(#releaseNotes) and #updatedAt <= :lastUpdatedAt",
+        ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":state": DashboardState.Published,
           ":lastUpdatedAt": lastUpdatedAt,

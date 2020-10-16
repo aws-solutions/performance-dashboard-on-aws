@@ -31,7 +31,6 @@ function createNew(
     state: DashboardState.Draft,
     createdBy: user.userId,
     updatedAt: new Date(),
-    releaseNotes: "",
   };
 }
 

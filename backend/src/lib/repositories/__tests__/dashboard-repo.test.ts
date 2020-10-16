@@ -47,6 +47,7 @@ describe("create", () => {
       parentDashboardId: "123",
       createdBy: user.userId,
       updatedAt: now,
+      releaseNotes: "",
     };
     const item = DashboardFactory.toItem(dashboard);
 
@@ -142,7 +143,12 @@ describe("DashboardRepository.publishDashboard", () => {
     const now = new Date();
     jest.useFakeTimers("modern");
     jest.setSystemTime(now);
-    await repo.publishDashboard("123", now.toISOString(), user);
+    await repo.publishDashboard(
+      "123",
+      now.toISOString(),
+      "release note test",
+      user
+    );
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         TableName: tableName,
@@ -158,15 +164,21 @@ describe("DashboardRepository.publishDashboard", () => {
     const now = new Date();
     jest.useFakeTimers("modern");
     jest.setSystemTime(now);
-    await repo.publishDashboard("123", now.toISOString(), user);
+    await repo.publishDashboard(
+      "123",
+      now.toISOString(),
+      "release note test",
+      user
+    );
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #state = :state, #updatedAt = :updatedAt, #releaseNotes = :releaseNotes, #updatedBy = :userId",
         ExpressionAttributeValues: {
           ":state": "Published",
           ":lastUpdatedAt": now.toISOString(),
           ":updatedAt": now.toISOString(),
+          ":releaseNotes": "release note test",
           ":userId": user.userId,
         },
       })
@@ -469,6 +481,7 @@ describe("getCurrentDraft", () => {
       createdBy: "johndoe",
       updatedAt: new Date().toISOString(),
       state: "Draft",
+      releaseNotes: "",
     };
 
     dynamodb.query = jest.fn().mockReturnValue({ Items: [existingDraft] });

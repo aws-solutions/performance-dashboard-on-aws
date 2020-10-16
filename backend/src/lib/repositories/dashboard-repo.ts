@@ -158,9 +158,14 @@ class DashboardRepository extends BaseRepository {
   public async publishDashboard(
     dashboardId: string,
     lastUpdatedAt: string,
+    releaseNotes: string,
     user: User
   ) {
     try {
+      const dashboard = await this.getDashboardById(dashboardId);
+      dashboard.releaseNotes = "";
+      await this.putDashboard(dashboard);
+      console.log(dashboard);
       await this.dynamodb.update({
         TableName: this.tableName,
         Key: {
@@ -168,11 +173,12 @@ class DashboardRepository extends BaseRepository {
           sk: DashboardFactory.itemId(dashboardId),
         },
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #state = :state, #updatedAt = :updatedAt, #releaseNotes = :releaseNotes, #updatedBy = :userId",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":state": DashboardState.Published,
           ":lastUpdatedAt": lastUpdatedAt,
+          ":releaseNotes": releaseNotes,
           ":updatedAt": new Date().toISOString(),
           ":userId": user.userId,
         },
@@ -180,6 +186,7 @@ class DashboardRepository extends BaseRepository {
           "#state": "state",
           "#updatedBy": "updatedBy",
           "#updatedAt": "updatedAt",
+          "#releaseNotes": "releaseNotes",
         },
       });
     } catch (error) {

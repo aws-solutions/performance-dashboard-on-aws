@@ -152,6 +152,7 @@ describe("publishDashboard", () => {
       },
       body: {
         updatedAt: now.toISOString(),
+        releaseNotes: "release note test",
       },
     } as any) as Request;
   });
@@ -175,6 +176,7 @@ describe("publishDashboard", () => {
     expect(repository.publishDashboard).toHaveBeenCalledWith(
       "123",
       now.toISOString(),
+      "release note test",
       user
     );
   });

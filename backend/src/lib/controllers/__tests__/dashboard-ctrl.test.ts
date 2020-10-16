@@ -372,7 +372,7 @@ describe("createNewDraft", () => {
   });
 
   it("creates a new dashboard in draft state", async () => {
-    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    repository.getDashboardWithWidgets = jest.fn().mockReturnValue(dashboard);
     repository.getCurrentDraft = jest.fn().mockReturnValue(null);
 
     await DashboardCtrl.createNewDraft(req, res);
@@ -387,7 +387,7 @@ describe("createNewDraft", () => {
 
   it("returns a 409 Conflict status code if dashboard is not Published", async () => {
     dashboard.state = DashboardState.Draft; // not published
-    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    repository.getDashboardWithWidgets = jest.fn().mockReturnValue(dashboard);
 
     await DashboardCtrl.createNewDraft(req, res);
 
@@ -399,7 +399,7 @@ describe("createNewDraft", () => {
 
   it("returns existing Draft if there is already one created", async () => {
     const existingDraft = {};
-    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    repository.getDashboardWithWidgets = jest.fn().mockReturnValue(dashboard);
     repository.getCurrentDraft = jest.fn().mockReturnValue(existingDraft);
 
     await DashboardCtrl.createNewDraft(req, res);

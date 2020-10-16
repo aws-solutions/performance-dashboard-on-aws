@@ -2,6 +2,7 @@ import { User } from "../models/user";
 import TopicAreaFactory from "../factories/topicarea-factory";
 import BaseRepository from "./base";
 import { TopicArea, TopicAreaList, TopicAreaItem } from "../models/topicarea";
+import { ItemNotFound } from "../errors";
 
 class TopicAreaRepository extends BaseRepository {
   private static instance: TopicAreaRepository;
@@ -32,6 +33,11 @@ class TopicAreaRepository extends BaseRepository {
         sk: TopicAreaFactory.itemId(id),
       },
     });
+
+    if (!result.Item) {
+      throw new ItemNotFound();
+    }
+
     return TopicAreaFactory.fromItem(result.Item as TopicAreaItem);
   }
 

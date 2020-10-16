@@ -220,7 +220,7 @@ async function createNewDraft(req: Request, res: Response) {
   const { id } = req.params;
   const repo = DashboardRepository.getInstance();
 
-  const dashboard = await repo.getDashboardById(id);
+  const dashboard = await repo.getDashboardWithWidgets(id);
   if (dashboard.state !== DashboardState.Published) {
     res.status(409);
     return res.send("Dashboard must be Published to create a new draft");

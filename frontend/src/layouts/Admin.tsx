@@ -7,13 +7,12 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-async function signOut(): Promise<boolean> {
+async function signOut(event: React.MouseEvent) {
   try {
     await Auth.signOut();
-    return true;
   } catch (error) {
     console.log("error signing out: ", error);
-    return false;
+    event.preventDefault();
   }
 }
 
@@ -54,13 +53,7 @@ function AdminLayout(props: LayoutProps) {
                   hidden
                 >
                   <li className="usa-nav__submenu-item">
-                    <a
-                      href="/admin"
-                      onClick={async e => {
-                        if (!(await signOut())) e.preventDefault();
-                      }}
-                      className="usa-link"
-                    >
+                    <a href="/admin" onClick={signOut} className="usa-link">
                       Logout
                     </a>
                   </li>

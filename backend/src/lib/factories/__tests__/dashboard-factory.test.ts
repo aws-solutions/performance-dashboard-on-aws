@@ -5,7 +5,6 @@ import {
   DashboardState,
 } from "../../models/dashboard";
 import { User } from "../../models/user";
-import dashboardFactory from "../dashboard-factory";
 
 const user: User = {
   userId: "johndoe",
@@ -71,6 +70,7 @@ describe("toItem", () => {
     createdBy: user.userId,
     updatedAt: now,
     state: DashboardState.Draft,
+    releaseNotes: "release note test",
   };
 
   it("should have a pk that starts with Dashboard", () => {
@@ -99,6 +99,7 @@ describe("toItem", () => {
     expect(item.state).toEqual("Draft");
     expect(item.version).toEqual(1);
     expect(item.parentDashboardId).toEqual("123");
+    expect(item.releaseNotes).toEqual("release note test");
   });
 });
 
@@ -117,6 +118,7 @@ describe("fromItem", () => {
     parentDashboardId: "123",
     updatedAt: now,
     state: "Draft",
+    releaseNotes: "release note test",
   };
 
   it("should include all attributes of Dashboard", () => {
@@ -131,6 +133,7 @@ describe("fromItem", () => {
     expect(dashboard.state).toEqual(DashboardState.Draft);
     expect(dashboard.version).toEqual(1);
     expect(dashboard.parentDashboardId).toEqual("123");
+    expect(dashboard.releaseNotes).toEqual("release note test");
   });
 });
 
@@ -147,6 +150,7 @@ describe("toPublic", () => {
     createdBy: user.userId,
     updatedAt: now,
     state: DashboardState.Draft,
+    releaseNotes: "release note test",
   };
 
   it("should expose fields that are not sensitive", () => {
@@ -172,6 +176,7 @@ describe("createDraftFromDashboard", () => {
     createdBy: user.userId,
     updatedAt: new Date(),
     state: DashboardState.Draft,
+    releaseNotes: "release note test",
   };
 
   it("should create a dashboard with same parentDashboardId", () => {

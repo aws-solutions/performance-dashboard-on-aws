@@ -18,6 +18,7 @@ export interface Dashboard {
   createdBy: string;
   updatedAt: Date;
   state: DashboardState;
+  releaseNotes?: string;
   widgets?: Array<Widget>;
 }
 
@@ -36,6 +37,7 @@ export interface DashboardItem {
   createdBy: string;
   updatedAt: string;
   state: string;
+  releaseNotes?: string;
 }
 
 // Public representation of a dashboard. Hides some fields

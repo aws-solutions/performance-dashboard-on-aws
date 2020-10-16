@@ -56,8 +56,8 @@ function AdminLayout(props: LayoutProps) {
                   <li className="usa-nav__submenu-item">
                     <a
                       href="/admin"
-                      onClick={async () => {
-                        await signOut();
+                      onClick={async e => {
+                        if (!(await signOut())) e.preventDefault();
                       }}
                       className="usa-link"
                     >

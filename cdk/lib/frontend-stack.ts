@@ -82,29 +82,11 @@ export class FrontendStack extends cdk.Stack {
      * S3 Deploy
      * Uploads react built code to the S3 bucket and invalidates CloudFront
      */
-<<<<<<< HEAD
-    const frontendDeploy = new s3Deploy.BucketDeployment(
-      this,
-      "DeployWithInvalidation",
-      {
-        sources: [s3Deploy.Source.asset("../frontend/build")],
-        destinationBucket: this.frontendBucket,
-        prune: false,
-        distribution,
-      }
-    );
-
-    const deployConfig = this.deployEnvironmentConfig(props);
-    // Make sure env.js gets deployed after the React code so
-    // it doesn't get overwritten.
-    deployConfig.node.addDependency(frontendDeploy);
-=======
     new s3Deploy.BucketDeployment(this, "DeployWithInvalidation", {
       sources: [s3Deploy.Source.asset("../frontend/build")],
       destinationBucket: this.frontendBucket,
       distribution
     });
->>>>>>> enable security http headers in responses of API and web site requests
 
     /**
      * Stack Outputs

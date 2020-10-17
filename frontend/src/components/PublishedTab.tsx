@@ -4,7 +4,6 @@ import Button from "./Button";
 import Search from "./Search";
 import DashboardsTable from "./DashboardsTable";
 import ScrollTop from "./ScrollTop";
-import AlertContainer from "../containers/AlertContainer";
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -81,7 +80,6 @@ function PublishedTab(props: Props) {
           </span>
         </div>
       </div>
-      <AlertContainer />
       <DashboardsTable
         dashboards={sortDashboards(filterDashboards(props.dashboards))}
         onSelect={onSelect}

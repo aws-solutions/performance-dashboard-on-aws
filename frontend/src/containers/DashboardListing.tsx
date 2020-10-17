@@ -5,6 +5,7 @@ import Tabs from "../components/Tabs";
 import DraftsTab from "../components/DraftsTab";
 import PublishedTab from "../components/PublishedTab";
 import { useLocation } from "react-router-dom";
+import AlertContainer from "../containers/AlertContainer";
 
 function DashboardListing() {
   const { search } = useLocation();
@@ -27,6 +28,7 @@ function DashboardListing() {
   return (
     <AdminLayout>
       <h1>Dashboards</h1>
+      <AlertContainer />
       <Tabs defaultActive={defaultActive}>
         <div label={draftsTab}>
           <DraftsTab dashboards={draftsDashboards} />

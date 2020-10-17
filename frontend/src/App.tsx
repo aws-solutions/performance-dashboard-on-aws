@@ -10,6 +10,7 @@ import AddContent from "./containers/AddContent";
 import EditDashboard from "./containers/EditDashboard";
 import DashboardPreview from "./containers/DashboardPreview";
 import ViewDashboard from "./containers/ViewDashboard";
+import ViewDashboardAdmin from "./containers/ViewDashboardAdmin";
 import AddChart from "./containers/AddChart";
 import EditChart from "./containers/EditChart";
 import AddTable from "./containers/AddTable";
@@ -35,6 +36,10 @@ const routes: Array<BadgerRoute> = [
   {
     path: "/admin/dashboard/create",
     component: CreateDashboard,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId",
+    component: ViewDashboardAdmin,
   },
   {
     path: "/admin/dashboard/edit/:dashboardId",

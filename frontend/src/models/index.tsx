@@ -4,9 +4,18 @@ export type TopicArea = {
   dashboards?: Array<Dashboard | PublicDashboard>;
 };
 
+export enum DashboardState {
+  Draft = "Draft",
+  Published = "Published",
+  Archived = "Archived",
+  PublishPending = "PublishPending",
+}
+
 export type Dashboard = {
   id: string;
   name: string;
+  version: number;
+  parentDashboardId: string;
   topicAreaId: string;
   topicAreaName: string;
   description?: string;

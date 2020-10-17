@@ -1,8 +1,21 @@
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { Dashboard } from "../../models";
+import { Dashboard, DashboardState } from "../../models";
 import DashboardsTable from "../DashboardsTable";
+
+const dashboard: Dashboard = {
+  id: "abc",
+  name: "USWDS",
+  version: 1,
+  parentDashboardId: "abc",
+  topicAreaId: "123",
+  topicAreaName: "Public Safety",
+  createdBy: "johndoe",
+  state: DashboardState.Draft,
+  updatedAt: new Date("2020-09-09 08:09"),
+  widgets: [],
+};
 
 test("renders an empty table", async () => {
   const wrapper = render(<DashboardsTable dashboards={[]} />);
@@ -10,17 +23,7 @@ test("renders an empty table", async () => {
 });
 
 test("renders a table with dashboards", async () => {
-  const dashboards: Array<Dashboard> = [
-    {
-      id: "abc",
-      name: "USWDS",
-      topicAreaId: "123",
-      topicAreaName: "Public Safety",
-      createdBy: "johndoe",
-      updatedAt: new Date("2020-09-09 08:09"),
-      widgets: [],
-    },
-  ];
+  const dashboards = [dashboard];
   const wrapper = render(<DashboardsTable dashboards={dashboards} />, {
     wrapper: MemoryRouter,
   });
@@ -28,16 +31,6 @@ test("renders a table with dashboards", async () => {
 });
 
 test("onSelect function is called when user selects dashboard", async () => {
-  const dashboard: Dashboard = {
-    id: "abc",
-    name: "USWDS",
-    topicAreaId: "123",
-    topicAreaName: "Public Safety",
-    createdBy: "johndoe",
-    widgets: [],
-    updatedAt: new Date(),
-  };
-
   const onSelect = jest.fn();
   const { getByLabelText } = render(
     <DashboardsTable onSelect={onSelect} dashboards={[dashboard]} />,

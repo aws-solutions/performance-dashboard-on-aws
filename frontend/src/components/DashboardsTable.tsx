@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
-import { Dashboard } from "../models";
+import { Dashboard, DashboardState } from "../models";
 import Button from "./Button";
 
 interface Props {
@@ -135,9 +135,15 @@ function DashboardsTable(props: Props) {
               />
             </td>
             <td>
-              <Link to={`/admin/dashboard/edit/${dashboard.id}`}>
-                {dashboard.name}
-              </Link>
+              {dashboard.state === DashboardState.Draft ? (
+                <Link to={`/admin/dashboard/edit/${dashboard.id}`}>
+                  {dashboard.name}
+                </Link>
+              ) : (
+                <Link to={`/admin/dashboard/${dashboard.id}`}>
+                  {dashboard.name}
+                </Link>
+              )}
             </td>
             <td>{dashboard.topicAreaName}</td>
             <td>{dayjs(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}</td>

@@ -129,6 +129,7 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
       widgetType: "Table",
       dashboardId: "abc",
       updatedAt,
+      content: {},
     },
   ];
 
@@ -158,4 +159,13 @@ test("fetchHomepage makes a GET request to widget API", async () => {
 test("fetchPublicDashboard makes a GET request to public API", async () => {
   await BadgerService.fetchPublicDashboard("123");
   expect(API.get).toHaveBeenCalledWith("BadgerApi", "public/dashboard/123", {});
+});
+
+test("createDraft makes a POST request to dashboard API", async () => {
+  await BadgerService.createDraft("123");
+  expect(API.post).toBeCalledWith(
+    "BadgerApi",
+    "dashboard/123",
+    expect.anything()
+  );
 });

@@ -10,6 +10,8 @@ const dashboards: Array<Dashboard> = [
   {
     id: "abc",
     name: "Dashboard One",
+    version: 1,
+    parentDashboardId: "abc",
     topicAreaId: "123456789",
     topicAreaName: "Topic Area Bananas",
     createdBy: "test user",
@@ -20,6 +22,8 @@ const dashboards: Array<Dashboard> = [
   {
     id: "xyz",
     name: "Dashboard Two",
+    version: 1,
+    parentDashboardId: "xyz",
     topicAreaId: "987654321",
     topicAreaName: "Topic Area Grapes",
     createdBy: "test user",

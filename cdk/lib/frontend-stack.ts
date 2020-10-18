@@ -28,7 +28,7 @@ export class FrontendStack extends cdk.Stack {
     this.frontendBucket = new s3.Bucket(this, "ReactAppBucket", {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
-      removalPolicy: cdk.RemovalPolicy.DESTROY
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {
@@ -38,8 +38,8 @@ export class FrontendStack extends cdk.Stack {
         "Strict-Transport-Security": "max-age=31540000; includeSubdomains",
         "X-XSS-Protection": "1; mode=block",
         "X-Frame-Options": "DENY",
-        "X-Content-Type-Options": "nosniff"
-      }
+        "X-Content-Type-Options": "nosniff",
+      },
     });
 
     /**
@@ -58,23 +58,23 @@ export class FrontendStack extends cdk.Stack {
           {
             errorCode: 404,
             responseCode: 200,
-            responsePagePath: "/index.html"
-          }
+            responsePagePath: "/index.html",
+          },
         ],
         originConfigs: [
           {
             behaviors: [
               {
                 isDefaultBehavior: true,
-                lambdaFunctionAssociations: [httpHeaders]
-              }
+                lambdaFunctionAssociations: [httpHeaders],
+              },
             ],
             s3OriginSource: {
               s3BucketSource: this.frontendBucket,
-              originAccessIdentity: originAccess
-            }
-          }
-        ]
+              originAccessIdentity: originAccess,
+            },
+          },
+        ],
       }
     );
 
@@ -89,7 +89,7 @@ export class FrontendStack extends cdk.Stack {
         sources: [s3Deploy.Source.asset("../frontend/build")],
         destinationBucket: this.frontendBucket,
         prune: false,
-        distribution
+        distribution,
       }
     );
 
@@ -102,10 +102,10 @@ export class FrontendStack extends cdk.Stack {
      * Stack Outputs
      */
     new cdk.CfnOutput(this, "CloudFrontURL", {
-      value: distribution.distributionDomainName
+      value: distribution.distributionDomainName,
     });
     new cdk.CfnOutput(this, "ReactAppBucketName", {
-      value: this.frontendBucket.bucketName
+      value: this.frontendBucket.bucketName,
     });
   }
 
@@ -127,24 +127,24 @@ export class FrontendStack extends cdk.Stack {
         USER_POOL_ID: props.userPoolId,
         APP_CLIENT_ID: props.appClientId,
         DATASETS_BUCKET: props.datasetsBucket,
-        IDENTITY_POOL_ID: props.identityPoolId
-      }
+        IDENTITY_POOL_ID: props.identityPoolId,
+      },
     });
 
     lambdaFunction.addToRolePolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         resources: [this.frontendBucket.arnForObjects("*")],
-        actions: ["s3:PutObject"]
+        actions: ["s3:PutObject"],
       })
     );
 
     const provider = new customResource.Provider(this, "EnvConfigProvider", {
-      onEventHandler: lambdaFunction
+      onEventHandler: lambdaFunction,
     });
 
     return new cdk.CustomResource(this, "EnvConfigDeployment", {
-      serviceToken: provider.serviceToken
+      serviceToken: provider.serviceToken,
     });
   }
 }

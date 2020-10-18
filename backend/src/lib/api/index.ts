@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import csp from "./middleware/csp";
 
 import dashboard from "./dashboard-api";
 import topicarea from "./topicarea-api";
@@ -10,6 +11,8 @@ import publicapi from "./public-api";
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+app.use(csp);
 
 app.use("/dashboard", dashboard);
 app.use("/topicarea", topicarea);

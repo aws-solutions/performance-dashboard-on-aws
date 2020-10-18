@@ -5,6 +5,7 @@ import cloudFront = require("@aws-cdk/aws-cloudfront");
 import customResource = require("@aws-cdk/custom-resources");
 import lambda = require("@aws-cdk/aws-lambda");
 import iam = require("@aws-cdk/aws-iam");
+import { HttpHeaders } from "@cloudcomponents/cdk-lambda-at-edge-pattern";
 
 interface Props extends cdk.StackProps {
   datasetsBucket: string;
@@ -30,6 +31,17 @@ export class FrontendStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
+    const httpHeaders = new HttpHeaders(this, "HttpHeaders", {
+      httpHeaders: {
+        "Content-Security-Policy":
+          "default-src 'self'; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazonaws.com; block-all-mixed-content;",
+        "Strict-Transport-Security": "max-age=31540000; includeSubdomains",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff",
+      },
+    });
+
     /**
      * CloudFront Distribution
      * Fronts the S3 bucket as CDN to provide caching and HTTPS.
@@ -51,7 +63,12 @@ export class FrontendStack extends cdk.Stack {
         ],
         originConfigs: [
           {
-            behaviors: [{ isDefaultBehavior: true }],
+            behaviors: [
+              {
+                isDefaultBehavior: true,
+                lambdaFunctionAssociations: [httpHeaders],
+              },
+            ],
             s3OriginSource: {
               s3BucketSource: this.frontendBucket,
               originAccessIdentity: originAccess,

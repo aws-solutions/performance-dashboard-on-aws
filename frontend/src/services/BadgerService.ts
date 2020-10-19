@@ -181,7 +181,7 @@ async function fetchPublicDashboard(
   return API.get(apiName, `public/dashboard/${dashboardId}`, {});
 }
 
-async function createDraft(dashboardId: string) {
+async function createDraft(dashboardId: string): Promise<Dashboard> {
   const headers = await authHeaders();
   return await API.post(apiName, `dashboard/${dashboardId}`, {
     headers,

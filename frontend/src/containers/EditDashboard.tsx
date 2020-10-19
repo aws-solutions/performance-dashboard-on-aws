@@ -3,6 +3,9 @@ import dayjs from "dayjs";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import { Widget, LocationState } from "../models";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import AlertContainer from "./AlertContainer";
 import BadgerService from "../services/BadgerService";
 import WidgetOrderingService from "../services/WidgetOrdering";
 import AdminLayout from "../layouts/Admin";
@@ -24,6 +27,10 @@ function EditDashboard() {
 
   const onAddContent = async () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
+  };
+
+  const onPreview = () => {
+    history.push(`/admin/dashboard/${dashboardId}/preview`);
   };
 
   const onPublish = async () => {
@@ -90,6 +97,7 @@ function EditDashboard() {
   return (
     <AdminLayout>
       <Breadcrumbs />
+      <AlertContainer />
       <div className="grid-row">
         <div className="grid-col text-left">
           <ul className="usa-button-group">
@@ -97,14 +105,10 @@ function EditDashboard() {
               <span className="usa-tag">{dashboard?.state}</span>
             </li>
             <li className="usa-button-group__item">
-              <a className="usa-link" href="/">
-                Share draft URL
-              </a>
-            </li>
-            <li className="usa-button-group__item">
-              <Link to={`/admin/dashboard/${dashboard?.id}/preview`}>
-                Preview
-              </Link>
+              <span className="text-underline">
+                <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
+                Version {dashboard?.version}
+              </span>
             </li>
           </ul>
         </div>
@@ -112,7 +116,10 @@ function EditDashboard() {
           <span className="text-base margin-right-1">
             {dashboard && `Last saved ${dayjs(dashboard.updatedAt).fromNow()}`}
           </span>
-          <Button variant="base" onClick={onPublish}>
+          <Button variant="base" onClick={onPreview}>
+            Preview
+          </Button>
+          <Button variant="outline" onClick={onPublish}>
             Publish
           </Button>
         </div>

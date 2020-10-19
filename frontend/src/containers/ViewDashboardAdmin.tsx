@@ -28,11 +28,11 @@ function ViewDashboardAdmin() {
       )
     ) {
       try {
-        await BadgerService.createDraft(dashboardId);
-        history.push("/admin/dashboards", {
+        const draft = await BadgerService.createDraft(dashboardId);
+        history.push("/admin/dashboard/edit/".concat(draft.id), {
           alert: {
             type: "success",
-            message: `A new draft version of "${dashboard?.name}" dashboard has been created`,
+            message: `A new draft version of "${draft.name}" dashboard has been created`,
           },
         });
       } catch (err) {

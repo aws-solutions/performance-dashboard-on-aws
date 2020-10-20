@@ -13,7 +13,9 @@ export class BadgerApi extends cdk.Construct {
   constructor(scope: cdk.Construct, id: string, props: ApiProps) {
     super(scope, id);
 
-    const apiIntegration = new apigateway.LambdaIntegration(props.apiFunction);
+    const apiIntegration = new apigateway.LambdaIntegration(props.apiFunction, {
+      allowTestInvoke: false,
+    });
     this.api = new apigateway.RestApi(scope, "ApiGateway", {
       description: "Badger API",
       deployOptions: { tracingEnabled: true },
@@ -49,6 +51,7 @@ export class BadgerApi extends cdk.Construct {
     const dashboards = this.api.root.addResource("dashboard");
     dashboards.addMethod("GET", apiIntegration, methodProps);
     dashboards.addMethod("POST", apiIntegration, methodProps);
+    dashboards.addMethod("DELETE", apiIntegration, methodProps);
 
     const dashboard = dashboards.addResource("{id}");
     dashboard.addMethod("GET", apiIntegration, methodProps);

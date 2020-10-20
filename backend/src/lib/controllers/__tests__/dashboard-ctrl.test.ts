@@ -281,6 +281,39 @@ describe("deleteDashboard", () => {
   });
 });
 
+describe("deleteDashboards", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = ({
+      query: {
+        ids: "090b0410,76546546",
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await DashboardCtrl.deleteDashboards(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when ids is missing", async () => {
+    delete req.query.ids;
+    await DashboardCtrl.deleteDashboards(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required query `ids`");
+  });
+
+  it("deletes the dashboard", async () => {
+    await DashboardCtrl.deleteDashboards(req, res);
+    expect(repository.deleteDashboardsAndWidgets).toBeCalledWith([
+      "090b0410",
+      "76546546",
+    ]);
+  });
+});
+
 describe("getPublicDashboardById", () => {
   let req: Request;
   beforeEach(() => {

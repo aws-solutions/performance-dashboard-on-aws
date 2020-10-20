@@ -12,6 +12,7 @@ const widgets: Array<Widget> = [
     widgetType: "Text",
     order: 1,
     updatedAt: new Date("2020-09-22T20:13:08Z"),
+    content: {},
   },
   {
     dashboardId: "abc",
@@ -20,6 +21,7 @@ const widgets: Array<Widget> = [
     widgetType: "Text",
     order: 2,
     updatedAt: new Date("2020-09-22T20:13:08Z"),
+    content: {},
   },
 ];
 

@@ -180,3 +180,17 @@ test("createDraft makes a POST request to dashboard API", async () => {
     expect.anything()
   );
 });
+
+test("publishPending makes a PUT request to dashboard API", async () => {
+  const lastUpdatedAt = new Date();
+  await BadgerService.publishPending("123", lastUpdatedAt);
+  expect(API.put).toBeCalledWith(
+    "BadgerApi",
+    "dashboard/123/publishpending",
+    expect.objectContaining({
+      body: {
+        updatedAt: lastUpdatedAt,
+      },
+    })
+  );
+});

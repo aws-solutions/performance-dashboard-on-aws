@@ -195,6 +195,19 @@ async function createDraft(dashboardId: string): Promise<Dashboard> {
   });
 }
 
+async function publishPending(
+  dashboardId: string,
+  lastUpdatedAt: Date
+): Promise<Dashboard> {
+  const headers = await authHeaders();
+  return await API.put(apiName, `dashboard/${dashboardId}/publishpending`, {
+    headers,
+    body: {
+      updatedAt: lastUpdatedAt,
+    },
+  });
+}
+
 export default {
   fetchDashboards,
   fetchDashboardById,
@@ -213,5 +226,6 @@ export default {
   getAuthToken,
   fetchHomepage,
   fetchPublicDashboard,
+  publishPending,
   createDraft,
 };

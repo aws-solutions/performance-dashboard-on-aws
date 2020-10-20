@@ -16,8 +16,8 @@ router.put(
 );
 router.put("/:id/widgetorder", withErrorHandler(WidgetCtrl.setWidgetOrder));
 router.put("/:id", withErrorHandler(DashboardCtrl.updateDashboard));
+router.delete("/", withErrorHandler(DashboardCtrl.deleteDashboards));
 router.delete("/:id", withErrorHandler(DashboardCtrl.deleteDashboard));
-
 router.post("/:id/widget", withErrorHandler(WidgetCtrl.createWidget));
 router.get("/:id/widget/:widgetId", withErrorHandler(WidgetCtrl.getWidgetById));
 router.put("/:id/widget/:widgetId", withErrorHandler(WidgetCtrl.updateWidget));

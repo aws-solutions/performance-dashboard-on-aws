@@ -94,6 +94,17 @@ test("publishDashboard should make a PUT request with payload", async () => {
   );
 });
 
+test("deleteDashboards makes a DELETE request to dashboard API", async () => {
+  const dashboardIds = ["123", "456"];
+
+  await BadgerService.deleteDashboards(dashboardIds);
+  expect(API.del).toHaveBeenCalledWith(
+    "BadgerApi",
+    `dashboard?ids=123,456`,
+    expect.anything()
+  );
+});
+
 test("fetchWidgetById makes a GET request to widget API", async () => {
   const dashboardId = "123";
   const widgetId = "abc";

@@ -8,6 +8,7 @@ import ScrollTop from "./ScrollTop";
 
 interface Props {
   dashboards: Array<Dashboard>;
+  onDelete: Function;
 }
 
 function DraftsTab(props: Props) {
@@ -53,7 +54,11 @@ function DraftsTab(props: Props) {
         </div>
         <div className="tablet:grid-col-9 text-right">
           <span>
-            <Button variant="base" disabled={selected.length === 0}>
+            <Button
+              variant="base"
+              disabled={selected.length === 0}
+              onClick={() => props.onDelete(selected)}
+            >
               Delete
             </Button>
           </span>

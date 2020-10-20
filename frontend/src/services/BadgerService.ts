@@ -93,6 +93,13 @@ async function publishDashboard(dashboardId: string, updatedAt: Date) {
   });
 }
 
+async function deleteDashboards(dashboards: Array<string>) {
+  const headers = await authHeaders();
+  return await API.del(apiName, `dashboard?ids=${dashboards.join(",")}`, {
+    headers,
+  });
+}
+
 async function createWidget(
   dashboardId: string,
   name: string,
@@ -197,6 +204,7 @@ export default {
   editDashboard,
   publishDashboard,
   createDashboard,
+  deleteDashboards,
   createWidget,
   editWidget,
   deleteWidget,

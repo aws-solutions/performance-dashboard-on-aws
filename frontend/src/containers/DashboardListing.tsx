@@ -4,17 +4,19 @@ import AdminLayout from "../layouts/Admin";
 import Tabs from "../components/Tabs";
 import DraftsTab from "../components/DraftsTab";
 import PublishedTab from "../components/PublishedTab";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import AlertContainer from "../containers/AlertContainer";
 import { Dashboard } from "../models";
 import BadgerService from "../services/BadgerService";
+import { LocationState } from "../models";
 
 function DashboardListing() {
   const { search } = useLocation();
+  const history = useHistory<LocationState>();
   const {
     draftsDashboards,
     publishedDashboards,
-    reloadDashboard,
+    reloadDashboards,
   } = useDashboards();
 
   if (!draftsDashboards || !publishedDashboards) {
@@ -35,7 +37,19 @@ function DashboardListing() {
         await BadgerService.deleteDashboards(
           selected.map((dashboard) => dashboard.id)
         );
-        await reloadDashboard();
+
+        history.replace("/admin/dashboards", {
+          alert: {
+            type: "info",
+            message: `${
+              selected.length > 1 ? selected.length : selected[0].name
+            } draft dashboard${selected.length > 1 ? "s" : ""} ${
+              selected.length > 1 ? "were" : "was"
+            } successfully deleted`,
+          },
+        });
+
+        await reloadDashboards();
       }
     }
   };

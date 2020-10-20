@@ -40,7 +40,7 @@ type UseDashboardsHook = {
   dashboards: Array<Dashboard>;
   draftsDashboards: Array<Dashboard> | undefined;
   publishedDashboards: Array<Dashboard> | undefined;
-  reloadDashboard: Function;
+  reloadDashboards: Function;
 };
 
 export function useDashboards(): UseDashboardsHook {
@@ -77,7 +77,7 @@ export function useDashboards(): UseDashboardsHook {
     dashboards,
     draftsDashboards,
     publishedDashboards,
-    reloadDashboard: fetchData,
+    reloadDashboards: fetchData,
   };
 }
 

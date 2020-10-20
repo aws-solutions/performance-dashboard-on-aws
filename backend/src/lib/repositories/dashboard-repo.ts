@@ -285,7 +285,7 @@ class DashboardRepository extends BaseRepository {
       const dashboard = await this.getDashboardWithWidgets(dashboardId);
 
       if (dashboard.state !== DashboardState.Draft) {
-        throw new InvalidState("Dashboard must be Draft to delte");
+        throw new InvalidState("Dashboard must be Draft to delete");
       }
 
       transactions.push({

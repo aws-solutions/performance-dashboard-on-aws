@@ -7,6 +7,7 @@ import { useWidget, useColors } from "./widget-hooks";
 import { useTopicAreas } from "./topicarea-hooks";
 import { useHomepage } from "./homepage-hooks";
 import { useJsonDataset } from "./dataset-hooks";
+import {useAdmin} from "./admin-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -26,4 +27,5 @@ export {
   useTopicAreas,
   useHomepage,
   useJsonDataset,
+  useAdmin,
 };

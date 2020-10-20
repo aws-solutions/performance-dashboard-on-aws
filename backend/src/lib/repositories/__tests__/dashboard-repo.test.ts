@@ -225,6 +225,43 @@ describe("DashboardRepository.publishPendingDashboard", () => {
   });
 });
 
+describe("DashboardRepository.moveToDraft", () => {
+  it("should call update with the correct keys", async () => {
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+    await repo.moveToDraft("123", now.toISOString(), user);
+    expect(dynamodb.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableName: tableName,
+        Key: {
+          pk: DashboardFactory.itemId("123"),
+          sk: DashboardFactory.itemId("123"),
+        },
+      })
+    );
+  });
+
+  it("should call update with all the fields", async () => {
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+    await repo.moveToDraft("123", now.toISOString(), user);
+    expect(dynamodb.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        UpdateExpression:
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+        ExpressionAttributeValues: {
+          ":state": "Draft",
+          ":lastUpdatedAt": now.toISOString(),
+          ":updatedAt": now.toISOString(),
+          ":userId": user.userId,
+        },
+      })
+    );
+  });
+});
+
 describe("DashboardRepository.delete", () => {
   it("should call delete with the correct key", async () => {
     await repo.delete("123");
@@ -619,5 +656,49 @@ describe("DashboardRepository.deleteDashboardsAndWidgets", () => {
         ],
       })
     );
+  });
+});
+
+describe("getDashboardVersions", () => {
+  it("returns empty array when there is no dashboard", async () => {
+    dynamodb.query = jest.fn().mockReturnValue({ Items: [] });
+    const dashboard = await repo.getDashboardVersions("123");
+    expect(dashboard).toEqual([]);
+  });
+
+  it("performs a query using GSI and a filter by state", async () => {
+    await repo.getDashboardVersions("123");
+    expect(dynamodb.query).toBeCalledWith({
+      TableName: tableName,
+      IndexName: "byParentDashboard",
+      KeyConditionExpression: "parentDashboardId = :parentDashboardId",
+      ExpressionAttributeValues: {
+        ":parentDashboardId": "123",
+      },
+    });
+  });
+
+  it("returns a dashboard when is found", async () => {
+    const existingDraft: DashboardItem = {
+      pk: "Dashboard#xyz",
+      sk: "Dashboard#xyz",
+      type: "Dashboard",
+      version: 2,
+      parentDashboardId: "123",
+      topicAreaId: "TopicArea#abc",
+      topicAreaName: "Health",
+      dashboardName: "My Health Dashboard",
+      description: "A relevant description",
+      createdBy: "johndoe",
+      updatedAt: new Date().toISOString(),
+      state: "Draft",
+      releaseNotes: "",
+    };
+
+    dynamodb.query = jest.fn().mockReturnValue({ Items: [existingDraft] });
+    const dashboard = DashboardFactory.fromItem(existingDraft);
+
+    const dashboardVersions = await repo.getDashboardVersions("123");
+    expect(dashboardVersions).toEqual([dashboard]);
   });
 });

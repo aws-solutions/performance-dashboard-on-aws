@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
-import { DashboardState, Dashboard } from "../../models/dashboard";
+import {
+  DashboardState,
+  Dashboard,
+  DashboardVersion,
+} from "../../models/dashboard";
 import { ItemNotFound } from "../../errors";
 import DashboardCtrl from "../dashboard-ctrl";
 import DashboardFactory from "../../factories/dashboard-factory";
 import DashboardRepository from "../../repositories/dashboard-repo";
 import TopicAreaRepository from "../../repositories/topicarea-repo";
 import AuthService from "../../services/auth";
+import dashboardCtrl from "../dashboard-ctrl";
 
 jest.mock("../../services/auth");
 jest.mock("../../repositories/dashboard-repo");
@@ -258,6 +263,84 @@ describe("publishPendingDashboard", () => {
   });
 });
 
+describe("moveToDraftDashboard", () => {
+  let req: Request;
+  const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
+  beforeEach(() => {
+    req = ({
+      params: {
+        id: "123",
+      },
+      body: {
+        updatedAt: now.toISOString(),
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await DashboardCtrl.moveToDraftDashboard(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when updatedAt is missing", async () => {
+    delete req.body.updatedAt;
+    await DashboardCtrl.moveToDraftDashboard(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
+  });
+
+  it("returns a 409 error when dashboard state is not publish pending", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "123",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      widgets: [],
+      releaseNotes: "release note test",
+    };
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    await DashboardCtrl.moveToDraftDashboard(req, res);
+    expect(res.status).toBeCalledWith(409);
+    expect(res.send).toBeCalledWith(
+      "Dashboard must be in publish pending state"
+    );
+  });
+
+  it("update the dashboard", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "123",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.PublishPending,
+      description: "",
+      widgets: [],
+      releaseNotes: "release note test",
+    };
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    await DashboardCtrl.moveToDraftDashboard(req, res);
+    expect(repository.moveToDraft).toHaveBeenCalledWith(
+      "123",
+      now.toISOString(),
+      user
+    );
+  });
+});
+
 describe("deleteDashboard", () => {
   let req: Request;
   beforeEach(() => {
@@ -443,5 +526,53 @@ describe("createNewDraft", () => {
 
     await DashboardCtrl.createNewDraft(req, res);
     expect(res.json).toBeCalledWith(existingDraft);
+  });
+});
+
+describe("getVersions", () => {
+  let req: Request;
+  let res: Response;
+  let dashboard: Dashboard;
+  beforeEach(() => {
+    req = ({
+      params: {
+        id: "090b0410",
+      },
+    } as any) as Request;
+    res = ({
+      send: jest.fn().mockReturnThis(),
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    } as any) as Response;
+    const now = new Date();
+    dashboard = {
+      id: "123",
+      name: "Banana",
+      version: 1,
+      parentDashboardId: "123",
+      description: "Something",
+      createdBy: "johndoe",
+      updatedAt: now,
+      state: DashboardState.Published,
+      topicAreaId: "xyz",
+      topicAreaName: "Health and Human Services",
+    };
+  });
+
+  it("returns a list of versions", async () => {
+    const dashboards: Array<Dashboard> = [dashboard];
+
+    repository.getDashboardVersions = jest.fn().mockReturnValue(dashboards);
+
+    const version: DashboardVersion = {
+      id: "123",
+      version: 1,
+      state: DashboardState.Draft,
+    };
+
+    DashboardFactory.toVersion = jest.fn().mockReturnValue(version);
+    await dashboardCtrl.getVersions(req, res);
+
+    expect(res.json).toBeCalledWith(expect.objectContaining([version]));
   });
 });

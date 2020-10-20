@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { Auth } from "aws-amplify";
+import { useAdmin } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,6 +18,8 @@ async function signOut(event: React.MouseEvent) {
 }
 
 function AdminLayout(props: LayoutProps) {
+  const { username } = useAdmin();
+
   return (
     <>
       <div className="usa-overlay"></div>
@@ -43,7 +46,7 @@ function AdminLayout(props: LayoutProps) {
                   aria-expanded="false"
                   aria-controls="basic-nav-section-one"
                 >
-                  <span>Admin</span>
+                  <span>{username}</span>
                 </button>
                 <ul
                   id="basic-nav-section-one"

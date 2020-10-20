@@ -209,6 +209,28 @@ async function deleteDashboard(req: Request, res: Response) {
   return res.send();
 }
 
+async function deleteDashboards(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const { ids } = req.query;
+
+  if (!ids) {
+    res.status(400).send("Missing required query `ids`");
+    return;
+  }
+
+  const dashboardIds = (ids as string).split(",");
+
+  const repo = DashboardRepository.getInstance();
+  await repo.deleteDashboardsAndWidgets(dashboardIds);
+  return res.send();
+}
+
 async function createNewDraft(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
 
@@ -244,6 +266,7 @@ export default {
   publishDashboard,
   publishPendingDashboard,
   deleteDashboard,
+  deleteDashboards,
   getPublicDashboardById,
   createNewDraft,
 };

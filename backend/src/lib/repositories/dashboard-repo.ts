@@ -4,7 +4,7 @@ import DashboardFactory from "../factories/dashboard-factory";
 import TopicAreaFactory from "../factories/topicarea-factory";
 import WidgetFactory from "../factories/widget-factory";
 import { WidgetItem } from "../models/widget";
-import { ItemNotFound } from "../errors";
+import { ItemNotFound, InvalidState } from "../errors";
 import {
   Dashboard,
   DashboardList,
@@ -262,7 +262,7 @@ class DashboardRepository extends BaseRepository {
 
   /**
    * Deletes the Dashboard identified by the params
-   * `dashboardId` and `topicAreaId`.
+   * `dashboardId`.
    */
   public async delete(dashboardId: string) {
     await this.dynamodb.delete({
@@ -271,6 +271,50 @@ class DashboardRepository extends BaseRepository {
         pk: DashboardFactory.itemId(dashboardId),
         sk: DashboardFactory.itemId(dashboardId),
       },
+    });
+  }
+
+  /**
+   * Deletes the dashboards and widgets identified
+   * by the params `ids`.
+   */
+  public async deleteDashboardsAndWidgets(dashboardIds: Array<string>) {
+    const transactions: DocumentClient.TransactWriteItemList = [];
+
+    for (let dashboardId of dashboardIds) {
+      const dashboard = await this.getDashboardWithWidgets(dashboardId);
+
+      if (dashboard.state !== DashboardState.Draft) {
+        throw new InvalidState("Dashboard must be Draft to delete");
+      }
+
+      transactions.push({
+        Delete: {
+          TableName: this.tableName,
+          Key: {
+            pk: DashboardFactory.itemId(dashboardId),
+            sk: DashboardFactory.itemId(dashboardId),
+          },
+        },
+      });
+
+      if (dashboard.widgets) {
+        dashboard.widgets.forEach((widget) => {
+          transactions.push({
+            Delete: {
+              TableName: this.tableName,
+              Key: {
+                pk: WidgetFactory.itemPk(dashboardId),
+                sk: WidgetFactory.itemSk(widget.id),
+              },
+            },
+          });
+        });
+      }
+    }
+
+    await this.dynamodb.transactWrite({
+      TransactItems: transactions,
     });
   }
 

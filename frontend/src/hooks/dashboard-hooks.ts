@@ -38,39 +38,46 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
 type UseDashboardsHook = {
   loading: boolean;
   dashboards: Array<Dashboard>;
-  draftsDashboards: Array<Dashboard> | null;
-  publishedDashboards: Array<Dashboard> | null;
+  draftsDashboards: Array<Dashboard> | undefined;
+  publishedDashboards: Array<Dashboard> | undefined;
+  reloadDashboards: Function;
 };
 
 export function useDashboards(): UseDashboardsHook {
   const [loading, setLoading] = useState(false);
   const [dashboards, setDashboards] = useState([]);
-  const [draftsDashboards, setDraftsDashboards] = useState<Array<
-    Dashboard
-  > | null>(null);
-  const [publishedDashboards, setPublishedDashboards] = useState<Array<
-    Dashboard
-  > | null>(null);
+  const [draftsDashboards, setDraftsDashboards] = useState<
+    Array<Dashboard> | undefined
+  >(undefined);
+  const [publishedDashboards, setPublishedDashboards] = useState<
+    Array<Dashboard> | undefined
+  >(undefined);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const data = await BadgerService.fetchDashboards();
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    setDraftsDashboards(undefined);
+    setPublishedDashboards(undefined);
+    const data = await BadgerService.fetchDashboards();
+    setLoading(false);
+    if (data) {
       setDraftsDashboards(data.filter((d: Dashboard) => d.state === "Draft"));
       setPublishedDashboards(
         data.filter((d: Dashboard) => d.state === "Published")
       );
       setDashboards(data);
-      setLoading(false);
-    };
-    fetchData();
+    }
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return {
     loading,
     dashboards,
     draftsDashboards,
     publishedDashboards,
+    reloadDashboards: fetchData,
   };
 }
 

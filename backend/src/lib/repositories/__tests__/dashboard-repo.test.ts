@@ -7,8 +7,10 @@ import {
 } from "../../models/dashboard";
 import DynamoDBService from "../../services/dynamodb";
 import DashboardRepository from "../dashboard-repo";
+import WidgetFactory from "../../factories/widget-factory";
 import DashboardFactory from "../../factories/dashboard-factory";
 import TopicAreaFactory from "../../factories/topicarea-factory";
+import { WidgetType } from "../../models/widget";
 
 jest.mock("../../services/dynamodb");
 
@@ -489,5 +491,133 @@ describe("getCurrentDraft", () => {
 
     const draft = await repo.getCurrentDraft("123");
     expect(draft).toEqual(dashboard);
+  });
+});
+
+describe("DashboardRepository.saveDashboardAndWidgets", () => {
+  it("should call saveDashboardAndWidgets with the correct key", async () => {
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      name: "Dashboard1",
+      topicAreaId: "456",
+      topicAreaName: "Topic1",
+      description: "Description Test",
+      state: DashboardState.Draft,
+      parentDashboardId: "123",
+      createdBy: user.userId,
+      updatedAt: now,
+      releaseNotes: "",
+      widgets: [
+        {
+          id: "abc",
+          dashboardId: "123",
+          widgetType: WidgetType.Text,
+          order: 0,
+          updatedAt: new Date(),
+          name: "AWS",
+          content: {},
+        },
+      ],
+    };
+    await repo.saveDashboardAndWidgets(dashboard);
+    expect(dynamodb.transactWrite).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TransactItems: [
+          {
+            Put: {
+              TableName: tableName,
+              Item: {
+                pk: DashboardFactory.itemId("123"),
+                sk: DashboardFactory.itemId("123"),
+                version: 1,
+                dashboardName: "Dashboard1",
+                topicAreaId: "TopicArea#456",
+                topicAreaName: "Topic1",
+                description: "Description Test",
+                state: DashboardState.Draft,
+                type: "Dashboard",
+                parentDashboardId: "123",
+                createdBy: user.userId,
+                updatedAt: now.toISOString(),
+                releaseNotes: "",
+              },
+            },
+          },
+          {
+            Put: {
+              Item: {
+                content: {},
+                name: "AWS",
+                order: 0,
+                pk: "Dashboard#123",
+                sk: "Widget#abc",
+                type: "Widget",
+                updatedAt: now.toISOString(),
+                widgetType: "Text",
+              },
+              TableName: "BadgerTable",
+            },
+          },
+        ],
+      })
+    );
+  });
+});
+
+describe("DashboardRepository.deleteDashboardsAndWidgets", () => {
+  it("should call delete dashboard with the correct key", async () => {
+    repo.getDashboardWithWidgets = jest
+      .fn()
+      .mockReturnValueOnce({
+        id: "123",
+        state: DashboardState.Draft,
+        widgets: [
+          {
+            id: "abc",
+          },
+        ],
+      })
+      .mockReturnValueOnce({
+        id: "456",
+        state: DashboardState.Draft,
+      });
+    await repo.deleteDashboardsAndWidgets(["123", "456"]);
+    expect(dynamodb.transactWrite).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TransactItems: [
+          {
+            Delete: {
+              TableName: tableName,
+              Key: {
+                pk: DashboardFactory.itemId("123"),
+                sk: DashboardFactory.itemId("123"),
+              },
+            },
+          },
+          {
+            Delete: {
+              TableName: tableName,
+              Key: {
+                pk: WidgetFactory.itemPk("123"),
+                sk: WidgetFactory.itemSk("abc"),
+              },
+            },
+          },
+          {
+            Delete: {
+              TableName: tableName,
+              Key: {
+                pk: DashboardFactory.itemId("456"),
+                sk: DashboardFactory.itemId("456"),
+              },
+            },
+          },
+        ],
+      })
+    );
   });
 });

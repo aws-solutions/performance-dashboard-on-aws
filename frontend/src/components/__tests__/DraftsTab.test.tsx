@@ -34,33 +34,45 @@ const dashboards: Array<Dashboard> = [
 ];
 
 test("renders a button to delete", async () => {
-  const { getByRole } = render(<DraftsTab dashboards={[]} />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByRole } = render(
+    <DraftsTab dashboards={[]} onDelete={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
   const button = getByRole("button", { name: "Delete" });
   expect(button).toBeInTheDocument();
 });
 
 test("renders a button to publish", async () => {
-  const { getByRole } = render(<DraftsTab dashboards={[]} />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByRole } = render(
+    <DraftsTab dashboards={[]} onDelete={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
   const button = getByRole("button", { name: "Publish" });
   expect(button).toBeInTheDocument();
 });
 
 test("renders a button to create dashboard", async () => {
-  const { getByRole } = render(<DraftsTab dashboards={[]} />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByRole } = render(
+    <DraftsTab dashboards={[]} onDelete={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
   const button = getByRole("button", { name: "Create dashboard" });
   expect(button).toBeInTheDocument();
 });
 
 test("renders a dashboard table", async () => {
-  const { getByRole } = render(<DraftsTab dashboards={dashboards} />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByRole } = render(
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
 
   const dashboard1 = getByRole("link", { name: "Dashboard One" });
   expect(dashboard1).toBeInTheDocument();
@@ -71,7 +83,7 @@ test("renders a dashboard table", async () => {
 
 test("filters dashboards based on search input", async () => {
   const { getByLabelText, getByRole } = render(
-    <DraftsTab dashboards={dashboards} />,
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
     {
       wrapper: MemoryRouter,
     }

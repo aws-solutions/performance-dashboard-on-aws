@@ -53,8 +53,10 @@ function DashboardListing() {
   };
 
   let activeTab = "drafts";
+  const validTabs = ["drafts", "published", "pending"];
+
   const queryString = search.split("tab=");
-  if (queryString.length > 1) {
+  if (queryString.length > 1 && validTabs.includes(queryString[1])) {
     activeTab = queryString[1];
   }
 

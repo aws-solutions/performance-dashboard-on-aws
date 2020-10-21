@@ -164,6 +164,30 @@ describe("toPublic", () => {
   });
 });
 
+describe("toVersion", () => {
+  const now = new Date();
+  const dashboard: Dashboard = {
+    id: "123",
+    version: 1,
+    parentDashboardId: "123",
+    name: "Dashboard 1",
+    topicAreaId: "456",
+    topicAreaName: "Topic 1",
+    description: "Description test",
+    createdBy: user.userId,
+    updatedAt: now,
+    state: DashboardState.Draft,
+    releaseNotes: "release note test",
+  };
+
+  it("should expose fields that are part of the version", () => {
+    const publicDashboard = factory.toVersion(dashboard);
+    expect(publicDashboard.id).toEqual(dashboard.id);
+    expect(publicDashboard.version).toEqual(dashboard.version);
+    expect(publicDashboard.state).toEqual(dashboard.state);
+  });
+});
+
 describe("createDraftFromDashboard", () => {
   const dashboard: Dashboard = {
     id: "123",

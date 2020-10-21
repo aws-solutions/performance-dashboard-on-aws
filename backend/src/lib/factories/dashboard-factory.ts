@@ -7,6 +7,7 @@ import {
   Dashboard,
   DashboardItem,
   DashboardState,
+  DashboardVersion,
   PublicDashboard,
 } from "../models/dashboard";
 
@@ -116,6 +117,14 @@ function toPublic(dashboard: Dashboard): PublicDashboard {
   };
 }
 
+function toVersion(dashboard: Dashboard): DashboardVersion {
+  return {
+    id: dashboard.id,
+    version: dashboard.version,
+    state: dashboard.state,
+  };
+}
+
 export default {
   createNew,
   createDraftFromDashboard,
@@ -123,4 +132,5 @@ export default {
   fromItem,
   itemId,
   toPublic,
+  toVersion,
 };

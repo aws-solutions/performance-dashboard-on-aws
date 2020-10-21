@@ -102,6 +102,29 @@ async function getPublicDashboardById(req: Request, res: Response) {
   return res.json(publicDashboard);
 }
 
+async function getVersions(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+  if (!user) {
+    res.status(401);
+    return res.send("Unauthorized");
+  }
+
+  const { id } = req.params;
+  const repo = DashboardRepository.getInstance();
+
+  try {
+    const dashboardVersions = await repo.getDashboardVersions(id);
+    const versions = dashboardVersions.map(DashboardFactory.toVersion);
+    return res.json(versions);
+  } catch (err) {
+    if (err instanceof ItemNotFound) {
+      res.status(404);
+      return res.send("Dashboard versions not found");
+    }
+    throw err;
+  }
+}
+
 async function updateDashboard(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
 
@@ -194,6 +217,34 @@ async function publishPendingDashboard(req: Request, res: Response) {
   res.send();
 }
 
+async function moveToDraftDashboard(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const { id } = req.params;
+  const { updatedAt } = req.body;
+
+  if (!updatedAt) {
+    res.status(400).send("Missing required body `updatedAt`");
+    return;
+  }
+
+  const repo = DashboardRepository.getInstance();
+
+  const dashboard = await repo.getDashboardById(id);
+  if (dashboard.state !== DashboardState.PublishPending) {
+    res.status(409);
+    return res.send("Dashboard must be in publish pending state");
+  }
+
+  await repo.moveToDraft(id, updatedAt, user);
+  res.send();
+}
+
 async function deleteDashboard(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
 
@@ -262,9 +313,11 @@ export default {
   listDashboards,
   createDashboard,
   getDashboardById,
+  getVersions,
   updateDashboard,
   publishDashboard,
   publishPendingDashboard,
+  moveToDraftDashboard,
   deleteDashboard,
   deleteDashboards,
   getPublicDashboardById,

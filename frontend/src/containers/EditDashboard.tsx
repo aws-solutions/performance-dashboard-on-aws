@@ -35,16 +35,16 @@ function EditDashboard() {
 
   const onPublish = async () => {
     if (
-      window.confirm(
-        "Are you sure you want to publish this dashboard? After publishing, the dashboard will be viewable on the external dashboard website."
-      )
+      window.confirm("Are you sure you want to start the publishing process?")
     ) {
       if (dashboard) {
-        await BadgerService.publishDashboard(dashboard.id, dashboard.updatedAt);
-        history.push("/admin/dashboards?tab=published", {
+        await BadgerService.publishPending(dashboard.id, dashboard.updatedAt);
+        history.push(`/admin/dashboard/${dashboard.id}/publish`, {
           alert: {
-            type: "success",
-            message: `${dashboard.name} dashboard was successfully published`,
+            type: "info",
+            message:
+              "This dashboard is now in the publish pending state and " +
+              "cannot be edited unless returned to draft",
           },
         });
       }

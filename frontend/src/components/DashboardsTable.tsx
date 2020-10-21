@@ -135,15 +135,14 @@ function DashboardsTable(props: Props) {
               />
             </td>
             <td>
-              {dashboard.state === DashboardState.Draft ? (
-                <Link to={`/admin/dashboard/edit/${dashboard.id}`}>
-                  {dashboard.name}
-                </Link>
-              ) : (
-                <Link to={`/admin/dashboard/${dashboard.id}`}>
-                  {dashboard.name}
-                </Link>
-              )}
+              <Link
+                to={dashboardLink(
+                  dashboard.id,
+                  dashboard.state as DashboardState
+                )}
+              >
+                {dashboard.name}
+              </Link>
             </td>
             <td>{dashboard.topicAreaName}</td>
             <td>{dayjs(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}</td>
@@ -153,6 +152,19 @@ function DashboardsTable(props: Props) {
       </tbody>
     </table>
   );
+}
+
+function dashboardLink(id: string, state: DashboardState): string {
+  switch (state) {
+    case DashboardState.Draft:
+      return `/admin/dashboard/edit/${id}`;
+    case DashboardState.Published:
+      return `/admin/dashboard/${id}`;
+    case DashboardState.PublishPending:
+      return `/admin/dashboard/${id}/publish`;
+    default:
+      return "/admin/dashboards";
+  }
 }
 
 export default DashboardsTable;

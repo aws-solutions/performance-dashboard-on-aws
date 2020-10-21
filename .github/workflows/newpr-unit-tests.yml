@@ -1,6 +1,6 @@
 # Workflow that runs unit tests on a new pull request to mainline.
 
-name: Unit Tests on PR
+name: Unit Tests
 
 on:
   pull_request:

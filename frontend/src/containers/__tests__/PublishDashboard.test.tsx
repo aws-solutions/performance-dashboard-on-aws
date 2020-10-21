@@ -31,25 +31,26 @@ test("renders step indicator in step 1", () => {
   ).toBeInTheDocument();
 });
 
-test("continue button advances to step 2", () => {
+test("continue button advances to step 2", async () => {
   fireEvent.input(wrapper.getByLabelText("Internal release notes"), {
     target: {
       value: "Some release notes",
     },
   });
 
-  fireEvent.click(
-    wrapper.getByRole("button", {
-      name: "Continue",
-    })
-  );
+  await act(async () => {
+    fireEvent.click(
+      wrapper.getByRole("button", {
+        name: "Continue",
+      })
+    );
+  });
 
   expect(
     wrapper.getByRole("heading", {
       name: "Step 2 of 2 Review and publish",
     })
   ).toBeInTheDocument();
-  expect(wrapper.getByText("Some release notes")).toBeInTheDocument();
 });
 
 test("publish button invokes BadgerService", async () => {
@@ -64,6 +65,14 @@ test("publish button invokes BadgerService", async () => {
       name: "Continue",
     })
   );
+
+  await act(async () => {
+    fireEvent.click(
+      wrapper.getByLabelText(
+        "I acknowledge that I have reviewed the dashboard and it is ready to publish."
+      )
+    );
+  });
 
   await act(async () => {
     fireEvent.click(

@@ -46,19 +46,31 @@ type UseDashboardsHook = {
 
 export function useDashboards(): UseDashboardsHook {
   const [loading, setLoading] = useState(false);
-  const [dashboards, setDashboards] = useState<Array<Dashboard>>([]);
-  const [draftsDashboards, setDraftsDashboards] = useState<Array<Dashboard>>([]);
-  const [publishedDashboards, setPublishedDashboards] = useState<Array<Dashboard>>([]);
-  const [pendingDashboards, setPendingDashboards] = useState<Array<Dashboard>>([]);
+  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  const [draftsDashboards, setDraftsDashboards] = useState<Dashboard[]>([]);
+  const [pendingDashboards, setPendingDashboards] = useState<Dashboard[]>([]);
+  const [publishedDashboards, setPublishedDashboards] = useState<Dashboard[]>(
+    []
+  );
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     const data = await BadgerService.fetchDashboards();
     if (data) {
-      setDraftsDashboards(data.filter((d) => d.state === DashboardState.Draft));
-      setPublishedDashboards(data.filter((d) => d.state === DashboardState.Published));
-      setPendingDashboards(data.filter((d) => d.state === DashboardState.PublishPending));
       setDashboards(data);
+      setDraftsDashboards(
+        data.filter((dashboard) => dashboard.state === DashboardState.Draft)
+      );
+
+      setPublishedDashboards(
+        data.filter((dashboard) => dashboard.state === DashboardState.Published)
+      );
+
+      setPendingDashboards(
+        data.filter(
+          (dashboard) => dashboard.state === DashboardState.PublishPending
+        )
+      );
     }
     setLoading(false);
   }, []);

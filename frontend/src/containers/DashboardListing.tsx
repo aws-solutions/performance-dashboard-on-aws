@@ -60,23 +60,23 @@ function DashboardListing() {
 
   return (
     <AdminLayout>
-    <h1>Dashboards</h1>
-    <AlertContainer />
-    <Tabs defaultActive={activeTab}>
-      <div id="drafts" label={`Drafts (${draftsDashboards.length})`}>
-        <DraftsTab
-          dashboards={draftsDashboards}
-          onDelete={onDeleteDraftDashboards}
-        />
-      </div>
-      <div id="pending" label={`Publish queue (${pendingDashboards.length})`}>
-        <PublishQueueTab dashboards={pendingDashboards} />
-      </div>
-      <div id="published" label={`Published (${publishedDashboards.length})`}>
-        <PublishedTab dashboards={publishedDashboards} />
-      </div>
-    </Tabs>
-  </AdminLayout>
+      <h1>Dashboards</h1>
+      <AlertContainer />
+      <Tabs defaultActive={activeTab}>
+        <div id="drafts" label={`Drafts (${draftsDashboards.length})`}>
+          <DraftsTab
+            dashboards={draftsDashboards}
+            onDelete={onDeleteDraftDashboards}
+          />
+        </div>
+        <div id="pending" label={`Publish queue (${pendingDashboards.length})`}>
+          <PublishQueueTab dashboards={pendingDashboards} />
+        </div>
+        <div id="published" label={`Published (${publishedDashboards.length})`}>
+          <PublishedTab dashboards={publishedDashboards} />
+        </div>
+      </Tabs>
+    </AdminLayout>
   );
 }
 

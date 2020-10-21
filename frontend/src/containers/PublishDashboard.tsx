@@ -40,7 +40,6 @@ function PublishDashboard() {
       try {
         await BadgerService.publishDashboard(
           dashboardId,
-          dashboard.parentDashboardId,
           dashboard.updatedAt,
           values.releaseNotes
         );

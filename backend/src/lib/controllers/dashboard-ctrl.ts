@@ -177,22 +177,24 @@ async function publishDashboard(req: Request, res: Response) {
   }
 
   const { id } = req.params;
-  const { parentDashboardId, updatedAt, releaseNotes } = req.body;
+  const { updatedAt, releaseNotes } = req.body;
 
   if (!updatedAt) {
     res.status(400).send("Missing required body `updatedAt`");
     return;
   }
 
-  if (!parentDashboardId) {
-    res.status(400).send("Missing required body `parentDashboardId`");
-    return;
+  const repo = DashboardRepository.getInstance();
+
+  const dashboard = await repo.getDashboardById(id);
+  if (dashboard.state !== DashboardState.PublishPending) {
+    res.status(409);
+    return res.send("Dashboard must be in publish pending state");
   }
 
-  const repo = DashboardRepository.getInstance();
   await repo.publishDashboard(
     id,
-    parentDashboardId,
+    dashboard.parentDashboardId,
     updatedAt,
     releaseNotes || "",
     user
@@ -219,12 +221,43 @@ async function publishPendingDashboard(req: Request, res: Response) {
   const repo = DashboardRepository.getInstance();
 
   const dashboard = await repo.getDashboardById(id);
-  if (dashboard.state !== DashboardState.Draft) {
+  if (
+    dashboard.state !== DashboardState.Draft &&
+    dashboard.state !== DashboardState.Archived
+  ) {
     res.status(409);
-    return res.send("Dashboard must be in draft state");
+    return res.send("Dashboard must be in draft or archived state");
   }
 
   await repo.publishPendingDashboard(id, updatedAt, user);
+  res.send();
+}
+
+async function archiveDashboard(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const { id } = req.params;
+  const { updatedAt } = req.body;
+
+  if (!updatedAt) {
+    res.status(400).send("Missing required body `updatedAt`");
+    return;
+  }
+
+  const repo = DashboardRepository.getInstance();
+
+  const dashboard = await repo.getDashboardById(id);
+  if (dashboard.state !== DashboardState.Published) {
+    res.status(409);
+    return res.send("Dashboard must be in published state");
+  }
+
+  await repo.archiveDashboard(id, updatedAt, user);
   res.send();
 }
 
@@ -328,6 +361,7 @@ export default {
   updateDashboard,
   publishDashboard,
   publishPendingDashboard,
+  archiveDashboard,
   moveToDraftDashboard,
   deleteDashboard,
   deleteDashboards,

@@ -268,6 +268,43 @@ describe("DashboardRepository.publishPendingDashboard", () => {
   });
 });
 
+describe("DashboardRepository.archiveDashboard", () => {
+  it("should call update with the correct keys", async () => {
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+    await repo.archiveDashboard("123", now.toISOString(), user);
+    expect(dynamodb.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableName: tableName,
+        Key: {
+          pk: DashboardFactory.itemId("123"),
+          sk: DashboardFactory.itemId("123"),
+        },
+      })
+    );
+  });
+
+  it("should call update with all the fields", async () => {
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+    await repo.archiveDashboard("123", now.toISOString(), user);
+    expect(dynamodb.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        UpdateExpression:
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+        ExpressionAttributeValues: {
+          ":state": "Archived",
+          ":lastUpdatedAt": now.toISOString(),
+          ":updatedAt": now.toISOString(),
+          ":userId": user.userId,
+        },
+      })
+    );
+  });
+});
+
 describe("DashboardRepository.moveToDraft", () => {
   it("should call update with the correct keys", async () => {
     const now = new Date();

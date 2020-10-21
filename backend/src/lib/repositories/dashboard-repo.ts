@@ -304,6 +304,47 @@ class DashboardRepository extends BaseRepository {
   }
 
   /**
+   * Set a Dashboard identified by the param `dashboardId` to archived state.
+   */
+  public async archiveDashboard(
+    dashboardId: string,
+    lastUpdatedAt: string,
+    user: User
+  ) {
+    try {
+      await this.dynamodb.update({
+        TableName: this.tableName,
+        Key: {
+          pk: DashboardFactory.itemId(dashboardId),
+          sk: DashboardFactory.itemId(dashboardId),
+        },
+        UpdateExpression:
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+        ConditionExpression: "#updatedAt <= :lastUpdatedAt",
+        ExpressionAttributeValues: {
+          ":state": DashboardState.Archived,
+          ":lastUpdatedAt": lastUpdatedAt,
+          ":updatedAt": new Date().toISOString(),
+          ":userId": user.userId,
+        },
+        ExpressionAttributeNames: {
+          "#state": "state",
+          "#updatedBy": "updatedBy",
+          "#updatedAt": "updatedAt",
+        },
+      });
+    } catch (error) {
+      if (error.code === "ConditionalCheckFailedException") {
+        console.error(
+          "ConditionalCheckFailed when moving dashboard to archived state",
+          dashboardId
+        );
+      }
+      throw error;
+    }
+  }
+
+  /**
    * Set a Dashboard identified by the param `dashboardId` to draft state.
    */
   public async moveToDraft(

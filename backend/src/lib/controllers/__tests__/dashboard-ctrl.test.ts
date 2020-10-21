@@ -176,10 +176,49 @@ describe("publishDashboard", () => {
     expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
   });
 
+  it("returns a 409 error when dashboard state is not Publish Pending", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "456",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      widgets: [],
+      releaseNotes: "release note test",
+    };
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    await DashboardCtrl.publishDashboard(req, res);
+    expect(res.status).toBeCalledWith(409);
+    expect(res.send).toBeCalledWith(
+      "Dashboard must be in publish pending state"
+    );
+  });
+
   it("update the dashboard", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "456",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.PublishPending,
+      description: "",
+      widgets: [],
+      releaseNotes: "release note test",
+    };
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishDashboard(req, res);
     expect(repository.publishDashboard).toHaveBeenCalledWith(
       "123",
+      "456",
       now.toISOString(),
       "release note test",
       user
@@ -217,7 +256,7 @@ describe("publishPendingDashboard", () => {
     expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
   });
 
-  it("returns a 409 error when dashboard state is not Draft", async () => {
+  it("returns a 409 error when dashboard state is not Draft or Archived", async () => {
     const dashboard: Dashboard = {
       id: "123",
       version: 1,
@@ -235,7 +274,9 @@ describe("publishPendingDashboard", () => {
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishPendingDashboard(req, res);
     expect(res.status).toBeCalledWith(409);
-    expect(res.send).toBeCalledWith("Dashboard must be in draft state");
+    expect(res.send).toBeCalledWith(
+      "Dashboard must be in draft or archived state"
+    );
   });
 
   it("update the dashboard", async () => {
@@ -256,6 +297,82 @@ describe("publishPendingDashboard", () => {
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishPendingDashboard(req, res);
     expect(repository.publishPendingDashboard).toHaveBeenCalledWith(
+      "123",
+      now.toISOString(),
+      user
+    );
+  });
+});
+
+describe("archiveDashboard", () => {
+  let req: Request;
+  const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
+  beforeEach(() => {
+    req = ({
+      params: {
+        id: "123",
+      },
+      body: {
+        updatedAt: now.toISOString(),
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await DashboardCtrl.archiveDashboard(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when updatedAt is missing", async () => {
+    delete req.body.updatedAt;
+    await DashboardCtrl.archiveDashboard(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
+  });
+
+  it("returns a 409 error when dashboard state is not Published", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "123",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Inactive,
+      description: "",
+      widgets: [],
+      releaseNotes: "release note test",
+    };
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    await DashboardCtrl.archiveDashboard(req, res);
+    expect(res.status).toBeCalledWith(409);
+    expect(res.send).toBeCalledWith("Dashboard must be in published state");
+  });
+
+  it("update the dashboard", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "123",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      widgets: [],
+      releaseNotes: "release note test",
+    };
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    await DashboardCtrl.archiveDashboard(req, res);
+    expect(repository.archiveDashboard).toHaveBeenCalledWith(
       "123",
       now.toISOString(),
       user

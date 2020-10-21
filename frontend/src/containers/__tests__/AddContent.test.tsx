@@ -31,7 +31,5 @@ test("cancel link takes you to Edit Dashboard screen", async () => {
     fireEvent.click(cancelButton);
   });
 
-  expect(history.push).toHaveBeenCalledWith(
-    "/admin/dashboard/edit/undefined"
-  );
+  expect(history.push).toHaveBeenCalledWith("/admin/dashboard/edit/undefined");
 });

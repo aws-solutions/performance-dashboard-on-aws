@@ -1,6 +1,6 @@
 # Workflow that runs prettier code style check.
 
-name: Prettier Code Style
+name: Code Style Check
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
       - mainline
 
 jobs:
-  tests:
+  prettier:
     runs-on: ubuntu-latest
 
     strategy:

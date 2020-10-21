@@ -39,7 +39,7 @@ function EditDashboard() {
     ) {
       if (dashboard) {
         await BadgerService.publishPending(dashboard.id, dashboard.updatedAt);
-        history.push(`/admin/dashboard/${dashboard.id}/preview`, {
+        history.push(`/admin/dashboard/${dashboard.id}/publish`, {
           alert: {
             type: "info",
             message:

@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDashboard } from "../hooks";
-import { LocationState } from "../models";
+import { DashboardState, LocationState } from "../models";
 import AdminLayout from "../layouts/Admin";
 import ReactMarkdown from "react-markdown";
 import Button from "../components/Button";
@@ -21,16 +21,16 @@ function DashboardPreview() {
 
   const onPublish = async () => {
     if (
-      window.confirm(
-        "Are you sure you want to publish this dashboard? After publishing, the dashboard will be viewable on the external dashboard website."
-      )
+      window.confirm("Are you sure you want to start the publishing process?")
     ) {
       if (dashboard) {
-        await BadgerService.publishDashboard(dashboard.id, dashboard.updatedAt);
-        history.push("/admin/dashboards?tab=published", {
+        await BadgerService.publishPending(dashboard.id, dashboard.updatedAt);
+        history.push(`/admin/dashboard/${dashboard.id}/publish`, {
           alert: {
-            type: "success",
-            message: `${dashboard.name} dashboard was successfully published`,
+            type: "info",
+            message:
+              "This dashboard is now in the publish pending state " +
+              "and cannot be edited unless returned to draft.",
           },
         });
       }
@@ -38,7 +38,7 @@ function DashboardPreview() {
   };
 
   const onCancel = () => {
-    history.push(`/admin/dashboard/edit/${dashboard?.id}`);
+    history.goBack();
   };
 
   return (
@@ -55,7 +55,11 @@ function DashboardPreview() {
             <span className="usa-tag text-middle">Preview</span>
           </div>
           <div className="grid-col text-right">
-            <Button variant="base" onClick={onPublish}>
+            <Button
+              variant="base"
+              onClick={onPublish}
+              disabled={dashboard?.state === DashboardState.PublishPending}
+            >
               Publish
             </Button>
             <Button variant="outline" type="button" onClick={onCancel}>

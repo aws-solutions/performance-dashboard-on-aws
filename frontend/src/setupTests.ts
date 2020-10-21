@@ -7,6 +7,6 @@ import "mutationobserver-shim";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
-// jest.mock("./hooks");
+jest.mock("./hooks");
 
 dayjs.extend(relativeTime);

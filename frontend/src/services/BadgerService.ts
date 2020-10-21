@@ -16,7 +16,7 @@ async function getAuthToken() {
   return idToken.getJwtToken();
 }
 
-async function fetchDashboards() {
+async function fetchDashboards(): Promise<Array<Dashboard>> {
   const headers = await authHeaders();
   return await API.get(apiName, "dashboard", { headers });
 }

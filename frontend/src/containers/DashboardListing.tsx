@@ -1,5 +1,6 @@
 import React from "react";
 import { useDashboards } from "../hooks";
+import { LocationState } from "../models";
 import AdminLayout from "../layouts/Admin";
 import Tabs from "../components/Tabs";
 import DraftsTab from "../components/DraftsTab";
@@ -8,7 +9,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import AlertContainer from "../containers/AlertContainer";
 import { Dashboard } from "../models";
 import BadgerService from "../services/BadgerService";
-import { LocationState } from "../models";
+import PublishQueueTab from "../components/PublishQueueTab";
 
 function DashboardListing() {
   const { search } = useLocation();
@@ -16,12 +17,9 @@ function DashboardListing() {
   const {
     draftsDashboards,
     publishedDashboards,
+    pendingDashboards,
     reloadDashboards,
   } = useDashboards();
-
-  if (!draftsDashboards || !publishedDashboards) {
-    return null;
-  }
 
   const onDeleteDraftDashboards = async (selected: Array<Dashboard>) => {
     if (
@@ -54,32 +52,31 @@ function DashboardListing() {
     }
   };
 
-  const draftsTab = `Drafts (${draftsDashboards.length})`;
-  const publishedTab = `Published (${publishedDashboards.length})`;
-
-  let defaultActive = draftsTab;
-
-  const queryString = search.split("=");
-  if (queryString.length > 1 && queryString[1] === "published") {
-    defaultActive = publishedTab;
+  let activeTab = "drafts";
+  const queryString = search.split("tab=");
+  if (queryString.length > 1) {
+    activeTab = queryString[1];
   }
 
   return (
     <AdminLayout>
-      <h1>Dashboards</h1>
-      <AlertContainer />
-      <Tabs defaultActive={defaultActive}>
-        <div label={draftsTab}>
-          <DraftsTab
-            dashboards={draftsDashboards}
-            onDelete={onDeleteDraftDashboards}
-          />
-        </div>
-        <div label={publishedTab}>
-          <PublishedTab dashboards={publishedDashboards} />
-        </div>
-      </Tabs>
-    </AdminLayout>
+    <h1>Dashboards</h1>
+    <AlertContainer />
+    <Tabs defaultActive={activeTab}>
+      <div id="drafts" label={`Drafts (${draftsDashboards.length})`}>
+        <DraftsTab
+          dashboards={draftsDashboards}
+          onDelete={onDeleteDraftDashboards}
+        />
+      </div>
+      <div id="pending" label={`Publish queue (${pendingDashboards.length})`}>
+        <PublishQueueTab dashboards={pendingDashboards} />
+      </div>
+      <div id="published" label={`Published (${publishedDashboards.length})`}>
+        <PublishedTab dashboards={publishedDashboards} />
+      </div>
+    </Tabs>
+  </AdminLayout>
   );
 }
 

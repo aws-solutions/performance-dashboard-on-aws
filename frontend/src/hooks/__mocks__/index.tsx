@@ -84,6 +84,7 @@ export function useDashboards() {
         topicAreaName: "Topic Area Grapes",
       },
     ],
+    pendingDashboards: [],
   };
 }
 

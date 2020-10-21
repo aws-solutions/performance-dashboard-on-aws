@@ -196,3 +196,17 @@ test("publishPending makes a PUT request to dashboard API", async () => {
     })
   );
 });
+
+test("moveToDraft makes a PUT request to dashboard API", async () => {
+  const lastUpdatedAt = new Date();
+  await BadgerService.moveToDraft("123", lastUpdatedAt);
+  expect(API.put).toBeCalledWith(
+    "BadgerApi",
+    "dashboard/123/draft",
+    expect.objectContaining({
+      body: {
+        updatedAt: lastUpdatedAt,
+      },
+    })
+  );
+});

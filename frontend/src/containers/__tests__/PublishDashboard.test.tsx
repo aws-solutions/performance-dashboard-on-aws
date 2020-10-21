@@ -68,10 +68,21 @@ test("publish button invokes BadgerService", async () => {
   await act(async () => {
     fireEvent.click(
       wrapper.getByRole("button", {
-        name: "Confirm & Publish",
+        name: "Submit for publishing",
       })
     );
   });
 
   expect(BadgerService.publishDashboard).toBeCalled();
+});
+
+test("return to draft button invokes BadgerService", async () => {
+  await act(async () => {
+    fireEvent.click(
+      wrapper.getByRole("button", {
+        name: "Return to draft",
+      })
+    );
+  });
+  expect(BadgerService.moveToDraft).toBeCalled();
 });

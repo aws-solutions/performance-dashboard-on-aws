@@ -25,14 +25,24 @@ function PublishDashboard() {
   const history = useHistory<LocationState>();
   const [step, setStep] = useState<number>(0);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard, reloadDashboard } = useDashboard(dashboardId);
 
   const onPreview = () => {
     history.push(`/admin/dashboard/${dashboardId}/preview`);
   };
 
-  const onReturnToDraft = () => {
-    history.push(`/admin/dashboard/edit/${dashboardId}`);
+  const onReturnToDraft = async () => {
+    if (!dashboard) {
+      return;
+    }
+
+    try {
+      await BadgerService.moveToDraft(dashboardId, dashboard.updatedAt);
+      history.push(`/admin/dashboard/edit/${dashboardId}`);
+    } catch (err) {
+      console.log("Failed to return to draft");
+      await reloadDashboard();
+    }
   };
 
   const onSubmit = async (values: FormValues) => {
@@ -68,9 +78,7 @@ function PublishDashboard() {
           <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
         </Link>
       </div>
-      <div className="padding-y-2">
-        <AlertContainer />
-      </div>
+      <AlertContainer />
       <div className="grid-row">
         <div className="grid-col text-left padding-top-2">
           <ul className="usa-button-group">
@@ -162,7 +170,7 @@ function PublishDashboard() {
           </span>
           <span hidden={step < 1}>
             <Button variant="default" type="submit">
-              Confirm & Publish
+              Submit for publishing
             </Button>
           </span>
         </div>

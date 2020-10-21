@@ -1,11 +1,16 @@
-# Runs unit tests for all 3 packages. 
+# Runs unit tests for all 2 packages. 
 
 #
 # Backend
 #
 cd backend
 echo "Running backend unit tests"
-npm run test:ci # Avoid interactive mode on tests
+npm run test:ci  # Avoid interactive mode on tests
+if [ $? -eq 1 ]
+then
+  echo "Backend tests failed"
+  exit 1
+fi
 cd ..
 
 #
@@ -14,12 +19,9 @@ cd ..
 cd frontend
 echo "Running frontend unit tests"
 CI=true yarn test # Avoid interactive mode on tests
-cd ..
-
-#
-# CDK
-#
-echo "Running cdk unit tests"
-cd cdk
-npm run test
+if [ $? -eq 1 ]
+then
+  echo "Frontend tests failed"
+  exit 1
+fi
 cd ..

@@ -169,6 +169,12 @@ export function useJsonDataset(s3Key: string) {
   };
 }
 
+export function useAdmin() {
+  return {
+    username: "johndoe",
+  };
+}
+
 export function useColors(numberOfColors: number) {
   return [
     "#29B4BB",

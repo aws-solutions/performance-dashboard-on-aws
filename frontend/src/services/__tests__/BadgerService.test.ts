@@ -79,10 +79,16 @@ test("editDashboard should make a PUT request with payload", async () => {
 
 test("publishDashboard should make a PUT request with payload", async () => {
   const dashboardId = "123";
+  const parentDashboardId = "456";
   const updatedAt = new Date("2020-09-17T21:01:00.780Z");
   const releaseNotes = "Made changes to the revenue metrics";
 
-  await BadgerService.publishDashboard(dashboardId, updatedAt, releaseNotes);
+  await BadgerService.publishDashboard(
+    dashboardId,
+    parentDashboardId,
+    updatedAt,
+    releaseNotes
+  );
 
   expect(API.put).toHaveBeenCalledWith(
     "BadgerApi",
@@ -90,6 +96,7 @@ test("publishDashboard should make a PUT request with payload", async () => {
     expect.objectContaining({
       body: {
         updatedAt,
+        parentDashboardId,
         releaseNotes,
       },
     })

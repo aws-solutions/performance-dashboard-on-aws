@@ -177,15 +177,26 @@ async function publishDashboard(req: Request, res: Response) {
   }
 
   const { id } = req.params;
-  const { updatedAt, releaseNotes } = req.body;
+  const { parentDashboardId, updatedAt, releaseNotes } = req.body;
 
   if (!updatedAt) {
     res.status(400).send("Missing required body `updatedAt`");
     return;
   }
 
+  if (!parentDashboardId) {
+    res.status(400).send("Missing required body `parentDashboardId`");
+    return;
+  }
+
   const repo = DashboardRepository.getInstance();
-  await repo.publishDashboard(id, updatedAt, releaseNotes || "", user);
+  await repo.publishDashboard(
+    id,
+    parentDashboardId,
+    updatedAt,
+    releaseNotes || "",
+    user
+  );
   res.send();
 }
 

@@ -157,6 +157,7 @@ describe("publishDashboard", () => {
       },
       body: {
         updatedAt: now.toISOString(),
+        parentDashboardId: "456",
         releaseNotes: "release note test",
       },
     } as any) as Request;
@@ -176,10 +177,20 @@ describe("publishDashboard", () => {
     expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
   });
 
+  it("returns a 400 error when parentDashboardId is missing", async () => {
+    delete req.body.parentDashboardId;
+    await DashboardCtrl.publishDashboard(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith(
+      "Missing required body `parentDashboardId`"
+    );
+  });
+
   it("update the dashboard", async () => {
     await DashboardCtrl.publishDashboard(req, res);
     expect(repository.publishDashboard).toHaveBeenCalledWith(
       "123",
+      "456",
       now.toISOString(),
       "release note test",
       user

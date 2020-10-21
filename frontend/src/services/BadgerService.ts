@@ -85,6 +85,7 @@ async function editDashboard(
 
 async function publishDashboard(
   dashboardId: string,
+  parentDashboardId: string,
   updatedAt: Date,
   releaseNotes: string
 ) {
@@ -93,6 +94,7 @@ async function publishDashboard(
     headers,
     body: {
       updatedAt,
+      parentDashboardId,
       releaseNotes,
     },
   });

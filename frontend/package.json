@@ -30,7 +30,7 @@
     "react-scripts": "3.4.1",
     "recharts": "^1.8.5",
     "typescript": "~3.7.2",
-    "uswds": "^2.8.0",
+    "uswds": "^2.9.0",
     "uuid": "^8.2.0"
   },
   "scripts": {

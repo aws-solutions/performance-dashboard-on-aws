@@ -31,9 +31,9 @@ test("renders the topic area as subtitle", async () => {
   expect(subtitle).toBeInTheDocument();
 });
 
-test("close preview button takes you to edit dashboard screen", async () => {
+test("close preview button takes you back to previous screen", async () => {
   const history = createMemoryHistory();
-  jest.spyOn(history, "push");
+  jest.spyOn(history, "goBack");
 
   const { findByRole } = render(
     <Router history={history}>
@@ -43,5 +43,5 @@ test("close preview button takes you to edit dashboard screen", async () => {
 
   const closePreview = await findByRole("button", { name: "Close Preview" });
   fireEvent.click(closePreview);
-  expect(history.push).toHaveBeenCalledWith("/admin/dashboard/edit/123");
+  expect(history.goBack).toBeCalled();
 });

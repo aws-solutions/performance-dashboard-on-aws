@@ -28,7 +28,7 @@ test("renders a dropdown with options", async () => {
         {
           label: "AWS Lambda",
           value: "lambda",
-        }
+        },
       ]}
     />
   );
@@ -90,7 +90,7 @@ test("renders a select with a default value", async () => {
         {
           label: "AWS Lambda",
           value: "lambda",
-        }
+        },
       ]}
     />
   );

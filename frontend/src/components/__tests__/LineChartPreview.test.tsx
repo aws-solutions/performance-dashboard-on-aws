@@ -5,10 +5,7 @@ import LineChartPreview from "../LineChartPreview";
 
 test("renders the title of the line chart preview component", async () => {
   const { getByText } = render(
-    <LineChartPreview
-      title="test title"
-      lines={["test"]}
-    />,
+    <LineChartPreview title="test title" lines={["test"]} />,
     { wrapper: MemoryRouter }
   );
   expect(getByText("test title")).toBeInTheDocument();

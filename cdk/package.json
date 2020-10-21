@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "cdk": "cdk",
     "deploy:pipeline": "cdk deploy --app 'npx ts-node bin/pipeline.ts'"
   },

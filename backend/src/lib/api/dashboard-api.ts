@@ -15,6 +15,7 @@ router.put(
   "/:id/publishpending",
   withErrorHandler(DashboardCtrl.publishPendingDashboard)
 );
+router.put("/:id/archive", withErrorHandler(DashboardCtrl.archiveDashboard));
 router.put("/:id/draft", withErrorHandler(DashboardCtrl.moveToDraftDashboard));
 router.put("/:id/widgetorder", withErrorHandler(WidgetCtrl.setWidgetOrder));
 router.put("/:id", withErrorHandler(DashboardCtrl.updateDashboard));

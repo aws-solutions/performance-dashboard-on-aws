@@ -7,6 +7,12 @@ export enum DashboardState {
   PublishPending = "PublishPending",
 }
 
+export interface DashboardVersion {
+  id: string;
+  version: number;
+  state: DashboardState;
+}
+
 export interface Dashboard {
   id: string;
   name: string;

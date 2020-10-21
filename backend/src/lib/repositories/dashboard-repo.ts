@@ -74,6 +74,27 @@ class DashboardRepository extends BaseRepository {
     );
   }
 
+  public async getDashboardVersions(
+    parentDashboardId: string
+  ): Promise<DashboardList> {
+    const result = await this.dynamodb.query({
+      TableName: this.tableName,
+      IndexName: "byParentDashboard",
+      KeyConditionExpression: "parentDashboardId = :parentDashboardId",
+      ExpressionAttributeValues: {
+        ":parentDashboardId": parentDashboardId,
+      },
+    });
+
+    if (!result.Items || result.Items.length === 0) {
+      return [];
+    }
+
+    return result.Items.map((item) =>
+      DashboardFactory.fromItem(item as DashboardItem)
+    );
+  }
+
   /**
    * Returns the list of Dashboards within an specified topic area.
    */
@@ -188,7 +209,7 @@ class DashboardRepository extends BaseRepository {
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
         console.error(
-          "ConditionalCheckFailed when publishing dashboard",
+          "ConditionalCheckFailed when moving dashboard to published state",
           dashboardId
         );
       }
@@ -229,7 +250,48 @@ class DashboardRepository extends BaseRepository {
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
         console.error(
-          "ConditionalCheckFailed when publishing dashboard",
+          "ConditionalCheckFailed when moving dashboard to publish pending state",
+          dashboardId
+        );
+      }
+      throw error;
+    }
+  }
+
+  /**
+   * Set a Dashboard identified by the param `dashboardId` to draft state.
+   */
+  public async moveToDraft(
+    dashboardId: string,
+    lastUpdatedAt: string,
+    user: User
+  ) {
+    try {
+      await this.dynamodb.update({
+        TableName: this.tableName,
+        Key: {
+          pk: DashboardFactory.itemId(dashboardId),
+          sk: DashboardFactory.itemId(dashboardId),
+        },
+        UpdateExpression:
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+        ConditionExpression: "#updatedAt <= :lastUpdatedAt",
+        ExpressionAttributeValues: {
+          ":state": DashboardState.Draft,
+          ":lastUpdatedAt": lastUpdatedAt,
+          ":updatedAt": new Date().toISOString(),
+          ":userId": user.userId,
+        },
+        ExpressionAttributeNames: {
+          "#state": "state",
+          "#updatedBy": "updatedBy",
+          "#updatedAt": "updatedAt",
+        },
+      });
+    } catch (error) {
+      if (error.code === "ConditionalCheckFailedException") {
+        console.error(
+          "ConditionalCheckFailed when moving dashboard to draft state",
           dashboardId
         );
       }
@@ -345,7 +407,7 @@ class DashboardRepository extends BaseRepository {
     return dashboard;
   }
 
-  public async listPublishedDashboards(): Promise<Array<Dashboard>> {
+  public async listPublishedDashboards(): Promise<DashboardList> {
     const result = await this.dynamodb.query({
       TableName: this.tableName,
       IndexName: "byType",

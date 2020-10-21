@@ -59,6 +59,9 @@ export class BadgerApi extends cdk.Construct {
     dashboard.addMethod("POST", apiIntegration, methodProps);
     dashboard.addMethod("DELETE", apiIntegration, methodProps);
 
+    const versions = dashboard.addResource("versions");
+    versions.addMethod("GET", apiIntegration, methodProps);
+
     const widgetorder = dashboard.addResource("widgetorder");
     widgetorder.addMethod("PUT", apiIntegration, methodProps);
 
@@ -67,6 +70,9 @@ export class BadgerApi extends cdk.Construct {
 
     const publishPending = dashboard.addResource("publishPending");
     publishPending.addMethod("PUT", apiIntegration, methodProps);
+
+    const draft = dashboard.addResource("draft");
+    draft.addMethod("PUT", apiIntegration, methodProps);
 
     const widgets = dashboard.addResource("widget");
     widgets.addMethod("POST", apiIntegration, methodProps);

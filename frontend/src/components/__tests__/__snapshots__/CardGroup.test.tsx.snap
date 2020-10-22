@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a card group with 1 card 1`] = `
+<div>
+  <ul
+    class="usa-card-group"
+  >
+    <li
+      class="usa-card cursor-default tablet:grid-col-12"
+    >
+      <div
+        class="usa-card__container"
+      >
+        <header
+          class="usa-card__header"
+        >
+          <h2
+            class="usa-card__heading font-family-sans"
+          >
+            Hello World
+          </h2>
+        </header>
+        <div
+          class="usa-card__body"
+        >
+          Welcome to badger
+        </div>
+        <div
+          class="usa-card__footer"
+        >
+          by AWS
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`renders a card group with multiple cards 1`] = `
+<div>
+  <ul
+    class="usa-card-group"
+  >
+    <li
+      class="usa-card cursor-default tablet:grid-col-4"
+    >
+      <div
+        class="usa-card__container"
+      >
+        <header
+          class="usa-card__header"
+        >
+          <h2
+            class="usa-card__heading font-family-sans"
+          >
+            Hello World
+          </h2>
+        </header>
+        <div
+          class="usa-card__body"
+        >
+          Welcome to badger
+        </div>
+        <div
+          class="usa-card__footer"
+        >
+          by AWS
+        </div>
+      </div>
+    </li>
+    <li
+      class="usa-card cursor-default tablet:grid-col-4"
+    >
+      <div
+        class="usa-card__container"
+      >
+        <header
+          class="usa-card__header"
+        >
+          <h2
+            class="usa-card__heading font-family-sans"
+          >
+            Hola Mundo
+          </h2>
+        </header>
+        <div
+          class="usa-card__body"
+        >
+          Bienvenido a badger
+        </div>
+        <div
+          class="usa-card__footer"
+        >
+          by AWS
+        </div>
+      </div>
+    </li>
+    <li
+      class="usa-card cursor-default tablet:grid-col-4"
+    >
+      <div
+        class="usa-card__container"
+      >
+        <header
+          class="usa-card__header"
+        >
+          <h2
+            class="usa-card__heading font-family-sans"
+          >
+            Bonjour le monde
+          </h2>
+        </header>
+        <div
+          class="usa-card__body"
+        >
+          Bienvenue chez badger
+        </div>
+        <div
+          class="usa-card__footer"
+        >
+          by AWS
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`renders a card without footer 1`] = `
+<div>
+  <ul
+    class="usa-card-group"
+  >
+    <li
+      class="usa-card cursor-default tablet:grid-col-4"
+    >
+      <div
+        class="usa-card__container"
+      >
+        <header
+          class="usa-card__header"
+        >
+          <h2
+            class="usa-card__heading font-family-sans"
+          >
+            Hello World
+          </h2>
+        </header>
+        <div
+          class="usa-card__body"
+        >
+          Welcome to badger
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;

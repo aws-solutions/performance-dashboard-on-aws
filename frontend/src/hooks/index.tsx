@@ -2,6 +2,7 @@ import {
   useDashboard,
   useDashboards,
   usePublicDashboard,
+  useDashboardVersions,
 } from "./dashboard-hooks";
 import { useWidget, useColors } from "./widget-hooks";
 import { useTopicAreas } from "./topicarea-hooks";
@@ -28,4 +29,5 @@ export {
   useHomepage,
   useJsonDataset,
   useAdmin,
+  useDashboardVersions,
 };

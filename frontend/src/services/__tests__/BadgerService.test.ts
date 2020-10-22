@@ -210,3 +210,12 @@ test("moveToDraft makes a PUT request to dashboard API", async () => {
     })
   );
 });
+
+test("fetchDashboardVersions makes a GET request to dashboard API", async () => {
+  await BadgerService.fetchDashboardVersions("123");
+  expect(API.get).toBeCalledWith(
+    "BadgerApi",
+    "dashboard/123/versions",
+    expect.anything()
+  );
+});

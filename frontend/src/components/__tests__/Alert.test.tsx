@@ -45,3 +45,22 @@ test("renders a slim alert ignoring title", async () => {
   );
   expect(wrapper.container).toMatchSnapshot();
 });
+
+test("renders an alert without icon", async () => {
+  const wrapper = render(
+    <Alert type="success" message="Hello world" hideIcon slim />
+  );
+  expect(wrapper.container).toMatchSnapshot();
+});
+
+test("renders an alert with HTML content as message", async () => {
+  const wrapper = render(
+    <Alert
+      type="success"
+      message={<a href="#">This is a link</a>}
+      hideIcon
+      slim
+    />
+  );
+  expect(wrapper.container).toMatchSnapshot();
+});

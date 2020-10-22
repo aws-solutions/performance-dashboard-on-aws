@@ -1,5 +1,11 @@
 import { API, Auth } from "aws-amplify";
-import { Dashboard, Dataset, PublicDashboard, Widget } from "../models";
+import {
+  Dashboard,
+  DashboardVersion,
+  Dataset,
+  PublicDashboard,
+  Widget,
+} from "../models";
 
 const apiName = "BadgerApi";
 
@@ -19,6 +25,15 @@ async function getAuthToken() {
 async function fetchDashboards(): Promise<Array<Dashboard>> {
   const headers = await authHeaders();
   return await API.get(apiName, "dashboard", { headers });
+}
+
+async function fetchDashboardVersions(
+  parentDashboardId: string
+): Promise<Array<DashboardVersion>> {
+  const headers = await authHeaders();
+  return await API.get(apiName, `dashboard/${parentDashboardId}/versions`, {
+    headers,
+  });
 }
 
 async function fetchDashboardById(dashboardId: string): Promise<Dashboard> {
@@ -247,4 +262,5 @@ export default {
   publishPending,
   createDraft,
   moveToDraft,
+  fetchDashboardVersions,
 };

@@ -1,5 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
-import { Dashboard, DashboardState, PublicDashboard } from "../models";
+import {
+  Dashboard,
+  DashboardState,
+  DashboardVersion,
+  PublicDashboard,
+} from "../models";
 import BadgerService from "../services/BadgerService";
 
 type UseDashboardHook = {
@@ -121,5 +126,36 @@ export function usePublicDashboard(
     loading,
     dashboard,
     reloadDashboard: fetchData,
+  };
+}
+
+type UseVersionsHook = {
+  loading: boolean;
+  versions: Array<DashboardVersion>;
+};
+
+export function useDashboardVersions(
+  parentDashboardId: string | undefined
+): UseVersionsHook {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [versions, setVersions] = useState<DashboardVersion[]>([]);
+
+  useEffect(() => {
+    if (parentDashboardId) {
+      const fetchData = async () => {
+        setLoading(true);
+        const data = await BadgerService.fetchDashboardVersions(
+          parentDashboardId
+        );
+        setVersions(data);
+        setLoading(false);
+      };
+      fetchData();
+    }
+  }, [parentDashboardId]);
+
+  return {
+    loading,
+    versions,
   };
 }

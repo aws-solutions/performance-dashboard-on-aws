@@ -4,6 +4,8 @@
  * calls to happen and instead returns dummy data.
  */
 
+import { DashboardState } from "../../models";
+
 const dummyDashboard = {
   id: "123",
   name: "My AWS Dashboard",
@@ -191,4 +193,22 @@ export function useColors(numberOfColors: number) {
     "#217C59",
     "#8DED43",
   ];
+}
+
+export function useDashboardVersions(parentDashboardId: string) {
+  return {
+    loading: false,
+    versions: [
+      {
+        id: "001",
+        version: 1,
+        state: DashboardState.Draft,
+      },
+      {
+        id: "002",
+        version: 2,
+        state: DashboardState.Published,
+      },
+    ],
+  };
 }

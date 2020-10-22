@@ -2,7 +2,8 @@ import React from "react";
 
 interface Props {
   title?: string;
-  message: string;
+  hideIcon?: boolean;
+  message: string | React.ReactNode;
   type: "info" | "warning" | "error" | "success";
   slim?: boolean;
 }
@@ -13,14 +14,22 @@ function Alert(props: Props) {
     className += " usa-alert--slim";
   }
 
+  if (props.hideIcon) {
+    className += " usa-alert--no-icon";
+  }
+
   return (
     <div className={className}>
-      <div className="usa-alert__body">
-        {props.title && !props.slim && (
-          <h3 className="usa-alert__heading">{props.title}</h3>
-        )}
-        <p className="usa-alert__text">{props.message}</p>
-      </div>
+      {typeof props.message === "object" ? (
+        props.message
+      ) : (
+        <div className="usa-alert__body">
+          {props.title && !props.slim && (
+            <h3 className="usa-alert__heading">{props.title}</h3>
+          )}
+          <p className="usa-alert__text">{props.message}</p>
+        </div>
+      )}
     </div>
   );
 }

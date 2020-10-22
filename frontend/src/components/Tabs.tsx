@@ -19,8 +19,9 @@ function Tabs(props: Props) {
         {React.Children.map(props.children, (child) => {
           return (
             <Tab
+              id={(child as any).props.id}
               activeTab={activeTab}
-              key={(child as any).props.label}
+              key={(child as any).props.id}
               label={(child as any).props.label}
               onClick={onClickTabItem}
             />
@@ -29,7 +30,7 @@ function Tabs(props: Props) {
       </ol>
       <div className="tab-content">
         {React.Children.map(props.children, (child) => {
-          if ((child as any).props.label !== activeTab) return undefined;
+          if ((child as any).props.id !== activeTab) return undefined;
           return (child as any).props.children;
         })}
       </div>

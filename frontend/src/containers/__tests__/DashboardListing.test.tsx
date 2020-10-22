@@ -79,3 +79,11 @@ test("filters dashboards based on search input", async () => {
   // Dashboard one should dissapear
   expect(dashboard1).not.toBeInTheDocument();
 });
+
+test("renders a publish queue tab", async () => {
+  const { getByText } = render(<DashboardListing />, {
+    wrapper: MemoryRouter,
+  });
+
+  expect(getByText("Publish queue (0)")).toBeInTheDocument();
+});

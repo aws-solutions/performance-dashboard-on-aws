@@ -12,7 +12,7 @@ function AlertContainer() {
   }
 
   return (
-    <div>
+    <div className="margin-y-2">
       <Alert type={state.alert.type} message={state.alert.message} slim />
     </div>
   );

@@ -176,7 +176,7 @@ describe("publishDashboard", () => {
     expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
   });
 
-  it("returns a 409 error when dashboard state is not Publish Pending", async () => {
+  it("returns a 409 error when dashboard state is not Publish Pending or Archived", async () => {
     const dashboard: Dashboard = {
       id: "123",
       version: 1,
@@ -195,7 +195,7 @@ describe("publishDashboard", () => {
     await DashboardCtrl.publishDashboard(req, res);
     expect(res.status).toBeCalledWith(409);
     expect(res.send).toBeCalledWith(
-      "Dashboard must be in publish pending state"
+      "Dashboard must be in publish pending or archived state"
     );
   });
 
@@ -256,7 +256,7 @@ describe("publishPendingDashboard", () => {
     expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
   });
 
-  it("returns a 409 error when dashboard state is not Draft or Archived", async () => {
+  it("returns a 409 error when dashboard state is not Draft", async () => {
     const dashboard: Dashboard = {
       id: "123",
       version: 1,
@@ -274,9 +274,7 @@ describe("publishPendingDashboard", () => {
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishPendingDashboard(req, res);
     expect(res.status).toBeCalledWith(409);
-    expect(res.send).toBeCalledWith(
-      "Dashboard must be in draft or archived state"
-    );
+    expect(res.send).toBeCalledWith("Dashboard must be in draft state");
   });
 
   it("update the dashboard", async () => {

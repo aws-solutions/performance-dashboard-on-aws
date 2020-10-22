@@ -63,11 +63,6 @@ function DraftsTab(props: Props) {
             </Button>
           </span>
           <span>
-            <Button variant="base" disabled={selected.length === 0}>
-              Publish
-            </Button>
-          </span>
-          <span>
             <Button onClick={createDashboard}>Create dashboard</Button>
           </span>
         </div>

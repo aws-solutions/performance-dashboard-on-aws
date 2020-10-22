@@ -45,8 +45,25 @@ function ViewDashboardAdmin() {
     }
   };
 
-  const onArchive = () => {
-    console.log("Archive");
+  const onArchive = async () => {
+    if (!dashboard) {
+      return;
+    }
+
+    if (
+      window.confirm(
+        `This will remove "${dashboard.name}" dashboard from the external site. You can re-publish archived dashboards at any time.`
+      )
+    ) {
+      await BadgerService.archive(dashboard.id, dashboard.updatedAt);
+
+      history.push("/admin/dashboards?tab=archived", {
+        alert: {
+          type: "success",
+          message: `${dashboard.name} was successfully archived`,
+        },
+      });
+    }
   };
 
   return (

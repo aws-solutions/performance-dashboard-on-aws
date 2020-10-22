@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import { Dashboard } from "../models";
-import Button from "./Button";
 import Search from "./Search";
 import DashboardsTable from "./DashboardsTable";
 import ScrollTop from "./ScrollTop";
 
 interface Props {
   dashboards: Array<Dashboard>;
-  onArchive: Function;
 }
 
-function PublishedTab(props: Props) {
+function ArchivedTab(props: Props) {
   const [filter, setFilter] = useState("");
-  const [selected, setSelected] = useState<Array<Dashboard>>([]);
-  const [canUpdateOnly, setCanUpdateOnly] = useState<boolean>(false);
+  const [, setSelected] = useState<Array<Dashboard>>([]);
 
   const onSearch = (query: string) => {
     setFilter(query);
@@ -40,8 +37,9 @@ function PublishedTab(props: Props) {
   return (
     <div>
       <p>
-        These are all of the published dashboards. You can view all dashboards
-        but you need editor access in order to update a published dashboard.
+        These are all archived dashboards. Archived dashboards are not viewable
+        on the published site. You can re-publish any version of an archived
+        dashboard.
       </p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-7 text-left padding-top-1px">
@@ -51,33 +49,7 @@ function PublishedTab(props: Props) {
                 <Search id="search" onSubmit={onSearch} size="small" />
               </span>
             </li>
-            <li className="usa-button-group__item padding-top-1 margin-left-1">
-              <span>
-                <input
-                  id="can-update-only"
-                  type="checkbox"
-                  checked={canUpdateOnly}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setCanUpdateOnly(e.target.checked);
-                  }}
-                />
-                <label htmlFor="can-update-only" className="margin-left-1">
-                  Show only dashboards I can update
-                </label>
-              </span>
-            </li>
           </ul>
-        </div>
-        <div className="tablet:grid-col-5 text-right">
-          <span>
-            <Button
-              variant="base"
-              disabled={selected.length === 0}
-              onClick={() => props.onArchive(selected)}
-            >
-              Archive
-            </Button>
-          </span>
         </div>
       </div>
       <DashboardsTable
@@ -91,4 +63,4 @@ function PublishedTab(props: Props) {
   );
 }
 
-export default PublishedTab;
+export default ArchivedTab;

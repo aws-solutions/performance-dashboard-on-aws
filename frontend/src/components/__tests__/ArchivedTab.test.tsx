@@ -1,10 +1,8 @@
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import DraftsTab from "../DraftsTab";
 import { Dashboard } from "../../models";
-
-jest.mock("../../hooks");
+import ArchivedTab from "../ArchivedTab";
 
 const dashboards: Array<Dashboard> = [
   {
@@ -15,7 +13,7 @@ const dashboards: Array<Dashboard> = [
     topicAreaId: "123456789",
     topicAreaName: "Topic Area Bananas",
     createdBy: "test user",
-    state: "Draft",
+    state: "Archived",
     updatedAt: new Date(),
     widgets: [],
   },
@@ -27,41 +25,16 @@ const dashboards: Array<Dashboard> = [
     topicAreaId: "987654321",
     topicAreaName: "Topic Area Grapes",
     createdBy: "test user",
-    state: "Draft",
+    state: "Archived",
     updatedAt: new Date(),
     widgets: [],
   },
 ];
 
-test("renders a button to delete", async () => {
-  const { getByRole } = render(
-    <DraftsTab dashboards={[]} onDelete={() => {}} />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
-  const button = getByRole("button", { name: "Delete" });
-  expect(button).toBeInTheDocument();
-});
-
-test("renders a button to create dashboard", async () => {
-  const { getByRole } = render(
-    <DraftsTab dashboards={[]} onDelete={() => {}} />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
-  const button = getByRole("button", { name: "Create dashboard" });
-  expect(button).toBeInTheDocument();
-});
-
 test("renders a dashboard table", async () => {
-  const { getByRole } = render(
-    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
+  const { getByRole } = render(<ArchivedTab dashboards={dashboards} />, {
+    wrapper: MemoryRouter,
+  });
 
   const dashboard1 = getByRole("link", { name: "Dashboard One" });
   expect(dashboard1).toBeInTheDocument();
@@ -72,7 +45,7 @@ test("renders a dashboard table", async () => {
 
 test("filters dashboards based on search input", async () => {
   const { getByLabelText, getByRole } = render(
-    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    <ArchivedTab dashboards={dashboards} />,
     {
       wrapper: MemoryRouter,
     }

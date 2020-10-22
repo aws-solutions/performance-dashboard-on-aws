@@ -1,24 +1,16 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Dashboard } from "../models";
-import Button from "./Button";
 import Search from "./Search";
 import DashboardsTable from "./DashboardsTable";
 import ScrollTop from "./ScrollTop";
 
 interface Props {
   dashboards: Array<Dashboard>;
-  onDelete: Function;
 }
 
-function DraftsTab(props: Props) {
+function ArchivedTab(props: Props) {
   const [filter, setFilter] = useState("");
-  const [selected, setSelected] = useState<Array<Dashboard>>([]);
-  const history = useHistory();
-
-  const createDashboard = () => {
-    history.push("/admin/dashboard/create");
-  };
+  const [, setSelected] = useState<Array<Dashboard>>([]);
 
   const onSearch = (query: string) => {
     setFilter(query);
@@ -45,26 +37,19 @@ function DraftsTab(props: Props) {
   return (
     <div>
       <p>
-        You have access to view, edit, and/or publish the draft dashboards in
-        this table.
+        These are all archived dashboards. Archived dashboards are not viewable
+        on the published site. You can re-publish any version of an archived
+        dashboard.
       </p>
       <div className="grid-row margin-y-3">
-        <div className="tablet:grid-col-3 padding-top-1px">
-          <Search id="search" onSubmit={onSearch} size="small" />
-        </div>
-        <div className="tablet:grid-col-9 text-right">
-          <span>
-            <Button
-              variant="base"
-              disabled={selected.length === 0}
-              onClick={() => props.onDelete(selected)}
-            >
-              Delete
-            </Button>
-          </span>
-          <span>
-            <Button onClick={createDashboard}>Create dashboard</Button>
-          </span>
+        <div className="tablet:grid-col-7 text-left padding-top-1px">
+          <ul className="usa-button-group">
+            <li className="usa-button-group__item">
+              <span>
+                <Search id="search" onSubmit={onSearch} size="small" />
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
       <DashboardsTable
@@ -78,4 +63,4 @@ function DraftsTab(props: Props) {
   );
 }
 
-export default DraftsTab;
+export default ArchivedTab;

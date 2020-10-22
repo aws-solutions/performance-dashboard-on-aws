@@ -120,6 +120,19 @@ async function deleteDashboards(dashboards: Array<string>) {
   });
 }
 
+async function archive(
+  dashboardId: string,
+  lastUpdatedAt: Date
+): Promise<Dashboard> {
+  const headers = await authHeaders();
+  return await API.put(apiName, `dashboard/${dashboardId}/archive`, {
+    headers,
+    body: {
+      updatedAt: lastUpdatedAt,
+    },
+  });
+}
+
 async function createWidget(
   dashboardId: string,
   name: string,
@@ -260,6 +273,7 @@ export default {
   fetchHomepage,
   fetchPublicDashboard,
   publishPending,
+  archive,
   createDraft,
   moveToDraft,
   fetchDashboardVersions,

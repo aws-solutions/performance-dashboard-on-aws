@@ -28,14 +28,6 @@ test("renders a button to delete", async () => {
   expect(button).toBeInTheDocument();
 });
 
-test("renders a button to publish", async () => {
-  const { getByRole } = render(<DashboardListing />, {
-    wrapper: MemoryRouter,
-  });
-  const button = getByRole("button", { name: "Publish" });
-  expect(button).toBeInTheDocument();
-});
-
 test("renders a button to create dashboard", async () => {
   const { getByRole } = render(<DashboardListing />, {
     wrapper: MemoryRouter,
@@ -86,4 +78,12 @@ test("renders a publish queue tab", async () => {
   });
 
   expect(getByText("Publish queue (0)")).toBeInTheDocument();
+});
+
+test("renders an archived tab", async () => {
+  const { getByText } = render(<DashboardListing />, {
+    wrapper: MemoryRouter,
+  });
+
+  expect(getByText("Archived (0)")).toBeInTheDocument();
 });

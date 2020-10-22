@@ -187,9 +187,12 @@ async function publishDashboard(req: Request, res: Response) {
   const repo = DashboardRepository.getInstance();
 
   const dashboard = await repo.getDashboardById(id);
-  if (dashboard.state !== DashboardState.PublishPending) {
+  if (
+    dashboard.state !== DashboardState.PublishPending &&
+    dashboard.state !== DashboardState.Archived
+  ) {
     res.status(409);
-    return res.send("Dashboard must be in publish pending state");
+    return res.send("Dashboard must be in publish pending or archived state");
   }
 
   await repo.publishDashboard(
@@ -221,12 +224,9 @@ async function publishPendingDashboard(req: Request, res: Response) {
   const repo = DashboardRepository.getInstance();
 
   const dashboard = await repo.getDashboardById(id);
-  if (
-    dashboard.state !== DashboardState.Draft &&
-    dashboard.state !== DashboardState.Archived
-  ) {
+  if (dashboard.state !== DashboardState.Draft) {
     res.status(409);
-    return res.send("Dashboard must be in draft or archived state");
+    return res.send("Dashboard must be in draft state");
   }
 
   await repo.publishPendingDashboard(id, updatedAt, user);

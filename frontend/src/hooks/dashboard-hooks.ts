@@ -46,6 +46,7 @@ type UseDashboardsHook = {
   draftsDashboards: Array<Dashboard>;
   publishedDashboards: Array<Dashboard>;
   pendingDashboards: Array<Dashboard>;
+  archivedDashboards: Array<Dashboard>;
   reloadDashboards: Function;
 };
 
@@ -57,6 +58,7 @@ export function useDashboards(): UseDashboardsHook {
   const [publishedDashboards, setPublishedDashboards] = useState<Dashboard[]>(
     []
   );
+  const [archivedDashboards, setArchivedDashboards] = useState<Dashboard[]>([]);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -76,6 +78,10 @@ export function useDashboards(): UseDashboardsHook {
           (dashboard) => dashboard.state === DashboardState.PublishPending
         )
       );
+
+      setArchivedDashboards(
+        data.filter((dashboard) => dashboard.state === DashboardState.Archived)
+      );
     }
     setLoading(false);
   }, []);
@@ -90,6 +96,7 @@ export function useDashboards(): UseDashboardsHook {
     draftsDashboards,
     publishedDashboards,
     pendingDashboards,
+    archivedDashboards,
     reloadDashboards: fetchData,
   };
 }

@@ -34,25 +34,23 @@ const dashboards: Array<Dashboard> = [
 ];
 
 test("renders a button to archive", async () => {
-  const { getByRole } = render(<PublishedTab dashboards={[]} />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByRole } = render(
+    <PublishedTab dashboards={[]} onArchive={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
   const button = getByRole("button", { name: "Archive" });
   expect(button).toBeInTheDocument();
 });
 
-test("renders a button to update", async () => {
-  const { getByRole } = render(<PublishedTab dashboards={[]} />, {
-    wrapper: MemoryRouter,
-  });
-  const button = getByRole("button", { name: "Update" });
-  expect(button).toBeInTheDocument();
-});
-
 test("renders a dashboard table", async () => {
-  const { getByRole } = render(<PublishedTab dashboards={dashboards} />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByRole } = render(
+    <PublishedTab dashboards={dashboards} onArchive={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
 
   const dashboard1 = getByRole("link", { name: "Dashboard One" });
   expect(dashboard1).toBeInTheDocument();
@@ -63,7 +61,7 @@ test("renders a dashboard table", async () => {
 
 test("filters dashboards based on search input", async () => {
   const { getByLabelText, getByRole } = render(
-    <PublishedTab dashboards={dashboards} />,
+    <PublishedTab dashboards={dashboards} onArchive={() => {}} />,
     {
       wrapper: MemoryRouter,
     }

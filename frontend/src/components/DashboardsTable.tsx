@@ -162,6 +162,8 @@ function dashboardLink(id: string, state: DashboardState): string {
       return `/admin/dashboard/${id}`;
     case DashboardState.PublishPending:
       return `/admin/dashboard/${id}/publish`;
+    case DashboardState.Archived:
+      return `/admin/dashboard/archived/${id}`;
     default:
       return "/admin/dashboards";
   }

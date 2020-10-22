@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { Dashboard, PublicDashboard } from "../models";
+import { Dashboard, DashboardState, PublicDashboard } from "../models";
 import BadgerService from "../services/BadgerService";
 
 type UseDashboardHook = {
@@ -38,34 +38,41 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
 type UseDashboardsHook = {
   loading: boolean;
   dashboards: Array<Dashboard>;
-  draftsDashboards: Array<Dashboard> | undefined;
-  publishedDashboards: Array<Dashboard> | undefined;
+  draftsDashboards: Array<Dashboard>;
+  publishedDashboards: Array<Dashboard>;
+  pendingDashboards: Array<Dashboard>;
   reloadDashboards: Function;
 };
 
 export function useDashboards(): UseDashboardsHook {
   const [loading, setLoading] = useState(false);
-  const [dashboards, setDashboards] = useState([]);
-  const [draftsDashboards, setDraftsDashboards] = useState<
-    Array<Dashboard> | undefined
-  >(undefined);
-  const [publishedDashboards, setPublishedDashboards] = useState<
-    Array<Dashboard> | undefined
-  >(undefined);
+  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  const [draftsDashboards, setDraftsDashboards] = useState<Dashboard[]>([]);
+  const [pendingDashboards, setPendingDashboards] = useState<Dashboard[]>([]);
+  const [publishedDashboards, setPublishedDashboards] = useState<Dashboard[]>(
+    []
+  );
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    setDraftsDashboards(undefined);
-    setPublishedDashboards(undefined);
     const data = await BadgerService.fetchDashboards();
-    setLoading(false);
     if (data) {
-      setDraftsDashboards(data.filter((d: Dashboard) => d.state === "Draft"));
-      setPublishedDashboards(
-        data.filter((d: Dashboard) => d.state === "Published")
-      );
       setDashboards(data);
+      setDraftsDashboards(
+        data.filter((dashboard) => dashboard.state === DashboardState.Draft)
+      );
+
+      setPublishedDashboards(
+        data.filter((dashboard) => dashboard.state === DashboardState.Published)
+      );
+
+      setPendingDashboards(
+        data.filter(
+          (dashboard) => dashboard.state === DashboardState.PublishPending
+        )
+      );
     }
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -77,6 +84,7 @@ export function useDashboards(): UseDashboardsHook {
     dashboards,
     draftsDashboards,
     publishedDashboards,
+    pendingDashboards,
     reloadDashboards: fetchData,
   };
 }

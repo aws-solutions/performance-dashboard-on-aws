@@ -24,15 +24,33 @@ function PublishDashboard() {
   const { dashboardId } = useParams<PathParams>();
   const history = useHistory<LocationState>();
   const [step, setStep] = useState<number>(0);
-  const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
-  const { dashboard } = useDashboard(dashboardId);
+  const [acknowledge, setAcknowledge] = useState<boolean>(false);
+  const { dashboard, reloadDashboard } = useDashboard(dashboardId);
+  const { register, errors, handleSubmit, trigger } = useForm<FormValues>();
 
   const onPreview = () => {
     history.push(`/admin/dashboard/${dashboardId}/preview`);
   };
 
-  const onReturnToDraft = () => {
-    history.push(`/admin/dashboard/edit/${dashboardId}`);
+  const onContinue = async () => {
+    if (await trigger()) {
+      // validates form
+      setStep(step + 1);
+    }
+  };
+
+  const onReturnToDraft = async () => {
+    if (!dashboard) {
+      return;
+    }
+
+    try {
+      await BadgerService.moveToDraft(dashboardId, dashboard.updatedAt);
+      history.push(`/admin/dashboard/edit/${dashboardId}`);
+    } catch (err) {
+      console.log("Failed to return to draft");
+      await reloadDashboard();
+    }
   };
 
   const onSubmit = async (values: FormValues) => {
@@ -68,9 +86,7 @@ function PublishDashboard() {
           <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
         </Link>
       </div>
-      <div className="padding-y-2">
-        <AlertContainer />
-      </div>
+      <AlertContainer />
       <div className="grid-row">
         <div className="grid-col text-left padding-top-2">
           <ul className="usa-button-group">
@@ -113,9 +129,9 @@ function PublishDashboard() {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="edit-details-form usa-form usa-form--large"
+        className="usa-form usa-form--large"
       >
-        <div className="margin-y-2 minh-mobile">
+        <div className="margin-y-2">
           <div hidden={step !== 0}>
             <TextField
               id="releaseNotes"
@@ -129,16 +145,24 @@ function PublishDashboard() {
             />
           </div>
 
-          <div hidden={step !== 1}>
-            <label className="usa-label text-bold">
-              Internal release notes
-            </label>
-            <div className="usa-hint">
-              Notes are only visible to internal users
-            </div>
-            <div className="padding-2 margin-top-1 bg-base-lightest">
-              <p>{getValues().releaseNotes}</p>
-            </div>
+          <div hidden={step !== 1} className="padding-y-6">
+            <fieldset className="usa-fieldset">
+              <div className="usa-checkbox">
+                <input
+                  type="checkbox"
+                  id="acknowledge"
+                  name="acknowledge"
+                  className="usa-checkbox__input"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setAcknowledge(e.target.checked);
+                  }}
+                />
+                <label className="usa-checkbox__label" htmlFor="acknowledge">
+                  I acknowledge that I have reviewed the dashboard and it is
+                  ready to publish.
+                </label>
+              </div>
+            </fieldset>
           </div>
         </div>
         <div>
@@ -152,17 +176,13 @@ function PublishDashboard() {
             </Button>
           </span>
           <span hidden={step === 1}>
-            <Button
-              variant="default"
-              type="button"
-              onClick={() => setStep(step + 1)}
-            >
+            <Button variant="default" type="button" onClick={onContinue}>
               Continue
             </Button>
           </span>
           <span hidden={step < 1}>
-            <Button variant="default" type="submit">
-              Confirm & Publish
+            <Button variant="default" type="submit" disabled={!acknowledge}>
+              Submit for publishing
             </Button>
           </span>
         </div>

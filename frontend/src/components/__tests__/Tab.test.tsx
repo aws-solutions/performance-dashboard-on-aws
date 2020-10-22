@@ -5,21 +5,21 @@ import { MemoryRouter } from "react-router-dom";
 
 test("renders the Tab component", async () => {
   const wrapper = render(
-    <Tab activeTab="Tab 1" key="Tab 1" label="Tab 1" onClick={() => {}} />
+    <Tab id="tab1" activeTab="tab1" key="Tab 1" label="Tab 1" onClick={() => {}} />
   );
   expect(wrapper.container).toMatchSnapshot();
 });
 
 test("renders the Tab component with default tab 2 selected", async () => {
   const wrapper = render(
-    <Tab activeTab="Tab 2" key="Tab 1" label="Tab 1" onClick={() => {}} />
+    <Tab id="tab1" activeTab="tab2" key="Tab 1" label="Tab 1" onClick={() => {}} />
   );
   expect(wrapper.container).toMatchSnapshot();
 });
 
 test("renders the tab", async () => {
   const { getAllByRole } = render(
-    <Tab activeTab="Tab 2" key="Tab 1" label="Tab 1" onClick={() => {}} />,
+    <Tab id="tab1" activeTab="tab2" key="Tab 1" label="Tab 1" onClick={() => {}} />,
     {
       wrapper: MemoryRouter,
     }

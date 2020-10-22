@@ -87,6 +87,7 @@ export function useDashboards() {
       },
     ],
     pendingDashboards: [],
+    archivedDashboards: [],
   };
 }
 

@@ -19,6 +19,7 @@ export type Dashboard = {
   topicAreaId: string;
   topicAreaName: string;
   description?: string;
+  releaseNotes?: string;
   widgets: Array<Widget>;
   state: string;
   updatedAt: Date;

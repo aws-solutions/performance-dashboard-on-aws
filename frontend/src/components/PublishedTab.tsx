@@ -7,6 +7,7 @@ import ScrollTop from "./ScrollTop";
 
 interface Props {
   dashboards: Array<Dashboard>;
+  onArchive: Function;
 }
 
 function PublishedTab(props: Props) {
@@ -69,13 +70,12 @@ function PublishedTab(props: Props) {
         </div>
         <div className="tablet:grid-col-5 text-right">
           <span>
-            <Button variant="base" disabled={selected.length === 0}>
+            <Button
+              variant="outline"
+              disabled={selected.length === 0}
+              onClick={() => props.onArchive(selected)}
+            >
               Archive
-            </Button>
-          </span>
-          <span>
-            <Button variant="base" disabled={selected.length === 0}>
-              Update
             </Button>
           </span>
         </div>

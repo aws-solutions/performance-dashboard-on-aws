@@ -82,7 +82,7 @@ function PublishDashboard() {
   return (
     <AdminLayout>
       <div>
-        <Link to="/admin/dashboards">
+        <Link to="/admin/dashboards?tab=pending">
           <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
         </Link>
       </div>

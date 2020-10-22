@@ -21,7 +21,11 @@ function ViewDashboardAdmin() {
   const { dashboard } = useDashboard(dashboardId);
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
 
-  const currentDraft = versions.find((v) => v.state === DashboardState.Draft);
+  const currentDraft = versions.find(
+    (v) =>
+      v.state === DashboardState.Draft ||
+      v.state === DashboardState.PublishPending
+  );
 
   const onUpdate = async () => {
     if (
@@ -45,8 +49,25 @@ function ViewDashboardAdmin() {
     }
   };
 
-  const onArchive = () => {
-    console.log("Archive");
+  const onArchive = async () => {
+    if (!dashboard) {
+      return;
+    }
+
+    if (
+      window.confirm(
+        `This will remove "${dashboard.name}" dashboard from the external site. You can re-publish archived dashboards at any time.`
+      )
+    ) {
+      await BadgerService.archive(dashboard.id, dashboard.updatedAt);
+
+      history.push("/admin/dashboards?tab=archived", {
+        alert: {
+          type: "success",
+          message: `${dashboard.name} was successfully archived`,
+        },
+      });
+    }
   };
 
   return (
@@ -64,10 +85,18 @@ function ViewDashboardAdmin() {
                 draft has been created to update this dashboard. Only one draft
                 at a time is allowed.
                 <Link
-                  to={`/admin/dashboard/edit/${currentDraft.id}`}
+                  to={`/admin/dashboard/${
+                    currentDraft.state === DashboardState.Draft
+                      ? "edit/" + currentDraft.id
+                      : currentDraft.id + "/publish"
+                  }`}
                   className="float-right"
                 >
-                  Edit draft
+                  {`${
+                    currentDraft.state === DashboardState.Draft
+                      ? "Edit"
+                      : "Publish"
+                  } draft`}
                 </Link>
               </div>
             }

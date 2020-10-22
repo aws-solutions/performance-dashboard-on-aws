@@ -2,13 +2,14 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useDashboard } from "../hooks";
-import { LocationState } from "../models";
+import { faArrowLeft, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { useDashboard, useDashboardVersions } from "../hooks";
+import { DashboardState, LocationState } from "../models";
 import BadgerService from "../services/BadgerService";
 import AdminLayout from "../layouts/Admin";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
+import Alert from "../components/Alert";
 
 interface PathParams {
   dashboardId: string;
@@ -18,6 +19,9 @@ function ViewDashboardAdmin() {
   const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard } = useDashboard(dashboardId);
+  const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
+
+  const currentDraft = versions.find((v) => v.state === DashboardState.Draft);
 
   const onUpdate = async () => {
     if (
@@ -48,11 +52,31 @@ function ViewDashboardAdmin() {
   return (
     <AdminLayout>
       <div className="position-sticky top-0 bg-white z-index-on-top">
+        <Link to="/admin/dashboards?tab=published">
+          <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
+        </Link>
+        {currentDraft && (
+          <Alert
+            type="info"
+            message={
+              <div>
+                <FontAwesomeIcon icon={faCopy} className="margin-right-2" />A
+                draft has been created to update this dashboard. Only one draft
+                at a time is allowed.
+                <Link
+                  to={`/admin/dashboard/edit/${currentDraft.id}`}
+                  className="float-right"
+                >
+                  Edit draft
+                </Link>
+              </div>
+            }
+            hideIcon
+            slim
+          />
+        )}
         <div className="grid-row margin-top-2">
           <div className="grid-col text-left">
-            <Link to="/admin/dashboards?tab=published">
-              <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
-            </Link>
             <div className="margin-top-2">
               <span className="usa-tag text-middle">
                 Version {dashboard?.version}
@@ -60,11 +84,11 @@ function ViewDashboardAdmin() {
             </div>
           </div>
           <div className="grid-col text-right">
-            <Button variant="base" onClick={onUpdate}>
-              Update
-            </Button>
             <Button variant="outline" type="button" onClick={onArchive}>
               Archive
+            </Button>
+            <Button variant="base" onClick={onUpdate} disabled={!!currentDraft}>
+              Update
             </Button>
           </div>
         </div>

@@ -32,3 +32,6 @@ jobs:
 
       # Check for backend code style
       - run: prettier --check "backend/src/**/*.ts"
+
+      # Check for cdk code style
+      - run: prettier --check "cdk/lib/**/*.ts" "cdk/bin/**/*.ts"

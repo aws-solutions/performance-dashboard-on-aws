@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { TopicArea, TopicAreaItem } from "../models/topicarea";
 import { User } from "../models/user";
 
-const TOPICAREA: string = 'TopicArea';
+const TOPICAREA: string = "TopicArea";
 
 function create(id: string, name: string, user: User): TopicArea {
   return {
@@ -42,10 +42,12 @@ function fromItem(item: TopicAreaItem): TopicArea {
     id,
     name: item.name,
     createdBy: item.createdBy,
-  }
+  };
 }
 
-function itemId(id: string): string { return `${TOPICAREA}#${id}` }
+function itemId(id: string): string {
+  return `${TOPICAREA}#${id}`;
+}
 
 export default {
   create,

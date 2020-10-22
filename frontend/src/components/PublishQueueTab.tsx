@@ -37,8 +37,8 @@ function PublishQueueTab(props: Props) {
   return (
     <div>
       <p>
-        These dashboards are waiting to be published. They cannot be edited unless
-        returned to draft and they are not publicly visible.
+        These dashboards are waiting to be published. They cannot be edited
+        unless returned to draft and they are not publicly visible.
       </p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-7 text-left padding-top-1px">

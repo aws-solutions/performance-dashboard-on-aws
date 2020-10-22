@@ -49,7 +49,7 @@ const Markdown = (props: MarkdownProps) => {
           placeholder="Enter text here"
           rows={6}
           ref={(e) => {
-            if(props.register) {
+            if (props.register) {
               props.register(e);
             }
             text.current = e;
@@ -57,7 +57,11 @@ const Markdown = (props: MarkdownProps) => {
           className="usa-textarea"
         />
       </div>
-      <div hidden={disabled} className="markdown-box" style={{ height: boxHeight }}>
+      <div
+        hidden={disabled}
+        className="markdown-box"
+        style={{ height: boxHeight }}
+      >
         <ReactMarkdown source={text.current?.value} />
       </div>
     </div>

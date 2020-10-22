@@ -122,20 +122,22 @@ describe("TopicAreaRepository.list", () => {
   it("returns a list of topic areas", async () => {
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({
-      Items: [{
-        pk: 'TopicArea#213',
-        sk: 'TopicArea#213',
-        name: 'Serverless is more',
-        createdBy: 'johndoe',
-      }],
+      Items: [
+        {
+          pk: "TopicArea#213",
+          sk: "TopicArea#213",
+          name: "Serverless is more",
+          createdBy: "johndoe",
+        },
+      ],
     });
 
     const list = await repo.list();
     expect(list.length).toEqual(1);
     expect(list[0]).toEqual({
-      id: '213',
-      name: 'Serverless is more',
-      createdBy: 'johndoe',
+      id: "213",
+      name: "Serverless is more",
+      createdBy: "johndoe",
     });
   });
 
@@ -143,18 +145,18 @@ describe("TopicAreaRepository.list", () => {
     // Mock query response
     dynamodb.get = jest.fn().mockReturnValue({
       Item: {
-        pk: 'TopicArea#213',
-        sk: 'TopicArea#213',
-        name: 'Serverless is more',
-        createdBy: 'johndoe',
+        pk: "TopicArea#213",
+        sk: "TopicArea#213",
+        name: "Serverless is more",
+        createdBy: "johndoe",
       },
     });
 
-    const item = await repo.getTopicAreaById('213');
+    const item = await repo.getTopicAreaById("213");
     expect(item).toEqual({
-      id: '213',
-      name: 'Serverless is more',
-      createdBy: 'johndoe',
+      id: "213",
+      name: "Serverless is more",
+      createdBy: "johndoe",
     });
   });
 });

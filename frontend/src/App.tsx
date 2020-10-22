@@ -19,6 +19,7 @@ import AddTable from "./containers/AddTable";
 import EditTable from "./containers/EditTable";
 import AddText from "./containers/AddText";
 import EditText from "./containers/EditText";
+import AdminHome from "./containers/AdminHome";
 
 interface BadgerRoute {
   path: string;
@@ -29,7 +30,7 @@ interface BadgerRoute {
 const routes: Array<BadgerRoute> = [
   {
     path: "/admin",
-    component: DashboardListing,
+    component: AdminHome,
   },
   {
     path: "/admin/dashboards",

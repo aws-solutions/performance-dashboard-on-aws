@@ -2,8 +2,16 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { MemoryRouter, Router } from "react-router-dom";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faGripLinesVertical,
+  faCaretUp,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 import DashboardPreview from "../DashboardPreview";
+
+library.add(faGripLinesVertical, faCaretUp, faCaretDown);
 
 jest.mock("../../hooks");
 

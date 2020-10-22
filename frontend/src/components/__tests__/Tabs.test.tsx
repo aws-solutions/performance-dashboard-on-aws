@@ -6,8 +6,12 @@ import { MemoryRouter } from "react-router-dom";
 test("renders the Tabs component", async () => {
   const wrapper = render(
     <Tabs defaultActive="tab1">
-      <div id="tab1" label="Tab 1">Tab 1</div>
-      <div id="tab2" label="Tab 2">Tab 2</div>
+      <div id="tab1" label="Tab 1">
+        Tab 1
+      </div>
+      <div id="tab2" label="Tab 2">
+        Tab 2
+      </div>
     </Tabs>
   );
   expect(wrapper.container).toMatchSnapshot();
@@ -16,8 +20,12 @@ test("renders the Tabs component", async () => {
 test("renders the Tabs component with default tab 2 selected", async () => {
   const wrapper = render(
     <Tabs defaultActive="tab2">
-      <div id="tab1" label="Tab 1">Tab 1</div>
-      <div id="tab2" label="Tab 2">Tab 2</div>
+      <div id="tab1" label="Tab 1">
+        Tab 1
+      </div>
+      <div id="tab2" label="Tab 2">
+        Tab 2
+      </div>
     </Tabs>
   );
   expect(wrapper.container).toMatchSnapshot();
@@ -26,8 +34,12 @@ test("renders the Tabs component with default tab 2 selected", async () => {
 test("renders the tabs", async () => {
   const { getAllByRole } = render(
     <Tabs defaultActive="tab2">
-      <div id="tab1" label="Tab 1">Tab 1</div>
-      <div id="tab2" label="Tab 2">Tab 2</div>
+      <div id="tab1" label="Tab 1">
+        Tab 1
+      </div>
+      <div id="tab2" label="Tab 2">
+        Tab 2
+      </div>
     </Tabs>,
     {
       wrapper: MemoryRouter,

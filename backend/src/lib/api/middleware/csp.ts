@@ -3,11 +3,7 @@ import { Request, Response, NextFunction } from "express";
 /**
  * Inject security related HTTP headers into the responses
  */
-const csp = function(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+const csp = function (req: Request, res: Response, next: NextFunction) {
   res.setHeader(
     "Content-Security-Policy",
     "default-src 'self'; block-all-mixed-content;"

@@ -1,17 +1,17 @@
-import { APIGatewayProxyEvent, Context } from 'aws-lambda';
-import serverlessExpress from 'aws-serverless-express';
-import api from '../lib/api';
+import { APIGatewayProxyEvent, Context } from "aws-lambda";
+import serverlessExpress from "aws-serverless-express";
+import api from "../lib/api";
 
 const server = serverlessExpress.createServer(api);
 
 /**
  * Lambda entry handler for HTTP requests
  * coming from API Gateway.
- * 
- * @param event 
+ *
+ * @param event
  */
 export const handler = (event: APIGatewayProxyEvent, context: Context) => {
-    console.log('Event=', JSON.stringify(event));
-    console.log('Context=', JSON.stringify(context));
-    return serverlessExpress.proxy(server, event, context);
+  console.log("Event=", JSON.stringify(event));
+  console.log("Context=", JSON.stringify(context));
+  return serverlessExpress.proxy(server, event, context);
 };

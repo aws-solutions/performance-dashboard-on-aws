@@ -71,7 +71,7 @@ function PublishedTab(props: Props) {
         <div className="tablet:grid-col-5 text-right">
           <span>
             <Button
-              variant="base"
+              variant="outline"
               disabled={selected.length === 0}
               onClick={() => props.onArchive(selected)}
             >

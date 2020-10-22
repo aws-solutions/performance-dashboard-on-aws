@@ -40,7 +40,7 @@ function DashboardListing() {
 
         history.replace("/admin/dashboards", {
           alert: {
-            type: "info",
+            type: "success",
             message: `${
               selected.length > 1 ? selected.length : selected[0].name
             } draft dashboard${selected.length > 1 ? "s" : ""} ${
@@ -71,7 +71,7 @@ function DashboardListing() {
 
         history.replace("/admin/dashboards?tab=published", {
           alert: {
-            type: "info",
+            type: "success",
             message: `${
               selected.length > 1 ? selected.length : selected[0].name
             } dashboard${selected.length > 1 ? "s" : ""} ${

@@ -21,7 +21,11 @@ function ViewDashboardAdmin() {
   const { dashboard } = useDashboard(dashboardId);
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
 
-  const currentDraft = versions.find((v) => v.state === DashboardState.Draft);
+  const currentDraft = versions.find(
+    (v) =>
+      v.state === DashboardState.Draft ||
+      v.state === DashboardState.PublishPending
+  );
 
   const onUpdate = async () => {
     if (
@@ -81,10 +85,18 @@ function ViewDashboardAdmin() {
                 draft has been created to update this dashboard. Only one draft
                 at a time is allowed.
                 <Link
-                  to={`/admin/dashboard/edit/${currentDraft.id}`}
+                  to={`/admin/dashboard/${
+                    currentDraft.state === DashboardState.Draft
+                      ? "edit/" + currentDraft.id
+                      : currentDraft.id + "/publish"
+                  }`}
                   className="float-right"
                 >
-                  Edit draft
+                  {`${
+                    currentDraft.state === DashboardState.Draft
+                      ? "Edit"
+                      : "Publish"
+                  } draft`}
                 </Link>
               </div>
             }

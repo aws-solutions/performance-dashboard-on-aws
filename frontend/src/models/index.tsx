@@ -35,6 +35,12 @@ export type PublicDashboard = {
   updatedAt: Date;
 };
 
+export type DashboardVersion = {
+  id: string;
+  version: number;
+  state: DashboardState;
+};
+
 export enum WidgetType {
   Text = "Text",
   Chart = "Chart",

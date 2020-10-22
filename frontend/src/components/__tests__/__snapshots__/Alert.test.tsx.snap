@@ -90,6 +90,20 @@ exports[`renders a warning alert 1`] = `
 </div>
 `;
 
+exports[`renders an alert with HTML content as message 1`] = `
+<div>
+  <div
+    class="usa-alert usa-alert--success usa-alert--slim usa-alert--no-icon"
+  >
+    <a
+      href="#"
+    >
+      This is a link
+    </a>
+  </div>
+</div>
+`;
+
 exports[`renders an alert with title 1`] = `
 <div>
   <div
@@ -103,6 +117,24 @@ exports[`renders an alert with title 1`] = `
       >
         Informative status
       </h3>
+      <p
+        class="usa-alert__text"
+      >
+        Hello world
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders an alert without icon 1`] = `
+<div>
+  <div
+    class="usa-alert usa-alert--success usa-alert--slim usa-alert--no-icon"
+  >
+    <div
+      class="usa-alert__body"
+    >
       <p
         class="usa-alert__text"
       >

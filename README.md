@@ -3,7 +3,7 @@
 A simple, cost-effective and adaptable metrics visualization service that consolidates citizen services data and makes it available to the public; The dashboard offers an easy-to-use web interface to consume and display data about government service performance, making it easier for governments to drive purposeful, data-driven change.
 
 <p align="center">
-  <img src="architecture.svg" alt="Architecture diagram">
+  <img src="docs/images/architecture.svg" alt="Architecture diagram">
 </p>
 
 ## Deployment
@@ -32,12 +32,17 @@ Make the installation and deployment scripts executable:
 ```bash
 chmod +x install.sh
 chmod +x deploy.sh
+chmod +x test.sh
 ```
 
-Bootstrap AWS CDK for the first time by running this command
+Bootstrap AWS CDK for the first time in your AWS account by running the following commands:
 
 ```bash
-cdk bootstrap
+# Need to bootstrap us-east-1 for Lambda@Edge
+cdk bootstrap aws://AWS-Account-ID/us-east-1
+
+# Also boostrap the region you plan to deploy to
+cdk bootstrap aws://AWS-Account-ID/desired-region
 ```
 
 ### 2. Install
@@ -46,6 +51,12 @@ Run the install script to download npm dependencies.
 
 ```bash
 ./install.sh
+```
+
+(Optional) Run the unit tests to make sure everything is in order.
+
+```bash
+./test.sh
 ```
 
 ### 3. Deploy
@@ -61,6 +72,10 @@ To create a `dev` environment for example, you may run the deployment script lik
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+
+## Want to contribute?
+
+See [CONTRIBUTING](CONTRIBUTING.md) for more information.
 
 ## License
 

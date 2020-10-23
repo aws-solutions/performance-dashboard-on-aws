@@ -1,6 +1,7 @@
 import * as cdk from "@aws-cdk/core";
 import * as cognito from "@aws-cdk/aws-cognito";
 import * as iam from "@aws-cdk/aws-iam";
+import * as fs from "fs";
 
 interface Props extends cdk.StackProps {
   datasetsBucketName: string;
@@ -15,7 +16,14 @@ export class AuthStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id, props);
 
-    const pool = new cognito.UserPool(this, "BadgerUserPool");
+    const pool = new cognito.UserPool(this, "BadgerUserPool", {
+      userInvitation: {
+        emailSubject:
+          "You have been invited to the {Organization} Performance Dashboard on AWS.",
+        emailBody: fs.readFileSync("lib/data/email-template.html").toString(),
+      },
+    });
+
     const client = pool.addClient("BadgerFrontend");
     const identityPool = this.buildIdentityPool(pool, client);
 

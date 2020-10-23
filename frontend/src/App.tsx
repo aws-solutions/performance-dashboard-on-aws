@@ -20,6 +20,7 @@ import EditTable from "./containers/EditTable";
 import AddText from "./containers/AddText";
 import EditText from "./containers/EditText";
 import AdminHome from "./containers/AdminHome";
+import FourZeroFour from "./containers/FourZeroFour";
 
 interface BadgerRoute {
   path: string;
@@ -121,6 +122,7 @@ function App() {
             />
           );
         })}
+        <Route component={FourZeroFour} />
       </Switch>
     </Router>
   );

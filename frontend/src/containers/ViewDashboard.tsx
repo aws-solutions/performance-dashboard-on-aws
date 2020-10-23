@@ -6,6 +6,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { usePublicDashboard } from "../hooks";
 import MainLayout from "../layouts/Main";
 import WidgetRender from "../components/WidgetRender";
+import FourZeroFour from "./FourZeroFour";
 
 interface PathParams {
   dashboardId: string;
@@ -15,7 +16,11 @@ function ViewDashboard() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard } = usePublicDashboard(dashboardId);
 
-  return (
+  if (dashboard === undefined) {
+    return null;
+  }
+
+  return dashboard.id ? (
     <MainLayout>
       <Link to="/">
         <FontAwesomeIcon icon={faArrowLeft} /> All Dashboards
@@ -45,6 +50,8 @@ function ViewDashboard() {
         );
       })}
     </MainLayout>
+  ) : (
+    <FourZeroFour />
   );
 }
 

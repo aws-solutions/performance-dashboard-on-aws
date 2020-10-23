@@ -18,9 +18,10 @@ export class AuthStack extends cdk.Stack {
 
     const pool = new cognito.UserPool(this, "BadgerUserPool", {
       userInvitation: {
-        emailSubject: 'You have been invited to the Performance Dashboard on AWS.',
+        emailSubject:
+          "You have been invited to the {Organization} Performance Dashboard on AWS.",
         emailBody: fs.readFileSync("lib/data/email-template.html").toString(),
-      }
+      },
     });
 
     const client = pool.addClient("BadgerFrontend");

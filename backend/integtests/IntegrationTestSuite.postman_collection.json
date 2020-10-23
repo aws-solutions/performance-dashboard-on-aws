@@ -652,8 +652,106 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "{{dashboard.id}}"
+							"value": "{{dashboard.id}}",
+							"type": "string"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set dashboard to publish pending",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fc4beae0-0650-498a-b269-2de3667179b2",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publishpending",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"publishpending"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch latest dashboard updatedAt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a886b4de-4762-45e9-ae98-b03c0aea466b",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"    const dashboard = pm.response.json();",
+							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}"
 					]
 				}
 			},
@@ -665,7 +763,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fc4beae0-0650-498a-b269-2de3667179b2",
+						"id": "5e8fca86-c723-47ec-9e92-8abfaf46fd6e",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -778,6 +876,7 @@
 							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
 							"    const dashboard = pm.response.json();",
 							"    pm.expect(dashboard.id).to.equal(id);",
+							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -803,7 +902,8 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "{{dashboard.id}}"
+							"value": "{{dashboard.id}}",
+							"type": "string"
 						}
 					]
 				}
@@ -870,6 +970,59 @@
 					"path": [
 						"dashboard",
 						"{{dashboard.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a36b0f17-4401-4860-a6a9-3333045d8872",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/archive",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						"{{dashboard.id}}",
+						"archive"
 					]
 				}
 			},
@@ -1116,67 +1269,67 @@
 	],
 	"variable": [
 		{
-			"id": "f64fbb2a-83f3-484d-92e3-542c01695570",
+			"id": "c5c45cc5-e083-4dba-b925-bff85355353f",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "3e231cbc-8aa3-48ac-81b4-108e8a7f11ae",
+			"id": "d46a2eb7-c935-4504-9ac0-ada04b1a5f1c",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "709ec3ef-1ef7-4c0f-baed-86e19356dfcb",
+			"id": "ff66299a-e0c1-4f1f-a6d8-7dbf1c922313",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "1e342875-513f-40c2-a6ff-dcdfc74518da",
+			"id": "d1489cbc-ce81-4ded-a094-5ad65352c094",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "518ef0fe-5401-40ba-a5a0-ed54428f7d04",
+			"id": "e19875fd-9cf7-4773-ac7e-fa450992e469",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "dc5021da-2e19-4481-91ac-ed1aedc9e575",
+			"id": "6619e31e-55a9-42d6-be7a-ee3e64995d85",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "7af15d01-0783-43c9-8203-08ce5ac76231",
+			"id": "e067a0e2-b043-469f-95bb-42776240b3e3",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "81fa390d-6690-4df3-9ca9-6380d2f0ac11",
+			"id": "298bfe6c-e56d-4d23-b493-bb0f2834ca83",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "b7c2d068-e4b9-474c-8324-535f7bb66827",
+			"id": "a8abd53c-b46e-4f67-b28f-7a8174610136",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "b2601d2a-8793-45fd-b547-2d5235fc9491",
+			"id": "6226da1d-579c-4342-b59a-08bea5a1af02",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "361279c8-a4ec-4ab8-b0ba-56fb351cdd68",
+			"id": "34471979-189e-4857-b225-5a004afb77a7",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "bed01595-2c05-45e9-ae6b-763906a4a472",
+			"id": "27ce3c9a-fc3d-4bbc-a063-c2045356bd7f",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "9ef3cd84-277b-4b53-abe3-ff59b4fd63bd",
+			"id": "790a3cdc-ee64-4308-af4c-9f9049255765",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		}

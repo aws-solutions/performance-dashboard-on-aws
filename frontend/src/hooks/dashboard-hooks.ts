@@ -117,12 +117,18 @@ export function usePublicDashboard(
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    const data = await BadgerService.fetchPublicDashboard(dashboardId);
-    setLoading(false);
-    if (data) {
-      data.widgets.sort((a, b) => a.order - b.order);
-      setDashboard(data);
+    let data = undefined;
+    try {
+      data = await BadgerService.fetchPublicDashboard(dashboardId);
+      if (data) {
+        data.widgets.sort((a, b) => a.order - b.order);
+        setDashboard(data);
+      }
+    } catch (error) {
+      data = {};
+      setDashboard(data as PublicDashboard);
     }
+    setLoading(false);
   }, [dashboardId]);
 
   useEffect(() => {

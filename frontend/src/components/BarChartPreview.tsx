@@ -41,7 +41,11 @@ const BarChartPreview = (props: Props) => {
             props.bars.slice(1).map((bar, index) => {
               return (
                 <Bar dataKey={bar} fill={colors[index]} key={index}>
-                  <LabelList dataKey={bar} position="right" />
+                  {props.bars.length <= 3 ? (
+                    <LabelList dataKey={bar} position="right" />
+                  ) : (
+                    ""
+                  )}
                 </Bar>
               );
             })}

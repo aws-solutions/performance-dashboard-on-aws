@@ -4,10 +4,15 @@ exports[`table preview should match snapshot 1`] = `
 <div>
   <div>
     <h2
-      class="margin-left-2px"
+      class="margin-left-1 margin-bottom-1"
     >
       test title
     </h2>
+    <p
+      class="margin-left-1 margin-top-0 margin-bottom-3"
+    >
+      test summary
+    </p>
     <table
       class="usa-table usa-table--borderless margin-left-2px"
     >

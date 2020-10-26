@@ -14,6 +14,7 @@ import TablePreview from "../components/TablePreview";
 
 interface FormValues {
   title: string;
+  summary: string;
 }
 
 interface PathParams {
@@ -30,6 +31,7 @@ function AddTable() {
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(false);
 
   const uploadDataset = async (): Promise<Dataset> => {
@@ -61,6 +63,7 @@ function AddTable() {
         WidgetType.Table,
         {
           title: values.title,
+          summary: values.summary,
           datasetId: newDataset.id,
           s3Key: newDataset.s3Key,
         }
@@ -80,8 +83,12 @@ function AddTable() {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleChangeTitle = (event: React.FormEvent<HTMLInputElement>) => {
     setTitle((event.target as HTMLInputElement).value);
+  };
+
+  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
+    setSummary((event.target as HTMLTextAreaElement).value);
   };
 
   const onFileProcessed = (data: File) => {
@@ -127,7 +134,7 @@ function AddTable() {
                 label="Table title"
                 hint="Give your table a descriptive title."
                 error={errors.title && "Please specify a table title"}
-                onChange={handleChange}
+                onChange={handleChangeTitle}
                 required
                 register={register}
               />
@@ -161,6 +168,19 @@ function AddTable() {
                 ) : (
                   ""
                 )}
+
+                <TextField
+                  id="summary"
+                  name="summary"
+                  label="Table summary"
+                  hint="Give your table a summary to explain it in more depth.
+                  It can also be read by screen readers to describe the table
+                  for those with visual impairments. What is useful in a table description?"
+                  register={register}
+                  onChange={handleSummaryChange}
+                  multiline
+                  rows={5}
+                />
               </div>
             </fieldset>
             <br />
@@ -181,6 +201,7 @@ function AddTable() {
             <h4>Preview</h4>
             <TablePreview
               title={title}
+              summary={summary}
               headers={
                 dataset && dataset.length
                   ? (Object.keys(dataset[0]) as Array<string>)

@@ -19,6 +19,7 @@ import { useWidget } from "../hooks";
 
 interface FormValues {
   title: string;
+  summary: string;
   chartType: string;
 }
 
@@ -108,6 +109,7 @@ function EditChart() {
         values.title,
         {
           title: values.title,
+          summary: values.summary,
           chartType: values.chartType,
           datasetId,
           s3Key,
@@ -129,7 +131,22 @@ function EditChart() {
     if (widget) {
       setWidget({
         ...widget,
-        name: (event.target as HTMLInputElement).value,
+        content: {
+          ...widget.content,
+          title: (event.target as HTMLInputElement).value,
+        },
+      });
+    }
+  };
+
+  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
+    if (widget) {
+      setWidget({
+        ...widget,
+        content: {
+          ...widget.content,
+          summary: (event.target as HTMLTextAreaElement).value,
+        },
       });
     }
   };
@@ -171,7 +188,7 @@ function EditChart() {
                 hint="Give your chart a descriptive title."
                 error={errors.title && "Please specify a chart title"}
                 onChange={handleTitleChange}
-                defaultValue={widget.name}
+                defaultValue={widget.content.title}
                 required
                 register={register}
               />
@@ -218,6 +235,20 @@ function EditChart() {
                       },
                     ]}
                   />
+
+                  <TextField
+                    id="summary"
+                    name="summary"
+                    label="Chart summary"
+                    hint="Give your chart a summary to explain it in more depth.
+                    It can also be read by screen readers to describe the chart
+                    for those with visual impairments. What is useful in a chart description?"
+                    register={register}
+                    defaultValue={widget.content.summary}
+                    onChange={handleSummaryChange}
+                    multiline
+                    rows={5}
+                  />
                 </div>
               ) : (
                 ""
@@ -239,7 +270,8 @@ function EditChart() {
             <h4>Preview</h4>
             {widget.content.chartType === ChartType.LineChart && (
               <LineChartPreview
-                title={widget.name}
+                title={widget.content.title}
+                summary={widget.content.summary}
                 lines={
                   json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
                 }
@@ -249,6 +281,7 @@ function EditChart() {
             {widget.content.chartType === ChartType.ColumnChart && (
               <ColumnChartPreview
                 title={widget.name}
+                summary={widget.content.summary}
                 columns={
                   json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
                 }
@@ -258,6 +291,7 @@ function EditChart() {
             {widget.content.chartType === ChartType.BarChart && (
               <BarChartPreview
                 title={widget.name}
+                summary={widget.content.summary}
                 bars={
                   json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
                 }
@@ -267,6 +301,7 @@ function EditChart() {
             {widget.content.chartType === ChartType.PartWholeChart && (
               <PartWholeChartPreview
                 title={widget.name}
+                summary={widget.content.summary}
                 parts={
                   json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
                 }

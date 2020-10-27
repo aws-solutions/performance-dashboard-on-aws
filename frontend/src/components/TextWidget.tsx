@@ -10,7 +10,7 @@ function TextWidget(props: Props) {
   const { content } = props.widget;
 
   return (
-    <div>
+    <div className="margin-left-1">
       <h2>{props.widget.name}</h2>
       <ReactMarkdown source={content.text} />
     </div>

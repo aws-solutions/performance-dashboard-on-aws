@@ -75,6 +75,7 @@ describe("createChartWidget", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
       datasetId: "090b0410",
+      summary: "test summary",
       s3Key: {
         raw: "abc.csv",
         json: "abc.json",
@@ -94,6 +95,7 @@ describe("createChartWidget", () => {
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
+    expect(widget.content.summary).toEqual("test summary");
     expect(widget.content.chartType).toEqual("LineChart");
   });
 
@@ -102,6 +104,7 @@ describe("createChartWidget", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
       datasetId: "090b0410",
+      summary: "test summary",
       s3Key: {
         raw: "abc.csv",
         json: "abc.json",
@@ -122,6 +125,7 @@ describe("createChartWidget", () => {
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
+    expect(widget.content.summary).toEqual("test summary");
     expect(widget.content.chartType).toEqual("LineChart");
     expect(widget.id).toEqual("123");
   });
@@ -182,6 +186,7 @@ describe("createChartWidget", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "BarChart",
       datasetId: "090b0410",
+      summary: "test summary",
       s3Key: {
         raw: "abc.csv",
         json: "abc.json",
@@ -203,6 +208,7 @@ describe("createChartWidget", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "PartWholeChart",
       datasetId: "090b0410",
+      summary: "test summary",
       s3Key: {
         raw: "abc.csv",
         json: "abc.json",
@@ -336,6 +342,7 @@ describe("fromItem", () => {
       content: {
         title: "Correlation of COVID cases to deaths",
         chartType: "LineChart",
+        summary: "test summary",
         datasetId: "090b0410",
       },
     };
@@ -352,6 +359,7 @@ describe("fromItem", () => {
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
+    expect(widget.content.summary).toEqual("test summary");
     expect(widget.content.chartType).toEqual("LineChart");
   });
 
@@ -367,6 +375,7 @@ describe("fromItem", () => {
       content: {
         title: "Correlation of COVID cases to deaths",
         datasetId: "090b0410",
+        summary: "test summary",
       },
     };
 
@@ -382,6 +391,7 @@ describe("fromItem", () => {
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
+    expect(widget.content.summary).toEqual("test summary");
   });
 
   it("handles an invalid widget type gracefully", () => {
@@ -452,6 +462,7 @@ describe("toItem", () => {
         title: "Correlation of COVID cases to deaths",
         chartType: ChartType.LineChart,
         datasetId: "090b0410",
+        summary: "test summary",
         s3Key: {
           raw: "abc.csv",
           json: "abc.json",
@@ -472,6 +483,7 @@ describe("toItem", () => {
       title: "Correlation of COVID cases to deaths",
       chartType: "LineChart",
       datasetId: "090b0410",
+      summary: "test summary",
       s3Key: {
         raw: "abc.csv",
         json: "abc.json",
@@ -491,6 +503,7 @@ describe("toItem", () => {
       content: {
         title: "Correlation of COVID cases to deaths",
         datasetId: "090b0410",
+        summary: "test summary",
         s3Key: {
           raw: "abc.csv",
           json: "abc.json",
@@ -510,6 +523,7 @@ describe("toItem", () => {
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
       datasetId: "090b0410",
+      summary: "test summary",
       s3Key: {
         raw: "abc.csv",
         json: "abc.json",

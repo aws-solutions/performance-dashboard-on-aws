@@ -4,6 +4,7 @@ import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   title: string;
+  summary: string;
   headers: Array<string>;
   data?: Array<object>;
 };
@@ -13,7 +14,10 @@ const getKeyValue = (key: string) => (obj: Record<string, any>) => obj[key];
 const TablePreview = (props: Props) => {
   return (
     <div>
-      <h2 className="margin-left-2px">{props.title}</h2>
+      <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
+      <p className="margin-left-1 margin-top-0 margin-bottom-3">
+        {props.summary}
+      </p>
       <table className="usa-table usa-table--borderless margin-left-2px">
         <thead>
           <tr>

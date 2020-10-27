@@ -16,6 +16,7 @@ const chart: ChartWidget = {
     chartType: ChartType.LineChart,
     title: "Bananas chart",
     datasetId: "0000",
+    summary: "test summary",
     s3Key: {
       json: "123.json",
       raw: "123.csv",

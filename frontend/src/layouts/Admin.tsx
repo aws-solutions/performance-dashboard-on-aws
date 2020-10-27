@@ -3,6 +3,7 @@ import { Auth } from "aws-amplify";
 import { useAdmin } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import logo from "../logo.svg";
 
 interface LayoutProps {
   children: ReactNode;
@@ -25,9 +26,10 @@ function AdminLayout(props: LayoutProps) {
       <div className="usa-overlay"></div>
       <header className="usa-header usa-header--basic">
         <div className="usa-nav-container">
-          <div className="usa-navbar">
+          <div className="usa-navbar navbar-long">
             <div className="usa-logo" id="basic-logo">
-              <em className="usa-logo__text">
+              <em className="usa-logo__text display-flex flex-align-center">
+                <img src={logo} alt="logo" className="logo" />
                 <a href="/admin" title="Home" aria-label="Home">
                   Badger
                 </a>
@@ -42,7 +44,7 @@ function AdminLayout(props: LayoutProps) {
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
                 <button
-                  className="usa-accordion__button usa-nav__link  usa-current"
+                  className="usa-accordion__button usa-nav__link"
                   aria-expanded="false"
                   aria-controls="basic-nav-section-one"
                 >

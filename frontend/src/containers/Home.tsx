@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { useHomepage } from "../hooks";
 import UtilsService from "../services/UtilsService";
-import MainLayout from "../layouts/Main";
+// import MainLayout from "../layouts/Main";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
 
@@ -16,11 +16,11 @@ function Home() {
   };
 
   if (loading) {
-    return <MainLayout />;
+    return null;
   }
 
   return (
-    <MainLayout>
+    <>
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
           <h1 className="font-sans-3xl">{homepage.title}</h1>
@@ -63,7 +63,7 @@ function Home() {
           </Accordion>
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 }
 

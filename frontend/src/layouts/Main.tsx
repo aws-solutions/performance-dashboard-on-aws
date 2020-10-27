@@ -48,4 +48,12 @@ function MainLayout(props: LayoutProps) {
   );
 }
 
-export default MainLayout;
+export const withMainLayout = (
+  component: React.ComponentType
+): React.FunctionComponent<{}> => {
+  return function () {
+    return <MainLayout>{React.createElement(component)}</MainLayout>;
+  };
+};
+
+export default withMainLayout;

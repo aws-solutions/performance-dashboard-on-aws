@@ -2,7 +2,6 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
-import AdminLayout from "../layouts/Admin";
 import Button from "../components/Button";
 import CardGroup from "../components/CardGroup";
 
@@ -24,7 +23,7 @@ function AdminHome() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
           <h1 className="font-sans-3xl">
@@ -82,7 +81,7 @@ function AdminHome() {
           </Button>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 }
 

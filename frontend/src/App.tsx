@@ -2,6 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 
+import withMainLayout from "./layouts/Main";
+import withAdminLayout from "./layouts/Admin";
+
 import Home from "./containers/Home";
 import DashboardListing from "./containers/DashboardListing";
 import CreateDashboard from "./containers/CreateDashboard";
@@ -111,8 +114,8 @@ function App() {
       <Switch>
         {routes.map((route) => {
           const component = route.public
-            ? route.component
-            : withAuthenticator(route.component);
+            ? withMainLayout(route.component)
+            : withAuthenticator(withAdminLayout(route.component));
           return (
             <Route
               exact

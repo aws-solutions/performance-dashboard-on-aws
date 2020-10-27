@@ -6,7 +6,6 @@ import { faArrowLeft, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useDashboard, useDashboardVersions } from "../hooks";
 import { DashboardState, LocationState } from "../models";
 import BadgerService from "../services/BadgerService";
-import AdminLayout from "../layouts/Admin";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
@@ -71,7 +70,7 @@ function ViewDashboardAdmin() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="position-sticky top-0 bg-white z-index-on-top">
         <Link to="/admin/dashboards?tab=published">
           <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
@@ -147,7 +146,7 @@ function ViewDashboardAdmin() {
           </div>
         );
       })}
-    </AdminLayout>
+    </>
   );
 }
 

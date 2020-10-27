@@ -2,7 +2,6 @@ import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import { DashboardState, LocationState } from "../models";
-import AdminLayout from "../layouts/Admin";
 import ReactMarkdown from "react-markdown";
 import Button from "../components/Button";
 import BadgerService from "../services/BadgerService";
@@ -42,7 +41,7 @@ function DashboardPreview() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="position-sticky top-0 bg-white z-index-on-top">
         <Alert
           type="info"
@@ -91,7 +90,7 @@ function DashboardPreview() {
           </div>
         );
       })}
-    </AdminLayout>
+    </>
   );
 }
 

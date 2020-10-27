@@ -2,7 +2,6 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas } from "../hooks";
-import AdminLayout from "../layouts/Admin";
 import BadgerService from "../services/BadgerService";
 import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
@@ -34,7 +33,7 @@ function CreateDashboard() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <h1>Create new dashboard</h1>
       <div className="grid-row">
         <div className="grid-col-12">
@@ -85,7 +84,7 @@ function CreateDashboard() {
           </form>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 }
 

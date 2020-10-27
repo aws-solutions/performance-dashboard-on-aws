@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useDashboard } from "../hooks";
@@ -13,6 +13,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
 import ReactMarkdown from "react-markdown";
 import Button from "../components/Button";
+import Modal from "../components/Modal";
 
 interface PathParams {
   dashboardId: string;
@@ -23,6 +24,10 @@ function EditDashboard() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, reloadDashboard, setDashboard } = useDashboard(
     dashboardId
+  );
+  const [isOpen, setIsOpen] = useState(false);
+  const [widgetToDelete, setWidgetToDelete] = useState<Widget | undefined>(
+    undefined
   );
 
   const onAddContent = async () => {
@@ -51,16 +56,28 @@ function EditDashboard() {
     }
   };
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   const onDeleteWidget = async (widget: Widget) => {
-    if (
-      window.confirm(
-        `Deleting ${widget.widgetType} content "${widget.name}" cannot be undone. Are you sure you want to continue?`
-      )
-    ) {
-      if (dashboard) {
-        await BadgerService.deleteWidget(dashboardId, widget.id);
-        await reloadDashboard();
-      }
+    setWidgetToDelete(widget);
+    setIsOpen(true);
+  };
+
+  const deleteWidget = async () => {
+    closeModal();
+    if (dashboard && widgetToDelete) {
+      await BadgerService.deleteWidget(dashboardId, widgetToDelete.id);
+
+      history.replace(`/admin/dashboard/edit/${dashboardId}`, {
+        alert: {
+          type: "success",
+          message: `"${widgetToDelete.name}" widget was successfully deleted`,
+        },
+      });
+
+      await reloadDashboard();
     }
   };
 
@@ -97,6 +114,21 @@ function EditDashboard() {
   return (
     <AdminLayout>
       <Breadcrumbs />
+      <Modal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        title={
+          widgetToDelete
+            ? `Delete ${widgetToDelete.widgetType.toLowerCase()} content item: "${
+                widgetToDelete.name
+              }"`
+            : ""
+        }
+        message="Deleting this content item cannot be undone. Are you sure you want to
+                continue?"
+        buttonType="Delete"
+        buttonAction={deleteWidget}
+      />
       <AlertContainer />
       <div className="grid-row">
         <div className="grid-col text-left">

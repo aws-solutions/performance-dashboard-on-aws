@@ -1,0 +1,19 @@
+.modal {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  border-right: 2px solid #333;
+  border-bottom: 2px solid #333;
+  background: #fff;
+  overflow: auto;
+  outline: none;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  width: 512px;
+  height: 256px;
+  transform: translate(-50%, -50%);
+  -webkit-overflow-scrolling: touch;
+}

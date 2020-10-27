@@ -148,6 +148,7 @@ function createChartWidget(
       title: content.title,
       chartType: content.chartType,
       datasetId: content.datasetId,
+      summary: content.summary,
       s3Key: content.s3Key,
     },
   };
@@ -181,6 +182,7 @@ function createTableWidget(
     content: {
       title: content.title,
       datasetId: content.datasetId,
+      summary: content.summary,
       s3Key: content.s3Key,
     },
   };

@@ -70,6 +70,7 @@ export interface ChartWidget extends Widget {
     title: string;
     chartType: ChartType;
     datasetId: string;
+    summary: string;
     s3Key: {
       raw: string;
       json: string;
@@ -81,6 +82,7 @@ export interface TableWidget extends Widget {
   content: {
     title: string;
     datasetId: string;
+    summary: string;
     s3Key: {
       raw: string;
       json: string;

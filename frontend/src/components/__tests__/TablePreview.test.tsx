@@ -8,17 +8,26 @@ import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faCaretUp, faCaretDown);
 
-test("renders the title of the table preview component", async () => {
+test("renders the title and summary of the table preview component", async () => {
   const { getByText } = render(
-    <TablePreview title="test title" headers={["test"]} />,
+    <TablePreview
+      title="test title"
+      summary="test summary"
+      headers={["test"]}
+    />,
     { wrapper: MemoryRouter }
   );
   expect(getByText("test title")).toBeInTheDocument();
+  expect(getByText("test summary")).toBeInTheDocument();
 });
 
 test("table preview should match snapshot", async () => {
   const wrapper = render(
-    <TablePreview title="test title" headers={["test"]} />,
+    <TablePreview
+      title="test title"
+      summary="test summary"
+      headers={["test"]}
+    />,
     { wrapper: MemoryRouter }
   );
   expect(wrapper.container).toMatchSnapshot();

@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import "./Main.css";
+import logo from "../logo.svg";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -15,7 +15,8 @@ function MainLayout(props: LayoutProps) {
         <div className="usa-nav-container">
           <div className="usa-navbar navbar-long">
             <div className="usa-logo" id="basic-logo">
-              <em className="usa-logo__text">
+              <em className="usa-logo__text display-flex flex-align-center">
+                <img src={logo} alt="logo" className="logo" />
                 <a href="/" title="Home" aria-label="Home">
                   Performance Dashboard
                 </a>
@@ -29,7 +30,10 @@ function MainLayout(props: LayoutProps) {
             </button>
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
-                <a href={`mailto:${process.env.REACT_APP_CONTACT_EMAIL}`}>
+                <a
+                  href={`mailto:${process.env.REACT_APP_CONTACT_EMAIL}`}
+                  className="usa-nav__link"
+                >
                   Contact
                 </a>
               </li>

@@ -24,8 +24,15 @@ export class AuthStack extends cdk.Stack {
       },
     });
 
-    const client = pool.addClient("BadgerFrontend");
+    const client = pool.addClient("BadgerFrontend", {
+      preventUserExistenceErrors: true,
+    });
     const identityPool = this.buildIdentityPool(pool, client);
+
+    const cliClient = pool.addClient("BadgerCLI", {
+      authFlows: { userPassword: true },
+      preventUserExistenceErrors: true,
+    });
 
     const stack = cdk.Stack.of(this);
     const bucketArn = `arn:${stack.partition}:s3:::${props.datasetsBucketName}`;

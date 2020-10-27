@@ -9,6 +9,7 @@ import App from "./App";
 import "uswds/dist/css/uswds.css";
 import "uswds/dist/js/uswds.js";
 import "./index.css";
+import ReactModal from "react-modal";
 
 declare module "react" {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -16,6 +17,8 @@ declare module "react" {
     label?: string;
   }
 }
+
+ReactModal.setAppElement("#root"); //this is important for accessibility
 
 dayjs.extend(relativeTime);
 Amplify.configure(envConfig);

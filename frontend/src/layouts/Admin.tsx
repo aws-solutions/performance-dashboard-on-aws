@@ -73,4 +73,12 @@ function AdminLayout(props: LayoutProps) {
   );
 }
 
-export default AdminLayout;
+export const withAdminLayout = (
+  component: React.ComponentType
+): React.FunctionComponent<{}> => {
+  return function () {
+    return <AdminLayout>{React.createElement(component)}</AdminLayout>;
+  };
+};
+
+export default withAdminLayout;

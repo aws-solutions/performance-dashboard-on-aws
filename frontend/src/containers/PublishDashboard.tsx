@@ -7,7 +7,6 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { LocationState } from "../models";
 import BadgerService from "../services/BadgerService";
 import AlertContainer from "./AlertContainer";
-import AdminLayout from "../layouts/Admin";
 import StepIndicator from "../components/StepIndicator";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
@@ -80,7 +79,7 @@ function PublishDashboard() {
   }
 
   return (
-    <AdminLayout>
+    <>
       <div>
         <Link to="/admin/dashboards?tab=pending">
           <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
@@ -187,7 +186,7 @@ function PublishDashboard() {
           </span>
         </div>
       </form>
-    </AdminLayout>
+    </>
   );
 }
 

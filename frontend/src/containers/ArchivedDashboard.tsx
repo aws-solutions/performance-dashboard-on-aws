@@ -6,7 +6,6 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useDashboard } from "../hooks";
 import { LocationState } from "../models";
 import BadgerService from "../services/BadgerService";
-import AdminLayout from "../layouts/Admin";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
@@ -40,7 +39,7 @@ function ArchivedDashboard() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="position-sticky top-0 bg-white z-index-on-top">
         <Link to="/admin/dashboards?tab=archived">
           <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
@@ -96,7 +95,7 @@ function ArchivedDashboard() {
           </div>
         );
       })}
-    </AdminLayout>
+    </>
   );
 }
 

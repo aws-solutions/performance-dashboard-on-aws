@@ -4,7 +4,6 @@ import { useHistory, useParams } from "react-router-dom";
 import { Dataset } from "../models";
 import BadgerService from "../services/BadgerService";
 import StorageService from "../services/StorageService";
-import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
@@ -149,7 +148,7 @@ function EditTable() {
   }
 
   return (
-    <AdminLayout>
+    <>
       <Breadcrumbs />
       <h1>Edit content item</h1>
       <div className="grid-row width-desktop">
@@ -238,7 +237,7 @@ function EditTable() {
           </div>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 }
 

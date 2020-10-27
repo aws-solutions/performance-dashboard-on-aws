@@ -2,7 +2,6 @@ import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas, useDashboard } from "../hooks";
-import AdminLayout from "../layouts/Admin";
 import BadgerService from "../services/BadgerService";
 import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
@@ -46,7 +45,7 @@ function EditDetails() {
   }
 
   return (
-    <AdminLayout>
+    <>
       <h1>Edit Details</h1>
       <div className="grid-row">
         <div className="grid-col-12">
@@ -102,7 +101,7 @@ function EditDetails() {
           </form>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 }
 

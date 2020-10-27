@@ -1,7 +1,6 @@
 import React from "react";
 import { useDashboards } from "../hooks";
 import { LocationState } from "../models";
-import AdminLayout from "../layouts/Admin";
 import Tabs from "../components/Tabs";
 import DraftsTab from "../components/DraftsTab";
 import PublishedTab from "../components/PublishedTab";
@@ -94,7 +93,7 @@ function DashboardListing() {
   }
 
   return (
-    <AdminLayout>
+    <>
       <h1>Dashboards</h1>
       <AlertContainer />
       <Tabs defaultActive={activeTab}>
@@ -117,7 +116,7 @@ function DashboardListing() {
           <ArchivedTab dashboards={archivedDashboards} />
         </div>
       </Tabs>
-    </AdminLayout>
+    </>
   );
 }
 

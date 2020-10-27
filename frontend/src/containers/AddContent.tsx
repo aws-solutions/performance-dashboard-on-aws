@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
 
@@ -9,9 +8,13 @@ interface FormValues {
   widgetType: string;
 }
 
+interface PathParams {
+  dashboardId: string;
+}
+
 function AddContent() {
   const history = useHistory();
-  const { dashboardId } = useParams();
+  const { dashboardId } = useParams<PathParams>();
   const { register, handleSubmit } = useForm<FormValues>();
   const [widgetType, setWidgetType] = useState("");
 
@@ -34,7 +37,7 @@ function AddContent() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <Breadcrumbs />
       <h1>Add content</h1>
       <div className="text-base text-italic">Step 1 of 2</div>
@@ -173,7 +176,7 @@ function AddContent() {
           </Button>
         </form>
       </div>
-    </AdminLayout>
+    </>
   );
 }
 

@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import MainLayout from "../layouts/Main";
 
 function FourZeroFour() {
   return (
-    <MainLayout>
+    <>
       <div className="text-center">
         <p className="font-sans-3xl text-heavy margin-top-9 margin-bottom-1">
           404 / Page not found
@@ -20,7 +19,7 @@ function FourZeroFour() {
         Having technical issues with the platform?{" "}
         <Link to="/">Contact support</Link>.
       </div>
-    </MainLayout>
+    </>
   );
 }
 

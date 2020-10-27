@@ -5,7 +5,6 @@ import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType, WidgetType } from "../models";
 import StorageService from "../services/StorageService";
 import BadgerService from "../services/BadgerService";
-import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
@@ -127,7 +126,7 @@ function AddChart() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <Breadcrumbs />
       <h1>Add content</h1>
       <div className="text-base text-italic">Step 2 of 2</div>
@@ -279,7 +278,7 @@ function AddChart() {
           </div>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 }
 

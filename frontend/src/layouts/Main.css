@@ -1,0 +1,5 @@
+@media (min-width: 64em) {
+  .navbar-long {
+    width: 40% !important;
+  }
+}

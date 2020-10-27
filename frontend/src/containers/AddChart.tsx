@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType, WidgetType } from "../models";
+import { useDashboard } from "../hooks";
 import StorageService from "../services/StorageService";
 import BadgerService from "../services/BadgerService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -28,6 +29,7 @@ interface PathParams {
 function AddChart() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
+  const { dashboard } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
@@ -127,7 +129,21 @@ function AddChart() {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        crumbs={[
+          {
+            label: "Dashboards",
+            url: "/admin/dashboards",
+          },
+          {
+            label: dashboard?.name || "Dashboard",
+            url: "/admin/dashboard/edit/".concat(dashboardId),
+          },
+          {
+            label: "Add content item",
+          },
+        ]}
+      />
       <h1>Add content</h1>
       <div className="text-base text-italic">Step 2 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">

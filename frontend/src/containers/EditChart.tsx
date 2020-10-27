@@ -5,7 +5,6 @@ import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType } from "../models";
 import StorageService from "../services/StorageService";
 import BadgerService from "../services/BadgerService";
-import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
@@ -171,7 +170,7 @@ function EditChart() {
   }
 
   return (
-    <AdminLayout>
+    <>
       <Breadcrumbs />
       <h1>Edit content item</h1>
       <div className="grid-row width-desktop">
@@ -311,7 +310,7 @@ function EditChart() {
           </div>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 }
 

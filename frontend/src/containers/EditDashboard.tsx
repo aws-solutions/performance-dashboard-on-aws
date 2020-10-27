@@ -8,7 +8,6 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import AlertContainer from "./AlertContainer";
 import BadgerService from "../services/BadgerService";
 import WidgetOrderingService from "../services/WidgetOrdering";
-import AdminLayout from "../layouts/Admin";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
 import ReactMarkdown from "react-markdown";
@@ -112,7 +111,7 @@ function EditDashboard() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <Breadcrumbs />
       <Modal
         isOpen={isOpen}
@@ -183,7 +182,7 @@ function EditDashboard() {
         onMoveUp={onMoveWidgetUp}
         onMoveDown={onMoveWidgetDown}
       />
-    </AdminLayout>
+    </>
   );
 }
 

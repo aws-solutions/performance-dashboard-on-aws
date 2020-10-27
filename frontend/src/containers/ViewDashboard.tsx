@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { usePublicDashboard } from "../hooks";
-import MainLayout from "../layouts/Main";
 import WidgetRender from "../components/WidgetRender";
 import FourZeroFour from "./FourZeroFour";
 
@@ -21,7 +20,7 @@ function ViewDashboard() {
   }
 
   return dashboard.id ? (
-    <MainLayout>
+    <>
       <Link to="/">
         <FontAwesomeIcon icon={faArrowLeft} /> All Dashboards
       </Link>
@@ -49,7 +48,7 @@ function ViewDashboard() {
           </div>
         );
       })}
-    </MainLayout>
+    </>
   ) : (
     <FourZeroFour />
   );

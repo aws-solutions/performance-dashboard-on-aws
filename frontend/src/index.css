@@ -1,3 +1,15 @@
 p {
   line-height: 1.4;
 }
+
+.logo {
+  margin-right: 0.5rem;
+  max-width: 3rem;
+  width: auto;
+}
+
+@media (min-width: 64em) {
+  .navbar-long {
+    width: 50% !important;
+  }
+}

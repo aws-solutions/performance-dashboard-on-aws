@@ -19,8 +19,13 @@ exports[`renders a FourZeroFour component 1`] = `
           id="basic-logo"
         >
           <em
-            class="usa-logo__text"
+            class="usa-logo__text display-flex flex-align-center"
           >
+            <img
+              alt="logo"
+              class="logo"
+              src="logo.svg"
+            />
             <a
               aria-label="Home"
               href="/"
@@ -66,6 +71,7 @@ exports[`renders a FourZeroFour component 1`] = `
             class="usa-nav__primary-item"
           >
             <a
+              class="usa-nav__link"
               href="mailto:support@example.com"
             >
               Contact

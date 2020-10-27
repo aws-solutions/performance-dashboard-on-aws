@@ -12,6 +12,7 @@ import { useColors } from "../hooks";
 
 type Props = {
   title: string;
+  summary: string;
   columns: Array<string>;
   data?: Array<object>;
 };
@@ -20,7 +21,10 @@ const ColumnChartPreview = (props: Props) => {
   const colors = useColors(props.columns.length);
   return (
     <div>
-      <h2 className="margin-left-2px">{props.title}</h2>
+      <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
+      <p className="margin-left-1 margin-top-0 margin-bottom-3">
+        {props.summary}
+      </p>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={props.data} margin={{ right: 0, left: 0 }}>
           <CartesianGrid vertical={false} />

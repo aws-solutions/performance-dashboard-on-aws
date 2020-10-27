@@ -15,6 +15,7 @@ import { useWidget } from "../hooks";
 
 interface FormValues {
   title: string;
+  summary: string;
 }
 
 interface PathParams {
@@ -103,6 +104,7 @@ function EditTable() {
         values.title,
         {
           title: values.title,
+          summary: values.summary,
           datasetId,
           s3Key,
         },
@@ -122,7 +124,22 @@ function EditTable() {
     if (widget) {
       setWidget({
         ...widget,
-        name: (event.target as HTMLInputElement).value,
+        content: {
+          ...widget.content,
+          title: (event.target as HTMLInputElement).value,
+        },
+      });
+    }
+  };
+
+  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
+    if (widget) {
+      setWidget({
+        ...widget,
+        content: {
+          ...widget.content,
+          summary: (event.target as HTMLTextAreaElement).value,
+        },
       });
     }
   };
@@ -149,7 +166,7 @@ function EditTable() {
                 hint="Give your table a descriptive title."
                 error={errors.title && "Please specify a table title"}
                 onChange={handleTitleChange}
-                defaultValue={widget.name}
+                defaultValue={widget.content.title}
                 required
                 register={register}
               />
@@ -181,6 +198,20 @@ function EditTable() {
                 ) : (
                   ""
                 )}
+
+                <TextField
+                  id="summary"
+                  name="summary"
+                  label="Table summary"
+                  hint="Give your table a summary to explain it in more depth.
+                  It can also be read by screen readers to describe the table
+                  for those with visual impairments. What is useful in a table description?"
+                  register={register}
+                  defaultValue={widget.content.summary}
+                  onChange={handleSummaryChange}
+                  multiline
+                  rows={5}
+                />
               </div>
             </fieldset>
             <br />
@@ -197,7 +228,8 @@ function EditTable() {
           <div hidden={!json} className="margin-left-4">
             <h4>Preview</h4>
             <TablePreview
-              title={widget.name}
+              title={widget.content.title}
+              summary={widget.content.summary}
               headers={
                 json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
               }

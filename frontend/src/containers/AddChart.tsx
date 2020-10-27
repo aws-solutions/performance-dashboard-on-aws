@@ -18,6 +18,7 @@ import PartWholeChartPreview from "../components/PartWholeChartPreview";
 
 interface FormValues {
   title: string;
+  summary: string;
   chartType: string;
 }
 
@@ -35,6 +36,7 @@ function AddChart() {
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
   const [chartType, setChartType] = useState<ChartType>(ChartType.LineChart);
   const [loading, setLoading] = useState(false);
 
@@ -67,6 +69,7 @@ function AddChart() {
         WidgetType.Chart,
         {
           title: values.title,
+          summary: values.summary,
           chartType: values.chartType,
           datasetId: newDataset.id,
           s3Key: newDataset.s3Key,
@@ -89,6 +92,10 @@ function AddChart() {
 
   const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setTitle((event.target as HTMLInputElement).value);
+  };
+
+  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
+    setSummary((event.target as HTMLTextAreaElement).value);
   };
 
   const handleChartTypeChange = (
@@ -189,6 +196,19 @@ function AddChart() {
                     },
                   ]}
                 />
+
+                <TextField
+                  id="summary"
+                  name="summary"
+                  label="Chart summary"
+                  hint="Give your chart a summary to explain it in more depth.
+                  It can also be read by screen readers to describe the chart
+                  for those with visual impairments. What is useful in a chart description?"
+                  register={register}
+                  onChange={handleSummaryChange}
+                  multiline
+                  rows={5}
+                />
               </div>
             </fieldset>
             <br />
@@ -211,6 +231,7 @@ function AddChart() {
             {chartType === ChartType.LineChart && (
               <LineChartPreview
                 title={title}
+                summary={summary}
                 lines={
                   dataset && dataset.length
                     ? (Object.keys(dataset[0]) as Array<string>)
@@ -222,6 +243,7 @@ function AddChart() {
             {chartType === ChartType.ColumnChart && (
               <ColumnChartPreview
                 title={title}
+                summary={summary}
                 columns={
                   dataset && dataset.length
                     ? (Object.keys(dataset[0]) as Array<string>)
@@ -233,6 +255,7 @@ function AddChart() {
             {chartType === ChartType.BarChart && (
               <BarChartPreview
                 title={title}
+                summary={summary}
                 bars={
                   dataset && dataset.length
                     ? (Object.keys(dataset[0]) as Array<string>)
@@ -244,6 +267,7 @@ function AddChart() {
             {chartType === ChartType.PartWholeChart && (
               <PartWholeChartPreview
                 title={title}
+                summary={summary}
                 parts={
                   dataset && dataset.length
                     ? (Object.keys(dataset[0]) as Array<string>)

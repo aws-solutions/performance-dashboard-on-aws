@@ -16,7 +16,14 @@ function TableWidgetComponent(props: Props) {
   }
 
   const keys = Object.keys(json[0] as Array<string>);
-  return <TablePreview title={content.title} headers={keys} data={json} />;
+  return (
+    <TablePreview
+      title={content.title}
+      summary={content.summary}
+      headers={keys}
+      data={json}
+    />
+  );
 }
 
 export default TableWidgetComponent;

@@ -22,20 +22,42 @@ function ChartWidgetComponent(props: Props) {
   switch (content.chartType) {
     case ChartType.LineChart:
       return (
-        <LineChartPreview title={content.title} lines={keys} data={json} />
+        <LineChartPreview
+          title={content.title}
+          summary={content.summary}
+          lines={keys}
+          data={json}
+        />
       );
 
     case ChartType.ColumnChart:
       return (
-        <ColumnChartPreview title={content.title} columns={keys} data={json} />
+        <ColumnChartPreview
+          title={content.title}
+          summary={content.summary}
+          columns={keys}
+          data={json}
+        />
       );
 
     case ChartType.BarChart:
-      return <BarChartPreview title={content.title} bars={keys} data={json} />;
+      return (
+        <BarChartPreview
+          title={content.title}
+          summary={content.summary}
+          bars={keys}
+          data={json}
+        />
+      );
 
     case ChartType.PartWholeChart:
       return (
-        <PartWholeChartPreview title={content.title} parts={keys} data={json} />
+        <PartWholeChartPreview
+          title={content.title}
+          summary={content.summary}
+          parts={keys}
+          data={json}
+        />
       );
 
     default:

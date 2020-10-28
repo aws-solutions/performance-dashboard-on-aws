@@ -86,7 +86,7 @@ function PublishDashboard() {
             url: "/admin/dashboards?tab=pending",
           },
           {
-            label: "Publish workflow",
+            label: dashboard.name,
           },
         ]}
       />

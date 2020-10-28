@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import BadgerService from "../services/BadgerService";
 import Alert from "../components/Alert";
 import WidgetRender from "../components/WidgetRender";
+import Breadcrumbs from "../components/Breadcrumbs";
 import "./DashboardPreview.css";
 
 interface PathParams {
@@ -42,6 +43,17 @@ function DashboardPreview() {
 
   return (
     <>
+      <Breadcrumbs
+        crumbs={[
+          {
+            label: "Dashboards",
+            url: "/admin/dashboards",
+          },
+          {
+            label: dashboard?.name,
+          },
+        ]}
+      />
       <div className="position-sticky top-0 bg-white z-index-on-top">
         <Alert
           type="info"

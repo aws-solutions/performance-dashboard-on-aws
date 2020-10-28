@@ -1,5 +1,95 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`renders a create draft type Modal 1`] = `
+<body
+  class="ReactModal__Body--open"
+>
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div />
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div
+    class="ReactModalPortal"
+  >
+    <div
+      class="ReactModal__Overlay ReactModal__Overlay--after-open"
+      style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
+    >
+      <div
+        class="ReactModal__Content ReactModal__Content--after-open modal"
+        role="dialog"
+        tabindex="-1"
+      >
+        <div
+          class="clearfix"
+        >
+          <div
+            class="float-left"
+            style="max-width: 80%;"
+          >
+            <h2
+              class="margin-top-0"
+            >
+              test title
+            </h2>
+          </div>
+          <div
+            class="float-right font-sans-md"
+          >
+            <button
+              class="usa-button usa-button--unstyled margin-left-1"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-times fa-w-11 fa-1x margin-right-1"
+                data-icon="times"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                style="margin-top: 5px;"
+                viewBox="0 0 352 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                  fill="currentColor"
+                />
+              </svg>
+              Close
+            </button>
+          </div>
+        </div>
+        <div
+          class="font-sans-md margin-top-2 margin-bottom-6"
+        >
+          test message
+        </div>
+        <button
+          class="usa-button usa-button--base"
+          type="button"
+        >
+          Create draft
+        </button>
+        <button
+          class="usa-button usa-button--unstyled margin-left-1"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
 exports[`renders a delete type Modal 1`] = `
 <body
   class="ReactModal__Body--open"
@@ -68,7 +158,7 @@ exports[`renders a delete type Modal 1`] = `
           </div>
         </div>
         <div
-          class="font-sans-md margin-top-2 margin-bottom-4"
+          class="font-sans-md margin-top-2 margin-bottom-6"
         >
           test message
         </div>
@@ -158,7 +248,7 @@ exports[`renders a publish type Modal 1`] = `
           </div>
         </div>
         <div
-          class="font-sans-md margin-top-2 margin-bottom-4"
+          class="font-sans-md margin-top-2 margin-bottom-6"
         >
           test message
         </div>
@@ -167,6 +257,186 @@ exports[`renders a publish type Modal 1`] = `
           type="button"
         >
           Publish
+        </button>
+        <button
+          class="usa-button usa-button--unstyled margin-left-1"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`renders a re-publish type Modal 1`] = `
+<body
+  class="ReactModal__Body--open"
+>
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div />
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div
+    class="ReactModalPortal"
+  >
+    <div
+      class="ReactModal__Overlay ReactModal__Overlay--after-open"
+      style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
+    >
+      <div
+        class="ReactModal__Content ReactModal__Content--after-open modal"
+        role="dialog"
+        tabindex="-1"
+      >
+        <div
+          class="clearfix"
+        >
+          <div
+            class="float-left"
+            style="max-width: 80%;"
+          >
+            <h2
+              class="margin-top-0"
+            >
+              test title
+            </h2>
+          </div>
+          <div
+            class="float-right font-sans-md"
+          >
+            <button
+              class="usa-button usa-button--unstyled margin-left-1"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-times fa-w-11 fa-1x margin-right-1"
+                data-icon="times"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                style="margin-top: 5px;"
+                viewBox="0 0 352 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                  fill="currentColor"
+                />
+              </svg>
+              Close
+            </button>
+          </div>
+        </div>
+        <div
+          class="font-sans-md margin-top-2 margin-bottom-6"
+        >
+          test message
+        </div>
+        <button
+          class="usa-button usa-button--base"
+          type="button"
+        >
+          Re-publish
+        </button>
+        <button
+          class="usa-button usa-button--unstyled margin-left-1"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`renders an archive type Modal 1`] = `
+<body
+  class="ReactModal__Body--open"
+>
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div />
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div
+    class="ReactModalPortal"
+  >
+    <div
+      class="ReactModal__Overlay ReactModal__Overlay--after-open"
+      style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
+    >
+      <div
+        class="ReactModal__Content ReactModal__Content--after-open modal"
+        role="dialog"
+        tabindex="-1"
+      >
+        <div
+          class="clearfix"
+        >
+          <div
+            class="float-left"
+            style="max-width: 80%;"
+          >
+            <h2
+              class="margin-top-0"
+            >
+              test title
+            </h2>
+          </div>
+          <div
+            class="float-right font-sans-md"
+          >
+            <button
+              class="usa-button usa-button--unstyled margin-left-1"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-times fa-w-11 fa-1x margin-right-1"
+                data-icon="times"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                style="margin-top: 5px;"
+                viewBox="0 0 352 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                  fill="currentColor"
+                />
+              </svg>
+              Close
+            </button>
+          </div>
+        </div>
+        <div
+          class="font-sans-md margin-top-2 margin-bottom-6"
+        >
+          test message
+        </div>
+        <button
+          class="usa-button usa-button--base"
+          type="button"
+        >
+          Archive
         </button>
         <button
           class="usa-button usa-button--unstyled margin-left-1"

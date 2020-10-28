@@ -14,7 +14,7 @@ import LineChartPreview from "../components/LineChartPreview";
 import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
-import { useWidget } from "../hooks";
+import { useWidget, useDashboard } from "../hooks";
 
 interface FormValues {
   title: string;
@@ -30,6 +30,7 @@ interface PathParams {
 function EditChart() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
+  const { dashboard } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
     undefined
@@ -171,7 +172,22 @@ function EditChart() {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        crumbs={[
+          {
+            label: "Dashboards",
+            url: "/admin/dashboards",
+          },
+          {
+            label: dashboard?.name,
+            url: `/admin/dashboard/edit/${dashboardId}`,
+          },
+          {
+            label: "Add content item",
+          },
+        ]}
+      />
+
       <h1>Edit content item</h1>
       <div className="grid-row width-desktop">
         <div className="grid-col-6">

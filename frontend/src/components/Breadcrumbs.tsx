@@ -1,30 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-/**
- * This is a dummy placeholder implementation of breadcrumbs.
- * We need to implement this for real at some point.
- */
-function Breadcrumbs() {
+interface Props {
+  crumbs: Array<{
+    label?: string;
+    url?: string;
+  }>;
+}
+
+function Breadcrumbs(props: Props) {
   return (
     <nav className="usa-breadcrumb padding-top-0" aria-label="Breadcrumbs">
       <ol className="usa-breadcrumb__list">
-        <li className="usa-breadcrumb__list-item">
-          <Link to="/admin" className="usa-breadcrumb__link">
-            <span>Home</span>
-          </Link>
-        </li>
-        <li className="usa-breadcrumb__list-item">
-          <Link to="/admin/dashboards" className="usa-breadcrumb__link">
-            <span>Dashboards</span>
-          </Link>
-        </li>
-        <li
-          className="usa-breadcrumb__list-item usa-current"
-          aria-current="page"
-        >
-          <span>Edit</span>
-        </li>
+        {props.crumbs?.map((crumb, index) => {
+          return crumb.url ? (
+            <li
+              className="usa-breadcrumb__list-item"
+              key={crumb.label || index}
+            >
+              <Link to={crumb.url} className="usa-breadcrumb__link">
+                <span>{crumb.label}</span>
+              </Link>
+            </li>
+          ) : (
+            <li
+              className="usa-breadcrumb__list-item usa-current cursor-default"
+              aria-current="page"
+              key={crumb.label || index}
+            >
+              <span>{crumb.label}</span>
+            </li>
+          );
+        })}
       </ol>
     </nav>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDashboard } from "../hooks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
 
@@ -15,6 +16,7 @@ interface PathParams {
 function AddContent() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
+  const { dashboard } = useDashboard(dashboardId);
   const { register, handleSubmit } = useForm<FormValues>();
   const [widgetType, setWidgetType] = useState("");
 
@@ -38,7 +40,22 @@ function AddContent() {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        crumbs={[
+          {
+            label: "Dashboards",
+            url: "/admin/dashboards",
+          },
+          {
+            label: dashboard?.name,
+            url: `/admin/dashboard/edit/${dashboardId}`,
+          },
+          {
+            label: "Add content item",
+          },
+        ]}
+      />
+
       <h1>Add content</h1>
       <div className="text-base text-italic">Step 1 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">

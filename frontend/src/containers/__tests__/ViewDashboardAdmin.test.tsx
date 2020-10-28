@@ -32,7 +32,7 @@ test("renders a back link to homepage", async () => {
   const { getByRole } = render(<ViewDashboardAdmin />, {
     wrapper: MemoryRouter,
   });
-  expect(getByRole("link", { name: "Back to dashboards" })).toBeInTheDocument();
+  expect(getByRole("link", { name: "Dashboards" })).toBeInTheDocument();
 });
 
 test("renders an update button", async () => {

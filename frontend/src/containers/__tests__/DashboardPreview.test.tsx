@@ -12,14 +12,13 @@ import {
 import DashboardPreview from "../DashboardPreview";
 
 library.add(faGripLinesVertical, faCaretUp, faCaretDown);
-
 jest.mock("../../hooks");
 
 test("renders the name of the dashboard", async () => {
-  const { findByText } = render(<DashboardPreview />, {
+  const { getByRole } = render(<DashboardPreview />, {
     wrapper: MemoryRouter,
   });
-  const name = await findByText("My AWS Dashboard");
+  const name = getByRole("heading", { name: "My AWS Dashboard" });
   expect(name).toBeInTheDocument();
 });
 

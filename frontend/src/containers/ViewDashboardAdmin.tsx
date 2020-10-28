@@ -2,13 +2,14 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useDashboard, useDashboardVersions } from "../hooks";
 import { DashboardState, LocationState } from "../models";
 import BadgerService from "../services/BadgerService";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 interface PathParams {
   dashboardId: string;
@@ -72,9 +73,17 @@ function ViewDashboardAdmin() {
   return (
     <>
       <div className="position-sticky top-0 bg-white z-index-on-top">
-        <Link to="/admin/dashboards?tab=published">
-          <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
-        </Link>
+        <Breadcrumbs
+          crumbs={[
+            {
+              label: "Dashboards",
+              url: "/admin/dashboards?tab=published",
+            },
+            {
+              label: dashboard?.name,
+            },
+          ]}
+        />
         {currentDraft && (
           <Alert
             type="info"

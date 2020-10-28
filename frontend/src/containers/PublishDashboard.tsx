@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDashboard } from "../hooks";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { LocationState } from "../models";
 import BadgerService from "../services/BadgerService";
 import AlertContainer from "./AlertContainer";
 import StepIndicator from "../components/StepIndicator";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 interface PathParams {
   dashboardId: string;
@@ -80,11 +79,18 @@ function PublishDashboard() {
 
   return (
     <>
-      <div>
-        <Link to="/admin/dashboards?tab=pending">
-          <FontAwesomeIcon icon={faArrowLeft} /> Back to dashboards
-        </Link>
-      </div>
+      <Breadcrumbs
+        crumbs={[
+          {
+            label: "Dashboards",
+            url: "/admin/dashboards?tab=pending",
+          },
+          {
+            label: "Publish workflow",
+          },
+        ]}
+      />
+
       <AlertContainer />
       <div className="grid-row">
         <div className="grid-col text-left padding-top-2">

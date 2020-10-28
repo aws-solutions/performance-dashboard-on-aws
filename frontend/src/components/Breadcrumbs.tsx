@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 interface Props {
-  crumbs?: Array<{
-    label: string;
+  crumbs: Array<{
+    label?: string;
     url?: string;
   }>;
 }
@@ -12,18 +12,21 @@ function Breadcrumbs(props: Props) {
   return (
     <nav className="usa-breadcrumb padding-top-0" aria-label="Breadcrumbs">
       <ol className="usa-breadcrumb__list">
-        {props.crumbs?.map((crumb) => {
+        {props.crumbs?.map((crumb, index) => {
           return crumb.url ? (
-            <li className="usa-breadcrumb__list-item" key={crumb.label}>
+            <li
+              className="usa-breadcrumb__list-item"
+              key={crumb.label || index}
+            >
               <Link to={crumb.url} className="usa-breadcrumb__link">
                 <span>{crumb.label}</span>
               </Link>
             </li>
           ) : (
             <li
-              className="usa-breadcrumb__list-item usa-current"
+              className="usa-breadcrumb__list-item usa-current cursor-default"
               aria-current="page"
-              key={crumb.label}
+              key={crumb.label || index}
             >
               <span>{crumb.label}</span>
             </li>

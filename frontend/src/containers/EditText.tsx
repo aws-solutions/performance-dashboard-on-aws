@@ -6,7 +6,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
 import ReactMarkdown from "react-markdown";
-import { useWidget } from "../hooks";
+import { useWidget, useDashboard } from "../hooks";
 
 interface FormValues {
   title: string;
@@ -21,6 +21,7 @@ interface PathParams {
 function EditText() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
+  const { dashboard } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
   const [loading, setLoading] = useState(false);
   const { widget, setWidget } = useWidget(dashboardId, widgetId);
@@ -70,7 +71,22 @@ function EditText() {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        crumbs={[
+          {
+            label: "Dashboards",
+            url: "/admin/dashboards",
+          },
+          {
+            label: dashboard?.name,
+            url: `/admin/dashboard/edit/${dashboardId}`,
+          },
+          {
+            label: "Add content item",
+          },
+        ]}
+      />
+
       <h1>Edit content item</h1>
       <div className="grid-row width-desktop">
         <div className="grid-col-6">

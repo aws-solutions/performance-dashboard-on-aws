@@ -136,14 +136,15 @@ function AddChart() {
             url: "/admin/dashboards",
           },
           {
-            label: dashboard?.name || "Dashboard",
-            url: "/admin/dashboard/edit/".concat(dashboardId),
+            label: dashboard?.name,
+            url: `/admin/dashboard/edit/${dashboardId}`,
           },
           {
             label: "Add content item",
           },
         ]}
       />
+
       <h1>Add content</h1>
       <div className="text-base text-italic">Step 2 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">

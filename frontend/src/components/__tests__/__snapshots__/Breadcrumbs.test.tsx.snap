@@ -24,7 +24,7 @@ exports[`renders a breadcrumb with one crumb 1`] = `
     >
       <li
         aria-current="page"
-        class="usa-breadcrumb__list-item usa-current"
+        class="usa-breadcrumb__list-item usa-current cursor-default"
       >
         <span>
           Add content
@@ -58,7 +58,7 @@ exports[`renders a breadcrumb with two crumbs 1`] = `
       </li>
       <li
         aria-current="page"
-        class="usa-breadcrumb__list-item usa-current"
+        class="usa-breadcrumb__list-item usa-current cursor-default"
       >
         <span>
           Add content

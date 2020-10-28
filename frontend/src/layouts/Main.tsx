@@ -18,7 +18,7 @@ function MainLayout(props: LayoutProps) {
               <em className="usa-logo__text display-flex flex-align-center">
                 <img src={logo} alt="logo" className="logo" />
                 <a href="/" title="Home" aria-label="Home">
-                  Performance Dashboard
+                  {process.env.REACT_APP_BRAND_NAME}
                 </a>
               </em>
             </div>

@@ -112,7 +112,18 @@ function EditDashboard() {
 
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs
+        crumbs={[
+          {
+            label: "Dashboards",
+            url: "/admin/dashboards",
+          },
+          {
+            label: dashboard?.name,
+          },
+        ]}
+      />
+
       <Modal
         isOpen={isOpen}
         closeModal={closeModal}
@@ -128,6 +139,7 @@ function EditDashboard() {
         buttonType="Delete"
         buttonAction={deleteWidget}
       />
+
       <AlertContainer />
       <div className="grid-row">
         <div className="grid-col text-left">

@@ -10,8 +10,8 @@ jest.mock("../../hooks");
 jest.mock("../../services/BadgerService");
 
 test("renders the name of the dashboard", async () => {
-  const { findByText } = render(<EditDashboard />, { wrapper: MemoryRouter });
-  const name = await findByText("My AWS Dashboard");
+  const { getByRole } = render(<EditDashboard />, { wrapper: MemoryRouter });
+  const name = getByRole("heading", { name: "My AWS Dashboard" });
   expect(name).toBeInTheDocument();
 });
 

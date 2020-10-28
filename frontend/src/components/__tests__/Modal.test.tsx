@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import Modal from "../Modal";
 
 test("renders a delete type Modal", async () => {
-  const wrapper = render(
+  const { baseElement } = render(
     <Modal
       title={"test title"}
       message={"test message"}
@@ -12,14 +12,13 @@ test("renders a delete type Modal", async () => {
       buttonType="Delete"
       buttonAction={() => {}}
       ariaHideApp={false}
-    />,
-    { container: document.body }
+    />
   );
-  expect(wrapper.container).toMatchSnapshot();
+  expect(baseElement).toMatchSnapshot();
 });
 
 test("renders a publish type Modal", async () => {
-  const wrapper = render(
+  const { baseElement } = render(
     <Modal
       title={"test title"}
       message={"test message"}
@@ -28,8 +27,7 @@ test("renders a publish type Modal", async () => {
       buttonType="Publish"
       buttonAction={() => {}}
       ariaHideApp={false}
-    />,
-    { container: document.body }
+    />
   );
-  expect(wrapper.container).toMatchSnapshot();
+  expect(baseElement).toMatchSnapshot();
 });

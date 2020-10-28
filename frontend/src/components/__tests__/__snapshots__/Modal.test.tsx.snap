@@ -9,6 +9,7 @@ exports[`renders a delete type Modal 1`] = `
     style="position: absolute; opacity: 0;"
     tabindex="0"
   />
+  <div />
   <div
     data-react-modal-body-trap=""
     style="position: absolute; opacity: 0;"
@@ -98,6 +99,7 @@ exports[`renders a publish type Modal 1`] = `
     style="position: absolute; opacity: 0;"
     tabindex="0"
   />
+  <div />
   <div
     data-react-modal-body-trap=""
     style="position: absolute; opacity: 0;"

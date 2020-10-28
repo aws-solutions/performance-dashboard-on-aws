@@ -24,7 +24,8 @@ function EditDashboard() {
   const { dashboard, reloadDashboard, setDashboard } = useDashboard(
     dashboardId
   );
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [widgetToDelete, setWidgetToDelete] = useState<Widget | undefined>(
     undefined
   );
@@ -37,35 +38,43 @@ function EditDashboard() {
     history.push(`/admin/dashboard/${dashboardId}/preview`);
   };
 
-  const onPublish = async () => {
-    if (
-      window.confirm("Are you sure you want to start the publishing process?")
-    ) {
-      if (dashboard) {
-        await BadgerService.publishPending(dashboard.id, dashboard.updatedAt);
-        history.push(`/admin/dashboard/${dashboard.id}/publish`, {
-          alert: {
-            type: "info",
-            message:
-              "This dashboard is now in the publish pending state and " +
-              "cannot be edited unless returned to draft",
-          },
-        });
-      }
+  const closePublishModal = () => {
+    setIsOpenPublishModal(false);
+  };
+
+  const closeDeleteModal = () => {
+    setIsOpenDeleteModal(false);
+  };
+
+  const onPublishDashboard = () => {
+    setIsOpenPublishModal(true);
+  };
+
+  const onDeleteWidget = (widget: Widget) => {
+    setWidgetToDelete(widget);
+    setIsOpenDeleteModal(true);
+  };
+
+  const publishDashboard = async () => {
+    closePublishModal();
+
+    if (dashboard) {
+      await BadgerService.publishPending(dashboard.id, dashboard.updatedAt);
+
+      history.push(`/admin/dashboard/${dashboard.id}/publish`, {
+        alert: {
+          type: "info",
+          message:
+            "This dashboard is now in the publish pending state and " +
+            "cannot be edited unless returned to draft",
+        },
+      });
     }
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
-  const onDeleteWidget = async (widget: Widget) => {
-    setWidgetToDelete(widget);
-    setIsOpen(true);
-  };
-
   const deleteWidget = async () => {
-    closeModal();
+    closeDeleteModal();
+
     if (dashboard && widgetToDelete) {
       await BadgerService.deleteWidget(dashboardId, widgetToDelete.id);
 
@@ -125,8 +134,17 @@ function EditDashboard() {
       />
 
       <Modal
-        isOpen={isOpen}
-        closeModal={closeModal}
+        isOpen={isOpenPublishModal}
+        closeModal={closePublishModal}
+        title={`Publish "${dashboard?.name}" dashboard`}
+        message="Are you sure you want to start the publishing process?"
+        buttonType="Publish"
+        buttonAction={publishDashboard}
+      />
+
+      <Modal
+        isOpen={isOpenDeleteModal}
+        closeModal={closeDeleteModal}
         title={
           widgetToDelete
             ? `Delete ${widgetToDelete.widgetType.toLowerCase()} content item: "${
@@ -162,7 +180,7 @@ function EditDashboard() {
           <Button variant="base" onClick={onPreview}>
             Preview
           </Button>
-          <Button variant="outline" onClick={onPublish}>
+          <Button variant="outline" onClick={onPublishDashboard}>
             Publish
           </Button>
         </div>

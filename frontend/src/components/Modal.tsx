@@ -10,7 +10,7 @@ interface PathParams {
   closeModal: Function;
   title: string;
   message: string;
-  buttonType: "Delete" | "Publish";
+  buttonType: "Delete" | "Publish" | "Archive";
   buttonAction: Function;
   ariaHideApp?: boolean;
 }
@@ -52,7 +52,7 @@ function Modal(props: PathParams) {
           </Button>
         </div>
       </div>
-      <div className="font-sans-md margin-top-2 margin-bottom-4">
+      <div className="font-sans-md margin-top-2 margin-bottom-6">
         {props.message}
       </div>
 

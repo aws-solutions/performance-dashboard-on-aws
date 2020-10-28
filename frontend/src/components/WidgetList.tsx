@@ -76,8 +76,7 @@ function WidgetList(props: Props) {
         <div>
           <h3 className="margin-bottom-0">Dashboard content</h3>
           <p className="margin-top-2px">
-            Build the dashboard by adding charts, tables, metrics and text as
-            content.
+            Build the dashboard by adding charts, tables, and text as content.
           </p>
           <div className="grid-row radius-lg padding-top-1 margin-left-1 margin-bottom-2 text-base">
             <div className="grid-col flex-1">Order</div>
@@ -182,7 +181,7 @@ function WidgetList(props: Props) {
         <div className="text-center radius-lg padding-5 margin-y-3 border-base border-dashed bg-base-lightest border">
           <p>
             This dashboard is empty. Build the dashboard by adding <br />
-            charts, tables, metrics and text as content.
+            charts, tables, and text as content.
           </p>
           <div className="text-center margin-top-4">
             <Button

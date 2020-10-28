@@ -31,7 +31,7 @@ function AdminLayout(props: LayoutProps) {
               <em className="usa-logo__text display-flex flex-align-center">
                 <img src={logo} alt="logo" className="logo" />
                 <a href="/admin" title="Home" aria-label="Home">
-                  Badger
+                  {process.env.REACT_APP_BRAND_NAME}
                 </a>
               </em>
             </div>

@@ -45,14 +45,14 @@ test("renders a dashboard table", async () => {
   expect(dashboard1).toBeInTheDocument();
 });
 
-test("filters dashboards based on search input", async () => {
+test("filters dashboards based on name search input", async () => {
   const { getByLabelText, getByRole } = render(<DashboardListing />, {
     wrapper: MemoryRouter,
   });
 
-  const dashboard1 = getByRole("link", { name: "Dashboard One" });
+  let dashboard1 = getByRole("link", { name: "Dashboard One" });
 
-  // Make sure both dashboards show up in the table
+  // Make sure the dashboard show up in the table
   expect(dashboard1).toBeInTheDocument();
 
   // Use search input to filter
@@ -60,7 +60,7 @@ test("filters dashboards based on search input", async () => {
   await act(async () => {
     fireEvent.input(search, {
       target: {
-        value: "Dashboard two",
+        value: "Dashboard Two",
       },
     });
 
@@ -70,6 +70,114 @@ test("filters dashboards based on search input", async () => {
 
   // Dashboard one should dissapear
   expect(dashboard1).not.toBeInTheDocument();
+
+  await act(async () => {
+    fireEvent.input(search, {
+      target: {
+        value: "Dashboard One",
+      },
+    });
+
+    const searchButton = getByRole("button", { name: "Search" });
+    fireEvent.click(searchButton);
+  });
+
+  dashboard1 = getByRole("link", { name: "Dashboard One" });
+
+  // Dashboard one should appear
+  expect(dashboard1).toBeInTheDocument();
+});
+
+test("filters dashboards based on topic area name search input", async () => {
+  const { getByLabelText, getByRole, getByText } = render(
+    <DashboardListing />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+
+  let dashboard1 = getByText("Topic Area Bananas");
+
+  // Make sure the dashboard show up in the table
+  expect(dashboard1).toBeInTheDocument();
+
+  // Use search input to filter
+  const search = getByLabelText("Search");
+  await act(async () => {
+    fireEvent.input(search, {
+      target: {
+        value: "Topic Area Grapes",
+      },
+    });
+
+    const searchButton = getByRole("button", { name: "Search" });
+    fireEvent.click(searchButton);
+  });
+
+  // Dashboard one should dissapear
+  expect(dashboard1).not.toBeInTheDocument();
+
+  await act(async () => {
+    fireEvent.input(search, {
+      target: {
+        value: "Topic Area Bananas",
+      },
+    });
+
+    const searchButton = getByRole("button", { name: "Search" });
+    fireEvent.click(searchButton);
+  });
+
+  dashboard1 = getByText("Topic Area Bananas");
+
+  // Dashboard one should appear
+  expect(dashboard1).toBeInTheDocument();
+});
+
+test("filters dashboards based on createdBy search input", async () => {
+  const { getByLabelText, getByRole, getByText } = render(
+    <DashboardListing />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+
+  let dashboard1 = getByText("test user");
+
+  // Make sure the dashboard show up in the table
+  expect(dashboard1).toBeInTheDocument();
+
+  // Use search input to filter
+  const search = getByLabelText("Search");
+  await act(async () => {
+    fireEvent.input(search, {
+      target: {
+        value: "another test user",
+      },
+    });
+
+    const searchButton = getByRole("button", { name: "Search" });
+    fireEvent.click(searchButton);
+  });
+
+  // Dashboard one should dissapear
+  expect(dashboard1).not.toBeInTheDocument();
+
+  await act(async () => {
+    fireEvent.input(search, {
+      target: {
+        value: "test user",
+      },
+    });
+
+    const searchButton = getByRole("button", { name: "Search" });
+    fireEvent.click(searchButton);
+  });
+
+  dashboard1 = getByText("test user");
+
+  // Dashboard one should appear
+  expect(dashboard1).toBeInTheDocument();
 });
 
 test("renders a publish queue tab", async () => {

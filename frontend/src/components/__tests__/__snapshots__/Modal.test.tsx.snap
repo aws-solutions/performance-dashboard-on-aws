@@ -23,6 +23,8 @@ exports[`renders a create draft type Modal 1`] = `
       style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
     >
       <div
+        aria-describedby="message"
+        aria-labelledby="title"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
@@ -36,6 +38,7 @@ exports[`renders a create draft type Modal 1`] = `
           >
             <h2
               class="margin-top-0"
+              id="title"
             >
               test title
             </h2>
@@ -69,6 +72,7 @@ exports[`renders a create draft type Modal 1`] = `
         </div>
         <div
           class="font-sans-md margin-top-2 margin-bottom-6"
+          id="message"
         >
           test message
         </div>
@@ -113,6 +117,8 @@ exports[`renders a delete type Modal 1`] = `
       style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
     >
       <div
+        aria-describedby="message"
+        aria-labelledby="title"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
@@ -126,6 +132,7 @@ exports[`renders a delete type Modal 1`] = `
           >
             <h2
               class="margin-top-0"
+              id="title"
             >
               test title
             </h2>
@@ -159,6 +166,7 @@ exports[`renders a delete type Modal 1`] = `
         </div>
         <div
           class="font-sans-md margin-top-2 margin-bottom-6"
+          id="message"
         >
           test message
         </div>
@@ -203,6 +211,8 @@ exports[`renders a publish type Modal 1`] = `
       style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
     >
       <div
+        aria-describedby="message"
+        aria-labelledby="title"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
@@ -216,6 +226,7 @@ exports[`renders a publish type Modal 1`] = `
           >
             <h2
               class="margin-top-0"
+              id="title"
             >
               test title
             </h2>
@@ -249,6 +260,7 @@ exports[`renders a publish type Modal 1`] = `
         </div>
         <div
           class="font-sans-md margin-top-2 margin-bottom-6"
+          id="message"
         >
           test message
         </div>
@@ -293,6 +305,8 @@ exports[`renders a re-publish type Modal 1`] = `
       style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
     >
       <div
+        aria-describedby="message"
+        aria-labelledby="title"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
@@ -306,6 +320,7 @@ exports[`renders a re-publish type Modal 1`] = `
           >
             <h2
               class="margin-top-0"
+              id="title"
             >
               test title
             </h2>
@@ -339,6 +354,7 @@ exports[`renders a re-publish type Modal 1`] = `
         </div>
         <div
           class="font-sans-md margin-top-2 margin-bottom-6"
+          id="message"
         >
           test message
         </div>
@@ -383,6 +399,8 @@ exports[`renders an archive type Modal 1`] = `
       style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(255, 255, 255, 0.75);"
     >
       <div
+        aria-describedby="message"
+        aria-labelledby="title"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
@@ -396,6 +414,7 @@ exports[`renders an archive type Modal 1`] = `
           >
             <h2
               class="margin-top-0"
+              id="title"
             >
               test title
             </h2>
@@ -429,6 +448,7 @@ exports[`renders an archive type Modal 1`] = `
         </div>
         <div
           class="font-sans-md margin-top-2 margin-bottom-6"
+          id="message"
         >
           test message
         </div>

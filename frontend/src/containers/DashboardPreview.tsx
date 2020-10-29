@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import { DashboardState, LocationState } from "../models";
@@ -9,6 +9,7 @@ import Alert from "../components/Alert";
 import WidgetRender from "../components/WidgetRender";
 import Breadcrumbs from "../components/Breadcrumbs";
 import "./DashboardPreview.css";
+import Modal from "../components/Modal";
 
 interface PathParams {
   dashboardId: string;
@@ -18,22 +19,29 @@ function DashboardPreview() {
   const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard } = useDashboard(dashboardId);
+  const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
 
-  const onPublish = async () => {
-    if (
-      window.confirm("Are you sure you want to start the publishing process?")
-    ) {
-      if (dashboard) {
-        await BadgerService.publishPending(dashboard.id, dashboard.updatedAt);
-        history.push(`/admin/dashboard/${dashboard.id}/publish`, {
-          alert: {
-            type: "info",
-            message:
-              "This dashboard is now in the publish pending state " +
-              "and cannot be edited unless returned to draft.",
-          },
-        });
-      }
+  const closePublishModal = () => {
+    setIsOpenPublishModal(false);
+  };
+
+  const onPublishDashboard = () => {
+    setIsOpenPublishModal(true);
+  };
+
+  const publishDashboard = async () => {
+    closePublishModal();
+
+    if (dashboard) {
+      await BadgerService.publishPending(dashboard.id, dashboard.updatedAt);
+      history.push(`/admin/dashboard/${dashboard.id}/publish`, {
+        alert: {
+          type: "info",
+          message:
+            "This dashboard is now in the publish pending state " +
+            "and cannot be edited unless returned to draft.",
+        },
+      });
     }
   };
 
@@ -54,6 +62,16 @@ function DashboardPreview() {
           },
         ]}
       />
+
+      <Modal
+        isOpen={isOpenPublishModal}
+        closeModal={closePublishModal}
+        title={`Publish "${dashboard?.name}" dashboard`}
+        message="Are you sure you want to start the publishing process?"
+        buttonType="Publish"
+        buttonAction={publishDashboard}
+      />
+
       <div className="position-sticky top-0 bg-white z-index-on-top">
         <Alert
           type="info"
@@ -68,7 +86,7 @@ function DashboardPreview() {
           <div className="grid-col text-right">
             <Button
               variant="base"
-              onClick={onPublish}
+              onClick={onPublishDashboard}
               disabled={dashboard?.state === DashboardState.PublishPending}
             >
               Publish

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +10,7 @@ import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
 import Breadcrumbs from "../components/Breadcrumbs";
+import Modal from "../components/Modal";
 
 interface PathParams {
   dashboardId: string;
@@ -19,22 +20,31 @@ function ArchivedDashboard() {
   const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard } = useDashboard(dashboardId);
+  const [isOpenRepublishModal, setIsOpenRepublishModal] = useState(false);
 
-  const onRepublish = async () => {
-    if (window.confirm("Are you sure you want to re-publish this dashboard?")) {
-      if (dashboard) {
-        await BadgerService.publishDashboard(
-          dashboard.id,
-          dashboard.updatedAt,
-          dashboard.releaseNotes || ""
-        );
-        history.push(`/admin/dashboards?tab=published`, {
-          alert: {
-            type: "success",
-            message: `${dashboard.name} dashboard was successfully re-published`,
-          },
-        });
-      }
+  const closeRepublishModal = () => {
+    setIsOpenRepublishModal(false);
+  };
+
+  const onRepublishDashboard = () => {
+    setIsOpenRepublishModal(true);
+  };
+
+  const republishDashboard = async () => {
+    closeRepublishModal();
+
+    if (dashboard) {
+      await BadgerService.publishDashboard(
+        dashboard.id,
+        dashboard.updatedAt,
+        dashboard.releaseNotes || ""
+      );
+      history.push(`/admin/dashboards?tab=published`, {
+        alert: {
+          type: "success",
+          message: `${dashboard.name} dashboard was successfully re-published`,
+        },
+      });
     }
   };
 
@@ -52,6 +62,16 @@ function ArchivedDashboard() {
             },
           ]}
         />
+
+        <Modal
+          isOpen={isOpenRepublishModal}
+          closeModal={closeRepublishModal}
+          title={`Re-publish "${dashboard?.name}" dashboard`}
+          message="Are you sure you want to re-publish this dashboard?"
+          buttonType="Re-publish"
+          buttonAction={republishDashboard}
+        />
+
         <Alert
           type="info"
           slim
@@ -72,7 +92,7 @@ function ArchivedDashboard() {
             </ul>
           </div>
           <div className="grid-col text-right">
-            <Button variant="base" type="button" onClick={onRepublish}>
+            <Button variant="base" type="button" onClick={onRepublishDashboard}>
               Re-publish
             </Button>
           </div>

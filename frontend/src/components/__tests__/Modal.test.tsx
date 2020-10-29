@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import Modal from "../Modal";
 
 test("renders a delete type Modal", async () => {
-  const wrapper = render(
+  const { baseElement } = render(
     <Modal
       title={"test title"}
       message={"test message"}
@@ -12,14 +12,13 @@ test("renders a delete type Modal", async () => {
       buttonType="Delete"
       buttonAction={() => {}}
       ariaHideApp={false}
-    />,
-    { container: document.body }
+    />
   );
-  expect(wrapper.container).toMatchSnapshot();
+  expect(baseElement).toMatchSnapshot();
 });
 
 test("renders a publish type Modal", async () => {
-  const wrapper = render(
+  const { baseElement } = render(
     <Modal
       title={"test title"}
       message={"test message"}
@@ -28,8 +27,52 @@ test("renders a publish type Modal", async () => {
       buttonType="Publish"
       buttonAction={() => {}}
       ariaHideApp={false}
-    />,
-    { container: document.body }
+    />
   );
-  expect(wrapper.container).toMatchSnapshot();
+  expect(baseElement).toMatchSnapshot();
+});
+
+test("renders an archive type Modal", async () => {
+  const { baseElement } = render(
+    <Modal
+      title={"test title"}
+      message={"test message"}
+      isOpen={true}
+      closeModal={() => {}}
+      buttonType="Archive"
+      buttonAction={() => {}}
+      ariaHideApp={false}
+    />
+  );
+  expect(baseElement).toMatchSnapshot();
+});
+
+test("renders a create draft type Modal", async () => {
+  const { baseElement } = render(
+    <Modal
+      title={"test title"}
+      message={"test message"}
+      isOpen={true}
+      closeModal={() => {}}
+      buttonType="Create draft"
+      buttonAction={() => {}}
+      ariaHideApp={false}
+    />
+  );
+  expect(baseElement).toMatchSnapshot();
+});
+
+test("renders a re-publish type Modal", async () => {
+  const { baseElement } = render(
+    <Modal
+      title={"test title"}
+      message={"test message"}
+      isOpen={true}
+      closeModal={() => {}}
+      buttonType="Re-publish"
+      buttonAction={() => {}}
+      ariaHideApp={false}
+    />
+  );
+  expect(baseElement).toMatchSnapshot();
 });

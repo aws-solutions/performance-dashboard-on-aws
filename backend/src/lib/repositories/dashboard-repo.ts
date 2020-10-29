@@ -95,6 +95,22 @@ class DashboardRepository extends BaseRepository {
     );
   }
 
+  public async getNextVersionNumber(
+    parentDashboardId: string
+  ): Promise<number> {
+    const dashboards = await this.getDashboardVersions(parentDashboardId);
+    if (dashboards.length === 0) {
+      return 1;
+    }
+
+    const versions = dashboards
+      .map((dashboard) => dashboard.version)
+      .filter((version) => !isNaN(version));
+
+    const latest = Math.max(...versions);
+    return !isFinite(latest) ? 1 : latest + 1;
+  }
+
   /**
    * Returns the list of Dashboards within an specified topic area.
    */

@@ -189,6 +189,7 @@ describe("toVersion", () => {
 });
 
 describe("createDraftFromDashboard", () => {
+  const nextVersion = 2;
   const dashboard: Dashboard = {
     id: "123",
     version: 1,
@@ -204,27 +205,47 @@ describe("createDraftFromDashboard", () => {
   };
 
   it("should create a dashboard with same parentDashboardId", () => {
-    const draft = factory.createDraftFromDashboard(dashboard, user);
+    const draft = factory.createDraftFromDashboard(
+      dashboard,
+      user,
+      nextVersion
+    );
     expect(draft.parentDashboardId).toEqual(dashboard.parentDashboardId);
   });
 
   it("should create a dashboard on Draft state", () => {
-    const draft = factory.createDraftFromDashboard(dashboard, user);
+    const draft = factory.createDraftFromDashboard(
+      dashboard,
+      user,
+      nextVersion
+    );
     expect(draft.state).toEqual(DashboardState.Draft);
   });
 
   it("should create a dashboard with a new id", () => {
-    const draft = factory.createDraftFromDashboard(dashboard, user);
+    const draft = factory.createDraftFromDashboard(
+      dashboard,
+      user,
+      nextVersion
+    );
     expect(draft.id).not.toEqual(dashboard.id);
   });
 
-  it("should increment the version number", () => {
-    const draft = factory.createDraftFromDashboard(dashboard, user);
-    expect(draft.version).toEqual(dashboard.version + 1);
+  it("should set the version number", () => {
+    const draft = factory.createDraftFromDashboard(
+      dashboard,
+      user,
+      nextVersion
+    );
+    expect(draft.version).toEqual(nextVersion);
   });
 
   it("should create a dashboard with all other attributes", () => {
-    const draft = factory.createDraftFromDashboard(dashboard, user);
+    const draft = factory.createDraftFromDashboard(
+      dashboard,
+      user,
+      nextVersion
+    );
     expect(draft).toEqual(
       expect.objectContaining({
         name: "Dashboard 1",

@@ -31,8 +31,14 @@ function DraftsTab(props: Props) {
   const filterDashboards = (dashboards: Array<Dashboard>): Array<Dashboard> => {
     return dashboards.filter((dashboard) => {
       const name = dashboard.name.toLowerCase().trim();
+      const topicAreaName = dashboard.topicAreaName.toLowerCase().trim();
+      const createdBy = dashboard.createdBy.toLowerCase().trim();
       const query = filter.toLowerCase();
-      return name.includes(query);
+      return (
+        name.includes(query) ||
+        topicAreaName.includes(query) ||
+        createdBy.includes(query)
+      );
     });
   };
 

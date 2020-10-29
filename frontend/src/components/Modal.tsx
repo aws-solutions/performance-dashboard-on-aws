@@ -24,6 +24,10 @@ function Modal(props: PathParams) {
       }}
       className="modal"
       shouldFocusAfterRender={false}
+      aria={{
+        labelledby: "title",
+        describedby: "message",
+      }}
       ariaHideApp={props.ariaHideApp !== false}
     >
       <div className="clearfix">
@@ -33,7 +37,9 @@ function Modal(props: PathParams) {
             maxWidth: "80%",
           }}
         >
-          <h2 className="margin-top-0">{props.title}</h2>
+          <h2 id="title" className="margin-top-0">
+            {props.title}
+          </h2>
         </div>
         <div className="float-right font-sans-md">
           <Button
@@ -52,7 +58,7 @@ function Modal(props: PathParams) {
           </Button>
         </div>
       </div>
-      <div className="font-sans-md margin-top-2 margin-bottom-6">
+      <div id="message" className="font-sans-md margin-top-2 margin-bottom-6">
         {props.message}
       </div>
 

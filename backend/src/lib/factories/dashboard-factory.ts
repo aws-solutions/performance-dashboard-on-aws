@@ -35,7 +35,11 @@ function createNew(
   };
 }
 
-function createDraftFromDashboard(dashboard: Dashboard, user: User): Dashboard {
+function createDraftFromDashboard(
+  dashboard: Dashboard,
+  user: User,
+  version: number
+): Dashboard {
   const id = uuidv4();
 
   let widgets: Array<Widget> = [];
@@ -49,7 +53,7 @@ function createDraftFromDashboard(dashboard: Dashboard, user: User): Dashboard {
   return {
     id,
     name: dashboard.name,
-    version: dashboard.version + 1,
+    version: version,
     parentDashboardId: dashboard.parentDashboardId,
     topicAreaId: dashboard.topicAreaId,
     topicAreaName: dashboard.topicAreaName,

@@ -348,7 +348,13 @@ async function createNewDraft(req: Request, res: Response) {
     return res.json(existingDraft);
   }
 
-  const draft = DashboardFactory.createDraftFromDashboard(dashboard, user);
+  const version = await repo.getNextVersionNumber(dashboard.parentDashboardId);
+  const draft = DashboardFactory.createDraftFromDashboard(
+    dashboard,
+    user,
+    version
+  );
+
   await repo.saveDashboardAndWidgets(draft);
   return res.json(draft);
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDashboards } from "../hooks";
 import { LocationState } from "../models";
 import Tabs from "../components/Tabs";
@@ -10,6 +10,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import AlertContainer from "../containers/AlertContainer";
 import { Dashboard } from "../models";
 import BadgerService from "../services/BadgerService";
+import Modal from "../components/Modal";
 
 function DashboardListing() {
   const { search } = useLocation();
@@ -22,65 +23,77 @@ function DashboardListing() {
     reloadDashboards,
   } = useDashboards();
 
-  const onDeleteDraftDashboards = async (selected: Array<Dashboard>) => {
-    if (
-      window.confirm(
-        `This will permanently delete "${
-          selected.length > 1 ? selected.length : selected[0].name
-        }" dashboard${
-          selected.length > 1 ? "s" : ""
-        }. This action cannot be undone. Are you sure you want to continue?`
-      )
-    ) {
-      if (selected.length) {
-        await BadgerService.deleteDashboards(
-          selected.map((dashboard) => dashboard.id)
-        );
+  const [isOpenArchiveModal, setIsOpenArchiveModal] = useState(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const [selectedDashboards, setSelectedDashboards] = useState<
+    Array<Dashboard>
+  >([]);
 
-        history.replace("/admin/dashboards", {
-          alert: {
-            type: "success",
-            message: `${
-              selected.length > 1 ? selected.length : selected[0].name
-            } draft dashboard${selected.length > 1 ? "s" : ""} ${
-              selected.length > 1 ? "were" : "was"
-            } successfully deleted`,
-          },
-        });
+  const closeArchiveModal = () => {
+    setIsOpenArchiveModal(false);
+  };
 
-        await reloadDashboards();
+  const closeDeleteModal = () => {
+    setIsOpenDeleteModal(false);
+  };
+
+  const onArchiveDashboards = (selected: Array<Dashboard>) => {
+    setSelectedDashboards(selected);
+    setIsOpenArchiveModal(true);
+  };
+
+  const onDeleteDashboards = (selected: Array<Dashboard>) => {
+    setSelectedDashboards(selected);
+    setIsOpenDeleteModal(true);
+  };
+
+  const archiveDashboards = async () => {
+    closeArchiveModal();
+
+    if (selectedDashboards.length) {
+      for (const dashboard of selectedDashboards) {
+        await BadgerService.archive(dashboard.id, dashboard.updatedAt);
       }
+
+      history.replace("/admin/dashboards?tab=published", {
+        alert: {
+          type: "success",
+          message: `${
+            selectedDashboards.length > 1
+              ? selectedDashboards.length
+              : selectedDashboards[0].name
+          } dashboard${selectedDashboards.length > 1 ? "s" : ""} ${
+            selectedDashboards.length > 1 ? "were" : "was"
+          } successfully archived`,
+        },
+      });
+
+      await reloadDashboards();
     }
   };
 
-  const onArchivePublishedDashboards = async (selected: Array<Dashboard>) => {
-    if (
-      window.confirm(
-        `This will remove "${
-          selected.length > 1 ? selected.length : selected[0].name
-        }" dashboard${
-          selected.length > 1 ? "s" : ""
-        } from the external site. You can re-publish archived dashboards at any time.`
-      )
-    ) {
-      if (selected.length) {
-        for (const dashboard of selected) {
-          await BadgerService.archive(dashboard.id, dashboard.updatedAt);
-        }
+  const deleteDashboards = async () => {
+    closeDeleteModal();
 
-        history.replace("/admin/dashboards?tab=published", {
-          alert: {
-            type: "success",
-            message: `${
-              selected.length > 1 ? selected.length : selected[0].name
-            } dashboard${selected.length > 1 ? "s" : ""} ${
-              selected.length > 1 ? "were" : "was"
-            } successfully archived`,
-          },
-        });
+    if (selectedDashboards.length) {
+      await BadgerService.deleteDashboards(
+        selectedDashboards.map((dashboard) => dashboard.id)
+      );
 
-        await reloadDashboards();
-      }
+      history.replace("/admin/dashboards", {
+        alert: {
+          type: "success",
+          message: `${
+            selectedDashboards.length > 1
+              ? selectedDashboards.length
+              : selectedDashboards[0].name
+          } draft dashboard${selectedDashboards.length > 1 ? "s" : ""} ${
+            selectedDashboards.length > 1 ? "were" : "was"
+          } successfully deleted`,
+        },
+      });
+
+      await reloadDashboards();
     }
   };
 
@@ -92,15 +105,47 @@ function DashboardListing() {
     activeTab = queryString[1];
   }
 
+  const dashboardLabel = `${
+    selectedDashboards.length !== 1
+      ? `${selectedDashboards.length} selected`
+      : `"${selectedDashboards[0].name}"`
+  } dashboard${selectedDashboards.length !== 1 ? "s" : ""}`;
+
   return (
     <>
       <h1>Dashboards</h1>
+      <Modal
+        isOpen={isOpenArchiveModal}
+        closeModal={closeArchiveModal}
+        title={`Archive ${dashboardLabel}`}
+        message={`This will remove ${
+          selectedDashboards.length !== 1
+            ? "these published dashboards"
+            : "this published dashboard"
+        } from the external site. You can re-publish archived dashboards at any time.`}
+        buttonType="Archive"
+        buttonAction={archiveDashboards}
+      />
+
+      <Modal
+        isOpen={isOpenDeleteModal}
+        closeModal={closeDeleteModal}
+        title={`Delete ${dashboardLabel}`}
+        message={`This will permanently delete ${
+          selectedDashboards.length !== 1
+            ? "these draft dashboards"
+            : "this draft dashboard"
+        }. This action cannot be undone. Are you sure you want to continue?`}
+        buttonType="Delete"
+        buttonAction={deleteDashboards}
+      />
+
       <AlertContainer />
       <Tabs defaultActive={activeTab}>
         <div id="drafts" label={`Drafts (${draftsDashboards.length})`}>
           <DraftsTab
             dashboards={draftsDashboards}
-            onDelete={onDeleteDraftDashboards}
+            onDelete={onDeleteDashboards}
           />
         </div>
         <div id="pending" label={`Publish queue (${pendingDashboards.length})`}>
@@ -109,7 +154,7 @@ function DashboardListing() {
         <div id="published" label={`Published (${publishedDashboards.length})`}>
           <PublishedTab
             dashboards={publishedDashboards}
-            onArchive={onArchivePublishedDashboards}
+            onArchive={onArchiveDashboards}
           />
         </div>
         <div id="archived" label={`Archived (${archivedDashboards.length})`}>

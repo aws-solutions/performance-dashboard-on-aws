@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +10,7 @@ import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
 import Breadcrumbs from "../components/Breadcrumbs";
+import Modal from "../components/Modal";
 
 interface PathParams {
   dashboardId: string;
@@ -20,6 +21,8 @@ function ViewDashboardAdmin() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard } = useDashboard(dashboardId);
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
+  const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false);
+  const [isOpenArchiveModal, setIsOpenArchiveModal] = useState(false);
 
   const currentDraft = versions.find(
     (v) =>
@@ -27,47 +30,54 @@ function ViewDashboardAdmin() {
       v.state === DashboardState.PublishPending
   );
 
-  const onUpdate = async () => {
-    if (
-      window.confirm(
-        "This will create a new draft of the dashboard that will allow " +
-          "you to edit the content. The current version will remain " +
-          "published until you publish the updates."
-      )
-    ) {
-      try {
-        const draft = await BadgerService.createDraft(dashboardId);
-        history.push("/admin/dashboard/edit/".concat(draft.id), {
-          alert: {
-            type: "success",
-            message: `A new draft version of "${draft.name}" dashboard has been created`,
-          },
-        });
-      } catch (err) {
-        console.log("Failed to create draft", err);
-      }
+  const closeArchiveModal = () => {
+    setIsOpenArchiveModal(false);
+  };
+
+  const closeUpdateModal = () => {
+    setIsOpenUpdateModal(false);
+  };
+
+  const onArchiveDashboard = () => {
+    setIsOpenArchiveModal(true);
+  };
+
+  const onUpdateDashboard = () => {
+    setIsOpenUpdateModal(true);
+  };
+
+  const updateDashboard = async () => {
+    closeUpdateModal();
+
+    try {
+      const draft = await BadgerService.createDraft(dashboardId);
+
+      history.push(`/admin/dashboard/edit/${draft.id}`, {
+        alert: {
+          type: "success",
+          message: `A new draft version of "${draft.name}" dashboard has been created`,
+        },
+      });
+    } catch (err) {
+      console.log("Failed to create draft", err);
     }
   };
 
-  const onArchive = async () => {
+  const archiveDashboard = async () => {
+    closeArchiveModal();
+
     if (!dashboard) {
       return;
     }
 
-    if (
-      window.confirm(
-        `This will remove "${dashboard.name}" dashboard from the external site. You can re-publish archived dashboards at any time.`
-      )
-    ) {
-      await BadgerService.archive(dashboard.id, dashboard.updatedAt);
+    await BadgerService.archive(dashboard.id, dashboard.updatedAt);
 
-      history.push("/admin/dashboards?tab=archived", {
-        alert: {
-          type: "success",
-          message: `${dashboard.name} was successfully archived`,
-        },
-      });
-    }
+    history.push("/admin/dashboards?tab=archived", {
+      alert: {
+        type: "success",
+        message: `${dashboard.name} was successfully archived`,
+      },
+    });
   };
 
   return (
@@ -84,6 +94,29 @@ function ViewDashboardAdmin() {
             },
           ]}
         />
+
+        <Modal
+          isOpen={isOpenUpdateModal}
+          closeModal={closeUpdateModal}
+          title={`Update "${dashboard?.name}" dashboard`}
+          message={
+            "This will create a new draft of the dashboard that will allow " +
+            "you to edit the content. The current version will remain " +
+            "published until you publish the updates."
+          }
+          buttonType="Create draft"
+          buttonAction={updateDashboard}
+        />
+
+        <Modal
+          isOpen={isOpenArchiveModal}
+          closeModal={closeArchiveModal}
+          title={`Archive "${dashboard?.name}" dashboard`}
+          message={`This will remove "${dashboard?.name}" dashboard from the external site. You can re-publish archived dashboards at any time.`}
+          buttonType="Archive"
+          buttonAction={archiveDashboard}
+        />
+
         {currentDraft && (
           <Alert
             type="info"
@@ -121,10 +154,18 @@ function ViewDashboardAdmin() {
             </div>
           </div>
           <div className="grid-col text-right">
-            <Button variant="outline" type="button" onClick={onArchive}>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={onArchiveDashboard}
+            >
               Archive
             </Button>
-            <Button variant="base" onClick={onUpdate} disabled={!!currentDraft}>
+            <Button
+              variant="base"
+              onClick={onUpdateDashboard}
+              disabled={!!currentDraft}
+            >
               Update
             </Button>
           </div>

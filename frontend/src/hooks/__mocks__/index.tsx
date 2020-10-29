@@ -13,6 +13,7 @@ const dummyDashboard = {
   topicAreaName: "Bananas",
   description: "Some description",
   updatedAt: "",
+  createdBy: "test user",
   widgets: [
     {
       id: "abc",
@@ -62,12 +63,14 @@ export function useDashboards() {
         name: "Dashboard One",
         topicAreaId: "123456789",
         topicAreaName: "Topic Area Bananas",
+        createdBy: "test user",
       },
       {
         id: "xyz",
         name: "Dashboard Two",
         topicAreaId: "987654321",
         topicAreaName: "Topic Area Grapes",
+        createdBy: "test user",
       },
     ],
     draftsDashboards: [
@@ -76,6 +79,7 @@ export function useDashboards() {
         name: "Dashboard One",
         topicAreaId: "123456789",
         topicAreaName: "Topic Area Bananas",
+        createdBy: "test user",
       },
     ],
     publishedDashboards: [
@@ -84,6 +88,7 @@ export function useDashboards() {
         name: "Dashboard Two",
         topicAreaId: "987654321",
         topicAreaName: "Topic Area Grapes",
+        createdBy: "test user",
       },
     ],
     pendingDashboards: [],

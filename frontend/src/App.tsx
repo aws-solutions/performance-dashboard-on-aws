@@ -4,6 +4,7 @@ import { withAuthenticator } from "@aws-amplify/ui-react";
 
 import withMainLayout from "./layouts/Main";
 import withAdminLayout from "./layouts/Admin";
+import { withFooterLayout } from "./layouts/Footer";
 
 import Home from "./containers/Home";
 import DashboardListing from "./containers/DashboardListing";
@@ -115,7 +116,9 @@ function App() {
         {routes.map((route) => {
           const component = route.public
             ? withMainLayout(route.component)
-            : withAuthenticator(withAdminLayout(route.component));
+            : withAuthenticator(
+                withFooterLayout(withAdminLayout(route.component))
+              );
           return (
             <Route
               exact
@@ -125,7 +128,11 @@ function App() {
             />
           );
         })}
-        <Route component={FourZeroFour} />
+        <Route
+          key={"/admin/"}
+          component={withFooterLayout(withAdminLayout(FourZeroFour))}
+          path={"/admin/"}
+        />
       </Switch>
     </Router>
   );

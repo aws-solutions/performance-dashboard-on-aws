@@ -6,6 +6,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { usePublicDashboard } from "../hooks";
 import WidgetRender from "../components/WidgetRender";
 import FourZeroFour from "./FourZeroFour";
+import FooterLayout from "../layouts/Footer";
 
 interface PathParams {
   dashboardId: string;
@@ -50,7 +51,9 @@ function ViewDashboard() {
       })}
     </>
   ) : (
-    <FourZeroFour />
+    <FooterLayout>
+      <FourZeroFour />
+    </FooterLayout>
   );
 }
 

@@ -11,13 +11,11 @@ function FourZeroFour() {
         <hr className="width-tablet border-base-light" />
         <p className="font-sans-md">
           You may want to double-check your link and try again, or return to the{" "}
-          <Link to="/">homepage</Link>.
+          <Link className="text-black" to="/">
+            homepage
+          </Link>
+          .
         </p>
-        <hr className="margin-top-9 border-base-lightest" />
-      </div>
-      <div className="text-base font-sans-sm">
-        Having technical issues with the platform?{" "}
-        <Link to="/">Contact support</Link>.
       </div>
     </>
   );

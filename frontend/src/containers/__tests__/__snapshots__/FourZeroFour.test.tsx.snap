@@ -19,27 +19,13 @@ exports[`renders a FourZeroFour component 1`] = `
       You may want to double-check your link and try again, or return to the
        
       <a
+        class="text-black"
         href="/"
       >
         homepage
       </a>
       .
     </p>
-    <hr
-      class="margin-top-9 border-base-lightest"
-    />
-  </div>
-  <div
-    class="text-base font-sans-sm"
-  >
-    Having technical issues with the platform?
-     
-    <a
-      href="/"
-    >
-      Contact support
-    </a>
-    .
   </div>
 </div>
 `;

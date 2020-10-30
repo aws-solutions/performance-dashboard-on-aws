@@ -19,7 +19,7 @@ let tableName: string;
 let repo: DashboardRepository;
 let dynamodb = mocked(DynamoDBService.prototype);
 
-beforeAll(() => {
+beforeEach(() => {
   user = { userId: "test" };
   tableName = "BadgerTable";
   process.env.BADGER_TABLE = tableName;
@@ -185,11 +185,15 @@ describe("getDashboardVersions", () => {
 });
 
 describe("DashboardRepository.publishDashboard", () => {
-  it("should call update with the correct keys and all the fields", async () => {
-    const now = new Date();
+  let now: Date;
+  beforeEach(() => {
+    now = new Date();
     jest.useFakeTimers("modern");
     jest.setSystemTime(now);
+    dynamodb.transactWrite = jest.fn();
+  });
 
+  it("should call update with the correct keys and all the fields", async () => {
     repo.getDashboardVersions = jest.fn().mockReturnValue([]);
     await repo.publishDashboard(
       "123",
@@ -228,6 +232,130 @@ describe("DashboardRepository.publishDashboard", () => {
         },
       ],
     });
+  });
+
+  it("should move an Archived version to inactive", async () => {
+    const parentDashboardId = "abc";
+
+    // Simulate there is an archived version already
+    const getDashboardVersions = jest.spyOn(repo, "getDashboardVersions");
+    getDashboardVersions.mockReturnValue(
+      Promise.resolve([
+        {
+          id: "001",
+          version: 1,
+          name: "Archived Dashboard",
+          topicAreaId: "456",
+          topicAreaName: "Bananas",
+          description: "Description Test",
+          state: DashboardState.Archived,
+          parentDashboardId: parentDashboardId,
+          createdBy: user.userId,
+          updatedAt: new Date(),
+          releaseNotes: "",
+        },
+      ])
+    );
+
+    await repo.publishDashboard(
+      "002",
+      parentDashboardId,
+      new Date().toISOString(),
+      "release note test",
+      user
+    );
+
+    const transaction = dynamodb.transactWrite.mock.calls[0][0];
+    expect(transaction.TransactItems).toHaveLength(2);
+    expect(transaction.TransactItems).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          Update: {
+            TableName: tableName,
+            Key: {
+              pk: DashboardFactory.itemId("001"),
+              sk: DashboardFactory.itemId("001"),
+            },
+            UpdateExpression:
+              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+            ExpressionAttributeValues: {
+              ":state": "Inactive", // Verify Archived version moves to Inactive
+              ":updatedAt": now.toISOString(),
+              ":userId": user.userId,
+            },
+            ExpressionAttributeNames: {
+              "#state": "state",
+              "#updatedAt": "updatedAt",
+              "#updatedBy": "updatedBy",
+            },
+          },
+        }),
+      ])
+    );
+
+    getDashboardVersions.mockRestore();
+  });
+
+  it("should move a Published version to inactive", async () => {
+    const parentDashboardId = "abc";
+
+    // Simulate there is a Published version already
+    const getDashboardVersions = jest.spyOn(repo, "getDashboardVersions");
+    getDashboardVersions.mockReturnValue(
+      Promise.resolve([
+        {
+          id: "001",
+          version: 1,
+          name: "Archived Dashboard",
+          topicAreaId: "456",
+          topicAreaName: "Bananas",
+          description: "Description Test",
+          state: DashboardState.Published, // PUBLISHED
+          parentDashboardId: parentDashboardId,
+          createdBy: user.userId,
+          updatedAt: new Date(),
+          releaseNotes: "",
+        },
+      ])
+    );
+
+    await repo.publishDashboard(
+      "002",
+      parentDashboardId,
+      new Date().toISOString(),
+      "release note test",
+      user
+    );
+
+    const transaction = dynamodb.transactWrite.mock.calls[0][0];
+    expect(transaction.TransactItems).toHaveLength(2);
+    expect(transaction.TransactItems).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          Update: {
+            TableName: tableName,
+            Key: {
+              pk: DashboardFactory.itemId("001"),
+              sk: DashboardFactory.itemId("001"),
+            },
+            UpdateExpression:
+              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+            ExpressionAttributeValues: {
+              ":state": "Inactive", // Verify Published version moves to Inactive
+              ":updatedAt": now.toISOString(),
+              ":userId": user.userId,
+            },
+            ExpressionAttributeNames: {
+              "#state": "state",
+              "#updatedAt": "updatedAt",
+              "#updatedBy": "updatedBy",
+            },
+          },
+        }),
+      ])
+    );
+
+    getDashboardVersions.mockRestore();
   });
 });
 

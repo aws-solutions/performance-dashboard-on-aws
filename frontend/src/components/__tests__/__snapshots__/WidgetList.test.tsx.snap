@@ -9,7 +9,7 @@ exports[`renders an empty box 1`] = `
       <p>
         This dashboard is empty. Build the dashboard by adding 
         <br />
-        charts, tables, metrics and text as content.
+        charts, tables, and text as content.
       </p>
       <div
         class="text-center margin-top-4"

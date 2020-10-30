@@ -99,33 +99,6 @@ function AddContent() {
             <div className="usa-radio">
               <div
                 className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                  widgetType === "metrics" ? " bg-base-lightest" : "-lighter"
-                } border-2px padding-2 margin-y-1`}
-              >
-                <div className="grid-col flex-5">
-                  <input
-                    className="usa-radio__input"
-                    id="metrics"
-                    value="metrics"
-                    type="radio"
-                    name="widgetType"
-                    ref={register()}
-                  />
-                  <label className="usa-radio__label" htmlFor="metrics">
-                    Metrics
-                  </label>
-                </div>
-                <div className="grid-col flex-7">
-                  <div className="usa-prose text-base margin-left-4">
-                    What metrics is, using a short description that fits inside
-                    this bound box
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="usa-radio">
-              <div
-                className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
                   widgetType === "chart" ? " bg-base-lightest" : "-lighter"
                 } border-2px padding-2 margin-y-1`}
               >

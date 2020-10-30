@@ -738,3 +738,107 @@ describe("DashboardRepository.deleteDashboardsAndWidgets", () => {
     );
   });
 });
+
+describe("getNextVersionNumber", () => {
+  let getDashboardVersions: jest.SpyInstance;
+  beforeEach(() => {
+    getDashboardVersions = jest.spyOn(repo, "getDashboardVersions");
+  });
+
+  afterEach(() => {
+    getDashboardVersions.mockRestore();
+  });
+
+  it("returns 1 when no dashboards are found", async () => {
+    getDashboardVersions.mockImplementation(() => Promise.resolve([]));
+    const nextVersion = await repo.getNextVersionNumber("123");
+    expect(nextVersion).toEqual(1);
+  });
+
+  it("returns the maximum version plus one", async () => {
+    const dashboards: Array<Dashboard> = [
+      {
+        id: "xyz",
+        version: 1,
+        name: "Dashboard v1",
+        topicAreaId: "456",
+        topicAreaName: "Topic1",
+        description: "Description Test",
+        state: DashboardState.Draft,
+        parentDashboardId: "123",
+        createdBy: user.userId,
+        updatedAt: new Date(),
+      },
+      {
+        id: "abc",
+        version: 2,
+        name: "Dashboard v2",
+        topicAreaId: "456",
+        topicAreaName: "Topic1",
+        description: "Description Test",
+        state: DashboardState.Published,
+        parentDashboardId: "123",
+        createdBy: user.userId,
+        updatedAt: new Date(),
+      },
+    ];
+
+    getDashboardVersions.mockImplementation(() => Promise.resolve(dashboards));
+    const nextVersion = await repo.getNextVersionNumber("123");
+    expect(nextVersion).toEqual(3);
+  });
+
+  it("handles incorrect versions gracefully", async () => {
+    const dashboards: Array<Dashboard> = [
+      {
+        id: "xyz",
+        version: (undefined as unknown) as number, // incorrect version
+        name: "Dashboard v1",
+        topicAreaId: "456",
+        topicAreaName: "Topic1",
+        description: "Description Test",
+        state: DashboardState.Draft,
+        parentDashboardId: "123",
+        createdBy: user.userId,
+        updatedAt: new Date(),
+      },
+    ];
+
+    getDashboardVersions.mockImplementation(() => Promise.resolve(dashboards));
+    const nextVersion = await repo.getNextVersionNumber("123");
+    expect(nextVersion).toEqual(1);
+  });
+
+  it("handles a mix of incorrect and correct versions", async () => {
+    const dashboards: Array<Dashboard> = [
+      {
+        id: "xyz",
+        version: (undefined as unknown) as number, // incorrect version
+        name: "Dashboard v1",
+        topicAreaId: "456",
+        topicAreaName: "Topic1",
+        description: "Description Test",
+        state: DashboardState.Draft,
+        parentDashboardId: "123",
+        createdBy: user.userId,
+        updatedAt: new Date(),
+      },
+      {
+        id: "abc",
+        version: 1,
+        name: "Dashboard v1",
+        topicAreaId: "456",
+        topicAreaName: "Topic1",
+        description: "Description Test",
+        state: DashboardState.Draft,
+        parentDashboardId: "123",
+        createdBy: user.userId,
+        updatedAt: new Date(),
+      },
+    ];
+
+    getDashboardVersions.mockImplementation(() => Promise.resolve(dashboards));
+    const nextVersion = await repo.getNextVersionNumber("123");
+    expect(nextVersion).toEqual(2);
+  });
+});

@@ -202,16 +202,17 @@ class DashboardRepository extends BaseRepository {
     try {
       const transactions: DocumentClient.TransactWriteItemList = [];
 
-      //Set published dashboard, if exists, to Inactice state
-      const dashboardVersions = await this.getDashboardVersions(
-        parentDashboardId
-      );
-      const publishedDashboard = dashboardVersions.filter(
-        (dashboard) => dashboard.state === DashboardState.Published
+      // If a published or archived version exists, move it to Inactive state
+      const versions = await this.getDashboardVersions(parentDashboardId);
+      const publishedOrArchived = versions.find(
+        (version) =>
+          (version.state === DashboardState.Published ||
+            version.state === DashboardState.Archived) &&
+          version.id !== dashboardId // excluding current dashboard being published
       );
 
-      if (publishedDashboard.length) {
-        const publishedDashboardId = publishedDashboard[0].id;
+      if (publishedOrArchived) {
+        const publishedDashboardId = publishedOrArchived.id;
         transactions.push({
           Update: {
             TableName: this.tableName,
@@ -220,17 +221,15 @@ class DashboardRepository extends BaseRepository {
               sk: DashboardFactory.itemId(publishedDashboardId),
             },
             UpdateExpression:
-              "set #state = :state, #updatedAt = :updatedAt, #releaseNotes = :releaseNotes, #updatedBy = :userId",
+              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
             ExpressionAttributeValues: {
               ":state": DashboardState.Inactive,
-              ":releaseNotes": releaseNotes,
               ":updatedAt": new Date().toISOString(),
               ":userId": user.userId,
             },
             ExpressionAttributeNames: {
               "#state": "state",
               "#updatedBy": "updatedBy",
-              "#releaseNotes": "releaseNotes",
               "#updatedAt": "updatedAt",
             },
           },

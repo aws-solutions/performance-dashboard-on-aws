@@ -5,12 +5,12 @@ abstract class BaseRepository {
   protected tableName: string;
 
   constructor() {
-    if (!process.env.BADGER_TABLE) {
-      throw new Error("Environment variable BADGER_TABLE not found");
+    if (!process.env.MAIN_TABLE) {
+      throw new Error("Environment variable MAIN_TABLE not found");
     }
 
     this.dynamodb = DynamoDBService.getInstance();
-    this.tableName = process.env.BADGER_TABLE;
+    this.tableName = process.env.MAIN_TABLE;
   }
 }
 

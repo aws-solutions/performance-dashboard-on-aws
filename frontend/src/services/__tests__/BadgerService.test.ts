@@ -21,7 +21,7 @@ test("fetchDashboardById makes a GET request to dashboard API", async () => {
 
   await BadgerService.fetchDashboardById(dashboardId);
   expect(API.get).toHaveBeenCalledWith(
-    "BadgerApi",
+    "BackendApi",
     `dashboard/${dashboardId}`,
     expect.anything()
   );
@@ -35,7 +35,7 @@ test("createDashboard should make a POST request with payload", async () => {
   await BadgerService.createDashboard(name, topicAreaId, description);
 
   expect(API.post).toHaveBeenCalledWith(
-    "BadgerApi",
+    "BackendApi",
     "dashboard",
     expect.objectContaining({
       body: {
@@ -64,7 +64,7 @@ test("editDashboard should make a PUT request with payload", async () => {
   );
 
   expect(API.put).toHaveBeenCalledWith(
-    "BadgerApi",
+    "BackendApi",
     `dashboard/${dashboardId}`,
     expect.objectContaining({
       body: {
@@ -85,7 +85,7 @@ test("publishDashboard should make a PUT request with payload", async () => {
   await BadgerService.publishDashboard(dashboardId, updatedAt, releaseNotes);
 
   expect(API.put).toHaveBeenCalledWith(
-    "BadgerApi",
+    "BackendApi",
     `dashboard/${dashboardId}/publish`,
     expect.objectContaining({
       body: {
@@ -101,7 +101,7 @@ test("deleteDashboards makes a DELETE request to dashboard API", async () => {
 
   await BadgerService.deleteDashboards(dashboardIds);
   expect(API.del).toHaveBeenCalledWith(
-    "BadgerApi",
+    "BackendApi",
     `dashboard?ids=123,456`,
     expect.anything()
   );
@@ -113,7 +113,7 @@ test("fetchWidgetById makes a GET request to widget API", async () => {
 
   await BadgerService.fetchWidgetById(dashboardId, widgetId);
   expect(API.get).toHaveBeenCalledWith(
-    "BadgerApi",
+    "BackendApi",
     `dashboard/${dashboardId}/widget/${widgetId}`,
     expect.anything()
   );
@@ -125,7 +125,7 @@ test("deleteWidget makes a DELETE request to widget API", async () => {
 
   await BadgerService.deleteWidget(dashboardId, widgetId);
   expect(API.del).toHaveBeenCalledWith(
-    "BadgerApi",
+    "BackendApi",
     `dashboard/${dashboardId}/widget/${widgetId}`,
     expect.anything()
   );
@@ -148,7 +148,7 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
 
   await BadgerService.setWidgetOrder(dashboardId, widgets);
   expect(API.put).toHaveBeenCalledWith(
-    "BadgerApi",
+    "BackendApi",
     `dashboard/${dashboardId}/widgetorder`,
     expect.objectContaining({
       body: {
@@ -166,18 +166,22 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
 
 test("fetchHomepage makes a GET request to widget API", async () => {
   await BadgerService.fetchHomepage();
-  expect(API.get).toHaveBeenCalledWith("BadgerApi", "homepage", {});
+  expect(API.get).toHaveBeenCalledWith("BackendApi", "homepage", {});
 });
 
 test("fetchPublicDashboard makes a GET request to public API", async () => {
   await BadgerService.fetchPublicDashboard("123");
-  expect(API.get).toHaveBeenCalledWith("BadgerApi", "public/dashboard/123", {});
+  expect(API.get).toHaveBeenCalledWith(
+    "BackendApi",
+    "public/dashboard/123",
+    {}
+  );
 });
 
 test("createDraft makes a POST request to dashboard API", async () => {
   await BadgerService.createDraft("123");
   expect(API.post).toBeCalledWith(
-    "BadgerApi",
+    "BackendApi",
     "dashboard/123",
     expect.anything()
   );
@@ -187,7 +191,7 @@ test("publishPending makes a PUT request to dashboard API", async () => {
   const lastUpdatedAt = new Date();
   await BadgerService.publishPending("123", lastUpdatedAt);
   expect(API.put).toBeCalledWith(
-    "BadgerApi",
+    "BackendApi",
     "dashboard/123/publishpending",
     expect.objectContaining({
       body: {
@@ -201,7 +205,7 @@ test("moveToDraft makes a PUT request to dashboard API", async () => {
   const lastUpdatedAt = new Date();
   await BadgerService.moveToDraft("123", lastUpdatedAt);
   expect(API.put).toBeCalledWith(
-    "BadgerApi",
+    "BackendApi",
     "dashboard/123/draft",
     expect.objectContaining({
       body: {
@@ -214,7 +218,7 @@ test("moveToDraft makes a PUT request to dashboard API", async () => {
 test("fetchDashboardVersions makes a GET request to dashboard API", async () => {
   await BadgerService.fetchDashboardVersions("123");
   expect(API.get).toBeCalledWith(
-    "BadgerApi",
+    "BackendApi",
     "dashboard/123/versions",
     expect.anything()
   );

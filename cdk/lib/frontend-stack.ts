@@ -12,7 +12,7 @@ interface Props extends cdk.StackProps {
   userPoolId: string;
   identityPoolId: string;
   appClientId: string;
-  badgerApiUrl: string;
+  backendApiUrl: string;
 }
 
 export class FrontendStack extends cdk.Stack {
@@ -123,7 +123,7 @@ export class FrontendStack extends cdk.Stack {
       environment: {
         FRONTEND_BUCKET: this.frontendBucket.bucketName,
         REGION: cdk.Stack.of(this).region,
-        BADGER_API: props.badgerApiUrl,
+        BACKEND_API: props.backendApiUrl,
         USER_POOL_ID: props.userPoolId,
         APP_CLIENT_ID: props.appClientId,
         DATASETS_BUCKET: props.datasetsBucket,

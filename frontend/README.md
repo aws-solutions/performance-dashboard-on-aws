@@ -11,14 +11,14 @@ To run the frontend locally against your deployed instance on AWS, create the fi
 ```js
 const env = {
   region: "us-west-2",
-  badgerApi: "https://123.execute-api.us-west-2.amazonaws.com/prod/",
+  backendApi: "https://123.execute-api.us-west-2.amazonaws.com/prod/",
   userPoolId: "us-west-2_abcd",
   appClientId: "123456789",
   datasetsBucket: "badger-fdingler-000000000000-datasets",
   identityPoolId: "us-west-2:123456-123-1234-123456-1234566789",
 };
 
-window.BadgerEnv = env;
+window.EnvironmentConfig = env;
 ```
 
 Then run the following command:

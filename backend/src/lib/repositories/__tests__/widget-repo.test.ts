@@ -12,7 +12,7 @@ let dynamodb = mocked(DynamoDBService.prototype);
 
 beforeAll(() => {
   tableName = "BadgerTable";
-  process.env.BADGER_TABLE = tableName;
+  process.env.MAIN_TABLE = tableName;
 
   dynamodb = mocked(DynamoDBService.prototype);
   DynamoDBService.getInstance = jest.fn().mockReturnValue(dynamodb);

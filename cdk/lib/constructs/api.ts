@@ -17,7 +17,7 @@ export class BadgerApi extends cdk.Construct {
       allowTestInvoke: false,
     });
     this.api = new apigateway.RestApi(scope, "ApiGateway", {
-      description: "Badger API",
+      description: "Performance Dashboard backend API",
       deployOptions: { tracingEnabled: true },
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,

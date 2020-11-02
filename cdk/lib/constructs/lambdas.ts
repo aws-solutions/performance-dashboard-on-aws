@@ -22,8 +22,8 @@ export class BadgerLambdas extends cdk.Construct {
       tracing: lambda.Tracing.ACTIVE,
       memorySize: 256,
       environment: {
-        BADGER_TABLE: props.mainTable.tableName,
-        BADGER_DATASETS_BUCKET: props.datasetsBucket.bucketName,
+        MAIN_TABLE: props.mainTable.tableName,
+        DATASETS_BUCKET: props.datasetsBucket.bucketName,
       },
     });
 

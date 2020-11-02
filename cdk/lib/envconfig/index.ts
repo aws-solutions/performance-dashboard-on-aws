@@ -44,13 +44,13 @@ function getConfigContent(): string {
   return `
 const env = {
   region: "${process.env.REGION}",
-  badgerApi: "${process.env.BADGER_API}",
+  backendApi: "${process.env.BACKEND_API}",
   userPoolId: "${process.env.USER_POOL_ID}",
   appClientId: "${process.env.APP_CLIENT_ID}",
   datasetsBucket: "${process.env.DATASETS_BUCKET}",
   identityPoolId: "${process.env.IDENTITY_POOL_ID}",
 };
 
-window.BadgerEnv = env;
+window.EnvironmentConfig = env;
   `;
 }

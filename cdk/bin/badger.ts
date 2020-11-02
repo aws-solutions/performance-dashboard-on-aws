@@ -37,6 +37,6 @@ const frontend = new FrontendStack(app, "Frontend", {
   userPoolId: auth.userPoolId,
   identityPoolId: auth.identityPoolId,
   appClientId: auth.appClientId,
-  badgerApiUrl: backend.apiGatewayEndpoint,
+  backendApiUrl: backend.apiGatewayEndpoint,
 });
 Tag.add(frontend, "app-id", APP_ID);

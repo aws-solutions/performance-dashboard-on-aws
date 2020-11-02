@@ -151,9 +151,18 @@ async function updateDashboard(req: Request, res: Response) {
     return;
   }
 
-  const topicArea = await TopicAreaRepository.getInstance().getTopicAreaById(
-    topicAreaId
-  );
+  let topicArea;
+
+  try {
+    topicArea = await TopicAreaRepository.getInstance().getTopicAreaById(
+      topicAreaId
+    );
+  } catch (error) {
+    if (error instanceof ItemNotFound) {
+      res.status(400).send("Invalid `topicAreaId`");
+      return;
+    } else throw error;
+  }
 
   const repo = DashboardRepository.getInstance();
   await repo.updateDashboard(

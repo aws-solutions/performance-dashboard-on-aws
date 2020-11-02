@@ -22,7 +22,7 @@ let dynamodb = mocked(DynamoDBService.prototype);
 beforeEach(() => {
   user = { userId: "test" };
   tableName = "BadgerTable";
-  process.env.BADGER_TABLE = tableName;
+  process.env.MAIN_TABLE = tableName;
 
   DynamoDBService.getInstance = jest.fn().mockReturnValue(dynamodb);
   repo = DashboardRepository.getInstance();

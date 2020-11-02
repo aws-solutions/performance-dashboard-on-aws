@@ -7,7 +7,7 @@ import {
   Widget,
 } from "../models";
 
-const apiName = "BadgerApi";
+const apiName = "BackendApi";
 
 async function authHeaders() {
   const token = await getAuthToken();

@@ -3,9 +3,9 @@
 
 declare global {
   interface Window {
-    BadgerEnv: {
+    EnvironmentConfig: {
       region: string;
-      badgerApi: string;
+      backendApi: string;
       userPoolId: string;
       appClientId: string;
       datasetsBucket: string;
@@ -18,21 +18,21 @@ const config = {
   API: {
     endpoints: [
       {
-        name: "BadgerApi",
-        endpoint: window.BadgerEnv.badgerApi,
+        name: "BackendApi",
+        endpoint: window.EnvironmentConfig.backendApi,
       },
     ],
   },
   Auth: {
-    region: window.BadgerEnv.region,
-    userPoolId: window.BadgerEnv.userPoolId,
-    userPoolWebClientId: window.BadgerEnv.appClientId,
-    identityPoolId: window.BadgerEnv.identityPoolId,
+    region: window.EnvironmentConfig.region,
+    userPoolId: window.EnvironmentConfig.userPoolId,
+    userPoolWebClientId: window.EnvironmentConfig.appClientId,
+    identityPoolId: window.EnvironmentConfig.identityPoolId,
   },
   Storage: {
     AWSS3: {
-      bucket: window.BadgerEnv.datasetsBucket,
-      region: window.BadgerEnv.region,
+      bucket: window.EnvironmentConfig.datasetsBucket,
+      region: window.EnvironmentConfig.region,
     },
   },
 };

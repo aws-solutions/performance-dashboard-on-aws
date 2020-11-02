@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas } from "../hooks";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
@@ -20,7 +20,7 @@ function CreateDashboard() {
   const { register, errors, handleSubmit } = useForm<FormValues>();
 
   const onSubmit = async (values: FormValues) => {
-    const dashboard = await BadgerService.createDashboard(
+    const dashboard = await BackendService.createDashboard(
       values.name,
       values.topicAreaId,
       values.description || ""

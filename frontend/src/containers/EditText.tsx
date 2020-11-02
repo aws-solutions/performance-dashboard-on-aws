@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
@@ -33,7 +33,7 @@ function EditText() {
 
     try {
       setLoading(true);
-      await BadgerService.editWidget(
+      await BackendService.editWidget(
         dashboardId,
         widgetId,
         values.title,

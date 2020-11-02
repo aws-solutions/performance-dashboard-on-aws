@@ -4,10 +4,10 @@ import { createMemoryHistory } from "history";
 import { MemoryRouter, Router } from "react-router-dom";
 
 import EditDashboard from "../EditDashboard";
-import BadgerService from "../../services/BadgerService";
+import BackendService from "../../services/BackendService";
 
 jest.mock("../../hooks");
-jest.mock("../../services/BadgerService");
+jest.mock("../../services/BackendService");
 
 test("renders the name of the dashboard", async () => {
   const { getByRole } = render(<EditDashboard />, { wrapper: MemoryRouter });
@@ -40,7 +40,7 @@ test("edit details link takes you to details screen", async () => {
 
 test("moving down a widget calls api to set widget order", async () => {
   const history = createMemoryHistory();
-  BadgerService.setWidgetOrder = jest.fn();
+  BackendService.setWidgetOrder = jest.fn();
 
   const { getByRole } = render(
     <Router history={history}>
@@ -55,5 +55,5 @@ test("moving down a widget calls api to set widget order", async () => {
     );
   });
 
-  expect(BadgerService.setWidgetOrder).toBeCalled();
+  expect(BackendService.setWidgetOrder).toBeCalled();
 });

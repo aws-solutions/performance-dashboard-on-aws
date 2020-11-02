@@ -6,7 +6,7 @@ import { Widget, LocationState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import AlertContainer from "./AlertContainer";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import WidgetOrderingService from "../services/WidgetOrdering";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
@@ -59,7 +59,7 @@ function EditDashboard() {
     closePublishModal();
 
     if (dashboard) {
-      await BadgerService.publishPending(dashboard.id, dashboard.updatedAt);
+      await BackendService.publishPending(dashboard.id, dashboard.updatedAt);
 
       history.push(`/admin/dashboard/${dashboard.id}/publish`, {
         alert: {
@@ -76,7 +76,7 @@ function EditDashboard() {
     closeDeleteModal();
 
     if (dashboard && widgetToDelete) {
-      await BadgerService.deleteWidget(dashboardId, widgetToDelete.id);
+      await BackendService.deleteWidget(dashboardId, widgetToDelete.id);
 
       history.replace(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
@@ -112,7 +112,7 @@ function EditDashboard() {
 
       try {
         setDashboard({ ...dashboard, widgets }); // optimistic ui
-        await BadgerService.setWidgetOrder(dashboardId, widgets);
+        await BackendService.setWidgetOrder(dashboardId, widgets);
       } finally {
         await reloadDashboard();
       }

@@ -5,7 +5,7 @@ import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType, WidgetType } from "../models";
 import { useDashboard } from "../hooks";
 import StorageService from "../services/StorageService";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
@@ -52,7 +52,7 @@ function AddChart() {
       JSON.stringify(dataset)
     );
 
-    const newDataset = await BadgerService.createDataset(csvFile.name, {
+    const newDataset = await BackendService.createDataset(csvFile.name, {
       raw: uploadResponse.s3Keys.raw,
       json: uploadResponse.s3Keys.json,
     });
@@ -64,7 +64,7 @@ function AddChart() {
   const onSubmit = async (values: FormValues) => {
     try {
       const newDataset = await uploadDataset();
-      await BadgerService.createWidget(
+      await BackendService.createWidget(
         dashboardId,
         values.title,
         WidgetType.Chart,

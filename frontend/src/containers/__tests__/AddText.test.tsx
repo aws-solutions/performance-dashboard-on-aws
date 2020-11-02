@@ -1,13 +1,13 @@
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import BadgerService from "../../services/BadgerService";
+import BackendService from "../../services/BackendService";
 import AddText from "../AddText";
 
-jest.mock("../../services/BadgerService");
+jest.mock("../../services/BackendService");
 
 beforeEach(() => {
-  BadgerService.createWidget = jest.fn();
+  BackendService.createWidget = jest.fn();
 });
 
 test("renders title and subtitles", async () => {
@@ -50,5 +50,5 @@ test("on submit, it calls createWidget api", async () => {
     fireEvent.click(getByRole("button", { name: "Add text" }));
   });
 
-  expect(BadgerService.createWidget).toHaveBeenCalled();
+  expect(BackendService.createWidget).toHaveBeenCalled();
 });

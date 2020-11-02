@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useDashboard, useDashboardVersions } from "../hooks";
 import { DashboardState, LocationState } from "../models";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
@@ -50,7 +50,7 @@ function ViewDashboardAdmin() {
     closeUpdateModal();
 
     try {
-      const draft = await BadgerService.createDraft(dashboardId);
+      const draft = await BackendService.createDraft(dashboardId);
 
       history.push(`/admin/dashboard/edit/${draft.id}`, {
         alert: {
@@ -70,7 +70,7 @@ function ViewDashboardAdmin() {
       return;
     }
 
-    await BadgerService.archive(dashboard.id, dashboard.updatedAt);
+    await BackendService.archive(dashboard.id, dashboard.updatedAt);
 
     history.push("/admin/dashboards?tab=archived", {
       alert: {

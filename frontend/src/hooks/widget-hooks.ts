@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Widget, WidgetType } from "../models";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
 
 type UseWidgetHook = {
@@ -21,7 +21,7 @@ export function useWidget(
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    const data = await BadgerService.fetchWidgetById(dashboardId, widgetId);
+    const data = await BackendService.fetchWidgetById(dashboardId, widgetId);
     setWidget(data);
 
     if (

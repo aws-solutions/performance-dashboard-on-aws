@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { Dataset, WidgetType } from "../models";
 import { useDashboard } from "../hooks";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
@@ -46,7 +46,7 @@ function AddTable() {
       JSON.stringify(dataset)
     );
 
-    const newDataset = await BadgerService.createDataset(csvFile.name, {
+    const newDataset = await BackendService.createDataset(csvFile.name, {
       raw: uploadResponse.s3Keys.raw,
       json: uploadResponse.s3Keys.json,
     });
@@ -58,7 +58,7 @@ function AddTable() {
   const onSubmit = async (values: FormValues) => {
     try {
       const newDataset = await uploadDataset();
-      await BadgerService.createWidget(
+      await BackendService.createWidget(
         dashboardId,
         values.title,
         WidgetType.Table,

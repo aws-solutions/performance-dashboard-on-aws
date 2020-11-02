@@ -4,6 +4,9 @@ import Button from "./Button";
 import Search from "./Search";
 import DashboardsTable from "./DashboardsTable";
 import ScrollTop from "./ScrollTop";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -47,7 +50,15 @@ function PublishedTab(props: Props) {
     <div>
       <p>
         These are all of the published dashboards. You can view all dashboards
-        but you need editor access in order to update a published dashboard.
+        but you need editor access in order to update a published dashboard.{" "}
+        <Link target="_blank" to={"/"}>
+          View the external site
+          <FontAwesomeIcon
+            className="margin-left-1"
+            icon={faExternalLinkAlt}
+            size="sm"
+          />
+        </Link>
       </p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-7 text-left padding-top-1px">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
+import MarkdownRender from "../components/MarkdownRender";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
@@ -180,7 +180,7 @@ function ViewDashboardAdmin() {
       </div>
       <div className="margin-y-2">
         {dashboard?.description ? (
-          <ReactMarkdown
+          <MarkdownRender
             source={dashboard.description}
             className="font-sans-lg usa-prose"
           />

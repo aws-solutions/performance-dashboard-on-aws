@@ -13,7 +13,9 @@ exports[`renders a multiline textarea 1`] = `
     </label>
     <div
       class="usa-hint"
-    />
+    >
+      
+    </div>
     <textarea
       class="usa-textarea"
       id="x"
@@ -38,7 +40,9 @@ exports[`renders a text input 1`] = `
     </label>
     <div
       class="usa-hint"
-    />
+    >
+      
+    </div>
     <input
       class="usa-input"
       id="x"
@@ -65,6 +69,7 @@ exports[`renders a text input with hint 1`] = `
       class="usa-hint"
     >
       Additional text
+      
     </div>
     <input
       class="usa-input"
@@ -92,6 +97,7 @@ exports[`shows an error message 1`] = `
       class="usa-hint"
     >
       Also displays hint
+      
     </div>
     <span
       class="usa-error-message"

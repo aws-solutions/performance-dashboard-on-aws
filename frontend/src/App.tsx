@@ -25,6 +25,7 @@ import AddText from "./containers/AddText";
 import EditText from "./containers/EditText";
 import AdminHome from "./containers/AdminHome";
 import FourZeroFour from "./containers/FourZeroFour";
+import MarkdownSyntax from "./containers/MarkdownSyntax";
 
 interface BadgerRoute {
   path: string;
@@ -96,6 +97,10 @@ const routes: Array<BadgerRoute> = [
   {
     path: "/admin/dashboard/:dashboardId/publish",
     component: PublishDashboard,
+  },
+  {
+    path: "/admin/markdown",
+    component: MarkdownSyntax,
   },
   {
     path: "/:dashboardId",

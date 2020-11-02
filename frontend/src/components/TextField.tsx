@@ -1,10 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface Props {
   name: string;
   id: string;
   label: string;
   hint?: string;
+  showMarkdownLink?: boolean;
   register?: Function;
   required?: boolean;
   defaultValue?: string;
@@ -33,7 +35,19 @@ function TextField(props: Props) {
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
       </label>
-      <div className="usa-hint">{props.hint}</div>
+      <div className="usa-hint">
+        {props.hint}
+        {props.showMarkdownLink ? (
+          <>
+            {". "}
+            <Link target="_blank" to={"/admin/markdown"}>
+              View Markdown Syntax
+            </Link>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
       {props.error && (
         <span
           className="usa-error-message"

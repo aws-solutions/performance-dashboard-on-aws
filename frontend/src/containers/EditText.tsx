@@ -5,7 +5,7 @@ import BadgerService from "../services/BadgerService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
-import ReactMarkdown from "react-markdown";
+import MarkdownRender from "../components/MarkdownRender";
 import { useWidget, useDashboard } from "../hooks";
 
 interface FormValues {
@@ -112,6 +112,7 @@ function EditText() {
                 name="text"
                 label="Text"
                 hint="Enter text here. This field supports markdown"
+                showMarkdownLink
                 error={errors.text && "Please specify a text content"}
                 required
                 register={register}
@@ -136,7 +137,7 @@ function EditText() {
           <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>
           {widget.content.text ? (
             <div className="border padding-left-05">
-              <ReactMarkdown source={widget.content.text} />
+              <MarkdownRender source={widget.content.text} />
             </div>
           ) : (
             ""

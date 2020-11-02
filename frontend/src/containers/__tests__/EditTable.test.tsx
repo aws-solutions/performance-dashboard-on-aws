@@ -1,17 +1,17 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import BadgerService from "../../services/BadgerService";
+import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
 import EditTable from "../EditTable";
 
-jest.mock("../../services/BadgerService");
+jest.mock("../../services/BackendService");
 jest.mock("../../services/StorageService");
 jest.mock("papaparse");
 jest.mock("../../hooks");
 
 beforeEach(() => {
-  BadgerService.editWidget = jest.fn();
+  BackendService.editWidget = jest.fn();
   StorageService.uploadDataset = jest.fn().mockReturnValue({
     s3Keys: {
       raw: "abc.csv",

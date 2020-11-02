@@ -1,5 +1,5 @@
 import { API, Auth } from "aws-amplify";
-import BadgerService from "../BadgerService";
+import BackendService from "../BackendService";
 import { Widget } from "../../models";
 
 jest.mock("aws-amplify");
@@ -19,7 +19,7 @@ beforeEach(() => {
 test("fetchDashboardById makes a GET request to dashboard API", async () => {
   const dashboardId = "123";
 
-  await BadgerService.fetchDashboardById(dashboardId);
+  await BackendService.fetchDashboardById(dashboardId);
   expect(API.get).toHaveBeenCalledWith(
     "BackendApi",
     `dashboard/${dashboardId}`,
@@ -32,7 +32,7 @@ test("createDashboard should make a POST request with payload", async () => {
   const description = "Alexa, how is the weather?";
   const topicAreaId = "xyz";
 
-  await BadgerService.createDashboard(name, topicAreaId, description);
+  await BackendService.createDashboard(name, topicAreaId, description);
 
   expect(API.post).toHaveBeenCalledWith(
     "BackendApi",
@@ -55,7 +55,7 @@ test("editDashboard should make a PUT request with payload", async () => {
 
   const updatedAt = new Date("2020-09-17T21:01:00.780Z");
 
-  await BadgerService.editDashboard(
+  await BackendService.editDashboard(
     dashboardId,
     name,
     topicAreaId,
@@ -82,7 +82,7 @@ test("publishDashboard should make a PUT request with payload", async () => {
   const updatedAt = new Date("2020-09-17T21:01:00.780Z");
   const releaseNotes = "Made changes to the revenue metrics";
 
-  await BadgerService.publishDashboard(dashboardId, updatedAt, releaseNotes);
+  await BackendService.publishDashboard(dashboardId, updatedAt, releaseNotes);
 
   expect(API.put).toHaveBeenCalledWith(
     "BackendApi",
@@ -99,7 +99,7 @@ test("publishDashboard should make a PUT request with payload", async () => {
 test("deleteDashboards makes a DELETE request to dashboard API", async () => {
   const dashboardIds = ["123", "456"];
 
-  await BadgerService.deleteDashboards(dashboardIds);
+  await BackendService.deleteDashboards(dashboardIds);
   expect(API.del).toHaveBeenCalledWith(
     "BackendApi",
     `dashboard?ids=123,456`,
@@ -111,7 +111,7 @@ test("fetchWidgetById makes a GET request to widget API", async () => {
   const dashboardId = "123";
   const widgetId = "abc";
 
-  await BadgerService.fetchWidgetById(dashboardId, widgetId);
+  await BackendService.fetchWidgetById(dashboardId, widgetId);
   expect(API.get).toHaveBeenCalledWith(
     "BackendApi",
     `dashboard/${dashboardId}/widget/${widgetId}`,
@@ -123,7 +123,7 @@ test("deleteWidget makes a DELETE request to widget API", async () => {
   const dashboardId = "123";
   const widgetId = "abc";
 
-  await BadgerService.deleteWidget(dashboardId, widgetId);
+  await BackendService.deleteWidget(dashboardId, widgetId);
   expect(API.del).toHaveBeenCalledWith(
     "BackendApi",
     `dashboard/${dashboardId}/widget/${widgetId}`,
@@ -146,7 +146,7 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
     },
   ];
 
-  await BadgerService.setWidgetOrder(dashboardId, widgets);
+  await BackendService.setWidgetOrder(dashboardId, widgets);
   expect(API.put).toHaveBeenCalledWith(
     "BackendApi",
     `dashboard/${dashboardId}/widgetorder`,
@@ -165,12 +165,12 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
 });
 
 test("fetchHomepage makes a GET request to widget API", async () => {
-  await BadgerService.fetchHomepage();
+  await BackendService.fetchHomepage();
   expect(API.get).toHaveBeenCalledWith("BackendApi", "homepage", {});
 });
 
 test("fetchPublicDashboard makes a GET request to public API", async () => {
-  await BadgerService.fetchPublicDashboard("123");
+  await BackendService.fetchPublicDashboard("123");
   expect(API.get).toHaveBeenCalledWith(
     "BackendApi",
     "public/dashboard/123",
@@ -179,7 +179,7 @@ test("fetchPublicDashboard makes a GET request to public API", async () => {
 });
 
 test("createDraft makes a POST request to dashboard API", async () => {
-  await BadgerService.createDraft("123");
+  await BackendService.createDraft("123");
   expect(API.post).toBeCalledWith(
     "BackendApi",
     "dashboard/123",
@@ -189,7 +189,7 @@ test("createDraft makes a POST request to dashboard API", async () => {
 
 test("publishPending makes a PUT request to dashboard API", async () => {
   const lastUpdatedAt = new Date();
-  await BadgerService.publishPending("123", lastUpdatedAt);
+  await BackendService.publishPending("123", lastUpdatedAt);
   expect(API.put).toBeCalledWith(
     "BackendApi",
     "dashboard/123/publishpending",
@@ -203,7 +203,7 @@ test("publishPending makes a PUT request to dashboard API", async () => {
 
 test("moveToDraft makes a PUT request to dashboard API", async () => {
   const lastUpdatedAt = new Date();
-  await BadgerService.moveToDraft("123", lastUpdatedAt);
+  await BackendService.moveToDraft("123", lastUpdatedAt);
   expect(API.put).toBeCalledWith(
     "BackendApi",
     "dashboard/123/draft",
@@ -216,7 +216,7 @@ test("moveToDraft makes a PUT request to dashboard API", async () => {
 });
 
 test("fetchDashboardVersions makes a GET request to dashboard API", async () => {
-  await BadgerService.fetchDashboardVersions("123");
+  await BackendService.fetchDashboardVersions("123");
   expect(API.get).toBeCalledWith(
     "BackendApi",
     "dashboard/123/versions",

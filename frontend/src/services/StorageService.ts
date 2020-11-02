@@ -14,7 +14,7 @@ type ValidFileTypes = {
 
 /**
  * Access Level `public` does not mean the S3 bucket is publicly accessible.
- * It just means that all valid and authenticated users in Badger will have
+ * It just means that all valid and authenticated users will have
  * access to the uploaded datasets regardless of who uploaded it originally.
  *
  * Docs: https://docs.amplify.aws/lib/storage/configureaccess/q/platform/js

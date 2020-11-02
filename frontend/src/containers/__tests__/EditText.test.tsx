@@ -1,14 +1,14 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import BadgerService from "../../services/BadgerService";
+import BackendService from "../../services/BackendService";
 import EditText from "../EditText";
 
-jest.mock("../../services/BadgerService");
+jest.mock("../../services/BackendService");
 jest.mock("../../hooks");
 
 beforeEach(() => {
-  BadgerService.editWidget = jest.fn();
+  BackendService.editWidget = jest.fn();
 });
 
 test("renders title", async () => {

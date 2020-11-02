@@ -1,18 +1,18 @@
 import React from "react";
 import { render, fireEvent, act, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import BadgerService from "../../services/BadgerService";
+import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
 import AddChart from "../AddChart";
 import papaparse from "papaparse";
 
-jest.mock("../../services/BadgerService");
+jest.mock("../../services/BackendService");
 jest.mock("../../services/StorageService");
 jest.mock("papaparse");
 
 beforeEach(() => {
-  BadgerService.createWidget = jest.fn();
-  BadgerService.createDataset = jest.fn().mockReturnValue({ id: "1244" });
+  BackendService.createWidget = jest.fn();
+  BackendService.createDataset = jest.fn().mockReturnValue({ id: "1244" });
   StorageService.uploadDataset = jest.fn().mockReturnValue({
     s3Keys: {
       raw: "abc.csv",
@@ -73,7 +73,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     fireEvent.click(submitButton);
   });
 
-  expect(BadgerService.createWidget).toHaveBeenCalled();
+  expect(BackendService.createWidget).toHaveBeenCalled();
   expect(StorageService.uploadDataset).toHaveBeenCalled();
-  expect(BadgerService.createDataset).toHaveBeenCalled();
+  expect(BackendService.createDataset).toHaveBeenCalled();
 });

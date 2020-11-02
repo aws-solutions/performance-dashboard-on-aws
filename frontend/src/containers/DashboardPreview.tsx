@@ -106,7 +106,19 @@ function DashboardPreview() {
       <div className="text-base text-italic">{dashboard?.topicAreaName}</div>
       <div>
         {dashboard?.description ? (
-          <ReactMarkdown source={dashboard.description} />
+          <ReactMarkdown
+            source={dashboard.description}
+            allowedTypes={[
+              "heading",
+              "link",
+              "list",
+              "listItem",
+              "paragraph",
+              "root",
+              "strong",
+              "text",
+            ]}
+          />
         ) : (
           <p>No description entered</p>
         )}

@@ -9,9 +9,9 @@ function FooterLayout(props: LayoutProps) {
     <>
       {props.children}
       <footer>
-        <div className="grid-container text-base font-sans-sm">
+        <div className="grid-container margin-bottom-9 text-base font-sans-sm">
           <hr className="margin-top-9 border-base-lightest" />
-          Having technical issues with the platform?{" "}
+          Having technical issues with the system?{" "}
           <a
             href={`mailto:${process.env.REACT_APP_CONTACT_EMAIL}?subject=Performance Dashboard Assistance`}
             className="text-base"

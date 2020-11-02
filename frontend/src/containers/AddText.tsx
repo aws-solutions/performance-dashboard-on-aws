@@ -106,6 +106,7 @@ function AddText() {
                 name="text"
                 label="Text"
                 hint="Enter text here. This field supports markdown"
+                showMarkdownLink
                 error={errors.text && "Please specify a text content"}
                 required
                 register={register}
@@ -132,7 +133,19 @@ function AddText() {
           <h2 className="margin-top-4 margin-left-2px">{title}</h2>
           {text ? (
             <div className="border padding-left-05">
-              <ReactMarkdown source={text} />
+              <ReactMarkdown
+                source={text}
+                allowedTypes={[
+                  "heading",
+                  "link",
+                  "list",
+                  "listItem",
+                  "paragraph",
+                  "root",
+                  "strong",
+                  "text",
+                ]}
+              />
             </div>
           ) : (
             ""

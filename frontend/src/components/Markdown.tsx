@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import { Link } from "react-router-dom";
 import "./Markdown.css";
 
 type MarkdownProps = {
@@ -26,7 +27,12 @@ const Markdown = (props: MarkdownProps) => {
       <label htmlFor="markdownarea" className="usa-label text-bold">
         {props.label}
       </label>
-      <span className="usa-hint">{`${props.hint} This text area supports limited Markdown.`}</span>
+      <span className="usa-hint">
+        {props.hint} This text area supports limited Markdown.{" "}
+        <Link target="_blank" to={"/admin/markdown"}>
+          View Markdown Syntax
+        </Link>
+      </span>
       <div className="usa-checkbox margin-top-2">
         <input
           id="toggle"
@@ -62,7 +68,19 @@ const Markdown = (props: MarkdownProps) => {
         className="markdown-box"
         style={{ height: boxHeight }}
       >
-        <ReactMarkdown source={text.current?.value} />
+        <ReactMarkdown
+          source={text.current?.value}
+          allowedTypes={[
+            "heading",
+            "link",
+            "list",
+            "listItem",
+            "paragraph",
+            "root",
+            "strong",
+            "text",
+          ]}
+        />
       </div>
     </div>
   );

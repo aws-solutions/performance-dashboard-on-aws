@@ -182,6 +182,16 @@ function ViewDashboardAdmin() {
         {dashboard?.description ? (
           <ReactMarkdown
             source={dashboard.description}
+            allowedTypes={[
+              "heading",
+              "link",
+              "list",
+              "listItem",
+              "paragraph",
+              "root",
+              "strong",
+              "text",
+            ]}
             className="font-sans-lg usa-prose"
           />
         ) : (

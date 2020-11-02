@@ -112,6 +112,7 @@ function EditText() {
                 name="text"
                 label="Text"
                 hint="Enter text here. This field supports markdown"
+                showMarkdownLink
                 error={errors.text && "Please specify a text content"}
                 required
                 register={register}
@@ -136,7 +137,19 @@ function EditText() {
           <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>
           {widget.content.text ? (
             <div className="border padding-left-05">
-              <ReactMarkdown source={widget.content.text} />
+              <ReactMarkdown
+                source={widget.content.text}
+                allowedTypes={[
+                  "heading",
+                  "link",
+                  "list",
+                  "listItem",
+                  "paragraph",
+                  "root",
+                  "strong",
+                  "text",
+                ]}
+              />
             </div>
           ) : (
             ""

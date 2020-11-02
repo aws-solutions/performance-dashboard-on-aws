@@ -12,7 +12,19 @@ function TextWidget(props: Props) {
   return (
     <div className="margin-left-1">
       <h2>{props.widget.name}</h2>
-      <ReactMarkdown source={content.text} />
+      <ReactMarkdown
+        source={content.text}
+        allowedTypes={[
+          "heading",
+          "link",
+          "list",
+          "listItem",
+          "paragraph",
+          "root",
+          "strong",
+          "text",
+        ]}
+      />
     </div>
   );
 }

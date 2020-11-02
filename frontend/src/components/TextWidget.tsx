@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
+import MarkdownRender from "./MarkdownRender";
 import { Widget } from "../models";
 
 interface Props {
@@ -12,19 +12,7 @@ function TextWidget(props: Props) {
   return (
     <div className="margin-left-1">
       <h2>{props.widget.name}</h2>
-      <ReactMarkdown
-        source={content.text}
-        allowedTypes={[
-          "heading",
-          "link",
-          "list",
-          "listItem",
-          "paragraph",
-          "root",
-          "strong",
-          "text",
-        ]}
-      />
+      <MarkdownRender source={content.text} />
     </div>
   );
 }

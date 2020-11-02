@@ -7,7 +7,7 @@ import BadgerService from "../services/BadgerService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
-import ReactMarkdown from "react-markdown";
+import MarkdownRender from "../components/MarkdownRender";
 
 interface FormValues {
   title: string;
@@ -133,19 +133,7 @@ function AddText() {
           <h2 className="margin-top-4 margin-left-2px">{title}</h2>
           {text ? (
             <div className="border padding-left-05">
-              <ReactMarkdown
-                source={text}
-                allowedTypes={[
-                  "heading",
-                  "link",
-                  "list",
-                  "listItem",
-                  "paragraph",
-                  "root",
-                  "strong",
-                  "text",
-                ]}
-              />
+              <MarkdownRender source={text} />
             </div>
           ) : (
             ""

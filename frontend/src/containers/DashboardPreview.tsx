@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import { DashboardState, LocationState } from "../models";
-import ReactMarkdown from "react-markdown";
+import MarkdownRender from "../components/MarkdownRender";
 import Button from "../components/Button";
 import BadgerService from "../services/BadgerService";
 import Alert from "../components/Alert";
@@ -106,19 +106,7 @@ function DashboardPreview() {
       <div className="text-base text-italic">{dashboard?.topicAreaName}</div>
       <div>
         {dashboard?.description ? (
-          <ReactMarkdown
-            source={dashboard.description}
-            allowedTypes={[
-              "heading",
-              "link",
-              "list",
-              "listItem",
-              "paragraph",
-              "root",
-              "strong",
-              "text",
-            ]}
-          />
+          <MarkdownRender source={dashboard.description} />
         ) : (
           <p>No description entered</p>
         )}

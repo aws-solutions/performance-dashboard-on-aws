@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
+import MarkdownRender from "../components/MarkdownRender";
 import { useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
@@ -107,18 +107,8 @@ function ArchivedDashboard() {
       </div>
       <div className="margin-y-2">
         {dashboard?.description ? (
-          <ReactMarkdown
+          <MarkdownRender
             source={dashboard.description}
-            allowedTypes={[
-              "heading",
-              "link",
-              "list",
-              "listItem",
-              "paragraph",
-              "root",
-              "strong",
-              "text",
-            ]}
             className="font-sans-lg usa-prose"
           />
         ) : (

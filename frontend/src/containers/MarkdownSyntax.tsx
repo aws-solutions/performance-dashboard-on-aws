@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
+import MarkdownRender from "../components/MarkdownRender";
 
 const MarkdownSyntax = () => {
   return (
@@ -28,19 +28,7 @@ const MarkdownSyntax = () => {
           <tr>
             <td>I love **bold** text</td>
             <td>
-              <ReactMarkdown
-                allowedTypes={[
-                  "heading",
-                  "link",
-                  "list",
-                  "listItem",
-                  "paragraph",
-                  "root",
-                  "strong",
-                  "text",
-                ]}
-                source="I love **bold** text"
-              />
+              <MarkdownRender source="I love **bold** text" />
             </td>
           </tr>
         </tbody>
@@ -63,19 +51,7 @@ const MarkdownSyntax = () => {
           <tr>
             <td># Section Title</td>
             <td>
-              <ReactMarkdown
-                allowedTypes={[
-                  "heading",
-                  "link",
-                  "list",
-                  "listItem",
-                  "paragraph",
-                  "root",
-                  "strong",
-                  "text",
-                ]}
-                source="# Section Title"
-              />
+              <MarkdownRender source="# Section Title" />
             </td>
           </tr>
         </tbody>
@@ -98,19 +74,7 @@ const MarkdownSyntax = () => {
           <tr>
             <td>I love [AWS](https://aws.amazon.com)</td>
             <td>
-              <ReactMarkdown
-                allowedTypes={[
-                  "heading",
-                  "link",
-                  "list",
-                  "listItem",
-                  "paragraph",
-                  "root",
-                  "strong",
-                  "text",
-                ]}
-                source="I love [AWS](https://aws.amazon.com)"
-              />
+              <MarkdownRender source="I love [AWS](https://aws.amazon.com)" />
             </td>
           </tr>
         </tbody>
@@ -137,17 +101,7 @@ const MarkdownSyntax = () => {
               <div>+ Fourth item</div>
             </td>
             <td>
-              <ReactMarkdown
-                allowedTypes={[
-                  "heading",
-                  "link",
-                  "list",
-                  "listItem",
-                  "paragraph",
-                  "root",
-                  "strong",
-                  "text",
-                ]}
+              <MarkdownRender
                 source="+ First item
 * Second item
 - Third item

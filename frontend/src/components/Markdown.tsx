@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import ReactMarkdown from "react-markdown";
+import MarkdownRender from "./MarkdownRender";
 import { Link } from "react-router-dom";
 import "./Markdown.css";
 
@@ -68,19 +68,7 @@ const Markdown = (props: MarkdownProps) => {
         className="markdown-box"
         style={{ height: boxHeight }}
       >
-        <ReactMarkdown
-          source={text.current?.value}
-          allowedTypes={[
-            "heading",
-            "link",
-            "list",
-            "listItem",
-            "paragraph",
-            "root",
-            "strong",
-            "text",
-          ]}
-        />
+        <MarkdownRender source={text.current?.value} />
       </div>
     </div>
   );

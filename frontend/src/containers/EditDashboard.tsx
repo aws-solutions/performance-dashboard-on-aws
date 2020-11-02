@@ -10,7 +10,7 @@ import BadgerService from "../services/BadgerService";
 import WidgetOrderingService from "../services/WidgetOrdering";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
-import ReactMarkdown from "react-markdown";
+import MarkdownRender from "../components/MarkdownRender";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 
@@ -199,19 +199,7 @@ function EditDashboard() {
       <div className="text-base text-italic">{dashboard?.topicAreaName}</div>
       <div>
         {dashboard?.description ? (
-          <ReactMarkdown
-            source={dashboard.description}
-            allowedTypes={[
-              "heading",
-              "link",
-              "list",
-              "listItem",
-              "paragraph",
-              "root",
-              "strong",
-              "text",
-            ]}
-          />
+          <MarkdownRender source={dashboard.description} />
         ) : (
           <p>No description entered</p>
         )}

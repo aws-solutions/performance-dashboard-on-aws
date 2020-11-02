@@ -2,11 +2,11 @@ import React from "react";
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Route, Router } from "react-router-dom";
-import BadgerService from "../../services/BadgerService";
+import BackendService from "../../services/BackendService";
 import EditDetails from "../EditDetails";
 
 jest.mock("../../hooks");
-jest.mock("../../services/BadgerService");
+jest.mock("../../services/BackendService");
 
 const history = createMemoryHistory();
 
@@ -30,7 +30,7 @@ test("submits form with the entered values", async () => {
     fireEvent.submit(screen.getByTestId("EditDetailsForm"));
   });
 
-  expect(BadgerService.editDashboard).toBeCalledWith(
+  expect(BackendService.editDashboard).toBeCalledWith(
     "123",
     "My AWS Dashboard",
     "123456789",

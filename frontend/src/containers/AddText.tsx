@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { WidgetType } from "../models";
 import { useDashboard } from "../hooks";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
@@ -31,7 +31,7 @@ function AddText() {
   const onSubmit = async (values: FormValues) => {
     try {
       setLoading(true);
-      await BadgerService.createWidget(
+      await BackendService.createWidget(
         dashboardId,
         values.title,
         WidgetType.Text,

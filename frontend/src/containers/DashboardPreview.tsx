@@ -4,7 +4,7 @@ import { useDashboard } from "../hooks";
 import { DashboardState, LocationState } from "../models";
 import MarkdownRender from "../components/MarkdownRender";
 import Button from "../components/Button";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import Alert from "../components/Alert";
 import WidgetRender from "../components/WidgetRender";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -33,7 +33,7 @@ function DashboardPreview() {
     closePublishModal();
 
     if (dashboard) {
-      await BadgerService.publishPending(dashboard.id, dashboard.updatedAt);
+      await BackendService.publishPending(dashboard.id, dashboard.updatedAt);
       history.push(`/admin/dashboard/${dashboard.id}/publish`, {
         alert: {
           type: "info",

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { TopicArea } from "../models";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 
 type UseTopicAreasHook = {
   loading: boolean;
@@ -14,7 +14,7 @@ export function useTopicAreas(): UseTopicAreasHook {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await BadgerService.fetchTopicAreas();
+      const data = await BackendService.fetchTopicAreas();
       setTopicAreas(data);
       setLoading(false);
     };

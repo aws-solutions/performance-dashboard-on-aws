@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType } from "../models";
 import StorageService from "../services/StorageService";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
@@ -84,7 +84,7 @@ function EditChart() {
       JSON.stringify(json)
     );
 
-    const newDataset = await BadgerService.createDataset(csvFile.name, {
+    const newDataset = await BackendService.createDataset(csvFile.name, {
       raw: uploadResponse.s3Keys.raw,
       json: uploadResponse.s3Keys.json,
     });
@@ -103,7 +103,7 @@ function EditChart() {
       const datasetId = newDataset ? newDataset.id : widget.content.datasetId;
       const s3Key = newDataset ? newDataset.s3Key : widget.content.s3Key;
 
-      await BadgerService.editWidget(
+      await BackendService.editWidget(
         dashboardId,
         widgetId,
         values.title,

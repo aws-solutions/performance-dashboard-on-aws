@@ -9,7 +9,7 @@ import ArchivedTab from "../components/ArchivedTab";
 import { useLocation, useHistory } from "react-router-dom";
 import AlertContainer from "../containers/AlertContainer";
 import { Dashboard } from "../models";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import Modal from "../components/Modal";
 
 function DashboardListing() {
@@ -52,7 +52,7 @@ function DashboardListing() {
 
     if (selectedDashboards.length) {
       for (const dashboard of selectedDashboards) {
-        await BadgerService.archive(dashboard.id, dashboard.updatedAt);
+        await BackendService.archive(dashboard.id, dashboard.updatedAt);
       }
 
       history.replace("/admin/dashboards?tab=published", {
@@ -76,7 +76,7 @@ function DashboardListing() {
     closeDeleteModal();
 
     if (selectedDashboards.length) {
-      await BadgerService.deleteDashboards(
+      await BackendService.deleteDashboards(
         selectedDashboards.map((dashboard) => dashboard.id)
       );
 

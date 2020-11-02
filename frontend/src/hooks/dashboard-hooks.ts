@@ -5,7 +5,7 @@ import {
   DashboardVersion,
   PublicDashboard,
 } from "../models";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 
 type UseDashboardHook = {
   loading: boolean;
@@ -20,7 +20,7 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    const data = await BadgerService.fetchDashboardById(dashboardId);
+    const data = await BackendService.fetchDashboardById(dashboardId);
     setLoading(false);
     if (data) {
       data.widgets.sort((a, b) => a.order - b.order);
@@ -62,7 +62,7 @@ export function useDashboards(): UseDashboardsHook {
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    const data = await BadgerService.fetchDashboards();
+    const data = await BackendService.fetchDashboards();
     if (data) {
       setDashboards(data);
       setDraftsDashboards(
@@ -119,7 +119,7 @@ export function usePublicDashboard(
     setLoading(true);
     let data = undefined;
     try {
-      data = await BadgerService.fetchPublicDashboard(dashboardId);
+      data = await BackendService.fetchPublicDashboard(dashboardId);
       if (data) {
         data.widgets.sort((a, b) => a.order - b.order);
         setDashboard(data);
@@ -157,7 +157,7 @@ export function useDashboardVersions(
     if (parentDashboardId) {
       const fetchData = async () => {
         setLoading(true);
-        const data = await BadgerService.fetchDashboardVersions(
+        const data = await BackendService.fetchDashboardVersions(
           parentDashboardId
         );
         setVersions(data);

@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDashboard } from "../hooks";
 import { LocationState } from "../models";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import AlertContainer from "./AlertContainer";
 import StepIndicator from "../components/StepIndicator";
 import TextField from "../components/TextField";
@@ -43,7 +43,7 @@ function PublishDashboard() {
     }
 
     try {
-      await BadgerService.moveToDraft(dashboardId, dashboard.updatedAt);
+      await BackendService.moveToDraft(dashboardId, dashboard.updatedAt);
       history.push(`/admin/dashboard/edit/${dashboardId}`);
     } catch (err) {
       console.log("Failed to return to draft");
@@ -54,7 +54,7 @@ function PublishDashboard() {
   const onSubmit = async (values: FormValues) => {
     if (dashboard) {
       try {
-        await BadgerService.publishDashboard(
+        await BackendService.publishDashboard(
           dashboardId,
           dashboard.updatedAt,
           values.releaseNotes

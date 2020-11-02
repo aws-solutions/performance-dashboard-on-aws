@@ -2,11 +2,11 @@ import React from "react";
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
-import BadgerService from "../../services/BadgerService";
+import BackendService from "../../services/BackendService";
 import CreateDashboard from "../CreateDashboard";
 
 jest.mock("../../hooks");
-jest.mock("../../services/BadgerService");
+jest.mock("../../services/BackendService");
 
 const history = createMemoryHistory();
 
@@ -14,7 +14,7 @@ describe("CreateDashboardForm", () => {
   beforeEach(async () => {
     // Mocks
     jest.spyOn(history, "push");
-    BadgerService.createDashboard = jest.fn().mockReturnValue({ id: "123" });
+    BackendService.createDashboard = jest.fn().mockReturnValue({ id: "123" });
 
     render(
       <Router history={history}>
@@ -40,7 +40,7 @@ describe("CreateDashboardForm", () => {
       fireEvent.submit(screen.getByTestId("CreateDashboardForm"));
     });
 
-    expect(BadgerService.createDashboard).toBeCalledWith(
+    expect(BackendService.createDashboard).toBeCalledWith(
       "AWS Dashboard",
       "123456789",
       ""

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useDashboard } from "../hooks";
 import { LocationState } from "../models";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
@@ -34,7 +34,7 @@ function ArchivedDashboard() {
     closeRepublishModal();
 
     if (dashboard) {
-      await BadgerService.publishDashboard(
+      await BackendService.publishDashboard(
         dashboard.id,
         dashboard.updatedAt,
         dashboard.releaseNotes || ""

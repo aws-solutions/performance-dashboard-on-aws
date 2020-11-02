@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { Dataset } from "../models";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
@@ -79,7 +79,7 @@ function EditTable() {
       JSON.stringify(json)
     );
 
-    const newDataset = await BadgerService.createDataset(csvFile.name, {
+    const newDataset = await BackendService.createDataset(csvFile.name, {
       raw: uploadResponse.s3Keys.raw,
       json: uploadResponse.s3Keys.json,
     });
@@ -98,7 +98,7 @@ function EditTable() {
       const datasetId = newDataset ? newDataset.id : widget.content.datasetId;
       const s3Key = newDataset ? newDataset.s3Key : widget.content.s3Key;
 
-      await BadgerService.editWidget(
+      await BackendService.editWidget(
         dashboardId,
         widgetId,
         values.title,

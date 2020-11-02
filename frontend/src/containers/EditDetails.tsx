@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas, useDashboard } from "../hooks";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
@@ -27,7 +27,7 @@ function EditDetails() {
   const { register, errors, handleSubmit } = useForm<FormValues>();
 
   const onSubmit = async (values: FormValues) => {
-    await BadgerService.editDashboard(
+    await BackendService.editDashboard(
       dashboardId,
       values.name,
       values.topicAreaId,

@@ -1,10 +1,10 @@
 import React from "react";
 import { render, RenderResult, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import BadgerService from "../../services/BadgerService";
+import BackendService from "../../services/BackendService";
 import PublishDashboard from "../PublishDashboard";
 
-jest.mock("../../services/BadgerService");
+jest.mock("../../services/BackendService");
 
 let wrapper: RenderResult;
 beforeEach(() => {
@@ -53,7 +53,7 @@ test("continue button advances to step 2", async () => {
   ).toBeInTheDocument();
 });
 
-test("publish button invokes BadgerService", async () => {
+test("publish button invokes BackendService", async () => {
   fireEvent.input(wrapper.getByLabelText("Internal release notes"), {
     target: {
       value: "Some release notes",
@@ -82,10 +82,10 @@ test("publish button invokes BadgerService", async () => {
     );
   });
 
-  expect(BadgerService.publishDashboard).toBeCalled();
+  expect(BackendService.publishDashboard).toBeCalled();
 });
 
-test("return to draft button invokes BadgerService", async () => {
+test("return to draft button invokes BackendService", async () => {
   await act(async () => {
     fireEvent.click(
       wrapper.getByRole("button", {
@@ -93,5 +93,5 @@ test("return to draft button invokes BadgerService", async () => {
       })
     );
   });
-  expect(BadgerService.moveToDraft).toBeCalled();
+  expect(BackendService.moveToDraft).toBeCalled();
 });

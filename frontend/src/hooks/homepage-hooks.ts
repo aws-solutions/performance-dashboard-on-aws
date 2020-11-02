@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Homepage } from "../models";
-import BadgerService from "../services/BadgerService";
+import BackendService from "../services/BackendService";
 
 type UseHomepageHook = {
   loading: boolean;
@@ -18,7 +18,7 @@ export function useHomepage(): UseHomepageHook {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await BadgerService.fetchHomepage();
+      const data = await BackendService.fetchHomepage();
       setHomepage(data);
       setLoading(false);
     };

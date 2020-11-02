@@ -1,5 +1,5 @@
 {
-  "name": "badger-frontend",
+  "name": "performance-dashboard-frontend",
   "version": "1.0.0",
   "private": true,
   "description": "Performance Dashboard on AWS Frontend",

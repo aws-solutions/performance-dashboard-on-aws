@@ -12,12 +12,12 @@ class DatasetRepository extends BaseRepository {
   private constructor() {
     super();
 
-    if (!process.env.BADGER_DATASETS_BUCKET) {
-      throw new Error("Environment variable BADGER_DATASETS_BUCKET not found");
+    if (!process.env.DATASETS_BUCKET) {
+      throw new Error("Environment variable DATASETS_BUCKET not found");
     }
 
     this.s3Service = S3Service.getInstance();
-    this.bucketName = process.env.BADGER_DATASETS_BUCKET;
+    this.bucketName = process.env.DATASETS_BUCKET;
     this.s3Prefix = "public/";
   }
 

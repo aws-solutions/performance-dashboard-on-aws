@@ -26,7 +26,7 @@ export class BackendStack extends cdk.Stack {
       datasetsBucket: dataStorage.datasetsBucket,
     });
 
-    const badgerApi = new BadgerApi(this, "Api", {
+    const backendApi = new BadgerApi(this, "Api", {
       cognitoUserPoolArn: props.userPoolArn,
       apiFunction: lambdas.apiHandler,
     });
@@ -34,7 +34,7 @@ export class BackendStack extends cdk.Stack {
     /**
      * Outputs
      */
-    this.apiGatewayEndpoint = badgerApi.api.url;
+    this.apiGatewayEndpoint = backendApi.api.url;
     this.dynamodbTableName = database.mainTable.tableName;
 
     new cdk.CfnOutput(this, "ApiGatewayEndpoint", {

@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { User } from "../models/user";
 
-const local = !!process.env.BADGER_LOCAL || false;
+const local = !!process.env.LOCAL_MODE || false;
 
 /**
  * Gets the logged-in user from the http request headers.

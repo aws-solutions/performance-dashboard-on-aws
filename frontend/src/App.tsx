@@ -27,13 +27,13 @@ import AdminHome from "./containers/AdminHome";
 import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
 
-interface BadgerRoute {
+interface AppRoute {
   path: string;
   component: React.FunctionComponent<any>;
   public?: boolean;
 }
 
-const routes: Array<BadgerRoute> = [
+const routes: Array<AppRoute> = [
   {
     path: "/admin",
     component: AdminHome,

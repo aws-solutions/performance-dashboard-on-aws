@@ -11,7 +11,7 @@ let repo: WidgetRepository;
 let dynamodb = mocked(DynamoDBService.prototype);
 
 beforeAll(() => {
-  tableName = "BadgerTable";
+  tableName = "MainTable";
   process.env.MAIN_TABLE = tableName;
 
   dynamodb = mocked(DynamoDBService.prototype);

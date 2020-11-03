@@ -25,10 +25,9 @@ export class FrontendStack extends cdk.Stack {
      * S3 Bucket
      * Hosts the React application code.
      */
-    this.frontendBucket = new s3.Bucket(this, "ReactAppBucket", {
+    this.frontendBucket = new s3.Bucket(this, "ReactApp", {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {
@@ -114,8 +113,9 @@ export class FrontendStack extends cdk.Stack {
     // with environment values. This file is uploaded to the bucket where
     // the React code is deployed.
 
-    const lambdaFunction = new lambda.Function(this, "EnvConfigLambda", {
+    const lambdaFunction = new lambda.Function(this, "EnvConfig", {
       runtime: lambda.Runtime.NODEJS_12_X,
+      description: "Deploys env.js file on S3 with environment configuration",
       code: lambda.Code.fromAsset("build/lib/envconfig"),
       handler: "index.handler",
       timeout: cdk.Duration.seconds(60),

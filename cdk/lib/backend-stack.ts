@@ -1,8 +1,8 @@
 import * as cdk from "@aws-cdk/core";
-import { BadgerApi } from "./constructs/api";
-import { BadgerDatabase } from "./constructs/database";
-import { BadgerLambdas } from "./constructs/lambdas";
-import { BadgerDataStorage } from "./constructs/datastorage";
+import { BackendApi } from "./constructs/api";
+import { Database } from "./constructs/database";
+import { LambdaFunctions } from "./constructs/lambdas";
+import { DatasetStorage } from "./constructs/datastorage";
 
 interface BackendStackProps extends cdk.StackProps {
   userPoolArn: string;
@@ -16,17 +16,17 @@ export class BackendStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
     super(scope, id, props);
 
-    const dataStorage = new BadgerDataStorage(this, "DataStorage", {
+    const dataStorage = new DatasetStorage(this, "DatasetStorage", {
       datasetsBucketName: props.datasetsBucketName,
     });
 
-    const database = new BadgerDatabase(this, "Database");
-    const lambdas = new BadgerLambdas(this, "Compute", {
+    const database = new Database(this, "Database");
+    const lambdas = new LambdaFunctions(this, "Functions", {
       mainTable: database.mainTable,
       datasetsBucket: dataStorage.datasetsBucket,
     });
 
-    const backendApi = new BadgerApi(this, "Api", {
+    const backendApi = new BackendApi(this, "Api", {
       cognitoUserPoolArn: props.userPoolArn,
       apiFunction: lambdas.apiHandler,
     });

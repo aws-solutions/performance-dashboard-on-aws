@@ -16,7 +16,7 @@ export class AuthStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id, props);
 
-    const pool = new cognito.UserPool(this, "BadgerUserPool", {
+    const pool = new cognito.UserPool(this, "UserPool", {
       userInvitation: {
         emailSubject:
           "You have been invited to the {Organization} Performance Dashboard on AWS.",
@@ -24,12 +24,12 @@ export class AuthStack extends cdk.Stack {
       },
     });
 
-    const client = pool.addClient("BadgerFrontend", {
+    const client = pool.addClient("Frontend", {
       preventUserExistenceErrors: true,
     });
     const identityPool = this.buildIdentityPool(pool, client);
 
-    const cliClient = pool.addClient("BadgerCLI", {
+    const cliClient = pool.addClient("CLI", {
       authFlows: { userPassword: true },
       preventUserExistenceErrors: true,
     });
@@ -68,7 +68,7 @@ export class AuthStack extends cdk.Stack {
     userPool: cognito.UserPool,
     client: cognito.UserPoolClient
   ) {
-    return new cognito.CfnIdentityPool(this, "BadgerIdentityPool", {
+    return new cognito.CfnIdentityPool(this, "IdentityPool", {
       allowUnauthenticatedIdentities: true,
       cognitoIdentityProviders: [
         {
@@ -90,7 +90,7 @@ export class AuthStack extends cdk.Stack {
       identityPool
     );
 
-    // The public role is assumed by unauthenticated identities in Badger. Which means,
+    // The public role is assumed by unauthenticated identities. Which means,
     // any user that lands on the public-facing website that does not have a login.
     // Need to be careful with what permissions you give to this role. It should be as
     // restricted as possible.
@@ -116,8 +116,8 @@ export class AuthStack extends cdk.Stack {
       identityPool
     );
 
-    // The following policy gives Badger user's access to the datasets S3 bucket
-    // to upload files. The permissions on this policy are taken from the Amplify docs:
+    // The following policy gives user's access to the datasets S3 bucket to upload
+    // files. The permissions on this policy are taken from the Amplify docs:
     // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#using-amazon-s3
 
     authRole.addToPolicy(

@@ -14,7 +14,7 @@ let dynamodb = mocked(DynamoDBService.prototype);
 let s3Service = mocked(S3Service.prototype);
 
 beforeAll(() => {
-  tableName = "BadgerTable";
+  tableName = "MainTable";
   process.env.MAIN_TABLE = tableName;
 
   DynamoDBService.getInstance = jest.fn().mockReturnValue(dynamodb);

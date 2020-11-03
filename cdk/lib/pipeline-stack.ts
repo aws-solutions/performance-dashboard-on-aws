@@ -93,7 +93,7 @@ export class PipelineStack extends cdk.Stack {
       {
         detailType: "BASIC",
         resource: build.projectArn,
-        name: "BadgerBuildNotifications",
+        name: "BuildNotifications",
         eventTypeIds: ["codebuild-project-build-state-failed"],
         targets: [
           {

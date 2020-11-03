@@ -23,7 +23,7 @@ exports[`renders a card group with 1 card 1`] = `
         <div
           class="usa-card__body"
         >
-          Welcome to badger
+          Welcome to Performance Dashboard
         </div>
         <div
           class="usa-card__footer"
@@ -59,7 +59,7 @@ exports[`renders a card group with multiple cards 1`] = `
         <div
           class="usa-card__body"
         >
-          Welcome to badger
+          Welcome to Performance Dashboard
         </div>
         <div
           class="usa-card__footer"
@@ -86,7 +86,7 @@ exports[`renders a card group with multiple cards 1`] = `
         <div
           class="usa-card__body"
         >
-          Bienvenido a badger
+          Bienvenido a Performance Dashboard
         </div>
         <div
           class="usa-card__footer"
@@ -113,7 +113,7 @@ exports[`renders a card group with multiple cards 1`] = `
         <div
           class="usa-card__body"
         >
-          Bienvenue chez badger
+          Bienvenue chez Performance Dashboard
         </div>
         <div
           class="usa-card__footer"
@@ -149,7 +149,7 @@ exports[`renders a card without footer 1`] = `
         <div
           class="usa-card__body"
         >
-          Welcome to badger
+          Welcome to Performance Dashboard
         </div>
       </div>
     </li>

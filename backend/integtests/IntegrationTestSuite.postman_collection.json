@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "0c2b1ed7-c894-40bd-a226-c5603d0269f6",
-		"name": "Badger Integration Tests",
+		"name": "Integration Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

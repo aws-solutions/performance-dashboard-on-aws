@@ -7,7 +7,7 @@ interface ApiProps {
   cognitoUserPoolArn: string;
 }
 
-export class BadgerApi extends cdk.Construct {
+export class BackendApi extends cdk.Construct {
   public readonly api: apigateway.RestApi;
 
   constructor(scope: cdk.Construct, id: string, props: ApiProps) {

@@ -1,13 +1,13 @@
 import * as cdk from "@aws-cdk/core";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
 
-export class BadgerDatabase extends cdk.Construct {
+export class Database extends cdk.Construct {
   public readonly mainTable: dynamodb.Table;
 
   constructor(scope: cdk.Construct, id: string) {
     super(scope, id);
 
-    const table = new dynamodb.Table(scope, "BadgerTable", {
+    const table = new dynamodb.Table(scope, "MainTable", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       partitionKey: {
         name: "pk",

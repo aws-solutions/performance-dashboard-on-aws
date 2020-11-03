@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Performance Dashboard on AWS CDK",
   "bin": {
-    "cdk": "bin/badger.js"
+    "cdk": "bin/main.js"
   },
   "scripts": {
     "build": "tsc",

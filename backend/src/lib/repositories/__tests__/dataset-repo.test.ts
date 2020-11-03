@@ -16,8 +16,8 @@ let dynamodb = mocked(DynamoDBService.prototype);
 let s3Service = mocked(S3Service.prototype);
 
 beforeAll(() => {
-  tableName = "BadgerTable";
-  datasetsBucket = "badger-datasets-bucket";
+  tableName = "MainTable";
+  datasetsBucket = "performancedash-datasets-bucket";
   process.env.MAIN_TABLE = tableName;
   process.env.DATASETS_BUCKET = datasetsBucket;
 

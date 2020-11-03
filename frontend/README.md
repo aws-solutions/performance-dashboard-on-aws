@@ -14,7 +14,7 @@ const env = {
   backendApi: "https://123.execute-api.us-west-2.amazonaws.com/prod/",
   userPoolId: "us-west-2_abcd",
   appClientId: "123456789",
-  datasetsBucket: "badger-fdingler-000000000000-datasets",
+  datasetsBucket: "performancedash-fdingler-000000000000-us-east-1-datasets",
   identityPoolId: "us-west-2:123456-123-1234-123456-1234566789",
 };
 

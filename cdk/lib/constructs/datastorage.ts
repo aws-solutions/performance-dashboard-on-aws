@@ -6,7 +6,7 @@ interface Props {
   datasetsBucketName: string;
 }
 
-export class BadgerDataStorage extends cdk.Construct {
+export class DatasetStorage extends cdk.Construct {
   public readonly datasetsBucket: s3.Bucket;
 
   constructor(scope: cdk.Construct, id: string, props: Props) {

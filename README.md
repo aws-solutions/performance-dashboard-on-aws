@@ -63,7 +63,7 @@ Run the install script to download npm dependencies.
 
 ### 3. Deploy
 
-The deploy script will use the AWS CDK to deploy 3 CloudFormation stacks named: `Badger-{env}-Backend`, `Badger-{env}-Frontend` and `Badger-{env}-Auth` where `{env}` is the environment name that you specify as parameter to the deployment script. By default, the stacks will be created in the AWS region that you have configured in your `~/.aws/config` file. If you want CDK to deploy to a specific region, you can set the environment variable `export AWS_REGION=us-west-2` before running the deployment script.
+The deploy script will use the AWS CDK to deploy 3 CloudFormation stacks named: `PerformanceDash-{env}-Backend`, `PerformanceDash-{env}-Frontend` and `PerformanceDash-{env}-Auth` where `{env}` is the environment name that you specify as parameter to the deployment script. By default, the stacks will be created in the AWS region that you have configured in your `~/.aws/config` file. If you want CDK to deploy to a specific region, you can set the environment variable `export AWS_REGION=us-west-2` before running the deployment script.
 
 To create a `dev` environment for example, you may run the deployment script like so:
 

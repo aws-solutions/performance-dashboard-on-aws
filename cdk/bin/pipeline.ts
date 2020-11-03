@@ -6,7 +6,7 @@ import { PipelineStack } from "../lib/pipeline-stack";
 const app = new cdk.App();
 
 new PipelineStack(app, "Pipeline", {
-  stackName: "Badger-Pipeline",
+  stackName: "PerformanceDash-Pipeline",
   repoName: "performance-dashboard-on-aws",
   sourceProvider: "GitHub",
   branch: "mainline",

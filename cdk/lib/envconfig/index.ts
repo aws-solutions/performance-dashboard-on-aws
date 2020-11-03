@@ -30,9 +30,7 @@ const uploadConfig = async () => {
       Bucket: frontendBucket,
       Key: "env.js",
       Body: content,
-      Metadata: {
-        "Content-Type": "application/javascript",
-      },
+      ContentType: "application/javascript",
     })
     .promise();
 

@@ -21,7 +21,7 @@ let dynamodb = mocked(DynamoDBService.prototype);
 
 beforeEach(() => {
   user = { userId: "test" };
-  tableName = "BadgerTable";
+  tableName = "MainTable";
   process.env.MAIN_TABLE = tableName;
 
   DynamoDBService.getInstance = jest.fn().mockReturnValue(dynamodb);
@@ -804,7 +804,7 @@ describe("DashboardRepository.saveDashboardAndWidgets", () => {
                 updatedAt: now.toISOString(),
                 widgetType: "Text",
               },
-              TableName: "BadgerTable",
+              TableName: "MainTable",
             },
           },
         ],

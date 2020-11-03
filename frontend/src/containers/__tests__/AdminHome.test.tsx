@@ -8,6 +8,7 @@ const history = createMemoryHistory();
 
 beforeEach(() => {
   jest.spyOn(history, "push");
+  global.open = jest.fn();
   render(
     <Router history={history}>
       <AdminHome />
@@ -53,5 +54,5 @@ test("renders a view public site button", async () => {
     fireEvent.click(viewButton);
   });
 
-  expect(history.push).toBeCalledWith("/");
+  expect(global.open).toBeCalledWith("/", "_blank");
 });

@@ -2,7 +2,16 @@
 
 ![Unit Tests](https://github.com/awslabs/performance-dashboard-on-aws/workflows/Unit%20Tests/badge.svg?branch=mainline)
 
-A simple, cost-effective and adaptable metrics visualization service that consolidates citizen services data and makes it available to the public; The dashboard offers an easy-to-use web interface to consume and display data about government service performance, making it easier for governments to drive purposeful, data-driven change.
+Performance Dashboard on AWS is a solution for national, municipal, and local governments to publish and visualize their data, so it can be easily shared internally and externally. This cost-effective solution presents digital service performance and other metrics in an accessible, clear, and open way. Performance Dashboard on AWS allows users to customize dashboards to visually demonstrate efficiencies achieved such as the processing of driver license applications or how citizenship statistics have changed over time. Dashboards clearly present performance data to meet the needs of data users including digital leaders, service owners, and the public.
+
+Below are a few key features:
+- Users can configure dashoards to visualize data in easy-to-understand ways through the use of charts and tables. The pairing of modern data visualizations and text features help governments share their data-driven findings.
+- A supportive workflow guides users through dashboard creation step-by-step, from creating an initial draft to archiving a published dashboard.
+- Built with AWS serverless technology, the system is designed to keep costs at a minimum by only incurring costs when your dashboard is actively being used.
+
+To access additional details on the system's features and workflows, please view the user guide.
+
+Performance Dashboard on AWS is setup by running its CloudFormation template. This will create an instantiation of the solution. The architecture diagram provides an overview of what will be built:
 
 <p align="center">
   <img src="docs/images/architecture.svg" alt="Architecture diagram">

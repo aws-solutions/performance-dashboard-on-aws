@@ -10,7 +10,6 @@ const MarkdownRender = (props: MarkdownRenderProps) => {
   return (
     <ReactMarkdown
       allowedTypes={[
-        "heading",
         "link",
         "list",
         "listItem",

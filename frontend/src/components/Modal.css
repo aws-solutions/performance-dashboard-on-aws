@@ -16,4 +16,15 @@
   display: table;
   transform: translate(-50%, -50%);
   -webkit-overflow-scrolling: touch;
+  z-index: 100001;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  z-index: 100000;
 }

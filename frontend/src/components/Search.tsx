@@ -1,9 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import Button from "./Button";
 
 interface Props {
   id: string;
   onSubmit?: Function;
+  addClear?: boolean;
   size: "big" | "small";
 }
 
@@ -12,8 +14,9 @@ interface FormValues {
 }
 
 function Search(props: Props) {
-  const { register, handleSubmit } = useForm<FormValues>();
-
+  const { register, handleSubmit, watch, reset } = useForm<FormValues>();
+  const watchInput = watch(`${props.id}`);
+  console.log(watchInput);
   const onSubmit = (values: FormValues) => {
     if (props.onSubmit) {
       props.onSubmit(values.query);
@@ -51,6 +54,19 @@ function Search(props: Props) {
           Search
         </span>
       </button>
+      {props.addClear && watchInput && (
+        <div className="text-base text-italic margin-bottom-3">
+          {`${0} results for "${watchInput}"`}
+          <Button
+            variant="unstyled"
+            type="button"
+            className="margin-left-2"
+            onClick={reset}
+          >
+            Clear search items
+          </Button>
+        </div>
+      )}
     </form>
   );
 }

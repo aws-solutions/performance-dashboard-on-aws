@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { useHomepage } from "../hooks";
@@ -6,14 +6,28 @@ import UtilsService from "../services/UtilsService";
 // import MainLayout from "../layouts/Main";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
+import { PublicDashboard } from "../models";
 
 function Home() {
+  const [filter, setFilter] = useState("");
   const { homepage, loading } = useHomepage();
-  const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
-  const onSearch = () => {
-    console.log("Searching");
+  const onSearch = (query: string) => {
+    setFilter(query);
   };
+
+  const filterPublicDashboards = (
+    dashboards: Array<PublicDashboard>
+  ): Array<PublicDashboard> => {
+    return dashboards.filter((dashboard) => {
+      const name = dashboard.name.toLowerCase().trim();
+      const query = filter.toLowerCase();
+      return name.includes(query);
+    });
+  };
+
+  const filteredPublicDashboards = filterPublicDashboards(homepage.dashboards);
+  const topicareas = UtilsService.groupByTopicArea(filteredPublicDashboards);
 
   if (loading) {
     return null;
@@ -29,7 +43,7 @@ function Home() {
       </div>
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8 padding-bottom-3">
-          <Search id="search" onSubmit={onSearch} size="big" />
+          <Search id="search" onSubmit={onSearch} size="big" addClear />
         </div>
       </div>
       <div className="grid-row">

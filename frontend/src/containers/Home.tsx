@@ -16,6 +16,10 @@ function Home() {
     setFilter(query);
   };
 
+  const onClear = () => {
+    setFilter("");
+  };
+
   const filterPublicDashboards = (
     dashboards: Array<PublicDashboard>
   ): Array<PublicDashboard> => {
@@ -26,8 +30,9 @@ function Home() {
     });
   };
 
-  const filteredPublicDashboards = filterPublicDashboards(homepage.dashboards);
-  const topicareas = UtilsService.groupByTopicArea(filteredPublicDashboards);
+  const topicareas = UtilsService.groupByTopicArea(
+    filterPublicDashboards(homepage.dashboards)
+  );
 
   if (loading) {
     return null;
@@ -43,7 +48,14 @@ function Home() {
       </div>
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8 padding-bottom-3">
-          <Search id="search" onSubmit={onSearch} size="big" addClear />
+          <Search
+            id="search"
+            onSubmit={onSearch}
+            size="big"
+            onClear={onClear}
+            query={filter}
+            results={filterPublicDashboards(homepage.dashboards).length}
+          />
         </div>
       </div>
       <div className="grid-row">

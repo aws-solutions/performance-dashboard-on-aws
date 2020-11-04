@@ -4,7 +4,7 @@
     "authStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Badger-dev-Auth.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Auth.json",
         "TimeoutInMinutes": "60"
       }
     },
@@ -12,7 +12,7 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "authStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Badger-dev-Backend.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Backend.json",
         "TimeoutInMinutes": "60"
       }
     },
@@ -20,7 +20,7 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "backendStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Badger-dev-Frontend.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Frontend.json",
         "TimeoutInMinutes": "60"
       }
     }

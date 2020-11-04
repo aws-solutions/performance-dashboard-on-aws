@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ItemNotFound } from "../../errors/index";
 
 /**
  * Wrapper for our route handlers to serve as a catch-all for unexpected
@@ -19,8 +20,14 @@ const withErrorHandler = (fn: Function) => async (
 ) => {
   Promise.resolve(fn(req, res)).catch((err) => {
     console.error(err);
-    res.status(500);
-    res.send("Internal server error");
+
+    if (err instanceof ItemNotFound) {
+      res.status(400);
+      res.send("Bad Request");
+    } else {
+      res.status(500);
+      res.send("Internal server error");
+    }
   });
 };
 

@@ -107,6 +107,15 @@ describe("updateDashboard", () => {
     expect(res.send).toBeCalledWith("Unauthorized");
   });
 
+  it("returns a 400 error when topicAreaId is invalid", async () => {
+    topicareaRepo.getTopicAreaById = jest.fn().mockImplementation(() => {
+      throw new ItemNotFound();
+    });
+    await DashboardCtrl.updateDashboard(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Invalid `topicAreaId`");
+  });
+
   it("returns a 400 error when name is missing", async () => {
     delete req.body.name;
     await DashboardCtrl.updateDashboard(req, res);

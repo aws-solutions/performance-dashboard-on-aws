@@ -1,9 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import Button from "./Button";
 
 interface Props {
   id: string;
   onSubmit?: Function;
+  onClear?: Function;
+  query?: string;
+  results?: number;
   size: "big" | "small";
 }
 
@@ -12,11 +16,18 @@ interface FormValues {
 }
 
 function Search(props: Props) {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, reset } = useForm<FormValues>();
 
   const onSubmit = (values: FormValues) => {
     if (props.onSubmit) {
       props.onSubmit(values.query);
+    }
+  };
+
+  const onClear = () => {
+    if (props.onClear) {
+      reset();
+      props.onClear();
     }
   };
 
@@ -26,32 +37,47 @@ function Search(props: Props) {
   }
 
   return (
-    <form
-      className={`usa-search usa-search--${props.size}`}
-      role="search"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <label className="usa-sr-only" htmlFor={props.id}>
-        Search
-      </label>
-      <input
-        className="usa-input"
-        id={props.id}
-        type="search"
-        ref={register}
-        name="query"
-        style={style}
-      />
-      <button className="usa-button" type="submit" style={style}>
-        <span
-          className={
-            props.size === "small" ? "usa-sr-only" : "usa-search__submit-text"
-          }
-        >
+    <>
+      <form
+        className={`usa-search usa-search--${props.size}`}
+        role="search"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <label className="usa-sr-only" htmlFor={props.id}>
           Search
-        </span>
-      </button>
-    </form>
+        </label>
+        <input
+          className="usa-input"
+          id={props.id}
+          type="search"
+          ref={register}
+          name="query"
+          style={style}
+        />
+        <button className="usa-button" type="submit" style={style}>
+          <span
+            className={
+              props.size === "small" ? "usa-sr-only" : "usa-search__submit-text"
+            }
+          >
+            Search
+          </span>
+        </button>
+      </form>
+      {props.onClear && props.query && (
+        <div className="text-base text-italic margin-top-3">
+          {`${props.results} results for "${props.query}"`}
+          <Button
+            variant="unstyled"
+            type="button"
+            className="margin-left-2"
+            onClick={onClear}
+          >
+            Clear search items
+          </Button>
+        </div>
+      )}
+    </>
   );
 }
 

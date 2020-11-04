@@ -7,6 +7,7 @@ import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
 import Button from "../components/Button";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 interface FormValues {
   name: string;
@@ -34,6 +35,17 @@ function CreateDashboard() {
 
   return (
     <>
+      <Breadcrumbs
+        crumbs={[
+          {
+            label: "Dashboards",
+            url: "/admin/dashboards",
+          },
+          {
+            label: "Create new dashboard",
+          },
+        ]}
+      />
       <h1>Create new dashboard</h1>
       <div className="grid-row">
         <div className="grid-col-12">

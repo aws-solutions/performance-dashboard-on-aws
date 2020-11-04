@@ -18,7 +18,7 @@ const withErrorHandler = (fn: Function) => async (
   req: Request,
   res: Response
 ) => {
-  Promise.resolve(fn(req, res)).catch(err => {
+  Promise.resolve(fn(req, res)).catch((err) => {
     console.error(err);
 
     if (err instanceof ItemNotFound) {

@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 /**
  * Catch parser error
  */
-const parserError = function(
+const parserError = function (
   err: Error | null,
   req: Request,
   res: Response,

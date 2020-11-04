@@ -23,6 +23,7 @@ function Modal(props: PathParams) {
         props.closeModal();
       }}
       className="modal"
+      overlayClassName="overlay"
       shouldFocusAfterRender={false}
       aria={{
         labelledby: "title",

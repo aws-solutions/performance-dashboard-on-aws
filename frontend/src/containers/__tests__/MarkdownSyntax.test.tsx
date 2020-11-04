@@ -17,9 +17,9 @@ test("renders the title of the markdown syntax component", async () => {
 test("renders the description of the markdown syntax component", async () => {
   const { findByText } = render(<MarkdownSyntax />, { wrapper: MemoryRouter });
   const title = await findByText(
-    "Supported Markdown is limited to bold, single-level heading, hyperlinks " +
-      "and single-level unordered lists. All other text and markdown will be " +
-      "rendered as plain text."
+    "Supported Markdown is limited to bold, hyperlinks and " +
+      "single-level unordered lists. All other text and markdown " +
+      "will be rendered as plain text."
   );
   expect(title).toBeInTheDocument();
 });
@@ -36,22 +36,6 @@ test("renders the Bold description of the markdown syntax component", async () =
     "To bold text, add two asterisks or underscores before and after a word " +
       "or phrase. To bold the middle of a word for emphasis, add two asterisks " +
       "without spaces around the letters."
-  );
-  expect(title).toBeInTheDocument();
-});
-
-test("renders the Header of the markdown syntax component", async () => {
-  const { findByText } = render(<MarkdownSyntax />, { wrapper: MemoryRouter });
-  const title = await findByText("Header");
-  expect(title).toBeInTheDocument();
-});
-
-test("renders the Header description of the markdown syntax component", async () => {
-  const { findByText } = render(<MarkdownSyntax />, { wrapper: MemoryRouter });
-  const title = await findByText(
-    "To create a heading, add a number sign (#) and space in front of a word " +
-      "or phrase. This platform only supports one level of headings. Any " +
-      "additional number signs will be render as text."
   );
   expect(title).toBeInTheDocument();
 });

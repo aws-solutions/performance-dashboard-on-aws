@@ -6,9 +6,9 @@ const MarkdownSyntax = () => {
     <>
       <h1>Markdown Syntax</h1>
       <p className="font-sans-lg">
-        Supported Markdown is limited to bold, single-level heading, hyperlinks
-        and single-level unordered lists. All other text and markdown will be
-        rendered as plain text.
+        Supported Markdown is limited to bold, hyperlinks and single-level
+        unordered lists. All other text and markdown will be rendered as plain
+        text.
       </p>
 
       <h3 className="margin-top-5">Bold</h3>
@@ -29,29 +29,6 @@ const MarkdownSyntax = () => {
             <td>I love **bold** text</td>
             <td>
               <MarkdownRender source="I love **bold** text" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h3 className="margin-top-7">Header</h3>
-      <p>
-        To create a heading, add a number sign (#) and space in front of a word
-        or phrase. This platform only supports one level of headings. Any
-        additional number signs will be render as text.
-      </p>
-      <table className="usa-table usa-table--borderless" width="100%">
-        <thead>
-          <tr>
-            <th style={{ width: "50%" }}>Markdown</th>
-            <th style={{ width: "50%" }}>Rendered output</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td># Section Title</td>
-            <td>
-              <MarkdownRender source="# Section Title" />
             </td>
           </tr>
         </tbody>

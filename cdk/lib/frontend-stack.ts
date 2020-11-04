@@ -5,6 +5,7 @@ import cloudFront = require("@aws-cdk/aws-cloudfront");
 import customResource = require("@aws-cdk/custom-resources");
 import lambda = require("@aws-cdk/aws-lambda");
 import iam = require("@aws-cdk/aws-iam");
+import kms = require("@aws-cdk/aws-kms");
 import { HttpHeaders } from "@cloudcomponents/cdk-lambda-at-edge-pattern";
 
 interface Props extends cdk.StackProps {
@@ -28,6 +29,10 @@ export class FrontendStack extends cdk.Stack {
     this.frontendBucket = new s3.Bucket(this, "ReactApp", {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
+      encryptionKey: new kms.Key(this, "ReactAppKey", {
+        enableKeyRotation: true,
+      }),
+      encryption: s3.BucketEncryption.KMS,
     });
 
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {

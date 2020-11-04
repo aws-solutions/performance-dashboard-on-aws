@@ -29,10 +29,7 @@ export class FrontendStack extends cdk.Stack {
     this.frontendBucket = new s3.Bucket(this, "ReactApp", {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
-      encryptionKey: new kms.Key(this, "ReactAppKey", {
-        enableKeyRotation: true,
-      }),
-      encryption: s3.BucketEncryption.KMS,
+      encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {

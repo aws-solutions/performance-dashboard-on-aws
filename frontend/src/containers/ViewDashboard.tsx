@@ -1,6 +1,7 @@
 import React from "react";
 import MarkdownRender from "../components/MarkdownRender";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { usePublicDashboard } from "../hooks";

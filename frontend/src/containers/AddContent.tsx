@@ -160,7 +160,7 @@ function AddContent() {
             variant="unstyled"
             type="button"
             onClick={onCancel}
-            className="margin-left-1"
+            className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
           >
             Cancel
           </Button>

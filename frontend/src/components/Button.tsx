@@ -37,6 +37,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       variantClassName = " usa-button--unstyled";
       break;
     default:
+      variantClassName = " usa-button--base";
       break;
   }
 

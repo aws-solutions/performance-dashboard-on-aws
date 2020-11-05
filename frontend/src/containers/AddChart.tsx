@@ -236,7 +236,12 @@ function AddChart() {
             <Button disabled={!dataset || loading} type="submit">
               Add chart
             </Button>
-            <Button variant="unstyled" type="button" onClick={onCancel}>
+            <Button
+              variant="unstyled"
+              className="text-base-dark hover:text-base-darker active:text-base-darkest"
+              type="button"
+              onClick={onCancel}
+            >
               Cancel
             </Button>
           </form>

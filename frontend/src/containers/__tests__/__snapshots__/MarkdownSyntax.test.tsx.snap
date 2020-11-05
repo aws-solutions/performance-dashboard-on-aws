@@ -89,6 +89,7 @@ exports[`renders the markdown syntax component 1`] = `
             I love 
             <a
               href="https://aws.amazon.com"
+              target="_blank"
             >
               AWS
             </a>

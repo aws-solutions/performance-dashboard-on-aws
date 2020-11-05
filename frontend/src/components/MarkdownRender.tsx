@@ -18,7 +18,8 @@ const MarkdownRender = (props: MarkdownRenderProps) => {
         "strong",
         "text",
       ]}
-      className={props.className || ""}
+      linkTarget="_blank"
+      className={props.className}
       source={props.source}
     />
   );

@@ -61,7 +61,7 @@ function DraftsTab(props: Props) {
         <div className="tablet:grid-col-9 text-right">
           <span>
             <Button
-              variant="base"
+              variant="outline"
               disabled={selected.length === 0}
               onClick={() => props.onDelete(selected)}
             >

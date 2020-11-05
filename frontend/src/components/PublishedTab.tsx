@@ -4,7 +4,7 @@ import Button from "./Button";
 import Search from "./Search";
 import DashboardsTable from "./DashboardsTable";
 import ScrollTop from "./ScrollTop";
-import { Link } from "react-router-dom";
+import Link from "./Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 

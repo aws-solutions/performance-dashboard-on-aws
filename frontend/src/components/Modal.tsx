@@ -46,7 +46,7 @@ function Modal(props: PathParams) {
           <Button
             variant="unstyled"
             type="button"
-            className="margin-left-1"
+            className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
             onClick={props.closeModal}
           >
             <FontAwesomeIcon
@@ -69,7 +69,7 @@ function Modal(props: PathParams) {
       <Button
         variant="unstyled"
         type="button"
-        className="margin-left-1"
+        className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
         onClick={props.closeModal}
       >
         Cancel

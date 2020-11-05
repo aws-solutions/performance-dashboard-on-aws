@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "./Link";
 
 interface Props {
   crumbs: Array<{
@@ -18,7 +18,7 @@ function Breadcrumbs(props: Props) {
               className="usa-breadcrumb__list-item"
               key={crumb.label || index}
             >
-              <Link to={crumb.url} className="usa-breadcrumb__link">
+              <Link to={crumb.url}>
                 <span>{crumb.label}</span>
               </Link>
             </li>

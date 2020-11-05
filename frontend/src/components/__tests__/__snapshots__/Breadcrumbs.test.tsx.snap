@@ -48,11 +48,15 @@ exports[`renders a breadcrumb with two crumbs 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          aria-label=""
+          class="link "
           href="/home"
+          target=""
         >
           <span>
-            Home
+            <span>
+              Home
+            </span>
           </span>
         </a>
       </li>

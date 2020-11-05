@@ -3,8 +3,8 @@ import { Widget } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGripLinesVertical,
-  faCaretUp,
-  faCaretDown,
+  faArrowUp,
+  faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import "./WidgetList.css";
@@ -105,11 +105,12 @@ function WidgetList(props: Props) {
                       {index > 0 && (
                         <Button
                           variant="unstyled"
+                          className="text-base-darkest"
                           ariaLabel={`Move ${widget.name} up`}
                           onClick={() => onMoveUp(index)}
                           ref={caretUpRefs[index]}
                         >
-                          <FontAwesomeIcon icon={faCaretUp} />
+                          <FontAwesomeIcon size="sm" icon={faArrowUp} />
                         </Button>
                       )}
                     </div>
@@ -117,13 +118,15 @@ function WidgetList(props: Props) {
                       {index < props.widgets.length - 1 && (
                         <Button
                           variant="unstyled"
+                          className="text-base-darkest"
                           ariaLabel={`Move ${widget.name} down`}
                           onClick={() => onMoveDown(index)}
                           ref={caretDownRefs[index]}
                         >
                           <FontAwesomeIcon
                             id={`${widget.id}-move-down`}
-                            icon={faCaretDown}
+                            size="sm"
+                            icon={faArrowDown}
                           />
                         </Button>
                       )}

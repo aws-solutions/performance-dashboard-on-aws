@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSort } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { Dashboard, DashboardState } from "../models";
 import Button from "./Button";
 
@@ -15,8 +15,13 @@ interface SelectionHashMap {
   [dashboardId: string]: Dashboard;
 }
 
+type ColumnType = "name" | "topicArea" | "lastUpdated" | "createdBy";
+type Direction = "up" | "down";
+
 function DashboardsTable(props: Props) {
   const [selected, setSelected] = useState<SelectionHashMap>({});
+  const [sortedBy, setSortedBy] = useState<ColumnType>("lastUpdated");
+  const [direction, setDirection] = useState<Direction>("down");
 
   const onSelect = (dashboard: Dashboard) => {
     const selection = { [dashboard.id]: dashboard, ...selected };
@@ -54,6 +59,15 @@ function DashboardsTable(props: Props) {
     }
   };
 
+  const sortBy = (columnType: ColumnType) => {
+    if (sortedBy === columnType) {
+      setDirection(direction === "down" ? "up" : "down");
+    } else {
+      setDirection("down");
+      setSortedBy(columnType);
+    }
+  };
+
   return (
     <table className="usa-table usa-table--borderless" width="100%">
       <thead>
@@ -74,84 +88,150 @@ function DashboardsTable(props: Props) {
             Dashboard name
             <Button
               variant="unstyled"
-              className="margin-left-1"
-              onClick={() => console.log("TODO: Implement sort by name")}
+              className={`margin-left-1 hover:text-base-light ${
+                sortedBy === "name" ? "text-base-darkest" : "text-white"
+              }`}
+              onClick={() => sortBy("name")}
             >
-              <FontAwesomeIcon icon={faSort} />
+              <FontAwesomeIcon
+                icon={
+                  sortedBy === "name" && direction === "up"
+                    ? faChevronUp
+                    : faChevronDown
+                }
+              />
             </Button>
           </th>
           <th style={{ width: "30%" }}>
             Topic area
             <Button
               variant="unstyled"
-              className="margin-left-1"
-              onClick={() => console.log("TODO: Implement sort by topic area")}
+              className={`margin-left-1 hover:text-base-light ${
+                sortedBy === "topicArea" ? "text-base-darkest" : "text-white"
+              }`}
+              onClick={() => sortBy("topicArea")}
             >
-              <FontAwesomeIcon icon={faSort} />
+              <FontAwesomeIcon
+                icon={
+                  sortedBy === "topicArea" && direction === "up"
+                    ? faChevronUp
+                    : faChevronDown
+                }
+              />
             </Button>
           </th>
           <th>
             Last updated
             <Button
               variant="unstyled"
-              className="margin-left-1"
-              onClick={() =>
-                console.log("TODO: Implement sort by last updated")
-              }
+              className={`margin-left-1 hover:text-base-light ${
+                sortedBy === "lastUpdated" ? "text-base-darkest" : "text-white"
+              }`}
+              onClick={() => sortBy("lastUpdated")}
             >
-              <FontAwesomeIcon icon={faSort} />
+              <FontAwesomeIcon
+                icon={
+                  sortedBy === "lastUpdated" && direction === "up"
+                    ? faChevronUp
+                    : faChevronDown
+                }
+              />
             </Button>
           </th>
           <th>
             Created by
             <Button
               variant="unstyled"
-              className="margin-left-1"
-              onClick={() => console.log("TODO: Implement sort by createdBy")}
+              className={`margin-left-1 hover:text-base-light ${
+                sortedBy === "createdBy" ? "text-base-darkest" : "text-white"
+              }`}
+              onClick={() => sortBy("createdBy")}
             >
-              <FontAwesomeIcon icon={faSort} />
+              <FontAwesomeIcon
+                icon={
+                  sortedBy === "createdBy" && direction === "up"
+                    ? faChevronUp
+                    : faChevronDown
+                }
+              />
             </Button>
           </th>
         </tr>
       </thead>
       <tbody>
-        {props.dashboards.map((dashboard) => (
-          <tr key={dashboard.id}>
-            <td>
-              <label className="usa-sr-only" htmlFor={dashboard.id}>
-                {dashboard.name}
-              </label>
-              <input
-                type="checkbox"
-                id={dashboard.id}
-                checked={isSelected(dashboard)}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  if (e.target.checked) {
-                    onSelect(dashboard);
-                  } else {
-                    onDeselect(dashboard);
-                  }
-                }}
-              />
-            </td>
-            <td>
-              <Link
-                to={dashboardLink(
-                  dashboard.id,
-                  dashboard.state as DashboardState
-                )}
-              >
-                {dashboard.name}
-              </Link>
-            </td>
-            <td>{dashboard.topicAreaName}</td>
-            <td>{dayjs(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}</td>
-            <td>{dashboard.createdBy}</td>
-          </tr>
-        ))}
+        {sortDashboards(props.dashboards, sortedBy, direction).map(
+          (dashboard) => (
+            <tr key={dashboard.id}>
+              <td>
+                <label className="usa-sr-only" htmlFor={dashboard.id}>
+                  {dashboard.name}
+                </label>
+                <input
+                  type="checkbox"
+                  id={dashboard.id}
+                  checked={isSelected(dashboard)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (e.target.checked) {
+                      onSelect(dashboard);
+                    } else {
+                      onDeselect(dashboard);
+                    }
+                  }}
+                />
+              </td>
+              <td>
+                <Link
+                  to={dashboardLink(
+                    dashboard.id,
+                    dashboard.state as DashboardState
+                  )}
+                >
+                  {dashboard.name}
+                </Link>
+              </td>
+              <td>{dashboard.topicAreaName}</td>
+              <td>{dayjs(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}</td>
+              <td>{dashboard.createdBy}</td>
+            </tr>
+          )
+        )}
       </tbody>
     </table>
   );
+}
+
+function sortDashboards(
+  dashboards: Array<Dashboard>,
+  sortedBy: ColumnType,
+  direction: Direction
+): Array<Dashboard> {
+  const sortedDashboard = [...dashboards];
+  if (sortedBy === "name") {
+    sortedDashboard.sort((a: Dashboard, b: Dashboard) =>
+      direction === "down"
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name)
+    );
+  } else if (sortedBy === "topicArea") {
+    sortedDashboard.sort((a: Dashboard, b: Dashboard) =>
+      direction === "down"
+        ? a.topicAreaName.localeCompare(b.topicAreaName)
+        : b.topicAreaName.localeCompare(a.topicAreaName)
+    );
+  } else if (sortedBy === "lastUpdated") {
+    sortedDashboard.sort((a: Dashboard, b: Dashboard) =>
+      direction === "down"
+        ? new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+        : new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+    );
+  } else if (sortedBy === "createdBy") {
+    sortedDashboard.sort((a: Dashboard, b: Dashboard) =>
+      direction === "down"
+        ? a.createdBy.localeCompare(b.createdBy)
+        : b.createdBy.localeCompare(a.createdBy)
+    );
+  }
+  return sortedDashboard;
 }
 
 function dashboardLink(id: string, state: DashboardState): string {

@@ -27,20 +27,20 @@ exports[`renders a table with dashboards 1`] = `
         >
           Dashboard name
           <button
-            class="usa-button usa-button--unstyled margin-left-1"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-sort fa-w-10 "
-              data-icon="sort"
+              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
               role="img"
-              viewBox="0 0 320 512"
+              viewBox="0 0 448 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
                 fill="currentColor"
               />
             </svg>
@@ -51,20 +51,20 @@ exports[`renders a table with dashboards 1`] = `
         >
           Topic area
           <button
-            class="usa-button usa-button--unstyled margin-left-1"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-sort fa-w-10 "
-              data-icon="sort"
+              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
               role="img"
-              viewBox="0 0 320 512"
+              viewBox="0 0 448 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
                 fill="currentColor"
               />
             </svg>
@@ -73,20 +73,20 @@ exports[`renders a table with dashboards 1`] = `
         <th>
           Last updated
           <button
-            class="usa-button usa-button--unstyled margin-left-1"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darkest"
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-sort fa-w-10 "
-              data-icon="sort"
+              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
               role="img"
-              viewBox="0 0 320 512"
+              viewBox="0 0 448 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
                 fill="currentColor"
               />
             </svg>
@@ -95,20 +95,20 @@ exports[`renders a table with dashboards 1`] = `
         <th>
           Created by
           <button
-            class="usa-button usa-button--unstyled margin-left-1"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-sort fa-w-10 "
-              data-icon="sort"
+              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
               role="img"
-              viewBox="0 0 320 512"
+              viewBox="0 0 448 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
                 fill="currentColor"
               />
             </svg>
@@ -179,20 +179,20 @@ exports[`renders an empty table 1`] = `
         >
           Dashboard name
           <button
-            class="usa-button usa-button--unstyled margin-left-1"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-sort fa-w-10 "
-              data-icon="sort"
+              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
               role="img"
-              viewBox="0 0 320 512"
+              viewBox="0 0 448 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
                 fill="currentColor"
               />
             </svg>
@@ -203,20 +203,20 @@ exports[`renders an empty table 1`] = `
         >
           Topic area
           <button
-            class="usa-button usa-button--unstyled margin-left-1"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-sort fa-w-10 "
-              data-icon="sort"
+              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
               role="img"
-              viewBox="0 0 320 512"
+              viewBox="0 0 448 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
                 fill="currentColor"
               />
             </svg>
@@ -225,20 +225,20 @@ exports[`renders an empty table 1`] = `
         <th>
           Last updated
           <button
-            class="usa-button usa-button--unstyled margin-left-1"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darkest"
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-sort fa-w-10 "
-              data-icon="sort"
+              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
               role="img"
-              viewBox="0 0 320 512"
+              viewBox="0 0 448 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
                 fill="currentColor"
               />
             </svg>
@@ -247,20 +247,20 @@ exports[`renders an empty table 1`] = `
         <th>
           Created by
           <button
-            class="usa-button usa-button--unstyled margin-left-1"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-sort fa-w-10 "
-              data-icon="sort"
+              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
               role="img"
-              viewBox="0 0 320 512"
+              viewBox="0 0 448 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
                 fill="currentColor"
               />
             </svg>

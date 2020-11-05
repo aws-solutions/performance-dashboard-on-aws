@@ -19,7 +19,10 @@ function AdminHome() {
   };
 
   const onViewPublicWebsite = () => {
-    history.push("/");
+    const win = window.open("/", "_blank");
+    if (!!win) {
+      win.focus();
+    }
   };
 
   return (

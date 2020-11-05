@@ -19,10 +19,14 @@ exports[`renders a FourZeroFour component 1`] = `
       You may want to double-check your link and try again, or return to the
        
       <a
-        class="text-black"
+        aria-label=""
+        class="link "
         href="/"
+        target=""
       >
-        homepage
+        <span>
+          homepage
+        </span>
       </a>
       .
     </p>

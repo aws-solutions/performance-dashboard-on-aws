@@ -1,4 +1,5 @@
 import React from "react";
+import "./StepIndicator.css";
 
 interface Props {
   current: number;
@@ -33,10 +34,10 @@ function StepIndicator(props: Props) {
         <h2 className="usa-step-indicator__heading">
           <span className="usa-step-indicator__heading-counter">
             <span className="usa-sr-only">Step</span>
-            <span className="usa-step-indicator__current-step">
+            <span className="usa-step-indicator__current-step bg-base-dark">
               {props.current + 1}
             </span>
-            <span className="usa-step-indicator__total-steps">
+            <span className="usa-step-indicator__total-steps text-base-dark margin-left-2px">
               of {props.segments.length}
             </span>
           </span>
@@ -63,7 +64,9 @@ function Segment(props: SegmentProps) {
         className="usa-step-indicator__segment usa-step-indicator__segment--current"
         aria-current="true"
       >
-        <span className="usa-step-indicator__segment-label">{props.label}</span>
+        <span className="usa-step-indicator__segment-label">
+          <div className="text-base-dark">{props.label}</div>
+        </span>
       </li>
     );
   }
@@ -72,7 +75,8 @@ function Segment(props: SegmentProps) {
     return (
       <li className="usa-step-indicator__segment usa-step-indicator__segment--complete">
         <span className="usa-step-indicator__segment-label">
-          {props.label} <span className="usa-sr-only">completed</span>
+          <div className="text-base-dark">{props.label}</div>{" "}
+          <span className="usa-sr-only">completed</span>
         </span>
       </li>
     );
@@ -81,7 +85,8 @@ function Segment(props: SegmentProps) {
   return (
     <li className="usa-step-indicator__segment">
       <span className="usa-step-indicator__segment-label">
-        {props.label} <span className="usa-sr-only">not completed</span>
+        <div className="text-base-dark">{props.label}</div>{" "}
+        <span className="usa-sr-only">not completed</span>
       </span>
     </li>
   );

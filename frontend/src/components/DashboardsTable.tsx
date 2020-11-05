@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
+import Link from "./Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { Dashboard, DashboardState } from "../models";
@@ -85,7 +85,7 @@ function DashboardsTable(props: Props) {
             />
           </th>
           <th style={{ width: "30%" }}>
-            Dashboard name
+            <span className="font-sans-xs">Dashboard name</span>
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${
@@ -103,7 +103,7 @@ function DashboardsTable(props: Props) {
             </Button>
           </th>
           <th style={{ width: "30%" }}>
-            Topic area
+            <span className="font-sans-xs">Topic area</span>
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${
@@ -121,7 +121,7 @@ function DashboardsTable(props: Props) {
             </Button>
           </th>
           <th>
-            Last updated
+            <span className="font-sans-xs">Last updated</span>
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${
@@ -139,7 +139,7 @@ function DashboardsTable(props: Props) {
             </Button>
           </th>
           <th>
-            Created by
+            <span className="font-sans-xs">Created by</span>
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${
@@ -185,13 +185,24 @@ function DashboardsTable(props: Props) {
                     dashboard.id,
                     dashboard.state as DashboardState
                   )}
+                  className="text-no-underline"
                 >
-                  {dashboard.name}
+                  <span className="text-bold text-base-darkest font-sans-md">
+                    {dashboard.name}
+                  </span>
                 </Link>
               </td>
-              <td>{dashboard.topicAreaName}</td>
-              <td>{dayjs(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}</td>
-              <td>{dashboard.createdBy}</td>
+              <td>
+                <span className="font-sans-md">{dashboard.topicAreaName}</span>
+              </td>
+              <td>
+                <span className="font-sans-md">
+                  {dayjs(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}
+                </span>
+              </td>
+              <td>
+                <span className="font-sans-md">{dashboard.createdBy}</span>
+              </td>
             </tr>
           )
         )}

@@ -127,7 +127,12 @@ function EditText() {
             <Button disabled={loading} type="submit">
               Save
             </Button>
-            <Button variant="unstyled" type="button" onClick={onCancel}>
+            <Button
+              variant="unstyled"
+              className="text-base-dark hover:text-base-darker active:text-base-darkest"
+              type="button"
+              onClick={onCancel}
+            >
               Cancel
             </Button>
           </form>

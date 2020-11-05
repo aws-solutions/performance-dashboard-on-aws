@@ -46,7 +46,7 @@ exports[`renders a create draft type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
-              class="usa-button usa-button--unstyled margin-left-1"
+              class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
               <svg
@@ -82,7 +82,7 @@ exports[`renders a create draft type Modal 1`] = `
           Create draft
         </button>
         <button
-          class="usa-button usa-button--unstyled margin-left-1"
+          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
           type="button"
         >
           Cancel
@@ -139,7 +139,7 @@ exports[`renders a delete type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
-              class="usa-button usa-button--unstyled margin-left-1"
+              class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
               <svg
@@ -175,7 +175,7 @@ exports[`renders a delete type Modal 1`] = `
           Delete
         </button>
         <button
-          class="usa-button usa-button--unstyled margin-left-1"
+          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
           type="button"
         >
           Cancel
@@ -232,7 +232,7 @@ exports[`renders a publish type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
-              class="usa-button usa-button--unstyled margin-left-1"
+              class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
               <svg
@@ -268,7 +268,7 @@ exports[`renders a publish type Modal 1`] = `
           Publish
         </button>
         <button
-          class="usa-button usa-button--unstyled margin-left-1"
+          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
           type="button"
         >
           Cancel
@@ -325,7 +325,7 @@ exports[`renders a re-publish type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
-              class="usa-button usa-button--unstyled margin-left-1"
+              class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
               <svg
@@ -361,7 +361,7 @@ exports[`renders a re-publish type Modal 1`] = `
           Re-publish
         </button>
         <button
-          class="usa-button usa-button--unstyled margin-left-1"
+          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
           type="button"
         >
           Cancel
@@ -418,7 +418,7 @@ exports[`renders an archive type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
-              class="usa-button usa-button--unstyled margin-left-1"
+              class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
               <svg
@@ -454,7 +454,7 @@ exports[`renders an archive type Modal 1`] = `
           Archive
         </button>
         <button
-          class="usa-button usa-button--unstyled margin-left-1"
+          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
           type="button"
         >
           Cancel

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "../components/Link";
 
 function FourZeroFour() {
   return (
@@ -11,10 +11,7 @@ function FourZeroFour() {
         <hr className="width-tablet border-base-light" />
         <p className="font-sans-md">
           You may want to double-check your link and try again, or return to the{" "}
-          <Link className="text-black" to="/">
-            homepage
-          </Link>
-          .
+          <Link to="/">homepage</Link>.
         </p>
       </div>
     </>

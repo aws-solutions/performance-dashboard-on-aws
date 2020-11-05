@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import MarkdownRender from "./MarkdownRender";
-import { Link } from "react-router-dom";
+import Link from "./Link";
 import "./Markdown.css";
 
 type MarkdownProps = {

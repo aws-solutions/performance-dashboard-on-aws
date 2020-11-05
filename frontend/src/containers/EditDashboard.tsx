@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import { useHistory, useParams, Link } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import Link from "../components/Link";
 import { useDashboard } from "../hooks";
 import { Widget, LocationState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -177,10 +178,10 @@ function EditDashboard() {
           <span className="text-base margin-right-1">
             {dashboard && `Last saved ${dayjs(dashboard.updatedAt).fromNow()}`}
           </span>
-          <Button variant="base" onClick={onPreview}>
+          <Button variant="outline" onClick={onPreview}>
             Preview
           </Button>
-          <Button variant="outline" onClick={onPublishDashboard}>
+          <Button variant="base" onClick={onPublishDashboard}>
             Publish
           </Button>
         </div>

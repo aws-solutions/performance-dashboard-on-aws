@@ -13,7 +13,7 @@ exports[`renders a base button 1`] = `
 exports[`renders a button with additional classNames 1`] = `
 <div>
   <button
-    class="usa-button banana"
+    class="usa-button usa-button--base banana"
   >
     Ok
   </button>
@@ -23,7 +23,7 @@ exports[`renders a button with additional classNames 1`] = `
 exports[`renders a default button 1`] = `
 <div>
   <button
-    class="usa-button"
+    class="usa-button usa-button--base"
   >
     Ok
   </button>
@@ -33,7 +33,7 @@ exports[`renders a default button 1`] = `
 exports[`renders a disabled button 1`] = `
 <div>
   <button
-    class="usa-button"
+    class="usa-button usa-button--base"
     disabled=""
   >
     Ok
@@ -44,7 +44,7 @@ exports[`renders a disabled button 1`] = `
 exports[`renders a reset button 1`] = `
 <div>
   <button
-    class="usa-button"
+    class="usa-button usa-button--base"
     type="reset"
   >
     Ok
@@ -65,7 +65,7 @@ exports[`renders a secondary button 1`] = `
 exports[`renders a submit button 1`] = `
 <div>
   <button
-    class="usa-button"
+    class="usa-button usa-button--base"
     type="submit"
   >
     Ok
@@ -107,7 +107,7 @@ exports[`renders aria-label attribute in button 1`] = `
 <div>
   <button
     aria-label="For screen readers"
-    class="usa-button"
+    class="usa-button usa-button--base"
   >
     Ok
   </button>

@@ -54,7 +54,11 @@ function Search(props: Props) {
           name="query"
           style={style}
         />
-        <button className="usa-button" type="submit" style={style}>
+        <button
+          className="usa-button usa-button--base"
+          type="submit"
+          style={style}
+        >
           <span
             className={
               props.size === "small" ? "usa-sr-only" : "usa-search__submit-text"
@@ -70,7 +74,7 @@ function Search(props: Props) {
           <Button
             variant="unstyled"
             type="button"
-            className="margin-left-2"
+            className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
             onClick={onClear}
           >
             Clear search items

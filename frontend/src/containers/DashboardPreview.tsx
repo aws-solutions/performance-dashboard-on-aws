@@ -84,15 +84,15 @@ function DashboardPreview() {
             <span className="usa-tag text-middle">Preview</span>
           </div>
           <div className="grid-col text-right">
+            <Button variant="outline" type="button" onClick={onCancel}>
+              Close Preview
+            </Button>
             <Button
               variant="base"
               onClick={onPublishDashboard}
               disabled={dashboard?.state === DashboardState.PublishPending}
             >
               Publish
-            </Button>
-            <Button variant="outline" type="button" onClick={onCancel}>
-              Close Preview
             </Button>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MarkdownRender from "../components/MarkdownRender";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useDashboard, useDashboardVersions } from "../hooks";

@@ -25,7 +25,11 @@ exports[`renders a table with dashboards 1`] = `
         <th
           style="width: 30%;"
         >
-          Dashboard name
+          <span
+            class="font-sans-xs"
+          >
+            Dashboard name
+          </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
@@ -49,7 +53,11 @@ exports[`renders a table with dashboards 1`] = `
         <th
           style="width: 30%;"
         >
-          Topic area
+          <span
+            class="font-sans-xs"
+          >
+            Topic area
+          </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
@@ -71,7 +79,11 @@ exports[`renders a table with dashboards 1`] = `
           </button>
         </th>
         <th>
-          Last updated
+          <span
+            class="font-sans-xs"
+          >
+            Last updated
+          </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darkest"
           >
@@ -93,7 +105,11 @@ exports[`renders a table with dashboards 1`] = `
           </button>
         </th>
         <th>
-          Created by
+          <span
+            class="font-sans-xs"
+          >
+            Created by
+          </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
@@ -132,19 +148,40 @@ exports[`renders a table with dashboards 1`] = `
         </td>
         <td>
           <a
+            aria-label=""
+            class="link text-no-underline"
             href="/admin/dashboard/edit/abc"
+            target=""
           >
-            USWDS
+            <span>
+              <span
+                class="text-bold text-base-darkest font-sans-md"
+              >
+                USWDS
+              </span>
+            </span>
           </a>
         </td>
         <td>
-          Public Safety
+          <span
+            class="font-sans-md"
+          >
+            Public Safety
+          </span>
         </td>
         <td>
-          2020-09-09 08:09
+          <span
+            class="font-sans-md"
+          >
+            2020-09-09 08:09
+          </span>
         </td>
         <td>
-          johndoe
+          <span
+            class="font-sans-md"
+          >
+            johndoe
+          </span>
         </td>
       </tr>
     </tbody>
@@ -177,7 +214,11 @@ exports[`renders an empty table 1`] = `
         <th
           style="width: 30%;"
         >
-          Dashboard name
+          <span
+            class="font-sans-xs"
+          >
+            Dashboard name
+          </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
@@ -201,7 +242,11 @@ exports[`renders an empty table 1`] = `
         <th
           style="width: 30%;"
         >
-          Topic area
+          <span
+            class="font-sans-xs"
+          >
+            Topic area
+          </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
@@ -223,7 +268,11 @@ exports[`renders an empty table 1`] = `
           </button>
         </th>
         <th>
-          Last updated
+          <span
+            class="font-sans-xs"
+          >
+            Last updated
+          </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darkest"
           >
@@ -245,7 +294,11 @@ exports[`renders an empty table 1`] = `
           </button>
         </th>
         <th>
-          Created by
+          <span
+            class="font-sans-xs"
+          >
+            Created by
+          </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >

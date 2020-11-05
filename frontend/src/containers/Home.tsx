@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
+import Link from "../components/Link";
 import { useHomepage } from "../hooks";
 import UtilsService from "../services/UtilsService";
-// import MainLayout from "../layouts/Main";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
 import { PublicDashboard } from "../models";

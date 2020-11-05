@@ -109,7 +109,7 @@ function EditDetails() {
             <Button
               variant="unstyled"
               type="button"
-              className="margin-left-1"
+              className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               onClick={onCancel}
             >
               Cancel

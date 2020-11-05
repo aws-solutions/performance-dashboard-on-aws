@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import "./WidgetList.css";
-import { Link } from "react-router-dom";
+import Link from "./Link";
 
 interface Props {
   onClick: Function;
@@ -105,7 +105,7 @@ function WidgetList(props: Props) {
                       {index > 0 && (
                         <Button
                           variant="unstyled"
-                          className="text-base-darkest"
+                          className="text-base-darker hover:text-base-darkest active:text-base-darkest"
                           ariaLabel={`Move ${widget.name} up`}
                           onClick={() => onMoveUp(index)}
                           ref={caretUpRefs[index]}
@@ -118,7 +118,7 @@ function WidgetList(props: Props) {
                       {index < props.widgets.length - 1 && (
                         <Button
                           variant="unstyled"
-                          className="text-base-darkest"
+                          className="text-base-darker hover:text-base-darkest active:text-base-darkest"
                           ariaLabel={`Move ${widget.name} down`}
                           onClick={() => onMoveDown(index)}
                           ref={caretDownRefs[index]}
@@ -146,22 +146,22 @@ function WidgetList(props: Props) {
                     {widget.widgetType}
                   </div>
                   <div className="grid-col flex-3 text-no-wrap overflow-hidden text-overflow-ellipsis text-right">
+                    <Button
+                      variant="unstyled"
+                      className="margin-right-2 text-base-dark hover:text-base-darker active:text-base-darkest"
+                      onClick={() => onDelete(widget)}
+                      ariaLabel={`Delete ${widget.name}`}
+                    >
+                      Delete
+                    </Button>
                     <Link
-                      className="usa-link margin-right-2"
-                      aria-label={`Edit ${widget.name}`}
+                      ariaLabel={`Edit ${widget.name}`}
                       to={`/admin/dashboard/${
                         widget.dashboardId
                       }/edit-${widget.widgetType.toLowerCase()}/${widget.id}`}
                     >
                       Edit
                     </Link>
-                    <Button
-                      variant="unstyled"
-                      onClick={() => onDelete(widget)}
-                      ariaLabel={`Delete ${widget.name}`}
-                    >
-                      Delete
-                    </Button>
                   </div>
                 </div>
               </div>

@@ -19,7 +19,7 @@ exports[`renders a big input 1`] = `
       type="search"
     />
     <button
-      class="usa-button"
+      class="usa-button usa-button--base"
       type="submit"
     >
       <span
@@ -52,7 +52,7 @@ exports[`renders a small search input 1`] = `
       type="search"
     />
     <button
-      class="usa-button"
+      class="usa-button usa-button--base"
       style="height: 37px;"
       type="submit"
     >

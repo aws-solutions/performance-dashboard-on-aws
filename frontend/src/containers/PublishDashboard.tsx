@@ -9,6 +9,7 @@ import StepIndicator from "../components/StepIndicator";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
+import dayjs from "dayjs";
 
 interface PathParams {
   dashboardId: string;
@@ -101,10 +102,13 @@ function PublishDashboard() {
           </ul>
         </div>
         <div className="grid-col text-right">
-          <Button variant="base" onClick={onPreview}>
+          <span className="text-base margin-right-1">
+            {dashboard && `Last saved ${dayjs(dashboard.updatedAt).fromNow()}`}
+          </span>
+          <Button variant="outline" onClick={onPreview}>
             Preview
           </Button>
-          <Button variant="outline" onClick={onReturnToDraft}>
+          <Button variant="base" onClick={onReturnToDraft}>
             Return to draft
           </Button>
         </div>
@@ -173,7 +177,7 @@ function PublishDashboard() {
         <div>
           <span hidden={step === 0}>
             <Button
-              variant="base"
+              variant="outline"
               type="button"
               onClick={() => setStep(step - 1)}
             >

@@ -88,10 +88,6 @@ See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more inform
 
 See [CONTRIBUTING](CONTRIBUTING.md) for more information.
 
-## Acknowledgements
-
-Performance Dashboard on AWS was inspired by the UK Government Digital Service's Performance website. 
-
 ## License
 
 This project is licensed under the Apache-2.0 License.

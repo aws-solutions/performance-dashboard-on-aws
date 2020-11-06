@@ -29,7 +29,7 @@ interface PathParams {
 function AddChart() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
@@ -39,14 +39,14 @@ function AddChart() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [chartType, setChartType] = useState<ChartType>(ChartType.LineChart);
-  const [loading, setLoading] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
       throw new Error("CSV file not specified");
     }
 
-    setLoading(true);
+    setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
       JSON.stringify(dataset)
@@ -57,7 +57,7 @@ function AddChart() {
       json: uploadResponse.s3Keys.json,
     });
 
-    setLoading(false);
+    setFileLoading(false);
     return newDataset;
   };
 
@@ -127,25 +127,29 @@ function AddChart() {
     setCsvFile(data);
   };
 
+  const crumbs = [
+    {
+      label: "Dashboards",
+      url: "/admin/dashboards",
+    },
+    {
+      label: dashboard?.name,
+      url: `/admin/dashboard/edit/${dashboardId}`,
+    },
+  ];
+
+  if (!loading) {
+    crumbs.push({
+      label: "Add chart",
+      url: "",
+    });
+  }
+
   return (
     <>
-      <Breadcrumbs
-        crumbs={[
-          {
-            label: "Dashboards",
-            url: "/admin/dashboards",
-          },
-          {
-            label: dashboard?.name,
-            url: `/admin/dashboard/edit/${dashboardId}`,
-          },
-          {
-            label: "Add content item",
-          },
-        ]}
-      />
+      <Breadcrumbs crumbs={crumbs} />
+      <h1>Add chart</h1>
 
-      <h1>Add content</h1>
       <div className="text-base text-italic">Step 2 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Configure chart
@@ -174,7 +178,7 @@ function AddChart() {
                 label="File upload"
                 accept=".csv"
                 disabled={!title}
-                loading={loading}
+                loading={fileLoading}
                 errors={csvErrors}
                 register={register}
                 hint="Must be a CSV file. [Link] How do I format my CSV?"
@@ -230,10 +234,10 @@ function AddChart() {
             <br />
             <br />
             <hr />
-            <Button variant="outline" onClick={goBack}>
+            <Button variant="outline" type="button" onClick={goBack}>
               Back
             </Button>
-            <Button disabled={!dataset || loading} type="submit">
+            <Button disabled={!dataset || fileLoading} type="submit">
               Add chart
             </Button>
             <Button

@@ -7,6 +7,7 @@ import TextField from "../components/TextField";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
 import { useWidget, useDashboard } from "../hooks";
+import Spinner from "../components/Spinner";
 
 interface FormValues {
   title: string;
@@ -65,90 +66,96 @@ function EditText() {
     });
   };
 
-  if (!widget) {
-    return null;
+  const crumbs = [
+    {
+      label: "Dashboards",
+      url: "/admin/dashboards",
+    },
+    {
+      label: dashboard?.name,
+      url: `/admin/dashboard/edit/${dashboardId}`,
+    },
+  ];
+
+  if (!loading && widget) {
+    crumbs.push({
+      label: "Edit text",
+      url: "",
+    });
   }
 
   return (
     <>
-      <Breadcrumbs
-        crumbs={[
-          {
-            label: "Dashboards",
-            url: "/admin/dashboards",
-          },
-          {
-            label: dashboard?.name,
-            url: `/admin/dashboard/edit/${dashboardId}`,
-          },
-          {
-            label: "Add content item",
-          },
-        ]}
-      />
+      <Breadcrumbs crumbs={crumbs} />
+      <h1>Edit text</h1>
 
-      <h1>Edit content item</h1>
-      <div className="grid-row width-desktop">
-        <div className="grid-col-6">
-          <form
-            className="usa-form usa-form--large"
-            onChange={onFormChange}
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <fieldset className="usa-fieldset">
-              <TextField
-                id="title"
-                name="title"
-                label="Text title"
-                hint="Give your content a descriptive title."
-                error={errors.title && "Please specify a content title"}
-                defaultValue={widget.name}
-                required
-                register={register}
-              />
+      {loading || !widget ? (
+        <Spinner className="text-center margin-top-9" label="Loading" />
+      ) : (
+        <>
+          <div className="grid-row width-desktop">
+            <div className="grid-col-6">
+              <form
+                className="usa-form usa-form--large"
+                onChange={onFormChange}
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <fieldset className="usa-fieldset">
+                  <TextField
+                    id="title"
+                    name="title"
+                    label="Text title"
+                    hint="Give your content a descriptive title."
+                    error={errors.title && "Please specify a content title"}
+                    defaultValue={widget.name}
+                    required
+                    register={register}
+                  />
 
-              <TextField
-                id="text"
-                name="text"
-                label="Text"
-                hint="Enter text here. This field supports markdown"
-                showMarkdownLink
-                error={errors.text && "Please specify a text content"}
-                required
-                register={register}
-                defaultValue={widget.content.text}
-                multiline
-                rows={10}
-              />
-            </fieldset>
-            <br />
-            <br />
-            <hr />
-            <Button disabled={loading} type="submit">
-              Save
-            </Button>
-            <Button
-              variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
-          </form>
-        </div>
-        <div className="grid-col-6">
-          <h4 className="margin-top-4">Preview</h4>
-          <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>
-          {widget.content.text ? (
-            <div className="border padding-left-05">
-              <MarkdownRender source={widget.content.text} />
+                  <TextField
+                    id="text"
+                    name="text"
+                    label="Text"
+                    hint="Enter text here. This field supports markdown"
+                    showMarkdownLink
+                    error={errors.text && "Please specify a text content"}
+                    required
+                    register={register}
+                    defaultValue={widget.content.text}
+                    multiline
+                    rows={10}
+                  />
+                </fieldset>
+                <br />
+                <br />
+                <hr />
+                <Button disabled={loading} type="submit">
+                  Save
+                </Button>
+                <Button
+                  variant="unstyled"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
+              </form>
             </div>
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
+            <div className="grid-col-6">
+              <h4 className="margin-top-4">Preview</h4>
+              <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>
+              {widget.content.text ? (
+                <div className="border padding-left-05">
+                  <MarkdownRender source={widget.content.text} />
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

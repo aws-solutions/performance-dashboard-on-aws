@@ -14,6 +14,7 @@ import WidgetList from "../components/WidgetList";
 import MarkdownRender from "../components/MarkdownRender";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
+import Spinner from "../components/Spinner";
 
 interface PathParams {
   dashboardId: string;
@@ -22,7 +23,7 @@ interface PathParams {
 function EditDashboard() {
   const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard, reloadDashboard, setDashboard } = useDashboard(
+  const { dashboard, reloadDashboard, setDashboard, loading } = useDashboard(
     dashboardId
   );
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
@@ -115,7 +116,7 @@ function EditDashboard() {
         setDashboard({ ...dashboard, widgets }); // optimistic ui
         await BackendService.setWidgetOrder(dashboardId, widgets);
       } finally {
-        await reloadDashboard();
+        await reloadDashboard(false);
       }
     }
   };
@@ -159,60 +160,69 @@ function EditDashboard() {
         buttonAction={deleteWidget}
       />
 
-      <AlertContainer />
-      <div className="grid-row">
-        <div className="grid-col text-left">
-          <ul className="usa-button-group">
-            <li className="usa-button-group__item">
-              <span className="usa-tag">{dashboard?.state}</span>
-            </li>
-            <li className="usa-button-group__item">
-              <span className="text-underline">
-                <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
-                Version {dashboard?.version}
+      {loading ? (
+        <Spinner className="text-center margin-top-9" label="Loading" />
+      ) : (
+        <>
+          <AlertContainer />
+          <div className="grid-row">
+            <div className="grid-col text-left">
+              <ul className="usa-button-group">
+                <li className="usa-button-group__item">
+                  <span className="usa-tag">{dashboard?.state}</span>
+                </li>
+                <li className="usa-button-group__item">
+                  <span className="text-underline">
+                    <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
+                    Version {dashboard?.version}
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div className="grid-col text-right">
+              <span className="text-base margin-right-1">
+                {dashboard &&
+                  `Last saved ${dayjs(dashboard.updatedAt).fromNow()}`}
               </span>
-            </li>
-          </ul>
-        </div>
-        <div className="grid-col text-right">
-          <span className="text-base margin-right-1">
-            {dashboard && `Last saved ${dayjs(dashboard.updatedAt).fromNow()}`}
-          </span>
-          <Button variant="outline" onClick={onPreview}>
-            Preview
-          </Button>
-          <Button variant="base" onClick={onPublishDashboard}>
-            Publish
-          </Button>
-        </div>
-      </div>
-      <div>
-        <h1 className="margin-bottom-0 display-inline-block">
-          {dashboard?.name}
-        </h1>
-        <Link
-          to={`/admin/dashboard/edit/${dashboard?.id}/details`}
-          className="margin-left-2"
-        >
-          Edit details
-        </Link>
-      </div>
-      <div className="text-base text-italic">{dashboard?.topicAreaName}</div>
-      <div>
-        {dashboard?.description ? (
-          <MarkdownRender source={dashboard.description} />
-        ) : (
-          <p>No description entered</p>
-        )}
-      </div>
-      <hr />
-      <WidgetList
-        widgets={dashboard ? dashboard.widgets : []}
-        onClick={onAddContent}
-        onDelete={onDeleteWidget}
-        onMoveUp={onMoveWidgetUp}
-        onMoveDown={onMoveWidgetDown}
-      />
+              <Button variant="outline" onClick={onPreview}>
+                Preview
+              </Button>
+              <Button variant="base" onClick={onPublishDashboard}>
+                Publish
+              </Button>
+            </div>
+          </div>
+          <div>
+            <h1 className="margin-bottom-0 display-inline-block">
+              {dashboard?.name}
+            </h1>
+            <Link
+              to={`/admin/dashboard/edit/${dashboard?.id}/details`}
+              className="margin-left-2"
+            >
+              Edit details
+            </Link>
+          </div>
+          <div className="text-base text-italic">
+            {dashboard?.topicAreaName}
+          </div>
+          <div>
+            {dashboard?.description ? (
+              <MarkdownRender source={dashboard.description} />
+            ) : (
+              <p>No description entered</p>
+            )}
+          </div>
+          <hr />
+          <WidgetList
+            widgets={dashboard ? dashboard.widgets : []}
+            onClick={onAddContent}
+            onDelete={onDeleteWidget}
+            onMoveUp={onMoveWidgetUp}
+            onMoveDown={onMoveWidgetDown}
+          />
+        </>
+      )}
     </>
   );
 }

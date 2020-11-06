@@ -22,8 +22,8 @@ beforeEach(() => {
 });
 
 test("renders title", async () => {
-  const { getByText } = render(<EditTable />, { wrapper: MemoryRouter });
-  expect(getByText("Edit content item")).toBeInTheDocument();
+  const { getByRole } = render(<EditTable />, { wrapper: MemoryRouter });
+  expect(getByRole("heading", { name: "Edit table" })).toBeInTheDocument();
 });
 
 test("renders a textfield for table title", async () => {

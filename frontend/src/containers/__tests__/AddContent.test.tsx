@@ -5,8 +5,8 @@ import { MemoryRouter, Router } from "react-router-dom";
 import AddContent from "../AddContent";
 
 test("renders Add content", async () => {
-  const { findByText } = render(<AddContent />, { wrapper: MemoryRouter });
-  const addContent = await findByText("Add content");
+  const { getByRole } = render(<AddContent />, { wrapper: MemoryRouter });
+  const addContent = await getByRole("heading", { name: "Add content" });
   expect(addContent).toBeInTheDocument();
 });
 

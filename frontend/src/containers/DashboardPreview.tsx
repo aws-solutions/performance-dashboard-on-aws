@@ -8,8 +8,9 @@ import BackendService from "../services/BackendService";
 import Alert from "../components/Alert";
 import WidgetRender from "../components/WidgetRender";
 import Breadcrumbs from "../components/Breadcrumbs";
-import "./DashboardPreview.css";
 import Modal from "../components/Modal";
+import Spinner from "../components/Spinner";
+import "./DashboardPreview.css";
 
 interface PathParams {
   dashboardId: string;
@@ -18,7 +19,7 @@ interface PathParams {
 function DashboardPreview() {
   const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard, loading } = useDashboard(dashboardId);
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
 
   const closePublishModal = () => {
@@ -46,33 +47,37 @@ function DashboardPreview() {
   };
 
   const onCancel = () => {
-    history.goBack();
+    history.push(
+      dashboard?.state === DashboardState.PublishPending
+        ? `/admin/dashboard/${dashboardId}/publish`
+        : `/admin/dashboard/edit/${dashboardId}`
+    );
   };
 
   return (
     <>
-      <Breadcrumbs
-        crumbs={[
-          {
-            label: "Dashboards",
-            url: "/admin/dashboards",
-          },
-          {
-            label: dashboard?.name,
-          },
-        ]}
-      />
-
-      <Modal
-        isOpen={isOpenPublishModal}
-        closeModal={closePublishModal}
-        title={`Publish "${dashboard?.name}" dashboard`}
-        message="Are you sure you want to start the publishing process?"
-        buttonType="Publish"
-        buttonAction={publishDashboard}
-      />
-
       <div className="position-sticky top-0 bg-white z-index-on-top">
+        <Breadcrumbs
+          crumbs={[
+            {
+              label: "Dashboards",
+              url: "/admin/dashboards",
+            },
+            {
+              label: dashboard?.name,
+            },
+          ]}
+        />
+
+        <Modal
+          isOpen={isOpenPublishModal}
+          closeModal={closePublishModal}
+          title={`Publish "${dashboard?.name}" dashboard`}
+          message="Are you sure you want to start the publishing process?"
+          buttonType="Publish"
+          buttonAction={publishDashboard}
+        />
+
         <Alert
           type="info"
           message="Below is a preview of what the published dashboard will look like.
@@ -98,28 +103,37 @@ function DashboardPreview() {
         </div>
         <div className="margin-top-2 gradient height-4" />
       </div>
-      <div>
-        <h1 className="margin-bottom-0 display-inline-block">
-          {dashboard?.name}
-        </h1>
-      </div>
-      <div className="text-base text-italic">{dashboard?.topicAreaName}</div>
-      <div>
-        {dashboard?.description ? (
-          <MarkdownRender source={dashboard.description} />
-        ) : (
-          <p>No description entered</p>
-        )}
-      </div>
-      <hr />
 
-      {dashboard?.widgets.map((widget, index) => {
-        return (
-          <div className="margin-top-5" key={index}>
-            <WidgetRender widget={widget} />
+      {loading ? (
+        <Spinner className="text-center margin-top-9" label="Loading" />
+      ) : (
+        <>
+          <div>
+            <h1 className="margin-bottom-0 display-inline-block">
+              {dashboard?.name}
+            </h1>
           </div>
-        );
-      })}
+          <div className="text-base text-italic">
+            {dashboard?.topicAreaName}
+          </div>
+          <div>
+            {dashboard?.description ? (
+              <MarkdownRender source={dashboard.description} />
+            ) : (
+              <p>No description entered</p>
+            )}
+          </div>
+          <hr />
+
+          {dashboard?.widgets.map((widget, index) => {
+            return (
+              <div className="margin-top-5" key={index}>
+                <WidgetRender widget={widget} />
+              </div>
+            );
+          })}
+        </>
+      )}
     </>
   );
 }

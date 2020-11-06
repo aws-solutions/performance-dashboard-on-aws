@@ -22,8 +22,8 @@ beforeEach(() => {
 });
 
 test("renders title", async () => {
-  const { getByText } = render(<EditChart />, { wrapper: MemoryRouter });
-  expect(getByText("Edit content item")).toBeInTheDocument();
+  const { getByRole } = render(<EditChart />, { wrapper: MemoryRouter });
+  expect(getByRole("heading", { name: "Edit chart" })).toBeInTheDocument();
 });
 
 test("renders a textfield for chart title", async () => {

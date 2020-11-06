@@ -21,16 +21,16 @@ interface PathParams {
 function AddText() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
 
-  const [loading, setLoading] = useState(false);
+  const [creatingWidget, setCreatingLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
   const onSubmit = async (values: FormValues) => {
+    setCreatingLoading(true);
     try {
-      setLoading(true);
       await BackendService.createWidget(
         dashboardId,
         values.title,
@@ -42,8 +42,8 @@ function AddText() {
       history.push(`/admin/dashboard/edit/${dashboardId}`);
     } catch (err) {
       console.log("Failed to save widget", err);
-      setLoading(false);
     }
+    setCreatingLoading(false);
   };
 
   const onCancel = () => {
@@ -60,25 +60,29 @@ function AddText() {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
+  const crumbs = [
+    {
+      label: "Dashboards",
+      url: "/admin/dashboards",
+    },
+    {
+      label: dashboard?.name,
+      url: `/admin/dashboard/edit/${dashboardId}`,
+    },
+  ];
+
+  if (!loading) {
+    crumbs.push({
+      label: "Add text",
+      url: "",
+    });
+  }
+
   return (
     <>
-      <Breadcrumbs
-        crumbs={[
-          {
-            label: "Dashboards",
-            url: "/admin/dashboards",
-          },
-          {
-            label: dashboard?.name,
-            url: `/admin/dashboard/edit/${dashboardId}`,
-          },
-          {
-            label: "Add content item",
-          },
-        ]}
-      />
+      <Breadcrumbs crumbs={crumbs} />
+      <h1>Add text</h1>
 
-      <h1>Add content</h1>
       <div className="text-base text-italic">Step 2 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Configure text content
@@ -117,10 +121,10 @@ function AddText() {
             <br />
             <br />
             <hr />
-            <Button variant="outline" onClick={goBack}>
+            <Button variant="outline" type="button" onClick={goBack}>
               Back
             </Button>
-            <Button disabled={loading} type="submit">
+            <Button disabled={creatingWidget} type="submit">
               Add text
             </Button>
             <Button

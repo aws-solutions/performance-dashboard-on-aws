@@ -1,6 +1,5 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Spinner from "./Spinner";
 
 interface Props {
   id: string;
@@ -26,10 +25,10 @@ function FileInput(props: Props) {
 
   if (props.loading) {
     content = (
-      <div className="usa-file-input__instructions" aria-hidden="true">
-        <FontAwesomeIcon icon={faSpinner} spin pulse size="lg" />
-        <span className="margin-left-1">Uploading file</span>
-      </div>
+      <Spinner
+        className="usa-file-input__instructions"
+        label="Uploading file"
+      />
     );
   } else if (props.fileName) {
     content = (

@@ -15,9 +15,7 @@ test("renders title", async () => {
   const { getByRole } = render(<EditText />, {
     wrapper: MemoryRouter,
   });
-  expect(
-    getByRole("heading", { name: "Edit content item" })
-  ).toBeInTheDocument();
+  expect(getByRole("heading", { name: "Edit text" })).toBeInTheDocument();
 });
 
 test("renders a text input for title", async () => {

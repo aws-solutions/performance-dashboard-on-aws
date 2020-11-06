@@ -24,7 +24,7 @@ interface PathParams {
 function AddTable() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
@@ -33,14 +33,14 @@ function AddTable() {
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
       throw new Error("CSV file not specified");
     }
 
-    setLoading(true);
+    setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
       JSON.stringify(dataset)
@@ -51,7 +51,7 @@ function AddTable() {
       json: uploadResponse.s3Keys.json,
     });
 
-    setLoading(false);
+    setFileLoading(false);
     return newDataset;
   };
 
@@ -114,25 +114,29 @@ function AddTable() {
     setCsvFile(data);
   };
 
+  const crumbs = [
+    {
+      label: "Dashboards",
+      url: "/admin/dashboards",
+    },
+    {
+      label: dashboard?.name,
+      url: `/admin/dashboard/edit/${dashboardId}`,
+    },
+  ];
+
+  if (!loading) {
+    crumbs.push({
+      label: "Add table",
+      url: "",
+    });
+  }
+
   return (
     <>
-      <Breadcrumbs
-        crumbs={[
-          {
-            label: "Dashboards",
-            url: "/admin/dashboards",
-          },
-          {
-            label: dashboard?.name,
-            url: `/admin/dashboard/edit/${dashboardId}`,
-          },
-          {
-            label: "Add content item",
-          },
-        ]}
-      />
+      <Breadcrumbs crumbs={crumbs} />
+      <h1>Add table</h1>
 
-      <h1>Add content</h1>
       <div className="text-base text-italic">Step 2 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Configure table
@@ -161,7 +165,7 @@ function AddTable() {
                 label="File upload"
                 accept=".csv"
                 disabled={!title}
-                loading={loading}
+                loading={fileLoading}
                 errors={csvErrors}
                 register={register}
                 hint="Must be a CSV file. [Link] How do I format my CSV?"
@@ -201,10 +205,10 @@ function AddTable() {
             </fieldset>
             <br />
             <hr />
-            <Button variant="outline" onClick={goBack}>
+            <Button variant="outline" type="button" onClick={goBack}>
               Back
             </Button>
-            <Button disabled={!dataset || loading} type="submit">
+            <Button disabled={!dataset || fileLoading} type="submit">
               Add table
             </Button>
             <Button

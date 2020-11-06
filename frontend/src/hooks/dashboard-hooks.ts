@@ -18,15 +18,18 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState<Dashboard | undefined>(undefined);
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    const data = await BackendService.fetchDashboardById(dashboardId);
-    setLoading(false);
-    if (data) {
-      data.widgets.sort((a, b) => a.order - b.order);
-      setDashboard(data);
-    }
-  }, [dashboardId]);
+  const fetchData = useCallback(
+    async (updateLoading: boolean = true) => {
+      updateLoading && setLoading(true);
+      const data = await BackendService.fetchDashboardById(dashboardId);
+      updateLoading && setLoading(false);
+      if (data) {
+        data.widgets.sort((a, b) => a.order - b.order);
+        setDashboard(data);
+      }
+    },
+    [dashboardId]
+  );
 
   useEffect(() => {
     fetchData();

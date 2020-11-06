@@ -11,6 +11,7 @@ import AlertContainer from "../containers/AlertContainer";
 import { Dashboard } from "../models";
 import BackendService from "../services/BackendService";
 import Modal from "../components/Modal";
+import Spinner from "../components/Spinner";
 
 function DashboardListing() {
   const { search } = useLocation();
@@ -21,6 +22,7 @@ function DashboardListing() {
     pendingDashboards,
     archivedDashboards,
     reloadDashboards,
+    loading,
   } = useDashboards();
 
   const [isOpenArchiveModal, setIsOpenArchiveModal] = useState(false);
@@ -55,7 +57,7 @@ function DashboardListing() {
         await BackendService.archive(dashboard.id, dashboard.updatedAt);
       }
 
-      history.replace("/admin/dashboards?tab=published", {
+      history.replace("/admin/dashboards?tab=archived", {
         alert: {
           type: "success",
           message: `${
@@ -140,27 +142,42 @@ function DashboardListing() {
         buttonAction={deleteDashboards}
       />
 
-      <AlertContainer />
-      <Tabs defaultActive={activeTab}>
-        <div id="drafts" label={`Drafts (${draftsDashboards.length})`}>
-          <DraftsTab
-            dashboards={draftsDashboards}
-            onDelete={onDeleteDashboards}
-          />
-        </div>
-        <div id="pending" label={`Publish queue (${pendingDashboards.length})`}>
-          <PublishQueueTab dashboards={pendingDashboards} />
-        </div>
-        <div id="published" label={`Published (${publishedDashboards.length})`}>
-          <PublishedTab
-            dashboards={publishedDashboards}
-            onArchive={onArchiveDashboards}
-          />
-        </div>
-        <div id="archived" label={`Archived (${archivedDashboards.length})`}>
-          <ArchivedTab dashboards={archivedDashboards} />
-        </div>
-      </Tabs>
+      {loading ? (
+        <Spinner className="text-center margin-top-9" label="Loading" />
+      ) : (
+        <>
+          <AlertContainer />
+          <Tabs defaultActive={activeTab}>
+            <div id="drafts" label={`Drafts (${draftsDashboards.length})`}>
+              <DraftsTab
+                dashboards={draftsDashboards}
+                onDelete={onDeleteDashboards}
+              />
+            </div>
+            <div
+              id="pending"
+              label={`Publish queue (${pendingDashboards.length})`}
+            >
+              <PublishQueueTab dashboards={pendingDashboards} />
+            </div>
+            <div
+              id="published"
+              label={`Published (${publishedDashboards.length})`}
+            >
+              <PublishedTab
+                dashboards={publishedDashboards}
+                onArchive={onArchiveDashboards}
+              />
+            </div>
+            <div
+              id="archived"
+              label={`Archived (${archivedDashboards.length})`}
+            >
+              <ArchivedTab dashboards={archivedDashboards} />
+            </div>
+          </Tabs>
+        </>
+      )}
     </>
   );
 }

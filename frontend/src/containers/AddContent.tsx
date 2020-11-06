@@ -16,7 +16,7 @@ interface PathParams {
 function AddContent() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard, loading } = useDashboard(dashboardId);
   const { register, handleSubmit } = useForm<FormValues>();
   const [widgetType, setWidgetType] = useState("");
 
@@ -38,25 +38,29 @@ function AddContent() {
     setWidgetType((event.target as HTMLInputElement).value);
   };
 
+  const crumbs = [
+    {
+      label: "Dashboards",
+      url: "/admin/dashboards",
+    },
+    {
+      label: dashboard?.name,
+      url: `/admin/dashboard/edit/${dashboardId}`,
+    },
+  ];
+
+  if (!loading) {
+    crumbs.push({
+      label: "Add content",
+      url: "",
+    });
+  }
+
   return (
     <>
-      <Breadcrumbs
-        crumbs={[
-          {
-            label: "Dashboards",
-            url: "/admin/dashboards",
-          },
-          {
-            label: dashboard?.name,
-            url: `/admin/dashboard/edit/${dashboardId}`,
-          },
-          {
-            label: "Add content item",
-          },
-        ]}
-      />
-
+      <Breadcrumbs crumbs={crumbs} />
       <h1>Add content</h1>
+
       <div className="text-base text-italic">Step 1 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Select the type of content you want to add

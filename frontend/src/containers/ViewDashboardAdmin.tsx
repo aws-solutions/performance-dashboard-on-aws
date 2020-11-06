@@ -12,6 +12,7 @@ import Button from "../components/Button";
 import Alert from "../components/Alert";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Modal from "../components/Modal";
+import Spinner from "../components/Spinner";
 
 interface PathParams {
   dashboardId: string;
@@ -20,7 +21,7 @@ interface PathParams {
 function ViewDashboardAdmin() {
   const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard, loading } = useDashboard(dashboardId);
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
   const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false);
   const [isOpenArchiveModal, setIsOpenArchiveModal] = useState(false);
@@ -173,30 +174,39 @@ function ViewDashboardAdmin() {
         </div>
         <div className="margin-top-2 gradient height-4" />
       </div>
-      <div className="margin-top-2">
-        <h1 className="margin-bottom-1 display-inline-block font-sans-2xl">
-          {dashboard?.name}
-        </h1>
-        <div className="text-base text-italic">{dashboard?.topicAreaName}</div>
-      </div>
-      <div className="margin-y-2">
-        {dashboard?.description ? (
-          <MarkdownRender
-            source={dashboard.description}
-            className="font-sans-lg usa-prose"
-          />
-        ) : (
-          <p>No description entered</p>
-        )}
-      </div>
-      <hr />
-      {dashboard?.widgets.map((widget, index) => {
-        return (
-          <div className="margin-top-5" key={index}>
-            <WidgetRender widget={widget} />
+
+      {loading ? (
+        <Spinner className="text-center margin-top-9" label="Loading" />
+      ) : (
+        <>
+          <div className="margin-top-2">
+            <h1 className="margin-bottom-1 display-inline-block font-sans-2xl">
+              {dashboard?.name}
+            </h1>
+            <div className="text-base text-italic">
+              {dashboard?.topicAreaName}
+            </div>
           </div>
-        );
-      })}
+          <div className="margin-y-2">
+            {dashboard?.description ? (
+              <MarkdownRender
+                source={dashboard.description}
+                className="font-sans-lg usa-prose"
+              />
+            ) : (
+              <p>No description entered</p>
+            )}
+          </div>
+          <hr />
+          {dashboard?.widgets.map((widget, index) => {
+            return (
+              <div className="margin-top-5" key={index}>
+                <WidgetRender widget={widget} />
+              </div>
+            );
+          })}
+        </>
+      )}
     </>
   );
 }

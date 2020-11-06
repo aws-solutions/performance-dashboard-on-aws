@@ -26,7 +26,10 @@ const BarChartPreview = (props: Props) => {
       <p className="margin-left-1 margin-top-0 margin-bottom-3">
         {props.summary}
       </p>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer
+        width="100%"
+        height={props.data && props.data.length > 15 ? 600 : 300}
+      >
         <BarChart
           data={props.data}
           layout="vertical"
@@ -37,10 +40,17 @@ const BarChartPreview = (props: Props) => {
           <YAxis
             dataKey={props.bars.length ? props.bars[0] : ""}
             type="category"
+            width={
+              (props.data
+                ?.map((d) => (d as any)[props.bars.length ? props.bars[0] : ""])
+                .map((c) => (c as string).length)
+                .reduce((a, b) => (a > b ? a : b), 0) || 0) *
+                8 +
+              16
+            }
             minTickGap={0}
-            padding={{ top: 10, bottom: 10 }}
           />
-          <Legend />
+          <Legend margin={{ top: 50, left: 50, right: 50 }} />
           {props.bars.length &&
             props.bars.slice(1).map((bar, index) => {
               return (

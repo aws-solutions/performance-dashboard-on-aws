@@ -15,6 +15,7 @@ import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
 import { useWidget, useDashboard } from "../hooks";
+import Spinner from "../components/Spinner";
 
 interface FormValues {
   title: string;
@@ -166,171 +167,185 @@ function EditChart() {
     }
   };
 
-  if (!widget) {
-    return null;
+  const crumbs = [
+    {
+      label: "Dashboards",
+      url: "/admin/dashboards",
+    },
+    {
+      label: dashboard?.name,
+      url: `/admin/dashboard/edit/${dashboardId}`,
+    },
+  ];
+
+  if (!loading && widget) {
+    crumbs.push({
+      label: "Edit chart",
+      url: "",
+    });
   }
 
   return (
     <>
-      <Breadcrumbs
-        crumbs={[
-          {
-            label: "Dashboards",
-            url: "/admin/dashboards",
-          },
-          {
-            label: dashboard?.name,
-            url: `/admin/dashboard/edit/${dashboardId}`,
-          },
-          {
-            label: "Add content item",
-          },
-        ]}
-      />
+      <Breadcrumbs crumbs={crumbs} />
+      <h1>Edit chart</h1>
 
-      <h1>Edit content item</h1>
-      <div className="grid-row width-desktop">
-        <div className="grid-col-6">
-          <form
-            className="usa-form usa-form--large"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <fieldset className="usa-fieldset">
-              <TextField
-                id="title"
-                name="title"
-                label="Chart title"
-                hint="Give your chart a descriptive title."
-                error={errors.title && "Please specify a chart title"}
-                onChange={handleTitleChange}
-                defaultValue={widget.content.title}
-                required
-                register={register}
-              />
-              <FileInput
-                id="dataset"
-                name="dataset"
-                label="File upload"
-                accept=".csv"
-                loading={loading}
-                errors={csvErrors}
-                register={register}
-                hint="Must be a CSV file. [Link] How do I format my CSV?"
-                fileName={`${widget.content.title}.csv`}
-                onFileProcessed={onFileProcessed}
-              />
-              {widget ? (
-                <div hidden={!json}>
-                  <RadioButtons
-                    id="chartType"
-                    name="chartType"
-                    label="Chart type"
-                    hint="Choose a chart type. [Link] Which chart is right for my data?"
-                    register={register}
-                    error={errors.chartType && "Please select a chart type"}
-                    onChange={handleChartTypeChange}
-                    defaultValue={widget.content.chartType}
-                    required
-                    options={[
-                      {
-                        value: ChartType.BarChart,
-                        label: "Bar",
-                      },
-                      {
-                        value: ChartType.ColumnChart,
-                        label: "Column",
-                      },
-                      {
-                        value: ChartType.LineChart,
-                        label: "Line",
-                      },
-                      {
-                        value: ChartType.PartWholeChart,
-                        label: "Part-to-whole",
-                      },
-                    ]}
-                  />
-
+      {loading || !widget ? (
+        <Spinner className="text-center margin-top-9" label="Loading" />
+      ) : (
+        <>
+          <div className="grid-row width-desktop">
+            <div className="grid-col-6">
+              <form
+                className="usa-form usa-form--large"
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <fieldset className="usa-fieldset">
                   <TextField
-                    id="summary"
-                    name="summary"
-                    label="Chart summary"
-                    hint="Give your chart a summary to explain it in more depth.
+                    id="title"
+                    name="title"
+                    label="Chart title"
+                    hint="Give your chart a descriptive title."
+                    error={errors.title && "Please specify a chart title"}
+                    onChange={handleTitleChange}
+                    defaultValue={widget.content.title}
+                    required
+                    register={register}
+                  />
+                  <FileInput
+                    id="dataset"
+                    name="dataset"
+                    label="File upload"
+                    accept=".csv"
+                    loading={loading}
+                    errors={csvErrors}
+                    register={register}
+                    hint="Must be a CSV file. [Link] How do I format my CSV?"
+                    fileName={`${widget.content.title}.csv`}
+                    onFileProcessed={onFileProcessed}
+                  />
+                  {widget ? (
+                    <div hidden={!json}>
+                      <RadioButtons
+                        id="chartType"
+                        name="chartType"
+                        label="Chart type"
+                        hint="Choose a chart type. [Link] Which chart is right for my data?"
+                        register={register}
+                        error={errors.chartType && "Please select a chart type"}
+                        onChange={handleChartTypeChange}
+                        defaultValue={widget.content.chartType}
+                        required
+                        options={[
+                          {
+                            value: ChartType.BarChart,
+                            label: "Bar",
+                          },
+                          {
+                            value: ChartType.ColumnChart,
+                            label: "Column",
+                          },
+                          {
+                            value: ChartType.LineChart,
+                            label: "Line",
+                          },
+                          {
+                            value: ChartType.PartWholeChart,
+                            label: "Part-to-whole",
+                          },
+                        ]}
+                      />
+
+                      <TextField
+                        id="summary"
+                        name="summary"
+                        label="Chart summary"
+                        hint="Give your chart a summary to explain it in more depth.
                     It can also be read by screen readers to describe the chart
                     for those with visual impairments. What is useful in a chart description?"
-                    register={register}
-                    defaultValue={widget.content.summary}
-                    onChange={handleSummaryChange}
-                    multiline
-                    rows={5}
+                        register={register}
+                        defaultValue={widget.content.summary}
+                        onChange={handleSummaryChange}
+                        multiline
+                        rows={5}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </fieldset>
+                <br />
+                <br />
+                <hr />
+                <Button disabled={!json || loading} type="submit">
+                  Save
+                </Button>
+                <Button
+                  variant="unstyled"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
+              </form>
+            </div>
+            <div className="grid-col-6">
+              <div hidden={!json} className="margin-left-4">
+                <h4>Preview</h4>
+                {widget.content.chartType === ChartType.LineChart && (
+                  <LineChartPreview
+                    title={widget.content.title}
+                    summary={widget.content.summary}
+                    lines={
+                      json.length > 0
+                        ? (Object.keys(json[0]) as Array<string>)
+                        : []
+                    }
+                    data={json}
                   />
-                </div>
-              ) : (
-                ""
-              )}
-            </fieldset>
-            <br />
-            <br />
-            <hr />
-            <Button disabled={!json || loading} type="submit">
-              Save
-            </Button>
-            <Button
-              variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
-          </form>
-        </div>
-        <div className="grid-col-6">
-          <div hidden={!json} className="margin-left-4">
-            <h4>Preview</h4>
-            {widget.content.chartType === ChartType.LineChart && (
-              <LineChartPreview
-                title={widget.content.title}
-                summary={widget.content.summary}
-                lines={
-                  json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
-                }
-                data={json}
-              />
-            )}
-            {widget.content.chartType === ChartType.ColumnChart && (
-              <ColumnChartPreview
-                title={widget.name}
-                summary={widget.content.summary}
-                columns={
-                  json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
-                }
-                data={json}
-              />
-            )}
-            {widget.content.chartType === ChartType.BarChart && (
-              <BarChartPreview
-                title={widget.name}
-                summary={widget.content.summary}
-                bars={
-                  json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
-                }
-                data={json}
-              />
-            )}
-            {widget.content.chartType === ChartType.PartWholeChart && (
-              <PartWholeChartPreview
-                title={widget.name}
-                summary={widget.content.summary}
-                parts={
-                  json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
-                }
-                data={json}
-              />
-            )}
+                )}
+                {widget.content.chartType === ChartType.ColumnChart && (
+                  <ColumnChartPreview
+                    title={widget.name}
+                    summary={widget.content.summary}
+                    columns={
+                      json.length > 0
+                        ? (Object.keys(json[0]) as Array<string>)
+                        : []
+                    }
+                    data={json}
+                  />
+                )}
+                {widget.content.chartType === ChartType.BarChart && (
+                  <BarChartPreview
+                    title={widget.name}
+                    summary={widget.content.summary}
+                    bars={
+                      json.length > 0
+                        ? (Object.keys(json[0]) as Array<string>)
+                        : []
+                    }
+                    data={json}
+                  />
+                )}
+                {widget.content.chartType === ChartType.PartWholeChart && (
+                  <PartWholeChartPreview
+                    title={widget.name}
+                    summary={widget.content.summary}
+                    parts={
+                      json.length > 0
+                        ? (Object.keys(json[0]) as Array<string>)
+                        : []
+                    }
+                    data={json}
+                  />
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }

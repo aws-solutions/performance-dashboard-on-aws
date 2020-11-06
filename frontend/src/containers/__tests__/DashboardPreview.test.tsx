@@ -32,7 +32,7 @@ test("renders the topic area as subtitle", async () => {
 
 test("close preview button takes you back to previous screen", async () => {
   const history = createMemoryHistory();
-  jest.spyOn(history, "goBack");
+  jest.spyOn(history, "push");
 
   const { findByRole } = render(
     <Router history={history}>
@@ -42,5 +42,5 @@ test("close preview button takes you back to previous screen", async () => {
 
   const closePreview = await findByRole("button", { name: "Close Preview" });
   fireEvent.click(closePreview);
-  expect(history.goBack).toBeCalled();
+  expect(history.push).toBeCalled();
 });

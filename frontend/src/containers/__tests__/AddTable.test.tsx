@@ -22,8 +22,10 @@ beforeEach(() => {
 });
 
 test("renders title and subtitles", async () => {
-  const { getByText } = render(<AddTable />, { wrapper: MemoryRouter });
-  expect(getByText("Add content")).toBeInTheDocument();
+  const { getByText, getByRole } = render(<AddTable />, {
+    wrapper: MemoryRouter,
+  });
+  expect(getByRole("heading", { name: "Add table" })).toBeInTheDocument();
   expect(getByText("Configure table")).toBeInTheDocument();
   expect(getByText("Step 2 of 2")).toBeInTheDocument();
 });

@@ -6,6 +6,7 @@ import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
 import { PublicDashboard } from "../models";
+import Spinner from "../components/Spinner";
 
 function Home() {
   const [filter, setFilter] = useState("");
@@ -33,11 +34,16 @@ function Home() {
     filterPublicDashboards(homepage.dashboards)
   );
 
-  if (loading) {
-    return null;
-  }
-
-  return (
+  return loading ? (
+    <Spinner
+      style={{
+        position: "fixed",
+        top: "30%",
+        left: "50%",
+      }}
+      label="Loading"
+    />
+  ) : (
     <>
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">

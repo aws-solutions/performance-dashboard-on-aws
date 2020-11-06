@@ -8,6 +8,7 @@ import { usePublicDashboard } from "../hooks";
 import WidgetRender from "../components/WidgetRender";
 import FourZeroFour from "./FourZeroFour";
 import FooterLayout from "../layouts/Footer";
+import Spinner from "../components/Spinner";
 
 interface PathParams {
   dashboardId: string;
@@ -15,13 +16,18 @@ interface PathParams {
 
 function ViewDashboard() {
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard } = usePublicDashboard(dashboardId);
+  const { dashboard, loading } = usePublicDashboard(dashboardId);
 
-  if (dashboard === undefined) {
-    return null;
-  }
-
-  return dashboard.id ? (
+  return loading || dashboard === undefined ? (
+    <Spinner
+      style={{
+        position: "fixed",
+        top: "30%",
+        left: "50%",
+      }}
+      label="Loading"
+    />
+  ) : dashboard.id ? (
     <>
       <Link to="/">
         <FontAwesomeIcon icon={faArrowLeft} /> All Dashboards

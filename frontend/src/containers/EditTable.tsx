@@ -11,6 +11,7 @@ import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
 import TablePreview from "../components/TablePreview";
 import { useWidget, useDashboard } from "../hooks";
+import Spinner from "../components/Spinner";
 
 interface FormValues {
   title: string;
@@ -144,120 +145,128 @@ function EditTable() {
     }
   };
 
-  if (!widget) {
-    return null;
+  const crumbs = [
+    {
+      label: "Dashboards",
+      url: "/admin/dashboards",
+    },
+    {
+      label: dashboard?.name,
+      url: `/admin/dashboard/edit/${dashboardId}`,
+    },
+  ];
+
+  if (!loading && widget) {
+    crumbs.push({
+      label: "Edit table",
+      url: "",
+    });
   }
 
   return (
     <>
-      <Breadcrumbs
-        crumbs={[
-          {
-            label: "Dashboards",
-            url: "/admin/dashboards",
-          },
-          {
-            label: dashboard?.name,
-            url: `/admin/dashboard/edit/${dashboardId}`,
-          },
-          {
-            label: "Add content item",
-          },
-        ]}
-      />
+      <Breadcrumbs crumbs={crumbs} />
+      <h1>Edit table</h1>
 
-      <h1>Edit content item</h1>
-      <div className="grid-row width-desktop">
-        <div className="grid-col-6">
-          <form
-            className="usa-form usa-form--large"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <fieldset className="usa-fieldset">
-              <TextField
-                id="title"
-                name="title"
-                label="Table title"
-                hint="Give your table a descriptive title."
-                error={errors.title && "Please specify a table title"}
-                onChange={handleTitleChange}
-                defaultValue={widget.content.title}
-                required
-                register={register}
-              />
+      {loading || !widget ? (
+        <Spinner className="text-center margin-top-9" label="Loading" />
+      ) : (
+        <>
+          <div className="grid-row width-desktop">
+            <div className="grid-col-6">
+              <form
+                className="usa-form usa-form--large"
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <fieldset className="usa-fieldset">
+                  <TextField
+                    id="title"
+                    name="title"
+                    label="Table title"
+                    hint="Give your table a descriptive title."
+                    error={errors.title && "Please specify a table title"}
+                    onChange={handleTitleChange}
+                    defaultValue={widget.content.title}
+                    required
+                    register={register}
+                  />
 
-              <FileInput
-                id="dataset"
-                name="dataset"
-                label="File upload"
-                accept=".csv"
-                loading={loading}
-                errors={csvErrors}
-                register={register}
-                hint="Must be a CSV file. [Link] How do I format my CSV?"
-                fileName={`${widget.content.title}.csv`}
-                onFileProcessed={onFileProcessed}
-              />
+                  <FileInput
+                    id="dataset"
+                    name="dataset"
+                    label="File upload"
+                    accept=".csv"
+                    loading={loading}
+                    errors={csvErrors}
+                    register={register}
+                    hint="Must be a CSV file. [Link] How do I format my CSV?"
+                    fileName={`${widget.content.title}.csv`}
+                    onFileProcessed={onFileProcessed}
+                  />
 
-              <div hidden={!json}>
-                {json.length > 0 &&
-                (Object.keys(json[0]) as Array<string>).length >= 8 ? (
-                  <div className="usa-alert usa-alert--warning margin-top-3">
-                    <div className="usa-alert__body">
-                      <p className="usa-alert__text">
-                        It is recommended that tables have less than 8 columns.
-                        You can still continue.
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
+                  <div hidden={!json}>
+                    {json.length > 0 &&
+                    (Object.keys(json[0]) as Array<string>).length >= 8 ? (
+                      <div className="usa-alert usa-alert--warning margin-top-3">
+                        <div className="usa-alert__body">
+                          <p className="usa-alert__text">
+                            It is recommended that tables have less than 8
+                            columns. You can still continue.
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
 
-                <TextField
-                  id="summary"
-                  name="summary"
-                  label="Table summary"
-                  hint="Give your table a summary to explain it in more depth.
+                    <TextField
+                      id="summary"
+                      name="summary"
+                      label="Table summary"
+                      hint="Give your table a summary to explain it in more depth.
                   It can also be read by screen readers to describe the table
                   for those with visual impairments. What is useful in a table description?"
-                  register={register}
-                  defaultValue={widget.content.summary}
-                  onChange={handleSummaryChange}
-                  multiline
-                  rows={5}
+                      register={register}
+                      defaultValue={widget.content.summary}
+                      onChange={handleSummaryChange}
+                      multiline
+                      rows={5}
+                    />
+                  </div>
+                </fieldset>
+                <br />
+                <hr />
+                <Button disabled={!json || loading} type="submit">
+                  Save
+                </Button>
+                <Button
+                  variant="unstyled"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
+              </form>
+            </div>
+            <div className="grid-col-6">
+              <div hidden={!json} className="margin-left-4">
+                <h4>Preview</h4>
+                <TablePreview
+                  title={widget.content.title}
+                  summary={widget.content.summary}
+                  headers={
+                    json.length > 0
+                      ? (Object.keys(json[0]) as Array<string>)
+                      : []
+                  }
+                  data={json}
                 />
               </div>
-            </fieldset>
-            <br />
-            <hr />
-            <Button disabled={!json || loading} type="submit">
-              Save
-            </Button>
-            <Button
-              variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
-          </form>
-        </div>
-        <div className="grid-col-6">
-          <div hidden={!json} className="margin-left-4">
-            <h4>Preview</h4>
-            <TablePreview
-              title={widget.content.title}
-              summary={widget.content.summary}
-              headers={
-                json.length > 0 ? (Object.keys(json[0]) as Array<string>) : []
-              }
-              data={json}
-            />
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }

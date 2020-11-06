@@ -22,8 +22,10 @@ beforeEach(() => {
 });
 
 test("renders title and subtitles", async () => {
-  const { getByText } = render(<AddChart />, { wrapper: MemoryRouter });
-  expect(getByText("Add content")).toBeInTheDocument();
+  const { getByText, getByRole } = render(<AddChart />, {
+    wrapper: MemoryRouter,
+  });
+  expect(getByRole("heading", { name: "Add chart" })).toBeInTheDocument();
   expect(getByText("Configure chart")).toBeInTheDocument();
   expect(getByText("Step 2 of 2")).toBeInTheDocument();
 });

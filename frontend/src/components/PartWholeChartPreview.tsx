@@ -33,7 +33,7 @@ const PartWholeChartPreview = (props: Props) => {
         [barKey]: value,
       };
       partWholeParts.push(barKey);
-      total += value;
+      total += isNaN(value) ? 0 : value;
     }
     partWholeData.push(bar);
   }
@@ -45,7 +45,7 @@ const PartWholeChartPreview = (props: Props) => {
     const label = value.substring(0, index);
     const amount = value.substring(index + 1);
     return (
-      <span className="">
+      <span>
         <span className="margin-left-1 font-sans-md text-bottom">{label}</span>
         <div className="margin-left-6 margin-bottom-2 text-bold">{amount}</div>
       </span>
@@ -58,7 +58,10 @@ const PartWholeChartPreview = (props: Props) => {
       <p className="margin-left-1 margin-top-0 margin-bottom-3">
         {props.summary}
       </p>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer
+        width="100%"
+        height={props.data && props.data.length > 15 ? 600 : 300}
+      >
         <BarChart
           data={partWholeData}
           layout="vertical"
@@ -93,6 +96,11 @@ const PartWholeChartPreview = (props: Props) => {
             verticalAlign="top"
             formatter={renderLegendText}
             iconSize={24}
+            wrapperStyle={{
+              top: 0,
+              right: 0,
+              width: "100%",
+            }}
           />
           {partWholeParts.map((part, index) => {
             return (

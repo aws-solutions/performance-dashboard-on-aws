@@ -185,7 +185,6 @@ function DashboardsTable(props: Props) {
                     dashboard.id,
                     dashboard.state as DashboardState
                   )}
-                  className="text-no-underline"
                 >
                   <span className="text-bold text-base-darkest font-sans-md">
                     {dashboard.name}

@@ -5,7 +5,6 @@ import "./Link.css";
 interface Props {
   children: ReactNode;
   to: string;
-  className?: string;
   target?: string;
   ariaLabel?: string;
 }
@@ -15,7 +14,7 @@ function Link(props: Props) {
     <ReactRouterLink
       target={props.target || ""}
       to={props.to}
-      className={`link ${props.className || ""}`}
+      className="link"
       aria-label={props.ariaLabel || ""}
     >
       <span>{props.children}</span>

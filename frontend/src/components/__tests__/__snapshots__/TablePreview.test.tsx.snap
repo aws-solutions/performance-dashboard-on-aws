@@ -2,7 +2,9 @@
 
 exports[`table preview should match snapshot 1`] = `
 <div>
-  <div>
+  <div
+    class="preview-container"
+  >
     <h2
       class="margin-left-1 margin-bottom-1"
     >

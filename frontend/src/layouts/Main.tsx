@@ -31,7 +31,7 @@ function MainLayout(props: LayoutProps) {
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
                 <a
-                  href={`mailto:${process.env.REACT_APP_CONTACT_EMAIL}`}
+                  href={`mailto:${process.env.REACT_APP_CONTACT_EMAIL}?subject=Performance Dashboard Assistance`}
                   className="usa-nav__link"
                 >
                   Contact

@@ -196,11 +196,8 @@ function EditDashboard() {
             <h1 className="margin-bottom-0 display-inline-block">
               {dashboard?.name}
             </h1>
-            <Link
-              to={`/admin/dashboard/edit/${dashboard?.id}/details`}
-              className="margin-left-2"
-            >
-              Edit details
+            <Link to={`/admin/dashboard/edit/${dashboard?.id}/details`}>
+              <span className="margin-left-2">Edit details</span>
             </Link>
           </div>
           <div className="text-base text-italic">

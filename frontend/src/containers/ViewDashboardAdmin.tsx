@@ -127,20 +127,21 @@ function ViewDashboardAdmin() {
                 <FontAwesomeIcon icon={faCopy} className="margin-right-2" />A
                 draft has been created to update this dashboard. Only one draft
                 at a time is allowed.
-                <Link
-                  to={`/admin/dashboard/${
-                    currentDraft.state === DashboardState.Draft
-                      ? "edit/" + currentDraft.id
-                      : currentDraft.id + "/publish"
-                  }`}
-                  className="float-right"
-                >
-                  {`${
-                    currentDraft.state === DashboardState.Draft
-                      ? "Edit"
-                      : "Publish"
-                  } draft`}
-                </Link>
+                <div className="float-right">
+                  <Link
+                    to={`/admin/dashboard/${
+                      currentDraft.state === DashboardState.Draft
+                        ? "edit/" + currentDraft.id
+                        : currentDraft.id + "/publish"
+                    }`}
+                  >
+                    {`${
+                      currentDraft.state === DashboardState.Draft
+                        ? "Edit"
+                        : "Publish"
+                    } draft`}
+                  </Link>
+                </div>
               </div>
             }
             hideIcon

@@ -149,7 +149,7 @@ exports[`renders a table with dashboards 1`] = `
         <td>
           <a
             aria-label=""
-            class="link text-no-underline"
+            class="link"
             href="/admin/dashboard/edit/abc"
             target=""
           >

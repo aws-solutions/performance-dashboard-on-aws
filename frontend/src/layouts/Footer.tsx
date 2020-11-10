@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import EnvConfig from "../services/EnvConfig";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -13,7 +14,7 @@ function FooterLayout(props: LayoutProps) {
           <hr className="margin-top-9 border-base-lightest" />
           Having technical issues with the system?{" "}
           <a
-            href={`mailto:${process.env.REACT_APP_CONTACT_EMAIL}?subject=Performance Dashboard Assistance`}
+            href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
             className="text-base"
           >
             Contact support

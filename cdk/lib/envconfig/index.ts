@@ -39,16 +39,20 @@ const uploadConfig = async () => {
 };
 
 function getConfigContent(): string {
-  return `
-const env = {
-  region: "${process.env.REGION}",
-  backendApi: "${process.env.BACKEND_API}",
-  userPoolId: "${process.env.USER_POOL_ID}",
-  appClientId: "${process.env.APP_CLIENT_ID}",
-  datasetsBucket: "${process.env.DATASETS_BUCKET}",
-  identityPoolId: "${process.env.IDENTITY_POOL_ID}",
-};
+  const config = {
+    region: process.env.REGION,
+    backendApi: process.env.BACKEND_API,
+    userPoolId: process.env.USER_POOL_ID,
+    appClientId: process.env.APP_CLIENT_ID,
+    datasetsBucket: process.env.DATASETS_BUCKET,
+    identityPoolId: process.env.IDENTITY_POOL_ID,
+    contactEmail: "support@example.com",
+    brandName: "Performance Dashboard",
+    topicAreaLabel: "Topic Area",
+  };
 
+  return `
+const env = ${JSON.stringify(config)}
 window.EnvironmentConfig = env;
   `;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import Link from "./Link";
+import EnvConfig from "../services/EnvConfig";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { Dashboard, DashboardState } from "../models";
@@ -84,7 +85,7 @@ function DashboardsTable(props: Props) {
               }}
             />
           </th>
-          <th style={{ width: "30%" }}>
+          <th>
             <span className="font-sans-xs">Dashboard name</span>
             <Button
               variant="unstyled"
@@ -102,8 +103,8 @@ function DashboardsTable(props: Props) {
               />
             </Button>
           </th>
-          <th style={{ width: "30%" }}>
-            <span className="font-sans-xs">Topic area</span>
+          <th>
+            <span className="font-sans-xs">{EnvConfig.topicAreaLabel}</span>
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${

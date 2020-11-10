@@ -146,14 +146,6 @@ function WidgetList(props: Props) {
                     {widget.widgetType}
                   </div>
                   <div className="grid-col flex-3 text-no-wrap overflow-hidden text-overflow-ellipsis text-right">
-                    <Button
-                      variant="unstyled"
-                      className="margin-right-2 text-base-dark hover:text-base-darker active:text-base-darkest"
-                      onClick={() => onDelete(widget)}
-                      ariaLabel={`Delete ${widget.name}`}
-                    >
-                      Delete
-                    </Button>
                     <Link
                       ariaLabel={`Edit ${widget.name}`}
                       to={`/admin/dashboard/${
@@ -162,6 +154,14 @@ function WidgetList(props: Props) {
                     >
                       Edit
                     </Link>
+                    <Button
+                      variant="unstyled"
+                      className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
+                      onClick={() => onDelete(widget)}
+                      ariaLabel={`Delete ${widget.name}`}
+                    >
+                      Delete
+                    </Button>
                   </div>
                 </div>
               </div>

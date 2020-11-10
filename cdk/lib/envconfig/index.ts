@@ -46,9 +46,9 @@ function getConfigContent(): string {
     appClientId: process.env.APP_CLIENT_ID,
     datasetsBucket: process.env.DATASETS_BUCKET,
     identityPoolId: process.env.IDENTITY_POOL_ID,
-    contactEmail: "support@example.com",
-    brandName: "Performance Dashboard",
-    topicAreaLabel: "Topic Area",
+    contactEmail: process.env.CONTACT_EMAIL,
+    brandName: process.env.BRAND_NAME,
+    topicAreaLabel: process.env.TOPIC_AREA_LABEL,
   };
 
   return `

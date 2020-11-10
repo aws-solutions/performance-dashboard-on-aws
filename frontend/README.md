@@ -16,6 +16,9 @@ const env = {
   appClientId: "123456789",
   datasetsBucket: "performancedash-fdingler-000000000000-us-east-1-datasets",
   identityPoolId: "us-west-2:123456-123-1234-123456-1234566789",
+  contactEmail: "support@example.com",
+  brandName: "Performance Dashboard",
+  topicAreaLabel: "Topic Area",
 };
 
 window.EnvironmentConfig = env;

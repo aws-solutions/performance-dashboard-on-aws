@@ -1,5 +1,5 @@
 import React, { createRef } from "react";
-import { Widget } from "../models";
+import { Widget, WidgetType } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGripLinesVertical,
@@ -9,6 +9,8 @@ import {
 import Button from "./Button";
 import "./WidgetList.css";
 import Link from "./Link";
+import AlertContainer from "../containers/AlertContainer";
+import UtilsService from "../services/UtilsService";
 
 interface Props {
   onClick: Function;
@@ -78,8 +80,9 @@ function WidgetList(props: Props) {
           <p className="margin-top-2px">
             Build the dashboard by adding charts, tables, and text as content.
           </p>
-          <div className="grid-row radius-lg padding-top-1 margin-left-1 margin-bottom-2 text-base">
-            <div className="grid-col flex-1">Order</div>
+          <AlertContainer />
+          <div className="grid-row radius-lg padding-top-1 margin-left-1 margin-bottom-2 text-bold font-sans-sm">
+            <div className="grid-col flex-1 text-center">Order</div>
             <div className="grid-col flex-6">
               <div className="margin-left-3">Name</div>
             </div>
@@ -110,7 +113,7 @@ function WidgetList(props: Props) {
                           onClick={() => onMoveUp(index)}
                           ref={caretUpRefs[index]}
                         >
-                          <FontAwesomeIcon size="sm" icon={faArrowUp} />
+                          <FontAwesomeIcon size="xs" icon={faArrowUp} />
                         </Button>
                       )}
                     </div>
@@ -125,7 +128,7 @@ function WidgetList(props: Props) {
                         >
                           <FontAwesomeIcon
                             id={`${widget.id}-move-down`}
-                            size="sm"
+                            size="xs"
                             icon={faArrowDown}
                           />
                         </Button>
@@ -143,7 +146,9 @@ function WidgetList(props: Props) {
                     <div className="margin-left-1">{widget.name}</div>
                   </div>
                   <div className="grid-col flex-2 text-italic">
-                    {widget.widgetType}
+                    {widget.widgetType === WidgetType.Chart
+                      ? UtilsService.getChartTypeLabel(widget.content.chartType)
+                      : widget.widgetType}
                   </div>
                   <div className="grid-col flex-3 text-no-wrap overflow-hidden text-overflow-ellipsis text-right">
                     <Link
@@ -176,7 +181,7 @@ function WidgetList(props: Props) {
                 }
               }}
             >
-              + Add content
+              + Add content item
             </button>
           </div>
         </div>

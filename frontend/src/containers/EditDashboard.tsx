@@ -3,10 +3,9 @@ import dayjs from "dayjs";
 import { useHistory, useParams } from "react-router-dom";
 import Link from "../components/Link";
 import { useDashboard } from "../hooks";
-import { Widget, LocationState } from "../models";
+import { Widget, LocationState, WidgetType } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
-import AlertContainer from "./AlertContainer";
 import BackendService from "../services/BackendService";
 import WidgetOrderingService from "../services/WidgetOrdering";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -15,6 +14,7 @@ import MarkdownRender from "../components/MarkdownRender";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
+import UtilsService from "../services/UtilsService";
 
 interface PathParams {
   dashboardId: string;
@@ -83,7 +83,13 @@ function EditDashboard() {
       history.replace(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${widgetToDelete.name}" widget was successfully deleted`,
+          message: `"${widgetToDelete.name}" ${
+            widgetToDelete.widgetType === WidgetType.Chart
+              ? UtilsService.getChartTypeLabel(
+                  widgetToDelete.content.chartType
+                ).toLowerCase()
+              : widgetToDelete.widgetType.toLowerCase()
+          } was successfully deleted`,
         },
       });
 
@@ -164,7 +170,6 @@ function EditDashboard() {
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
-          <AlertContainer />
           <div className="grid-row">
             <div className="grid-col text-left">
               <ul className="usa-button-group">

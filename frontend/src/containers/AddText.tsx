@@ -24,13 +24,13 @@ function AddText() {
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
 
-  const [creatingWidget, setCreatingLoading] = useState(false);
+  const [creatingWidget, setCreatingWidget] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
   const onSubmit = async (values: FormValues) => {
-    setCreatingLoading(true);
     try {
+      setCreatingWidget(true);
       await BackendService.createWidget(
         dashboardId,
         values.title,
@@ -39,11 +39,18 @@ function AddText() {
           text: values.text,
         }
       );
-      history.push(`/admin/dashboard/edit/${dashboardId}`);
+      setCreatingWidget(false);
+
+      history.push(`/admin/dashboard/edit/${dashboardId}`, {
+        alert: {
+          type: "success",
+          message: `"${values.title}" text has been successfully added`,
+        },
+      });
     } catch (err) {
       console.log("Failed to save widget", err);
+      setCreatingWidget(false);
     }
-    setCreatingLoading(false);
   };
 
   const onCancel = () => {

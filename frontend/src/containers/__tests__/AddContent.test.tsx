@@ -6,7 +6,7 @@ import AddContent from "../AddContent";
 
 test("renders Add content", async () => {
   const { getByRole } = render(<AddContent />, { wrapper: MemoryRouter });
-  const addContent = await getByRole("heading", { name: "Add content" });
+  const addContent = await getByRole("heading", { name: "Add content item" });
   expect(addContent).toBeInTheDocument();
 });
 

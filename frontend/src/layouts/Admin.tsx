@@ -3,6 +3,7 @@ import { Auth } from "aws-amplify";
 import { useAdmin } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import EnvConfig from "../services/EnvConfig";
 import logo from "../logo.svg";
 
 interface LayoutProps {
@@ -31,7 +32,7 @@ function AdminLayout(props: LayoutProps) {
               <em className="usa-logo__text display-flex flex-align-center">
                 <img src={logo} alt="logo" className="logo" />
                 <a href="/admin" title="Home" aria-label="Home">
-                  {process.env.REACT_APP_BRAND_NAME}
+                  {EnvConfig.brandName}
                 </a>
               </em>
             </div>

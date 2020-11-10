@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas, useDashboard } from "../hooks";
 import BackendService from "../services/BackendService";
+import EnvConfig from "../services/EnvConfig";
 import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
@@ -89,8 +90,8 @@ function EditDetails() {
                 <Dropdown
                   id="topicAreaId"
                   name="topicAreaId"
-                  label="Topic Area"
-                  hint="Select an existing topic area"
+                  label={EnvConfig.topicAreaLabel}
+                  hint={`Select an existing ${EnvConfig.topicAreaLabel.toLowerCase()}`}
                   defaultValue={dashboard?.topicAreaId}
                   register={register}
                   options={topicareas.map((topicarea) => ({

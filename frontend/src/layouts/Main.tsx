@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import EnvConfig from "../services/EnvConfig";
 import logo from "../logo.svg";
 
 interface LayoutProps {
@@ -18,7 +19,7 @@ function MainLayout(props: LayoutProps) {
               <em className="usa-logo__text display-flex flex-align-center">
                 <img src={logo} alt="logo" className="logo" />
                 <a href="/" title="Home" aria-label="Home">
-                  {process.env.REACT_APP_BRAND_NAME}
+                  {EnvConfig.brandName}
                 </a>
               </em>
             </div>
@@ -31,7 +32,7 @@ function MainLayout(props: LayoutProps) {
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
                 <a
-                  href={`mailto:${process.env.REACT_APP_CONTACT_EMAIL}?subject=Performance Dashboard Assistance`}
+                  href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
                   className="usa-nav__link"
                 >
                   Contact

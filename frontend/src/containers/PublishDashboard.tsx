@@ -110,7 +110,7 @@ function PublishDashboard() {
               <Button variant="outline" onClick={onPreview}>
                 Preview
               </Button>
-              <Button variant="base" onClick={onReturnToDraft}>
+              <Button variant="outline" onClick={onReturnToDraft}>
                 Return to draft
               </Button>
             </div>

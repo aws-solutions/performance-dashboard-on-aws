@@ -75,5 +75,5 @@ verify_prereqs
 create_build_directories
 build_cdk
 deploy_auth
-deploy_backend
+# deploy_backend
 deploy_frontend

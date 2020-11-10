@@ -124,7 +124,7 @@ function DashboardListing() {
           selectedDashboards.length !== 1
             ? "these published dashboards"
             : "this published dashboard"
-        } from the external site. You can re-publish archived dashboards at any time.`}
+        } from the published site. You can re-publish archived dashboards at any time.`}
         buttonType="Archive"
         buttonAction={archiveDashboards}
       />

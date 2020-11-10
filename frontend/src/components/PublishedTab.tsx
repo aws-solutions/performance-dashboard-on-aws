@@ -68,21 +68,6 @@ function PublishedTab(props: Props) {
                 <Search id="search" onSubmit={onSearch} size="small" />
               </span>
             </li>
-            <li className="usa-button-group__item padding-top-1 margin-left-1">
-              <span>
-                <input
-                  id="can-update-only"
-                  type="checkbox"
-                  checked={canUpdateOnly}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setCanUpdateOnly(e.target.checked);
-                  }}
-                />
-                <label htmlFor="can-update-only" className="margin-left-1">
-                  Show only dashboards I can update
-                </label>
-              </span>
-            </li>
           </ul>
         </div>
         <div className="tablet:grid-col-5 text-right">

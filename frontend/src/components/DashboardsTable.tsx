@@ -245,14 +245,24 @@ function sortDashboards(
   return sortedDashboard;
 }
 
-function dashboardLink(id: string, state: DashboardState): string {
+function dashboardLink(id: string, state: DashboardState): string | object {
   switch (state) {
     case DashboardState.Draft:
       return `/admin/dashboard/edit/${id}`;
     case DashboardState.Published:
       return `/admin/dashboard/${id}`;
     case DashboardState.PublishPending:
-      return `/admin/dashboard/${id}/publish`;
+      return {
+        pathname: `/admin/dashboard/${id}/publish`,
+        state: {
+          alert: {
+            type: "info",
+            message:
+              "This dashboard is now in the publish pending state and " +
+              "cannot be edited unless returned to draft",
+          },
+        },
+      };
     case DashboardState.Archived:
       return `/admin/dashboard/archived/${id}`;
     default:

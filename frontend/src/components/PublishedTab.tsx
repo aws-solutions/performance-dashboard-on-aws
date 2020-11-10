@@ -51,7 +51,7 @@ function PublishedTab(props: Props) {
         These are all of the published dashboards. You can view all dashboards
         but you need editor access in order to update a published dashboard.{" "}
         <Link target="_blank" to={"/"}>
-          View the external site
+          View the published site
           <FontAwesomeIcon
             className="margin-left-1"
             icon={faExternalLinkAlt}

@@ -22,9 +22,7 @@ exports[`renders a table with dashboards 1`] = `
             type="checkbox"
           />
         </th>
-        <th
-          style="width: 30%;"
-        >
+        <th>
           <span
             class="font-sans-xs"
           >
@@ -50,13 +48,11 @@ exports[`renders a table with dashboards 1`] = `
             </svg>
           </button>
         </th>
-        <th
-          style="width: 30%;"
-        >
+        <th>
           <span
             class="font-sans-xs"
           >
-            Topic area
+            Topic Area
           </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
@@ -211,9 +207,7 @@ exports[`renders an empty table 1`] = `
             type="checkbox"
           />
         </th>
-        <th
-          style="width: 30%;"
-        >
+        <th>
           <span
             class="font-sans-xs"
           >
@@ -239,13 +233,11 @@ exports[`renders an empty table 1`] = `
             </svg>
           </button>
         </th>
-        <th
-          style="width: 30%;"
-        >
+        <th>
           <span
             class="font-sans-xs"
           >
-            Topic area
+            Topic Area
           </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"

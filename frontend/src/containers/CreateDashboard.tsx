@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas } from "../hooks";
 import BackendService from "../services/BackendService";
+import EnvConfig from "../services/EnvConfig";
 import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
@@ -72,8 +73,8 @@ function CreateDashboard() {
                 <Dropdown
                   id="topicAreaId"
                   name="topicAreaId"
-                  label="Topic Area"
-                  hint="Select an existing topic area"
+                  label={EnvConfig.topicAreaLabel}
+                  hint={`Select an existing ${EnvConfig.topicAreaLabel.toLowerCase()}`}
                   register={register}
                   options={topicareas.map((topicarea) => ({
                     value: topicarea.id,

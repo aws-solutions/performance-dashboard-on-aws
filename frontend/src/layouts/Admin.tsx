@@ -28,7 +28,7 @@ function AdminLayout(props: LayoutProps) {
       <header className="usa-header usa-header--basic">
         <div className="usa-nav-container">
           <div className="usa-navbar navbar-long">
-            <div className="usa-logo" id="basic-logo">
+            <div className="usa-logo margin-top-2" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
                 <img src={logo} alt="logo" className="logo" />
                 <a href="/admin" title="Home" aria-label="Home">

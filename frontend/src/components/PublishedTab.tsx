@@ -16,7 +16,6 @@ interface Props {
 function PublishedTab(props: Props) {
   const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<Array<Dashboard>>([]);
-  const [canUpdateOnly, setCanUpdateOnly] = useState<boolean>(false);
 
   const onSearch = (query: string) => {
     setFilter(query);

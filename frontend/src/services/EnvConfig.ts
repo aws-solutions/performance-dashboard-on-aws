@@ -19,6 +19,13 @@ interface EnvConfig {
   topicAreaLabel: string;
 }
 
+const config = window.EnvironmentConfig;
+
 export default {
+  // Export all values in the window object
   ...window.EnvironmentConfig,
-};
+  // Set default values for some keys
+  contactEmail: (config && config.contactEmail) || "support@example.com",
+  brandName: (config && config.brandName) || "Performance Dashboard",
+  topicAreaLabel: (config && config.topicAreaLabel) || "Topic Area",
+} as EnvConfig;

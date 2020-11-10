@@ -92,7 +92,7 @@ function DashboardPreview() {
           type="info"
           message="Below is a preview of what the published dashboard will look like.
               If everything looks right, you can publish the dashboard to be
-              viewable on the external site."
+              viewable on the published site."
         />
         <div className="grid-row margin-top-2">
           <div className="grid-col text-left">

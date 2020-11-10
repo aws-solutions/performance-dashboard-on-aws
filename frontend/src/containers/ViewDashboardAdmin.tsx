@@ -114,7 +114,7 @@ function ViewDashboardAdmin() {
           isOpen={isOpenArchiveModal}
           closeModal={closeArchiveModal}
           title={`Archive "${dashboard?.name}" dashboard`}
-          message={`This will remove "${dashboard?.name}" dashboard from the external site. You can re-publish archived dashboards at any time.`}
+          message={`This will remove "${dashboard?.name}" dashboard from the published site. You can re-publish archived dashboards at any time.`}
           buttonType="Archive"
           buttonAction={archiveDashboard}
         />

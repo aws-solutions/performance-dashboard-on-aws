@@ -4,7 +4,7 @@ import "./Link.css";
 
 interface Props {
   children: ReactNode;
-  to: string;
+  to: string | object;
   target?: string;
   ariaLabel?: string;
 }

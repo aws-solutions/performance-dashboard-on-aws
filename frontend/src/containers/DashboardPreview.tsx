@@ -50,7 +50,17 @@ function DashboardPreview() {
     history.push(
       dashboard?.state === DashboardState.PublishPending
         ? `/admin/dashboard/${dashboardId}/publish`
-        : `/admin/dashboard/edit/${dashboardId}`
+        : `/admin/dashboard/edit/${dashboardId}`,
+      dashboard?.state === DashboardState.PublishPending
+        ? {
+            alert: {
+              type: "info",
+              message:
+                "This dashboard is now in the publish pending state and " +
+                "cannot be edited unless returned to draft",
+            },
+          }
+        : {}
     );
   };
 

@@ -51,7 +51,7 @@ function AddContent() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add content",
+      label: "Add content item",
       url: "",
     });
   }
@@ -59,7 +59,7 @@ function AddContent() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Add content</h1>
+      <h1>Add content item</h1>
 
       <div className="text-base text-italic">Step 1 of 2</div>
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">

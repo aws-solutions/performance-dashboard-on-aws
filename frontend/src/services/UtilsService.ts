@@ -1,4 +1,4 @@
-import { Dashboard, PublicDashboard, TopicArea } from "../models";
+import { ChartType, Dashboard, PublicDashboard, TopicArea } from "../models";
 
 /**
  * Takes an array of dashboards and groups them by topic area.
@@ -27,6 +27,13 @@ function groupByTopicArea(
   return Object.values(byId);
 }
 
+function getChartTypeLabel(chartType: string): string {
+  return chartType === ChartType.PartWholeChart
+    ? "Part-to-whole Chart"
+    : chartType.split(/(?=[A-Z])/).join(" ");
+}
+
 export default {
   groupByTopicArea,
+  getChartTypeLabel,
 };

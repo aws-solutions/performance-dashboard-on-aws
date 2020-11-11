@@ -15,6 +15,7 @@ import LineChartPreview from "../components/LineChartPreview";
 import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
+import UtilsService from "../services/UtilsService";
 
 interface FormValues {
   title: string;
@@ -40,6 +41,7 @@ function AddChart() {
   const [summary, setSummary] = useState("");
   const [chartType, setChartType] = useState<ChartType>(ChartType.LineChart);
   const [fileLoading, setFileLoading] = useState(false);
+  const [creatingWidget, setCreatingWidget] = useState(false);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -64,6 +66,8 @@ function AddChart() {
   const onSubmit = async (values: FormValues) => {
     try {
       const newDataset = await uploadDataset();
+
+      setCreatingWidget(true);
       await BackendService.createWidget(
         dashboardId,
         values.title,
@@ -76,11 +80,20 @@ function AddChart() {
           s3Key: newDataset.s3Key,
         }
       );
+      setCreatingWidget(false);
+
+      history.push(`/admin/dashboard/edit/${dashboardId}`, {
+        alert: {
+          type: "success",
+          message: `"${values.title}" ${UtilsService.getChartTypeLabel(
+            values.chartType
+          ).toLowerCase()} has been successfully added`,
+        },
+      });
     } catch (err) {
       console.log("Failed to save widget", err);
+      setCreatingWidget(false);
     }
-
-    history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
   const goBack = () => {
@@ -237,7 +250,10 @@ function AddChart() {
             <Button variant="outline" type="button" onClick={goBack}>
               Back
             </Button>
-            <Button disabled={!dataset || fileLoading} type="submit">
+            <Button
+              disabled={!dataset || fileLoading || creatingWidget}
+              type="submit"
+            >
               Add chart
             </Button>
             <Button

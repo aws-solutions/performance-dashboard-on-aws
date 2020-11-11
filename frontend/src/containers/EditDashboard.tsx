@@ -213,10 +213,19 @@ function EditDashboard() {
                           <p className="margin-top-0">
                             A version of this dashboard is
                             <br />
-                            published.
+                            {publishedOrArchived.state.toLowerCase()}.
                           </p>
-                          <Link target="_blank" to={"/"}>
-                            View published version
+                          <Link
+                            target="_blank"
+                            to={`/admin/dashboard${
+                              publishedOrArchived.state ===
+                              DashboardState.Archived
+                                ? "/archived"
+                                : ""
+                            }/${publishedOrArchived.id}`}
+                          >
+                            View {publishedOrArchived.state.toLowerCase()}{" "}
+                            version
                             <FontAwesomeIcon
                               className="margin-left-1"
                               icon={faExternalLinkAlt}

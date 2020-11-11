@@ -9,3 +9,6 @@
 .usa-button--base.usa-button--active {
   background-color: #1b1b1b !important;
 }
+.usa-button--base:disabled {
+  background-color: #c9c9c9 !important;
+}

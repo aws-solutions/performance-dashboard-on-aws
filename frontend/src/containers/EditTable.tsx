@@ -26,13 +26,14 @@ interface PathParams {
 function EditTable() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
     undefined
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
-  const [loading, setLoading] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
+  const [editingWidget, setEditingWidget] = useState(false);
   const { widget, json, setJson, setWidget } = useWidget(dashboardId, widgetId);
 
   const onFileProcessed = useCallback(
@@ -74,7 +75,7 @@ function EditTable() {
       };
     }
 
-    setLoading(true);
+    setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
       JSON.stringify(json)
@@ -85,7 +86,7 @@ function EditTable() {
       json: uploadResponse.s3Keys.json,
     });
 
-    setLoading(false);
+    setFileLoading(false);
     return newDataset;
   };
 
@@ -99,6 +100,7 @@ function EditTable() {
       const datasetId = newDataset ? newDataset.id : widget.content.datasetId;
       const s3Key = newDataset ? newDataset.s3Key : widget.content.s3Key;
 
+      setEditingWidget(true);
       await BackendService.editWidget(
         dashboardId,
         widgetId,
@@ -111,9 +113,17 @@ function EditTable() {
         },
         widget.updatedAt
       );
-      history.push(`/admin/dashboard/edit/${dashboardId}`);
+      setEditingWidget(false);
+
+      history.push(`/admin/dashboard/edit/${dashboardId}`, {
+        alert: {
+          type: "success",
+          message: `"${values.title}" table has been successfully edited`,
+        },
+      });
     } catch (err) {
       console.log("Failed to edit widget", err);
+      setEditingWidget(false);
     }
   };
 
@@ -196,7 +206,7 @@ function EditTable() {
                     name="dataset"
                     label="File upload"
                     accept=".csv"
-                    loading={loading}
+                    loading={fileLoading}
                     errors={csvErrors}
                     register={register}
                     hint="Must be a CSV file. [Link] How do I format my CSV?"
@@ -236,7 +246,10 @@ function EditTable() {
                 </fieldset>
                 <br />
                 <hr />
-                <Button disabled={!json || loading} type="submit">
+                <Button
+                  disabled={!json || fileLoading || editingWidget}
+                  type="submit"
+                >
                   Save
                 </Button>
                 <Button

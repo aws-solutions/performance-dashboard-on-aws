@@ -30,6 +30,7 @@ const dummyDashboard = {
       order: 1,
       updatedAt: "",
       content: {
+        chartType: "LineChart",
         s3Key: {
           json: "xyz.json",
         },

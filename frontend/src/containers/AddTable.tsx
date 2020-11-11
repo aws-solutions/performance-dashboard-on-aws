@@ -34,6 +34,7 @@ function AddTable() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [fileLoading, setFileLoading] = useState(false);
+  const [creatingWidget, setCreatingWidget] = useState(false);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -58,6 +59,8 @@ function AddTable() {
   const onSubmit = async (values: FormValues) => {
     try {
       const newDataset = await uploadDataset();
+
+      setCreatingWidget(true);
       await BackendService.createWidget(
         dashboardId,
         values.title,
@@ -69,11 +72,18 @@ function AddTable() {
           s3Key: newDataset.s3Key,
         }
       );
+      setCreatingWidget(false);
+
+      history.push(`/admin/dashboard/edit/${dashboardId}`, {
+        alert: {
+          type: "success",
+          message: `"${values.title}" table has been successfully added`,
+        },
+      });
     } catch (err) {
       console.log("Failed to save widget", err);
+      setCreatingWidget(false);
     }
-
-    history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
   const goBack = () => {
@@ -208,7 +218,10 @@ function AddTable() {
             <Button variant="outline" type="button" onClick={goBack}>
               Back
             </Button>
-            <Button disabled={!dataset || fileLoading} type="submit">
+            <Button
+              disabled={!dataset || fileLoading || creatingWidget}
+              type="submit"
+            >
               Add table
             </Button>
             <Button

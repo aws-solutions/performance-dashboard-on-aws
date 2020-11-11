@@ -22,9 +22,9 @@ interface PathParams {
 function EditText() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
-  const { dashboard } = useDashboard(dashboardId);
+  const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
-  const [loading, setLoading] = useState(false);
+  const [editingWidget, setEditingWidget] = useState(false);
   const { widget, setWidget } = useWidget(dashboardId, widgetId);
 
   const onSubmit = async (values: FormValues) => {
@@ -33,7 +33,7 @@ function EditText() {
     }
 
     try {
-      setLoading(true);
+      setEditingWidget(true);
       await BackendService.editWidget(
         dashboardId,
         widgetId,
@@ -43,10 +43,17 @@ function EditText() {
         },
         widget.updatedAt
       );
-      history.push(`/admin/dashboard/edit/${dashboardId}`);
+      setEditingWidget(false);
+
+      history.push(`/admin/dashboard/edit/${dashboardId}`, {
+        alert: {
+          type: "success",
+          message: `"${values.title}" text has been successfully edited`,
+        },
+      });
     } catch (err) {
       console.log("Failed to save widget", err);
-      setLoading(false);
+      setEditingWidget(false);
     }
   };
 
@@ -129,7 +136,7 @@ function EditText() {
                 <br />
                 <br />
                 <hr />
-                <Button disabled={loading} type="submit">
+                <Button disabled={editingWidget} type="submit">
                   Save
                 </Button>
                 <Button

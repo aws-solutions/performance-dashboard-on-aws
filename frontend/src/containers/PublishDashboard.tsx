@@ -98,7 +98,9 @@ function PublishDashboard() {
             <div className="grid-col text-left padding-top-2">
               <ul className="usa-button-group">
                 <li className="usa-button-group__item">
-                  <span className="usa-tag">Publish Pending</span>
+                  <span className="usa-tag" style={{ cursor: "text" }}>
+                    Publish Pending
+                  </span>
                 </li>
               </ul>
             </div>

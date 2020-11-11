@@ -82,7 +82,9 @@ function ArchivedDashboard() {
           <div className="grid-col text-left">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
-                <span className="usa-tag">{dashboard?.state}</span>
+                <span className="usa-tag" style={{ cursor: "text" }}>
+                  {dashboard?.state}
+                </span>
               </li>
               <li className="usa-button-group__item">
                 <span className="text-underline">

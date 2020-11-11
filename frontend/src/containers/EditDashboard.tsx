@@ -3,12 +3,17 @@ import dayjs from "dayjs";
 import { useHistory, useParams } from "react-router-dom";
 import Link from "../components/Link";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useDashboard } from "../hooks";
 import { Widget, LocationState, WidgetType } from "../models";
 =======
 import { useDashboard, useDashboardVersions } from "../hooks";
 import { Widget, LocationState, DashboardState } from "../models";
 >>>>>>> e0579f5... Add tooltip component and use it in Version link
+=======
+import { useDashboard } from "../hooks";
+import { Widget, LocationState, WidgetType } from "../models";
+>>>>>>> 6fc6834... Preparing for merge
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
@@ -20,11 +25,15 @@ import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import UtilsService from "../services/UtilsService";
 =======
 import ReactTooltip from "react-tooltip";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 >>>>>>> e0579f5... Add tooltip component and use it in Version link
+=======
+import UtilsService from "../services/UtilsService";
+>>>>>>> 6fc6834... Preparing for merge
 
 interface PathParams {
   dashboardId: string;
@@ -40,13 +49,6 @@ function EditDashboard() {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [widgetToDelete, setWidgetToDelete] = useState<Widget | undefined>(
     undefined
-  );
-  const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
-
-  const publishedOrArchived = versions.find(
-    (v) =>
-      v.state === DashboardState.Published ||
-      v.state === DashboardState.Archived
   );
 
   const onAddContent = async () => {
@@ -195,47 +197,11 @@ function EditDashboard() {
                     {dashboard?.state}
                   </span>
                 </li>
-                <li
-                  className={`usa-button-group__item${
-                    publishedOrArchived ? "" : " cursor-default"
-                  }`}
-                >
-                  <span
-                    className="text-underline"
-                    data-for="version"
-                    data-tip=""
-                    data-event="click focus"
-                    data-border={true}
-                  >
+                <li className="usa-button-group__item">
+                  <span className="text-underline">
                     <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
                     Version {dashboard?.version}
                   </span>
-                  {publishedOrArchived && (
-                    <ReactTooltip
-                      id="version"
-                      clickable
-                      place="bottom"
-                      type="light"
-                      getContent={() => (
-                        <div className="padding-05 margin-05 font-sans-sm">
-                          <p className="margin-top-0">
-                            A version of this dashboard is
-                            <br />
-                            published.
-                          </p>
-                          <Link target="_blank" to={"/"}>
-                            View published version
-                            <FontAwesomeIcon
-                              className="margin-left-1"
-                              icon={faExternalLinkAlt}
-                              size="sm"
-                            />
-                          </Link>
-                        </div>
-                      )}
-                      className="padding-05 margin-05"
-                    />
-                  )}
                 </li>
               </ul>
             </div>

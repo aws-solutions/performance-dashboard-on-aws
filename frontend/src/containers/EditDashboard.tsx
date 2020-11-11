@@ -43,7 +43,7 @@ function EditDashboard() {
   );
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
 
-  const publisedOrArchived = versions.find(
+  const publishedOrArchived = versions.find(
     (v) =>
       v.state === DashboardState.Published ||
       v.state === DashboardState.Archived
@@ -195,7 +195,11 @@ function EditDashboard() {
                     {dashboard?.state}
                   </span>
                 </li>
-                <li className="usa-button-group__item">
+                <li
+                  className={`usa-button-group__item${
+                    publishedOrArchived ? "" : " cursor-default"
+                  }`}
+                >
                   <span
                     className="text-underline"
                     data-for="version"
@@ -206,30 +210,32 @@ function EditDashboard() {
                     <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
                     Version {dashboard?.version}
                   </span>
-                  <ReactTooltip
-                    id="version"
-                    clickable
-                    place="bottom"
-                    type="light"
-                    getContent={() => (
-                      <div className="padding-05 margin-05 font-sans-sm">
-                        <p className="margin-top-0">
-                          A version of this dashboard is
-                          <br />
-                          published.
-                        </p>
-                        <Link target="_blank" to={"/"}>
-                          View published version
-                          <FontAwesomeIcon
-                            className="margin-left-1"
-                            icon={faExternalLinkAlt}
-                            size="sm"
-                          />
-                        </Link>
-                      </div>
-                    )}
-                    className="padding-05 margin-05"
-                  />
+                  {publishedOrArchived && (
+                    <ReactTooltip
+                      id="version"
+                      clickable
+                      place="bottom"
+                      type="light"
+                      getContent={() => (
+                        <div className="padding-05 margin-05 font-sans-sm">
+                          <p className="margin-top-0">
+                            A version of this dashboard is
+                            <br />
+                            published.
+                          </p>
+                          <Link target="_blank" to={"/"}>
+                            View published version
+                            <FontAwesomeIcon
+                              className="margin-left-1"
+                              icon={faExternalLinkAlt}
+                              size="sm"
+                            />
+                          </Link>
+                        </div>
+                      )}
+                      className="padding-05 margin-05"
+                    />
+                  )}
                 </li>
               </ul>
             </div>

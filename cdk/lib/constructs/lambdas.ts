@@ -24,6 +24,7 @@ export class LambdaFunctions extends cdk.Construct {
       tracing: lambda.Tracing.ACTIVE,
       memorySize: 256,
       timeout: cdk.Duration.seconds(10),
+      reservedConcurrentExecutions: 25,
       environment: {
         MAIN_TABLE: props.mainTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,

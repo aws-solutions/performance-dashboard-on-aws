@@ -11,54 +11,74 @@ interface Props {
 
 export class LambdaFunctions extends cdk.Construct {
   public readonly apiHandler: lambda.Function;
+  public readonly publicApiHandler: lambda.Function;
 
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id);
 
-    this.apiHandler = new lambda.Function(this, "Api", {
+    this.apiHandler = new lambda.Function(this, "PrivateApi", {
       runtime: lambda.Runtime.NODEJS_12_X,
-      description: "Function that handles requests from API Gateway",
+      description: "Handles API Gateway traffic from admin users",
       code: lambda.Code.fromAsset("../backend/build"),
       handler: "lambda/api.handler",
       tracing: lambda.Tracing.ACTIVE,
       memorySize: 256,
+      timeout: cdk.Duration.seconds(10),
       environment: {
         MAIN_TABLE: props.mainTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
       },
     });
 
-    this.apiHandler.addToRolePolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        resources: [
-          // Grant permissions to table itself
-          props.mainTable.tableArn,
-          // Grant permissions to GSI indexes
-          props.mainTable.tableArn.concat("/index/*"),
-        ],
-        actions: [
-          "dynamodb:PutItem",
-          "dynamodb:GetItem",
-          "dynamodb:DeleteItem",
-          "dynamodb:BatchGetItem",
-          "dynamodb:BatchWriteItem",
-          "dynamodb:ConditionCheckItem",
-          "dynamodb:GetRecords",
-          "dynamodb:GetShardIterator",
-          "dynamodb:Query",
-          "dynamodb:Scan",
-          "dynamodb:UpdateItem",
-        ],
-      })
-    );
+    // This function handles traffic coming from the public.
+    // It provides flexibility to define specific throttling limits
+    // between this lambda vs the one that handles private traffic.
+    this.publicApiHandler = new lambda.Function(this, "PublicApi", {
+      runtime: lambda.Runtime.NODEJS_12_X,
+      description: "Handles API Gateway traffic from public users",
+      code: lambda.Code.fromAsset("../backend/build"),
+      handler: "lambda/api.handler",
+      tracing: lambda.Tracing.ACTIVE,
+      memorySize: 256,
+      timeout: cdk.Duration.seconds(10),
+      environment: {
+        MAIN_TABLE: props.mainTable.tableName,
+        DATASETS_BUCKET: props.datasetsBucket.bucketName,
+      },
+    });
 
-    this.apiHandler.addToRolePolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        resources: [props.datasetsBucket.arnForObjects("*")],
-        actions: ["s3:GetObject", "s3:PutObject"],
-      })
-    );
+    const dynamodbPolicy = new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      resources: [
+        // Grant permissions to table itself
+        props.mainTable.tableArn,
+        // Grant permissions to GSI indexes
+        props.mainTable.tableArn.concat("/index/*"),
+      ],
+      actions: [
+        "dynamodb:PutItem",
+        "dynamodb:GetItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem",
+      ],
+    });
+
+    const s3Policy = new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      resources: [props.datasetsBucket.arnForObjects("*")],
+      actions: ["s3:GetObject", "s3:PutObject"],
+    });
+
+    this.apiHandler.addToRolePolicy(dynamodbPolicy);
+    this.apiHandler.addToRolePolicy(s3Policy);
+    this.publicApiHandler.addToRolePolicy(dynamodbPolicy);
+    this.publicApiHandler.addToRolePolicy(s3Policy);
   }
 }

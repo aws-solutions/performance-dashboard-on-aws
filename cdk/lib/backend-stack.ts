@@ -29,6 +29,7 @@ export class BackendStack extends cdk.Stack {
     const backendApi = new BackendApi(this, "Api", {
       cognitoUserPoolArn: props.userPoolArn,
       apiFunction: lambdas.apiHandler,
+      publicApiFunction: lambdas.publicApiHandler,
     });
 
     /**

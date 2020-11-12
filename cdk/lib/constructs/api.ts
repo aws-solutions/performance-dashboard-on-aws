@@ -4,6 +4,7 @@ import * as lambda from "@aws-cdk/aws-lambda";
 
 interface ApiProps {
   apiFunction: lambda.Function;
+  publicApiFunction: lambda.Function;
   cognitoUserPoolArn: string;
 }
 
@@ -16,6 +17,14 @@ export class BackendApi extends cdk.Construct {
     const apiIntegration = new apigateway.LambdaIntegration(props.apiFunction, {
       allowTestInvoke: false,
     });
+
+    const publicApiIntegration = new apigateway.LambdaIntegration(
+      props.publicApiFunction,
+      {
+        allowTestInvoke: false,
+      }
+    );
+
     this.api = new apigateway.RestApi(scope, "ApiGateway", {
       description: "Performance Dashboard backend API",
       deployOptions: { tracingEnabled: true },
@@ -34,7 +43,7 @@ export class BackendApi extends cdk.Construct {
     });
 
     this.addPrivateEndpoints(apiIntegration, authorizer);
-    this.addPublicEndpoints(apiIntegration);
+    this.addPublicEndpoints(publicApiIntegration);
   }
 
   private addPrivateEndpoints(

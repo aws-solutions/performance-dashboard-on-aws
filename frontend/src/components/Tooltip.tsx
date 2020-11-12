@@ -6,6 +6,7 @@ import ReactTooltip, {
   Offset,
   GetContent,
 } from "react-tooltip";
+import "./Tooltip.css";
 
 interface Props {
   id: string;
@@ -29,7 +30,7 @@ function Tooltip(props: Props) {
       getContent={props.getContent}
       clickable
       globalEventOff="click"
-      className="padding-x-2"
+      className="padding-x-2 cursor-default"
     />
   );
 }

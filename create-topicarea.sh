@@ -1,12 +1,15 @@
 #!/bin/bash
 
-#read and create api request source
-read -p 'Cognito region code: ' region
-read -p 'Cognito user pool ID: ' userPool
-post_url='https://cognito-idp.'"$region"'.amazonaws.com/'"$userPool"
+# Replace fields with proper IDs
+region='Replace with the code for the AWS Region in which you configured the Cognito User pools'
+userPoolID='Replace with the Cognito Pool Id'
+app_clientID='Replace with the Cognito User Pools App client id'
+api_invokeURL='Replace with Invoke API url'
 
-# reads USERNAME PASSWORD and clientID 
-read -p 'App Client ID: ' clientID
+api_url="$api_invokeURL"'/topicarea'
+post_url='https://cognito-idp.'"$region"'.amazonaws.com/'"$userPoolID"
+
+# reads USERNAME read PASSWORD
 read -p 'Username: ' userName
 read -e -s -p "Password (hidden):" pass
 printf "\n"
@@ -16,7 +19,7 @@ generate_post_token()
 {
   cat <<EOF
     {
-      "ClientId": "$clientID",
+      "ClientId": "$app_clientID",
       "AuthFlow": "USER_PASSWORD_AUTH",
       "AuthParameters": {
           "USERNAME": "$userName",
@@ -47,7 +50,7 @@ generate_post_data()
 EOF
 }
 
-get_response=$(curl -X --location --request POST 'https://71vtbdvejb.execute-api.us-east-1.amazonaws.com/prod//topicarea' \
+get_response=$(curl -X --location --request POST "$api_url" \
 --header 'Authorization: Bearer '$jwt_token'' \
 --header 'Content-Type: application/json' \
 --data-raw "$(generate_post_data)")

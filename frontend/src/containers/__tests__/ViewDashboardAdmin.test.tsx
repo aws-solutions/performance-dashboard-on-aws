@@ -5,6 +5,23 @@ import ViewDashboardAdmin from "../ViewDashboardAdmin";
 
 jest.mock("../../hooks");
 
+test("renders dashboard version", () => {
+  const { getByText } = render(<ViewDashboardAdmin />, {
+    wrapper: MemoryRouter,
+  });
+  expect(getByText("Version 1")).toBeInTheDocument();
+});
+
+test("renders show version notes button", async () => {
+  const { getByRole } = render(<ViewDashboardAdmin />, {
+    wrapper: MemoryRouter,
+  });
+  const viewButton = getByRole("button", {
+    name: "Show version notes",
+  });
+  expect(viewButton).toBeInTheDocument();
+});
+
 test("renders dashboard title", () => {
   const { getByRole } = render(<ViewDashboardAdmin />, {
     wrapper: MemoryRouter,

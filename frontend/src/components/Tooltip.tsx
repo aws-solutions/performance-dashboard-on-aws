@@ -29,7 +29,7 @@ function Tooltip(props: Props) {
       getContent={props.getContent}
       clickable
       globalEventOff="click"
-      className="padding-05 margin-05"
+      className="padding-x-2"
     />
   );
 }

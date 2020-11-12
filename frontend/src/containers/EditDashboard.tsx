@@ -208,9 +208,9 @@ function EditDashboard() {
                       place="bottom"
                       type="light"
                       effect="solid"
-                      offset={{ right: 10 }}
+                      offset={{ right: 14 }}
                       getContent={() => (
-                        <div className="padding-05 margin-05 font-sans-sm">
+                        <div className="font-sans-sm">
                           <p className="margin-top-0">
                             A version of this dashboard is
                             <br />

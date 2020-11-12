@@ -21,6 +21,7 @@ export class LambdaFunctions extends cdk.Construct {
       code: lambda.Code.fromAsset("../backend/build"),
       handler: "lambda/api.handler",
       tracing: lambda.Tracing.ACTIVE,
+      timeout: cdk.Duration.seconds(10),
       memorySize: 256,
       environment: {
         MAIN_TABLE: props.mainTable.tableName,

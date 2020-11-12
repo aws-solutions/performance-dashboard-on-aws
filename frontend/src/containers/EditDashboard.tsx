@@ -14,7 +14,7 @@ import MarkdownRender from "../components/MarkdownRender";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
-import ReactTooltip from "react-tooltip";
+import Tooltip from "../components/Tooltip";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import UtilsService from "../services/UtilsService";
 
@@ -196,18 +196,19 @@ function EditDashboard() {
                     className="text-underline"
                     data-for="version"
                     data-tip=""
-                    data-event="click focus"
+                    data-event="click"
                     data-border={true}
                   >
                     <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
                     Version {dashboard?.version}
                   </span>
                   {publishedOrArchived && (
-                    <ReactTooltip
+                    <Tooltip
                       id="version"
-                      clickable
                       place="bottom"
                       type="light"
+                      effect="solid"
+                      offset={{ right: 10 }}
                       getContent={() => (
                         <div className="padding-05 margin-05 font-sans-sm">
                           <p className="margin-top-0">
@@ -234,7 +235,6 @@ function EditDashboard() {
                           </Link>
                         </div>
                       )}
-                      className="padding-05 margin-05"
                     />
                   )}
                 </li>

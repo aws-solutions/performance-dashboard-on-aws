@@ -27,6 +27,8 @@
     "@aws-cdk/aws-apigateway": "1.67.0",
     "@aws-cdk/aws-cloudfront": "1.67.0",
     "@aws-cdk/aws-codebuild": "1.67.0",
+    "@aws-cdk/aws-cloudwatch": "1.67.0",
+    "@aws-cdk/aws-cloudwatch-actions": "1.67.0",
     "@aws-cdk/aws-codecommit": "1.67.0",
     "@aws-cdk/aws-codepipeline": "1.67.0",
     "@aws-cdk/aws-codepipeline-actions": "1.67.0",

@@ -77,7 +77,7 @@ test("publish button invokes BackendService", async () => {
   await act(async () => {
     fireEvent.click(
       wrapper.getByRole("button", {
-        name: "Submit for publishing",
+        name: "Publish",
       })
     );
   });

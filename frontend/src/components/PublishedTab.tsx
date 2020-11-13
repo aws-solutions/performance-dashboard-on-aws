@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dashboard } from "../models";
+import { Dashboard, DashboardState } from "../models";
 import Button from "./Button";
 import Search from "./Search";
 import DashboardsTable from "./DashboardsTable";
@@ -83,6 +83,7 @@ function PublishedTab(props: Props) {
       </div>
       <DashboardsTable
         dashboards={sortDashboards(filterDashboards(props.dashboards))}
+        dashboardsState={DashboardState.Published}
         onSelect={onSelect}
       />
       <div className="text-right">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dashboard } from "../models";
+import { Dashboard, DashboardState } from "../models";
 import Search from "./Search";
 import DashboardsTable from "./DashboardsTable";
 import ScrollTop from "./ScrollTop";
@@ -43,8 +43,7 @@ function PublishQueueTab(props: Props) {
   return (
     <div>
       <p>
-        These dashboards are waiting to be published. They cannot be edited
-        unless returned to draft and they are not publicly visible.
+        These are all of the dashboards that have been submitted for publishing.
       </p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-7 text-left padding-top-1px">
@@ -60,6 +59,7 @@ function PublishQueueTab(props: Props) {
       </div>
       <DashboardsTable
         dashboards={sortDashboards(filterDashboards(props.dashboards))}
+        dashboardsState={DashboardState.PublishPending}
         onSelect={onSelect}
       />
       <div className="text-right">

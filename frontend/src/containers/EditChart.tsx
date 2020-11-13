@@ -131,7 +131,7 @@ function EditChart() {
         },
       });
     } catch (err) {
-      console.log("Failed to edit widget", err);
+      console.log("Failed to edit content item", err);
       setEditingWidget(false);
     }
   };
@@ -274,7 +274,7 @@ function EditChart() {
                         label="Chart summary"
                         hint="Give your chart a summary to explain it in more depth.
                     It can also be read by screen readers to describe the chart
-                    for those with visual impairments. What is useful in a chart description?"
+                    for those with visual impairments."
                         register={register}
                         defaultValue={widget.content.summary}
                         onChange={handleSummaryChange}

@@ -230,6 +230,7 @@ function EditDashboard() {
                           </Link>
                         </div>
                       )}
+                      clickable
                     />
                   )}
                 </li>
@@ -243,9 +244,22 @@ function EditDashboard() {
               <Button variant="outline" onClick={onPreview}>
                 Preview
               </Button>
-              <Button variant="base" onClick={onPublishDashboard}>
-                Publish
-              </Button>
+              <span data-for="publish" data-tip="">
+                <Button variant="base" onClick={onPublishDashboard}>
+                  Publish
+                </Button>
+              </span>
+              <Tooltip
+                id="publish"
+                place="bottom"
+                effect="solid"
+                offset={{ bottom: 8 }}
+                getContent={() => (
+                  <div className="font-sans-sm">
+                    Prepare dashboard for publishing
+                  </div>
+                )}
+              />
             </div>
           </div>
           <div>

@@ -214,7 +214,7 @@ function PublishDashboard() {
               </span>
               <span hidden={step < 1}>
                 <Button variant="default" type="submit" disabled={!acknowledge}>
-                  Submit for publishing
+                  Publish
                 </Button>
               </span>
             </div>

@@ -65,6 +65,12 @@ deploy_frontend() {
     echo "Deploying frontend stack"
 }
 
+deploy_ops() {
+    echo "Deploying ops stack"
+    cd $CDK_DIR
+    cdk deploy Ops --require-approval never
+}
+
 build_cdk() {
     cd $CDK_DIR
     npm run build
@@ -77,3 +83,4 @@ build_cdk
 deploy_auth
 deploy_backend
 deploy_frontend
+deploy_ops

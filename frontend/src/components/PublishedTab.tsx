@@ -53,9 +53,9 @@ function PublishedTab(props: Props) {
         <Link target="_blank" to={"/"}>
           View the published site
           <FontAwesomeIcon
-            className="margin-left-1"
+            className="margin-left-05"
             icon={faExternalLinkAlt}
-            size="sm"
+            size="xs"
           />
         </Link>
       </p>

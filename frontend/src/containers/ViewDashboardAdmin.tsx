@@ -60,6 +60,7 @@ function ViewDashboardAdmin() {
           type: "success",
           message: `A new draft version of "${draft.name}" dashboard has been created`,
         },
+        id: "top-alert",
       });
     } catch (err) {
       console.log("Failed to create draft", err);

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDashboard } from "../hooks";
 import { LocationState } from "../models";
 import BackendService from "../services/BackendService";
-import AlertContainer from "./AlertContainer";
+import Alert from "../components/Alert";
 import StepIndicator from "../components/StepIndicator";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
@@ -46,7 +46,14 @@ function PublishDashboard() {
 
     try {
       await BackendService.moveToDraft(dashboardId, dashboard.updatedAt);
-      history.push(`/admin/dashboard/edit/${dashboardId}`);
+
+      history.push(`/admin/dashboard/edit/${dashboardId}`, {
+        alert: {
+          type: "success",
+          message: `"${dashboard.name}" dashboard successfully returned to draft`,
+        },
+        id: "top-alert",
+      });
     } catch (err) {
       console.log("Failed to return to draft");
       await reloadDashboard();
@@ -93,7 +100,16 @@ function PublishDashboard() {
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
-          <AlertContainer />
+          <div className="margin-y-2">
+            <Alert
+              type="info"
+              message={
+                "This dashboard is now in the publish pending state and " +
+                "cannot be edited unless returned to draft"
+              }
+              slim
+            />
+          </div>
           <div className="grid-row">
             <div className="grid-col text-left padding-top-2">
               <ul className="usa-button-group">

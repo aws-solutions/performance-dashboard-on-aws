@@ -28,7 +28,14 @@ function CreateDashboard() {
       values.topicAreaId,
       values.description || ""
     );
-    history.push(`/admin/dashboard/edit/${dashboard.id}`);
+
+    history.push(`/admin/dashboard/edit/${dashboard.id}`, {
+      alert: {
+        type: "success",
+        message: `"${dashboard.name}" draft dashboard successfully created`,
+      },
+      id: "top-alert",
+    });
   };
 
   const onCancel = () => {

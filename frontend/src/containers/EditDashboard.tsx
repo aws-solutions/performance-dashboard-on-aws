@@ -18,6 +18,7 @@ import Tooltip from "../components/Tooltip";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import UtilsService from "../services/UtilsService";
 import AlertContainer from "../containers/AlertContainer";
+import DashboardHeader from "../components/DashboardHeader";
 
 interface PathParams {
   dashboardId: string;
@@ -266,25 +267,17 @@ function EditDashboard() {
               />
             </div>
           </div>
-          <div>
-            <h1 className="margin-bottom-0 display-inline-block">
-              {dashboard?.name}
-            </h1>
-            <Link to={`/admin/dashboard/edit/${dashboard?.id}/details`}>
-              <span className="margin-left-2">Edit details</span>
-            </Link>
-          </div>
-          <div className="text-base text-italic topic-area">
-            {dashboard?.topicAreaName}
-          </div>
-          <div>
-            {dashboard?.description && (
-              <MarkdownRender
-                source={dashboard.description}
-                className="dashboard-description"
-              />
-            )}
-          </div>
+          <DashboardHeader
+            name={dashboard?.name}
+            topicAreaName={dashboard?.topicAreaName}
+            description={dashboard?.description}
+            unpublished
+            link={
+              <Link to={`/admin/dashboard/edit/${dashboard?.id}/details`}>
+                <span className="margin-left-2">Edit details</span>
+              </Link>
+            }
+          />
           <hr />
           <WidgetList
             widgets={dashboard ? dashboard.widgets : []}

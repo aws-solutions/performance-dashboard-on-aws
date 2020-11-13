@@ -14,6 +14,7 @@ const dummyDashboard = {
   description: "Some description",
   updatedAt: "",
   createdBy: "test user",
+  version: 1,
   widgets: [
     {
       id: "abc",

@@ -35,14 +35,7 @@ function DashboardPreview() {
 
     if (dashboard) {
       await BackendService.publishPending(dashboard.id, dashboard.updatedAt);
-      history.push(`/admin/dashboard/${dashboard.id}/publish`, {
-        alert: {
-          type: "info",
-          message:
-            "This dashboard is now in the publish pending state " +
-            "and cannot be edited unless returned to draft.",
-        },
-      });
+      history.push(`/admin/dashboard/${dashboard.id}/publish`);
     }
   };
 
@@ -50,17 +43,7 @@ function DashboardPreview() {
     history.push(
       dashboard?.state === DashboardState.PublishPending
         ? `/admin/dashboard/${dashboardId}/publish`
-        : `/admin/dashboard/edit/${dashboardId}`,
-      dashboard?.state === DashboardState.PublishPending
-        ? {
-            alert: {
-              type: "info",
-              message:
-                "This dashboard is now in the publish pending state and " +
-                "cannot be edited unless returned to draft",
-            },
-          }
-        : {}
+        : `/admin/dashboard/edit/${dashboardId}`
     );
   };
 
@@ -93,6 +76,7 @@ function DashboardPreview() {
           message="Below is a preview of what the published dashboard will look like.
               If everything looks right, you can publish the dashboard to be
               viewable on the published site."
+          slim
         />
         <div className="grid-row margin-top-2">
           <div className="grid-col text-left">

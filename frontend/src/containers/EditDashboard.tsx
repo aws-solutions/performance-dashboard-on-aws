@@ -17,6 +17,7 @@ import Spinner from "../components/Spinner";
 import Tooltip from "../components/Tooltip";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import UtilsService from "../services/UtilsService";
+import AlertContainer from "../containers/AlertContainer";
 
 interface PathParams {
   dashboardId: string;
@@ -72,14 +73,7 @@ function EditDashboard() {
     if (dashboard) {
       await BackendService.publishPending(dashboard.id, dashboard.updatedAt);
 
-      history.push(`/admin/dashboard/${dashboard.id}/publish`, {
-        alert: {
-          type: "info",
-          message:
-            "This dashboard is now in the publish pending state and " +
-            "cannot be edited unless returned to draft",
-        },
-      });
+      history.push(`/admin/dashboard/${dashboard.id}/publish`);
     }
   };
 
@@ -179,6 +173,7 @@ function EditDashboard() {
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
+          <AlertContainer id="top-alert" />
           <div className="grid-row">
             <div className="grid-col text-left">
               <ul className="usa-button-group">
@@ -235,6 +230,7 @@ function EditDashboard() {
                           </Link>
                         </div>
                       )}
+                      clickable
                     />
                   )}
                 </li>
@@ -248,9 +244,22 @@ function EditDashboard() {
               <Button variant="outline" onClick={onPreview}>
                 Preview
               </Button>
-              <Button variant="base" onClick={onPublishDashboard}>
-                Publish
-              </Button>
+              <span data-for="publish" data-tip="">
+                <Button variant="base" onClick={onPublishDashboard}>
+                  Publish
+                </Button>
+              </span>
+              <Tooltip
+                id="publish"
+                place="bottom"
+                effect="solid"
+                offset={{ bottom: 8 }}
+                getContent={() => (
+                  <div className="font-sans-sm">
+                    Prepare dashboard for publishing
+                  </div>
+                )}
+              />
             </div>
           </div>
           <div>

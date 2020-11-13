@@ -52,7 +52,7 @@ function EditText() {
         },
       });
     } catch (err) {
-      console.log("Failed to save widget", err);
+      console.log("Failed to save content item", err);
       setEditingWidget(false);
     }
   };
@@ -153,7 +153,7 @@ function EditText() {
               <h4 className="margin-top-4">Preview</h4>
               <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>
               {widget.content.text ? (
-                <div className="border padding-left-05">
+                <div className="padding-left-05">
                   <MarkdownRender source={widget.content.text} />
                 </div>
               ) : (

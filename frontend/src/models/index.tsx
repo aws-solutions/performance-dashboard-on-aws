@@ -113,4 +113,5 @@ export type LocationState = {
     type: "success" | "warning" | "info" | "error";
     message: string;
   };
+  id?: string;
 };

@@ -16,6 +16,7 @@ interface Props {
   effect?: Effect;
   offset?: Offset;
   getContent?: GetContent;
+  clickable?: boolean;
 }
 
 function Tooltip(props: Props) {
@@ -28,7 +29,7 @@ function Tooltip(props: Props) {
       effect={props.effect}
       offset={props.offset}
       getContent={props.getContent}
-      clickable
+      clickable={props.clickable}
       globalEventOff="click"
       className="padding-x-2 cursor-default"
     />

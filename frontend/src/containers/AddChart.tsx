@@ -91,7 +91,7 @@ function AddChart() {
         },
       });
     } catch (err) {
-      console.log("Failed to save widget", err);
+      console.log("Failed to save content item", err);
       setCreatingWidget(false);
     }
   };
@@ -236,7 +236,7 @@ function AddChart() {
                   label="Chart summary"
                   hint="Give your chart a summary to explain it in more depth.
                   It can also be read by screen readers to describe the chart
-                  for those with visual impairments. What is useful in a chart description?"
+                  for those with visual impairments."
                   register={register}
                   onChange={handleSummaryChange}
                   multiline

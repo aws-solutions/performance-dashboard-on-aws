@@ -122,7 +122,7 @@ function EditTable() {
         },
       });
     } catch (err) {
-      console.log("Failed to edit widget", err);
+      console.log("Failed to edit content item", err);
       setEditingWidget(false);
     }
   };
@@ -235,7 +235,7 @@ function EditTable() {
                       label="Table summary"
                       hint="Give your table a summary to explain it in more depth.
                   It can also be read by screen readers to describe the table
-                  for those with visual impairments. What is useful in a table description?"
+                  for those with visual impairments."
                       register={register}
                       defaultValue={widget.content.summary}
                       onChange={handleSummaryChange}

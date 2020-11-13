@@ -9,6 +9,7 @@ import Button from "./Button";
 
 interface Props {
   dashboards: Array<Dashboard>;
+  dashboardsState: DashboardState;
   onSelect?: Function;
 }
 
@@ -73,19 +74,29 @@ function DashboardsTable(props: Props) {
     <table className="usa-table usa-table--borderless" width="100%">
       <thead>
         <tr>
-          <th style={{ padding: "0.5rem 1rem" }}>
-            <label className="usa-sr-only" htmlFor="selectAll">
-              Select all dashboards
-            </label>
-            <input
-              type="checkbox"
-              id="selectAll"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                e.target.checked ? onSelectAll() : onDeselectAll();
-              }}
-            />
-          </th>
-          <th>
+          {(props.dashboardsState === DashboardState.Draft ||
+            props.dashboardsState === DashboardState.Published) && (
+            <th style={{ padding: "0.5rem 1rem" }}>
+              <label className="usa-sr-only" htmlFor="selectAll">
+                Select all dashboards
+              </label>
+              <input
+                type="checkbox"
+                id="selectAll"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  e.target.checked ? onSelectAll() : onDeselectAll();
+                }}
+              />
+            </th>
+          )}
+          <th
+            style={
+              props.dashboardsState === DashboardState.Draft ||
+              props.dashboardsState === DashboardState.Published
+                ? {}
+                : { padding: "0.5rem 1rem" }
+            }
+          >
             <span className="font-sans-xs">Dashboard name</span>
             <Button
               variant="unstyled"
@@ -163,23 +174,26 @@ function DashboardsTable(props: Props) {
         {sortDashboards(props.dashboards, sortedBy, direction).map(
           (dashboard) => (
             <tr key={dashboard.id}>
-              <td>
-                <label className="usa-sr-only" htmlFor={dashboard.id}>
-                  {dashboard.name}
-                </label>
-                <input
-                  type="checkbox"
-                  id={dashboard.id}
-                  checked={isSelected(dashboard)}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    if (e.target.checked) {
-                      onSelect(dashboard);
-                    } else {
-                      onDeselect(dashboard);
-                    }
-                  }}
-                />
-              </td>
+              {(props.dashboardsState === DashboardState.Draft ||
+                props.dashboardsState === DashboardState.Published) && (
+                <td>
+                  <label className="usa-sr-only" htmlFor={dashboard.id}>
+                    {dashboard.name}
+                  </label>
+                  <input
+                    type="checkbox"
+                    id={dashboard.id}
+                    checked={isSelected(dashboard)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      if (e.target.checked) {
+                        onSelect(dashboard);
+                      } else {
+                        onDeselect(dashboard);
+                      }
+                    }}
+                  />
+                </td>
+              )}
               <td>
                 <Link
                   to={dashboardLink(

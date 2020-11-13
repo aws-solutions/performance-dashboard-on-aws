@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dashboard } from "../models";
+import { Dashboard, DashboardState } from "../models";
 import Search from "./Search";
 import DashboardsTable from "./DashboardsTable";
 import ScrollTop from "./ScrollTop";
@@ -43,9 +43,10 @@ function ArchivedTab(props: Props) {
   return (
     <div>
       <p>
-        These are all archived dashboards. Archived dashboards are not viewable
-        on the published site. You can re-publish any version of an archived
-        dashboard.
+        These are your organization's archived dashboards. Archived dashboards
+        are not viewable on the published site. Click on any dashboard name to
+        view the dashboard. You can also re-publish archived dashboards to the
+        published site.
       </p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-7 text-left padding-top-1px">
@@ -60,6 +61,7 @@ function ArchivedTab(props: Props) {
       </div>
       <DashboardsTable
         dashboards={sortDashboards(filterDashboards(props.dashboards))}
+        dashboardsState={DashboardState.Archived}
         onSelect={onSelect}
       />
       <div className="text-right">

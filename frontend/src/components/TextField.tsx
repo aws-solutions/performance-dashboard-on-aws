@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "./Link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   name: string;
@@ -42,6 +44,11 @@ function TextField(props: Props) {
             {". "}
             <Link target="_blank" to={"/admin/markdown"}>
               View Markdown Syntax
+              <FontAwesomeIcon
+                className="margin-left-05"
+                icon={faExternalLinkAlt}
+                size="xs"
+              />
             </Link>
           </>
         ) : (

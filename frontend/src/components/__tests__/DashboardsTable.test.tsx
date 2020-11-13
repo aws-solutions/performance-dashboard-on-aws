@@ -18,22 +18,34 @@ const dashboard: Dashboard = {
 };
 
 test("renders an empty table", async () => {
-  const wrapper = render(<DashboardsTable dashboards={[]} />);
+  const wrapper = render(
+    <DashboardsTable dashboardsState={DashboardState.Draft} dashboards={[]} />
+  );
   expect(wrapper.container).toMatchSnapshot();
 });
 
 test("renders a table with dashboards", async () => {
   const dashboards = [dashboard];
-  const wrapper = render(<DashboardsTable dashboards={dashboards} />, {
-    wrapper: MemoryRouter,
-  });
+  const wrapper = render(
+    <DashboardsTable
+      dashboardsState={DashboardState.Draft}
+      dashboards={dashboards}
+    />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
   expect(wrapper.container).toMatchSnapshot();
 });
 
 test("onSelect function is called when user selects dashboard", async () => {
   const onSelect = jest.fn();
   const { getByLabelText } = render(
-    <DashboardsTable onSelect={onSelect} dashboards={[dashboard]} />,
+    <DashboardsTable
+      dashboardsState={DashboardState.Draft}
+      onSelect={onSelect}
+      dashboards={[dashboard]}
+    />,
     {
       wrapper: MemoryRouter,
     }

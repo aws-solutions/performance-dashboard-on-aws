@@ -72,7 +72,7 @@ function AddContent() {
           onSubmit={handleSubmit(onSubmit)}
         >
           <fieldset className="usa-fieldset" onChange={handleChange}>
-            <legend className="usa-sr-only">Widget types</legend>
+            <legend className="usa-sr-only">Content item types</legend>
             <div className="usa-radio">
               <div
                 className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${

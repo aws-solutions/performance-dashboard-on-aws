@@ -3,7 +3,7 @@
 exports[`renders a tooltip at the bottom 1`] = `
 <div>
   <div
-    class="__react_component_tooltip test place-bottom type-dark allow_click"
+    class="__react_component_tooltip test place-bottom type-dark"
     data-id="tooltip"
     id="test"
   >
@@ -91,7 +91,7 @@ exports[`renders a tooltip at the bottom 1`] = `
 exports[`renders a tooltip at the left 1`] = `
 <div>
   <div
-    class="__react_component_tooltip test place-left type-dark allow_click"
+    class="__react_component_tooltip test place-left type-dark"
     data-id="tooltip"
     id="test"
   >
@@ -179,7 +179,7 @@ exports[`renders a tooltip at the left 1`] = `
 exports[`renders a tooltip at the right 1`] = `
 <div>
   <div
-    class="__react_component_tooltip test place-right type-dark allow_click"
+    class="__react_component_tooltip test place-right type-dark"
     data-id="tooltip"
     id="test"
   >
@@ -267,7 +267,7 @@ exports[`renders a tooltip at the right 1`] = `
 exports[`renders a tooltip at the top (default) 1`] = `
 <div>
   <div
-    class="__react_component_tooltip test place-top type-dark allow_click"
+    class="__react_component_tooltip test place-top type-dark"
     data-id="tooltip"
     id="test"
   >

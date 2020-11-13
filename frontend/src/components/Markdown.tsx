@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import MarkdownRender from "./MarkdownRender";
 import Link from "./Link";
 import "./Markdown.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 type MarkdownProps = {
   id: string;
@@ -31,6 +33,11 @@ const Markdown = (props: MarkdownProps) => {
         {props.hint} This text area supports limited Markdown.{" "}
         <Link target="_blank" to={"/admin/markdown"}>
           View Markdown Syntax
+          <FontAwesomeIcon
+            className="margin-left-05"
+            icon={faExternalLinkAlt}
+            size="xs"
+          />
         </Link>
       </span>
       <div className="usa-checkbox margin-top-2">

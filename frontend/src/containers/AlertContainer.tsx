@@ -3,11 +3,15 @@ import { useHistory } from "react-router-dom";
 import { LocationState } from "../models";
 import Alert from "../components/Alert";
 
-function AlertContainer() {
+interface Props {
+  id?: string;
+}
+
+function AlertContainer(props: Props) {
   const history = useHistory<LocationState>();
   const { state } = history.location;
 
-  if (!state || !state.alert) {
+  if (!state || !state.alert || state.id !== props.id) {
     return null;
   }
 

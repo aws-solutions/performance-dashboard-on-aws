@@ -48,7 +48,7 @@ function AddText() {
         },
       });
     } catch (err) {
-      console.log("Failed to save widget", err);
+      console.log("Failed to save content item", err);
       setCreatingWidget(false);
     }
   };
@@ -148,7 +148,7 @@ function AddText() {
           <h4 className="margin-top-4">Preview</h4>
           <h2 className="margin-top-4 margin-left-2px">{title}</h2>
           {text ? (
-            <div className="border padding-left-05">
+            <div className="padding-left-05">
               <MarkdownRender source={text} />
             </div>
           ) : (

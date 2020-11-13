@@ -1,11 +1,7 @@
 import React, { createRef } from "react";
 import { Widget, WidgetType } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGripLinesVertical,
-  faArrowUp,
-  faArrowDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import "./WidgetList.css";
 import Link from "./Link";
@@ -97,13 +93,10 @@ function WidgetList(props: Props) {
                 className="grid-row radius-lg border-base border margin-y-1"
               >
                 <div className="grid-row grid-col flex-1 padding-1">
-                  <div className="grid-col flex-4 text-center display-flex flex-align-center flex-justify-center">
-                    <FontAwesomeIcon icon={faGripLinesVertical} />
-                  </div>
-                  <div className="grid-col flex-4 text-center display-flex flex-align-center flex-justify-center">
+                  <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md">
                     {index + 1}
                   </div>
-                  <div className="grid-col flex-4 grid-row flex-column text-center">
+                  <div className="grid-col flex-6 grid-row flex-column text-center">
                     <div className="grid-col flex-6">
                       {index > 0 && (
                         <Button
@@ -113,7 +106,7 @@ function WidgetList(props: Props) {
                           onClick={() => onMoveUp(index)}
                           ref={caretUpRefs[index]}
                         >
-                          <FontAwesomeIcon size="xs" icon={faArrowUp} />
+                          <FontAwesomeIcon size="sm" icon={faArrowUp} />
                         </Button>
                       )}
                     </div>
@@ -128,7 +121,7 @@ function WidgetList(props: Props) {
                         >
                           <FontAwesomeIcon
                             id={`${widget.id}-move-down`}
-                            size="xs"
+                            size="sm"
                             icon={faArrowDown}
                           />
                         </Button>

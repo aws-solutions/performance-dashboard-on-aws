@@ -36,7 +36,14 @@ function EditDetails() {
       values.description || "",
       dashboard ? dashboard.updatedAt : new Date()
     );
-    history.push(`/admin/dashboard/edit/${dashboardId}`);
+
+    history.push(`/admin/dashboard/edit/${dashboardId}`, {
+      alert: {
+        type: "success",
+        message: `"${values.name}" details successfully edited`,
+      },
+      id: "top-alert",
+    });
   };
 
   const onCancel = () => {

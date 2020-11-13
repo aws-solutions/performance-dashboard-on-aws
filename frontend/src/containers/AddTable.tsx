@@ -81,7 +81,7 @@ function AddTable() {
         },
       });
     } catch (err) {
-      console.log("Failed to save widget", err);
+      console.log("Failed to save content item", err);
       setCreatingWidget(false);
     }
   };
@@ -205,7 +205,7 @@ function AddTable() {
                   label="Table summary"
                   hint="Give your table a summary to explain it in more depth.
                   It can also be read by screen readers to describe the table
-                  for those with visual impairments. What is useful in a table description?"
+                  for those with visual impairments."
                   register={register}
                   onChange={handleSummaryChange}
                   multiline

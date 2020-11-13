@@ -1,4 +1,7 @@
 import * as cdk from "@aws-cdk/core";
+import * as lambda from "@aws-cdk/aws-lambda";
+import * as dynamodb from "@aws-cdk/aws-dynamodb";
+import * as apigateway from "@aws-cdk/aws-apigateway";
 import { BackendApi } from "./constructs/api";
 import { Database } from "./constructs/database";
 import { LambdaFunctions } from "./constructs/lambdas";
@@ -10,8 +13,10 @@ interface BackendStackProps extends cdk.StackProps {
 }
 
 export class BackendStack extends cdk.Stack {
-  public readonly apiGatewayEndpoint: string;
-  public readonly dynamodbTableName: string;
+  public readonly privateApiFunction: lambda.Function;
+  public readonly publicApiFunction: lambda.Function;
+  public readonly mainTable: dynamodb.Table;
+  public readonly restApi: apigateway.RestApi;
 
   constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
     super(scope, id, props);
@@ -35,15 +40,17 @@ export class BackendStack extends cdk.Stack {
     /**
      * Outputs
      */
-    this.apiGatewayEndpoint = backendApi.api.url;
-    this.dynamodbTableName = database.mainTable.tableName;
+    this.privateApiFunction = lambdas.apiHandler;
+    this.publicApiFunction = lambdas.publicApiHandler;
+    this.mainTable = database.mainTable;
+    this.restApi = backendApi.api;
 
     new cdk.CfnOutput(this, "ApiGatewayEndpoint", {
-      value: this.apiGatewayEndpoint,
+      value: this.restApi.url,
     });
 
     new cdk.CfnOutput(this, "DynamoDbTableName", {
-      value: this.dynamodbTableName,
+      value: database.mainTable.tableName,
     });
 
     new cdk.CfnOutput(this, "DatasetsBucketName", {

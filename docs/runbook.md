@@ -2,6 +2,10 @@
 
 This runbook describes procedures for a technical operator (TechOps) to troubleshoot issues with the Performance Dashboard.
 
+## The Ops Dashboard
+
+The purpose of the operations dashboard is to serve as a single pane of glass to look at the current health of the Performance Dashboard infrastructure. We recommend to start looking at the dashboard as the first step to troubleshoot an issue. You will find it by opening your CloudWatch console: https://console.aws.amazon.com/cloudwatch/home#dashboards: and click on the dashboard with a similar name to this: `OpsDashboardCE408D93-bldvfxWYfBUH`.
+
 ## How to search the logs
 
 As the backend runs on Lambda functions, the logs are automatically shipped to CloudWatch Logs. Follow this steps to browse them:

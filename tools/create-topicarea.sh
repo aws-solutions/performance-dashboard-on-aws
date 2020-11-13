@@ -40,7 +40,7 @@ jwt_token=$(echo $token_request | jq --raw-output '.AuthenticationResult.IdToken
 # reads topic name 
 read -p 'enter the topic name: ' topicName
 
-# JOSN payload for topic create request
+# JSON payload for topic create request
 generate_post_data()
 {
   cat <<EOF

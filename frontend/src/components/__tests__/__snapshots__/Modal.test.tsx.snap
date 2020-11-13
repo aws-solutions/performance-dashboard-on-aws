@@ -265,7 +265,7 @@ exports[`renders a publish type Modal 1`] = `
           class="usa-button usa-button--base"
           type="button"
         >
-          Publish
+          Prepare for publishing
         </button>
         <button
           class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"

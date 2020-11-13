@@ -206,7 +206,7 @@ function ViewDashboardAdmin() {
             </div>
           </>
         )}
-        <div className="margin-top-2 gradient height-4" />
+        <div className="margin-top-2 gradient height-2" />
       </div>
 
       {loading ? (

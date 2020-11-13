@@ -115,10 +115,8 @@ function DashboardPreview() {
             {dashboard?.topicAreaName}
           </div>
           <div>
-            {dashboard?.description ? (
+            {dashboard?.description && (
               <MarkdownRender source={dashboard.description} />
-            ) : (
-              <p>No description entered</p>
             )}
           </div>
           <hr />

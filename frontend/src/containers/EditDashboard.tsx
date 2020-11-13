@@ -274,14 +274,15 @@ function EditDashboard() {
               <span className="margin-left-2">Edit details</span>
             </Link>
           </div>
-          <div className="text-base text-italic">
+          <div className="text-base text-italic topic-area">
             {dashboard?.topicAreaName}
           </div>
           <div>
-            {dashboard?.description ? (
-              <MarkdownRender source={dashboard.description} />
-            ) : (
-              <p>No description entered</p>
+            {dashboard?.description && (
+              <MarkdownRender
+                source={dashboard.description}
+                className="dashboard-description"
+              />
             )}
           </div>
           <hr />

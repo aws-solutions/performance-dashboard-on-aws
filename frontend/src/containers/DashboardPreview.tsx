@@ -65,9 +65,13 @@ function DashboardPreview() {
         <Modal
           isOpen={isOpenPublishModal}
           closeModal={closePublishModal}
-          title={`Publish "${dashboard?.name}" dashboard`}
-          message="Are you sure you want to start the publishing process?"
-          buttonType="Publish"
+          title={`Prepare "${dashboard?.name}" dashboard for publishing`}
+          message={`${
+            dashboard?.widgets.length === 0
+              ? "This dashboard has no content items. "
+              : ""
+          }Are you sure you want to prepare this dashboard for publishing?`}
+          buttonType="Prepare for publishing"
           buttonAction={publishDashboard}
         />
 
@@ -95,7 +99,7 @@ function DashboardPreview() {
             </Button>
           </div>
         </div>
-        <div className="margin-top-2 gradient height-4" />
+        <div className="margin-top-2 gradient height-2" />
       </div>
 
       {loading ? (

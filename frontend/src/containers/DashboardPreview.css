@@ -1,5 +1,5 @@
 .gradient {
-  background: linear-gradient(#eee, #fff);
+  background: linear-gradient(rgba(239, 239, 239, 0.5), rgba(239, 239, 239, 0));
 }
 
 .z-index-on-top {

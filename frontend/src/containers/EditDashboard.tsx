@@ -147,9 +147,13 @@ function EditDashboard() {
       <Modal
         isOpen={isOpenPublishModal}
         closeModal={closePublishModal}
-        title={`Publish "${dashboard?.name}" dashboard`}
-        message="Are you sure you want to start the publishing process?"
-        buttonType="Publish"
+        title={`Prepare "${dashboard?.name}" dashboard for publishing`}
+        message={`${
+          dashboard?.widgets.length === 0
+            ? "This dashboard has no content items. "
+            : ""
+        }Are you sure you want to prepare this dashboard for publishing?`}
+        buttonType="Prepare for publishing"
         buttonAction={publishDashboard}
       />
 

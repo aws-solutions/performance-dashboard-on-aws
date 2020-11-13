@@ -24,7 +24,7 @@ test("renders a publish type Modal", async () => {
       message={"test message"}
       isOpen={true}
       closeModal={() => {}}
-      buttonType="Publish"
+      buttonType="Prepare for publishing"
       buttonAction={() => {}}
       ariaHideApp={false}
     />

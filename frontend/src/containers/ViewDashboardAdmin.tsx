@@ -25,6 +25,7 @@ function ViewDashboardAdmin() {
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
   const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false);
   const [isOpenArchiveModal, setIsOpenArchiveModal] = useState(false);
+  const [showVersionNotes, setShowVersionNotes] = useState(false);
 
   const currentDraft = versions.find(
     (v) =>
@@ -150,11 +151,31 @@ function ViewDashboardAdmin() {
         )}
         <div className="grid-row margin-top-2">
           <div className="grid-col text-left">
-            <div className="margin-top-2">
-              <span className="usa-tag text-middle">
-                Version {dashboard?.version}
-              </span>
-            </div>
+            <ul className="usa-button-group">
+              <li className="usa-button-group__item">
+                <span
+                  className="usa-tag text-middle"
+                  style={{ cursor: "text" }}
+                >
+                  {dashboard?.state}
+                </span>
+              </li>
+              <li className="usa-button-group__item">
+                <span className="usa-tag text-middle">
+                  Version {dashboard?.version}
+                </span>
+              </li>
+              <li>
+                <Button
+                  variant="unstyled"
+                  type="button"
+                  className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+                  onClick={() => setShowVersionNotes(!showVersionNotes)}
+                >
+                  {`${showVersionNotes ? "Hide" : "Show"} version notes`}
+                </Button>
+              </li>
+            </ul>
           </div>
           <div className="grid-col text-right">
             <Button
@@ -173,6 +194,17 @@ function ViewDashboardAdmin() {
             </Button>
           </div>
         </div>
+        {showVersionNotes && (
+          <>
+            <div className="margin-top-3 text-bold font-sans-sm">
+              {`Version ${dashboard?.version} notes from `}
+              <span className="text-underline">{dashboard?.createdBy}</span>
+            </div>
+            <div className="margin-top-2 text-base">
+              {dashboard?.releaseNotes}
+            </div>
+          </>
+        )}
         <div className="margin-top-2 gradient height-4" />
       </div>
 

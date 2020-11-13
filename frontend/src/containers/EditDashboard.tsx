@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { useHistory, useParams } from "react-router-dom";
 import Link from "../components/Link";
-import { useDashboard } from "../hooks";
-import { Widget, LocationState, WidgetType } from "../models";
+import { useDashboard, useDashboardVersions } from "../hooks";
+import { Widget, LocationState, WidgetType, DashboardState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
@@ -14,6 +14,8 @@ import MarkdownRender from "../components/MarkdownRender";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
+import Tooltip from "../components/Tooltip";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import UtilsService from "../services/UtilsService";
 
 interface PathParams {
@@ -30,6 +32,13 @@ function EditDashboard() {
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [widgetToDelete, setWidgetToDelete] = useState<Widget | undefined>(
     undefined
+  );
+  const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
+
+  const publishedOrArchived = versions.find(
+    (v) =>
+      v.state === DashboardState.Published ||
+      v.state === DashboardState.Archived
   );
 
   const onAddContent = async () => {
@@ -178,11 +187,56 @@ function EditDashboard() {
                     {dashboard?.state}
                   </span>
                 </li>
-                <li className="usa-button-group__item">
-                  <span className="text-underline">
+                <li
+                  className={`usa-button-group__item${
+                    publishedOrArchived ? "" : " cursor-default"
+                  }`}
+                >
+                  <span
+                    className="text-underline"
+                    data-for="version"
+                    data-tip=""
+                    data-event="click"
+                    data-border={true}
+                  >
                     <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
                     Version {dashboard?.version}
                   </span>
+                  {publishedOrArchived && (
+                    <Tooltip
+                      id="version"
+                      place="bottom"
+                      type="light"
+                      effect="solid"
+                      offset={{ right: 14 }}
+                      getContent={() => (
+                        <div className="font-sans-sm">
+                          <p className="margin-top-0">
+                            A version of this dashboard is
+                            <br />
+                            {publishedOrArchived.state.toLowerCase()}.
+                          </p>
+                          <Link
+                            target="_blank"
+                            to={`/admin/dashboard${
+                              publishedOrArchived.state ===
+                              DashboardState.Archived
+                                ? "/archived"
+                                : ""
+                            }/${publishedOrArchived.id}`}
+                          >
+                            View {publishedOrArchived.state.toLowerCase()}{" "}
+                            version
+                            <FontAwesomeIcon
+                              className="margin-left-1"
+                              icon={faExternalLinkAlt}
+                              size="sm"
+                            />
+                          </Link>
+                        </div>
+                      )}
+                    />
+                  )}
                 </li>
               </ul>
             </div>

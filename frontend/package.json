@@ -30,6 +30,7 @@
     "react-modal": "^3.11.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.4",
+    "react-tooltip": "^4.2.10",
     "recharts": "^1.8.5",
     "typescript": "~3.7.2",
     "uswds": "^2.9.0",

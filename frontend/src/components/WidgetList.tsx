@@ -139,18 +139,20 @@ function WidgetList(props: Props) {
                 <div className="border-base border"></div>
                 <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
                   <div
-                    className="grid-col flex-7 text-no-wrap overflow-hidden text-overflow-ellipsis usa-tooltip text-bold"
+                    className="grid-col flex-7 usa-tooltip text-bold"
                     data-position="bottom"
                     title={widget.name}
                   >
-                    <div className="margin-left-1">{widget.name}</div>
+                    <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
+                      {widget.name}
+                    </div>
                   </div>
                   <div className="grid-col flex-2 text-italic">
                     {widget.widgetType === WidgetType.Chart
                       ? UtilsService.getChartTypeLabel(widget.content.chartType)
                       : widget.widgetType}
                   </div>
-                  <div className="grid-col flex-3 text-no-wrap overflow-hidden text-overflow-ellipsis text-right">
+                  <div className="grid-col flex-3 text-right">
                     <Link
                       ariaLabel={`Edit ${widget.name}`}
                       to={`/admin/dashboard/${

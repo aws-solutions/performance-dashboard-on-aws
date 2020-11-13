@@ -1,21 +1,25 @@
 # Performance Dashboard on AWS
 
 ![Unit Tests](https://github.com/awslabs/performance-dashboard-on-aws/workflows/Unit%20Tests/badge.svg?branch=mainline)
+![Version](https://img.shields.io/badge/version-beta-blue)
 
 Performance Dashboard on AWS is a solution for national, municipal, and local governments to publish and visualize their data, so it can be easily shared internally and externally. This cost-effective solution presents digital service performance and other metrics in an accessible, clear, and open way. Performance Dashboard on AWS allows users to customize dashboards to visually demonstrate efficiencies achieved such as the processing of driver license applications or how citizenship statistics have changed over time. Dashboards clearly present performance data to meet the needs of data users including digital leaders, service owners, and the public.
-
-Below are a few key features:
-- Users can configure dashoards to visualize data in easy-to-understand ways through the use of charts and tables. The pairing of modern data visualizations and text features help governments share their data-driven findings.
-- A supportive workflow guides users through dashboard creation step-by-step, from creating an initial draft to archiving a published dashboard.
-- Built with AWS serverless technology, the system is designed to keep costs at a minimum by only incurring costs when your dashboard is actively being used.
-
-To access additional details on the system's features and workflows, please view the user guide.
 
 Performance Dashboard on AWS is setup by running its CloudFormation template. This will create an instantiation of the solution. The architecture diagram provides an overview of what will be built:
 
 <p align="center">
   <img src="docs/images/architecture.svg" alt="Architecture diagram">
 </p>
+
+## Key Features
+
+Below are a few key features of the Performance Dashboard:
+
+- Users can configure dashoards to visualize data in easy-to-understand ways through the use of charts and tables. The pairing of modern data visualizations and text features help governments share their data-driven findings.
+- A supportive workflow guides users through dashboard creation step-by-step, from creating an initial draft to archiving a published dashboard.
+- Built with AWS serverless technology, the system is designed to keep costs at a minimum by only incurring costs when your dashboard is actively being used.
+
+To access additional details on the system's features and workflows, please view the user guide.
 
 ## Deployment
 
@@ -72,7 +76,7 @@ Run the install script to download npm dependencies.
 
 ### 3. Deploy
 
-The deploy script will use the AWS CDK to deploy 3 CloudFormation stacks named: `PerformanceDash-{env}-Backend`, `PerformanceDash-{env}-Frontend` and `PerformanceDash-{env}-Auth` where `{env}` is the environment name that you specify as parameter to the deployment script. By default, the stacks will be created in the AWS region that you have configured in your `~/.aws/config` file. If you want CDK to deploy to a specific region, you can set the environment variable `export AWS_REGION=us-west-2` before running the deployment script.
+The deploy script will use the AWS CDK to deploy 4 CloudFormation stacks named: `PerformanceDash-{env}-Backend`, `PerformanceDash-{env}-Frontend`, `PerformanceDash-{env}-Auth` and `PerformanceDash-{env}-Ops` where `{env}` is the environment name that you specify as parameter to the deployment script. By default, the stacks will be created in the AWS region that you have configured in your `~/.aws/config` file. If you want CDK to deploy to a specific region, you can set the environment variable `export AWS_REGION=us-west-2` before running the deployment script.
 
 To create a `dev` environment for example, you may run the deployment script like so:
 

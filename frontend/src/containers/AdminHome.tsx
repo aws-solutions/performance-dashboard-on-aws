@@ -57,7 +57,10 @@ function AdminHome() {
           </Card>
           <Card title="View existing dashboards" col={5}>
             <CardBody>
-              <p>See the dashboards that others have created.</p>
+              <p>
+                See the dashboards that other editors in your organization have
+                created.
+              </p>
             </CardBody>
             <CardFooter>
               <Button

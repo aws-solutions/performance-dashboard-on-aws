@@ -10,7 +10,12 @@ interface PathParams {
   closeModal: Function;
   title: string;
   message: string;
-  buttonType: "Delete" | "Publish" | "Archive" | "Create draft" | "Re-publish";
+  buttonType:
+    | "Delete"
+    | "Prepare for publishing"
+    | "Archive"
+    | "Create draft"
+    | "Re-publish";
   buttonAction: Function;
   ariaHideApp?: boolean;
 }

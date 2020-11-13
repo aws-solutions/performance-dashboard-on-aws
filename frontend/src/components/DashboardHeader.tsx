@@ -1,8 +1,7 @@
 import React from "react";
 import MarkdownRender from "../components/MarkdownRender";
-import "./DashboardHeader.css";
 
-interface DashboardHeaderProps {
+interface Props {
   name?: string;
   topicAreaName?: string;
   description?: string;
@@ -10,33 +9,31 @@ interface DashboardHeaderProps {
   link?: React.ReactNode;
 }
 
-function DashboardHeader({
-  name,
-  topicAreaName,
-  description,
-  unpublished,
-  link,
-}: DashboardHeaderProps) {
+function DashboardHeader(props: Props) {
   return (
     <>
-      <div className={unpublished ? "" : "margin-top-2"}>
+      <div className={props.unpublished ? "" : "margin-top-2"}>
         <h1
           className={`display-inline-block ${
-            unpublished ? "margin-bottom-0" : "margin-bottom-1 font-sans-2xl"
+            props.unpublished
+              ? "margin-bottom-0"
+              : "margin-bottom-1 font-sans-2xl"
           }`}
         >
-          {name}
+          {props.name}
         </h1>
-        {link}
-        <div className="text-base text-italic topic-area-name">
-          {topicAreaName}
+        {props.link}
+        <div className="text-base text-italic margin-bottom-2">
+          {props.topicAreaName}
         </div>
       </div>
-      <div className={unpublished ? "" : "margin-y-2"}>
-        {description && (
+      <div className={props.unpublished ? "" : "margin-y-2"}>
+        {props.description && (
           <MarkdownRender
-            source={description}
-            className={unpublished ? "" : "font-sans-lg usa-prose description"}
+            source={props.description}
+            className={
+              props.unpublished ? "" : "font-sans-lg usa-prose margin-top-0"
+            }
           />
         )}
       </div>
@@ -44,5 +41,4 @@ function DashboardHeader({
   );
 }
 
-DashboardHeader.defaultProps = { unpublished: false };
 export default DashboardHeader;

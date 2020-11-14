@@ -166,7 +166,7 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
 
 test("fetchHomepage makes a GET request to widget API", async () => {
   await BackendService.fetchHomepage();
-  expect(API.get).toHaveBeenCalledWith("BackendApi", "homepage", {});
+  expect(API.get).toHaveBeenCalledWith("BackendApi", "public/homepage", {});
 });
 
 test("fetchPublicDashboard makes a GET request to public API", async () => {

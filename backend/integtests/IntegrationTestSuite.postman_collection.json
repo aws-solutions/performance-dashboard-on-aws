@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "13dcbab0-caf6-45da-b2d1-dbc025d23f7f",
-		"name": "Badger Integration Tests",
+		"name": "Integration Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -1268,67 +1268,67 @@
 	],
 	"variable": [
 		{
-			"id": "ae1c54df-d5b9-49d7-bcb4-5eda500682e0",
+			"id": "598455bd-d540-4dee-96ff-829e9de93ced",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "2fd48315-b265-43db-915f-ce78d8b81ca3",
+			"id": "3b23c769-d19d-47d2-a2c3-46c9531d441d",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "6ebd9aaa-bafa-4b61-9677-21345c7666a5",
+			"id": "d4499fb3-1fbe-43ad-b66f-2e5ee6592943",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "0bdc1bb9-2e2f-42a4-acbf-2da8fc819208",
+			"id": "ca3952fa-ed69-41d5-b23c-2d4a474df501",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "286af688-4eff-45e2-babd-610299959266",
+			"id": "fd458a0d-03e7-4f6d-9511-d3384f22281a",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "39f9ba6d-8146-4739-bd92-9947bbb49b03",
+			"id": "3a854c61-2ea5-491f-be89-1f16b69f0509",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "f633f527-93ad-4f3f-95c1-877a96057983",
+			"id": "cd824e16-459b-4df8-816a-408c9502fef8",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "8f7e4313-4f19-41a7-84e2-7be2fcdc9d70",
+			"id": "2fb79890-e2e4-4a66-b8ac-86eb3c4d6d6a",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "f654ef51-848b-43bd-9108-80d09cb14859",
+			"id": "a6693a2a-4577-48a5-9581-996fc316d1b0",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "c1eaffb0-8046-4f97-90e1-5a02d087dee2",
+			"id": "7882878f-8198-4ee2-8872-080b6d911c9f",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "4b68ecab-3a2d-4a62-bcbe-41d96a564f63",
+			"id": "eca7007d-e5e2-4d42-b15d-5001a03e5a10",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "1cc90166-61e7-4812-8fde-6c042e6a078f",
+			"id": "ed7723c8-37e2-4334-8858-0b5819dfd2c8",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "79978c62-fdf1-406a-bc92-06101237ea95",
+			"id": "bde9ef2a-c013-4c1f-84f5-d2081c9a1c63",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		}

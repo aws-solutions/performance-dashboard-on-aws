@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0c2b1ed7-c894-40bd-a226-c5603d0269f6",
+		"_postman_id": "13dcbab0-caf6-45da-b2d1-dbc025d23f7f",
 		"name": "Integration Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "3a0e8288-450b-4657-91f8-a02a4e7900c2",
+						"id": "96e1f07c-c28f-4e75-af16-b3f24c054343",
 						"exec": [
 							"const testId = new Date().getTime();",
 							"pm.collectionVariables.set(\"testId\", testId);",
@@ -23,7 +23,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fb1b2722-1596-49ad-b991-8f862835f3f9",
+						"id": "0640c5dc-2f09-40e4-8ace-07a96fd06f41",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -80,7 +80,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "39525d4e-e72e-442d-94eb-892d0d40a715",
+						"id": "3b2969bb-44e2-4d66-98e8-80277c05a982",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -101,7 +101,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "c35f1760-d4c7-48de-af7d-6c96a4feb471",
+						"id": "375b94f3-694d-40a3-b706-b75506036365",
 						"exec": [
 							""
 						],
@@ -141,7 +141,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "690d1ff3-dfe2-48e4-beee-722a4aef386f",
+						"id": "2a01f039-056a-4cee-864c-3d99f45aa011",
 						"exec": [
 							"const testId = pm.variables.get(\"testId\");",
 							"pm.collectionVariables.set(\"dashboard.name\", testId);"
@@ -152,7 +152,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d60c016d-cf63-43aa-87c2-0687022353d2",
+						"id": "d4df44fc-c6cd-4a78-8051-83eb2a797d00",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -212,7 +212,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a0aeba4a-c087-4a13-9f35-4d32818a4aae",
+						"id": "74226553-8800-475f-816a-7b9b8a74acf3",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -224,7 +224,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "43acbc34-b6e6-48d6-b68a-1c1b4d836d30",
+						"id": "6d6901fe-6622-4f8b-80ea-bd16799a2498",
 						"exec": [
 							""
 						],
@@ -274,7 +274,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9f783919-4748-496b-b719-971726d2c2f8",
+						"id": "d3d6ef5f-3983-4935-aa8b-516aabdf862b",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -336,7 +336,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e77998a4-c5a5-405e-9953-925281075536",
+						"id": "950c8a31-8699-4117-9496-49f55b3fb9e0",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -397,7 +397,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "671b73bc-aceb-4fe4-a57f-b48fd3e35ec2",
+						"id": "9d120e0e-34df-479f-86a4-b5a44360240d",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -458,7 +458,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "245faeae-c4f6-4582-a482-b4d70e7e1f90",
+						"id": "0dd976cd-a966-4968-b8b5-3e93120230df",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -526,7 +526,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3da8adfd-cfd0-48d3-aded-55a8c26a397d",
+						"id": "c1e55959-364d-4a8a-a841-7a68cdaebd7e",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -579,7 +579,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "20dd8e9a-2268-4337-9bc7-5a7626e14bfd",
+						"id": "6389e884-ed55-4615-b3da-2e9b0799130e",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -623,7 +623,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c0542246-51bb-43f4-b933-fbf17f1d69dd",
+						"id": "10355027-016f-4660-8427-676d35c15b92",
 						"exec": [
 							"pm.test(\"returns 404 not found\", () => {",
 							"    pm.response.to.have.status(404);",
@@ -652,8 +652,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "{{dashboard.id}}",
-							"type": "string"
+							"value": "{{dashboard.id}}"
 						}
 					]
 				}
@@ -666,7 +665,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fc4beae0-0650-498a-b269-2de3667179b2",
+						"id": "6df27c49-2461-4710-adb9-2e1ed151a7db",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -719,7 +718,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a886b4de-4762-45e9-ae98-b03c0aea466b",
+						"id": "b610cb4f-f05e-4ca4-85d7-c9c2d62def7a",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -763,7 +762,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "5e8fca86-c723-47ec-9e92-8abfaf46fd6e",
+						"id": "b6fb2dd4-7249-42d4-b93a-b88c5e1f8c77",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -816,7 +815,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c5ae5e31-4849-4fd8-82bf-4316834cbf68",
+						"id": "e7c398ec-3e14-4539-b25d-8115b4ea3f63",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -849,11 +848,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/homepage",
+					"raw": "{{baseUrl}}/public/homepage",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
+						"public",
 						"homepage"
 					]
 				}
@@ -866,7 +866,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "45e2b3e4-32c0-48f0-9bf3-1b02ce594256",
+						"id": "4817bb59-f031-4d52-85fb-728053821eb9",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -902,8 +902,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "{{dashboard.id}}",
-							"type": "string"
+							"value": "{{dashboard.id}}"
 						}
 					]
 				}
@@ -916,7 +915,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6ba904eb-2243-4513-a6e6-cb99c7625234",
+						"id": "5b9581f5-274f-4795-b30e-607f5cd0af58",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -981,7 +980,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a36b0f17-4401-4860-a6a9-3333045d8872",
+						"id": "f1e31908-7768-4b55-8ca3-fa2d6e3cf5aa",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1034,7 +1033,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e1f9b8a5-2e04-4c3f-88ed-e40beb882ff3",
+						"id": "216f60e9-6a7d-4b4f-a196-88e66f90b60a",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1078,7 +1077,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "618148a2-ecfb-4adb-a930-c905d931f0f3",
+						"id": "047951c8-d3f0-4f57-b65c-51feabe61f1b",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1122,7 +1121,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0b68cb0d-1cc1-434b-ba9a-f5054aaa1780",
+						"id": "d35c7566-6fe9-4fe3-8e3b-bf7cdf5a7a76",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1165,7 +1164,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0eb24190-8204-4438-a514-ed06b503ead4",
+						"id": "876792de-6980-4c76-93a5-8e77c4535cff",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1208,7 +1207,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f04c7f2f-e4c2-4bf1-b159-da6a4d2c4205",
+						"id": "12c1a22d-34a5-402f-8559-f8393901685d",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1249,7 +1248,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "c7d4e318-982f-42df-beaf-98c626b8b6b0",
+				"id": "41aed339-f228-40a6-8360-8fb12c2a9a56",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1259,7 +1258,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "5b6a60f0-22bb-4299-ac0b-987ab8b035fc",
+				"id": "9dccf20b-e80b-46a2-94fa-ffe389845ead",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1269,67 +1268,67 @@
 	],
 	"variable": [
 		{
-			"id": "c5c45cc5-e083-4dba-b925-bff85355353f",
+			"id": "598455bd-d540-4dee-96ff-829e9de93ced",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "d46a2eb7-c935-4504-9ac0-ada04b1a5f1c",
+			"id": "3b23c769-d19d-47d2-a2c3-46c9531d441d",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "ff66299a-e0c1-4f1f-a6d8-7dbf1c922313",
+			"id": "d4499fb3-1fbe-43ad-b66f-2e5ee6592943",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "d1489cbc-ce81-4ded-a094-5ad65352c094",
+			"id": "ca3952fa-ed69-41d5-b23c-2d4a474df501",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "e19875fd-9cf7-4773-ac7e-fa450992e469",
+			"id": "fd458a0d-03e7-4f6d-9511-d3384f22281a",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "6619e31e-55a9-42d6-be7a-ee3e64995d85",
+			"id": "3a854c61-2ea5-491f-be89-1f16b69f0509",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "e067a0e2-b043-469f-95bb-42776240b3e3",
+			"id": "cd824e16-459b-4df8-816a-408c9502fef8",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "298bfe6c-e56d-4d23-b493-bb0f2834ca83",
+			"id": "2fb79890-e2e4-4a66-b8ac-86eb3c4d6d6a",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "a8abd53c-b46e-4f67-b28f-7a8174610136",
+			"id": "a6693a2a-4577-48a5-9581-996fc316d1b0",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "6226da1d-579c-4342-b59a-08bea5a1af02",
+			"id": "7882878f-8198-4ee2-8872-080b6d911c9f",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "34471979-189e-4857-b225-5a004afb77a7",
+			"id": "eca7007d-e5e2-4d42-b15d-5001a03e5a10",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "27ce3c9a-fc3d-4bbc-a063-c2045356bd7f",
+			"id": "ed7723c8-37e2-4334-8858-0b5819dfd2c8",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "790a3cdc-ee64-4308-af4c-9f9049255765",
+			"id": "bde9ef2a-c013-4c1f-84f5-d2081c9a1c63",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		}

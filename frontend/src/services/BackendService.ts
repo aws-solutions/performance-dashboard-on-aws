@@ -212,7 +212,7 @@ async function setWidgetOrder(
 }
 
 async function fetchHomepage() {
-  return API.get(apiName, "homepage", {});
+  return API.get(apiName, "public/homepage", {});
 }
 
 async function fetchPublicDashboard(

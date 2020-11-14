@@ -6,7 +6,6 @@ import parserError from "./middleware/parser-error-handler";
 import dashboard from "./dashboard-api";
 import topicarea from "./topicarea-api";
 import dataset from "./dataset-api";
-import homepage from "./homepage-api";
 import publicapi from "./public-api";
 
 const app = express();
@@ -19,7 +18,6 @@ app.use(csp);
 app.use("/dashboard", dashboard);
 app.use("/topicarea", topicarea);
 app.use("/dataset", dataset);
-app.use("/homepage", homepage);
 app.use("/public", publicapi);
 
 export default app;

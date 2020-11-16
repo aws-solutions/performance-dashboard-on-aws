@@ -9,6 +9,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { useColors } from "../hooks";
+import "./PartWholeChartPreview.css";
 
 type Props = {
   title: string;
@@ -46,75 +47,80 @@ const PartWholeChartPreview = (props: Props) => {
     const amount = value.substring(index + 1);
     return (
       <span>
-        <span className="margin-left-1 font-sans-md text-bottom">{label}</span>
-        <div className="margin-left-6 margin-bottom-2 text-bold">{amount}</div>
+        <span className="margin-left-05 font-sans-md text-bottom">{label}</span>
+        <div className="margin-left-4 margin-bottom-2 text-bold">{amount}</div>
       </span>
     );
   };
 
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        height: `${props.data && props.data.length > 15 ? "600px" : "300px"}`,
+      }}
+    >
       <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
       <p className="margin-left-1 margin-top-0 margin-bottom-3">
         {props.summary}
       </p>
-      <ResponsiveContainer
-        width="100%"
-        height={props.data && props.data.length > 15 ? 600 : 300}
-      >
-        <BarChart
-          data={partWholeData}
-          layout="vertical"
-          margin={{ right: -50, left: -50 }}
-        >
-          <CartesianGrid horizontal={false} vertical={false} />
-          <XAxis
-            tickLine={false}
-            domain={[0, "dataMax"]}
-            ticks={[0, total]}
-            axisLine={false}
-            interval="preserveStartEnd"
-            type="number"
-          />
-          <YAxis
-            orientation="left"
-            yAxisId="left"
-            tick={false}
-            tickLine={false}
-            type="category"
-            padding={{ top: 10, bottom: 10 }}
-          />
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            tick={false}
-            tickLine={false}
-            type="category"
-            padding={{ top: 10, bottom: 10 }}
-          />
-          <Legend
-            verticalAlign="top"
-            formatter={renderLegendText}
-            iconSize={24}
-            wrapperStyle={{
-              top: 0,
-              right: 0,
-              width: "100%",
-            }}
-          />
-          {partWholeParts.map((part, index) => {
-            return (
-              <Bar
-                yAxisId="left"
-                stackId={"a"}
-                dataKey={part}
-                fill={colors[index]}
-                key={index}
-              />
-            );
-          })}
-        </BarChart>
-      </ResponsiveContainer>
+      {partWholeData.length && (
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={partWholeData}
+            layout="vertical"
+            margin={{ right: -50, left: -50 }}
+            maxBarSize={100}
+          >
+            <CartesianGrid horizontal={false} vertical={false} />
+            <XAxis
+              tickLine={false}
+              domain={[0, "dataMax"]}
+              ticks={[0, total]}
+              axisLine={false}
+              interval="preserveStartEnd"
+              type="number"
+            />
+            <YAxis
+              orientation="left"
+              yAxisId="left"
+              tick={false}
+              tickLine={false}
+              type="category"
+              padding={{ top: 10, bottom: 10 }}
+            />
+            <YAxis
+              yAxisId="right"
+              orientation="right"
+              tick={false}
+              tickLine={false}
+              type="category"
+              padding={{ top: 10, bottom: 10 }}
+            />
+            <Legend
+              verticalAlign="top"
+              formatter={renderLegendText}
+              iconSize={24}
+              wrapperStyle={{
+                top: 0,
+                right: 0,
+                width: "100%",
+              }}
+            />
+            {partWholeParts.map((part, index) => {
+              return (
+                <Bar
+                  yAxisId="left"
+                  stackId={"a"}
+                  dataKey={part}
+                  fill={colors[index]}
+                  key={index}
+                />
+              );
+            })}
+          </BarChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 };

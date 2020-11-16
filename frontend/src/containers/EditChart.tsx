@@ -117,6 +117,7 @@ function EditChart() {
           chartType: values.chartType,
           datasetId,
           s3Key,
+          fileName: csvFile?.name,
         },
         widget.updatedAt
       );
@@ -233,7 +234,11 @@ function EditChart() {
                     errors={csvErrors}
                     register={register}
                     hint="Must be a CSV file. [Link] How do I format my CSV?"
-                    fileName={`${widget.content.title}.csv`}
+                    fileName={`${
+                      csvFile?.name ||
+                      widget.content.fileName ||
+                      widget.content.title + ".csv"
+                    }`}
                     onFileProcessed={onFileProcessed}
                   />
                   {widget ? (

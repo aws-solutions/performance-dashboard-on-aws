@@ -58,7 +58,7 @@ describe("uploadDataset", () => {
 describe("downloadDataset", () => {
   test("download file", async () => {
     try {
-      await StorageService.downloadDataset("123.csv", "abc");
+      await StorageService.downloadDataset("123.csv");
     } catch (error) {
       expect(Storage.get).toBeCalledWith("123.csv", {
         download: true,

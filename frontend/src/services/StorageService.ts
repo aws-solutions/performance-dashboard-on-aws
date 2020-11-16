@@ -26,7 +26,7 @@ const rawFileTypes: ValidFileTypes = {
   "application/vnd.ms-excel": ".csv",
 };
 
-async function downloadDataset(filename: string, title: string): Promise<File> {
+async function downloadDataset(filename: string): Promise<File> {
   const data: any = await Storage.get(filename, {
     download: true,
     level: accessLevel,
@@ -35,7 +35,6 @@ async function downloadDataset(filename: string, title: string): Promise<File> {
   if (!data || !data.Body) {
     throw new Error("The filename is invalid");
   }
-  data.Body.name = `${title}.csv`;
   return data.Body as File;
 }
 

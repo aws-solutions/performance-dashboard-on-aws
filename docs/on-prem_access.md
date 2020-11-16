@@ -6,7 +6,7 @@ By default, Performance Dashboard is configured to allow access from the Interne
 
 You can use the [AWS WAF](https://aws.amazon.com/waf/) to limit access to Performance Dashboard to requests originating in your on-premises network.  You create a [Web ACL](https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html) to allow or block requests based on the IP addresses that the requests originate from.  You then protect the CloudFront distribution used with Performance Dashboard with that WebACL.  The diagram below shows the concept:
 
-![on-premises access only](images/protect_login_page.png)
+![on-premises access only](images/protect-login-page.png)
 
 ## Configuring the WAF
 

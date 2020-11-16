@@ -12,6 +12,7 @@ import Alert from "../components/Alert";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
+import DashboardHeader from "../components/DashboardHeader";
 
 interface PathParams {
   dashboardId: string;
@@ -107,24 +108,11 @@ function ArchivedDashboard() {
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
-          <div className="margin-top-2">
-            <h1 className="margin-bottom-1 display-inline-block font-sans-2xl">
-              {dashboard?.name}
-            </h1>
-            <div className="text-base text-italic">
-              {dashboard?.topicAreaName}
-            </div>
-          </div>
-          <div className="margin-y-2">
-            {dashboard?.description ? (
-              <MarkdownRender
-                source={dashboard.description}
-                className="font-sans-lg usa-prose"
-              />
-            ) : (
-              <p>No description entered</p>
-            )}
-          </div>
+          <DashboardHeader
+            name={dashboard?.name}
+            topicAreaName={dashboard?.topicAreaName}
+            description={dashboard?.description}
+          />
           <hr />
           {dashboard?.widgets.map((widget, index) => {
             return (

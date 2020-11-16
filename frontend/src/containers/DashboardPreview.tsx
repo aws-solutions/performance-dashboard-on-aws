@@ -11,6 +11,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
 import "./DashboardPreview.css";
+import DashboardHeader from "../components/DashboardHeader";
 
 interface PathParams {
   dashboardId: string;
@@ -106,21 +107,12 @@ function DashboardPreview() {
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
-          <div>
-            <h1 className="margin-bottom-0 display-inline-block">
-              {dashboard?.name}
-            </h1>
-          </div>
-          <div className="text-base text-italic">
-            {dashboard?.topicAreaName}
-          </div>
-          <div>
-            {dashboard?.description ? (
-              <MarkdownRender source={dashboard.description} />
-            ) : (
-              <p>No description entered</p>
-            )}
-          </div>
+          <DashboardHeader
+            name={dashboard?.name}
+            topicAreaName={dashboard?.topicAreaName}
+            description={dashboard?.description}
+            unpublished
+          />
           <hr />
 
           {dashboard?.widgets.map((widget, index) => {

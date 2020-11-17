@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDashboard } from "../hooks";
-import { LocationState } from "../models";
+import { useDashboard, useDashboardVersions } from "../hooks";
+import { DashboardState, LocationState } from "../models";
 import BackendService from "../services/BackendService";
 import Alert from "../components/Alert";
 import StepIndicator from "../components/StepIndicator";
@@ -11,6 +11,8 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import dayjs from "dayjs";
 import Spinner from "../components/Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 
 interface PathParams {
   dashboardId: string;
@@ -27,6 +29,10 @@ function PublishDashboard() {
   const [acknowledge, setAcknowledge] = useState<boolean>(false);
   const { dashboard, reloadDashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, trigger } = useForm<FormValues>();
+
+  const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
+
+  const published = versions.find((v) => v.state === DashboardState.Published);
 
   const onPreview = () => {
     history.push(`/admin/dashboard/${dashboardId}/preview`);
@@ -118,6 +124,12 @@ function PublishDashboard() {
                     Publish Pending
                   </span>
                 </li>
+                <li className="usa-button-group__item">
+                  <span className="text-underline text-middle">
+                    <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
+                    Version {dashboard?.version}
+                  </span>
+                </li>
               </ul>
             </div>
             <div className="grid-col text-right">
@@ -190,8 +202,13 @@ function PublishDashboard() {
                       className="usa-checkbox__label"
                       htmlFor="acknowledge"
                     >
-                      I acknowledge that I have reviewed the dashboard and it is
-                      ready to publish.
+                      {`I acknowledge that I have reviewed the dashboard and it is
+                      ready to publish.${
+                        published &&
+                        published.state === DashboardState.Published
+                          ? " I also understand that this will overwrite the existing published version of the dashboard."
+                          : ""
+                      }`}
                     </label>
                   </div>
                 </fieldset>

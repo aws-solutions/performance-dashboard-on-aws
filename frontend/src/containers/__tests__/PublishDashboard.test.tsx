@@ -69,7 +69,8 @@ test("publish button invokes BackendService", async () => {
   await act(async () => {
     fireEvent.click(
       wrapper.getByLabelText(
-        "I acknowledge that I have reviewed the dashboard and it is ready to publish."
+        "I acknowledge that I have reviewed the dashboard and it is ready to publish." +
+          " I also understand that this will overwrite the existing published version of the dashboard."
       )
     );
   });

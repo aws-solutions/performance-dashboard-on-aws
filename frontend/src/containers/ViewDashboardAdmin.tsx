@@ -27,7 +27,7 @@ function ViewDashboardAdmin() {
   const [isOpenArchiveModal, setIsOpenArchiveModal] = useState(false);
   const [showVersionNotes, setShowVersionNotes] = useState(false);
 
-  const currentDraft = versions.find(
+  const draftOrPublishPending = versions.find(
     (v) =>
       v.state === DashboardState.Draft ||
       v.state === DashboardState.PublishPending
@@ -104,9 +104,8 @@ function ViewDashboardAdmin() {
           closeModal={closeUpdateModal}
           title={`Update "${dashboard?.name}" dashboard`}
           message={
-            "This will create a new draft of the dashboard that will allow " +
-            "you to edit the content. The current version will remain " +
-            "published until you publish the updates."
+            "This will create a new draft of the dashboard that will allow you to edit the content," +
+            " then publish the new version to the published site."
           }
           buttonType="Create draft"
           buttonAction={updateDashboard}
@@ -121,7 +120,7 @@ function ViewDashboardAdmin() {
           buttonAction={archiveDashboard}
         />
 
-        {currentDraft && (
+        {draftOrPublishPending && (
           <Alert
             type="info"
             message={
@@ -132,13 +131,13 @@ function ViewDashboardAdmin() {
                 <div className="float-right">
                   <Link
                     to={`/admin/dashboard/${
-                      currentDraft.state === DashboardState.Draft
-                        ? "edit/" + currentDraft.id
-                        : currentDraft.id + "/publish"
+                      draftOrPublishPending.state === DashboardState.Draft
+                        ? "edit/" + draftOrPublishPending.id
+                        : draftOrPublishPending.id + "/publish"
                     }`}
                   >
                     {`${
-                      currentDraft.state === DashboardState.Draft
+                      draftOrPublishPending.state === DashboardState.Draft
                         ? "Edit"
                         : "Publish"
                     } draft`}
@@ -162,7 +161,8 @@ function ViewDashboardAdmin() {
                 </span>
               </li>
               <li className="usa-button-group__item">
-                <span className="usa-tag text-middle">
+                <span className="text-underline text-middle">
+                  <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
                   Version {dashboard?.version}
                 </span>
               </li>
@@ -189,7 +189,7 @@ function ViewDashboardAdmin() {
             <Button
               variant="base"
               onClick={onUpdateDashboard}
-              disabled={!!currentDraft}
+              disabled={!!draftOrPublishPending}
             >
               Update
             </Button>

@@ -80,6 +80,7 @@ describe("createChartWidget", () => {
         raw: "abc.csv",
         json: "abc.json",
       },
+      fileName: "abc.csv",
     };
 
     const widget = WidgetFactory.createWidget(
@@ -109,6 +110,7 @@ describe("createChartWidget", () => {
         raw: "abc.csv",
         json: "abc.json",
       },
+      fileName: "abc.csv",
     };
 
     const widget = WidgetFactory.createWidget(
@@ -191,6 +193,7 @@ describe("createChartWidget", () => {
         raw: "abc.csv",
         json: "abc.json",
       },
+      fileName: "abc.csv",
     };
 
     const widget = WidgetFactory.createWidget(
@@ -213,6 +216,7 @@ describe("createChartWidget", () => {
         raw: "abc.csv",
         json: "abc.json",
       },
+      fileName: "abc.csv",
     };
 
     const widget = WidgetFactory.createWidget(
@@ -235,6 +239,7 @@ describe("createTableWidget", () => {
         raw: "abc.csv",
         json: "abc.json",
       },
+      fileName: "abc.csv",
     };
 
     const widget = WidgetFactory.createWidget(
@@ -260,6 +265,7 @@ describe("createTableWidget", () => {
         raw: "abc.csv",
         json: "abc.json",
       },
+      fileName: "abc.csv",
     };
 
     const widget = WidgetFactory.createWidget(
@@ -467,6 +473,7 @@ describe("toItem", () => {
           raw: "abc.csv",
           json: "abc.json",
         },
+        fileName: "abc.csv",
       },
     };
 
@@ -488,6 +495,7 @@ describe("toItem", () => {
         raw: "abc.csv",
         json: "abc.json",
       },
+      fileName: "abc.csv",
     });
   });
 
@@ -508,6 +516,7 @@ describe("toItem", () => {
           raw: "abc.csv",
           json: "abc.json",
         },
+        fileName: "abc.csv",
       },
     };
 
@@ -528,6 +537,7 @@ describe("toItem", () => {
         raw: "abc.csv",
         json: "abc.json",
       },
+      fileName: "abc.csv",
     });
   });
 });

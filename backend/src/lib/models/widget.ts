@@ -48,6 +48,7 @@ export interface ChartWidget extends Widget {
       raw: string;
       json: string;
     };
+    fileName: string;
   };
 }
 
@@ -60,5 +61,6 @@ export interface TableWidget extends Widget {
       raw: string;
       json: string;
     };
+    fileName: string;
   };
 }

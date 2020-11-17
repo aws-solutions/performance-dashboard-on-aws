@@ -173,7 +173,7 @@ function EditDashboard() {
         buttonAction={deleteWidget}
       />
 
-      {loading ? (
+      {loading || !versions ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>

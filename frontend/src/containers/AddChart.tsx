@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType, WidgetType } from "../models";
 import { useDashboard } from "../hooks";
@@ -195,7 +195,14 @@ function AddChart() {
                 loading={fileLoading}
                 errors={csvErrors}
                 register={register}
-                hint="Must be a CSV file. [Link] How do I format my CSV?"
+                hint={
+                  <span>
+                    Must be a CSV file.{" "}
+                    <Link to="/admin/formattingcsv" target="_blank">
+                      How do I format my CSV file?
+                    </Link>
+                  </span>
+                }
                 fileName={csvFile && csvFile.name}
                 onFileProcessed={onFileProcessed}
               />

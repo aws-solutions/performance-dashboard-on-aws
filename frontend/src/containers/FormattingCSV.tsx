@@ -1,109 +1,28 @@
 import React from "react";
-import LineChartPreview from "../components/LineChartPreview";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { useSampleDataset } from "../hooks";
+import LineChartPreview from "../components/LineChartPreview";
 import TablePreview from "../components/TablePreview";
+import ColumnChartPreview from "../components/ColumnChartPreview";
+import PartWholeChartPreview from "../components/PartWholeChartPreview";
+import Button from "../components/Button";
 
-const lineChartDataset = {
-  headers: ["Month", "Covid cases", "Covid deaths"],
-  data: [
-    {
-      Month: "Mar.",
-      "Covid cases": 6000,
-      "Covid deaths": 1000,
-    },
-    {
-      Month: "Apr.",
-      "Covid cases": 21000,
-      "Covid deaths": 4900,
-    },
-    {
-      Month: "May",
-      "Covid cases": 34000,
-      "Covid deaths": 7000,
-    },
-    {
-      Month: "Jun.",
-      "Covid cases": 70000,
-      "Covid deaths": 12500,
-    },
-    {
-      Month: "Jul.",
-      "Covid cases": 93000,
-      "Covid deaths": 18900,
-    },
-    {
-      Month: "Aug.",
-      "Covid cases": 102000,
-      "Covid deaths": 25000,
-    },
-    {
-      Month: "Sep.",
-      "Covid cases": 95000,
-      "Covid deaths": 26000,
-    },
-    {
-      Month: "Oct.",
-      "Covid cases": 75000,
-      "Covid deaths": 26000,
-    },
-    {
-      Month: "Nov.",
-      "Covid cases": 68000,
-      "Covid deaths": 24000,
-    },
-  ],
-};
-
-const tableDataset = {
-  headers: ["Region", "Confirmed cases", "Deaths", "Increase (%)"],
-  data: [
-    {
-      Region: "Northeast",
-      "Confirmed cases": "150,000",
-      Deaths: "23,000",
-      "Increase (%)": 5,
-    },
-    {
-      Region: "Mid-Atlantic",
-      "Confirmed cases": "132,000",
-      Deaths: "17,000",
-      "Increase (%)": 6,
-    },
-    {
-      Region: "Southeast",
-      "Confirmed cases": 150000,
-      Deaths: 23000,
-      "Increase (%)": 5,
-    },
-    {
-      Region: "Gulf Coast",
-      "Confirmed cases": 150000,
-      Deaths: 23000,
-      "Increase (%)": 5,
-    },
-    {
-      Region: "Midwest",
-      "Confirmed cases": 150000,
-      Deaths: 23000,
-      "Increase (%)": 5,
-    },
-    {
-      Region: "Southwest",
-      "Confirmed cases": 150000,
-      Deaths: 23000,
-      "Increase (%)": 5,
-    },
-    {
-      Region: "Northeast",
-      "Confirmed cases": 150000,
-      Deaths: 23000,
-      "Increase (%)": 5,
-    },
-  ],
-};
+const LINE_CHART_CSV = "Example-CSV-Line.csv";
+const TABLE_CSV = "Example-CSV-Table.csv";
+const COLUMN_CHART_CSV = "Example-CSV-Column.csv";
+const PART_TO_WHOLE_CSV = "Example-CSV-Part-to-whole.csv";
 
 function FormattingCSV() {
+  const lineChart = useSampleDataset(LINE_CHART_CSV);
+  const table = useSampleDataset(TABLE_CSV);
+  const column = useSampleDataset(COLUMN_CHART_CSV);
+  const partToWhole = useSampleDataset(PART_TO_WHOLE_CSV);
+
+  const onDownload = (sampleCsv: string) => {
+    window.open(`${process.env.PUBLIC_URL}/samplecsv/${sampleCsv}`);
+  };
+
   return (
     <>
       <h1 className="font-sans-2xl">Formatting CSV files</h1>
@@ -115,23 +34,27 @@ function FormattingCSV() {
         </p>
       </div>
 
-      <h2>Line Chart</h2>
+      <h2>Line chart</h2>
       <div className="usa-prose">
         <p>
           A line chart or line graph is a type of chart which displays
-          information as a series of data points called 'markers' connected by
-          straight line segments. Line charts can include multiple lines and
-          they are most often used to show trends over time or distribution.
+          information as a series of data points called ‘markers’ connected by
+          straight line segments. Line charts can include multiple lines. Line
+          charts are most often used to show trends over time or distribution.
         </p>
         <div className="grid-row">
           <div className="grid-col text-left">
             <b>Line Chart Example</b>
           </div>
           <div className="grid-col text-right">
-            <a href="/home">
-              <FontAwesomeIcon icon={faDownload} />
+            <Button
+              onClick={() => onDownload(LINE_CHART_CSV)}
+              type="button"
+              variant="unstyled"
+            >
+              <FontAwesomeIcon icon={faDownload} className="margin-right-1" />
               Download line chart example CSV
-            </a>
+            </Button>
           </div>
         </div>
       </div>
@@ -140,8 +63,78 @@ function FormattingCSV() {
         <LineChartPreview
           title=""
           summary=""
-          lines={lineChartDataset.headers}
-          data={lineChartDataset.data}
+          lines={lineChart.dataset.headers}
+          data={lineChart.dataset.data}
+        />
+      </div>
+
+      <h2>Column chart</h2>
+      <div className="usa-prose">
+        <p>
+          Column charts provide a visual presentation of categorical data.
+          Categorical data is a grouping of data into discrete groups, such as
+          months of the year, age group, shoe sizes, and animals. These
+          categories are usually qualitative. Bars on the chart may be arranged
+          in any order. Column charts can also be used to show trend over time.
+        </p>
+        <div className="grid-row">
+          <div className="grid-col text-left">
+            <b>Column Example</b>
+          </div>
+          <div className="grid-col text-right">
+            <Button
+              onClick={() => onDownload(COLUMN_CHART_CSV)}
+              type="button"
+              variant="unstyled"
+            >
+              <FontAwesomeIcon icon={faDownload} className="margin-right-1" />
+              Download column chart example CSV
+            </Button>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div>
+        <ColumnChartPreview
+          title=""
+          summary=""
+          columns={column.dataset.headers}
+          data={column.dataset.data}
+        />
+      </div>
+
+      <h2>Part-to-whole chart</h2>
+      <div className="usa-prose">
+        <p>
+          A part-to-whole chart is divided into blocks, illustrating numerical
+          proportion. In a part-to-whole chart, the length of each block (and
+          consequently its area), is proportional to the quantity it represents.
+          Part-to-whole charts are used to show relative comparison between
+          blocks as part of a total value.
+        </p>
+        <div className="grid-row">
+          <div className="grid-col text-left">
+            <b>Part-to-whole Example</b>
+          </div>
+          <div className="grid-col text-right">
+            <Button
+              onClick={() => onDownload(PART_TO_WHOLE_CSV)}
+              type="button"
+              variant="unstyled"
+            >
+              <FontAwesomeIcon icon={faDownload} className="margin-right-1" />
+              Download part-to-whole chart example CSV
+            </Button>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div>
+        <PartWholeChartPreview
+          title=""
+          summary=""
+          parts={partToWhole.dataset.headers}
+          data={partToWhole.dataset.data}
         />
       </div>
 
@@ -149,17 +142,21 @@ function FormattingCSV() {
       <div className="usa-prose">
         <p>
           A table is a means of arranging data in rows and columns. Tables are
-          used to show comparisson with granularity.
+          used to show comparison when the granularity of data is desired.
         </p>
         <div className="grid-row">
           <div className="grid-col text-left">
             <b>Table Example</b>
           </div>
           <div className="grid-col text-right">
-            <a href="">
-              <FontAwesomeIcon icon={faDownload} />
+            <Button
+              onClick={() => onDownload(TABLE_CSV)}
+              type="button"
+              variant="unstyled"
+            >
+              <FontAwesomeIcon icon={faDownload} className="margin-right-1" />
               Download table example CSV
-            </a>
+            </Button>
           </div>
         </div>
       </div>
@@ -168,8 +165,8 @@ function FormattingCSV() {
         <TablePreview
           title=""
           summary=""
-          headers={tableDataset.headers}
-          data={tableDataset.data}
+          headers={table.dataset.headers}
+          data={table.dataset.data}
         />
       </div>
     </>

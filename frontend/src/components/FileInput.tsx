@@ -8,7 +8,7 @@ interface Props {
   register?: Function;
   disabled?: boolean;
   fileName?: string;
-  hint?: string;
+  hint?: string | React.ReactNode;
   accept?: string;
   errors?: Array<object>;
   loading?: boolean;

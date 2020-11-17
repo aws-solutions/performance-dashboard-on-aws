@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType } from "../models";
 import StorageService from "../services/StorageService";
@@ -233,12 +233,19 @@ function EditChart() {
                     loading={fileLoading}
                     errors={csvErrors}
                     register={register}
-                    hint="Must be a CSV file. [Link] How do I format my CSV?"
                     fileName={`${
                       csvFile?.name ||
                       widget.content.fileName ||
                       widget.content.title + ".csv"
                     }`}
+                    hint={
+                      <span>
+                        Must be a CSV file.{" "}
+                        <Link to="/admin/formattingcsv" target="_blank">
+                          How do I format my CSV file?
+                        </Link>
+                      </span>
+                    }
                     onFileProcessed={onFileProcessed}
                   />
                   {widget ? (

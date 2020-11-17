@@ -16,13 +16,13 @@ You will be directed to the CloudFormation console on your browser. Enter the st
 
 ![Launch CFT](images/launch-cft.png)
 
-Once completed, you can see the stacks created in the CloudFormation console such as in the screenshot below:
+Once completed, you can see the stacks created in the CloudFormation console such as in the screenshot below. Click on the stacks to browse the AWS resources that were provisioned.
 
 ![View stacks created](images/stacks-created.png)
 
 ### Other regions
 
-If you prefer to deploy PDoA in the us-west-2 or eu-west-2 region, you must first install a prerequisite stack into us-east-1, then install the rest into the desired us-west-2 or eu-west-2 region.
+If you prefer to deploy PDoA in the us-west-2 or eu-west-2 region, you must first install a prerequisite stack into us-east-1, then complete the installation by deploying into the desired us-west-2 or eu-west-2 region.
 
 **Install prereq first** [![Install this first](images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/LambdaEdge-1.0-b.0.json)
 
@@ -32,7 +32,7 @@ Install in eu-west-2 [![Install in eu-west-2](images/launch-stack.png)](https://
 
 ## Deploying with AWS Cloud Development Kit (CDK)
 
-You can also use CDK to install PDoA.  If you are updating the PDoA source code (e.g. for experimentation),  you can use CDK to deploy your changes more easily than with CFT.  The CDK code is the source of truth for creating the AWS application resources for PDoA.  The CFT described earlier are generated from the CDK code.
+You can also use CDK to install PDoA. If you are updating the PDoA source code (e.g. for experimentation), you can use CDK to deploy your changes more easily than with CFT. The CDK code is the source of truth for creating the AWS application resources for PDoA. The CFT described earlier are generated from the CDK code.
 
 This repository is a monorepo that includes 3 different applications: Backend, Frontend and CDK. The three of them are written in Typescript but each has its own set of dependencies (package.json) and they get built, packaged and deployed independently.
 
@@ -97,7 +97,7 @@ To create a `dev` environment for example, you may run the deployment script lik
 
 ## Installation Completed
 
-Once the installation has completed (whether using CFT or CDK), head to the AWS CFT console to view the resources and stacks created. If you're not familiar with navigating the CFT console, review the CFT [documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html). In the CFT Console, click on "Stacks" to view the stacks created. Click on a created stack, then click on "Outputs" to view the resources created. You will need the identifiers of the resources created to configure PDoA.
+Once the installation has completed (whether using CFT or CDK), head to the AWS CFT console to view the resources and stacks created. If you're not familiar with navigating the CFT console, review the CFT [documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html). In the CFT Console, click on "Stacks" to view the stacks created. Click on a created stack, then click on "Outputs" to view the resources created. Later, you will need the identifiers of the resources created to configure PDoA.
 
 # Configuring Performance Dashboard
 
@@ -105,7 +105,7 @@ You can configure PDoA to tailor it to your environment, such as configuring it 
 
 ## Domain Name
 
-You can use your domain name with PDoA. To get the web address of PDoA, go to the CFT Console, and click on the stack that has the string "frontendStack". For example, if you named your stack "MyCorp-PerfDash", then click on the stack with the prefix "MyCorp-PerfDash-frontendStack". Click on Outputs, and get the value for the key "CloudFrontURL" (e.g. something like <id>.cloudfront.net), which is the web address of PDoA. Assign your domain name to that web address.  If you don't already have a domain name, you can use [Amazon Route 53](https://aws.amazon.com/route53/) to host your domain.
+You can use your domain name with PDoA. To get the web address of PDoA, go to the CFT Console, and click on the stack that has the string "frontendStack". For example, if you named your stack "MyCorp-PerfDash", then click on the stack with the prefix "MyCorp-PerfDash-frontendStack". Click on Outputs, and get the value for the key "CloudFrontURL" (e.g. something like <id>.cloudfront.net), which is the web address of PDoA. Assign your domain name to that web address. If you don't already have a domain name, you can use [Amazon Route 53](https://aws.amazon.com/route53/) to host your domain.
 
 ## User Management
 
@@ -117,13 +117,13 @@ When you create a new user in the Performance Dashboard Amazon Cognito user pool
 
 #### Pre installation
 
-To customize the email template before installing PDoA, you will use CDK.  Edit the file **cdk/lib/data/email-template-html** and make the changes below:
+To customize the email template before installing PDoA, you will use CDK. Edit the file **cdk/lib/data/email-template-html** and make the changes below:
 
 - Open **cdk/lib/data/email-template-html** in your editor
 - Replace the placeholder values enclosed within "[]" with your own:
   - [Organization] - replace with your organization name
   - [Administrator] - replace with the name of person sending the invite
-  - [your domain] - replace with the domain name you're using for Performance Dashboard
+  - [your domain] - replace with the domain name you're using for Performance Dashboard. For example, change the placeholder value https://[your domain]/admin to https://example.com/admin
   - {username} and {####} - the username and temporary password created by Cognito. Don't replace these, leave them as is
 
 After making the edits, install your changes using CDK. See the section above on installing PDoA using CDK.
@@ -144,26 +144,28 @@ Add a user for each editor you plan to have use PDoA, and add a user for the tec
 
 ## Manage Topic Areas
 
-In a future release, PDoA will have an Admin UI for you to manage topic areas.  For now, you will have to manage topic areas outside of the UI.
+In a future release, PDoA will have an Admin UI for you to manage topic areas. For now, you will edit topic areas directly in the database.
 
 ### Create a New Topic Area
-Dashboards are grouped by topic areas. Before creating your first dashboard, you will have to create your topic areas. For now, you will use the script tools/create-topicarea.sh to create topic areas. To use that script, you must first gather some system information. Go to the CFT Console, and click on the stack that has the string "authStack". Click on Outputs, and get the values for the keys "CLIClientId" and "UserPoolId". Next, go to the CFT Console, and click on the stack that has the string "backendStack". Click on Outputs, and get the value for the key "ApiGatewayEndpoint". Edit the file tools/create-topicarea.sh, and replace the variables below with the values you've just collected.
 
-```
-...
-region=<region>
-userPoolID=<UserPoolId>
-app_clientID=<CLIClientId>
-api_invokeURL=<ApiGatewayEndpoint>
-...
-```
+Dashboards are grouped by topic areas. Before creating your first dashboard, you will have to create your topic areas. For now, you will create the topic area directly in the AWS DynamoDB table used by PDoA. To begin, go to the AWS DynamoDB console, click on the Tables tab, then on the table with the prefix "PerformanceDash". In the right panel, click on the Items tab.
 
-Before you run tools/create-topicarea.sh, remember to run `aws configure` to configure your AWS Access Key ID, AWS Secret Access Key, and region. You will be prompted for the username and password for the Cognito user you created earlier for the techops person. You will also be prompted to enter the topic area name.  After running this command, the topic area will be created in the DynamoDB table used for PDoA.
+![DynamoDB table](images/topicarea-dynamodb.png)
+
+Next, click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. For the "pk" and "sk" fields, enter the identifier "8db2aafa-f6db-41ac-bf07-403b18c2dd46". For the "type" field, enter "TopicArea". You now must add two new fields called "createdBy" and "name". To add a field, click on the "+" symbol, then on "Append", then on "String".
+
+![Add item to DynamoDB table](images/add-item-dynamodb.png)
+
+Enter "createdBy" for the field, and the Cognito user name for the user who's creating the entry. Repeat for the "name" field, and enter the topic area name, such as "Ministry of Finance"
+
+![topic area entry](images/topic-area-entry.png)
+
+Repeat the steps above for every topic area that you need to add. For the "pk" and "sk" fields, vary the identifier above by a digit, such as changing "8db2aafa-f6db-41ac-bf07-403b18c2dd46" to "8db2aafa-f6db-41ac-bf07-403b18c2dd4**7**"
 
 ### Rename a Topic Area
 
-To rename an existing topic area, go to the Amazon DynamoDB console, and open the table with the prefix "PerformanceDash".  Look for the topic area that you wish to rename by filtering the type "TopicArea".  Edit the entry to change the name of the topic area. 
+To rename an existing topic area, go to the Amazon DynamoDB console, and open the table with the prefix "PerformanceDash". Look for the topic area that you wish to rename by filtering the type "TopicArea". Edit the entry to change the name of the topic area.
 
 ### Delete a Topic Area
 
-Before deleting a topic area, make sure you delete all dashboards associated with that topic area first.  As in renaming a topic area above, find your topic area entry in DynamoDB.  Delete that entry to delete the topic area.
+Before deleting a topic area, make sure you delete all dashboards associated with that topic area first. As in renaming a topic area above, find your topic area entry in DynamoDB. Delete that entry to delete the topic area.

@@ -247,7 +247,7 @@ function EditChart() {
                         id="chartType"
                         name="chartType"
                         label="Chart type"
-                        hint="Choose a chart type. [Link] Which chart is right for my data?"
+                        hint="Choose a chart type."
                         register={register}
                         error={errors.chartType && "Please select a chart type"}
                         onChange={handleChartTypeChange}

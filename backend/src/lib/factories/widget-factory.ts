@@ -137,6 +137,10 @@ function createChartWidget(
     throw new Error("Chart widget must have `content.s3Key` field");
   }
 
+  if (!content.fileName) {
+    throw new Error("Chart widget must have `content.fileName` field");
+  }
+
   return {
     id,
     name,
@@ -150,6 +154,7 @@ function createChartWidget(
       datasetId: content.datasetId,
       summary: content.summary,
       s3Key: content.s3Key,
+      fileName: content.fileName,
     },
   };
 }
@@ -172,6 +177,10 @@ function createTableWidget(
     throw new Error("Table widget must have `content.s3Key` field");
   }
 
+  if (!content.fileName) {
+    throw new Error("Table widget must have `content.fileName` field");
+  }
+
   return {
     id,
     name,
@@ -184,6 +193,7 @@ function createTableWidget(
       datasetId: content.datasetId,
       summary: content.summary,
       s3Key: content.s3Key,
+      fileName: content.fileName,
     },
   };
 }

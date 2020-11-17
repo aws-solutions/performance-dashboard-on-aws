@@ -70,6 +70,7 @@ function AddTable() {
           summary: values.summary,
           datasetId: newDataset.id,
           s3Key: newDataset.s3Key,
+          fileName: csvFile?.name,
         }
       );
       setCreatingWidget(false);

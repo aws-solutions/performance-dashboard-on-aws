@@ -78,6 +78,7 @@ function AddChart() {
           chartType: values.chartType,
           datasetId: newDataset.id,
           s3Key: newDataset.s3Key,
+          fileName: csvFile?.name,
         }
       );
       setCreatingWidget(false);

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDashboard } from "../hooks";
 import { DashboardState, LocationState } from "../models";
-import MarkdownRender from "../components/MarkdownRender";
 import Button from "../components/Button";
 import BackendService from "../services/BackendService";
 import Alert from "../components/Alert";

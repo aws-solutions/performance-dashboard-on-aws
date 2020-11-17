@@ -1,5 +1,4 @@
 import React from "react";
-import MarkdownRender from "../components/MarkdownRender";
 import { useParams } from "react-router-dom";
 import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

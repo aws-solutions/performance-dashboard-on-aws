@@ -10,7 +10,6 @@ import BackendService from "../services/BackendService";
 import WidgetOrderingService from "../services/WidgetOrdering";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
-import MarkdownRender from "../components/MarkdownRender";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";

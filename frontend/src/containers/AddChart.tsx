@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType, WidgetType } from "../models";
 import { useDashboard } from "../hooks";
@@ -16,6 +16,7 @@ import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
 import UtilsService from "../services/UtilsService";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -198,7 +199,7 @@ function AddChart() {
                 hint={
                   <span>
                     Must be a CSV file.{" "}
-                    <Link to="/admin/formattingcsv" target="_blank">
+                    <Link to="/admin/formattingcsv" target="_blank" external>
                       How do I format my CSV file?
                     </Link>
                   </span>

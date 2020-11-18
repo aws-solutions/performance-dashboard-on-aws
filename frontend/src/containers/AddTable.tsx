@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Dataset, WidgetType } from "../models";
 import { useDashboard } from "../hooks";
 import BackendService from "../services/BackendService";
@@ -11,6 +11,7 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
 import TablePreview from "../components/TablePreview";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -182,7 +183,7 @@ function AddTable() {
                 hint={
                   <span>
                     Must be a CSV file.{" "}
-                    <Link to="/admin/formattingcsv" target="_blank">
+                    <Link to="/admin/formattingcsv" target="_blank" external>
                       How do I format my CSV file?
                     </Link>
                   </span>

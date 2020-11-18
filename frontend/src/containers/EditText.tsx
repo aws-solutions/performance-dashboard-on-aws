@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
 import { useWidget, useDashboard } from "../hooks";
 import Spinner from "../components/Spinner";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -123,8 +124,14 @@ function EditText() {
                     id="text"
                     name="text"
                     label="Text"
-                    hint="Enter text here. This field supports markdown"
-                    showMarkdownLink
+                    hint={
+                      <>
+                        Enter text here. This field supports markdown.{" "}
+                        <Link target="_blank" to={"/admin/markdown"} external>
+                          View Markdown Syntax
+                        </Link>
+                      </>
+                    }
                     error={errors.text && "Please specify a text content"}
                     required
                     register={register}

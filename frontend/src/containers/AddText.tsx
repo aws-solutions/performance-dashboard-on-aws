@@ -8,6 +8,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -116,8 +117,14 @@ function AddText() {
                 id="text"
                 name="text"
                 label="Text"
-                hint="Enter text here. This field supports markdown"
-                showMarkdownLink
+                hint={
+                  <>
+                    Enter text here. This field supports markdown.
+                    <Link target="_blank" to={"/admin/markdown"} external>
+                      View Markdown Syntax
+                    </Link>
+                  </>
+                }
                 error={errors.text && "Please specify a text content"}
                 required
                 register={register}

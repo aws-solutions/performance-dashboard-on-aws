@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Dataset } from "../models";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
@@ -12,6 +12,7 @@ import { parse, ParseResult } from "papaparse";
 import TablePreview from "../components/TablePreview";
 import { useWidget, useDashboard } from "../hooks";
 import Spinner from "../components/Spinner";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -218,7 +219,11 @@ function EditTable() {
                     hint={
                       <span>
                         Must be a CSV file.{" "}
-                        <Link to="/admin/formattingcsv" target="_blank">
+                        <Link
+                          to="/admin/formattingcsv"
+                          target="_blank"
+                          external
+                        >
                           How do I format my CSV file?
                         </Link>
                       </span>

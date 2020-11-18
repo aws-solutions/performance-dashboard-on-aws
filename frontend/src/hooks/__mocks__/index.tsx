@@ -220,3 +220,13 @@ export function useDashboardVersions(parentDashboardId: string) {
     ],
   };
 }
+
+export function useSampleDataset() {
+  return {
+    loading: false,
+    dataset: {
+      data: [],
+      headers: [],
+    },
+  };
+}

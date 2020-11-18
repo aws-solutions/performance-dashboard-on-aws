@@ -11,6 +11,7 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
 import TablePreview from "../components/TablePreview";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -179,7 +180,14 @@ function AddTable() {
                 loading={fileLoading}
                 errors={csvErrors}
                 register={register}
-                hint="Must be a CSV file. [Link] How do I format my CSV?"
+                hint={
+                  <span>
+                    Must be a CSV file.{" "}
+                    <Link to="/admin/formattingcsv" target="_blank" external>
+                      How do I format my CSV file?
+                    </Link>
+                  </span>
+                }
                 fileName={csvFile && csvFile.name}
                 onFileProcessed={onFileProcessed}
               />

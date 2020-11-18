@@ -16,6 +16,7 @@ import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
 import UtilsService from "../services/UtilsService";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -195,7 +196,14 @@ function AddChart() {
                 loading={fileLoading}
                 errors={csvErrors}
                 register={register}
-                hint="Must be a CSV file. [Link] How do I format my CSV?"
+                hint={
+                  <span>
+                    Must be a CSV file.{" "}
+                    <Link to="/admin/formattingcsv" target="_blank" external>
+                      How do I format my CSV file?
+                    </Link>
+                  </span>
+                }
                 fileName={csvFile && csvFile.name}
                 onFileProcessed={onFileProcessed}
               />

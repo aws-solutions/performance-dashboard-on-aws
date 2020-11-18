@@ -17,6 +17,7 @@ import PartWholeChartPreview from "../components/PartWholeChartPreview";
 import { useWidget, useDashboard } from "../hooks";
 import Spinner from "../components/Spinner";
 import UtilsService from "../services/UtilsService";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -233,12 +234,23 @@ function EditChart() {
                     loading={fileLoading}
                     errors={csvErrors}
                     register={register}
-                    hint="Must be a CSV file. [Link] How do I format my CSV?"
                     fileName={`${
                       csvFile?.name ||
                       widget.content.fileName ||
                       widget.content.title + ".csv"
                     }`}
+                    hint={
+                      <span>
+                        Must be a CSV file.{" "}
+                        <Link
+                          to="/admin/formattingcsv"
+                          target="_blank"
+                          external
+                        >
+                          How do I format my CSV file?
+                        </Link>
+                      </span>
+                    }
                     onFileProcessed={onFileProcessed}
                   />
                   {widget ? (

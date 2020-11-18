@@ -26,6 +26,7 @@ import EditText from "./containers/EditText";
 import AdminHome from "./containers/AdminHome";
 import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
+import FormattingCSV from "./containers/FormattingCSV";
 
 interface AppRoute {
   path: string;
@@ -101,6 +102,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/markdown",
     component: MarkdownSyntax,
+  },
+  {
+    path: "/admin/formattingcsv",
+    component: FormattingCSV,
   },
   {
     path: "/:dashboardId",

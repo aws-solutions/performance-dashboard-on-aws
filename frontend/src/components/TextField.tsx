@@ -1,14 +1,10 @@
 import React from "react";
-import Link from "./Link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   name: string;
   id: string;
   label: string;
-  hint?: string;
-  showMarkdownLink?: boolean;
+  hint?: string | React.ReactNode;
   register?: Function;
   required?: boolean;
   defaultValue?: string;
@@ -37,24 +33,7 @@ function TextField(props: Props) {
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
       </label>
-      <div className="usa-hint">
-        {props.hint}
-        {props.showMarkdownLink ? (
-          <>
-            {". "}
-            <Link target="_blank" to={"/admin/markdown"}>
-              View Markdown Syntax
-              <FontAwesomeIcon
-                className="margin-left-05"
-                icon={faExternalLinkAlt}
-                size="xs"
-              />
-            </Link>
-          </>
-        ) : (
-          ""
-        )}
-      </div>
+      <div className="usa-hint">{props.hint}</div>
       {props.error && (
         <span
           className="usa-error-message"

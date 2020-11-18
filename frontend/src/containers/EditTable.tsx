@@ -12,6 +12,7 @@ import { parse, ParseResult } from "papaparse";
 import TablePreview from "../components/TablePreview";
 import { useWidget, useDashboard } from "../hooks";
 import Spinner from "../components/Spinner";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -210,12 +211,23 @@ function EditTable() {
                     loading={fileLoading}
                     errors={csvErrors}
                     register={register}
-                    hint="Must be a CSV file. [Link] How do I format my CSV?"
                     fileName={`${
                       csvFile?.name ||
                       widget.content.fileName ||
                       widget.content.title + ".csv"
                     }`}
+                    hint={
+                      <span>
+                        Must be a CSV file.{" "}
+                        <Link
+                          to="/admin/formattingcsv"
+                          target="_blank"
+                          external
+                        >
+                          How do I format my CSV file?
+                        </Link>
+                      </span>
+                    }
                     onFileProcessed={onFileProcessed}
                   />
 

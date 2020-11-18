@@ -4,7 +4,9 @@ Performance Dashboard on AWS (PDoA) comes with pre-built code to provision an in
 
 ## Prerequisites
 
-To deploy PDoA on AWS, you must have an AWS account. If you need to create and activate your account, follow these [instructions](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/).
+To deploy PDoA on AWS, you must have an AWS account, and have been granted permission to deploy resources. If you need to create and activate your account, follow these [instructions](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/). You can [contact](https://aws.amazon.com/contact-us/) AWS to ask questions about setting up an account. In the instructions provided on this page, you will be asked to navigate to the AWS console for a particular service, such as the DynamoDB Console. If you're not familiar with the AWS console, click on the "Services" drop down to bring up a search bar where you can search for the console of a service.
+
+![AWS Search Bar](docs/installation/searchbar.png)
 
 ## Deploying with AWS CloudFormation Template (CFT)
 
@@ -18,7 +20,7 @@ You will be directed to the CloudFormation console on your browser. Enter the st
 
 Once completed, you can see the stacks created in the CloudFormation console such as in the screenshot below. Click on the stacks to browse the AWS resources that were provisioned.
 
-![View stacks created](images/stacks-created.png)
+![View stacks created](images/installation/stacks-created.png)
 
 ### Other regions
 
@@ -97,7 +99,9 @@ To create a `dev` environment for example, you may run the deployment script lik
 
 ## Installation Completed
 
-Once the installation has completed (whether using CFT or CDK), head to the AWS CFT console to view the resources and stacks created. If you're not familiar with navigating the CFT console, review the CFT [documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html). In the CFT Console, click on "Stacks" to view the stacks created. Click on a created stack, then click on "Outputs" to view the resources created. Later, you will need the identifiers of the resources created to configure PDoA.
+Once the installation has completed (whether using CFT or CDK), head to the AWS CFT console to view the resources and stacks created. If you're not familiar with using the CFT console, review the CFT [documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html). In the CFT Console, click on "Stacks" to view the stacks created. Click on a created stack, then click on "Outputs" to view the resources created.
+
+Let's get the web address of PDoA. Go to the CFT Console, and click on the stack that has the string "frontendStack". For example, if you named your stack "MyCorp-PerfDash", then click on the stack with the prefix "MyCorp-PerfDash-frontendStack". Click on Outputs, and get the value for the key "CloudFrontURL" (e.g. something like <id>.cloudfront.net), which is the web address of PDoA. Type that web address into the browser, and you should land on the public homepage of PDoA.
 
 # Configuring Performance Dashboard
 
@@ -105,11 +109,11 @@ You can configure PDoA to tailor it to your environment, such as configuring it 
 
 ## Domain Name
 
-You can use your domain name with PDoA. To get the web address of PDoA, go to the CFT Console, and click on the stack that has the string "frontendStack". For example, if you named your stack "MyCorp-PerfDash", then click on the stack with the prefix "MyCorp-PerfDash-frontendStack". Click on Outputs, and get the value for the key "CloudFrontURL" (e.g. something like <id>.cloudfront.net), which is the web address of PDoA. Assign your domain name to that web address. If you don't already have a domain name, you can use [Amazon Route 53](https://aws.amazon.com/route53/) to host your domain.
+You can use your domain name with PDoA. See the Installation Completed section above on how to get the web address of PDoA. Assign your domain name to that web address. If you don't already have a domain name, you can use [Amazon Route 53](https://aws.amazon.com/route53/) to host your domain.
 
 ## User Management
 
-Before you can use PDoA, you must first add the Editor users who will create and publish dashboards. Out of the box, PDoA manages user identities in Amazon Cognito. A user login in to PDoA will be authenticated by Cognito. In a future release, PDoA will also support user identities managed in Active Directory.
+Out of the box, PDoA manages user identities in Amazon Cognito. A user login in to PDoA will be authenticated by Cognito. In a future release, PDoA will also support user identities managed in Active Directory. Before you begin use to PDoA, you must add the Editor users who will create and publish dashboards.
 
 ### Customize Email Invite
 
@@ -132,39 +136,49 @@ After making the edits, install your changes using CDK. See the section above on
 
 If you wish to update the email template after installation, go to Cognito console. Click on the User Pool created for PDoA, then click on "Message customizations". Click on the "Email message" text box, enlarge the box, then make edits to the placeholder values as described above.
 
+You can also update the logo used by the email. In the email template, look for the text src="https://[your domain]/logo.png", and replace it with the link to your logo. You can also use the logo that comes with PDoA. To get the web address of that logo, go to the web address of PDoA in your browser. Right click on the logo on the PDoA public home page, and copy the link address. Paste that address into the email template to replace the placeholder logo.
+
 ### Adding Users
 
 Go to the AWS Cognito Console, and click on Manage User Pools. Click on the User Pool created for PDoA, then click on "Users and groups". Enter the information requested as in the following dialog box:
 
-![Create user](images/create-user.png)
+![Create user](images/installation/create-user.png)
 
-An email will be sent to the email entered. The user will have to change the password when loggin in for the first time.
+An email will be sent to the email address you entered. The user will have to change the password when logging in for the first time.
 
 Add a user for each editor you plan to have use PDoA, and add a user for the techops person.
 
 ## Manage Topic Areas
 
-In a future release, PDoA will have an Admin UI for you to manage topic areas. For now, you will edit topic areas directly in the database.
+In a future release, PDoA will have an Admin UI for you to manage topic areas. For now, you will create and edit topic areas directly in the DynamoDB database.
 
 ### Create a New Topic Area
 
-Dashboards are grouped by topic areas. Before creating your first dashboard, you will have to create your topic areas. For now, you will create the topic area directly in the AWS DynamoDB table used by PDoA. To begin, go to the AWS DynamoDB console, click on the Tables tab, then on the table with the prefix "PerformanceDash". In the right panel, click on the Items tab.
+Dashboards are grouped by topic areas. Before creating your first dashboard, you will have to create your topic areas. For now, you will create the topic area directly in the AWS DynamoDB table used by PDoA. To begin, go to the AWS DynamoDB console, click on the Tables tab, then on the table name that has the string "backendStack". In the right panel, click on the Items tab. Your table should be empty as shown in the screen shot.
 
-![DynamoDB table](images/topicarea-dynamodb.png)
+![DynamoDB table](images/installation/topicarea-dynamodb.png)
 
-Next, click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. For the "pk" and "sk" fields, enter the identifier "8db2aafa-f6db-41ac-bf07-403b18c2dd46". For the "type" field, enter "TopicArea". You now must add two new fields called "createdBy" and "name". To add a field, click on the "+" symbol, then on "Append", then on "String".
+Next, click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. For the "pk" and "sk" attributes, enter the identifier "TopicArea#8db2aafa-f6db-41ac-bf07-403b18c2dd46". For the "type" attribute, enter "TopicArea". You now must add two new attributes called "createdBy" and "name". To add a field, click on the "+" symbol, then on "Append", then on "String".
 
-![Add item to DynamoDB table](images/add-item-dynamodb.png)
+![Add item to DynamoDB table](images/installation/append-topicarea-attribute.png)
 
-Enter "createdBy" for the field, and the Cognito user name for the user who's creating the entry. Repeat for the "name" field, and enter the topic area name, such as "Ministry of Finance"
+Enter "createdBy" for the key, and for the value enter the Cognito user name for the user who's creating the entry. Repeat for the "name" field, and enter the topic area name, such as "IRS".
 
-![topic area entry](images/topic-area-entry.png)
+![Add attribute to DynamoDB item](images/installation/insert-topicarea-attribute.png)
+
+Now, delete the unneeded attributes like "parentDashboardId" and "version". To delete an attribute, click on the "+" symbol, then on "remove".
+
+![Remove attribute from DynamoDB item](images/installation/remove-topicarea-attribute.png)
+
+The item you're adding should now look like the screen shot below:
+
+![topic area entry](images/installation/topicarea-item.png)
 
 Repeat the steps above for every topic area that you need to add. For the "pk" and "sk" fields, vary the identifier above by a digit, such as changing "8db2aafa-f6db-41ac-bf07-403b18c2dd46" to "8db2aafa-f6db-41ac-bf07-403b18c2dd4**7**"
 
 ### Rename a Topic Area
 
-To rename an existing topic area, go to the Amazon DynamoDB console, and open the table with the prefix "PerformanceDash". Look for the topic area that you wish to rename by filtering the type "TopicArea". Edit the entry to change the name of the topic area.
+To rename an existing topic area, go back to the DynamoDB table for PDoA. Look for the topic area that you wish to rename by filtering the type "TopicArea". Edit the entry to change the name of the topic area.
 
 ### Delete a Topic Area
 

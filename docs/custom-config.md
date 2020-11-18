@@ -18,7 +18,7 @@ The appropriate way to modify the values of the `env.js` file, is to change the 
 
 3. Once you are inside the Lambda function, find the section where the Environment Variables are defined and click Edit. Modify their values as needed and save your changes.
 
-4. Invoke the Lambda function by clicking the Test button in the console. You will be asked to provide a Test Event, enter the following JSON input:
+4. Invoke the Lambda function by clicking the Test button in the console. You will be asked to provide a Test Event, enter any name you want for the test event, then copy and paste the following JSON input in the content area:
 
 ```json
 {

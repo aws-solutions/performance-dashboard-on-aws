@@ -4,9 +4,9 @@ Performance Dashboard on AWS (PDoA) comes with pre-built code to provision an in
 
 ## Prerequisites
 
-To deploy PDoA on AWS, you must have an AWS account, and have been granted permission to deploy resources. If you need to create and activate your account, follow these [instructions](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/). You can [contact](https://aws.amazon.com/contact-us/) AWS to ask questions about setting up an account. In the instructions provided on this page, you will be asked to navigate to the AWS console for a particular service, such as the DynamoDB Console. If you're not familiar with the AWS console, click on the "Services" drop down to bring up a search bar where you can search for the console of a service.
+To deploy PDoA on AWS, you must have an AWS account, and have been granted permission to deploy resources. If you need to create and activate your account, follow these [instructions](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/). You can [contact](https://aws.amazon.com/contact-us/) AWS to ask questions about setting up an account. In the instructions provided on this page, you will be asked to navigate to the AWS console for a particular service, such as the DynamoDB Console. If you're not familiar with the AWS console, you can click on the "Services" drop down to bring up a search bar where you can search for the console of a service.
 
-![AWS Search Bar](docs/installation/searchbar.png)
+![AWS Search Bar](images/installation/searchbar.png)
 
 ## Deploying with AWS CloudFormation Template (CFT)
 
@@ -14,9 +14,9 @@ If you're not familiar with deploying resources on AWS using CFT, start by revie
 
 Install in us-east-1 [![Install in us-east-1](images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/performance-dashboard-us-east-1.json)
 
-You will be directed to the CloudFormation console on your browser. Enter the stack name such as "MyCorp-PerfDash", then check on the two "Capabilities" checkboxes at the bottom of the page. Press the "Create Stack" button. It will take about 25 minutes for the resources to be provisioned.
+You will be directed to the CloudFormation console on your browser. Enter the stack name such as "MyCorp-PerfDash", then check on the two "Capabilities" checkboxes at the bottom of the page. Press the "Create Stack" button. It will take about 25 minutes for the compute, storage, and database resources on AWS to be provisioned.
 
-![Launch CFT](images/launch-cft.png)
+![Launch CFT](images/installation/launch-cft.png)
 
 Once completed, you can see the stacks created in the CloudFormation console such as in the screenshot below. Click on the stacks to browse the AWS resources that were provisioned.
 
@@ -24,7 +24,7 @@ Once completed, you can see the stacks created in the CloudFormation console suc
 
 ### Other regions
 
-If you prefer to deploy PDoA in the us-west-2 or eu-west-2 region, you must first install a prerequisite stack into us-east-1, then complete the installation by deploying into the desired us-west-2 or eu-west-2 region.
+If you prefer to deploy PDoA in the us-west-2 or eu-west-2 region, you must first install a prerequisite stack into us-east-1, then complete the installation by deploying into the desired us-west-2 or eu-west-2 region. (Please note that if you want to use PDoA in other regions, use the CDK method to install as described in the next [section](#Deploying-with-AWS-Cloud-Development-Kit))
 
 **Install prereq first** [![Install this first](images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/LambdaEdge-1.0-b.0.json)
 
@@ -32,7 +32,7 @@ Install in us-west-2 [![Install in us-west-2](images/launch-stack.png)](https://
 
 Install in eu-west-2 [![Install in eu-west-2](images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-eu-west-2.s3.amazonaws.com/performance-dashboard-eu-west-2.json)
 
-## Deploying with AWS Cloud Development Kit (CDK)
+## Deploying with AWS Cloud Development Kit
 
 You can also use CDK to install PDoA. If you are updating the PDoA source code (e.g. for experimentation), you can use CDK to deploy your changes more easily than with CFT. The CDK code is the source of truth for creating the AWS application resources for PDoA. The CFT described earlier are generated from the CDK code.
 
@@ -136,7 +136,7 @@ After making the edits, install your changes using CDK. See the section above on
 
 If you wish to update the email template after installation, go to Cognito console. Click on the User Pool created for PDoA, then click on "Message customizations". Click on the "Email message" text box, enlarge the box, then make edits to the placeholder values as described above.
 
-You can also update the logo used by the email. In the email template, look for the text src="https://[your domain]/logo.png", and replace it with the link to your logo. You can also use the logo that comes with PDoA. To get the web address of that logo, go to the web address of PDoA in your browser. Right click on the logo on the PDoA public home page, and copy the link address. Paste that address into the email template to replace the placeholder logo.
+You can also update the logo used by the email. In the email template, look for the text src="https://[your domain]/logo.png", and replace it with the link to your logo. If you want to use the logo that comes with PDoA, get the link of that logo by opening a browser to PDoA. Right click on the logo on the PDoA public home page, and copy the link address. Paste that address into the email template to replace the placeholder logo.
 
 ### Adding Users
 
@@ -154,11 +154,15 @@ In a future release, PDoA will have an Admin UI for you to manage topic areas. F
 
 ### Create a New Topic Area
 
-Dashboards are grouped by topic areas. Before creating your first dashboard, you will have to create your topic areas. For now, you will create the topic area directly in the AWS DynamoDB table used by PDoA. To begin, go to the AWS DynamoDB console, click on the Tables tab, then on the table name that has the string "backendStack". In the right panel, click on the Items tab. Your table should be empty as shown in the screen shot.
+Dashboards are grouped by topic areas. Before creating your first dashboard, you will have to create your topic areas. For now, you will create the topic area directly in the AWS DynamoDB table used by PDoA. To begin, go to the AWS DynamoDB console, click on the Tables tab, then on the table that has "backendStack" as part of the name. In the right panel, click on the Items tab. Your table should be empty as shown in the screen shot.
 
 ![DynamoDB table](images/installation/topicarea-dynamodb.png)
 
-Next, click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. For the "pk" and "sk" attributes, enter the identifier "TopicArea#8db2aafa-f6db-41ac-bf07-403b18c2dd46". For the "type" attribute, enter "TopicArea". You now must add two new attributes called "createdBy" and "name". To add a field, click on the "+" symbol, then on "Append", then on "String".
+There are 2 options for adding an entry in DynamoDB for a topic area. Review [Option 1](#option-1) and [Option 2](#option-2) below and choose the option you're more comfortable with.
+
+#### Option 1
+
+Click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. For the "pk" and "sk" attributes, enter the identifier "TopicArea#8db2aafa-f6db-41ac-bf07-403b18c2dd46". For the "type" attribute, enter "TopicArea". You now must add two new attributes called "createdBy" and "name". To add a field, click on the "+" symbol, then on "Append", then on "String".
 
 ![Add item to DynamoDB table](images/installation/append-topicarea-attribute.png)
 
@@ -170,11 +174,27 @@ Now, delete the unneeded attributes like "parentDashboardId" and "version". To d
 
 ![Remove attribute from DynamoDB item](images/installation/remove-topicarea-attribute.png)
 
-The item you're adding should now look like the screen shot below:
+The item you're adding should now look like the screen shot below (the order of the attributes doesn't matter):
 
 ![topic area entry](images/installation/topicarea-item.png)
 
-Repeat the steps above for every topic area that you need to add. For the "pk" and "sk" fields, vary the identifier above by a digit, such as changing "8db2aafa-f6db-41ac-bf07-403b18c2dd46" to "8db2aafa-f6db-41ac-bf07-403b18c2dd4**7**"
+Press Save when done.
+
+Repeat the steps above for every topic area that you need to add. For the "pk" and "sk" fields, vary the identifier above by a digit, such as changing the last digit in "8db2aafa-f6db-41ac-bf07-403b18c2dd46" to "8db2aafa-f6db-41ac-bf07-403b18c2dd4**7**"
+
+#### Option 2
+
+Click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. On the top left of the dialog box, click the drop down to choose "text" instead of "tree". Cut and paste the text below. For "createdBy", replace with the Cognito user name for the user who's creating the entry. For "name", replace with the desired topic area name, such as "IRS". Press Save when done. Repeat the steps above for every topic area that you need to add. For the "pk" and "sk" fields, vary the identifier above by a digit, such as changing the last digit in "8db2aafa-f6db-41ac-bf07-403b18c2dd46" to "8db2aafa-f6db-41ac-bf07-403b18c2dd4**7**"
+
+```json
+{
+  "createdBy": "trietlu",
+  "name": "IRS",
+  "pk": "TopicArea#8db2aafa-f6db-41ac-bf07-403b18c2dd46",
+  "sk": "TopicArea#8db2aafa-f6db-41ac-bf07-403b18c2dd46",
+  "type": "TopicArea"
+}
+```
 
 ### Rename a Topic Area
 
@@ -183,3 +203,11 @@ To rename an existing topic area, go back to the DynamoDB table for PDoA. Look f
 ### Delete a Topic Area
 
 Before deleting a topic area, make sure you delete all dashboards associated with that topic area first. As in renaming a topic area above, find your topic area entry in DynamoDB. Delete that entry to delete the topic area.
+
+## Replace Logo
+
+You can replace the logo displayed on the PDoA web page header. Go to the S3 console, and look for a bucket that has "frontendstack" and "reactapp" as part of the name. Click on that bucket, then on the folder "static", then on the folder "media". Look for an object with the name starting with "logo". Upload your logo to replace that object, be sure to use the same name as the logo that exists. For example, if the existing logo is named "logo.27a7fd8b.svg", when uploading your logo make sure to use that same name.
+
+## Uninstall PDoA
+
+To uninstall PDoA, go to the CFT console, and delete the stacks that were stood up. Look for the name you used when creating the stack, such as "MyCorp-PerfDash". If you installed using CFT, you can delete the top level stack, which will also delete the nested stacks. The top level stack is not marked "nested". If you deployed using CDK, you can use the `cdk destroy` command.

@@ -67,7 +67,7 @@ Copy and paste the following JSON content in the text area to replace the existi
 }
 ```
 
-Click the Save the button
+Click the Save button
 
 ![click save](images/installation/homepage-dynamodb-save-item.png)
 

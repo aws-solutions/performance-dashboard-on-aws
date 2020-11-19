@@ -1,16 +1,16 @@
 # Limiting access to on-premises networks only
 
-By default, Performance Dashboard is configured to allow access from the Internet. This include Editors who can create and publish dashboards, and public users who can view the dashboards. To remove the threat of attackers from the Internet attempting to access the administrative functions of Performance Dashboard, you can configure it to only allow access to the **/admin** path to come from your on-premises network. In the same manner, you can also limit access to the entire application to only from your on-premises network.
+By default, Performance Dashboard on AWS (PDoA) is configured to allow access from the Internet. This include Editors who can create and publish dashboards, and public users who can view the dashboards. To mitigate the threat of attackers from the Internet attempting to access the administrative functions of PDoA, you can configure it to only allow access to the **/admin** path to come from your on-premises network. In the same manner, you can also limit access to the entire application to only from your on-premises network.
 
 ## Preventing access with AWS WAF
 
-You can use the [AWS WAF](https://aws.amazon.com/waf/) to limit access to Performance Dashboard to requests originating in your on-premises network. You create a [Web ACL](https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html) to allow or block requests based on the IP addresses that the requests originate from. You then protect the CloudFront distribution used with Performance Dashboard with that WebACL. The diagram below shows the concept:
+You can use the [AWS WAF](https://aws.amazon.com/waf/) to limit access to Performance Dashboard to requests originating in your on-premises network. You create a [Web ACL](https://docs.aws.amazon.com/waf/latest/developerguide/web-acl.html) to allow or block requests based on the IP addresses that the requests originate from. You then protect the CloudFront distribution used with Performance Dashboard on AWS with that WebACL. The diagram below shows the concept:
 
 ![on-premises access only](images/protect-login-page.png)
 
 ## Configuring the WAF
 
-In a future release of Performance Dashboard, as part of the automated installation, you will be able to specify whether you want to limit access to Performance Dashboard to certain IP addresses. For now, you can manually create the AWS WAF Web ACL and associate it with the Performance Dashboard CloudFront distribution. Refer to AWS documentation in the links below to understand the steps for configuring the Web ACL in the AWS WAF console:
+In a future release of Performance Dashboard on AWS, as part of the automated installation, you will be able to specify whether you want to limit access to PDoA to certain IP addresses. For now, you can manually create the AWS WAF Web ACL and associate it with the Performance Dashboard CloudFront distribution. Refer to AWS documentation in the links below to understand the steps for configuring the Web ACL in the AWS WAF console:
 
 - [Creating a web ACL](https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-creating.html)
 - Use an [IP set match](https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-ipset-match.html) to inspect the IP address of a web request against a set of IP addresses and address ranges. Use this to allow or block web requests based on the IP addresses that the requests originate from

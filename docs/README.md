@@ -17,4 +17,4 @@
 ## Security
 
 - [Shared responsibility](security.md): securing Performance Dashboard is a shared responsiblity between AWS and the customer
-- [IP blocking](on-prem_access.md): limit access to come from an IP range (e.g. on-premises network)
+- [IP blocking](on-prem-access.md): limit access to come from an IP range (e.g. on-premises network)

@@ -15,17 +15,19 @@ Performance Dashboard on AWS is setup by running its CloudFormation template. Th
 
 Below are a few key features of the Performance Dashboard:
 
-- Users can configure dashoards to visualize data in easy-to-understand ways through the use of charts and tables. The pairing of modern data visualizations and text features help governments share their data-driven findings.
+- Users can configure dashboards to visualize data in easy-to-understand ways through the use of charts and tables. The pairing of modern data visualizations and text features help governments share their data-driven findings.
 - A supportive workflow guides users through dashboard creation step-by-step, from creating an initial draft to archiving a published dashboard.
 - Built with AWS serverless technology, the system is designed to keep costs at a minimum by only incurring costs when your dashboard is actively being used.
 
-To access additional details on the system's features and workflows, please view the user guide.
+To access additional details on the system's features and workflows, please view the [user guide](docs/user-guide.pdf).
 
 ## Deployment
 
 PDoA comes with pre-built code to provision an instance in your AWS account. You can use the provided AWS CloudFormation [template](docs/installation.md#-deploying-with-aws-cloudformation-template) (CFT) to install PDoA in a few clicks. If you're in a developer or techops role and want to update or experiment with the source code, the provided AWS Cloud Development Kit (CDK) [script](docs/installation.md#deploying-with-aws-cloud-development-kit-cdk) makes it easy to deploy your changes. If you're already familiar with deploying resources on AWS using CFT, click the link below to deploy in the us-east-1 region. Refer to the [installation guide](docs/installation.md) for more detailed instructions.
 
-Install in us-east-1 [![Install in us-east-1](docs/images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/performance-dashboard-us-east-1.json)
+| Region               | Launch                                                                                                                                                                                                                                                            |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Install in us-east-1 | [![Install in us-east-1](docs/images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/performance-dashboard-us-east-1.json) |
 
 ## Security
 
@@ -38,3 +40,7 @@ See [CONTRIBUTING](CONTRIBUTING.md) for more information.
 ## License
 
 This project is licensed under the Apache-2.0 License.
+
+## Feedback
+
+We would love to hear from you, contact us at wwps-performance-dashboard@amazon.com.

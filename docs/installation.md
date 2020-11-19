@@ -103,7 +103,7 @@ Once the installation has completed (whether using CFT or CDK), head to the AWS 
 
 Let's get the web address of PDoA. On the CFT Console, click on the stack that has the string "frontendStack" as part of the name. For example, if you named your stack "MyCorp-PerfDash", then click on the stack with the prefix "MyCorp-PerfDash-frontendStack". Click on Outputs, and get the value for the key "CloudFrontURL" (e.g. something like <id>.cloudfront.net), which is the web address of PDoA. Type that web address into the browser, and you should land on the PDoA public homepage. There are no dashboards to view yet. To login to PDoA to create dashboards, add "/admin" to the web address, and go there. Before that however, we need to create the Editor users that you can use to login.
 
-# Configuring Performance Dashboard
+# Configuring Performance Dashboard on AWS
 
 You can configure PDoA to tailor it to your environment, such as configuring it to use your DNS domain, adding users, customizing the home page logo, and more.
 
@@ -117,7 +117,7 @@ Out of the box, PDoA manages user identities in Amazon Cognito. A user login in 
 
 ### Customize Email Invite
 
-When you create a new user in the Performance Dashboard Amazon Cognito user pool, Cognito will send an email to invite that user to login to Performance Dashboard. A default invite email template is provided, which you can customize to suit your organization. You can customize the email template before you install PDoA, or after you have installed PDoA.
+When you create a new user in the Performance Dashboard on AWS Amazon Cognito user pool, Cognito will send an email to invite that user to login to PDoA. A default invite email template is provided, which you can customize to suit your organization. You can customize the email template before you install PDoA, or after you have installed PDoA.
 
 #### Pre installation
 

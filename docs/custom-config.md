@@ -5,8 +5,9 @@ The frontend application loads a set of environment variables from a file `env.j
 ## Things that you can customize
 
 - Topic area label
-- Brand name
+- Site name
 - Contact email address
+- Homepage title and description
 
 ## How to
 
@@ -39,3 +40,35 @@ The appropriate way to modify the values of the `env.js` file, is to change the 
 ```
 
 9. Wait a few minutes for CloudFront to finish invalidating the cache, and your new custom values should be reflected in the Performance Dashboard frontend.
+
+## Customize the Homepage
+
+The homepage is the first page that public users of PDoA see when they visit the website. You can customize the homepage title and description which are the ones highlighted in the image below:
+
+![Homepage title and description](images/custom-homepage.png)
+
+To do so, open the DynamoDB Console: https://console.aws.amazon.com/dynamodb and navigate to the Tables item in the left Menu. You should see the main table for PDoA:
+
+![DynamoDB table](images/installation/homepage-dynamodb.png)
+
+Click on the Create Item button. When the modal opens, switch to the Text view using the dropdown highlighted in the image below:
+
+![Switch to text view](images/installation/homepage-dynamodb-text-view.png)
+
+Copy and paste the following JSON content in the text area to replace the existing one. Write your desired `title` and `description` in the corresponding fields.
+
+```json
+{
+  "description": "This is my description",
+  "title": "Welcome to my Performance Dashboard",
+  "pk": "Homepage",
+  "sk": "Homepage",
+  "type": "Homepage"
+}
+```
+
+Click the Save the button
+
+![click save](images/installation/homepage-dynamodb-save-item.png)
+
+That's all. Your changes should automatically be reflected in the Homepage.

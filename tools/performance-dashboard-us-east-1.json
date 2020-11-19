@@ -4,7 +4,7 @@
     "authStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Auth-0.1.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/Auth-0.1.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     },
@@ -12,15 +12,23 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "authStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Backend-0.1.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/Backend-0.1.0-beta.json",
+        "TimeoutInMinutes": "60"
+      }
+    },
+    "lambdaEdgeStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "DependsOn": "backendStack",
+      "Properties": {
+        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/LambdaEdge-0.1.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     },
     "frontendStack": {
       "Type": "AWS::CloudFormation::Stack",
-      "DependsOn": "backendStack",
+      "DependsOn": "lambdaEdgeStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Frontend-0.1.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/Frontend-0.1.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     },
@@ -28,7 +36,7 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "frontendStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Ops-0.1.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/Ops-0.1.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     }

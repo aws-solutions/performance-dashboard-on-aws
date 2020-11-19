@@ -24,7 +24,7 @@ Once completed, you can see the stacks created in the CloudFormation console suc
 
 ### Other regions
 
-If you prefer to deploy PDoA in the us-west-2 or eu-west-2 region, you must first install a prerequisite stack into us-east-1, then complete the installation by deploying into the desired us-west-2 or eu-west-2 region. (Please note that if you want to use PDoA in other regions, use the CDK method to install as described in the next [section](#Deploying-with-AWS-Cloud-Development-Kit))
+If you prefer to deploy PDoA in the us-west-2 or eu-west-2 region, you must first install a prerequisite stack into us-east-1, then complete the installation by deploying into the desired us-west-2 or eu-west-2 region. Please note that if you use the CDK method to install (described in the next [section](#Deploying-with-AWS-Cloud-Development-Kit)), you can choose to deploy into other regions besides us-east-1, us-west-2, or eu-west-2.
 
 **Install prereq first** [![Install this first](images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/LambdaEdge-1.0-b.0.json)
 
@@ -101,7 +101,7 @@ To create a `dev` environment for example, you may run the deployment script lik
 
 Once the installation has completed (whether using CFT or CDK), head to the AWS CFT console to view the resources and stacks created. If you're not familiar with using the CFT console, review the CFT [documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html). In the CFT Console, click on "Stacks" to view the stacks created. Click on a created stack, then click on "Outputs" to view the resources created.
 
-Let's get the web address of PDoA. Go to the CFT Console, and click on the stack that has the string "frontendStack". For example, if you named your stack "MyCorp-PerfDash", then click on the stack with the prefix "MyCorp-PerfDash-frontendStack". Click on Outputs, and get the value for the key "CloudFrontURL" (e.g. something like <id>.cloudfront.net), which is the web address of PDoA. Type that web address into the browser, and you should land on the public homepage of PDoA.
+Let's get the web address of PDoA. On the CFT Console, click on the stack that has the string "frontendStack" as part of the name. For example, if you named your stack "MyCorp-PerfDash", then click on the stack with the prefix "MyCorp-PerfDash-frontendStack". Click on Outputs, and get the value for the key "CloudFrontURL" (e.g. something like <id>.cloudfront.net), which is the web address of PDoA. Type that web address into the browser, and you should land on the PDoA public homepage. There are no dashboards to view yet. To login to PDoA to create dashboards, add "/admin" to the web address, and go there. Before that however, we need to create the Editor users that you can use to login.
 
 # Configuring Performance Dashboard
 
@@ -127,8 +127,8 @@ To customize the email template before installing PDoA, you will use CDK. Edit t
 - Replace the placeholder values enclosed within "[]" with your own:
   - [Organization] - replace with your organization name
   - [Administrator] - replace with the name of person sending the invite
-  - [your domain] - replace with the domain name you're using for Performance Dashboard. For example, change the placeholder value https://[your domain]/admin to https://example.com/admin
-  - {username} and {####} - the username and temporary password created by Cognito. Don't replace these, leave them as is
+  - [your domain] - replace with the domain name you're using for Performance Dashboard. For example, change the placeholder value https://[your domain]/admin to https://example.com/admin. There are multiple instances of [your domain].
+  - {username} and {####} - the username and temporary password created by Cognito. **Don't replace these, leave them as is**.
 
 After making the edits, install your changes using CDK. See the section above on installing PDoA using CDK.
 
@@ -184,7 +184,7 @@ Repeat the steps above for every topic area that you need to add. For the "pk" a
 
 #### Option 2
 
-Click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. On the top left of the dialog box, click the drop down to choose "text" instead of "tree". Cut and paste the text below. For "createdBy", replace with the Cognito user name for the user who's creating the entry. For "name", replace with the desired topic area name, such as "IRS". Press Save when done. Repeat the steps above for every topic area that you need to add. For the "pk" and "sk" fields, vary the identifier above by a digit, such as changing the last digit in "8db2aafa-f6db-41ac-bf07-403b18c2dd46" to "8db2aafa-f6db-41ac-bf07-403b18c2dd4**7**"
+Click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. On the top left of the dialog box, click the drop down to choose "text" instead of "tree". Cut and paste the JSON text below into your dialog box. For "createdBy", replace with the Cognito user name of the user who's creating the entry. For "name", replace with the desired topic area name, such as "IRS". Press Save when done. Repeat the steps above for every topic area that you need to add. For the "pk" and "sk" fields, vary the identifier above by a digit, such as changing the last digit in "8db2aafa-f6db-41ac-bf07-403b18c2dd46" to "8db2aafa-f6db-41ac-bf07-403b18c2dd4**7**"
 
 ```json
 {
@@ -206,8 +206,20 @@ Before deleting a topic area, make sure you delete all dashboards associated wit
 
 ## Replace Logo
 
-You can replace the logo displayed on the PDoA web page header. Go to the S3 console, and look for a bucket that has "frontendstack" and "reactapp" as part of the name. Click on that bucket, then on the folder "static", then on the folder "media". Look for an object with the name starting with "logo". Upload your logo to replace that object, be sure to use the same name as the logo that exists. For example, if the existing logo is named "logo.27a7fd8b.svg", when uploading your logo make sure to use that same name.
+You can replace the logo displayed on the PDoA web page header. Go to the S3 console, and look for a bucket that has "frontendstack" and "reactapp" as part of the name, such as "performancedash-beta-frontend-reactapp05daba0d-e5r481e3f18t". Click on that bucket, then on the folder "static", then on the folder "media". Look for an object with the name starting with "logo". Upload your logo to replace that object, be sure to use the same name as the logo that exists. For example, if the existing logo is named "logo.27a7fd8b.svg", when uploading your logo make sure to use that same name.
+
+## Using PDoA
+
+You have added the Editor users, and created the topic areas. You are now ready to use PDoA. Refer to the [User Guide](user-guide.md) for information on using PDoA to create and publish dashboards.
 
 ## Uninstall PDoA
 
-To uninstall PDoA, go to the CFT console, and delete the stacks that were stood up. Look for the name you used when creating the stack, such as "MyCorp-PerfDash". If you installed using CFT, you can delete the top level stack, which will also delete the nested stacks. The top level stack is not marked "nested". If you deployed using CDK, you can use the `cdk destroy` command.
+### Uninstall using CFT
+
+If you deployed using CFT, go to the CFT console and delete the stacks that were stood up. Look for the name you used when creating the stack, such as "MyCorp-PerfDash". Delete the top level stack, which will also delete the nested stacks. The top level stack is the one not marked "nested". When deleting the stack you may encounter an error with deleting the LambdaEdge nested stack (the other nested stacks should have been deleted successfully). If this occurs, wait an hour, then try to delete again. Lambda@Edge functions are created with replicas, and it takes some time before all the replicas are [deleted](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-edge-delete-replicas.html).
+
+![Uninstall error](images/installation/uninstall-stack-error.png)
+
+### Uninstall using CDK
+
+If you deployed using CDK, you can use the `cdk destroy` command to uninstall PDoA. Remember to set the environment variable CDK_ENV_NAME to the value used when you ran `deploy.sh`. For example if you ran `deploy.sh dev`, then set `CDK_ENV_NAME=dev`.

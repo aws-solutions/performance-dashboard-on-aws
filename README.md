@@ -23,7 +23,7 @@ To access additional details on the system's features and workflows, please view
 
 ## Deployment
 
-PDoA comes with pre-built code to provision an instance in your AWS account. You can use the provided AWS CloudFormation Template (CFT) to install PDoA in a few clicks. If you're in a developer or techops role and want to update or experiment with the source code, the provided AWS Cloud Development Kit [script](docs/installation.md#deploying-with-aws-cloud-development-kit-cdk) makes it easy to deploy your changes. If you're already familiar with deploying resources on AWS using CFT, click the link below to deploy in the us-east-1 region. Otherwise, refer to the [installation guide](docs/installation.md) for more detailed instructions.
+PDoA comes with pre-built code to provision an instance in your AWS account. You can use the provided AWS CloudFormation [template](docs/installation.md#-deploying-with-aws-cloudformation-template) (CFT) to install PDoA in a few clicks. If you're in a developer or techops role and want to update or experiment with the source code, the provided AWS Cloud Development Kit (CDK) [script](docs/installation.md#deploying-with-aws-cloud-development-kit-cdk) makes it easy to deploy your changes. If you're already familiar with deploying resources on AWS using CFT, click the link below to deploy in the us-east-1 region. Refer to the [installation guide](docs/installation.md) for more detailed instructions.
 
 Install in us-east-1 [![Install in us-east-1](docs/images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/performance-dashboard-us-east-1.json)
 

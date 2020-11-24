@@ -45,6 +45,19 @@ export class Database extends cdk.Construct {
       },
     });
 
+    table.addGlobalSecondaryIndex({
+      indexName: "byTopicArea",
+      projectionType: dynamodb.ProjectionType.ALL,
+      partitionKey: {
+        name: "topicAreaId",
+        type: dynamodb.AttributeType.STRING,
+      },
+      sortKey: {
+        name: "pk",
+        type: dynamodb.AttributeType.STRING,
+      },
+    });
+
     this.mainTable = table;
   }
 }

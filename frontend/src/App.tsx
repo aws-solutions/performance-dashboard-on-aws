@@ -24,6 +24,7 @@ import EditTable from "./containers/EditTable";
 import AddText from "./containers/AddText";
 import EditText from "./containers/EditText";
 import AdminHome from "./containers/AdminHome";
+import TopicareaSettings from "./containers/TopicareaSettings";
 import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
 import FormattingCSV from "./containers/FormattingCSV";
@@ -38,6 +39,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin",
     component: AdminHome,
+  },
+  {
+    path: "/admin/settings/topicarea",
+    component: TopicareaSettings,
   },
   {
     path: "/admin/dashboards",

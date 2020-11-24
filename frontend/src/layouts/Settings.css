@@ -1,0 +1,23 @@
+.usa-prose > h1,
+.usa-prose > h2,
+.usa-prose > h3,
+.usa-prose > h4,
+.usa-prose > h5,
+.usa-prose > h6 {
+  font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial,
+    sans-serif !important;
+}
+
+.usa-sidenav .usa-current {
+  color: #1b1b1b !important;
+}
+
+.usa-sidenav .usa-current::after {
+  background-color: #1b1b1b !important;
+}
+
+@media all and (min-width: 40em) {
+  .usa-sidenav .usa-current::after {
+    background-color: #1b1b1b !important;
+  }
+}

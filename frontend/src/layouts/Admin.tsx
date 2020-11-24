@@ -44,6 +44,11 @@ function AdminLayout(props: LayoutProps) {
             </button>
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
+                <a className="usa-nav__link" href="/admin/settings/topicarea">
+                  Settings
+                </a>
+              </li>
+              <li className="usa-nav__primary-item">
                 <button
                   className="usa-accordion__button usa-nav__link"
                   aria-expanded="false"

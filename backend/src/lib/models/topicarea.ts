@@ -1,8 +1,9 @@
-export type TopicArea = {
+export interface TopicArea {
   id: string;
   name: string;
   createdBy: string;
-};
+  dashboardCount?: number;
+}
 
 export type TopicAreaList = Array<TopicArea>;
 

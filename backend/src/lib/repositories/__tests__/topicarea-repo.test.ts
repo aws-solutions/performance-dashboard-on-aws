@@ -27,7 +27,7 @@ describe("TopicAreaRepository", () => {
   });
 });
 
-describe("TopicAreaRepository.create", () => {
+describe("create", () => {
   it("should call putItem on dynamodb", async () => {
     const topicarea = TopicAreaFactory.create("123", "Banana", user);
     const item = TopicAreaFactory.toItem(topicarea);
@@ -43,7 +43,7 @@ describe("TopicAreaRepository.create", () => {
   });
 });
 
-describe("TopicAreaRepository.createNew", () => {
+describe("createNew", () => {
   it("should call putItem on dynamodb", async () => {
     const topicarea = TopicAreaFactory.createNew("Banana", user);
     const item = TopicAreaFactory.toItem(topicarea);
@@ -59,7 +59,7 @@ describe("TopicAreaRepository.createNew", () => {
   });
 });
 
-describe("TopicAreaRepository.updateTopicArea", () => {
+describe("updateTopicArea", () => {
   it("should call updateItem with the correct key", async () => {
     const topicarea = TopicAreaFactory.create("123", "Banana", user);
     await repo.updateTopicArea(topicarea, user);
@@ -89,7 +89,7 @@ describe("TopicAreaRepository.updateTopicArea", () => {
   });
 });
 
-describe("TopicAreaRepository.delete", () => {
+describe("delete", () => {
   it("should call delete with the correct key", async () => {
     await repo.delete("123456");
     expect(dynamodb.delete).toHaveBeenCalledWith(
@@ -104,7 +104,7 @@ describe("TopicAreaRepository.delete", () => {
   });
 });
 
-describe("TopicAreaRepository.list", () => {
+describe("list", () => {
   it("should query using the correct GSI", async () => {
     // Mock query response
     dynamodb.query = jest.fn().mockReturnValue({});
@@ -132,15 +132,25 @@ describe("TopicAreaRepository.list", () => {
       ],
     });
 
+    // Simulate 5 dashboards associated to this topic area
+    jest.spyOn(repo, "getDashboardCount").mockReturnValue(Promise.resolve(5));
+
     const list = await repo.list();
     expect(list.length).toEqual(1);
-    expect(list[0]).toEqual({
+
+    const topicarea = list[0];
+    expect(topicarea).toEqual({
       id: "213",
       name: "Serverless is more",
       createdBy: "johndoe",
+      dashboardCount: 5,
     });
-  });
 
+    jest.restoreAllMocks();
+  });
+});
+
+describe("getTopicAreaById", () => {
   it("returns topic area by id", async () => {
     // Mock query response
     dynamodb.get = jest.fn().mockReturnValue({
@@ -158,5 +168,36 @@ describe("TopicAreaRepository.list", () => {
       name: "Serverless is more",
       createdBy: "johndoe",
     });
+  });
+});
+
+describe("getDashboardCount", () => {
+  it("returns the number of dashboards for a given topic area", async () => {
+    // Mock query response to simulate 2 dashboard versions in this topic area.
+    dynamodb.query = jest.fn().mockReturnValue({
+      Items: [
+        {
+          pk: "Dashboard#002",
+          sk: "Dashboard#002",
+          name: "My AWS Dashboard",
+          type: "Dashboard",
+          version: 2,
+          parentDashboardId: "001", // Both dashboards belong to parent 001
+          topicAreaId: "TopicArea#123",
+        },
+        {
+          pk: "Dashboard#001",
+          sk: "Dashboard#001",
+          name: "My AWS Dashboard",
+          type: "Dashboard",
+          version: 1,
+          parentDashboardId: "001", // Both dashboards belong to parent 001
+          topicAreaId: "TopicArea#123",
+        },
+      ],
+    });
+
+    const count = await repo.getDashboardCount("123");
+    expect(count).toEqual(1);
   });
 });

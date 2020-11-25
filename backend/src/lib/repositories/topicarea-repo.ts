@@ -1,8 +1,10 @@
 import { User } from "../models/user";
 import TopicAreaFactory from "../factories/topicarea-factory";
+import DashboardFactory from "../factories/dashboard-factory";
 import BaseRepository from "./base";
 import { TopicArea, TopicAreaList, TopicAreaItem } from "../models/topicarea";
 import { ItemNotFound } from "../errors";
+import { DashboardItem } from "../models/dashboard";
 
 class TopicAreaRepository extends BaseRepository {
   private static instance: TopicAreaRepository;
@@ -58,9 +60,16 @@ class TopicAreaRepository extends BaseRepository {
       return [];
     }
 
-    return result.Items.map((item) =>
+    const topicareas = result.Items.map((item) =>
       TopicAreaFactory.fromItem(item as TopicAreaItem)
     );
+
+    for await (const topicarea of topicareas) {
+      const count = await this.getDashboardCount(topicarea.id);
+      topicarea.dashboardCount = count;
+    }
+
+    return topicareas;
   }
 
   public async updateTopicArea(topicArea: TopicArea, user: User) {
@@ -90,6 +99,44 @@ class TopicAreaRepository extends BaseRepository {
         sk: TopicAreaFactory.itemId(id),
       },
     });
+  }
+
+  public async getDashboardCount(topicAreaId: string) {
+    const result = await this.dynamodb.query({
+      TableName: this.tableName,
+      IndexName: "byTopicArea",
+      ProjectionExpression:
+        "#pk, #sk, #type, #parentDashboardId, #version, #topicAreaId",
+      KeyConditionExpression: "#topicAreaId = :topicAreaId",
+      ExpressionAttributeNames: {
+        "#topicAreaId": "topicAreaId",
+        "#pk": "pk",
+        "#sk": "sk",
+        "#type": "type",
+        "#parentDashboardId": "parentDashboardId",
+        "#version": "version",
+      },
+      ExpressionAttributeValues: {
+        ":topicAreaId": TopicAreaFactory.itemId(topicAreaId),
+      },
+    });
+
+    if (!result.Items) {
+      return 0;
+    }
+
+    const dashboards = result.Items.map((item) =>
+      DashboardFactory.fromItem(item as DashboardItem)
+    );
+
+    // Count the number of dashboards in the query result grouped by parentDashboardId.
+    // We don't want to count every dashboard version. We only want to count 1 for
+    // every "dashboard family".
+    const uniqueParents = new Set();
+    dashboards.map((dashboard) =>
+      uniqueParents.add(dashboard.parentDashboardId)
+    );
+    return uniqueParents.size;
   }
 }
 

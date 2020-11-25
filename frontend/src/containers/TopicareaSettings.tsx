@@ -12,14 +12,6 @@ function TopicareaSettings() {
         area and can have only on topic area.
       </p>
 
-      <h3 id="section-heading-h2">Topic area name</h3>
-
-      <p>
-        You can customize the name "topic area" and it will be replaced
-        throughout the interface. For example, "topic area" can be renamed to
-        "department", "ministry", "program", "agency", etc.
-      </p>
-
       <hr
         style={{
           border: "none",

@@ -14,12 +14,12 @@ interface SelectionHashMap {
   [topicareaId: string]: TopicArea;
 }
 
-type ColumnType = "name" | "createdBy";
+type ColumnType = "name" | "createdBy" | "dashboards";
 type Direction = "up" | "down";
 
 function TopicareasTable(props: Props) {
   const [selected, setSelected] = useState<SelectionHashMap>({});
-  const [sortedBy, setSortedBy] = useState<ColumnType>("name");
+  const [sortedBy, setSortedBy] = useState<ColumnType>("dashboards");
   const [direction, setDirection] = useState<Direction>("down");
 
   const onSelect = (topicarea: TopicArea) => {
@@ -71,6 +71,24 @@ function TopicareasTable(props: Props) {
             </Button>
           </th>
           <th>
+            <span className="font-sans-xs">Dashboards</span>
+            <Button
+              variant="unstyled"
+              className={`margin-left-1 hover:text-base-light ${
+                sortedBy === "dashboards" ? "text-base-darkest" : "text-white"
+              }`}
+              onClick={() => sortBy("dashboards")}
+            >
+              <FontAwesomeIcon
+                icon={
+                  sortedBy === "dashboards" && direction === "up"
+                    ? faChevronUp
+                    : faChevronDown
+                }
+              />
+            </Button>
+          </th>
+          <th>
             <span className="font-sans-xs">Created by</span>
             <Button
               variant="unstyled"
@@ -115,6 +133,9 @@ function TopicareasTable(props: Props) {
                 </span>
               </td>
               <td>
+                <span className="font-sans-md">{topicarea.dashboardCount}</span>
+              </td>
+              <td>
                 <span className="font-sans-md">{topicarea.createdBy}</span>
               </td>
             </tr>
@@ -142,6 +163,12 @@ function sortTopicAreas(
       direction === "down"
         ? a.createdBy.localeCompare(b.createdBy)
         : b.createdBy.localeCompare(a.createdBy)
+    );
+  } else if (sortedBy === "dashboards") {
+    sortedTopicAreas.sort((a: TopicArea, b: TopicArea) =>
+      direction === "down"
+        ? b.dashboardCount - a.dashboardCount
+        : a.dashboardCount - b.dashboardCount
     );
   }
   return sortedTopicAreas;

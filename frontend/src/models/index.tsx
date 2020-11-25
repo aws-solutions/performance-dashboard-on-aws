@@ -2,6 +2,7 @@ export type TopicArea = {
   id: string;
   name: string;
   createdBy: string;
+  dashboardCount: number;
 };
 
 export type PublicTopicArea = {

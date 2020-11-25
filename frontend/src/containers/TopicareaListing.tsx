@@ -30,9 +30,14 @@ function TopicareaListing(props: Props) {
   const filterDashboards = (topicAreas: Array<TopicArea>): Array<TopicArea> => {
     return topicAreas.filter((topicarea) => {
       const name = topicarea.name.toLowerCase().trim();
+      const dashboardCount = topicarea.dashboardCount.toString().trim();
       const createdBy = topicarea.createdBy.toLowerCase().trim();
       const query = filter.toLowerCase();
-      return name.includes(query) || createdBy.includes(query);
+      return (
+        name.includes(query) ||
+        dashboardCount.includes(query) ||
+        createdBy.includes(query)
+      );
     });
   };
 

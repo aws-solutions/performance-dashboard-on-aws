@@ -7,6 +7,7 @@ import { TopicArea } from "../models";
 import Button from "../components/Button";
 import ScrollTop from "../components/ScrollTop";
 import TopicareasTable from "../components/TopicareasTable";
+import EnvConfig from "../services/EnvConfig";
 
 interface Props {
   onDelete: Function;
@@ -73,7 +74,9 @@ function TopicareaListing(props: Props) {
                 </Button>
               </span>
               <span>
-                <Button onClick={() => {}}>Create topic area</Button>
+                <Button
+                  onClick={() => {}}
+                >{`Create ${EnvConfig.topicAreaLabel.toLowerCase()}`}</Button>
               </span>
             </div>
           </div>

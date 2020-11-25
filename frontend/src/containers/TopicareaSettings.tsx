@@ -1,6 +1,7 @@
 import React from "react";
 import TopicareaListing from "./TopicareaListing";
 import SettingsLayout from "../layouts/Settings";
+import EnvConfig from "../services/EnvConfig";
 
 function TopicareaSettings() {
   return (
@@ -8,8 +9,7 @@ function TopicareaSettings() {
       <h1>Topic areas</h1>
 
       <p>
-        Dashboards are organized by topic areas. A dashboard must have a topic
-        area and can have only on topic area.
+        {`Dashboards are organized by topic areas. A dashboard must have a ${EnvConfig.topicAreaLabel.toLowerCase()} and can have only on ${EnvConfig.topicAreaLabel.toLowerCase()}.`}
       </p>
 
       <hr

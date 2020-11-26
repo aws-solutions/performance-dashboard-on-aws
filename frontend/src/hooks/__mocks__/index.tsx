@@ -47,10 +47,14 @@ export function useTopicAreas() {
       {
         id: "123456789",
         name: "Topic Area Bananas",
+        createdBy: "test user 1",
+        dashboardCount: 4,
       },
       {
         id: "987654321",
         name: "Topic Area Grapes",
+        createdBy: "test user 2",
+        dashboardCount: 10,
       },
     ],
   };

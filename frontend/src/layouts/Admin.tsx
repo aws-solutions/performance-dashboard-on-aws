@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import EnvConfig from "../services/EnvConfig";
 import logo from "../logo.svg";
+import { Link } from "react-router-dom";
 
 interface LayoutProps {
   children: ReactNode;
@@ -43,6 +44,11 @@ function AdminLayout(props: LayoutProps) {
               <FontAwesomeIcon icon={faWindowClose} size="lg" role="img" />
             </button>
             <ul className="usa-nav__primary usa-accordion">
+              <li className="usa-nav__primary-item">
+                <Link className="usa-nav__link" to="/admin/settings/topicarea">
+                  Settings
+                </Link>
+              </li>
               <li className="usa-nav__primary-item">
                 <button
                   className="usa-accordion__button usa-nav__link"

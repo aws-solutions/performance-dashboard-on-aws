@@ -1,6 +1,13 @@
 export type TopicArea = {
   id: string;
   name: string;
+  createdBy: string;
+  dashboardCount: number;
+};
+
+export type PublicTopicArea = {
+  id: string;
+  name: string;
   dashboards?: Array<Dashboard | PublicDashboard>;
 };
 

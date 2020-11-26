@@ -1,4 +1,9 @@
-import { ChartType, Dashboard, PublicDashboard, TopicArea } from "../models";
+import {
+  ChartType,
+  Dashboard,
+  PublicDashboard,
+  PublicTopicArea,
+} from "../models";
 
 /**
  * Takes an array of dashboards and groups them by topic area.
@@ -7,10 +12,10 @@ import { ChartType, Dashboard, PublicDashboard, TopicArea } from "../models";
  */
 function groupByTopicArea(
   dashboards: Array<Dashboard | PublicDashboard>
-): Array<TopicArea> {
-  const byId: { [id: string]: TopicArea } = {};
+): Array<PublicTopicArea> {
+  const byId: { [id: string]: PublicTopicArea } = {};
   dashboards.forEach((dashboard) => {
-    let topicarea: TopicArea;
+    let topicarea: PublicTopicArea;
     const id = dashboard.topicAreaId;
     if (byId[id]) {
       topicarea = byId[id];

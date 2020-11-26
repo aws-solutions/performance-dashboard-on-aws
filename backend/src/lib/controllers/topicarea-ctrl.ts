@@ -94,6 +94,12 @@ async function deleteTopicArea(req: Request, res: Response) {
   }
 
   const repo = TopicAreaRepository.getInstance();
+  const dashboardCount = await repo.getDashboardCount(id);
+
+  if (dashboardCount > 0) {
+    return res.status(409).send("Topic Area has dashboards associated to it");
+  }
+
   await repo.delete(id);
   res.send();
 }

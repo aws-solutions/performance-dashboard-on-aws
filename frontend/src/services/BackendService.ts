@@ -120,6 +120,23 @@ async function deleteDashboards(dashboards: Array<string>) {
   });
 }
 
+async function createTopicArea(name: string) {
+  const headers = await authHeaders();
+  return await API.post(apiName, "topicarea", {
+    headers,
+    body: {
+      name,
+    },
+  });
+}
+
+async function deleteTopicArea(topicareaId: string) {
+  const headers = await authHeaders();
+  return await API.del(apiName, `topicarea/${topicareaId}`, {
+    headers,
+  });
+}
+
 async function archive(
   dashboardId: string,
   lastUpdatedAt: Date
@@ -264,6 +281,8 @@ export default {
   publishDashboard,
   createDashboard,
   deleteDashboards,
+  createTopicArea,
+  deleteTopicArea,
   createWidget,
   editWidget,
   deleteWidget,

@@ -21,7 +21,7 @@ function TopicareaSettings() {
         }}
       />
 
-      <TopicareaListing onDelete={() => {}}></TopicareaListing>
+      <TopicareaListing />
     </SettingsLayout>
   );
 }

@@ -8,6 +8,7 @@ const topicArea: TopicArea = {
   id: "abc",
   name: "USWDS",
   createdBy: "johndoe",
+  dashboardCount: 1,
 };
 
 test("renders an empty table", async () => {

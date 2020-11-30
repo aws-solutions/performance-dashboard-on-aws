@@ -107,6 +107,33 @@ test("deleteDashboards makes a DELETE request to dashboard API", async () => {
   );
 });
 
+test("createTopicArea should make a POST request with payload", async () => {
+  const name = "Topic Area 1";
+
+  await BackendService.createTopicArea(name);
+
+  expect(API.post).toHaveBeenCalledWith(
+    "BackendApi",
+    "topicarea",
+    expect.objectContaining({
+      body: {
+        name,
+      },
+    })
+  );
+});
+
+test("deleteTopicArea makes a DELETE request to dashboard API", async () => {
+  const topicAreaId = "123";
+
+  await BackendService.deleteTopicArea(topicAreaId);
+  expect(API.del).toHaveBeenCalledWith(
+    "BackendApi",
+    `topicarea/123`,
+    expect.anything()
+  );
+});
+
 test("fetchWidgetById makes a GET request to widget API", async () => {
   const dashboardId = "123";
   const widgetId = "abc";

@@ -133,7 +133,9 @@ function TopicareasTable(props: Props) {
                 </span>
               </td>
               <td>
-                <span className="font-sans-md">{topicarea.dashboardCount}</span>
+                <span className="font-sans-md">
+                  {topicarea.dashboardCount || "-"}
+                </span>
               </td>
               <td>
                 <span className="font-sans-md">{topicarea.createdBy}</span>

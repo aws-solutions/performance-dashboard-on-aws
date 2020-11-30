@@ -25,6 +25,7 @@ import AddText from "./containers/AddText";
 import EditText from "./containers/EditText";
 import AdminHome from "./containers/AdminHome";
 import TopicareaSettings from "./containers/TopicareaSettings";
+import CreateTopicArea from "./containers/CreateTopicArea";
 import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
 import FormattingCSV from "./containers/FormattingCSV";
@@ -43,6 +44,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/settings/topicarea",
     component: TopicareaSettings,
+  },
+  {
+    path: "/admin/settings/topicarea/create",
+    component: CreateTopicArea,
   },
   {
     path: "/admin/dashboards",

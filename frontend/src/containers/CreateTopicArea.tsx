@@ -63,7 +63,7 @@ function CreateTopicArea() {
             <TextField
               id="name"
               name="name"
-              label="Topic area name"
+              label={`${EnvConfig.topicAreaLabel} name`}
               register={register}
               error={errors.name && "Please specify a name"}
               required

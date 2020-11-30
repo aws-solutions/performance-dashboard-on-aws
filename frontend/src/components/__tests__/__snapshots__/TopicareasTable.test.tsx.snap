@@ -114,7 +114,7 @@ exports[`renders a table with topic areas 1`] = `
           <span
             class="font-sans-md"
           >
-            -
+            1
           </span>
         </td>
         <td>

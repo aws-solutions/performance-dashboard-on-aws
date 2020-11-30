@@ -6,7 +6,7 @@ import TopicareaListing from "../TopicareaListing";
 jest.mock("../../hooks");
 
 test("renders a button to delete", async () => {
-  const { getByRole } = render(<TopicareaListing onDelete={() => {}} />, {
+  const { getByRole } = render(<TopicareaListing />, {
     wrapper: MemoryRouter,
   });
   const button = getByRole("button", { name: "Delete" });
@@ -14,7 +14,7 @@ test("renders a button to delete", async () => {
 });
 
 test("renders a button to create topic area", async () => {
-  const { getByRole } = render(<TopicareaListing onDelete={() => {}} />, {
+  const { getByRole } = render(<TopicareaListing />, {
     wrapper: MemoryRouter,
   });
   const button = getByRole("button", { name: "Create topic area" });
@@ -22,7 +22,7 @@ test("renders a button to create topic area", async () => {
 });
 
 test("renders a topic area table", async () => {
-  const { getByLabelText } = render(<TopicareaListing onDelete={() => {}} />, {
+  const { getByLabelText } = render(<TopicareaListing />, {
     wrapper: MemoryRouter,
   });
 
@@ -34,12 +34,9 @@ test("renders a topic area table", async () => {
 });
 
 test("filters topic areas based on search input", async () => {
-  const { getByLabelText, getByRole } = render(
-    <TopicareaListing onDelete={() => {}} />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
+  const { getByLabelText, getByRole } = render(<TopicareaListing />, {
+    wrapper: MemoryRouter,
+  });
 
   const topicarea1 = getByLabelText("Topic Area Bananas");
   const topicarea2 = getByLabelText("Topic Area Grapes");

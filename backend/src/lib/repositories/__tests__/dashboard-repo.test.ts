@@ -569,7 +569,7 @@ describe("listDashboards", () => {
 
     const topicAreaId = "456";
 
-    await repo.listDashboardsWithinTopicArea(topicAreaId);
+    await repo.listDashboardsInTopicArea(topicAreaId);
 
     expect(dynamodb.query).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -588,6 +588,7 @@ describe("listDashboards", () => {
         {
           pk: "Dashboard#123",
           sk: "Dashboard#123",
+          type: "Dashboard",
           topicAreaId: `TopicArea#${topicAreaId}`,
           topicAreaName: "Topic 1",
           dashboardName: "Test name",
@@ -599,7 +600,7 @@ describe("listDashboards", () => {
       ],
     });
 
-    const list = await repo.listDashboardsWithinTopicArea(topicAreaId);
+    const list = await repo.listDashboardsInTopicArea(topicAreaId);
     expect(list.length).toEqual(1);
     expect(list[0]).toEqual({
       id: "123",
@@ -968,5 +969,27 @@ describe("getNextVersionNumber", () => {
     getDashboardVersions.mockImplementation(() => Promise.resolve(dashboards));
     const nextVersion = await repo.getNextVersionNumber("123");
     expect(nextVersion).toEqual(2);
+  });
+});
+
+describe("updateTopicAreaName", () => {
+  it("handles incorrect versions gracefully", async () => {
+    const dashboards = [
+      {
+        id: "abc",
+        version: 1,
+        name: "Dashboard v1",
+        topicAreaId: "456",
+        topicAreaName: "Topic1",
+        description: "Description Test",
+        state: DashboardState.Draft,
+        parentDashboardId: "123",
+        createdBy: user.userId,
+        updatedAt: new Date(),
+      },
+    ];
+
+    await repo.updateTopicAreaName(dashboards, "New Topic Area Name");
+    expect(dynamodb.transactWrite).toBeCalled();
   });
 });

@@ -67,15 +67,13 @@ async function updateTopicArea(req: Request, res: Response) {
     return;
   }
 
-  if (!id || !name) {
-    res.status(400).send("Missing required param `id` or body `name`");
+  if (!name) {
+    res.status(400).send("Missing required field `name`");
     return;
   }
 
-  const topicArea = TopicAreaFactory.create(id, name, user);
-
   const repo = TopicAreaRepository.getInstance();
-  await repo.updateTopicArea(topicArea, user);
+  await repo.renameTopicArea(id, name);
   res.send();
 }
 

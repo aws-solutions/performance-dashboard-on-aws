@@ -53,7 +53,29 @@ class DynamoDBService {
   }
 
   async transactWrite(input: DocumentClient.TransactWriteItemsInput) {
-    return this.client.transactWrite(input).promise();
+    if (!input.TransactItems) {
+      return;
+    }
+
+    // Given that DynamoDB doesn't support more than 25 updates in a transaction.
+    // We need to batch them in chunks of 25.
+    const batchSize = 25;
+    const batches = [];
+    let i = 0;
+    while (i < input.TransactItems.length) {
+      const items = input.TransactItems.slice(i, i + batchSize);
+      batches.push(items);
+      i += batchSize;
+    }
+
+    for await (const batch of batches) {
+      await this.client
+        .transactWrite({
+          ...input,
+          TransactItems: batch,
+        })
+        .promise();
+    }
   }
 }
 

@@ -6,19 +6,6 @@ const user: User = {
   userId: "johndoe",
 };
 
-describe("TopicAreaFactory.create", () => {
-  it("should create a new topic area with name", () => {
-    const topicarea = factory.create("123", "AWS", user);
-    expect(topicarea.id).toEqual("123");
-    expect(topicarea.name).toEqual("AWS");
-  });
-
-  it("should create a new topic area with createdBy", () => {
-    const topicarea = factory.create("123", "AWS", user);
-    expect(topicarea.createdBy).toEqual(user.userId);
-  });
-});
-
 describe("TopicAreaFactory.createNew", () => {
   it("should create a new topic area with unique id", () => {
     const topicarea1 = factory.createNew("Banana", user);

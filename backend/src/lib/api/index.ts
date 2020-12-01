@@ -7,6 +7,7 @@ import dashboard from "./dashboard-api";
 import topicarea from "./topicarea-api";
 import dataset from "./dataset-api";
 import publicapi from "./public-api";
+import settingsapi from "./settings-api";
 
 const app = express();
 app.use(express.json());
@@ -19,5 +20,6 @@ app.use("/dashboard", dashboard);
 app.use("/topicarea", topicarea);
 app.use("/dataset", dataset);
 app.use("/public", publicapi);
+app.use("/settings", settingsapi);
 
 export default app;

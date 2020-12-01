@@ -9,9 +9,11 @@ class HomepageRepository extends BaseRepository {
   }
 
   static getInstance(): HomepageRepository {
-    return HomepageRepository.instance
-      ? HomepageRepository.instance
-      : new HomepageRepository();
+    if (!HomepageRepository.instance) {
+      HomepageRepository.instance = new HomepageRepository();
+    }
+
+    return HomepageRepository.instance;
   }
 
   public async getHomepage(): Promise<Homepage | undefined> {

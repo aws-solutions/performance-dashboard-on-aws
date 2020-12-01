@@ -5,6 +5,7 @@ import BaseRepository from "./base";
 import { TopicArea, TopicAreaList, TopicAreaItem } from "../models/topicarea";
 import { ItemNotFound } from "../errors";
 import { DashboardItem } from "../models/dashboard";
+import DashboardRepository from "./dashboard-repo";
 
 class TopicAreaRepository extends BaseRepository {
   private static instance: TopicAreaRepository;
@@ -72,25 +73,6 @@ class TopicAreaRepository extends BaseRepository {
     return topicareas;
   }
 
-  public async updateTopicArea(topicArea: TopicArea, user: User) {
-    await this.dynamodb.update({
-      TableName: this.tableName,
-      Key: {
-        pk: TopicAreaFactory.itemId(topicArea.id),
-        sk: TopicAreaFactory.itemId(topicArea.id),
-      },
-      UpdateExpression: "set #name = :name, #updatedBy = :userId",
-      ExpressionAttributeValues: {
-        ":name": topicArea.name,
-        ":userId": user.userId,
-      },
-      ExpressionAttributeNames: {
-        "#name": "name",
-        "#updatedBy": "updatedBy",
-      },
-    });
-  }
-
   public async delete(id: string) {
     await this.dynamodb.delete({
       TableName: this.tableName,
@@ -137,6 +119,34 @@ class TopicAreaRepository extends BaseRepository {
       uniqueParents.add(dashboard.parentDashboardId)
     );
     return uniqueParents.size;
+  }
+
+  public async renameTopicArea(topicAreaId: string, name: string) {
+    // 1. Update the TopicArea item
+    await this.dynamodb.update({
+      TableName: this.tableName,
+      Key: {
+        pk: TopicAreaFactory.itemId(topicAreaId),
+        sk: TopicAreaFactory.itemId(topicAreaId),
+      },
+      UpdateExpression: "set #name = :name",
+      ExpressionAttributeNames: {
+        "#name": "name",
+      },
+      ExpressionAttributeValues: {
+        ":name": name,
+      },
+    });
+
+    // 2. Fetch all dashboards related to this topic area
+    const dashboardRepo = DashboardRepository.getInstance();
+    const dashboards = await dashboardRepo.listDashboardsInTopicArea(
+      topicAreaId
+    );
+
+    // 3. Update topicAreaName in every dashboard in the query result
+    console.log("Updating dashboards", dashboards);
+    await dashboardRepo.updateTopicAreaName(dashboards, name);
   }
 }
 

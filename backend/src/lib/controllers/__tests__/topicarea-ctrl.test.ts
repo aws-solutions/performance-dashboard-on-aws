@@ -22,6 +22,43 @@ beforeEach(() => {
   TopicAreaRepository.getInstance = jest.fn().mockReturnValue(repository);
 });
 
+describe("updateTopicArea", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = ({
+      params: {
+        id: "3ffdb1ef-081d-4534-97e9-b69cdbb687d0",
+      },
+      body: {
+        name: "New Name",
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await TopicAreaCtrl.updateTopicArea(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when name is missing", async () => {
+    delete req.body.name;
+    await TopicAreaCtrl.updateTopicArea(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `name`");
+    expect(repository.renameTopicArea).not.toBeCalled();
+  });
+
+  it("renames a topic area successfully", async () => {
+    await TopicAreaCtrl.updateTopicArea(req, res);
+    expect(repository.renameTopicArea).toBeCalledWith(
+      "3ffdb1ef-081d-4534-97e9-b69cdbb687d0",
+      "New Name"
+    );
+  });
+});
+
 describe("deleteTopicArea", () => {
   let req: Request;
   beforeEach(() => {

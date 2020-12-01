@@ -111,15 +111,12 @@ class DashboardRepository extends BaseRepository {
     return !isFinite(latest) ? 1 : latest + 1;
   }
 
-  /**
-   * Returns the list of Dashboards within an specified topic area.
-   */
-  public async listDashboardsWithinTopicArea(
+  public async listDashboardsInTopicArea(
     topicAreaId: string
   ): Promise<DashboardList> {
     const result = await this.dynamodb.query({
       TableName: this.tableName,
-      IndexName: "byTopicAreaId",
+      IndexName: "byTopicArea",
       KeyConditionExpression: "#topicAreaId = :topicAreaId",
       ExpressionAttributeNames: {
         "#topicAreaId": "topicAreaId",
@@ -133,7 +130,8 @@ class DashboardRepository extends BaseRepository {
       return [];
     }
 
-    return result.Items.map((item) =>
+    const items = result.Items.filter((item) => item.type === "Dashboard");
+    return items.map((item) =>
       DashboardFactory.fromItem(item as DashboardItem)
     );
   }
@@ -582,6 +580,36 @@ class DashboardRepository extends BaseRepository {
 
     await this.dynamodb.transactWrite({
       TransactItems: transactions,
+    });
+  }
+
+  /**
+   * Updates the topicAreaName on every dashboard in the list.
+   * This function is invoked by the TopicArea repository whenever
+   * a topic area is renamed.
+   */
+  public async updateTopicAreaName(
+    dashboards: Array<Dashboard>,
+    topicAreaName: string
+  ) {
+    const updates: DocumentClient.TransactWriteItem[] = dashboards.map(
+      (dashboard) => ({
+        Update: {
+          TableName: this.tableName,
+          Key: {
+            pk: DashboardFactory.itemId(dashboard.id),
+            sk: DashboardFactory.itemId(dashboard.id),
+          },
+          UpdateExpression: "set topicAreaName = :topicAreaName",
+          ExpressionAttributeValues: {
+            ":topicAreaName": topicAreaName,
+          },
+        },
+      })
+    );
+
+    await this.dynamodb.transactWrite({
+      TransactItems: updates,
     });
   }
 }

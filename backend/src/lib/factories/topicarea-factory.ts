@@ -4,14 +4,6 @@ import { User } from "../models/user";
 
 const TOPICAREA: string = "TopicArea";
 
-function create(id: string, name: string, user: User): TopicArea {
-  return {
-    id,
-    name,
-    createdBy: user.userId,
-  };
-}
-
 function createNew(name: string, user: User): TopicArea {
   return {
     id: uuidv4(),
@@ -50,7 +42,6 @@ function itemId(id: string): string {
 }
 
 export default {
-  create,
   createNew,
   toItem,
   fromItem,

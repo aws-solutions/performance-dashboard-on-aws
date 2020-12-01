@@ -1,5 +1,6 @@
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
+import { TopicArea } from "../../models/topicarea";
 import TopicAreaRepository from "../topicarea-repo";
 import TopicAreaFactory from "../../factories/topicarea-factory";
 
@@ -29,7 +30,7 @@ describe("TopicAreaRepository", () => {
 
 describe("create", () => {
   it("should call putItem on dynamodb", async () => {
-    const topicarea = TopicAreaFactory.create("123", "Banana", user);
+    const topicarea = TopicAreaFactory.createNew("Banana", user);
     const item = TopicAreaFactory.toItem(topicarea);
 
     await repo.create(topicarea);
@@ -54,36 +55,6 @@ describe("createNew", () => {
       expect.objectContaining({
         TableName: tableName,
         Item: item,
-      })
-    );
-  });
-});
-
-describe("updateTopicArea", () => {
-  it("should call updateItem with the correct key", async () => {
-    const topicarea = TopicAreaFactory.create("123", "Banana", user);
-    await repo.updateTopicArea(topicarea, user);
-    expect(dynamodb.update).toHaveBeenCalledWith(
-      expect.objectContaining({
-        TableName: tableName,
-        Key: {
-          pk: TopicAreaFactory.itemId("123"),
-          sk: TopicAreaFactory.itemId("123"),
-        },
-      })
-    );
-  });
-
-  it("should set name and updatedBy fields", async () => {
-    const topicarea = TopicAreaFactory.create("123", "Banana", user);
-    await repo.updateTopicArea(topicarea, user);
-    expect(dynamodb.update).toHaveBeenCalledWith(
-      expect.objectContaining({
-        UpdateExpression: "set #name = :name, #updatedBy = :userId",
-        ExpressionAttributeValues: {
-          ":name": "Banana",
-          ":userId": user.userId,
-        },
       })
     );
   });
@@ -199,5 +170,27 @@ describe("getDashboardCount", () => {
 
     const count = await repo.getDashboardCount("123");
     expect(count).toEqual(1);
+  });
+});
+
+describe("renameTopicArea", () => {
+  it("updates topic area name", async () => {
+    await repo.renameTopicArea("123", "New name");
+    expect(dynamodb.update).toBeCalledWith(
+      expect.objectContaining({
+        TableName: tableName,
+        Key: {
+          pk: "TopicArea#123",
+          sk: "TopicArea#123",
+        },
+        UpdateExpression: "set #name = :name",
+        ExpressionAttributeNames: {
+          "#name": "name",
+        },
+        ExpressionAttributeValues: {
+          ":name": "New name",
+        },
+      })
+    );
   });
 });

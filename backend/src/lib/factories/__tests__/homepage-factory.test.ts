@@ -1,4 +1,4 @@
-import { Homepage, HomepageItem } from "../../models/homepage";
+import { HomepageItem } from "../../models/homepage";
 import HomepageFactory from "../homepage-factory";
 
 describe("getDefaultHomepage", () => {

@@ -250,3 +250,28 @@ test("fetchDashboardVersions makes a GET request to dashboard API", async () => 
     expect.anything()
   );
 });
+
+test("fetchTopicAreaById makes a GET request to topicarea API", async () => {
+  const topicAreaId = "123";
+  await BackendService.fetchTopicAreaById(topicAreaId);
+  expect(API.get).toHaveBeenCalledWith(
+    "BackendApi",
+    `topicarea/${topicAreaId}`,
+    expect.anything()
+  );
+});
+
+test("renameTopicArea makes a PUT request to topicarea API", async () => {
+  const topicAreaId = "123";
+  const newName = "My New Name";
+  await BackendService.renameTopicArea(topicAreaId, newName);
+  expect(API.put).toHaveBeenCalledWith(
+    "BackendApi",
+    `topicarea/${topicAreaId}`,
+    expect.objectContaining({
+      body: {
+        name: newName,
+      },
+    })
+  );
+});

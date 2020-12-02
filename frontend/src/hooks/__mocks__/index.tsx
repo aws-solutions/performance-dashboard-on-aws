@@ -234,3 +234,14 @@ export function useSampleDataset() {
     },
   };
 }
+
+export function useTopicArea() {
+  return {
+    loading: false,
+    topicarea: {
+      id: "123456789",
+      name: "Health Topic",
+      createdBy: "johndoe",
+    },
+  };
+}

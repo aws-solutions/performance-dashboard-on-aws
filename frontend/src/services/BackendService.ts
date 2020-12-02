@@ -46,6 +46,11 @@ async function fetchTopicAreas() {
   return await API.get(apiName, "topicarea", { headers });
 }
 
+async function fetchTopicAreaById(topicAreaId: string) {
+  const headers = await authHeaders();
+  return await API.get(apiName, `topicarea/${topicAreaId}`, { headers });
+}
+
 async function fetchWidgetById(
   dashboardId: string,
   widgetId: string
@@ -123,6 +128,16 @@ async function deleteDashboards(dashboards: Array<string>) {
 async function createTopicArea(name: string) {
   const headers = await authHeaders();
   return await API.post(apiName, "topicarea", {
+    headers,
+    body: {
+      name,
+    },
+  });
+}
+
+async function renameTopicArea(topicAreaId: string, name: string) {
+  const headers = await authHeaders();
+  return await API.put(apiName, `topicarea/${topicAreaId}`, {
     headers,
     body: {
       name,
@@ -275,6 +290,7 @@ export default {
   fetchDashboards,
   fetchDashboardById,
   fetchTopicAreas,
+  fetchTopicAreaById,
   fetchWidgetById,
   fetchWidgets,
   editDashboard,
@@ -282,6 +298,7 @@ export default {
   createDashboard,
   deleteDashboards,
   createTopicArea,
+  renameTopicArea,
   deleteTopicArea,
   createWidget,
   editWidget,

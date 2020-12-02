@@ -29,3 +29,29 @@ export function useTopicAreas(): UseTopicAreasHook {
     reloadTopicAreas: fetchData,
   };
 }
+
+type UseTopicAreaHook = {
+  topicarea: TopicArea | undefined;
+  loading: boolean;
+};
+
+export function useTopicArea(topicAreaId: string): UseTopicAreaHook {
+  const [loading, setLoading] = useState(false);
+  const [topicarea, setTopicArea] = useState<TopicArea | undefined>(undefined);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const data = await BackendService.fetchTopicAreaById(topicAreaId);
+    setTopicArea(data);
+    setLoading(false);
+  }, [topicAreaId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return {
+    loading,
+    topicarea,
+  };
+}

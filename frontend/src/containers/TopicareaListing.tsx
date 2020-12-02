@@ -26,6 +26,12 @@ function TopicareaListing() {
     history.push("/admin/settings/topicarea/create");
   };
 
+  const onEdit = () => {
+    if (selected) {
+      history.push(`/admin/settings/topicarea/${selected.id}/edit`);
+    }
+  };
+
   const onSearch = (query: string) => {
     setFilter(query);
   };
@@ -139,11 +145,7 @@ function TopicareaListing() {
                 />
               )}
               <span>
-                <Button
-                  variant="outline"
-                  disabled={!selected}
-                  onClick={() => {}}
-                >
+                <Button variant="outline" disabled={!selected} onClick={onEdit}>
                   Edit
                 </Button>
               </span>

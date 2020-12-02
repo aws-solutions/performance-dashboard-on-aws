@@ -5,7 +5,7 @@ import {
   useDashboardVersions,
 } from "./dashboard-hooks";
 import { useWidget, useColors } from "./widget-hooks";
-import { useTopicAreas } from "./topicarea-hooks";
+import { useTopicAreas, useTopicArea } from "./topicarea-hooks";
 import { useHomepage } from "./homepage-hooks";
 import { useJsonDataset, useSampleDataset } from "./dataset-hooks";
 import { useAdmin } from "./admin-hooks";
@@ -26,6 +26,7 @@ export {
   useWidget,
   useColors,
   useTopicAreas,
+  useTopicArea,
   useHomepage,
   useJsonDataset,
   useAdmin,

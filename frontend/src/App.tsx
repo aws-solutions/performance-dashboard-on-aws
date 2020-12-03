@@ -25,6 +25,8 @@ import AddText from "./containers/AddText";
 import EditText from "./containers/EditText";
 import AdminHome from "./containers/AdminHome";
 import TopicareaSettings from "./containers/TopicareaSettings";
+import PublishingGuidanceSettings from "./containers/PublishingGuidanceSettings";
+import EditPublishingGuidance from "./containers/EditPublishingGuidance";
 import CreateTopicArea from "./containers/CreateTopicArea";
 import EditTopicArea from "./containers/EditTopicArea";
 import FourZeroFour from "./containers/FourZeroFour";
@@ -45,6 +47,14 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/settings/topicarea",
     component: TopicareaSettings,
+  },
+  {
+    path: "/admin/settings/publishingguidance",
+    component: PublishingGuidanceSettings,
+  },
+  {
+    path: "/admin/settings/publishingguidance/edit",
+    component: EditPublishingGuidance,
   },
   {
     path: "/admin/settings/topicarea/create",

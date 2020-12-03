@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDashboard, useDashboardVersions } from "../hooks";
+import { useDashboard, useDashboardVersions, useSettings } from "../hooks";
 import { DashboardState, LocationState } from "../models";
 import BackendService from "../services/BackendService";
 import Alert from "../components/Alert";
@@ -13,6 +13,8 @@ import dayjs from "dayjs";
 import Spinner from "../components/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import MarkdownRender from "../components/MarkdownRender";
+import "./PublicDashboard.css";
 
 interface PathParams {
   dashboardId: string;
@@ -28,6 +30,7 @@ function PublishDashboard() {
   const [step, setStep] = useState<number>(0);
   const [acknowledge, setAcknowledge] = useState<boolean>(false);
   const { dashboard, reloadDashboard, loading } = useDashboard(dashboardId);
+  const { settings, loadingSettings } = useSettings();
   const { register, errors, handleSubmit, trigger } = useForm<FormValues>();
 
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
@@ -102,7 +105,7 @@ function PublishDashboard() {
         ]}
       />
 
-      {loading ? (
+      {loading || loadingSettings ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
@@ -186,32 +189,56 @@ function PublishDashboard() {
                 />
               </div>
 
-              <div hidden={step !== 1} className="padding-y-6">
-                <fieldset className="usa-fieldset">
-                  <div className="usa-checkbox">
-                    <input
-                      type="checkbox"
-                      id="acknowledge"
-                      name="acknowledge"
-                      className="usa-checkbox__input"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setAcknowledge(e.target.checked);
-                      }}
-                    />
-                    <label
-                      className="usa-checkbox__label"
-                      htmlFor="acknowledge"
-                    >
-                      {`I acknowledge that I have reviewed the dashboard and it is
-                      ready to publish.${
-                        published &&
-                        published.state === DashboardState.Published
-                          ? " I also understand that this will overwrite the existing published version of the dashboard."
-                          : ""
-                      }`}
-                    </label>
-                  </div>
-                </fieldset>
+              <div hidden={step !== 1} className="padding-y-1">
+                <table className="usa-table border-hidden" width="100%">
+                  <tbody>
+                    <tr>
+                      <td className="border-hidden text-top">
+                        <div className="usa-checkbox">
+                          <input
+                            type="checkbox"
+                            id="acknowledge"
+                            name="acknowledge"
+                            className="usa-checkbox__input"
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setAcknowledge(e.target.checked);
+                            }}
+                          />
+                          <label
+                            className="usa-sr-only margin-top-1"
+                            htmlFor="acknowledge"
+                          >
+                            Acknowledgement
+                          </label>
+                        </div>
+                      </td>
+                      <td className="publishing-guidance border-hidden">
+                        <span className=" font-sans-sm">
+                          <MarkdownRender
+                            source={`${settings.publishingGuidance}${
+                              settings.publishingGuidance[
+                                settings.publishingGuidance.length - 1
+                              ] === "."
+                                ? ""
+                                : "."
+                            }`}
+                          />
+                        </span>
+                        {published &&
+                        published.state === DashboardState.Published ? (
+                          <p>
+                            I also understand that this will overwrite the
+                            existing published version of the dashboard.
+                          </p>
+                        ) : (
+                          ""
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
             <div>

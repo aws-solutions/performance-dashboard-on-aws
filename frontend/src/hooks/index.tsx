@@ -7,6 +7,7 @@ import {
 import { useWidget, useColors } from "./widget-hooks";
 import { useTopicAreas, useTopicArea } from "./topicarea-hooks";
 import { useHomepage } from "./homepage-hooks";
+import { useSettings } from "./settings-hooks";
 import { useJsonDataset, useSampleDataset } from "./dataset-hooks";
 import { useAdmin } from "./admin-hooks";
 
@@ -28,6 +29,7 @@ export {
   useTopicAreas,
   useTopicArea,
   useHomepage,
+  useSettings,
   useJsonDataset,
   useAdmin,
   useDashboardVersions,

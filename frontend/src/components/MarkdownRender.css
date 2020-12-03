@@ -1,0 +1,15 @@
+a {
+  color: #565c65 !important;
+}
+
+a:hover {
+  color: #1b1b1b !important;
+}
+
+a:active {
+  color: #1b1b1b !important;
+}
+
+a:visited {
+  color: #1b1b1b !important;
+}

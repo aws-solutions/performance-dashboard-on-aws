@@ -112,6 +112,11 @@ export type Homepage = {
   dashboards: Array<PublicDashboard>;
 };
 
+export type Settings = {
+  publishingGuidance: string;
+  updatedAt: Date;
+};
+
 // Type for the History object in react-router. Defines the
 // location state that is common across all routes.
 // Usage in a component: useHistory<LocationState>();

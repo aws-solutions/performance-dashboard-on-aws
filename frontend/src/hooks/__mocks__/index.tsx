@@ -60,6 +60,17 @@ export function useTopicAreas() {
   };
 }
 
+export function useSettings() {
+  return {
+    loadingSettings: false,
+    settings: {
+      publishingGuidance:
+        "I acknowledge that I have reviewed the dashboard and it is ready to publish",
+      updatedAt: "",
+    },
+  };
+}
+
 export function useDashboards() {
   return {
     loading: false,

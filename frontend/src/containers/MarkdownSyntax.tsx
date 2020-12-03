@@ -1,6 +1,5 @@
 import React from "react";
 import MarkdownRender from "../components/MarkdownRender";
-import "./MarkdownSyntax.css";
 
 const MarkdownSyntax = () => {
   return (

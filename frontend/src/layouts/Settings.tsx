@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import "./Settings.css";
 import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../components/Breadcrumbs";
+import EnvConfig from "../services/EnvConfig";
 import { Link } from "react-router-dom";
 
 interface LayoutProps {
@@ -12,7 +13,7 @@ function SettingsLayout(props: LayoutProps) {
   const { pathname } = useLocation();
   let currentSetting = "topicarea";
   const validSettings: any = {
-    topicarea: "Topic areas",
+    topicarea: EnvConfig.topicAreasLabel,
     publishingguidance: "Publishing guidance",
     publishedsite: "Published site",
   };

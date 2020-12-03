@@ -52,7 +52,7 @@ exports[`renders a table with dashboards 1`] = `
           <span
             class="font-sans-xs"
           >
-            Topic Area
+            Topic area
           </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
@@ -237,7 +237,7 @@ exports[`renders an empty table 1`] = `
           <span
             class="font-sans-xs"
           >
-            Topic Area
+            Topic area
           </span>
           <button
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"

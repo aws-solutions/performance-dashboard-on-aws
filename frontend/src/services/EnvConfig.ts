@@ -18,6 +18,7 @@ interface EnvConfig {
   contactEmail: string;
   brandName: string;
   topicAreaLabel: string;
+  topicAreasLabel: string;
 }
 
 const config = window.EnvironmentConfig;
@@ -31,5 +32,6 @@ export default {
   // available, but just in case it doesn't, the app wont crash.
   contactEmail: (config && config.contactEmail) || "support@example.com",
   brandName: (config && config.brandName) || "Performance Dashboard",
-  topicAreaLabel: (config && config.topicAreaLabel) || "Topic Area",
+  topicAreaLabel: (config && config.topicAreaLabel) || "Topic area",
+  topicAreasLabel: (config && config.topicAreasLabel) || "Topic areas",
 } as EnvConfig;

@@ -34,6 +34,11 @@ async function updateSettings(req: Request, res: Response) {
 
   const { publishingGuidance, updatedAt } = req.body;
 
+  if (!updatedAt) {
+    res.status(400);
+    return res.send("Missing field `updatedAt` in body");
+  }
+
   if (publishingGuidance) {
     const repo = SettingsRepository.getInstance();
     await repo.updatePublishingGuidance(publishingGuidance, updatedAt, user);

@@ -2,6 +2,7 @@ import { Settings, SettingsItem } from "../models/settings";
 
 function getDefaultSettings(): Settings {
   return {
+    updatedAt: new Date(),
     publishingGuidance:
       "I acknowledge that I have reviewed the dashboard and it is ready to publish",
   };

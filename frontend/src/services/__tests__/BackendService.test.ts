@@ -191,9 +191,38 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
   );
 });
 
+test("fetchPublicHomepage makes a GET request to widget API", async () => {
+  await BackendService.fetchPublicHomepage();
+  expect(API.get).toHaveBeenCalledWith("BackendApi", "public/homepage", {});
+});
+
 test("fetchHomepage makes a GET request to widget API", async () => {
   await BackendService.fetchHomepage();
-  expect(API.get).toHaveBeenCalledWith("BackendApi", "public/homepage", {});
+  expect(API.get).toHaveBeenCalledWith(
+    "BackendApi",
+    "settings/homepage",
+    expect.anything()
+  );
+});
+
+test("editHomepage should make a PUT request with payload", async () => {
+  const title = "123";
+  const description = "description test";
+  const updatedAt = new Date("2020-09-17T21:01:00.780Z");
+
+  await BackendService.editHomepage(title, description, updatedAt);
+
+  expect(API.put).toHaveBeenCalledWith(
+    "BackendApi",
+    "settings/homepage",
+    expect.objectContaining({
+      body: {
+        title,
+        description,
+        updatedAt,
+      },
+    })
+  );
 });
 
 test("fetchPublicDashboard makes a GET request to public API", async () => {

@@ -14,6 +14,7 @@ function SettingsLayout(props: LayoutProps) {
   const validSettings: any = {
     topicarea: "Topic areas",
     publishingguidance: "Publishing guidance",
+    publishedsite: "Published site",
   };
 
   const queryString = pathname.split("/");
@@ -74,6 +75,20 @@ function SettingsLayout(props: LayoutProps) {
                           to="/admin/settings/publishingguidance"
                         >
                           {`${validSettings["publishingguidance"]}`}
+                        </Link>
+                      </li>
+                    </ul>
+                    <ul className="usa-sidenav__sublist">
+                      <li className="usa-sidenav__item">
+                        <Link
+                          className={
+                            currentSetting === "publishedsite"
+                              ? "usa-current"
+                              : ""
+                          }
+                          to="/admin/settings/publishedsite"
+                        >
+                          {`${validSettings["publishedsite"]}`}
                         </Link>
                       </li>
                     </ul>

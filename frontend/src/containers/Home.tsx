@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import Link from "../components/Link";
-import { useHomepage } from "../hooks";
+import { usePublicHomepage } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
 import { PublicDashboard } from "../models";
 import Spinner from "../components/Spinner";
+import MarkdownRender from "../components/MarkdownRender";
+import "./Home.css";
 
 function Home() {
   const [filter, setFilter] = useState("");
-  const { homepage, loading } = useHomepage();
+  const { homepage, loading } = usePublicHomepage();
 
   const onSearch = (query: string) => {
     setFilter(query);
@@ -48,11 +50,14 @@ function Home() {
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
           <h1 className="font-sans-3xl">{homepage.title}</h1>
-          <p className="font-sans-lg usa-prose">{homepage.description}</p>
+          <MarkdownRender
+            className="font-sans-lg usa-prose"
+            source={homepage.description}
+          />
         </div>
       </div>
       <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8 padding-bottom-3">
+        <div className="grid-col-12 tablet:grid-col-8 padding-y-3">
           <Search
             id="search"
             onSubmit={onSearch}

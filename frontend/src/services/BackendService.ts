@@ -244,7 +244,28 @@ async function setWidgetOrder(
 }
 
 async function fetchHomepage() {
+  const headers = await authHeaders();
+  return API.get(apiName, "settings/homepage", { headers });
+}
+
+async function fetchPublicHomepage() {
   return API.get(apiName, "public/homepage", {});
+}
+
+async function editHomepage(
+  title: string,
+  description: string,
+  updatedAt: Date
+) {
+  const headers = await authHeaders();
+  return await API.put(apiName, "settings/homepage", {
+    headers,
+    body: {
+      title,
+      description,
+      updatedAt,
+    },
+  });
 }
 
 async function fetchSettings() {
@@ -323,6 +344,8 @@ export default {
   createDataset,
   getAuthToken,
   fetchHomepage,
+  fetchPublicHomepage,
+  editHomepage,
   fetchPublicDashboard,
   fetchSettings,
   editSettings,

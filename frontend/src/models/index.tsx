@@ -106,10 +106,16 @@ export type Dataset = {
   };
 };
 
-export type Homepage = {
+export type PublicHomepage = {
   title: string;
   description: string;
   dashboards: Array<PublicDashboard>;
+};
+
+export type Homepage = {
+  title: string;
+  description: string;
+  updatedAt: Date;
 };
 
 export type Settings = {

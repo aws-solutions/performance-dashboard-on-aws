@@ -111,6 +111,7 @@ export class BackendApi extends cdk.Construct {
     settings.addMethod("PUT", apiIntegration, methodProps);
 
     const publishedSite = settings.addResource("homepage");
+    publishedSite.addMethod("GET", apiIntegration, methodProps);
     publishedSite.addMethod("PUT", apiIntegration, methodProps);
   }
 

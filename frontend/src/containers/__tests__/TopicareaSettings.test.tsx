@@ -18,7 +18,7 @@ test("renders the description", async () => {
   });
   expect(
     getByText(
-      "Dashboards are organized by topic areas. A dashboard must have a topic area and can have only on topic area."
+      "Dashboards are organized by topic areas. A dashboard must have a topic area and can have only one topic area."
     )
   ).toBeInTheDocument();
 });

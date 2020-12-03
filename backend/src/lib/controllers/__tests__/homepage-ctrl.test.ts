@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
+import { User } from "../../models/user";
 import {
   Dashboard,
   DashboardState,
@@ -10,12 +11,14 @@ import HomepageRepository from "../../repositories/homepage-repo";
 import DashboardRepository from "../../repositories/dashboard-repo";
 import DashboardFactory from "../../factories/dashboard-factory";
 import HomepageCtrl from "../homepage-ctrl";
+import AuthService from "../../services/auth";
 
 jest.mock("../../repositories/homepage-repo");
 jest.mock("../../repositories/dashboard-repo");
 jest.mock("../../factories/dashboard-factory");
 jest.mock("../../factories/homepage-factory");
 
+const user: User = { userId: "johndoe" };
 const repository = mocked(HomepageRepository.prototype);
 const dashboardRepo = mocked(DashboardRepository.prototype);
 const req = ({} as any) as Request;
@@ -26,6 +29,7 @@ const res = ({
 } as any) as Response;
 
 beforeEach(() => {
+  AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   HomepageRepository.getInstance = jest.fn().mockReturnValue(repository);
   DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
   dashboardRepo.listPublishedDashboards = jest.fn().mockReturnValue([]);
@@ -106,6 +110,60 @@ describe("getHomepage", () => {
       expect.objectContaining({
         dashboards: [publicDashboard],
       })
+    );
+  });
+});
+
+describe("updateHomepage", () => {
+  let req: Request;
+  const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
+  beforeEach(() => {
+    req = ({
+      body: {
+        title: "abc",
+        description: "description test",
+        updatedAt: now.toISOString(),
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await HomepageCtrl.updateHomepage(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when title is missing", async () => {
+    delete req.body.title;
+    await HomepageCtrl.updateHomepage(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required body `title`");
+  });
+
+  it("returns a 400 error when description is missing", async () => {
+    delete req.body.description;
+    await HomepageCtrl.updateHomepage(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required body `description`");
+  });
+
+  it("returns a 400 error when updatedAt is missing", async () => {
+    delete req.body.updatedAt;
+    await HomepageCtrl.updateHomepage(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
+  });
+
+  it("update the homepage", async () => {
+    await HomepageCtrl.updateHomepage(req, res);
+    expect(repository.updateHomepage).toHaveBeenCalledWith(
+      "abc",
+      "description test",
+      now.toISOString(),
+      user
     );
   });
 });

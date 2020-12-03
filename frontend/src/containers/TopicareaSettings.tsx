@@ -6,10 +6,12 @@ import EnvConfig from "../services/EnvConfig";
 function TopicareaSettings() {
   return (
     <SettingsLayout>
-      <h1>Topic areas</h1>
+      <h1>{EnvConfig.topicAreasLabel}</h1>
 
       <p>
-        {`Dashboards are organized by topic areas. A dashboard must have a ${EnvConfig.topicAreaLabel.toLowerCase()} and can have only on ${EnvConfig.topicAreaLabel.toLowerCase()}.`}
+        {`Dashboards are organized by ${EnvConfig.topicAreasLabel.toLocaleLowerCase()}. ` +
+          `A dashboard must have a ${EnvConfig.topicAreaLabel.toLowerCase()} and can ` +
+          `have only one ${EnvConfig.topicAreaLabel.toLowerCase()}.`}
       </p>
 
       <hr

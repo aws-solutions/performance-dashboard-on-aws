@@ -30,7 +30,7 @@ describe("CreateDashboardForm", () => {
       },
     });
 
-    fireEvent.input(screen.getByLabelText("Topic Area"), {
+    fireEvent.input(screen.getByLabelText("Topic area"), {
       target: {
         value: "123456789",
       },

@@ -132,7 +132,8 @@ export class FrontendStack extends cdk.Stack {
         IDENTITY_POOL_ID: props.identityPoolId,
         CONTACT_EMAIL: "support@example.com",
         BRAND_NAME: "Performance Dashboard",
-        TOPIC_AREA_LABEL: "Topic Area",
+        TOPIC_AREA_LABEL: "Topic area",
+        TOPIC_AREAS_LABEL: "Topic areas",
       },
     });
 

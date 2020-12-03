@@ -49,6 +49,7 @@ function getConfigContent(): string {
     contactEmail: process.env.CONTACT_EMAIL,
     brandName: process.env.BRAND_NAME,
     topicAreaLabel: process.env.TOPIC_AREA_LABEL,
+    topicAreasLabel: process.env.TOPIC_AREAS_LABEL,
   };
 
   return `

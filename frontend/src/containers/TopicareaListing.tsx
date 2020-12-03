@@ -106,7 +106,7 @@ function TopicareaListing() {
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
-          <h3 id="section-heading-h3">{`Topic areas (${topicareas.length})`}</h3>
+          <h3 id="section-heading-h3">{`${EnvConfig.topicAreasLabel} (${topicareas.length})`}</h3>
           <AlertContainer />
           <div className="grid-row margin-y-3">
             <div className="tablet:grid-col-4 padding-top-1px">
@@ -138,7 +138,8 @@ function TopicareaListing() {
                   getContent={() => (
                     <div className="font-sans-sm">
                       <p className="margin-y-0">
-                        {`You can only delete topic areas that have zero dashboards`}
+                        {`You can only delete ${EnvConfig.topicAreasLabel.toLocaleLowerCase()}` +
+                          `that have zero dashboards`}
                       </p>
                     </div>
                   )}

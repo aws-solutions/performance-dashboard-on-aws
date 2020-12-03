@@ -28,6 +28,7 @@ import TopicareaSettings from "./containers/TopicareaSettings";
 import PublishingGuidanceSettings from "./containers/PublishingGuidanceSettings";
 import EditPublishingGuidance from "./containers/EditPublishingGuidance";
 import CreateTopicArea from "./containers/CreateTopicArea";
+import EditTopicArea from "./containers/EditTopicArea";
 import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
 import FormattingCSV from "./containers/FormattingCSV";
@@ -58,6 +59,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/settings/topicarea/create",
     component: CreateTopicArea,
+  },
+  {
+    path: "/admin/settings/topicarea/:topicAreaId/edit",
+    component: EditTopicArea,
   },
   {
     path: "/admin/dashboards",

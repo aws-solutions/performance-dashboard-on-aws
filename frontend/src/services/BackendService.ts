@@ -232,6 +232,22 @@ async function fetchHomepage() {
   return API.get(apiName, "public/homepage", {});
 }
 
+async function fetchSettings() {
+  const headers = await authHeaders();
+  return API.get(apiName, "settings", { headers });
+}
+
+async function editSettings(publishingGuidance: string, updatedAt: Date) {
+  const headers = await authHeaders();
+  return await API.put(apiName, "settings", {
+    headers,
+    body: {
+      publishingGuidance,
+      updatedAt,
+    },
+  });
+}
+
 async function fetchPublicDashboard(
   dashboardId: string
 ): Promise<PublicDashboard> {
@@ -291,6 +307,8 @@ export default {
   getAuthToken,
   fetchHomepage,
   fetchPublicDashboard,
+  fetchSettings,
+  editSettings,
   publishPending,
   archive,
   createDraft,

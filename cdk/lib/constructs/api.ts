@@ -105,6 +105,10 @@ export class BackendApi extends cdk.Construct {
 
     const datasets = this.api.root.addResource("dataset");
     datasets.addMethod("POST", apiIntegration, methodProps);
+
+    const settings = this.api.root.addResource("settings");
+    settings.addMethod("GET", apiIntegration, methodProps);
+    settings.addMethod("PUT", apiIntegration, methodProps);
   }
 
   private addPublicEndpoints(apiIntegration: apigateway.LambdaIntegration) {

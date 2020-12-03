@@ -10,6 +10,7 @@ function getDefaultSettings(): Settings {
 function fromItem(item: SettingsItem): Settings {
   return {
     publishingGuidance: item.publishingGuidance,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
   };
 }
 

@@ -11,14 +11,17 @@ interface LayoutProps {
 function SettingsLayout(props: LayoutProps) {
   const { pathname } = useLocation();
   let currentSetting = "topicarea";
-  const validSettings: any = { topicarea: "Topic areas" };
+  const validSettings: any = {
+    topicarea: "Topic areas",
+    publishingguidance: "Publishing guidance",
+  };
 
   const queryString = pathname.split("/");
   if (
-    queryString.length > 2 &&
-    Object.keys(validSettings).includes(queryString[2])
+    queryString.length > 3 &&
+    Object.keys(validSettings).includes(queryString[3])
   ) {
-    currentSetting = queryString[2];
+    currentSetting = queryString[3];
   }
 
   return (
@@ -56,7 +59,21 @@ function SettingsLayout(props: LayoutProps) {
                           }
                           to="/admin/settings/topicarea"
                         >
-                          Topic areas
+                          {`${validSettings["topicarea"]}`}
+                        </Link>
+                      </li>
+                    </ul>
+                    <ul className="usa-sidenav__sublist">
+                      <li className="usa-sidenav__item">
+                        <Link
+                          className={
+                            currentSetting === "publishingguidance"
+                              ? "usa-current"
+                              : ""
+                          }
+                          to="/admin/settings/publishingguidance"
+                        >
+                          {`${validSettings["publishingguidance"]}`}
                         </Link>
                       </li>
                     </ul>

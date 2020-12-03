@@ -5,6 +5,7 @@ import BackendService from "../../services/BackendService";
 import PublishDashboard from "../PublishDashboard";
 
 jest.mock("../../services/BackendService");
+jest.mock("../../hooks");
 
 let wrapper: RenderResult;
 beforeEach(() => {
@@ -67,12 +68,7 @@ test("publish button invokes BackendService", async () => {
   );
 
   await act(async () => {
-    fireEvent.click(
-      wrapper.getByLabelText(
-        "I acknowledge that I have reviewed the dashboard and it is ready to publish." +
-          " I also understand that this will overwrite the existing published version of the dashboard."
-      )
-    );
+    fireEvent.click(wrapper.getByLabelText("Acknowledgement"));
   });
 
   await act(async () => {

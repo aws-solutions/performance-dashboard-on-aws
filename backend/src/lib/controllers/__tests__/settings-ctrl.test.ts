@@ -91,6 +91,13 @@ describe("updateSettings", () => {
     expect(res.send).toBeCalledWith("Unauthorized");
   });
 
+  it("returns a 400 error when updatedAt is not specified", async () => {
+    delete req.body.updatedAt;
+    await SettingsCtrl.updateSettings(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing field `updatedAt` in body");
+  });
+
   it("update the settings", async () => {
     await SettingsCtrl.updateSettings(req, res);
     expect(repository.updatePublishingGuidance).toHaveBeenCalledWith(

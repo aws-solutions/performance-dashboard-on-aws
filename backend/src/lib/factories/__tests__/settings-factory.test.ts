@@ -4,6 +4,7 @@ import SettingsFactory from "../settings-factory";
 describe("getDefaultSettings", () => {
   it("returns default values", () => {
     expect(SettingsFactory.getDefaultSettings()).toEqual({
+      updatedAt: expect.anything(),
       publishingGuidance:
         "I acknowledge that I have reviewed the dashboard and it is ready to publish",
     });

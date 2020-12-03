@@ -1,6 +1,6 @@
 export interface Settings {
   publishingGuidance: string;
-  updatedAt?: Date;
+  updatedAt: Date;
 }
 
 export interface SettingsItem {

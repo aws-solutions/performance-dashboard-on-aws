@@ -43,7 +43,7 @@ function CreateTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
-            label: "Topic areas",
+            label: EnvConfig.topicAreasLabel,
             url: "/admin/settings/topicarea",
           },
           {

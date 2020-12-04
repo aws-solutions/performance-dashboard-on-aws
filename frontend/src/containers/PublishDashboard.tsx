@@ -14,7 +14,7 @@ import Spinner from "../components/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import MarkdownRender from "../components/MarkdownRender";
-import "./PublicDashboard.css";
+import "./PublishDashboard.css";
 
 interface PathParams {
   dashboardId: string;
@@ -207,11 +207,10 @@ function PublishDashboard() {
                             }}
                           />
                           <label
-                            className="usa-sr-only margin-top-1"
+                            className="usa-checkbox__label margin-top-1"
                             htmlFor="acknowledge"
-                          >
-                            Acknowledgement
-                          </label>
+                            data-testid="AcknowledgementCheckboxLabel"
+                          />
                         </div>
                       </td>
                       <td className="publishing-guidance border-hidden">

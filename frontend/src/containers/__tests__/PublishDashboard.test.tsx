@@ -68,7 +68,7 @@ test("publish button invokes BackendService", async () => {
   );
 
   await act(async () => {
-    fireEvent.click(wrapper.getByLabelText("Acknowledgement"));
+    fireEvent.click(wrapper.getByTestId("AcknowledgementCheckboxLabel"));
   });
 
   await act(async () => {

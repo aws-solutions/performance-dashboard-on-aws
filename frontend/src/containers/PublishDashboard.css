@@ -1,6 +1,7 @@
 .border-hidden {
   border-style: hidden !important;
   margin: 0 !important;
+  padding-left: 0 !important;
 }
 
 .publishing-guidance p {

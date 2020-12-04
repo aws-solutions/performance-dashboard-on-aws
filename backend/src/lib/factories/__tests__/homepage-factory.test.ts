@@ -9,6 +9,7 @@ describe("getDefaultHomepage", () => {
         "The Performance Dashboard makes data open " +
         "and accessible to provide transparency and help drive the " +
         "ongoing improvement of digital services.",
+      updatedAt: expect.anything(),
     });
   });
 });

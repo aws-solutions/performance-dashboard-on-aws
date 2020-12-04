@@ -10,6 +10,6 @@ router.get(
   withErrorHandler(DashboardCtrl.getPublicDashboardById)
 );
 
-router.get("/homepage", withErrorHandler(HomepageCtrl.getHomepage));
+router.get("/homepage", withErrorHandler(HomepageCtrl.getPublicHomepage));
 
 export default router;

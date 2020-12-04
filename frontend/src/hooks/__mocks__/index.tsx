@@ -147,7 +147,7 @@ export function useWidgets(dashboardId: string) {
   return;
 }
 
-export function useHomepage() {
+export function usePublicHomepage() {
   return {
     loading: false,
     homepage: {
@@ -167,6 +167,17 @@ export function useHomepage() {
           topicAreaName: "Topic Area Grapes",
         },
       ],
+    },
+  };
+}
+
+export function useHomepage() {
+  return {
+    loading: false,
+    homepage: {
+      title: "Kingdom of Wakanda",
+      description: "Welcome to our dashboard",
+      updatedAt: "",
     },
   };
 }

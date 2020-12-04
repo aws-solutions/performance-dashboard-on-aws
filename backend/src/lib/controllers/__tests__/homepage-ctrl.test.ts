@@ -35,6 +35,89 @@ beforeEach(() => {
   dashboardRepo.listPublishedDashboards = jest.fn().mockReturnValue([]);
 });
 
+describe("getPublicHomepage", () => {
+  it("returns default values for homepage", async () => {
+    // No Homepage found on the database
+    repository.getHomepage = jest.fn().mockReturnValueOnce(undefined);
+
+    // Homepage factory should provide the default homepage
+    HomepageFactory.getDefaultHomepage = jest.fn().mockReturnValueOnce({
+      title: "Performance Dashboard",
+      description: "Welcome to the performance dashboard",
+    });
+
+    await HomepageCtrl.getPublicHomepage(req, res);
+    expect(HomepageFactory.getDefaultHomepage).toBeCalled();
+    expect(res.json).toBeCalledWith(
+      expect.objectContaining({
+        title: "Performance Dashboard",
+        description: "Welcome to the performance dashboard",
+      })
+    );
+  });
+
+  it("returns homepage when available in the database", async () => {
+    HomepageFactory.getDefaultHomepage = jest.fn();
+    repository.getHomepage = jest.fn().mockReturnValueOnce({
+      title: "Kingdom of Wakanda",
+      description: "Welcome to the performance dashboard of our kingdom",
+    });
+
+    await HomepageCtrl.getPublicHomepage(req, res);
+    expect(HomepageFactory.getDefaultHomepage).not.toBeCalled();
+    expect(res.json).toBeCalledWith(
+      expect.objectContaining({
+        title: "Kingdom of Wakanda",
+        description: "Welcome to the performance dashboard of our kingdom",
+      })
+    );
+  });
+
+  it("returns a list of published dashboards", async () => {
+    const now = new Date();
+    const published: Array<Dashboard> = [
+      {
+        id: "123",
+        name: "Banana",
+        version: 1,
+        parentDashboardId: "123",
+        description: "Something",
+        createdBy: "johndoe",
+        updatedAt: now,
+        state: DashboardState.Published,
+        topicAreaId: "xyz",
+        topicAreaName: "Health and Human Services",
+      },
+    ];
+
+    HomepageFactory.getDefaultHomepage = jest.fn().mockReturnValueOnce({
+      title: "Performance Dashboard",
+      description: "Welcome to the performance dashboard",
+    });
+    dashboardRepo.listPublishedDashboards = jest
+      .fn()
+      .mockReturnValue(published);
+
+    const publicDashboard: PublicDashboard = {
+      id: "123",
+      name: "Banana",
+      description: "Something",
+      updatedAt: now,
+      topicAreaId: "xyz",
+      topicAreaName: "Health and Human Services",
+    };
+
+    DashboardFactory.toPublic = jest.fn().mockReturnValue(publicDashboard);
+    await HomepageCtrl.getPublicHomepage(req, res);
+
+    expect(res.json).toBeCalledWith(
+      expect.objectContaining({
+        dashboards: [publicDashboard],
+      })
+    );
+  });
+});
+
 describe("getHomepage", () => {
   it("returns default values for homepage", async () => {
     // No Homepage found on the database
@@ -69,46 +152,6 @@ describe("getHomepage", () => {
       expect.objectContaining({
         title: "Kingdom of Wakanda",
         description: "Welcome to the performance dashboard of our kingdom",
-      })
-    );
-  });
-
-  it("returns a list of published dashboards", async () => {
-    const now = new Date();
-    const published: Array<Dashboard> = [
-      {
-        id: "123",
-        name: "Banana",
-        version: 1,
-        parentDashboardId: "123",
-        description: "Something",
-        createdBy: "johndoe",
-        updatedAt: now,
-        state: DashboardState.Published,
-        topicAreaId: "xyz",
-        topicAreaName: "Health and Human Services",
-      },
-    ];
-
-    dashboardRepo.listPublishedDashboards = jest
-      .fn()
-      .mockReturnValue(published);
-
-    const publicDashboard: PublicDashboard = {
-      id: "123",
-      name: "Banana",
-      description: "Something",
-      updatedAt: now,
-      topicAreaId: "xyz",
-      topicAreaName: "Health and Human Services",
-    };
-
-    DashboardFactory.toPublic = jest.fn().mockReturnValue(publicDashboard);
-    await HomepageCtrl.getHomepage(req, res);
-
-    expect(res.json).toBeCalledWith(
-      expect.objectContaining({
-        dashboards: [publicDashboard],
       })
     );
   });

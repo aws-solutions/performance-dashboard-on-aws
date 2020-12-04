@@ -5,7 +5,7 @@ import DashboardRepository from "../repositories/dashboard-repo";
 import DashboardFactory from "../factories/dashboard-factory";
 import AuthService from "../services/auth";
 
-async function getHomepage(req: Request, res: Response) {
+async function getPublicHomepage(req: Request, res: Response) {
   const repo = HomepageRepository.getInstance();
   const dashboardRepo = DashboardRepository.getInstance();
 
@@ -18,9 +18,22 @@ async function getHomepage(req: Request, res: Response) {
   }
 
   return res.json({
-    ...homepage,
+    title: homepage.title,
+    description: homepage.description,
     dashboards: publicDashboards,
   });
+}
+
+async function getHomepage(req: Request, res: Response) {
+  const repo = HomepageRepository.getInstance();
+
+  let homepage = await repo.getHomepage();
+
+  if (!homepage) {
+    homepage = HomepageFactory.getDefaultHomepage();
+  }
+
+  return res.json(homepage);
 }
 
 async function updateHomepage(req: Request, res: Response) {
@@ -55,6 +68,7 @@ async function updateHomepage(req: Request, res: Response) {
 }
 
 export default {
+  getPublicHomepage,
   getHomepage,
   updateHomepage,
 };

@@ -7,6 +7,7 @@ const router = Router();
 
 router.get("/", withErrorHandler(SettingsCtrl.getSettings));
 router.put("/", withErrorHandler(SettingsCtrl.updateSettings));
+router.get("/homepage", withErrorHandler(HomepageCtrl.getHomepage));
 router.put("/homepage", withErrorHandler(HomepageCtrl.updateHomepage));
 
 export default router;

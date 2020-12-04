@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
-import { Homepage } from "../models";
+import { PublicHomepage } from "../models";
 import BackendService from "../services/BackendService";
 
-type UseHomepageHook = {
+type UsePublicHomepageHook = {
   loading: boolean;
-  homepage: Homepage;
+  homepage: PublicHomepage;
 };
 
-export function useHomepage(): UseHomepageHook {
+export function usePublicHomepage(): UsePublicHomepageHook {
   const [loading, setLoading] = useState<boolean>(false);
-  const [homepage, setHomepage] = useState<Homepage>({
+  const [homepage, setHomepage] = useState<PublicHomepage>({
     title: "",
     description: "",
-    updatedAt: new Date(),
+    dashboards: [],
   });
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await BackendService.fetchHomepage();
+      const data = await BackendService.fetchPublicHomepage();
       setHomepage(data);
       setLoading(false);
     };

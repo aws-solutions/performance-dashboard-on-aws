@@ -24,7 +24,7 @@ function PublishedSiteSettings() {
       <h1>Published site</h1>
 
       <p>
-        Customize your publisehd site.{" "}
+        Customize your published site.{" "}
         <Link target="_blank" to={"/"}>
           View published site
           <FontAwesomeIcon

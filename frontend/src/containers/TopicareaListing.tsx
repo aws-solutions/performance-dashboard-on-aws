@@ -138,7 +138,7 @@ function TopicareaListing() {
                   getContent={() => (
                     <div className="font-sans-sm">
                       <p className="margin-y-0">
-                        {`You can only delete ${EnvConfig.topicAreasLabel.toLocaleLowerCase()}` +
+                        {`You can only delete ${EnvConfig.topicAreasLabel.toLocaleLowerCase()} ` +
                           `that have zero dashboards`}
                       </p>
                     </div>

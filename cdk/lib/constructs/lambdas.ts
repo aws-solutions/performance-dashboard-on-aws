@@ -28,6 +28,7 @@ export class LambdaFunctions extends cdk.Construct {
       environment: {
         MAIN_TABLE: props.mainTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
+        LOG_LEVEL: "info",
       },
     });
 
@@ -45,6 +46,7 @@ export class LambdaFunctions extends cdk.Construct {
       environment: {
         MAIN_TABLE: props.mainTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
+        LOG_LEVEL: "info",
       },
     });
 

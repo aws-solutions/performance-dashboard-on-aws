@@ -12,7 +12,9 @@ To deploy PDoA on AWS, you must have an AWS account, and have been granted permi
 
 If you're not familiar with deploying resources on AWS using CFT, start by reviewing the CFT [FAQ](https://aws.amazon.com/cloudformation/faqs/). When you're ready to deploy, click the image below to deploy in the us-east-1 region:
 
-Install in us-east-1 [![Install in us-east-1](images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/performance-dashboard-us-east-1.json)
+| Region    | Launch                                                                                                                                                                                                                                                       |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| us-east-1 | [![Install in us-east-1](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/performance-dashboard-us-east-1.json) |
 
 You will be directed to the CloudFormation console on your browser. Enter the stack name such as "MyCorp-PerfDash", then check on the two "Capabilities" checkboxes at the bottom of the page. Press the "Create Stack" button. It will take about 25 minutes for the compute, storage, and database resources on AWS to be provisioned.
 
@@ -26,11 +28,11 @@ Once completed, you can see the stacks created in the CloudFormation console suc
 
 If you prefer to deploy PDoA in the us-west-2 or eu-west-2 region, you must first install a prerequisite stack into us-east-1, then complete the installation by deploying into the desired us-west-2 or eu-west-2 region. Please note that if you use the CDK method to install (described in the next [section](#Deploying-with-AWS-Cloud-Development-Kit)), you can choose to deploy into other regions besides us-east-1, us-west-2, or eu-west-2.
 
-**Install prereq first** [![Install this first](images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/LambdaEdge-1.0-b.0.json)
-
-Install in us-west-2 [![Install in us-west-2](images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-west-2.s3.amazonaws.com/performance-dashboard-us-west-2.json)
-
-Install in eu-west-2 [![Install in eu-west-2](images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-eu-west-2.s3.amazonaws.com/performance-dashboard-eu-west-2.json)
+| Region                              | Launch                                                                                                                                                                                                                                                       |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Install this first in us-east-1** | [![Install this first](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/LambdaEdge-0.2.0-beta.json)             |
+| us-west-2                           | [![Install in us-west-2](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-west-2.s3.amazonaws.com/performance-dashboard-us-west-2.json) |
+| eu-west-2                           | [![Install in eu-west-2](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-eu-west-2.s3.amazonaws.com/performance-dashboard-eu-west-2.json) |
 
 ## Deploying with AWS Cloud Development Kit
 
@@ -150,59 +152,7 @@ Add a user for each editor you plan to have use PDoA, and add a user for the tec
 
 ## Manage Topic Areas
 
-In a future release, PDoA will have an Admin UI for you to manage topic areas. For now, you will create and edit topic areas directly in the DynamoDB database.
-
-### Create a New Topic Area
-
-Dashboards are grouped by topic areas. Before creating your first dashboard, you will have to create your topic areas. For now, you will create the topic area directly in the AWS DynamoDB table used by PDoA. To begin, go to the AWS DynamoDB console, click on the Tables tab, then on the table that has "backendStack" as part of the name. In the right panel, click on the Items tab. Your table should be empty as shown in the screen shot.
-
-![DynamoDB table](images/installation/topicarea-dynamodb.png)
-
-There are 2 options for adding an entry in DynamoDB for a topic area. Review [Option 1](#option-1) and [Option 2](#option-2) below and choose the option you're more comfortable with.
-
-#### Option 1
-
-Click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. For the "pk" and "sk" attributes, enter the identifier "TopicArea#8db2aafa-f6db-41ac-bf07-403b18c2dd46". For the "type" attribute, enter "TopicArea". You now must add two new attributes called "createdBy" and "name". To add a field, click on the "+" symbol, then on "Append", then on "String".
-
-![Add item to DynamoDB table](images/installation/append-topicarea-attribute.png)
-
-Enter "createdBy" for the key, and for the value enter the Cognito user name for the user who's creating the entry. Repeat for the "name" field, and enter the topic area name, such as "IRS".
-
-![Add attribute to DynamoDB item](images/installation/insert-topicarea-attribute.png)
-
-Now, delete the unneeded attributes like "parentDashboardId" and "version". To delete an attribute, click on the "+" symbol, then on "remove".
-
-![Remove attribute from DynamoDB item](images/installation/remove-topicarea-attribute.png)
-
-The item you're adding should now look like the screen shot below (the order of the attributes doesn't matter):
-
-![topic area entry](images/installation/topicarea-item.png)
-
-Press Save when done.
-
-Repeat the steps above for every topic area that you need to add. For the "pk" and "sk" fields, vary the identifier above by a digit, such as changing the last digit in "8db2aafa-f6db-41ac-bf07-403b18c2dd46" to "8db2aafa-f6db-41ac-bf07-403b18c2dd4**7**"
-
-#### Option 2
-
-Click on the "Create item" blue button. You will be presented with a dialog box to compose the entry to be added to the table. On the top left of the dialog box, click the drop down to choose "text" instead of "tree". Cut and paste the JSON text below into your dialog box. For "createdBy", replace with the Cognito user name of the user who's creating the entry. For "name", replace with the desired topic area name, such as "IRS". Press Save when done. Repeat the steps above for every topic area that you need to add. For the "pk" and "sk" fields, vary the identifier above by a digit, such as changing the last digit in "8db2aafa-f6db-41ac-bf07-403b18c2dd46" to "8db2aafa-f6db-41ac-bf07-403b18c2dd4**7**"
-
-```json
-{
-  "createdBy": "trietlu",
-  "name": "IRS",
-  "pk": "TopicArea#8db2aafa-f6db-41ac-bf07-403b18c2dd46",
-  "sk": "TopicArea#8db2aafa-f6db-41ac-bf07-403b18c2dd46",
-  "type": "TopicArea"
-}
-```
-
-### Rename a Topic Area
-
-To rename an existing topic area, go back to the DynamoDB table for PDoA. Look for the topic area that you wish to rename by filtering the type "TopicArea". Edit the entry to change the name of the topic area.
-
-### Delete a Topic Area
-
-Before deleting a topic area, make sure you delete all dashboards associated with that topic area first. As in renaming a topic area above, find your topic area entry in DynamoDB. Delete that entry to delete the topic area.
+Topic areas are categories used to organize and group your dashboards. Before creating your first dashboard, you will have to create your topic areas. After you login to PDoA, click on Settings menu in the top navigation bar, then click on "Topic areas" in the left menu. You can create as many topic areas as you need to organize your dashboards.
 
 ## Replace Logo
 
@@ -210,7 +160,7 @@ You can replace the logo displayed on the PDoA web page header. Go to the S3 con
 
 ## Using PDoA
 
-You have added the Editor users, and created the topic areas. You are now ready to use PDoA. Refer to the [User Guide](user-guide.md) for information on using PDoA to create and publish dashboards.
+You have added the Editor users, and created the topic areas. You are now ready to use PDoA. Refer to the [User Guide](user-guide.pdf) for information on using PDoA to create and publish dashboards.
 
 ## Uninstall PDoA
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { withAuthenticator } from "@aws-amplify/ui-react";
+import SettingsProvider from "./context/SettingsProvider";
 
 import withMainLayout from "./layouts/Main";
 import withAdminLayout from "./layouts/Admin";
@@ -156,30 +157,32 @@ const routes: Array<AppRoute> = [
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        {routes.map((route) => {
-          const component = route.public
-            ? withMainLayout(route.component)
-            : withAuthenticator(
-                withFooterLayout(withAdminLayout(route.component))
-              );
-          return (
-            <Route
-              exact
-              key={route.path}
-              component={component}
-              path={route.path}
-            />
-          );
-        })}
-        <Route
-          key={"/admin/"}
-          component={withFooterLayout(withAdminLayout(FourZeroFour))}
-          path={"/admin/"}
-        />
-      </Switch>
-    </Router>
+    <SettingsProvider>
+      <Router>
+        <Switch>
+          {routes.map((route) => {
+            const component = route.public
+              ? withMainLayout(route.component)
+              : withAuthenticator(
+                  withFooterLayout(withAdminLayout(route.component))
+                );
+            return (
+              <Route
+                exact
+                key={route.path}
+                component={component}
+                path={route.path}
+              />
+            );
+          })}
+          <Route
+            key={"/admin/"}
+            component={withFooterLayout(withAdminLayout(FourZeroFour))}
+            path={"/admin/"}
+          />
+        </Switch>
+      </Router>
+    </SettingsProvider>
   );
 }
 

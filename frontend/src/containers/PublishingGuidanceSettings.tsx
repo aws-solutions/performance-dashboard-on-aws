@@ -2,15 +2,14 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useSettings } from "../hooks";
 import SettingsLayout from "../layouts/Settings";
-import Spinner from "../components/Spinner";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
-import "./PublishingGuidanceSettings.css";
 import AlertContainer from "./AlertContainer";
+import "./PublishingGuidanceSettings.css";
 
 function PublishingGuidanceSettings() {
   const history = useHistory();
-  const { settings, loadingSettings } = useSettings();
+  const { settings } = useSettings();
 
   const onEdit = () => {
     history.push("/admin/settings/publishingguidance/edit");
@@ -39,25 +38,14 @@ function PublishingGuidanceSettings() {
         </div>
       </div>
 
-      {loadingSettings ? (
-        <Spinner
-          style={{
-            position: "fixed",
-            top: "30%",
-            left: "50%",
-          }}
-          label="Loading"
-        />
-      ) : (
-        <div className="grid-row margin-top-0-important">
-          <div className="grid-col flex-9">
-            <div className="publishing-guidance font-sans-lg">
-              <MarkdownRender source={settings.publishingGuidance} />
-            </div>
+      <div className="grid-row margin-top-0-important">
+        <div className="grid-col flex-9">
+          <div className="publishing-guidance font-sans-lg">
+            <MarkdownRender source={settings.publishingGuidance} />
           </div>
-          <div className="grid-col flex-3 text-right"></div>
         </div>
-      )}
+        <div className="grid-col flex-3 text-right"></div>
+      </div>
     </SettingsLayout>
   );
 }

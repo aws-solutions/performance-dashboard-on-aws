@@ -3,7 +3,7 @@
  * testing easier. Prevents the actual backend API
  * calls to happen and instead returns dummy data.
  */
-
+import { useState } from "react";
 import { DashboardState } from "../../models";
 
 const dummyDashboard = {
@@ -61,13 +61,16 @@ export function useTopicAreas() {
 }
 
 export function useSettings() {
+  const [settings] = useState({
+    publishingGuidance:
+      "I acknowledge that I have reviewed the " +
+      "dashboard and it is ready to publish",
+    updatedAt: new Date("2020-12-08T22:56:13.721Z"),
+  });
+
   return {
-    loadingSettings: false,
-    settings: {
-      publishingGuidance:
-        "I acknowledge that I have reviewed the dashboard and it is ready to publish",
-      updatedAt: "",
-    },
+    reloadSettings: jest.fn(),
+    settings,
   };
 }
 

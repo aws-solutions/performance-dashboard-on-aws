@@ -32,7 +32,7 @@ test("submits form with the entered values", async () => {
 
   expect(BackendService.editSettings).toBeCalledWith(
     "I acknowledge that I have reviewed the dashboard and it is ready to publish",
-    ""
+    new Date("2020-12-08T22:56:13.721Z")
   );
 });
 

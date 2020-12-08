@@ -1,5 +1,6 @@
 import AWSXRay from "aws-xray-sdk";
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
+import logger from "./logger";
 
 /**
  * This class serves as a wrapper to the DynamoDB DocumentClient.
@@ -33,26 +34,32 @@ class DynamoDBService {
   }
 
   async get(input: DocumentClient.GetItemInput) {
+    logger.debug("DynamoDB GetItem %o", input);
     return this.client.get(input).promise();
   }
 
   async put(input: DocumentClient.PutItemInput) {
+    logger.debug("DynamoDB PutItem %o", input);
     return this.client.put(input).promise();
   }
 
   async query(input: DocumentClient.QueryInput) {
+    logger.debug("DynamoDB Query %o", input);
     return this.client.query(input).promise();
   }
 
   async update(input: DocumentClient.UpdateItemInput) {
+    logger.debug("DynamoDB UpdateItem %o", input);
     return this.client.update(input).promise();
   }
 
   async delete(input: DocumentClient.DeleteItemInput) {
+    logger.debug("DynamoDB DeleteItem %o", input);
     return this.client.delete(input).promise();
   }
 
   async transactWrite(input: DocumentClient.TransactWriteItemsInput) {
+    logger.debug("DynamoDB TransactWrite %o", input);
     if (!input.TransactItems) {
       return;
     }
@@ -68,6 +75,7 @@ class DynamoDBService {
       i += batchSize;
     }
 
+    logger.debug("DynamoDB TransactWrite batches = %d", batches.length);
     for await (const batch of batches) {
       await this.client
         .transactWrite({

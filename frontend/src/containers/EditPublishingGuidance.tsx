@@ -14,15 +14,16 @@ interface FormValues {
 
 function EditPublishingGuidance() {
   const history = useHistory();
-  const { settings, loadingSettings } = useSettings();
+  const { settings, reloadSettings } = useSettings();
   const { register, handleSubmit } = useForm<FormValues>();
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.editSettings(
       values.publishingGuidance,
-      settings ? settings.updatedAt : new Date()
+      settings.updatedAt ? settings.updatedAt : new Date()
     );
 
+    await reloadSettings();
     history.push("/admin/settings/publishingguidance", {
       alert: {
         type: "success",
@@ -62,7 +63,7 @@ function EditPublishingGuidance() {
           guidance specific to your organization.
         </p>
 
-        {loadingSettings ? (
+        {!settings.updatedAt ? (
           <Spinner className="text-center margin-top-9" label="Loading" />
         ) : (
           <>
@@ -81,7 +82,7 @@ function EditPublishingGuidance() {
               />
 
               <br />
-              <Button type="submit" disabled={loadingSettings}>
+              <Button type="submit" disabled={!settings.updatedAt}>
                 Save
               </Button>
               <Button

@@ -120,7 +120,7 @@ export type Homepage = {
 
 export type Settings = {
   publishingGuidance: string;
-  updatedAt: Date;
+  updatedAt?: Date;
 };
 
 // Type for the History object in react-router. Defines the

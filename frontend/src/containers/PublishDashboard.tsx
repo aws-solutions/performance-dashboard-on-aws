@@ -30,7 +30,7 @@ function PublishDashboard() {
   const [step, setStep] = useState<number>(0);
   const [acknowledge, setAcknowledge] = useState<boolean>(false);
   const { dashboard, reloadDashboard, loading } = useDashboard(dashboardId);
-  const { settings, loadingSettings } = useSettings();
+  const { settings } = useSettings();
   const { register, errors, handleSubmit, trigger } = useForm<FormValues>();
 
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
@@ -105,7 +105,7 @@ function PublishDashboard() {
         ]}
       />
 
-      {loading || loadingSettings ? (
+      {loading ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>

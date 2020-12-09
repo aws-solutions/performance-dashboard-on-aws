@@ -60,7 +60,6 @@ function SettingsProvider(props: { children: React.ReactNode }) {
       switch (payload.event) {
         case "signIn":
         case "tokenRefresh":
-          console.log("Refetching settings", payload);
           fetchData();
           break;
         default:

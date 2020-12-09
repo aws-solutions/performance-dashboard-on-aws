@@ -32,7 +32,8 @@ async function updateSettings(req: Request, res: Response) {
     return;
   }
 
-  const { publishingGuidance, dateTimeFormat, updatedAt } = req.body;
+  let { updatedAt } = req.body;
+  const { publishingGuidance, dateTimeFormat } = req.body;
 
   if (!updatedAt) {
     res.status(400);
@@ -41,12 +42,8 @@ async function updateSettings(req: Request, res: Response) {
 
   const repo = SettingsRepository.getInstance();
 
-  /**
-   * Potential refactor: Make the updateSetting function in the repo be
-   * able to receive multiple settings to update at once.
-   */
   if (publishingGuidance) {
-    await repo.updateSetting(
+    updatedAt = await repo.updateSetting(
       "publishingGuidance",
       publishingGuidance,
       updatedAt,
@@ -55,7 +52,12 @@ async function updateSettings(req: Request, res: Response) {
   }
 
   if (dateTimeFormat) {
-    await repo.updateSetting("dateTimeFormat", dateTimeFormat, updatedAt, user);
+    updatedAt = await repo.updateSetting(
+      "dateTimeFormat",
+      dateTimeFormat,
+      updatedAt,
+      user
+    );
   }
 
   res.send();

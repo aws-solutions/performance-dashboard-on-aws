@@ -34,15 +34,22 @@ class SettingsRepository extends BaseRepository {
     return SettingsFactory.fromItem(result.Item as SettingsItem);
   }
 
+  /**
+   * Updates a given setting key with the provided setting value.
+   * Performs conditional check based on the lastUpdatedAt and
+   * also updates the updatedAt value to now(). It returns the new
+   * updatedAt value as a date string in ISO format.
+   */
   public async updateSetting(
     settingKey: string,
     settingValue: string,
     lastUpdatedAt: string,
     user: User
-  ) {
+  ): Promise<string> {
     const expressionAttributeKey = `#${settingKey}`;
     const expressionAttributeValue = `:${settingKey}`;
     try {
+      const now = new Date().toISOString();
       await this.dynamodb.update({
         TableName: this.tableName,
         Key: {
@@ -59,7 +66,7 @@ class SettingsRepository extends BaseRepository {
         ExpressionAttributeValues: {
           [expressionAttributeValue]: settingValue,
           ":lastUpdatedAt": lastUpdatedAt,
-          ":updatedAt": new Date().toISOString(),
+          ":updatedAt": now,
           ":userId": user.userId,
           ":type": "Settings",
         },
@@ -70,6 +77,7 @@ class SettingsRepository extends BaseRepository {
           "#type": "type",
         },
       });
+      return now;
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
         logger.warn(

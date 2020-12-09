@@ -32,16 +32,30 @@ async function updateSettings(req: Request, res: Response) {
     return;
   }
 
-  const { publishingGuidance, updatedAt } = req.body;
+  const { publishingGuidance, dateTimeFormat, updatedAt } = req.body;
 
   if (!updatedAt) {
     res.status(400);
     return res.send("Missing field `updatedAt` in body");
   }
 
+  const repo = SettingsRepository.getInstance();
+
+  /**
+   * Potential refactor: Make the updateSetting function in the repo be
+   * able to receive multiple settings to update at once.
+   */
   if (publishingGuidance) {
-    const repo = SettingsRepository.getInstance();
-    await repo.updatePublishingGuidance(publishingGuidance, updatedAt, user);
+    await repo.updateSetting(
+      "publishingGuidance",
+      publishingGuidance,
+      updatedAt,
+      user
+    );
+  }
+
+  if (dateTimeFormat) {
+    await repo.updateSetting("dateTimeFormat", dateTimeFormat, updatedAt, user);
   }
 
   res.send();

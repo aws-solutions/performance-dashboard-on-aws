@@ -2,6 +2,7 @@ import { User } from "../models/user";
 import { Settings, SettingsItem } from "../models/settings";
 import SettingsFactory from "../factories/settings-factory";
 import BaseRepository from "./base";
+import logger from "../services/logger";
 
 class SettingsRepository extends BaseRepository {
   protected static instance: SettingsRepository;
@@ -33,14 +34,14 @@ class SettingsRepository extends BaseRepository {
     return SettingsFactory.fromItem(result.Item as SettingsItem);
   }
 
-  /**
-   * Updates the publishing guidance
-   */
-  public async updatePublishingGuidance(
-    publishingGuidance: string,
+  public async updateSetting(
+    settingKey: string,
+    settingValue: string,
     lastUpdatedAt: string,
     user: User
   ) {
+    const expressionAttributeKey = `#${settingKey}`;
+    const expressionAttributeValue = `:${settingKey}`;
     try {
       await this.dynamodb.update({
         TableName: this.tableName,
@@ -49,18 +50,21 @@ class SettingsRepository extends BaseRepository {
           sk: "Settings",
         },
         UpdateExpression:
-          "set #publishingGuidance = :publishingGuidance, #type = :type, #updatedAt = :updatedAt, #updatedBy = :userId",
+          `set ${expressionAttributeKey} = ${expressionAttributeValue}, ` +
+          `#type = :type, ` +
+          `#updatedAt = :updatedAt, ` +
+          `#updatedBy = :userId`,
         ConditionExpression:
           "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
-          ":publishingGuidance": publishingGuidance,
+          [expressionAttributeValue]: settingValue,
           ":lastUpdatedAt": lastUpdatedAt,
           ":updatedAt": new Date().toISOString(),
           ":userId": user.userId,
           ":type": "Settings",
         },
         ExpressionAttributeNames: {
-          "#publishingGuidance": "publishingGuidance",
+          [expressionAttributeKey]: settingKey,
           "#updatedBy": "updatedBy",
           "#updatedAt": "updatedAt",
           "#type": "type",
@@ -68,11 +72,12 @@ class SettingsRepository extends BaseRepository {
       });
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.log("Someone else updated the item before us");
-        return;
-      } else {
-        throw error;
+        logger.warn(
+          "ConditionalCheckFailedException on update setting=%s",
+          settingKey
+        );
       }
+      throw error;
     }
   }
 }

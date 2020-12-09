@@ -50,10 +50,13 @@ describe("getSettings", () => {
   });
 });
 
-describe("updateSettings", () => {
-  it("should call updateItem with the correct keys", async () => {
-    const now = new Date();
-    await repo.updatePublishingGuidance("abc", now.toISOString(), user);
+describe("updateSetting", () => {
+  const settingKey = "foo";
+  const settingValue = "bar";
+  const lastUpdated = new Date().toISOString();
+
+  it("should call updateItem with the correct Key", async () => {
+    await repo.updateSetting(settingKey, settingValue, lastUpdated, user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         TableName: tableName,
@@ -65,22 +68,33 @@ describe("updateSettings", () => {
     );
   });
 
-  it("should call update with all the fields", async () => {
-    const now = new Date();
-    jest.useFakeTimers("modern");
-    jest.setSystemTime(now);
-    await repo.updatePublishingGuidance("abc", now.toISOString(), user);
+  it("should call updateItem with type=Settings", async () => {
+    await repo.updateSetting(settingKey, settingValue, lastUpdated, user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
-        UpdateExpression:
-          "set #publishingGuidance = :publishingGuidance, #type = :type, #updatedAt = :updatedAt, #updatedBy = :userId",
-        ExpressionAttributeValues: {
-          ":publishingGuidance": "abc",
-          ":lastUpdatedAt": now.toISOString(),
-          ":updatedAt": now.toISOString(),
-          ":userId": user.userId,
+        /**
+         * Making sure that type is always set to Settings is important
+         * because it covers the scenario where the Settings item does
+         * not exist in the database yet and it is being created for the
+         * first time.
+         */
+        ExpressionAttributeValues: expect.objectContaining({
           ":type": "Settings",
-        },
+        }),
+      })
+    );
+  });
+
+  it("should update the correct setting key", async () => {
+    await repo.updateSetting(settingKey, settingValue, lastUpdated, user);
+    expect(dynamodb.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ExpressionAttributeNames: expect.objectContaining({
+          "#foo": "foo",
+        }),
+        ExpressionAttributeValues: expect.objectContaining({
+          ":foo": "bar",
+        }),
       })
     );
   });

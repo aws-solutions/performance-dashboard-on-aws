@@ -62,6 +62,7 @@ export function useTopicAreas() {
 
 export function useSettings() {
   const [settings] = useState({
+    dateTimeFormat: "YYYY-MM-DD hh:mm",
     publishingGuidance:
       "I acknowledge that I have reviewed the " +
       "dashboard and it is ready to publish",

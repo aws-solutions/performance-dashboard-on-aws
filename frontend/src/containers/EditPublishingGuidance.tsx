@@ -14,7 +14,7 @@ interface FormValues {
 
 function EditPublishingGuidance() {
   const history = useHistory();
-  const { settings, reloadSettings } = useSettings(true);
+  const { settings, reloadSettings, loadingSettings } = useSettings(true);
   const { register, handleSubmit, reset } = useForm<FormValues>();
 
   useEffect(() => {
@@ -71,7 +71,7 @@ function EditPublishingGuidance() {
           guidance specific to your organization.
         </p>
 
-        {!settings.updatedAt ? (
+        {loadingSettings ? (
           <Spinner className="text-center margin-top-9" label="Loading" />
         ) : (
           <>

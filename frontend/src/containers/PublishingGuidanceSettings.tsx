@@ -5,11 +5,12 @@ import SettingsLayout from "../layouts/Settings";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
 import AlertContainer from "./AlertContainer";
+import Spinner from "../components/Spinner";
 import "./PublishingGuidanceSettings.css";
 
 function PublishingGuidanceSettings() {
   const history = useHistory();
-  const { settings } = useSettings();
+  const { settings, loadingSettings } = useSettings();
 
   const onEdit = () => {
     history.push("/admin/settings/publishingguidance/edit");
@@ -27,25 +28,43 @@ function PublishingGuidanceSettings() {
       </p>
 
       <AlertContainer />
-      <div className="grid-row margin-top-0-important">
-        <div className="grid-col flex-9">
-          <p className="text-bold">Acknowledgement statement</p>
-        </div>
-        <div className="grid-col flex-3 text-right">
-          <Button className="margin-top-2" variant="outline" onClick={onEdit}>
-            Edit
-          </Button>
-        </div>
-      </div>
 
-      <div className="grid-row margin-top-0-important">
-        <div className="grid-col flex-9">
-          <div className="publishing-guidance font-sans-lg">
-            <MarkdownRender source={settings.publishingGuidance} />
+      {loadingSettings ? (
+        <Spinner
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+          }}
+          label="Loading"
+        />
+      ) : (
+        <>
+          <div className="grid-row margin-top-0-important">
+            <div className="grid-col flex-9">
+              <p className="text-bold">Acknowledgement statement</p>
+            </div>
+            <div className="grid-col flex-3 text-right">
+              <Button
+                className="margin-top-2"
+                variant="outline"
+                onClick={onEdit}
+              >
+                Edit
+              </Button>
+            </div>
           </div>
-        </div>
-        <div className="grid-col flex-3 text-right"></div>
-      </div>
+
+          <div className="grid-row margin-top-0-important">
+            <div className="grid-col flex-9">
+              <div className="publishing-guidance font-sans-lg">
+                <MarkdownRender source={settings.publishingGuidance} />
+              </div>
+            </div>
+            <div className="grid-col flex-3 text-right"></div>
+          </div>
+        </>
+      )}
     </SettingsLayout>
   );
 }

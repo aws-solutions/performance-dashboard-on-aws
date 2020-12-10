@@ -58,7 +58,7 @@ function PublishedSiteSettings() {
         <Spinner
           style={{
             position: "fixed",
-            top: "30%",
+            top: "60%",
             left: "50%",
           }}
           label="Loading"

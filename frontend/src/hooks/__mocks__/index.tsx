@@ -75,6 +75,7 @@ export function useSettings() {
   return {
     reloadSettings: jest.fn(),
     settings,
+    loadingSettings: false,
   };
 }
 

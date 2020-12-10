@@ -25,7 +25,7 @@ const dateFormats = [
 
 function EditDateFormat() {
   const history = useHistory();
-  const { settings, reloadSettings } = useSettings(true);
+  const { settings, reloadSettings, loadingSettings } = useSettings(true);
   const { register, handleSubmit, reset } = useForm<FormValues>();
 
   useEffect(() => {
@@ -87,7 +87,7 @@ function EditDateFormat() {
           user interface.
         </p>
 
-        {!settings.updatedAt ? (
+        {loadingSettings ? (
           <Spinner className="text-center margin-top-9" label="Loading" />
         ) : (
           <>

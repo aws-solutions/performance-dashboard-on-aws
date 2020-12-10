@@ -42,7 +42,7 @@ class SettingsRepository extends BaseRepository {
    */
   public async updateSetting(
     settingKey: string,
-    settingValue: string,
+    settingValue: string | object,
     lastUpdatedAt: string,
     user: User
   ): Promise<string> {

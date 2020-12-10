@@ -8,6 +8,7 @@ import BackendService from "../services/BackendService";
  * Settings from the Backend.
  */
 const defaultSettings: Settings = {
+  dateTimeFormat: "YYYY-MM-DD hh:mm",
   publishingGuidance:
     "I acknowledge that I have reviewed the dashboard" +
     " and it is ready to publish",

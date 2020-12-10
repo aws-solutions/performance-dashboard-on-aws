@@ -88,7 +88,7 @@ function EditDateFormat() {
         </p>
 
         {loadingSettings ? (
-          <Spinner className="text-center margin-top-9" label="Loading" />
+          <Spinner className="margin-top-9 text-center" label="Loading" />
         ) : (
           <>
             <form

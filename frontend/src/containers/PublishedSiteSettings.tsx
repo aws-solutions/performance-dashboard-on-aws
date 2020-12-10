@@ -55,14 +55,7 @@ function PublishedSiteSettings() {
       </div>
 
       {loading ? (
-        <Spinner
-          style={{
-            position: "fixed",
-            top: "60%",
-            left: "50%",
-          }}
-          label="Loading"
-        />
+        <Spinner className="margin-top-3 text-center" label="Loading" />
       ) : (
         <div className="grid-row margin-top-0-important">
           <div className="grid-col flex-9">

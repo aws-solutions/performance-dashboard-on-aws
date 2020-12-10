@@ -30,14 +30,7 @@ function PublishingGuidanceSettings() {
       <AlertContainer />
 
       {loadingSettings ? (
-        <Spinner
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-          }}
-          label="Loading"
-        />
+        <Spinner className="margin-top-3 text-center" label="Loading" />
       ) : (
         <>
           <div className="grid-row margin-top-0-important">

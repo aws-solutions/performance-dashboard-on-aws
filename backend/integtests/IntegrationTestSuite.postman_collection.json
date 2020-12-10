@@ -26,7 +26,8 @@
 							"pm.test(\"has a setting for dateTimeFormat\", () => {",
 							"    const settings = pm.response.json();",
 							"    pm.expect(settings.dateTimeFormat).to.not.be.undefined;",
-							"    pm.collectionVariables.set(\"settings.dateTimeFormat\", settings.dateTimeFormat);",
+							"    pm.expect(settings.dateTimeFormat.date).to.be.a(\"string\");",
+							"    pm.expect(settings.dateTimeFormat.time).to.be.a(\"string\");",
 							"});",
 							"",
 							"pm.test(\"returns updatedAt field\", () => {",
@@ -183,7 +184,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"publishingGuidance\": \"{{settings.publishingGuidance}}\",\n    \"dateTimeFormat\": \"{{settings.dateTimeFormat}}\",\n    \"updatedAt\": \"{{settings.updatedAt}}\"\n}",
+					"raw": "{\n    \"dateTimeFormat\": {\n        \"date\": \"YYYY-MM-DD\",\n        \"time\": \"HH:mm\"\n    },\n    \"publishingGuidance\": \"{{settings.publishingGuidance}}\",\n    \"updatedAt\": \"{{settings.updatedAt}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1596,97 +1597,92 @@
 	],
 	"variable": [
 		{
-			"id": "cdc786c6-991f-42be-8f83-e8359ea372b5",
+			"id": "d6fa7f9b-6b63-433e-b7ac-776691696311",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "46e4842f-8b56-4497-a4f1-750ba1142593",
+			"id": "082a9f3a-1a98-4f9e-9f56-ad733c3491d9",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "dda604d0-7968-48f1-a972-101fe6998be4",
+			"id": "99b710ad-e6cb-455d-92f4-2f560a34556f",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "356cbcf3-f248-4a18-bcb8-6aaf0269bcb7",
+			"id": "da55b065-e4bc-47fe-a891-9848fbaf7b89",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "8a8228c7-edbf-4697-b60c-22c4c906c185",
+			"id": "134e5ed0-1926-4727-9dd2-30cbd9211770",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "69067ed7-0c60-4a42-8893-fd5de206a8d4",
+			"id": "6d2e5bfd-373a-46d3-86c1-7f68af775d60",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "d6da2d86-8780-4a3c-a180-d32dab28bab1",
+			"id": "7be8f17d-7bdc-4d01-87e4-3f4f0b215b63",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "6a60067a-fcaf-4e7d-bee2-217b92635714",
+			"id": "eea20f06-a51c-4129-a47b-89c7fcbb4b3f",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "e384f122-af84-4ba2-90ec-f09c8096f20e",
+			"id": "57b17375-cc01-453f-b0b8-a2d1e816acd1",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "9e9d547b-5e76-405b-b2d1-a76d25d59abf",
+			"id": "30855123-f9c6-4d7c-ab6c-f76d6864953c",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "2b2dabdd-22bd-468d-9b67-cf3e3fb42284",
+			"id": "8b032bce-4657-49f8-bf5d-e6013ea09d83",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "4d1f7ff1-b055-402e-9e6f-0dac25a389f3",
+			"id": "a83814cc-1ae6-4d55-8e40-038f2b54bfae",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "27658ca5-a425-49de-a56e-538fe5f29b1d",
+			"id": "22ab0b4f-c817-4d64-8288-611d89983bca",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "66f6d072-cbaa-47fe-9bb9-b416b295f0c5",
+			"id": "484aded3-cd08-4954-a18e-0f2698474b02",
 			"key": "settings.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "2ad61546-795a-451c-b49a-8c07f0ec4bfc",
+			"id": "33fc9180-e87c-4759-96cc-5a72ec917810",
 			"key": "settings.publishingGuidance",
 			"value": ""
 		},
 		{
-			"id": "db7c6f39-5d4e-4690-8cb7-1ed2a3f2fbb8",
-			"key": "settings.dateTimeFormat",
-			"value": ""
-		},
-		{
-			"id": "2823df04-43f2-4396-87c6-9525c374c2d2",
+			"id": "06b3e797-6b9e-4467-97b9-aab3340a531a",
 			"key": "homepage.title",
 			"value": ""
 		},
 		{
-			"id": "1ad59f46-b192-425c-81ce-481153d4e797",
+			"id": "63a5c91f-857d-4a5a-842b-0a6374276e4c",
 			"key": "homepage.description",
 			"value": ""
 		},
 		{
-			"id": "da580020-83cc-41ce-af1c-0abeb56b2733",
+			"id": "728911f5-e153-494b-942a-c4a178278019",
 			"key": "homepage.updatedAt",
 			"value": ""
 		}

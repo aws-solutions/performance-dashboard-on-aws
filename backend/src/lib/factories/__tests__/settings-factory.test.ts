@@ -5,7 +5,10 @@ describe("getDefaultSettings", () => {
   it("returns default values", () => {
     expect(SettingsFactory.getDefaultSettings()).toEqual({
       updatedAt: expect.anything(),
-      dateTimeFormat: "YYYY-MM-DD hh:mm",
+      dateTimeFormat: {
+        date: "YYYY-MM-DD",
+        time: "HH:mm",
+      },
       publishingGuidance:
         "I acknowledge that I have reviewed the dashboard and it is ready to publish",
     });
@@ -18,7 +21,10 @@ describe("fromItem", () => {
       pk: "Settings",
       sk: "Settings",
       type: "Settings",
-      dateTimeFormat: "YYYY-MM-DD hh:mm",
+      dateTimeFormat: {
+        date: "YYYY-MM-DD",
+        time: "HH:mm",
+      },
       publishingGuidance: "I acknowledge foo is equal to bar",
       updatedAt: "2020-12-09T17:21:42.823Z",
     };
@@ -26,7 +32,10 @@ describe("fromItem", () => {
     const settings = SettingsFactory.fromItem(item);
     expect(settings).toEqual({
       publishingGuidance: "I acknowledge foo is equal to bar",
-      dateTimeFormat: "YYYY-MM-DD hh:mm",
+      dateTimeFormat: {
+        date: "YYYY-MM-DD",
+        time: "HH:mm",
+      },
       updatedAt: new Date("2020-12-09T17:21:42.823Z"),
     });
   });

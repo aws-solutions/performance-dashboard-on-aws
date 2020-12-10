@@ -52,6 +52,11 @@ async function updateSettings(req: Request, res: Response) {
   }
 
   if (dateTimeFormat) {
+    if (!dateTimeFormat.date || !dateTimeFormat.time) {
+      res.status(400);
+      return res.send("Missing fields `date` or `time` in dateTimeFormat");
+    }
+
     updatedAt = await repo.updateSetting(
       "dateTimeFormat",
       dateTimeFormat,

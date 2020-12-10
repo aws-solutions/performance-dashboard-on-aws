@@ -62,6 +62,10 @@ export function useTopicAreas() {
 
 export function useSettings() {
   const [settings] = useState({
+    dateTimeFormat: {
+      date: "YYYY-MM-DD",
+      time: "HH:mm",
+    },
     publishingGuidance:
       "I acknowledge that I have reviewed the " +
       "dashboard and it is ready to publish",
@@ -71,6 +75,7 @@ export function useSettings() {
   return {
     reloadSettings: jest.fn(),
     settings,
+    loadingSettings: false,
   };
 }
 

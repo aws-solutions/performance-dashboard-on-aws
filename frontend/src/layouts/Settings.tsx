@@ -16,6 +16,7 @@ function SettingsLayout(props: LayoutProps) {
     topicarea: EnvConfig.topicAreasLabel,
     publishingguidance: "Publishing guidance",
     publishedsite: "Published site",
+    dateformat: "Date and time format",
   };
 
   const queryString = pathname.split("/");
@@ -90,6 +91,18 @@ function SettingsLayout(props: LayoutProps) {
                           to="/admin/settings/publishedsite"
                         >
                           {`${validSettings["publishedsite"]}`}
+                        </Link>
+                      </li>
+                    </ul>
+                    <ul className="usa-sidenav__sublist">
+                      <li className="usa-sidenav__item">
+                        <Link
+                          className={
+                            currentSetting === "dateformat" ? "usa-current" : ""
+                          }
+                          to="/admin/settings/dateformat"
+                        >
+                          {`${validSettings["dateformat"]}`}
                         </Link>
                       </li>
                     </ul>

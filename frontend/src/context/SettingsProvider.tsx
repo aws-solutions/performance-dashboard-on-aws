@@ -8,6 +8,10 @@ import BackendService from "../services/BackendService";
  * Settings from the Backend.
  */
 const defaultSettings: Settings = {
+  dateTimeFormat: {
+    date: "YYYY-MM-DD",
+    time: "HH:mm",
+  },
   publishingGuidance:
     "I acknowledge that I have reviewed the dashboard" +
     " and it is ready to publish",
@@ -16,11 +20,13 @@ const defaultSettings: Settings = {
 interface SettingsContextProps {
   settings: Settings;
   reloadSettings: Function;
+  loadingSettings: boolean;
 }
 
 export const SettingsContext = React.createContext<SettingsContextProps>({
   reloadSettings: () => {},
   settings: defaultSettings,
+  loadingSettings: false,
 });
 
 /**
@@ -33,17 +39,34 @@ function SettingsProvider(props: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<SettingsContextProps>({
     reloadSettings: () => {},
     settings: defaultSettings,
+    loadingSettings: false,
   });
 
-  const fetchData = useCallback(async () => {
+  const fetchSettings = useCallback(async () => {
     try {
+      /**
+       * Its important that the reloadSettings function does not
+       * change, because it causes an infinite loop due to the
+       * settings-hook having a useEffect on it.
+       */
+      setSettings({
+        reloadSettings: fetchSettings,
+        settings: defaultSettings,
+        loadingSettings: true,
+      });
       const data = await BackendService.fetchSettings();
       setSettings({
         settings: data,
-        reloadSettings: fetchData,
+        reloadSettings: fetchSettings,
+        loadingSettings: false,
       });
     } catch (err) {
       console.log("Failed to load settings from backend");
+      setSettings({
+        reloadSettings: fetchSettings,
+        settings: defaultSettings,
+        loadingSettings: false,
+      });
     }
   }, []);
 
@@ -60,20 +83,20 @@ function SettingsProvider(props: { children: React.ReactNode }) {
       switch (payload.event) {
         case "signIn":
         case "tokenRefresh":
-          fetchData();
+          fetchSettings();
           break;
         default:
           break;
       }
     },
-    [fetchData]
+    [fetchSettings]
   );
 
   useEffect(() => {
-    fetchData();
+    fetchSettings();
     Hub.listen("auth", listenAuthEvents);
     return () => Hub.remove("auth", listenAuthEvents);
-  }, [fetchData, listenAuthEvents]);
+  }, [fetchSettings, listenAuthEvents]);
 
   return (
     <SettingsContext.Provider value={settings}>

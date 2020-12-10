@@ -35,6 +35,8 @@ import EditTopicArea from "./containers/EditTopicArea";
 import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
 import FormattingCSV from "./containers/FormattingCSV";
+import DateFormatSettings from "./containers/DateFormatSettings";
+import EditDateFormat from "./containers/EditDateFormat";
 
 interface AppRoute {
   path: string;
@@ -72,7 +74,19 @@ const routes: Array<AppRoute> = [
     component: CreateTopicArea,
   },
   {
+    path: "/admin/settings/dateformat",
+    component: DateFormatSettings,
+  },
+  {
+    path: "/admin/settings/dateformat/edit",
+    component: EditDateFormat,
+  },
+  {
     path: "/admin/settings/topicarea/:topicAreaId/edit",
+    component: EditTopicArea,
+  },
+  {
+    path: "/admin/settings",
     component: EditTopicArea,
   },
   {

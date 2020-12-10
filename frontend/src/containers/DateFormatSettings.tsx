@@ -1,41 +1,46 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useSettings } from "../hooks";
+import dayjs from "dayjs";
 import SettingsLayout from "../layouts/Settings";
 import Button from "../components/Button";
-import MarkdownRender from "../components/MarkdownRender";
 import AlertContainer from "./AlertContainer";
 import Spinner from "../components/Spinner";
-import "./PublishingGuidanceSettings.css";
+import "./PublishedSiteSettings.css";
 
-function PublishingGuidanceSettings() {
+function DateFormatSettings() {
   const history = useHistory();
   const { settings, loadingSettings } = useSettings();
 
   const onEdit = () => {
-    history.push("/admin/settings/publishingguidance/edit");
+    history.push("/admin/settings/dateformat/edit");
   };
 
   return (
     <SettingsLayout>
-      <h1>Publishing guidance</h1>
+      <h1>Date and time format</h1>
 
       <p>
-        Publishing guidance is text that users must acknowledge before they
-        publish a dashboard. For example, use this text to remind them to check
-        for errors or mistakes, sensitive or confidential data, or guidance
-        specific to your organization.
+        Customize how your performance dashboard displays date and time in the
+        user interface.
       </p>
 
       <AlertContainer />
 
       {loadingSettings ? (
-        <Spinner className="margin-top-3 text-center" label="Loading" />
+        <Spinner
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+          }}
+          label="Loading"
+        />
       ) : (
         <>
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
-              <p className="text-bold">Acknowledgement statement</p>
+              <p className="text-bold">Date format</p>
             </div>
             <div className="grid-col flex-3 text-right">
               <Button
@@ -50,8 +55,16 @@ function PublishingGuidanceSettings() {
 
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
-              <div className="publishing-guidance font-sans-lg">
-                <MarkdownRender source={settings.publishingGuidance} />
+              <div className="published-site font-sans-lg">
+                {dayjs().format(settings.dateTimeFormat.date)} (
+                {settings.dateTimeFormat.date})
+              </div>
+              <div className="grid-col flex-9">
+                <p className="text-bold">Time format</p>
+              </div>
+              <div className="font-sans-lg">
+                {dayjs().format(settings.dateTimeFormat.time)} (
+                {settings.dateTimeFormat.time})
               </div>
             </div>
             <div className="grid-col flex-3 text-right"></div>
@@ -62,4 +75,4 @@ function PublishingGuidanceSettings() {
   );
 }
 
-export default PublishingGuidanceSettings;
+export default DateFormatSettings;

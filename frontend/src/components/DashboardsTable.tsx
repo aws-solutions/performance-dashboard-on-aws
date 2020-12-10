@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import Link from "./Link";
 import EnvConfig from "../services/EnvConfig";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { Dashboard, DashboardState } from "../models";
+import { useDateTimeFormatter } from "../hooks";
 import Button from "./Button";
 
 interface Props {
@@ -24,6 +24,7 @@ function DashboardsTable(props: Props) {
   const [selected, setSelected] = useState<SelectionHashMap>({});
   const [sortedBy, setSortedBy] = useState<ColumnType>("lastUpdated");
   const [direction, setDirection] = useState<Direction>("down");
+  const dateFormatter = useDateTimeFormatter();
 
   const onSelect = (dashboard: Dashboard) => {
     const selection = { [dashboard.id]: dashboard, ...selected };
@@ -211,7 +212,7 @@ function DashboardsTable(props: Props) {
               </td>
               <td>
                 <span className="font-sans-md">
-                  {dayjs(dashboard.updatedAt).format("YYYY-MM-DD hh:mm")}
+                  {dateFormatter(dashboard.updatedAt)}
                 </span>
               </td>
               <td>

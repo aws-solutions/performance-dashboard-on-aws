@@ -11,6 +11,7 @@ import { useHomepage } from "./homepage-hooks";
 import { useSettings } from "./settings-hooks";
 import { useJsonDataset, useSampleDataset } from "./dataset-hooks";
 import { useAdmin } from "./admin-hooks";
+import { useDateTimeFormatter } from "./datetime-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -36,4 +37,5 @@ export {
   useAdmin,
   useDashboardVersions,
   useSampleDataset,
+  useDateTimeFormatter,
 };

@@ -1,6 +1,9 @@
 export interface Settings {
   publishingGuidance: string;
-  dateTimeFormat: string;
+  dateTimeFormat: {
+    date: string;
+    time: string;
+  };
   updatedAt: Date;
 }
 
@@ -10,5 +13,8 @@ export interface SettingsItem {
   type: string;
   updatedAt?: string;
   publishingGuidance?: string;
-  dateTimeFormat?: string;
+  dateTimeFormat?: {
+    date: string;
+    time: string;
+  };
 }

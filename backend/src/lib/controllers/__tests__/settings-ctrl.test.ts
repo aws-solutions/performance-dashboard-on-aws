@@ -109,11 +109,17 @@ describe("updateSettings", () => {
   });
 
   it("updates dateTimeFormat setting", async () => {
-    req.body.dateTimeFormat = "YYYY-MM-DD hh:mm";
+    req.body.dateTimeFormat = {
+      date: "YYYY-MM-DD",
+      time: "hh:mm",
+    };
     await SettingsCtrl.updateSettings(req, res);
     expect(repository.updateSetting).toHaveBeenCalledWith(
       "dateTimeFormat",
-      "YYYY-MM-DD hh:mm",
+      {
+        date: "YYYY-MM-DD",
+        time: "hh:mm",
+      },
       now.toISOString(),
       user
     );

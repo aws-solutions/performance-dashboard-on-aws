@@ -32,16 +32,32 @@ async function updateSettings(req: Request, res: Response) {
     return;
   }
 
-  const { publishingGuidance, updatedAt } = req.body;
+  let { updatedAt } = req.body;
+  const { publishingGuidance, dateTimeFormat } = req.body;
 
   if (!updatedAt) {
     res.status(400);
     return res.send("Missing field `updatedAt` in body");
   }
 
+  const repo = SettingsRepository.getInstance();
+
   if (publishingGuidance) {
-    const repo = SettingsRepository.getInstance();
-    await repo.updatePublishingGuidance(publishingGuidance, updatedAt, user);
+    updatedAt = await repo.updateSetting(
+      "publishingGuidance",
+      publishingGuidance,
+      updatedAt,
+      user
+    );
+  }
+
+  if (dateTimeFormat) {
+    updatedAt = await repo.updateSetting(
+      "dateTimeFormat",
+      dateTimeFormat,
+      updatedAt,
+      user
+    );
   }
 
   res.send();

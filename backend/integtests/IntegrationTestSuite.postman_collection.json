@@ -23,6 +23,12 @@
 							"    pm.collectionVariables.set(\"settings.publishingGuidance\", settings.publishingGuidance);",
 							"});",
 							"",
+							"pm.test(\"has a setting for dateTimeFormat\", () => {",
+							"    const settings = pm.response.json();",
+							"    pm.expect(settings.dateTimeFormat).to.not.be.undefined;",
+							"    pm.collectionVariables.set(\"settings.dateTimeFormat\", settings.dateTimeFormat);",
+							"});",
+							"",
 							"pm.test(\"returns updatedAt field\", () => {",
 							"    const settings = pm.response.json();",
 							"    pm.expect(settings.updatedAt).to.not.be.undefined;",
@@ -177,7 +183,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"publishingGuidance\": \"{{settings.publishingGuidance}}\",\n    \"updatedAt\": \"{{settings.updatedAt}}\"\n}",
+					"raw": "{\n    \"publishingGuidance\": \"{{settings.publishingGuidance}}\",\n    \"dateTimeFormat\": \"{{settings.dateTimeFormat}}\",\n    \"updatedAt\": \"{{settings.updatedAt}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1590,92 +1596,97 @@
 	],
 	"variable": [
 		{
-			"id": "44b7d159-a9d5-4bd6-a343-eaab19ca9be5",
+			"id": "cdc786c6-991f-42be-8f83-e8359ea372b5",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "ff3a5241-9a92-4fd8-aad9-75f5e39a6eea",
+			"id": "46e4842f-8b56-4497-a4f1-750ba1142593",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "07445789-6706-456f-8fc3-e10d8aa1d06c",
+			"id": "dda604d0-7968-48f1-a972-101fe6998be4",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "9bbfa0d4-333e-49e4-8f9a-0bbdbb7f6a82",
+			"id": "356cbcf3-f248-4a18-bcb8-6aaf0269bcb7",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "7edc3fff-2fbf-4e59-8988-5bdf0d5e5cdf",
+			"id": "8a8228c7-edbf-4697-b60c-22c4c906c185",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "3e95eadf-282a-42f7-a012-afda9ad91078",
+			"id": "69067ed7-0c60-4a42-8893-fd5de206a8d4",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "9dcd58d4-fcca-402c-82f6-d3f6cb703955",
+			"id": "d6da2d86-8780-4a3c-a180-d32dab28bab1",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "e6a612c7-4427-406e-8c14-c2864d525928",
+			"id": "6a60067a-fcaf-4e7d-bee2-217b92635714",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "89f1bdc0-c6fd-47f6-bf6c-af42c6791bd3",
+			"id": "e384f122-af84-4ba2-90ec-f09c8096f20e",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "04413907-63e8-4b8c-a934-7eddab39ed69",
+			"id": "9e9d547b-5e76-405b-b2d1-a76d25d59abf",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "97c8fd42-2c92-46fd-9ac1-a9b79a8109ae",
+			"id": "2b2dabdd-22bd-468d-9b67-cf3e3fb42284",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "568ec390-0564-40b1-be51-327f5df880c9",
+			"id": "4d1f7ff1-b055-402e-9e6f-0dac25a389f3",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "9d9db034-91cc-4c6b-821b-a14bc928d7dd",
+			"id": "27658ca5-a425-49de-a56e-538fe5f29b1d",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "86b6deff-3e0d-468a-88d6-48e9c6dbcb7e",
+			"id": "66f6d072-cbaa-47fe-9bb9-b416b295f0c5",
 			"key": "settings.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "00133a4a-039c-4e9f-97f8-18cfe0cb4f86",
+			"id": "2ad61546-795a-451c-b49a-8c07f0ec4bfc",
 			"key": "settings.publishingGuidance",
 			"value": ""
 		},
 		{
-			"id": "1508ef1d-872e-4e52-9577-d853ec5102ca",
+			"id": "db7c6f39-5d4e-4690-8cb7-1ed2a3f2fbb8",
+			"key": "settings.dateTimeFormat",
+			"value": ""
+		},
+		{
+			"id": "2823df04-43f2-4396-87c6-9525c374c2d2",
 			"key": "homepage.title",
 			"value": ""
 		},
 		{
-			"id": "683b84f9-35d5-4128-aefb-a07ff14c5b7f",
+			"id": "1ad59f46-b192-425c-81ce-481153d4e797",
 			"key": "homepage.description",
 			"value": ""
 		},
 		{
-			"id": "0f4cbdb8-8d81-4e41-a15e-457f0c6cce3e",
+			"id": "da580020-83cc-41ce-af1c-0abeb56b2733",
 			"key": "homepage.updatedAt",
 			"value": ""
 		}

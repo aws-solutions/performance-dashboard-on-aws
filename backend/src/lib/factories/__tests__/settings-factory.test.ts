@@ -5,6 +5,7 @@ describe("getDefaultSettings", () => {
   it("returns default values", () => {
     expect(SettingsFactory.getDefaultSettings()).toEqual({
       updatedAt: expect.anything(),
+      dateTimeFormat: "YYYY-MM-DD hh:mm",
       publishingGuidance:
         "I acknowledge that I have reviewed the dashboard and it is ready to publish",
     });
@@ -17,13 +18,16 @@ describe("fromItem", () => {
       pk: "Settings",
       sk: "Settings",
       type: "Settings",
-      publishingGuidance:
-        "I acknowledge that I have reviewed the dashboard and it is ready to publish",
+      dateTimeFormat: "YYYY-MM-DD hh:mm",
+      publishingGuidance: "I acknowledge foo is equal to bar",
+      updatedAt: "2020-12-09T17:21:42.823Z",
     };
 
     const settings = SettingsFactory.fromItem(item);
-    expect(settings.publishingGuidance).toEqual(
-      "I acknowledge that I have reviewed the dashboard and it is ready to publish"
-    );
+    expect(settings).toEqual({
+      publishingGuidance: "I acknowledge foo is equal to bar",
+      dateTimeFormat: "YYYY-MM-DD hh:mm",
+      updatedAt: new Date("2020-12-09T17:21:42.823Z"),
+    });
   });
 });

@@ -2,6 +2,7 @@ import { User } from "../models/user";
 import { Settings, SettingsItem } from "../models/settings";
 import SettingsFactory from "../factories/settings-factory";
 import BaseRepository from "./base";
+import logger from "../services/logger";
 
 class SettingsRepository extends BaseRepository {
   protected static instance: SettingsRepository;
@@ -34,14 +35,21 @@ class SettingsRepository extends BaseRepository {
   }
 
   /**
-   * Updates the publishing guidance
+   * Updates a given setting key with the provided setting value.
+   * Performs conditional check based on the lastUpdatedAt and
+   * also updates the updatedAt value to now(). It returns the new
+   * updatedAt value as a date string in ISO format.
    */
-  public async updatePublishingGuidance(
-    publishingGuidance: string,
+  public async updateSetting(
+    settingKey: string,
+    settingValue: string,
     lastUpdatedAt: string,
     user: User
-  ) {
+  ): Promise<string> {
+    const expressionAttributeKey = `#${settingKey}`;
+    const expressionAttributeValue = `:${settingKey}`;
     try {
+      const now = new Date().toISOString();
       await this.dynamodb.update({
         TableName: this.tableName,
         Key: {
@@ -49,30 +57,35 @@ class SettingsRepository extends BaseRepository {
           sk: "Settings",
         },
         UpdateExpression:
-          "set #publishingGuidance = :publishingGuidance, #type = :type, #updatedAt = :updatedAt, #updatedBy = :userId",
+          `set ${expressionAttributeKey} = ${expressionAttributeValue}, ` +
+          `#type = :type, ` +
+          `#updatedAt = :updatedAt, ` +
+          `#updatedBy = :userId`,
         ConditionExpression:
           "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
-          ":publishingGuidance": publishingGuidance,
+          [expressionAttributeValue]: settingValue,
           ":lastUpdatedAt": lastUpdatedAt,
-          ":updatedAt": new Date().toISOString(),
+          ":updatedAt": now,
           ":userId": user.userId,
           ":type": "Settings",
         },
         ExpressionAttributeNames: {
-          "#publishingGuidance": "publishingGuidance",
+          [expressionAttributeKey]: settingKey,
           "#updatedBy": "updatedBy",
           "#updatedAt": "updatedAt",
           "#type": "type",
         },
       });
+      return now;
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.log("Someone else updated the item before us");
-        return;
-      } else {
-        throw error;
+        logger.warn(
+          "ConditionalCheckFailedException on update setting=%s",
+          settingKey
+        );
       }
+      throw error;
     }
   }
 }

@@ -78,7 +78,6 @@ describe("updateSettings", () => {
   beforeEach(() => {
     req = ({
       body: {
-        publishingGuidance: "abc",
         updatedAt: now.toISOString(),
       },
     } as any) as Request;
@@ -98,10 +97,23 @@ describe("updateSettings", () => {
     expect(res.send).toBeCalledWith("Missing field `updatedAt` in body");
   });
 
-  it("update the settings", async () => {
+  it("updates publishing guidance setting", async () => {
+    req.body.publishingGuidance = "abc";
     await SettingsCtrl.updateSettings(req, res);
-    expect(repository.updatePublishingGuidance).toHaveBeenCalledWith(
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "publishingGuidance",
       "abc",
+      now.toISOString(),
+      user
+    );
+  });
+
+  it("updates dateTimeFormat setting", async () => {
+    req.body.dateTimeFormat = "YYYY-MM-DD hh:mm";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "dateTimeFormat",
+      "YYYY-MM-DD hh:mm",
       now.toISOString(),
       user
     );

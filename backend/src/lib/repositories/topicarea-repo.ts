@@ -145,7 +145,6 @@ class TopicAreaRepository extends BaseRepository {
     );
 
     // 3. Update topicAreaName in every dashboard in the query result
-    console.log("Updating dashboards", dashboards);
     await dashboardRepo.updateTopicAreaName(dashboards, name);
   }
 }

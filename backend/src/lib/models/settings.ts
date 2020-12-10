@@ -1,5 +1,6 @@
 export interface Settings {
   publishingGuidance: string;
+  dateTimeFormat: string;
   updatedAt: Date;
 }
 
@@ -8,5 +9,6 @@ export interface SettingsItem {
   sk: string;
   type: string;
   updatedAt?: string;
-  publishingGuidance: string;
+  publishingGuidance?: string;
+  dateTimeFormat?: string;
 }

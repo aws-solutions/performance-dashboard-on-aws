@@ -3,6 +3,7 @@
  * testing easier. Prevents the actual backend API
  * calls to happen and instead returns dummy data.
  */
+import dayjs from "dayjs";
 import { useState } from "react";
 import { DashboardState } from "../../models";
 
@@ -273,5 +274,11 @@ export function useTopicArea() {
       name: "Health Topic",
       createdBy: "johndoe",
     },
+  };
+}
+
+export function useDateTimeFormatter() {
+  return (dateToDisplay: Date) => {
+    return dayjs(dateToDisplay).format("YYYY-MM-DD HH:mm");
   };
 }

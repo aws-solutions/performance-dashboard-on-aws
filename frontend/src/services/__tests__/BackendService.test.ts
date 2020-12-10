@@ -304,3 +304,20 @@ test("renameTopicArea makes a PUT request to topicarea API", async () => {
     })
   );
 });
+
+test("updateSetting makes a PUT request to settings API", async () => {
+  const settingKey = "publishingGuidance";
+  const settingValue = "foo=bar";
+  const now = new Date();
+  await BackendService.updateSetting(settingKey, settingValue, now);
+  expect(API.put).toHaveBeenCalledWith(
+    "BackendApi",
+    `settings`,
+    expect.objectContaining({
+      body: {
+        updatedAt: now,
+        publishingGuidance: "foo=bar",
+      },
+    })
+  );
+});

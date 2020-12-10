@@ -10,10 +10,9 @@ import "./PublishedSiteSettings.css";
 function DateFormatSettings() {
   const history = useHistory();
   const { settings } = useSettings();
-  const [dateFormat, timeFormat] = settings.dateTimeFormat.split(" ");
 
   const onEdit = () => {
-    history.push("/admin/settings/publishedsite/edit");
+    history.push("/admin/settings/dateformat/edit");
   };
 
   return (
@@ -41,13 +40,15 @@ function DateFormatSettings() {
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
           <div className="published-site font-sans-lg">
-            {dayjs().format(dateFormat)} ({dateFormat})
+            {dayjs().format(settings.dateTimeFormat.date)} (
+            {settings.dateTimeFormat.date})
           </div>
           <div className="grid-col flex-9">
             <p className="text-bold">Time format</p>
           </div>
           <div className="font-sans-lg">
-            {dayjs().format(timeFormat)} ({timeFormat})
+            {dayjs().format(settings.dateTimeFormat.time)} (
+            {settings.dateTimeFormat.time})
           </div>
         </div>
         <div className="grid-col flex-3 text-right"></div>

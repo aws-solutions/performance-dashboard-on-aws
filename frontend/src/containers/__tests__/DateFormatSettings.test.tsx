@@ -33,6 +33,6 @@ test("renders the time format", async () => {
   mockDayJs.mockReturnValueOnce({
     format: jest.fn().mockReturnValueOnce("03:30"),
   });
-  const timeFormat = screen.getByText("03:30 (hh:mm)");
+  const timeFormat = screen.getByText("03:30 (HH:mm)");
   expect(timeFormat).toBeInTheDocument();
 });

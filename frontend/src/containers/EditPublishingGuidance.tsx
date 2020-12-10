@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSettings } from "../hooks";
@@ -14,8 +14,16 @@ interface FormValues {
 
 function EditPublishingGuidance() {
   const history = useHistory();
-  const { settings, reloadSettings } = useSettings();
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { settings, reloadSettings } = useSettings(true);
+  const { register, handleSubmit, reset } = useForm<FormValues>();
+
+  useEffect(() => {
+    // Set the form values when the newly fetched Settings
+    // come back from the backend.
+    reset({
+      publishingGuidance: settings.publishingGuidance,
+    });
+  }, [reset, settings]);
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.editSettings(
@@ -39,7 +47,7 @@ function EditPublishingGuidance() {
   const crumbs = [
     {
       label: "Settings",
-      url: "/admin/settings/topicarea",
+      url: "/admin/settings",
     },
     {
       label: "Publishing guidance",

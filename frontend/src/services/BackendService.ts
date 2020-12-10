@@ -284,6 +284,21 @@ async function editSettings(publishingGuidance: string, updatedAt: Date) {
   });
 }
 
+async function updateSetting(
+  settingKey: string,
+  settingValue: any,
+  updatedAt: Date
+) {
+  const headers = await authHeaders();
+  return await API.put(apiName, "settings", {
+    headers,
+    body: {
+      [settingKey]: settingValue,
+      updatedAt,
+    },
+  });
+}
+
 async function fetchPublicDashboard(
   dashboardId: string
 ): Promise<PublicDashboard> {
@@ -349,6 +364,7 @@ export default {
   fetchPublicDashboard,
   fetchSettings,
   editSettings,
+  updateSetting,
   publishPending,
   archive,
   createDraft,

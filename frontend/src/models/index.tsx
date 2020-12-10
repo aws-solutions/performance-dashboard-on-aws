@@ -120,7 +120,10 @@ export type Homepage = {
 
 export type Settings = {
   publishingGuidance: string;
-  dateTimeFormat: string;
+  dateTimeFormat: {
+    date: string;
+    time: string;
+  };
   updatedAt?: Date;
 };
 

@@ -1,15 +1,15 @@
-a {
+.Markdown a {
   color: #565c65 !important;
 }
 
-a:hover {
+.Markdown a:hover {
   color: #1b1b1b !important;
 }
 
-a:active {
+.Markdown a:active {
   color: #1b1b1b !important;
 }
 
-a:visited {
+.Markdown a:visited {
   color: #1b1b1b !important;
 }

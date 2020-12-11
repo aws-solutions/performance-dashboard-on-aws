@@ -20,7 +20,7 @@ const MarkdownRender = (props: MarkdownRenderProps) => {
         "text",
       ]}
       linkTarget="_blank"
-      className={props.className}
+      className={`Markdown ${props.className}`}
       source={props.source}
     />
   );

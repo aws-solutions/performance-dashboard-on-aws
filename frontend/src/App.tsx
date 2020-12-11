@@ -3,9 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import SettingsProvider from "./context/SettingsProvider";
 
-import withMainLayout from "./layouts/Main";
+import withPublicLayout from "./layouts/Public";
 import withAdminLayout from "./layouts/Admin";
-import { withFooterLayout } from "./layouts/Footer";
 
 import Home from "./containers/Home";
 import DashboardListing from "./containers/DashboardListing";
@@ -163,6 +162,11 @@ const routes: Array<AppRoute> = [
     public: true,
   },
   {
+    path: "/404/page-not-found",
+    component: FourZeroFour,
+    public: true,
+  },
+  {
     path: "/",
     component: Home,
     public: true,
@@ -176,10 +180,8 @@ function App() {
         <Switch>
           {routes.map((route) => {
             const component = route.public
-              ? withMainLayout(route.component)
-              : withAuthenticator(
-                  withFooterLayout(withAdminLayout(route.component))
-                );
+              ? withPublicLayout(route.component)
+              : withAuthenticator(withAdminLayout(route.component));
             return (
               <Route
                 exact
@@ -191,7 +193,7 @@ function App() {
           })}
           <Route
             key={"/admin/"}
-            component={withFooterLayout(withAdminLayout(FourZeroFour))}
+            component={withAdminLayout(FourZeroFour)}
             path={"/admin/"}
           />
         </Switch>

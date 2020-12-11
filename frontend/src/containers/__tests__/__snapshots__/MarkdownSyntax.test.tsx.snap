@@ -42,13 +42,17 @@ exports[`renders the markdown syntax component 1`] = `
           I love **bold** text
         </td>
         <td>
-          <p>
-            I love 
-            <strong>
-              bold
-            </strong>
-             text
-          </p>
+          <div
+            class="Markdown undefined"
+          >
+            <p>
+              I love 
+              <strong>
+                bold
+              </strong>
+               text
+            </p>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -85,15 +89,19 @@ exports[`renders the markdown syntax component 1`] = `
           I love [AWS](https://aws.amazon.com)
         </td>
         <td>
-          <p>
-            I love 
-            <a
-              href="https://aws.amazon.com"
-              target="_blank"
-            >
-              AWS
-            </a>
-          </p>
+          <div
+            class="Markdown undefined"
+          >
+            <p>
+              I love 
+              <a
+                href="https://aws.amazon.com"
+                target="_blank"
+              >
+                AWS
+              </a>
+            </p>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -141,26 +149,30 @@ exports[`renders the markdown syntax component 1`] = `
           </div>
         </td>
         <td>
-          <ul>
-            <li>
-              First item
-            </li>
-          </ul>
-          <ul>
-            <li>
-              Second item
-            </li>
-          </ul>
-          <ul>
-            <li>
-              Third item
-            </li>
-          </ul>
-          <ul>
-            <li>
-              Fourth item
-            </li>
-          </ul>
+          <div
+            class="Markdown undefined"
+          >
+            <ul>
+              <li>
+                First item
+              </li>
+            </ul>
+            <ul>
+              <li>
+                Second item
+              </li>
+            </ul>
+            <ul>
+              <li>
+                Third item
+              </li>
+            </ul>
+            <ul>
+              <li>
+                Fourth item
+              </li>
+            </ul>
+          </div>
         </td>
       </tr>
     </tbody>

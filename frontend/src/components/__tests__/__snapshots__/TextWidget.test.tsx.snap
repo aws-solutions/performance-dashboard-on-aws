@@ -8,13 +8,17 @@ exports[`renders markdown text 1`] = `
     <h2>
       Benefits of Bananas
     </h2>
-    <p>
-      This 
-      <strong>
-        text
-      </strong>
-       has 
-    </p>
+    <div
+      class="Markdown undefined"
+    >
+      <p>
+        This 
+        <strong>
+          text
+        </strong>
+         has 
+      </p>
+    </div>
   </div>
 </div>
 `;

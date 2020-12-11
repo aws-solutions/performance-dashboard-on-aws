@@ -20,7 +20,7 @@ exports[`renders a dashboard header for a published view 1`] = `
     class="margin-y-2"
   >
     <div
-      class="font-sans-lg usa-prose margin-top-0"
+      class="Markdown font-sans-lg usa-prose margin-top-0"
     >
       <p>
         A test descripttion
@@ -49,9 +49,13 @@ exports[`renders a dashboard header for an unpublished view 1`] = `
   <div
     class=""
   >
-    <p>
-      A test descripttion
-    </p>
+    <div
+      class="Markdown "
+    >
+      <p>
+        A test descripttion
+      </p>
+    </div>
   </div>
 </div>
 `;
@@ -76,9 +80,13 @@ exports[`renders a dashboard header for an unpublished view with a link 1`] = `
   <div
     class=""
   >
-    <p>
-      A test descripttion
-    </p>
+    <div
+      class="Markdown "
+    >
+      <p>
+        A test descripttion
+      </p>
+    </div>
   </div>
 </div>
 `;

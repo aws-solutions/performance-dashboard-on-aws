@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import SettingsProvider from "./context/SettingsProvider";
 
@@ -191,11 +196,7 @@ function App() {
               />
             );
           })}
-          <Route
-            key={"/admin/"}
-            component={withAdminLayout(FourZeroFour)}
-            path={"/admin/"}
-          />
+          <Redirect from="*" to="/404/page-not-found" />
         </Switch>
       </Router>
     </SettingsProvider>

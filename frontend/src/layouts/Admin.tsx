@@ -1,27 +1,28 @@
 import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { useAdmin } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import EnvConfig from "../services/EnvConfig";
+import Footer from "./Footer";
 import logo from "../logo.svg";
-import { Link } from "react-router-dom";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-async function signOut(event: React.MouseEvent) {
-  try {
-    await Auth.signOut();
-  } catch (error) {
-    console.log("error signing out: ", error);
-    event.preventDefault();
-  }
-}
-
 function AdminLayout(props: LayoutProps) {
   const { username } = useAdmin();
+
+  const signOut = async (event: React.MouseEvent) => {
+    try {
+      await Auth.signOut();
+    } catch (error) {
+      console.log("error signing out: ", error);
+      event.preventDefault();
+    }
+  };
 
   return (
     <>
@@ -32,9 +33,9 @@ function AdminLayout(props: LayoutProps) {
             <div className="usa-logo margin-top-2" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
                 <img src={logo} alt="logo" className="logo" />
-                <a href="/admin" title="Home" aria-label="Home">
+                <Link to="/admin" title="Home" aria-label="Home" className="">
                   {EnvConfig.brandName}
-                </a>
+                </Link>
               </em>
             </div>
             <button className="usa-menu-btn">Menu</button>
@@ -76,6 +77,7 @@ function AdminLayout(props: LayoutProps) {
       <main className="padding-y-3">
         <div className="grid-container">{props.children}</div>
       </main>
+      <Footer />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "../components/Link";
+import Footer from "../layouts/Footer";
 
 function FourZeroFour() {
   return (
@@ -14,6 +15,7 @@ function FourZeroFour() {
           <Link to="/">homepage</Link>.
         </p>
       </div>
+      <Footer />
     </>
   );
 }

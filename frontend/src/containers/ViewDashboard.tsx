@@ -1,12 +1,10 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { usePublicDashboard } from "../hooks";
 import WidgetRender from "../components/WidgetRender";
-import FourZeroFour from "./FourZeroFour";
-import FooterLayout from "../layouts/Footer";
 import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 
@@ -47,9 +45,7 @@ function ViewDashboard() {
       })}
     </>
   ) : (
-    <FooterLayout>
-      <FourZeroFour />
-    </FooterLayout>
+    <Redirect to="/404/page-not-found" />
   );
 }
 

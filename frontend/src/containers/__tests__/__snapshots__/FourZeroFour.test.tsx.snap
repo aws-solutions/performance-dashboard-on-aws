@@ -31,5 +31,22 @@ exports[`renders a FourZeroFour component 1`] = `
       .
     </p>
   </div>
+  <footer>
+    <div
+      class="grid-container margin-bottom-9 text-base font-sans-sm"
+    >
+      <hr
+        class="margin-top-9 border-base-lightest"
+      />
+      Having technical issues with the system?
+       
+      <a
+        class="text-base"
+        href="mailto:support@example.com?subject=Performance Dashboard Assistance"
+      >
+        Contact support
+      </a>
+    </div>
+  </footer>
 </div>
 `;

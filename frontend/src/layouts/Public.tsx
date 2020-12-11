@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import EnvConfig from "../services/EnvConfig";
@@ -8,7 +9,7 @@ interface LayoutProps {
   children?: ReactNode;
 }
 
-function MainLayout(props: LayoutProps) {
+function PublicLayout(props: LayoutProps) {
   return (
     <>
       <div className="usa-overlay"></div>
@@ -18,9 +19,9 @@ function MainLayout(props: LayoutProps) {
             <div className="usa-logo margin-top-2" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
                 <img src={logo} alt="logo" className="logo" />
-                <a href="/" title="Home" aria-label="Home">
+                <Link to="/" title="Home" aria-label="Home">
                   {EnvConfig.brandName}
-                </a>
+                </Link>
               </em>
             </div>
             <button className="usa-menu-btn">Menu</button>
@@ -31,12 +32,12 @@ function MainLayout(props: LayoutProps) {
             </button>
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
-                <a
-                  href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
+                <Link
+                  to={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
                   className="usa-nav__link"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -49,12 +50,12 @@ function MainLayout(props: LayoutProps) {
   );
 }
 
-export const withMainLayout = (
+export const withPublicLayout = (
   component: React.ComponentType
 ): React.FunctionComponent<{}> => {
   return function () {
-    return <MainLayout>{React.createElement(component)}</MainLayout>;
+    return <PublicLayout>{React.createElement(component)}</PublicLayout>;
   };
 };
 
-export default withMainLayout;
+export default withPublicLayout;

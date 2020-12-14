@@ -104,7 +104,19 @@ export class BackendApi extends cdk.Construct {
     topicarea.addMethod("DELETE", apiIntegration, methodProps);
 
     const datasets = this.api.root.addResource("dataset");
+    datasets.addMethod("GET", apiIntegration, methodProps);
     datasets.addMethod("POST", apiIntegration, methodProps);
+
+    const dataset = datasets.addResource("{id}");
+    dataset.addMethod("GET", apiIntegration, methodProps);
+
+    const ingestApi = this.api.root.addResource("ingestapi");
+    const ingestApiDatasets = ingestApi.addResource("dataset");
+    ingestApiDatasets.addMethod("POST", apiIntegration, methodProps);
+
+    const ingestApiDataset = ingestApiDatasets.addResource("{id}");
+    ingestApiDataset.addMethod("PUT", apiIntegration, methodProps);
+    ingestApiDataset.addMethod("DELETE", apiIntegration, methodProps);
 
     const settings = this.api.root.addResource("settings");
     settings.addMethod("GET", apiIntegration, methodProps);

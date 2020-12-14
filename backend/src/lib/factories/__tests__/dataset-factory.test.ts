@@ -1,3 +1,4 @@
+import { DatasetItem, SourceType } from "../../models/dataset";
 import * as uuid from "uuid";
 import DatasetFactory from "../dataset-factory";
 
@@ -12,6 +13,7 @@ it("creates a new dataset object", () => {
       raw: "abc.csv",
       json: "abc.json",
     },
+    sourceType: SourceType.FileUpload,
   });
 
   expect(dataset).toEqual({
@@ -22,6 +24,7 @@ it("creates a new dataset object", () => {
       raw: "abc.csv",
       json: "abc.json",
     },
+    sourceType: SourceType.FileUpload,
   });
 });
 
@@ -33,6 +36,7 @@ it("converts a dataset into a dynamodb item", () => {
       raw: "abc.csv",
       json: "abc.json",
     },
+    sourceType: SourceType.FileUpload,
   });
 
   const item = DatasetFactory.toItem(dataset);
@@ -46,5 +50,33 @@ it("converts a dataset into a dynamodb item", () => {
       raw: "abc.csv",
       json: "abc.json",
     },
+    sourceType: SourceType.FileUpload,
+  });
+});
+
+it("converts a dynamo item into a dataset", () => {
+  const item: DatasetItem = {
+    pk: "Dataset#123",
+    sk: "Dataset#123",
+    type: "Dataset",
+    fileName: "covid.csv",
+    createdBy: "johndoe",
+    s3Key: {
+      raw: "abc.csv",
+      json: "abc.json",
+    },
+    sourceType: SourceType.IngestApi,
+  };
+
+  const dataset = DatasetFactory.fromItem(item);
+  expect(dataset).toEqual({
+    id: "123",
+    fileName: "covid.csv",
+    createdBy: "johndoe",
+    s3Key: {
+      raw: "abc.csv",
+      json: "abc.json",
+    },
+    sourceType: SourceType.IngestApi,
   });
 });

@@ -1,3 +1,8 @@
+export enum SourceType {
+  IngestApi = "IngestApi",
+  FileUpload = "FileUpload",
+}
+
 export interface Dataset {
   id: string;
   createdBy: string;
@@ -6,7 +11,10 @@ export interface Dataset {
     raw: string;
     json: string;
   };
+  sourceType: SourceType;
 }
+
+export type DatasetList = Array<Dataset>;
 
 export interface DatasetItem {
   pk: string;
@@ -18,4 +26,5 @@ export interface DatasetItem {
     raw: string;
     json: string;
   };
+  sourceType: string;
 }

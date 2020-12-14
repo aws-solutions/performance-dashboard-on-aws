@@ -11,7 +11,7 @@ import {
   PublicDashboard,
 } from "../models/dashboard";
 
-const DASHBOARD: string = "Dashboard";
+const DASHBOARD_ITEM_TYPE: string = "Dashboard";
 
 function createNew(
   name: string,
@@ -72,7 +72,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
   let item: DashboardItem = {
     pk: itemId(dashboard.id),
     sk: itemId(dashboard.id),
-    type: DASHBOARD,
+    type: DASHBOARD_ITEM_TYPE,
     version: dashboard.version,
     parentDashboardId: dashboard.parentDashboardId,
     dashboardName: dashboard.name,
@@ -106,7 +106,7 @@ function fromItem(item: DashboardItem): Dashboard {
 }
 
 function itemId(id: string): string {
-  return `${DASHBOARD}#${id}`;
+  return `${DASHBOARD_ITEM_TYPE}#${id}`;
 }
 
 function toPublic(dashboard: Dashboard): PublicDashboard {

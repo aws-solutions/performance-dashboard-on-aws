@@ -2,6 +2,43 @@ import { Request, Response } from "express";
 import AuthService from "../services/auth";
 import DatasetRepository from "../repositories/dataset-repo";
 import DatasetFactory from "../factories/dataset-factory";
+import { SourceType } from "../models/dataset";
+import { ItemNotFound } from "../errors";
+
+async function listDatasets(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  const repo = DatasetRepository.getInstance();
+  const datasets = await repo.listDatasets();
+  res.json(datasets);
+}
+
+async function getDatasetById(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+  if (!user) {
+    res.status(401);
+    return res.send("Unauthorized");
+  }
+
+  const { id } = req.params;
+  const repo = DatasetRepository.getInstance();
+
+  try {
+    const dataset = await repo.getDatasetById(id);
+    return res.json(dataset);
+  } catch (err) {
+    if (err instanceof ItemNotFound) {
+      res.status(404);
+      return res.send("Dataset not found");
+    }
+    throw err;
+  }
+}
 
 async function createDataset(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
@@ -23,6 +60,7 @@ async function createDataset(req: Request, res: Response) {
       fileName,
       createdBy: user.userId,
       s3Key,
+      sourceType: SourceType.FileUpload,
     });
 
     const repo = DatasetRepository.getInstance();
@@ -36,4 +74,6 @@ async function createDataset(req: Request, res: Response) {
 
 export default {
   createDataset,
+  listDatasets,
+  getDatasetById,
 };

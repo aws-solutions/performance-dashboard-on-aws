@@ -222,8 +222,8 @@ async function publishDashboard(req: Request, res: Response) {
   }
 
   const repo = DashboardRepository.getInstance();
-
   const dashboard = await repo.getDashboardById(id);
+
   if (
     dashboard.state !== DashboardState.PublishPending &&
     dashboard.state !== DashboardState.Archived
@@ -232,12 +232,29 @@ async function publishDashboard(req: Request, res: Response) {
     return res.send("Dashboard must be in publish pending or archived state");
   }
 
+  // Automatically generate a friendlyURL for this dashboard. In a future sprint,
+  // we will allow the user to define the URL in the UI before publishing.
+  const friendlyURL = DashboardFactory.generateFriendlyURL(dashboard.name);
+  try {
+    // Make sure the URL is not being used already by another dashboard family
+    const existingDashboard = await repo.getDashboardByFriendlyURL(friendlyURL);
+    if (existingDashboard.parentDashboardId !== dashboard.parentDashboardId) {
+      res.status(409);
+      return res.send(`The friendlyURL ${friendlyURL} is already being used`);
+    }
+  } catch (err) {
+    if (!(err instanceof ItemNotFound)) {
+      throw err;
+    }
+  }
+
   await repo.publishDashboard(
     id,
     dashboard.parentDashboardId,
     updatedAt,
     releaseNotes || "",
-    user
+    user,
+    friendlyURL
   );
   res.send();
 }

@@ -200,7 +200,8 @@ describe("DashboardRepository.publishDashboard", () => {
       "456",
       now.toISOString(),
       "release note test",
-      user
+      user,
+      "my-friendly-url"
     );
 
     expect(dynamodb.transactWrite).toHaveBeenCalledWith({
@@ -213,13 +214,16 @@ describe("DashboardRepository.publishDashboard", () => {
               sk: DashboardFactory.itemId("123"),
             },
             UpdateExpression:
-              "set #state = :state, #updatedAt = :updatedAt, #releaseNotes = :releaseNotes, #updatedBy = :userId",
+              "set #state = :state, #updatedAt = :updatedAt, " +
+              "#releaseNotes = :releaseNotes, #updatedBy = :userId, " +
+              "#friendlyURL = :friendlyURL",
             ExpressionAttributeValues: {
               ":state": "Published",
               ":lastUpdatedAt": now.toISOString(),
               ":updatedAt": now.toISOString(),
               ":releaseNotes": "release note test",
               ":userId": user.userId,
+              ":friendlyURL": "my-friendly-url",
             },
             ConditionExpression: "#updatedAt <= :lastUpdatedAt",
             ExpressionAttributeNames: {
@@ -227,6 +231,7 @@ describe("DashboardRepository.publishDashboard", () => {
               "#state": "state",
               "#updatedAt": "updatedAt",
               "#updatedBy": "updatedBy",
+              "#friendlyURL": "friendlyURL",
             },
           },
         },
@@ -262,7 +267,8 @@ describe("DashboardRepository.publishDashboard", () => {
       parentDashboardId,
       new Date().toISOString(),
       "release note test",
-      user
+      user,
+      "my-friendly-url"
     );
 
     const transaction = dynamodb.transactWrite.mock.calls[0][0];
@@ -277,7 +283,8 @@ describe("DashboardRepository.publishDashboard", () => {
               sk: DashboardFactory.itemId("001"),
             },
             UpdateExpression:
-              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+              "REMOVE #friendlyURL", // Make sure friendlyURL is removed
             ExpressionAttributeValues: {
               ":state": "Inactive", // Verify Archived version moves to Inactive
               ":updatedAt": now.toISOString(),
@@ -287,6 +294,7 @@ describe("DashboardRepository.publishDashboard", () => {
               "#state": "state",
               "#updatedAt": "updatedAt",
               "#updatedBy": "updatedBy",
+              "#friendlyURL": "friendlyURL",
             },
           },
         }),
@@ -324,7 +332,8 @@ describe("DashboardRepository.publishDashboard", () => {
       parentDashboardId,
       new Date().toISOString(),
       "release note test",
-      user
+      user,
+      "my-friendly-url"
     );
 
     const transaction = dynamodb.transactWrite.mock.calls[0][0];
@@ -339,7 +348,8 @@ describe("DashboardRepository.publishDashboard", () => {
               sk: DashboardFactory.itemId("001"),
             },
             UpdateExpression:
-              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+              "REMOVE #friendlyURL", // Make sure friendlyURL is removed
             ExpressionAttributeValues: {
               ":state": "Inactive", // Verify Published version moves to Inactive
               ":updatedAt": now.toISOString(),
@@ -349,6 +359,7 @@ describe("DashboardRepository.publishDashboard", () => {
               "#state": "state",
               "#updatedAt": "updatedAt",
               "#updatedBy": "updatedBy",
+              "#friendlyURL": "friendlyURL",
             },
           },
         }),
@@ -397,10 +408,14 @@ describe("DashboardRepository.publishPendingDashboard", () => {
 });
 
 describe("DashboardRepository.archiveDashboard", () => {
-  it("should call update with the correct keys", async () => {
-    const now = new Date();
+  let now: Date;
+  beforeEach(() => {
+    now = new Date();
     jest.useFakeTimers("modern");
     jest.setSystemTime(now);
+  });
+
+  it("should call update with the correct keys", async () => {
     await repo.archiveDashboard("123", now.toISOString(), user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -414,14 +429,12 @@ describe("DashboardRepository.archiveDashboard", () => {
   });
 
   it("should call update with all the fields", async () => {
-    const now = new Date();
-    jest.useFakeTimers("modern");
-    jest.setSystemTime(now);
     await repo.archiveDashboard("123", now.toISOString(), user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+          "REMOVE #friendlyURL",
         ExpressionAttributeValues: {
           ":state": "Archived",
           ":lastUpdatedAt": now.toISOString(),
@@ -434,10 +447,14 @@ describe("DashboardRepository.archiveDashboard", () => {
 });
 
 describe("DashboardRepository.moveToDraft", () => {
-  it("should call update with the correct keys", async () => {
-    const now = new Date();
+  let now: Date;
+  beforeEach(() => {
+    now = new Date();
     jest.useFakeTimers("modern");
     jest.setSystemTime(now);
+  });
+
+  it("should call update with the correct keys", async () => {
     await repo.moveToDraft("123", now.toISOString(), user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -451,9 +468,6 @@ describe("DashboardRepository.moveToDraft", () => {
   });
 
   it("should call update with all the fields", async () => {
-    const now = new Date();
-    jest.useFakeTimers("modern");
-    jest.setSystemTime(now);
     await repo.moveToDraft("123", now.toISOString(), user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({

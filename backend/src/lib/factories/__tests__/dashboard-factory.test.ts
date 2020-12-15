@@ -275,3 +275,20 @@ describe("createDraftFromDashboard", () => {
     expect(draft.friendlyURL).toBeUndefined();
   });
 });
+
+describe("generateFriendlyURL", () => {
+  test("generates a sanitized URL", () => {
+    expect(factory.generateFriendlyURL("COVID-19")).toEqual("covid-19");
+    expect(factory.generateFriendlyURL("La Construcción")).toEqual(
+      "la-construccin"
+    );
+    expect(factory.generateFriendlyURL("Jen'O Brien")).toEqual("jeno-brien");
+    expect(factory.generateFriendlyURL("Performance Dashboard @ AWS")).toEqual(
+      "performance-dashboard-aws"
+    );
+    expect(factory.generateFriendlyURL("This is - great")).toEqual(
+      "this-is-great"
+    );
+    expect(factory.generateFriendlyURL("A Construção")).toEqual("a-construo");
+  });
+});

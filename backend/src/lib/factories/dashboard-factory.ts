@@ -137,6 +137,15 @@ function toVersion(dashboard: Dashboard): DashboardVersion {
   };
 }
 
+function generateFriendlyURL(dashboardName: string): string {
+  return dashboardName
+    .trim()
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9 -]+/g, "") // remove non-alphanumeric characters
+    .replace(/\s+/g, "-") // replace spaces for dashes
+    .replace(/-+/g, "-"); // convert consecutive dashes to singular dash
+}
+
 export default {
   createNew,
   createDraftFromDashboard,
@@ -145,4 +154,5 @@ export default {
   itemId,
   toPublic,
   toVersion,
+  generateFriendlyURL,
 };

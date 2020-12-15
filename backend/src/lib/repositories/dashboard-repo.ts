@@ -196,7 +196,8 @@ class DashboardRepository extends BaseRepository {
     parentDashboardId: string,
     lastUpdatedAt: string,
     releaseNotes: string,
-    user: User
+    user: User,
+    friendlyURL: string
   ) {
     try {
       const transactions: DocumentClient.TransactWriteItemList = [];
@@ -220,7 +221,7 @@ class DashboardRepository extends BaseRepository {
               sk: DashboardFactory.itemId(publishedDashboardId),
             },
             UpdateExpression:
-              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, REMOVE #friendlyURL",
             ExpressionAttributeValues: {
               ":state": DashboardState.Inactive,
               ":updatedAt": new Date().toISOString(),
@@ -230,6 +231,7 @@ class DashboardRepository extends BaseRepository {
               "#state": "state",
               "#updatedBy": "updatedBy",
               "#updatedAt": "updatedAt",
+              "#friendlyURL": "friendlyURL",
             },
           },
         });
@@ -244,7 +246,9 @@ class DashboardRepository extends BaseRepository {
             sk: DashboardFactory.itemId(dashboardId),
           },
           UpdateExpression:
-            "set #state = :state, #updatedAt = :updatedAt, #releaseNotes = :releaseNotes, #updatedBy = :userId",
+            "set #state = :state, #updatedAt = :updatedAt, " +
+            "#releaseNotes = :releaseNotes, #updatedBy = :userId, " +
+            "#friendlyURL = :friendlyURL",
           ConditionExpression: "#updatedAt <= :lastUpdatedAt",
           ExpressionAttributeValues: {
             ":state": DashboardState.Published,
@@ -252,12 +256,14 @@ class DashboardRepository extends BaseRepository {
             ":releaseNotes": releaseNotes,
             ":updatedAt": new Date().toISOString(),
             ":userId": user.userId,
+            ":friendlyURL": friendlyURL,
           },
           ExpressionAttributeNames: {
             "#state": "state",
             "#updatedBy": "updatedBy",
             "#releaseNotes": "releaseNotes",
             "#updatedAt": "updatedAt",
+            "#friendlyURL": "friendlyURL",
           },
         },
       });
@@ -333,7 +339,8 @@ class DashboardRepository extends BaseRepository {
           sk: DashboardFactory.itemId(dashboardId),
         },
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+          "REMOVE #friendlyURL",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":state": DashboardState.Archived,
@@ -345,12 +352,13 @@ class DashboardRepository extends BaseRepository {
           "#state": "state",
           "#updatedBy": "updatedBy",
           "#updatedAt": "updatedAt",
+          "#friendlyURL": "friendlyURL",
         },
       });
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.error(
-          "ConditionalCheckFailed when moving dashboard to archived state",
+        logger.warn(
+          "ConditionalCheckFailed when archiving dashboard %s",
           dashboardId
         );
       }

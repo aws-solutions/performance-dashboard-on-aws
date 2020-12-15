@@ -33,7 +33,9 @@ function fromItem(item: DatasetItem): Dataset {
     fileName: item.fileName,
     createdBy: item.createdBy,
     s3Key: item.s3Key,
-    sourceType: item.sourceType as SourceType,
+    sourceType: item.sourceType
+      ? (item.sourceType as SourceType)
+      : SourceType.FileUpload,
   };
   return dataset;
 }

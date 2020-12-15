@@ -20,7 +20,7 @@ class S3Service {
     return S3Service.instance;
   }
 
-  async putDataset(bucketName: string, jsonS3Key: string, jsonFile: string) {
+  async putObject(bucketName: string, jsonS3Key: string, jsonFile: string) {
     const params = {
       Key: jsonS3Key,
       Body: jsonFile,
@@ -45,7 +45,7 @@ class S3Service {
     }
   }
 
-  async deleteDataset(bucketName: string, jsonS3Key: string) {
+  async deleteObject(bucketName: string, jsonS3Key: string) {
     const params = {
       Key: jsonS3Key,
       Bucket: bucketName,

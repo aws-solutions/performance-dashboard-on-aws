@@ -90,7 +90,7 @@ class DatasetRepository extends BaseRepository {
   public async createDataset(metadata: any, data: any): Promise<Dataset> {
     const jsonS3Key = this.getNewJsonS3Key();
     const jsonKey = this.s3Prefix.concat(jsonS3Key);
-    await this.s3Service.putDataset(this.bucketName, jsonKey, data);
+    await this.s3Service.putObject(this.bucketName, jsonKey, data);
     const dataset = DatasetFactory.createNew({
       fileName: metadata.name,
       createdBy: metadata.createdBy,
@@ -98,16 +98,7 @@ class DatasetRepository extends BaseRepository {
       sourceType: SourceType.IngestApi,
     });
 
-    let fileExists = await this.s3Service.objectExists(
-      this.bucketName,
-      jsonKey
-    );
-    if (!fileExists) {
-      console.error("JSON file not found for dataset=", dataset);
-      throw new Error("JSON file for dataset not found on S3");
-    }
-
-    this.dynamodb.put({
+    await this.dynamodb.put({
       TableName: this.tableName,
       Item: DatasetFactory.toItem(dataset),
     });
@@ -119,16 +110,7 @@ class DatasetRepository extends BaseRepository {
     const dataset = await this.getDatasetById(id);
     const jsonS3Key = dataset.s3Key.json || this.getNewJsonS3Key();
     const jsonKey = this.s3Prefix.concat(jsonS3Key);
-    await this.s3Service.putDataset(this.bucketName, jsonKey, data);
-
-    let fileExists = await this.s3Service.objectExists(
-      this.bucketName,
-      jsonKey
-    );
-    if (!fileExists) {
-      console.error("JSON file not found for dataset=", dataset);
-      throw new Error("JSON file for dataset not found on S3");
-    }
+    await this.s3Service.putObject(this.bucketName, jsonKey, data);
 
     await this.dynamodb.update({
       TableName: this.tableName,
@@ -154,7 +136,7 @@ class DatasetRepository extends BaseRepository {
   public async deleteDataset(id: string) {
     const dataset = await this.getDatasetById(id);
     const jsonKey = this.s3Prefix.concat(dataset.s3Key.json);
-    await this.s3Service.deleteDataset(this.bucketName, jsonKey);
+    await this.s3Service.deleteObject(this.bucketName, jsonKey);
 
     await this.dynamodb.delete({
       TableName: this.tableName,

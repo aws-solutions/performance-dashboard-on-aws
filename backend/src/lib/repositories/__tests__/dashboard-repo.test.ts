@@ -283,7 +283,7 @@ describe("DashboardRepository.publishDashboard", () => {
               sk: DashboardFactory.itemId("001"),
             },
             UpdateExpression:
-              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId " +
               "REMOVE #friendlyURL", // Make sure friendlyURL is removed
             ExpressionAttributeValues: {
               ":state": "Inactive", // Verify Archived version moves to Inactive
@@ -348,7 +348,7 @@ describe("DashboardRepository.publishDashboard", () => {
               sk: DashboardFactory.itemId("001"),
             },
             UpdateExpression:
-              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId " +
               "REMOVE #friendlyURL", // Make sure friendlyURL is removed
             ExpressionAttributeValues: {
               ":state": "Inactive", // Verify Published version moves to Inactive
@@ -433,7 +433,7 @@ describe("DashboardRepository.archiveDashboard", () => {
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId " +
           "REMOVE #friendlyURL",
         ExpressionAttributeValues: {
           ":state": "Archived",

@@ -221,7 +221,8 @@ class DashboardRepository extends BaseRepository {
               sk: DashboardFactory.itemId(publishedDashboardId),
             },
             UpdateExpression:
-              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, REMOVE #friendlyURL",
+              "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId " +
+              "REMOVE #friendlyURL",
             ExpressionAttributeValues: {
               ":state": DashboardState.Inactive,
               ":updatedAt": new Date().toISOString(),
@@ -339,7 +340,7 @@ class DashboardRepository extends BaseRepository {
           sk: DashboardFactory.itemId(dashboardId),
         },
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId " +
           "REMOVE #friendlyURL",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {

@@ -10,6 +10,11 @@ router.get(
   withErrorHandler(DashboardCtrl.getPublicDashboardById)
 );
 
+router.get(
+  "/dashboard/friendly-url/:friendlyURL",
+  withErrorHandler(DashboardCtrl.getPublicDashboardByFriendlyURL)
+);
+
 router.get("/homepage", withErrorHandler(HomepageCtrl.getPublicHomepage));
 
 export default router;

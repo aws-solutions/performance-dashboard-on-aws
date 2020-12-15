@@ -12,6 +12,7 @@ import {
   DashboardState,
 } from "../models/dashboard";
 import BaseRepository from "./base";
+import logger from "../services/logger";
 
 class DashboardRepository extends BaseRepository {
   private static instance: DashboardRepository;
@@ -611,6 +612,42 @@ class DashboardRepository extends BaseRepository {
     await this.dynamodb.transactWrite({
       TransactItems: updates,
     });
+  }
+
+  /**
+   * Finds a dashboard by its friendlyURL, if it exists. Otherwise
+   * returns null if no dashboard is associated to the URL.
+   */
+  public async getDashboardByFriendlyURL(
+    friendlyURL: string
+  ): Promise<Dashboard> {
+    const result = await this.dynamodb.query({
+      TableName: this.tableName,
+      IndexName: "byFriendlyURL",
+      KeyConditionExpression: "#friendlyURL = :friendlyURL",
+      ExpressionAttributeNames: {
+        "#friendlyURL": "friendlyURL",
+      },
+      ExpressionAttributeValues: {
+        ":friendlyURL": friendlyURL,
+      },
+    });
+
+    if (!result.Items || result.Items.length === 0) {
+      logger.warn("No dashboard found for friendlyURL %s", friendlyURL);
+      throw new ItemNotFound();
+    }
+
+    // In theory, there should never be more than 1 item with the same
+    // friendlyURL. However, GSIs don't enforce uniqueness so we can
+    // assume that result.Items will only have 1 item in the result set.
+    const items = result.Items.filter((item) => item["type"] === "Dashboard");
+    if (items.length === 0) {
+      logger.warn("No dashboard found for friendlyURL %s", friendlyURL);
+      throw new ItemNotFound();
+    }
+
+    return DashboardFactory.fromItem(items[0] as DashboardItem);
   }
 }
 

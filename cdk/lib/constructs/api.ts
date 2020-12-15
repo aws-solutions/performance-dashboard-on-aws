@@ -132,13 +132,13 @@ export class BackendApi extends cdk.Construct {
     // Not passing `methodProps` is what makes the endpoint public.
     const publicapi = this.api.root.addResource("public");
     const dashboards = publicapi.addResource("dashboard");
+    const friendlyURLs = dashboards.addResource("friendly-url");
 
     const dashboard = dashboards.addResource("{id}");
     dashboard.addMethod("GET", apiIntegration);
 
-    const friendlyURLs = dashboard.addResource("friendly-url");
-    const byFriendlyURL = friendlyURLs.addResource("{friendlyURL}");
-    byFriendlyURL.addMethod("GET", apiIntegration);
+    const byfriendlyURL = friendlyURLs.addResource("{friendlyURL}");
+    byfriendlyURL.addMethod("GET", apiIntegration);
 
     const homepage = publicapi.addResource("homepage");
     homepage.addMethod("GET", apiIntegration);

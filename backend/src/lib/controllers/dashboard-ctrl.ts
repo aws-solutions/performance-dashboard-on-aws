@@ -93,11 +93,14 @@ async function getPublicDashboardByFriendlyURL(req: Request, res: Response) {
     throw err;
   }
 
-  const publicDashboard = DashboardFactory.toPublic(dashboard);
   if (dashboard.state !== DashboardState.Published) {
     res.status(404);
     return res.send("Dashboard not found");
   }
+
+  // Now we need to get the widgets as well
+  dashboard = await repo.getDashboardWithWidgets(dashboard.id);
+  const publicDashboard = DashboardFactory.toPublic(dashboard);
 
   return res.json(publicDashboard);
 }

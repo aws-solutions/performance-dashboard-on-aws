@@ -90,7 +90,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
 }
 
 function fromItem(item: DashboardItem): Dashboard {
-  const id = item.pk.substring(10);
+  const id = dashboardIdFromPk(item.pk);
   let dashboard: Dashboard = {
     id,
     version: item.version,
@@ -110,6 +110,10 @@ function fromItem(item: DashboardItem): Dashboard {
 
 function itemId(id: string): string {
   return `${DASHBOARD_ITEM_TYPE}#${id}`;
+}
+
+function dashboardIdFromPk(pk: string): string {
+  return pk.substring(`${DASHBOARD_ITEM_TYPE}#`.length);
 }
 
 function toPublic(dashboard: Dashboard): PublicDashboard {

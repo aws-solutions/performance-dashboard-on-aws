@@ -729,6 +729,8 @@ describe("getPublicDashboardByFriendlyURL", () => {
     };
 
     repository.getDashboardByFriendlyURL = jest.fn().mockReturnValue(dashboard);
+    repository.getDashboardWithWidgets = jest.fn().mockReturnValue(dashboard);
+
     const publicDashboard = DashboardFactory.toPublic(dashboard);
 
     await DashboardCtrl.getPublicDashboardByFriendlyURL(req, res);

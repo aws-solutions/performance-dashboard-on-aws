@@ -993,3 +993,39 @@ describe("updateTopicAreaName", () => {
     expect(dynamodb.transactWrite).toBeCalled();
   });
 });
+
+describe("getDashboardByFriendlyURL", () => {
+  it("queries the correct GSI", async () => {
+    await repo.getDashboardByFriendlyURL("my-friendly-url");
+    expect(dynamodb.query).toBeCalledWith(
+      expect.objectContaining({
+        TableName: tableName,
+        IndexName: "byFriendlyURL",
+      })
+    );
+  });
+
+  it("returns the dashboard associated to the friendlyURL", async () => {
+    const items: DashboardItem[] = [
+      {
+        pk: "Dashboard#123",
+        sk: "Dashboard#123",
+        type: "Dashboard",
+        parentDashboardId: "123",
+        version: 1,
+        description: "",
+        createdBy: "johndoe",
+        state: "Published",
+        dashboardName: "My Dashboard",
+        topicAreaId: "001",
+        topicAreaName: "Environment",
+        updatedAt: new Date().toISOString(),
+        friendlyURL: "my-friendly-url",
+      },
+    ];
+
+    dynamodb.query = jest.fn().mockReturnValue({ Items: items });
+    const dashboard = await repo.getDashboardByFriendlyURL("my-friendly-url");
+    expect(dashboard?.friendlyURL).toEqual("my-friendly-url");
+  });
+});

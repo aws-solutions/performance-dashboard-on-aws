@@ -58,6 +58,15 @@ export class Database extends cdk.Construct {
       },
     });
 
+    table.addGlobalSecondaryIndex({
+      indexName: "byFriendlyURL",
+      projectionType: dynamodb.ProjectionType.ALL,
+      partitionKey: {
+        name: "friendlyURL",
+        type: dynamodb.AttributeType.STRING,
+      },
+    });
+
     this.mainTable = table;
   }
 }

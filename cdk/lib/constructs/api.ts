@@ -136,6 +136,10 @@ export class BackendApi extends cdk.Construct {
     const dashboard = dashboards.addResource("{id}");
     dashboard.addMethod("GET", apiIntegration);
 
+    const friendlyURLs = dashboard.addResource("friendly-url");
+    const byFriendlyURL = friendlyURLs.addResource("{friendlyURL}");
+    byFriendlyURL.addMethod("GET", apiIntegration);
+
     const homepage = publicapi.addResource("homepage");
     homepage.addMethod("GET", apiIntegration);
   }

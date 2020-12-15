@@ -700,3 +700,63 @@ describe("getVersions", () => {
     expect(res.json).toBeCalledWith(expect.objectContaining([version]));
   });
 });
+
+describe("getPublicDashboardByFriendlyURL", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = ({
+      params: {
+        friendlyURL: "covid-19",
+      },
+    } as any) as Request;
+  });
+
+  it("returns the public representation of a dashboard", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "123",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      widgets: [],
+      releaseNotes: "release note test",
+      friendlyURL: "covid-19",
+    };
+
+    repository.getDashboardByFriendlyURL = jest.fn().mockReturnValue(dashboard);
+    const publicDashboard = DashboardFactory.toPublic(dashboard);
+
+    await DashboardCtrl.getPublicDashboardByFriendlyURL(req, res);
+    expect(res.json).toBeCalledWith(expect.objectContaining(publicDashboard));
+  });
+
+  it("returns a 404 error when dashboard not found", async () => {
+    repository.getDashboardByFriendlyURL = jest
+      .fn()
+      .mockImplementationOnce(() => {
+        throw new ItemNotFound();
+      });
+
+    await DashboardCtrl.getPublicDashboardByFriendlyURL(req, res);
+    expect(res.status).toBeCalledWith(404);
+    expect(res.send).toBeCalledWith("Dashboard not found");
+  });
+
+  it("returns a 404 error when dashboard is not published", async () => {
+    repository.getDashboardByFriendlyURL = jest.fn().mockReturnValueOnce({
+      id: "123",
+      name: "My Dashboard",
+      state: DashboardState.Draft,
+      friendlyURL: "covid-19",
+    });
+
+    await DashboardCtrl.getPublicDashboardByFriendlyURL(req, res);
+    expect(res.status).toBeCalledWith(404);
+    expect(res.send).toBeCalledWith("Dashboard not found");
+  });
+});

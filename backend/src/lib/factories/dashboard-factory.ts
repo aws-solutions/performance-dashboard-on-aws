@@ -62,6 +62,7 @@ function createDraftFromDashboard(
     createdBy: user.userId,
     updatedAt: new Date(),
     widgets,
+    friendlyURL: undefined, // new draft should not have friendlyURL
   };
 }
 
@@ -83,6 +84,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
     createdBy: dashboard.createdBy,
     updatedAt: dashboard.updatedAt.toISOString(),
     releaseNotes: dashboard.releaseNotes,
+    friendlyURL: dashboard.friendlyURL,
   };
   return item;
 }
@@ -101,6 +103,7 @@ function fromItem(item: DashboardItem): Dashboard {
     updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
     state: (item.state as DashboardState) || DashboardState.Draft,
     releaseNotes: item.releaseNotes,
+    friendlyURL: item.friendlyURL,
   };
   return dashboard;
 }
@@ -118,6 +121,7 @@ function toPublic(dashboard: Dashboard): PublicDashboard {
     description: dashboard.description,
     updatedAt: dashboard.updatedAt,
     widgets: dashboard.widgets,
+    friendlyURL: dashboard.friendlyURL,
   };
 }
 

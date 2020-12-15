@@ -71,6 +71,7 @@ describe("toItem", () => {
     updatedAt: now,
     state: DashboardState.Draft,
     releaseNotes: "release note test",
+    friendlyURL: "bananas-in-pyjamas",
   };
 
   it("should have a pk that starts with Dashboard", () => {
@@ -100,6 +101,7 @@ describe("toItem", () => {
     expect(item.version).toEqual(1);
     expect(item.parentDashboardId).toEqual("123");
     expect(item.releaseNotes).toEqual("release note test");
+    expect(item.friendlyURL).toEqual("bananas-in-pyjamas");
   });
 });
 
@@ -119,6 +121,7 @@ describe("fromItem", () => {
     updatedAt: now,
     state: "Draft",
     releaseNotes: "release note test",
+    friendlyURL: "bananas-in-pyjamas",
   };
 
   it("should include all attributes of Dashboard", () => {
@@ -134,6 +137,7 @@ describe("fromItem", () => {
     expect(dashboard.version).toEqual(1);
     expect(dashboard.parentDashboardId).toEqual("123");
     expect(dashboard.releaseNotes).toEqual("release note test");
+    expect(dashboard.friendlyURL).toEqual("bananas-in-pyjamas");
   });
 });
 
@@ -151,6 +155,7 @@ describe("toPublic", () => {
     updatedAt: now,
     state: DashboardState.Draft,
     releaseNotes: "release note test",
+    friendlyURL: "my-friendly-url",
   };
 
   it("should expose fields that are not sensitive", () => {
@@ -161,6 +166,7 @@ describe("toPublic", () => {
     expect(publicDashboard.topicAreaName).toEqual(dashboard.topicAreaName);
     expect(publicDashboard.description).toEqual(dashboard.description);
     expect(publicDashboard.updatedAt).toEqual(dashboard.updatedAt);
+    expect(publicDashboard.friendlyURL).toEqual(dashboard.friendlyURL);
   });
 });
 
@@ -254,5 +260,18 @@ describe("createDraftFromDashboard", () => {
         description: "Description test",
       })
     );
+  });
+
+  it("should remove the friendlyURL", () => {
+    const dashboardWithFriendlyURL = {
+      ...dashboard,
+      friendlyURL: "bananas-in-pyjamas",
+    };
+    const draft = factory.createDraftFromDashboard(
+      dashboardWithFriendlyURL,
+      user,
+      nextVersion
+    );
+    expect(draft.friendlyURL).toBeUndefined();
   });
 });

@@ -77,6 +77,31 @@ async function getDashboardById(req: Request, res: Response) {
   }
 }
 
+async function getPublicDashboardByFriendlyURL(req: Request, res: Response) {
+  const { friendlyURL } = req.params;
+
+  const repo = DashboardRepository.getInstance();
+  let dashboard: Dashboard;
+
+  try {
+    dashboard = await repo.getDashboardByFriendlyURL(friendlyURL);
+  } catch (err) {
+    if (err instanceof ItemNotFound) {
+      res.status(404);
+      return res.send("Dashboard not found");
+    }
+    throw err;
+  }
+
+  const publicDashboard = DashboardFactory.toPublic(dashboard);
+  if (dashboard.state !== DashboardState.Published) {
+    res.status(404);
+    return res.send("Dashboard not found");
+  }
+
+  return res.json(publicDashboard);
+}
+
 async function getPublicDashboardById(req: Request, res: Response) {
   const { id } = req.params;
 
@@ -372,6 +397,7 @@ export default {
   listDashboards,
   createDashboard,
   getDashboardById,
+  getPublicDashboardByFriendlyURL,
   getVersions,
   updateDashboard,
   publishDashboard,

@@ -1,13 +1,16 @@
 import { mocked } from "ts-jest/utils";
-import { Dataset, DatasetItem } from "../../models/dataset";
+import { Dataset, DatasetItem, SourceType } from "../../models/dataset";
 import DatasetFactory from "../../factories/dataset-factory";
 import DatasetRepository from "../dataset-repo";
 import DynamoDBService from "../../services/dynamodb";
 import S3Service from "../../services/s3";
+import * as uuid from "uuid";
 
 jest.mock("../../services/dynamodb");
 jest.mock("../../services/s3");
 jest.mock("../../factories/dataset-factory");
+jest.mock("uuid");
+jest.spyOn(uuid, "v4").mockReturnValue("123");
 
 let tableName: string;
 let datasetsBucket: string;
@@ -78,5 +81,56 @@ describe("saveDataset", () => {
       TableName: tableName,
       Item: item,
     });
+  });
+});
+
+describe("createDataset", () => {
+  it("create the item in dynamodb", async () => {
+    const metadata = { name: "abc", createdBy: "johndoe" };
+    const data = { data: "data" };
+    const item = {} as DatasetItem;
+
+    s3Service.putObject = jest.fn().mockReturnValue(true);
+    s3Service.objectExists = jest.fn().mockReturnValue(true);
+    DatasetFactory.toItem = jest.fn().mockReturnValue(item);
+
+    await repo.createDataset(metadata, data);
+    expect(dynamodb.put).toBeCalledWith({
+      TableName: tableName,
+      Item: item,
+    });
+  });
+});
+
+describe("updateDataset", () => {
+  it("update the item in dynamodb", async () => {
+    const id = "123";
+    const metadata = { name: "abc" };
+    const data = { data: "data" };
+
+    const dataset: Dataset = {
+      id: "123",
+      createdBy: "johndoe",
+      fileName: "abc",
+      s3Key: {
+        json: "def.json",
+        raw: "",
+      },
+      sourceType: SourceType.IngestApi,
+    };
+    repo.getDatasetById = jest.fn().mockReturnValue(dataset);
+    s3Service.putObject = jest.fn().mockReturnValue(true);
+    s3Service.objectExists = jest.fn().mockReturnValue(true);
+
+    await repo.updateDataset(id, metadata, data);
+    expect(dynamodb.update).toBeCalledWith(
+      expect.objectContaining({
+        TableName: tableName,
+        Key: {
+          pk: DatasetFactory.itemId("123"),
+          sk: DatasetFactory.itemId("123"),
+        },
+      })
+    );
   });
 });

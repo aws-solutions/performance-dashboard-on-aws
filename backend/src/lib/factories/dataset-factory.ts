@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { Dataset, DatasetItem } from "../models/dataset";
+import { Dataset, DatasetItem, SourceType } from "../models/dataset";
 
 const DATASET_ITEM_TYPE = "Dataset";
 
@@ -10,6 +10,7 @@ type DatasetInfo = {
     raw: string;
     json: string;
   };
+  sourceType: SourceType;
 };
 
 function createNew(info: DatasetInfo): Dataset {
@@ -21,21 +22,43 @@ function createNew(info: DatasetInfo): Dataset {
       raw: info.s3Key.raw,
       json: info.s3Key.json,
     },
+    sourceType: info.sourceType,
   };
+}
+
+function fromItem(item: DatasetItem): Dataset {
+  const id = item.pk.substring(8);
+  let dataset: Dataset = {
+    id,
+    fileName: item.fileName,
+    createdBy: item.createdBy,
+    s3Key: item.s3Key,
+    sourceType: item.sourceType
+      ? (item.sourceType as SourceType)
+      : SourceType.FileUpload,
+  };
+  return dataset;
 }
 
 function toItem(dataset: Dataset): DatasetItem {
   return {
-    pk: `${DATASET_ITEM_TYPE}#${dataset.id}`,
-    sk: `${DATASET_ITEM_TYPE}#${dataset.id}`,
+    pk: itemId(dataset.id),
+    sk: itemId(dataset.id),
     type: DATASET_ITEM_TYPE,
     createdBy: dataset.createdBy,
     fileName: dataset.fileName,
     s3Key: dataset.s3Key,
+    sourceType: dataset.sourceType,
   };
+}
+
+function itemId(id: string): string {
+  return `${DATASET_ITEM_TYPE}#${id}`;
 }
 
 export default {
   createNew,
+  fromItem,
   toItem,
+  itemId,
 };

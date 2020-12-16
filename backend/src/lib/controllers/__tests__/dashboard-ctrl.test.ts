@@ -21,16 +21,18 @@ jest.mock("../../repositories/topicarea-repo");
 const user: User = { userId: "johndoe" };
 const repository = mocked(DashboardRepository.prototype);
 const topicareaRepo = mocked(TopicAreaRepository.prototype);
-const res = ({
-  send: jest.fn().mockReturnThis(),
-  status: jest.fn().mockReturnThis(),
-  json: jest.fn().mockReturnThis(),
-} as any) as Response;
+let res: Response;
 
 beforeEach(() => {
   AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   DashboardRepository.getInstance = jest.fn().mockReturnValue(repository);
   TopicAreaRepository.getInstance = jest.fn().mockReturnValue(topicareaRepo);
+
+  res = ({
+    send: jest.fn().mockReturnThis(),
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn().mockReturnThis(),
+  } as any) as Response;
 });
 
 describe("createDashboard", () => {
@@ -137,7 +139,7 @@ describe("updateDashboard", () => {
     expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
   });
 
-  it("update the dashboard", async () => {
+  it("updates the dashboard", async () => {
     topicareaRepo.getTopicAreaById = jest
       .fn()
       .mockReturnValue({ id: "abc", name: "abc name" });
@@ -185,6 +187,44 @@ describe("publishDashboard", () => {
     expect(res.send).toBeCalledWith("Missing required body `updatedAt`");
   });
 
+  it("returns a 409 error when friendlyURL is already taken", async () => {
+    // Dashboard being published
+    repository.getDashboardById = jest.fn().mockReturnValue({
+      id: "123",
+      version: 1,
+      parentDashboardId: "456",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.PublishPending,
+      description: "",
+    });
+
+    // Dashboard with the friendlyURL
+    repository.getDashboardByFriendlyURL = jest.fn().mockReturnValue({
+      id: "001",
+      version: 1,
+      parentDashboardId: "xyz", // parentDashboardId is different
+      name: "The Dashboard With The Friendly URL",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      friendlyURL: "my-dashboard",
+    });
+
+    await DashboardCtrl.publishDashboard(req, res);
+
+    expect(res.status).toBeCalledWith(409);
+    expect(res.send).toBeCalledWith(
+      "The friendlyURL my-dashboard is already being used"
+    );
+  });
+
   it("returns a 409 error when dashboard state is not Publish Pending or Archived", async () => {
     const dashboard: Dashboard = {
       id: "123",
@@ -208,7 +248,7 @@ describe("publishDashboard", () => {
     );
   });
 
-  it("update the dashboard", async () => {
+  it("publishes the dashboard", async () => {
     const dashboard: Dashboard = {
       id: "123",
       version: 1,
@@ -223,14 +263,24 @@ describe("publishDashboard", () => {
       widgets: [],
       releaseNotes: "release note test",
     };
+
+    // Simulate friendlyURL is not already taken
+    repository.getDashboardByFriendlyURL = jest
+      .fn()
+      .mockImplementationOnce(() => {
+        throw new ItemNotFound();
+      });
+
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishDashboard(req, res);
+
     expect(repository.publishDashboard).toHaveBeenCalledWith(
       "123",
       "456",
       now.toISOString(),
       "release note test",
-      user
+      user,
+      "my-dashboard"
     );
   });
 });

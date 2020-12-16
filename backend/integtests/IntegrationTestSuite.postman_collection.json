@@ -1162,8 +1162,16 @@
 							"    ",
 							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
 							"    const dashboards = homepage.dashboards;",
-							"    const dashboard = homepage.dashboards.find(dash => dash.id === id);",
+							"    const dashboard = dashboards.find(dash => dash.id === id);",
 							"    pm.expect(dashboard).to.not.be.undefined;",
+							"});",
+							"",
+							"pm.test(\"dashboard has a friendly URL\", () => {",
+							"    const homepage = pm.response.json();",
+							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
+							"    const dashboard = homepage.dashboards.find(dash => dash.id === id);",
+							"    pm.expect(dashboard.friendlyURL).to.be.a(\"string\");",
+							"    pm.collectionVariables.set(\"dashboard.friendlyURL\", dashboard.friendlyURL);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -1190,7 +1198,7 @@
 			"response": []
 		},
 		{
-			"name": "Verify dashboard using public api",
+			"name": "Get dashboard by Id using public api",
 			"event": [
 				{
 					"listen": "test",
@@ -1232,6 +1240,56 @@
 						{
 							"key": "id",
 							"value": "{{dashboard.id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get dashboard by friendlyURL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c55c63a3-81eb-42d4-a53c-eff79895f529",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"response contains dashboard\", () => {",
+							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
+							"    const dashboard = pm.response.json();",
+							"    pm.expect(dashboard.id).to.equal(id);",
+							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/public/dashboard/friendly-url/:friendlyURL",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"public",
+						"dashboard",
+						"friendly-url",
+						":friendlyURL"
+					],
+					"variable": [
+						{
+							"key": "friendlyURL",
+							"value": "{{dashboard.friendlyURL}}"
 						}
 					]
 				}
@@ -1597,92 +1655,97 @@
 	],
 	"variable": [
 		{
-			"id": "d6fa7f9b-6b63-433e-b7ac-776691696311",
+			"id": "75ceaf28-fa34-4b86-88ef-9d7a71afef75",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "082a9f3a-1a98-4f9e-9f56-ad733c3491d9",
+			"id": "2bc55514-e5f1-42f3-acf7-8bc2d5b3027e",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "99b710ad-e6cb-455d-92f4-2f560a34556f",
+			"id": "a0fd618a-d43a-4460-a60a-d7f6b2b5bb70",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "da55b065-e4bc-47fe-a891-9848fbaf7b89",
+			"id": "29b19a44-f65a-4b7c-a4c8-aedc55a51921",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "134e5ed0-1926-4727-9dd2-30cbd9211770",
+			"id": "e7f483a9-a385-4287-92fc-b83734094742",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "6d2e5bfd-373a-46d3-86c1-7f68af775d60",
+			"id": "dd842fda-1f02-4f61-ae76-005d2b5c1717",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "7be8f17d-7bdc-4d01-87e4-3f4f0b215b63",
+			"id": "9b89551c-4072-418d-8dce-41ca2fbedcc1",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "eea20f06-a51c-4129-a47b-89c7fcbb4b3f",
+			"id": "f08884d8-921b-4b88-8037-3eb1d004d596",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "57b17375-cc01-453f-b0b8-a2d1e816acd1",
+			"id": "d838592c-7d52-4fdf-b51b-056a531c7bec",
+			"key": "dashboard.friendlyURL",
+			"value": ""
+		},
+		{
+			"id": "f54d28bc-93fe-41a1-8d52-eb1a1988fb36",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "30855123-f9c6-4d7c-ab6c-f76d6864953c",
+			"id": "cbe1c971-b8e8-482d-8a4c-4c8bef43041a",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "8b032bce-4657-49f8-bf5d-e6013ea09d83",
+			"id": "e3396940-097e-4c1b-af4b-e8c5998fc4ff",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "a83814cc-1ae6-4d55-8e40-038f2b54bfae",
+			"id": "b33063a5-8716-4c7d-8554-b75b9a21a657",
 			"key": "textwidget2.id",
 			"value": ""
 		},
 		{
-			"id": "22ab0b4f-c817-4d64-8288-611d89983bca",
+			"id": "7a23790c-54e4-4db0-9bcc-df1273dbe1a6",
 			"key": "textwidget2.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "484aded3-cd08-4954-a18e-0f2698474b02",
+			"id": "7755a6ce-11e8-43f9-8d96-cc2c52328cc5",
 			"key": "settings.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "33fc9180-e87c-4759-96cc-5a72ec917810",
+			"id": "282a76e2-c4ef-4985-be9c-5034e478458a",
 			"key": "settings.publishingGuidance",
 			"value": ""
 		},
 		{
-			"id": "06b3e797-6b9e-4467-97b9-aab3340a531a",
+			"id": "1544874f-2325-47b5-ab01-66cc5bed061e",
 			"key": "homepage.title",
 			"value": ""
 		},
 		{
-			"id": "63a5c91f-857d-4a5a-842b-0a6374276e4c",
+			"id": "9c7bdb58-943c-46aa-85b4-fa926d7da7d7",
 			"key": "homepage.description",
 			"value": ""
 		},
 		{
-			"id": "728911f5-e153-494b-942a-c4a178278019",
+			"id": "017db20d-8fd3-4a48-9eed-d317858b9074",
 			"key": "homepage.updatedAt",
 			"value": ""
 		}

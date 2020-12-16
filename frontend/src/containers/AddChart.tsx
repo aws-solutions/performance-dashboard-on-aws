@@ -192,7 +192,6 @@ function AddChart() {
                 name="dataset"
                 label="File upload"
                 accept=".csv"
-                disabled={!title}
                 loading={fileLoading}
                 errors={csvErrors}
                 register={register}

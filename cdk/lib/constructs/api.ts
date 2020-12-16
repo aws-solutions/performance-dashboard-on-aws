@@ -44,6 +44,19 @@ export class BackendApi extends cdk.Construct {
             },
           },
         }),
+
+        //Need to change this policy for ingest API with specific values
+        new PolicyStatement({
+          effect: Effect.ALLOW,
+          actions: ["execute-api:Invoke"],
+          resources: ["execute-api:/prod/*/ingestapi/*"],
+          principals: [new AnyPrincipal()],
+          conditions: {
+            IpAddress: {
+              "aws:SourceIp": ["0.0.0.0/0"],
+            },
+          },
+        }),
       ],
     });
 
@@ -68,13 +81,13 @@ export class BackendApi extends cdk.Construct {
     this.addPrivateEndpoints(apiIntegration, authorizer);
     this.addPublicEndpoints(publicApiIntegration);
 
-    const key = this.api.addApiKey("PerformanceDashboardApiKey");
-    const plan = this.api.addUsagePlan("PerformanceDashboardUsagePlan", {
-      name: "PerformanceDashboardUsagePlan",
+    const key = this.api.addApiKey("PerfDashIngestApiKey");
+    const plan = this.api.addUsagePlan("PerfDashIngestUsagePlan", {
+      name: "PerfDashIngestUsagePlan",
       apiKey: key,
       throttle: {
-        rateLimit: 100,
-        burstLimit: 200,
+        rateLimit: 25,
+        burstLimit: 50,
       },
     });
 

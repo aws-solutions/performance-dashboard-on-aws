@@ -9,12 +9,18 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 
 interface PathParams {
-  dashboardId: string;
+  friendlyURL: string;
 }
 
 function ViewDashboard() {
-  const { dashboardId } = useParams<PathParams>();
-  const { dashboard, loading } = usePublicDashboard(dashboardId);
+  const { friendlyURL } = useParams<PathParams>();
+  const { dashboard, loading, dashboardNotFound } = usePublicDashboard(
+    friendlyURL
+  );
+
+  if (dashboardNotFound) {
+    return <Redirect to="/404/page-not-found" />;
+  }
 
   return loading || dashboard === undefined ? (
     <Spinner
@@ -25,7 +31,7 @@ function ViewDashboard() {
       }}
       label="Loading"
     />
-  ) : dashboard.id ? (
+  ) : (
     <>
       <Link to="/">
         <FontAwesomeIcon icon={faArrowLeft} /> All Dashboards
@@ -44,8 +50,6 @@ function ViewDashboard() {
         );
       })}
     </>
-  ) : (
-    <Redirect to="/404/page-not-found" />
   );
 }
 

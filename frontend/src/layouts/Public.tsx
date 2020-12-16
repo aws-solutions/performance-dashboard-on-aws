@@ -32,12 +32,12 @@ function PublicLayout(props: LayoutProps) {
             </button>
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
-                <Link
-                  to={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
+                <a
+                  href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
                   className="usa-nav__link"
                 >
                   Contact
-                </Link>
+                </a>
               </li>
             </ul>
           </nav>

@@ -321,3 +321,13 @@ test("updateSetting makes a PUT request to settings API", async () => {
     })
   );
 });
+
+test("fetchDashboardByFriendlyURL makes a GET request to public API", async () => {
+  const friendlyURL = "my-friendly-url";
+  await BackendService.fetchPublicDashboardByURL(friendlyURL);
+  expect(API.get).toHaveBeenCalledWith(
+    "BackendApi",
+    `public/dashboard/friendly-url/my-friendly-url`,
+    expect.anything()
+  );
+});

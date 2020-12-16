@@ -41,6 +41,17 @@ async function fetchDashboardById(dashboardId: string): Promise<Dashboard> {
   return await API.get(apiName, `dashboard/${dashboardId}`, { headers });
 }
 
+async function fetchPublicDashboardByURL(
+  friendlyURL: string
+): Promise<Dashboard> {
+  const headers = await authHeaders();
+  return await API.get(
+    apiName,
+    `public/dashboard/friendly-url/${friendlyURL}`,
+    { headers }
+  );
+}
+
 async function fetchTopicAreas() {
   const headers = await authHeaders();
   return await API.get(apiName, "topicarea", { headers });
@@ -362,6 +373,7 @@ export default {
   fetchPublicHomepage,
   editHomepage,
   fetchPublicDashboard,
+  fetchPublicDashboardByURL,
   fetchSettings,
   editSettings,
   updateSetting,

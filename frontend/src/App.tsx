@@ -162,7 +162,7 @@ const routes: Array<AppRoute> = [
     component: FormattingCSV,
   },
   {
-    path: "/:dashboardId",
+    path: "/:friendlyURL",
     component: ViewDashboard,
     public: true,
   },

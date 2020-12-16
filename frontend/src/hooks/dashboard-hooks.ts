@@ -108,31 +108,54 @@ type UsePublicDashboardHook = {
   loading: boolean;
   dashboard?: PublicDashboard;
   reloadDashboard: Function;
+  dashboardNotFound?: boolean;
 };
 
 export function usePublicDashboard(
-  dashboardId: string
+  friendlyURL: string
 ): UsePublicDashboardHook {
   const [loading, setLoading] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const [dashboard, setDashboard] = useState<PublicDashboard | undefined>(
     undefined
   );
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    let data = undefined;
-    try {
-      data = await BackendService.fetchPublicDashboard(dashboardId);
-      if (data) {
-        data.widgets.sort((a, b) => a.order - b.order);
-        setDashboard(data);
-      }
-    } catch (error) {
-      data = {};
-      setDashboard(data as PublicDashboard);
+  const setDashboardAndSortWidgets = (dashboard: PublicDashboard) => {
+    if (dashboard) {
+      dashboard.widgets.sort((a, b) => a.order - b.order);
+      setDashboard(dashboard);
     }
-    setLoading(false);
-  }, [dashboardId]);
+  };
+
+  const fetchData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await BackendService.fetchPublicDashboardByURL(friendlyURL);
+      setDashboardAndSortWidgets(data);
+    } catch (error) {
+      try {
+        /**
+         * If fetching the dashboard by URL fails. Try loading the dashboard
+         * by ID as a last resource. This allows us to be backwards compatible
+         * so dashboards that don't currently have a friendlyURL can still
+         * load for public users. We may remove this in the future.
+         */
+        const dashboardId = friendlyURL; // use the friendlyURL as an ID
+        const data = await BackendService.fetchPublicDashboard(dashboardId);
+        setDashboardAndSortWidgets(data);
+      } catch (err) {
+        /**
+         * If fetching the dashboard by ID did not work either. Then consider
+         * we can consider the dashboard to be NotFound.
+         */
+        setNotFound(true);
+      } finally {
+        setLoading(false);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [friendlyURL]);
 
   useEffect(() => {
     fetchData();
@@ -142,6 +165,7 @@ export function usePublicDashboard(
     loading,
     dashboard,
     reloadDashboard: fetchData,
+    dashboardNotFound: notFound,
   };
 }
 

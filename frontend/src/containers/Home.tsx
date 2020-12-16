@@ -86,7 +86,14 @@ function Home() {
                       key={dashboard.id}
                       className="border-bottom border-base-light padding-2"
                     >
-                      <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
+                      {dashboard.friendlyURL ? (
+                        <Link to={`/${dashboard.friendlyURL}`}>
+                          {dashboard.name}
+                        </Link>
+                      ) : (
+                        // If dashboard doesn't have a friendlyURL, use the dashboardId.
+                        <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
+                      )}
                       <br />
                       <span className="text-base text-italic">
                         Last updated {updatedAt}

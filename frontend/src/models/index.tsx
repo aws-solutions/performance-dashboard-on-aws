@@ -31,6 +31,7 @@ export type Dashboard = {
   state: string;
   updatedAt: Date;
   createdBy: string;
+  friendlyURL?: string;
 };
 
 export type PublicDashboard = {
@@ -41,6 +42,7 @@ export type PublicDashboard = {
   description?: string;
   widgets: Array<Widget>;
   updatedAt: Date;
+  friendlyURL?: string;
 };
 
 export type DashboardVersion = {

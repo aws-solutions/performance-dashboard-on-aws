@@ -1,6 +1,54 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Papa, { ParseResult } from "papaparse";
 import StorageService from "../services/StorageService";
+import { Dataset, SourceType } from "../models";
+import BackendService from "../services/BackendService";
+
+type UseDatasetsHook = {
+  loadingDatasets: boolean;
+  datasets: Array<Dataset>;
+  dynamicDatasets: Array<Dataset>;
+  staticDatasets: Array<Dataset>;
+  reloadDatasets: Function;
+};
+
+export function useDatasets(): UseDatasetsHook {
+  const [loadingDatasets, setLoadingDatasets] = useState(false);
+  const [datasets, setDatasets] = useState<Dataset[]>([]);
+  const [dynamicDatasets, setDynamicDatasets] = useState<Dataset[]>([]);
+  const [staticDatasets, setStaticDatasets] = useState<Dataset[]>([]);
+
+  const fetchData = useCallback(async () => {
+    setLoadingDatasets(true);
+    const data = await BackendService.fetchDatasets();
+    if (data) {
+      setDatasets(data);
+      setDynamicDatasets(
+        data.filter((dataset) => dataset.sourceType === SourceType.IngestApi)
+      );
+
+      setStaticDatasets(
+        data.filter(
+          (dataset) =>
+            !dataset.sourceType || dataset.sourceType === SourceType.FileUpload
+        )
+      );
+    }
+    setLoadingDatasets(false);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return {
+    loadingDatasets,
+    datasets,
+    dynamicDatasets,
+    staticDatasets,
+    reloadDatasets: fetchData,
+  };
+}
 
 type UseJsonDatasetHook = {
   loading: boolean;

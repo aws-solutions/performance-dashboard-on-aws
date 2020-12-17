@@ -18,6 +18,11 @@ export enum DashboardState {
   PublishPending = "PublishPending",
 }
 
+export enum SourceType {
+  IngestApi = "IngestApi",
+  FileUpload = "FileUpload",
+}
+
 export type Dashboard = {
   id: string;
   name: string;
@@ -106,6 +111,7 @@ export type Dataset = {
     raw: string;
     json: string;
   };
+  sourceType?: SourceType;
 };
 
 export type PublicHomepage = {

@@ -1,5 +1,11 @@
 import React from "react";
-import { render, fireEvent, act, waitFor } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  act,
+  waitFor,
+  screen,
+} from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
@@ -22,22 +28,30 @@ beforeEach(() => {
 });
 
 test("renders title and subtitles", async () => {
-  const { getByText, getByRole } = render(<AddChart />, {
+  render(<AddChart />, {
     wrapper: MemoryRouter,
   });
-  expect(getByRole("heading", { name: "Add chart" })).toBeInTheDocument();
-  expect(getByText("Configure chart")).toBeInTheDocument();
-  expect(getByText("Step 2 of 2")).toBeInTheDocument();
+  expect(
+    await screen.findByRole("heading", { name: "Add chart" })
+  ).toBeInTheDocument();
+  expect(await screen.findByText("Configure chart")).toBeInTheDocument();
+  expect(await screen.findByText("Step 2 of 2")).toBeInTheDocument();
 });
 
 test("renders a textfield for chart title", async () => {
-  const { getByLabelText } = render(<AddChart />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Chart title")).toBeInTheDocument();
+  render(<AddChart />, { wrapper: MemoryRouter });
+  expect(await screen.findByLabelText("Chart title")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {
-  const { getByLabelText } = render(<AddChart />, { wrapper: MemoryRouter });
-  expect(getByLabelText("File upload")).toBeInTheDocument();
+  render(<AddChart />, { wrapper: MemoryRouter });
+
+  const radioButton = await screen.findByLabelText(
+    "Create a new dataset from file"
+  );
+  fireEvent.click(radioButton);
+
+  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
 });
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
@@ -47,6 +61,9 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
   });
 
   const submitButton = getByRole("button", { name: "Add chart" });
+
+  const radioButton = getByLabelText("Create a new dataset from file");
+  fireEvent.click(radioButton);
 
   fireEvent.input(getByLabelText("Chart title"), {
     target: {
@@ -68,7 +85,6 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
   await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {
     expect(getByText("Preview")).toBeInTheDocument();
-    expect(getByText("COVID Cases")).toBeInTheDocument();
   });
 
   await act(async () => {

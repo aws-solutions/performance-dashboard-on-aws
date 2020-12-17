@@ -6,7 +6,7 @@ exports[`renders a combobox 1`] = `
     class="usa-form-group"
   >
     <label
-      class="usa-label"
+      class="usa-label margin-top-1"
       for="1"
     >
       label
@@ -22,9 +22,6 @@ exports[`renders a combobox 1`] = `
         name="name"
         tabindex="-1"
       >
-        <option>
-          Select an option
-        </option>
         <option
           value="value1"
         >
@@ -120,7 +117,7 @@ exports[`shows an error message 1`] = `
     class="usa-form-group usa-form-group--error"
   >
     <label
-      class="usa-label"
+      class="usa-label margin-top-1"
       for="1"
     >
       label
@@ -143,9 +140,6 @@ exports[`shows an error message 1`] = `
         name="name"
         tabindex="-1"
       >
-        <option>
-          Select an option
-        </option>
         <option
           value="value1"
         >

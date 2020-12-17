@@ -1,5 +1,11 @@
 import React from "react";
-import { render, fireEvent, act, waitFor } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  act,
+  waitFor,
+  screen,
+} from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
@@ -22,21 +28,29 @@ beforeEach(() => {
 });
 
 test("renders title and subtitles", async () => {
-  const { getByText, getByRole } = render(<AddTable />, {
+  render(<AddTable />, {
     wrapper: MemoryRouter,
   });
-  expect(getByRole("heading", { name: "Add table" })).toBeInTheDocument();
-  expect(getByText("Configure table")).toBeInTheDocument();
-  expect(getByText("Step 2 of 2")).toBeInTheDocument();
+  expect(
+    await screen.findByRole("heading", { name: "Add table" })
+  ).toBeInTheDocument();
+  expect(await screen.findByText("Configure table")).toBeInTheDocument();
+  expect(await screen.findByText("Step 2 of 2")).toBeInTheDocument();
 });
 
 test("renders a textfield for table title", async () => {
-  const { getByLabelText } = render(<AddTable />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Table title")).toBeInTheDocument();
+  render(<AddTable />, { wrapper: MemoryRouter });
+  expect(await screen.findByLabelText("Table title")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {
   const { getByLabelText } = render(<AddTable />, { wrapper: MemoryRouter });
+
+  const radioButton = getByLabelText("Create a new dataset from file");
+  await act(async () => {
+    fireEvent.click(radioButton);
+  });
+
   expect(getByLabelText("File upload")).toBeInTheDocument();
 });
 
@@ -47,6 +61,11 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
   });
 
   const submitButton = getByRole("button", { name: "Add table" });
+
+  const radioButton = getByLabelText("Create a new dataset from file");
+  await act(async () => {
+    fireEvent.click(radioButton);
+  });
 
   fireEvent.input(getByLabelText("Table title"), {
     target: {

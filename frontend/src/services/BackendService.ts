@@ -210,23 +210,6 @@ async function editWidget(
   });
 }
 
-async function createDataset(
-  fileName: string,
-  s3Keys: { raw: string; json: string }
-): Promise<Dataset> {
-  const headers = await authHeaders();
-  return await API.post(apiName, "dataset", {
-    headers,
-    body: {
-      fileName,
-      s3Key: {
-        raw: s3Keys.raw,
-        json: s3Keys.json,
-      },
-    },
-  });
-}
-
 async function deleteWidget(dashboardId: string, widgetId: string) {
   const headers = await authHeaders();
   const url = `dashboard/${dashboardId}/widget/${widgetId}`;
@@ -249,6 +232,28 @@ async function setWidgetOrder(
     headers,
     body: {
       widgets: payload,
+    },
+  });
+}
+
+async function fetchDatasets(): Promise<Array<Dataset>> {
+  const headers = await authHeaders();
+  return await API.get(apiName, "dataset", { headers });
+}
+
+async function createDataset(
+  fileName: string,
+  s3Keys: { raw: string; json: string }
+): Promise<Dataset> {
+  const headers = await authHeaders();
+  return await API.post(apiName, "dataset", {
+    headers,
+    body: {
+      fileName,
+      s3Key: {
+        raw: s3Keys.raw,
+        json: s3Keys.json,
+      },
     },
   });
 }
@@ -367,6 +372,7 @@ export default {
   deleteWidget,
   setWidgetOrder,
   createDataset,
+  fetchDatasets,
   getAuthToken,
   fetchHomepage,
   fetchPublicHomepage,

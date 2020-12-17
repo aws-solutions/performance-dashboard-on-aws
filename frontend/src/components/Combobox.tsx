@@ -41,7 +41,7 @@ function Combobox(props: Props) {
 
   return (
     <div className={formGroupClassName}>
-      <label className="usa-label" htmlFor={props.id}>
+      <label className="usa-label margin-top-1" htmlFor={props.id}>
         {props.label}
       </label>
       {props.error && (
@@ -62,7 +62,6 @@ function Combobox(props: Props) {
           defaultValue={props.defaultValue}
           ref={props.register && props.register({ required: props.required })}
         >
-          <option>Select an option</option>
           {props.options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.content}

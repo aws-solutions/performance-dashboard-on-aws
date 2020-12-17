@@ -293,6 +293,6 @@ describe("generateFriendlyURL", () => {
     expect(factory.generateFriendlyURL("訳サービスで、テキストや")).toEqual(
       "訳サービスで、テキストや"
     );
-    expect(factory.generateFriendlyURL("!	#	$	&	'	(	)	*	+	,	/	:	;	=	?	@	[	] hi")).toEqual("-hi");
+    expect(factory.generateFriendlyURL("!	#	$	&	'	(	)	*	+	,	/	:	;	=	?	@	[	] hi")).toEqual("hi");
   });
 });

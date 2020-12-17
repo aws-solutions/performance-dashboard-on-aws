@@ -721,24 +721,212 @@
 			"response": []
 		},
 		{
-			"name": "Create 2nd text widget",
+			"name": "Create dataset (Ingest API)",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "6c1c2b97-2136-4a4d-a88e-71ff757d7a19",
+						"id": "241b6ded-05d2-4418-8e37-7fdb72518b0f",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns the dataset id\", () => {",
+							"    const dataset = pm.response.json();",
+							"    pm.expect(dataset.id).to.exist;",
+							"    pm.collectionVariables.set(\"dataset.id\", dataset.id);",
+							"});",
+							"",
+							"pm.test(\"returns the dataset s3Key\", () => {",
+							"    const dataset = pm.response.json();",
+							"    pm.expect(dataset.s3Key.json).to.exist;",
+							"    pm.collectionVariables.set(\"dataset.s3Key.json\", dataset.s3Key.json);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{apiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "x-api-key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\",\n        \"createdBy\": \"johndoe\"\n    },\n    \"data\": \"[{\\\"Year\\\":2016,\\\"Live Stream Attendees\\\":17000},{\\\"Year\\\":2017,\\\"Live Stream Attendees\\\":23000},{\\\"Year\\\":2018,\\\"Live Stream Attendees\\\":13500},{\\\"Year\\\":2019,\\\"Live Stream Attendees\\\":21100},{\\\"Year\\\":2020,\\\"Live Stream Attendees\\\":8450}]\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/ingestapi/dataset",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"ingestapi",
+						"dataset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update dataset (Ingest API)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bbf34a5a-dcb1-49a3-bfe5-aaae070f5226",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{apiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "x-api-key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\"\n    },\n    \"data\": \"[{\\\"Year\\\":2016,\\\"Live Stream Attendees\\\":10000},{\\\"Year\\\":2017,\\\"Live Stream Attendees\\\":23000},{\\\"Year\\\":2018,\\\"Live Stream Attendees\\\":13500},{\\\"Year\\\":2019,\\\"Live Stream Attendees\\\":21100},{\\\"Year\\\":2020,\\\"Live Stream Attendees\\\":8450}]\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"ingestapi",
+						"dataset",
+						":datasetId"
+					],
+					"variable": [
+						{
+							"key": "datasetId",
+							"value": "{{dataset.id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List datasets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "998cd59a-f683-445c-abda-c8aadbf7cf56",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns a list of datasets\", () => {",
+							"    const datasets = pm.response.json();",
+							"    pm.expect(datasets).to.be.an(\"array\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dataset/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dataset",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create chart widget",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4d784e6-d943-496c-9bca-7e3a81854afd",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
 							"pm.test(\"returns the widget id\", () => {",
-							"    const textwidget = pm.response.json();",
-							"    pm.expect(textwidget.id).to.exist;",
-							"    pm.collectionVariables.set(\"textwidget2.id\", textwidget.id);",
+							"    const chartwidget = pm.response.json();",
+							"    pm.expect(chartwidget.id).to.exist;",
+							"    pm.collectionVariables.set(\"chartwidget.id\", chartwidget.id);",
 							"",
-							"    pm.expect(textwidget.updatedAt).to.exist;",
-							"    pm.collectionVariables.set(\"textwidget2.updatedAt\", textwidget.updatedAt);",
+							"    pm.expect(chartwidget.updatedAt).to.exist;",
+							"    pm.collectionVariables.set(\"chartwidget.updatedAt\", chartwidget.updatedAt);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -760,7 +948,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Another text widget\",\n    \"widgetType\": \"Text\",\n    \"content\": {\n        \"text\": \"Basic text\"\n    }\n}",
+					"raw": "{\n    \"name\": \"Chart widget\",\n    \"widgetType\": \"Chart\",\n    \"content\": {\n        \"title\": \"{{$randomWords}}\",\n        \"chartType\": \"LineChart\",\n        \"datasetId\": \"{{dataset.id}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"s3Key\": {\n            \"raw\": \"\",\n            \"json\": \"{{dataset.s3Key.json}}\"\n        },\n        \"fileName\": \"{{$randomFileName}}\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -782,7 +970,7 @@
 			"response": []
 		},
 		{
-			"name": "Check text widgets are in dashboard",
+			"name": "Verify widgets are in dashboard",
 			"event": [
 				{
 					"listen": "test",
@@ -806,17 +994,17 @@
 							"    pm.expect(textwidget.widgetType).to.equal(\"Text\");",
 							"});",
 							"",
-							"pm.test(\"2nd text widget is included in dashboard\", () => {",
+							"pm.test(\"chart widget is included in dashboard\", () => {",
 							"    const dashboard = pm.response.json();",
-							"    const textwidgetId = pm.collectionVariables.get(\"textwidget2.id\");",
+							"    const chartWidgetId = pm.collectionVariables.get(\"chartwidget.id\");",
 							"    pm.expect(dashboard.widgets).to.exist;",
 							"",
-							"    const widgets = dashboard.widgets.filter(widget => widget.id === textwidgetId);",
+							"    const widgets = dashboard.widgets.filter(widget => widget.id === chartWidgetId);",
 							"    pm.expect(widgets.length).to.equal(1);",
 							"",
-							"    const textwidget = widgets[0];",
-							"    pm.expect(textwidget.id).to.equal(textwidgetId);",
-							"    pm.expect(textwidget.widgetType).to.equal(\"Text\");",
+							"    const chartWidget = widgets[0];",
+							"    pm.expect(chartWidget.id).to.equal(chartWidgetId);",
+							"    pm.expect(chartWidget.widgetType).to.equal(\"Chart\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -881,7 +1069,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"widgets\": [\n        {\n            \"id\": \"{{textwidget.id}}\",\n            \"order\": 2,\n            \"updatedAt\": \"{{textwidget.updatedAt}}\"\n        },\n        {\n            \"id\": \"{{textwidget2.id}}\",\n            \"order\": 1,\n            \"updatedAt\": \"{{textwidget2.updatedAt}}\"\n        }\n    ]\n}",
+					"raw": "{\n    \"widgets\": [\n        {\n            \"id\": \"{{textwidget.id}}\",\n            \"order\": 2,\n            \"updatedAt\": \"{{textwidget.updatedAt}}\"\n        },\n        {\n            \"id\": \"{{chartwidget.id}}\",\n            \"order\": 1,\n            \"updatedAt\": \"{{chartwidget.updatedAt}}\"\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1459,7 +1647,7 @@
 			"response": []
 		},
 		{
-			"name": "Delete 2nd text widget",
+			"name": "Delete chart widget",
 			"event": [
 				{
 					"listen": "test",
@@ -1488,7 +1676,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget/{{textwidget2.id}}",
+					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget/{{chartwidget.id}}",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -1496,7 +1684,66 @@
 						"dashboard",
 						"{{dashboard.id}}",
 						"widget",
-						"{{textwidget2.id}}"
+						"{{chartwidget.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete dataset (Ingest API)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00abe9e8-2d85-41b3-8925-cef1d8664b02",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{apiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "x-api-key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"ingestapi",
+						"dataset",
+						":datasetId"
+					],
+					"variable": [
+						{
+							"key": "datasetId",
+							"value": "{{dataset.id}}"
+						}
 					]
 				}
 			},
@@ -1655,98 +1902,118 @@
 	],
 	"variable": [
 		{
-			"id": "75ceaf28-fa34-4b86-88ef-9d7a71afef75",
+			"id": "74463c53-40c2-4dfa-b029-ca1a04e323ef",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "2bc55514-e5f1-42f3-acf7-8bc2d5b3027e",
+			"id": "6e158611-4cdd-44e8-9540-9ab1cbd7cb57",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "a0fd618a-d43a-4460-a60a-d7f6b2b5bb70",
+			"id": "009e1fdd-3d03-4ac0-8c34-286b1deb49df",
+			"key": "apiKey",
+			"value": ""
+		},
+		{
+			"id": "176d7a15-6074-4339-8cb7-8ce42aff57d8",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "29b19a44-f65a-4b7c-a4c8-aedc55a51921",
+			"id": "46d36e7c-7479-476b-a117-cd4d96402477",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "e7f483a9-a385-4287-92fc-b83734094742",
+			"id": "d7cadb61-4ad7-418a-b39b-6038b4dd81f9",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "dd842fda-1f02-4f61-ae76-005d2b5c1717",
+			"id": "f38dc94d-d439-4e0e-ac20-5236bfdd3aaa",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "9b89551c-4072-418d-8dce-41ca2fbedcc1",
+			"id": "326c1c76-de1f-4b78-a4c9-ed27989db1bd",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "f08884d8-921b-4b88-8037-3eb1d004d596",
+			"id": "95ec25b2-0aff-4079-a500-4954b9293e58",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "d838592c-7d52-4fdf-b51b-056a531c7bec",
+			"id": "49f20271-3dba-4906-a033-e20dc6bc9363",
 			"key": "dashboard.friendlyURL",
 			"value": ""
 		},
 		{
-			"id": "f54d28bc-93fe-41a1-8d52-eb1a1988fb36",
+			"id": "ff72f486-5d42-4745-956d-593ad80c8717",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "cbe1c971-b8e8-482d-8a4c-4c8bef43041a",
+			"id": "3e3b502f-52b3-4d5f-b6e5-1d1f48d39b6a",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "e3396940-097e-4c1b-af4b-e8c5998fc4ff",
+			"id": "0ddec0d1-8736-46b1-b890-8de63fcb2269",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "b33063a5-8716-4c7d-8554-b75b9a21a657",
-			"key": "textwidget2.id",
+			"id": "8d549761-7b68-4a50-befc-ad9e8cc5861e",
+			"key": "chartwidget.id",
 			"value": ""
 		},
 		{
-			"id": "7a23790c-54e4-4db0-9bcc-df1273dbe1a6",
-			"key": "textwidget2.updatedAt",
+			"id": "2052d271-025b-43ba-880f-c6d79d525777",
+			"key": "chartwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "7755a6ce-11e8-43f9-8d96-cc2c52328cc5",
+			"id": "7df3d61f-5d6f-4e8e-9411-beae2a4916fd",
 			"key": "settings.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "282a76e2-c4ef-4985-be9c-5034e478458a",
+			"id": "af5bd861-7225-4b8d-86a6-f20dcba9b756",
 			"key": "settings.publishingGuidance",
 			"value": ""
 		},
 		{
-			"id": "1544874f-2325-47b5-ab01-66cc5bed061e",
+			"id": "1e8e407d-ac08-4a63-a1b4-b1b9b29de039",
 			"key": "homepage.title",
 			"value": ""
 		},
 		{
-			"id": "9c7bdb58-943c-46aa-85b4-fa926d7da7d7",
+			"id": "130920fe-2eec-4445-abd2-1651e35273b7",
 			"key": "homepage.description",
 			"value": ""
 		},
 		{
-			"id": "017db20d-8fd3-4a48-9eed-d317858b9074",
+			"id": "c2e02377-d9ed-4415-b19a-4f50753719d0",
 			"key": "homepage.updatedAt",
+			"value": ""
+		},
+		{
+			"id": "119ff257-c898-4088-8ff9-4b6291d70ecc",
+			"key": "dataset.id",
+			"value": ""
+		},
+		{
+			"id": "dd204628-9af2-4339-80da-1ef84b123b04",
+			"key": "dataset.s3Key",
+			"value": ""
+		},
+		{
+			"id": "9a9f18a3-a0f7-4bc4-8c57-1674df5b7272",
+			"key": "dataset.s3Key.json",
 			"value": ""
 		}
 	],

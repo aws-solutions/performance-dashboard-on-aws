@@ -76,7 +76,7 @@ export class LambdaFunctions extends cdk.Construct {
     const s3Policy = new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
       resources: [props.datasetsBucket.arnForObjects("*")],
-      actions: ["s3:GetObject", "s3:PutObject"],
+      actions: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
     });
 
     this.apiHandler.addToRolePolicy(dynamodbPolicy);

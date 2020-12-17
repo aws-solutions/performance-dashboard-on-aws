@@ -1,6 +1,12 @@
 import * as cdk from "@aws-cdk/core";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as lambda from "@aws-cdk/aws-lambda";
+import {
+  AnyPrincipal,
+  Effect,
+  PolicyDocument,
+  PolicyStatement,
+} from "@aws-cdk/aws-iam";
 
 interface ApiProps {
   apiFunction: lambda.Function;
@@ -25,6 +31,35 @@ export class BackendApi extends cdk.Construct {
       }
     );
 
+    const apiPolicy = new PolicyDocument({
+      statements: [
+        new PolicyStatement({
+          effect: Effect.ALLOW,
+          actions: ["execute-api:Invoke"],
+          resources: ["execute-api:/prod/*/*"],
+          principals: [new AnyPrincipal()],
+          conditions: {
+            IpAddress: {
+              "aws:SourceIp": ["0.0.0.0/0"],
+            },
+          },
+        }),
+
+        //Need to change this policy for ingest API with specific values
+        new PolicyStatement({
+          effect: Effect.ALLOW,
+          actions: ["execute-api:Invoke"],
+          resources: ["execute-api:/prod/*/ingestapi/*"],
+          principals: [new AnyPrincipal()],
+          conditions: {
+            IpAddress: {
+              "aws:SourceIp": ["0.0.0.0/0"],
+            },
+          },
+        }),
+      ],
+    });
+
     this.api = new apigateway.RestApi(scope, "ApiGateway", {
       description: "Performance Dashboard backend API",
       deployOptions: { tracingEnabled: true },
@@ -32,6 +67,7 @@ export class BackendApi extends cdk.Construct {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,
       },
+      policy: apiPolicy,
     });
 
     const authorizer = new apigateway.CfnAuthorizer(scope, "CognitoAuth", {
@@ -44,6 +80,21 @@ export class BackendApi extends cdk.Construct {
 
     this.addPrivateEndpoints(apiIntegration, authorizer);
     this.addPublicEndpoints(publicApiIntegration);
+
+    const key = this.api.addApiKey("PerfDashIngestApiKey");
+    const plan = this.api.addUsagePlan("PerfDashIngestUsagePlan", {
+      name: "PerfDashIngestUsagePlan",
+      apiKey: key,
+      throttle: {
+        rateLimit: 25,
+        burstLimit: 50,
+      },
+    });
+
+    plan.addApiStage({
+      api: this.api,
+      stage: this.api.deploymentStage,
+    });
   }
 
   private addPrivateEndpoints(
@@ -110,14 +161,6 @@ export class BackendApi extends cdk.Construct {
     const dataset = datasets.addResource("{id}");
     dataset.addMethod("GET", apiIntegration, methodProps);
 
-    const ingestApi = this.api.root.addResource("ingestapi");
-    const ingestApiDatasets = ingestApi.addResource("dataset");
-    ingestApiDatasets.addMethod("POST", apiIntegration, methodProps);
-
-    const ingestApiDataset = ingestApiDatasets.addResource("{id}");
-    ingestApiDataset.addMethod("PUT", apiIntegration, methodProps);
-    ingestApiDataset.addMethod("DELETE", apiIntegration, methodProps);
-
     const settings = this.api.root.addResource("settings");
     settings.addMethod("GET", apiIntegration, methodProps);
     settings.addMethod("PUT", apiIntegration, methodProps);
@@ -125,6 +168,18 @@ export class BackendApi extends cdk.Construct {
     const publishedSite = settings.addResource("homepage");
     publishedSite.addMethod("GET", apiIntegration, methodProps);
     publishedSite.addMethod("PUT", apiIntegration, methodProps);
+
+    const ingestApi = this.api.root.addResource("ingestapi");
+    const ingestApiDatasets = ingestApi.addResource("dataset");
+    ingestApiDatasets.addMethod("POST", apiIntegration, {
+      apiKeyRequired: true,
+    });
+
+    const ingestApiDataset = ingestApiDatasets.addResource("{id}");
+    ingestApiDataset.addMethod("PUT", apiIntegration, { apiKeyRequired: true });
+    ingestApiDataset.addMethod("DELETE", apiIntegration, {
+      apiKeyRequired: true,
+    });
   }
 
   private addPublicEndpoints(apiIntegration: apigateway.LambdaIntegration) {

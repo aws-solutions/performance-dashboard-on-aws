@@ -30,6 +30,27 @@ export const SettingsContext = React.createContext<SettingsContextProps>({
 });
 
 /**
+ * The settings reducer takes the settings object coming from the
+ * backend and returns a Settings object containing those values
+ * and fallbacks to default values for any missing field.
+ *
+ * This protects the frontend from crashing in the event where the
+ * backend returns a Settings object that is missing certain fields.
+ */
+const settingsReducer = (backendSettings: Settings): Settings => {
+  return {
+    ...backendSettings, // add all values to start with
+    // Check if we need to fallback to default values
+    dateTimeFormat: backendSettings.dateTimeFormat
+      ? backendSettings.dateTimeFormat
+      : defaultSettings.dateTimeFormat,
+    publishingGuidance: backendSettings.publishingGuidance
+      ? backendSettings.publishingGuidance
+      : defaultSettings.publishingGuidance,
+  };
+};
+
+/**
  * This provider wraps the root of our component's tree in <App />
  * to provide Settings to all the children components in the tree. It
  * uses React Context so that settings are kept in a global state instead
@@ -56,7 +77,7 @@ function SettingsProvider(props: { children: React.ReactNode }) {
       });
       const data = await BackendService.fetchSettings();
       setSettings({
-        settings: data,
+        settings: settingsReducer(data),
         reloadSettings: fetchSettings,
         loadingSettings: false,
       });

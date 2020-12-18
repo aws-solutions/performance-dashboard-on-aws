@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { Widget, WidgetType } from "../models";
+import { DatasetType, Widget, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
 
@@ -7,6 +7,8 @@ type UseWidgetHook = {
   loading: boolean;
   widget?: Widget;
   json: Array<any>;
+  datasetType: DatasetType | undefined;
+  setDatasetType: Function;
   setJson: Function;
   setWidget: Function;
 };
@@ -18,6 +20,9 @@ export function useWidget(
   const [loading, setLoading] = useState(false);
   const [widget, setWidget] = useState<Widget | undefined>(undefined);
   const [json, setJson] = useState<Array<any>>([]);
+  const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
+    undefined
+  );
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -28,10 +33,15 @@ export function useWidget(
       data.widgetType === WidgetType.Chart ||
       data.widgetType === WidgetType.Table
     ) {
-      const { s3Key } = data.content;
+      const { s3Key, datasetType } = data.content;
       if (s3Key.json) {
         const dataset = await StorageService.downloadJson(s3Key.json);
         setJson(dataset);
+      }
+      if (datasetType) {
+        setDatasetType(datasetType as DatasetType);
+      } else {
+        setDatasetType(DatasetType.CsvFileUpload);
       }
     }
     setLoading(false);
@@ -45,6 +55,8 @@ export function useWidget(
     loading,
     widget,
     json,
+    datasetType,
+    setDatasetType,
     setJson,
     setWidget,
   };

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
-import { Dataset, ChartType, WidgetType } from "../models";
+import { Dataset, ChartType, WidgetType, DatasetType } from "../models";
 import { useDashboard } from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
@@ -20,6 +20,7 @@ import Link from "../components/Link";
 import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";
 import Spinner from "../components/Spinner";
+
 interface FormValues {
   title: string;
   summary: string;
@@ -36,7 +37,7 @@ function AddChart() {
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
+  const [json, setJson] = useState<Array<any>>([]);
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
   );
@@ -53,7 +54,9 @@ function AddChart() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
-  const [sourceType, setSourceType] = useState("");
+  const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
+    undefined
+  );
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -63,7 +66,7 @@ function AddChart() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(dataset)
+      JSON.stringify(json)
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -91,6 +94,7 @@ function AddChart() {
           title: values.title,
           summary: values.summary,
           chartType: values.chartType,
+          datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
             : dynamicDataset?.id || staticDataset?.id,
@@ -153,10 +157,10 @@ function AddChart() {
       complete: function (results: ParseResult<object>) {
         if (results.errors.length) {
           setCsvErrors(results.errors);
-          setDataset(undefined);
+          setJson([]);
         } else {
           setCsvErrors(undefined);
-          setDataset(results.data);
+          setJson(results.data);
         }
         setDatasetLoading(false);
       },
@@ -166,9 +170,9 @@ function AddChart() {
 
   const handleChange = (event: React.FormEvent<HTMLFieldSetElement>) => {
     const target = event.target as HTMLInputElement;
-    if (target.name === "sourceType") {
-      setSourceType(target.value);
-      setDataset(undefined);
+    if (target.name === "datasetType") {
+      setDatasetType(target.value as DatasetType);
+      setJson([]);
       setDynamicDataset(undefined);
       setStaticDataset(undefined);
       setCsvFile(undefined);
@@ -184,7 +188,7 @@ function AddChart() {
     const jsonFile = (event.target as HTMLInputElement).value;
     const dataset = await StorageService.downloadJson(jsonFile);
 
-    setDataset(dataset);
+    setJson(dataset);
     setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
     setStaticDataset(undefined);
     setCsvFile(undefined);
@@ -202,7 +206,7 @@ function AddChart() {
     const jsonFile = (event.target as HTMLInputElement).value;
     const dataset = await StorageService.downloadJson(jsonFile);
 
-    setDataset(dataset);
+    setJson(dataset);
     setStaticDataset(staticDatasets.find((d) => d.s3Key.json === jsonFile));
     setDynamicDataset(undefined);
     setCsvFile(undefined);
@@ -275,9 +279,9 @@ function AddChart() {
                       <input
                         className="usa-radio__input"
                         id="dynamicDataset"
-                        value="dynamicDataset"
+                        value="DynamicDataset"
                         type="radio"
-                        name="sourceType"
+                        name="datasetType"
                         ref={register()}
                       />
                       <label
@@ -289,7 +293,7 @@ function AddChart() {
                     </div>
                   </div>
                 </div>
-                {sourceType === "dynamicDataset" && (
+                {datasetType === DatasetType.DynamicDataset && (
                   <div className="margin-left-4">
                     <div className="usa-hint margin-top-1">
                       Choose from a list of available datasets.
@@ -304,7 +308,7 @@ function AddChart() {
                           content: `${d.fileName} (${d.s3Key.json})`,
                         };
                       })}
-                      defaultValue={dynamicDataset?.s3Key.json}
+                      value={dynamicDataset?.s3Key.json}
                       onChange={onSelectDynamicDataset}
                     />
                   </div>
@@ -315,9 +319,9 @@ function AddChart() {
                       <input
                         className="usa-radio__input"
                         id="staticDataset"
-                        value="staticDataset"
+                        value="StaticDataset"
                         type="radio"
-                        name="sourceType"
+                        name="datasetType"
                         ref={register()}
                       />
                       <label
@@ -329,7 +333,7 @@ function AddChart() {
                     </div>
                   </div>
                 </div>
-                {sourceType === "staticDataset" && (
+                {datasetType === DatasetType.StaticDataset && (
                   <div className="margin-left-4">
                     <div className="usa-hint margin-top-1">
                       Choose from a list of available datasets.
@@ -344,7 +348,7 @@ function AddChart() {
                           content: `${d.fileName} (${d.s3Key.json})`,
                         };
                       })}
-                      defaultValue={staticDataset?.s3Key.json}
+                      value={staticDataset?.s3Key.json}
                       onChange={onSelectStaticDataset}
                     />
                   </div>
@@ -355,9 +359,9 @@ function AddChart() {
                       <input
                         className="usa-radio__input"
                         id="csvFileUpload"
-                        value="csvFileUpload"
+                        value="CsvFileUpload"
                         type="radio"
-                        name="sourceType"
+                        name="datasetType"
                         ref={register()}
                       />
                       <label
@@ -369,7 +373,7 @@ function AddChart() {
                     </div>
                   </div>
                 </div>
-                {sourceType === "csvFileUpload" && (
+                {datasetType === DatasetType.CsvFileUpload && (
                   <FileInput
                     id="dataset"
                     name="dataset"
@@ -396,7 +400,7 @@ function AddChart() {
                 )}
               </fieldset>
 
-              <div hidden={!dataset}>
+              <div hidden={!json.length}>
                 <RadioButtons
                   id="chartType"
                   name="chartType"
@@ -448,7 +452,7 @@ function AddChart() {
               Back
             </Button>
             <Button
-              disabled={!dataset || !title || fileLoading || creatingWidget}
+              disabled={!json.length || !title || fileLoading || creatingWidget}
               type="submit"
             >
               Add chart
@@ -464,7 +468,7 @@ function AddChart() {
           </form>
         </div>
         <div className="grid-col-6">
-          <div hidden={!dataset} className="margin-left-4">
+          <div hidden={!json.length} className="margin-left-4">
             <h4>Preview</h4>
             {datasetLoading ? (
               <Spinner className="text-center margin-top-6" label="Loading" />
@@ -475,11 +479,9 @@ function AddChart() {
                     title={title}
                     summary={summary}
                     lines={
-                      dataset && dataset.length
-                        ? (Object.keys(dataset[0]) as Array<string>)
-                        : []
+                      json.length ? (Object.keys(json[0]) as Array<string>) : []
                     }
-                    data={dataset}
+                    data={json}
                   />
                 )}
                 {chartType === ChartType.ColumnChart && (
@@ -487,11 +489,9 @@ function AddChart() {
                     title={title}
                     summary={summary}
                     columns={
-                      dataset && dataset.length
-                        ? (Object.keys(dataset[0]) as Array<string>)
-                        : []
+                      json.length ? (Object.keys(json[0]) as Array<string>) : []
                     }
-                    data={dataset}
+                    data={json}
                   />
                 )}
                 {chartType === ChartType.BarChart && (
@@ -499,11 +499,9 @@ function AddChart() {
                     title={title}
                     summary={summary}
                     bars={
-                      dataset && dataset.length
-                        ? (Object.keys(dataset[0]) as Array<string>)
-                        : []
+                      json.length ? (Object.keys(json[0]) as Array<string>) : []
                     }
-                    data={dataset}
+                    data={json}
                   />
                 )}
                 {chartType === ChartType.PartWholeChart && (
@@ -511,11 +509,9 @@ function AddChart() {
                     title={title}
                     summary={summary}
                     parts={
-                      dataset && dataset.length
-                        ? (Object.keys(dataset[0]) as Array<string>)
-                        : []
+                      json.length ? (Object.keys(json[0]) as Array<string>) : []
                     }
-                    data={dataset}
+                    data={json}
                   />
                 )}
               </>

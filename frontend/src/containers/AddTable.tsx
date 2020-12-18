@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { Dataset, WidgetType } from "../models";
+import { Dataset, DatasetType, WidgetType } from "../models";
 import { useDashboard } from "../hooks";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
@@ -31,7 +31,7 @@ function AddTable() {
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
+  const [json, setJson] = useState<Array<any>>([]);
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
   );
@@ -47,7 +47,9 @@ function AddTable() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
-  const [sourceType, setSourceType] = useState("");
+  const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
+    undefined
+  );
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -57,7 +59,7 @@ function AddTable() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(dataset)
+      JSON.stringify(json)
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -84,6 +86,7 @@ function AddTable() {
         {
           title: values.title,
           summary: values.summary,
+          datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
             : dynamicDataset?.id || staticDataset?.id,
@@ -138,10 +141,10 @@ function AddTable() {
       complete: function (results: ParseResult<object>) {
         if (results.errors.length) {
           setCsvErrors(results.errors);
-          setDataset(undefined);
+          setJson([]);
         } else {
           setCsvErrors(undefined);
-          setDataset(results.data);
+          setJson(results.data);
         }
         setDatasetLoading(false);
       },
@@ -151,9 +154,9 @@ function AddTable() {
 
   const handleChange = (event: React.FormEvent<HTMLFieldSetElement>) => {
     const target = event.target as HTMLInputElement;
-    if (target.name === "sourceType") {
-      setSourceType(target.value);
-      setDataset(undefined);
+    if (target.name === "datasetType") {
+      setDatasetType(target.value as DatasetType);
+      setJson([]);
       setDynamicDataset(undefined);
       setStaticDataset(undefined);
       setCsvFile(undefined);
@@ -169,7 +172,7 @@ function AddTable() {
     const jsonFile = (event.target as HTMLInputElement).value;
     const dataset = await StorageService.downloadJson(jsonFile);
 
-    setDataset(dataset);
+    setJson(dataset);
     setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
     setStaticDataset(undefined);
     setCsvFile(undefined);
@@ -187,7 +190,7 @@ function AddTable() {
     const jsonFile = (event.target as HTMLInputElement).value;
     const dataset = await StorageService.downloadJson(jsonFile);
 
-    setDataset(dataset);
+    setJson(dataset);
     setStaticDataset(staticDatasets.find((d) => d.s3Key.json === jsonFile));
     setDynamicDataset(undefined);
     setCsvFile(undefined);
@@ -260,9 +263,9 @@ function AddTable() {
                       <input
                         className="usa-radio__input"
                         id="dynamicDataset"
-                        value="dynamicDataset"
+                        value="DynamicDataset"
                         type="radio"
-                        name="sourceType"
+                        name="datasetType"
                         ref={register()}
                       />
                       <label
@@ -274,7 +277,7 @@ function AddTable() {
                     </div>
                   </div>
                 </div>
-                {sourceType === "dynamicDataset" && (
+                {datasetType === DatasetType.DynamicDataset && (
                   <div className="margin-left-4">
                     <div className="usa-hint margin-top-1">
                       Choose from a list of available datasets.
@@ -289,7 +292,7 @@ function AddTable() {
                           content: `${d.fileName} (${d.s3Key.json})`,
                         };
                       })}
-                      defaultValue={dynamicDataset?.s3Key.json}
+                      value={dynamicDataset?.s3Key.json}
                       onChange={onSelectDynamicDataset}
                     />
                   </div>
@@ -300,9 +303,9 @@ function AddTable() {
                       <input
                         className="usa-radio__input"
                         id="staticDataset"
-                        value="staticDataset"
+                        value="StaticDataset"
                         type="radio"
-                        name="sourceType"
+                        name="datasetType"
                         ref={register()}
                       />
                       <label
@@ -314,7 +317,7 @@ function AddTable() {
                     </div>
                   </div>
                 </div>
-                {sourceType === "staticDataset" && (
+                {datasetType === DatasetType.StaticDataset && (
                   <div className="margin-left-4">
                     <div className="usa-hint margin-top-1">
                       Choose from a list of available datasets.
@@ -329,7 +332,7 @@ function AddTable() {
                           content: `${d.fileName} (${d.s3Key.json})`,
                         };
                       })}
-                      defaultValue={staticDataset?.s3Key.json}
+                      value={staticDataset?.s3Key.json}
                       onChange={onSelectStaticDataset}
                     />
                   </div>
@@ -340,9 +343,9 @@ function AddTable() {
                       <input
                         className="usa-radio__input"
                         id="csvFileUpload"
-                        value="csvFileUpload"
+                        value="CsvFileUpload"
                         type="radio"
-                        name="sourceType"
+                        name="datasetType"
                         ref={register()}
                       />
                       <label
@@ -354,7 +357,7 @@ function AddTable() {
                     </div>
                   </div>
                 </div>
-                {sourceType === "csvFileUpload" && (
+                {datasetType === DatasetType.CsvFileUpload && (
                   <FileInput
                     id="dataset"
                     name="dataset"
@@ -381,10 +384,9 @@ function AddTable() {
                 )}
               </fieldset>
 
-              <div hidden={!dataset}>
-                {dataset &&
-                dataset.length &&
-                (Object.keys(dataset[0]) as Array<string>).length >= 8 ? (
+              <div hidden={!json.length}>
+                {json.length &&
+                (Object.keys(json[0]) as Array<string>).length >= 8 ? (
                   <div className="usa-alert usa-alert--warning margin-top-3">
                     <div className="usa-alert__body">
                       <p className="usa-alert__text">
@@ -417,7 +419,7 @@ function AddTable() {
               Back
             </Button>
             <Button
-              disabled={!dataset || !title || fileLoading || creatingWidget}
+              disabled={!json.length || !title || fileLoading || creatingWidget}
               type="submit"
             >
               Add table
@@ -433,7 +435,7 @@ function AddTable() {
           </form>
         </div>
         <div className="grid-col-6">
-          <div hidden={!dataset} className="margin-left-4">
+          <div hidden={!json.length} className="margin-left-4">
             <h4>Preview</h4>
             {datasetLoading ? (
               <Spinner className="text-center margin-top-6" label="Loading" />
@@ -442,11 +444,9 @@ function AddTable() {
                 title={title}
                 summary={summary}
                 headers={
-                  dataset && dataset.length
-                    ? (Object.keys(dataset[0]) as Array<string>)
-                    : []
+                  json.length ? (Object.keys(json[0]) as Array<string>) : []
                 }
-                data={dataset}
+                data={json}
               />
             )}
           </div>

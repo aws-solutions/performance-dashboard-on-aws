@@ -13,6 +13,7 @@ interface Props {
   register?: Function;
   required?: boolean;
   defaultValue?: string;
+  value?: string;
   error?: string;
   onChange?: Function;
 }
@@ -60,6 +61,7 @@ function Combobox(props: Props) {
           id={props.id}
           onChange={handleChange}
           defaultValue={props.defaultValue}
+          value={props.value}
           ref={props.register && props.register({ required: props.required })}
         >
           {props.options.map((option) => (

@@ -5,7 +5,7 @@
  */
 import dayjs from "dayjs";
 import { useState } from "react";
-import { DashboardState } from "../../models";
+import { DashboardState, DatasetType, SourceType } from "../../models";
 
 const dummyDashboard = {
   id: "123",
@@ -141,6 +141,7 @@ export function useWidget(
     json: [],
     setJson: jest.fn(),
     setWidget: jest.fn(),
+    datasetType: DatasetType.CsvFileUpload,
     widget: {
       id: "123",
       name: "Correlation of COVID cases to deaths",
@@ -212,6 +213,55 @@ export function useJsonDataset(s3Key: string) {
         Jobs: 150,
       },
     ],
+  };
+}
+
+export function useDatasets() {
+  return {
+    loadingDatasets: false,
+    datasets: [
+      {
+        id: "123",
+        fileName: "abc",
+        s3Key: {
+          raw: "abc.csv",
+          json: "abc.json",
+        },
+        sourceType: SourceType.FileUpload,
+      },
+      {
+        id: "123",
+        fileName: "abc",
+        s3Key: {
+          raw: "",
+          json: "abc.json",
+        },
+        sourceType: SourceType.IngestApi,
+      },
+    ],
+    dynamicDatasets: [
+      {
+        id: "123",
+        fileName: "abc",
+        s3Key: {
+          raw: "",
+          json: "abc.json",
+        },
+        sourceType: SourceType.IngestApi,
+      },
+    ],
+    staticDatasets: [
+      {
+        id: "123",
+        fileName: "abc",
+        s3Key: {
+          raw: "abc.csv",
+          json: "abc.json",
+        },
+        sourceType: SourceType.FileUpload,
+      },
+    ],
+    reloadDatasets: jest.fn(),
   };
 }
 

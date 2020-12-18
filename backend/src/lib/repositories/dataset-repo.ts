@@ -1,9 +1,15 @@
 import S3Service from "../services/s3";
-import { Dataset, DatasetItem, DatasetList } from "../models/dataset";
+import {
+  Dataset,
+  DatasetItem,
+  DatasetList,
+  DatasetContent,
+} from "../models/dataset";
 import DatasetFactory from "../factories/dataset-factory";
 import BaseRepository from "./base";
 import { SourceType } from "../models/dataset";
 import { v4 as uuidv4 } from "uuid";
+import logger from "../services/logger";
 
 class DatasetRepository extends BaseRepository {
   private s3Service: S3Service;
@@ -87,10 +93,24 @@ class DatasetRepository extends BaseRepository {
     });
   }
 
-  public async createDataset(metadata: any, data: any): Promise<Dataset> {
+  public async createDataset(
+    metadata: any,
+    data: DatasetContent
+  ): Promise<Dataset> {
     const jsonS3Key = this.getNewJsonS3Key();
     const jsonKey = this.s3Prefix.concat(jsonS3Key);
-    await this.s3Service.putObject(this.bucketName, jsonKey, data);
+
+    try {
+      await this.s3Service.putObject(
+        this.bucketName,
+        jsonKey,
+        JSON.stringify(data)
+      );
+    } catch (err) {
+      logger.error("Failed to save dataset to S3 %o", data);
+      throw err;
+    }
+
     const dataset = DatasetFactory.createNew({
       fileName: metadata.name,
       createdBy: metadata.createdBy,
@@ -98,53 +118,84 @@ class DatasetRepository extends BaseRepository {
       sourceType: SourceType.IngestApi,
     });
 
-    await this.dynamodb.put({
-      TableName: this.tableName,
-      Item: DatasetFactory.toItem(dataset),
-    });
+    try {
+      await this.dynamodb.put({
+        TableName: this.tableName,
+        Item: DatasetFactory.toItem(dataset),
+      });
+    } catch (err) {
+      logger.error("Failed to save dataset to DynamoDB %o", metadata);
+      throw err;
+    }
 
     return dataset;
   }
 
-  public async updateDataset(id: string, metadata: any, data: any) {
+  public async updateDataset(id: string, metadata: any, data: DatasetContent) {
     const dataset = await this.getDatasetById(id);
     const jsonS3Key = dataset.s3Key.json || this.getNewJsonS3Key();
     const jsonKey = this.s3Prefix.concat(jsonS3Key);
-    await this.s3Service.putObject(this.bucketName, jsonKey, data);
 
-    await this.dynamodb.update({
-      TableName: this.tableName,
-      Key: {
-        pk: DatasetFactory.itemId(id),
-        sk: DatasetFactory.itemId(id),
-      },
-      UpdateExpression:
-        "set #fileName = :fileName, #s3Key = :s3Key, #sourceType = :sourceType",
-      ExpressionAttributeValues: {
-        ":fileName": metadata.name,
-        ":s3Key": { raw: "", json: jsonS3Key },
-        ":sourceType": SourceType.IngestApi,
-      },
-      ExpressionAttributeNames: {
-        "#fileName": "fileName",
-        "#s3Key": "s3Key",
-        "#sourceType": "sourceType",
-      },
-    });
+    try {
+      await this.s3Service.putObject(
+        this.bucketName,
+        jsonKey,
+        JSON.stringify(data)
+      );
+    } catch (err) {
+      logger.error("Failed to update dataset on S3 %o", data);
+      throw err;
+    }
+
+    try {
+      await this.dynamodb.update({
+        TableName: this.tableName,
+        Key: {
+          pk: DatasetFactory.itemId(id),
+          sk: DatasetFactory.itemId(id),
+        },
+        UpdateExpression:
+          "set #fileName = :fileName, #s3Key = :s3Key, #sourceType = :sourceType",
+        ExpressionAttributeValues: {
+          ":fileName": metadata.name,
+          ":s3Key": { raw: "", json: jsonS3Key },
+          ":sourceType": SourceType.IngestApi,
+        },
+        ExpressionAttributeNames: {
+          "#fileName": "fileName",
+          "#s3Key": "s3Key",
+          "#sourceType": "sourceType",
+        },
+      });
+    } catch (err) {
+      logger.error("Failed to update dataset in DynamoDB %o", metadata);
+      throw err;
+    }
   }
 
   public async deleteDataset(id: string) {
     const dataset = await this.getDatasetById(id);
     const jsonKey = this.s3Prefix.concat(dataset.s3Key.json);
-    await this.s3Service.deleteObject(this.bucketName, jsonKey);
 
-    await this.dynamodb.delete({
-      TableName: this.tableName,
-      Key: {
-        pk: DatasetFactory.itemId(id),
-        sk: DatasetFactory.itemId(id),
-      },
-    });
+    try {
+      await this.s3Service.deleteObject(this.bucketName, jsonKey);
+    } catch (err) {
+      logger.error("Failed to delete dataset from S3 %s", jsonKey);
+      throw err;
+    }
+
+    try {
+      await this.dynamodb.delete({
+        TableName: this.tableName,
+        Key: {
+          pk: DatasetFactory.itemId(id),
+          sk: DatasetFactory.itemId(id),
+        },
+      });
+    } catch (err) {
+      logger.error("Failed to delete dataset from DynamoDB %s", id);
+      throw err;
+    }
   }
 
   private getNewJsonS3Key() {

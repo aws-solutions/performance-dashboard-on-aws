@@ -773,7 +773,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\",\n        \"createdBy\": \"johndoe\"\n    },\n    \"data\": \"[{\\\"Year\\\":2016,\\\"Live Stream Attendees\\\":17000},{\\\"Year\\\":2017,\\\"Live Stream Attendees\\\":23000},{\\\"Year\\\":2018,\\\"Live Stream Attendees\\\":13500},{\\\"Year\\\":2019,\\\"Live Stream Attendees\\\":21100},{\\\"Year\\\":2020,\\\"Live Stream Attendees\\\":8450}]\"\n}",
+					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\",\n        \"createdBy\": \"johndoe\"\n    },\n    \"data\": [{\"Year\":2016,\"Live Stream Attendees\":17000},{\"Year\":2017,\"Live Stream Attendees\":23000},{\"Year\":2018,\"Live Stream Attendees\":13500},{\"Year\":2019,\"Live Stream Attendees\":21100},{\"Year\":2020,\"Live Stream Attendees\":8450}]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -834,7 +834,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\"\n    },\n    \"data\": \"[{\\\"Year\\\":2016,\\\"Live Stream Attendees\\\":10000},{\\\"Year\\\":2017,\\\"Live Stream Attendees\\\":23000},{\\\"Year\\\":2018,\\\"Live Stream Attendees\\\":13500},{\\\"Year\\\":2019,\\\"Live Stream Attendees\\\":21100},{\\\"Year\\\":2020,\\\"Live Stream Attendees\\\":8450}]\"\n}",
+					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\"\n    },\n    \"data\": [{\"Year\":2016,\"Live Stream Attendees\":15000},{\"Year\":2017,\"Live Stream Attendees\":23000},{\"Year\":2018,\"Live Stream Attendees\":13500},{\"Year\":2019,\"Live Stream Attendees\":21100},{\"Year\":2020,\"Live Stream Attendees\":9050}]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1902,117 +1902,117 @@
 	],
 	"variable": [
 		{
-			"id": "74463c53-40c2-4dfa-b029-ca1a04e323ef",
+			"id": "f921fa3c-bcdf-4a56-9dfc-0aa0c627b5ef",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "6e158611-4cdd-44e8-9540-9ab1cbd7cb57",
+			"id": "a2f6cdfb-de65-4014-852a-9d84ee29c745",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "009e1fdd-3d03-4ac0-8c34-286b1deb49df",
+			"id": "857073ed-eca8-4ee4-93b6-28798b5ca8ab",
 			"key": "apiKey",
 			"value": ""
 		},
 		{
-			"id": "176d7a15-6074-4339-8cb7-8ce42aff57d8",
+			"id": "80b292ca-08a3-43ce-babd-7c729ab3765d",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "46d36e7c-7479-476b-a117-cd4d96402477",
+			"id": "622dfddd-cf8f-43ef-85b1-905db197abd6",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "d7cadb61-4ad7-418a-b39b-6038b4dd81f9",
+			"id": "ae1f01aa-a2dd-4237-93e7-712e79f5f2b7",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "f38dc94d-d439-4e0e-ac20-5236bfdd3aaa",
+			"id": "c1d9a784-f896-491d-91c7-58e9c88553fd",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "326c1c76-de1f-4b78-a4c9-ed27989db1bd",
+			"id": "9063fc2a-28ab-4a04-87c5-45d4ce291fbb",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "95ec25b2-0aff-4079-a500-4954b9293e58",
+			"id": "dcb35e90-8dab-48d9-992d-d5ca1e5fb152",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "49f20271-3dba-4906-a033-e20dc6bc9363",
+			"id": "a8149bca-31ab-4852-9520-632865420957",
 			"key": "dashboard.friendlyURL",
 			"value": ""
 		},
 		{
-			"id": "ff72f486-5d42-4745-956d-593ad80c8717",
+			"id": "e786e4f6-f1f1-4ff5-a198-346161205cc1",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "3e3b502f-52b3-4d5f-b6e5-1d1f48d39b6a",
+			"id": "a0484716-5835-4540-bf41-ef2a83c23526",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "0ddec0d1-8736-46b1-b890-8de63fcb2269",
+			"id": "35056674-fbff-485f-bcef-967b57e20ad6",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "8d549761-7b68-4a50-befc-ad9e8cc5861e",
+			"id": "1c15947c-fdf5-4cf7-8737-c150c6543b72",
 			"key": "chartwidget.id",
 			"value": ""
 		},
 		{
-			"id": "2052d271-025b-43ba-880f-c6d79d525777",
+			"id": "f12eb729-eb78-4c26-b3db-26490d8114f5",
 			"key": "chartwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "7df3d61f-5d6f-4e8e-9411-beae2a4916fd",
+			"id": "f28c5cea-5832-4eb6-8c41-6c2b276532d4",
 			"key": "settings.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "af5bd861-7225-4b8d-86a6-f20dcba9b756",
+			"id": "5b5c9535-acee-4f19-b1c4-8af3ec8052bb",
 			"key": "settings.publishingGuidance",
 			"value": ""
 		},
 		{
-			"id": "1e8e407d-ac08-4a63-a1b4-b1b9b29de039",
+			"id": "8701fbad-4294-4c69-a285-7b10094bfbef",
 			"key": "homepage.title",
 			"value": ""
 		},
 		{
-			"id": "130920fe-2eec-4445-abd2-1651e35273b7",
+			"id": "15cdb48b-1c15-4d85-ae4b-e017ea3e9567",
 			"key": "homepage.description",
 			"value": ""
 		},
 		{
-			"id": "c2e02377-d9ed-4415-b19a-4f50753719d0",
+			"id": "aba1f381-192b-48ce-98ce-399961de2e8c",
 			"key": "homepage.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "119ff257-c898-4088-8ff9-4b6291d70ecc",
+			"id": "a5c08d35-36ee-462e-93a4-87cf375f1290",
 			"key": "dataset.id",
 			"value": ""
 		},
 		{
-			"id": "dd204628-9af2-4339-80da-1ef84b123b04",
+			"id": "a08c4b1c-8c42-4541-a8ac-a4e304e35366",
 			"key": "dataset.s3Key",
 			"value": ""
 		},
 		{
-			"id": "9a9f18a3-a0f7-4bc4-8c57-1674df5b7272",
+			"id": "b1ae682c-ce73-4f8d-8554-7e248880a9fd",
 			"key": "dataset.s3Key.json",
 			"value": ""
 		}

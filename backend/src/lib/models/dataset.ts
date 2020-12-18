@@ -14,6 +14,7 @@ export interface Dataset {
   sourceType: SourceType;
 }
 
+export type DatasetContent = Array<object>;
 export type DatasetList = Array<Dataset>;
 
 export interface DatasetItem {

@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
@@ -22,16 +22,18 @@ beforeEach(() => {
 });
 
 test("renders title", async () => {
-  const { getByRole } = render(<EditTable />, { wrapper: MemoryRouter });
-  expect(getByRole("heading", { name: "Edit table" })).toBeInTheDocument();
+  render(<EditTable />, { wrapper: MemoryRouter });
+  expect(
+    await screen.findByRole("heading", { name: "Edit table" })
+  ).toBeInTheDocument();
 });
 
 test("renders a textfield for table title", async () => {
-  const { getByLabelText } = render(<EditTable />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Table title")).toBeInTheDocument();
+  render(<EditTable />, { wrapper: MemoryRouter });
+  expect(await screen.findByLabelText("Table title")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {
-  const { getByLabelText } = render(<EditTable />, { wrapper: MemoryRouter });
-  expect(getByLabelText("File upload")).toBeInTheDocument();
+  render(<EditTable />, { wrapper: MemoryRouter });
+  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
@@ -22,16 +22,18 @@ beforeEach(() => {
 });
 
 test("renders title", async () => {
-  const { getByRole } = render(<EditChart />, { wrapper: MemoryRouter });
-  expect(getByRole("heading", { name: "Edit chart" })).toBeInTheDocument();
+  render(<EditChart />, { wrapper: MemoryRouter });
+  expect(
+    await screen.findByRole("heading", { name: "Edit chart" })
+  ).toBeInTheDocument();
 });
 
 test("renders a textfield for chart title", async () => {
-  const { getByLabelText } = render(<EditChart />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Chart title")).toBeInTheDocument();
+  render(<EditChart />, { wrapper: MemoryRouter });
+  expect(await screen.findByLabelText("Chart title")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {
-  const { getByLabelText } = render(<EditChart />, { wrapper: MemoryRouter });
-  expect(getByLabelText("File upload")).toBeInTheDocument();
+  render(<EditChart />, { wrapper: MemoryRouter });
+  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
 });

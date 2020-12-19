@@ -18,6 +18,17 @@ export enum DashboardState {
   PublishPending = "PublishPending",
 }
 
+export enum SourceType {
+  IngestApi = "IngestApi",
+  FileUpload = "FileUpload",
+}
+
+export enum DatasetType {
+  DynamicDataset = "DynamicDataset",
+  StaticDataset = "StaticDataset",
+  CsvFileUpload = "CsvFileUpload",
+}
+
 export type Dashboard = {
   id: string;
   name: string;
@@ -80,6 +91,7 @@ export interface ChartWidget extends Widget {
     chartType: ChartType;
     datasetId: string;
     summary: string;
+    datasetType?: DatasetType;
     s3Key: {
       raw: string;
       json: string;
@@ -92,6 +104,7 @@ export interface TableWidget extends Widget {
     title: string;
     datasetId: string;
     summary: string;
+    datasetType?: DatasetType;
     s3Key: {
       raw: string;
       json: string;
@@ -106,6 +119,7 @@ export type Dataset = {
     raw: string;
     json: string;
   };
+  sourceType?: SourceType;
 };
 
 export type PublicHomepage = {

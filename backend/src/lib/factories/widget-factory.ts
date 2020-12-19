@@ -155,6 +155,7 @@ function createChartWidget(
       summary: content.summary,
       s3Key: content.s3Key,
       fileName: content.fileName,
+      datasetType: content.datasetType,
     },
   };
 }
@@ -194,6 +195,7 @@ function createTableWidget(
       summary: content.summary,
       s3Key: content.s3Key,
       fileName: content.fileName,
+      datasetType: content.datasetType,
     },
   };
 }

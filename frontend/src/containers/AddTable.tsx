@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { Dataset, WidgetType } from "../models";
+import { Dataset, DatasetType, WidgetType } from "../models";
 import { useDashboard } from "../hooks";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
@@ -12,6 +12,9 @@ import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
 import TablePreview from "../components/TablePreview";
 import Link from "../components/Link";
+import ComboBox from "../components/Combobox";
+import { useDatasets } from "../hooks/dataset-hooks";
+import Spinner from "../components/Spinner";
 
 interface FormValues {
   title: string;
@@ -26,8 +29,18 @@ function AddTable() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
+  const { dynamicDatasets, staticDatasets } = useDatasets();
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const [dataset, setDataset] = useState<Array<object> | undefined>(undefined);
+  const [currentJson, setCurrentJson] = useState<Array<any>>([]);
+  const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
+  const [staticJson, setStaticJson] = useState<Array<any>>([]);
+  const [csvJson, setCsvJson] = useState<Array<any>>([]);
+  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
+    undefined
+  );
+  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
+    undefined
+  );
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
     undefined
   );
@@ -35,7 +48,11 @@ function AddTable() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [fileLoading, setFileLoading] = useState(false);
+  const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
+  const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
+    undefined
+  );
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -45,7 +62,7 @@ function AddTable() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(dataset)
+      JSON.stringify(currentJson)
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -59,7 +76,10 @@ function AddTable() {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      const newDataset = await uploadDataset();
+      let newDataset;
+      if (csvFile) {
+        newDataset = await uploadDataset();
+      }
 
       setCreatingWidget(true);
       await BackendService.createWidget(
@@ -69,9 +89,16 @@ function AddTable() {
         {
           title: values.title,
           summary: values.summary,
-          datasetId: newDataset.id,
-          s3Key: newDataset.s3Key,
-          fileName: csvFile?.name,
+          datasetType: datasetType,
+          datasetId: newDataset
+            ? newDataset.id
+            : dynamicDataset?.id || staticDataset?.id,
+          s3Key: newDataset
+            ? newDataset.s3Key
+            : dynamicDataset?.s3Key || staticDataset?.s3Key,
+          fileName: csvFile
+            ? csvFile.name
+            : dynamicDataset?.fileName || staticDataset?.fileName,
         }
       );
       setCreatingWidget(false);
@@ -108,6 +135,7 @@ function AddTable() {
     if (!data) {
       return;
     }
+    setDatasetLoading(true);
     parse(data, {
       header: true,
       dynamicTyping: true,
@@ -116,14 +144,78 @@ function AddTable() {
       complete: function (results: ParseResult<object>) {
         if (results.errors.length) {
           setCsvErrors(results.errors);
-          setDataset(undefined);
+          setCsvJson([]);
+          setCurrentJson([]);
         } else {
           setCsvErrors(undefined);
-          setDataset(results.data);
+          setCsvJson(results.data);
+          setCurrentJson(results.data);
         }
+        setDatasetLoading(false);
       },
     });
     setCsvFile(data);
+  };
+
+  const handleChange = (event: React.FormEvent<HTMLFieldSetElement>) => {
+    const target = event.target as HTMLInputElement;
+    if (target.name === "datasetType") {
+      const datasetType = target.value as DatasetType;
+      setDatasetType(datasetType);
+      if (datasetType === DatasetType.DynamicDataset) {
+        setCurrentJson(dynamicJson);
+      }
+      if (datasetType === DatasetType.StaticDataset) {
+        setCurrentJson(staticJson);
+      }
+      if (datasetType === DatasetType.CsvFileUpload) {
+        setCurrentJson(csvJson);
+      }
+    }
+  };
+
+  const onSelectDynamicDataset = async (
+    event: React.FormEvent<HTMLSelectElement>
+  ) => {
+    event.persist();
+    setDatasetLoading(true);
+
+    const jsonFile = (event.target as HTMLInputElement).value;
+    if (jsonFile) {
+      const dataset = await StorageService.downloadJson(jsonFile);
+      setDynamicJson(dataset);
+      setCurrentJson(dataset);
+      setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
+    } else {
+      setDynamicJson([]);
+      setCurrentJson([]);
+      setDynamicDataset(undefined);
+    }
+
+    setDatasetLoading(false);
+    event.stopPropagation();
+  };
+
+  const onSelectStaticDataset = async (
+    event: React.FormEvent<HTMLSelectElement>
+  ) => {
+    event.persist();
+    setDatasetLoading(true);
+
+    const jsonFile = (event.target as HTMLInputElement).value;
+    if (jsonFile) {
+      const dataset = await StorageService.downloadJson(jsonFile);
+      setStaticJson(dataset);
+      setCurrentJson(dataset);
+      setStaticDataset(staticDatasets.find((d) => d.s3Key.json === jsonFile));
+    } else {
+      setStaticJson([]);
+      setCurrentJson([]);
+      setStaticDataset(undefined);
+    }
+
+    setDatasetLoading(false);
+    event.stopPropagation();
   };
 
   const crumbs = [
@@ -171,31 +263,151 @@ function AddTable() {
                 register={register}
               />
 
-              <FileInput
-                id="dataset"
-                name="dataset"
-                label="File upload"
-                accept=".csv"
-                disabled={!title}
-                loading={fileLoading}
-                errors={csvErrors}
-                register={register}
-                hint={
-                  <span>
-                    Must be a CSV file.{" "}
-                    <Link to="/admin/formattingcsv" target="_blank" external>
-                      How do I format my CSV file?
-                    </Link>
-                  </span>
-                }
-                fileName={csvFile && csvFile.name}
-                onFileProcessed={onFileProcessed}
-              />
+              <label htmlFor="fieldset" className="usa-label text-bold">
+                Data
+              </label>
+              <div className="usa-hint">
+                Choose an existing dataset or create a new one to populate this
+                table.
+              </div>
+              <fieldset
+                id="fieldset"
+                className="usa-fieldset"
+                onChange={handleChange}
+              >
+                <legend className="usa-sr-only">Content item types</legend>
+                <div className="usa-radio">
+                  <div className="grid-row">
+                    <div className="grid-col flex-5">
+                      <input
+                        className="usa-radio__input"
+                        id="dynamicDataset"
+                        value="DynamicDataset"
+                        type="radio"
+                        name="datasetType"
+                        ref={register()}
+                      />
+                      <label
+                        className="usa-radio__label"
+                        htmlFor="dynamicDataset"
+                      >
+                        Select a dynamic dataset
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="margin-left-4"
+                  hidden={datasetType !== DatasetType.DynamicDataset}
+                >
+                  <div className="usa-hint margin-top-1">
+                    Choose from a list of available datasets.
+                  </div>
+                  <ComboBox
+                    id="dynamicDatasets"
+                    name="dynamicDatasets"
+                    label=""
+                    options={dynamicDatasets.map((d) => {
+                      return {
+                        value: d.s3Key.json,
+                        content: `${d.fileName} (${d.s3Key.json})`,
+                      };
+                    })}
+                    register={register}
+                    onChange={onSelectDynamicDataset}
+                  />
+                </div>
+                <div className="usa-radio">
+                  <div className="grid-row">
+                    <div className="grid-col flex-5">
+                      <input
+                        className="usa-radio__input"
+                        id="staticDataset"
+                        value="StaticDataset"
+                        type="radio"
+                        name="datasetType"
+                        ref={register()}
+                      />
+                      <label
+                        className="usa-radio__label"
+                        htmlFor="staticDataset"
+                      >
+                        Select a static dataset
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="margin-left-4"
+                  hidden={datasetType !== DatasetType.StaticDataset}
+                >
+                  <div className="usa-hint margin-top-1">
+                    Choose from a list of available datasets.
+                  </div>
+                  <ComboBox
+                    id="staticDatasets"
+                    name="staticDatasets"
+                    label=""
+                    options={staticDatasets.map((d) => {
+                      return {
+                        value: d.s3Key.json,
+                        content: `${d.fileName} (${d.s3Key.json})`,
+                      };
+                    })}
+                    register={register}
+                    onChange={onSelectStaticDataset}
+                  />
+                </div>
+                <div className="usa-radio">
+                  <div className="grid-row">
+                    <div className="grid-col flex-5">
+                      <input
+                        className="usa-radio__input"
+                        id="csvFileUpload"
+                        value="CsvFileUpload"
+                        type="radio"
+                        name="datasetType"
+                        ref={register()}
+                      />
+                      <label
+                        className="usa-radio__label"
+                        htmlFor="csvFileUpload"
+                      >
+                        Create a new dataset from file
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div hidden={datasetType !== DatasetType.CsvFileUpload}>
+                  <FileInput
+                    id="dataset"
+                    name="dataset"
+                    label="File upload"
+                    accept=".csv"
+                    loading={fileLoading}
+                    errors={csvErrors}
+                    register={register}
+                    hint={
+                      <span>
+                        Must be a CSV file.{" "}
+                        <Link
+                          to="/admin/formattingcsv"
+                          target="_blank"
+                          external
+                        >
+                          How do I format my CSV file?
+                        </Link>
+                      </span>
+                    }
+                    fileName={csvFile && csvFile.name}
+                    onFileProcessed={onFileProcessed}
+                  />
+                </div>
+              </fieldset>
 
-              <div hidden={!dataset}>
-                {dataset &&
-                dataset.length &&
-                (Object.keys(dataset[0]) as Array<string>).length >= 8 ? (
+              <div hidden={!currentJson.length}>
+                {currentJson.length &&
+                (Object.keys(currentJson[0]) as Array<string>).length >= 8 ? (
                   <div className="usa-alert usa-alert--warning margin-top-3">
                     <div className="usa-alert__body">
                       <p className="usa-alert__text">
@@ -228,7 +440,9 @@ function AddTable() {
               Back
             </Button>
             <Button
-              disabled={!dataset || fileLoading || creatingWidget}
+              disabled={
+                !currentJson.length || !title || fileLoading || creatingWidget
+              }
               type="submit"
             >
               Add table
@@ -244,18 +458,22 @@ function AddTable() {
           </form>
         </div>
         <div className="grid-col-6">
-          <div hidden={!dataset} className="margin-left-4">
+          <div hidden={!currentJson.length} className="margin-left-4">
             <h4>Preview</h4>
-            <TablePreview
-              title={title}
-              summary={summary}
-              headers={
-                dataset && dataset.length
-                  ? (Object.keys(dataset[0]) as Array<string>)
-                  : []
-              }
-              data={dataset}
-            />
+            {datasetLoading ? (
+              <Spinner className="text-center margin-top-6" label="Loading" />
+            ) : (
+              <TablePreview
+                title={title}
+                summary={summary}
+                headers={
+                  currentJson.length
+                    ? (Object.keys(currentJson[0]) as Array<string>)
+                    : []
+                }
+                data={currentJson}
+              />
+            )}
           </div>
         </div>
       </div>

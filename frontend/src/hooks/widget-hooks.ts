@@ -1,13 +1,21 @@
 import { useEffect, useState, useCallback } from "react";
-import { Widget, WidgetType } from "../models";
+import { DatasetType, Widget, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
 
 type UseWidgetHook = {
   loading: boolean;
   widget?: Widget;
-  json: Array<any>;
-  setJson: Function;
+  datasetType: DatasetType | undefined;
+  setDatasetType: Function;
+  currentJson: Array<any>;
+  dynamicJson: Array<any>;
+  staticJson: Array<any>;
+  csvJson: Array<any>;
+  setCurrentJson: Function;
+  setDynamicJson: Function;
+  setStaticJson: Function;
+  setCsvJson: Function;
   setWidget: Function;
 };
 
@@ -17,7 +25,13 @@ export function useWidget(
 ): UseWidgetHook {
   const [loading, setLoading] = useState(false);
   const [widget, setWidget] = useState<Widget | undefined>(undefined);
-  const [json, setJson] = useState<Array<any>>([]);
+  const [currentJson, setCurrentJson] = useState<Array<any>>([]);
+  const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
+  const [staticJson, setStaticJson] = useState<Array<any>>([]);
+  const [csvJson, setCsvJson] = useState<Array<any>>([]);
+  const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
+    undefined
+  );
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -28,10 +42,22 @@ export function useWidget(
       data.widgetType === WidgetType.Chart ||
       data.widgetType === WidgetType.Table
     ) {
-      const { s3Key } = data.content;
+      const { s3Key, datasetType } = data.content;
       if (s3Key.json) {
         const dataset = await StorageService.downloadJson(s3Key.json);
-        setJson(dataset);
+        if (datasetType === DatasetType.DynamicDataset) {
+          setDynamicJson(dataset);
+        } else if (datasetType === DatasetType.StaticDataset) {
+          setStaticJson(dataset);
+        } else {
+          setCsvJson(dataset);
+        }
+        setCurrentJson(dataset);
+      }
+      if (datasetType) {
+        setDatasetType(datasetType as DatasetType);
+      } else {
+        setDatasetType(DatasetType.CsvFileUpload);
       }
     }
     setLoading(false);
@@ -44,8 +70,16 @@ export function useWidget(
   return {
     loading,
     widget,
-    json,
-    setJson,
+    datasetType,
+    setDatasetType,
+    currentJson,
+    dynamicJson,
+    staticJson,
+    csvJson,
+    setCurrentJson,
+    setDynamicJson,
+    setStaticJson,
+    setCsvJson,
     setWidget,
   };
 }

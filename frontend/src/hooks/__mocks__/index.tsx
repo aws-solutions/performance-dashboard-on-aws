@@ -136,6 +136,16 @@ export function useWidget(
   widgetId: string,
   onWidgetFetched: Function
 ) {
+  const [widget] = useState({
+    id: "123",
+    name: "Correlation of COVID cases to deaths",
+    datasetType: DatasetType.DynamicDataset,
+    widgetType: "Text",
+    order: 1,
+    updatedAt: "",
+    content: { text: "test" },
+  });
+
   return {
     loading: false,
     currentJson: [],
@@ -149,15 +159,7 @@ export function useWidget(
     setWidget: jest.fn(),
     setDatasetType: jest.fn(),
     datasetType: DatasetType.DynamicDataset,
-    widget: {
-      id: "123",
-      name: "Correlation of COVID cases to deaths",
-      datasetType: DatasetType.DynamicDataset,
-      widgetType: "Text",
-      order: 1,
-      updatedAt: "",
-      content: { text: "test" },
-    },
+    widget: widget,
   };
 }
 
@@ -225,50 +227,56 @@ export function useJsonDataset(s3Key: string) {
 }
 
 export function useDatasets() {
+  const [datasets] = useState([
+    {
+      id: "123",
+      fileName: "abc",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
+      sourceType: SourceType.FileUpload,
+    },
+    {
+      id: "123",
+      fileName: "abc",
+      s3Key: {
+        raw: "",
+        json: "abc.json",
+      },
+      sourceType: SourceType.IngestApi,
+    },
+  ]);
+
+  const [dynamicDatasets] = useState([
+    {
+      id: "123",
+      fileName: "abc",
+      s3Key: {
+        raw: "",
+        json: "abc.json",
+      },
+      sourceType: SourceType.IngestApi,
+    },
+  ]);
+
+  const [staticDatasets] = useState([
+    {
+      id: "123",
+      fileName: "abc",
+      s3Key: {
+        raw: "abc.csv",
+        json: "abc.json",
+      },
+      sourceType: SourceType.FileUpload,
+    },
+  ]);
+
   return {
     loadingDatasets: false,
-    datasets: [
-      {
-        id: "123",
-        fileName: "abc",
-        s3Key: {
-          raw: "abc.csv",
-          json: "abc.json",
-        },
-        sourceType: SourceType.FileUpload,
-      },
-      {
-        id: "123",
-        fileName: "abc",
-        s3Key: {
-          raw: "",
-          json: "abc.json",
-        },
-        sourceType: SourceType.IngestApi,
-      },
-    ],
-    dynamicDatasets: [
-      {
-        id: "123",
-        fileName: "abc",
-        s3Key: {
-          raw: "",
-          json: "abc.json",
-        },
-        sourceType: SourceType.IngestApi,
-      },
-    ],
-    staticDatasets: [
-      {
-        id: "123",
-        fileName: "abc",
-        s3Key: {
-          raw: "abc.csv",
-          json: "abc.json",
-        },
-        sourceType: SourceType.FileUpload,
-      },
-    ],
+    datasets: datasets,
+    dynamicDatasets: dynamicDatasets,
+    staticDatasets: staticDatasets,
     reloadDatasets: jest.fn(),
   };
 }

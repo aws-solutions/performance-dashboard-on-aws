@@ -22,10 +22,10 @@ beforeEach(() => {
 });
 
 test("renders title", async () => {
-  /*render(<EditChart />, { wrapper: MemoryRouter });
+  render(<EditChart />, { wrapper: MemoryRouter });
   expect(
     await screen.findByRole("heading", { name: "Edit chart" })
-  ).toBeInTheDocument();*/
+  ).toBeInTheDocument();
 });
 
 test("renders a textfield for chart title", async () => {

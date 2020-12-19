@@ -25,7 +25,7 @@ describe("createDataset", () => {
           name: "covid-dataset.csv",
           createdBy: "johndoe",
         },
-        data: { data: "data" },
+        data: [{ data: "data" }],
       },
     } as any) as Request;
   });
@@ -72,7 +72,7 @@ describe("updateDataset", () => {
         metadata: {
           name: "covid-dataset.csv",
         },
-        data: { data: "data" },
+        data: [{ data: "data" }],
       },
       params: { id: "abc" },
     } as any) as Request;

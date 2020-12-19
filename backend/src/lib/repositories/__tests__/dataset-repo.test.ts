@@ -87,7 +87,7 @@ describe("saveDataset", () => {
 describe("createDataset", () => {
   it("create the item in dynamodb", async () => {
     const metadata = { name: "abc", createdBy: "johndoe" };
-    const data = { data: "data" };
+    const data = [{ data: "data" }];
     const item = {} as DatasetItem;
 
     s3Service.putObject = jest.fn().mockReturnValue(true);
@@ -106,7 +106,7 @@ describe("updateDataset", () => {
   it("update the item in dynamodb", async () => {
     const id = "123";
     const metadata = { name: "abc" };
-    const data = { data: "data" };
+    const data = [{ data: "data" }];
 
     const dataset: Dataset = {
       id: "123",

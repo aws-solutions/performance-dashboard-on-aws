@@ -41,6 +41,7 @@ import MarkdownSyntax from "./containers/MarkdownSyntax";
 import FormattingCSV from "./containers/FormattingCSV";
 import DateFormatSettings from "./containers/DateFormatSettings";
 import EditDateFormat from "./containers/EditDateFormat";
+import APIHelpPage from "./containers/APIHelpPage";
 
 interface AppRoute {
   path: string;
@@ -160,6 +161,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/formattingcsv",
     component: FormattingCSV,
+  },
+  {
+    path: "/admin/apihelp",
+    component: APIHelpPage,
   },
   {
     path: "/:friendlyURL",

@@ -29,11 +29,11 @@ test("renders title", async () => {
 });
 
 test("renders a textfield for chart title", async () => {
-  /*render(<EditChart />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("Chart title")).toBeInTheDocument();*/
+  render(<EditChart />, { wrapper: MemoryRouter });
+  expect(await screen.findByLabelText("Chart title")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {
-  /*render(<EditChart />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();*/
+  render(<EditChart />, { wrapper: MemoryRouter });
+  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
 });

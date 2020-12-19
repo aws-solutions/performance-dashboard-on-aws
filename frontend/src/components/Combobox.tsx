@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React /*, { useEffect }*/ from "react";
 // @ts-ignore
-import comboBox from "uswds/src/js/components/combo-box";
+//import comboBox from "uswds/src/js/components/combo-box";
 
 interface Props {
   id: string;
@@ -13,21 +13,20 @@ interface Props {
   register?: Function;
   required?: boolean;
   defaultValue?: string;
-  value?: string;
   error?: string;
   onChange?: Function;
 }
 
 function Combobox(props: Props) {
-  useEffect(() => {
-    // initialize
-    comboBox.on();
+  // useEffect(() => {
+  //   // initialize
+  //   comboBox.on();
 
-    // remove event listeners when component un-mounts.
-    return () => {
-      comboBox.off();
-    };
-  }, []);
+  //   // remove event listeners when component un-mounts.
+  //   return () => {
+  //     comboBox.off();
+  //   };
+  // }, []);
 
   let formGroupClassName = "usa-form-group";
   if (props.error) {
@@ -54,23 +53,25 @@ function Combobox(props: Props) {
           {props.error}
         </span>
       )}
-      <div className="usa-combo-box">
-        <select
-          className="usa-select"
-          name={props.name}
-          id={props.id}
-          onChange={handleChange}
-          defaultValue={props.defaultValue}
-          value={props.value}
-          ref={props.register && props.register({ required: props.required })}
-        >
-          {props.options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.content}
-            </option>
-          ))}
-        </select>
-      </div>
+      {/*<div className="usa-combo-box">*/}
+      <select
+        className="usa-select"
+        name={props.name}
+        id={props.id}
+        onChange={handleChange}
+        defaultValue={props.defaultValue}
+        ref={props.register && props.register({ required: props.required })}
+      >
+        <option key="" value="">
+          Select an option
+        </option>
+        {props.options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.content}
+          </option>
+        ))}
+      </select>
+      {/*</div>*/}
     </div>
   );
 }

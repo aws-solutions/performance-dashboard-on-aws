@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
@@ -26,6 +26,8 @@ interface FormValues {
   title: string;
   summary: string;
   chartType: string;
+  dynamicDatasets: string;
+  staticDatasets: string;
 }
 
 interface PathParams {
@@ -38,7 +40,13 @@ function EditChart() {
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
-  const { register, errors, handleSubmit } = useForm<FormValues>();
+  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
+  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
+    undefined
+  );
+  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
+    undefined
+  );
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
     undefined
   );
@@ -48,19 +56,39 @@ function EditChart() {
   const [editingWidget, setEditingWidget] = useState(false);
   const {
     widget,
-    json,
-    setJson,
     setWidget,
     datasetType,
     setDatasetType,
+    currentJson,
+    dynamicJson,
+    staticJson,
+    csvJson,
+    setCurrentJson,
+    setDynamicJson,
+    setStaticJson,
+    setCsvJson,
   } = useWidget(dashboardId, widgetId);
 
-  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
-    dynamicDatasets.find((d) => d.s3Key.json === widget?.content.s3Key.json)
-  );
-  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
-    staticDatasets.find((d) => d.s3Key.json === widget?.content.s3Key.json)
-  );
+  useEffect(() => {
+    if (widget && dynamicDatasets && staticDatasets) {
+      reset({
+        dynamicDatasets:
+          widget.content.datasetType === DatasetType.DynamicDataset
+            ? widget.content.s3Key.json
+            : "",
+        staticDatasets:
+          widget.content.datasetType === DatasetType.StaticDataset
+            ? widget.content.s3Key.json
+            : "",
+      });
+      setDynamicDataset(
+        dynamicDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
+      );
+      setStaticDataset(
+        staticDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
+      );
+    }
+  }, [widget, dynamicDatasets, staticDatasets, reset]);
 
   const onFileProcessed = useCallback(
     async (data: File) => {
@@ -76,17 +104,19 @@ function EditChart() {
         complete: function (results: ParseResult<object>) {
           if (results.errors.length) {
             setCsvErrors(results.errors);
-            setJson([]);
+            setCsvJson([]);
+            setCurrentJson([]);
           } else {
             setCsvErrors(undefined);
-            setJson(results.data);
+            setCsvJson(results.data);
+            setCurrentJson(results.data);
           }
           setDatasetLoading(false);
         },
       });
       setCsvFile(data);
     },
-    [setJson]
+    [setCurrentJson, setCsvJson]
   );
 
   const uploadDataset = async (): Promise<Dataset | null> => {
@@ -107,7 +137,7 @@ function EditChart() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(json)
+      JSON.stringify(currentJson)
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -214,30 +244,16 @@ function EditChart() {
   const handleChange = async (event: React.FormEvent<HTMLFieldSetElement>) => {
     const target = event.target as HTMLInputElement;
     if (target.name === "datasetType") {
-      setDatasetType(target.value as DatasetType);
-      if (
-        datasetType === DatasetType.DynamicDataset &&
-        dynamicDataset &&
-        dynamicDataset.s3Key.json
-      ) {
-        setDatasetLoading(true);
-        const dataset = await StorageService.downloadJson(
-          dynamicDataset.s3Key.json
-        );
-        setJson(dataset);
-        setDatasetLoading(false);
+      const datasetType = target.value as DatasetType;
+      setDatasetType(datasetType);
+      if (datasetType === DatasetType.DynamicDataset) {
+        setCurrentJson(dynamicJson);
       }
-      if (
-        datasetType === DatasetType.StaticDataset &&
-        staticDataset &&
-        staticDataset.s3Key.json
-      ) {
-        setDatasetLoading(true);
-        const dataset = await StorageService.downloadJson(
-          staticDataset.s3Key.json
-        );
-        setJson(dataset);
-        setDatasetLoading(false);
+      if (datasetType === DatasetType.StaticDataset) {
+        setCurrentJson(staticJson);
+      }
+      if (datasetType === DatasetType.CsvFileUpload) {
+        setCurrentJson(csvJson);
       }
     }
   };
@@ -249,12 +265,16 @@ function EditChart() {
     setDatasetLoading(true);
 
     const jsonFile = (event.target as HTMLInputElement).value;
-    const dataset = await StorageService.downloadJson(jsonFile);
-
-    setJson(dataset);
-    setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
-    setStaticDataset(undefined);
-    setCsvFile(undefined);
+    if (jsonFile) {
+      const dataset = await StorageService.downloadJson(jsonFile);
+      setDynamicJson(dataset);
+      setCurrentJson(dataset);
+      setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
+    } else {
+      setDynamicJson([]);
+      setCurrentJson([]);
+      setDynamicDataset(undefined);
+    }
 
     setDatasetLoading(false);
     event.stopPropagation();
@@ -267,12 +287,16 @@ function EditChart() {
     setDatasetLoading(true);
 
     const jsonFile = (event.target as HTMLInputElement).value;
-    const dataset = await StorageService.downloadJson(jsonFile);
-
-    setJson(dataset);
-    setStaticDataset(staticDatasets.find((d) => d.s3Key.json === jsonFile));
-    setDynamicDataset(undefined);
-    setCsvFile(undefined);
+    if (jsonFile) {
+      const dataset = await StorageService.downloadJson(jsonFile);
+      setStaticJson(dataset);
+      setCurrentJson(dataset);
+      setStaticDataset(staticDatasets.find((d) => d.s3Key.json === jsonFile));
+    } else {
+      setStaticJson([]);
+      setCurrentJson([]);
+      setStaticDataset(undefined);
+    }
 
     setDatasetLoading(false);
     event.stopPropagation();
@@ -360,26 +384,27 @@ function EditChart() {
                         </div>
                       </div>
                     </div>
-                    {datasetType === DatasetType.DynamicDataset && (
-                      <div className="margin-left-4">
-                        <div className="usa-hint margin-top-1">
-                          Choose from a list of available datasets.
-                        </div>
-                        <ComboBox
-                          id="dynamicDatasets"
-                          name="dynamicDatasets"
-                          label=""
-                          options={dynamicDatasets.map((d) => {
-                            return {
-                              value: d.s3Key.json,
-                              content: `${d.fileName} (${d.s3Key.json})`,
-                            };
-                          })}
-                          value={dynamicDataset?.s3Key.json}
-                          onChange={onSelectDynamicDataset}
-                        />
+                    <div
+                      className="margin-left-4"
+                      hidden={datasetType !== DatasetType.DynamicDataset}
+                    >
+                      <div className="usa-hint margin-top-1">
+                        Choose from a list of available datasets.
                       </div>
-                    )}
+                      <ComboBox
+                        id="dynamicDatasets"
+                        name="dynamicDatasets"
+                        label=""
+                        options={dynamicDatasets.map((d) => {
+                          return {
+                            value: d.s3Key.json,
+                            content: `${d.fileName} (${d.s3Key.json})`,
+                          };
+                        })}
+                        register={register}
+                        onChange={onSelectDynamicDataset}
+                      />
+                    </div>
                     <div className="usa-radio">
                       <div className="grid-row">
                         <div className="grid-col flex-5">
@@ -403,26 +428,27 @@ function EditChart() {
                         </div>
                       </div>
                     </div>
-                    {datasetType === DatasetType.StaticDataset && (
-                      <div className="margin-left-4">
-                        <div className="usa-hint margin-top-1">
-                          Choose from a list of available datasets.
-                        </div>
-                        <ComboBox
-                          id="staticDatasets"
-                          name="staticDatasets"
-                          label=""
-                          options={staticDatasets.map((d) => {
-                            return {
-                              value: d.s3Key.json,
-                              content: `${d.fileName} (${d.s3Key.json})`,
-                            };
-                          })}
-                          value={staticDataset?.s3Key.json}
-                          onChange={onSelectStaticDataset}
-                        />
+                    <div
+                      className="margin-left-4"
+                      hidden={datasetType !== DatasetType.StaticDataset}
+                    >
+                      <div className="usa-hint margin-top-1">
+                        Choose from a list of available datasets.
                       </div>
-                    )}
+                      <ComboBox
+                        id="staticDatasets"
+                        name="staticDatasets"
+                        label=""
+                        options={staticDatasets.map((d) => {
+                          return {
+                            value: d.s3Key.json,
+                            content: `${d.fileName} (${d.s3Key.json})`,
+                          };
+                        })}
+                        register={register}
+                        onChange={onSelectStaticDataset}
+                      />
+                    </div>
                     <div className="usa-radio">
                       <div className="grid-row">
                         <div className="grid-col flex-5">
@@ -446,7 +472,7 @@ function EditChart() {
                         </div>
                       </div>
                     </div>
-                    {datasetType === DatasetType.CsvFileUpload && (
+                    <div hidden={datasetType !== DatasetType.CsvFileUpload}>
                       <FileInput
                         id="dataset"
                         name="dataset"
@@ -457,8 +483,9 @@ function EditChart() {
                         register={register}
                         fileName={`${
                           csvFile?.name ||
-                          (widget.content.datasetType ===
-                          DatasetType.CsvFileUpload
+                          (!widget.content.datasetType ||
+                          widget.content.datasetType ===
+                            DatasetType.CsvFileUpload
                             ? widget.content.fileName ||
                               widget.content.title + ".csv"
                             : "")
@@ -477,11 +504,11 @@ function EditChart() {
                         }
                         onFileProcessed={onFileProcessed}
                       />
-                    )}
+                    </div>
                   </fieldset>
 
                   {widget ? (
-                    <div hidden={!json.length}>
+                    <div hidden={!currentJson.length}>
                       <RadioButtons
                         id="chartType"
                         name="chartType"
@@ -535,7 +562,10 @@ function EditChart() {
                 <hr />
                 <Button
                   disabled={
-                    !json.length || !title || fileLoading || editingWidget
+                    !currentJson.length ||
+                    !title ||
+                    fileLoading ||
+                    editingWidget
                   }
                   type="submit"
                 >
@@ -552,7 +582,7 @@ function EditChart() {
               </form>
             </div>
             <div className="grid-col-6">
-              <div hidden={!json.length} className="margin-left-4">
+              <div hidden={!currentJson.length} className="margin-left-4">
                 <h4>Preview</h4>
                 {datasetLoading ? (
                   <Spinner
@@ -566,11 +596,11 @@ function EditChart() {
                         title={widget.content.title}
                         summary={widget.content.summary}
                         lines={
-                          json.length > 0
-                            ? (Object.keys(json[0]) as Array<string>)
+                          currentJson.length > 0
+                            ? (Object.keys(currentJson[0]) as Array<string>)
                             : []
                         }
-                        data={json}
+                        data={currentJson}
                       />
                     )}
                     {widget.content.chartType === ChartType.ColumnChart && (
@@ -578,11 +608,11 @@ function EditChart() {
                         title={widget.name}
                         summary={widget.content.summary}
                         columns={
-                          json.length > 0
-                            ? (Object.keys(json[0]) as Array<string>)
+                          currentJson.length > 0
+                            ? (Object.keys(currentJson[0]) as Array<string>)
                             : []
                         }
-                        data={json}
+                        data={currentJson}
                       />
                     )}
                     {widget.content.chartType === ChartType.BarChart && (
@@ -590,11 +620,11 @@ function EditChart() {
                         title={widget.name}
                         summary={widget.content.summary}
                         bars={
-                          json.length > 0
-                            ? (Object.keys(json[0]) as Array<string>)
+                          currentJson.length > 0
+                            ? (Object.keys(currentJson[0]) as Array<string>)
                             : []
                         }
-                        data={json}
+                        data={currentJson}
                       />
                     )}
                     {widget.content.chartType === ChartType.PartWholeChart && (
@@ -602,11 +632,11 @@ function EditChart() {
                         title={widget.name}
                         summary={widget.content.summary}
                         parts={
-                          json.length > 0
-                            ? (Object.keys(json[0]) as Array<string>)
+                          currentJson.length > 0
+                            ? (Object.keys(currentJson[0]) as Array<string>)
                             : []
                         }
-                        data={json}
+                        data={currentJson}
                       />
                     )}
                   </>

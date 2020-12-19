@@ -6,10 +6,16 @@ import StorageService from "../services/StorageService";
 type UseWidgetHook = {
   loading: boolean;
   widget?: Widget;
-  json: Array<any>;
   datasetType: DatasetType | undefined;
   setDatasetType: Function;
-  setJson: Function;
+  currentJson: Array<any>;
+  dynamicJson: Array<any>;
+  staticJson: Array<any>;
+  csvJson: Array<any>;
+  setCurrentJson: Function;
+  setDynamicJson: Function;
+  setStaticJson: Function;
+  setCsvJson: Function;
   setWidget: Function;
 };
 
@@ -19,7 +25,10 @@ export function useWidget(
 ): UseWidgetHook {
   const [loading, setLoading] = useState(false);
   const [widget, setWidget] = useState<Widget | undefined>(undefined);
-  const [json, setJson] = useState<Array<any>>([]);
+  const [currentJson, setCurrentJson] = useState<Array<any>>([]);
+  const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
+  const [staticJson, setStaticJson] = useState<Array<any>>([]);
+  const [csvJson, setCsvJson] = useState<Array<any>>([]);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     undefined
   );
@@ -36,7 +45,14 @@ export function useWidget(
       const { s3Key, datasetType } = data.content;
       if (s3Key.json) {
         const dataset = await StorageService.downloadJson(s3Key.json);
-        setJson(dataset);
+        if (datasetType === DatasetType.DynamicDataset) {
+          setDynamicJson(dataset);
+        } else if (datasetType === DatasetType.StaticDataset) {
+          setStaticJson(dataset);
+        } else {
+          setCsvJson(dataset);
+        }
+        setCurrentJson(dataset);
       }
       if (datasetType) {
         setDatasetType(datasetType as DatasetType);
@@ -54,10 +70,16 @@ export function useWidget(
   return {
     loading,
     widget,
-    json,
     datasetType,
     setDatasetType,
-    setJson,
+    currentJson,
+    dynamicJson,
+    staticJson,
+    csvJson,
+    setCurrentJson,
+    setDynamicJson,
+    setStaticJson,
+    setCsvJson,
     setWidget,
   };
 }

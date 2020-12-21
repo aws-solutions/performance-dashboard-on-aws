@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { Dataset, DatasetType, WidgetType } from "../models";
-import { useDashboard } from "../hooks";
 import BackendService from "../services/BackendService";
+import { useDashboard, useDateTimeFormatter } from "../hooks";
 import StorageService from "../services/StorageService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
@@ -28,6 +28,7 @@ interface PathParams {
 function AddTable() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
+  const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
   const { register, errors, handleSubmit } = useForm<FormValues>();
@@ -313,7 +314,9 @@ function AddTable() {
                     options={dynamicDatasets.map((d) => {
                       return {
                         value: d.s3Key.json,
-                        content: `${d.fileName} (${d.s3Key.json})`,
+                        content: `Last update: ${dateFormatter(d.updatedAt)} ${
+                          d.fileName
+                        } (${d.s3Key.json}`,
                       };
                     })}
                     register={register}

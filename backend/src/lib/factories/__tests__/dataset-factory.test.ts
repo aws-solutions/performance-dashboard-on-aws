@@ -6,6 +6,9 @@ jest.mock("uuid");
 jest.spyOn(uuid, "v4").mockReturnValue("123");
 
 it("creates a new dataset object", () => {
+  const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
   const dataset = DatasetFactory.createNew({
     fileName: "covid.csv",
     createdBy: "johndoe",
@@ -24,11 +27,15 @@ it("creates a new dataset object", () => {
       raw: "abc.csv",
       json: "abc.json",
     },
+    updatedAt: now,
     sourceType: SourceType.FileUpload,
   });
 });
 
 it("converts a dataset into a dynamodb item", () => {
+  const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
   const dataset = DatasetFactory.createNew({
     fileName: "covid.csv",
     createdBy: "johndoe",
@@ -50,11 +57,15 @@ it("converts a dataset into a dynamodb item", () => {
       raw: "abc.csv",
       json: "abc.json",
     },
+    updatedAt: now.toISOString(),
     sourceType: SourceType.FileUpload,
   });
 });
 
 it("converts a dynamo item into a dataset", () => {
+  const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
   const item: DatasetItem = {
     pk: "Dataset#123",
     sk: "Dataset#123",
@@ -65,6 +76,7 @@ it("converts a dynamo item into a dataset", () => {
       raw: "abc.csv",
       json: "abc.json",
     },
+    updatedAt: now.toISOString(),
     sourceType: SourceType.IngestApi,
   };
 
@@ -77,6 +89,7 @@ it("converts a dynamo item into a dataset", () => {
       raw: "abc.csv",
       json: "abc.json",
     },
+    updatedAt: now,
     sourceType: SourceType.IngestApi,
   });
 });

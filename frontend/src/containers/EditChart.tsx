@@ -14,13 +14,15 @@ import LineChartPreview from "../components/LineChartPreview";
 import ColumnChartPreview from "../components/ColumnChartPreview";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
-import { useWidget, useDashboard } from "../hooks";
+import { useWidget, useDashboard, useDateTimeFormatter } from "../hooks";
 import Spinner from "../components/Spinner";
 import UtilsService from "../services/UtilsService";
 import Link from "../components/Link";
 import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";
 import { title } from "process";
+import Alert from "../components/Alert";
+import "./EditChart.css";
 
 interface FormValues {
   title: string;
@@ -38,6 +40,7 @@ interface PathParams {
 function EditChart() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
+  const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
   const { register, errors, handleSubmit, reset } = useForm<FormValues>();
@@ -358,6 +361,38 @@ function EditChart() {
                       How do I add datasets?
                     </Link>
                   </div>
+                  {(datasetType === DatasetType.DynamicDataset &&
+                    dynamicDataset &&
+                    dynamicDataset.s3Key.json !== widget.content.s3Key.json) ||
+                  (datasetType === DatasetType.StaticDataset &&
+                    staticDataset &&
+                    staticDataset.s3Key.json !== widget.content.s3Key.json) ||
+                  (datasetType === DatasetType.CsvFileUpload &&
+                    csvFile &&
+                    csvFile.name) ? (
+                    <Alert
+                      type="info"
+                      message={
+                        <div>
+                          <span className="margin-left-4">Dataset changed</span>
+                          <div className="float-right">
+                            <Button
+                              variant="unstyled"
+                              className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                              onClick={() => window.location.reload()}
+                              type="button"
+                              ariaLabel="Undo"
+                            >
+                              Undo
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                      slim
+                    />
+                  ) : (
+                    ""
+                  )}
                   <fieldset
                     id="fieldset"
                     className="usa-fieldset"
@@ -401,7 +436,9 @@ function EditChart() {
                         options={dynamicDatasets.map((d) => {
                           return {
                             value: d.s3Key.json,
-                            content: `${d.fileName} (${d.s3Key.json})`,
+                            content: `Last update: ${dateFormatter(
+                              d.updatedAt
+                            )} ${d.fileName} (${d.s3Key.json}`,
                           };
                         })}
                         register={register}

@@ -11,6 +11,7 @@ export interface Dataset {
     raw: string;
     json: string;
   };
+  updatedAt: Date;
   sourceType: SourceType;
 }
 
@@ -27,5 +28,6 @@ export interface DatasetItem {
     raw: string;
     json: string;
   };
+  updatedAt: string;
   sourceType: string;
 }

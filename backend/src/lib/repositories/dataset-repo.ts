@@ -155,15 +155,17 @@ class DatasetRepository extends BaseRepository {
           sk: DatasetFactory.itemId(id),
         },
         UpdateExpression:
-          "set #fileName = :fileName, #s3Key = :s3Key, #sourceType = :sourceType",
+          "set #fileName = :fileName, #s3Key = :s3Key, #sourceType = :sourceType, #updatedAt = :updatedAt",
         ExpressionAttributeValues: {
           ":fileName": metadata.name,
           ":s3Key": { raw: "", json: jsonS3Key },
+          ":updatedAt": new Date().toISOString(),
           ":sourceType": SourceType.IngestApi,
         },
         ExpressionAttributeNames: {
           "#fileName": "fileName",
           "#s3Key": "s3Key",
+          "#updatedAt": "updatedAt",
           "#sourceType": "sourceType",
         },
       });

@@ -24,11 +24,15 @@ const APIHelpPage = () => {
           needs to be configured,{" "}
           <a
             href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
+            className="text-base-darkest"
           >
             contact support
           </a>
           . If you want to learn more about how to set up dynamic datasets,{" "}
-          <a href="https://github.com/awslabs/performance-dashboard-on-aws">
+          <a
+            href="https://github.com/awslabs/performance-dashboard-on-aws"
+            className="text-base-darkest"
+          >
             read our documentation.
           </a>
         </p>

@@ -24,6 +24,7 @@ exports[`renders the API Help Page component 1`] = `
       These datasets update the data visualization automatically as new data is added to the source. Dynamic datasets are useful for visualizing streaming data that is updated frequently. Dynamic datasets are not configurable in the interface. If you have a dynamic dataset that needs to be configured,
        
       <a
+        class="text-base-darkest"
         href="mailto:support@example.com?subject=Performance Dashboard Assistance"
       >
         contact support
@@ -31,6 +32,7 @@ exports[`renders the API Help Page component 1`] = `
       . If you want to learn more about how to set up dynamic datasets,
        
       <a
+        class="text-base-darkest"
         href="https://github.com/awslabs/performance-dashboard-on-aws"
       >
         read our documentation.

@@ -284,7 +284,10 @@ function AddChart() {
               </label>
               <div className="usa-hint">
                 Choose an existing dataset or create a new one to populate this
-                chart.
+                chart.{" "}
+                <Link to="/admin/apihelp" target="_blank" external>
+                  How do I add datasets?
+                </Link>
               </div>
               <fieldset
                 id="fieldset"

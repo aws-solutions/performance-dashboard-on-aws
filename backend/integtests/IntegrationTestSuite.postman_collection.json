@@ -77,6 +77,52 @@
 			"response": []
 		},
 		{
+			"name": "Get public settings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fab377ee-743b-4426-856f-88226ebbbfee",
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f5d75aab-3a73-4cb1-88eb-fb68aa6544e9",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/public/settings",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"public",
+						"settings"
+					]
+				},
+				"description": "List topic areas to verify the newly created topic area shows up correctly. "
+			},
+			"response": []
+		},
+		{
 			"name": "Get Homepage settings",
 			"event": [
 				{
@@ -1902,117 +1948,117 @@
 	],
 	"variable": [
 		{
-			"id": "f921fa3c-bcdf-4a56-9dfc-0aa0c627b5ef",
+			"id": "2d14de38-8303-4012-8ca4-fa1a06076e40",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "a2f6cdfb-de65-4014-852a-9d84ee29c745",
+			"id": "5154f17e-1208-4bc7-a296-3ac211e172a0",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "857073ed-eca8-4ee4-93b6-28798b5ca8ab",
+			"id": "fe8f20a9-f74a-427d-becc-af027a2a88a4",
 			"key": "apiKey",
 			"value": ""
 		},
 		{
-			"id": "80b292ca-08a3-43ce-babd-7c729ab3765d",
+			"id": "2ba43d65-9943-47a0-b653-10a07bad8f81",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "622dfddd-cf8f-43ef-85b1-905db197abd6",
+			"id": "e166f52b-98b2-4735-a0a8-73ab7439db32",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "ae1f01aa-a2dd-4237-93e7-712e79f5f2b7",
+			"id": "fa992f05-4af0-4759-a828-e2c4ce4b6ce8",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "c1d9a784-f896-491d-91c7-58e9c88553fd",
+			"id": "8b4a2e85-2b65-43f3-afbb-7ec6f3b138e1",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "9063fc2a-28ab-4a04-87c5-45d4ce291fbb",
+			"id": "ad7eaa75-d4d0-4dc5-8f23-cf1b0b6e0a79",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "dcb35e90-8dab-48d9-992d-d5ca1e5fb152",
+			"id": "e919e8e1-0b4f-4e92-8c88-d89a144cedcc",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "a8149bca-31ab-4852-9520-632865420957",
+			"id": "c670b912-05e3-47ae-bc44-9a61322142df",
 			"key": "dashboard.friendlyURL",
 			"value": ""
 		},
 		{
-			"id": "e786e4f6-f1f1-4ff5-a198-346161205cc1",
+			"id": "bd2958ae-0163-45c0-9332-e33e04d43074",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "a0484716-5835-4540-bf41-ef2a83c23526",
+			"id": "6194b8f6-f49b-4e40-9f25-1b3dbefa7ff1",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "35056674-fbff-485f-bcef-967b57e20ad6",
+			"id": "da643995-4338-47d5-a661-26ea88e22b73",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "1c15947c-fdf5-4cf7-8737-c150c6543b72",
+			"id": "fdba500d-33a9-45e0-94e9-d4f6042ef373",
 			"key": "chartwidget.id",
 			"value": ""
 		},
 		{
-			"id": "f12eb729-eb78-4c26-b3db-26490d8114f5",
+			"id": "40e1d432-b88b-45cb-a080-d5fa73224cbc",
 			"key": "chartwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "f28c5cea-5832-4eb6-8c41-6c2b276532d4",
+			"id": "381c1e4e-429d-4247-be86-e33415d63a6f",
 			"key": "settings.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "5b5c9535-acee-4f19-b1c4-8af3ec8052bb",
+			"id": "d6451663-20e2-4de7-818e-ad5bdff7ec58",
 			"key": "settings.publishingGuidance",
 			"value": ""
 		},
 		{
-			"id": "8701fbad-4294-4c69-a285-7b10094bfbef",
+			"id": "ae878c87-d55b-44ab-85f9-a30d77b4c0f9",
 			"key": "homepage.title",
 			"value": ""
 		},
 		{
-			"id": "15cdb48b-1c15-4d85-ae4b-e017ea3e9567",
+			"id": "ae25f9a8-b6b1-45a3-bc34-548ec967b7f8",
 			"key": "homepage.description",
 			"value": ""
 		},
 		{
-			"id": "aba1f381-192b-48ce-98ce-399961de2e8c",
+			"id": "05736242-453f-4b80-a6eb-67666d07b56a",
 			"key": "homepage.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "a5c08d35-36ee-462e-93a4-87cf375f1290",
+			"id": "bf980f13-7d17-4c2d-bb17-1d1df74a658f",
 			"key": "dataset.id",
 			"value": ""
 		},
 		{
-			"id": "a08c4b1c-8c42-4541-a8ac-a4e304e35366",
+			"id": "ce6aaa54-8e15-4f2c-96d1-0b37c8a7ea6f",
 			"key": "dataset.s3Key",
 			"value": ""
 		},
 		{
-			"id": "b1ae682c-ce73-4f8d-8554-7e248880a9fd",
+			"id": "fc100e2e-3f87-4578-a345-7cdffdbd2440",
 			"key": "dataset.s3Key.json",
 			"value": ""
 		}

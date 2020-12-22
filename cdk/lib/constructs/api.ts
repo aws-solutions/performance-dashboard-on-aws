@@ -197,5 +197,8 @@ export class BackendApi extends cdk.Construct {
 
     const homepage = publicapi.addResource("homepage");
     homepage.addMethod("GET", apiIntegration);
+
+    const settings = publicapi.addResource("settings");
+    settings.addMethod("GET", apiIntegration);
   }
 }

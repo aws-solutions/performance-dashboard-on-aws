@@ -13,15 +13,16 @@ jest.mock("../../factories/settings-factory");
 const user: User = { userId: "johndoe" };
 const repository = mocked(SettingsRepository.prototype);
 const req = ({} as any) as Request;
-const res = ({
-  send: jest.fn().mockReturnThis(),
-  status: jest.fn().mockReturnThis(),
-  json: jest.fn().mockReturnThis(),
-} as any) as Response;
+let res: Response;
 
 beforeEach(() => {
   AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   SettingsRepository.getInstance = jest.fn().mockReturnValue(repository);
+  res = ({
+    send: jest.fn().mockReturnThis(),
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn().mockReturnThis(),
+  } as any) as Response;
 });
 
 describe("getSettings", () => {
@@ -30,26 +31,6 @@ describe("getSettings", () => {
     await SettingsCtrl.getSettings(req, res);
     expect(res.status).toBeCalledWith(401);
     expect(res.send).toBeCalledWith("Unauthorized");
-  });
-
-  it("returns default values for settings", async () => {
-    // No Settings found on the database
-    repository.getSettings = jest.fn().mockReturnValueOnce(undefined);
-
-    // Settings factory should provide the default settings
-    SettingsFactory.getDefaultSettings = jest.fn().mockReturnValueOnce({
-      publishingGuidance:
-        "I acknowledge that I have reviewed the dashboard and it is ready to publish",
-    });
-
-    await SettingsCtrl.getSettings(req, res);
-    expect(SettingsFactory.getDefaultSettings).toBeCalled();
-    expect(res.json).toBeCalledWith(
-      expect.objectContaining({
-        publishingGuidance:
-          "I acknowledge that I have reviewed the dashboard and it is ready to publish",
-      })
-    );
   });
 
   it("returns settings when available in the database", async () => {
@@ -123,5 +104,17 @@ describe("updateSettings", () => {
       now.toISOString(),
       user
     );
+  });
+});
+
+describe("getPublicSettings", () => {
+  it("returns the public settings only", async () => {
+    const publicSettings = { foo: "bar" };
+    SettingsFactory.toPublicSettings = jest
+      .fn()
+      .mockReturnValue(publicSettings);
+
+    await SettingsCtrl.getPublicSettings(req, res);
+    expect(res.json).toBeCalledWith(publicSettings);
   });
 });

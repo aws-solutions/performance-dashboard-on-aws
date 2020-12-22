@@ -314,9 +314,9 @@ function AddTable() {
                     options={dynamicDatasets.map((d) => {
                       return {
                         value: d.s3Key.json,
-                        content: `Last update: ${dateFormatter(d.updatedAt)} ${
-                          d.fileName
-                        } (${d.s3Key.json}`,
+                        content: `${d.fileName} (${
+                          d.s3Key.json
+                        }) Last update: ${dateFormatter(d.updatedAt)}`,
                       };
                     })}
                     register={register}

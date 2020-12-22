@@ -5,6 +5,7 @@ import DatasetRepository from "../dataset-repo";
 import DynamoDBService from "../../services/dynamodb";
 import S3Service from "../../services/s3";
 import * as uuid from "uuid";
+import { WidgetType } from "../../models/widget";
 
 jest.mock("../../services/dynamodb");
 jest.mock("../../services/s3");
@@ -133,5 +134,48 @@ describe("updateDataset", () => {
         },
       })
     );
+  });
+});
+
+describe("getWidgetCount", () => {
+  it("returns the number of widgets for a given dataset id", async () => {
+    // Mock query response to simulate 2 widgets.
+    const now = new Date();
+    dynamodb.query = jest.fn().mockReturnValue({
+      Items: [
+        {
+          pk: "Dashboard#abc",
+          sk: "Widget#123",
+          widgetType: WidgetType.Text,
+          order: 1,
+          updatedAt: now.toISOString(),
+          name: "AWS",
+          content: { text: "test" },
+        },
+        {
+          pk: "Dashboard#abc",
+          sk: "Widget#123",
+          widgetType: WidgetType.Chart,
+          order: 1,
+          updatedAt: now.toISOString(),
+          name: "AWS",
+          content: { s3Key: { json: "abc.json" } },
+        },
+      ],
+    });
+
+    const getDatasetById = jest.spyOn(repo, "getDatasetById");
+    const dataset: Dataset = {
+      s3Key: { json: "abc.json", raw: "" },
+      updatedAt: now,
+      sourceType: SourceType.IngestApi,
+      fileName: "abc",
+      createdBy: "User 1",
+      id: "456",
+    };
+    getDatasetById.mockReturnValue(Promise.resolve(dataset));
+
+    const count = await repo.getWidgetCount("abc");
+    expect(count).toEqual(1);
   });
 });

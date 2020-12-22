@@ -28,10 +28,15 @@ beforeAll(() => {
 
 describe("getSettings", () => {
   it("returns default settings if Settings not found", async () => {
-    const defaultSettings = SettingsFactory.getDefaultSettings();
+    const defaultSettings = { foo: "bar" };
+    SettingsFactory.getDefaultSettings = jest
+      .fn()
+      .mockReturnValue(defaultSettings);
+
     dynamodb.get = jest.fn().mockReturnValueOnce({ Item: null });
     const settings = await repo.getSettings();
-    expect(settings).toEqual(defaultSettings);
+
+    expect(settings).toBe(defaultSettings);
   });
 
   it("returns a Settings if found on database", async () => {

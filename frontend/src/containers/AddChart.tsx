@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType, WidgetType, DatasetType } from "../models";
-import { useDashboard } from "../hooks";
+import { useDashboard, useDateTimeFormatter } from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -34,6 +34,7 @@ interface PathParams {
 function AddChart() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
+  const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
   const { register, errors, handleSubmit } = useForm<FormValues>();
@@ -329,7 +330,9 @@ function AddChart() {
                     options={dynamicDatasets.map((d) => {
                       return {
                         value: d.s3Key.json,
-                        content: `${d.fileName} (${d.s3Key.json})`,
+                        content: `Last update: ${dateFormatter(d.updatedAt)} ${
+                          d.fileName
+                        } (${d.s3Key.json}`,
                       };
                     })}
                     register={register}

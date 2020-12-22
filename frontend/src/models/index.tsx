@@ -119,6 +119,7 @@ export type Dataset = {
     raw: string;
     json: string;
   };
+  updatedAt?: Date;
   sourceType?: SourceType;
 };
 

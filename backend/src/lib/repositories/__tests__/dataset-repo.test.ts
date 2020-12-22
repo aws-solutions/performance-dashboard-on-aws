@@ -116,6 +116,7 @@ describe("updateDataset", () => {
         json: "def.json",
         raw: "",
       },
+      updatedAt: new Date(),
       sourceType: SourceType.IngestApi,
     };
     repo.getDatasetById = jest.fn().mockReturnValue(dataset);

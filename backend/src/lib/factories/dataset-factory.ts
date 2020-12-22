@@ -22,6 +22,7 @@ function createNew(info: DatasetInfo): Dataset {
       raw: info.s3Key.raw,
       json: info.s3Key.json,
     },
+    updatedAt: new Date(),
     sourceType: info.sourceType,
   };
 }
@@ -33,6 +34,7 @@ function fromItem(item: DatasetItem): Dataset {
     fileName: item.fileName,
     createdBy: item.createdBy,
     s3Key: item.s3Key,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
     sourceType: item.sourceType
       ? (item.sourceType as SourceType)
       : SourceType.FileUpload,
@@ -48,6 +50,9 @@ function toItem(dataset: Dataset): DatasetItem {
     createdBy: dataset.createdBy,
     fileName: dataset.fileName,
     s3Key: dataset.s3Key,
+    updatedAt: dataset.updatedAt
+      ? dataset.updatedAt.toISOString()
+      : new Date().toISOString(),
     sourceType: dataset.sourceType,
   };
 }

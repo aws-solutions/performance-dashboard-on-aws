@@ -10,12 +10,14 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
 import TablePreview from "../components/TablePreview";
-import { useWidget, useDashboard } from "../hooks";
+import { useWidget, useDashboard, useDateTimeFormatter } from "../hooks";
 import Spinner from "../components/Spinner";
 import Link from "../components/Link";
 import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";
 import { title } from "process";
+import Alert from "../components/Alert";
+import "./EditTable.css";
 
 interface FormValues {
   title: string;
@@ -32,6 +34,7 @@ interface PathParams {
 function EditTable() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
+  const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
   const { register, errors, handleSubmit, reset } = useForm<FormValues>();
@@ -334,6 +337,38 @@ function EditTable() {
                       How do I add datasets?
                     </Link>
                   </div>
+                  {(datasetType === DatasetType.DynamicDataset &&
+                    dynamicDataset &&
+                    dynamicDataset.s3Key.json !== widget.content.s3Key.json) ||
+                  (datasetType === DatasetType.StaticDataset &&
+                    staticDataset &&
+                    staticDataset.s3Key.json !== widget.content.s3Key.json) ||
+                  (datasetType === DatasetType.CsvFileUpload &&
+                    csvFile &&
+                    csvFile.name) ? (
+                    <Alert
+                      type="info"
+                      message={
+                        <div>
+                          <span className="margin-left-4">Dataset changed</span>
+                          <div className="float-right">
+                            <Button
+                              variant="unstyled"
+                              className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                              onClick={() => window.location.reload()}
+                              type="button"
+                              ariaLabel="Undo"
+                            >
+                              Undo
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                      slim
+                    />
+                  ) : (
+                    ""
+                  )}
                   <fieldset
                     id="fieldset"
                     className="usa-fieldset"
@@ -377,7 +412,9 @@ function EditTable() {
                         options={dynamicDatasets.map((d) => {
                           return {
                             value: d.s3Key.json,
-                            content: `${d.fileName} (${d.s3Key.json})`,
+                            content: `Last update: ${dateFormatter(
+                              d.updatedAt
+                            )} ${d.fileName} (${d.s3Key.json}`,
                           };
                         })}
                         register={register}

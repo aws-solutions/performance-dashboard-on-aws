@@ -6,9 +6,8 @@ import {
 } from "./dashboard-hooks";
 import { useWidget, useColors } from "./widget-hooks";
 import { useTopicAreas, useTopicArea } from "./topicarea-hooks";
-import { usePublicHomepage } from "./public-homepage-hooks";
-import { useHomepage } from "./homepage-hooks";
-import { useSettings } from "./settings-hooks";
+import { useHomepage, usePublicHomepage } from "./homepage-hooks";
+import { useSettings, usePublicSettings } from "./settings-hooks";
 import { useJsonDataset, useSampleDataset } from "./dataset-hooks";
 import { useAdmin } from "./admin-hooks";
 import { useDateTimeFormatter } from "./datetime-hooks";
@@ -33,6 +32,7 @@ export {
   usePublicHomepage,
   useHomepage,
   useSettings,
+  usePublicSettings,
   useJsonDataset,
   useAdmin,
   useDashboardVersions,

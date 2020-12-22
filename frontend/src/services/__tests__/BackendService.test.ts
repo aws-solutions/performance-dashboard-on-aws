@@ -331,3 +331,8 @@ test("fetchDashboardByFriendlyURL makes a GET request to public API", async () =
     expect.anything()
   );
 });
+
+test("fetchPublicSettings makes a GET request to public API", async () => {
+  await BackendService.fetchPublicSettings();
+  expect(API.get).toHaveBeenCalledWith("BackendApi", `public/settings`, {});
+});

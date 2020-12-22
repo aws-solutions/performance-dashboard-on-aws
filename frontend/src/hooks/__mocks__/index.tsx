@@ -80,6 +80,21 @@ export function useSettings() {
   };
 }
 
+export function usePublicSettings() {
+  const [settings] = useState({
+    dateTimeFormat: {
+      date: "YYYY-MM-DD",
+      time: "HH:mm",
+    },
+  });
+
+  return {
+    reloadSettings: jest.fn(),
+    settings,
+    loadingSettings: false,
+  };
+}
+
 export function useDashboards() {
   return {
     loading: false,

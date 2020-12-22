@@ -10,6 +10,8 @@ import BaseRepository from "./base";
 import { SourceType } from "../models/dataset";
 import { v4 as uuidv4 } from "uuid";
 import logger from "../services/logger";
+import { DASHBOARD_PREFIX, WIDGET_PREFIX } from "../factories/widget-factory";
+import { WidgetType } from "../models/widget";
 
 class DatasetRepository extends BaseRepository {
   private s3Service: S3Service;
@@ -198,6 +200,34 @@ class DatasetRepository extends BaseRepository {
       logger.error("Failed to delete dataset from DynamoDB %s", id);
       throw err;
     }
+  }
+
+  public async getWidgetCount(datasetId: string) {
+    const dataset = await this.getDatasetById(datasetId);
+
+    const result = await this.dynamodb.query({
+      TableName: this.tableName,
+      IndexName: "byType",
+      KeyConditionExpression: "#type = :type",
+      ExpressionAttributeNames: {
+        "#type": "type",
+      },
+      ExpressionAttributeValues: {
+        ":type": "Widget",
+      },
+    });
+
+    if (!result.Items) {
+      return 0;
+    }
+
+    const items = result.Items.filter(
+      (item) =>
+        item.widgetType !== WidgetType.Text &&
+        item.content.s3Key.json === dataset.s3Key.json
+    );
+
+    return items.length;
   }
 
   private getNewJsonS3Key() {

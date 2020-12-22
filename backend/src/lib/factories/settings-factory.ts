@@ -1,4 +1,4 @@
-import { Settings, SettingsItem } from "../models/settings";
+import { Settings, PublicSettings, SettingsItem } from "../models/settings";
 
 function getDefaultSettings(): Settings {
   return {
@@ -26,7 +26,17 @@ function fromItem(item: SettingsItem): Settings {
   };
 }
 
+function toPublicSettings(settings: Settings): PublicSettings {
+  const defaults = getDefaultSettings();
+  return {
+    dateTimeFormat: settings.dateTimeFormat
+      ? settings.dateTimeFormat
+      : defaults.dateTimeFormat,
+  };
+}
+
 export default {
   getDefaultSettings,
   fromItem,
+  toPublicSettings,
 };

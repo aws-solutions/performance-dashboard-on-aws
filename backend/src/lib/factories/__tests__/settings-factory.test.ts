@@ -1,4 +1,4 @@
-import { SettingsItem } from "../../models/settings";
+import { SettingsItem, Settings } from "../../models/settings";
 import SettingsFactory from "../settings-factory";
 
 describe("getDefaultSettings", () => {
@@ -37,6 +37,27 @@ describe("fromItem", () => {
         time: "HH:mm",
       },
       updatedAt: new Date("2020-12-09T17:21:42.823Z"),
+    });
+  });
+});
+
+describe("toPublicSettings", () => {
+  it("removes values that should not be public", () => {
+    const settings: Settings = {
+      updatedAt: new Date(),
+      publishingGuidance: "foo=bar",
+      dateTimeFormat: {
+        date: "MMM, YYY",
+        time: "hh:mm",
+      },
+    };
+
+    const publicSettings = SettingsFactory.toPublicSettings(settings);
+    expect(publicSettings).toEqual({
+      dateTimeFormat: {
+        date: "MMM, YYY",
+        time: "hh:mm",
+      },
     });
   });
 });

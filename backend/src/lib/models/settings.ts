@@ -7,6 +7,13 @@ export interface Settings {
   updatedAt: Date;
 }
 
+export interface PublicSettings {
+  dateTimeFormat: {
+    date: string;
+    time: string;
+  };
+}
+
 export interface SettingsItem {
   pk: string;
   sk: string;

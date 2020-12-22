@@ -4,6 +4,7 @@ import { Settings, SettingsItem } from "../../models/settings";
 import SettingsRepository from "../settings-repo";
 import DynamoDBService from "../../services/dynamodb";
 import S3Service from "../../services/s3";
+import SettingsFactory from "../../factories/settings-factory";
 
 jest.mock("../../services/dynamodb");
 jest.mock("../../services/s3");
@@ -26,10 +27,16 @@ beforeAll(() => {
 });
 
 describe("getSettings", () => {
-  it("returns undefined if Settings is not found", async () => {
+  it("returns default settings if Settings not found", async () => {
+    const defaultSettings = { foo: "bar" };
+    SettingsFactory.getDefaultSettings = jest
+      .fn()
+      .mockReturnValue(defaultSettings);
+
     dynamodb.get = jest.fn().mockReturnValueOnce({ Item: null });
     const settings = await repo.getSettings();
-    expect(settings).toBeUndefined();
+
+    expect(settings).toBe(defaultSettings);
   });
 
   it("returns a Settings if found on database", async () => {

@@ -18,7 +18,7 @@ class SettingsRepository extends BaseRepository {
     return SettingsRepository.instance;
   }
 
-  public async getSettings(): Promise<Settings | undefined> {
+  public async getSettings(): Promise<Settings> {
     const result = await this.dynamodb.get({
       TableName: this.tableName,
       Key: {
@@ -28,7 +28,7 @@ class SettingsRepository extends BaseRepository {
     });
 
     if (!result.Item) {
-      return undefined;
+      return SettingsFactory.getDefaultSettings();
     }
 
     return SettingsFactory.fromItem(result.Item as SettingsItem);

@@ -12,16 +12,9 @@ async function getSettings(req: Request, res: Response) {
   }
 
   const repo = SettingsRepository.getInstance();
+  const settings = await repo.getSettings();
 
-  let settings = await repo.getSettings();
-
-  if (!settings) {
-    settings = SettingsFactory.getDefaultSettings();
-  }
-
-  return res.json({
-    ...settings,
-  });
+  return res.json(settings);
 }
 
 async function updateSettings(req: Request, res: Response) {
@@ -68,7 +61,16 @@ async function updateSettings(req: Request, res: Response) {
   res.send();
 }
 
+async function getPublicSettings(req: Request, res: Response) {
+  const repo = SettingsRepository.getInstance();
+  let settings = await repo.getSettings();
+
+  const publicSettings = SettingsFactory.toPublicSettings(settings);
+  return res.json(publicSettings);
+}
+
 export default {
   getSettings,
+  getPublicSettings,
   updateSettings,
 };

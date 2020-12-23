@@ -135,6 +135,13 @@ export type Homepage = {
   updatedAt: Date;
 };
 
+export type PublicSettings = {
+  dateTimeFormat: {
+    date: string;
+    time: string;
+  };
+};
+
 export type Settings = {
   publishingGuidance: string;
   dateTimeFormat: {

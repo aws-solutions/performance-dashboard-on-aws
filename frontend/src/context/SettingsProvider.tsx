@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Hub } from "aws-amplify";
-import { Settings } from "../models";
+import { Hub, Auth } from "aws-amplify";
+import { Settings, PublicSettings } from "../models";
 import BackendService from "../services/BackendService";
 
 /**
@@ -18,7 +18,7 @@ const defaultSettings: Settings = {
 };
 
 interface SettingsContextProps {
-  settings: Settings;
+  settings: Settings | PublicSettings;
   reloadSettings: Function;
   loadingSettings: boolean;
 }
@@ -50,6 +50,18 @@ const settingsReducer = (backendSettings: Settings): Settings => {
   };
 };
 
+const publicSettingsReducer = (
+  backendSettings: PublicSettings
+): PublicSettings => {
+  return {
+    ...backendSettings, // add all values to start with
+    // Check if we need to fallback to default values
+    dateTimeFormat: backendSettings.dateTimeFormat
+      ? backendSettings.dateTimeFormat
+      : defaultSettings.dateTimeFormat,
+  };
+};
+
 /**
  * This provider wraps the root of our component's tree in <App />
  * to provide Settings to all the children components in the tree. It
@@ -63,33 +75,52 @@ function SettingsProvider(props: { children: React.ReactNode }) {
     loadingSettings: false,
   });
 
-  const fetchSettings = useCallback(async () => {
+  const fetchSettings = useCallback(async (isUserAuthenticated: boolean) => {
+    return isUserAuthenticated
+      ? BackendService.fetchSettings()
+      : BackendService.fetchPublicSettings();
+  }, []);
+
+  const loadSettings = useCallback(async () => {
+    let isUserAuthenticated: boolean;
+    try {
+      await Auth.currentSession();
+      isUserAuthenticated = true;
+    } catch (err) {
+      isUserAuthenticated = false;
+    }
+
     try {
       /**
-       * Its important that the reloadSettings function does not
-       * change, because it causes an infinite loop due to the
-       * settings-hook having a useEffect on it.
+       * useCallback is used because it is important that the
+       * reloadSettings function does not change, because it
+       * causes an infinite loop due to the settings-hook
+       * having a useEffect on it.
        */
       setSettings({
-        reloadSettings: fetchSettings,
+        reloadSettings: loadSettings,
         settings: defaultSettings,
         loadingSettings: true,
       });
-      const data = await BackendService.fetchSettings();
+
+      const data = await fetchSettings(isUserAuthenticated);
+
       setSettings({
-        settings: settingsReducer(data),
-        reloadSettings: fetchSettings,
+        settings: isUserAuthenticated
+          ? settingsReducer(data)
+          : publicSettingsReducer(data),
+        reloadSettings: loadSettings,
         loadingSettings: false,
       });
     } catch (err) {
       console.log("Failed to load settings from backend");
       setSettings({
-        reloadSettings: fetchSettings,
+        reloadSettings: loadSettings,
         settings: defaultSettings,
         loadingSettings: false,
       });
     }
-  }, []);
+  }, [fetchSettings]);
 
   /**
    * Listen for authentication events so that when users
@@ -104,20 +135,20 @@ function SettingsProvider(props: { children: React.ReactNode }) {
       switch (payload.event) {
         case "signIn":
         case "tokenRefresh":
-          fetchSettings();
+          loadSettings();
           break;
         default:
           break;
       }
     },
-    [fetchSettings]
+    [loadSettings]
   );
 
   useEffect(() => {
-    fetchSettings();
+    loadSettings();
     Hub.listen("auth", listenAuthEvents);
     return () => Hub.remove("auth", listenAuthEvents);
-  }, [fetchSettings, listenAuthEvents]);
+  }, [loadSettings, listenAuthEvents]);
 
   return (
     <SettingsContext.Provider value={settings}>

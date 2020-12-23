@@ -158,6 +158,8 @@ export type LocationState = {
   alert?: {
     type: "success" | "warning" | "info" | "error";
     message: string;
+    to?: string;
+    linkLabel?: string;
   };
   id?: string;
 };

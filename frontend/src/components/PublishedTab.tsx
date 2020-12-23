@@ -5,8 +5,6 @@ import Search from "./Search";
 import DashboardsTable from "./DashboardsTable";
 import ScrollTop from "./ScrollTop";
 import Link from "./Link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -50,13 +48,8 @@ function PublishedTab(props: Props) {
       <p>
         These are all of the published dashboards. You can view all dashboards
         but you need editor access in order to update a published dashboard.{" "}
-        <Link target="_blank" to={"/"}>
+        <Link target="_blank" to={"/"} external>
           View the published site
-          <FontAwesomeIcon
-            className="margin-left-05"
-            icon={faExternalLinkAlt}
-            size="xs"
-          />
         </Link>
       </p>
       <div className="grid-row margin-y-3">

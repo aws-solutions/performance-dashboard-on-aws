@@ -10,8 +10,8 @@ import BaseRepository from "./base";
 import { SourceType } from "../models/dataset";
 import { v4 as uuidv4 } from "uuid";
 import logger from "../services/logger";
-import { WidgetType } from "../models/widget";
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
+import { WidgetType } from "../models/widget";
 
 class DatasetRepository extends BaseRepository {
   private s3Service: S3Service;
@@ -240,7 +240,6 @@ class DatasetRepository extends BaseRepository {
         ];
       }
     }
-
     return items.length;
   }
 

@@ -159,21 +159,10 @@ describe("getWidgetCount", () => {
           order: 1,
           updatedAt: now.toISOString(),
           name: "AWS",
-          content: { s3Key: { json: "abc.json" } },
+          content: { datasetId: "abc" },
         },
       ],
     });
-
-    const getDatasetById = jest.spyOn(repo, "getDatasetById");
-    const dataset: Dataset = {
-      s3Key: { json: "abc.json", raw: "" },
-      updatedAt: now,
-      sourceType: SourceType.IngestApi,
-      fileName: "abc",
-      createdBy: "User 1",
-      id: "456",
-    };
-    getDatasetById.mockReturnValue(Promise.resolve(dataset));
 
     const count = await repo.getWidgetCount("abc");
     expect(count).toEqual(1);

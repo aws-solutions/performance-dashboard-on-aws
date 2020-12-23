@@ -87,6 +87,12 @@ async function deleteDataset(req: Request, res: Response) {
   const { id } = req.params;
 
   const repo = DatasetRepository.getInstance();
+  const widgetCount = await repo.getWidgetCount(id);
+
+  if (widgetCount > 0) {
+    return res.status(409).send("Dataset has widgets associated to it");
+  }
+
   await repo.deleteDataset(id);
   logger.info("Dataset deleted %s", id);
 

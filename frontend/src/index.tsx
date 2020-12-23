@@ -7,8 +7,8 @@ import * as serviceWorker from "./serviceWorker";
 import config from "./amplify-config";
 import App from "./App";
 import ReactModal from "react-modal";
-import "uswds/dist/css/uswds.css";
-import "uswds/dist/js/uswds.js";
+import "uswds/dist/css/uswds.min.css";
+import "uswds/dist/js/uswds.min.js";
 import "./index.css";
 
 declare module "react" {

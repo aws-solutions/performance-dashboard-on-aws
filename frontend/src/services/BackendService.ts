@@ -288,6 +288,10 @@ async function fetchSettings() {
   return API.get(apiName, "settings", { headers });
 }
 
+async function fetchPublicSettings() {
+  return API.get(apiName, "public/settings", {});
+}
+
 async function editSettings(publishingGuidance: string, updatedAt: Date) {
   const headers = await authHeaders();
   return await API.put(apiName, "settings", {
@@ -380,6 +384,7 @@ export default {
   fetchPublicDashboard,
   fetchPublicDashboardByURL,
   fetchSettings,
+  fetchPublicSettings,
   editSettings,
   updateSetting,
   publishPending,

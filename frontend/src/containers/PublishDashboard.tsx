@@ -86,6 +86,8 @@ function PublishDashboard() {
         alert: {
           type: "success",
           message: `${dashboard.name} dashboard was successfully published`,
+          to: `/${dashboardId}`,
+          linkLabel: "View the published dashboard",
         },
       });
     }

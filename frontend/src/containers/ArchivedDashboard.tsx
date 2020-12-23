@@ -44,6 +44,8 @@ function ArchivedDashboard() {
         alert: {
           type: "success",
           message: `${dashboard.name} dashboard was successfully re-published`,
+          to: `/${dashboardId}`,
+          linkLabel: "View the published dashboard",
         },
       });
     }

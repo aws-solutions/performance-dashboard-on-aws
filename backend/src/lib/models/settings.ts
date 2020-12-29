@@ -26,5 +26,5 @@ export interface SettingsItem {
     date: string;
     time: string;
   };
-  navbarTitle: string;
+  navbarTitle?: string;
 }

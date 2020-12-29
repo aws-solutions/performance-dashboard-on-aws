@@ -13,6 +13,7 @@ import Link from "../components/Link";
 interface FormValues {
   title: string;
   text: string;
+  showTitle: boolean;
 }
 
 interface PathParams {
@@ -28,6 +29,7 @@ function AddText() {
   const [creatingWidget, setCreatingWidget] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [showTitle, setShowTitle] = useState(true);
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -59,9 +61,11 @@ function AddText() {
   };
 
   const onFormChange = () => {
-    const { title, text } = getValues();
+    const { title, text, showTitle } = getValues();
     setTitle(title);
     setText(text);
+    setShowTitle(showTitle);
+    console.log(showTitle);
   };
 
   const goBack = () => {
@@ -119,6 +123,7 @@ function AddText() {
                   id="display-title"
                   type="checkbox"
                   name="checkbox"
+                  // checked
                 />
                 <label className="usa-checkbox__label" htmlFor="display-title">
                   Show title on dashboard

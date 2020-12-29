@@ -10,6 +10,7 @@ function getDefaultSettings(): Settings {
     publishingGuidance:
       "I acknowledge that I have reviewed " +
       "the dashboard and it is ready to publish",
+    navbarTitle: "Performance Dashboard",
   };
 }
 
@@ -23,6 +24,7 @@ function fromItem(item: SettingsItem): Settings {
     dateTimeFormat: item.dateTimeFormat
       ? item.dateTimeFormat
       : defaults.dateTimeFormat,
+    navbarTitle: item.navbarTitle ? item.navbarTitle : defaults.navbarTitle,
   };
 }
 
@@ -32,6 +34,9 @@ function toPublicSettings(settings: Settings): PublicSettings {
     dateTimeFormat: settings.dateTimeFormat
       ? settings.dateTimeFormat
       : defaults.dateTimeFormat,
+    navbarTitle: settings.navbarTitle
+      ? settings.navbarTitle
+      : defaults.navbarTitle,
   };
 }
 

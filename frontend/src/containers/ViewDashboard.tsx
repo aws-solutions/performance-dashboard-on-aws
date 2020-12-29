@@ -37,9 +37,10 @@ function ViewDashboard() {
         <FontAwesomeIcon icon={faArrowLeft} /> All Dashboards
       </Link>
       <DashboardHeader
-        name={dashboard?.name}
-        topicAreaName={dashboard?.topicAreaName}
-        description={dashboard?.description}
+        name={dashboard.name}
+        topicAreaName={dashboard.topicAreaName}
+        description={dashboard.description}
+        lastUpdated={dashboard.updatedAt}
       />
       <hr />
       {dashboard?.widgets.map((widget, index) => {

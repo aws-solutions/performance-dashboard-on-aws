@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import Link from "../components/Link";
-import { usePublicHomepage } from "../hooks";
+import { usePublicHomepage, useDateTimeFormatter } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
@@ -13,6 +12,7 @@ import "./Home.css";
 function Home() {
   const [filter, setFilter] = useState("");
   const { homepage, loading } = usePublicHomepage();
+  const dateFormatter = useDateTimeFormatter();
 
   const onSearch = (query: string) => {
     setFilter(query);
@@ -78,9 +78,7 @@ function Home() {
                 title={topicarea.name}
               >
                 {topicarea.dashboards?.map((dashboard) => {
-                  const updatedAt = dayjs(dashboard.updatedAt).format(
-                    "YYYY-MM-DD hh:mm"
-                  );
+                  const updatedAt = dateFormatter(dashboard.updatedAt);
                   return (
                     <div
                       key={dashboard.id}

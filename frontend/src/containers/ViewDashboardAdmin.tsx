@@ -217,6 +217,7 @@ function ViewDashboardAdmin() {
             name={dashboard?.name}
             topicAreaName={dashboard?.topicAreaName}
             description={dashboard?.description}
+            lastUpdated={dashboard?.updatedAt}
           />
           <hr />
           {dashboard?.widgets.map((widget, index) => {

@@ -1,4 +1,5 @@
 import React from "react";
+import { useDateTimeFormatter } from "../hooks";
 import MarkdownRender from "../components/MarkdownRender";
 
 interface Props {
@@ -7,9 +8,12 @@ interface Props {
   description?: string;
   unpublished?: boolean;
   link?: React.ReactNode;
+  lastUpdated?: Date;
 }
 
 function DashboardHeader(props: Props) {
+  const dateFormatter = useDateTimeFormatter();
+
   return (
     <>
       <div className={props.unpublished ? "" : "margin-top-2"}>
@@ -25,6 +29,8 @@ function DashboardHeader(props: Props) {
         {props.link}
         <div className="text-base text-italic margin-bottom-2">
           {props.topicAreaName}
+          {props.lastUpdated &&
+            ` | Last updated ${dateFormatter(props.lastUpdated)}`}
         </div>
       </div>
       <div className={props.unpublished ? "" : "margin-y-2"}>

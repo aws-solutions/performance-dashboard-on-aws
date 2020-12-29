@@ -32,6 +32,8 @@ function moveWidget(
   return reordered;
 }
 
-export default {
+const WidgetOrdering = {
   moveWidget,
 };
+
+export default WidgetOrdering;

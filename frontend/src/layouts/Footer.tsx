@@ -1,9 +1,5 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import EnvConfig from "../services/EnvConfig";
-
-interface LayoutProps {
-  children?: ReactNode;
-}
 
 function Footer() {
   return (

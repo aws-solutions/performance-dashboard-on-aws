@@ -100,8 +100,10 @@ async function uploadDataset(
   };
 }
 
-export default {
+const StorageService = {
   downloadDataset,
   downloadJson,
   uploadDataset,
 };
+
+export default StorageService;

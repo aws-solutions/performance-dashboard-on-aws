@@ -113,6 +113,18 @@ function AddText() {
                 register={register}
               />
 
+              <div className="usa-checkbox">
+                <input
+                  className="usa-checkbox__input"
+                  id="display-title"
+                  type="checkbox"
+                  name="checkbox"
+                />
+                <label className="usa-checkbox__label" htmlFor="display-title">
+                  Show title on dashboard
+                </label>
+              </div>
+
               <TextField
                 id="text"
                 name="text"

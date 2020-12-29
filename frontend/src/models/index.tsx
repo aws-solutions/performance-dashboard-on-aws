@@ -83,6 +83,7 @@ export interface Widget {
   updatedAt: Date;
   dashboardId: string;
   content: any;
+  showTitle: boolean;
 }
 
 export interface ChartWidget extends Widget {

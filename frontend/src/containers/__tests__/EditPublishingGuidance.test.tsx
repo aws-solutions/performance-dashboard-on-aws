@@ -9,11 +9,10 @@ jest.mock("../../hooks");
 jest.mock("../../services/BackendService");
 
 const history = createMemoryHistory();
+history.push("/admin/settings/publishingguidance/edit");
+jest.spyOn(history, "push");
 
 beforeEach(async () => {
-  history.push("/admin/settings/publishingguidance/edit");
-  jest.spyOn(history, "push");
-
   await act(async () => {
     render(
       <Router history={history}>

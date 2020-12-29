@@ -357,7 +357,7 @@ async function moveToDraft(
   });
 }
 
-export default {
+const BackendService = {
   fetchDashboards,
   fetchDashboardById,
   fetchTopicAreas,
@@ -393,3 +393,5 @@ export default {
   moveToDraft,
   fetchDashboardVersions,
 };
+
+export default BackendService;

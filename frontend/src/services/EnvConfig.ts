@@ -23,7 +23,7 @@ interface EnvConfig {
 
 const config = window.EnvironmentConfig;
 
-export default {
+const EnvConfigService = {
   // Export all values in the window object
   ...window.EnvironmentConfig,
   // Set default values for some properties. These defaults are a fallback
@@ -35,3 +35,5 @@ export default {
   topicAreaLabel: (config && config.topicAreaLabel) || "Topic area",
   topicAreasLabel: (config && config.topicAreasLabel) || "Topic areas",
 } as EnvConfig;
+
+export default EnvConfigService;

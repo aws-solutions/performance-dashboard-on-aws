@@ -38,7 +38,9 @@ function getChartTypeLabel(chartType: string): string {
     : chartType.split(/(?=[A-Z])/).join(" ");
 }
 
-export default {
+const UtilsService = {
   groupByTopicArea,
   getChartTypeLabel,
 };
+
+export default UtilsService;

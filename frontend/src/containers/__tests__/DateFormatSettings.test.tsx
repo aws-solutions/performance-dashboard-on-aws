@@ -4,14 +4,10 @@ import { MemoryRouter } from "react-router-dom";
 import DateFormatSettings from "../DateFormatSettings";
 
 jest.mock("../../hooks");
-
-const mockDayJs = jest.fn();
-jest.mock("dayjs", () =>
-  jest.fn(() => {
-    const dayjs = jest.requireActual("dayjs");
-    return dayjs("2020-12-09 03:30:00");
-  })
-);
+jest.mock("dayjs", () => () => {
+  const dayjs = jest.requireActual("dayjs");
+  return dayjs("2020-12-09 03:30:00");
+});
 
 beforeEach(() => {
   render(<DateFormatSettings />, {
@@ -30,9 +26,6 @@ test("renders the date format", async () => {
 });
 
 test("renders the time format", async () => {
-  mockDayJs.mockReturnValueOnce({
-    format: jest.fn().mockReturnValueOnce("03:30"),
-  });
   const timeFormat = screen.getByText("03:30 (HH:mm)");
   expect(timeFormat).toBeInTheDocument();
 });

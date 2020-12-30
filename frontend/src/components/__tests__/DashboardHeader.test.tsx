@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import { render, screen } from "@testing-library/react";
 import DashboardHeader from "../DashboardHeader";
 
@@ -39,18 +40,21 @@ test("renders a dashboard header for an unpublished view with a link", async () 
 });
 
 test("renders a dashboard header with lastUpdatedDate", async () => {
-  const wrapper = render(
+  const lastUpdated = new Date("2020-01-01T00:00:00Z");
+  render(
     <DashboardHeader
       name="Dashboard 1"
       topicAreaName="Bananas"
       description="A test descripttion"
-      lastUpdated={new Date("2020-01-01T00:00:00Z")}
+      lastUpdated={lastUpdated}
       unpublished
       link="A test link"
     />
   );
 
   expect(
-    screen.getByText("Bananas | Last updated 2019-12-31 16:00")
+    screen.getByText(
+      `Bananas | Last updated ${dayjs(lastUpdated).format("YYYY-MM-DD HH:mm")}`
+    )
   ).toBeInTheDocument();
 });

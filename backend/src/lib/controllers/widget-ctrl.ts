@@ -101,7 +101,7 @@ async function updateWidget(req: Request, res: Response) {
     return;
   }
 
-  const { name, content, updatedAt } = req.body;
+  const { name, content, updatedAt, showTitle } = req.body;
 
   if (!name) {
     res.status(400).send("Missing required field `name`");
@@ -120,13 +120,14 @@ async function updateWidget(req: Request, res: Response) {
 
   const repo = WidgetRepository.getInstance();
   const dashboardRepo = DashboardRepository.getInstance();
-  await repo.updateWidget(
+  await repo.updateWidget({
     dashboardId,
     widgetId,
     name,
     content,
-    new Date(updatedAt)
-  );
+    lastUpdatedAt: new Date(updatedAt),
+    showTitle: showTitle || false,
+  });
   await dashboardRepo.updateAt(dashboardId, user);
   return res.send();
 }

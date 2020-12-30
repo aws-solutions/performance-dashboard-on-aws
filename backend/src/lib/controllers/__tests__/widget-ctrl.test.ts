@@ -111,6 +111,7 @@ describe("updateWidget", () => {
       body: {
         name: "test",
         updatedAt: now,
+        showTitle: true,
         content: {
           text: "123",
         },
@@ -160,17 +161,18 @@ describe("updateWidget", () => {
     expect(res.send).toBeCalledWith("Missing required field `content`");
   });
 
-  it("update the widget", async () => {
+  it("updates the widget", async () => {
     await WidgetCtrl.updateWidget(req, res);
-    expect(repository.updateWidget).toHaveBeenCalledWith(
-      "090b0410",
-      "14507073",
-      "test",
-      {
+    expect(repository.updateWidget).toHaveBeenCalledWith({
+      dashboardId: "090b0410",
+      widgetId: "14507073",
+      name: "test",
+      content: {
         text: "123",
       },
-      now
-    );
+      lastUpdatedAt: now,
+      showTitle: true,
+    });
   });
 });
 

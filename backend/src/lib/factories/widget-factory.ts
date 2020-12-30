@@ -45,8 +45,10 @@ function createWidget(widgetInfo: CreateWidgetInfo): Widget {
   }
 }
 
+/**
+ * Creates a new Widget based on an existing one.
+ */
 function createFromWidget(dashboardId: string, widget: Widget): Widget {
-  // Creates a new Widget based on an existing one.
   return {
     id: uuidv4(),
     name: widget.name,
@@ -54,6 +56,7 @@ function createFromWidget(dashboardId: string, widget: Widget): Widget {
     dashboardId, // associate new widget to the given dashboardId
     order: widget.order,
     updatedAt: new Date(),
+    showTitle: widget.showTitle,
     content: widget.content,
   };
 }
@@ -62,6 +65,7 @@ function fromItem(item: WidgetItem): Widget {
   const id = item.sk.substring(WIDGET_PREFIX.length);
   const dashboardId = item.pk.substring(DASHBOARD_PREFIX.length);
   const updatedAt = item.updatedAt ? new Date(item.updatedAt) : new Date();
+  const showTitle = item.showTitle !== undefined ? item.showTitle : true;
   const widget: Widget = {
     id,
     dashboardId,
@@ -69,6 +73,7 @@ function fromItem(item: WidgetItem): Widget {
     widgetType: item.widgetType as WidgetType,
     order: item.order,
     updatedAt,
+    showTitle,
     content: item.content,
   };
 
@@ -97,6 +102,7 @@ function toItem(widget: Widget): WidgetItem {
     type: WIDGET_ITEM_TYPE,
     order: widget.order,
     updatedAt: widget.updatedAt?.toISOString(),
+    showTitle: widget.showTitle,
     content: widget.content,
   };
 }

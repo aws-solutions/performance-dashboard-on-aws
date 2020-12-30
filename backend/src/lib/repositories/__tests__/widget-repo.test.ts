@@ -43,6 +43,7 @@ describe("Widget Repository", () => {
       order: 1,
       updatedAt: now,
       name: "AWS",
+      showTitle: true,
       content: { text: "test" },
     });
   });

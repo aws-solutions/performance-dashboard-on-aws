@@ -266,6 +266,7 @@ describe("fromItem", () => {
       type: "Widget",
       order: 1,
       updatedAt: "2020-09-17T00:24:35.000Z",
+      showTitle: false,
       content: {
         text: "Random text",
       },
@@ -278,6 +279,7 @@ describe("fromItem", () => {
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Text);
     expect(widget.order).toEqual(1);
+    expect(widget.showTitle).toBe(false);
     expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
     expect(widget.content.text).toEqual("Random text");
   });
@@ -291,6 +293,7 @@ describe("fromItem", () => {
       type: "Widget",
       order: 1,
       updatedAt: "2020-09-17T00:24:35.000Z",
+      showTitle: false,
       content: {
         title: "Correlation of COVID cases to deaths",
         chartType: "LineChart",
@@ -307,6 +310,7 @@ describe("fromItem", () => {
     expect(widget.widgetType).toEqual(WidgetType.Chart);
     expect(widget.content.datasetId).toEqual("090b0410");
     expect(widget.order).toEqual(1);
+    expect(widget.showTitle).toBe(false);
     expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
@@ -324,6 +328,7 @@ describe("fromItem", () => {
       type: "Widget",
       order: 1,
       updatedAt: "2020-09-17T00:24:35.000Z",
+      showTitle: false,
       content: {
         title: "Correlation of COVID cases to deaths",
         datasetId: "090b0410",
@@ -339,6 +344,7 @@ describe("fromItem", () => {
     expect(widget.widgetType).toEqual(WidgetType.Table);
     expect(widget.content.datasetId).toEqual("090b0410");
     expect(widget.order).toEqual(1);
+    expect(widget.showTitle).toBe(false);
     expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
@@ -382,6 +388,7 @@ describe("toItem", () => {
       widgetType: WidgetType.Text,
       order: 5,
       updatedAt: now,
+      showTitle: false,
       content: {
         text: "Pizza and Beer",
       },
@@ -395,6 +402,7 @@ describe("toItem", () => {
     expect(item.widgetType).toEqual("Text");
     expect(item.type).toEqual("Widget");
     expect(item.order).toEqual(5);
+    expect(item.showTitle).toBe(false);
     expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.content).toEqual({
       text: "Pizza and Beer",
@@ -410,6 +418,7 @@ describe("toItem", () => {
       widgetType: WidgetType.Chart,
       order: 5,
       updatedAt: now,
+      showTitle: false,
       content: {
         title: "Correlation of COVID cases to deaths",
         chartType: ChartType.LineChart,
@@ -431,6 +440,7 @@ describe("toItem", () => {
     expect(item.widgetType).toEqual("Chart");
     expect(item.type).toEqual("Widget");
     expect(item.order).toEqual(5);
+    expect(item.showTitle).toBe(false);
     expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
@@ -454,6 +464,7 @@ describe("toItem", () => {
       widgetType: WidgetType.Table,
       order: 1,
       updatedAt: now,
+      showTitle: false,
       content: {
         title: "Correlation of COVID cases to deaths",
         datasetId: "090b0410",
@@ -474,6 +485,7 @@ describe("toItem", () => {
     expect(item.widgetType).toEqual("Table");
     expect(item.type).toEqual("Widget");
     expect(item.order).toEqual(1);
+    expect(item.showTitle).toBe(false);
     expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
@@ -509,6 +521,7 @@ describe("createFromWidget", () => {
     dashboardId: "123",
     order: 1,
     updatedAt: new Date(),
+    showTitle: true,
     content: {
       text: "Hello",
     },
@@ -531,6 +544,7 @@ describe("createFromWidget", () => {
         name: "Text Widget",
         widgetType: WidgetType.Text,
         order: 1,
+        showTitle: true,
         content: {
           text: "Hello",
         },

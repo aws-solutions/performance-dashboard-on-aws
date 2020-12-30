@@ -126,7 +126,7 @@ async function updateWidget(req: Request, res: Response) {
     name,
     content,
     lastUpdatedAt: new Date(updatedAt),
-    showTitle: showTitle || false,
+    showTitle,
   });
   await dashboardRepo.updateAt(dashboardId, user);
   return res.send();

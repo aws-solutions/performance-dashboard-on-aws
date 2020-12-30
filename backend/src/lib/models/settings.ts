@@ -5,6 +5,7 @@ export interface Settings {
     time: string;
   };
   updatedAt: Date;
+  navbarTitle: string;
 }
 
 export interface PublicSettings {
@@ -12,6 +13,7 @@ export interface PublicSettings {
     date: string;
     time: string;
   };
+  navbarTitle: string;
 }
 
 export interface SettingsItem {
@@ -24,4 +26,5 @@ export interface SettingsItem {
     date: string;
     time: string;
   };
+  navbarTitle?: string;
 }

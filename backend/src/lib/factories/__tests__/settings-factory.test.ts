@@ -11,6 +11,7 @@ describe("getDefaultSettings", () => {
       },
       publishingGuidance:
         "I acknowledge that I have reviewed the dashboard and it is ready to publish",
+      navbarTitle: "Performance Dashboard",
     });
   });
 });
@@ -27,6 +28,7 @@ describe("fromItem", () => {
       },
       publishingGuidance: "I acknowledge foo is equal to bar",
       updatedAt: "2020-12-09T17:21:42.823Z",
+      navbarTitle: "Performance Dashboard",
     };
 
     const settings = SettingsFactory.fromItem(item);
@@ -37,6 +39,7 @@ describe("fromItem", () => {
         time: "HH:mm",
       },
       updatedAt: new Date("2020-12-09T17:21:42.823Z"),
+      navbarTitle: "Performance Dashboard",
     });
   });
 });
@@ -50,6 +53,7 @@ describe("toPublicSettings", () => {
         date: "MMM, YYY",
         time: "hh:mm",
       },
+      navbarTitle: "Performance Dashboard",
     };
 
     const publicSettings = SettingsFactory.toPublicSettings(settings);
@@ -58,6 +62,7 @@ describe("toPublicSettings", () => {
         date: "MMM, YYY",
         time: "hh:mm",
       },
+      navbarTitle: "Performance Dashboard",
     });
   });
 });

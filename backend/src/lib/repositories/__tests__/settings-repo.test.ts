@@ -46,6 +46,7 @@ describe("getSettings", () => {
       type: "Settings",
       publishingGuidance:
         "I acknowledge that I have reviewed the dashboard and it is ready to publish",
+      navbarTitle: "Performance Dashboard",
     };
 
     dynamodb.get = jest.fn().mockReturnValueOnce({ Item: item });

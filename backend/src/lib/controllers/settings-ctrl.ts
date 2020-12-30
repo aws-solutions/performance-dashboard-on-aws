@@ -26,7 +26,7 @@ async function updateSettings(req: Request, res: Response) {
   }
 
   let { updatedAt } = req.body;
-  const { publishingGuidance, dateTimeFormat } = req.body;
+  const { publishingGuidance, dateTimeFormat, navbarTitle } = req.body;
 
   if (!updatedAt) {
     res.status(400);
@@ -58,6 +58,14 @@ async function updateSettings(req: Request, res: Response) {
     );
   }
 
+  if (navbarTitle) {
+    updatedAt = await repo.updateSetting(
+      "navbarTitle",
+      navbarTitle,
+      updatedAt,
+      user
+    );
+  }
   res.send();
 }
 

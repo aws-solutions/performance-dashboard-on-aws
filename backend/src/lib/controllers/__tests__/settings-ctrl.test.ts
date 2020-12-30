@@ -105,6 +105,17 @@ describe("updateSettings", () => {
       user
     );
   });
+
+  it("updates navbarTitle setting", async () => {
+    req.body.navbarTitle = "New Title";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "navbarTitle",
+      "New Title",
+      now.toISOString(),
+      user
+    );
+  });
 });
 
 describe("getPublicSettings", () => {

@@ -42,7 +42,7 @@ async function createWidget(req: Request, res: Response) {
     return;
   }
 
-  const { name, content, widgetType } = req.body;
+  const { name, content, widgetType, showTitle } = req.body;
 
   if (!name) {
     res.status(400).send("Missing required field `name`");
@@ -61,7 +61,13 @@ async function createWidget(req: Request, res: Response) {
 
   let widget;
   try {
-    widget = WidgetFactory.createWidget(name, dashboardId, widgetType, content);
+    widget = WidgetFactory.createWidget({
+      name,
+      dashboardId,
+      widgetType,
+      showTitle,
+      content,
+    });
   } catch (err) {
     console.log("Invalid request to create widget", err);
     return res.status(400).send(err.message);

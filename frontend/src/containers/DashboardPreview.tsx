@@ -110,6 +110,7 @@ function DashboardPreview() {
             name={dashboard?.name}
             topicAreaName={dashboard?.topicAreaName}
             description={dashboard?.description}
+            lastUpdated={dashboard?.updatedAt}
             unpublished
           />
           <hr />

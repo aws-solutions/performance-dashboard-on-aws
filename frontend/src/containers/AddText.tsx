@@ -38,6 +38,7 @@ function AddText() {
         dashboardId,
         values.title,
         WidgetType.Text,
+        values.showTitle,
         {
           text: values.text,
         }
@@ -65,7 +66,6 @@ function AddText() {
     setTitle(title);
     setText(text);
     setShowTitle(showTitle);
-    console.log(showTitle);
   };
 
   const goBack = () => {
@@ -122,8 +122,9 @@ function AddText() {
                   className="usa-checkbox__input"
                   id="display-title"
                   type="checkbox"
-                  name="checkbox"
-                  // checked
+                  name="showTitle"
+                  defaultChecked={true}
+                  ref={register()}
                 />
                 <label className="usa-checkbox__label" htmlFor="display-title">
                   Show title on dashboard
@@ -170,7 +171,11 @@ function AddText() {
         </div>
         <div className="grid-col-6">
           <h4 className="margin-top-4">Preview</h4>
-          <h2 className="margin-top-4 margin-left-2px">{title}</h2>
+          {showTitle ? (
+            <h2 className="margin-top-4 margin-left-2px">{title}</h2>
+          ) : (
+            ""
+          )}
           {text ? (
             <div className="padding-left-05">
               <MarkdownRender source={text} />

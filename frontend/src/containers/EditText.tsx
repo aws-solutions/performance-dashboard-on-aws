@@ -13,6 +13,7 @@ import Link from "../components/Link";
 interface FormValues {
   title: string;
   text: string;
+  showTitle: boolean;
 }
 
 interface PathParams {
@@ -29,6 +30,7 @@ function EditText() {
   const { widget, setWidget } = useWidget(dashboardId, widgetId);
 
   const onSubmit = async (values: FormValues) => {
+    console.log("SUBMITTING:", values);
     if (!widget) {
       return;
     }
@@ -39,6 +41,7 @@ function EditText() {
         dashboardId,
         widgetId,
         values.title,
+        values.showTitle,
         {
           text: values.text,
         },
@@ -63,10 +66,12 @@ function EditText() {
   };
 
   const onFormChange = () => {
-    const { title, text } = getValues();
+    const { title, text, showTitle } = getValues();
+    console.log(title, showTitle);
     setWidget({
       ...widget,
       name: title,
+      showTitle: showTitle,
       content: {
         ...widget?.content,
         text,
@@ -120,6 +125,23 @@ function EditText() {
                     register={register}
                   />
 
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="display-title"
+                      type="checkbox"
+                      name="showTitle"
+                      defaultChecked={widget.showTitle}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="display-title"
+                    >
+                      Show title on dashboard
+                    </label>
+                  </div>
+
                   <TextField
                     id="text"
                     name="text"
@@ -158,7 +180,11 @@ function EditText() {
             </div>
             <div className="grid-col-6">
               <h4 className="margin-top-4">Preview</h4>
-              <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>
+              {widget.showTitle ? (
+                <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>
+              ) : (
+                ""
+              )}
               {widget.content.text ? (
                 <div className="padding-left-05">
                   <MarkdownRender source={widget.content.text} />

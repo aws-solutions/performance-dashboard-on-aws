@@ -11,7 +11,7 @@ function TextWidget(props: Props) {
 
   return (
     <div className="margin-left-1">
-      <h2>{props.widget.name}</h2>
+      {props.widget.showTitle ? <h2>{props.widget.name}</h2> : ""}
       <MarkdownRender source={content.text} />
     </div>
   );

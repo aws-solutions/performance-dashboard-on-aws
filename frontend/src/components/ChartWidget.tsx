@@ -23,7 +23,7 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.LineChart:
       return (
         <LineChartPreview
-          title={content.title}
+          title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
           lines={keys}
           data={json}
@@ -33,7 +33,7 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.ColumnChart:
       return (
         <ColumnChartPreview
-          title={content.title}
+          title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
           columns={keys}
           data={json}
@@ -43,7 +43,7 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.BarChart:
       return (
         <BarChartPreview
-          title={content.title}
+          title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
           bars={keys}
           data={json}
@@ -53,7 +53,7 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.PartWholeChart:
       return (
         <PartWholeChartPreview
-          title={content.title}
+          title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
           parts={keys}
           data={json}

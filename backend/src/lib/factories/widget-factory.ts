@@ -13,27 +13,42 @@ export const WIDGET_ITEM_TYPE = "Widget";
 export const WIDGET_PREFIX = "Widget#";
 export const DASHBOARD_PREFIX = "Dashboard#";
 
-function createWidget(
-  name: string,
-  dashboardId: string,
-  widgetType: WidgetType,
-  content: any,
-  id = uuidv4()
-): Widget {
-  switch (widgetType) {
+type CreateWidgetInfo = {
+  name: string;
+  dashboardId: string;
+  widgetType: WidgetType;
+  showTitle?: boolean;
+  content: any;
+};
+
+function createWidget(widgetInfo: CreateWidgetInfo): Widget {
+  const widget: Widget = {
+    id: uuidv4(),
+    name: widgetInfo.name,
+    order: 0,
+    updatedAt: new Date(),
+    dashboardId: widgetInfo.dashboardId,
+    widgetType: widgetInfo.widgetType,
+    showTitle: widgetInfo.showTitle,
+    content: widgetInfo.content,
+  };
+
+  switch (widgetInfo.widgetType) {
     case WidgetType.Text:
-      return createTextWidget(id, name, dashboardId, content);
+      return createTextWidget(widget);
     case WidgetType.Chart:
-      return createChartWidget(id, name, dashboardId, content);
+      return createChartWidget(widget);
     case WidgetType.Table:
-      return createTableWidget(id, name, dashboardId, content);
+      return createTableWidget(widget);
     default:
       throw new Error("Invalid widget type");
   }
 }
 
+/**
+ * Creates a new Widget based on an existing one.
+ */
 function createFromWidget(dashboardId: string, widget: Widget): Widget {
-  // Creates a new Widget based on an existing one.
   return {
     id: uuidv4(),
     name: widget.name,
@@ -41,6 +56,7 @@ function createFromWidget(dashboardId: string, widget: Widget): Widget {
     dashboardId, // associate new widget to the given dashboardId
     order: widget.order,
     updatedAt: new Date(),
+    showTitle: widget.showTitle,
     content: widget.content,
   };
 }
@@ -49,6 +65,7 @@ function fromItem(item: WidgetItem): Widget {
   const id = item.sk.substring(WIDGET_PREFIX.length);
   const dashboardId = item.pk.substring(DASHBOARD_PREFIX.length);
   const updatedAt = item.updatedAt ? new Date(item.updatedAt) : new Date();
+  const showTitle = item.showTitle !== undefined ? item.showTitle : true;
   const widget: Widget = {
     id,
     dashboardId,
@@ -56,6 +73,7 @@ function fromItem(item: WidgetItem): Widget {
     widgetType: item.widgetType as WidgetType,
     order: item.order,
     updatedAt,
+    showTitle,
     content: item.content,
   };
 
@@ -84,118 +102,89 @@ function toItem(widget: Widget): WidgetItem {
     type: WIDGET_ITEM_TYPE,
     order: widget.order,
     updatedAt: widget.updatedAt?.toISOString(),
+    showTitle: widget.showTitle,
     content: widget.content,
   };
 }
 
-function createTextWidget(
-  id: string,
-  name: string,
-  dashboardId: string,
-  content: any
-): TextWidget {
-  if (!content.text) {
+function createTextWidget(widget: Widget): TextWidget {
+  if (!widget.content.text) {
     throw new Error("Text widget must have `content.text` field");
   }
 
   return {
-    id,
-    name,
-    dashboardId,
-    widgetType: WidgetType.Text,
-    order: 0,
-    updatedAt: new Date(),
+    ...widget,
     content: {
-      text: content.text,
+      text: widget.content.text,
     },
   };
 }
 
-function createChartWidget(
-  id: string,
-  name: string,
-  dashboardId: string,
-  content: any
-): ChartWidget {
-  if (!content.title) {
+function createChartWidget(widget: Widget): ChartWidget {
+  if (!widget.content.title) {
     throw new Error("Chart widget must have `content.title` field");
   }
 
-  if (!content.chartType) {
+  if (!widget.content.chartType) {
     throw new Error("Chart widget must have `content.chartType` field");
   }
 
-  if (!(content.chartType in ChartType)) {
+  if (!(widget.content.chartType in ChartType)) {
     throw new Error("Invalid chart type");
   }
 
-  if (!content.datasetId) {
+  if (!widget.content.datasetId) {
     throw new Error("Chart widget must have `content.datasetId` field");
   }
 
-  if (!content.s3Key) {
+  if (!widget.content.s3Key) {
     throw new Error("Chart widget must have `content.s3Key` field");
   }
 
-  if (!content.fileName) {
+  if (!widget.content.fileName) {
     throw new Error("Chart widget must have `content.fileName` field");
   }
 
   return {
-    id,
-    name,
-    dashboardId,
-    widgetType: WidgetType.Chart,
-    order: 0,
-    updatedAt: new Date(),
+    ...widget,
     content: {
-      title: content.title,
-      chartType: content.chartType,
-      datasetId: content.datasetId,
-      summary: content.summary,
-      s3Key: content.s3Key,
-      fileName: content.fileName,
-      datasetType: content.datasetType,
+      title: widget.content.title,
+      chartType: widget.content.chartType,
+      datasetId: widget.content.datasetId,
+      summary: widget.content.summary,
+      s3Key: widget.content.s3Key,
+      fileName: widget.content.fileName,
+      datasetType: widget.content.datasetType,
     },
   };
 }
 
-function createTableWidget(
-  id: string,
-  name: string,
-  dashboardId: string,
-  content: any
-): TableWidget {
-  if (!content.title) {
+function createTableWidget(widget: Widget): TableWidget {
+  if (!widget.content.title) {
     throw new Error("Table widget must have `content.title` field");
   }
 
-  if (!content.datasetId) {
+  if (!widget.content.datasetId) {
     throw new Error("Table widget must have `content.datasetId` field");
   }
 
-  if (!content.s3Key) {
+  if (!widget.content.s3Key) {
     throw new Error("Table widget must have `content.s3Key` field");
   }
 
-  if (!content.fileName) {
+  if (!widget.content.fileName) {
     throw new Error("Table widget must have `content.fileName` field");
   }
 
   return {
-    id,
-    name,
-    dashboardId,
-    widgetType: WidgetType.Table,
-    order: 0,
-    updatedAt: new Date(),
+    ...widget,
     content: {
-      title: content.title,
-      datasetId: content.datasetId,
-      summary: content.summary,
-      s3Key: content.s3Key,
-      fileName: content.fileName,
-      datasetType: content.datasetType,
+      title: widget.content.title,
+      datasetId: widget.content.datasetId,
+      summary: widget.content.summary,
+      s3Key: widget.content.s3Key,
+      fileName: widget.content.fileName,
+      datasetType: widget.content.datasetType,
     },
   };
 }

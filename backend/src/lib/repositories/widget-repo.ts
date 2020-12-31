@@ -64,33 +64,37 @@ class WidgetRepository extends BaseRepository {
     });
   }
 
-  public async updateWidget(
-    dashboardId: string,
-    widgetId: string,
-    name: string,
-    content: any,
-    updatedAt: Date
-  ) {
+  public async updateWidget(updateRequest: {
+    dashboardId: string;
+    widgetId: string;
+    name: string;
+    content: any;
+    lastUpdatedAt: Date;
+    showTitle: boolean;
+  }) {
     try {
       await this.dynamodb.update({
         TableName: this.tableName,
         Key: {
-          pk: WidgetFactory.itemPk(dashboardId),
-          sk: WidgetFactory.itemSk(widgetId),
+          pk: WidgetFactory.itemPk(updateRequest.dashboardId),
+          sk: WidgetFactory.itemSk(updateRequest.widgetId),
         },
         UpdateExpression:
-          "set #name = :name, #content = :content, #updatedAt = :updatedAt",
+          "set #name = :name, #content = :content, " +
+          "#updatedAt = :updatedAt, #showTitle = :showTitle",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
-          ":name": name,
-          ":content": content,
-          ":lastUpdatedAt": updatedAt.toISOString(),
+          ":name": updateRequest.name,
+          ":content": updateRequest.content,
+          ":lastUpdatedAt": updateRequest.lastUpdatedAt.toISOString(),
           ":updatedAt": new Date().toISOString(),
+          ":showTitle": updateRequest.showTitle,
         },
         ExpressionAttributeNames: {
           "#name": "name",
           "#content": "content",
           "#updatedAt": "updatedAt",
+          "#showTitle": "showTitle",
         },
       });
     } catch (error) {

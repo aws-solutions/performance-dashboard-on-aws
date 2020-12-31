@@ -68,7 +68,6 @@ describe("createWidget", () => {
 
   it("returns a 400 error when widgetType is missing", async () => {
     delete req.body.widgetType;
-    widgetFactory.createWidget = jest.fn().mockReturnThis();
     await WidgetCtrl.createWidget(req, res);
     expect(res.status).toBeCalledWith(400);
     expect(res.send).toBeCalledWith("Missing required field `widgetType`");
@@ -81,15 +80,17 @@ describe("createWidget", () => {
     expect(res.send).toBeCalledWith("Missing required field `content`");
   });
 
-  it("create the widget", async () => {
-    const widget = WidgetFactory.createWidget(
-      "test",
-      "090b0410",
-      WidgetType.Text,
-      {
+  it("creates the widget", async () => {
+    const widget = WidgetFactory.createWidget({
+      name: "test",
+      dashboardId: "090b0410",
+      widgetType: WidgetType.Text,
+      showTitle: false,
+      content: {
         text: "123",
-      }
-    );
+      },
+    });
+
     WidgetFactory.createWidget = jest.fn().mockReturnValue(widget);
     await WidgetCtrl.createWidget(req, res);
     expect(repository.saveWidget).toBeCalledWith(widget);
@@ -110,6 +111,7 @@ describe("updateWidget", () => {
       body: {
         name: "test",
         updatedAt: now,
+        showTitle: true,
         content: {
           text: "123",
         },
@@ -159,17 +161,18 @@ describe("updateWidget", () => {
     expect(res.send).toBeCalledWith("Missing required field `content`");
   });
 
-  it("update the widget", async () => {
+  it("updates the widget", async () => {
     await WidgetCtrl.updateWidget(req, res);
-    expect(repository.updateWidget).toHaveBeenCalledWith(
-      "090b0410",
-      "14507073",
-      "test",
-      {
+    expect(repository.updateWidget).toHaveBeenCalledWith({
+      dashboardId: "090b0410",
+      widgetId: "14507073",
+      name: "test",
+      content: {
         text: "123",
       },
-      now
-    );
+      lastUpdatedAt: now,
+      showTitle: true,
+    });
   });
 });
 

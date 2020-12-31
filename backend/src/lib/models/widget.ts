@@ -18,6 +18,7 @@ export interface Widget {
   dashboardId: string;
   order: number;
   updatedAt: Date;
+  showTitle?: boolean;
   content: any;
 }
 
@@ -29,6 +30,7 @@ export interface WidgetItem {
   widgetType: string;
   order: number;
   updatedAt: string;
+  showTitle?: boolean;
   content: any;
 }
 

@@ -16,7 +16,13 @@ describe("createWidget", () => {
   it("throw an error for invalid widget types", () => {
     expect(() => {
       const bananaType = "BananaType" as WidgetType;
-      WidgetFactory.createWidget("BananaWidget", "123", bananaType, {});
+      WidgetFactory.createWidget({
+        name: "BananaWidget",
+        dashboardId: "123",
+        widgetType: bananaType,
+        showTitle: true,
+        content: {},
+      });
     }).toThrowError("Invalid widget type");
   });
 });
@@ -24,47 +30,33 @@ describe("createWidget", () => {
 describe("createTextWidget", () => {
   it("builds a text widget", () => {
     const content = { text: "Text can include markdown syntax" };
-    const widget = WidgetFactory.createWidget(
-      dummyWidgetName,
+    const widget = WidgetFactory.createWidget({
+      name: dummyWidgetName,
       dashboardId,
-      WidgetType.Text,
-      content
-    ) as TextWidget;
-
-    expect(widget.name).toEqual(dummyWidgetName);
-    expect(widget.dashboardId).toEqual(dashboardId);
-    expect(widget.widgetType).toEqual(WidgetType.Text);
-    expect(widget.order).toEqual(0);
-    expect(widget.content.text).toEqual("Text can include markdown syntax");
-  });
-
-  it("builds a text widget with id", () => {
-    const content = { text: "Text can include markdown syntax" };
-    const widget = WidgetFactory.createWidget(
-      dummyWidgetName,
-      dashboardId,
-      WidgetType.Text,
+      widgetType: WidgetType.Text,
+      showTitle: true,
       content,
-      "123"
-    ) as TextWidget;
+    }) as TextWidget;
 
+    expect(widget.id).toBeDefined();
     expect(widget.name).toEqual(dummyWidgetName);
     expect(widget.dashboardId).toEqual(dashboardId);
     expect(widget.widgetType).toEqual(WidgetType.Text);
     expect(widget.order).toEqual(0);
+    expect(widget.showTitle).toBe(true);
     expect(widget.content.text).toEqual("Text can include markdown syntax");
-    expect(widget.id).toEqual("123");
   });
 
   it("throws an error if text is undefined", () => {
     const content = {};
     expect(() => {
-      WidgetFactory.createWidget(
-        dummyWidgetName,
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
         dashboardId,
-        WidgetType.Text,
-        content
-      );
+        widgetType: WidgetType.Text,
+        showTitle: true,
+        content,
+      });
     }).toThrowError("Text widget must have `content.text` field");
   });
 });
@@ -83,64 +75,36 @@ describe("createChartWidget", () => {
       fileName: "abc.csv",
     };
 
-    const widget = WidgetFactory.createWidget(
-      dummyWidgetName,
+    const widget = WidgetFactory.createWidget({
+      name: dummyWidgetName,
       dashboardId,
-      WidgetType.Chart,
-      content
-    ) as ChartWidget;
-
-    expect(widget.name).toEqual(dummyWidgetName);
-    expect(widget.dashboardId).toEqual(dashboardId);
-    expect(widget.widgetType).toEqual(WidgetType.Chart);
-    expect(widget.content.title).toEqual(
-      "Correlation of COVID cases to deaths"
-    );
-    expect(widget.content.summary).toEqual("test summary");
-    expect(widget.content.chartType).toEqual("LineChart");
-  });
-
-  it("builds a chart widget with id", () => {
-    const content = {
-      title: "Correlation of COVID cases to deaths",
-      chartType: "LineChart",
-      datasetId: "090b0410",
-      summary: "test summary",
-      s3Key: {
-        raw: "abc.csv",
-        json: "abc.json",
-      },
-      fileName: "abc.csv",
-    };
-
-    const widget = WidgetFactory.createWidget(
-      dummyWidgetName,
-      dashboardId,
-      WidgetType.Chart,
+      widgetType: WidgetType.Chart,
+      showTitle: true,
       content,
-      "123"
-    ) as ChartWidget;
+    }) as ChartWidget;
 
+    expect(widget.id).toBeDefined();
     expect(widget.name).toEqual(dummyWidgetName);
     expect(widget.dashboardId).toEqual(dashboardId);
+    expect(widget.showTitle).toBe(true);
     expect(widget.widgetType).toEqual(WidgetType.Chart);
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
     expect(widget.content.summary).toEqual("test summary");
     expect(widget.content.chartType).toEqual("LineChart");
-    expect(widget.id).toEqual("123");
   });
 
   it("throws an error if chart title is undefined", () => {
     const content = { datasetId: "090b0410", chartType: "LineChart" };
     expect(() => {
-      WidgetFactory.createWidget(
-        dummyWidgetName,
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
         dashboardId,
-        WidgetType.Chart,
-        content
-      );
+        widgetType: WidgetType.Chart,
+        showTitle: true,
+        content,
+      });
     }).toThrowError("Chart widget must have `content.title` field");
   });
 
@@ -150,36 +114,39 @@ describe("createChartWidget", () => {
       chartType: "LineChart",
     };
     expect(() => {
-      WidgetFactory.createWidget(
-        dummyWidgetName,
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
         dashboardId,
-        WidgetType.Chart,
-        content
-      );
+        widgetType: WidgetType.Chart,
+        showTitle: true,
+        content,
+      });
     }).toThrowError("Chart widget must have `content.datasetId` field");
   });
 
   it("throws an error if chartType is undefined", () => {
     const content = { title: "My chart title" };
     expect(() => {
-      WidgetFactory.createWidget(
-        dummyWidgetName,
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
         dashboardId,
-        WidgetType.Chart,
-        content
-      );
+        widgetType: WidgetType.Chart,
+        showTitle: true,
+        content,
+      });
     }).toThrowError("Chart widget must have `content.chartType` field");
   });
 
   it("throws an error if chart type does not exist in ChartType", () => {
     const content = { title: "My chart title", chartType: "TestChart" };
     expect(() => {
-      WidgetFactory.createWidget(
-        dummyWidgetName,
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
         dashboardId,
-        WidgetType.Chart,
-        content
-      );
+        widgetType: WidgetType.Chart,
+        showTitle: true,
+        content,
+      });
     }).toThrowError("Invalid chart type");
   });
 
@@ -196,12 +163,13 @@ describe("createChartWidget", () => {
       fileName: "abc.csv",
     };
 
-    const widget = WidgetFactory.createWidget(
-      dummyWidgetName,
+    const widget = WidgetFactory.createWidget({
+      name: dummyWidgetName,
       dashboardId,
-      WidgetType.Chart,
-      content
-    ) as ChartWidget;
+      widgetType: WidgetType.Chart,
+      showTitle: true,
+      content,
+    }) as ChartWidget;
 
     expect(widget.content.chartType).toEqual("BarChart");
   });
@@ -219,12 +187,13 @@ describe("createChartWidget", () => {
       fileName: "abc.csv",
     };
 
-    const widget = WidgetFactory.createWidget(
-      dummyWidgetName,
+    const widget = WidgetFactory.createWidget({
+      name: dummyWidgetName,
       dashboardId,
-      WidgetType.Chart,
-      content
-    ) as ChartWidget;
+      widgetType: WidgetType.Chart,
+      showTitle: true,
+      content,
+    }) as ChartWidget;
 
     expect(widget.content.chartType).toEqual("PartWholeChart");
   });
@@ -242,70 +211,47 @@ describe("createTableWidget", () => {
       fileName: "abc.csv",
     };
 
-    const widget = WidgetFactory.createWidget(
-      dummyWidgetName,
+    const widget = WidgetFactory.createWidget({
+      name: dummyWidgetName,
       dashboardId,
-      WidgetType.Table,
-      content
-    ) as TableWidget;
-
-    expect(widget.name).toEqual(dummyWidgetName);
-    expect(widget.dashboardId).toEqual(dashboardId);
-    expect(widget.widgetType).toEqual(WidgetType.Table);
-    expect(widget.content.title).toEqual(
-      "Correlation of COVID cases to deaths"
-    );
-  });
-
-  it("builds a table widget with id", () => {
-    const content = {
-      title: "Correlation of COVID cases to deaths",
-      datasetId: "090b0410",
-      s3Key: {
-        raw: "abc.csv",
-        json: "abc.json",
-      },
-      fileName: "abc.csv",
-    };
-
-    const widget = WidgetFactory.createWidget(
-      dummyWidgetName,
-      dashboardId,
-      WidgetType.Table,
+      widgetType: WidgetType.Table,
+      showTitle: true,
       content,
-      "123"
-    ) as TableWidget;
+    }) as TableWidget;
 
+    expect(widget.id).toBeDefined();
     expect(widget.name).toEqual(dummyWidgetName);
     expect(widget.dashboardId).toEqual(dashboardId);
     expect(widget.widgetType).toEqual(WidgetType.Table);
+    expect(widget.showTitle).toBe(true);
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
     );
-    expect(widget.id).toEqual("123");
   });
 
   it("throws an error if table title is undefined", () => {
     const content = {};
     expect(() => {
-      WidgetFactory.createWidget(
-        dummyWidgetName,
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
         dashboardId,
-        WidgetType.Table,
-        content
-      );
+        widgetType: WidgetType.Table,
+        showTitle: true,
+        content,
+      });
     }).toThrowError("Table widget must have `content.title` field");
   });
 
   it("throws an error if datasetId is undefined", () => {
     const content = { title: "COVID cases" };
     expect(() => {
-      WidgetFactory.createWidget(
-        dummyWidgetName,
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
         dashboardId,
-        WidgetType.Table,
-        content
-      );
+        widgetType: WidgetType.Table,
+        showTitle: true,
+        content,
+      });
     }).toThrowError("Table widget must have `content.datasetId` field");
   });
 });
@@ -320,6 +266,7 @@ describe("fromItem", () => {
       type: "Widget",
       order: 1,
       updatedAt: "2020-09-17T00:24:35.000Z",
+      showTitle: false,
       content: {
         text: "Random text",
       },
@@ -332,6 +279,7 @@ describe("fromItem", () => {
     expect(widget.name).toEqual("Random name");
     expect(widget.widgetType).toEqual(WidgetType.Text);
     expect(widget.order).toEqual(1);
+    expect(widget.showTitle).toBe(false);
     expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
     expect(widget.content.text).toEqual("Random text");
   });
@@ -345,6 +293,7 @@ describe("fromItem", () => {
       type: "Widget",
       order: 1,
       updatedAt: "2020-09-17T00:24:35.000Z",
+      showTitle: false,
       content: {
         title: "Correlation of COVID cases to deaths",
         chartType: "LineChart",
@@ -361,6 +310,7 @@ describe("fromItem", () => {
     expect(widget.widgetType).toEqual(WidgetType.Chart);
     expect(widget.content.datasetId).toEqual("090b0410");
     expect(widget.order).toEqual(1);
+    expect(widget.showTitle).toBe(false);
     expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
@@ -378,6 +328,7 @@ describe("fromItem", () => {
       type: "Widget",
       order: 1,
       updatedAt: "2020-09-17T00:24:35.000Z",
+      showTitle: false,
       content: {
         title: "Correlation of COVID cases to deaths",
         datasetId: "090b0410",
@@ -393,6 +344,7 @@ describe("fromItem", () => {
     expect(widget.widgetType).toEqual(WidgetType.Table);
     expect(widget.content.datasetId).toEqual("090b0410");
     expect(widget.order).toEqual(1);
+    expect(widget.showTitle).toBe(false);
     expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
     expect(widget.content.title).toEqual(
       "Correlation of COVID cases to deaths"
@@ -436,6 +388,7 @@ describe("toItem", () => {
       widgetType: WidgetType.Text,
       order: 5,
       updatedAt: now,
+      showTitle: false,
       content: {
         text: "Pizza and Beer",
       },
@@ -449,6 +402,7 @@ describe("toItem", () => {
     expect(item.widgetType).toEqual("Text");
     expect(item.type).toEqual("Widget");
     expect(item.order).toEqual(5);
+    expect(item.showTitle).toBe(false);
     expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.content).toEqual({
       text: "Pizza and Beer",
@@ -464,6 +418,7 @@ describe("toItem", () => {
       widgetType: WidgetType.Chart,
       order: 5,
       updatedAt: now,
+      showTitle: false,
       content: {
         title: "Correlation of COVID cases to deaths",
         chartType: ChartType.LineChart,
@@ -485,6 +440,7 @@ describe("toItem", () => {
     expect(item.widgetType).toEqual("Chart");
     expect(item.type).toEqual("Widget");
     expect(item.order).toEqual(5);
+    expect(item.showTitle).toBe(false);
     expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
@@ -508,6 +464,7 @@ describe("toItem", () => {
       widgetType: WidgetType.Table,
       order: 1,
       updatedAt: now,
+      showTitle: false,
       content: {
         title: "Correlation of COVID cases to deaths",
         datasetId: "090b0410",
@@ -528,6 +485,7 @@ describe("toItem", () => {
     expect(item.widgetType).toEqual("Table");
     expect(item.type).toEqual("Widget");
     expect(item.order).toEqual(1);
+    expect(item.showTitle).toBe(false);
     expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.content).toEqual({
       title: "Correlation of COVID cases to deaths",
@@ -563,6 +521,7 @@ describe("createFromWidget", () => {
     dashboardId: "123",
     order: 1,
     updatedAt: new Date(),
+    showTitle: true,
     content: {
       text: "Hello",
     },
@@ -585,6 +544,7 @@ describe("createFromWidget", () => {
         name: "Text Widget",
         widgetType: WidgetType.Text,
         order: 1,
+        showTitle: true,
         content: {
           text: "Hello",
         },

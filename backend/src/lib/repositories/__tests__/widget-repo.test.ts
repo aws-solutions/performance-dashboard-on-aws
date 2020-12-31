@@ -43,6 +43,7 @@ describe("Widget Repository", () => {
       order: 1,
       updatedAt: now,
       name: "AWS",
+      showTitle: true,
       content: { text: "test" },
     });
   });
@@ -78,16 +79,26 @@ describe("Widget Repository", () => {
     jest.useFakeTimers("modern");
     jest.setSystemTime(now);
 
-    await repo.updateWidget("abc", "123", name, content, now);
+    await repo.updateWidget({
+      dashboardId: "abc",
+      widgetId: "123",
+      name,
+      content,
+      lastUpdatedAt: now,
+      showTitle: true,
+    });
+
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #name = :name, #content = :content, #updatedAt = :updatedAt",
+          "set #name = :name, #content = :content, " +
+          "#updatedAt = :updatedAt, #showTitle = :showTitle",
         ExpressionAttributeValues: {
           ":name": name,
           ":content": content,
           ":lastUpdatedAt": now.toISOString(),
           ":updatedAt": now.toISOString(),
+          ":showTitle": true,
         },
       })
     );

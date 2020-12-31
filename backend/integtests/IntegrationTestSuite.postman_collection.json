@@ -1692,15 +1692,25 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget/{{chartwidget.id}}",
+					"raw": "{{baseUrl}}/dashboard/:dashboardId/widget/:widgetId",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"dashboard",
-						"{{dashboard.id}}",
+						":dashboardId",
 						"widget",
-						"{{chartwidget.id}}"
+						":widgetId"
+					],
+					"variable": [
+						{
+							"key": "dashboardId",
+							"value": "{{dashboard.id}}"
+						},
+						{
+							"key": "widgetId",
+							"value": "{{chartwidget.id}}"
+						}
 					]
 				}
 			},
@@ -1713,8 +1723,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
+							"pm.test(\"returns 409 conflict when dataset is being used by a widget\", () => {",
+							"    // dashboard2 was created as a draft from dashboard1 ",
+							"    // and therefore contains the same widgets. Since we ",
+							"    // don't know the IDs for those widgets, we can't delete them",
+							"    // and because of that, this dataset deletion fails.",
+							"    pm.response.to.have.status(409);",
 							"});"
 						],
 						"type": "text/javascript"

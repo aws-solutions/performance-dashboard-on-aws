@@ -19,6 +19,7 @@ import Spinner from "../components/Spinner";
 interface FormValues {
   title: string;
   summary: string;
+  showTitle: boolean;
 }
 
 interface PathParams {
@@ -48,6 +49,7 @@ function AddTable() {
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
+  const [showTitle, setShowTitle] = useState(true);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
@@ -87,6 +89,7 @@ function AddTable() {
         dashboardId,
         values.title,
         WidgetType.Table,
+        values.showTitle,
         {
           title: values.title,
           summary: values.summary,
@@ -130,6 +133,10 @@ function AddTable() {
 
   const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
     setSummary((event.target as HTMLTextAreaElement).value);
+  };
+
+  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setShowTitle((event.target as HTMLInputElement).checked);
   };
 
   const onFileProcessed = (data: File) => {
@@ -263,6 +270,21 @@ function AddTable() {
                 required
                 register={register}
               />
+
+              <div className="usa-checkbox">
+                <input
+                  className="usa-checkbox__input"
+                  id="display-title"
+                  type="checkbox"
+                  name="showTitle"
+                  defaultChecked={true}
+                  onChange={handleShowTitleChange}
+                  ref={register()}
+                />
+                <label className="usa-checkbox__label" htmlFor="display-title">
+                  Show title on dashboard
+                </label>
+              </div>
 
               <label htmlFor="fieldset" className="usa-label text-bold">
                 Data
@@ -470,7 +492,7 @@ function AddTable() {
               <Spinner className="text-center margin-top-6" label="Loading" />
             ) : (
               <TablePreview
-                title={title}
+                title={showTitle ? title : ""}
                 summary={summary}
                 headers={
                   currentJson.length

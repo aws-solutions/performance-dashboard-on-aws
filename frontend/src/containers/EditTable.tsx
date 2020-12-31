@@ -22,6 +22,7 @@ import "./EditTable.css";
 interface FormValues {
   title: string;
   summary: string;
+  showTitle: boolean;
   dynamicDatasets: string;
   staticDatasets: string;
 }
@@ -162,6 +163,7 @@ function EditTable() {
         dashboardId,
         widgetId,
         values.title,
+        values.showTitle,
         {
           title: values.title,
           summary: values.summary,
@@ -215,6 +217,18 @@ function EditTable() {
         content: {
           ...widget.content,
           summary: (event.target as HTMLTextAreaElement).value,
+        },
+      });
+    }
+  };
+
+  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    if (widget) {
+      setWidget({
+        ...widget,
+        showTitle: (event.target as HTMLInputElement).checked,
+        content: {
+          ...widget.content,
         },
       });
     }
@@ -326,6 +340,24 @@ function EditTable() {
                     required
                     register={register}
                   />
+
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="display-title"
+                      type="checkbox"
+                      name="showTitle"
+                      defaultChecked={widget.showTitle}
+                      onChange={handleShowTitleChange}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="display-title"
+                    >
+                      Show title on dashboard
+                    </label>
+                  </div>
 
                   <label htmlFor="fieldset" className="usa-label text-bold">
                     Data
@@ -589,7 +621,7 @@ function EditTable() {
                   />
                 ) : (
                   <TablePreview
-                    title={widget.content.title}
+                    title={widget.showTitle ? widget.content.title : ""}
                     summary={widget.content.summary}
                     headers={
                       currentJson.length > 0

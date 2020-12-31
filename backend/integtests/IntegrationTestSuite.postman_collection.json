@@ -11,7 +11,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "90206dc1-c0f3-4d5d-a71a-ee80e17f123e",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -42,7 +41,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "45b061af-e5c3-45b2-9c08-3c64c6dd3be7",
 						"exec": [
 							""
 						],
@@ -82,7 +80,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fab377ee-743b-4426-856f-88226ebbbfee",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -94,7 +91,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "f5d75aab-3a73-4cb1-88eb-fb68aa6544e9",
 						"exec": [
 							""
 						],
@@ -128,7 +124,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "30fb1f84-c254-4e92-9ceb-3444739ad593",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -154,7 +149,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "d78e92fa-e898-4956-b05e-5e8548f6426b",
 						"exec": [
 							""
 						],
@@ -195,7 +189,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "9b3651d0-162c-4af7-9a5c-26c48906764e",
 						"exec": [
 							""
 						],
@@ -205,7 +198,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "89b7a2ca-0223-49a2-a5ce-8a26553d147e",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -256,7 +248,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "97a0322b-2a99-4a16-8f57-3308d08979a5",
 						"exec": [
 							""
 						],
@@ -266,7 +257,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fe4d87a2-e72d-4434-964d-da5ff60b5d85",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -318,7 +308,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "012d3c41-ab36-4fa8-89d5-5d633f1bb291",
 						"exec": [
 							"const testId = new Date().getTime();",
 							"pm.collectionVariables.set(\"testId\", testId);",
@@ -330,7 +319,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6c66a648-6455-4827-8281-3f9dcf25e6b0",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -387,7 +375,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bad2e8ec-1c78-45c3-bb12-e1e30202c543",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -408,7 +395,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "f02648d5-e767-407f-b08f-e40c5403cdb8",
 						"exec": [
 							""
 						],
@@ -448,7 +434,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "98102928-bb4f-4ef5-b213-239255b3b30c",
 						"exec": [
 							""
 						],
@@ -458,7 +443,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "018988c7-c9d4-41e5-8a76-77b790ad5b9b",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -516,7 +500,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "d036b4ce-0dc3-407b-a4f6-17022bcfd938",
 						"exec": [
 							"const testId = pm.variables.get(\"testId\");",
 							"pm.collectionVariables.set(\"dashboard.name\", testId);"
@@ -527,7 +510,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f6014853-2bf2-471f-ae0c-cfc816aaf99c",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -587,7 +569,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b7d22fd8-6e96-4af7-a10e-41e6f44265a3",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -599,7 +580,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "bf182409-1c42-41e5-8896-64a814661d11",
 						"exec": [
 							""
 						],
@@ -649,7 +629,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cac8312b-f261-4adc-9960-4c18aa0677fd",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -711,7 +690,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1d15281d-3318-413e-a3b6-ba4faf8c2725",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -745,7 +723,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Text widget\",\n    \"widgetType\": \"Text\",\n    \"content\": {\n        \"text\": \"Lorem _ipsum_ **with markdown**\"\n    }\n}",
+					"raw": "{\n    \"name\": \"Text widget\",\n    \"widgetType\": \"Text\",\n    \"showTitle\": false,\n    \"content\": {\n        \"text\": \"Lorem _ipsum_ **with markdown**\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -772,7 +750,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "241b6ded-05d2-4418-8e37-7fdb72518b0f",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -845,7 +822,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bbf34a5a-dcb1-49a3-bfe5-aaae070f5226",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -913,7 +889,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "998cd59a-f683-445c-abda-c8aadbf7cf56",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -960,7 +935,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a4d784e6-d943-496c-9bca-7e3a81854afd",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -994,7 +968,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Chart widget\",\n    \"widgetType\": \"Chart\",\n    \"content\": {\n        \"title\": \"{{$randomWords}}\",\n        \"chartType\": \"LineChart\",\n        \"datasetId\": \"{{dataset.id}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"s3Key\": {\n            \"raw\": \"\",\n            \"json\": \"{{dataset.s3Key.json}}\"\n        },\n        \"fileName\": \"{{$randomFileName}}\"\n    }\n}",
+					"raw": "{\n    \"name\": \"Chart widget\",\n    \"widgetType\": \"Chart\",\n    \"showTitle\": true,\n    \"content\": {\n        \"title\": \"{{$randomWords}}\",\n        \"chartType\": \"LineChart\",\n        \"datasetId\": \"{{dataset.id}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"s3Key\": {\n            \"raw\": \"\",\n            \"json\": \"{{dataset.s3Key.json}}\"\n        },\n        \"fileName\": \"{{$randomFileName}}\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1021,7 +995,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1f7ec05d-70fc-4034-a927-ff3d1312e309",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1089,7 +1062,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1a40b187-aac1-4fa9-8ec5-3f0902d323c8",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1142,7 +1114,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "80cee280-eeaf-48fc-ad7f-7403b985eb7e",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1186,7 +1157,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "5e3b123a-7af5-4e3e-9ced-42cf5797c3fc",
 						"exec": [
 							"pm.test(\"returns 404 not found\", () => {",
 							"    pm.response.to.have.status(404);",
@@ -1228,7 +1198,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8673f50f-a215-4637-9615-eaaae5a4bf8a",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1281,7 +1250,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4aa4f5b0-a247-448c-b3fe-8c31761e4505",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1325,7 +1293,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b9b6923d-2f5e-4339-bc2f-39aee616cbe5",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1378,7 +1345,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a4def804-9a17-4e9a-a1d6-60c5cc672849",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1437,7 +1403,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "48b56603-8098-498a-8a7a-cfcc61d6edbd",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1486,7 +1451,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c55c63a3-81eb-42d4-a53c-eff79895f529",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1536,7 +1500,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e22bbe27-ebaa-4f71-9b2c-d80831a86425",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1601,7 +1564,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "90b45ab4-6d99-4288-be2e-1fcc055f4b22",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1654,7 +1616,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4d9f9c0d-5fec-426b-92c3-274e1c674692",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1678,15 +1639,25 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget/{{textwidget.id}}",
+					"raw": "{{baseUrl}}/dashboard/:dashboardId/widget/:widgetId",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"dashboard",
-						"{{dashboard.id}}",
+						":dashboardId",
 						"widget",
-						"{{textwidget.id}}"
+						":widgetId"
+					],
+					"variable": [
+						{
+							"key": "dashboardId",
+							"value": "{{dashboard.id}}"
+						},
+						{
+							"key": "widgetId",
+							"value": "{{textwidget.id}}"
+						}
 					]
 				}
 			},
@@ -1698,7 +1669,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f8b47d42-3bc2-42dd-ad97-c29e9aa42b88",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1742,7 +1712,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "00abe9e8-2d85-41b3-8925-cef1d8664b02",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1801,7 +1770,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8b2088fb-d8cf-4e65-8841-5b5b116f342c",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1844,7 +1812,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4013bc8d-b5c4-447d-bdab-f88cbf320925",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1887,7 +1854,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d39ff287-57fb-4452-b61d-8d32367c75f0",
 						"exec": [
 							"pm.test(\"returns 200 OK\", () => {",
 							"    pm.response.to.have.status(200);",
@@ -1928,7 +1894,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "aa868f8c-5b89-4e65-8133-51edeb9daf48",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1938,7 +1903,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "71218ece-93e7-4d70-be86-549819a240ad",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1948,120 +1912,96 @@
 	],
 	"variable": [
 		{
-			"id": "2d14de38-8303-4012-8ca4-fa1a06076e40",
 			"key": "baseUrl",
 			"value": "http://localhost:8080"
 		},
 		{
-			"id": "5154f17e-1208-4bc7-a296-3ac211e172a0",
 			"key": "token",
 			"value": ""
 		},
 		{
-			"id": "fe8f20a9-f74a-427d-becc-af027a2a88a4",
 			"key": "apiKey",
 			"value": ""
 		},
 		{
-			"id": "2ba43d65-9943-47a0-b653-10a07bad8f81",
 			"key": "testId",
 			"value": ""
 		},
 		{
-			"id": "e166f52b-98b2-4735-a0a8-73ab7439db32",
 			"key": "topicarea.id",
 			"value": ""
 		},
 		{
-			"id": "fa992f05-4af0-4759-a828-e2c4ce4b6ce8",
 			"key": "topicarea.name",
 			"value": ""
 		},
 		{
-			"id": "8b4a2e85-2b65-43f3-afbb-7ec6f3b138e1",
 			"key": "dashboard.id",
 			"value": ""
 		},
 		{
-			"id": "ad7eaa75-d4d0-4dc5-8f23-cf1b0b6e0a79",
 			"key": "dashboard.name",
 			"value": ""
 		},
 		{
-			"id": "e919e8e1-0b4f-4e92-8c88-d89a144cedcc",
 			"key": "dashboard.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "c670b912-05e3-47ae-bc44-9a61322142df",
 			"key": "dashboard.friendlyURL",
 			"value": ""
 		},
 		{
-			"id": "bd2958ae-0163-45c0-9332-e33e04d43074",
 			"key": "dashboard2.id",
 			"value": ""
 		},
 		{
-			"id": "6194b8f6-f49b-4e40-9f25-1b3dbefa7ff1",
 			"key": "textwidget.id",
 			"value": ""
 		},
 		{
-			"id": "da643995-4338-47d5-a661-26ea88e22b73",
 			"key": "textwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "fdba500d-33a9-45e0-94e9-d4f6042ef373",
 			"key": "chartwidget.id",
 			"value": ""
 		},
 		{
-			"id": "40e1d432-b88b-45cb-a080-d5fa73224cbc",
 			"key": "chartwidget.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "381c1e4e-429d-4247-be86-e33415d63a6f",
 			"key": "settings.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "d6451663-20e2-4de7-818e-ad5bdff7ec58",
 			"key": "settings.publishingGuidance",
 			"value": ""
 		},
 		{
-			"id": "ae878c87-d55b-44ab-85f9-a30d77b4c0f9",
 			"key": "homepage.title",
 			"value": ""
 		},
 		{
-			"id": "ae25f9a8-b6b1-45a3-bc34-548ec967b7f8",
 			"key": "homepage.description",
 			"value": ""
 		},
 		{
-			"id": "05736242-453f-4b80-a6eb-67666d07b56a",
 			"key": "homepage.updatedAt",
 			"value": ""
 		},
 		{
-			"id": "bf980f13-7d17-4c2d-bb17-1d1df74a658f",
 			"key": "dataset.id",
 			"value": ""
 		},
 		{
-			"id": "ce6aaa54-8e15-4f2c-96d1-0b37c8a7ea6f",
 			"key": "dataset.s3Key",
 			"value": ""
 		},
 		{
-			"id": "fc100e2e-3f87-4578-a345-7cdffdbd2440",
 			"key": "dataset.s3Key.json",
 			"value": ""
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

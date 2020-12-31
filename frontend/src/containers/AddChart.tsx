@@ -85,7 +85,6 @@ function AddChart() {
   };
 
   const onSubmit = async (values: FormValues) => {
-    return;
     try {
       let newDataset;
       if (csvFile) {

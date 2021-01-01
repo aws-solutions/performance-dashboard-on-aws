@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useHomepage } from "../hooks";
+import { useHomepage, useSettings } from "../hooks";
 import SettingsLayout from "../layouts/Settings";
 import Spinner from "../components/Spinner";
 import Button from "../components/Button";
@@ -14,9 +14,14 @@ import "./PublishedSiteSettings.css";
 function PublishedSiteSettings() {
   const history = useHistory();
   const { homepage, loading } = useHomepage();
+  const { settings, loadingSettings } = useSettings(true);
 
-  const onEdit = () => {
-    history.push("/admin/settings/publishedsite/edit");
+  const onContentEdit = () => {
+    history.push("/admin/settings/publishedsite/contentedit");
+  };
+
+  const onNavbarEdit = () => {
+    history.push("/admin/settings/publishedsite/navbaredit");
   };
 
   return (
@@ -36,6 +41,40 @@ function PublishedSiteSettings() {
       </p>
 
       <AlertContainer />
+      <h3 className="margin-top-2-important">Navigation Bar</h3>
+
+      <p>You can customize the header and navigation of the published site.</p>
+
+      <div className="grid-row margin-top-0-important">
+        <div className="grid-col flex-9">
+          <p className="text-bold">Title</p>
+        </div>
+        <div className="grid-col flex-3 text-right">
+          <Button
+            className="margin-top-2"
+            variant="outline"
+            onClick={onNavbarEdit}
+          >
+            Edit
+          </Button>
+        </div>
+      </div>
+
+      {loadingSettings ? (
+        <Spinner className="margin-top-3 text-center" label="Loading" />
+      ) : (
+        <div className="grid-row margin-top-0-important margin-bottom-4">
+          <div className="grid-col flex-9">
+            <div className="published-site font-sans-lg">
+              <MarkdownRender source={settings.navbarTitle} />
+            </div>
+          </div>
+          <div className="grid-col flex-3 text-right"></div>
+        </div>
+      )}
+
+      <hr className="border-gray-5" />
+
       <h3 className="margin-top-2-important">Homepage content</h3>
 
       <p>
@@ -48,7 +87,11 @@ function PublishedSiteSettings() {
           <p className="text-bold">Headline</p>
         </div>
         <div className="grid-col flex-3 text-right">
-          <Button className="margin-top-2" variant="outline" onClick={onEdit}>
+          <Button
+            className="margin-top-2"
+            variant="outline"
+            onClick={onContentEdit}
+          >
             Edit
           </Button>
         </div>

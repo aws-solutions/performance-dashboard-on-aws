@@ -4,12 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import EnvConfig from "../services/EnvConfig";
 import logo from "../logo.svg";
+import { useSettings } from "../hooks";
 
 interface LayoutProps {
   children?: ReactNode;
 }
 
 function PublicLayout(props: LayoutProps) {
+  const { settings } = useSettings();
+
   return (
     <>
       <div className="usa-overlay"></div>
@@ -20,7 +23,7 @@ function PublicLayout(props: LayoutProps) {
               <em className="usa-logo__text display-flex flex-align-center">
                 <img src={logo} alt="logo" className="logo" />
                 <Link to="/" title="Home" aria-label="Home">
-                  {EnvConfig.brandName}
+                  {settings.navbarTitle}
                 </Link>
               </em>
             </div>

@@ -85,7 +85,7 @@ function PublishDashboard() {
       history.push(`/admin/dashboards?tab=published`, {
         alert: {
           type: "success",
-          message: `${dashboard.name} dashboard was successfully published`,
+          message: `${dashboard.name} dashboard was successfully published.`,
           to: `/${dashboardId}`,
           linkLabel: "View the published dashboard",
         },

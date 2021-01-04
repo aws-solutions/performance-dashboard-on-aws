@@ -43,7 +43,7 @@ function ArchivedDashboard() {
       history.push(`/admin/dashboards?tab=published`, {
         alert: {
           type: "success",
-          message: `${dashboard.name} dashboard was successfully re-published`,
+          message: `${dashboard.name} dashboard was successfully re-published.`,
           to: `/${dashboardId}`,
           linkLabel: "View the published dashboard",
         },

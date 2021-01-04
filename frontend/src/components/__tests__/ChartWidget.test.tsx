@@ -12,6 +12,7 @@ const chart: ChartWidget = {
   updatedAt: new Date(),
   widgetType: WidgetType.Chart,
   order: 0,
+  showTitle: true,
   content: {
     chartType: ChartType.LineChart,
     title: "Bananas chart",

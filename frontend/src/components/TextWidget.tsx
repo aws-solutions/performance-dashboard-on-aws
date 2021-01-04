@@ -7,11 +7,11 @@ interface Props {
 }
 
 function TextWidget(props: Props) {
-  const { content } = props.widget;
+  const { content, showTitle, name } = props.widget;
 
   return (
     <div className="margin-left-1">
-      {props.widget.showTitle ? <h2>{props.widget.name}</h2> : ""}
+      {showTitle && <h2>{name}</h2>}
       <MarkdownRender source={content.text} />
     </div>
   );

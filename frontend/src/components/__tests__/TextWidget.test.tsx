@@ -8,6 +8,7 @@ const widget: Widget = {
   name: "Benefits of Bananas",
   dashboardId: "123",
   order: 1,
+  showTitle: true,
   updatedAt: new Date(),
   widgetType: "Text",
   content: { text: "This is simple plain text" },

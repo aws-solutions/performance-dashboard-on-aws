@@ -8,7 +8,7 @@ interface Props {
 }
 
 function TableWidgetComponent(props: Props) {
-  const { content } = props.widget;
+  const { content, showTitle } = props.widget;
   const { json } = useJsonDataset(content.s3Key.json);
 
   if (!json || json.length === 0) {
@@ -18,7 +18,7 @@ function TableWidgetComponent(props: Props) {
   const keys = Object.keys(json[0] as Array<string>);
   return (
     <TablePreview
-      title={props.widget.showTitle ? content.title : ""}
+      title={showTitle ? content.title : ""}
       summary={content.summary}
       headers={keys}
       data={json}

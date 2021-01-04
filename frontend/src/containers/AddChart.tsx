@@ -25,6 +25,7 @@ interface FormValues {
   title: string;
   summary: string;
   chartType: string;
+  showTitle: boolean;
 }
 
 interface PathParams {
@@ -55,6 +56,7 @@ function AddChart() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [chartType, setChartType] = useState<ChartType>(ChartType.LineChart);
+  const [showTitle, setShowTitle] = useState(true);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
@@ -94,6 +96,7 @@ function AddChart() {
         dashboardId,
         values.title,
         WidgetType.Chart,
+        values.showTitle,
         {
           title: values.title,
           summary: values.summary,
@@ -140,6 +143,10 @@ function AddChart() {
 
   const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
     setSummary((event.target as HTMLTextAreaElement).value);
+  };
+
+  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setShowTitle((event.target as HTMLInputElement).checked);
   };
 
   const handleChartTypeChange = (
@@ -279,6 +286,21 @@ function AddChart() {
                 required
                 register={register}
               />
+
+              <div className="usa-checkbox">
+                <input
+                  className="usa-checkbox__input"
+                  id="display-title"
+                  type="checkbox"
+                  name="showTitle"
+                  defaultChecked={true}
+                  onChange={handleShowTitleChange}
+                  ref={register()}
+                />
+                <label className="usa-checkbox__label" htmlFor="display-title">
+                  Show title on dashboard
+                </label>
+              </div>
 
               <label htmlFor="fieldset" className="usa-label text-bold">
                 Data
@@ -505,7 +527,7 @@ function AddChart() {
               <>
                 {chartType === ChartType.LineChart && (
                   <LineChartPreview
-                    title={title}
+                    title={showTitle ? title : ""}
                     summary={summary}
                     lines={
                       currentJson.length
@@ -517,7 +539,7 @@ function AddChart() {
                 )}
                 {chartType === ChartType.ColumnChart && (
                   <ColumnChartPreview
-                    title={title}
+                    title={showTitle ? title : ""}
                     summary={summary}
                     columns={
                       currentJson.length
@@ -529,7 +551,7 @@ function AddChart() {
                 )}
                 {chartType === ChartType.BarChart && (
                   <BarChartPreview
-                    title={title}
+                    title={showTitle ? title : ""}
                     summary={summary}
                     bars={
                       currentJson.length
@@ -541,7 +563,7 @@ function AddChart() {
                 )}
                 {chartType === ChartType.PartWholeChart && (
                   <PartWholeChartPreview
-                    title={title}
+                    title={showTitle ? title : ""}
                     summary={summary}
                     parts={
                       currentJson.length

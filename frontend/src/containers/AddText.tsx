@@ -13,6 +13,7 @@ import Link from "../components/Link";
 interface FormValues {
   title: string;
   text: string;
+  showTitle: boolean;
 }
 
 interface PathParams {
@@ -28,6 +29,7 @@ function AddText() {
   const [creatingWidget, setCreatingWidget] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [showTitle, setShowTitle] = useState(true);
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -36,6 +38,7 @@ function AddText() {
         dashboardId,
         values.title,
         WidgetType.Text,
+        values.showTitle,
         {
           text: values.text,
         }
@@ -59,9 +62,10 @@ function AddText() {
   };
 
   const onFormChange = () => {
-    const { title, text } = getValues();
+    const { title, text, showTitle } = getValues();
     setTitle(title);
     setText(text);
+    setShowTitle(showTitle);
   };
 
   const goBack = () => {
@@ -113,6 +117,20 @@ function AddText() {
                 register={register}
               />
 
+              <div className="usa-checkbox">
+                <input
+                  className="usa-checkbox__input"
+                  id="display-title"
+                  type="checkbox"
+                  name="showTitle"
+                  defaultChecked={true}
+                  ref={register()}
+                />
+                <label className="usa-checkbox__label" htmlFor="display-title">
+                  Show title on dashboard
+                </label>
+              </div>
+
               <TextField
                 id="text"
                 name="text"
@@ -153,7 +171,11 @@ function AddText() {
         </div>
         <div className="grid-col-6">
           <h4 className="margin-top-4">Preview</h4>
-          <h2 className="margin-top-4 margin-left-2px">{title}</h2>
+          {showTitle ? (
+            <h2 className="margin-top-4 margin-left-2px">{title}</h2>
+          ) : (
+            ""
+          )}
           {text ? (
             <div className="padding-left-05">
               <MarkdownRender source={text} />

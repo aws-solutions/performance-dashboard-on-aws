@@ -12,8 +12,10 @@ const table: TableWidget = {
   updatedAt: new Date(),
   widgetType: WidgetType.Table,
   order: 0,
+  showTitle: true,
   content: {
     title: "Bananas table",
+    summary: "This is a banana table",
     datasetId: "0000",
     s3Key: {
       json: "123.json",

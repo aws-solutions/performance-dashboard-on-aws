@@ -28,6 +28,7 @@ interface FormValues {
   title: string;
   summary: string;
   chartType: string;
+  showTitle: boolean;
   dynamicDatasets: string;
   staticDatasets: string;
 }
@@ -168,6 +169,7 @@ function EditChart() {
         dashboardId,
         widgetId,
         values.title,
+        values.showTitle,
         {
           title: values.title,
           summary: values.summary,
@@ -224,6 +226,18 @@ function EditChart() {
         content: {
           ...widget.content,
           summary: (event.target as HTMLTextAreaElement).value,
+        },
+      });
+    }
+  };
+
+  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    if (widget) {
+      setWidget({
+        ...widget,
+        showTitle: (event.target as HTMLInputElement).checked,
+        content: {
+          ...widget.content,
         },
       });
     }
@@ -350,6 +364,24 @@ function EditChart() {
                     required
                     register={register}
                   />
+
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="display-title"
+                      type="checkbox"
+                      name="showTitle"
+                      defaultChecked={widget.showTitle}
+                      onChange={handleShowTitleChange}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="display-title"
+                    >
+                      Show title on dashboard
+                    </label>
+                  </div>
 
                   <label htmlFor="fieldset" className="usa-label text-bold">
                     Data
@@ -633,7 +665,7 @@ function EditChart() {
                   <>
                     {widget.content.chartType === ChartType.LineChart && (
                       <LineChartPreview
-                        title={widget.content.title}
+                        title={widget.showTitle ? widget.content.title : ""}
                         summary={widget.content.summary}
                         lines={
                           currentJson.length > 0
@@ -645,7 +677,7 @@ function EditChart() {
                     )}
                     {widget.content.chartType === ChartType.ColumnChart && (
                       <ColumnChartPreview
-                        title={widget.name}
+                        title={widget.showTitle ? widget.name : ""}
                         summary={widget.content.summary}
                         columns={
                           currentJson.length > 0
@@ -657,7 +689,7 @@ function EditChart() {
                     )}
                     {widget.content.chartType === ChartType.BarChart && (
                       <BarChartPreview
-                        title={widget.name}
+                        title={widget.showTitle ? widget.name : ""}
                         summary={widget.content.summary}
                         bars={
                           currentJson.length > 0
@@ -669,7 +701,7 @@ function EditChart() {
                     )}
                     {widget.content.chartType === ChartType.PartWholeChart && (
                       <PartWholeChartPreview
-                        title={widget.name}
+                        title={widget.showTitle ? widget.name : ""}
                         summary={widget.content.summary}
                         parts={
                           currentJson.length > 0

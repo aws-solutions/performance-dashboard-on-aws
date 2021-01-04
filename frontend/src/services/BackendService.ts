@@ -179,6 +179,7 @@ async function createWidget(
   dashboardId: string,
   name: string,
   widgetType: string,
+  showTitle: boolean,
   content: object
 ) {
   const headers = await authHeaders();
@@ -187,6 +188,7 @@ async function createWidget(
     body: {
       name,
       widgetType,
+      showTitle,
       content,
     },
   });
@@ -196,6 +198,7 @@ async function editWidget(
   dashboardId: string,
   widgetId: string,
   name: string,
+  showTitle: boolean,
   content: object,
   updatedAt: Date
 ) {
@@ -204,6 +207,7 @@ async function editWidget(
     headers,
     body: {
       name,
+      showTitle,
       content,
       updatedAt,
     },

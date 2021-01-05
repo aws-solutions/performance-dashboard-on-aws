@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import EnvConfig from "../services/EnvConfig";
 import logo from "../logo.svg";
-import { useSettings } from "../hooks";
+import { usePublicSettings } from "../hooks";
 
 interface LayoutProps {
   children?: ReactNode;
 }
 
 function PublicLayout(props: LayoutProps) {
-  const { settings } = useSettings();
+  const { settings } = usePublicSettings();
 
   return (
     <>

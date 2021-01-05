@@ -15,6 +15,7 @@ const defaultSettings: Settings = {
   publishingGuidance:
     "I acknowledge that I have reviewed the dashboard" +
     " and it is ready to publish",
+  navbarTitle: "",
 };
 
 interface SettingsContextProps {

@@ -4,7 +4,6 @@ import { Auth } from "aws-amplify";
 import { useAdmin, useSettings } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import EnvConfig from "../services/EnvConfig";
 import Footer from "./Footer";
 import logo from "../logo.svg";
 
@@ -14,7 +13,7 @@ interface LayoutProps {
 
 function AdminLayout(props: LayoutProps) {
   const { username } = useAdmin();
-  const { settings, loadingSettings } = useSettings();
+  const { settings } = useSettings();
 
   const signOut = async (event: React.MouseEvent) => {
     try {

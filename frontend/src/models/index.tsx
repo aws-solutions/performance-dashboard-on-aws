@@ -141,6 +141,7 @@ export type PublicSettings = {
     date: string;
     time: string;
   };
+  navbarTitle?: string;
 };
 
 export type Settings = {

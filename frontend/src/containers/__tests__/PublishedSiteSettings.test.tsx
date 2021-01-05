@@ -12,6 +12,20 @@ test("renders the title", async () => {
   expect(getByRole("heading", { name: "Published site" })).toBeInTheDocument();
 });
 
+test("renders the navbar title", async () => {
+  const { getByRole } = render(<PublishedSiteSettings />, {
+    wrapper: MemoryRouter,
+  });
+  expect(getByRole("heading", { name: "Navigation Bar" })).toBeInTheDocument();
+});
+
+test("renders the navigation bar title", async () => {
+  const { getByText } = render(<PublishedSiteSettings />, {
+    wrapper: MemoryRouter,
+  });
+  expect(getByText("Performance Dashboard")).toBeInTheDocument();
+});
+
 test("renders the homepage title", async () => {
   const { getByRole } = render(<PublishedSiteSettings />, {
     wrapper: MemoryRouter,
@@ -48,9 +62,10 @@ test("renders the headline statement", async () => {
 });
 
 test("renders a button to edit", async () => {
-  const { getByRole } = render(<PublishedSiteSettings />, {
+  const { getAllByRole } = render(<PublishedSiteSettings />, {
     wrapper: MemoryRouter,
   });
-  const button = getByRole("button", { name: "Edit" });
-  expect(button).toBeInTheDocument();
+  const buttons = getAllByRole("button", { name: "Edit" });
+  expect(buttons[0]).toBeInTheDocument();
+  expect(buttons[1]).toBeInTheDocument();
 });

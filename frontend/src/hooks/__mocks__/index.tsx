@@ -71,6 +71,7 @@ export function useSettings() {
       "I acknowledge that I have reviewed the " +
       "dashboard and it is ready to publish",
     updatedAt: new Date("2020-12-08T22:56:13.721Z"),
+    navbarTitle: "Performance Dashboard",
   });
 
   return {

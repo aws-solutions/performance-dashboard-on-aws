@@ -42,6 +42,7 @@ import FormattingCSV from "./containers/FormattingCSV";
 import DateFormatSettings from "./containers/DateFormatSettings";
 import EditDateFormat from "./containers/EditDateFormat";
 import APIHelpPage from "./containers/APIHelpPage";
+import EditNavbar from "./containers/EditNavbar";
 
 interface AppRoute {
   path: string;
@@ -71,8 +72,12 @@ const routes: Array<AppRoute> = [
     component: EditPublishingGuidance,
   },
   {
-    path: "/admin/settings/publishedsite/edit",
+    path: "/admin/settings/publishedsite/contentedit",
     component: EditHomepageContent,
+  },
+  {
+    path: "/admin/settings/publishedsite/navbaredit",
+    component: EditNavbar,
   },
   {
     path: "/admin/settings/topicarea/create",

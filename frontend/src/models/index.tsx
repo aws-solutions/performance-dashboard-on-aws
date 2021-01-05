@@ -141,6 +141,7 @@ export type PublicSettings = {
     date: string;
     time: string;
   };
+  navbarTitle?: string;
 };
 
 export type Settings = {
@@ -150,6 +151,7 @@ export type Settings = {
     time: string;
   };
   updatedAt?: Date;
+  navbarTitle?: string;
 };
 
 // Type for the History object in react-router. Defines the

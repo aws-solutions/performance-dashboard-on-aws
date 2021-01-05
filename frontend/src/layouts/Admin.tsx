@@ -1,10 +1,9 @@
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
-import { useAdmin } from "../hooks";
+import { useAdmin, useSettings } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import EnvConfig from "../services/EnvConfig";
 import Footer from "./Footer";
 import logo from "../logo.svg";
 
@@ -14,6 +13,7 @@ interface LayoutProps {
 
 function AdminLayout(props: LayoutProps) {
   const { username } = useAdmin();
+  const { settings } = useSettings();
 
   const signOut = async (event: React.MouseEvent) => {
     try {
@@ -34,7 +34,7 @@ function AdminLayout(props: LayoutProps) {
               <em className="usa-logo__text display-flex flex-align-center">
                 <img src={logo} alt="logo" className="logo" />
                 <Link to="/admin" title="Home" aria-label="Home" className="">
-                  {EnvConfig.brandName}
+                  {settings.navbarTitle}
                 </Link>
               </em>
             </div>

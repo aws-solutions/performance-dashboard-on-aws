@@ -451,7 +451,7 @@ function AddTable() {
                 <TextField
                   id="summary"
                   name="summary"
-                  label="Table summary"
+                  label="Table summary - optional"
                   hint="Give your table a summary to explain it in more depth.
                   It can also be read by screen readers to describe the table
                   for those with visual impairments."

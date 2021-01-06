@@ -21,10 +21,6 @@ async function createDataset(req: Request, res: Response) {
     return res.status(400).send("Missing required field `name`");
   }
 
-  if (!metadata.createdBy) {
-    return res.status(400).send("Missing required field `createdBy`");
-  }
-
   if (!data) {
     return res.status(400).send("Missing required field `data`");
   }
@@ -37,6 +33,9 @@ async function createDataset(req: Request, res: Response) {
     logger.warn("Unable to parse dataset %s", data);
     return res.status(400).send("Data is not a valid JSON array");
   }
+
+  // Make all datasets created with this endpoint createdBy=ingestapi
+  metadata.createdBy = "ingestapi";
 
   try {
     const repo = DatasetRepository.getInstance();

@@ -54,18 +54,16 @@ const PartWholeChartPreview = (props: Props) => {
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: `${props.data && props.data.length > 15 ? "600px" : "300px"}`,
-      }}
-    >
+    <div>
       <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
       <p className="margin-left-1 margin-top-0 margin-bottom-3">
         {props.summary}
       </p>
       {partWholeData.length && (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer
+          width="100%"
+          height={props.data && props.data.length > 15 ? 600 : 300}
+        >
           <BarChart
             data={partWholeData}
             layout="vertical"

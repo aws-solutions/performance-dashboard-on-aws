@@ -94,7 +94,9 @@ function PublishDashboard() {
     }
   };
 
-  const handleReleaseNotesInput = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleReleaseNotesInput = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
     setReleaseNotes((event.target as HTMLInputElement).value);
   };
 
@@ -259,7 +261,12 @@ function PublishDashboard() {
                 </Button>
               </span>
               <span hidden={step === 1}>
-                <Button variant="default" type="button" onClick={onContinue} disabled={releaseNotes===""}>
+                <Button
+                  variant="default"
+                  type="button"
+                  onClick={onContinue}
+                  disabled={releaseNotes === ""}
+                >
                   Continue
                 </Button>
               </span>

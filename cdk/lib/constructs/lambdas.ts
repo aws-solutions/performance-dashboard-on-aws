@@ -3,10 +3,12 @@ import * as lambda from "@aws-cdk/aws-lambda";
 import * as iam from "@aws-cdk/aws-iam";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
 import * as s3 from "@aws-cdk/aws-s3";
+import { AuthStack } from "../auth-stack";
 
 interface Props {
   mainTable: dynamodb.Table;
   datasetsBucket: s3.Bucket;
+  auth: AuthStack;
 }
 
 export class LambdaFunctions extends cdk.Construct {
@@ -28,6 +30,7 @@ export class LambdaFunctions extends cdk.Construct {
       environment: {
         MAIN_TABLE: props.mainTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
+        USER_POOL_ID: props.auth.userPoolId,
         LOG_LEVEL: "info",
       },
     });
@@ -79,8 +82,15 @@ export class LambdaFunctions extends cdk.Construct {
       actions: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
     });
 
+    const cognitoPolicy = new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      resources: [props.auth.userPoolArn],
+      actions: ["cognito-idp:ListUsers"],
+    });
+
     this.apiHandler.addToRolePolicy(dynamodbPolicy);
     this.apiHandler.addToRolePolicy(s3Policy);
+    this.apiHandler.addToRolePolicy(cognitoPolicy);
     this.publicApiHandler.addToRolePolicy(dynamodbPolicy);
     this.publicApiHandler.addToRolePolicy(s3Policy);
   }

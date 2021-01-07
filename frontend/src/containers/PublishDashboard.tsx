@@ -32,6 +32,7 @@ function PublishDashboard() {
   const { dashboard, reloadDashboard, loading } = useDashboard(dashboardId);
   const { settings } = useSettings();
   const { register, errors, handleSubmit, trigger } = useForm<FormValues>();
+  const [releaseNotes, setReleaseNotes] = useState("");
 
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
 
@@ -91,6 +92,12 @@ function PublishDashboard() {
         },
       });
     }
+  };
+
+  const handleReleaseNotesInput = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setReleaseNotes((event.target as HTMLInputElement).value);
   };
 
   return (
@@ -185,6 +192,7 @@ function PublishDashboard() {
                   label="Internal release notes"
                   error={errors.releaseNotes && "Please enter release notes"}
                   hint="Describe what changes you are publishing to the dashboard."
+                  onChange={handleReleaseNotesInput}
                   register={register}
                   required
                   multiline
@@ -253,7 +261,12 @@ function PublishDashboard() {
                 </Button>
               </span>
               <span hidden={step === 1}>
-                <Button variant="default" type="button" onClick={onContinue}>
+                <Button
+                  variant="default"
+                  type="button"
+                  onClick={onContinue}
+                  disabled={releaseNotes === ""}
+                >
                   Continue
                 </Button>
               </span>

@@ -1,4 +1,4 @@
-import { Storage } from "aws-amplify";
+import Storage from "@aws-amplify/storage";
 import { v4 as uuidv4 } from "uuid";
 
 type UploadDatasetResult = {

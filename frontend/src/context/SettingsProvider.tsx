@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Hub, Auth } from "aws-amplify";
+import { Hub } from "@aws-amplify/core";
+import Auth from "@aws-amplify/auth";
 import { Settings, PublicSettings } from "../models";
 import BackendService from "../services/BackendService";
 

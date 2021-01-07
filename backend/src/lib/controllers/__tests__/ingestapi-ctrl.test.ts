@@ -44,13 +44,6 @@ describe("createDataset", () => {
     expect(res.send).toBeCalledWith("Missing required field `name`");
   });
 
-  it("returns a 400 error when metadata.createdBy is missing", async () => {
-    delete req.body.metadata.createdBy;
-    await IngestApiCtrl.createDataset(req, res);
-    expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Missing required field `createdBy`");
-  });
-
   it("returns a 400 error when data is missing", async () => {
     delete req.body.data;
     await IngestApiCtrl.createDataset(req, res);
@@ -60,7 +53,12 @@ describe("createDataset", () => {
 
   it("saves the dataset", async () => {
     await IngestApiCtrl.createDataset(req, res);
-    expect(repository.createDataset).toBeCalled();
+    expect(repository.createDataset).toBeCalledWith(
+      expect.objectContaining({
+        createdBy: "ingestapi",
+      }),
+      [{ data: "data" }]
+    );
   });
 });
 

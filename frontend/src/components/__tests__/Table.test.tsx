@@ -113,3 +113,19 @@ test("sorting buttons are clickable", async () => {
   // Vanilla should be last
   expect(container).toMatchSnapshot();
 });
+
+test("filters out data when filterQuery is provided", async () => {
+  render(
+    <Table
+      selection="none"
+      columns={columns}
+      rows={rows}
+      screenReaderField="name"
+      filterQuery="Chocolate"
+    />
+  );
+
+  expect(screen.getByText("Chocolate")).toBeInTheDocument();
+  expect(screen.queryByText("Vanilla")).not.toBeInTheDocument();
+  expect(screen.queryByText("Banana")).not.toBeInTheDocument();
+});

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { Dashboard, DashboardState } from "../models";
+import React, { useState, useCallback } from "react";
+import { Dashboard } from "../models";
+import { useDateTimeFormatter } from "../hooks";
+import EnvConfig from "../services/EnvConfig";
 import Search from "./Search";
-import DashboardsTable from "./DashboardsTable";
 import ScrollTop from "./ScrollTop";
+import Link from "./Link";
+import Table from "./Table";
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -11,34 +14,16 @@ interface Props {
 function PublishQueueTab(props: Props) {
   const [filter, setFilter] = useState("");
   const [, setSelected] = useState<Array<Dashboard>>([]);
+  const dateFormatter = useDateTimeFormatter();
+  const { dashboards } = props;
 
   const onSearch = (query: string) => {
     setFilter(query);
   };
 
-  const onSelect = (selectedDashboards: Array<Dashboard>) => {
+  const onSelect = useCallback((selectedDashboards: Array<Dashboard>) => {
     setSelected(selectedDashboards);
-  };
-
-  const filterDashboards = (dashboards: Array<Dashboard>): Array<Dashboard> => {
-    return dashboards.filter((dashboard) => {
-      const name = dashboard.name.toLowerCase().trim();
-      const topicAreaName = dashboard.topicAreaName.toLowerCase().trim();
-      const createdBy = dashboard.createdBy.toLowerCase().trim();
-      const query = filter.toLowerCase();
-      return (
-        name.includes(query) ||
-        topicAreaName.includes(query) ||
-        createdBy.includes(query)
-      );
-    });
-  };
-
-  const sortDashboards = (dashboards: Array<Dashboard>): Array<Dashboard> => {
-    return [...dashboards].sort((a, b) => {
-      return a.updatedAt > b.updatedAt ? -1 : 1;
-    });
-  };
+  }, []);
 
   return (
     <div>
@@ -57,10 +42,57 @@ function PublishQueueTab(props: Props) {
         </div>
         <div className="tablet:grid-col-5 text-right">&nbsp;</div>
       </div>
-      <DashboardsTable
-        dashboards={sortDashboards(filterDashboards(props.dashboards))}
-        dashboardsState={DashboardState.PublishPending}
-        onSelect={onSelect}
+      <Table
+        selection="none"
+        initialSortByField="updatedAt"
+        filterQuery={filter}
+        rows={React.useMemo(() => dashboards, [dashboards])}
+        screenReaderField="name"
+        onSelection={onSelect}
+        columns={React.useMemo(
+          () => [
+            {
+              Header: "Dashboard name",
+              accessor: "name",
+              Cell: (props: any) => {
+                const dashboard = props.row.original as Dashboard;
+                return (
+                  <Link
+                    to={{
+                      pathname: `/admin/dashboard/${dashboard.id}/publish`,
+                      state: {
+                        alert: {
+                          type: "info",
+                          message:
+                            "This dashboard is now in the publish pending state and " +
+                            "cannot be edited unless returned to draft",
+                        },
+                      },
+                    }}
+                  >
+                    <span className="text-bold text-base-darkest">
+                      {dashboard.name}
+                    </span>
+                  </Link>
+                );
+              },
+            },
+            {
+              Header: EnvConfig.topicAreaLabel,
+              accessor: "topicAreaName",
+            },
+            {
+              Header: "Last Updated",
+              accessor: "updatedAt",
+              Cell: (props: any) => dateFormatter(props.value),
+            },
+            {
+              Header: "Created by",
+              accessor: "createdBy",
+            },
+          ],
+          [dateFormatter]
+        )}
       />
       <div className="text-right">
         <ScrollTop />

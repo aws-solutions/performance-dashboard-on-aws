@@ -8,7 +8,10 @@ import { LambdaFunctions } from "./constructs/lambdas";
 import { DatasetStorage } from "./constructs/datastorage";
 
 interface BackendStackProps extends cdk.StackProps {
-  userPoolArn: string;
+  userPool: {
+    id: string;
+    arn: string;
+  };
   datasetsBucketName: string;
 }
 
@@ -29,10 +32,11 @@ export class BackendStack extends cdk.Stack {
     const lambdas = new LambdaFunctions(this, "Functions", {
       mainTable: database.mainTable,
       datasetsBucket: dataStorage.datasetsBucket,
+      userPool: props.userPool,
     });
 
     const backendApi = new BackendApi(this, "Api", {
-      cognitoUserPoolArn: props.userPoolArn,
+      cognitoUserPoolArn: props.userPool.arn,
       apiFunction: lambdas.apiHandler,
       publicApiFunction: lambdas.publicApiHandler,
     });

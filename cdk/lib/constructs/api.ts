@@ -180,6 +180,9 @@ export class BackendApi extends cdk.Construct {
     ingestApiDataset.addMethod("DELETE", apiIntegration, {
       apiKeyRequired: true,
     });
+
+    const user = this.api.root.addResource("user");
+    user.addMethod("GET", apiIntegration, methodProps);
   }
 
   private addPublicEndpoints(apiIntegration: apigateway.LambdaIntegration) {

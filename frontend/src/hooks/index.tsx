@@ -9,7 +9,7 @@ import { useTopicAreas, useTopicArea } from "./topicarea-hooks";
 import { useHomepage, usePublicHomepage } from "./homepage-hooks";
 import { useSettings, usePublicSettings } from "./settings-hooks";
 import { useJsonDataset, useSampleDataset } from "./dataset-hooks";
-import { useAdmin } from "./admin-hooks";
+import { useAdmin, useUsers } from "./user-hooks";
 import { useDateTimeFormatter } from "./datetime-hooks";
 
 /**
@@ -38,4 +38,5 @@ export {
   useDashboardVersions,
   useSampleDataset,
   useDateTimeFormatter,
+  useUsers,
 };

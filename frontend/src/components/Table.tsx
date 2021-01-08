@@ -110,12 +110,12 @@ function Table(props: Props) {
                 {column.render("Header")}
                 {props.selection !== "none" && i === 0 ? null : (
                   <button
-                    className="usa-button usa-button--unstyled"
+                    className="margin-left-1 usa-button usa-button--unstyled"
                     {...column.getSortByToggleProps()}
                     title={`Toggle SortBy ${column.Header}`}
                   >
                     <FontAwesomeIcon
-                      className={`margin-left-1 hover:text-base-light ${
+                      className={`hover:text-base-light ${
                         column.isSorted ? "text-base-darkest" : "text-white"
                       }`}
                       icon={

@@ -4,7 +4,7 @@
  * calls to happen and instead returns dummy data.
  */
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { DashboardState, DatasetType, SourceType } from "../../models";
 
 const dummyDashboard = {
@@ -360,7 +360,7 @@ export function useTopicArea() {
 }
 
 export function useDateTimeFormatter() {
-  return (dateToDisplay: Date) => {
+  return useCallback((dateToDisplay: Date) => {
     return dayjs(dateToDisplay).format("YYYY-MM-DD HH:mm");
-  };
+  }, []);
 }

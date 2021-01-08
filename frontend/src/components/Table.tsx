@@ -1,12 +1,18 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { useTable, useSortBy, useRowSelect } from "react-table";
+import {
+  useTable,
+  useSortBy,
+  useRowSelect,
+  useGlobalFilter,
+} from "react-table";
 
 interface Props {
   selection: "multiple" | "none";
   initialSortByField?: string;
   screenReaderField?: string;
+  filterQuery?: string;
   className?: string;
   onSelection?: Function;
   rows: Array<object>;
@@ -25,12 +31,14 @@ function Table(props: Props) {
     rows,
     prepareRow,
     selectedFlatRows,
+    setGlobalFilter,
   } = useTable(
     {
       columns: props.columns,
       data: props.rows,
       disableSortRemove: true,
       initialState: {
+        selectedRowIds: {},
         sortBy: React.useMemo(
           () => [
             {
@@ -42,6 +50,7 @@ function Table(props: Props) {
         ),
       },
     },
+    useGlobalFilter,
     useSortBy,
     useRowSelect,
     (hooks) => {
@@ -69,11 +78,17 @@ function Table(props: Props) {
     }
   );
 
+  const { onSelection, filterQuery } = props;
   React.useEffect(() => {
-    if (props.onSelection) {
-      props.onSelection(selectedFlatRows.map((flatRow) => flatRow.values));
+    setGlobalFilter(filterQuery);
+  }, [filterQuery, setGlobalFilter]);
+
+  React.useEffect(() => {
+    if (onSelection) {
+      const values = selectedFlatRows.map((flatRow) => flatRow.original);
+      onSelection(values);
     }
-  }, [selectedFlatRows, props]);
+  }, [selectedFlatRows, onSelection]);
 
   return (
     <table

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Amplify from "aws-amplify";
+import Amplify from "@aws-amplify/core";
 import * as serviceWorker from "./serviceWorker";
 import config from "./amplify-config";
 import App from "./App";

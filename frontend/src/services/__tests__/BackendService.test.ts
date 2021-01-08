@@ -1,8 +1,10 @@
-import { API, Auth } from "aws-amplify";
+import API from "@aws-amplify/api";
+import Auth from "@aws-amplify/auth";
 import BackendService from "../BackendService";
 import { Widget } from "../../models";
 
-jest.mock("aws-amplify");
+jest.mock("@aws-amplify/api");
+jest.mock("@aws-amplify/auth");
 
 beforeEach(() => {
   const getJwtToken = jest.fn().mockReturnValue("eyJhbGciOiJIUzI1NiIsInR5c");
@@ -169,6 +171,7 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
       widgetType: "Table",
       dashboardId: "abc",
       updatedAt,
+      showTitle: true,
       content: {},
     },
   ];

@@ -1,4 +1,5 @@
-import { API, Auth } from "aws-amplify";
+import API from "@aws-amplify/api";
+import Auth from "@aws-amplify/auth";
 import {
   Dashboard,
   DashboardVersion,

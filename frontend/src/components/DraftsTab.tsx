@@ -65,6 +65,7 @@ function DraftsTab(props: Props) {
         rows={React.useMemo(() => dashboards, [dashboards])}
         screenReaderField="name"
         onSelection={onSelect}
+        width="100%"
         columns={React.useMemo(
           () => [
             {

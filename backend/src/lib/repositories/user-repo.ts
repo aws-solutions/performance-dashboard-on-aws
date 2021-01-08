@@ -33,7 +33,9 @@ class UserRepository {
       return [];
     }
 
-    return result.Users.map((cognitoUser) => UserFactory.toUser(cognitoUser));
+    return result.Users.map((cognitoUser) =>
+      UserFactory.fromCognitoUser(cognitoUser)
+    );
   }
 }
 

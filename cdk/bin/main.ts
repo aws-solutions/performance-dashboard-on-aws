@@ -27,7 +27,10 @@ const auth = new AuthStack(app, "Auth", {
 
 const backend = new BackendStack(app, "Backend", {
   stackName: stackPrefix.concat("-Backend"),
-  auth,
+  userPool: {
+    id: auth.userPoolId,
+    arn: auth.userPoolArn,
+  },
   datasetsBucketName: datasetsBucketName,
 });
 

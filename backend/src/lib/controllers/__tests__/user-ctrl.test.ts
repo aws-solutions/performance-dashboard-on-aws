@@ -4,7 +4,6 @@ import { User } from "../../models/user";
 import UserRepository from "../../repositories/user-repo";
 import UserCtrl from "../user-ctrl";
 import AuthService from "../../services/auth";
-import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 jest.mock("../../services/auth");
 jest.mock("../../repositories/user-repo");
@@ -37,37 +36,14 @@ describe("getUsers", () => {
     const now = new Date();
     jest.useFakeTimers("modern");
     jest.setSystemTime(now);
-    const cognitoUser: UserType = {
-      Username: "test user",
-      Enabled: true,
-      UserStatus: "CONFIRMED",
-      Attributes: [
-        {
-          Name: "sub",
-          Value: "123",
-        },
-        { Name: "email_verified", Value: "true" },
-        { Name: "email", Value: "test@test.com" },
-      ],
-      UserCreateDate: now,
-      UserLastModifiedDate: now,
-    };
-
     const user: User = {
-      userId: cognitoUser.Username || "",
-      enabled: cognitoUser.Enabled,
-      userStatus: cognitoUser.UserStatus,
-      sub: cognitoUser.Attributes ? cognitoUser.Attributes[0].Value : "",
-      emailVerified: cognitoUser.Attributes
-        ? cognitoUser.Attributes[1].Value === "true"
-        : false,
-      email: cognitoUser.Attributes ? cognitoUser.Attributes[2].Value : "",
-      createdAt: cognitoUser.UserCreateDate
-        ? cognitoUser.UserCreateDate
-        : new Date(),
-      updatedAt: cognitoUser.UserLastModifiedDate
-        ? cognitoUser.UserLastModifiedDate
-        : new Date(),
+      userId: "test user",
+      enabled: true,
+      userStatus: "CONFIRMED",
+      sub: "123",
+      email: "test@test.com",
+      createdAt: now,
+      updatedAt: now,
     };
     repository.listUsers = jest.fn().mockReturnValueOnce([user]);
 

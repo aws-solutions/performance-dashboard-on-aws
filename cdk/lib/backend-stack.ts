@@ -6,10 +6,12 @@ import { BackendApi } from "./constructs/api";
 import { Database } from "./constructs/database";
 import { LambdaFunctions } from "./constructs/lambdas";
 import { DatasetStorage } from "./constructs/datastorage";
-import { AuthStack } from "./auth-stack";
 
 interface BackendStackProps extends cdk.StackProps {
-  auth: AuthStack;
+  userPool: {
+    id: string;
+    arn: string;
+  };
   datasetsBucketName: string;
 }
 
@@ -30,11 +32,11 @@ export class BackendStack extends cdk.Stack {
     const lambdas = new LambdaFunctions(this, "Functions", {
       mainTable: database.mainTable,
       datasetsBucket: dataStorage.datasetsBucket,
-      auth: props.auth,
+      userPool: props.userPool,
     });
 
     const backendApi = new BackendApi(this, "Api", {
-      cognitoUserPoolArn: props.auth.userPoolArn,
+      cognitoUserPoolArn: props.userPool.arn,
       apiFunction: lambdas.apiHandler,
       publicApiFunction: lambdas.publicApiHandler,
     });

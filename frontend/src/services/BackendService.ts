@@ -6,6 +6,7 @@ import {
   Dataset,
   PublicDashboard,
   Widget,
+  User,
 } from "../models";
 
 const apiName = "BackendApi";
@@ -362,6 +363,11 @@ async function moveToDraft(
   });
 }
 
+async function fetchUsers(): Promise<User[]> {
+  const headers = await authHeaders();
+  return await API.get(apiName, "user", { headers });
+}
+
 const BackendService = {
   fetchDashboards,
   fetchDashboardById,
@@ -397,6 +403,7 @@ const BackendService = {
   createDraft,
   moveToDraft,
   fetchDashboardVersions,
+  fetchUsers,
 };
 
 export default BackendService;

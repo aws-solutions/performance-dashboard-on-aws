@@ -364,3 +364,16 @@ export function useDateTimeFormatter() {
     return dayjs(dateToDisplay).format("YYYY-MM-DD HH:mm");
   }, []);
 }
+
+export function useUsers() {
+  return {
+    loading: false,
+    users: [
+      {
+        userId: "johndoe",
+        email: "johndoe@example.com",
+        status: "CONFIRMED",
+      },
+    ],
+  };
+}

@@ -80,8 +80,6 @@ async function updateSettings(req: Request, res: Response) {
       user
     );
   }
-
-
   res.send();
 }
 
@@ -92,7 +90,6 @@ async function getPublicSettings(req: Request, res: Response) {
   const publicSettings = SettingsFactory.toPublicSettings(settings);
   return res.json(publicSettings);
 }
-
 
 export default {
   getSettings,

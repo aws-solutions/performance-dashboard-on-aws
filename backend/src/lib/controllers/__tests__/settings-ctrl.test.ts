@@ -116,6 +116,23 @@ describe("updateSettings", () => {
       user
     );
   });
+
+  it("updates topicAreaLabels setting", async () => {
+    req.body.topicAreaLabels = {
+      singular: "Topic Area",
+      plural: "Topic Areas",
+    };
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "topicAreaLabels",
+      {
+        singular: "Topic Area",
+        plural: "Topic Areas",
+      },
+      now.toISOString(),
+      user
+    );
+  });
 });
 
 describe("getPublicSettings", () => {

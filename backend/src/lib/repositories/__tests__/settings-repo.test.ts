@@ -47,6 +47,10 @@ describe("getSettings", () => {
       publishingGuidance:
         "I acknowledge that I have reviewed the dashboard and it is ready to publish",
       navbarTitle: "Performance Dashboard",
+      topicAreaLabels: {
+        singular: "Topic Area",
+        plural: "Topic Areas"
+      }
     };
 
     dynamodb.get = jest.fn().mockReturnValueOnce({ Item: item });

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { Dashboard, DashboardState } from "../models";
+import React, { useState, useCallback } from "react";
+import { Dashboard } from "../models";
+import { useDateTimeFormatter } from "../hooks";
 import Button from "./Button";
 import Search from "./Search";
-import DashboardsTable from "./DashboardsTable";
+import Table from "./Table";
+import EnvConfig from "../services/EnvConfig";
 import ScrollTop from "./ScrollTop";
 import Link from "./Link";
 
@@ -12,36 +14,18 @@ interface Props {
 }
 
 function PublishedTab(props: Props) {
+  const dateFormatter = useDateTimeFormatter();
   const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<Array<Dashboard>>([]);
+  const { dashboards } = props;
 
   const onSearch = (query: string) => {
     setFilter(query);
   };
 
-  const onSelect = (selectedDashboards: Array<Dashboard>) => {
+  const onSelect = useCallback((selectedDashboards: Array<Dashboard>) => {
     setSelected(selectedDashboards);
-  };
-
-  const filterDashboards = (dashboards: Array<Dashboard>): Array<Dashboard> => {
-    return dashboards.filter((dashboard) => {
-      const name = dashboard.name.toLowerCase().trim();
-      const topicAreaName = dashboard.topicAreaName.toLowerCase().trim();
-      const createdBy = dashboard.createdBy.toLowerCase().trim();
-      const query = filter.toLowerCase();
-      return (
-        name.includes(query) ||
-        topicAreaName.includes(query) ||
-        createdBy.includes(query)
-      );
-    });
-  };
-
-  const sortDashboards = (dashboards: Array<Dashboard>): Array<Dashboard> => {
-    return [...dashboards].sort((a, b) => {
-      return a.updatedAt > b.updatedAt ? -1 : 1;
-    });
-  };
+  }, []);
 
   return (
     <div>
@@ -74,10 +58,45 @@ function PublishedTab(props: Props) {
           </span>
         </div>
       </div>
-      <DashboardsTable
-        dashboards={sortDashboards(filterDashboards(props.dashboards))}
-        dashboardsState={DashboardState.Published}
-        onSelect={onSelect}
+      <Table
+        selection="multiple"
+        initialSortByField="updatedAt"
+        filterQuery={filter}
+        rows={React.useMemo(() => dashboards, [dashboards])}
+        screenReaderField="name"
+        onSelection={onSelect}
+        columns={React.useMemo(
+          () => [
+            {
+              Header: "Dashboard name",
+              accessor: "name",
+              Cell: (props: any) => {
+                const dashboard = props.row.original as Dashboard;
+                return (
+                  <Link to={`/admin/dashboard/${dashboard.id}`}>
+                    <span className="text-bold text-base-darkest">
+                      {dashboard.name}
+                    </span>
+                  </Link>
+                );
+              },
+            },
+            {
+              Header: EnvConfig.topicAreaLabel,
+              accessor: "topicAreaName",
+            },
+            {
+              Header: "Last Updated",
+              accessor: "updatedAt",
+              Cell: (props: any) => dateFormatter(props.value),
+            },
+            {
+              Header: "Created by",
+              accessor: "createdBy",
+            },
+          ],
+          [dateFormatter]
+        )}
       />
       <div className="text-right">
         <ScrollTop />

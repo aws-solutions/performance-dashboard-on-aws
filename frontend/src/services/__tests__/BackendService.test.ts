@@ -339,3 +339,8 @@ test("fetchPublicSettings makes a GET request to public API", async () => {
   await BackendService.fetchPublicSettings();
   expect(API.get).toHaveBeenCalledWith("BackendApi", `public/settings`, {});
 });
+
+test("fetchUsers makes a GET request to users API", async () => {
+  await BackendService.fetchUsers();
+  expect(API.get).toHaveBeenCalledWith("BackendApi", `user`, expect.anything());
+});

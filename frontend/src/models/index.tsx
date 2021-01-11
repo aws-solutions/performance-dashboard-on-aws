@@ -166,3 +166,9 @@ export type LocationState = {
   };
   id?: string;
 };
+
+export type User = {
+  userId: string;
+  email: string;
+  status: string;
+};

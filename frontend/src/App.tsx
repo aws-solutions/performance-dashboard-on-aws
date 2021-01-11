@@ -43,6 +43,7 @@ import DateFormatSettings from "./containers/DateFormatSettings";
 import EditDateFormat from "./containers/EditDateFormat";
 import APIHelpPage from "./containers/APIHelpPage";
 import EditNavbar from "./containers/EditNavbar";
+import UserListing from "./containers/UserListing";
 
 interface AppRoute {
   path: string;
@@ -170,6 +171,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/apihelp",
     component: APIHelpPage,
+  },
+  {
+    path: "/admin/users",
+    component: UserListing,
   },
   {
     path: "/:friendlyURL",

@@ -37,6 +37,20 @@ class UserRepository {
       UserFactory.fromCognitoUser(cognitoUser)
     );
   }
+
+  public async addUsers(users: User[]) {
+    try {
+      for (const user of users) {
+        await this.cognito.addUser({
+          UserPoolId: this.userPoolId,
+          Username: user.userId,
+          UserAttributes: [{ Name: "email", Value: user.email }],
+        });
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default UserRepository;

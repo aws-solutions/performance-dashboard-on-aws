@@ -1,6 +1,14 @@
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import UserFactory from "../user-factory";
 
+describe("createNew", () => {
+  it("should create a new user with userId and email", () => {
+    const user = UserFactory.createNew("test@test.com");
+    expect(user.userId).toEqual("test");
+    expect(user.email).toEqual("test@test.com");
+  });
+});
+
 describe("fromCognitoUser", () => {
   it("converts a cognito user to a user", () => {
     const now = new Date();

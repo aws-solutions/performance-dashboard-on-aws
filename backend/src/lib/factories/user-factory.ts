@@ -1,6 +1,13 @@
 import { User } from "../models/user";
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
+function createNew(email: string): User {
+  return {
+    userId: email.split("@")[0],
+    email,
+  };
+}
+
 function fromCognitoUser(cognitoUser: UserType): User {
   return {
     userId: cognitoUser.Username || "",
@@ -22,5 +29,6 @@ function fromCognitoUser(cognitoUser: UserType): User {
 }
 
 export default {
+  createNew,
   fromCognitoUser,
 };

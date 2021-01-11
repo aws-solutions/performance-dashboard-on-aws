@@ -68,3 +68,14 @@ describe("listUsers", () => {
     });
   });
 });
+
+describe("addUsers", () => {
+  it("should call addUser with the correct parameters", async () => {
+    await repo.addUsers([{ userId: "test", email: "test@test.com" }]);
+    expect(cognito.addUser).toHaveBeenCalledWith({
+      UserPoolId: "abc",
+      Username: "test",
+      UserAttributes: [{ Name: "email", Value: "test@test.com" }],
+    });
+  });
+});

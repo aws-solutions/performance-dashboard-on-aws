@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useMemo } from "react";
+import Table from "./Table";
 import "./TablePreview.css";
 
 type Props = {
@@ -8,49 +9,30 @@ type Props = {
   data?: Array<object>;
 };
 
-const getKeyValue = (key: string) => (obj: Record<string, any>) => obj[key];
-
 const TablePreview = (props: Props) => {
+  const { headers, data } = props;
+
   return (
     <div className="preview-container">
       <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
       <p className="margin-left-1 margin-top-0 margin-bottom-3">
         {props.summary}
       </p>
-      <table className="usa-table usa-table--borderless margin-left-2px">
-        <thead>
-          <tr>
-            {props.headers.length
-              ? props.headers.map((header, index) => {
-                  return (
-                    <th key={index} scope="col">
-                      <div className="display-inline">{header}</div>
-                    </th>
-                  );
-                })
-              : null}
-          </tr>
-        </thead>
-        <tbody>
-          {props.data
-            ? props.data.map((data, indexData) => {
-                return (
-                  <tr key={indexData}>
-                    {props.headers.map((header, index) => {
-                      return index === 0 ? (
-                        <th key={index} scope="row">
-                          {getKeyValue(header)(data)}
-                        </th>
-                      ) : (
-                        <td key={index}>{getKeyValue(header)(data)}</td>
-                      );
-                    })}
-                  </tr>
-                );
-              })
-            : null}
-        </tbody>
-      </table>
+      <Table
+        selection="none"
+        rows={useMemo(() => data || [], [data])}
+        className="margin-left-2px"
+        columns={useMemo(
+          () =>
+            headers.map((header) => {
+              return {
+                Header: header,
+                accessor: header,
+              };
+            }),
+          [headers]
+        )}
+      />
     </div>
   );
 };

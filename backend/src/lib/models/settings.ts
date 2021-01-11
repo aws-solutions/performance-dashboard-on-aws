@@ -9,7 +9,7 @@ export interface Settings {
   topicAreaLabels: {
     singular: string;
     plural: string;
-  }
+  };
 }
 
 export interface PublicSettings {
@@ -21,7 +21,7 @@ export interface PublicSettings {
   topicAreaLabels: {
     singular: string;
     plural: string;
-  }
+  };
 }
 
 export interface SettingsItem {
@@ -38,5 +38,5 @@ export interface SettingsItem {
   topicAreaLabels?: {
     singular: string;
     plural: string;
-  }
+  };
 }

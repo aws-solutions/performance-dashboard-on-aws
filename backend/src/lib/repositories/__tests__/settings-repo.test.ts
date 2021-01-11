@@ -49,8 +49,8 @@ describe("getSettings", () => {
       navbarTitle: "Performance Dashboard",
       topicAreaLabels: {
         singular: "Topic Area",
-        plural: "Topic Areas"
-      }
+        plural: "Topic Areas",
+      },
     };
 
     dynamodb.get = jest.fn().mockReturnValueOnce({ Item: item });

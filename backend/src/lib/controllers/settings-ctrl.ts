@@ -26,7 +26,12 @@ async function updateSettings(req: Request, res: Response) {
   }
 
   let { updatedAt } = req.body;
-  const { publishingGuidance, dateTimeFormat, navbarTitle, topicAreaLabels } = req.body;
+  const {
+    publishingGuidance,
+    dateTimeFormat,
+    navbarTitle,
+    topicAreaLabels,
+  } = req.body;
 
   if (!updatedAt) {
     res.status(400);
@@ -70,7 +75,9 @@ async function updateSettings(req: Request, res: Response) {
   if (topicAreaLabels) {
     if (!topicAreaLabels.singular || !topicAreaLabels.plural) {
       res.status(400);
-      return res.send("Missing fields `singular` or `plural` in topicAreaLabels");
+      return res.send(
+        "Missing fields `singular` or `plural` in topicAreaLabels"
+      );
     }
 
     updatedAt = await repo.updateSetting(

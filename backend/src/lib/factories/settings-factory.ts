@@ -29,7 +29,9 @@ function fromItem(item: SettingsItem): Settings {
       ? item.dateTimeFormat
       : defaults.dateTimeFormat,
     navbarTitle: item.navbarTitle ? item.navbarTitle : defaults.navbarTitle,
-    topicAreaLabels: item.topicAreaLabels ? item.topicAreaLabels : defaults.topicAreaLabels,
+    topicAreaLabels: item.topicAreaLabels
+      ? item.topicAreaLabels
+      : defaults.topicAreaLabels,
   };
 }
 

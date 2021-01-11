@@ -6,6 +6,10 @@ export interface Settings {
   };
   updatedAt: Date;
   navbarTitle: string;
+  topicAreaLabels: {
+    singular: string;
+    plural: string;
+  };
 }
 
 export interface PublicSettings {
@@ -14,6 +18,10 @@ export interface PublicSettings {
     time: string;
   };
   navbarTitle: string;
+  topicAreaLabels: {
+    singular: string;
+    plural: string;
+  };
 }
 
 export interface SettingsItem {
@@ -27,4 +35,8 @@ export interface SettingsItem {
     time: string;
   };
   navbarTitle?: string;
+  topicAreaLabels?: {
+    singular: string;
+    plural: string;
+  };
 }

@@ -11,6 +11,10 @@ function getDefaultSettings(): Settings {
       "I acknowledge that I have reviewed " +
       "the dashboard and it is ready to publish",
     navbarTitle: "Performance Dashboard",
+    topicAreaLabels: {
+      singular: "Topic Area",
+      plural: "Topic Areas",
+    },
   };
 }
 
@@ -25,6 +29,9 @@ function fromItem(item: SettingsItem): Settings {
       ? item.dateTimeFormat
       : defaults.dateTimeFormat,
     navbarTitle: item.navbarTitle ? item.navbarTitle : defaults.navbarTitle,
+    topicAreaLabels: item.topicAreaLabels
+      ? item.topicAreaLabels
+      : defaults.topicAreaLabels,
   };
 }
 
@@ -37,6 +44,9 @@ function toPublicSettings(settings: Settings): PublicSettings {
     navbarTitle: settings.navbarTitle
       ? settings.navbarTitle
       : defaults.navbarTitle,
+    topicAreaLabels: settings.topicAreaLabels
+      ? settings.topicAreaLabels
+      : defaults.topicAreaLabels,
   };
 }
 

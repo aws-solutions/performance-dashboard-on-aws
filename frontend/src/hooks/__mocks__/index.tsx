@@ -297,12 +297,6 @@ export function useDatasets() {
   };
 }
 
-export function useAdmin() {
-  return {
-    username: "johndoe",
-  };
-}
-
 export function useColors(numberOfColors: number) {
   return [
     "#29B4BB",
@@ -375,5 +369,28 @@ export function useUsers() {
         status: "CONFIRMED",
       },
     ],
+  };
+}
+
+type CurrentUserHook = {
+  username: string;
+  isAdmin: boolean;
+  isEditor: boolean;
+  isPublisher: boolean;
+};
+
+export function useCurrentAuthenticatedUser() {
+  const [username] = useState("johndoe");
+  const [roles] = useState({
+    isAdmin: true,
+    isEditor: false,
+    isPublisher: false,
+  });
+
+  return {
+    username,
+    isAdmin: roles.isAdmin,
+    isEditor: roles.isEditor,
+    isPublisher: roles.isPublisher,
   };
 }

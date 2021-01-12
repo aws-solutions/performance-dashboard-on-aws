@@ -5,5 +5,6 @@ import withErrorHandler from "./middleware/error-handler";
 const router = Router();
 
 router.get("/", withErrorHandler(UserCtrl.getUsers));
+router.post("/", withErrorHandler(UserCtrl.addUsers));
 
 export default router;

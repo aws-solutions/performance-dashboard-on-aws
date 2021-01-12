@@ -183,6 +183,7 @@ export class BackendApi extends cdk.Construct {
 
     const user = this.api.root.addResource("user");
     user.addMethod("GET", apiIntegration, methodProps);
+    user.addMethod("POST", apiIntegration, methodProps);
   }
 
   private addPublicEndpoints(apiIntegration: apigateway.LambdaIntegration) {

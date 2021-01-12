@@ -92,7 +92,53 @@ async function resendInvite(req: Request, res: Response) {
 
   const repo = UserRepository.getInstance();
   try {
-    await repo.resendInvite(userEmails);
+    await repo.resendInvite(userEmails.map((email) => email.split("@")[0]));
+    return res.send();
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+
+async function changeRole(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401);
+    return res.send("Unauthorized");
+  }
+
+  const { role, emails } = req.body;
+
+  if (!role) {
+    res.status(400).send("Missing required body `role`");
+    return;
+  }
+
+  if (role !== Role.Admin && role !== Role.Editor && role !== Role.Publisher) {
+    res.status(400).send("Invalid role value");
+    return;
+  }
+
+  if (!emails) {
+    res.status(400).send("Missing required body `emails`");
+    return;
+  }
+
+  const userEmails = (emails as string).split(",");
+
+  for (const userEmail of userEmails) {
+    if (!emailIsValid(userEmail)) {
+      res.status(400).send(`Invalid email: ${userEmail}`);
+      return;
+    }
+  }
+
+  const repo = UserRepository.getInstance();
+  try {
+    await repo.changeRole(
+      userEmails.map((email) => email.split("@")[0]),
+      role
+    );
     return res.send();
   } catch (error) {
     res.status(500).send(error);
@@ -107,4 +153,5 @@ export default {
   getUsers,
   addUsers,
   resendInvite,
+  changeRole,
 };

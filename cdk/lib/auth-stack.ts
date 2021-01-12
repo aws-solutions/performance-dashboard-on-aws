@@ -3,7 +3,7 @@ import * as cognito from "@aws-cdk/aws-cognito";
 import * as iam from "@aws-cdk/aws-iam";
 import * as fs from "fs";
 import { StringAttribute } from "@aws-cdk/aws-cognito";
-import { CfnCondition, CfnParameter, Fn } from "@aws-cdk/core";
+//import { CfnCondition, CfnParameter, Fn } from "@aws-cdk/core";
 
 interface Props extends cdk.StackProps {
   datasetsBucketName: string;
@@ -51,7 +51,7 @@ export class AuthStack extends cdk.Stack {
       },
     });
 
-    const adminEmail = new CfnParameter(this, "adminEmail");
+    /*const adminEmail = new CfnParameter(this, "adminEmail");
     const isAdminEmailEmpty = new CfnCondition(this, "IsAdminEmailEmpty", {
       expression: Fn.conditionEquals("", adminEmail),
     });
@@ -69,7 +69,7 @@ export class AuthStack extends cdk.Stack {
           { name: "custom:roles", value: JSON.stringify(["Admin"]) },
         ],
       })
-    );
+    );*/
 
     /**
      * Outputs

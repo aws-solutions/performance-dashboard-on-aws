@@ -17,12 +17,7 @@ else
     exit 0
 fi
 
-# Validate email from input
-cognito_email=$2
-if [ "$cognito_email" != "" ]; then
-    echo "Cognito email = $cognito_email"
-    export COGNITO_EMAIL=$cognito_email
-fi
+admin_email=$2
 
 verify_prereqs() {
     # Verify necessary commands
@@ -49,7 +44,7 @@ deploy_auth() {
     # Auth stack definition is in cdk/lib/auth-stack.ts
     echo "Deploying auth stack"
     cd $CDK_DIR
-    cdk deploy Auth --require-approval never
+    cdk deploy Auth --require-approval never --parameters adminEmail="$admin_email"
 }
 
 deploy_backend() {

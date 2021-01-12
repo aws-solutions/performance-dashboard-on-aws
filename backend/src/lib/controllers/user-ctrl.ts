@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import UserRepository from "../repositories/user-repo";
 import UserFactory from "../factories/user-factory";
 import AuthService from "../services/auth";
+import { Role } from "../models/user";
 
 async function getUsers(req: Request, res: Response) {
   const user = AuthService.getCurrentUser(req);
@@ -28,21 +29,20 @@ async function addUsers(req: Request, res: Response) {
     return res.send("Unauthorized");
   }
 
-  const { role } = req.body;
-  const { emails } = req.query;
+  const { role, emails } = req.body;
 
   if (!role) {
     res.status(400).send("Missing required body `role`");
     return;
   }
 
-  if (role !== "Admin" && role !== "Editor" && role !== "Publisher") {
+  if (role !== Role.Admin && role !== Role.Editor && role !== Role.Publisher) {
     res.status(400).send("Invalid role value");
     return;
   }
 
   if (!emails) {
-    res.status(400).send("Missing required query `emails`");
+    res.status(400).send("Missing required body `emails`");
     return;
   }
 

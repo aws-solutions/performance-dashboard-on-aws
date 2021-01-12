@@ -3,6 +3,7 @@ import * as cognito from "@aws-cdk/aws-cognito";
 import * as iam from "@aws-cdk/aws-iam";
 import * as fs from "fs";
 import { StringAttribute } from "@aws-cdk/aws-cognito";
+import { CfnCondition, CfnParameter, Fn } from "@aws-cdk/core";
 
 interface Props extends cdk.StackProps {
   datasetsBucketName: string;
@@ -50,16 +51,25 @@ export class AuthStack extends cdk.Stack {
       },
     });
 
-    if (process.env.COGNITO_EMAIL) {
+    const adminEmail = new CfnParameter(this, "adminEmail");
+    const isAdminEmailEmpty = new CfnCondition(this, "IsAdminEmailEmpty", {
+      expression: Fn.conditionEquals("", adminEmail),
+    });
+    Fn.conditionIf(
+      isAdminEmailEmpty.logicalId,
+      "",
       new cognito.CfnUserPoolUser(this, "UserPoolUser", {
         userPoolId: pool.userPoolId,
-        username: process.env.COGNITO_EMAIL.split("@")[0],
+        username: adminEmail.valueAsString,
         userAttributes: [
-          { name: "email", value: process.env.COGNITO_EMAIL },
+          {
+            name: "email",
+            value: adminEmail.valueAsString,
+          },
           { name: "custom:roles", value: JSON.stringify(["Admin"]) },
         ],
-      });
-    }
+      })
+    );
 
     /**
      * Outputs

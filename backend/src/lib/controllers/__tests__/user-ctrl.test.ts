@@ -29,11 +29,9 @@ describe("addUser", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
-      query: {
-        emails: "test1@test.com,test2@test.com",
-      },
       body: {
         role: "Admin",
+        emails: "test1@test.com,test2@test.com",
       },
     } as any) as Request;
   });
@@ -60,14 +58,14 @@ describe("addUser", () => {
   });
 
   it("returns a 400 error when emails is missing", async () => {
-    delete req.query.emails;
+    delete req.body.emails;
     await UserCtrl.addUsers(req, res);
     expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Missing required query `emails`");
+    expect(res.send).toBeCalledWith("Missing required body `emails`");
   });
 
   it("returns a 400 error when emails have an invalid email", async () => {
-    req.query.emails = "wrong email";
+    req.body.emails = "wrong email";
     await UserCtrl.addUsers(req, res);
     expect(res.status).toBeCalledWith(400);
     expect(res.send).toBeCalledWith("Invalid email: wrong email");
@@ -75,7 +73,7 @@ describe("addUser", () => {
 
   it("create the users", async () => {
     const user1 = UserFactory.createNew("test1@test.com", "Admin");
-    const user2 = UserFactory.createNew("test1@test.com", "Editor");
+    const user2 = UserFactory.createNew("test2@test.com", "Editor");
     UserFactory.createNew = jest
       .fn()
       .mockReturnValueOnce(user1)

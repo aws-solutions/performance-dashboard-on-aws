@@ -87,3 +87,14 @@ describe("addUsers", () => {
     });
   });
 });
+
+describe("resendInvite", () => {
+  it("should call resendInvite with the correct parameters", async () => {
+    await repo.resendInvite(["test@test.com"]);
+    expect(cognito.addUser).toHaveBeenCalledWith({
+      UserPoolId: "abc",
+      Username: "test",
+      MessageAction: "RESEND",
+    });
+  });
+});

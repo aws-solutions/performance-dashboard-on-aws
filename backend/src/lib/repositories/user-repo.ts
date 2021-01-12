@@ -24,7 +24,7 @@ class UserRepository {
     return UserRepository.instance;
   }
 
-  public async listUsers(): Promise<User[]> {
+  public async listUsers(): Promise<Array<User>> {
     const result = await this.cognito.listUsers({
       UserPoolId: this.userPoolId,
     });
@@ -38,7 +38,7 @@ class UserRepository {
     );
   }
 
-  public async addUsers(users: User[]) {
+  public async addUsers(users: Array<User>) {
     try {
       for (const user of users) {
         await this.cognito.addUser({
@@ -48,6 +48,20 @@ class UserRepository {
             { Name: "email", Value: user.email },
             { Name: "custom:roles", Value: JSON.stringify(user.roles) },
           ],
+        });
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async resendInvite(emails: Array<string>) {
+    try {
+      for (const email of emails) {
+        await this.cognito.addUser({
+          UserPoolId: this.userPoolId,
+          Username: email.split("@")[0],
+          MessageAction: "RESEND",
         });
       }
     } catch (error) {

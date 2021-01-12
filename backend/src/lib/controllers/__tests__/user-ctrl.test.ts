@@ -83,6 +83,46 @@ describe("addUser", () => {
   });
 });
 
+describe("resendInvite", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = ({
+      body: {
+        emails: "test1@test.com,test2@test.com",
+      },
+    } as any) as Request;
+  });
+
+  it("returns a 401 error when user is not authenticated", async () => {
+    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
+    await UserCtrl.resendInvite(req, res);
+    expect(res.status).toBeCalledWith(401);
+    expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when emails is missing", async () => {
+    delete req.body.emails;
+    await UserCtrl.resendInvite(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required body `emails`");
+  });
+
+  it("returns a 400 error when emails have an invalid email", async () => {
+    req.body.emails = "wrong email";
+    await UserCtrl.resendInvite(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Invalid email: wrong email");
+  });
+
+  it("create the users", async () => {
+    await UserCtrl.resendInvite(req, res);
+    expect(repository.resendInvite).toBeCalledWith([
+      "test1@test.com",
+      "test2@test.com",
+    ]);
+  });
+});
+
 describe("getUsers", () => {
   it("returns a 401 error when user is not authenticated", async () => {
     AuthService.getCurrentUser = jest.fn().mockReturnValue(null);

@@ -66,6 +66,39 @@ async function addUsers(req: Request, res: Response) {
   }
 }
 
+async function resendInvite(req: Request, res: Response) {
+  const user = AuthService.getCurrentUser(req);
+
+  if (!user) {
+    res.status(401);
+    return res.send("Unauthorized");
+  }
+
+  const { emails } = req.body;
+
+  if (!emails) {
+    res.status(400).send("Missing required body `emails`");
+    return;
+  }
+
+  const userEmails = (emails as string).split(",");
+
+  for (const userEmail of userEmails) {
+    if (!emailIsValid(userEmail)) {
+      res.status(400).send(`Invalid email: ${userEmail}`);
+      return;
+    }
+  }
+
+  const repo = UserRepository.getInstance();
+  try {
+    await repo.resendInvite(userEmails);
+    return res.send();
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+
 function emailIsValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -73,4 +106,5 @@ function emailIsValid(email: string) {
 export default {
   getUsers,
   addUsers,
+  resendInvite,
 };

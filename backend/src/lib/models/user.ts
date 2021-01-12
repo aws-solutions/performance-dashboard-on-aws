@@ -10,7 +10,7 @@ export interface User {
   userStatus?: string;
   sub?: string;
   email?: string;
-  roles?: Role[];
+  roles?: Array<Role>;
   createdAt?: Date;
   updatedAt?: Date;
 }

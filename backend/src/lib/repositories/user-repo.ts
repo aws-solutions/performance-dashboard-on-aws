@@ -44,7 +44,10 @@ class UserRepository {
         await this.cognito.addUser({
           UserPoolId: this.userPoolId,
           Username: user.userId,
-          UserAttributes: [{ Name: "email", Value: user.email }],
+          UserAttributes: [
+            { Name: "email", Value: user.email },
+            { Name: "custom:roles", Value: JSON.stringify(user.roles) },
+          ],
         });
       }
     } catch (error) {

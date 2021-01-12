@@ -2,6 +2,7 @@ import * as cdk from "@aws-cdk/core";
 import * as cognito from "@aws-cdk/aws-cognito";
 import * as iam from "@aws-cdk/aws-iam";
 import * as fs from "fs";
+import { StringAttribute } from "@aws-cdk/aws-cognito";
 
 interface Props extends cdk.StackProps {
   datasetsBucketName: string;
@@ -22,6 +23,7 @@ export class AuthStack extends cdk.Stack {
           "You have been invited to the {Organization} Performance Dashboard on AWS.",
         emailBody: fs.readFileSync("lib/data/email-template.html").toString(),
       },
+      customAttributes: { roles: new StringAttribute({ mutable: true }) },
     });
 
     const client = pool.addClient("Frontend", {
@@ -47,6 +49,17 @@ export class AuthStack extends cdk.Stack {
         unauthenticated: publicRole.roleArn,
       },
     });
+
+    if (process.env.COGNITO_EMAIL) {
+      new cognito.CfnUserPoolUser(this, "UserPoolUser", {
+        userPoolId: pool.userPoolId,
+        username: process.env.COGNITO_EMAIL.split("@")[0],
+        userAttributes: [
+          { name: "email", value: process.env.COGNITO_EMAIL },
+          { name: "custom:roles", value: JSON.stringify(["Admin"]) },
+        ],
+      });
+    }
 
     /**
      * Outputs

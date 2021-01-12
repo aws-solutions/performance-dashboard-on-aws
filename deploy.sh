@@ -17,6 +17,13 @@ else
     exit 0
 fi
 
+# Validate email from input
+cognito_email=$2
+if [ "$cognito_email" != "" ]; then
+    echo "Cognito email = $cognito_email"
+    export COGNITO_EMAIL=$cognito_email
+fi
+
 verify_prereqs() {
     # Verify necessary commands
     echo "node version"

@@ -28,7 +28,18 @@ async function addUsers(req: Request, res: Response) {
     return res.send("Unauthorized");
   }
 
+  const { role } = req.body;
   const { emails } = req.query;
+
+  if (!role) {
+    res.status(400).send("Missing required body `role`");
+    return;
+  }
+
+  if (role !== "Admin" && role !== "Editor" && role !== "Publisher") {
+    res.status(400).send("Invalid role value");
+    return;
+  }
 
   if (!emails) {
     res.status(400).send("Missing required query `emails`");
@@ -47,7 +58,7 @@ async function addUsers(req: Request, res: Response) {
   const repo = UserRepository.getInstance();
   try {
     await repo.addUsers(
-      userEmails.map((email) => UserFactory.createNew(email))
+      userEmails.map((email) => UserFactory.createNew(email, role))
     );
     return res.send();
   } catch (error) {

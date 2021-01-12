@@ -1,11 +1,13 @@
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { Role } from "../../models/user";
 import UserFactory from "../user-factory";
 
 describe("createNew", () => {
   it("should create a new user with userId and email", () => {
-    const user = UserFactory.createNew("test@test.com");
+    const user = UserFactory.createNew("test@test.com", "Admin");
     expect(user.userId).toEqual("test");
     expect(user.email).toEqual("test@test.com");
+    expect(user.roles).toEqual([Role.Admin]);
   });
 });
 
@@ -22,6 +24,7 @@ describe("fromCognitoUser", () => {
           Value: "123",
         },
         { Name: "email", Value: "test@test.com" },
+        { Name: "custom:roles", Value: '["Admin"]' },
       ],
       UserCreateDate: now,
       UserLastModifiedDate: now,
@@ -34,6 +37,7 @@ describe("fromCognitoUser", () => {
       userStatus: "CONFIRMED",
       sub: "123",
       email: "test@test.com",
+      roles: [Role.Admin],
       createdAt: now,
       updatedAt: now,
     });

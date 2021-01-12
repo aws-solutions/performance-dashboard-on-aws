@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
-import { User } from "../../models/user";
+import { Role, User } from "../../models/user";
 import UserRepository from "../../repositories/user-repo";
 import UserCtrl from "../user-ctrl";
 import AuthService from "../../services/auth";
@@ -32,6 +32,9 @@ describe("addUser", () => {
       query: {
         emails: "test1@test.com,test2@test.com",
       },
+      body: {
+        role: "Admin",
+      },
     } as any) as Request;
   });
 
@@ -40,6 +43,20 @@ describe("addUser", () => {
     await UserCtrl.addUsers(req, res);
     expect(res.status).toBeCalledWith(401);
     expect(res.send).toBeCalledWith("Unauthorized");
+  });
+
+  it("returns a 400 error when role is missing", async () => {
+    delete req.body.role;
+    await UserCtrl.addUsers(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required body `role`");
+  });
+
+  it("returns a 400 error when role is invalid", async () => {
+    req.body.role = "wrong role";
+    await UserCtrl.addUsers(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Invalid role value");
   });
 
   it("returns a 400 error when emails is missing", async () => {
@@ -57,8 +74,8 @@ describe("addUser", () => {
   });
 
   it("create the users", async () => {
-    const user1 = UserFactory.createNew("test1@test.com");
-    const user2 = UserFactory.createNew("test1@test.com");
+    const user1 = UserFactory.createNew("test1@test.com", "Admin");
+    const user2 = UserFactory.createNew("test1@test.com", "Editor");
     UserFactory.createNew = jest
       .fn()
       .mockReturnValueOnce(user1)
@@ -86,6 +103,7 @@ describe("getUsers", () => {
       userStatus: "CONFIRMED",
       sub: "123",
       email: "test@test.com",
+      roles: [Role.Admin],
       createdAt: now,
       updatedAt: now,
     };

@@ -342,5 +342,18 @@ test("fetchPublicSettings makes a GET request to public API", async () => {
 
 test("fetchUsers makes a GET request to users API", async () => {
   await BackendService.fetchUsers();
-  expect(API.get).toHaveBeenCalledWith("BackendApi", `user`, expect.anything());
+  expect(API.get).toHaveBeenCalledWith("BackendApi", "user", expect.anything());
+});
+
+test("resendInvite makes a POST request to users API", async () => {
+  await BackendService.resendInvite(["test1@test.com", "test2@test.com"]);
+  expect(API.post).toHaveBeenCalledWith(
+    "BackendApi",
+    "user/invite",
+    expect.objectContaining({
+      body: {
+        emails: "test1@test.com,test2@test.com",
+      },
+    })
+  );
 });

@@ -16,7 +16,7 @@ exports[`table preview should match snapshot 1`] = `
       test summary
     </p>
     <table
-      class="usa-table usa-table--borderless margin-left-2px"
+      class="usa-table usa-table--borderless margin-left-1"
       role="table"
     >
       <thead>

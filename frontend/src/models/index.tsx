@@ -170,7 +170,7 @@ export type LocationState = {
 export enum UserRoles {
   Admin = "Admin",
   Editor = "Editor",
-  Publisher = "Publisher",
+  //Publisher = "Publisher",
 }
 
 export type User = {

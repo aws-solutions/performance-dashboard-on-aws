@@ -368,6 +368,16 @@ async function fetchUsers(): Promise<User[]> {
   return await API.get(apiName, "user", { headers });
 }
 
+async function resendInvite(emails: Array<string>) {
+  const headers = await authHeaders();
+  return await API.post(apiName, "user/invite", {
+    headers,
+    body: {
+      emails: emails.join(","),
+    },
+  });
+}
+
 const BackendService = {
   fetchDashboards,
   fetchDashboardById,
@@ -404,6 +414,7 @@ const BackendService = {
   moveToDraft,
   fetchDashboardVersions,
   fetchUsers,
+  resendInvite,
 };
 
 export default BackendService;

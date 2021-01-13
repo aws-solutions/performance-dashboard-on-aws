@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { User } from "../models/user";
+import { User, Role } from "../models/user";
 
 const local = !!process.env.LOCAL_MODE || false;
 
@@ -41,8 +41,18 @@ function userFromClaims(claims: any): User {
    *
    * https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
    */
+  let roles: Array<Role> = [];
+  if (claims["custom:roles"]) {
+    try {
+      roles = JSON.parse(claims["custom:roles"]);
+    } catch (err) {
+      console.error("Invalid value for custom:roles in JWT token claims", err);
+    }
+  }
+
   return {
     userId: claims["cognito:username"],
+    roles,
   };
 }
 
@@ -59,6 +69,7 @@ function dummyUser(): any {
     exp: "Sat Jul 18 00:05:53 UTC 2020",
     iat: "Fri Jul 17 23:05:54 UTC 2020",
     email: "fdingler@amazon.com",
+    "custom:roles": '["Admin"]',
   };
 }
 

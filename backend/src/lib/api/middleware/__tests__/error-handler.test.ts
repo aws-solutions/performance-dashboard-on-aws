@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import withErrorHandler from "../error-handler";
+import errorHandler from "../error-handler";
 
 const successfulRouteHandler = jest.fn(() => Promise.resolve());
 const failedRouteHandler = jest.fn(() => Promise.reject("error"));
@@ -12,13 +12,13 @@ const res = {
 
 describe("withErrorHandler", () => {
   it("calls the route handler", async () => {
-    await withErrorHandler(successfulRouteHandler)(req, res);
+    await errorHandler(successfulRouteHandler)(req, res);
     expect(successfulRouteHandler).toBeCalled();
   });
 
   it("handles error and returns a 500 error", async () => {
     console.error = jest.fn();
-    await withErrorHandler(failedRouteHandler)(req, res);
+    await errorHandler(failedRouteHandler)(req, res);
     expect(res.status).toBeCalledWith(500);
     expect(console.error).toBeCalledWith("error");
     expect(res.send).toBeCalledWith("Internal server error");

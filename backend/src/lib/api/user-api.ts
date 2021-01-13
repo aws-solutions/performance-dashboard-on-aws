@@ -1,14 +1,16 @@
 import { Router } from "express";
+import { Role } from "../models/user";
 import UserCtrl from "../controllers/user-ctrl";
-import withErrorHandler from "./middleware/error-handler";
+import errorHandler from "./middleware/error-handler";
 import auth from "./middleware/auth";
+import rbac from "./middleware/rbac";
 
 const router = Router();
 router.use(auth);
 
-router.get("/", withErrorHandler(UserCtrl.getUsers));
-router.post("/", withErrorHandler(UserCtrl.addUsers));
-router.post("/invite", withErrorHandler(UserCtrl.resendInvite));
-router.put("/role", withErrorHandler(UserCtrl.changeRole));
+router.get("/", rbac(Role.Admin), errorHandler(UserCtrl.getUsers));
+router.post("/", rbac(Role.Admin), errorHandler(UserCtrl.addUsers));
+router.post("/invite", rbac(Role.Admin), errorHandler(UserCtrl.resendInvite));
+router.put("/role", rbac(Role.Admin), errorHandler(UserCtrl.changeRole));
 
 export default router;

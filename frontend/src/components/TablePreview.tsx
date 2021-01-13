@@ -24,10 +24,15 @@ const TablePreview = (props: Props) => {
         className="margin-left-2px"
         columns={useMemo(
           () =>
-            headers.map((header) => {
+            headers.map((header, i) => {
               return {
                 Header: header,
+                id: String(i),
                 accessor: header,
+                Cell: (props: any) => {
+                  const row = props.row.original;
+                  return row[header] || null;
+                },
               };
             }),
           [headers]

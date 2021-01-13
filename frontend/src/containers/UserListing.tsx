@@ -44,6 +44,7 @@ function UserListing() {
         screenReaderField="userId"
         filterQuery={filter}
         initialSortByField="userId"
+        asc
         width="100%"
         columns={useMemo(
           () => [

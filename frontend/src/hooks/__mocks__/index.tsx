@@ -360,15 +360,18 @@ export function useDateTimeFormatter() {
 }
 
 export function useUsers() {
+  const [users] = useState([
+    {
+      userId: "johndoe",
+      email: "johndoe@example.com",
+      status: "CONFIRMED",
+      roles: ["Admin"],
+    },
+  ]);
+
   return {
     loading: false,
-    users: [
-      {
-        userId: "johndoe",
-        email: "johndoe@example.com",
-        status: "CONFIRMED",
-      },
-    ],
+    users,
   };
 }
 

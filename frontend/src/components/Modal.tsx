@@ -15,7 +15,8 @@ interface PathParams {
     | "Prepare for publishing"
     | "Archive"
     | "Create draft"
-    | "Re-publish";
+    | "Re-publish"
+    | "Resend";
   buttonAction: Function;
   ariaHideApp?: boolean;
 }

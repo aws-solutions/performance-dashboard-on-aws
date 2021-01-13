@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import EnvConfig from "../services/EnvConfig";
+import { useSettings } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { TopicArea } from "../models";
@@ -21,6 +21,8 @@ function TopicareasTable(props: Props) {
   const [selected, setSelected] = useState<SelectionHashMap>({});
   const [sortedBy, setSortedBy] = useState<ColumnType>("dashboards");
   const [direction, setDirection] = useState<Direction>("down");
+
+  const { settings } = useSettings();
 
   const onSelect = (topicarea: TopicArea) => {
     const selection = { [topicarea.id]: topicarea };
@@ -53,7 +55,9 @@ function TopicareasTable(props: Props) {
         <tr>
           <th></th>
           <th>
-            <span className="font-sans-xs">{EnvConfig.topicAreaLabel}</span>
+            <span className="font-sans-xs">
+              {settings.topicAreaLabels?.singular}
+            </span>
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${

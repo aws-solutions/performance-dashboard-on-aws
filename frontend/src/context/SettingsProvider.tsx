@@ -17,6 +17,10 @@ const defaultSettings: Settings = {
     "I acknowledge that I have reviewed the dashboard" +
     " and it is ready to publish",
   navbarTitle: "",
+  topicAreaLabels: {
+    singular: "Topic Area",
+    plural: "Topic Areas",
+  },
 };
 
 interface SettingsContextProps {

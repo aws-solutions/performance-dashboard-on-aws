@@ -3,11 +3,11 @@ import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicArea } from "../hooks";
 import BackendService from "../services/BackendService";
-import EnvConfig from "../services/EnvConfig";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import AlertContainer from "./AlertContainer";
+import { useSettings } from "../hooks";
 
 interface FormValues {
   name: string;
@@ -24,6 +24,7 @@ function EditTopicArea() {
   const { topicAreaId } = useParams<PathParams>();
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const { topicarea } = useTopicArea(topicAreaId);
+  const { settings } = useSettings();
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -61,7 +62,7 @@ function EditTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
-            label: EnvConfig.topicAreasLabel,
+            label: settings.topicAreaLabels?.plural,
             url: "/admin/settings/topicarea",
           },
           {
@@ -70,7 +71,7 @@ function EditTopicArea() {
         ]}
       />
       <AlertContainer />
-      <h1>{`Edit ${EnvConfig.topicAreaLabel.toLocaleLowerCase()} name`}</h1>
+      <h1>{`Edit ${settings.topicAreaLabels?.singular} name`}</h1>
 
       <div className="grid-row">
         <div className="grid-col-12">
@@ -81,7 +82,7 @@ function EditTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={`${EnvConfig.topicAreaLabel} name`}
+              label={`${settings.topicAreaLabels?.singular} name`}
               register={register}
               error={errors.name && "Please specify a name"}
               defaultValue={topicarea?.name}

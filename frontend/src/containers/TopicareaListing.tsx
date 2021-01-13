@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { useTopicAreas } from "../hooks";
-import AlertContainer from "./AlertContainer";
 import Spinner from "../components/Spinner";
 import Search from "../components/Search";
 import { LocationState, TopicArea } from "../models";
 import Button from "../components/Button";
 import ScrollTop from "../components/ScrollTop";
 import TopicareasTable from "../components/TopicareasTable";
-import EnvConfig from "../services/EnvConfig";
 import BackendService from "../services/BackendService";
 import Modal from "../components/Modal";
 import { useHistory } from "react-router-dom";
 import Tooltip from "../components/Tooltip";
+import { useSettings } from "../hooks";
 
 function TopicareaListing() {
   const history = useHistory<LocationState>();
@@ -21,6 +20,8 @@ function TopicareaListing() {
 
   const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<TopicArea | undefined>(undefined);
+
+  const { settings } = useSettings();
 
   const createTopicArea = () => {
     history.push("/admin/settings/topicarea/create");
@@ -61,7 +62,7 @@ function TopicareaListing() {
           type: "success",
           message: `"${
             selected.name
-          }" ${EnvConfig.topicAreaLabel.toLowerCase()} successfully deleted`,
+          }" ${settings.topicAreaLabels?.singular.toLowerCase()} successfully deleted`,
         },
       });
 
@@ -96,8 +97,8 @@ function TopicareaListing() {
         closeModal={closeDeleteModal}
         title={`Delete "${
           selected?.name
-        }" ${EnvConfig.topicAreaLabel.toLowerCase()}?`}
-        message={`Are you sure you want to delete this ${EnvConfig.topicAreaLabel.toLowerCase()}?`}
+        }" ${settings.topicAreaLabels?.singular.toLowerCase()}?`}
+        message={`Are you sure you want to delete this ${settings.topicAreaLabels?.singular.toLowerCase()}?`}
         buttonType="Delete"
         buttonAction={deleteTopicArea}
       />
@@ -106,8 +107,7 @@ function TopicareaListing() {
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
-          <h3 id="section-heading-h3">{`${EnvConfig.topicAreasLabel} (${topicareas.length})`}</h3>
-          <AlertContainer />
+          <h3 id="section-heading-h3">{`${settings.topicAreaLabels?.plural} (${topicareas.length})`}</h3>
           <div className="grid-row margin-y-3">
             <div className="tablet:grid-col-4 padding-top-1px">
               <Search id="search" onSubmit={onSearch} size="small" />
@@ -138,7 +138,7 @@ function TopicareaListing() {
                   getContent={() => (
                     <div className="font-sans-sm">
                       <p className="margin-y-0">
-                        {`You can only delete ${EnvConfig.topicAreasLabel.toLocaleLowerCase()} ` +
+                        {`You can only delete ${settings.topicAreaLabels?.plural.toLocaleLowerCase()} ` +
                           `that have zero dashboards`}
                       </p>
                     </div>
@@ -153,7 +153,7 @@ function TopicareaListing() {
               <span>
                 <Button
                   onClick={createTopicArea}
-                >{`Create ${EnvConfig.topicAreaLabel.toLowerCase()}`}</Button>
+                >{`Create new ${settings.topicAreaLabels?.singular.toLowerCase()}`}</Button>
               </span>
             </div>
           </div>

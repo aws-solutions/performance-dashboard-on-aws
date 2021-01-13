@@ -56,7 +56,7 @@ function TopicareasTable(props: Props) {
           <th></th>
           <th>
             <span className="font-sans-xs">
-              {settings.topicAreaLabels?.singular}
+              {settings.topicAreaLabels.singular}
             </span>
             <Button
               variant="unstyled"

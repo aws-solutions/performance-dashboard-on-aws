@@ -62,7 +62,7 @@ function EditTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
-            label: settings.topicAreaLabels?.plural,
+            label: settings.topicAreaLabels.plural,
             url: "/admin/settings/topicarea",
           },
           {
@@ -71,7 +71,7 @@ function EditTopicArea() {
         ]}
       />
       <AlertContainer />
-      <h1>{`Edit ${settings.topicAreaLabels?.singular} name`}</h1>
+      <h1>{`Edit ${settings.topicAreaLabels.singular} name`}</h1>
 
       <div className="grid-row">
         <div className="grid-col-12">
@@ -82,7 +82,7 @@ function EditTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={`${settings.topicAreaLabels?.singular} name`}
+              label={`${settings.topicAreaLabels.singular} name`}
               register={register}
               error={errors.name && "Please specify a name"}
               defaultValue={topicarea?.name}

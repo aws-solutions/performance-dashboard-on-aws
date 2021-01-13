@@ -4,8 +4,6 @@ import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { useSettings } from "../hooks";
-import UtilsService from "../services/UtilsService";
-import EnvConfig from "../services/EnvConfig";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -17,10 +15,7 @@ function SettingsLayout(props: LayoutProps) {
   let currentSetting = "topicarea";
 
   const validSettings: any = {
-    topicarea: UtilsService.determineTopicAreaString(
-      EnvConfig.topicAreasLabel,
-      settings.topicAreaLabels?.plural
-    ),
+    topicarea: settings.topicAreaLabels.plural,
     publishingguidance: "Publishing guidance",
     publishedsite: "Published site",
     dateformat: "Date and time format",

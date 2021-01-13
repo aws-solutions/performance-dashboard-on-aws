@@ -26,7 +26,7 @@ function CreateTopicArea() {
         type: "success",
         message: `"${
           topicarea.name
-        }" ${settings.topicAreaLabels?.singular.toLowerCase()} successfully created`,
+        }" ${settings.topicAreaLabels.singular.toLowerCase()} successfully created`,
       },
     });
   };
@@ -44,15 +44,15 @@ function CreateTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
-            label: settings.topicAreaLabels?.plural,
+            label: settings.topicAreaLabels.plural,
             url: "/admin/settings/topicarea",
           },
           {
-            label: `Create new ${settings.topicAreaLabels?.singular.toLowerCase()}`,
+            label: `Create new ${settings.topicAreaLabels.singular.toLowerCase()}`,
           },
         ]}
       />
-      <h1>{`Create new ${settings.topicAreaLabels?.singular.toLowerCase()}`}</h1>
+      <h1>{`Create new ${settings.topicAreaLabels.singular.toLowerCase()}`}</h1>
 
       <div className="grid-row">
         <div className="grid-col-12">
@@ -64,14 +64,14 @@ function CreateTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={`${settings.topicAreaLabels?.singular} name`}
+              label={`${settings.topicAreaLabels.singular} name`}
               register={register}
               error={errors.name && "Please specify a name"}
               required
             />
 
             <br />
-            <Button type="submit">{`Create ${settings.topicAreaLabels?.singular.toLowerCase()}`}</Button>
+            <Button type="submit">{`Create ${settings.topicAreaLabels.singular.toLowerCase()}`}</Button>
             <Button
               className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               variant="unstyled"

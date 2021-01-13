@@ -4,10 +4,8 @@ import { useSettings } from "../hooks";
 import Button from "../components/Button";
 import TopicareaListing from "./TopicareaListing";
 import SettingsLayout from "../layouts/Settings";
-import EnvConfig from "../services/EnvConfig";
 import AlertContainer from "./AlertContainer";
 import MarkdownRender from "../components/MarkdownRender";
-import UtilsService from "../services/UtilsService";
 
 function TopicareaSettings() {
   const { settings, loadingSettings } = useSettings(true);
@@ -23,12 +21,7 @@ function TopicareaSettings() {
         ""
       ) : (
         <>
-          <h1>
-            {UtilsService.determineTopicAreaString(
-              EnvConfig.topicAreasLabel,
-              settings.topicAreaLabels?.plural
-            )}
-          </h1>
+          <h1>{settings.topicAreaLabels.plural}</h1>
 
           <p>
             Dashboards are organized by topic areas. A dashboard must have a
@@ -60,7 +53,7 @@ function TopicareaSettings() {
           <div className="grid-row margin-top-0-important margin-bottom-4">
             <div className="grid-col flex-9">
               <div className="published-site font-sans-lg">
-                <MarkdownRender source={settings.topicAreaLabels?.singular} />
+                <MarkdownRender source={settings.topicAreaLabels.singular} />
               </div>
             </div>
             <div className="grid-col flex-3 text-right"></div>
@@ -72,7 +65,7 @@ function TopicareaSettings() {
           <div className="grid-row margin-top-0-important margin-bottom-4">
             <div className="grid-col flex-9">
               <div className="published-site font-sans-lg">
-                <MarkdownRender source={settings.topicAreaLabels?.plural} />
+                <MarkdownRender source={settings.topicAreaLabels.plural} />
               </div>
             </div>
             <div className="grid-col flex-3 text-right"></div>

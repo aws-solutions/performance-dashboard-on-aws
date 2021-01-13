@@ -48,10 +48,7 @@ function EditTopicAreaLabel() {
       url: "/admin/settings/topicarea",
     },
     {
-      label: UtilsService.determineTopicAreaString(
-        EnvConfig.topicAreasLabel,
-        settings.topicAreaLabels?.plural
-      ),
+      label: settings.topicAreaLabels.plural,
       url: "/admin/settings/topicarea",
     },
     {
@@ -86,7 +83,7 @@ function EditTopicAreaLabel() {
                 label='Rename single "topic area"'
                 hint='For example, "ministry"'
                 error={errors.singular && "Please specify a title"}
-                defaultValue={settings.topicAreaLabels?.singular}
+                defaultValue={settings.topicAreaLabels.singular}
                 register={register}
                 required
               />
@@ -97,7 +94,7 @@ function EditTopicAreaLabel() {
                 label='Rename multiple "topic areas"'
                 hint='For example, "ministries"'
                 error={errors.plural && "Please specify a title"}
-                defaultValue={settings.topicAreaLabels?.plural}
+                defaultValue={settings.topicAreaLabels.plural}
                 register={register}
                 required
               />

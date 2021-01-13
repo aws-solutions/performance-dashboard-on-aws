@@ -156,7 +156,7 @@ export type Settings = {
   };
   updatedAt?: Date;
   navbarTitle?: string;
-  topicAreaLabels?: {
+  topicAreaLabels: {
     singular: string;
     plural: string;
   };

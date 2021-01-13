@@ -9,18 +9,14 @@ test("renders the title", async () => {
   const { getByRole } = render(<TopicareaSettings />, {
     wrapper: MemoryRouter,
   });
-  expect(
-    getByRole("heading", { name: "Topic areas (Ministries)" })
-  ).toBeInTheDocument();
+  expect(getByRole("heading", { name: "Ministries" })).toBeInTheDocument();
 });
 
 test("renders the title with set value of topic areas", async () => {
   const { getByRole } = render(<TopicareaSettings />, {
     wrapper: MemoryRouter,
   });
-  expect(
-    getByRole("heading", { name: "Topic areas (Ministries)" })
-  ).toBeInTheDocument();
+  expect(getByRole("heading", { name: "Ministries" })).toBeInTheDocument();
 });
 
 test("renders the description", async () => {

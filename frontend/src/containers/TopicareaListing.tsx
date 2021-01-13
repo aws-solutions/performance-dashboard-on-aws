@@ -62,7 +62,7 @@ function TopicareaListing() {
           type: "success",
           message: `"${
             selected.name
-          }" ${settings.topicAreaLabels?.singular.toLowerCase()} successfully deleted`,
+          }" ${settings.topicAreaLabels.singular.toLowerCase()} successfully deleted`,
         },
       });
 
@@ -97,8 +97,8 @@ function TopicareaListing() {
         closeModal={closeDeleteModal}
         title={`Delete "${
           selected?.name
-        }" ${settings.topicAreaLabels?.singular.toLowerCase()}?`}
-        message={`Are you sure you want to delete this ${settings.topicAreaLabels?.singular.toLowerCase()}?`}
+        }" ${settings.topicAreaLabels.singular.toLowerCase()}?`}
+        message={`Are you sure you want to delete this ${settings.topicAreaLabels.singular.toLowerCase()}?`}
         buttonType="Delete"
         buttonAction={deleteTopicArea}
       />
@@ -107,7 +107,7 @@ function TopicareaListing() {
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
-          <h3 id="section-heading-h3">{`${settings.topicAreaLabels?.plural} (${topicareas.length})`}</h3>
+          <h3 id="section-heading-h3">{`${settings.topicAreaLabels.plural} (${topicareas.length})`}</h3>
           <div className="grid-row margin-y-3">
             <div className="tablet:grid-col-4 padding-top-1px">
               <Search id="search" onSubmit={onSearch} size="small" />
@@ -138,7 +138,7 @@ function TopicareaListing() {
                   getContent={() => (
                     <div className="font-sans-sm">
                       <p className="margin-y-0">
-                        {`You can only delete ${settings.topicAreaLabels?.plural.toLocaleLowerCase()} ` +
+                        {`You can only delete ${settings.topicAreaLabels.plural.toLocaleLowerCase()} ` +
                           `that have zero dashboards`}
                       </p>
                     </div>
@@ -153,7 +153,7 @@ function TopicareaListing() {
               <span>
                 <Button
                   onClick={createTopicArea}
-                >{`Create new ${settings.topicAreaLabels?.singular.toLowerCase()}`}</Button>
+                >{`Create new ${settings.topicAreaLabels.singular.toLowerCase()}`}</Button>
               </span>
             </div>
           </div>

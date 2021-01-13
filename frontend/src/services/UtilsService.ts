@@ -38,22 +38,9 @@ function getChartTypeLabel(chartType: string): string {
     : chartType.split(/(?=[A-Z])/).join(" ");
 }
 
-function determineTopicAreaString(
-  defaultTopicArea: string,
-  currentTopicArea: string | undefined
-): string {
-  return `Topic areas ${
-    currentTopicArea &&
-    currentTopicArea.toLowerCase() === defaultTopicArea.toLowerCase()
-      ? ""
-      : ` (${currentTopicArea})`
-  }`;
-}
-
 const UtilsService = {
   groupByTopicArea,
   getChartTypeLabel,
-  determineTopicAreaString,
 };
 
 export default UtilsService;

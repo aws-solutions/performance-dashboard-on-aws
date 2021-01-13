@@ -3,10 +3,8 @@ import { mocked } from "ts-jest/utils";
 import { Role, User } from "../../models/user";
 import UserRepository from "../../repositories/user-repo";
 import UserCtrl from "../user-ctrl";
-import AuthService from "../../services/auth";
 import UserFactory from "../../factories/user-factory";
 
-jest.mock("../../services/auth");
 jest.mock("../../repositories/user-repo");
 jest.mock("../../factories/user-factory");
 
@@ -16,7 +14,6 @@ const req = ({} as any) as Request;
 let res: Response;
 
 beforeEach(() => {
-  AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   UserRepository.getInstance = jest.fn().mockReturnValue(repository);
   res = ({
     send: jest.fn().mockReturnThis(),
@@ -29,18 +26,12 @@ describe("addUser", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       body: {
         role: "Admin",
         emails: "test1@test.com,test2@test.com",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await UserCtrl.addUsers(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when role is missing", async () => {
@@ -87,17 +78,11 @@ describe("resendInvite", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       body: {
         emails: "test1@test.com,test2@test.com",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await UserCtrl.resendInvite(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when emails is missing", async () => {
@@ -124,18 +109,12 @@ describe("changeRole", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       body: {
         role: "Editor",
         emails: "test1@test.com,test2@test.com",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await UserCtrl.changeRole(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when role is missing", async () => {
@@ -176,13 +155,6 @@ describe("changeRole", () => {
 });
 
 describe("getUsers", () => {
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await UserCtrl.getUsers(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
-  });
-
   it("returns users when available in cognito", async () => {
     const now = new Date();
     jest.useFakeTimers("modern");

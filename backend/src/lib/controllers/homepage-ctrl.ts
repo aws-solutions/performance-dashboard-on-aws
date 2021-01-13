@@ -37,13 +37,7 @@ async function getHomepage(req: Request, res: Response) {
 }
 
 async function updateHomepage(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const { title, description, updatedAt } = req.body;
 
   if (!title) {

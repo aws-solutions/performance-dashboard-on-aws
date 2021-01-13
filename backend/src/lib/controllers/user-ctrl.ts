@@ -1,17 +1,9 @@
 import { Request, Response } from "express";
 import UserRepository from "../repositories/user-repo";
 import UserFactory from "../factories/user-factory";
-import AuthService from "../services/auth";
 import { Role } from "../models/user";
 
 async function getUsers(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
-
   const repo = UserRepository.getInstance();
   try {
     const users = await repo.listUsers();
@@ -22,13 +14,6 @@ async function getUsers(req: Request, res: Response) {
 }
 
 async function addUsers(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
-
   const { role, emails } = req.body;
 
   if (!role) {
@@ -67,13 +52,6 @@ async function addUsers(req: Request, res: Response) {
 }
 
 async function resendInvite(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
-
   const { emails } = req.body;
 
   if (!emails) {
@@ -100,13 +78,6 @@ async function resendInvite(req: Request, res: Response) {
 }
 
 async function changeRole(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
-
   const { role, emails } = req.body;
 
   if (!role) {

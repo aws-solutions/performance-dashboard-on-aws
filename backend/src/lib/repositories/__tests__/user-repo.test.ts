@@ -87,3 +87,27 @@ describe("addUsers", () => {
     });
   });
 });
+
+describe("resendInvite", () => {
+  it("should call resendInvite with the correct parameters", async () => {
+    await repo.resendInvite(["test"]);
+    expect(cognito.addUser).toHaveBeenCalledWith({
+      UserPoolId: "abc",
+      Username: "test",
+      MessageAction: "RESEND",
+    });
+  });
+});
+
+describe("changeRole", () => {
+  it("should call changeRole with the correct parameters", async () => {
+    await repo.changeRole(["test"], Role.Publisher);
+    expect(cognito.updateUserAttributes).toHaveBeenCalledWith({
+      UserPoolId: "abc",
+      Username: "test",
+      UserAttributes: [
+        { Name: "custom:roles", Value: JSON.stringify([Role.Publisher]) },
+      ],
+    });
+  });
+});

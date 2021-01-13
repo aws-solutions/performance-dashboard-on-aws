@@ -6,5 +6,7 @@ const router = Router();
 
 router.get("/", withErrorHandler(UserCtrl.getUsers));
 router.post("/", withErrorHandler(UserCtrl.addUsers));
+router.post("/invite", withErrorHandler(UserCtrl.resendInvite));
+router.put("/role", withErrorHandler(UserCtrl.changeRole));
 
 export default router;

@@ -169,6 +169,16 @@ export class BackendApi extends cdk.Construct {
     publishedSite.addMethod("GET", apiIntegration, methodProps);
     publishedSite.addMethod("PUT", apiIntegration, methodProps);
 
+    const user = this.api.root.addResource("user");
+    user.addMethod("GET", apiIntegration, methodProps);
+    user.addMethod("POST", apiIntegration, methodProps);
+
+    const resendInvite = user.addResource("invite");
+    resendInvite.addMethod("POST", apiIntegration, methodProps);
+
+    const changeRole = user.addResource("role");
+    changeRole.addMethod("PUT", apiIntegration, methodProps);
+
     const ingestApi = this.api.root.addResource("ingestapi");
     const ingestApiDatasets = ingestApi.addResource("dataset");
     ingestApiDatasets.addMethod("POST", apiIntegration, {
@@ -180,10 +190,6 @@ export class BackendApi extends cdk.Construct {
     ingestApiDataset.addMethod("DELETE", apiIntegration, {
       apiKeyRequired: true,
     });
-
-    const user = this.api.root.addResource("user");
-    user.addMethod("GET", apiIntegration, methodProps);
-    user.addMethod("POST", apiIntegration, methodProps);
   }
 
   private addPublicEndpoints(apiIntegration: apigateway.LambdaIntegration) {

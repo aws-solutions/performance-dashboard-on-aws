@@ -1,25 +1,50 @@
 import { useEffect, useState, useCallback } from "react";
 import Auth from "@aws-amplify/auth";
-import { User } from "../models";
+import { User, UserRoles } from "../models";
 import BackendService from "../services/BackendService";
 
-type AdminHook = {
+type CurrentUserHook = {
   username: string;
+  isAdmin: boolean;
+  isEditor: boolean;
+  isPublisher: boolean;
 };
 
-export function useAdmin(): AdminHook {
-  const [username, setUsername] = useState<string>("");
+export function useCurrentAuthenticatedUser(): CurrentUserHook {
+  const [username, setUser] = useState<string>("");
+  const [roles, setRoles] = useState<{
+    isAdmin: boolean;
+    isEditor: boolean;
+    isPublisher: boolean;
+  }>({
+    isAdmin: false,
+    isEditor: false,
+    isPublisher: false,
+  });
+
+  const fetchData = useCallback(async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    setUser(user.username);
+
+    if (user.attributes && user.attributes["custom:roles"]) {
+      const userRoles = user.attributes["custom:roles"];
+      setRoles({
+        isAdmin: userRoles.includes(UserRoles.Admin),
+        isEditor: userRoles.includes(UserRoles.Editor),
+        isPublisher: userRoles.includes(UserRoles.Publisher),
+      });
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const user = await Auth.currentAuthenticatedUser();
-      setUsername(user.username);
-    };
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return {
     username,
+    isAdmin: roles.isAdmin,
+    isEditor: roles.isEditor,
+    isPublisher: roles.isPublisher,
   };
 }
 

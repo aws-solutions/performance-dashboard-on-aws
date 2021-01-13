@@ -34,6 +34,20 @@ class CognitoService {
     logger.debug("Cognito ListUsers %o", input);
     return this.cognitoIdentityServiceProvider.listUsers(input).promise();
   }
+
+  async addUser(input: CognitoIdentityServiceProvider.AdminCreateUserRequest) {
+    logger.debug("Cognito AdminCreateUser %o", input);
+    return this.cognitoIdentityServiceProvider.adminCreateUser(input).promise();
+  }
+
+  async updateUserAttributes(
+    input: CognitoIdentityServiceProvider.AdminUpdateUserAttributesRequest
+  ) {
+    logger.debug("Cognito AdminUpdateUserAttributes %o", input);
+    return this.cognitoIdentityServiceProvider
+      .adminUpdateUserAttributes(input)
+      .promise();
+  }
 }
 
 export default CognitoService;

@@ -1,17 +1,9 @@
 import { Request, Response } from "express";
-import AuthService from "../services/auth";
 import WidgetFactory from "../factories/widget-factory";
 import WidgetRepository from "../repositories/widget-repo";
 import DashboardRepository from "../repositories/dashboard-repo";
 
 async function getWidgetById(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
   const { id, widgetId } = req.params;
 
   if (!id) {
@@ -30,12 +22,7 @@ async function getWidgetById(req: Request, res: Response) {
 }
 
 async function createWidget(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const dashboardId = req.params.id;
   if (!dashboardId) {
     res.status(400).send("Missing required field `id`");
@@ -83,12 +70,7 @@ async function createWidget(req: Request, res: Response) {
 }
 
 async function updateWidget(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const dashboardId = req.params.id;
   if (!dashboardId) {
     res.status(400).send("Missing required field `id`");
@@ -133,12 +115,6 @@ async function updateWidget(req: Request, res: Response) {
 }
 
 async function deleteWidget(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
   const dashboardId = req.params.id;
   const widgetId = req.params.widgetId;
 
@@ -158,12 +134,7 @@ async function deleteWidget(req: Request, res: Response) {
 }
 
 async function setWidgetOrder(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const dashboardId = req.params.id;
   const { widgets } = req.body;
 

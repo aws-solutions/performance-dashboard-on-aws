@@ -5,7 +5,6 @@ exports[`renders a basic table 1`] = `
   <table
     class="usa-table usa-table--borderless"
     role="table"
-    width="100%"
   >
     <thead>
       <tr
@@ -170,7 +169,6 @@ exports[`renders a table with selection checkboxes 1`] = `
   <table
     class="usa-table usa-table--borderless"
     role="table"
-    width="100%"
   >
     <thead>
       <tr
@@ -374,7 +372,6 @@ exports[`sorting buttons are clickable 1`] = `
   <table
     class="usa-table usa-table--borderless"
     role="table"
-    width="100%"
   >
     <thead>
       <tr
@@ -578,7 +575,6 @@ exports[`sorting buttons are clickable 2`] = `
   <table
     class="usa-table usa-table--borderless"
     role="table"
-    width="100%"
   >
     <thead>
       <tr

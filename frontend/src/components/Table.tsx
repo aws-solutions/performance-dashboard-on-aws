@@ -16,9 +16,12 @@ interface Props {
   className?: string;
   onSelection?: Function;
   rows: Array<object>;
+  width?: string;
   columns: Array<{
-    accessor: string;
+    accessor?: string;
     Header: string;
+    Cell?: Function;
+    id?: string;
   }>;
 }
 
@@ -93,7 +96,7 @@ function Table(props: Props) {
   return (
     <table
       className={`usa-table usa-table--borderless${className}`}
-      width="100%"
+      width={props.width}
       {...getTableProps()}
     >
       <thead>

@@ -175,6 +175,12 @@ export type LocationState = {
   id?: string;
 };
 
+export enum UserRoles {
+  Admin = "admin",
+  Editor = "editor",
+  Publisher = "publisher",
+}
+
 export type User = {
   userId: string;
   email: string;

@@ -1,4 +1,5 @@
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { Role } from "../../models/user";
 import { mocked } from "ts-jest/utils";
 import CognitoService from "../../services/cognito";
 import UserRepository from "../user-repo";
@@ -47,6 +48,7 @@ describe("listUsers", () => {
           Value: "123",
         },
         { Name: "email", Value: "test@test.com" },
+        { Name: "custom:roles", Value: '["Admin"]' },
       ],
       UserCreateDate: now,
       UserLastModifiedDate: now,
@@ -63,8 +65,49 @@ describe("listUsers", () => {
       userStatus: "CONFIRMED",
       sub: "123",
       email: "test@test.com",
+      roles: [Role.Admin],
       createdAt: now,
       updatedAt: now,
+    });
+  });
+});
+
+describe("addUsers", () => {
+  it("should call addUser with the correct parameters", async () => {
+    await repo.addUsers([
+      { userId: "test", email: "test@test.com", roles: [Role.Admin] },
+    ]);
+    expect(cognito.addUser).toHaveBeenCalledWith({
+      UserPoolId: "abc",
+      Username: "test",
+      UserAttributes: [
+        { Name: "email", Value: "test@test.com" },
+        { Name: "custom:roles", Value: JSON.stringify([Role.Admin]) },
+      ],
+    });
+  });
+});
+
+describe("resendInvite", () => {
+  it("should call resendInvite with the correct parameters", async () => {
+    await repo.resendInvite(["test"]);
+    expect(cognito.addUser).toHaveBeenCalledWith({
+      UserPoolId: "abc",
+      Username: "test",
+      MessageAction: "RESEND",
+    });
+  });
+});
+
+describe("changeRole", () => {
+  it("should call changeRole with the correct parameters", async () => {
+    await repo.changeRole(["test"], Role.Publisher);
+    expect(cognito.updateUserAttributes).toHaveBeenCalledWith({
+      UserPoolId: "abc",
+      Username: "test",
+      UserAttributes: [
+        { Name: "custom:roles", Value: JSON.stringify([Role.Publisher]) },
+      ],
     });
   });
 });

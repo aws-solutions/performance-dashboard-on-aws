@@ -2,11 +2,8 @@ import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
 import TopicAreaCtrl from "../topicarea-ctrl";
-import TopicAreaFactory from "../../factories/topicarea-factory";
 import TopicAreaRepository from "../../repositories/topicarea-repo";
-import AuthService from "../../services/auth";
 
-jest.mock("../../services/auth");
 jest.mock("../../repositories/topicarea-repo");
 
 const user: User = { userId: "johndoe" };
@@ -18,7 +15,6 @@ const res = ({
 } as any) as Response;
 
 beforeEach(() => {
-  AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   TopicAreaRepository.getInstance = jest.fn().mockReturnValue(repository);
 });
 
@@ -26,6 +22,7 @@ describe("updateTopicArea", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "3ffdb1ef-081d-4534-97e9-b69cdbb687d0",
       },
@@ -33,13 +30,6 @@ describe("updateTopicArea", () => {
         name: "New Name",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await TopicAreaCtrl.updateTopicArea(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when name is missing", async () => {
@@ -63,17 +53,11 @@ describe("deleteTopicArea", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "3ffdb1ef-081d-4534-97e9-b69cdbb687d0",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await TopicAreaCtrl.deleteTopicArea(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when topicAreaId is missing", async () => {

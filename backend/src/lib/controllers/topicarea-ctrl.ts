@@ -1,29 +1,16 @@
 import { Request, Response } from "express";
 import TopicAreaFactory from "../factories/topicarea-factory";
-import AuthService from "../services/auth";
 import TopicAreaRepository from "../repositories/topicarea-repo";
 
 async function listTopicAreas(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
   const repo = TopicAreaRepository.getInstance();
   const topicareas = await repo.list();
   res.json(topicareas);
 }
 
 async function createTopicArea(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
+  const user = req.user;
   const { name } = req.body;
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
 
   if (!name) {
     res.status(400).send("Missing required field `name`");
@@ -38,13 +25,6 @@ async function createTopicArea(req: Request, res: Response) {
 }
 
 async function getTopicAreaById(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
   const { id } = req.params;
 
   if (!id) {
@@ -58,14 +38,8 @@ async function getTopicAreaById(req: Request, res: Response) {
 }
 
 async function updateTopicArea(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
   const { id } = req.params;
   const { name } = req.body;
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
 
   if (!name) {
     res.status(400).send("Missing required field `name`");
@@ -78,13 +52,7 @@ async function updateTopicArea(req: Request, res: Response) {
 }
 
 async function deleteTopicArea(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
   const { id } = req.params;
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
 
   if (!id) {
     res.status(400).send("Missing required param `id`");

@@ -87,7 +87,11 @@ export class LambdaFunctions extends cdk.Construct {
     const cognitoPolicy = new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
       resources: [props.userPool.arn],
-      actions: ["cognito-idp:ListUsers"],
+      actions: [
+        "cognito-idp:ListUsers",
+        "cognito-idp:AdminCreateUser",
+        "cognito-idp:AdminUpdateUserAttributes",
+      ],
     });
 
     this.apiHandler.addToRolePolicy(dynamodbPolicy);

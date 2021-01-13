@@ -2,8 +2,10 @@ import { Router } from "express";
 import SettingsCtrl from "../controllers/settings-ctrl";
 import withErrorHandler from "./middleware/error-handler";
 import HomepageCtrl from "../controllers/homepage-ctrl";
+import auth from "./middleware/auth";
 
 const router = Router();
+router.use(auth);
 
 router.get("/", withErrorHandler(SettingsCtrl.getSettings));
 router.put("/", withErrorHandler(SettingsCtrl.updateSettings));

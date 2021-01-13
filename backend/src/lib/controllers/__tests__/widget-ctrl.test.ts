@@ -5,11 +5,8 @@ import WidgetCtrl from "../widget-ctrl";
 import WidgetFactory from "../../factories/widget-factory";
 import WidgetRepository from "../../repositories/widget-repo";
 import { WidgetType } from "../../models/widget";
-import AuthService from "../../services/auth";
 import DashboardRepository from "../../repositories/dashboard-repo";
-import widgetFactory from "../../factories/widget-factory";
 
-jest.mock("../../services/auth");
 jest.mock("../../repositories/widget-repo");
 jest.mock("../../repositories/dashboard-repo");
 
@@ -23,7 +20,6 @@ const res = ({
 } as any) as Response;
 
 beforeEach(() => {
-  AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   WidgetRepository.getInstance = jest.fn().mockReturnValue(repository);
   DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
 });
@@ -32,6 +28,7 @@ describe("createWidget", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "090b0410",
       },
@@ -43,13 +40,6 @@ describe("createWidget", () => {
         },
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await WidgetCtrl.createWidget(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when dashboardId is missing", async () => {
@@ -104,6 +94,7 @@ describe("updateWidget", () => {
   jest.setSystemTime(now);
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "090b0410",
         widgetId: "14507073",
@@ -117,13 +108,6 @@ describe("updateWidget", () => {
         },
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await WidgetCtrl.updateWidget(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when dashboardId is missing", async () => {
@@ -180,18 +164,12 @@ describe("deleteWidget", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "090b0410",
         widgetId: "14507073",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await WidgetCtrl.deleteWidget(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when dashboardId is missing", async () => {
@@ -218,6 +196,7 @@ describe("setWidgetOrder", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       params: { id: "090b0410" },
       body: {
         widgets: [
@@ -234,13 +213,6 @@ describe("setWidgetOrder", () => {
         ],
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await WidgetCtrl.setWidgetOrder(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when dashboardId is missing", async () => {

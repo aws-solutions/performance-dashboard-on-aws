@@ -2,31 +2,17 @@ import { Request, Response } from "express";
 import { ItemNotFound } from "../errors";
 import { Dashboard, DashboardState } from "../models/dashboard";
 import DashboardFactory from "../factories/dashboard-factory";
-import AuthService from "../services/auth";
 import DashboardRepository from "../repositories/dashboard-repo";
 import TopicAreaRepository from "../repositories/topicarea-repo";
 
 async function listDashboards(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
   const repo = DashboardRepository.getInstance();
   const dashboards = await repo.listDashboards();
   res.json(dashboards);
 }
 
 async function createDashboard(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const { topicAreaId, name, description } = req.body;
 
   if (!topicAreaId) {
@@ -56,12 +42,6 @@ async function createDashboard(req: Request, res: Response) {
 }
 
 async function getDashboardById(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
-
   const { id } = req.params;
   const repo = DashboardRepository.getInstance();
 
@@ -131,12 +111,6 @@ async function getPublicDashboardById(req: Request, res: Response) {
 }
 
 async function getVersions(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
-
   const { id } = req.params;
   const repo = DashboardRepository.getInstance();
 
@@ -154,13 +128,7 @@ async function getVersions(req: Request, res: Response) {
 }
 
 async function updateDashboard(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const { id } = req.params;
   const { name, topicAreaId, description, updatedAt } = req.body;
 
@@ -206,13 +174,7 @@ async function updateDashboard(req: Request, res: Response) {
 }
 
 async function publishDashboard(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const { id } = req.params;
   const { updatedAt, releaseNotes } = req.body;
 
@@ -260,13 +222,7 @@ async function publishDashboard(req: Request, res: Response) {
 }
 
 async function publishPendingDashboard(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const { id } = req.params;
   const { updatedAt } = req.body;
 
@@ -288,13 +244,7 @@ async function publishPendingDashboard(req: Request, res: Response) {
 }
 
 async function archiveDashboard(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const { id } = req.params;
   const { updatedAt } = req.body;
 
@@ -316,13 +266,7 @@ async function archiveDashboard(req: Request, res: Response) {
 }
 
 async function moveToDraftDashboard(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const { id } = req.params;
   const { updatedAt } = req.body;
 
@@ -344,13 +288,6 @@ async function moveToDraftDashboard(req: Request, res: Response) {
 }
 
 async function deleteDashboard(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
   const { id } = req.params;
 
   const repo = DashboardRepository.getInstance();
@@ -359,13 +296,6 @@ async function deleteDashboard(req: Request, res: Response) {
 }
 
 async function deleteDashboards(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
   const { ids } = req.query;
 
   if (!ids) {
@@ -381,13 +311,7 @@ async function deleteDashboards(req: Request, res: Response) {
 }
 
 async function createNewDraft(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   const { id } = req.params;
   const repo = DashboardRepository.getInstance();
 

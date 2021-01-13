@@ -4,7 +4,6 @@ import { User } from "../../models/user";
 import DatasetCtrl from "../dataset-ctrl";
 import DatasetRepository from "../../repositories/dataset-repo";
 
-jest.mock("../../services/auth");
 jest.mock("../../repositories/dataset-repo");
 
 const user: User = { userId: "johndoe" };

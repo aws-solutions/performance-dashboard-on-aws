@@ -4,13 +4,6 @@ import SettingsRepository from "../repositories/settings-repo";
 import AuthService from "../services/auth";
 
 async function getSettings(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
-
   const repo = SettingsRepository.getInstance();
   const settings = await repo.getSettings();
 
@@ -18,14 +11,9 @@ async function getSettings(req: Request, res: Response) {
 }
 
 async function updateSettings(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   let { updatedAt } = req.body;
+
   const {
     publishingGuidance,
     dateTimeFormat,

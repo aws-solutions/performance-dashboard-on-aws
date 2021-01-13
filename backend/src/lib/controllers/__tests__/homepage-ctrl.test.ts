@@ -11,7 +11,6 @@ import HomepageRepository from "../../repositories/homepage-repo";
 import DashboardRepository from "../../repositories/dashboard-repo";
 import DashboardFactory from "../../factories/dashboard-factory";
 import HomepageCtrl from "../homepage-ctrl";
-import AuthService from "../../services/auth";
 
 jest.mock("../../repositories/homepage-repo");
 jest.mock("../../repositories/dashboard-repo");
@@ -29,7 +28,6 @@ const res = ({
 } as any) as Response;
 
 beforeEach(() => {
-  AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   HomepageRepository.getInstance = jest.fn().mockReturnValue(repository);
   DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
   dashboardRepo.listPublishedDashboards = jest.fn().mockReturnValue([]);
@@ -164,19 +162,13 @@ describe("updateHomepage", () => {
   jest.setSystemTime(now);
   beforeEach(() => {
     req = ({
+      user,
       body: {
         title: "abc",
         description: "description test",
         updatedAt: now.toISOString(),
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await HomepageCtrl.updateHomepage(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when title is missing", async () => {

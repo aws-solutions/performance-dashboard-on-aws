@@ -2,8 +2,10 @@ import { Router } from "express";
 import DashboardCtrl from "../controllers/dashboard-ctrl";
 import WidgetCtrl from "../controllers/widget-ctrl";
 import withErrorHandler from "./middleware/error-handler";
+import auth from "./middleware/auth";
 
 const router = Router();
+router.use(auth);
 
 router.get("/", withErrorHandler(DashboardCtrl.listDashboards));
 router.get("/:id", withErrorHandler(DashboardCtrl.getDashboardById));

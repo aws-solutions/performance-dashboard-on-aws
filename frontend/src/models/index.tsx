@@ -168,13 +168,18 @@ export type LocationState = {
 };
 
 export enum UserRoles {
-  Admin = "admin",
-  Editor = "editor",
-  Publisher = "publisher",
+  Admin = "Admin",
+  Editor = "Editor",
+  Publisher = "Publisher",
 }
 
 export type User = {
   userId: string;
+  enabled: boolean;
+  userStatus: string;
+  sub: string;
   email: string;
-  status: string;
+  roles: Array<UserRoles>;
+  createdAt: Date;
+  updatedAt: Date;
 };

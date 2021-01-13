@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import ScrollTop from "../components/ScrollTop";
 import Search from "../components/Search";
 import Table from "../components/Table";
+import { UserRoles } from "../models";
 
 function UserListing() {
   const { users } = useUsers();
@@ -43,6 +44,7 @@ function UserListing() {
         screenReaderField="userId"
         filterQuery={filter}
         initialSortByField="userId"
+        width="100%"
         columns={useMemo(
           () => [
             {
@@ -55,8 +57,11 @@ function UserListing() {
             },
             {
               Header: "Role",
-              accessor: "",
-              Cell: () => "Admin",
+              accessor: "roles",
+              Cell: (props: any) =>
+                props.value && props.value.length
+                  ? (props.value as Array<UserRoles>).join(",")
+                  : "Admin",
             },
             {
               Header: "Status",

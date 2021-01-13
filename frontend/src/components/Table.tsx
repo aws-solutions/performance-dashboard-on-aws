@@ -18,8 +18,10 @@ interface Props {
   rows: Array<object>;
   width?: string;
   columns: Array<{
-    accessor: string;
+    accessor?: string;
     Header: string;
+    Cell?: Function;
+    id?: string;
   }>;
 }
 

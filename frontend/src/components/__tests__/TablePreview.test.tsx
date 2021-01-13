@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import TablePreview from "../TablePreview";
 
@@ -31,4 +31,21 @@ test("table preview should match snapshot", async () => {
     { wrapper: MemoryRouter }
   );
   expect(wrapper.container).toMatchSnapshot();
+});
+
+test("table should not crash when a column header is an empty string", async () => {
+  const wrapper = render(
+    <TablePreview
+      title="test title"
+      summary="test summary"
+      headers={["", "something"]}
+      data={[{ "": "foo", something: "bar" }]}
+    />,
+    { wrapper: MemoryRouter }
+  );
+
+  expect(screen.getByRole("table")).toBeInTheDocument();
+  expect(screen.getByText("foo")).toBeInTheDocument();
+  expect(screen.getByText("bar")).toBeInTheDocument();
+  expect(screen.getByText("something")).toBeInTheDocument();
 });

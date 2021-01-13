@@ -22,7 +22,7 @@ const TablePreview = (props: Props) => {
         selection="none"
         rows={useMemo(() => data || [], [data])}
         className="margin-left-1"
-        asc
+        initialSortAscending
         columns={useMemo(
           () =>
             headers.map((header, i) => {

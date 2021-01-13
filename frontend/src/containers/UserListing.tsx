@@ -114,7 +114,7 @@ function UserListing() {
         filterQuery={filter}
         initialSortByField="userId"
         onSelection={onSelect}
-        asc
+        initialSortAscending
         width="100%"
         columns={useMemo(
           () => [
@@ -132,7 +132,7 @@ function UserListing() {
               Cell: (props: any) =>
                 props.value && props.value.length
                   ? (props.value as Array<UserRoles>).join(",")
-                  : "Admin",
+                  : "",
             },
             {
               Header: "Status",

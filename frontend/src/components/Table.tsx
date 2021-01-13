@@ -11,7 +11,7 @@ import {
 interface Props {
   selection: "multiple" | "none";
   initialSortByField?: string;
-  asc?: boolean;
+  initialSortAscending?: boolean;
   screenReaderField?: string;
   filterQuery?: string;
   className?: string;
@@ -47,10 +47,10 @@ function Table(props: Props) {
           () => [
             {
               id: props.initialSortByField || "",
-              desc: !props.asc,
+              desc: !props.initialSortAscending,
             },
           ],
-          [props.initialSortByField, props.asc]
+          [props.initialSortByField, props.initialSortAscending]
         ),
       },
     },

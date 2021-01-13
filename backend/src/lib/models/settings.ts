@@ -10,7 +10,6 @@ export interface Settings {
     singular: string;
     plural: string;
   };
-
 }
 
 export interface PublicSettings {
@@ -23,7 +22,6 @@ export interface PublicSettings {
     singular: string;
     plural: string;
   };
-
 }
 
 export interface SettingsItem {
@@ -41,5 +39,4 @@ export interface SettingsItem {
     singular: string;
     plural: string;
   };
-
 }

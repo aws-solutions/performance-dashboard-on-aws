@@ -1,7 +1,6 @@
 import { InvalidDatasetContent } from "../errors";
 import { DatasetContent } from "../models/dataset";
 import { User } from "../models/user";
-import { Widget } from "../models/widget";
 import DashboardRepository from "../repositories/dashboard-repo";
 import WidgetRepository from "../repositories/widget-repo";
 import DatasetRepository from "../repositories/dataset-repo";
@@ -32,9 +31,8 @@ async function updateDataset(
   await repo.updateDataset(datasetId, newMetadata, newContent);
 
   // Fetch all widgets associated to this dataset
-  let associatedWidgets: Widget[] = [];
   const widgetRepo = WidgetRepository.getInstance();
-  associatedWidgets = await widgetRepo.getAssociatedWidgets(datasetId);
+  const associatedWidgets = await widgetRepo.getAssociatedWidgets(datasetId);
 
   // Get the dashboards associated to these widgets and update
   // their `updateAt` value to reflect that their datasets have been updated.

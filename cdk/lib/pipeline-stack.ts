@@ -56,6 +56,9 @@ export class PipelineStack extends cdk.Stack {
         computeType: codebuild.ComputeType.LARGE,
       },
       environmentVariables: {
+        CDK_ADMIN_EMAIL: {
+          value: "johndoe@example.com",
+        },
         ENVIRONMENT: {
           value: "Gamma",
         },

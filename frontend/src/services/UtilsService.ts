@@ -38,9 +38,19 @@ function getChartTypeLabel(chartType: string): string {
     : chartType.split(/(?=[A-Z])/).join(" ");
 }
 
+function validateEmails(input: string): boolean {
+  const emails = input.split(",").map((email) => email.trim());
+  return emails.every(emailIsValid);
+}
+
+function emailIsValid(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 const UtilsService = {
   groupByTopicArea,
   getChartTypeLabel,
+  validateEmails,
 };
 
 export default UtilsService;

@@ -172,13 +172,14 @@ export type LocationState = {
     to?: string;
     linkLabel?: string;
   };
+  emails?: string;
   id?: string;
 };
 
 export enum UserRoles {
   Admin = "Admin",
   Editor = "Editor",
-  //Publisher = "Publisher",
+  Publisher = "Publisher",
 }
 
 export type User = {

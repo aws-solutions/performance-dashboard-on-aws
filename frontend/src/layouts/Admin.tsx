@@ -46,7 +46,22 @@ function AdminLayout(props: LayoutProps) {
             </button>
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
+                <Link className="usa-nav__link" to="/admin/dashboards">
+                  Dashboards
+                </Link>
+              </li>
+              <li className="usa-nav__primary-item">
                 <Link className="usa-nav__link" to="/admin/settings/topicarea">
+                  Topic areas
+                </Link>
+              </li>
+              <li className="usa-nav__primary-item">
+                <Link className="usa-nav__link" to="/admin/users">
+                  Manage users
+                </Link>
+              </li>
+              <li className="usa-nav__primary-item">
+                <Link className="usa-nav__link" to="/admin/settings">
                   Settings
                 </Link>
               </li>

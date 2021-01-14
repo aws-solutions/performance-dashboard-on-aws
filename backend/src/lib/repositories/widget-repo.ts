@@ -1,5 +1,5 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import { Widget, WidgetItem } from "../models/widget";
+import { Widget, WidgetItem, ChartWidget } from "../models/widget";
 import BaseRepository from "./base";
 import WidgetFactory, {
   WIDGET_PREFIX,
@@ -47,6 +47,45 @@ class WidgetRepository extends BaseRepository {
       },
     });
     return WidgetFactory.fromItem(result.Item as WidgetItem);
+  }
+
+  public async getAssociatedWidgets(datasetId: String) {
+    const input: DocumentClient.QueryInput = {
+      TableName: this.tableName,
+      IndexName: "byType",
+      KeyConditionExpression: "#type = :type",
+      FilterExpression: "#content.datasetId = :datasetId",
+      ExpressionAttributeNames: {
+        "#type": "type",
+        "#content.datasetId": "content.datasetId",
+      },
+      ExpressionAttributeValues: {
+        ":type": "Widget",
+        ":datasetId": datasetId,
+      },
+    };
+
+    let result = await this.dynamodb.query(input);
+
+    if (!result.Items) {
+      return [];
+    }
+
+    let items = result.Items;
+
+    while (result.LastEvaluatedKey) {
+      input.ExclusiveStartKey = result.LastEvaluatedKey;
+      result = await this.dynamodb.query(input);
+      if (result.Items) {
+        items = [
+          ...items,
+          ...result.Items.filter(
+            (item) => item.content.datasetId === datasetId
+          ),
+        ];
+      }
+    }
+    return items;
   }
 
   public async saveWidget(widget: Widget) {

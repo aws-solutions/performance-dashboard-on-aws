@@ -34,7 +34,7 @@ If you prefer to deploy PDoA in the us-west-2 or eu-west-2 region, you must firs
 | us-west-2                           | [![Install in us-west-2](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-west-2.s3.amazonaws.com/performance-dashboard-us-west-2.json) |
 | eu-west-2                           | [![Install in eu-west-2](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-eu-west-2.s3.amazonaws.com/performance-dashboard-eu-west-2.json) |
 
-## Deploying with AWS Cloud Development Kit
+## Deploying with AWS Cloud Development Kit (CDK)
 
 You can also use CDK to install PDoA. If you are updating the PDoA source code (e.g. for experimentation), you can use CDK to deploy your changes more easily than with CFT. The CDK code is the source of truth for creating the AWS application resources for PDoA. The CFT described earlier are generated from the CDK code.
 
@@ -95,7 +95,14 @@ Run the install script to download npm dependencies.
 
 The deploy script will use the AWS CDK to deploy 4 CloudFormation stacks named: `PerformanceDash-{env}-Backend`, `PerformanceDash-{env}-Frontend`, `PerformanceDash-{env}-Auth` and `PerformanceDash-{env}-Ops` where `{env}` is the environment name that you specify as parameter to the deployment script. By default, the stacks will be created in the AWS region that you have configured in your `~/.aws/config` file. If you want CDK to deploy to a specific region, you can set the environment variable `export AWS_REGION=us-west-2` before running the deployment script.
 
-To create a `dev` environment for example, you may run the deployment script like so:
+If this is the first time you deploy PDoA, you must also specify the desired email address for the Administrator user. You will receive an email invitation to login with a temporary password to this address, so make sure you specify a valid email:
+
+```bash
+# You only need to do this the first time you deploy.
+export CDK_ADMIN_EMAIL=johndoe@example.com
+```
+
+Now, to deploy a `dev` environment for example, you may run the deployment script like so:
 
 ```bash
 ./deploy.sh dev

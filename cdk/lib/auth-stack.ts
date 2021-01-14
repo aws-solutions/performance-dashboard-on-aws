@@ -18,6 +18,15 @@ export class AuthStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id, props);
 
+    /**
+     * CloudFormation parameters
+     */
+    const adminEmail = new cdk.CfnParameter(this, "adminEmail", {
+      type: "String",
+      description: "Email address for the admin user",
+      minLength: 5,
+    });
+
     const pool = new cognito.UserPool(this, "UserPool", {
       userInvitation: {
         emailSubject:
@@ -51,25 +60,20 @@ export class AuthStack extends cdk.Stack {
       },
     });
 
-    /*const adminEmail = new CfnParameter(this, "adminEmail");
-    const isAdminEmailEmpty = new CfnCondition(this, "IsAdminEmailEmpty", {
-      expression: Fn.conditionEquals("", adminEmail),
+    const adminUser = new cognito.CfnUserPoolUser(this, "AdminUser", {
+      userPoolId: pool.userPoolId,
+      username: adminEmail.valueAsString,
+      userAttributes: [
+        {
+          name: "email",
+          value: adminEmail.valueAsString,
+        },
+        {
+          name: "custom:roles",
+          value: JSON.stringify(["Admin"]),
+        },
+      ],
     });
-    Fn.conditionIf(
-      isAdminEmailEmpty.logicalId,
-      "",
-      new cognito.CfnUserPoolUser(this, "UserPoolUser", {
-        userPoolId: pool.userPoolId,
-        username: adminEmail.valueAsString,
-        userAttributes: [
-          {
-            name: "email",
-            value: adminEmail.valueAsString,
-          },
-          { name: "custom:roles", value: JSON.stringify(["Admin"]) },
-        ],
-      })
-    );*/
 
     /**
      * Outputs
@@ -82,6 +86,7 @@ export class AuthStack extends cdk.Stack {
     new cdk.CfnOutput(this, "UserPoolArn", { value: this.userPoolArn });
     new cdk.CfnOutput(this, "AppClientId", { value: this.appClientId });
     new cdk.CfnOutput(this, "UserPoolId", { value: this.userPoolId });
+    new cdk.CfnOutput(this, "AdminUsername", { value: adminUser.ref });
     new cdk.CfnOutput(this, "IdentityPoolId", {
       value: identityPool.ref,
     });

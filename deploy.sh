@@ -17,8 +17,6 @@ else
     exit 0
 fi
 
-admin_email=$2
-
 verify_prereqs() {
     # Verify necessary commands
     echo "node version"
@@ -44,7 +42,12 @@ deploy_auth() {
     # Auth stack definition is in cdk/lib/auth-stack.ts
     echo "Deploying auth stack"
     cd $CDK_DIR
-    cdk deploy Auth --require-approval never --parameters adminEmail="$admin_email"
+
+    if [ "$CDK_ADMIN_EMAIL" != "" ]; then
+        cdk deploy Auth --require-approval never --parameters adminEmail=$CDK_ADMIN_EMAIL
+    else
+        cdk deploy Auth --require-approval never
+    fi
 }
 
 deploy_backend() {

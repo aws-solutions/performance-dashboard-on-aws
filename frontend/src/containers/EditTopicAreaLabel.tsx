@@ -7,8 +7,6 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import TextField from "../components/TextField";
-import UtilsService from "../services/UtilsService";
-import EnvConfig from "../services/EnvConfig";
 
 interface FormValues {
   singular: string;

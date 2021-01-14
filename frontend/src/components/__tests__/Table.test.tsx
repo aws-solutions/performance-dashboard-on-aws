@@ -47,7 +47,7 @@ test("renders a basic table", async () => {
 });
 
 test("renders a table with selection checkboxes", async () => {
-  const { container } = render(
+  render(
     <Table
       selection="multiple"
       columns={columns}
@@ -55,7 +55,23 @@ test("renders a table with selection checkboxes", async () => {
       screenReaderField="name"
     />
   );
-  expect(container).toMatchSnapshot();
+  expect(
+    screen.getByRole("checkbox", {
+      name: "Banana",
+    })
+  ).toBeInTheDocument();
+
+  expect(
+    screen.getByRole("checkbox", {
+      name: "Chocolate",
+    })
+  ).toBeInTheDocument();
+
+  expect(
+    screen.getByRole("checkbox", {
+      name: "Vanilla",
+    })
+  ).toBeInTheDocument();
 });
 
 test("calls onSelection function when user selects a row", async () => {

@@ -61,7 +61,7 @@ function AdminLayout(props: LayoutProps) {
                 </Link>
               </li>
               <li className="usa-nav__primary-item">
-                <Link className="usa-nav__link" to="/admin/settings/topicarea">
+                <Link className="usa-nav__link" to="/admin/settings">
                   Settings
                 </Link>
               </li>

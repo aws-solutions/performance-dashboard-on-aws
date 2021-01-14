@@ -17,7 +17,7 @@ test("renders a button to create topic area", async () => {
   const { getByRole } = render(<TopicareaListing />, {
     wrapper: MemoryRouter,
   });
-  const button = getByRole("button", { name: "Create topic area" });
+  const button = getByRole("button", { name: "Create new ministry" });
   expect(button).toBeInTheDocument();
 });
 

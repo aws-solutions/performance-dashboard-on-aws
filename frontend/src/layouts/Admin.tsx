@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Auth } from "aws-amplify";
-import { useAdmin, useSettings } from "../hooks";
+import Auth from "@aws-amplify/auth";
+import { useSettings, useCurrentAuthenticatedUser } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
@@ -12,7 +12,7 @@ interface LayoutProps {
 }
 
 function AdminLayout(props: LayoutProps) {
-  const { username } = useAdmin();
+  const { username } = useCurrentAuthenticatedUser();
   const { settings } = useSettings();
 
   const signOut = async (event: React.MouseEvent) => {

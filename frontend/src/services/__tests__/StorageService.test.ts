@@ -1,8 +1,8 @@
-import { Storage } from "aws-amplify";
+import Storage from "@aws-amplify/storage";
 import * as uuid from "uuid";
 import StorageService from "../StorageService";
 
-jest.mock("aws-amplify");
+jest.mock("@aws-amplify/storage");
 jest.mock("uuid");
 
 const invalidRawFile = {

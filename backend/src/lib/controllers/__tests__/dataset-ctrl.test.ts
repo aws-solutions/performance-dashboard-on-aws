@@ -3,9 +3,7 @@ import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
 import DatasetCtrl from "../dataset-ctrl";
 import DatasetRepository from "../../repositories/dataset-repo";
-import AuthService from "../../services/auth";
 
-jest.mock("../../services/auth");
 jest.mock("../../repositories/dataset-repo");
 
 const user: User = { userId: "johndoe" };
@@ -17,7 +15,6 @@ const res = ({
 } as any) as Response;
 
 beforeEach(() => {
-  AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   DatasetRepository.getInstance = jest.fn().mockReturnValue(repository);
 });
 
@@ -25,6 +22,7 @@ describe("createDataset", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       body: {
         fileName: "covid-dataset.csv",
         s3Key: {
@@ -33,13 +31,6 @@ describe("createDataset", () => {
         },
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await DatasetCtrl.createDataset(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when fileName is missing", async () => {

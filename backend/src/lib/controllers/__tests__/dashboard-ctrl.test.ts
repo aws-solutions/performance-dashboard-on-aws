@@ -11,10 +11,8 @@ import DashboardCtrl from "../dashboard-ctrl";
 import DashboardFactory from "../../factories/dashboard-factory";
 import DashboardRepository from "../../repositories/dashboard-repo";
 import TopicAreaRepository from "../../repositories/topicarea-repo";
-import AuthService from "../../services/auth";
 import dashboardCtrl from "../dashboard-ctrl";
 
-jest.mock("../../services/auth");
 jest.mock("../../repositories/dashboard-repo");
 jest.mock("../../repositories/topicarea-repo");
 
@@ -24,7 +22,6 @@ const topicareaRepo = mocked(TopicAreaRepository.prototype);
 let res: Response;
 
 beforeEach(() => {
-  AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   DashboardRepository.getInstance = jest.fn().mockReturnValue(repository);
   TopicAreaRepository.getInstance = jest.fn().mockReturnValue(topicareaRepo);
 
@@ -39,19 +36,13 @@ describe("createDashboard", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       body: {
         topicAreaId: "abc",
         name: "test",
         description: "description test",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await DashboardCtrl.createDashboard(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when topicAreaId is missing", async () => {
@@ -90,6 +81,7 @@ describe("updateDashboard", () => {
   jest.setSystemTime(now);
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "123",
       },
@@ -100,13 +92,6 @@ describe("updateDashboard", () => {
         updatedAt: now.toISOString(),
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await DashboardCtrl.updateDashboard(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when topicAreaId is invalid", async () => {
@@ -163,6 +148,7 @@ describe("publishDashboard", () => {
   jest.setSystemTime(now);
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "123",
       },
@@ -171,13 +157,6 @@ describe("publishDashboard", () => {
         releaseNotes: "release note test",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await DashboardCtrl.publishDashboard(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -292,6 +271,7 @@ describe("publishPendingDashboard", () => {
   jest.setSystemTime(now);
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "123",
       },
@@ -299,13 +279,6 @@ describe("publishPendingDashboard", () => {
         updatedAt: now.toISOString(),
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await DashboardCtrl.publishPendingDashboard(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -368,6 +341,7 @@ describe("archiveDashboard", () => {
   jest.setSystemTime(now);
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "123",
       },
@@ -375,13 +349,6 @@ describe("archiveDashboard", () => {
         updatedAt: now.toISOString(),
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await DashboardCtrl.archiveDashboard(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -444,6 +411,7 @@ describe("moveToDraftDashboard", () => {
   jest.setSystemTime(now);
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "123",
       },
@@ -451,13 +419,6 @@ describe("moveToDraftDashboard", () => {
         updatedAt: now.toISOString(),
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await DashboardCtrl.moveToDraftDashboard(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -519,17 +480,11 @@ describe("deleteDashboard", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "090b0410",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await DashboardCtrl.deleteDashboard(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("deletes the dashboard", async () => {
@@ -542,17 +497,11 @@ describe("deleteDashboards", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       query: {
         ids: "090b0410,76546546",
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await DashboardCtrl.deleteDashboards(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when ids is missing", async () => {
@@ -575,6 +524,7 @@ describe("getPublicDashboardById", () => {
   let req: Request;
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "090b0410",
       },
@@ -646,6 +596,7 @@ describe("createNewDraft", () => {
   let dashboard: Dashboard;
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "090b0410",
       },
@@ -709,6 +660,7 @@ describe("getVersions", () => {
   let dashboard: Dashboard;
   beforeEach(() => {
     req = ({
+      user,
       params: {
         id: "090b0410",
       },

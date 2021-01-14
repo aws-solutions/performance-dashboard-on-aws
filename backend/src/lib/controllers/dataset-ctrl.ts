@@ -1,30 +1,16 @@
 import { Request, Response } from "express";
-import AuthService from "../services/auth";
 import DatasetRepository from "../repositories/dataset-repo";
 import DatasetFactory from "../factories/dataset-factory";
 import { SourceType } from "../models/dataset";
 import { ItemNotFound } from "../errors";
 
 async function listDatasets(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
   const repo = DatasetRepository.getInstance();
   const datasets = await repo.listDatasets();
   res.json(datasets);
 }
 
 async function getDatasetById(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
-
   const { id } = req.params;
   const repo = DatasetRepository.getInstance();
 
@@ -41,11 +27,7 @@ async function getDatasetById(req: Request, res: Response) {
 }
 
 async function createDataset(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-  if (!user) {
-    return res.status(401).send("Unauthorized");
-  }
-
+  const user = req.user;
   const { fileName, s3Key } = req.body;
   if (!fileName) {
     return res.status(400).send("Missing required field `fileName`");

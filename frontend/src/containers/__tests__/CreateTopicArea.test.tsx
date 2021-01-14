@@ -24,16 +24,14 @@ describe("CreateTopicAreaForm", () => {
   });
 
   test("submits form with the entered values", async () => {
-    fireEvent.input(screen.getByLabelText("Topic area name"), {
+    fireEvent.input(screen.getByLabelText("Ministry name"), {
       target: {
         value: "AWS Topic Area",
       },
     });
-
     await act(async () => {
       fireEvent.submit(screen.getByTestId("CreateTopicAreaForm"));
     });
-
     expect(BackendService.createTopicArea).toBeCalledWith("AWS Topic Area");
   });
 

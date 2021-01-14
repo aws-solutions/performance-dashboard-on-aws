@@ -9,6 +9,7 @@ import dataset from "./dataset-api";
 import ingestapi from "./ingest-api";
 import publicapi from "./public-api";
 import settingsapi from "./settings-api";
+import userapi from "./user-api";
 
 const app = express();
 app.use(express.json());
@@ -23,5 +24,6 @@ app.use("/dataset", dataset);
 app.use("/ingestapi", ingestapi);
 app.use("/public", publicapi);
 app.use("/settings", settingsapi);
+app.use("/user", userapi);
 
 export default app;

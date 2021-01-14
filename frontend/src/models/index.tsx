@@ -142,6 +142,10 @@ export type PublicSettings = {
     time: string;
   };
   navbarTitle?: string;
+  topicAreaLabels?: {
+    singular: string;
+    plural: string;
+  };
 };
 
 export type Settings = {
@@ -152,6 +156,10 @@ export type Settings = {
   };
   updatedAt?: Date;
   navbarTitle?: string;
+  topicAreaLabels: {
+    singular: string;
+    plural: string;
+  };
 };
 
 // Type for the History object in react-router. Defines the
@@ -165,4 +173,21 @@ export type LocationState = {
     linkLabel?: string;
   };
   id?: string;
+};
+
+export enum UserRoles {
+  Admin = "Admin",
+  Editor = "Editor",
+  //Publisher = "Publisher",
+}
+
+export type User = {
+  userId: string;
+  enabled: boolean;
+  userStatus: string;
+  sub: string;
+  email: string;
+  roles: Array<UserRoles>;
+  createdAt: Date;
+  updatedAt: Date;
 };

@@ -4,9 +4,7 @@ import { User } from "../../models/user";
 import SettingsFactory from "../../factories/settings-factory";
 import SettingsRepository from "../../repositories/settings-repo";
 import SettingsCtrl from "../settings-ctrl";
-import AuthService from "../../services/auth";
 
-jest.mock("../../services/auth");
 jest.mock("../../repositories/settings-repo");
 jest.mock("../../factories/settings-factory");
 
@@ -16,7 +14,6 @@ const req = ({} as any) as Request;
 let res: Response;
 
 beforeEach(() => {
-  AuthService.getCurrentUser = jest.fn().mockReturnValue(user);
   SettingsRepository.getInstance = jest.fn().mockReturnValue(repository);
   res = ({
     send: jest.fn().mockReturnThis(),
@@ -26,13 +23,6 @@ beforeEach(() => {
 });
 
 describe("getSettings", () => {
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await SettingsCtrl.getSettings(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
-  });
-
   it("returns settings when available in the database", async () => {
     SettingsFactory.getDefaultSettings = jest.fn();
     repository.getSettings = jest.fn().mockReturnValueOnce({
@@ -58,17 +48,11 @@ describe("updateSettings", () => {
   jest.setSystemTime(now);
   beforeEach(() => {
     req = ({
+      user,
       body: {
         updatedAt: now.toISOString(),
       },
     } as any) as Request;
-  });
-
-  it("returns a 401 error when user is not authenticated", async () => {
-    AuthService.getCurrentUser = jest.fn().mockReturnValue(null);
-    await SettingsCtrl.updateSettings(req, res);
-    expect(res.status).toBeCalledWith(401);
-    expect(res.send).toBeCalledWith("Unauthorized");
   });
 
   it("returns a 400 error when updatedAt is not specified", async () => {
@@ -112,6 +96,23 @@ describe("updateSettings", () => {
     expect(repository.updateSetting).toHaveBeenCalledWith(
       "navbarTitle",
       "New Title",
+      now.toISOString(),
+      user
+    );
+  });
+
+  it("updates topicAreaLabels setting", async () => {
+    req.body.topicAreaLabels = {
+      singular: "Topic Area",
+      plural: "Topic Areas",
+    };
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "topicAreaLabels",
+      {
+        singular: "Topic Area",
+        plural: "Topic Areas",
+      },
       now.toISOString(),
       user
     );

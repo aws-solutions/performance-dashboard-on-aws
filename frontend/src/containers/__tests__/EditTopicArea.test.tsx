@@ -27,18 +27,16 @@ beforeEach(() => {
 });
 
 test("saves the new topic area name", async () => {
-  const nameInput = screen.getByLabelText(`${EnvConfig.topicAreaLabel} name`);
+  const nameInput = screen.getByLabelText("Ministry name");
   fireEvent.input(nameInput, {
     target: {
       value: "New topic area name",
     },
   });
-
   const submitBtn = screen.getByRole("button", { name: "Save" });
   await act(async () => {
     fireEvent.click(submitBtn);
   });
-
   expect(BackendService.renameTopicArea).toBeCalledWith(
     topicAreaId,
     "New topic area name"

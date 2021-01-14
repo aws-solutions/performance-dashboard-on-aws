@@ -4,7 +4,7 @@
  * calls to happen and instead returns dummy data.
  */
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { DashboardState, DatasetType, SourceType } from "../../models";
 
 const dummyDashboard = {
@@ -72,6 +72,10 @@ export function useSettings() {
       "dashboard and it is ready to publish",
     updatedAt: new Date("2020-12-08T22:56:13.721Z"),
     navbarTitle: "Performance Dashboard",
+    topicAreaLabels: {
+      singular: "Ministry",
+      plural: "Ministries",
+    },
   });
 
   return {
@@ -297,12 +301,6 @@ export function useDatasets() {
   };
 }
 
-export function useAdmin() {
-  return {
-    username: "johndoe",
-  };
-}
-
 export function useColors(numberOfColors: number) {
   return [
     "#29B4BB",
@@ -360,7 +358,46 @@ export function useTopicArea() {
 }
 
 export function useDateTimeFormatter() {
-  return (dateToDisplay: Date) => {
+  return useCallback((dateToDisplay: Date) => {
     return dayjs(dateToDisplay).format("YYYY-MM-DD HH:mm");
+  }, []);
+}
+
+export function useUsers() {
+  const [users] = useState([
+    {
+      userId: "johndoe",
+      email: "johndoe@example.com",
+      status: "CONFIRMED",
+      roles: ["Admin"],
+    },
+  ]);
+
+  return {
+    loading: false,
+    users,
+  };
+}
+
+type CurrentUserHook = {
+  username: string;
+  isAdmin: boolean;
+  isEditor: boolean;
+  isPublisher: boolean;
+};
+
+export function useCurrentAuthenticatedUser() {
+  const [username] = useState("johndoe");
+  const [roles] = useState({
+    isAdmin: true,
+    isEditor: false,
+    isPublisher: false,
+  });
+
+  return {
+    username,
+    isAdmin: roles.isAdmin,
+    isEditor: roles.isEditor,
+    isPublisher: roles.isPublisher,
   };
 }

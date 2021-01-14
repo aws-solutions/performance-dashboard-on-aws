@@ -4,13 +4,6 @@ import SettingsRepository from "../repositories/settings-repo";
 import AuthService from "../services/auth";
 
 async function getSettings(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
-
   const repo = SettingsRepository.getInstance();
   const settings = await repo.getSettings();
 
@@ -18,15 +11,15 @@ async function getSettings(req: Request, res: Response) {
 }
 
 async function updateSettings(req: Request, res: Response) {
-  const user = AuthService.getCurrentUser(req);
-
-  if (!user) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
-
+  const user = req.user;
   let { updatedAt } = req.body;
-  const { publishingGuidance, dateTimeFormat, navbarTitle } = req.body;
+
+  const {
+    publishingGuidance,
+    dateTimeFormat,
+    navbarTitle,
+    topicAreaLabels,
+  } = req.body;
 
   if (!updatedAt) {
     res.status(400);
@@ -62,6 +55,22 @@ async function updateSettings(req: Request, res: Response) {
     updatedAt = await repo.updateSetting(
       "navbarTitle",
       navbarTitle,
+      updatedAt,
+      user
+    );
+  }
+
+  if (topicAreaLabels) {
+    if (!topicAreaLabels.singular || !topicAreaLabels.plural) {
+      res.status(400);
+      return res.send(
+        "Missing fields `singular` or `plural` in topicAreaLabels"
+      );
+    }
+
+    updatedAt = await repo.updateSetting(
+      "topicAreaLabels",
+      topicAreaLabels,
       updatedAt,
       user
     );

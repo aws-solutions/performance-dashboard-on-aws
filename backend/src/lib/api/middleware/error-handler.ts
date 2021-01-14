@@ -14,10 +14,7 @@ import { ItemNotFound } from "../../errors/index";
  * validation or access denied errors should be handled gracefully by
  * the controllers and return appropriate HTTP status codes.
  */
-const withErrorHandler = (fn: Function) => async (
-  req: Request,
-  res: Response
-) => {
+const errorHandler = (fn: Function) => async (req: Request, res: Response) => {
   Promise.resolve(fn(req, res)).catch((err) => {
     console.error(err);
 
@@ -31,4 +28,4 @@ const withErrorHandler = (fn: Function) => async (
   });
 };
 
-export default withErrorHandler;
+export default errorHandler;

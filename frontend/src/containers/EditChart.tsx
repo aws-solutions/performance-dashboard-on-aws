@@ -614,7 +614,7 @@ function EditChart() {
                       <TextField
                         id="summary"
                         name="summary"
-                        label="Chart summary"
+                        label="Chart summary - optional"
                         hint="Give your chart a summary to explain it in more depth.
                     It can also be read by screen readers to describe the chart
                     for those with visual impairments."

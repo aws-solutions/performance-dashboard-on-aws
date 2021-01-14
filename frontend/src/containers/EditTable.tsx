@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { Dataset, DatasetType } from "../models";
@@ -313,6 +313,12 @@ function EditTable() {
     });
   }
 
+  const tableHeaders = useMemo(() => {
+    return currentJson.length > 0
+      ? (Object.keys(currentJson[0]) as Array<string>)
+      : [];
+  }, [currentJson]);
+
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
@@ -576,7 +582,7 @@ function EditTable() {
                     <TextField
                       id="summary"
                       name="summary"
-                      label="Table summary"
+                      label="Table summary - optional"
                       hint="Give your table a summary to explain it in more depth.
                   It can also be read by screen readers to describe the table
                   for those with visual impairments."
@@ -623,11 +629,7 @@ function EditTable() {
                   <TablePreview
                     title={widget.showTitle ? widget.content.title : ""}
                     summary={widget.content.summary}
-                    headers={
-                      currentJson.length > 0
-                        ? (Object.keys(currentJson[0]) as Array<string>)
-                        : []
-                    }
+                    headers={tableHeaders}
                     data={currentJson}
                   />
                 )}

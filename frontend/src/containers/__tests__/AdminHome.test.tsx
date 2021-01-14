@@ -34,14 +34,25 @@ test("renders a create dashboard button", async () => {
 });
 
 test("renders a view dashboard button", async () => {
-  const viewButton = screen.getByRole("button", { name: "View dashboards" });
+  const viewButton = screen.getByRole("button", { name: "Manage users" });
   expect(viewButton).toBeInTheDocument();
 
   await act(async () => {
     fireEvent.click(viewButton);
   });
 
-  expect(history.push).toBeCalledWith("/admin/dashboards");
+  expect(history.push).toBeCalledWith("/admin/users");
+});
+
+test("renders a view dashboard button", async () => {
+  const viewButton = screen.getByRole("button", { name: "View settings" });
+  expect(viewButton).toBeInTheDocument();
+
+  await act(async () => {
+    fireEvent.click(viewButton);
+  });
+
+  expect(history.push).toBeCalledWith("/admin/settings");
 });
 
 test("renders a view public site button", async () => {

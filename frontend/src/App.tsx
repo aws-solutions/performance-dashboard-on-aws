@@ -60,6 +60,10 @@ const routes: Array<AppRoute> = [
     component: AdminHome,
   },
   {
+    path: "/admin/settings",
+    component: TopicareaSettings,
+  },
+  {
     path: "/admin/settings/topicarea",
     component: TopicareaSettings,
   },
@@ -97,10 +101,6 @@ const routes: Array<AppRoute> = [
   },
   {
     path: "/admin/settings/topicarea/:topicAreaId/edit",
-    component: EditTopicArea,
-  },
-  {
-    path: "/admin/settings",
     component: EditTopicArea,
   },
   {

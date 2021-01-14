@@ -368,11 +368,33 @@ async function fetchUsers(): Promise<User[]> {
   return await API.get(apiName, "user", { headers });
 }
 
+async function addUsers(role: string, emails: Array<string>) {
+  const headers = await authHeaders();
+  return await API.post(apiName, "user", {
+    headers,
+    body: {
+      role,
+      emails: emails.join(","),
+    },
+  });
+}
+
 async function resendInvite(emails: Array<string>) {
   const headers = await authHeaders();
   return await API.post(apiName, "user/invite", {
     headers,
     body: {
+      emails: emails.join(","),
+    },
+  });
+}
+
+async function changeRole(role: string, emails: Array<string>) {
+  const headers = await authHeaders();
+  return await API.put(apiName, "user/role", {
+    headers,
+    body: {
+      role,
       emails: emails.join(","),
     },
   });
@@ -414,7 +436,9 @@ const BackendService = {
   moveToDraft,
   fetchDashboardVersions,
   fetchUsers,
+  addUsers,
   resendInvite,
+  changeRole,
 };
 
 export default BackendService;

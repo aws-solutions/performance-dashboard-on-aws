@@ -1,38 +1,38 @@
 import { InvalidDatasetContent } from "../../errors";
-import DatasetParser from "../dataset-parser";
+import DatasetService from "../dataset-service";
 
 test("should return the parsed data with a valid JSON array", () => {
   const data = [{ year: 2012, amount: 100 }];
-  const dataset = DatasetParser.parse(data);
+  const dataset = DatasetService.parse(data);
   expect(dataset).toEqual(data);
 });
 
 test("should throw an error when data is an array of strings", () => {
   expect(() => {
-    DatasetParser.parse(["an array", "of strings", "is not valid"]);
+    DatasetService.parse(["an array", "of strings", "is not valid"]);
   }).toThrow(InvalidDatasetContent);
 });
 
 test("should throw an error when data is an array of numbers", () => {
   expect(() => {
-    DatasetParser.parse([1, 2, 3]);
+    DatasetService.parse([1, 2, 3]);
   }).toThrow(InvalidDatasetContent);
 });
 
 test("should throw an error when input is a boolean", () => {
   expect(() => {
-    DatasetParser.parse(true);
+    DatasetService.parse(true);
   }).toThrow(InvalidDatasetContent);
 });
 
 test("should throw an error when input is a number", () => {
   expect(() => {
-    DatasetParser.parse(100);
+    DatasetService.parse(100);
   }).toThrow(InvalidDatasetContent);
 });
 
 test("should throw an error when input is an object", () => {
   expect(() => {
-    DatasetParser.parse({ foo: "bar" });
+    DatasetService.parse({ foo: "bar" });
   }).toThrow(InvalidDatasetContent);
 });

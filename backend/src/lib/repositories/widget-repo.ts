@@ -49,15 +49,14 @@ class WidgetRepository extends BaseRepository {
     return WidgetFactory.fromItem(result.Item as WidgetItem);
   }
 
-  public async getAssociatedWidgets(datasetId: String) {
+  public async getAssociatedWidgets(datasetId: String): Promise<Widget[]> {
     const input: DocumentClient.QueryInput = {
       TableName: this.tableName,
       IndexName: "byType",
       KeyConditionExpression: "#type = :type",
-      FilterExpression: "#content.datasetId = :datasetId",
+      FilterExpression: "content.datasetId = :datasetId",
       ExpressionAttributeNames: {
         "#type": "type",
-        "#content.datasetId": "content.datasetId",
       },
       ExpressionAttributeValues: {
         ":type": "Widget",
@@ -85,7 +84,8 @@ class WidgetRepository extends BaseRepository {
         ];
       }
     }
-    return items;
+
+    return WidgetFactory.fromItems(items as WidgetItem[]);
   }
 
   public async saveWidget(widget: Widget) {

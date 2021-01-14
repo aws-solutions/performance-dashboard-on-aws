@@ -45,6 +45,8 @@ import EditDateFormat from "./containers/EditDateFormat";
 import APIHelpPage from "./containers/APIHelpPage";
 import EditNavbar from "./containers/EditNavbar";
 import UserListing from "./containers/UserListing";
+import AddUsers from "./containers/AddUsers";
+import ChangeRole from "./containers/ChangeRole";
 
 interface AppRoute {
   path: string;
@@ -180,6 +182,14 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/users",
     component: UserListing,
+  },
+  {
+    path: "/admin/users/add",
+    component: AddUsers,
+  },
+  {
+    path: "/admin/users/changerole",
+    component: ChangeRole,
   },
   {
     path: "/:friendlyURL",

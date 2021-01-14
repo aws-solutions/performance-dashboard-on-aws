@@ -17,6 +17,16 @@ function UserListing() {
   const [selected, setSelected] = useState<Array<User>>([]);
   const [isOpenResendInviteModal, setIsOpenResendInviteModal] = useState(false);
 
+  const addUsers = () => {
+    history.push("/admin/users/add");
+  };
+
+  const changeRole = () => {
+    history.push("/admin/users/changerole", {
+      emails: selected.map((s) => s.email).join(","),
+    });
+  };
+
   const onSearch = useCallback((query) => {
     setFilter(query);
   }, []);
@@ -25,7 +35,7 @@ function UserListing() {
     setSelected(selectedUsers);
   }, []);
 
-  const closeDeleteModal = () => {
+  const closeResendInviteModal = () => {
     setIsOpenResendInviteModal(false);
   };
 
@@ -34,7 +44,7 @@ function UserListing() {
   };
 
   const resendInvite = async () => {
-    closeDeleteModal();
+    closeResendInviteModal();
 
     if (selected.length) {
       await BackendService.resendInvite(selected.map((s) => s.email));
@@ -58,8 +68,8 @@ function UserListing() {
 
       <Modal
         isOpen={isOpenResendInviteModal}
-        closeModal={closeDeleteModal}
-        title={"Resend invite"}
+        closeModal={closeResendInviteModal}
+        title={"Resend invite email"}
         message={`Are you sure you want to resend the invite${
           selected.length === 1 ? " for this user?" : "s for these users?"
         }`}
@@ -89,20 +99,20 @@ function UserListing() {
               disabled={selected.length === 0}
               onClick={onResendInvite}
             >
-              Resend invite(s)
+              Resend invite email
             </Button>
           </span>
           <span>
             <Button
               variant="outline"
               disabled={selected.length === 0}
-              onClick={() => console.log("Edit roles")}
+              onClick={changeRole}
             >
-              Edit role(s)
+              Change role
             </Button>
           </span>
           <span>
-            <Button variant="base" onClick={() => console.log("Add users")}>
+            <Button variant="base" onClick={addUsers}>
               Add user(s)
             </Button>
           </span>

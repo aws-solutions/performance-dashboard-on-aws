@@ -345,6 +345,20 @@ test("fetchUsers makes a GET request to users API", async () => {
   expect(API.get).toHaveBeenCalledWith("BackendApi", "user", expect.anything());
 });
 
+test("addUsers makes a POST request to users API", async () => {
+  await BackendService.addUsers("Admin", ["test1@test.com", "test2@test.com"]);
+  expect(API.post).toHaveBeenCalledWith(
+    "BackendApi",
+    "user",
+    expect.objectContaining({
+      body: {
+        role: "Admin",
+        emails: "test1@test.com,test2@test.com",
+      },
+    })
+  );
+});
+
 test("resendInvite makes a POST request to users API", async () => {
   await BackendService.resendInvite(["test1@test.com", "test2@test.com"]);
   expect(API.post).toHaveBeenCalledWith(
@@ -352,6 +366,23 @@ test("resendInvite makes a POST request to users API", async () => {
     "user/invite",
     expect.objectContaining({
       body: {
+        emails: "test1@test.com,test2@test.com",
+      },
+    })
+  );
+});
+
+test("changeRole makes a POST request to users API", async () => {
+  await BackendService.changeRole("Admin", [
+    "test1@test.com",
+    "test2@test.com",
+  ]);
+  expect(API.put).toHaveBeenCalledWith(
+    "BackendApi",
+    "user/role",
+    expect.objectContaining({
+      body: {
+        role: "Admin",
         emails: "test1@test.com,test2@test.com",
       },
     })

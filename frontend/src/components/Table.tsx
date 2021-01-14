@@ -28,6 +28,19 @@ interface Props {
 
 function Table(props: Props) {
   const className = props.className ? ` ${props.className}` : "";
+
+  const { initialSortByField, initialSortAscending } = props;
+  const initialSortBy = React.useMemo(() => {
+    return initialSortByField
+      ? [
+          {
+            id: initialSortByField,
+            desc: !initialSortAscending,
+          },
+        ]
+      : [];
+  }, [initialSortByField, initialSortAscending]);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -43,15 +56,7 @@ function Table(props: Props) {
       disableSortRemove: true,
       initialState: {
         selectedRowIds: {},
-        sortBy: React.useMemo(
-          () => [
-            {
-              id: props.initialSortByField || "",
-              desc: !props.initialSortAscending,
-            },
-          ],
-          [props.initialSortByField, props.initialSortAscending]
-        ),
+        sortBy: initialSortBy,
       },
     },
     useGlobalFilter,

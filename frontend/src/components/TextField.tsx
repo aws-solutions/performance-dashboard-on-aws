@@ -7,6 +7,8 @@ interface Props {
   hint?: string | React.ReactNode;
   register?: Function;
   required?: boolean;
+  validate?: Function;
+  disabled?: boolean;
   defaultValue?: string;
   error?: string;
   onChange?: Function;
@@ -52,7 +54,16 @@ function TextField(props: Props) {
           onChange={handleChange}
           rows={props.rows || 10}
           style={{ height: "auto" }}
-          ref={props.register && props.register({ required: props.required })}
+          disabled={props.disabled}
+          ref={
+            props.register &&
+            (props.validate
+              ? props.register({
+                  required: props.required,
+                  validate: props.validate,
+                })
+              : props.register({ required: props.required }))
+          }
         />
       ) : (
         <input
@@ -61,7 +72,16 @@ function TextField(props: Props) {
           name={props.name}
           type="text"
           defaultValue={props.defaultValue}
-          ref={props.register && props.register({ required: props.required })}
+          ref={
+            props.register &&
+            (props.validate
+              ? props.register({
+                  required: props.required,
+                  validate: props.validate,
+                })
+              : props.register({ required: props.required }))
+          }
+          disabled={props.disabled}
           onChange={handleChange}
         />
       )}

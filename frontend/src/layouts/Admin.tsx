@@ -12,7 +12,7 @@ interface LayoutProps {
 }
 
 function AdminLayout(props: LayoutProps) {
-  const { username } = useCurrentAuthenticatedUser();
+  const { username, isAdmin } = useCurrentAuthenticatedUser();
   const { settings } = useSettings();
 
   const signOut = async (event: React.MouseEvent) => {
@@ -45,21 +45,30 @@ function AdminLayout(props: LayoutProps) {
               <FontAwesomeIcon icon={faWindowClose} size="lg" role="img" />
             </button>
             <ul className="usa-nav__primary usa-accordion">
-              <li className="usa-nav__primary-item">
-                <Link className="usa-nav__link" to="/admin/dashboards">
-                  Dashboards
-                </Link>
-              </li>
-              <li className="usa-nav__primary-item">
-                <Link className="usa-nav__link" to="/admin/settings/topicarea">
-                  Topic areas
-                </Link>
-              </li>
-              <li className="usa-nav__primary-item">
-                <Link className="usa-nav__link" to="/admin/users">
-                  Manage users
-                </Link>
-              </li>
+              {isAdmin ? (
+                <>
+                  <li className="usa-nav__primary-item">
+                    <Link className="usa-nav__link" to="/admin/dashboards">
+                      Dashboards
+                    </Link>
+                  </li>
+                  <li className="usa-nav__primary-item">
+                    <Link
+                      className="usa-nav__link"
+                      to="/admin/settings/topicarea"
+                    >
+                      Topic areas
+                    </Link>
+                  </li>
+                  <li className="usa-nav__primary-item">
+                    <Link className="usa-nav__link" to="/admin/users">
+                      Manage users
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                ""
+              )}
               <li className="usa-nav__primary-item">
                 <Link className="usa-nav__link" to="/admin/settings">
                   Settings

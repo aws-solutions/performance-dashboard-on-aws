@@ -1,10 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { Dashboard } from "../models";
-import { useDateTimeFormatter } from "../hooks";
+import { useDateTimeFormatter, useSettings } from "../hooks";
 import Button from "./Button";
 import Search from "./Search";
 import Table from "./Table";
-import EnvConfig from "../services/EnvConfig";
 import ScrollTop from "./ScrollTop";
 import Link from "./Link";
 
@@ -14,6 +13,7 @@ interface Props {
 }
 
 function PublishedTab(props: Props) {
+  const { settings } = useSettings();
   const dateFormatter = useDateTimeFormatter();
   const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<Array<Dashboard>>([]);
@@ -83,7 +83,7 @@ function PublishedTab(props: Props) {
               },
             },
             {
-              Header: EnvConfig.topicAreaLabel,
+              Header: settings.topicAreaLabels.singular,
               accessor: "topicAreaName",
             },
             {
@@ -96,7 +96,7 @@ function PublishedTab(props: Props) {
               accessor: "createdBy",
             },
           ],
-          [dateFormatter]
+          [dateFormatter, settings]
         )}
       />
       <div className="text-right">

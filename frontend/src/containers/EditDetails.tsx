@@ -1,9 +1,8 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useTopicAreas, useDashboard } from "../hooks";
+import { useTopicAreas, useDashboard, useSettings } from "../hooks";
 import BackendService from "../services/BackendService";
-import EnvConfig from "../services/EnvConfig";
 import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
@@ -23,6 +22,7 @@ interface PathParams {
 
 function EditDetails() {
   const history = useHistory();
+  const { settings } = useSettings();
   const { topicareas } = useTopicAreas();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
@@ -97,8 +97,8 @@ function EditDetails() {
                 <Dropdown
                   id="topicAreaId"
                   name="topicAreaId"
-                  label={EnvConfig.topicAreaLabel}
-                  hint={`Select an existing ${EnvConfig.topicAreaLabel.toLowerCase()}`}
+                  label={settings.topicAreaLabels.singular}
+                  hint={`Select an existing ${settings.topicAreaLabels.singular.toLowerCase()}`}
                   defaultValue={dashboard?.topicAreaId}
                   register={register}
                   options={topicareas.map((topicarea) => ({

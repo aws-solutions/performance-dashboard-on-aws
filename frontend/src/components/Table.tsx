@@ -19,7 +19,7 @@ interface Props {
   rows: Array<object>;
   width?: string;
   columns: Array<{
-    accessor?: string;
+    accessor?: string | Function;
     Header: string;
     Cell?: Function;
     id?: string;

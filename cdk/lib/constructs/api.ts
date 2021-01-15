@@ -47,7 +47,7 @@ export class BackendApi extends cdk.Construct {
 
         //Need to change this policy for ingest API with specific values
         new PolicyStatement({
-          effect: Effect.ALLOW,
+          effect: Effect.DENY,
           actions: ["execute-api:Invoke"],
           resources: ["execute-api:/prod/*/ingestapi/*"],
           principals: [new AnyPrincipal()],

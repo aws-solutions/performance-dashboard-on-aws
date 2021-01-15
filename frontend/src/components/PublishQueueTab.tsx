@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Dashboard } from "../models";
-import { useDateTimeFormatter } from "../hooks";
-import EnvConfig from "../services/EnvConfig";
+import { useDateTimeFormatter, useSettings } from "../hooks";
 import Search from "./Search";
 import ScrollTop from "./ScrollTop";
 import Link from "./Link";
@@ -14,6 +13,7 @@ interface Props {
 function PublishQueueTab(props: Props) {
   const [filter, setFilter] = useState("");
   const [, setSelected] = useState<Array<Dashboard>>([]);
+  const { settings } = useSettings();
   const dateFormatter = useDateTimeFormatter();
   const { dashboards } = props;
 
@@ -79,7 +79,7 @@ function PublishQueueTab(props: Props) {
               },
             },
             {
-              Header: EnvConfig.topicAreaLabel,
+              Header: settings.topicAreaLabels.singular,
               accessor: "topicAreaName",
             },
             {
@@ -92,7 +92,7 @@ function PublishQueueTab(props: Props) {
               accessor: "createdBy",
             },
           ],
-          [dateFormatter]
+          [dateFormatter, settings]
         )}
       />
       <div className="text-right">

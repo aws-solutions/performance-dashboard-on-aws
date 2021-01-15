@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import ScrollTop from "../components/ScrollTop";
 import Search from "../components/Search";
 import Table from "../components/Table";
-import { LocationState, User, UserRoles } from "../models";
+import { LocationState, User } from "../models";
 import BackendService from "../services/BackendService";
 import { useHistory } from "react-router-dom";
 import Modal from "../components/Modal";
@@ -23,7 +23,7 @@ function UserListing() {
 
   const changeRole = () => {
     history.push("/admin/users/changerole", {
-      emails: selected.map((s) => s.email).join(","),
+      emails: selected.map((s) => s.email).join(" , "),
     });
   };
 
@@ -138,11 +138,7 @@ function UserListing() {
             },
             {
               Header: "Role",
-              accessor: "roles",
-              Cell: (props: any) =>
-                props.value && props.value.length
-                  ? (props.value as Array<UserRoles>).join(",")
-                  : "",
+              accessor: (row: User) => row.roles[0],
             },
             {
               Header: "Status",

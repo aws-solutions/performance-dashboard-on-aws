@@ -53,10 +53,7 @@ function SettingsLayout(props: LayoutProps) {
                 <nav aria-label="Left navigation">
                   <ul className="usa-sidenav">
                     <li className="usa-sidenav__item">
-                      <Link
-                        to="/admin/settings/topicarea"
-                        className="usa-current"
-                      >
+                      <Link to="/admin/settings" className="usa-current">
                         Settings
                       </Link>
                       <ul className="usa-sidenav__sublist">

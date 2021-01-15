@@ -1,9 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useTopicAreas } from "../hooks";
+import { useTopicAreas, useSettings } from "../hooks";
 import BackendService from "../services/BackendService";
-import EnvConfig from "../services/EnvConfig";
 import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
@@ -19,6 +18,7 @@ interface FormValues {
 
 function CreateDashboard() {
   const history = useHistory();
+  const { settings } = useSettings();
   const { topicareas, loading } = useTopicAreas();
   const { register, errors, handleSubmit } = useForm<FormValues>();
 
@@ -80,8 +80,8 @@ function CreateDashboard() {
                 <Dropdown
                   id="topicAreaId"
                   name="topicAreaId"
-                  label={EnvConfig.topicAreaLabel}
-                  hint={`Select an existing ${EnvConfig.topicAreaLabel.toLowerCase()}`}
+                  label={settings.topicAreaLabels.singular}
+                  hint={`Select an existing ${settings.topicAreaLabels.singular.toLowerCase()}`}
                   register={register}
                   options={topicareas.map((topicarea) => ({
                     value: topicarea.id,

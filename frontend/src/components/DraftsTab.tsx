@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { Dashboard } from "../models";
-import { useDateTimeFormatter } from "../hooks";
+import { useDateTimeFormatter, useSettings } from "../hooks";
 import Button from "./Button";
 import Search from "./Search";
 import ScrollTop from "./ScrollTop";
 import Table from "./Table";
 import Link from "./Link";
-import EnvConfig from "../services/EnvConfig";
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -17,6 +16,7 @@ interface Props {
 function DraftsTab(props: Props) {
   const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<Array<Dashboard>>([]);
+  const { settings } = useSettings();
   const dateFormatter = useDateTimeFormatter();
   const history = useHistory();
   const { dashboards } = props;
@@ -83,7 +83,7 @@ function DraftsTab(props: Props) {
               },
             },
             {
-              Header: EnvConfig.topicAreaLabel,
+              Header: settings.topicAreaLabels.singular,
               accessor: "topicAreaName",
             },
             {
@@ -96,7 +96,7 @@ function DraftsTab(props: Props) {
               accessor: "createdBy",
             },
           ],
-          [dateFormatter]
+          [dateFormatter, settings]
         )}
       />
       <div className="text-right">

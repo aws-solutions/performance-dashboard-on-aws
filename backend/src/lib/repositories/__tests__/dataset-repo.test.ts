@@ -5,7 +5,7 @@ import DatasetRepository from "../dataset-repo";
 import DynamoDBService from "../../services/dynamodb";
 import S3Service from "../../services/s3";
 import * as uuid from "uuid";
-import { WidgetType } from "../../models/widget";
+import WidgetRepository from "../widget-repo";
 
 jest.mock("../../services/dynamodb");
 jest.mock("../../services/s3");
@@ -16,6 +16,7 @@ jest.spyOn(uuid, "v4").mockReturnValue("123");
 let tableName: string;
 let datasetsBucket: string;
 let repo: DatasetRepository;
+let widgetRepo = mocked(WidgetRepository.prototype);
 let dynamodb = mocked(DynamoDBService.prototype);
 let s3Service = mocked(S3Service.prototype);
 
@@ -28,6 +29,8 @@ beforeAll(() => {
   DynamoDBService.getInstance = jest.fn().mockReturnValue(dynamodb);
   S3Service.getInstance = jest.fn().mockReturnValue(s3Service);
   repo = DatasetRepository.getInstance();
+
+  WidgetRepository.getInstance = jest.fn().mockReturnValue(widgetRepo);
 });
 
 describe("DatasetRepository", () => {
@@ -140,31 +143,9 @@ describe("updateDataset", () => {
 describe("getWidgetCount", () => {
   it("returns the number of widgets for a given dataset id", async () => {
     // Mock query response to simulate 2 widgets.
-    const now = new Date();
-    dynamodb.query = jest.fn().mockReturnValue({
-      Items: [
-        {
-          pk: "Dashboard#abc",
-          sk: "Widget#123",
-          widgetType: WidgetType.Text,
-          order: 1,
-          updatedAt: now.toISOString(),
-          name: "AWS",
-          content: { text: "test" },
-        },
-        {
-          pk: "Dashboard#abc",
-          sk: "Widget#123",
-          widgetType: WidgetType.Chart,
-          order: 1,
-          updatedAt: now.toISOString(),
-          name: "AWS",
-          content: { datasetId: "abc" },
-        },
-      ],
-    });
+    widgetRepo.getAssociatedWidgets = jest.fn().mockReturnValue([1, 2]);
 
     const count = await repo.getWidgetCount("abc");
-    expect(count).toEqual(1);
+    expect(count).toEqual(2);
   });
 });

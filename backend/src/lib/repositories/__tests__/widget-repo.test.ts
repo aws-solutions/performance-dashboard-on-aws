@@ -210,4 +210,30 @@ describe("Widget Repository", () => {
       },
     });
   });
+
+  describe("getAssociatedWidgets", () => {
+    it("returns widgets associated with a given dataset ID", async () => {
+      const now = new Date();
+      dynamodb.query = jest.fn().mockReturnValue({
+        Items: [
+          {
+            pk: "Dashboard#abc",
+            sk: "Widget#123",
+            widgetType: WidgetType.Text,
+            order: 1,
+            updatedAt: now.toISOString(),
+            name: "AWS",
+            content: { text: "test" },
+          },
+        ],
+      });
+
+      const widgets = await repo.getAssociatedWidgets("abc");
+      expect(widgets[0]).toEqual(
+        expect.objectContaining({
+          id: "123",
+        })
+      );
+    });
+  });
 });

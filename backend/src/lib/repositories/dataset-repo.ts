@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import logger from "../services/logger";
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { WidgetType } from "../models/widget";
+import WidgetRepository from "./widget-repo";
 
 class DatasetRepository extends BaseRepository {
   private s3Service: S3Service;
@@ -203,44 +204,9 @@ class DatasetRepository extends BaseRepository {
   }
 
   public async getWidgetCount(datasetId: string) {
-    const input: DocumentClient.QueryInput = {
-      TableName: this.tableName,
-      IndexName: "byType",
-      KeyConditionExpression: "#type = :type",
-      FilterExpression: "#widgetType <> :widgetType",
-      ExpressionAttributeNames: {
-        "#type": "type",
-        "#widgetType": "widgetType",
-      },
-      ExpressionAttributeValues: {
-        ":type": "Widget",
-        ":widgetType": WidgetType.Text,
-      },
-    };
-
-    let result = await this.dynamodb.query(input);
-
-    if (!result.Items) {
-      return 0;
-    }
-
-    let items = result.Items.filter(
-      (item) => item.content.datasetId === datasetId
-    );
-
-    while (result.LastEvaluatedKey) {
-      input.ExclusiveStartKey = result.LastEvaluatedKey;
-      result = await this.dynamodb.query(input);
-      if (result.Items) {
-        items = [
-          ...items,
-          ...result.Items.filter(
-            (item) => item.content.datasetId === datasetId
-          ),
-        ];
-      }
-    }
-    return items.length;
+    return (
+      await WidgetRepository.getInstance().getAssociatedWidgets(datasetId)
+    ).length;
   }
 
   private getNewJsonS3Key() {

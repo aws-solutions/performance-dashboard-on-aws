@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import IngestApiCtrl from "../ingestapi-ctrl";
 import DatasetRepository from "../../repositories/dataset-repo";
+import DatasetService from "../../services/dataset-service";
 
 jest.mock("../../repositories/dataset-repo");
 
@@ -98,8 +99,9 @@ describe("updateDataset", () => {
   });
 
   it("saves the dataset", async () => {
+    jest.spyOn(DatasetService, "updateDataset");
     await IngestApiCtrl.updateDataset(req, res);
-    expect(repository.updateDataset).toBeCalled();
+    expect(DatasetService.updateDataset).toBeCalled();
   });
 });
 

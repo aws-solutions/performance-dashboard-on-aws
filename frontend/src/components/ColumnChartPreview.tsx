@@ -15,6 +15,7 @@ type Props = {
   summary: string;
   columns: Array<string>;
   data?: Array<object>;
+  summaryBelow: boolean;
 };
 
 const ColumnChartPreview = (props: Props) => {
@@ -22,9 +23,11 @@ const ColumnChartPreview = (props: Props) => {
   return (
     <div>
       <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
-      <p className="margin-left-1 margin-top-0 margin-bottom-3">
-        {props.summary}
-      </p>
+      {!props.summaryBelow && (
+        <p className="margin-left-1 margin-top-0 margin-bottom-3">
+          {props.summary}
+        </p>
+      )}
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={props.data} margin={{ right: 0, left: 0 }}>
           <CartesianGrid vertical={false} />
@@ -41,6 +44,11 @@ const ColumnChartPreview = (props: Props) => {
             })}
         </BarChart>
       </ResponsiveContainer>
+      {props.summaryBelow && (
+        <p className="margin-left-1 margin-top-3 margin-bottom-0">
+          {props.summary}
+        </p>
+      )}
     </div>
   );
 };

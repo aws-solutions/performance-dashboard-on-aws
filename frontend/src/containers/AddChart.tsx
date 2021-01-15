@@ -26,6 +26,7 @@ interface FormValues {
   summary: string;
   chartType: string;
   showTitle: boolean;
+  summaryBelow: boolean;
 }
 
 interface PathParams {
@@ -57,6 +58,7 @@ function AddChart() {
   const [summary, setSummary] = useState("");
   const [chartType, setChartType] = useState<ChartType>(ChartType.LineChart);
   const [showTitle, setShowTitle] = useState(true);
+  const [summaryBelow, setSummaryBelow] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
@@ -100,6 +102,7 @@ function AddChart() {
         {
           title: values.title,
           summary: values.summary,
+          summaryBelow: values.summaryBelow,
           chartType: values.chartType,
           datasetType: datasetType,
           datasetId: newDataset
@@ -143,6 +146,12 @@ function AddChart() {
 
   const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
     setSummary((event.target as HTMLTextAreaElement).value);
+  };
+
+  const handleSummaryBelowChange = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setSummaryBelow((event.target as HTMLInputElement).checked);
   };
 
   const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -479,7 +488,6 @@ function AddChart() {
                     },
                   ]}
                 />
-
                 <TextField
                   id="summary"
                   name="summary"
@@ -492,6 +500,23 @@ function AddChart() {
                   multiline
                   rows={5}
                 />
+                <div className="usa-checkbox">
+                  <input
+                    className="usa-checkbox__input"
+                    id="summary-below"
+                    type="checkbox"
+                    name="summaryBelow"
+                    defaultChecked={false}
+                    onChange={handleSummaryBelowChange}
+                    ref={register()}
+                  />
+                  <label
+                    className="usa-checkbox__label"
+                    htmlFor="summary-below"
+                  >
+                    Show summary below chart
+                  </label>
+                </div>
               </div>
             </fieldset>
             <br />
@@ -535,6 +560,7 @@ function AddChart() {
                         : []
                     }
                     data={currentJson}
+                    summaryBelow={summaryBelow}
                   />
                 )}
                 {chartType === ChartType.ColumnChart && (
@@ -547,6 +573,7 @@ function AddChart() {
                         : []
                     }
                     data={currentJson}
+                    summaryBelow={summaryBelow}
                   />
                 )}
                 {chartType === ChartType.BarChart && (
@@ -559,6 +586,7 @@ function AddChart() {
                         : []
                     }
                     data={currentJson}
+                    summaryBelow={summaryBelow}
                   />
                 )}
                 {chartType === ChartType.PartWholeChart && (
@@ -571,6 +599,7 @@ function AddChart() {
                         : []
                     }
                     data={currentJson}
+                    summaryBelow={summaryBelow}
                   />
                 )}
               </>

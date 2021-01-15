@@ -22,6 +22,7 @@ function TableWidgetComponent(props: Props) {
       summary={content.summary}
       headers={keys}
       data={json}
+      summaryBelow={content.summaryBelow}
     />
   );
 }

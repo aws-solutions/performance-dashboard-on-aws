@@ -92,6 +92,7 @@ export interface ChartWidget extends Widget {
     chartType: ChartType;
     datasetId: string;
     summary: string;
+    summaryBelow: boolean;
     datasetType?: DatasetType;
     s3Key: {
       raw: string;
@@ -105,6 +106,7 @@ export interface TableWidget extends Widget {
     title: string;
     datasetId: string;
     summary: string;
+    summaryBelow: boolean;
     datasetType?: DatasetType;
     s3Key: {
       raw: string;

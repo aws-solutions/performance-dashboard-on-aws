@@ -23,9 +23,9 @@ function fromCognitoUser(cognitoUser: UserType): User {
     roles: cognitoUser.Attributes
       ? JSON.parse(
           cognitoUser.Attributes.find((a) => a.Name === "custom:roles")
-            ?.Value || '["Admin"]'
+            ?.Value || '[""]'
         )
-      : [Role.Admin],
+      : [""],
     createdAt: cognitoUser.UserCreateDate
       ? cognitoUser.UserCreateDate
       : new Date(),

@@ -14,11 +14,28 @@ test("renders the title and summary of the table preview component", async () =>
       title="test title"
       summary="test summary"
       headers={["test"]}
+      summaryBelow={false}
     />,
     { wrapper: MemoryRouter }
   );
   expect(getByText("test title")).toBeInTheDocument();
   expect(getByText("test summary")).toBeInTheDocument();
+  expect(getByText("test summary").nextSibling).toHaveClass("usa-table");
+});
+
+test("renders the table preview component with the summary below the chart", async () => {
+  const { getByText } = render(
+    <TablePreview
+      title="test title"
+      summary="test summary"
+      headers={["test"]}
+      summaryBelow={true}
+    />,
+    { wrapper: MemoryRouter }
+  );
+  expect(getByText("test title")).toBeInTheDocument();
+  expect(getByText("test summary")).toBeInTheDocument();
+  expect(getByText("test summary").previousSibling).toHaveClass("usa-table");
 });
 
 test("table preview should match snapshot", async () => {
@@ -27,6 +44,7 @@ test("table preview should match snapshot", async () => {
       title="test title"
       summary="test summary"
       headers={["test"]}
+      summaryBelow={false}
     />,
     { wrapper: MemoryRouter }
   );

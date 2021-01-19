@@ -31,6 +31,7 @@ interface FormValues {
   showTitle: boolean;
   dynamicDatasets: string;
   staticDatasets: string;
+  summaryBelow: boolean;
 }
 
 interface PathParams {
@@ -173,6 +174,7 @@ function EditChart() {
         {
           title: values.title,
           summary: values.summary,
+          summaryBelow: values.summaryBelow,
           chartType: values.chartType,
           datasetType: datasetType,
           datasetId: newDataset
@@ -238,6 +240,20 @@ function EditChart() {
         showTitle: (event.target as HTMLInputElement).checked,
         content: {
           ...widget.content,
+        },
+      });
+    }
+  };
+
+  const handleSummaryBelowChange = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    if (widget) {
+      setWidget({
+        ...widget,
+        content: {
+          ...widget.content,
+          summaryBelow: (event.target as HTMLInputElement).checked,
         },
       });
     }
@@ -624,6 +640,23 @@ function EditChart() {
                         multiline
                         rows={5}
                       />
+                      <div className="usa-checkbox">
+                        <input
+                          className="usa-checkbox__input"
+                          id="summary-below"
+                          type="checkbox"
+                          name="summaryBelow"
+                          defaultChecked={widget.content.summaryBelow}
+                          onChange={handleSummaryBelowChange}
+                          ref={register()}
+                        />
+                        <label
+                          className="usa-checkbox__label"
+                          htmlFor="summary-below"
+                        >
+                          Show summary below chart
+                        </label>
+                      </div>
                     </div>
                   ) : (
                     ""
@@ -673,6 +706,7 @@ function EditChart() {
                             : []
                         }
                         data={currentJson}
+                        summaryBelow={widget.content.summaryBelow}
                       />
                     )}
                     {widget.content.chartType === ChartType.ColumnChart && (
@@ -685,6 +719,7 @@ function EditChart() {
                             : []
                         }
                         data={currentJson}
+                        summaryBelow={widget.content.summaryBelow}
                       />
                     )}
                     {widget.content.chartType === ChartType.BarChart && (
@@ -697,6 +732,7 @@ function EditChart() {
                             : []
                         }
                         data={currentJson}
+                        summaryBelow={widget.content.summaryBelow}
                       />
                     )}
                     {widget.content.chartType === ChartType.PartWholeChart && (
@@ -709,6 +745,7 @@ function EditChart() {
                             : []
                         }
                         data={currentJson}
+                        summaryBelow={widget.content.summaryBelow}
                       />
                     )}
                   </>

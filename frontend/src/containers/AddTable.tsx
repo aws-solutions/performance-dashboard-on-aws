@@ -20,6 +20,7 @@ interface FormValues {
   title: string;
   summary: string;
   showTitle: boolean;
+  summaryBelow: boolean;
 }
 
 interface PathParams {
@@ -50,6 +51,7 @@ function AddTable() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [showTitle, setShowTitle] = useState(true);
+  const [summaryBelow, setSummaryBelow] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
@@ -93,6 +95,7 @@ function AddTable() {
         {
           title: values.title,
           summary: values.summary,
+          summaryBelow: values.summaryBelow,
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
@@ -133,6 +136,12 @@ function AddTable() {
 
   const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
     setSummary((event.target as HTMLTextAreaElement).value);
+  };
+
+  const handleSummaryBelowChange = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setSummaryBelow((event.target as HTMLInputElement).checked);
   };
 
   const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -460,6 +469,23 @@ function AddTable() {
                   multiline
                   rows={5}
                 />
+                <div className="usa-checkbox">
+                  <input
+                    className="usa-checkbox__input"
+                    id="summary-below"
+                    type="checkbox"
+                    name="summaryBelow"
+                    defaultChecked={false}
+                    onChange={handleSummaryBelowChange}
+                    ref={register()}
+                  />
+                  <label
+                    className="usa-checkbox__label"
+                    htmlFor="summary-below"
+                  >
+                    Show summary below chart
+                  </label>
+                </div>
               </div>
             </fieldset>
             <br />
@@ -494,6 +520,7 @@ function AddTable() {
               <TablePreview
                 title={showTitle ? title : ""}
                 summary={summary}
+                summaryBelow={summaryBelow}
                 headers={
                   currentJson.length
                     ? (Object.keys(currentJson[0]) as Array<string>)

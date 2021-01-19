@@ -25,6 +25,7 @@ function ChartWidgetComponent(props: Props) {
         <LineChartPreview
           title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
+          summaryBelow={content.summaryBelow}
           lines={keys}
           data={json}
         />
@@ -35,6 +36,7 @@ function ChartWidgetComponent(props: Props) {
         <ColumnChartPreview
           title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
+          summaryBelow={content.summaryBelow}
           columns={keys}
           data={json}
         />
@@ -45,6 +47,7 @@ function ChartWidgetComponent(props: Props) {
         <BarChartPreview
           title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
+          summaryBelow={content.summaryBelow}
           bars={keys}
           data={json}
         />
@@ -55,6 +58,7 @@ function ChartWidgetComponent(props: Props) {
         <PartWholeChartPreview
           title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
+          summaryBelow={content.summaryBelow}
           parts={keys}
           data={json}
         />

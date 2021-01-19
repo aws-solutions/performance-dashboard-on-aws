@@ -25,6 +25,7 @@ interface FormValues {
   showTitle: boolean;
   dynamicDatasets: string;
   staticDatasets: string;
+  summaryBelow: boolean;
 }
 
 interface PathParams {
@@ -167,6 +168,7 @@ function EditTable() {
         {
           title: values.title,
           summary: values.summary,
+          summaryBelow: values.summaryBelow,
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
@@ -229,6 +231,20 @@ function EditTable() {
         showTitle: (event.target as HTMLInputElement).checked,
         content: {
           ...widget.content,
+        },
+      });
+    }
+  };
+
+  const handleSummaryBelowChange = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    if (widget) {
+      setWidget({
+        ...widget,
+        content: {
+          ...widget.content,
+          summaryBelow: (event.target as HTMLInputElement).checked,
         },
       });
     }
@@ -592,6 +608,23 @@ function EditTable() {
                       multiline
                       rows={5}
                     />
+                    <div className="usa-checkbox">
+                      <input
+                        className="usa-checkbox__input"
+                        id="summary-below"
+                        type="checkbox"
+                        name="summaryBelow"
+                        defaultChecked={widget.content.summaryBelow}
+                        onChange={handleSummaryBelowChange}
+                        ref={register()}
+                      />
+                      <label
+                        className="usa-checkbox__label"
+                        htmlFor="summary-below"
+                      >
+                        Show summary below chart
+                      </label>
+                    </div>
                   </div>
                 </fieldset>
                 <br />
@@ -630,6 +663,7 @@ function EditTable() {
                     title={widget.showTitle ? widget.content.title : ""}
                     summary={widget.content.summary}
                     headers={tableHeaders}
+                    summaryBelow={widget.content.summaryBelow}
                     data={currentJson}
                   />
                 )}

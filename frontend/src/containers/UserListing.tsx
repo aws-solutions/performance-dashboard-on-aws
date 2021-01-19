@@ -9,6 +9,7 @@ import BackendService from "../services/BackendService";
 import { useHistory } from "react-router-dom";
 import Modal from "../components/Modal";
 import AlertContainer from "./AlertContainer";
+import Tooltip from "../components/Tooltip";
 
 function UserListing() {
   const history = useHistory<LocationState>();
@@ -23,7 +24,7 @@ function UserListing() {
 
   const changeRole = () => {
     history.push("/admin/users/changerole", {
-      emails: selected.map((s) => s.email).join(" , "),
+      emails: selected.map((s) => s.email).join(", "),
     });
   };
 
@@ -62,6 +63,13 @@ function UserListing() {
     }
   };
 
+  const resendInviteEmailDisabled = () => {
+    return (
+      selected.length === 0 ||
+      selected.some((s) => s.userStatus !== "FORCE_CHANGE_PASSWORD")
+    );
+  };
+
   return (
     <>
       <h1>Manage users</h1>
@@ -94,13 +102,30 @@ function UserListing() {
         </div>
         <div className="tablet:grid-col-7 text-right">
           <span>
-            <Button
-              variant="outline"
-              disabled={selected.length === 0}
-              onClick={onResendInvite}
-            >
-              Resend invite email
-            </Button>
+            <span data-for="resend" data-tip="">
+              <Button
+                variant="outline"
+                disabled={resendInviteEmailDisabled()}
+                onClick={onResendInvite}
+              >
+                Resend invite email
+              </Button>
+            </span>
+            {resendInviteEmailDisabled() ? (
+              <Tooltip
+                id="resend"
+                place="bottom"
+                effect="solid"
+                offset={{ bottom: 8 }}
+                getContent={() => (
+                  <div className="font-sans-sm">
+                    You can only resend invite emails to not confirmed users
+                  </div>
+                )}
+              />
+            ) : (
+              ""
+            )}
           </span>
           <span>
             <Button

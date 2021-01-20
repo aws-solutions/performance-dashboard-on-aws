@@ -137,6 +137,7 @@ function AddImage() {
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Configure image
       </div>
+
       {imageUploading ? (
         <Spinner className="text-center margin-top-6" label="Loading" />
       ) : (

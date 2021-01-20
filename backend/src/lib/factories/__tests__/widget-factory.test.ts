@@ -7,6 +7,7 @@ import {
   ChartWidget,
   TableWidget,
   ChartType,
+  MetricsWidget,
 } from "../../models/widget";
 
 const dummyWidgetName = "Some widget";
@@ -564,5 +565,69 @@ describe("createFromWidget", () => {
         },
       })
     );
+  });
+});
+
+describe("createMetricsWidget", () => {
+  const content = {
+    title: "Population trends",
+    datasetId: "090b0410",
+    s3Key: {
+      json: "abc.json",
+    },
+  };
+
+  it("builds a metrics widget", () => {
+    const widget = WidgetFactory.createWidget({
+      name: dummyWidgetName,
+      dashboardId,
+      widgetType: WidgetType.Metrics,
+      showTitle: true,
+      content,
+    }) as MetricsWidget;
+
+    expect(widget.id).toBeDefined();
+    expect(widget.name).toEqual(dummyWidgetName);
+    expect(widget.dashboardId).toEqual(dashboardId);
+    expect(widget.widgetType).toEqual(WidgetType.Metrics);
+    expect(widget.showTitle).toBe(true);
+    expect(widget.content.title).toEqual("Population trends");
+    expect(widget.content.datasetId).toEqual("090b0410");
+    expect(widget.content.s3Key).toEqual({
+      json: "abc.json",
+    });
+  });
+
+  it("throws an error if datasetId is undefined", () => {
+    expect(() => {
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
+        dashboardId,
+        widgetType: WidgetType.Metrics,
+        showTitle: true,
+        content: {
+          ...content,
+          datasetId: undefined,
+        },
+      });
+    }).toThrowError("Metrics widget must have `content.datasetId` field");
+  });
+
+  it("throws an error if s3Key.json is undefined", () => {
+    expect(() => {
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
+        dashboardId,
+        widgetType: WidgetType.Metrics,
+        showTitle: true,
+        content: {
+          ...content,
+          s3Key: {
+            ...content.s3Key,
+            json: undefined,
+          },
+        },
+      });
+    }).toThrowError("Metrics widget must have `content.s3Key.json` field");
   });
 });

@@ -7,6 +7,7 @@ import {
   ChartWidget,
   TableWidget,
   ChartType,
+  MetricsWidget,
 } from "../models/widget";
 
 export const WIDGET_ITEM_TYPE = "Widget";
@@ -40,6 +41,8 @@ function createWidget(widgetInfo: CreateWidgetInfo): Widget {
       return createChartWidget(widget);
     case WidgetType.Table:
       return createTableWidget(widget);
+    case WidgetType.Metrics:
+      return createMetricsWidget(widget);
     default:
       throw new Error("Invalid widget type");
   }
@@ -187,6 +190,25 @@ function createTableWidget(widget: Widget): TableWidget {
       s3Key: widget.content.s3Key,
       fileName: widget.content.fileName,
       datasetType: widget.content.datasetType,
+    },
+  };
+}
+
+function createMetricsWidget(widget: Widget): MetricsWidget {
+  if (!widget.content.datasetId) {
+    throw new Error("Metrics widget must have `content.datasetId` field");
+  }
+
+  if (!widget.content.s3Key || !widget.content.s3Key.json) {
+    throw new Error("Metrics widget must have `content.s3Key.json` field");
+  }
+
+  return {
+    ...widget,
+    content: {
+      title: widget.content.title,
+      datasetId: widget.content.datasetId,
+      s3Key: widget.content.s3Key,
     },
   };
 }

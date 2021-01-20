@@ -2,6 +2,7 @@ export enum WidgetType {
   Text = "Text",
   Chart = "Chart",
   Table = "Table",
+  Metrics = "Metrics",
 }
 
 export enum ChartType {
@@ -68,5 +69,15 @@ export interface TableWidget extends Widget {
       json: string;
     };
     fileName: string;
+  };
+}
+
+export interface MetricsWidget extends Widget {
+  content: {
+    title: string;
+    datasetId: string;
+    s3Key: {
+      json: string;
+    };
   };
 }

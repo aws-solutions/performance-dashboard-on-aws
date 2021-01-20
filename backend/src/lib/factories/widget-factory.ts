@@ -87,6 +87,8 @@ function fromItem(item: WidgetItem): Widget {
       return widget as ChartWidget;
     case WidgetType.Table:
       return widget as TableWidget;
+    case WidgetType.Metrics:
+      return widget as MetricsWidget;
     default:
       return widget;
   }

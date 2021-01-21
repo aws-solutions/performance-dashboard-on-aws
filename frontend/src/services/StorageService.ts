@@ -24,6 +24,7 @@ const serverSideEncryption = "aws:kms";
 const rawFileTypes: ValidFileTypes = {
   "text/csv": ".csv",
   "application/vnd.ms-excel": ".csv",
+  "image/png": ".png",
 };
 
 async function downloadDataset(filename: string): Promise<File> {

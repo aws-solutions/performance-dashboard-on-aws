@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { Dataset, DatasetType, WidgetType } from "../models";
+import { Dataset, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
-import { useDashboard, useDateTimeFormatter } from "../hooks";
+import { useDashboard } from "../hooks";
 import StorageService from "../services/StorageService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
-import { parse, ParseResult } from "papaparse";
-import TablePreview from "../components/TablePreview";
-import { useDatasets } from "../hooks/dataset-hooks";
+import ImagePreview from "../components/ImagePreview";
 import Spinner from "../components/Spinner";
 
 interface FormValues {
@@ -28,24 +26,9 @@ interface PathParams {
 function AddImage() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
-  const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
-  const { dynamicDatasets, staticDatasets } = useDatasets();
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const [currentJson, setCurrentJson] = useState<Array<any>>([]);
-  const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
-  const [staticJson, setStaticJson] = useState<Array<any>>([]);
-  const [csvJson, setCsvJson] = useState<Array<any>>([]);
-  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
-    undefined
-  );
-  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
-    undefined
-  );
-  const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
-    undefined
-  );
-  const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
+  const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [showTitle, setShowTitle] = useState(true);
@@ -53,22 +36,16 @@ function AddImage() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
-  const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
-    undefined
-  );
 
   const uploadDataset = async (): Promise<Dataset> => {
-    if (!csvFile) {
-      throw new Error("CSV file not specified");
+    if (!imageFile) {
+      throw new Error("Image file not specified");
     }
 
     setFileLoading(true);
-    const uploadResponse = await StorageService.uploadDataset(
-      csvFile,
-      JSON.stringify(currentJson)
-    );
+    const uploadResponse = await StorageService.uploadDataset(imageFile, "");
 
-    const newDataset = await BackendService.createDataset(csvFile.name, {
+    const newDataset = await BackendService.createDataset(imageFile.name, {
       raw: uploadResponse.s3Keys.raw,
       json: uploadResponse.s3Keys.json,
     });
@@ -80,7 +57,7 @@ function AddImage() {
   const onSubmit = async (values: FormValues) => {
     try {
       let newDataset;
-      if (csvFile) {
+      if (imageFile) {
         newDataset = await uploadDataset();
       }
 
@@ -88,22 +65,15 @@ function AddImage() {
       await BackendService.createWidget(
         dashboardId,
         values.title,
-        WidgetType.Table,
+        WidgetType.Image,
         values.showTitle,
         {
           title: values.title,
           summary: values.summary,
           summaryBelow: values.summaryBelow,
-          datasetType: datasetType,
-          datasetId: newDataset
-            ? newDataset.id
-            : dynamicDataset?.id || staticDataset?.id,
-          s3Key: newDataset
-            ? newDataset.s3Key
-            : dynamicDataset?.s3Key || staticDataset?.s3Key,
-          fileName: csvFile
-            ? csvFile.name
-            : dynamicDataset?.fileName || staticDataset?.fileName,
+          datasetId: newDataset ? newDataset.id : null,
+          s3Key: newDataset ? newDataset.s3Key : null,
+          fileName: imageFile ? imageFile.name : null,
         }
       );
       setCreatingWidget(false);
@@ -151,86 +121,8 @@ function AddImage() {
       return;
     }
     setDatasetLoading(true);
-    parse(data, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true,
-      comments: "#",
-      complete: function (results: ParseResult<object>) {
-        if (results.errors.length) {
-          setCsvErrors(results.errors);
-          setCsvJson([]);
-          setCurrentJson([]);
-        } else {
-          setCsvErrors(undefined);
-          setCsvJson(results.data);
-          setCurrentJson(results.data);
-        }
-        setDatasetLoading(false);
-      },
-    });
-    setCsvFile(data);
-  };
-
-  const handleChange = (event: React.FormEvent<HTMLFieldSetElement>) => {
-    const target = event.target as HTMLInputElement;
-    if (target.name === "datasetType") {
-      const datasetType = target.value as DatasetType;
-      setDatasetType(datasetType);
-      if (datasetType === DatasetType.DynamicDataset) {
-        setCurrentJson(dynamicJson);
-      }
-      if (datasetType === DatasetType.StaticDataset) {
-        setCurrentJson(staticJson);
-      }
-      if (datasetType === DatasetType.CsvFileUpload) {
-        setCurrentJson(csvJson);
-      }
-    }
-  };
-
-  const onSelectDynamicDataset = async (
-    event: React.FormEvent<HTMLSelectElement>
-  ) => {
-    event.persist();
-    setDatasetLoading(true);
-
-    const jsonFile = (event.target as HTMLInputElement).value;
-    if (jsonFile) {
-      const dataset = await StorageService.downloadJson(jsonFile);
-      setDynamicJson(dataset);
-      setCurrentJson(dataset);
-      setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
-    } else {
-      setDynamicJson([]);
-      setCurrentJson([]);
-      setDynamicDataset(undefined);
-    }
-
     setDatasetLoading(false);
-    event.stopPropagation();
-  };
-
-  const onSelectStaticDataset = async (
-    event: React.FormEvent<HTMLSelectElement>
-  ) => {
-    event.persist();
-    setDatasetLoading(true);
-
-    const jsonFile = (event.target as HTMLInputElement).value;
-    if (jsonFile) {
-      const dataset = await StorageService.downloadJson(jsonFile);
-      setStaticJson(dataset);
-      setCurrentJson(dataset);
-      setStaticDataset(staticDatasets.find((d) => d.s3Key.json === jsonFile));
-    } else {
-      setStaticJson([]);
-      setCurrentJson([]);
-      setStaticDataset(undefined);
-    }
-
-    setDatasetLoading(false);
-    event.stopPropagation();
+    setImageFile(data);
   };
 
   const crumbs = [
@@ -298,19 +190,17 @@ function AddImage() {
                   id="dataset"
                   name="dataset"
                   label="File upload"
-                  accept=".csv"
+                  accept=".png, .jpeg, .svg"
                   loading={fileLoading}
-                  errors={csvErrors}
                   register={register}
                   hint={<span>Must be a PNG, JPEG, or SVG file</span>}
-                  fileName={csvFile && csvFile.name}
+                  fileName={imageFile && imageFile.name}
                   onFileProcessed={onFileProcessed}
                 />
               </div>
 
               <div>
-                {currentJson.length &&
-                (Object.keys(currentJson[0]) as Array<string>).length >= 8 ? (
+                {false && false ? (
                   <div className="usa-alert usa-alert--warning margin-top-3">
                     <div className="usa-alert__body">
                       <p className="usa-alert__text">
@@ -323,32 +213,35 @@ function AddImage() {
                   ""
                 )}
 
-                <TextField
-                  id="summary"
-                  name="summary"
-                  label="Image description - optional"
-                  hint="Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments."
-                  register={register}
-                  onChange={handleSummaryChange}
-                  multiline
-                  rows={5}
-                />
-                <div className="usa-checkbox">
-                  <input
-                    className="usa-checkbox__input"
-                    id="summary-below"
-                    type="checkbox"
-                    name="summaryBelow"
-                    defaultChecked={false}
-                    onChange={handleSummaryBelowChange}
-                    ref={register()}
+                <div hidden={!imageFile}>
+                  <TextField
+                    id="summary"
+                    name="summary"
+                    label="Image description - optional"
+                    hint="Give your image a description to explain it in more depth. It 
+                    can also be read by screen readers to describe the image for those with visual impairments."
+                    register={register}
+                    onChange={handleSummaryChange}
+                    multiline
+                    rows={5}
                   />
-                  <label
-                    className="usa-checkbox__label"
-                    htmlFor="summary-below"
-                  >
-                    Show description below image
-                  </label>
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="summary-below"
+                      type="checkbox"
+                      name="summaryBelow"
+                      defaultChecked={false}
+                      onChange={handleSummaryBelowChange}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="summary-below"
+                    >
+                      Show description below image
+                    </label>
+                  </div>
                 </div>
               </div>
             </fieldset>
@@ -358,12 +251,10 @@ function AddImage() {
               Back
             </Button>
             <Button
-              disabled={
-                !currentJson.length || !title || fileLoading || creatingWidget
-              }
+              disabled={!imageFile || !title || fileLoading || creatingWidget}
               type="submit"
             >
-              Add table
+              Add image
             </Button>
             <Button
               variant="unstyled"
@@ -376,21 +267,16 @@ function AddImage() {
           </form>
         </div>
         <div className="grid-col-6">
-          <div hidden={!currentJson.length} className="margin-left-4">
+          <div hidden={!imageFile} className="margin-left-4">
             <h4>Preview</h4>
             {datasetLoading ? (
               <Spinner className="text-center margin-top-6" label="Loading" />
             ) : (
-              <TablePreview
+              <ImagePreview
                 title={showTitle ? title : ""}
                 summary={summary}
+                file={imageFile}
                 summaryBelow={summaryBelow}
-                headers={
-                  currentJson.length
-                    ? (Object.keys(currentJson[0]) as Array<string>)
-                    : []
-                }
-                data={currentJson}
               />
             )}
           </div>

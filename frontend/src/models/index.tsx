@@ -66,6 +66,7 @@ export enum WidgetType {
   Text = "Text",
   Chart = "Chart",
   Table = "Table",
+  Image = "Image",
 }
 
 export enum ChartType {

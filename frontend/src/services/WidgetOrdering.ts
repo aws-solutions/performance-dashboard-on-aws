@@ -1,10 +1,8 @@
-import { Widget } from "../models";
-
 function moveWidget(
-  widgets: Array<Widget>,
+  widgets: Array<any>,
   index: number,
   newIndex: number
-): Array<Widget> {
+): Array<any> {
   // If new position is out of bounds, don't move anything.
   if (newIndex < 0 || newIndex >= widgets.length) {
     return widgets;

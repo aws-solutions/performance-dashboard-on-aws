@@ -12,7 +12,7 @@ const logger = pino.child({
 });
 
 async function createDataset(req: Request, res: Response) {
-  const { metadata, data, schema } = req.body;
+  const { metadata, data } = req.body;
 
   if (!metadata.name) {
     return res.status(400).send("Missing required field `metadata.name`");
@@ -22,18 +22,21 @@ async function createDataset(req: Request, res: Response) {
     return res.status(400).send("Missing required field `data`");
   }
 
-  if (schema && !Object.values(DatasetSchema).includes(schema)) {
-    return res.status(400).send(`Unknown schema provided '${schema}'`);
+  if (
+    metadata.schema &&
+    !Object.values(DatasetSchema).includes(metadata.schema)
+  ) {
+    return res.status(400).send(`Unknown schema provided '${metadata.schema}'`);
   }
 
   const repo = DatasetRepository.getInstance();
   let parsedData: DatasetContent;
 
   try {
-    parsedData = DatasetService.parse(data);
+    parsedData = DatasetService.parse(data, metadata.schema);
   } catch (err) {
-    logger.warn("Unable to parse dataset %s", data);
-    return res.status(400).send("Unable to parse the provide dataset");
+    logger.warn("Unable to parse dataset %o", data);
+    return res.status(400).send(err.message);
   }
 
   try {
@@ -46,7 +49,7 @@ async function createDataset(req: Request, res: Response) {
         json: s3Key,
       },
       sourceType: SourceType.IngestApi,
-      schema: schema,
+      schema: metadata.schema,
     });
 
     await repo.saveDataset(dataset);

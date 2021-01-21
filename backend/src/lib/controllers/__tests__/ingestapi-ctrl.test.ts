@@ -49,10 +49,9 @@ describe("createDataset", () => {
   });
 
   it("returns a 400 error when schema is invalid", async () => {
-    req.body.schema = "banana";
+    req.body.metadata.schema = "banana";
     await IngestApiCtrl.createDataset(req, res);
     expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Unknown schema provided 'banana'");
   });
 
   it("returns a 400 error if data cannot be parsed", async () => {
@@ -61,9 +60,11 @@ describe("createDataset", () => {
 
     await IngestApiCtrl.createDataset(req, res);
 
-    expect(DatasetService.parse).toBeCalledWith("This is not a valid JSON");
     expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Unable to parse the provide dataset");
+    expect(DatasetService.parse).toBeCalledWith(
+      "This is not a valid JSON",
+      undefined
+    );
   });
 
   it("uploads the data content to S3", async () => {

@@ -1,24 +1,49 @@
 import { InvalidDatasetContent } from "../errors";
-import { DatasetContent } from "../models/dataset";
+import { DatasetContent, DatasetSchema } from "../models/dataset";
 import { User } from "../models/user";
+import { Validator, ValidatorResult } from "jsonschema";
 import DashboardRepository from "../repositories/dashboard-repo";
 import WidgetRepository from "../repositories/widget-repo";
 import DatasetRepository from "../repositories/dataset-repo";
+import pino from "../services/logger";
 
-function parse(dataset: any): DatasetContent {
-  // Verify dataset is an Array
-  if (Array.isArray(dataset)) {
-    // Verify every element in the array is an Object
-    const isValid = dataset.every((element) => typeof element === "object");
+import MetricsSchema from "../jsonschema/datasets/metrics.json";
+import NoneSchema from "../jsonschema/datasets/none.json";
 
-    if (!isValid) {
-      throw new InvalidDatasetContent();
-    }
+const logger = pino.child({
+  api: "ingestapi",
+});
 
-    return dataset;
+function parse(dataset: any, schema = DatasetSchema.None): DatasetContent {
+  const schemaValidator = new Validator();
+  let result: ValidatorResult;
+
+  switch (schema as DatasetSchema) {
+    case DatasetSchema.Metrics:
+      logger.info("Validating dataset against Metrics schema %o", dataset);
+      result = schemaValidator.validate(dataset, MetricsSchema);
+      break;
+    case DatasetSchema.None:
+      logger.info("Validating dataset against None schema %o", dataset);
+      result = schemaValidator.validate(dataset, NoneSchema);
+      break;
+    default:
+      logger.info("Validating dataset against None schema %o", dataset);
+      result = schemaValidator.validate(dataset, NoneSchema);
+      break;
   }
 
-  throw new InvalidDatasetContent();
+  if (!result.valid) {
+    logger.error(
+      "Dataset does not conform to schema %s, %s, %s",
+      schema,
+      JSON.stringify(dataset),
+      result.toString()
+    );
+    throw new InvalidDatasetContent(result.toString());
+  }
+
+  return dataset;
 }
 
 async function updateDataset(

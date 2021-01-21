@@ -67,6 +67,7 @@ export enum WidgetType {
   Chart = "Chart",
   Table = "Table",
   Image = "Image",
+  Metrics = "Metrics",
 }
 
 export enum ChartType {
@@ -207,4 +208,12 @@ export type User = {
   roles: Array<UserRoles>;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type Metric = {
+  title: string;
+  value: string;
+  changeOverTime?: string;
+  startDate?: Date;
+  endDate?: Date;
 };

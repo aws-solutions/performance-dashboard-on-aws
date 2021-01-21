@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import IngestApiCtrl from "../ingestapi-ctrl";
+import { Dataset, SourceType } from "../../models/dataset";
 import DatasetRepository from "../../repositories/dataset-repo";
 import DatasetService from "../../services/dataset-service";
+import DatasetFactory from "../../factories/dataset-factory";
 
 jest.mock("../../repositories/dataset-repo");
+jest.mock("../../factories/dataset-factory");
 
 const repository = mocked(DatasetRepository.prototype);
 const res = ({
@@ -31,18 +34,11 @@ describe("createDataset", () => {
     } as any) as Request;
   });
 
-  it("returns a 400 error when metadata is missing", async () => {
-    delete req.body.metadata;
-    await IngestApiCtrl.createDataset(req, res);
-    expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Missing required field `metadata`");
-  });
-
   it("returns a 400 error when metadata.name is missing", async () => {
     delete req.body.metadata.name;
     await IngestApiCtrl.createDataset(req, res);
     expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Missing required field `name`");
+    expect(res.send).toBeCalledWith("Missing required field `metadata.name`");
   });
 
   it("returns a 400 error when data is missing", async () => {
@@ -52,14 +48,50 @@ describe("createDataset", () => {
     expect(res.send).toBeCalledWith("Missing required field `data`");
   });
 
-  it("saves the dataset", async () => {
+  it("returns a 400 error when schema is invalid", async () => {
+    req.body.schema = "banana";
     await IngestApiCtrl.createDataset(req, res);
-    expect(repository.createDataset).toBeCalledWith(
-      expect.objectContaining({
-        createdBy: "ingestapi",
-      }),
-      [{ data: "data" }]
-    );
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Unknown schema provided 'banana'");
+  });
+
+  it("returns a 400 error if data cannot be parsed", async () => {
+    req.body.data = "This is not a valid JSON";
+    jest.spyOn(DatasetService, "parse");
+
+    await IngestApiCtrl.createDataset(req, res);
+
+    expect(DatasetService.parse).toBeCalledWith("This is not a valid JSON");
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Unable to parse the provide dataset");
+  });
+
+  it("uploads the data content to S3", async () => {
+    await IngestApiCtrl.createDataset(req, res);
+    expect(repository.uploadDatasetContent).toBeCalled();
+  });
+
+  it("builds a new dataset using the proper values", async () => {
+    const s3Key = "00001";
+    jest.spyOn(repository, "uploadDatasetContent").mockResolvedValue(s3Key);
+
+    await IngestApiCtrl.createDataset(req, res);
+    expect(DatasetFactory.createNew).toBeCalledWith({
+      fileName: "covid-dataset.csv",
+      createdBy: "ingestapi",
+      s3Key: {
+        raw: s3Key,
+        json: s3Key,
+      },
+      sourceType: SourceType.IngestApi,
+    });
+  });
+
+  it("saves the dataset", async () => {
+    const dataset = {} as Dataset;
+    DatasetFactory.createNew = jest.fn().mockReturnValue(dataset);
+    await IngestApiCtrl.createDataset(req, res);
+    expect(repository.saveDataset).toBeCalledWith(dataset);
   });
 });
 

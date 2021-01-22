@@ -11,7 +11,7 @@ const imageFile = {
 
 window.URL.createObjectURL = jest.fn();
 
-test("renders the title and summary of the table preview component", async () => {
+test("renders the title and summary of the image preview component", async () => {
   const { getByText } = render(
     <ImagePreview
       title="test title"
@@ -23,11 +23,10 @@ test("renders the title and summary of the table preview component", async () =>
   );
   expect(getByText("test title")).toBeInTheDocument();
   expect(getByText("test summary")).toBeInTheDocument();
-  //expect(getByText("test summary").nextSibling).toHaveClass("usa-table");
   expect(getByText("test summary").nextSibling).toContainHTML("img");
 });
 
-test("renders the table preview component with the summary below the chart", async () => {
+test("renders the image preview component with the summary below the chart", async () => {
   const { getByText } = render(
     <ImagePreview
       title="test title"
@@ -39,19 +38,18 @@ test("renders the table preview component with the summary below the chart", asy
   );
   expect(getByText("test title")).toBeInTheDocument();
   expect(getByText("test summary")).toBeInTheDocument();
-  //expect(getByText("test summary").previousSibling).toHaveClass("usa-table");
   expect(getByText("test summary").previousSibling).toContainHTML("img");
 });
 
-// test("table preview should match snapshot", async () => {
-//   const wrapper = render(
-//     <ImagePreview
-//       title="test title"
-//       summary="test summary"
-//       file={imageFile}
-//       summaryBelow={false}
-//     />,
-//     { wrapper: MemoryRouter }
-//   );
-//   expect(wrapper.container).toMatchSnapshot();
-// });
+test("image preview should match snapshot", async () => {
+  const wrapper = render(
+    <ImagePreview
+      title="test title"
+      summary="test summary"
+      file={imageFile}
+      summaryBelow={false}
+    />,
+    { wrapper: MemoryRouter }
+  );
+  expect(wrapper.container).toMatchSnapshot();
+});

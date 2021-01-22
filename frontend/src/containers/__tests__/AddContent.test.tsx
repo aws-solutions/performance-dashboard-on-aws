@@ -16,6 +16,44 @@ test("renders Step 1 of 2", async () => {
   expect(stepOneOfTwo).toBeInTheDocument();
 });
 
+test("renders text option", async () => {
+  const { findByText } = render(<AddContent />, { wrapper: MemoryRouter });
+  const header = await findByText("Text");
+  const description = await findByText(
+    "Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings."
+  );
+  expect(header).toBeInTheDocument();
+  expect(description).toBeInTheDocument();
+});
+
+test("renders chart option", async () => {
+  const { findByText } = render(<AddContent />, { wrapper: MemoryRouter });
+  const header = await findByText("Chart");
+  const description = await findByText(
+    "Upload a CSV file to display data as a visualization, including line, bar, column and part-to-whole charts."
+  );
+  expect(header).toBeInTheDocument();
+  expect(description).toBeInTheDocument();
+});
+
+test("renders table option", async () => {
+  const { findByText } = render(<AddContent />, { wrapper: MemoryRouter });
+  const header = await findByText("Table");
+  const description = await findByText(
+    "Upload a CSV file to display data formatted in rows and columns."
+  );
+  expect(header).toBeInTheDocument();
+  expect(description).toBeInTheDocument();
+});
+
+test("renders image option", async () => {
+  const { findByText } = render(<AddContent />, { wrapper: MemoryRouter });
+  const header = await findByText("Image");
+  const description = await findByText("Upload an image to display.");
+  expect(header).toBeInTheDocument();
+  expect(description).toBeInTheDocument();
+});
+
 test("cancel link takes you to Edit Dashboard screen", async () => {
   const history = createMemoryHistory();
   jest.spyOn(history, "push");

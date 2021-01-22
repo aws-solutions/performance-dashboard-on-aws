@@ -67,7 +67,6 @@ async function downloadJson(s3Key: string): Promise<Array<any>> {
   }
 }
 
-//Upload image here
 async function uploadFile(rawFile: File, fileS3Key: string) {
   await Storage.put(fileS3Key, rawFile, {
     level: accessLevel,
@@ -119,7 +118,7 @@ async function uploadImage(rawFile: File): Promise<string> {
   const extension = imageFileTypes[mimeType as keyof ValidFileTypes];
 
   if (!extension) {
-    throw new Error("Image file is not supported");
+    throw new Error("File type is not supported");
   }
 
   const fileS3Key = uuidv4().concat(extension);

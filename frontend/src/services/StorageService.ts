@@ -27,7 +27,7 @@ const rawFileTypes: ValidFileTypes = {
 };
 const imageFileTypes: ValidFileTypes = {
   "image/png": ".png",
-  "image/jpg": ".jpg",
+  "image/jpeg": ".jpg",
   "image/svg": ".svg",
 };
 

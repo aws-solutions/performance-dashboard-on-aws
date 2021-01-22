@@ -10,7 +10,6 @@ import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
 import AddImage from "../AddImage";
-import papaparse from "papaparse";
 
 jest.mock("../../services/BackendService");
 jest.mock("../../services/StorageService");
@@ -18,12 +17,8 @@ jest.mock("../../services/StorageService");
 beforeEach(() => {
   BackendService.createWidget = jest.fn();
   BackendService.createDataset = jest.fn().mockReturnValue({ id: "1244" });
-  StorageService.uploadDataset = jest.fn().mockReturnValue({
-    s3Keys: {
-      raw: "abc.csv",
-      json: "abc.json",
-    },
-  });
+  StorageService.uploadDataset = jest.fn().mockReturnValue("abc.jpg");
+  window.URL.createObjectURL = jest.fn();
 });
 
 test("renders title and subtitles", async () => {
@@ -31,59 +26,64 @@ test("renders title and subtitles", async () => {
     wrapper: MemoryRouter,
   });
   expect(
-    await screen.findByRole("heading", { name: "Add chart" })
+    await screen.findByRole("heading", { name: "Add Image" })
   ).toBeInTheDocument();
-  expect(await screen.findByText("Configure chart")).toBeInTheDocument();
+  expect(await screen.findByText("Configure image")).toBeInTheDocument();
   expect(await screen.findByText("Step 2 of 2")).toBeInTheDocument();
 });
 
-test("renders a textfield for chart title", async () => {
+test("renders a textfield for image title", async () => {
   render(<AddImage />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("Chart title")).toBeInTheDocument();
+  expect(await screen.findByLabelText("Image title")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {
   render(<AddImage />, { wrapper: MemoryRouter });
-
-  const radioButton = await screen.findByLabelText(
-    "Create a new dataset from file"
-  );
-  fireEvent.click(radioButton);
-
   expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
 });
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
-  const parseSpy = jest.spyOn(papaparse, "parse");
   const { getByRole, getByText, getByLabelText } = render(<AddImage />, {
     wrapper: MemoryRouter,
   });
 
-  const submitButton = getByRole("button", { name: "Add chart" });
+  const submitButton = getByRole("button", { name: "Add image" });
 
-  const radioButton = getByLabelText("Create a new dataset from file");
-  fireEvent.click(radioButton);
-
-  fireEvent.input(getByLabelText("Chart title"), {
+  fireEvent.input(getByLabelText("Image title"), {
     target: {
-      value: "COVID Cases",
+      value: "Test Image",
+    },
+  });
+
+  fireEvent.input(getByLabelText("Image alt text"), {
+    target: {
+      value: "Test alt text",
     },
   });
 
   fireEvent.change(getByLabelText("File upload"), {
     target: {
-      files: ["dataset.csv"],
+      files: ["image.jpg"],
     },
-  });
-
-  await waitFor(() => {
-    expect(parseSpy).toHaveBeenCalled();
-    submitButton.removeAttribute("disabled");
   });
 
   await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {
     expect(getByText("Preview")).toBeInTheDocument();
+
+    expect(getByText("Image alt text")).toBeInTheDocument();
+    expect(
+      getByText(
+        "Invisible description of the image which is read aloud to users with visual impairments on a screen reader."
+      )
+    ).toBeInTheDocument();
+
+    expect(getByText("Image description - optional")).toBeInTheDocument();
+    expect(
+      getByText(
+        "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments."
+      )
+    ).toBeInTheDocument();
   });
 
   await act(async () => {
@@ -91,6 +91,5 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
   });
 
   expect(BackendService.createWidget).toHaveBeenCalled();
-  expect(StorageService.uploadDataset).toHaveBeenCalled();
-  expect(BackendService.createDataset).toHaveBeenCalled();
+  expect(StorageService.uploadImage).toHaveBeenCalled();
 });

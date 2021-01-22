@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$comment": "For Datasets that do not have a defined schema",
+  "type": "array",
+  "items": {
+    "type": "object"
+  }
+}

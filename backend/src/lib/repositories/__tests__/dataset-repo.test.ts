@@ -88,21 +88,21 @@ describe("saveDataset", () => {
   });
 });
 
-describe("createDataset", () => {
-  it("create the item in dynamodb", async () => {
-    const metadata = { name: "abc", createdBy: "johndoe" };
-    const data = [{ data: "data" }];
-    const item = {} as DatasetItem;
+describe("uploadDatasetContent", () => {
+  it("uploads JSON content to S3", async () => {
+    const content = [{ foo: "bar" }];
+    await repo.uploadDatasetContent(content);
+    expect(s3Service.putObject).toBeCalledWith(
+      datasetsBucket,
+      expect.anything(),
+      JSON.stringify(content)
+    );
+  });
 
-    s3Service.putObject = jest.fn().mockReturnValue(true);
-    s3Service.objectExists = jest.fn().mockReturnValue(true);
-    DatasetFactory.toItem = jest.fn().mockReturnValue(item);
-
-    await repo.createDataset(metadata, data);
-    expect(dynamodb.put).toBeCalledWith({
-      TableName: tableName,
-      Item: item,
-    });
+  it("returns the generated S3 key", async () => {
+    const content = [{ foo: "bar" }];
+    const s3Key = await repo.uploadDatasetContent(content);
+    expect(typeof s3Key).toBe("string");
   });
 });
 

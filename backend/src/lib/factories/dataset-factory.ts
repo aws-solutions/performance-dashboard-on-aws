@@ -1,5 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
-import { Dataset, DatasetItem, SourceType } from "../models/dataset";
+import {
+  Dataset,
+  DatasetItem,
+  SourceType,
+  DatasetSchema,
+} from "../models/dataset";
 
 const DATASET_ITEM_TYPE = "Dataset";
 
@@ -11,9 +16,14 @@ type DatasetInfo = {
     json: string;
   };
   sourceType: SourceType;
+  schema?: string;
 };
 
 function createNew(info: DatasetInfo): Dataset {
+  const schema = info.schema
+    ? (info.schema as DatasetSchema)
+    : DatasetSchema.None;
+
   return {
     id: uuidv4(),
     fileName: info.fileName,
@@ -24,6 +34,7 @@ function createNew(info: DatasetInfo): Dataset {
     },
     updatedAt: new Date(),
     sourceType: info.sourceType,
+    schema,
   };
 }
 
@@ -38,6 +49,7 @@ function fromItem(item: DatasetItem): Dataset {
     sourceType: item.sourceType
       ? (item.sourceType as SourceType)
       : SourceType.FileUpload,
+    schema: item.schema ? (item.schema as DatasetSchema) : DatasetSchema.None,
   };
   return dataset;
 }
@@ -54,6 +66,7 @@ function toItem(dataset: Dataset): DatasetItem {
       ? dataset.updatedAt.toISOString()
       : new Date().toISOString(),
     sourceType: dataset.sourceType,
+    schema: dataset.schema,
   };
 }
 

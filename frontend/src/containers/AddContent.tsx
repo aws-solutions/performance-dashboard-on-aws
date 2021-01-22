@@ -27,6 +27,8 @@ function AddContent() {
       history.push(`/admin/dashboard/${dashboardId}/add-table`);
     } else if (values.widgetType === "text") {
       history.push(`/admin/dashboard/${dashboardId}/add-text`);
+    } else if (values.widgetType === "image") {
+      history.push(`/admin/dashboard/${dashboardId}/add-image`);
     }
   };
 
@@ -150,6 +152,32 @@ function AddContent() {
                   <div className="usa-prose text-base margin-left-4">
                     Upload a CSV file to display data formatted in rows and
                     columns.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="usa-radio">
+              <div
+                className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
+                  widgetType === "image" ? " bg-base-lightest" : "-lighter"
+                } border-2px padding-2 margin-y-1`}
+              >
+                <div className="grid-col flex-5">
+                  <input
+                    className="usa-radio__input"
+                    id="image"
+                    value="image"
+                    type="radio"
+                    name="widgetType"
+                    ref={register()}
+                  />
+                  <label className="usa-radio__label" htmlFor="image">
+                    Image
+                  </label>
+                </div>
+                <div className="grid-col flex-7">
+                  <div className="usa-prose text-base margin-left-4">
+                    Upload an image to display.
                   </div>
                 </div>
               </div>

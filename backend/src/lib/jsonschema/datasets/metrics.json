@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$comment": "Schema for Datasets that populate Metrics content items",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string",
+        "$comment": "For example, Transactions per year"
+      },
+      "value": {
+        "type": "number"
+      },
+      "changeOverTime": {
+        "type": "string",
+        "$comment": "For example, +10.1% or -56%"
+      },
+      "startDate": {
+        "type": "string",
+        "$comment": "A start date in ISO format"
+      },
+      "endDate": {
+        "type": "string",
+        "$comment": "An end date in ISO format"
+      }
+    },
+    "required": ["title", "value"]
+  }
+}

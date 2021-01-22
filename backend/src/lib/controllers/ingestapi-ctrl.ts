@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { DatasetContent } from "../models/dataset";
+import { DatasetContent, SourceType, DatasetSchema } from "../models/dataset";
 import DatasetRepository from "../repositories/dataset-repo";
 import DatasetService from "../services/dataset-service";
+import DatasetFactory from "../factories/dataset-factory";
 import pino from "../services/logger";
 
 // Add an identifier so that any log from the ingest API is easy
@@ -13,33 +14,45 @@ const logger = pino.child({
 async function createDataset(req: Request, res: Response) {
   const { metadata, data } = req.body;
 
-  if (!metadata) {
-    return res.status(400).send("Missing required field `metadata`");
-  }
-
   if (!metadata.name) {
-    return res.status(400).send("Missing required field `name`");
+    return res.status(400).send("Missing required field `metadata.name`");
   }
 
   if (!data) {
     return res.status(400).send("Missing required field `data`");
   }
 
+  if (
+    metadata.schema &&
+    !Object.values(DatasetSchema).includes(metadata.schema)
+  ) {
+    return res.status(400).send(`Unknown schema provided '${metadata.schema}'`);
+  }
+
+  const repo = DatasetRepository.getInstance();
   let parsedData: DatasetContent;
 
   try {
-    parsedData = DatasetService.parse(data);
+    parsedData = DatasetService.parse(data, metadata.schema);
   } catch (err) {
-    logger.warn("Unable to parse dataset %s", data);
-    return res.status(400).send("Data is not a valid JSON array");
+    logger.warn("Unable to parse dataset %o", data);
+    return res.status(400).send(err.message);
   }
 
-  // Make all datasets created with this endpoint createdBy=ingestapi
-  metadata.createdBy = "ingestapi";
-
   try {
-    const repo = DatasetRepository.getInstance();
-    const dataset = await repo.createDataset(metadata, parsedData);
+    const s3Key = await repo.uploadDatasetContent(parsedData);
+    const dataset = DatasetFactory.createNew({
+      fileName: metadata.name,
+      createdBy: "ingestapi",
+      s3Key: {
+        raw: s3Key,
+        json: s3Key,
+      },
+      sourceType: SourceType.IngestApi,
+      schema: metadata.schema,
+    });
+
+    await repo.saveDataset(dataset);
     res.json(dataset);
   } catch (err) {
     logger.error("Failed to create dataset %o, %o", metadata, parsedData);

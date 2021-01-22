@@ -3,6 +3,11 @@ export enum SourceType {
   FileUpload = "FileUpload",
 }
 
+export enum DatasetSchema {
+  None = "None",
+  Metrics = "Metrics",
+}
+
 export interface Dataset {
   id: string;
   createdBy: string;
@@ -13,6 +18,7 @@ export interface Dataset {
   };
   updatedAt: Date;
   sourceType: SourceType;
+  schema?: DatasetSchema;
 }
 
 export type DatasetContent = Array<object>;
@@ -30,4 +36,5 @@ export interface DatasetItem {
   };
   updatedAt: string;
   sourceType: string;
+  schema?: string;
 }

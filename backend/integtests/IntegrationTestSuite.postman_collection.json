@@ -796,7 +796,78 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\",\n        \"createdBy\": \"johndoe\"\n    },\n    \"data\": [{\"Year\":2016,\"Live Stream Attendees\":17000},{\"Year\":2017,\"Live Stream Attendees\":23000},{\"Year\":2018,\"Live Stream Attendees\":13500},{\"Year\":2019,\"Live Stream Attendees\":21100},{\"Year\":2020,\"Live Stream Attendees\":8450}]\n}",
+					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\"\n    },\n    \"data\": [{\"Year\":2016,\"Live Stream Attendees\":17000},{\"Year\":2017,\"Live Stream Attendees\":23000},{\"Year\":2018,\"Live Stream Attendees\":13500},{\"Year\":2019,\"Live Stream Attendees\":21100},{\"Year\":2020,\"Live Stream Attendees\":8450}]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/ingestapi/dataset",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"ingestapi",
+						"dataset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create metrics dataset (Ingest API)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns the dataset id\", () => {",
+							"    const dataset = pm.response.json();",
+							"    pm.expect(dataset.id).to.exist;",
+							"    pm.collectionVariables.set(\"metricsdataset.id\", dataset.id);",
+							"});",
+							"",
+							"pm.test(\"returns the dataset s3Key\", () => {",
+							"    const dataset = pm.response.json();",
+							"    pm.expect(dataset.s3Key.json).to.exist;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{apiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "x-api-key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"schema\": \"Metrics\"\n    },\n    \"data\": [\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"changeOverTime\": \"+6%\",\n            \"startDate\": \"{{$randomDatePast}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        },\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"changeOverTime\": \"+1000\",\n            \"startDate\": \"{{$randomDateRecent}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1824,6 +1895,64 @@
 			"response": []
 		},
 		{
+			"name": "Delete metrics dataset (Ingest API)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"returns 200 ok\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{apiKey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "x-api-key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"ingestapi",
+						"dataset",
+						":datasetId"
+					],
+					"variable": [
+						{
+							"key": "datasetId",
+							"value": "{{metricsdataset.id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete dashboard",
 			"event": [
 				{
@@ -2060,6 +2189,10 @@
 		},
 		{
 			"key": "dataset.s3Key.json",
+			"value": ""
+		},
+		{
+			"key": "metricsdataset.id",
 			"value": ""
 		}
 	]

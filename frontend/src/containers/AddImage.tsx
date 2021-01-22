@@ -65,7 +65,7 @@ function AddImage() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" table has been successfully added`,
+          message: `"${values.title}" image has been successfully added`,
         },
       });
     } catch (err) {
@@ -221,8 +221,7 @@ function AddImage() {
                         id="summary"
                         name="summary"
                         label="Image description - optional"
-                        hint="Give your image a description to explain it in more depth. It 
-                    can also be read by screen readers to describe the image for those with visual impairments."
+                        hint="Give your image a description to explain it in more depth."
                         register={register}
                         onChange={handleSummaryChange}
                         multiline

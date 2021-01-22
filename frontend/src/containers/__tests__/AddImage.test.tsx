@@ -80,9 +80,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
 
     expect(getByText("Image description - optional")).toBeInTheDocument();
     expect(
-      getByText(
-        "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments."
-      )
+      getByText("Give your image a description to explain it in more depth.")
     ).toBeInTheDocument();
   });
 

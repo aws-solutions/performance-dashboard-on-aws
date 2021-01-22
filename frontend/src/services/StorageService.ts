@@ -24,7 +24,11 @@ const serverSideEncryption = "aws:kms";
 const rawFileTypes: ValidFileTypes = {
   "text/csv": ".csv",
   "application/vnd.ms-excel": ".csv",
+};
+const imageFileTypes: ValidFileTypes = {
   "image/png": ".png",
+  "image/jpg": ".jpg",
+  "image/svg": ".svg",
 };
 
 async function downloadDataset(filename: string): Promise<File> {
@@ -63,6 +67,28 @@ async function downloadJson(s3Key: string): Promise<Array<any>> {
   }
 }
 
+//Upload image here
+async function uploadFile(rawFile: File, fileS3Key: string) {
+  await Storage.put(fileS3Key, rawFile, {
+    level: accessLevel,
+    /**
+     * ContentDisposition metadata allows the original filename
+     * to be preserved on the S3 object for future downloads.
+     */
+    contentDisposition: `attachment; filename="${rawFile.name}"`,
+    contentType: rawFile.type,
+    serverSideEncryption,
+  });
+}
+
+async function uploadJson(jsonFile: string, jsonS3Key: string) {
+  await Storage.put(jsonS3Key, jsonFile, {
+    level: accessLevel,
+    contentType: "application/json",
+    serverSideEncryption,
+  });
+}
+
 async function uploadDataset(
   rawFile: File,
   jsonFile: string
@@ -75,23 +101,10 @@ async function uploadDataset(
 
   const s3Key = uuidv4();
   const rawS3Key = s3Key.concat(extension);
-  await Storage.put(rawS3Key, rawFile, {
-    level: accessLevel,
-    /**
-     * ContentDisposition metadata allows the original filename
-     * to be preserved on the S3 object for future downloads.
-     */
-    contentDisposition: `attachment; filename="${rawFile.name}"`,
-    contentType: mimeType,
-    serverSideEncryption,
-  });
-
   const jsonS3Key = s3Key.concat(".json");
-  await Storage.put(jsonS3Key, jsonFile, {
-    level: accessLevel,
-    contentType: "application/json",
-    serverSideEncryption,
-  });
+
+  await uploadFile(rawFile, rawS3Key);
+  await uploadJson(jsonFile, jsonS3Key);
 
   return {
     s3Keys: {
@@ -101,10 +114,26 @@ async function uploadDataset(
   };
 }
 
+async function uploadImage(rawFile: File): Promise<string> {
+  const mimeType = rawFile.type;
+  const extension = imageFileTypes[mimeType as keyof ValidFileTypes];
+
+  if (!extension) {
+    throw new Error("Image file is not supported");
+  }
+
+  const fileS3Key = uuidv4().concat(extension);
+  await uploadFile(rawFile, fileS3Key);
+
+  return fileS3Key;
+}
+
 const StorageService = {
   downloadDataset,
   downloadJson,
   uploadDataset,
+  uploadImage,
+  imageFileTypes,
 };
 
 export default StorageService;

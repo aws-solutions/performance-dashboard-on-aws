@@ -37,29 +37,16 @@ function AddImage() {
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
 
-  const uploadDataset = async (): Promise<Dataset> => {
-    if (!imageFile) {
-      throw new Error("Image file not specified");
-    }
-
-    setFileLoading(true);
-    const uploadResponse = await StorageService.uploadDataset(imageFile, "");
-
-    const newDataset = await BackendService.createDataset(imageFile.name, {
-      raw: uploadResponse.s3Keys.raw,
-      json: uploadResponse.s3Keys.json,
-    });
-
-    setFileLoading(false);
-    return newDataset;
-  };
+  const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
   const onSubmit = async (values: FormValues) => {
     try {
-      let newDataset;
-      if (imageFile) {
-        newDataset = await uploadDataset();
+      if (!imageFile) {
+        throw new Error("Image file not specified");
       }
+      setFileLoading(true);
+      const s3Key = await StorageService.uploadImage(imageFile);
+      setFileLoading(false);
 
       setCreatingWidget(true);
       await BackendService.createWidget(
@@ -68,12 +55,7 @@ function AddImage() {
         WidgetType.Image,
         values.showTitle,
         {
-          title: values.title,
-          summary: values.summary,
-          summaryBelow: values.summaryBelow,
-          datasetId: newDataset ? newDataset.id : null,
-          s3Key: newDataset ? newDataset.s3Key : null,
-          fileName: imageFile ? imageFile.name : null,
+          s3Key: s3Key,
         }
       );
       setCreatingWidget(false);
@@ -117,12 +99,9 @@ function AddImage() {
   };
 
   const onFileProcessed = (data: File) => {
-    if (!data) {
-      return;
+    if (data) {
+      setImageFile(data);
     }
-    setDatasetLoading(true);
-    setDatasetLoading(false);
-    setImageFile(data);
   };
 
   const crumbs = [
@@ -190,7 +169,7 @@ function AddImage() {
                   id="dataset"
                   name="dataset"
                   label="File upload"
-                  accept=".png, .jpeg, .svg"
+                  accept={supportedImageFileTypes.toString()}
                   loading={fileLoading}
                   register={register}
                   hint={<span>Must be a PNG, JPEG, or SVG file</span>}

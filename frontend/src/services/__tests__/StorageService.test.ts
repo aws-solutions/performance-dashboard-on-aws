@@ -5,8 +5,8 @@ import StorageService from "../StorageService";
 jest.mock("@aws-amplify/storage");
 jest.mock("uuid");
 
-const invalidRawFile = {
-  type: "text/png",
+const imageFile = {
+  type: "image/png",
   name: "myphoto.png",
   size: 100,
 } as File;
@@ -18,6 +18,33 @@ const rawFile = {
   size: 100,
 } as File;
 
+describe("uploadImage", () => {
+  beforeEach(() => {
+    jest.spyOn(uuid, "v4").mockReturnValue("abc");
+  });
+
+  test("throws an error for an invalid image type", () => {
+    return expect(StorageService.uploadImage(rawFile)).rejects.toEqual(
+      Error("File type is not supported")
+    );
+  });
+
+  test("uploads image file", async () => {
+    await StorageService.uploadImage(imageFile);
+    expect(Storage.put).toBeCalledWith("abc.png", imageFile, {
+      level: "public",
+      contentType: "image/png",
+      contentDisposition: 'attachment; filename="myphoto.png"',
+      serverSideEncryption: "aws:kms",
+    });
+  });
+
+  test("returns the s3Key for the image file", async () => {
+    const response = await StorageService.uploadImage(imageFile);
+    expect(response).toEqual("abc.png");
+  });
+});
+
 describe("uploadDataset", () => {
   beforeEach(() => {
     jest.spyOn(uuid, "v4").mockReturnValue("abc");
@@ -25,7 +52,7 @@ describe("uploadDataset", () => {
 
   test("throws an error for invalid file type", () => {
     return expect(
-      StorageService.uploadDataset(invalidRawFile, jsonFile)
+      StorageService.uploadDataset(imageFile, jsonFile)
     ).rejects.toEqual(Error("Raw file is not an accepted format"));
   });
 

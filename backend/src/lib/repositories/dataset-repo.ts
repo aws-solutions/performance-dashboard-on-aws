@@ -10,8 +10,6 @@ import BaseRepository from "./base";
 import { SourceType } from "../models/dataset";
 import { v4 as uuidv4 } from "uuid";
 import logger from "../services/logger";
-import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import { WidgetType } from "../models/widget";
 import WidgetRepository from "./widget-repo";
 
 class DatasetRepository extends BaseRepository {
@@ -96,10 +94,11 @@ class DatasetRepository extends BaseRepository {
     });
   }
 
-  public async createDataset(
-    metadata: any,
-    data: DatasetContent
-  ): Promise<Dataset> {
+  /**
+   * Uploads the JSON content for a dataset to S3.
+   * Returns the generated S3 key.
+   */
+  public async uploadDatasetContent(content: DatasetContent): Promise<string> {
     const jsonS3Key = this.getNewJsonS3Key();
     const jsonKey = this.s3Prefix.concat(jsonS3Key);
 
@@ -107,31 +106,14 @@ class DatasetRepository extends BaseRepository {
       await this.s3Service.putObject(
         this.bucketName,
         jsonKey,
-        JSON.stringify(data)
+        JSON.stringify(content)
       );
     } catch (err) {
-      logger.error("Failed to save dataset to S3 %o", data);
+      logger.error("Failed to save dataset content to S3 %o", content);
       throw err;
     }
 
-    const dataset = DatasetFactory.createNew({
-      fileName: metadata.name,
-      createdBy: metadata.createdBy,
-      s3Key: { raw: "", json: jsonS3Key },
-      sourceType: SourceType.IngestApi,
-    });
-
-    try {
-      await this.dynamodb.put({
-        TableName: this.tableName,
-        Item: DatasetFactory.toItem(dataset),
-      });
-    } catch (err) {
-      logger.error("Failed to save dataset to DynamoDB %o", metadata);
-      throw err;
-    }
-
-    return dataset;
+    return jsonS3Key;
   }
 
   public async updateDataset(id: string, metadata: any, data: DatasetContent) {

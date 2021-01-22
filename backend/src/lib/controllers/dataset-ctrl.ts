@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import DatasetRepository from "../repositories/dataset-repo";
 import DatasetFactory from "../factories/dataset-factory";
-import { SourceType } from "../models/dataset";
+import { SourceType, DatasetSchema } from "../models/dataset";
 import { ItemNotFound } from "../errors";
 
 async function listDatasets(req: Request, res: Response) {
@@ -28,7 +28,8 @@ async function getDatasetById(req: Request, res: Response) {
 
 async function createDataset(req: Request, res: Response) {
   const user = req.user;
-  const { fileName, s3Key } = req.body;
+  const { fileName, s3Key, schema } = req.body;
+
   if (!fileName) {
     return res.status(400).send("Missing required field `fileName`");
   }
@@ -37,12 +38,17 @@ async function createDataset(req: Request, res: Response) {
     return res.status(400).send("Missing required field `s3Key`");
   }
 
+  if (schema && !Object.values(DatasetSchema).includes(schema)) {
+    return res.status(400).send(`Unknown schema provided '${schema}'`);
+  }
+
   try {
     const dataset = DatasetFactory.createNew({
       fileName,
       createdBy: user.userId,
       s3Key,
       sourceType: SourceType.FileUpload,
+      schema,
     });
 
     const repo = DatasetRepository.getInstance();

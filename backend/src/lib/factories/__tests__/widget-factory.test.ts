@@ -8,6 +8,7 @@ import {
   TableWidget,
   ChartType,
   MetricsWidget,
+  ImageWidget,
 } from "../../models/widget";
 
 const dummyWidgetName = "Some widget";
@@ -629,5 +630,97 @@ describe("createMetricsWidget", () => {
         },
       });
     }).toThrowError("Metrics widget must have `content.s3Key.json` field");
+  });
+});
+
+describe("createImageWidget", () => {
+  const content = {
+    title: "Image widget title",
+    summaryBelow: false,
+    s3Key: {
+      raw: "image.jpeg",
+    },
+    fileName: "example name",
+    imageAltText: "Image of a widget",
+  };
+  it("builds a image widget", () => {
+    const widget = WidgetFactory.createWidget({
+      name: dummyWidgetName,
+      dashboardId,
+      widgetType: WidgetType.Image,
+      showTitle: true,
+      content,
+    }) as ImageWidget;
+
+    expect(widget.id).toBeDefined();
+    expect(widget.name).toEqual(dummyWidgetName);
+    expect(widget.dashboardId).toEqual(dashboardId);
+    expect(widget.widgetType).toEqual(WidgetType.Image);
+    expect(widget.showTitle).toBe(true);
+    expect(widget.content.title).toEqual("Image widget title");
+    expect(widget.content.summaryBelow).toBe(false);
+    expect(widget.content.s3Key).toEqual({
+      raw: "image.jpeg",
+    });
+    expect(widget.content.imageAltText).toEqual("Image of a widget");
+    expect(widget.content.fileName).toEqual("example name");
+  });
+
+  it("throws an error if image title is undefined", () => {
+    const content = {};
+    expect(() => {
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
+        dashboardId,
+        widgetType: WidgetType.Image,
+        showTitle: true,
+        content,
+      });
+    }).toThrowError("Image widget must have `content.title` field");
+  });
+
+  it("throws an error if s3Key is undefined", () => {
+    expect(() => {
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
+        dashboardId,
+        widgetType: WidgetType.Image,
+        showTitle: true,
+        content: {
+          ...content,
+          s3Key: undefined,
+        },
+      });
+    }).toThrowError("Image widget must have `content.s3Key` field");
+  });
+
+  it("throws an error if file name is undefined", () => {
+    expect(() => {
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
+        dashboardId,
+        widgetType: WidgetType.Image,
+        showTitle: true,
+        content: {
+          ...content,
+          fileName: undefined,
+        },
+      });
+    }).toThrowError("Image widget must have `content.fileName` field");
+  });
+
+  it("throws an error if image alt text is undefined", () => {
+    expect(() => {
+      WidgetFactory.createWidget({
+        name: dummyWidgetName,
+        dashboardId,
+        widgetType: WidgetType.Image,
+        showTitle: true,
+        content: {
+          ...content,
+          imageAltText: undefined,
+        },
+      });
+    }).toThrowError("Image widget must have `content.imageAltText` field");
   });
 });

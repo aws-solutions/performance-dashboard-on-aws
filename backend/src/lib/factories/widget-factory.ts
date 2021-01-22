@@ -7,6 +7,8 @@ import {
   ChartWidget,
   TableWidget,
   ChartType,
+  MetricsWidget,
+  ImageWidget,
 } from "../models/widget";
 
 export const WIDGET_ITEM_TYPE = "Widget";
@@ -40,6 +42,10 @@ function createWidget(widgetInfo: CreateWidgetInfo): Widget {
       return createChartWidget(widget);
     case WidgetType.Table:
       return createTableWidget(widget);
+    case WidgetType.Metrics:
+      return createMetricsWidget(widget);
+    case WidgetType.Image:
+      return createImageWidget(widget);
     default:
       throw new Error("Invalid widget type");
   }
@@ -84,6 +90,8 @@ function fromItem(item: WidgetItem): Widget {
       return widget as ChartWidget;
     case WidgetType.Table:
       return widget as TableWidget;
+    case WidgetType.Metrics:
+      return widget as MetricsWidget;
     default:
       return widget;
   }
@@ -187,6 +195,55 @@ function createTableWidget(widget: Widget): TableWidget {
       s3Key: widget.content.s3Key,
       fileName: widget.content.fileName,
       datasetType: widget.content.datasetType,
+    },
+  };
+}
+
+function createImageWidget(widget: Widget): ImageWidget {
+  if (!widget.content.title) {
+    throw new Error("Image widget must have `content.title` field");
+  }
+
+  if (!widget.content.s3Key) {
+    throw new Error("Image widget must have `content.s3Key` field");
+  }
+
+  if (!widget.content.fileName) {
+    throw new Error("Image widget must have `content.fileName` field");
+  }
+
+  if (!widget.content.imageAltText) {
+    throw new Error("Image widget must have `content.imageAltText` field");
+  }
+
+  return {
+    ...widget,
+    content: {
+      title: widget.content.title,
+      imageAltText: widget.content.imageAltText,
+      summary: widget.content.summary,
+      summaryBelow: widget.content.summaryBelow,
+      s3Key: widget.content.s3Key,
+      fileName: widget.content.fileName,
+    },
+  };
+}
+
+function createMetricsWidget(widget: Widget): MetricsWidget {
+  if (!widget.content.datasetId) {
+    throw new Error("Metrics widget must have `content.datasetId` field");
+  }
+
+  if (!widget.content.s3Key || !widget.content.s3Key.json) {
+    throw new Error("Metrics widget must have `content.s3Key.json` field");
+  }
+
+  return {
+    ...widget,
+    content: {
+      title: widget.content.title,
+      datasetId: widget.content.datasetId,
+      s3Key: widget.content.s3Key,
     },
   };
 }

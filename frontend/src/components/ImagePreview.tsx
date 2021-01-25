@@ -6,10 +6,11 @@ type Props = {
   summary: string;
   file: File | undefined;
   summaryBelow: boolean;
+  altText: string;
 };
 
 const ImagePreview = (props: Props) => {
-  const { file, summaryBelow, summary, title } = props;
+  const { file, summaryBelow, summary, title, altText } = props;
 
   return (
     <div className="preview-container">
@@ -17,7 +18,7 @@ const ImagePreview = (props: Props) => {
       {!summaryBelow && (
         <p className="margin-left-1 margin-top-0 margin-bottom-3">{summary}</p>
       )}
-      <img src={file ? URL.createObjectURL(file) : ""}></img>
+      <img src={file ? URL.createObjectURL(file) : ""} alt={altText}></img>
       {summaryBelow && (
         <p className="margin-left-1 margin-top-3 margin-bottom-0">{summary}</p>
       )}

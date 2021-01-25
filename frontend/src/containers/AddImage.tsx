@@ -277,6 +277,7 @@ function AddImage() {
                   summary={summary}
                   file={imageFile}
                   summaryBelow={summaryBelow}
+                  altText={altText}
                 />
               </div>
             </div>

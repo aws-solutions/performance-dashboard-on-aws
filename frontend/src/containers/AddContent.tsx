@@ -29,8 +29,6 @@ function AddContent() {
       history.push(`/admin/dashboard/${dashboardId}/add-text`);
     } else if (values.widgetType === "image") {
       history.push(`/admin/dashboard/${dashboardId}/add-image`);
-    } else if (values.widgetType === "metrics") {
-      history.push(`/admin/dashboard/${dashboardId}/add-metrics`);
     }
   };
 

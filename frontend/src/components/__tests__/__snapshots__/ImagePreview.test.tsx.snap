@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`image preview should match snapshot 1`] = `
+<div>
+  <div
+    class="preview-container"
+  >
+    <h2
+      class="margin-left-1 margin-bottom-1"
+    >
+      test title
+    </h2>
+    <p
+      class="margin-left-1 margin-top-0 margin-bottom-3"
+    >
+      test summary
+    </p>
+    <img />
+  </div>
+</div>
+`;

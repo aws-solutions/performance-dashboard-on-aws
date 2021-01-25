@@ -11,6 +11,7 @@ import { useSettings, usePublicSettings } from "./settings-hooks";
 import { useJsonDataset, useSampleDataset } from "./dataset-hooks";
 import { useUsers, useCurrentAuthenticatedUser } from "./user-hooks";
 import { useDateTimeFormatter } from "./datetime-hooks";
+import { useImage } from "./image-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -39,4 +40,5 @@ export {
   useDateTimeFormatter,
   useUsers,
   useCurrentAuthenticatedUser,
+  useImage,
 };

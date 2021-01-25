@@ -31,14 +31,16 @@ const imageFileTypes: ValidFileTypes = {
   "image/svg": ".svg",
 };
 
-async function downloadDataset(filename: string): Promise<File> {
-  const data: any = await Storage.get(filename, {
+async function downloadFile(s3Key: string): Promise<File> {
+  const data: any = await Storage.get(s3Key, {
     download: true,
     level: accessLevel,
     serverSideEncryption,
   });
   if (!data || !data.Body) {
-    throw new Error("The filename is invalid");
+    throw new Error(
+      "The query using the provided S3 key, returned no results."
+    );
   }
   return data.Body as File;
 }
@@ -128,7 +130,7 @@ async function uploadImage(rawFile: File): Promise<string> {
 }
 
 const StorageService = {
-  downloadDataset,
+  downloadFile,
   downloadJson,
   uploadDataset,
   uploadImage,

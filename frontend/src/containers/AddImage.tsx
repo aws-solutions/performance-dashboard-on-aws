@@ -53,7 +53,9 @@ function AddImage() {
         values.showTitle,
         {
           title: title,
-          s3Key: s3Key,
+          s3Key: {
+            raw: s3Key,
+          },
           fileName: imageFile.name,
           imageAltText: altText,
           summary: summary,
@@ -277,6 +279,7 @@ function AddImage() {
                   summary={summary}
                   file={imageFile}
                   summaryBelow={summaryBelow}
+                  altText={altText}
                 />
               </div>
             </div>

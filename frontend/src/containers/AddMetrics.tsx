@@ -29,9 +29,15 @@ function AddMetrics() {
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
 
   const [creatingMetrics, setCreatingMetrics] = useState(false);
-  const [title, setTitle] = useState("");
-  const [showTitle, setShowTitle] = useState(true);
-  const [oneMetricPerRow, setOneMetricPerRow] = useState(false);
+  const [title, setTitle] = useState(
+    state && state.metricTitle !== undefined ? state.metricTitle : ""
+  );
+  const [showTitle, setShowTitle] = useState(
+    state && state.showTitle !== undefined ? state.showTitle : true
+  );
+  const [oneMetricPerRow, setOneMetricPerRow] = useState(
+    state && state.oneMetricPerRow !== undefined ? state.oneMetricPerRow : false
+  );
   const [metrics, setMetrics] = useState<Array<Metric>>(
     state && state.metrics ? [...state.metrics] : []
   );
@@ -63,6 +69,9 @@ function AddMetrics() {
   const onAddMetric = async () => {
     history.push(`/admin/dashboard/${dashboardId}/add-metric`, {
       metrics,
+      showTitle,
+      oneMetricPerRow,
+      metricTitle: title,
     });
   };
 
@@ -71,6 +80,9 @@ function AddMetrics() {
       metrics,
       metric,
       position,
+      showTitle,
+      oneMetricPerRow,
+      metricTitle: title,
     });
   };
 
@@ -155,6 +167,7 @@ function AddMetrics() {
                 hint="Give your group of metrics a descriptive title."
                 error={errors.title && "Please specify a content title"}
                 required
+                defaultValue={title}
                 register={register}
               />
 
@@ -164,7 +177,7 @@ function AddMetrics() {
                   id="display-title"
                   type="checkbox"
                   name="showTitle"
-                  defaultChecked={true}
+                  defaultChecked={showTitle}
                   ref={register()}
                 />
                 <label className="usa-checkbox__label" htmlFor="display-title">
@@ -179,6 +192,7 @@ function AddMetrics() {
                 onDelete={onDeleteMetric}
                 onMoveUp={onMoveMetricUp}
                 onMoveDown={onMoveMetricDown}
+                defaultChecked={oneMetricPerRow}
                 register={register}
               />
             </fieldset>

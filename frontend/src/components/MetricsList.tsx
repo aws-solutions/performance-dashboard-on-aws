@@ -14,6 +14,7 @@ interface Props {
   onMoveDown?: Function;
   metrics: Array<Metric>;
   register?: Function;
+  defaultChecked?: boolean;
 }
 
 function MetricsList(props: Props) {
@@ -88,7 +89,7 @@ function MetricsList(props: Props) {
           type="checkbox"
           name="oneMetricPerRow"
           ref={props.register && props.register({ required: true })}
-          defaultChecked={false}
+          defaultChecked={props.defaultChecked}
         />
         <label className="usa-checkbox__label" htmlFor="oneMetricPerRow">
           One metric per row

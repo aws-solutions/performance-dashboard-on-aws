@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { Metric, WidgetType } from "../models";
+import { Metric, WidgetType, LocationState } from "../models";
 import { useDashboard } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
+import MetricsCardGroup from "../components/MetricsCardGroup";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
-import MarkdownRender from "../components/MarkdownRender";
 import MetricsList from "../components/MetricsList";
-import WidgetOrderingService from "../services/WidgetOrdering";
+import OrderingService from "../services/OrderingService";
 
 interface FormValues {
   title: string;
-  text: string;
   showTitle: boolean;
+  oneMetricPerRow: boolean;
 }
 
 interface PathParams {
@@ -22,16 +22,19 @@ interface PathParams {
 }
 
 function AddMetrics() {
-  const history = useHistory();
+  const history = useHistory<LocationState>();
+  const { state } = history.location;
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
 
   const [creatingMetrics, setCreatingMetrics] = useState(false);
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
   const [showTitle, setShowTitle] = useState(true);
-  const [metrics, setMetrics] = useState<Array<Metric>>([]);
+  const [oneMetricPerRow, setOneMetricPerRow] = useState(false);
+  const [metrics, setMetrics] = useState<Array<Metric>>(
+    state && state.metrics ? [...state.metrics] : []
+  );
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -41,9 +44,7 @@ function AddMetrics() {
         values.title,
         WidgetType.Metrics,
         values.showTitle,
-        {
-          text: values.text,
-        }
+        {}
       );
       setCreatingMetrics(false);
 
@@ -60,7 +61,17 @@ function AddMetrics() {
   };
 
   const onAddMetric = async () => {
-    history.push(`/admin/dashboard/${dashboardId}/add-metric`);
+    history.push(`/admin/dashboard/${dashboardId}/add-metric`, {
+      metrics,
+    });
+  };
+
+  const onEditMetric = async (metric: Metric, position: number) => {
+    history.push(`/admin/dashboard/${dashboardId}/edit-metric`, {
+      metrics,
+      metric,
+      position,
+    });
   };
 
   const onDeleteMetric = (metric: Metric) => {
@@ -81,7 +92,7 @@ function AddMetrics() {
   };
 
   const setMetricOrder = async (index: number, newIndex: number) => {
-    const widgets = WidgetOrderingService.moveWidget(metrics, index, newIndex);
+    const widgets = OrderingService.moveMetric(metrics, index, newIndex);
 
     // if no change in order ocurred, exit
     if (widgets === metrics) {
@@ -92,10 +103,10 @@ function AddMetrics() {
   };
 
   const onFormChange = () => {
-    const { title, text, showTitle } = getValues();
+    const { title, showTitle, oneMetricPerRow } = getValues();
     setTitle(title);
-    setText(text);
     setShowTitle(showTitle);
+    setOneMetricPerRow(oneMetricPerRow);
   };
 
   const goBack = () => {
@@ -162,11 +173,13 @@ function AddMetrics() {
               </div>
 
               <MetricsList
-                metrics={[]}
+                metrics={metrics}
                 onClick={onAddMetric}
+                onEdit={onEditMetric}
                 onDelete={onDeleteMetric}
                 onMoveUp={onMoveMetricUp}
                 onMoveDown={onMoveMetricDown}
+                register={register}
               />
             </fieldset>
             <br />
@@ -191,13 +204,16 @@ function AddMetrics() {
         <div className="grid-col-6">
           <h4 className="margin-top-4">Preview</h4>
           {showTitle ? (
-            <h2 className="margin-top-4 margin-left-2px">{title}</h2>
+            <h2 className="margin-top-4 margin-left-1">{title}</h2>
           ) : (
             ""
           )}
-          {text ? (
-            <div className="padding-left-05">
-              <MarkdownRender source={text} />
+          {metrics.length ? (
+            <div className="padding-left-1">
+              <MetricsCardGroup
+                metrics={metrics}
+                metricPerRow={oneMetricPerRow ? 1 : 3}
+              />
             </div>
           ) : (
             ""

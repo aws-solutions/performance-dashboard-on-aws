@@ -29,6 +29,8 @@ import AddTable from "./containers/AddTable";
 import EditTable from "./containers/EditTable";
 import AddText from "./containers/AddText";
 import AddMetrics from "./containers/AddMetrics";
+import AddMetric from "./containers/AddMetric";
+import EditMetric from "./containers/EditMetric";
 import EditText from "./containers/EditText";
 import AdminHome from "./containers/AdminHome";
 import TopicareaSettings from "./containers/TopicareaSettings";
@@ -164,6 +166,14 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/dashboard/:dashboardId/add-metrics",
     component: AddMetrics,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/add-metric",
+    component: AddMetric,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/edit-metric",
+    component: EditMetric,
   },
   {
     path: "/admin/dashboard/:dashboardId/add-content",

@@ -22,6 +22,7 @@ const chart: ChartWidget = {
       json: "123.json",
       raw: "123.csv",
     },
+    summaryBelow: false,
   },
 };
 

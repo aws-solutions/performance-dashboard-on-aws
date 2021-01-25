@@ -18,6 +18,7 @@ test("renders the title and summary of the image preview component", async () =>
       summary="test summary"
       file={imageFile}
       summaryBelow={false}
+      altText="alt text"
     />,
     { wrapper: MemoryRouter }
   );
@@ -33,6 +34,7 @@ test("renders the image preview component with the summary below the chart", asy
       summary="test summary"
       file={imageFile}
       summaryBelow={true}
+      altText="alt text"
     />,
     { wrapper: MemoryRouter }
   );
@@ -48,6 +50,7 @@ test("image preview should match snapshot", async () => {
       summary="test summary"
       file={imageFile}
       summaryBelow={false}
+      altText="alt text"
     />,
     { wrapper: MemoryRouter }
   );

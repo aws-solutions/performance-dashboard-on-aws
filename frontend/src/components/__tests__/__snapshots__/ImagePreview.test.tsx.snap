@@ -15,7 +15,9 @@ exports[`image preview should match snapshot 1`] = `
     >
       test summary
     </p>
-    <img />
+    <img
+      alt="alt text"
+    />
   </div>
 </div>
 `;

@@ -49,12 +49,18 @@ function EditMetric() {
         message: "Metric successfully edited.",
       },
       metrics: newMetrics,
+      showTitle: state.showTitle !== false,
+      oneMetricPerRow: state.oneMetricPerRow === true,
+      metricTitle: state.metricTitle || "",
     });
   };
 
   const onCancel = () => {
     history.push(`/admin/dashboard/${dashboardId}/add-metrics`, {
       metrics: state && state.metrics ? [...state.metrics] : [],
+      showTitle: state.showTitle !== false,
+      oneMetricPerRow: state.oneMetricPerRow === true,
+      metricTitle: state.metricTitle || "",
     });
   };
 

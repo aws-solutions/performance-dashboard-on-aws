@@ -185,10 +185,13 @@ export type LocationState = {
     linkLabel?: string;
   };
   emails?: string;
+  id?: string;
   metrics?: Array<Metric>;
   metric?: Metric;
   position?: number;
-  id?: string;
+  showTitle?: boolean;
+  oneMetricPerRow?: boolean;
+  metricTitle?: string;
 };
 
 export enum UserRoles {

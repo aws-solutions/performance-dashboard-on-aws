@@ -179,6 +179,14 @@ export type Settings = {
   };
 };
 
+export type Metric = {
+  title: string;
+  value: number;
+  changeOverTime?: string;
+  startDate?: string;
+  endDate?: string;
+};
+
 // Type for the History object in react-router. Defines the
 // location state that is common across all routes.
 // Usage in a component: useHistory<LocationState>();
@@ -190,6 +198,9 @@ export type LocationState = {
     linkLabel?: string;
   };
   emails?: string;
+  metrics?: Array<Metric>;
+  metric?: Metric;
+  position?: number;
   id?: string;
 };
 
@@ -208,12 +219,4 @@ export type User = {
   roles: Array<UserRoles>;
   createdAt: Date;
   updatedAt: Date;
-};
-
-export type Metric = {
-  title: string;
-  value: string;
-  changeOverTime?: string;
-  startDate?: Date;
-  endDate?: Date;
 };

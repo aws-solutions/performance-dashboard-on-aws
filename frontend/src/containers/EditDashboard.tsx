@@ -7,7 +7,7 @@ import { Widget, LocationState, WidgetType, DashboardState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
-import WidgetOrderingService from "../services/WidgetOrdering";
+import OrderingService from "../services/OrderingService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
 import Button from "../components/Button";
@@ -110,7 +110,7 @@ function EditDashboard() {
 
   const setWidgetOrder = async (index: number, newIndex: number) => {
     if (dashboard) {
-      const widgets = WidgetOrderingService.moveWidget(
+      const widgets = OrderingService.moveWidget(
         dashboard.widgets,
         index,
         newIndex

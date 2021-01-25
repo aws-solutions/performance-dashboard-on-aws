@@ -14,7 +14,6 @@ export function useImage(s3Key: string): UseImageHook {
     const fetchData = async () => {
       setLoading(true);
       const data = await StorageService.downloadFile(s3Key);
-      console.log(data);
       setFile(data);
       setLoading(false);
     };

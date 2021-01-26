@@ -4,7 +4,7 @@ function moveWidget(
   widgets: Array<Widget>,
   index: number,
   newIndex: number
-): Array<any> {
+): Array<Widget> {
   // If new position is out of bounds, don't move anything.
   if (newIndex < 0 || newIndex >= widgets.length) {
     return widgets;
@@ -36,7 +36,7 @@ function moveMetric(
   metrics: Array<Metric>,
   index: number,
   newIndex: number
-): Array<any> {
+): Array<Metric> {
   // If new position is out of bounds, don't move anything.
   if (newIndex < 0 || newIndex >= metrics.length) {
     return metrics;

@@ -336,6 +336,17 @@ export function useDashboardVersions(parentDashboardId: string) {
   };
 }
 
+export function useImage() {
+  return {
+    loading: false,
+    file: {
+      type: "image/png",
+      name: "myphoto.png",
+      size: 100,
+    },
+  };
+}
+
 export function useSampleDataset() {
   return {
     loading: false,

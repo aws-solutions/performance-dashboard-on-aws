@@ -210,3 +210,8 @@ export type User = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export enum DatasetSchema {
+  None = "None",
+  Metrics = "Metrics",
+}

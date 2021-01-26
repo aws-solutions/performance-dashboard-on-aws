@@ -243,6 +243,7 @@ function createMetricsWidget(widget: Widget): MetricsWidget {
     content: {
       title: widget.content.title,
       datasetId: widget.content.datasetId,
+      oneMetricPerRow: widget.content.oneMetricPerRow,
       s3Key: widget.content.s3Key,
     },
   };

@@ -7,6 +7,7 @@ import {
   PublicDashboard,
   Widget,
   User,
+  DatasetSchema,
 } from "../models";
 
 const apiName = "BackendApi";
@@ -249,7 +250,8 @@ async function fetchDatasets(): Promise<Array<Dataset>> {
 
 async function createDataset(
   fileName: string,
-  s3Keys: { raw: string; json: string }
+  s3Keys: { raw: string; json: string },
+  schema = DatasetSchema.None
 ): Promise<Dataset> {
   const headers = await authHeaders();
   return await API.post(apiName, "dataset", {
@@ -260,6 +262,7 @@ async function createDataset(
         raw: s3Keys.raw,
         json: s3Keys.json,
       },
+      schema,
     },
   });
 }

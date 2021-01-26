@@ -58,6 +58,7 @@ test("table should not crash when a column header is an empty string", async () 
       summary="test summary"
       headers={["", "something"]}
       data={[{ "": "foo", something: "bar" }]}
+      summaryBelow={false}
     />,
     { wrapper: MemoryRouter }
   );

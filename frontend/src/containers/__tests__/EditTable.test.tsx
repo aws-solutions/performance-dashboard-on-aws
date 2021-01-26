@@ -18,7 +18,7 @@ beforeEach(() => {
       json: "abc.json",
     },
   });
-  StorageService.downloadDataset = jest.fn();
+  StorageService.downloadFile = jest.fn();
 });
 
 test("renders title", async () => {

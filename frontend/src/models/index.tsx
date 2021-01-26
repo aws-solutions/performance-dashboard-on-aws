@@ -117,6 +117,19 @@ export interface TableWidget extends Widget {
   };
 }
 
+export interface ImageWidget extends Widget {
+  content: {
+    title: string;
+    imageAltText: string;
+    summary?: string;
+    summaryBelow: boolean;
+    s3Key: {
+      raw: string;
+    };
+    filename: string;
+  };
+}
+
 export type Dataset = {
   id: string;
   fileName: string;

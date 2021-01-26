@@ -8,7 +8,6 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { useDashboard } from "../hooks";
 import Spinner from "../components/Spinner";
 import DatePicker from "../components/DatePicker";
-import "./EditMetric.css";
 import { LocationState } from "../models";
 
 interface FormValues {
@@ -101,7 +100,7 @@ function EditMetric() {
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="usa-form usa-form--large"
-                data-testid="CreateDashboardForm"
+                data-testid="EditMetricForm"
               >
                 <TextField
                   id="title"

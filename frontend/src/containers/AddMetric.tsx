@@ -8,7 +8,6 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { useDashboard } from "../hooks";
 import Spinner from "../components/Spinner";
 import DatePicker from "../components/DatePicker";
-import "./AddMetric.css";
 import { LocationState } from "../models";
 
 interface FormValues {
@@ -97,7 +96,7 @@ function AddMetric() {
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="usa-form usa-form--large"
-                data-testid="CreateDashboardForm"
+                data-testid="AddMetricForm"
               >
                 <TextField
                   id="title"

@@ -61,7 +61,7 @@ function MetricsCardGroup(props: Props) {
                         ) : (
                           ""
                         )}
-                        {metric.startDate && metric.endDate ? (
+                        {metric.startDate && metric.endDate && (
                           <div className="margin-top-1px">
                             <span>
                               {dayjs(metric.startDate).format("MMM YYYY")}
@@ -71,8 +71,6 @@ function MetricsCardGroup(props: Props) {
                               {dayjs(metric.endDate).format("MMM YYYY")}
                             </span>
                           </div>
-                        ) : (
-                          ""
                         )}
                       </div>
                     </div>

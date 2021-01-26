@@ -88,7 +88,7 @@ function MetricsList(props: Props) {
           id="oneMetricPerRow"
           type="checkbox"
           name="oneMetricPerRow"
-          ref={props.register && props.register({ required: true })}
+          ref={props.register && props.register()}
           defaultChecked={props.defaultChecked}
         />
         <label className="usa-checkbox__label" htmlFor="oneMetricPerRow">

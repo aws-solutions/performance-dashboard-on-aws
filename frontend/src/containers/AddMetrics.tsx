@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { Metric, WidgetType, LocationState } from "../models";
+import {
+  Metric,
+  WidgetType,
+  LocationState,
+  Dataset,
+  DatasetSchema,
+} from "../models";
 import { useDashboard } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -10,6 +16,7 @@ import TextField from "../components/TextField";
 import Button from "../components/Button";
 import MetricsList from "../components/MetricsList";
 import OrderingService from "../services/OrderingService";
+import StorageService from "../services/StorageService";
 
 interface FormValues {
   title: string;
@@ -27,7 +34,7 @@ function AddMetrics() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
-
+  const [fileLoading, setFileLoading] = useState(false);
   const [creatingMetrics, setCreatingMetrics] = useState(false);
   const [title, setTitle] = useState(
     state && state.metricTitle !== undefined ? state.metricTitle : ""
@@ -42,22 +49,48 @@ function AddMetrics() {
     state && state.metrics ? [...state.metrics] : []
   );
 
+  const uploadDataset = async (): Promise<Dataset> => {
+    setFileLoading(true);
+    const uploadResponse = await StorageService.uploadMetric(
+      JSON.stringify(metrics)
+    );
+
+    const newDataset = await BackendService.createDataset(
+      title,
+      {
+        raw: uploadResponse.s3Keys.raw,
+        json: uploadResponse.s3Keys.json,
+      },
+      DatasetSchema.Metrics
+    );
+
+    setFileLoading(false);
+    return newDataset;
+  };
+
   const onSubmit = async (values: FormValues) => {
     try {
+      let newDataset = await uploadDataset();
+
       setCreatingMetrics(true);
       await BackendService.createWidget(
         dashboardId,
         values.title,
         WidgetType.Metrics,
         values.showTitle,
-        {}
+        {
+          title: values.title,
+          datasetId: newDataset.id,
+          s3Key: newDataset.s3Key,
+          oneMetricPerRow: values.oneMetricPerRow,
+        }
       );
       setCreatingMetrics(false);
 
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" text has been successfully added`,
+          message: `"${values.title}" metrics have been successfully added`,
         },
       });
     } catch (err) {
@@ -202,7 +235,7 @@ function AddMetrics() {
             <Button variant="outline" type="button" onClick={goBack}>
               Back
             </Button>
-            <Button disabled={creatingMetrics} type="submit">
+            <Button disabled={creatingMetrics || fileLoading} type="submit">
               Add metrics
             </Button>
             <Button

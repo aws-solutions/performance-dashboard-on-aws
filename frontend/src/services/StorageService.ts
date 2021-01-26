@@ -115,6 +115,20 @@ async function uploadDataset(
   };
 }
 
+async function uploadMetric(jsonFile: string): Promise<UploadDatasetResult> {
+  const s3Key = uuidv4();
+  const jsonS3Key = s3Key.concat(".json");
+
+  await uploadJson(jsonFile, jsonS3Key);
+
+  return {
+    s3Keys: {
+      raw: jsonS3Key,
+      json: jsonS3Key,
+    },
+  };
+}
+
 async function uploadImage(rawFile: File): Promise<string> {
   const mimeType = rawFile.type;
   const extension = imageFileTypes[mimeType as keyof ValidFileTypes];
@@ -133,6 +147,7 @@ const StorageService = {
   downloadFile,
   downloadJson,
   uploadDataset,
+  uploadMetric,
   uploadImage,
   imageFileTypes,
 };

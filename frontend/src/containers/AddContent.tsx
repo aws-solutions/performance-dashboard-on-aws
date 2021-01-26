@@ -29,6 +29,8 @@ function AddContent() {
       history.push(`/admin/dashboard/${dashboardId}/add-text`);
     } else if (values.widgetType === "image") {
       history.push(`/admin/dashboard/${dashboardId}/add-image`);
+    } else if (values.widgetType === "metrics") {
+      history.push(`/admin/dashboard/${dashboardId}/add-metrics`);
     }
   };
 
@@ -98,6 +100,33 @@ function AddContent() {
                   <div className="usa-prose text-base margin-left-4">
                     Add a formatted block of text. Input supports Markdown
                     including links, bullets, bolding, and headings.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="usa-radio">
+              <div
+                className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
+                  widgetType === "metrics" ? " bg-base-lightest" : "-lighter"
+                } border-2px padding-2 margin-y-1`}
+              >
+                <div className="grid-col flex-5">
+                  <input
+                    className="usa-radio__input"
+                    id="metrics"
+                    value="metrics"
+                    type="radio"
+                    name="widgetType"
+                    ref={register()}
+                  />
+                  <label className="usa-radio__label" htmlFor="metrics">
+                    Metrics
+                  </label>
+                </div>
+                <div className="grid-col flex-7">
+                  <div className="usa-prose text-base margin-left-4">
+                    Add one or more metrics. Great for showing point-in-time
+                    numerical data and trends.
                   </div>
                 </div>
               </div>

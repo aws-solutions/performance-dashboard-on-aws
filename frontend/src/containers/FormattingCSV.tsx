@@ -65,6 +65,7 @@ function FormattingCSV() {
           summary=""
           lines={lineChart.dataset.headers}
           data={lineChart.dataset.data}
+          summaryBelow={false}
         />
       </div>
 

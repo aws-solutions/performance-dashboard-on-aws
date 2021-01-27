@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+// @ts-ignore
+import datePicker from "uswds/src/js/components/date-picker";
 
 interface Props {
   name: string;
@@ -12,31 +14,34 @@ interface Props {
   defaultValue?: string;
   error?: string;
   onChange?: Function;
-  multiline?: boolean;
   rows?: number;
   className?: string;
 }
 
-function TextField(props: Props) {
+function DatePicker(props: Props) {
+  const formGroupRef = useRef(null);
+  useEffect(() => {
+    // initialize
+    if (formGroupRef.current) {
+      datePicker.init(formGroupRef.current);
+    }
+  }, [formGroupRef]);
+
   let formGroupClassName = "usa-form-group";
   if (props.error) {
     formGroupClassName += " usa-form-group--error";
   }
 
-  const handleChange = (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     if (props.onChange) {
       props.onChange(event);
     }
   };
 
-  const className = `${props.multiline ? "usa-textarea" : "usa-input"}${
-    props.className ? " " + props.className : ""
-  }`;
+  const className = `usa-input${props.className ? " " + props.className : ""}`;
 
   return (
-    <div className={formGroupClassName}>
+    <div className={formGroupClassName} ref={formGroupRef}>
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
       </label>
@@ -50,27 +55,8 @@ function TextField(props: Props) {
           {props.error}
         </span>
       )}
-      {props.multiline ? (
-        <textarea
-          id={props.id}
-          name={props.name}
-          className={className}
-          defaultValue={props.defaultValue}
-          onChange={handleChange}
-          rows={props.rows || 10}
-          style={{ height: "auto" }}
-          disabled={props.disabled}
-          ref={
-            props.register &&
-            (props.validate
-              ? props.register({
-                  required: props.required,
-                  validate: props.validate,
-                })
-              : props.register({ required: props.required }))
-          }
-        />
-      ) : (
+
+      <div className="usa-date-picker" data-default-value={props.defaultValue}>
         <input
           id={props.id}
           className={className}
@@ -89,9 +75,9 @@ function TextField(props: Props) {
           disabled={props.disabled}
           onChange={handleChange}
         />
-      )}
+      </div>
     </div>
   );
 }
 
-export default TextField;
+export default DatePicker;

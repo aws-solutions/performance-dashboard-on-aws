@@ -576,6 +576,7 @@ describe("createMetricsWidget", () => {
     s3Key: {
       json: "abc.json",
     },
+    oneMetricPerRow: false,
   };
 
   it("builds a metrics widget", () => {
@@ -597,6 +598,7 @@ describe("createMetricsWidget", () => {
     expect(widget.content.s3Key).toEqual({
       json: "abc.json",
     });
+    expect(widget.content.oneMetricPerRow).toEqual(false);
   });
 
   it("throws an error if datasetId is undefined", () => {

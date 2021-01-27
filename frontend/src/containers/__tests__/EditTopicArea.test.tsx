@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Route, Router } from "react-router-dom";
-import EnvConfig from "../../services/EnvConfig";
 import BackendService from "../../services/BackendService";
 import EditTopicArea from "../EditTopicArea";
 

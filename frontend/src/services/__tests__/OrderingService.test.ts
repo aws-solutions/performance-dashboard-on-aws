@@ -1,5 +1,5 @@
 import { Widget } from "../../models";
-import WidgetOrderingService from "../WidgetOrdering";
+import OrderingService from "../OrderingService";
 
 const widgets: Array<Widget> = [
   {
@@ -7,28 +7,37 @@ const widgets: Array<Widget> = [
     name: "Banana",
     order: 0,
     widgetType: "Text",
-    updatedAt: "2020-09-17T21:01:00.780Z",
+    updatedAt: new Date("2020-09-17T21:01:00.780Z"),
+    content: {},
+    dashboardId: "123",
+    showTitle: false,
   },
   {
     id: "xyz",
     name: "Strawberry",
     order: 1,
     widgetType: "Chart",
-    updatedAt: "2020-09-17T21:01:00.780Z",
+    updatedAt: new Date("2020-09-17T21:01:00.780Z"),
+    content: {},
+    dashboardId: "123",
+    showTitle: false,
   },
   {
     id: "def",
     name: "Apple",
     order: 2,
     widgetType: "Table",
-    updatedAt: "2020-09-17T21:01:00.780Z",
+    updatedAt: new Date("2020-09-17T21:01:00.780Z"),
+    content: {},
+    dashboardId: "123",
+    showTitle: false,
   },
 ];
 
 test("does not change order if new index is less than zero", () => {
   const index = 0;
   const newIndex = -1;
-  const ordered = WidgetOrderingService.moveWidget(widgets, index, newIndex);
+  const ordered = OrderingService.moveWidget(widgets, index, newIndex);
 
   expectWidgetInPosition(ordered, "Banana", 0);
   expectWidgetInPosition(ordered, "Strawberry", 1);
@@ -38,7 +47,7 @@ test("does not change order if new index is less than zero", () => {
 test("does not change order if new index exceeds length", () => {
   const index = 0;
   const newIndex = widgets.length; // out of bounds
-  const ordered = WidgetOrderingService.moveWidget(widgets, index, newIndex);
+  const ordered = OrderingService.moveWidget(widgets, index, newIndex);
 
   expectWidgetInPosition(ordered, "Banana", 0);
   expectWidgetInPosition(ordered, "Strawberry", 1);
@@ -48,11 +57,7 @@ test("does not change order if new index exceeds length", () => {
 test("banana widget moves one position up", () => {
   const indexOfBanana = 0;
   const newIndex = indexOfBanana + 1;
-  const ordered = WidgetOrderingService.moveWidget(
-    widgets,
-    indexOfBanana,
-    newIndex
-  );
+  const ordered = OrderingService.moveWidget(widgets, indexOfBanana, newIndex);
 
   expectWidgetInPosition(ordered, "Banana", 1);
   expectWidgetInPosition(ordered, "Strawberry", 0);
@@ -62,11 +67,7 @@ test("banana widget moves one position up", () => {
 test("apple widget moves one position down", () => {
   const indexOfApple = 2;
   const newIndex = indexOfApple - 1;
-  const ordered = WidgetOrderingService.moveWidget(
-    widgets,
-    indexOfApple,
-    newIndex
-  );
+  const ordered = OrderingService.moveWidget(widgets, indexOfApple, newIndex);
 
   expectWidgetInPosition(ordered, "Banana", 0);
   expectWidgetInPosition(ordered, "Strawberry", 2);
@@ -76,11 +77,7 @@ test("apple widget moves one position down", () => {
 test("move widget two positions down", () => {
   const indexOfBanana = 0;
   const newIndex = indexOfBanana + 2;
-  const ordered = WidgetOrderingService.moveWidget(
-    widgets,
-    indexOfBanana,
-    newIndex
-  );
+  const ordered = OrderingService.moveWidget(widgets, indexOfBanana, newIndex);
 
   expectWidgetInPosition(ordered, "Banana", 2);
   expectWidgetInPosition(ordered, "Strawberry", 1);

@@ -67,6 +67,7 @@ export enum WidgetType {
   Chart = "Chart",
   Table = "Table",
   Image = "Image",
+  Metrics = "Metrics",
 }
 
 export enum ChartType {
@@ -178,6 +179,14 @@ export type Settings = {
   };
 };
 
+export type Metric = {
+  title: string;
+  value: number;
+  changeOverTime?: string;
+  startDate?: string;
+  endDate?: string;
+};
+
 // Type for the History object in react-router. Defines the
 // location state that is common across all routes.
 // Usage in a component: useHistory<LocationState>();
@@ -190,6 +199,12 @@ export type LocationState = {
   };
   emails?: string;
   id?: string;
+  metrics?: Array<Metric>;
+  metric?: Metric;
+  position?: number;
+  showTitle?: boolean;
+  oneMetricPerRow?: boolean;
+  metricTitle?: string;
 };
 
 export enum UserRoles {
@@ -208,3 +223,8 @@ export type User = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export enum DatasetSchema {
+  None = "None",
+  Metrics = "Metrics",
+}

@@ -1,4 +1,4 @@
-import { Widget } from "../models";
+import { Metric, Widget } from "../models";
 
 function moveWidget(
   widgets: Array<Widget>,
@@ -32,8 +32,34 @@ function moveWidget(
   return reordered;
 }
 
-const WidgetOrdering = {
+function moveMetric(
+  metrics: Array<Metric>,
+  index: number,
+  newIndex: number
+): Array<Metric> {
+  // If new position is out of bounds, don't move anything.
+  if (newIndex < 0 || newIndex >= metrics.length) {
+    return metrics;
+  }
+
+  // Create a new metrics array so we don't modify the one
+  // passed as parameter.
+  const reordered = metrics.map((metric) => ({
+    ...metric,
+  }));
+
+  const metric = reordered[index];
+  const neighbor = reordered[newIndex];
+
+  reordered[newIndex] = metric;
+  reordered[index] = neighbor;
+
+  return reordered;
+}
+
+const OrderingService = {
   moveWidget,
+  moveMetric,
 };
 
-export default WidgetOrdering;
+export default OrderingService;

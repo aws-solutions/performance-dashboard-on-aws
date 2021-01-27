@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -245,26 +245,28 @@ const routes: Array<AppRoute> = [
 
 function App() {
   return (
-    <SettingsProvider>
-      <Router>
-        <Switch>
-          {routes.map((route) => {
-            const component = route.public
-              ? withPublicLayout(route.component)
-              : withAuthenticator(withAdminLayout(route.component));
-            return (
-              <Route
-                exact
-                key={route.path}
-                component={component}
-                path={route.path}
-              />
-            );
-          })}
-          <Redirect from="*" to="/404/page-not-found" />
-        </Switch>
-      </Router>
-    </SettingsProvider>
+    <Suspense fallback="loading">
+      <SettingsProvider>
+        <Router>
+          <Switch>
+            {routes.map((route) => {
+              const component = route.public
+                ? withPublicLayout(route.component)
+                : withAuthenticator(withAdminLayout(route.component));
+              return (
+                <Route
+                  exact
+                  key={route.path}
+                  component={component}
+                  path={route.path}
+                />
+              );
+            })}
+            <Redirect from="*" to="/404/page-not-found" />
+          </Switch>
+        </Router>
+      </SettingsProvider>
+    </Suspense>
   );
 }
 

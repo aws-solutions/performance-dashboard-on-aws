@@ -60,6 +60,15 @@ export function useWidget(
         setDatasetType(DatasetType.CsvFileUpload);
       }
     }
+
+    if (data.widgetType === WidgetType.Metrics) {
+      const { s3Key } = data.content;
+      if (s3Key.json) {
+        const dataset = await StorageService.downloadJson(s3Key.json);
+        setCurrentJson(dataset);
+      }
+    }
+
     setLoading(false);
   }, [dashboardId, widgetId]);
 

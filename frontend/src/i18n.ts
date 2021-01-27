@@ -10,9 +10,9 @@ export default function init() {
     // For all configuration options read:
     // https://www.i18next.com/overview/configuration-options
     .init({
-      lng: "es",
+      lng: window.navigator.language || "en",
       fallbackLng: "en",
-      debug: true,
+      debug: false,
       resources: {
         en: { translation: english },
         es: { translation: spanish },

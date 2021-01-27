@@ -24,6 +24,7 @@ import PublishDashboard from "./containers/PublishDashboard";
 import ArchivedDashboard from "./containers/ArchivedDashboard";
 import AddChart from "./containers/AddChart";
 import AddImage from "./containers/AddImage";
+import EditImage from "./containers/EditImage";
 import EditChart from "./containers/EditChart";
 import AddTable from "./containers/AddTable";
 import EditTable from "./containers/EditTable";
@@ -151,6 +152,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/dashboard/:dashboardId/add-image",
     component: AddImage,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/edit-image/:widgetId",
+    component: EditImage,
   },
   {
     path: "/admin/dashboard/:dashboardId/edit-text/:widgetId",

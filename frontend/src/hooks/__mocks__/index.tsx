@@ -163,7 +163,12 @@ export function useWidget(
     widgetType: "Text",
     order: 1,
     updatedAt: "",
-    content: { text: "test" },
+    content: {
+      text: "test",
+      s3Key: {
+        raw: "abc.jpeg",
+      },
+    },
   });
 
   return {

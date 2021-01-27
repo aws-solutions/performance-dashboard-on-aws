@@ -13,7 +13,7 @@ import "./Home.css";
 function Home() {
   const [filter, setFilter] = useState("");
   const { homepage, loading } = usePublicHomepage();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
 
   const onSearch = (query: string) => {
@@ -104,6 +104,13 @@ function Home() {
               </Accordion.Item>
             ))}
           </Accordion>
+          <h3>Numbers</h3>
+          <ul>
+            <li>
+              <b>Locale {i18n.language}: </b>
+              {Intl.NumberFormat(i18n.language).format(5.45)}
+            </li>
+          </ul>
         </div>
       </div>
     </>

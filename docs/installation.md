@@ -46,7 +46,6 @@ This repository is a monorepo that includes 3 different applications: Backend, F
 ### Requirements
 
 - [Node.js 12](https://nodejs.org/en/download)
-- [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [An AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
 

@@ -44,9 +44,9 @@ deploy_auth() {
     cd $CDK_DIR
 
     if [ "$CDK_ADMIN_EMAIL" != "" ]; then
-        cdk deploy Auth --require-approval never --parameters adminEmail=$CDK_ADMIN_EMAIL
+        npm run cdk deploy Auth --require-approval never --parameters adminEmail=$CDK_ADMIN_EMAIL
     else
-        cdk deploy Auth --require-approval never
+        npm run cdk deploy Auth --require-approval never
     fi
 }
 
@@ -63,7 +63,7 @@ deploy_backend() {
 deploy_frontend() {
     echo "Building frontend application"
     cd $FRONTEND_DIR
-    yarn build
+    npm run build
 
     cd $CDK_DIR
     cdk deploy Frontend --require-approval never

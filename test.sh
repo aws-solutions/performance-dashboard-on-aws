@@ -18,7 +18,7 @@ cd ..
 #
 cd frontend
 echo "Running frontend unit tests"
-CI=true yarn test # Avoid interactive mode on tests
+CI=true npm run test # Avoid interactive mode on tests
 if [ $? -eq 1 ]
 then
   echo "Frontend tests failed"

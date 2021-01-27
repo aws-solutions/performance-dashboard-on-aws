@@ -10,8 +10,8 @@ cd ..
 # Frontend
 #
 cd frontend
-echo "yarn install on frontend"
-yarn install
+echo "npm install on frontend"
+npm install
 cd ..
 
 #

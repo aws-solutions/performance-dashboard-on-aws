@@ -38,25 +38,31 @@ function AddMetric() {
       startDate: values.startDate,
       endDate: values.endDate,
     });
-    history.push(`/admin/dashboard/${dashboardId}/add-metrics`, {
-      alert: {
-        type: "success",
-        message: "Metric successfully added.",
-      },
-      metrics: newMetrics,
-      showTitle: state.showTitle !== false,
-      oneMetricPerRow: state.oneMetricPerRow === true,
-      metricTitle: state.metricTitle || "",
-    });
+    history.push(
+      (state && state.origin) || `/admin/dashboard/${dashboardId}/add-metrics`,
+      {
+        alert: {
+          type: "success",
+          message: "Metric successfully added.",
+        },
+        metrics: newMetrics,
+        showTitle: state.showTitle !== false,
+        oneMetricPerRow: state.oneMetricPerRow === true,
+        metricTitle: state.metricTitle || "",
+      }
+    );
   };
 
   const onCancel = () => {
-    history.push(`/admin/dashboard/${dashboardId}/add-metrics`, {
-      metrics: state && state.metrics ? [...state.metrics] : [],
-      showTitle: state.showTitle !== false,
-      oneMetricPerRow: state.oneMetricPerRow === true,
-      metricTitle: state.metricTitle || "",
-    });
+    history.push(
+      (state && state.origin) || `/admin/dashboard/${dashboardId}/add-metrics`,
+      {
+        metrics: state && state.metrics ? [...state.metrics] : [],
+        showTitle: state && state.showTitle !== false,
+        oneMetricPerRow: state && state.oneMetricPerRow === true,
+        metricTitle: (state && state.metricTitle) || "",
+      }
+    );
   };
 
   if (!state || !state.metrics) {

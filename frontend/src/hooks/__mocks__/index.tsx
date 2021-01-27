@@ -166,9 +166,11 @@ export function useWidget(
     content: { text: "test" },
   });
 
+  const [currentJson] = useState([]);
+
   return {
     loading: false,
-    currentJson: [],
+    currentJson,
     dynamicJson: [],
     staticJson: [],
     csvJson: [],

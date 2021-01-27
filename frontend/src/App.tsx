@@ -28,6 +28,7 @@ import EditChart from "./containers/EditChart";
 import AddTable from "./containers/AddTable";
 import EditTable from "./containers/EditTable";
 import AddText from "./containers/AddText";
+import EditMetrics from "./containers/EditMetrics";
 import AddMetrics from "./containers/AddMetrics";
 import AddMetric from "./containers/AddMetric";
 import EditMetric from "./containers/EditMetric";
@@ -162,6 +163,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/dashboard/:dashboardId/add-text",
     component: AddText,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/edit-metrics/:widgetId",
+    component: EditMetrics,
   },
   {
     path: "/admin/dashboard/:dashboardId/add-metrics",

@@ -205,6 +205,7 @@ export type LocationState = {
   showTitle?: boolean;
   oneMetricPerRow?: boolean;
   metricTitle?: string;
+  origin?: string;
 };
 
 export enum UserRoles {

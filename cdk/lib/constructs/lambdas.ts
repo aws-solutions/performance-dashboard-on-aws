@@ -3,6 +3,7 @@ import * as lambda from "@aws-cdk/aws-lambda";
 import * as iam from "@aws-cdk/aws-iam";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
 import * as s3 from "@aws-cdk/aws-s3";
+import logs = require("@aws-cdk/aws-logs");
 
 interface Props {
   mainTable: dynamodb.Table;
@@ -29,6 +30,7 @@ export class LambdaFunctions extends cdk.Construct {
       memorySize: 256,
       timeout: cdk.Duration.seconds(10),
       reservedConcurrentExecutions: 25,
+      logRetention: logs.RetentionDays.TEN_YEARS,
       environment: {
         MAIN_TABLE: props.mainTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
@@ -48,6 +50,7 @@ export class LambdaFunctions extends cdk.Construct {
       tracing: lambda.Tracing.ACTIVE,
       memorySize: 256,
       timeout: cdk.Duration.seconds(10),
+      logRetention: logs.RetentionDays.TEN_YEARS,
       environment: {
         MAIN_TABLE: props.mainTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,

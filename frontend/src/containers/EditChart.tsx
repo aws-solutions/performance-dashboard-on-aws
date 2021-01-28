@@ -20,7 +20,6 @@ import UtilsService from "../services/UtilsService";
 import Link from "../components/Link";
 import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";
-import { title } from "process";
 import Alert from "../components/Alert";
 import "./EditChart.css";
 
@@ -666,12 +665,7 @@ function EditChart() {
                 <br />
                 <hr />
                 <Button
-                  disabled={
-                    !currentJson.length ||
-                    !title ||
-                    fileLoading ||
-                    editingWidget
-                  }
+                  disabled={!currentJson.length || fileLoading || editingWidget}
                   type="submit"
                 >
                   Save

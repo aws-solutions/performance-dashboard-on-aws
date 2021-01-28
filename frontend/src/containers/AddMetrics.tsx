@@ -11,7 +11,7 @@ import {
 import { useDashboard } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import MetricsCardGroup from "../components/MetricsCardGroup";
+import MetricsPreview from "../components/MetricsPreview";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
 import MetricsList from "../components/MetricsList";
@@ -255,21 +255,11 @@ function AddMetrics() {
         </div>
         <div className="grid-col-6">
           <h4 className="margin-top-4">Preview</h4>
-          {showTitle ? (
-            <h2 className="margin-top-4 margin-left-1">{title}</h2>
-          ) : (
-            ""
-          )}
-          {metrics.length ? (
-            <div className="padding-left-1">
-              <MetricsCardGroup
-                metrics={metrics}
-                metricPerRow={oneMetricPerRow ? 1 : 3}
-              />
-            </div>
-          ) : (
-            ""
-          )}
+          <MetricsPreview
+            title={showTitle ? title : ""}
+            metrics={metrics}
+            metricPerRow={oneMetricPerRow ? 1 : 3}
+          />
         </div>
       </div>
     </>

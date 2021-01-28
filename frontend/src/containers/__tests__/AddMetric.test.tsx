@@ -13,7 +13,7 @@ describe("AddMetricForm", () => {
   beforeEach(async () => {
     // Mocks
     history.location.state = {
-      ...history.location.state,
+      ...(history.location.state || Object.create({})),
       metrics: [],
     };
     jest.spyOn(history, "push");

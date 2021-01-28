@@ -15,7 +15,6 @@ import Spinner from "../components/Spinner";
 import Link from "../components/Link";
 import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";
-import { title } from "process";
 import Alert from "../components/Alert";
 import "./EditTable.css";
 
@@ -630,12 +629,7 @@ function EditTable() {
                 <br />
                 <hr />
                 <Button
-                  disabled={
-                    !currentJson.length ||
-                    !title ||
-                    fileLoading ||
-                    editingWidget
-                  }
+                  disabled={!currentJson.length || fileLoading || editingWidget}
                   type="submit"
                 >
                   Save

@@ -16,6 +16,7 @@ const table: TableWidget = {
   content: {
     title: "Bananas table",
     summary: "This is a banana table",
+    summaryBelow: false,
     datasetId: "0000",
     s3Key: {
       json: "123.json",

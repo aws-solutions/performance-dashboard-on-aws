@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import StorageService from "../services/StorageService";
 
 type UseImageHook = {
-  loading: boolean;
+  loadingFile: boolean;
   file: File | undefined;
 };
 
@@ -24,7 +24,7 @@ export function useImage(s3Key: string): UseImageHook {
   }, [fetchData]);
 
   return {
-    loading,
+    loadingFile: loading,
     file,
   };
 }

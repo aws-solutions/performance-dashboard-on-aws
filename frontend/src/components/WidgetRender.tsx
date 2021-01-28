@@ -5,11 +5,13 @@ import {
   ChartWidget,
   TableWidget,
   ImageWidget,
+  MetricsWidget,
 } from "../models";
 import ChartWidgetComponent from "../components/ChartWidget";
 import TableWidgetComponent from "../components/TableWidget";
 import TextWidget from "../components/TextWidget";
 import ImageWidgetComponent from "../components/ImageWidget";
+import MetricsWidgetComponent from "../components/MetricsWidget";
 
 interface Props {
   widget: Widget;
@@ -26,6 +28,8 @@ function WidgetRender(props: Props) {
       return <TableWidgetComponent widget={widget as TableWidget} />;
     case WidgetType.Image:
       return <ImageWidgetComponent widget={widget as ImageWidget} />;
+    case WidgetType.Metrics:
+      return <MetricsWidgetComponent widget={widget as MetricsWidget} />;
     default:
       return null;
   }

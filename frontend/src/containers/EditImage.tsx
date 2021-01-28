@@ -17,7 +17,6 @@ interface FormValues {
   showTitle: boolean;
   summaryBelow: boolean;
   altText: string;
-  image: File;
 }
 
 interface PathParams {
@@ -32,13 +31,12 @@ function EditImage() {
   const { dashboard, loading } = useDashboard(dashboardId);
   const { setWidget, widget } = useWidget(dashboardId, widgetId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const imageHook = useImage(widget?.content.s3Key.raw);
+  const { file, loadingFile } = useImage(widget?.content.s3Key.raw);
 
   const [newImageFile, setNewImageFile] = useState<File | undefined>(undefined);
   const [imageUploading, setImageUploading] = useState(false);
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
-  const originalImageHook = imageHook;
 
   const onSubmit = async (values: FormValues) => {
     if (!widget) {
@@ -169,7 +167,7 @@ function EditImage() {
       <Breadcrumbs crumbs={crumbs} />
       <h1>Edit Image</h1>
 
-      {!widget || imageHook.loading || imageUploading ? (
+      {!widget || loading || loadingFile ? (
         <Spinner className="text-center margin-top-6" label="Loading" />
       ) : (
         <>
@@ -274,10 +272,7 @@ function EditImage() {
                 </fieldset>
                 <br />
                 <hr />
-                <Button
-                  disabled={!originalImageHook.file && !newImageFile}
-                  type="submit"
-                >
+                <Button disabled={imageUploading} type="submit">
                   Save
                 </Button>
                 <Button
@@ -293,13 +288,20 @@ function EditImage() {
             <div className="grid-col-6">
               <div hidden={false} className="margin-left-4">
                 <h4>Preview</h4>
-                <ImagePreview
-                  title={widget.showTitle ? widget.content.title : ""}
-                  summary={widget.content.summary}
-                  file={newImageFile ? newImageFile : originalImageHook.file}
-                  summaryBelow={widget.content.summaryBelow}
-                  altText={widget.content.imageAltText}
-                />
+                {loadingFile ? (
+                  <Spinner
+                    className="text-center margin-top-6"
+                    label="Loading"
+                  />
+                ) : (
+                  <ImagePreview
+                    title={widget.showTitle ? widget.content.title : ""}
+                    summary={widget.content.summary}
+                    file={newImageFile ? newImageFile : file}
+                    summaryBelow={widget.content.summaryBelow}
+                    altText={widget.content.imageAltText}
+                  />
+                )}
               </div>
             </div>
           </div>

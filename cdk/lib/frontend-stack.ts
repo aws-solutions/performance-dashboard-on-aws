@@ -6,6 +6,7 @@ import customResource = require("@aws-cdk/custom-resources");
 import lambda = require("@aws-cdk/aws-lambda");
 import iam = require("@aws-cdk/aws-iam");
 import kms = require("@aws-cdk/aws-kms");
+import logs = require("@aws-cdk/aws-logs");
 import { HttpHeaders } from "@cloudcomponents/cdk-lambda-at-edge-pattern";
 
 interface Props extends cdk.StackProps {
@@ -122,6 +123,7 @@ export class FrontendStack extends cdk.Stack {
       handler: "index.handler",
       timeout: cdk.Duration.seconds(60),
       memorySize: 128,
+      logRetention: logs.RetentionDays.TEN_YEARS,
       environment: {
         FRONTEND_BUCKET: this.frontendBucket.bucketName,
         REGION: cdk.Stack.of(this).region,

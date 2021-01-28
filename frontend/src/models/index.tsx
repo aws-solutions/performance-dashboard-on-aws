@@ -130,6 +130,18 @@ export interface ImageWidget extends Widget {
   };
 }
 
+export interface MetricsWidget extends Widget {
+  content: {
+    title: string;
+    datasetId: string;
+    oneMetricPerRow: boolean;
+    s3Key: {
+      raw: string;
+      json: string;
+    };
+  };
+}
+
 export type Dataset = {
   id: string;
   fileName: string;

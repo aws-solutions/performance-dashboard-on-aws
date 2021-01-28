@@ -92,6 +92,7 @@ export interface MetricsWidget extends Widget {
     datasetId: string;
     oneMetricPerRow: boolean;
     s3Key: {
+      raw: string;
       json: string;
     };
   };

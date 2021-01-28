@@ -1,6 +1,6 @@
 import React from "react";
 import { ImageWidget } from "../models";
-import ImagePreview from "../components/ImagePreview";
+import ImagePreview from "./ImagePreview";
 import { useImage } from "../hooks";
 
 interface Props {

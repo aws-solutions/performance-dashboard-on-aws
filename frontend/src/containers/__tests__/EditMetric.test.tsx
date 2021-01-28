@@ -12,9 +12,9 @@ const history = createMemoryHistory();
 describe("EditMetricForm", () => {
   beforeEach(async () => {
     history.location.state = {
-      ...history.location.state,
-      metrics: [{ title: "test title", value: "test value" }],
-      metric: { title: "test title", value: "test value" },
+      ...(history.location.state || Object.create({})),
+      metrics: [{ title: "test title", value: 1 }],
+      metric: { title: "test title", value: 1 },
     };
     jest.spyOn(history, "push");
 
@@ -53,7 +53,7 @@ describe("EditMetricForm", () => {
       {
         alert: { message: "Metric successfully edited.", type: "success" },
         metricTitle: "",
-        metrics: [{ title: "test title", value: "test value" }],
+        metrics: [{ title: "test title", value: 1 }],
         oneMetricPerRow: false,
         showTitle: true,
       }
@@ -68,7 +68,7 @@ describe("EditMetricForm", () => {
       "/admin/dashboard/undefined/add-metrics",
       {
         metricTitle: "",
-        metrics: [{ title: "test title", value: "test value" }],
+        metrics: [{ title: "test title", value: 1 }],
         oneMetricPerRow: false,
         showTitle: true,
       }

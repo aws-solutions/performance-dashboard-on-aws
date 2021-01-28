@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import Table from "./Table";
-import "./TablePreview.css";
 
 type Props = {
   title: string;

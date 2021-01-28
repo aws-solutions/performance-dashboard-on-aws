@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`metrics preview should match snapshot 1`] = `
+<div>
+  <h2
+    class="margin-top-4 margin-left-1"
+  >
+    test title
+  </h2>
+  <div
+    class="margin-left-1"
+  >
+    <div
+      class="grid-col"
+    >
+      <div
+        class="grid-row flex-column"
+      >
+        <div
+          class="grid-col grid-row flex-row"
+        >
+          <div
+            class="grid-col-4 padding-05"
+          >
+            <div
+              class="display-flex flex-column border-base-lightest border-2px height-card padding-1"
+            >
+              <div
+                class="flex-5"
+              >
+                <p
+                  class="text-base-darkest text-bold margin-0"
+                >
+                  test title
+                </p>
+              </div>
+              <div
+                class="flex-3"
+              >
+                <h1
+                  class="margin-0"
+                >
+                  1
+                </h1>
+              </div>
+              <div
+                class="flex-4"
+              >
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

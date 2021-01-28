@@ -272,16 +272,14 @@ function AddImage() {
               </form>
             </div>
             <div className="grid-col-6">
-              <div hidden={!imageFile} className="margin-left-4">
-                <h4>Preview</h4>
-                <ImagePreview
-                  title={showTitle ? title : ""}
-                  summary={summary}
-                  file={imageFile}
-                  summaryBelow={summaryBelow}
-                  altText={altText}
-                />
-              </div>
+              <h4 className="margin-top-4">Preview</h4>
+              <ImagePreview
+                title={showTitle ? title : ""}
+                summary={summary}
+                file={imageFile}
+                summaryBelow={summaryBelow}
+                altText={altText}
+              />
             </div>
           </div>
         </>

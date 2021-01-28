@@ -171,9 +171,11 @@ export function useWidget(
     },
   });
 
+  const [currentJson] = useState([]);
+
   return {
     loading: false,
-    currentJson: [],
+    currentJson,
     dynamicJson: [],
     staticJson: [],
     csvJson: [],

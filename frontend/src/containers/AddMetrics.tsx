@@ -105,6 +105,7 @@ function AddMetrics() {
       showTitle,
       oneMetricPerRow,
       metricTitle: title,
+      origin: history.location.pathname,
     });
   };
 
@@ -116,6 +117,7 @@ function AddMetrics() {
       showTitle,
       oneMetricPerRow,
       metricTitle: title,
+      origin: history.location.pathname,
     });
   };
 
@@ -235,7 +237,10 @@ function AddMetrics() {
             <Button variant="outline" type="button" onClick={goBack}>
               Back
             </Button>
-            <Button disabled={creatingMetrics || fileLoading} type="submit">
+            <Button
+              disabled={!title || creatingMetrics || fileLoading}
+              type="submit"
+            >
               Add metrics
             </Button>
             <Button

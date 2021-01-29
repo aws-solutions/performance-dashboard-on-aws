@@ -31,7 +31,7 @@ export class FrontendStack extends cdk.Stack {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
       encryption: s3.BucketEncryption.S3_MANAGED,
-      serverAccessLogsPrefix: "AccessLogs/",
+      serverAccessLogsPrefix: "access_logs/",
       accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
     });
 

@@ -12,6 +12,7 @@ const csp = function (req: Request, res: Response, next: NextFunction) {
   res.set("X-XSS-Protection", "1; mode=block");
   res.set("X-Frame-Options", "DENY");
   res.set("X-Content-Type-Options", "nosniff");
+  res.set("Cache-control", "no-cache");
   next();
 };
 

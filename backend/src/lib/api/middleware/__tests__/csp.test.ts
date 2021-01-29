@@ -22,6 +22,7 @@ describe("csp", () => {
     expect(res.set).toHaveBeenCalledWith("X-XSS-Protection", "1; mode=block");
     expect(res.set).toHaveBeenCalledWith("X-Frame-Options", "DENY");
     expect(res.set).toHaveBeenCalledWith("X-Content-Type-Options", "nosniff");
+    expect(res.set).toHaveBeenCalledWith("Cache-control", "no-cache");
 
     expect(next).toHaveBeenCalled();
   });

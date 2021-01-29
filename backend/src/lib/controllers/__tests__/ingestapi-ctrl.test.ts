@@ -12,7 +12,6 @@ jest.mock("../../factories/dataset-factory");
 const repository = mocked(DatasetRepository.prototype);
 const res = ({
   send: jest.fn().mockReturnThis(),
-  set: jest.fn().mockReturnThis(),
   status: jest.fn().mockReturnThis(),
   json: jest.fn().mockReturnThis(),
 } as any) as Response;

@@ -124,8 +124,8 @@ export class FrontendStack extends cdk.Stack {
       code: lambda.Code.fromAsset("build/lib/envconfig"),
       handler: "index.handler",
       timeout: cdk.Duration.seconds(60),
-      logRetention: logs.RetentionDays.TEN_YEARS,
       memorySize: 128,
+      logRetention: logs.RetentionDays.TEN_YEARS,
       environment: {
         FRONTEND_BUCKET: this.frontendBucket.bucketName,
         REGION: cdk.Stack.of(this).region,

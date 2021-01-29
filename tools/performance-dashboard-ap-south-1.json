@@ -4,7 +4,7 @@
     "authStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-sa-east-1.s3.sa-east-1.amazonaws.com/Auth-0.4.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Auth-0.4.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     },
@@ -12,7 +12,7 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "authStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-sa-east-1.s3.sa-east-1.amazonaws.com/Backend-0.4.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Backend-0.4.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     },
@@ -20,7 +20,7 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "backendStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-sa-east-1.s3.sa-east-1.amazonaws.com/Frontend-0.4.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Frontend-0.4.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     },
@@ -28,7 +28,7 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "frontendStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-sa-east-1.s3.sa-east-1.amazonaws.com/Ops-0.4.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Ops-0.4.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     }

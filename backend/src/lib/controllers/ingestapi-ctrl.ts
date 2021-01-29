@@ -53,6 +53,7 @@ async function createDataset(req: Request, res: Response) {
     });
 
     await repo.saveDataset(dataset);
+    res.set("Cache-control", "public, max-age=600");
     res.json(dataset);
   } catch (err) {
     logger.error("Failed to create dataset %o, %o", metadata, parsedData);
@@ -87,6 +88,7 @@ async function updateDataset(req: Request, res: Response) {
 
   try {
     await DatasetService.updateDataset(id, metadata, parsedData);
+    res.set("Cache-control", "public, max-age=600");
     res.json();
   } catch (err) {
     logger.error("Failed to update dataset %o, %o", err, metadata, parsedData);
@@ -107,6 +109,7 @@ async function deleteDataset(req: Request, res: Response) {
   await repo.deleteDataset(id);
   logger.info("Dataset deleted %s", id);
 
+  res.set("Cache-control", "public, max-age=600");
   return res.send();
 }
 

@@ -5,9 +5,8 @@ import cloudFront = require("@aws-cdk/aws-cloudfront");
 import customResource = require("@aws-cdk/custom-resources");
 import lambda = require("@aws-cdk/aws-lambda");
 import iam = require("@aws-cdk/aws-iam");
-import kms = require("@aws-cdk/aws-kms");
-import logs = require("@aws-cdk/aws-logs");
 import { HttpHeaders } from "@cloudcomponents/cdk-lambda-at-edge-pattern";
+import { BucketAccessControl } from "@aws-cdk/aws-s3";
 
 interface Props extends cdk.StackProps {
   datasetsBucket: string;
@@ -31,6 +30,8 @@ export class FrontendStack extends cdk.Stack {
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
       encryption: s3.BucketEncryption.S3_MANAGED,
+      serverAccessLogsPrefix: "AccessLogs/",
+      accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
     });
 
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {
@@ -123,7 +124,6 @@ export class FrontendStack extends cdk.Stack {
       handler: "index.handler",
       timeout: cdk.Duration.seconds(60),
       memorySize: 128,
-      logRetention: logs.RetentionDays.TEN_YEARS,
       environment: {
         FRONTEND_BUCKET: this.frontendBucket.bucketName,
         REGION: cdk.Stack.of(this).region,

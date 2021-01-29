@@ -5,6 +5,7 @@ import cloudFront = require("@aws-cdk/aws-cloudfront");
 import customResource = require("@aws-cdk/custom-resources");
 import lambda = require("@aws-cdk/aws-lambda");
 import iam = require("@aws-cdk/aws-iam");
+import logs = require("@aws-cdk/aws-logs");
 import { HttpHeaders } from "@cloudcomponents/cdk-lambda-at-edge-pattern";
 import { BucketAccessControl } from "@aws-cdk/aws-s3";
 
@@ -123,6 +124,7 @@ export class FrontendStack extends cdk.Stack {
       code: lambda.Code.fromAsset("build/lib/envconfig"),
       handler: "index.handler",
       timeout: cdk.Duration.seconds(60),
+      logRetention: logs.RetentionDays.TEN_YEARS,
       memorySize: 128,
       environment: {
         FRONTEND_BUCKET: this.frontendBucket.bucketName,

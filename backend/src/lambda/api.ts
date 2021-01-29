@@ -11,7 +11,13 @@ const server = serverlessExpress.createServer(api);
  * @param event
  */
 export const handler = (event: APIGatewayProxyEvent, context: Context) => {
-  console.log("Event=", JSON.stringify(event));
+  let eventToLog = { ...event };
+  if (eventToLog && eventToLog.resource.includes("ingestapi")) {
+    eventToLog = { ...eventToLog, body: null };
+  }
+
+  console.log("Event=", JSON.stringify(eventToLog));
   console.log("Context=", JSON.stringify(context));
+
   return serverlessExpress.proxy(server, event, context);
 };

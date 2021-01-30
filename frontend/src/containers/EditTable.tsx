@@ -37,7 +37,7 @@ function EditTable() {
   const { dashboardId, widgetId } = useParams<PathParams>();
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
-  const { dynamicDatasets, staticDatasets } = useDatasets();
+  const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
   const {
     register,
     errors,
@@ -327,7 +327,7 @@ function EditTable() {
       <Breadcrumbs crumbs={crumbs} />
       <h1>Edit table</h1>
 
-      {loading || !widget || !datasetType ? (
+      {loading || loadingDatasets || !widget || !datasetType ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>

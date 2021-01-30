@@ -107,13 +107,19 @@ function AddChart() {
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
-            : dynamicDataset?.id || staticDataset?.id,
+            : datasetType === DatasetType.DynamicDataset
+            ? dynamicDataset?.id
+            : staticDataset?.id,
           s3Key: newDataset
             ? newDataset.s3Key
-            : dynamicDataset?.s3Key || staticDataset?.s3Key,
+            : datasetType === DatasetType.DynamicDataset
+            ? dynamicDataset?.s3Key
+            : staticDataset?.s3Key,
           fileName: csvFile
             ? csvFile.name
-            : dynamicDataset?.fileName || staticDataset?.fileName,
+            : datasetType === DatasetType.DynamicDataset
+            ? dynamicDataset?.fileName
+            : staticDataset?.fileName,
         }
       );
       setCreatingWidget(false);

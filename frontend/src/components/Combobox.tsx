@@ -1,6 +1,6 @@
-import React /*, { useEffect }*/ from "react";
+import React, { useEffect, useRef } from "react";
 // @ts-ignore
-//import comboBox from "uswds/src/js/components/combo-box";
+import comboBox from "uswds/src/js/components/combo-box";
 
 interface Props {
   id: string;
@@ -18,15 +18,13 @@ interface Props {
 }
 
 function Combobox(props: Props) {
-  // useEffect(() => {
-  //   // initialize
-  //   comboBox.on();
-
-  //   // remove event listeners when component un-mounts.
-  //   return () => {
-  //     comboBox.off();
-  //   };
-  // }, []);
+  const formGroupRef = useRef(null);
+  useEffect(() => {
+    // initialize
+    if (formGroupRef.current) {
+      comboBox.init(formGroupRef.current);
+    }
+  }, [formGroupRef]);
 
   let formGroupClassName = "usa-form-group";
   if (props.error) {
@@ -40,7 +38,7 @@ function Combobox(props: Props) {
   };
 
   return (
-    <div className={formGroupClassName}>
+    <div className={formGroupClassName} ref={formGroupRef}>
       <label className="usa-label margin-top-1" htmlFor={props.id}>
         {props.label}
       </label>
@@ -53,25 +51,25 @@ function Combobox(props: Props) {
           {props.error}
         </span>
       )}
-      {/*<div className="usa-combo-box">*/}
-      <select
-        className="usa-select"
-        name={props.name}
-        id={props.id}
-        onChange={handleChange}
-        defaultValue={props.defaultValue}
-        ref={props.register && props.register({ required: props.required })}
-      >
-        <option key="" value="">
-          Select an option
-        </option>
-        {props.options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.content}
+      <div className="usa-combo-box" data-default-value={props.defaultValue}>
+        <select
+          className="usa-select"
+          name={props.name}
+          id={props.id}
+          onChange={handleChange}
+          defaultValue={props.defaultValue}
+          ref={props.register && props.register({ required: props.required })}
+        >
+          <option key="" value="">
+            Select an option
           </option>
-        ))}
-      </select>
-      {/*</div>*/}
+          {props.options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.content}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 }

@@ -44,7 +44,13 @@ function EditChart() {
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
+  const {
+    register,
+    errors,
+    handleSubmit,
+    getValues,
+    reset,
+  } = useForm<FormValues>();
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
   );
@@ -60,7 +66,6 @@ function EditChart() {
   const [editingWidget, setEditingWidget] = useState(false);
   const {
     widget,
-    setWidget,
     datasetType,
     setDatasetType,
     currentJson,
@@ -73,9 +78,26 @@ function EditChart() {
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
 
+  const [title, setTitle] = useState("");
+  const [showTitle, setShowTitle] = useState(false);
+  const [summary, setSummary] = useState("");
+  const [summaryBelow, setSummaryBelow] = useState(false);
+  const [chartType, setChartType] = useState("");
+
   useEffect(() => {
     if (widget && dynamicDatasets && staticDatasets) {
+      const title = widget.content.title;
+      const showTitle = widget.showTitle;
+      const summary = widget.content.summary;
+      const summaryBelow = widget.content.summaryBelow;
+      const chartType = widget.content.chartType;
+
       reset({
+        title,
+        showTitle,
+        summary,
+        summaryBelow,
+        chartType,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
             ? widget.content.s3Key.json
@@ -85,6 +107,12 @@ function EditChart() {
             ? widget.content.s3Key.json
             : "",
       });
+
+      setTitle(title);
+      setShowTitle(showTitle);
+      setSummary(summary);
+      setSummary(summaryBelow);
+      setChartType(chartType);
       setDynamicDataset(
         dynamicDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
       );
@@ -178,13 +206,19 @@ function EditChart() {
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
-            : dynamicDataset?.id || staticDataset?.id,
+            : datasetType === DatasetType.DynamicDataset
+            ? dynamicDataset?.id
+            : staticDataset?.id,
           s3Key: newDataset
             ? newDataset.s3Key
-            : dynamicDataset?.s3Key || staticDataset?.s3Key,
+            : datasetType === DatasetType.DynamicDataset
+            ? dynamicDataset?.s3Key
+            : staticDataset?.s3Key,
           fileName: csvFile
             ? csvFile.name
-            : dynamicDataset?.fileName || staticDataset?.fileName,
+            : datasetType === DatasetType.DynamicDataset
+            ? dynamicDataset?.fileName
+            : staticDataset?.fileName,
         },
         widget.updatedAt
       );
@@ -206,71 +240,6 @@ function EditChart() {
 
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
-  };
-
-  const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    if (widget) {
-      setWidget({
-        ...widget,
-        content: {
-          ...widget.content,
-          title: (event.target as HTMLInputElement).value,
-        },
-      });
-    }
-  };
-
-  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    if (widget) {
-      setWidget({
-        ...widget,
-        content: {
-          ...widget.content,
-          summary: (event.target as HTMLTextAreaElement).value,
-        },
-      });
-    }
-  };
-
-  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    if (widget) {
-      setWidget({
-        ...widget,
-        showTitle: (event.target as HTMLInputElement).checked,
-        content: {
-          ...widget.content,
-        },
-      });
-    }
-  };
-
-  const handleSummaryBelowChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    if (widget) {
-      setWidget({
-        ...widget,
-        content: {
-          ...widget.content,
-          summaryBelow: (event.target as HTMLInputElement).checked,
-        },
-      });
-    }
-  };
-
-  const handleChartTypeChange = (
-    event: React.FormEvent<HTMLFieldSetElement>
-  ) => {
-    const selectedType = (event.target as HTMLInputElement).value;
-    if (widget) {
-      setWidget({
-        ...widget,
-        content: {
-          ...widget.content,
-          chartType: selectedType,
-        },
-      });
-    }
   };
 
   const handleChange = async (event: React.FormEvent<HTMLFieldSetElement>) => {
@@ -334,6 +303,15 @@ function EditChart() {
     event.stopPropagation();
   };
 
+  const onFormChange = () => {
+    const { title, showTitle, summary, summaryBelow, chartType } = getValues();
+    setTitle(title);
+    setShowTitle(showTitle);
+    setSummary(summary);
+    setSummaryBelow(summaryBelow);
+    setChartType(chartType);
+  };
+
   const crumbs = [
     {
       label: "Dashboards",
@@ -365,6 +343,7 @@ function EditChart() {
             <div className="grid-col-6">
               <form
                 className="usa-form usa-form--large"
+                onChange={onFormChange}
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <fieldset className="usa-fieldset">
@@ -374,8 +353,7 @@ function EditChart() {
                     label="Chart title"
                     hint="Give your chart a descriptive title."
                     error={errors.title && "Please specify a chart title"}
-                    onChange={handleTitleChange}
-                    defaultValue={widget.content.title}
+                    defaultValue={title}
                     required
                     register={register}
                   />
@@ -386,8 +364,7 @@ function EditChart() {
                       id="display-title"
                       type="checkbox"
                       name="showTitle"
-                      defaultChecked={widget.showTitle}
-                      onChange={handleShowTitleChange}
+                      defaultChecked={showTitle}
                       ref={register()}
                     />
                     <label
@@ -488,6 +465,7 @@ function EditChart() {
                             }) Last update: ${dateFormatter(d.updatedAt)}`,
                           };
                         })}
+                        defaultValue={dynamicDataset?.s3Key.json}
                         register={register}
                         onChange={onSelectDynamicDataset}
                       />
@@ -532,6 +510,7 @@ function EditChart() {
                             content: `${d.fileName} (${d.s3Key.json})`,
                           };
                         })}
+                        defaultValue={staticDataset?.s3Key.json}
                         register={register}
                         onChange={onSelectStaticDataset}
                       />
@@ -603,8 +582,7 @@ function EditChart() {
                         hint="Choose a chart type."
                         register={register}
                         error={errors.chartType && "Please select a chart type"}
-                        onChange={handleChartTypeChange}
-                        defaultValue={widget.content.chartType}
+                        defaultValue={chartType}
                         required
                         options={[
                           {
@@ -634,8 +612,7 @@ function EditChart() {
                     It can also be read by screen readers to describe the chart
                     for those with visual impairments."
                         register={register}
-                        defaultValue={widget.content.summary}
-                        onChange={handleSummaryChange}
+                        defaultValue={summary}
                         multiline
                         rows={5}
                       />
@@ -645,8 +622,7 @@ function EditChart() {
                           id="summary-below"
                           type="checkbox"
                           name="summaryBelow"
-                          defaultChecked={widget.content.summaryBelow}
-                          onChange={handleSummaryBelowChange}
+                          defaultChecked={summaryBelow}
                           ref={register()}
                         />
                         <label
@@ -690,56 +666,56 @@ function EditChart() {
                   />
                 ) : (
                   <>
-                    {widget.content.chartType === ChartType.LineChart && (
+                    {chartType === ChartType.LineChart && (
                       <LineChartPreview
-                        title={widget.showTitle ? widget.content.title : ""}
-                        summary={widget.content.summary}
+                        title={showTitle ? title : ""}
+                        summary={summary}
                         lines={
                           currentJson.length > 0
                             ? (Object.keys(currentJson[0]) as Array<string>)
                             : []
                         }
                         data={currentJson}
-                        summaryBelow={widget.content.summaryBelow}
+                        summaryBelow={summaryBelow}
                       />
                     )}
-                    {widget.content.chartType === ChartType.ColumnChart && (
+                    {chartType === ChartType.ColumnChart && (
                       <ColumnChartPreview
-                        title={widget.showTitle ? widget.name : ""}
-                        summary={widget.content.summary}
+                        title={showTitle ? title : ""}
+                        summary={summary}
                         columns={
                           currentJson.length > 0
                             ? (Object.keys(currentJson[0]) as Array<string>)
                             : []
                         }
                         data={currentJson}
-                        summaryBelow={widget.content.summaryBelow}
+                        summaryBelow={summaryBelow}
                       />
                     )}
-                    {widget.content.chartType === ChartType.BarChart && (
+                    {chartType === ChartType.BarChart && (
                       <BarChartPreview
-                        title={widget.showTitle ? widget.name : ""}
-                        summary={widget.content.summary}
+                        title={showTitle ? title : ""}
+                        summary={summary}
                         bars={
                           currentJson.length > 0
                             ? (Object.keys(currentJson[0]) as Array<string>)
                             : []
                         }
                         data={currentJson}
-                        summaryBelow={widget.content.summaryBelow}
+                        summaryBelow={summaryBelow}
                       />
                     )}
-                    {widget.content.chartType === ChartType.PartWholeChart && (
+                    {chartType === ChartType.PartWholeChart && (
                       <PartWholeChartPreview
-                        title={widget.showTitle ? widget.name : ""}
-                        summary={widget.content.summary}
+                        title={showTitle ? title : ""}
+                        summary={summary}
                         parts={
                           currentJson.length > 0
                             ? (Object.keys(currentJson[0]) as Array<string>)
                             : []
                         }
                         data={currentJson}
-                        summaryBelow={widget.content.summaryBelow}
+                        summaryBelow={summaryBelow}
                       />
                     )}
                   </>

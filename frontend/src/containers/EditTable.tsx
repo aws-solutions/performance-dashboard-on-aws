@@ -38,7 +38,13 @@ function EditTable() {
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
+  const {
+    register,
+    errors,
+    handleSubmit,
+    getValues,
+    reset,
+  } = useForm<FormValues>();
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
   );
@@ -54,7 +60,6 @@ function EditTable() {
   const [editingWidget, setEditingWidget] = useState(false);
   const {
     widget,
-    setWidget,
     datasetType,
     setDatasetType,
     currentJson,
@@ -67,9 +72,23 @@ function EditTable() {
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
 
+  const [title, setTitle] = useState("");
+  const [showTitle, setShowTitle] = useState(false);
+  const [summary, setSummary] = useState("");
+  const [summaryBelow, setSummaryBelow] = useState(false);
+
   useEffect(() => {
     if (widget && dynamicDatasets && staticDatasets) {
+      const title = widget.content.title;
+      const showTitle = widget.showTitle;
+      const summary = widget.content.summary;
+      const summaryBelow = widget.content.summaryBelow;
+
       reset({
+        title,
+        showTitle,
+        summary,
+        summaryBelow,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
             ? widget.content.s3Key.json
@@ -79,6 +98,11 @@ function EditTable() {
             ? widget.content.s3Key.json
             : "",
       });
+
+      setTitle(title);
+      setShowTitle(showTitle);
+      setSummary(summary);
+      setSummary(summaryBelow);
       setDynamicDataset(
         dynamicDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
       );
@@ -171,13 +195,19 @@ function EditTable() {
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
-            : dynamicDataset?.id || staticDataset?.id,
+            : datasetType === DatasetType.DynamicDataset
+            ? dynamicDataset?.id
+            : staticDataset?.id,
           s3Key: newDataset
             ? newDataset.s3Key
-            : dynamicDataset?.s3Key || staticDataset?.s3Key,
+            : datasetType === DatasetType.DynamicDataset
+            ? dynamicDataset?.s3Key
+            : staticDataset?.s3Key,
           fileName: csvFile
             ? csvFile.name
-            : dynamicDataset?.fileName || staticDataset?.fileName,
+            : datasetType === DatasetType.DynamicDataset
+            ? dynamicDataset?.fileName
+            : staticDataset?.fileName,
         },
         widget.updatedAt
       );
@@ -197,56 +227,6 @@ function EditTable() {
 
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
-  };
-
-  const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    if (widget) {
-      setWidget({
-        ...widget,
-        content: {
-          ...widget.content,
-          title: (event.target as HTMLInputElement).value,
-        },
-      });
-    }
-  };
-
-  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    if (widget) {
-      setWidget({
-        ...widget,
-        content: {
-          ...widget.content,
-          summary: (event.target as HTMLTextAreaElement).value,
-        },
-      });
-    }
-  };
-
-  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    if (widget) {
-      setWidget({
-        ...widget,
-        showTitle: (event.target as HTMLInputElement).checked,
-        content: {
-          ...widget.content,
-        },
-      });
-    }
-  };
-
-  const handleSummaryBelowChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    if (widget) {
-      setWidget({
-        ...widget,
-        content: {
-          ...widget.content,
-          summaryBelow: (event.target as HTMLInputElement).checked,
-        },
-      });
-    }
   };
 
   const handleChange = async (event: React.FormEvent<HTMLFieldSetElement>) => {
@@ -310,6 +290,14 @@ function EditTable() {
     event.stopPropagation();
   };
 
+  const onFormChange = () => {
+    const { title, showTitle, summary, summaryBelow } = getValues();
+    setTitle(title);
+    setShowTitle(showTitle);
+    setSummary(summary);
+    setSummaryBelow(summaryBelow);
+  };
+
   const crumbs = [
     {
       label: "Dashboards",
@@ -347,6 +335,7 @@ function EditTable() {
             <div className="grid-col-6">
               <form
                 className="usa-form usa-form--large"
+                onChange={onFormChange}
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <fieldset className="usa-fieldset">
@@ -356,8 +345,7 @@ function EditTable() {
                     label="Table title"
                     hint="Give your table a descriptive title."
                     error={errors.title && "Please specify a table title"}
-                    onChange={handleTitleChange}
-                    defaultValue={widget.content.title}
+                    defaultValue={title}
                     required
                     register={register}
                   />
@@ -368,8 +356,7 @@ function EditTable() {
                       id="display-title"
                       type="checkbox"
                       name="showTitle"
-                      defaultChecked={widget.showTitle}
-                      onChange={handleShowTitleChange}
+                      defaultChecked={showTitle}
                       ref={register()}
                     />
                     <label
@@ -602,8 +589,7 @@ function EditTable() {
                   It can also be read by screen readers to describe the table
                   for those with visual impairments."
                       register={register}
-                      defaultValue={widget.content.summary}
-                      onChange={handleSummaryChange}
+                      defaultValue={summary}
                       multiline
                       rows={5}
                     />
@@ -613,8 +599,7 @@ function EditTable() {
                         id="summary-below"
                         type="checkbox"
                         name="summaryBelow"
-                        defaultChecked={widget.content.summaryBelow}
-                        onChange={handleSummaryBelowChange}
+                        defaultChecked={summaryBelow}
                         ref={register()}
                       />
                       <label
@@ -654,10 +639,10 @@ function EditTable() {
                   />
                 ) : (
                   <TablePreview
-                    title={widget.showTitle ? widget.content.title : ""}
-                    summary={widget.content.summary}
+                    title={showTitle ? title : ""}
+                    summary={summary}
                     headers={tableHeaders}
-                    summaryBelow={widget.content.summaryBelow}
+                    summaryBelow={summaryBelow}
                     data={currentJson}
                   />
                 )}

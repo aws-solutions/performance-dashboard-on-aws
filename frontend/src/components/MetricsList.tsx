@@ -113,6 +113,7 @@ function MetricsList(props: Props) {
                       {index > 0 && (
                         <Button
                           variant="unstyled"
+                          type="button"
                           className="margin-top-0-important text-base-darker hover:text-base-darkest active:text-base-darkest"
                           ariaLabel={`Move ${metric.title} up`}
                           onClick={() => onMoveUp(index)}
@@ -126,6 +127,7 @@ function MetricsList(props: Props) {
                       {index < props.metrics.length - 1 && (
                         <Button
                           variant="unstyled"
+                          type="button"
                           className="margin-top-0-important text-base-darker hover:text-base-darkest active:text-base-darkest"
                           ariaLabel={`Move ${metric.title} down`}
                           onClick={() => onMoveDown(index)}

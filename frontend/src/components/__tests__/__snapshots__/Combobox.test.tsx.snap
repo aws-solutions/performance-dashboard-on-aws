@@ -11,27 +11,107 @@ exports[`renders a combobox 1`] = `
     >
       label
     </label>
-    <select
-      class="usa-select"
-      id="1"
-      name="name"
+    <div
+      class="usa-combo-box"
+      data-enhanced="true"
     >
-      <option
-        value=""
+      <select
+        aria-hidden="true"
+        class="usa-select usa-sr-only usa-combo-box__select"
+        id=""
+        name="name"
+        tabindex="-1"
       >
-        Select an option
-      </option>
-      <option
-        value="value1"
+        <option
+          value=""
+        >
+          Select an option
+        </option>
+        <option
+          value="value1"
+        >
+          content1
+        </option>
+        <option
+          value="value2"
+        >
+          content2
+        </option>
+      </select>
+      <input
+        aria-autocomplete="list"
+        aria-describedby="1--assistiveHint"
+        aria-expanded="false"
+        aria-owns="1--list"
+        autocapitalize="off"
+        autocomplete="off"
+        class="usa-combo-box__input"
+        id="1"
+        role="combobox"
+        type="text"
+      />
+      <span
+        class="usa-combo-box__clear-input__wrapper"
+        tabindex="-1"
       >
-        content1
-      </option>
-      <option
-        value="value2"
+        
+        
+        <button
+          aria-label="Clear the select contents"
+          class="usa-combo-box__clear-input"
+          type="button"
+        >
+           
+        </button>
+        
+      
+      </span>
+      <span
+        class="usa-combo-box__input-button-separator"
       >
-        content2
-      </option>
-    </select>
+         
+      </span>
+      <span
+        class="usa-combo-box__toggle-list__wrapper"
+        tabindex="-1"
+      >
+        
+        
+        <button
+          aria-label="Toggle the dropdown list"
+          class="usa-combo-box__toggle-list"
+          tabindex="-1"
+          type="button"
+        >
+           
+        </button>
+        
+      
+      </span>
+      <ul
+        class="usa-combo-box__list"
+        hidden=""
+        id="1--list"
+        role="listbox"
+        tabindex="-1"
+      >
+        
+      
+      </ul>
+      <div
+        class="usa-combo-box__status usa-sr-only"
+        role="status"
+      />
+      <span
+        class="usa-sr-only"
+        id="1--assistiveHint"
+      >
+        
+        When autocomplete results are available use up and down arrows to review and enter to select.
+        Touch device users, explore by touch or with swipe gestures.
+      
+      </span>
+    </div>
   </div>
 </div>
 `;
@@ -54,27 +134,107 @@ exports[`shows an error message 1`] = `
     >
       Something went wrong
     </span>
-    <select
-      class="usa-select"
-      id="1"
-      name="name"
+    <div
+      class="usa-combo-box"
+      data-enhanced="true"
     >
-      <option
-        value=""
+      <select
+        aria-hidden="true"
+        class="usa-select usa-sr-only usa-combo-box__select"
+        id=""
+        name="name"
+        tabindex="-1"
       >
-        Select an option
-      </option>
-      <option
-        value="value1"
+        <option
+          value=""
+        >
+          Select an option
+        </option>
+        <option
+          value="value1"
+        >
+          content1
+        </option>
+        <option
+          value="value2"
+        >
+          content2
+        </option>
+      </select>
+      <input
+        aria-autocomplete="list"
+        aria-describedby="1--assistiveHint"
+        aria-expanded="false"
+        aria-owns="1--list"
+        autocapitalize="off"
+        autocomplete="off"
+        class="usa-combo-box__input"
+        id="1"
+        role="combobox"
+        type="text"
+      />
+      <span
+        class="usa-combo-box__clear-input__wrapper"
+        tabindex="-1"
       >
-        content1
-      </option>
-      <option
-        value="value2"
+        
+        
+        <button
+          aria-label="Clear the select contents"
+          class="usa-combo-box__clear-input"
+          type="button"
+        >
+           
+        </button>
+        
+      
+      </span>
+      <span
+        class="usa-combo-box__input-button-separator"
       >
-        content2
-      </option>
-    </select>
+         
+      </span>
+      <span
+        class="usa-combo-box__toggle-list__wrapper"
+        tabindex="-1"
+      >
+        
+        
+        <button
+          aria-label="Toggle the dropdown list"
+          class="usa-combo-box__toggle-list"
+          tabindex="-1"
+          type="button"
+        >
+           
+        </button>
+        
+      
+      </span>
+      <ul
+        class="usa-combo-box__list"
+        hidden=""
+        id="1--list"
+        role="listbox"
+        tabindex="-1"
+      >
+        
+      
+      </ul>
+      <div
+        class="usa-combo-box__status usa-sr-only"
+        role="status"
+      />
+      <span
+        class="usa-sr-only"
+        id="1--assistiveHint"
+      >
+        
+        When autocomplete results are available use up and down arrows to review and enter to select.
+        Touch device users, explore by touch or with swipe gestures.
+      
+      </span>
+    </div>
   </div>
 </div>
 `;

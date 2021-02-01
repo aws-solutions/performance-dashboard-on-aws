@@ -214,7 +214,7 @@ function EditImage() {
                       name="image"
                       label="File upload"
                       accept={supportedImageFileTypes.toString()}
-                      loading={false}
+                      loading={imageUploading}
                       register={register}
                       hint={<span>Must be a PNG, JPEG, or SVG file</span>}
                       fileName={

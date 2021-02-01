@@ -142,6 +142,11 @@ export interface MetricsWidget extends Widget {
   };
 }
 
+export enum DatasetSchema {
+  None = "None",
+  Metrics = "Metrics",
+}
+
 export type Dataset = {
   id: string;
   fileName: string;
@@ -149,8 +154,10 @@ export type Dataset = {
     raw: string;
     json: string;
   };
+  createdBy?: string;
   updatedAt?: Date;
   sourceType?: SourceType;
+  schema?: DatasetSchema;
 };
 
 export type PublicHomepage = {
@@ -236,8 +243,3 @@ export type User = {
   createdAt: Date;
   updatedAt: Date;
 };
-
-export enum DatasetSchema {
-  None = "None",
-  Metrics = "Metrics",
-}

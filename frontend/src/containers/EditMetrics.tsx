@@ -37,7 +37,7 @@ function EditMetrics() {
     reset,
   } = useForm<FormValues>();
   const [fileLoading, setFileLoading] = useState(false);
-  const [editingMetrics, setEditingMetrics] = useState(false);
+  const [editingWidget, setEditingWidget] = useState(false);
   const { widget, currentJson } = useWidget(dashboardId, widgetId);
 
   const [title, setTitle] = useState("");
@@ -102,7 +102,7 @@ function EditMetrics() {
     try {
       let newDataset = await uploadDataset();
 
-      setEditingMetrics(true);
+      setEditingWidget(true);
       await BackendService.editWidget(
         dashboardId,
         widgetId,
@@ -116,7 +116,7 @@ function EditMetrics() {
         },
         widget.updatedAt
       );
-      setEditingMetrics(false);
+      setEditingWidget(false);
 
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
@@ -126,7 +126,7 @@ function EditMetrics() {
       });
     } catch (err) {
       console.log("Failed to save content item", err);
-      setEditingMetrics(false);
+      setEditingWidget(false);
     }
   };
 
@@ -210,8 +210,17 @@ function EditMetrics() {
       <Breadcrumbs crumbs={crumbs} />
       <h1>Edit metrics</h1>
 
-      {loading || !widget || !currentJson ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+      {loading || !widget || !currentJson || fileLoading || editingWidget ? (
+        <Spinner
+          className="text-center margin-top-9"
+          label={`${
+            fileLoading
+              ? "Uploading file"
+              : editingWidget
+              ? "Editing metrics"
+              : "Loading"
+          }`}
+        />
       ) : (
         <div className="grid-row width-desktop">
           <div className="grid-col-6">
@@ -264,7 +273,7 @@ function EditMetrics() {
               <br />
               <hr />
               <Button
-                disabled={!title || editingMetrics || fileLoading}
+                disabled={!title || editingWidget || fileLoading}
                 type="submit"
               >
                 Save

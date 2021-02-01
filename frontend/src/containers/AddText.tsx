@@ -9,6 +9,7 @@ import TextField from "../components/TextField";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
 import Link from "../components/Link";
+import Spinner from "../components/Spinner";
 
 interface FormValues {
   title: string;
@@ -99,92 +100,102 @@ function AddText() {
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Configure text content
       </div>
-      <div className="grid-row width-desktop">
-        <div className="grid-col-6">
-          <form
-            className="usa-form usa-form--large"
-            onChange={onFormChange}
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <fieldset className="usa-fieldset">
-              <TextField
-                id="title"
-                name="title"
-                label="Text title"
-                hint="Give your content a descriptive title."
-                error={errors.title && "Please specify a content title"}
-                required
-                register={register}
-              />
 
-              <div className="usa-checkbox">
-                <input
-                  className="usa-checkbox__input"
-                  id="display-title"
-                  type="checkbox"
-                  name="showTitle"
-                  defaultChecked={true}
-                  ref={register()}
-                />
-                <label className="usa-checkbox__label" htmlFor="display-title">
-                  Show title on dashboard
-                </label>
-              </div>
+      {creatingWidget ? (
+        <Spinner className="text-center margin-top-6" label="Creating text" />
+      ) : (
+        <>
+          <div className="grid-row width-desktop">
+            <div className="grid-col-6">
+              <form
+                className="usa-form usa-form--large"
+                onChange={onFormChange}
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <fieldset className="usa-fieldset">
+                  <TextField
+                    id="title"
+                    name="title"
+                    label="Text title"
+                    hint="Give your content a descriptive title."
+                    error={errors.title && "Please specify a content title"}
+                    required
+                    register={register}
+                  />
 
-              <TextField
-                id="text"
-                name="text"
-                label="Text"
-                hint={
-                  <>
-                    Enter text here. This field supports markdown.
-                    <Link target="_blank" to={"/admin/markdown"} external>
-                      View Markdown Syntax
-                    </Link>
-                  </>
-                }
-                error={errors.text && "Please specify a text content"}
-                required
-                register={register}
-                multiline
-                rows={10}
-              />
-            </fieldset>
-            <br />
-            <br />
-            <hr />
-            <Button variant="outline" type="button" onClick={goBack}>
-              Back
-            </Button>
-            <Button disabled={creatingWidget} type="submit">
-              Add text
-            </Button>
-            <Button
-              variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
-          </form>
-        </div>
-        <div className="grid-col-6">
-          <h4 className="margin-top-4">Preview</h4>
-          {showTitle ? (
-            <h2 className="margin-top-4 margin-left-2px">{title}</h2>
-          ) : (
-            ""
-          )}
-          {text ? (
-            <div className="padding-left-05">
-              <MarkdownRender source={text} />
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="display-title"
+                      type="checkbox"
+                      name="showTitle"
+                      defaultChecked={true}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="display-title"
+                    >
+                      Show title on dashboard
+                    </label>
+                  </div>
+
+                  <TextField
+                    id="text"
+                    name="text"
+                    label="Text"
+                    hint={
+                      <>
+                        Enter text here. This field supports markdown.
+                        <Link target="_blank" to={"/admin/markdown"} external>
+                          View Markdown Syntax
+                        </Link>
+                      </>
+                    }
+                    error={errors.text && "Please specify a text content"}
+                    required
+                    register={register}
+                    multiline
+                    rows={10}
+                  />
+                </fieldset>
+                <br />
+                <br />
+                <hr />
+                <Button variant="outline" type="button" onClick={goBack}>
+                  Back
+                </Button>
+                <Button disabled={creatingWidget} type="submit">
+                  Add text
+                </Button>
+                <Button
+                  variant="unstyled"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
+              </form>
             </div>
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
+            <div className="grid-col-6">
+              <h4 className="margin-top-4">Preview</h4>
+              {showTitle ? (
+                <h2 className="margin-top-4 margin-left-2px">{title}</h2>
+              ) : (
+                ""
+              )}
+              {text ? (
+                <div className="padding-left-05">
+                  <MarkdownRender source={text} />
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

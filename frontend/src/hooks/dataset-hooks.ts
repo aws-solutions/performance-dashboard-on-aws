@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Papa, { ParseResult } from "papaparse";
 import StorageService from "../services/StorageService";
-import { Dataset, SourceType } from "../models";
+import { Dataset, DatasetSchema, SourceType } from "../models";
 import BackendService from "../services/BackendService";
 
 type UseDatasetsHook = {
@@ -30,7 +30,9 @@ export function useDatasets(): UseDatasetsHook {
       setStaticDatasets(
         data.filter(
           (dataset) =>
-            !dataset.sourceType || dataset.sourceType === SourceType.FileUpload
+            (!dataset.sourceType ||
+              dataset.sourceType === SourceType.FileUpload) &&
+            dataset.schema === DatasetSchema.None
         )
       );
     }

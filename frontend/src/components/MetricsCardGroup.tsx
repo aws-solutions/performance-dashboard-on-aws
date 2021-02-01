@@ -41,10 +41,16 @@ function MetricsCardGroup(props: Props) {
                           {metric.title}
                         </p>
                       </div>
-                      <div className="flex-3">
-                        <h1 className="margin-0">{metric.value}</h1>
+                      <div
+                        className="flex-3 usa-tooltip"
+                        data-position="bottom"
+                        title={metric.value ? metric.value.toString() : ""}
+                      >
+                        <h1 className="margin-0 text-no-wrap overflow-hidden text-overflow-ellipsis">
+                          {metric.value}
+                        </h1>
                       </div>
-                      <div className="flex-4">
+                      <div className="flex-2">
                         {metric.changeOverTime ? (
                           <div className="margin-top-05">
                             <FontAwesomeIcon
@@ -61,6 +67,8 @@ function MetricsCardGroup(props: Props) {
                         ) : (
                           ""
                         )}
+                      </div>
+                      <div className="flex-2">
                         {metric.startDate && metric.endDate && (
                           <div className="margin-top-1px">
                             <span>

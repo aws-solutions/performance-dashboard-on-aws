@@ -35,19 +35,22 @@ exports[`metrics preview should match snapshot 1`] = `
                 </p>
               </div>
               <div
-                class="flex-3"
+                class="flex-3 usa-tooltip"
+                data-position="bottom"
+                title="1"
               >
                 <h1
-                  class="margin-0"
+                  class="margin-0 text-no-wrap overflow-hidden text-overflow-ellipsis"
                 >
                   1
                 </h1>
               </div>
               <div
-                class="flex-4"
-              >
-                
-              </div>
+                class="flex-2"
+              />
+              <div
+                class="flex-2"
+              />
             </div>
           </div>
         </div>

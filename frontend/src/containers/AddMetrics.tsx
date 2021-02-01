@@ -17,6 +17,7 @@ import Button from "../components/Button";
 import MetricsList from "../components/MetricsList";
 import OrderingService from "../services/OrderingService";
 import StorageService from "../services/StorageService";
+import Spinner from "../components/Spinner";
 
 interface FormValues {
   title: string;
@@ -35,7 +36,7 @@ function AddMetrics() {
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
   const [fileLoading, setFileLoading] = useState(false);
-  const [creatingMetrics, setCreatingMetrics] = useState(false);
+  const [creatingWidget, setCreatingWidget] = useState(false);
   const [title, setTitle] = useState(
     state && state.metricTitle !== undefined ? state.metricTitle : ""
   );
@@ -72,7 +73,7 @@ function AddMetrics() {
     try {
       let newDataset = await uploadDataset();
 
-      setCreatingMetrics(true);
+      setCreatingWidget(true);
       await BackendService.createWidget(
         dashboardId,
         values.title,
@@ -85,7 +86,7 @@ function AddMetrics() {
           oneMetricPerRow: values.oneMetricPerRow,
         }
       );
-      setCreatingMetrics(false);
+      setCreatingWidget(false);
 
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
@@ -95,7 +96,7 @@ function AddMetrics() {
       });
     } catch (err) {
       console.log("Failed to save content item", err);
-      setCreatingMetrics(false);
+      setCreatingWidget(false);
     }
   };
 
@@ -187,81 +188,94 @@ function AddMetrics() {
       <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
         Configure metrics
       </div>
-      <div className="grid-row width-desktop">
-        <div className="grid-col-6">
-          <form
-            className="usa-form usa-form--large"
-            onChange={onFormChange}
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <fieldset className="usa-fieldset">
-              <TextField
-                id="title"
-                name="title"
-                label="Metrics title"
-                hint="Give your group of metrics a descriptive title."
-                error={errors.title && "Please specify a content title"}
-                required
-                defaultValue={title}
-                register={register}
-              />
 
-              <div className="usa-checkbox">
-                <input
-                  className="usa-checkbox__input"
-                  id="display-title"
-                  type="checkbox"
-                  name="showTitle"
-                  defaultChecked={showTitle}
-                  ref={register()}
-                />
-                <label className="usa-checkbox__label" htmlFor="display-title">
-                  Show title on dashboard
-                </label>
-              </div>
+      {fileLoading || creatingWidget ? (
+        <Spinner
+          className="text-center margin-top-6"
+          label={`${fileLoading ? "Uploading file" : "Creating metrics"}`}
+        />
+      ) : (
+        <>
+          <div className="grid-row width-desktop">
+            <div className="grid-col-6">
+              <form
+                className="usa-form usa-form--large"
+                onChange={onFormChange}
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <fieldset className="usa-fieldset">
+                  <TextField
+                    id="title"
+                    name="title"
+                    label="Metrics title"
+                    hint="Give your group of metrics a descriptive title."
+                    error={errors.title && "Please specify a content title"}
+                    required
+                    defaultValue={title}
+                    register={register}
+                  />
 
-              <MetricsList
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="display-title"
+                      type="checkbox"
+                      name="showTitle"
+                      defaultChecked={showTitle}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="display-title"
+                    >
+                      Show title on dashboard
+                    </label>
+                  </div>
+
+                  <MetricsList
+                    metrics={metrics}
+                    onClick={onAddMetric}
+                    onEdit={onEditMetric}
+                    onDelete={onDeleteMetric}
+                    onMoveUp={onMoveMetricUp}
+                    onMoveDown={onMoveMetricDown}
+                    defaultChecked={oneMetricPerRow}
+                    register={register}
+                  />
+                </fieldset>
+                <br />
+                <br />
+                <hr />
+                <Button variant="outline" type="button" onClick={goBack}>
+                  Back
+                </Button>
+                <Button
+                  disabled={!title || creatingWidget || fileLoading}
+                  type="submit"
+                >
+                  Add metrics
+                </Button>
+                <Button
+                  variant="unstyled"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
+              </form>
+            </div>
+            <div className="grid-col-6">
+              <h4 className="margin-top-4">Preview</h4>
+              <MetricsPreview
+                title={showTitle ? title : ""}
                 metrics={metrics}
-                onClick={onAddMetric}
-                onEdit={onEditMetric}
-                onDelete={onDeleteMetric}
-                onMoveUp={onMoveMetricUp}
-                onMoveDown={onMoveMetricDown}
-                defaultChecked={oneMetricPerRow}
-                register={register}
+                metricPerRow={oneMetricPerRow ? 1 : 3}
               />
-            </fieldset>
-            <br />
-            <br />
-            <hr />
-            <Button variant="outline" type="button" onClick={goBack}>
-              Back
-            </Button>
-            <Button
-              disabled={!title || creatingMetrics || fileLoading}
-              type="submit"
-            >
-              Add metrics
-            </Button>
-            <Button
-              variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
-          </form>
-        </div>
-        <div className="grid-col-6">
-          <h4 className="margin-top-4">Preview</h4>
-          <MetricsPreview
-            title={showTitle ? title : ""}
-            metrics={metrics}
-            metricPerRow={oneMetricPerRow ? 1 : 3}
-          />
-        </div>
-      </div>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

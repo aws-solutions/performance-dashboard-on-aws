@@ -10,7 +10,6 @@ import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import ImagePreview from "../components/ImagePreview";
-import Spinner from "../components/Spinner";
 
 interface FormValues {
   title: string;
@@ -140,150 +139,141 @@ function AddImage() {
         Configure image
       </div>
 
-      {imageUploading ? (
-        <Spinner className="text-center margin-top-6" label="Loading" />
-      ) : (
-        <>
-          <div className="grid-row width-desktop">
-            <div className="grid-col-6">
-              <form
-                className="usa-form usa-form--large"
-                onSubmit={handleSubmit(onSubmit)}
-              >
-                <fieldset className="usa-fieldset">
+      <div className="grid-row width-desktop">
+        <div className="grid-col-6">
+          <form
+            className="usa-form usa-form--large"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <fieldset className="usa-fieldset">
+              <TextField
+                id="title"
+                name="title"
+                label="Image title"
+                hint="Give your image a descriptive title."
+                error={errors.title && "Please specify an image title"}
+                onChange={handleChangeTitle}
+                required
+                register={register}
+              />
+
+              <div className="usa-checkbox">
+                <input
+                  className="usa-checkbox__input"
+                  id="display-title"
+                  type="checkbox"
+                  name="showTitle"
+                  defaultChecked={true}
+                  onChange={handleShowTitleChange}
+                  ref={register()}
+                />
+                <label className="usa-checkbox__label" htmlFor="display-title">
+                  Show title on dashboard
+                </label>
+              </div>
+
+              <div>
+                <FileInput
+                  id="dataset"
+                  name="dataset"
+                  label="File upload"
+                  accept={supportedImageFileTypes.toString()}
+                  loading={imageUploading}
+                  register={register}
+                  hint={<span>Must be a PNG, JPEG, or SVG file</span>}
+                  fileName={imageFile && imageFile.name}
+                  onFileProcessed={onFileProcessed}
+                />
+              </div>
+
+              <div>
+                {false && false ? (
+                  <div className="usa-alert usa-alert--warning margin-top-3">
+                    <div className="usa-alert__body">
+                      <p className="usa-alert__text">
+                        It is recommended that tables have less than 8 columns.
+                        You can still continue.
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                <div hidden={!imageFile}>
                   <TextField
-                    id="title"
-                    name="title"
-                    label="Image title"
-                    hint="Give your image a descriptive title."
-                    error={errors.title && "Please specify an image title"}
-                    onChange={handleChangeTitle}
-                    required
+                    id="altText"
+                    name="altText"
+                    label="Image alt text"
+                    hint="Invisible description of the image which is read aloud to users with visual impairments on a screen reader."
                     register={register}
+                    onChange={handleAltTextChange}
+                    multiline
+                    rows={1}
                   />
 
+                  <TextField
+                    id="summary"
+                    name="summary"
+                    label="Image description - optional"
+                    hint="Give your image a description to explain it in more depth."
+                    register={register}
+                    onChange={handleSummaryChange}
+                    multiline
+                    rows={5}
+                  />
                   <div className="usa-checkbox">
                     <input
                       className="usa-checkbox__input"
-                      id="display-title"
+                      id="summary-below"
                       type="checkbox"
-                      name="showTitle"
-                      defaultChecked={true}
-                      onChange={handleShowTitleChange}
+                      name="summaryBelow"
+                      defaultChecked={false}
+                      onChange={handleSummaryBelowChange}
                       ref={register()}
                     />
                     <label
                       className="usa-checkbox__label"
-                      htmlFor="display-title"
+                      htmlFor="summary-below"
                     >
-                      Show title on dashboard
+                      Show description below image
                     </label>
                   </div>
-
-                  <div>
-                    <FileInput
-                      id="dataset"
-                      name="dataset"
-                      label="File upload"
-                      accept={supportedImageFileTypes.toString()}
-                      loading={imageUploading}
-                      register={register}
-                      hint={<span>Must be a PNG, JPEG, or SVG file</span>}
-                      fileName={imageFile && imageFile.name}
-                      onFileProcessed={onFileProcessed}
-                    />
-                  </div>
-
-                  <div>
-                    {false && false ? (
-                      <div className="usa-alert usa-alert--warning margin-top-3">
-                        <div className="usa-alert__body">
-                          <p className="usa-alert__text">
-                            It is recommended that tables have less than 8
-                            columns. You can still continue.
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-
-                    <div hidden={!imageFile}>
-                      <TextField
-                        id="altText"
-                        name="altText"
-                        label="Image alt text"
-                        hint="Invisible description of the image which is read aloud to users with visual impairments on a screen reader."
-                        register={register}
-                        onChange={handleAltTextChange}
-                        multiline
-                        rows={1}
-                      />
-
-                      <TextField
-                        id="summary"
-                        name="summary"
-                        label="Image description - optional"
-                        hint="Give your image a description to explain it in more depth."
-                        register={register}
-                        onChange={handleSummaryChange}
-                        multiline
-                        rows={5}
-                      />
-                      <div className="usa-checkbox">
-                        <input
-                          className="usa-checkbox__input"
-                          id="summary-below"
-                          type="checkbox"
-                          name="summaryBelow"
-                          defaultChecked={false}
-                          onChange={handleSummaryBelowChange}
-                          ref={register()}
-                        />
-                        <label
-                          className="usa-checkbox__label"
-                          htmlFor="summary-below"
-                        >
-                          Show description below image
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </fieldset>
-                <br />
-                <hr />
-                <Button variant="outline" type="button" onClick={goBack}>
-                  Back
-                </Button>
-                <Button
-                  disabled={!imageFile || !title || !altText || imageUploading}
-                  type="submit"
-                >
-                  Add image
-                </Button>
-                <Button
-                  variant="unstyled"
-                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                  type="button"
-                  onClick={onCancel}
-                >
-                  Cancel
-                </Button>
-              </form>
-            </div>
-            <div className="grid-col-6">
-              <h4 className="margin-top-4">Preview</h4>
-              <ImagePreview
-                title={showTitle ? title : ""}
-                summary={summary}
-                file={imageFile}
-                summaryBelow={summaryBelow}
-                altText={altText}
-              />
-            </div>
-          </div>
-        </>
-      )}
+                </div>
+              </div>
+            </fieldset>
+            <br />
+            <hr />
+            <Button variant="outline" type="button" onClick={goBack}>
+              Back
+            </Button>
+            <Button
+              disabled={!imageFile || !title || !altText || imageUploading}
+              type="submit"
+            >
+              Add image
+            </Button>
+            <Button
+              variant="unstyled"
+              className="text-base-dark hover:text-base-darker active:text-base-darkest"
+              type="button"
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+          </form>
+        </div>
+        <div className="grid-col-6">
+          <h4 className="margin-top-4">Preview</h4>
+          <ImagePreview
+            title={showTitle ? title : ""}
+            summary={summary}
+            file={imageFile}
+            summaryBelow={summaryBelow}
+            altText={altText}
+          />
+        </div>
+      </div>
     </>
   );
 }

@@ -30,7 +30,6 @@ function EditText() {
   const { widget, setWidget } = useWidget(dashboardId, widgetId);
 
   const onSubmit = async (values: FormValues) => {
-    console.log("SUBMITTING:", values);
     if (!widget) {
       return;
     }
@@ -67,7 +66,6 @@ function EditText() {
 
   const onFormChange = () => {
     const { title, text, showTitle } = getValues();
-    console.log(title, showTitle);
     setWidget({
       ...widget,
       name: title,
@@ -102,8 +100,11 @@ function EditText() {
       <Breadcrumbs crumbs={crumbs} />
       <h1>Edit text</h1>
 
-      {loading || !widget ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+      {loading || !widget || editingWidget ? (
+        <Spinner
+          className="text-center margin-top-9"
+          label={`${editingWidget ? "Editing text" : "Loading"}`}
+        />
       ) : (
         <>
           <div className="grid-row width-desktop">

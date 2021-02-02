@@ -3,10 +3,12 @@ import * as lambda from "@aws-cdk/aws-lambda";
 import * as iam from "@aws-cdk/aws-iam";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
 import * as s3 from "@aws-cdk/aws-s3";
+import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
 import logs = require("@aws-cdk/aws-logs");
 
 interface Props {
   mainTable: dynamodb.Table;
+  auditTrailTable: dynamodb.Table;
   datasetsBucket: s3.Bucket;
   userPool: {
     id: string;
@@ -17,6 +19,7 @@ interface Props {
 export class LambdaFunctions extends cdk.Construct {
   public readonly apiHandler: lambda.Function;
   public readonly publicApiHandler: lambda.Function;
+  public readonly ddbStreamProcessor: lambda.Function;
 
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id);
@@ -58,13 +61,48 @@ export class LambdaFunctions extends cdk.Construct {
       },
     });
 
+    // The DynamoDB Stream processor is a Lambda function that triggers
+    // based on the stream from the Main table. Its primary function is to
+    // write updates to the Audit Trail table.
+    this.ddbStreamProcessor = new lambda.Function(
+      this,
+      "DynamoDBStreamProcessor",
+      {
+        runtime: lambda.Runtime.NODEJS_12_X,
+        description: "Handles messages from the main table's DynamoDB stream",
+        code: lambda.Code.fromAsset("../backend/build"),
+        handler: "lambda/streams.handler",
+        tracing: lambda.Tracing.ACTIVE,
+        memorySize: 256,
+        timeout: cdk.Duration.seconds(10),
+        logRetention: logs.RetentionDays.TEN_YEARS,
+        environment: {
+          AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
+          LOG_LEVEL: "info",
+        },
+      }
+    );
+
+    // Connect the Lambda function to the DynamoDB Stream of the main table
+    this.ddbStreamProcessor.addEventSource(
+      new DynamoEventSource(props.mainTable, {
+        startingPosition: lambda.StartingPosition.TRIM_HORIZON,
+        enabled: true,
+        batchSize: 1,
+        bisectBatchOnError: false,
+        retryAttempts: 10,
+      })
+    );
+
     const dynamodbPolicy = new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
       resources: [
-        // Grant permissions to table itself
+        // Grant permissions to tables themselves
         props.mainTable.tableArn,
-        // Grant permissions to GSI indexes
+        props.auditTrailTable.tableArn,
+        // Grant permissions to the GSI indexes
         props.mainTable.tableArn.concat("/index/*"),
+        props.auditTrailTable.tableArn.concat("/index/*"),
       ],
       actions: [
         "dynamodb:PutItem",
@@ -100,7 +138,10 @@ export class LambdaFunctions extends cdk.Construct {
     this.apiHandler.addToRolePolicy(dynamodbPolicy);
     this.apiHandler.addToRolePolicy(s3Policy);
     this.apiHandler.addToRolePolicy(cognitoPolicy);
+
     this.publicApiHandler.addToRolePolicy(dynamodbPolicy);
     this.publicApiHandler.addToRolePolicy(s3Policy);
+
+    this.ddbStreamProcessor.addToRolePolicy(dynamodbPolicy);
   }
 }

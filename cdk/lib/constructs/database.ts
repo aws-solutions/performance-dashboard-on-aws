@@ -3,12 +3,14 @@ import * as dynamodb from "@aws-cdk/aws-dynamodb";
 
 export class Database extends cdk.Construct {
   public readonly mainTable: dynamodb.Table;
+  public readonly auditTrailTable: dynamodb.Table;
 
   constructor(scope: cdk.Construct, id: string) {
     super(scope, id);
 
-    const table = new dynamodb.Table(scope, "MainTable", {
+    const mainTable = new dynamodb.Table(scope, "MainTable", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES,
       partitionKey: {
         name: "pk",
         type: dynamodb.AttributeType.STRING,
@@ -19,7 +21,7 @@ export class Database extends cdk.Construct {
       },
     });
 
-    table.addGlobalSecondaryIndex({
+    mainTable.addGlobalSecondaryIndex({
       indexName: "byType",
       projectionType: dynamodb.ProjectionType.ALL,
       partitionKey: {
@@ -32,7 +34,7 @@ export class Database extends cdk.Construct {
       },
     });
 
-    table.addGlobalSecondaryIndex({
+    mainTable.addGlobalSecondaryIndex({
       indexName: "byParentDashboard",
       projectionType: dynamodb.ProjectionType.ALL,
       partitionKey: {
@@ -45,7 +47,7 @@ export class Database extends cdk.Construct {
       },
     });
 
-    table.addGlobalSecondaryIndex({
+    mainTable.addGlobalSecondaryIndex({
       indexName: "byTopicArea",
       projectionType: dynamodb.ProjectionType.ALL,
       partitionKey: {
@@ -58,7 +60,7 @@ export class Database extends cdk.Construct {
       },
     });
 
-    table.addGlobalSecondaryIndex({
+    mainTable.addGlobalSecondaryIndex({
       indexName: "byFriendlyURL",
       projectionType: dynamodb.ProjectionType.ALL,
       partitionKey: {
@@ -67,6 +69,19 @@ export class Database extends cdk.Construct {
       },
     });
 
-    this.mainTable = table;
+    const auditTrailTable = new dynamodb.Table(scope, "AuditTrail", {
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      partitionKey: {
+        name: "pk",
+        type: dynamodb.AttributeType.STRING,
+      },
+      sortKey: {
+        name: "timestamp",
+        type: dynamodb.AttributeType.STRING,
+      },
+    });
+
+    this.mainTable = mainTable;
+    this.auditTrailTable = auditTrailTable;
   }
 }

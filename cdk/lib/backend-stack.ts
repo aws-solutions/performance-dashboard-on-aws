@@ -19,6 +19,7 @@ export class BackendStack extends cdk.Stack {
   public readonly privateApiFunction: lambda.Function;
   public readonly publicApiFunction: lambda.Function;
   public readonly mainTable: dynamodb.Table;
+  public readonly auditTrailTable: dynamodb.Table;
   public readonly restApi: apigateway.RestApi;
 
   constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
@@ -31,6 +32,7 @@ export class BackendStack extends cdk.Stack {
     const database = new Database(this, "Database");
     const lambdas = new LambdaFunctions(this, "Functions", {
       mainTable: database.mainTable,
+      auditTrailTable: database.auditTrailTable,
       datasetsBucket: dataStorage.datasetsBucket,
       userPool: props.userPool,
     });

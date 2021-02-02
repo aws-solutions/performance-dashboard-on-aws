@@ -13,7 +13,7 @@ export class DatasetStorage extends cdk.Construct {
     super(scope, id);
 
     this.datasetsBucket = new s3.Bucket(scope, "DatasetsBucket", {
-      encryption: s3.BucketEncryption.KMS,
+      encryption: s3.BucketEncryption.S3_MANAGED,
       versioned: true,
       serverAccessLogsPrefix: "access_logs/",
       accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,

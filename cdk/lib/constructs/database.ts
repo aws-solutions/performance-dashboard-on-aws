@@ -76,7 +76,7 @@ export class Database extends cdk.Construct {
         type: dynamodb.AttributeType.STRING,
       },
       sortKey: {
-        name: "timestamp",
+        name: "sk",
         type: dynamodb.AttributeType.STRING,
       },
     });

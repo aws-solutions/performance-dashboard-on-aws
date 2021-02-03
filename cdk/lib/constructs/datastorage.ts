@@ -1,6 +1,7 @@
 import * as cdk from "@aws-cdk/core";
 import * as s3 from "@aws-cdk/aws-s3";
 import { BucketAccessControl } from "@aws-cdk/aws-s3";
+import { Effect, PolicyStatement, AnyPrincipal } from "@aws-cdk/aws-iam";
 
 interface Props {
   datasetsBucketName: string;
@@ -58,5 +59,19 @@ export class DatasetStorage extends cdk.Construct {
         },
       ],
     });
+
+    this.datasetsBucket.addToResourcePolicy(
+      new PolicyStatement({
+        effect: Effect.DENY,
+        actions: ["s3:*"],
+        principals: [new AnyPrincipal()],
+        resources: [this.datasetsBucket.arnForObjects("*")],
+        conditions: {
+          Bool: {
+            "aws:SecureTransport": false,
+          },
+        },
+      })
+    );
   }
 }

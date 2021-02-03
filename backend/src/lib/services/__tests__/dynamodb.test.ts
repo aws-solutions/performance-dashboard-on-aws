@@ -2,15 +2,15 @@ import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { mocked } from "ts-jest/utils";
 import DynamoDBService from "../dynamodb";
 
-jest.mock("aws-sdk/clients/dynamodb");
 jest.mock("aws-xray-sdk");
 
-let documentClient = mocked(DocumentClient.prototype);
-documentClient.transactWrite = jest.fn().mockReturnValue({
-  promise: jest.fn(),
-});
-
 describe("transactWrite", () => {
+  jest.mock("aws-sdk/clients/dynamodb");
+  let documentClient = mocked(DocumentClient.prototype);
+  documentClient.transactWrite = jest.fn().mockReturnValue({
+    promise: jest.fn(),
+  });
+
   it("creates 2 batches of 25 requests", async () => {
     const numberOfItems = 50;
     const updateItems = [];
@@ -32,5 +32,23 @@ describe("transactWrite", () => {
     });
 
     expect(documentClient.transactWrite).toBeCalledTimes(2);
+  });
+});
+
+describe("unmarshall", () => {
+  it("should convert a raw dynamodb item into a javascript object", () => {
+    const dynamodb = DynamoDBService.getInstance();
+    const item = {
+      dashboardId: {
+        S: "Dashboard#001",
+      },
+      version: {
+        N: "3",
+      },
+    };
+
+    const dashboard = dynamodb.unmarshall(item);
+    expect(dashboard.dashboardId).toEqual("Dashboard#001");
+    expect(dashboard.version).toEqual(3);
   });
 });

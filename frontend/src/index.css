@@ -42,3 +42,7 @@ p {
 .preview-container {
   overflow: auto;
 }
+
+div > .recharts-surface {
+  margin-top: 24px;
+}

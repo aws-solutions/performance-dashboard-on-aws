@@ -23,6 +23,7 @@ To run the backend locally from VSCode, create a folder in the root of this repo
         "AWS_REGION": "us-west-2",
         "LOCAL_MODE": "true",
         "MAIN_TABLE": "PerformanceDash-${stageName}-Backend-MainTable",
+        "AUDIT_TRAIL_TABLE": "PerformanceDash-${stageName}-Backend-AuditTrailTable",
         "DATASETS_BUCKET": "performancedash-${stageName}-${accountNumber}-${region}-datasets",
         "USER_POOL_ID": "${your-user-pool-id}",
         "LOG_LEVEL": "debug",

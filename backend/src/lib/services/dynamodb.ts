@@ -1,4 +1,5 @@
 import AWSXRay from "aws-xray-sdk";
+import { DynamoDB } from "aws-sdk";
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import logger from "./logger";
 
@@ -56,6 +57,15 @@ class DynamoDBService {
   async delete(input: DocumentClient.DeleteItemInput) {
     logger.debug("DynamoDB DeleteItem %o", input);
     return this.client.delete(input).promise();
+  }
+
+  /**
+   * This function is useful to convert records from DynamoDB Streams
+   * into Javascript objects. It maps the "S", "N", attributes into
+   * corresponding primitives (string, number, boolean, etc).
+   */
+  unmarshall(data: DynamoDB.AttributeMap) {
+    return DynamoDB.Converter.unmarshall(data);
   }
 
   async transactWrite(input: DocumentClient.TransactWriteItemsInput) {

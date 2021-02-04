@@ -1,4 +1,5 @@
 import { DynamoDBStreamEvent, Context } from "aws-lambda";
+import StreamProcessor from "../lib/services/stream-processor";
 
 /**
  * Lambda entry handler for messages coming from the
@@ -6,11 +7,12 @@ import { DynamoDBStreamEvent, Context } from "aws-lambda";
  *
  * @param event
  */
-export const handler = (event: DynamoDBStreamEvent, context: Context) => {
+export const handler = async (event: DynamoDBStreamEvent, context: Context) => {
   console.log("Event=", JSON.stringify(event));
   console.log("Context=", JSON.stringify(context));
 
-  // TODO: Implement function to process messages from the stream
+  const promises = event.Records.map(StreamProcessor.processRecord);
+  await Promise.all(promises);
 
-  return true;
+  console.log("Finished processing records", promises.length);
 };

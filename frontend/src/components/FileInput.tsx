@@ -48,7 +48,7 @@ function FileInput(props: Props) {
           </div>
           <div></div>
           <label className="usa-label" htmlFor="fileIconDiv" id="fileIconLabel">
-            Test.png
+            {props.fileName}
           </label>
         </div>
         <div className="usa-file-input__box"></div>

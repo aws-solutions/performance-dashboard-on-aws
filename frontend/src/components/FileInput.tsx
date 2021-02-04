@@ -1,5 +1,8 @@
 import React from "react";
 import Spinner from "./Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFile } from "@fortawesome/free-solid-svg-icons";
+import "./FileInput.css";
 
 interface Props {
   id: string;
@@ -32,8 +35,23 @@ function FileInput(props: Props) {
     );
   } else if (props.fileName) {
     content = (
-      <div className="usa-file-input__instructions" aria-hidden="true">
-        {props.fileName}
+      <div>
+        <div className="usa-file-input__preview-heading">
+          Selected file{" "}
+          <span className="usa-file-input__choose">Change file</span>
+        </div>
+        <div className="usa-file-input__preview" aria-hidden="true">
+          <div className="usa-file-input__preview-image">
+            <div className="fileIcon" id="fileIconDiv">
+              <FontAwesomeIcon icon={faFile} size="lg" />
+            </div>
+          </div>
+          <div></div>
+          <label className="usa-label" htmlFor="fileIconDiv" id="fileIconLabel">
+            Test.png
+          </label>
+        </div>
+        <div className="usa-file-input__box"></div>
       </div>
     );
   }

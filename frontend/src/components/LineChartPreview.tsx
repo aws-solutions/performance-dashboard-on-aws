@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   XAxis,
   YAxis,
@@ -14,12 +14,19 @@ type Props = {
   title: string;
   summary: string;
   lines: Array<string>;
-  data?: Array<object>;
+  data?: Array<any>;
   summaryBelow: boolean;
 };
 
 const LineChartPreview = (props: Props) => {
   const colors = useColors(props.lines.length);
+  const xAxisType = useCallback(() => {
+    return props.data &&
+      props.data.every((row) => typeof row[props.lines[0]] === "number")
+      ? "number"
+      : "category";
+  }, [props]);
+
   return (
     <div>
       <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
@@ -33,7 +40,7 @@ const LineChartPreview = (props: Props) => {
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey={props.lines.length ? props.lines[0] : ""}
-            type="category"
+            type={xAxisType()}
             padding={{ left: 20, right: 20 }}
           />
           <YAxis type="number" />

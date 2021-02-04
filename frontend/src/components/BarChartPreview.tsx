@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   XAxis,
   YAxis,
@@ -15,12 +15,19 @@ type Props = {
   title: string;
   summary: string;
   bars: Array<string>;
-  data?: Array<object>;
+  data?: Array<any>;
   summaryBelow: boolean;
 };
 
 const BarChartPreview = (props: Props) => {
   const colors = useColors(props.bars.length);
+  const yAxisType = useCallback(() => {
+    return props.data &&
+      props.data.every((row) => typeof row[props.bars[0]] === "number")
+      ? "number"
+      : "category";
+  }, [props]);
+
   return (
     <div>
       <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
@@ -42,7 +49,7 @@ const BarChartPreview = (props: Props) => {
           <XAxis type="number" />
           <YAxis
             dataKey={props.bars.length ? props.bars[0] : ""}
-            type="category"
+            type={yAxisType()}
             width={
               (props.data
                 ?.map((d) => (d as any)[props.bars.length ? props.bars[0] : ""])

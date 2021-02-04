@@ -20,12 +20,12 @@ type Props = {
 
 const LineChartPreview = (props: Props) => {
   const colors = useColors(props.lines.length);
+  const { data, lines } = props;
   const xAxisType = useCallback(() => {
-    return props.data &&
-      props.data.every((row) => typeof row[props.lines[0]] === "number")
+    return data && data.every((row) => typeof row[lines[0]] === "number")
       ? "number"
       : "category";
-  }, [props]);
+  }, [data, lines]);
 
   return (
     <div>

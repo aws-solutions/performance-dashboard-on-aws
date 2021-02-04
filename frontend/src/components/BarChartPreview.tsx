@@ -21,12 +21,12 @@ type Props = {
 
 const BarChartPreview = (props: Props) => {
   const colors = useColors(props.bars.length);
+  const { data, bars } = props;
   const yAxisType = useCallback(() => {
-    return props.data &&
-      props.data.every((row) => typeof row[props.bars[0]] === "number")
+    return data && data.every((row) => typeof row[bars[0]] === "number")
       ? "number"
       : "category";
-  }, [props]);
+  }, [data, bars]);
 
   return (
     <div>

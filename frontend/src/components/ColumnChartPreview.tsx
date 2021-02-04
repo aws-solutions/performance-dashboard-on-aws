@@ -20,12 +20,12 @@ type Props = {
 
 const ColumnChartPreview = (props: Props) => {
   const colors = useColors(props.columns.length);
+  const { data, columns } = props;
   const xAxisType = useCallback(() => {
-    return props.data &&
-      props.data.every((row) => typeof row[props.columns[0]] === "number")
+    return data && data.every((row) => typeof row[columns[0]] === "number")
       ? "number"
       : "category";
-  }, [props]);
+  }, [data, columns]);
 
   return (
     <div>

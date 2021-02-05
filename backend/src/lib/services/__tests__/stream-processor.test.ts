@@ -1,6 +1,6 @@
-import { DynamoDBRecord, StreamRecord } from "aws-lambda";
 import StreamProcessor from "../stream-processor";
 import AuditTrailService from "../audit-trail";
+import { ItemEvent } from "../../models/auditlog";
 
 jest.mock("../audit-trail");
 
@@ -10,7 +10,7 @@ it("discards a record that is missing the `dynamodb` property", async () => {
     eventName: "INSERT",
     eventSource: "aws:dynamodb",
   });
-  expect(AuditTrailService.handleCreatedItem).not.toBeCalled();
+  expect(AuditTrailService.handleItemEvent).not.toBeCalled();
 });
 
 it("discards a record which source is not dynamodb", async () => {
@@ -19,7 +19,7 @@ it("discards a record which source is not dynamodb", async () => {
     eventName: "INSERT",
     eventSource: "aws:bananas",
   });
-  expect(AuditTrailService.handleCreatedItem).not.toBeCalled();
+  expect(AuditTrailService.handleItemEvent).not.toBeCalled();
 });
 
 it("handles an INSERT record and delegates to AuditTrail service", async () => {
@@ -54,7 +54,9 @@ it("handles an INSERT record and delegates to AuditTrail service", async () => {
     },
   });
 
-  expect(AuditTrailService.handleCreatedItem).toBeCalledWith(
+  expect(AuditTrailService.handleItemEvent).toBeCalledWith(
+    ItemEvent.Create,
+    null, // no old item
     expect.objectContaining({
       pk: "Dashboard#1dcde43a-9700-41d3-b651-ceee60f7bdf8",
       sk: "Dashboard#1dcde43a-9700-41d3-b651-ceee60f7bdf8",
@@ -117,7 +119,8 @@ it("handles a MODIFY record and delegates to AuditTrail service", async () => {
     },
   });
 
-  expect(AuditTrailService.handleModifiedItem).toBeCalledWith(
+  expect(AuditTrailService.handleItemEvent).toBeCalledWith(
+    ItemEvent.Update,
     // Old item
     expect.objectContaining({
       pk: "Dashboard#1dcde43a-9700-41d3-b651-ceee60f7bdf8",
@@ -170,13 +173,15 @@ it("handles a REMOVE record and delegates to AuditTrail service", async () => {
     },
   });
 
-  expect(AuditTrailService.handleDeletedItem).toBeCalledWith(
+  expect(AuditTrailService.handleItemEvent).toBeCalledWith(
+    ItemEvent.Delete,
     expect.objectContaining({
       pk: "Dashboard#1dcde43a-9700-41d3-b651-ceee60f7bdf8",
       sk: "Dashboard#1dcde43a-9700-41d3-b651-ceee60f7bdf8",
       type: "Dashboard",
       version: 1,
     }),
+    null, // no new item
     new Date("2021-02-03T18:03:23.000Z")
   );
 });

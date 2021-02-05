@@ -127,7 +127,12 @@ export class AuthStack extends cdk.Stack {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:GetObject"],
-        resources: [bucketArn.concat("/public/*.json")],
+        resources: [
+          bucketArn.concat("/public/*.json"),
+          bucketArn.concat("/public/*.png"),
+          bucketArn.concat("/public/*.jpg"),
+          bucketArn.concat("/public/*.svg"),
+        ],
       })
     );
 

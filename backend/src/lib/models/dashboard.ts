@@ -1,5 +1,7 @@
 import { Widget } from "./widget";
 
+export const DASHBOARD_ITEM_TYPE = "Dashboard";
+
 export enum DashboardState {
   Draft = "Draft",
   Published = "Published",

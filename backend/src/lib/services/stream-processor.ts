@@ -1,6 +1,7 @@
 import { DynamoDBRecord, StreamRecord } from "aws-lambda";
 import DynamoDBService from "./dynamodb";
 import AuditTrailService from "./audit-trail";
+import { ItemEvent } from "../models/auditlog";
 import logger from "./logger";
 
 /**
@@ -51,7 +52,12 @@ async function handleModifyRecord(record: StreamRecord) {
   const newItem = dynamodb.unmarshall(record.NewImage);
 
   const timestamp = getTimestampFromRecord(record);
-  return AuditTrailService.handleModifiedItem(oldItem, newItem, timestamp);
+  return AuditTrailService.handleItemEvent(
+    ItemEvent.Update,
+    oldItem,
+    newItem,
+    timestamp
+  );
 }
 
 /**
@@ -68,7 +74,12 @@ async function handleInsertRecord(record: StreamRecord) {
   const newItem = dynamodb.unmarshall(record.NewImage);
 
   const timestamp = getTimestampFromRecord(record);
-  return AuditTrailService.handleCreatedItem(newItem, timestamp);
+  return AuditTrailService.handleItemEvent(
+    ItemEvent.Create,
+    null,
+    newItem,
+    timestamp
+  );
 }
 
 /**
@@ -85,7 +96,12 @@ async function handleRemoveRecord(record: StreamRecord) {
   const oldItem = dynamodb.unmarshall(record.OldImage);
 
   const timestamp = getTimestampFromRecord(record);
-  return AuditTrailService.handleDeletedItem(oldItem, timestamp);
+  return AuditTrailService.handleItemEvent(
+    ItemEvent.Delete,
+    oldItem,
+    null,
+    timestamp
+  );
 }
 
 function getTimestampFromRecord(record: StreamRecord): Date {

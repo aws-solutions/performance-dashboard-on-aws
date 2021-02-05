@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   XAxis,
   YAxis,
@@ -20,27 +20,58 @@ type Props = {
 };
 
 const PartWholeChartPreview = (props: Props) => {
-  const partWholeData: Array<object> = [];
-  const partWholeParts: Array<string> = [];
-  let total: number = 0;
+  const [partsHover, setPartsHover] = useState(null);
+  const [hiddenParts, setHiddenParts] = useState<Array<string>>([]);
 
-  if (props.data) {
-    let bar = {};
-    for (let i = 0; i < props.data.length; i++) {
-      const key = props.data[i][props.parts[0] as keyof object];
-      const value = props.data[i][props.parts[1] as keyof object];
-      const barKey = `${key} ${value}`;
-      bar = {
-        ...bar,
-        [barKey]: value,
-      };
-      partWholeParts.push(barKey);
-      total += isNaN(value) ? 0 : value;
+  const partWholeData = useRef<Array<object>>([]);
+  const partWholeParts = useRef<Array<string>>([]);
+  let total = useRef<number>(0);
+
+  const { data, parts } = props;
+  useMemo(() => {
+    if (data) {
+      let bar = {};
+      total.current = 0;
+      partWholeParts.current = [];
+      partWholeData.current = [];
+      for (let i = 0; i < data.length; i++) {
+        const key = data[i][parts[0] as keyof object];
+        const value = data[i][parts[1] as keyof object];
+        const barKey = `${key} ${value}`;
+        bar = {
+          ...bar,
+          [barKey]: value,
+        };
+        partWholeParts.current.push(barKey);
+        if (hiddenParts.includes(barKey)) {
+          continue;
+        }
+        total.current += isNaN(value) ? 0 : value;
+      }
+      partWholeData.current.push(bar);
     }
-    partWholeData.push(bar);
-  }
+  }, [data, parts, partWholeData, partWholeParts, hiddenParts]);
 
-  const colors = useColors(partWholeParts.length);
+  const colors = useColors(partWholeParts.current.length);
+
+  const getOpacity = useCallback(
+    (dataKey) => {
+      if (!partsHover) {
+        return 1;
+      }
+      return partsHover === dataKey ? 1 : 0.2;
+    },
+    [partsHover]
+  );
+
+  const toggleParts = (e: any) => {
+    if (hiddenParts.includes(e.dataKey)) {
+      const hidden = hiddenParts.filter((column) => column !== e.dataKey);
+      setHiddenParts(hidden);
+    } else {
+      setHiddenParts([...hiddenParts, e.dataKey]);
+    }
+  };
 
   const renderLegendText = (value: string) => {
     const index = value.lastIndexOf(" ");
@@ -58,17 +89,17 @@ const PartWholeChartPreview = (props: Props) => {
     <div>
       <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
       {!props.summaryBelow && (
-        <p className="margin-left-1 margin-top-0 margin-bottom-3">
+        <p className="margin-left-1 margin-top-0 margin-bottom-2">
           {props.summary}
         </p>
       )}
-      {partWholeData.length && (
+      {partWholeData.current.length && (
         <ResponsiveContainer
           width="100%"
-          height={props.data && props.data.length > 15 ? 600 : 300}
+          height={data && data.length > 15 ? 600 : 300}
         >
           <BarChart
-            data={partWholeData}
+            data={partWholeData.current}
             layout="vertical"
             margin={{ right: -50, left: -50 }}
             maxBarSize={100}
@@ -77,10 +108,11 @@ const PartWholeChartPreview = (props: Props) => {
             <XAxis
               tickLine={false}
               domain={[0, "dataMax"]}
-              ticks={[0, total]}
+              ticks={[0, total.current]}
               axisLine={false}
               interval="preserveStartEnd"
               type="number"
+              padding={{ left: 2, right: 2 }}
             />
             <YAxis
               orientation="left"
@@ -107,15 +139,22 @@ const PartWholeChartPreview = (props: Props) => {
                 right: 0,
                 width: "100%",
               }}
+              onClick={toggleParts}
+              onMouseLeave={(e) => setPartsHover(null)}
+              onMouseEnter={(e) => setPartsHover(e.dataKey)}
             />
-            {partWholeParts.map((part, index) => {
+            {partWholeParts.current.map((part, index) => {
               return (
                 <Bar
                   yAxisId="left"
                   stackId={"a"}
                   dataKey={part}
-                  fill={colors[index]}
                   key={index}
+                  fill={colors[index]}
+                  fillOpacity={getOpacity(part)}
+                  stroke="white"
+                  strokeWidth={2}
+                  hide={hiddenParts.includes(part)}
                 />
               );
             })}

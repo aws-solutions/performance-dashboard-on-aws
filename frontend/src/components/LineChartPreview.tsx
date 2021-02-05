@@ -83,7 +83,7 @@ const LineChartPreview = (props: Props) => {
                   type="monotone"
                   stroke={colors[index]}
                   key={index}
-                  strokeWidth="2"
+                  strokeWidth={3}
                   strokeOpacity={getOpacity(line)}
                   hide={hiddenLines.includes(line)}
                 />

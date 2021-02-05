@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   XAxis,
   YAxis,
@@ -8,6 +8,7 @@ import {
   LabelList,
   ResponsiveContainer,
   CartesianGrid,
+  Tooltip,
 } from "recharts";
 import { useColors } from "../hooks";
 
@@ -20,7 +21,20 @@ type Props = {
 };
 
 const BarChartPreview = (props: Props) => {
+  const [barsHover, setBarsHover] = useState(null);
+  const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
   const colors = useColors(props.bars.length);
+
+  const getOpacity = useCallback(
+    (dataKey) => {
+      if (!barsHover) {
+        return 1;
+      }
+      return barsHover === dataKey ? 1 : 0.2;
+    },
+    [barsHover]
+  );
+
   const { data, bars } = props;
   const yAxisType = useCallback(() => {
     return data && data.every((row) => typeof row[bars[0]] === "number")
@@ -28,11 +42,20 @@ const BarChartPreview = (props: Props) => {
       : "category";
   }, [data, bars]);
 
+  const toggleBars = (e: any) => {
+    if (hiddenBars.includes(e.dataKey)) {
+      const hidden = hiddenBars.filter((bar) => bar !== e.dataKey);
+      setHiddenBars(hidden);
+    } else {
+      setHiddenBars([...hiddenBars, e.dataKey]);
+    }
+  };
+
   return (
     <div>
       <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
       {!props.summaryBelow && (
-        <p className="margin-left-1 margin-top-0 margin-bottom-3">
+        <p className="margin-left-1 margin-top-0 margin-bottom-2">
           {props.summary}
         </p>
       )}
@@ -46,7 +69,13 @@ const BarChartPreview = (props: Props) => {
           margin={{ right: 0, left: 0 }}
         >
           <CartesianGrid horizontal={false} />
-          <XAxis type="number" />
+          <XAxis
+            type="number"
+            domain={[
+              (dataMin) => 0,
+              (dataMax) => dataMax + Math.floor(dataMax * 0.1),
+            ]}
+          />
           <YAxis
             dataKey={props.bars.length ? props.bars[0] : ""}
             type={yAxisType()}
@@ -56,15 +85,28 @@ const BarChartPreview = (props: Props) => {
                 .map((c) => (c as string).length)
                 .reduce((a, b) => (a > b ? a : b), 0) || 0) *
                 8 +
-              16
+              24
             }
             minTickGap={0}
+            domain={[0, "dataMax + 1"]}
           />
-          <Legend margin={{ top: 50, left: 50, right: 50 }} />
+          <Tooltip cursor={{ fill: "#F0F0F0" }} />
+          <Legend
+            verticalAlign="top"
+            onClick={toggleBars}
+            onMouseLeave={(e) => setBarsHover(null)}
+            onMouseEnter={(e) => setBarsHover(e.dataKey)}
+          />
           {props.bars.length &&
             props.bars.slice(1).map((bar, index) => {
               return (
-                <Bar dataKey={bar} fill={colors[index]} key={index}>
+                <Bar
+                  dataKey={bar}
+                  fill={colors[index]}
+                  key={index}
+                  fillOpacity={getOpacity(bar)}
+                  hide={hiddenBars.includes(bar)}
+                >
                   {props.bars.length <= 3 ? (
                     <LabelList dataKey={bar} position="right" />
                   ) : (

@@ -3,6 +3,10 @@
 ![Unit Tests](https://github.com/awslabs/performance-dashboard-on-aws/workflows/Unit%20Tests/badge.svg?branch=mainline)
 ![Version](https://img.shields.io/badge/version-beta-blue)
 
+<p align="center">
+  <img src="docs/images/Dashboard_Images.jpg" alt="Performance Dashboard on AWS user interface image">
+</p>
+
 Performance Dashboard on AWS (PDoA) is a solution for national, municipal, and local governments to publish and visualize their data, so it can be easily shared internally and externally. This cost-effective solution presents digital service performance and other metrics in an accessible, clear, and open way. Performance Dashboard on AWS allows users to customize dashboards to visually demonstrate efficiencies achieved such as the processing of driver license applications or how citizenship statistics have changed over time. Dashboards clearly present performance data to meet the needs of data users including digital leaders, service owners, and the public.
 
 Performance Dashboard on AWS is setup by running its CloudFormation template. This will create an instantiation of the solution. The architecture diagram provides an overview of what will be built:

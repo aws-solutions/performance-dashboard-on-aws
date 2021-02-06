@@ -14,6 +14,19 @@ const config = {
     userPoolId: EnvConfig.userPoolId,
     userPoolWebClientId: EnvConfig.appClientId,
     identityPoolId: EnvConfig.identityPoolId,
+    oauth: {
+      domain: "auth-251647719696-us-east-2.auth.us-east-2.amazoncognito.com",
+      //awsCognito: "",
+      scope: ['phone', 'email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
+      redirectSignIn: 'http://localhost:3000/admin',
+      redirectSignOut: 'http://localhost:3000/admin',
+      responseType: 'code', // or token
+      // optional, for Cognito hosted ui specified options
+      options: {
+        // Indicates if the data collection is enabled to support Cognito advanced security features. By default, this flag is set to true.
+        AdvancedSecurityDataCollectionFlag: true
+      }
+    }
   },
   Storage: {
     AWSS3: {
@@ -23,37 +36,11 @@ const config = {
   },
 };
 
-const oauthConfig = {
-  domain: EnvConfig.cognitoDomain,
-  scope: ['phone', 'email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
-  redirectSignIn: EnvConfig.frontendDomain,
-  redirectSignOut: EnvConfig.frontendDomain,
-  responseType: 'code', // or token
-  // optional, for Cognito hosted ui specified options
-  options: {
-    // Indicates if the data collection is enabled to support Cognito advanced security features. By default, this flag is set to true.
-    AdvancedSecurityDataCollectionFlag: true
-  }
-}
-
 export const samlConfig = {
   oauthConfig: {
-    customProvider: EnvConfig.samlProvider,
-    label: EnvConfig.enterpriseLoginLabel,
+    customProvider: "PDOA",
+    label: "Enterprise Sign-in",
   },
 };
-
-export function amplifyConfig(): {} {
-
-  var configuration: {[k: string]: any} = {...config};
-  if(isFederatedLogin()){
-    configuration.oauth = oauthConfig;
-  }
-  return configuration;
-}
-
-export function isFederatedLogin(): boolean {
-  return (EnvConfig.samlProvider)? true: false;
-}
 
 export default config;

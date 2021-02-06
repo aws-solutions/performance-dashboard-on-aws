@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import SettingsProvider from "./context/SettingsProvider";
+import withSAMLAuthenticator from "./layouts/SAMLAuthenticator";
+import { samlConfig } from "./amplify-config";
 
 import withPublicLayout from "./layouts/Public";
 import withAdminLayout from "./layouts/Admin";
@@ -246,7 +248,9 @@ function App() {
           {routes.map((route) => {
             const component = route.public
               ? withPublicLayout(route.component)
-              : withAuthenticator(withAdminLayout(route.component));
+              : withAuthenticator(withAdminLayout(route.component), {
+                  federated: samlConfig,
+                });
             return (
               <Route
                 exact

@@ -119,6 +119,9 @@ export class BackendApi extends cdk.Construct {
     dashboard.addMethod("POST", apiIntegration, methodProps);
     dashboard.addMethod("DELETE", apiIntegration, methodProps);
 
+    const auditLogs = dashboard.addResource("auditlogs");
+    auditLogs.addMethod("GET", apiIntegration, methodProps);
+
     const versions = dashboard.addResource("versions");
     versions.addMethod("GET", apiIntegration, methodProps);
 

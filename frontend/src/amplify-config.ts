@@ -15,10 +15,11 @@ const config = {
     userPoolWebClientId: EnvConfig.appClientId,
     identityPoolId: EnvConfig.identityPoolId,
     oauth: {
-      domain: EnvConfig.cognitoDomain,
+      domain: "auth-251647719696-us-east-2.auth.us-east-2.amazoncognito.com",
+      //awsCognito: "",
       scope: ['phone', 'email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
-      redirectSignIn: EnvConfig.frontendDomain+'/admin',
-      redirectSignOut: EnvConfig.frontendDomain+'/admin',
+      redirectSignIn: 'http://localhost:3000/admin',
+      redirectSignOut: 'http://localhost:3000/admin',
       responseType: 'code', // or token
       // optional, for Cognito hosted ui specified options
       options: {
@@ -37,8 +38,8 @@ const config = {
 
 export const samlConfig = {
   oauthConfig: {
-    customProvider: EnvConfig.samlProvider,
-    label: EnvConfig.enterpriseLoginLabel,
+    customProvider: "PDOA",
+    label: "Enterprise Sign-in",
   },
 };
 

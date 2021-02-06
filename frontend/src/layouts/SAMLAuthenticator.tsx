@@ -1,45 +1,24 @@
-import React, {
-  ComponentType,
-  ComponentPropsWithRef,
-  FunctionComponent,
-  useCallback,
-} from "react";
-import { Auth, appendToCognitoUserAgent } from "@aws-amplify/auth";
+import React, { ComponentType, FunctionComponent, useCallback } from "react";
+import { Auth, CognitoUser } from "@aws-amplify/auth";
+import { Hub } from "@aws-amplify/core";
+import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import {
-  AmplifyContainer,
   AmplifyAuthenticator,
+  AmplifyContainer,
   AmplifySignIn,
-  AmplifySignInButton,
+  AmplifyFederatedSignIn,
   AmplifyFederatedButtons,
-  AmplifyButton,
 } from "@aws-amplify/ui-react";
-import { onAuthUIStateChange, AuthState } from "@aws-amplify/ui-components";
-import { Hub, Logger } from "@aws-amplify/core";
-import config, { samlConfig } from "../amplify-config";
 
-const logger = new Logger("withAuthenticator");
-
-export function withSAMLAuthenticator(
-  Component: ComponentType,
-  authenticatorProps?: ComponentPropsWithRef<typeof AmplifyAuthenticator>
-) {
+function withSAMLAuthenticator(Component: ComponentType) {
   const AppWithSAMLAuthenticator: FunctionComponent = (props) => {
     const [signedIn, setSignedIn] = React.useState(false);
 
     React.useEffect(() => {
-      appendToCognitoUserAgent("withAuthenticator");
-
-      // checkUser returns an "unsubscribe" function to stop side-effects
       return checkUser();
     }, []);
 
-    React.useLayoutEffect(() => {
-      Hub.listen("auth", listenAuthEvents);
-    }, []);
-
     function checkUser() {
-      setUser();
-
       return onAuthUIStateChange((authState) => {
         if (authState === AuthState.SignedIn) {
           setSignedIn(true);
@@ -49,76 +28,30 @@ export function withSAMLAuthenticator(
       });
     }
 
-    async function setUser() {
-      try {
-        const user = await Auth.currentAuthenticatedUser();
-        if (user) setSignedIn(true);
-      } catch (err) {
-        logger.debug(err);
-      }
-    }
-
-    const listenAuthEvents = useCallback((event: any) => {
-      const { payload } = event;
-      switch (payload.event) {
-        case "signIn":
-        case AuthState.SignedIn:
-        case "cognitoHostedUI":
-          setSignedIn(true);
-          break;
-        case "signOut":
-        case AuthState.SignedOut:
-        case "cognitoHostedUI_failure":
-          setSignedIn(false);
-          break;
-        default:
-          break;
-      }
-    }, []);
-
-    function signInWithSAML(event: any) {
-      event.preventDefault();
-      if (
-        samlConfig &&
-        samlConfig.oauthConfig &&
-        samlConfig.oauthConfig.customProvider
-      ) {
-        Auth.federatedSignIn({
-          customProvider: samlConfig.oauthConfig.customProvider,
-        });
-      } else {
-        Auth.federatedSignIn();
-      }
-    }
-
+    const federated = {
+      oauthConfig: {
+        customProvider: "PDOA",
+        label: "Enterprise Sign-in",
+      },
+    };
     if (!signedIn) {
+      //Auth.federatedSignIn();
+      //window.location.assign(
+      //  "https://auth-251647719696-us-east-2.auth.us-east-2.amazoncognito.com/login?client_id=2trf0n8643045iga8qqsi85g0i&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:3000/admin"
+      //);
+      //return <button onClick={() => Auth.federatedSignIn()}>Sign in</button>;
       return (
         <AmplifyContainer>
-          <AmplifyAuthenticator {...authenticatorProps} {...props}>
-            {"oauth" in config.Auth && (
-              <AmplifySignIn federated={samlConfig} slot="sign-in">
-                <AmplifyFederatedButtons federated={samlConfig} />
-                <div slot="federated-buttons">
-                  <AmplifyButton
-                    handleButtonClick={(event) => signInWithSAML(event)}
-                  >
-                    <span className="content">
-                      {samlConfig &&
-                      samlConfig.oauthConfig &&
-                      samlConfig.oauthConfig.label
-                        ? samlConfig.oauthConfig.label
-                        : "Enterprise Sign-in"}
-                    </span>
-                  </AmplifyButton>
-                  <style></style>
-                </div>
-              </AmplifySignIn>
-            )}
+          <AmplifyAuthenticator>
+            <AmplifySignIn slot="sign-in">
+              <div slot="federated-buttons">
+                <AmplifyFederatedButtons federated={federated} />
+              </div>
+            </AmplifySignIn>
           </AmplifyAuthenticator>
         </AmplifyContainer>
       );
-    }
-    return <Component />;
+    } else return <Component />;
   };
 
   return AppWithSAMLAuthenticator;

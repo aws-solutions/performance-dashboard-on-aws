@@ -55,6 +55,19 @@ class UserRepository {
     }
   }
 
+  public async removeUser(users: Array<User>) {
+    try {
+      for (const user of users) {
+        await this.cognito.removeUser({
+          UserPoolId: this.userPoolId,
+          Username: user.userId,
+        });
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public async resendInvite(usernames: Array<string>) {
     try {
       for (const username of usernames) {

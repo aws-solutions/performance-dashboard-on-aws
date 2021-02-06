@@ -51,6 +51,34 @@ async function addUsers(req: Request, res: Response) {
   }
 }
 
+async function removeUsers(req: Request, res: Response) {
+  const { role, emails } = req.body;
+
+  if (!role) {
+    res.status(400).send("Missing required body `role`");
+    return;
+  }
+
+  if (role !== Role.Admin && role !== Role.Editor && role !== Role.Publisher) {
+    res.status(400).send("Invalid role value");
+    return;
+  }
+
+  if (!emails) {
+    res.status(400).send("Missing required body `emails`");
+    return;
+  }
+
+  const userEmails = (emails as string).split(",");
+
+  for (const userEmail of userEmails) {
+    if (!emailIsValid(userEmail)) {
+      res.status(400).send(`Invalid email: ${userEmail}`);
+      return;
+    }
+  }
+}
+
 async function resendInvite(req: Request, res: Response) {
   const { emails } = req.body;
 
@@ -125,4 +153,5 @@ export default {
   addUsers,
   resendInvite,
   changeRole,
+  removeUsers,
 };

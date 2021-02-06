@@ -392,6 +392,8 @@ async function addUsers(role: string, emails: Array<string>) {
   });
 }
 
+async function removeUsers(emails: Array<string>) {}
+
 async function resendInvite(emails: Array<string>) {
   const headers = await authHeaders();
   return await API.post(apiName, "user/invite", {

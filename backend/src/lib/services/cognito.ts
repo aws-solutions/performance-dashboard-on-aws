@@ -40,6 +40,13 @@ class CognitoService {
     return this.cognitoIdentityServiceProvider.adminCreateUser(input).promise();
   }
 
+  async removeUser(
+    input: CognitoIdentityServiceProvider.AdminDeleteUserRequest
+  ) {
+    logger.debug("Cognito AdminDeleteUser %o", input);
+    return this.cognitoIdentityServiceProvider.adminDeleteUser(input).promise();
+  }
+
   async updateUserAttributes(
     input: CognitoIdentityServiceProvider.AdminUpdateUserAttributesRequest
   ) {

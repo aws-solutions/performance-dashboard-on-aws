@@ -36,6 +36,7 @@ export class LambdaFunctions extends cdk.Construct {
       logRetention: logs.RetentionDays.TEN_YEARS,
       environment: {
         MAIN_TABLE: props.mainTable.tableName,
+        AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
         USER_POOL_ID: props.userPool.id,
         LOG_LEVEL: "info",

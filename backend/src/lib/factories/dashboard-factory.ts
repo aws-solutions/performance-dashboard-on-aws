@@ -9,9 +9,8 @@ import {
   DashboardState,
   DashboardVersion,
   PublicDashboard,
+  DASHBOARD_ITEM_TYPE,
 } from "../models/dashboard";
-
-const DASHBOARD_ITEM_TYPE: string = "Dashboard";
 
 function createNew(
   name: string,

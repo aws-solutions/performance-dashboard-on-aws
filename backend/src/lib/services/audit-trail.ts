@@ -1,22 +1,54 @@
+import { Dashboard, DASHBOARD_ITEM_TYPE } from "../models/dashboard";
+import { ItemEvent } from "../models/auditlog";
+import DashboardFactory from "../factories/dashboard-factory";
+import AuditLogFactory from "../factories/auditlog-factory";
+import AuditLogRepository from "../repositories/auditlog-repo";
 import logger from "./logger";
 
-async function handleModifiedItem(oldItem: any, newItem: any, timestamp: Date) {
-  logger.info("Creating audit log entry for modified item");
-  // TODO: Implement
-}
+/**
+ * Handles a Create, Delete or Updat eevent that happened to
+ * a DynamoDB item on the main table. i.e. Dashboard was updated.
+ */
+async function handleItemEvent(
+  event: ItemEvent,
+  oldItem: any,
+  newItem: any,
+  timestamp: Date
+) {
+  const itemType = newItem?.type || oldItem?.type;
+  // For now, we only care about capturing changes for Dashboard items
+  if (itemType === DASHBOARD_ITEM_TYPE) {
+    let dashboard: Dashboard;
+    let oldDashboard = undefined;
 
-async function handleCreatedItem(newItem: any, timestamp: Date) {
-  logger.info("Creating audit log entry for new created item");
-  // TODO: Implement
-}
+    switch (event) {
+      case ItemEvent.Create:
+        dashboard = DashboardFactory.fromItem(newItem);
+        break;
+      case ItemEvent.Update:
+        dashboard = DashboardFactory.fromItem(newItem);
+        oldDashboard = DashboardFactory.fromItem(oldItem);
+        break;
+      case ItemEvent.Delete:
+        dashboard = DashboardFactory.fromItem(oldItem);
+        break;
+      default:
+        logger.error("Invalid event");
+        return;
+    }
 
-async function handleDeletedItem(oldItem: any, timestamp: Date) {
-  logger.info("Creating audit log entry for deleted item");
-  // TODO: Implement
+    const auditLogItem = AuditLogFactory.buildDashboardAuditLogFromEvent(
+      event,
+      timestamp,
+      dashboard,
+      oldDashboard
+    );
+
+    await AuditLogRepository.saveAuditLog(auditLogItem);
+    logger.info("Saved audit log record for dashboard");
+  }
 }
 
 export default {
-  handleModifiedItem,
-  handleCreatedItem,
-  handleDeletedItem,
+  handleItemEvent,
 };

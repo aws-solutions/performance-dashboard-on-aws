@@ -19,6 +19,7 @@ describe("buildDashboardAuditLogFromEvent", () => {
       topicAreaName: "Department of Homeland Security",
       description: "",
       createdBy: "johndoe",
+      updatedBy: "johndoe",
       updatedAt: new Date(),
       state: DashboardState.Draft,
     };
@@ -47,6 +48,7 @@ describe("buildDashboardAuditLogFromEvent", () => {
       topicAreaName: "Department of Homeland Security",
       description: "",
       createdBy: "johndoe",
+      updatedBy: "alice",
       updatedAt: new Date(),
       state: DashboardState.PublishPending,
     };
@@ -60,6 +62,7 @@ describe("buildDashboardAuditLogFromEvent", () => {
       topicAreaName: "Department of Homeland Security",
       description: "",
       createdBy: "johndoe",
+      updatedBy: "johndoe",
       updatedAt: new Date(),
       state: DashboardState.Draft,
     };
@@ -75,7 +78,7 @@ describe("buildDashboardAuditLogFromEvent", () => {
     expect(auditLog.sk).toEqual(timestamp.toISOString());
     expect(auditLog.pk).toEqual("Dashboard#d5f6b6e4bb22");
     expect(auditLog.type).toEqual(DASHBOARD_ITEM_TYPE);
-    expect(auditLog.userId).toEqual("Unknown");
+    expect(auditLog.userId).toEqual("alice");
     expect(auditLog.version).toEqual(1);
     expect(auditLog.modifiedProperties).toEqual(
       expect.arrayContaining([
@@ -108,6 +111,7 @@ describe("buildDashboardAuditLogFromEvent", () => {
       topicAreaName: "Department of Homeland Security",
       description: "",
       createdBy: "johndoe",
+      updatedBy: "johndoe",
       updatedAt: new Date(),
       state: DashboardState.Draft,
     };
@@ -122,7 +126,7 @@ describe("buildDashboardAuditLogFromEvent", () => {
     expect(auditLog.sk).toEqual(timestamp.toISOString());
     expect(auditLog.pk).toEqual("Dashboard#d5f6b6e4bb22");
     expect(auditLog.type).toEqual(DASHBOARD_ITEM_TYPE);
-    expect(auditLog.userId).toEqual("Unknown");
+    expect(auditLog.userId).toEqual("unknown");
     expect(auditLog.version).toEqual(1);
   });
 });

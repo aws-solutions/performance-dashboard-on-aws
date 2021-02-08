@@ -158,7 +158,9 @@ class DashboardRepository extends BaseRepository {
           sk: DashboardFactory.itemId(dashboardId),
         },
         UpdateExpression:
-          "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #description = :description, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, " +
+          "#topicAreaName = :topicAreaName, #description = :description, " +
+          "#updatedAt = :updatedAt, #updatedBy = :userId",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":dashboardName": name,
@@ -600,7 +602,8 @@ class DashboardRepository extends BaseRepository {
    */
   public async updateTopicAreaName(
     dashboards: Array<Dashboard>,
-    topicAreaName: string
+    topicAreaName: string,
+    user: User
   ) {
     const updates: DocumentClient.TransactWriteItem[] = dashboards.map(
       (dashboard) => ({
@@ -610,9 +613,14 @@ class DashboardRepository extends BaseRepository {
             pk: DashboardFactory.itemId(dashboard.id),
             sk: DashboardFactory.itemId(dashboard.id),
           },
-          UpdateExpression: "set topicAreaName = :topicAreaName",
+          UpdateExpression:
+            "set topicAreaName = :topicAreaName, #updatedBy = :updatedBy",
+          ExpressionAttributeNames: {
+            "#updatedBy": "updatedBy",
+          },
           ExpressionAttributeValues: {
             ":topicAreaName": topicAreaName,
+            ":updatedBy": user.userId,
           },
         },
       })

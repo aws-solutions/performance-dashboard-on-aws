@@ -38,6 +38,7 @@ async function getTopicAreaById(req: Request, res: Response) {
 }
 
 async function updateTopicArea(req: Request, res: Response) {
+  const user = req.user;
   const { id } = req.params;
   const { name } = req.body;
 
@@ -47,7 +48,7 @@ async function updateTopicArea(req: Request, res: Response) {
   }
 
   const repo = TopicAreaRepository.getInstance();
-  await repo.renameTopicArea(id, name);
+  await repo.renameTopicArea(id, name, user);
   res.send();
 }
 

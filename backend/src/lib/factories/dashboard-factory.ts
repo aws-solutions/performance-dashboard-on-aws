@@ -31,6 +31,7 @@ function createNew(
     state: DashboardState.Draft,
     createdBy: user.userId,
     updatedAt: new Date(),
+    updatedBy: user.userId,
   };
 }
 
@@ -60,6 +61,7 @@ function createDraftFromDashboard(
     state: DashboardState.Draft,
     createdBy: user.userId,
     updatedAt: new Date(),
+    updatedBy: user.userId,
     widgets,
     friendlyURL: undefined, // new draft should not have friendlyURL
   };
@@ -82,6 +84,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
     state: dashboard.state,
     createdBy: dashboard.createdBy,
     updatedAt: dashboard.updatedAt.toISOString(),
+    updatedBy: dashboard.updatedBy,
     releaseNotes: dashboard.releaseNotes,
     friendlyURL: dashboard.friendlyURL,
   };
@@ -100,6 +103,7 @@ function fromItem(item: DashboardItem): Dashboard {
     createdBy: item.createdBy,
     parentDashboardId: item.parentDashboardId,
     updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
+    updatedBy: item.updatedBy,
     state: (item.state as DashboardState) || DashboardState.Draft,
     releaseNotes: item.releaseNotes,
     friendlyURL: item.friendlyURL,

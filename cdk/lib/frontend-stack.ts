@@ -15,6 +15,7 @@ interface Props extends cdk.StackProps {
   identityPoolId: string;
   appClientId: string;
   backendApiUrl: string;
+  frontendDomain: string;
 }
 
 export class FrontendStack extends cdk.Stack {
@@ -81,6 +82,7 @@ export class FrontendStack extends cdk.Stack {
         ],
       }
     );
+    props.frontendDomain = distribution.distributionDomainName;
 
     /**
      * S3 Deploy
@@ -138,6 +140,10 @@ export class FrontendStack extends cdk.Stack {
         BRAND_NAME: "Performance Dashboard",
         TOPIC_AREA_LABEL: "Topic area",
         TOPIC_AREAS_LABEL: "Topic areas",
+        FRONTEND_DOMAIN: props.frontendDomain,
+        COGNITO_DOMAIN: "",
+        SAML_PROVIDER: "",
+        ENTERPRISE_LOGIN_LABEL: "Enterprise Sign-In",
       },
     });
 

@@ -58,37 +58,39 @@ const ColumnChartPreview = (props: Props) => {
           {props.summary}
         </p>
       )}
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={props.data} margin={{ right: 0, left: 0 }}>
-          <CartesianGrid vertical={false} />
-          <XAxis
-            dataKey={props.columns.length ? props.columns[0] : ""}
-            type={xAxisType()}
-            padding={{ left: 20, right: 20 }}
-            domain={[0, "dataMax"]}
-          />
-          <YAxis type="number" domain={[0, "dataMax"]} />
-          <Tooltip cursor={{ fill: "#F0F0F0" }} />
-          <Legend
-            verticalAlign="top"
-            onClick={toggleColumns}
-            onMouseLeave={(e) => setColumnsHover(null)}
-            onMouseEnter={(e) => setColumnsHover(e.dataKey)}
-          />
-          {props.columns.length &&
-            props.columns.slice(1).map((column, index) => {
-              return (
-                <Bar
-                  dataKey={column}
-                  fill={colors[index]}
-                  key={index}
-                  fillOpacity={getOpacity(column)}
-                  hide={hiddenColumns.includes(column)}
-                />
-              );
-            })}
-        </BarChart>
-      </ResponsiveContainer>
+      {props.data && props.data.length && (
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={props.data} margin={{ right: 0, left: 0 }}>
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey={props.columns.length ? props.columns[0] : ""}
+              type={xAxisType()}
+              padding={{ left: 20, right: 20 }}
+              domain={[0, "dataMax"]}
+            />
+            <YAxis type="number" domain={[0, "dataMax"]} />
+            <Tooltip cursor={{ fill: "#F0F0F0" }} />
+            <Legend
+              verticalAlign="top"
+              onClick={toggleColumns}
+              onMouseLeave={(e) => setColumnsHover(null)}
+              onMouseEnter={(e) => setColumnsHover(e.dataKey)}
+            />
+            {props.columns.length &&
+              props.columns.slice(1).map((column, index) => {
+                return (
+                  <Bar
+                    dataKey={column}
+                    fill={colors[index]}
+                    key={index}
+                    fillOpacity={getOpacity(column)}
+                    hide={hiddenColumns.includes(column)}
+                  />
+                );
+              })}
+          </BarChart>
+        </ResponsiveContainer>
+      )}
       {props.summaryBelow && (
         <p className="margin-left-1 margin-top-3 margin-bottom-0">
           {props.summary}

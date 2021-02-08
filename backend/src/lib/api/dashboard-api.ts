@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { Role } from "../models/user";
 import DashboardCtrl from "../controllers/dashboard-ctrl";
+import AuditLogCtrl from "../controllers/auditlog-ctrl";
 import WidgetCtrl from "../controllers/widget-ctrl";
 import errorHandler from "./middleware/error-handler";
 import auth from "./middleware/auth";
@@ -25,6 +26,12 @@ router.get(
   "/:id/versions",
   rbac(Role.Admin, Role.Editor),
   errorHandler(DashboardCtrl.getVersions)
+);
+
+router.get(
+  "/:id/auditlogs",
+  rbac(Role.Admin, Role.Editor),
+  errorHandler(AuditLogCtrl.listDashboardAuditLogs)
 );
 
 router.post(

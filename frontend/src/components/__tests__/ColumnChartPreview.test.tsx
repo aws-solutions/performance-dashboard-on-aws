@@ -9,6 +9,7 @@ test("renders the title and summary of the column chart preview component", asyn
       title="test title"
       summary="test summary"
       columns={["test"]}
+      data={[{ test: 1 }]}
       summaryBelow={false}
     />,
     { wrapper: MemoryRouter }
@@ -26,6 +27,7 @@ test("renders the title and summary of the column chart preview component with t
       title="test title"
       summary="test summary"
       columns={["test"]}
+      data={[{ test: 1 }]}
       summaryBelow={true}
     />,
     { wrapper: MemoryRouter }

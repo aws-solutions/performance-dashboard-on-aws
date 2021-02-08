@@ -9,6 +9,7 @@ test("renders the title and summary of the bar chart preview component", async (
       title="test title"
       summary="test summary"
       bars={["test"]}
+      data={[{ test: 1 }]}
       summaryBelow={false}
     />,
     { wrapper: MemoryRouter }
@@ -26,6 +27,7 @@ test("renders the bar chart preview component with the summary below the chart",
       title="test title"
       summary="test summary"
       bars={["test"]}
+      data={[{ test: 1 }]}
       summaryBelow={true}
     />,
     { wrapper: MemoryRouter }

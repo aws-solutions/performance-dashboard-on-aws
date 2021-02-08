@@ -50,6 +50,10 @@ function getConfigContent(): string {
     brandName: process.env.BRAND_NAME,
     topicAreaLabel: process.env.TOPIC_AREA_LABEL,
     topicAreasLabel: process.env.TOPIC_AREAS_LABEL,
+    frontendDomain: process.env.FRONTEND_DOMAIN,
+    cognitoDomain: process.env.COGNITO_DOMAIN,
+    samlProvider: process.env.SAML_PROVIDER,
+    enterpriseLoginLabel: process.env.ENTERPRISE_LOGIN_LABEL,
   };
 
   return `

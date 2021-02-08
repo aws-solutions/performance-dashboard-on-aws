@@ -4,7 +4,7 @@ import {
   DASHBOARD_ITEM_TYPE,
 } from "../../models/dashboard";
 import AuditLogFactory from "../auditlog-factory";
-import { ItemEvent } from "../../models/auditlog";
+import { DashboardAuditLogItem, ItemEvent } from "../../models/auditlog";
 
 const timestamp = new Date();
 
@@ -124,5 +124,42 @@ describe("buildDashboardAuditLogFromEvent", () => {
     expect(auditLog.type).toEqual(DASHBOARD_ITEM_TYPE);
     expect(auditLog.userId).toEqual("Unknown");
     expect(auditLog.version).toEqual(1);
+  });
+});
+
+describe("fromItem", () => {
+  it("returns a dashboard audit log", () => {
+    const auditLogItem: DashboardAuditLogItem = {
+      pk: "Dashboard#001",
+      sk: "2021-02-06T02:53:33.935Z",
+      type: DASHBOARD_ITEM_TYPE,
+      userId: "johndoe",
+      version: 1,
+      event: ItemEvent.Update,
+      modifiedProperties: [
+        {
+          property: "name",
+          oldValue: "Foo",
+          newValue: "Bar",
+        },
+      ],
+    };
+
+    const auditLog = AuditLogFactory.fromItem(auditLogItem);
+    expect(auditLog).not.toBe(null);
+    expect(auditLog).toEqual({
+      itemId: "001",
+      timestamp: new Date("2021-02-06T02:53:33.935Z"),
+      userId: "johndoe",
+      version: 1,
+      event: ItemEvent.Update,
+      modifiedProperties: [
+        {
+          property: "name",
+          oldValue: "Foo",
+          newValue: "Bar",
+        },
+      ],
+    });
   });
 });

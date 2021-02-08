@@ -1,4 +1,7 @@
 import {
+  AuditLog,
+  AuditLogItem,
+  DashboardAuditLog,
   DashboardAuditLogItem,
   ModifiedProperty,
   ItemEvent,
@@ -38,6 +41,28 @@ function buildDashboardAuditLogFromEvent(
 }
 
 /**
+ * Builds an AuditLog object from a AuditLog dynamodb item. Just like
+ * the WidgetFactory.fromItem, this function returns the concrete AuditLog
+ * type depending on the item type, i.e. DashboardAuditLogItem for a Dashboard item.
+ */
+function fromItem(auditLogItem: AuditLogItem): AuditLog | null {
+  if (auditLogItem.type === DASHBOARD_ITEM_TYPE) {
+    const dashboardAuditLogItem = auditLogItem as DashboardAuditLogItem;
+    return {
+      itemId: DashboardFactory.dashboardIdFromPk(dashboardAuditLogItem.pk),
+      timestamp: new Date(dashboardAuditLogItem.sk),
+      event: dashboardAuditLogItem.event,
+      userId: dashboardAuditLogItem.userId,
+      modifiedProperties: dashboardAuditLogItem.modifiedProperties,
+      version: dashboardAuditLogItem.version,
+    } as DashboardAuditLog;
+  }
+
+  // Item type not recognized, should not happen.
+  return null;
+}
+
+/**
  * Compares 2 dynamodb items and returns the properties that have changed
  * in the newItem compared to the oldItem.
  */
@@ -66,5 +91,6 @@ function getPropValue(item: any, prop: string) {
 }
 
 export default {
+  fromItem,
   buildDashboardAuditLogFromEvent,
 };

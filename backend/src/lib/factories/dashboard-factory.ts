@@ -155,4 +155,5 @@ export default {
   toPublic,
   toVersion,
   generateFriendlyURL,
+  dashboardIdFromPk,
 };

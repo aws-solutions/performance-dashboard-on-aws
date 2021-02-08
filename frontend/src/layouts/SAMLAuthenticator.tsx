@@ -14,7 +14,7 @@ import {
 } from "@aws-amplify/ui-react";
 import { onAuthUIStateChange, AuthState } from "@aws-amplify/ui-components";
 import { Logger } from "@aws-amplify/core";
-import { samlConfig } from "../amplify-config";
+import config, { samlConfig } from "../amplify-config";
 
 const logger = new Logger("withAuthenticator");
 
@@ -72,23 +72,25 @@ export function withSAMLAuthenticator(
       return (
         <AmplifyContainer>
           <AmplifyAuthenticator {...authenticatorProps} {...props}>
-            <AmplifySignIn federated={samlConfig} slot="sign-in">
-              <AmplifyFederatedButtons federated={samlConfig} />
-              <div slot="federated-buttons">
-                <AmplifyButton
-                  handleButtonClick={(event) => signInWithSAML(event)}
-                >
-                  <span className="content">
-                    {samlConfig &&
-                    samlConfig.oauthConfig &&
-                    samlConfig.oauthConfig.label
-                      ? samlConfig.oauthConfig.label
-                      : "Enterprise Sign-in"}
-                  </span>
-                </AmplifyButton>
-                <style></style>
-              </div>
-            </AmplifySignIn>
+            {"oauth" in config.Auth && (
+              <AmplifySignIn federated={samlConfig} slot="sign-in">
+                <AmplifyFederatedButtons federated={samlConfig} />
+                <div slot="federated-buttons">
+                  <AmplifyButton
+                    handleButtonClick={(event) => signInWithSAML(event)}
+                  >
+                    <span className="content">
+                      {samlConfig &&
+                      samlConfig.oauthConfig &&
+                      samlConfig.oauthConfig.label
+                        ? samlConfig.oauthConfig.label
+                        : "Enterprise Sign-in"}
+                    </span>
+                  </AmplifyButton>
+                  <style></style>
+                </div>
+              </AmplifySignIn>
+            )}
           </AmplifyAuthenticator>
         </AmplifyContainer>
       );

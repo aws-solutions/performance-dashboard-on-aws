@@ -2,6 +2,7 @@ import React, {
   ComponentType,
   ComponentPropsWithRef,
   FunctionComponent,
+  useCallback,
 } from "react";
 import { Auth, appendToCognitoUserAgent } from "@aws-amplify/auth";
 import {
@@ -13,7 +14,7 @@ import {
   AmplifyButton,
 } from "@aws-amplify/ui-react";
 import { onAuthUIStateChange, AuthState } from "@aws-amplify/ui-components";
-import { Logger } from "@aws-amplify/core";
+import { Hub, Logger } from "@aws-amplify/core";
 import config, { samlConfig } from "../amplify-config";
 
 const logger = new Logger("withAuthenticator");
@@ -30,6 +31,10 @@ export function withSAMLAuthenticator(
 
       // checkUser returns an "unsubscribe" function to stop side-effects
       return checkUser();
+    }, []);
+
+    React.useLayoutEffect(() => {
+      Hub.listen("auth", listenAuthEvents);
     }, []);
 
     function checkUser() {
@@ -52,6 +57,24 @@ export function withSAMLAuthenticator(
         logger.debug(err);
       }
     }
+
+    const listenAuthEvents = useCallback((event: any) => {
+      const { payload } = event;
+      switch (payload.event) {
+        case "signIn":
+        case AuthState.SignedIn:
+        case "cognitoHostedUI":
+          setSignedIn(true);
+          break;
+        case "signOut":
+        case AuthState.SignedOut:
+        case "cognitoHostedUI_failure":
+          setSignedIn(false);
+          break;
+        default:
+          break;
+      }
+    }, []);
 
     function signInWithSAML(event: any) {
       event.preventDefault();

@@ -1739,6 +1739,80 @@
 			"response": []
 		},
 		{
+			"name": "Verify audit logs",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const testId = pm.variables.get(\"testId\");",
+							"pm.collectionVariables.set(\"dashboard.name\", testId);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"returns 200 OK\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns a list of logs\", () => {",
+							"    const auditlogs = pm.response.json();",
+							"    pm.expect(auditlogs).to.be.an(\"array\");",
+							"    pm.expect(auditlogs.length).to.be.greaterThan(5);",
+							"});",
+							"",
+							"pm.test(\"each log has appropriate attributes\", () => {",
+							"    const auditlogs = pm.response.json();",
+							"    auditlogs.forEach(auditlog => {",
+							"        pm.expect(auditlog.timestamp).to.be.a(\"string\");",
+							"        pm.expect(auditlog.version).to.be.a(\"number\");",
+							"        pm.expect(auditlog.event).to.be.oneOf([\"Create\", \"Update\", \"Delete\"]);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dashboard/:id/auditlogs",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dashboard",
+						":id",
+						"auditlogs"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{dashboard.id}}"
+						}
+					]
+				},
+				"description": "Creates a dashboard in the newly created topic area"
+			},
+			"response": []
+		},
+		{
 			"name": "List users",
 			"event": [
 				{

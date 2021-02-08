@@ -37,6 +37,41 @@
 					"response": []
 				},
 				{
+					"name": "List Audit Logs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/:id/auditlogs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dashboard",
+								":id",
+								"auditlogs"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1dcde43a-9700-41d3-b651-ceee60f7bdf8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Dashboard",
 					"request": {
 						"method": "POST",
@@ -679,6 +714,50 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"{{$randomAdjective}} {{$randomProductName}}\",\n    \"widgetType\": \"Metrics\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"s3Key\": {\n            \"json\": \"123.json\",\n            \"raw\": \"123.json\"\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/:id/widget",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dashboard",
+								":id",
+								"widget"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "235cd5a3-dd65-4706-88b5-35fe3c785584"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Image Widget",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Image\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"summaryBelow\": false,\n        \"imageAltText\": \"{{$randomWord}}\",\n        \"fileName\": \"123.png\",\n        \"s3Key\": {\n            \"raw\": \"123.png\"\n        }\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1444,13 +1523,15 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:8080",
-			"type": "string"
+			"value": "http://localhost:8080"
 		},
 		{
 			"key": "token",
-			"value": "",
-			"type": "string"
+			"value": ""
+		},
+		{
+			"key": "apiKey",
+			"value": ""
 		}
 	]
 }

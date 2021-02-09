@@ -18,6 +18,11 @@ test("renders a table with audit logs", async () => {
   // Expected values coming from mocked hooks
   expect(within(table).getAllByText("johndoe")).toHaveLength(2);
   expect(within(table).getAllByText("1")).toHaveLength(2);
-  expect(within(table).getByText("Create")).toBeInTheDocument();
-  expect(within(table).getByText("Update")).toBeInTheDocument();
+  expect(within(table).getByText("Created")).toBeInTheDocument();
+  expect(within(table).getByText("Moved to publish queue")).toBeInTheDocument();
+});
+
+test("renders a search input", async () => {
+  render(<DashboardHistory />, { wrapper: MemoryRouter });
+  expect(screen.getByRole("searchbox")).toBeInTheDocument();
 });

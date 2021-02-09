@@ -1,19 +1,22 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
+import Breadcrumbs from "../components/Breadcrumbs";
+import Table from "../components/Table";
+import Spinner from "../components/Spinner";
+import AuditTrailService from "../services/AuditTrailService";
+import Search from "../components/Search";
 import {
   useDashboard,
   useDashboardHistory,
   useDateTimeFormatter,
 } from "../hooks";
-import Breadcrumbs from "../components/Breadcrumbs";
-import Table from "../components/Table";
-import Spinner from "../components/Spinner";
 
 interface PathParams {
   dashboardId: string;
 }
 
 function DashboardHistory() {
+  const [filter, setFilter] = useState("");
   const { dashboardId } = useParams<PathParams>();
   const dateFormatter = useDateTimeFormatter();
   const { dashboard } = useDashboard(dashboardId);
@@ -23,7 +26,9 @@ function DashboardHistory() {
     () => [
       {
         Header: "Action",
-        accessor: "event",
+        accessor: (props: any) => {
+          return AuditTrailService.getActionFromDashboardAuditLog(props);
+        },
       },
       {
         Header: "Dashboard version",
@@ -41,6 +46,10 @@ function DashboardHistory() {
     ],
     []
   );
+
+  const onSearch = (query: string) => {
+    setFilter(query);
+  };
 
   if (!dashboard) {
     return <Spinner label="Loading..." />;
@@ -65,12 +74,21 @@ function DashboardHistory() {
       />
       <h1>History</h1>
 
+      <div className="grid-row margin-y-3">
+        <div className="tablet:grid-col-3 padding-top-1px">
+          <Search id="search" onSubmit={onSearch} size="small" />
+        </div>
+        <div className="tablet:grid-col-9 text-right">&nbsp;</div>
+      </div>
+
       <Table
         width="100%"
         selection="none"
         rows={auditlogs}
+        initialSortAscending={false}
         initialSortByField="timestamp"
         columns={tableColumns}
+        filterQuery={filter}
       />
     </>
   );

@@ -1,7 +1,9 @@
 import { Request } from "express";
 import { User, Role } from "../models/user";
 
-const local = !!process.env.LOCAL_MODE || false;
+function isLocalMode() {
+  return !!process.env.LOCAL_MODE || false;
+}
 
 /**
  * Gets the logged-in user from the http request headers.
@@ -9,7 +11,7 @@ const local = !!process.env.LOCAL_MODE || false;
  * Returns dummy user if running in local mode.
  */
 function getCurrentUser(req: Request): User | null {
-  if (local) {
+  if (isLocalMode()) {
     return userFromClaims(dummyUser());
   }
 
@@ -65,10 +67,10 @@ function dummyUser(): any {
     token_use: "id",
     auth_time: "1595027153",
     iss: "https://cognito-idp.us-west-2.amazonaws.com/us-west-2_JRVEBvlNZ",
-    "cognito:username": "fdingler",
+    "cognito:username": "johndoe",
     exp: "Sat Jul 18 00:05:53 UTC 2020",
     iat: "Fri Jul 17 23:05:54 UTC 2020",
-    email: "fdingler@amazon.com",
+    email: "johndoe@example.com",
     "custom:roles": '["Admin"]',
   };
 }

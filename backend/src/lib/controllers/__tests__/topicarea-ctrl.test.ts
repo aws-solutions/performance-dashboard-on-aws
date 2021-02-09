@@ -44,7 +44,8 @@ describe("updateTopicArea", () => {
     await TopicAreaCtrl.updateTopicArea(req, res);
     expect(repository.renameTopicArea).toBeCalledWith(
       "3ffdb1ef-081d-4534-97e9-b69cdbb687d0",
-      "New Name"
+      "New Name",
+      user
     );
   });
 });

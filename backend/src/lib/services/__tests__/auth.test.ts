@@ -1,4 +1,5 @@
 import AuthService from "../auth";
+import { Role } from "../../models/user";
 
 let req: any = {};
 
@@ -57,4 +58,13 @@ test("handles the case of roles not being present in claims", () => {
 
   const user = AuthService.getCurrentUser(req);
   expect(user?.roles).toEqual([]);
+});
+
+test("returns a dummy user when running on local mode", () => {
+  process.env.LOCAL_MODE = "true";
+  const user = AuthService.getCurrentUser(req);
+  expect(user).toEqual({
+    roles: [Role.Admin],
+    userId: "johndoe",
+  });
 });

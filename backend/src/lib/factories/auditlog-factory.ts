@@ -21,14 +21,21 @@ function buildDashboardAuditLogFromEvent(
   dashboard: Dashboard,
   oldDashboard?: Dashboard
 ): DashboardAuditLogItem {
-  // TODO: Add `updatedBy` attribute to Dashboard model
-  const user = event === ItemEvent.Create ? dashboard.createdBy : "Unknown";
+  let userId = "unknown";
+  switch (event) {
+    case ItemEvent.Create:
+      userId = dashboard.createdBy;
+      break;
+    case ItemEvent.Update:
+      userId = dashboard.updatedBy ?? "unknown";
+      break;
+  }
 
   const auditLog: DashboardAuditLogItem = {
     pk: DashboardFactory.itemId(dashboard.parentDashboardId),
     sk: timestamp.toISOString(),
     type: DASHBOARD_ITEM_TYPE,
-    userId: user,
+    userId: userId,
     version: dashboard.version,
     event,
   };

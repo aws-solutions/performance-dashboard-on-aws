@@ -45,7 +45,7 @@ describe("createNew", () => {
     expect(dashboard1.parentDashboardId).toEqual(dashboard1.id);
   });
 
-  it("should create a new dashboard with createdBy", () => {
+  it("should create a new dashboard with createdBy and updatedBy", () => {
     const dashboard1 = factory.createNew(
       "Dashboard1",
       "123",
@@ -54,6 +54,7 @@ describe("createNew", () => {
       user
     );
     expect(dashboard1.createdBy).toEqual(user.userId);
+    expect(dashboard1.updatedBy).toEqual(user.userId);
   });
 });
 
@@ -68,6 +69,7 @@ describe("toItem", () => {
     description: "Description test",
     parentDashboardId: "123",
     createdBy: user.userId,
+    updatedBy: user.userId,
     updatedAt: now,
     state: DashboardState.Draft,
     releaseNotes: "release note test",
@@ -95,7 +97,8 @@ describe("toItem", () => {
     expect(item.description).toEqual("Description test");
     expect(item.topicAreaId).toEqual("TopicArea#456");
     expect(item.topicAreaName).toEqual("Topic 1");
-    expect(item.createdBy).toEqual(user.userId);
+    expect(item.createdBy).toEqual(dashboard.createdBy);
+    expect(item.updatedBy).toEqual(dashboard.updatedBy);
     expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.state).toEqual("Draft");
     expect(item.version).toEqual(1);
@@ -117,6 +120,7 @@ describe("fromItem", () => {
     topicAreaName: "Topic 1",
     description: "Description test",
     createdBy: user.userId,
+    updatedBy: user.userId,
     parentDashboardId: "123",
     updatedAt: now,
     state: "Draft",
@@ -131,7 +135,8 @@ describe("fromItem", () => {
     expect(dashboard.name).toEqual("Dashboard 1");
     expect(dashboard.description).toEqual("Description test");
     expect(dashboard.topicAreaName).toEqual("Topic 1");
-    expect(dashboard.createdBy).toEqual(user.userId);
+    expect(dashboard.createdBy).toEqual(item.createdBy);
+    expect(dashboard.updatedBy).toEqual(item.updatedBy);
     expect(dashboard.updatedAt).toEqual(new Date(now));
     expect(dashboard.state).toEqual(DashboardState.Draft);
     expect(dashboard.version).toEqual(1);
@@ -258,6 +263,8 @@ describe("createDraftFromDashboard", () => {
         topicAreaId: "456",
         topicAreaName: "Topic 1",
         description: "Description test",
+        createdBy: user.userId,
+        updatedBy: user.userId,
       })
     );
   });

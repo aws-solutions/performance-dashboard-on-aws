@@ -1,16 +1,19 @@
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
-import { TopicArea } from "../../models/topicarea";
+import { DashboardList } from "../../models/dashboard";
 import TopicAreaRepository from "../topicarea-repo";
+import DashboardRepository from "../dashboard-repo";
 import TopicAreaFactory from "../../factories/topicarea-factory";
+import DynamoDBService from "../../services/dynamodb";
 
 jest.mock("../../services/dynamodb");
-import DynamoDBService from "../../services/dynamodb";
+jest.mock("../../repositories/dashboard-repo");
 
 let user: User;
 let tableName: string;
 let repo: TopicAreaRepository;
 let dynamodb = mocked(DynamoDBService.prototype);
+let dashboardRepo = mocked(DashboardRepository.prototype);
 
 beforeAll(() => {
   user = { userId: "johndoe" };
@@ -18,6 +21,7 @@ beforeAll(() => {
   process.env.MAIN_TABLE = tableName;
 
   DynamoDBService.getInstance = jest.fn().mockReturnValue(dynamodb);
+  DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
   repo = TopicAreaRepository.getInstance();
 });
 
@@ -175,7 +179,7 @@ describe("getDashboardCount", () => {
 
 describe("renameTopicArea", () => {
   it("updates topic area name", async () => {
-    await repo.renameTopicArea("123", "New name");
+    await repo.renameTopicArea("123", "New name", user);
     expect(dynamodb.update).toBeCalledWith(
       expect.objectContaining({
         TableName: tableName,
@@ -191,6 +195,21 @@ describe("renameTopicArea", () => {
           ":name": "New name",
         },
       })
+    );
+  });
+
+  it("updates all related dashboards", async () => {
+    const relatedDashboards: DashboardList = [];
+    dashboardRepo.listDashboardsInTopicArea = jest
+      .fn()
+      .mockReturnValue(relatedDashboards);
+
+    await repo.renameTopicArea("123", "New name", user);
+
+    expect(dashboardRepo.updateTopicAreaName).toBeCalledWith(
+      relatedDashboards,
+      "New name",
+      user
     );
   });
 });

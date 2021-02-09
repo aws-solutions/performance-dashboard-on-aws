@@ -121,7 +121,7 @@ class TopicAreaRepository extends BaseRepository {
     return uniqueParents.size;
   }
 
-  public async renameTopicArea(topicAreaId: string, name: string) {
+  public async renameTopicArea(topicAreaId: string, name: string, user: User) {
     // 1. Update the TopicArea item
     await this.dynamodb.update({
       TableName: this.tableName,
@@ -145,7 +145,7 @@ class TopicAreaRepository extends BaseRepository {
     );
 
     // 3. Update topicAreaName in every dashboard in the query result
-    await dashboardRepo.updateTopicAreaName(dashboards, name);
+    await dashboardRepo.updateTopicAreaName(dashboards, name, user);
   }
 }
 

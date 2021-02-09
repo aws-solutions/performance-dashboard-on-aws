@@ -987,7 +987,7 @@ describe("getNextVersionNumber", () => {
 });
 
 describe("updateTopicAreaName", () => {
-  it("handles incorrect versions gracefully", async () => {
+  it("updates all dashboards with new topic area name", async () => {
     const dashboards = [
       {
         id: "abc",
@@ -1003,8 +1003,29 @@ describe("updateTopicAreaName", () => {
       },
     ];
 
-    await repo.updateTopicAreaName(dashboards, "New Topic Area Name");
-    expect(dynamodb.transactWrite).toBeCalled();
+    await repo.updateTopicAreaName(dashboards, "New Topic Area Name", user);
+    expect(dynamodb.transactWrite).toBeCalledWith({
+      TransactItems: expect.arrayContaining([
+        expect.objectContaining({
+          Update: {
+            TableName: tableName,
+            Key: {
+              pk: "Dashboard#abc",
+              sk: "Dashboard#abc",
+            },
+            UpdateExpression:
+              "set topicAreaName = :topicAreaName, #updatedBy = :updatedBy",
+            ExpressionAttributeNames: {
+              "#updatedBy": "updatedBy",
+            },
+            ExpressionAttributeValues: {
+              ":topicAreaName": "New Topic Area Name",
+              ":updatedBy": user.userId,
+            },
+          },
+        }),
+      ]),
+    });
   });
 });
 

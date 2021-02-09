@@ -33,10 +33,6 @@ export function withSAMLAuthenticator(
       return checkUser();
     }, []);
 
-    React.useLayoutEffect(() => {
-      Hub.listen("auth", listenAuthEvents);
-    }, []);
-
     function checkUser() {
       setUser();
 
@@ -57,24 +53,6 @@ export function withSAMLAuthenticator(
         logger.debug(err);
       }
     }
-
-    const listenAuthEvents = useCallback((event: any) => {
-      const { payload } = event;
-      switch (payload.event) {
-        case "signIn":
-        case AuthState.SignedIn:
-        case "cognitoHostedUI":
-          setSignedIn(true);
-          break;
-        case "signOut":
-        case AuthState.SignedOut:
-        case "cognitoHostedUI_failure":
-          setSignedIn(false);
-          break;
-        default:
-          break;
-      }
-    }, []);
 
     function signInWithSAML(event: any) {
       event.preventDefault();

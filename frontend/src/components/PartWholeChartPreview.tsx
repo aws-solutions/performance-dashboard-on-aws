@@ -80,16 +80,22 @@ const PartWholeChartPreview = (props: Props) => {
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">{label}</span>
-        <div className="margin-left-4 margin-bottom-2 text-bold">{amount}</div>
+        <div className="margin-left-4 margin-bottom-1 text-bold">{amount}</div>
       </span>
     );
   };
 
   return (
     <div>
-      <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
+      <h2
+        className={`margin-left-1 margin-bottom-${
+          props.summaryBelow ? "4" : "1"
+        }`}
+      >
+        {props.title}
+      </h2>
       {!props.summaryBelow && (
-        <p className="margin-left-1 margin-top-0 margin-bottom-2">
+        <p className="margin-left-1 margin-top-0 margin-bottom-4">
           {props.summary}
         </p>
       )}
@@ -120,7 +126,6 @@ const PartWholeChartPreview = (props: Props) => {
               tick={false}
               tickLine={false}
               type="category"
-              padding={{ top: 10, bottom: 10 }}
             />
             <YAxis
               yAxisId="right"
@@ -128,7 +133,6 @@ const PartWholeChartPreview = (props: Props) => {
               tick={false}
               tickLine={false}
               type="category"
-              padding={{ top: 10, bottom: 10 }}
             />
             <Legend
               verticalAlign="top"
@@ -162,7 +166,7 @@ const PartWholeChartPreview = (props: Props) => {
         </ResponsiveContainer>
       )}
       {props.summaryBelow && (
-        <p className="margin-left-1 margin-top-3 margin-bottom-0">
+        <p className="margin-left-1 margin-top-1 margin-bottom-0">
           {props.summary}
         </p>
       )}

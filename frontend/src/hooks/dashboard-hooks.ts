@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import {
   Dashboard,
+  DashboardAuditLog,
   DashboardState,
   DashboardVersion,
   PublicDashboard,
@@ -197,5 +198,36 @@ export function useDashboardVersions(
   return {
     loading,
     versions,
+  };
+}
+
+type UseHistoryHook = {
+  loading: boolean;
+  auditlogs: DashboardAuditLog[];
+};
+
+export function useDashboardHistory(
+  parentDashboardId?: string
+): UseHistoryHook {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [auditlogs, setAuditlogs] = useState<DashboardAuditLog[]>([]);
+
+  useEffect(() => {
+    if (parentDashboardId) {
+      const fetchData = async () => {
+        setLoading(true);
+        const data = await BackendService.fetchDashboardHistory(
+          parentDashboardId
+        );
+        setAuditlogs(data);
+        setLoading(false);
+      };
+      fetchData();
+    }
+  }, [parentDashboardId]);
+
+  return {
+    loading,
+    auditlogs,
   };
 }

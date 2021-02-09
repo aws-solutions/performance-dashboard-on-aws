@@ -3,6 +3,7 @@ import {
   useDashboards,
   usePublicDashboard,
   useDashboardVersions,
+  useDashboardHistory,
 } from "./dashboard-hooks";
 import { useWidget, useColors } from "./widget-hooks";
 import { useTopicAreas, useTopicArea } from "./topicarea-hooks";
@@ -24,6 +25,7 @@ import { useImage } from "./image-hooks";
 
 export {
   useDashboard,
+  useDashboardHistory,
   usePublicDashboard,
   useDashboards,
   useWidget,

@@ -388,3 +388,12 @@ test("changeRole makes a POST request to users API", async () => {
     })
   );
 });
+
+test("fetchDashboardHistory makes a GET request to dashboard API", async () => {
+  await BackendService.fetchDashboardHistory("001");
+  expect(API.get).toBeCalledWith(
+    "BackendApi",
+    "dashboard/001/auditlogs",
+    expect.anything()
+  );
+});

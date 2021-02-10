@@ -52,7 +52,7 @@ function DashboardHistory() {
   };
 
   if (!dashboard) {
-    return <Spinner label="Loading..." />;
+    return <Spinner className="text-center margin-top-9" label="Loading" />;
   }
 
   return (

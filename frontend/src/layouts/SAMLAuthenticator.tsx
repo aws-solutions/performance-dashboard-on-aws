@@ -13,7 +13,7 @@ import {
 } from "@aws-amplify/ui-react";
 import { onAuthUIStateChange, AuthState } from "@aws-amplify/ui-components";
 import { Logger } from "@aws-amplify/core";
-import config, { samlConfig } from "../amplify-config";
+import { isFederatedLogin, samlConfig } from "../amplify-config";
 
 const logger = new Logger("withAuthenticator");
 
@@ -71,7 +71,7 @@ export function withSAMLAuthenticator(
       return (
         <AmplifyContainer>
           <AmplifyAuthenticator {...authenticatorProps} {...props}>
-            {"oauth" in config.Auth && (
+            {isFederatedLogin() && (
               <AmplifySignIn federated={samlConfig} slot="sign-in">
                 <AmplifyFederatedButtons federated={samlConfig} />
                 <div slot="federated-buttons">

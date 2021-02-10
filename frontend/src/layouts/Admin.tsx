@@ -18,7 +18,7 @@ function AdminLayout(props: LayoutProps) {
 
   const signOut = async (event: React.MouseEvent) => {
     try {
-      if (isFederatedId) {
+      if (isFederatedLogin()) {
         event.preventDefault();
       }
       await Auth.signOut();

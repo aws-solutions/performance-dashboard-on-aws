@@ -18,6 +18,9 @@ function AdminLayout(props: LayoutProps) {
 
   const signOut = async (event: React.MouseEvent) => {
     try {
+      if (isFederatedLogin()) {
+        event.preventDefault();
+      }
       await Auth.signOut();
     } catch (error) {
       console.log("error signing out: ", error);

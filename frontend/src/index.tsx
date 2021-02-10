@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Amplify from "@aws-amplify/core";
 import * as serviceWorker from "./serviceWorker";
-import config from "./amplify-config";
+import { amplifyConfig } from "./amplify-config";
 import App from "./App";
 import ReactModal from "react-modal";
 import "uswds/dist/css/uswds.min.css";
@@ -21,7 +21,7 @@ declare module "react" {
 ReactModal.setAppElement("#root"); //this is important for accessibility
 
 dayjs.extend(relativeTime);
-Amplify.configure(config);
+Amplify.configure(amplifyConfig());
 
 ReactDOM.render(
   <React.StrictMode>

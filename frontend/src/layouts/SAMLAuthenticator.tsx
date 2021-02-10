@@ -2,19 +2,17 @@ import React, {
   ComponentType,
   ComponentPropsWithRef,
   FunctionComponent,
-  useCallback,
 } from "react";
 import { Auth, appendToCognitoUserAgent } from "@aws-amplify/auth";
 import {
   AmplifyContainer,
   AmplifyAuthenticator,
   AmplifySignIn,
-  AmplifySignInButton,
   AmplifyFederatedButtons,
   AmplifyButton,
 } from "@aws-amplify/ui-react";
 import { onAuthUIStateChange, AuthState } from "@aws-amplify/ui-components";
-import { Hub, Logger } from "@aws-amplify/core";
+import { Logger } from "@aws-amplify/core";
 import config, { samlConfig } from "../amplify-config";
 
 const logger = new Logger("withAuthenticator");

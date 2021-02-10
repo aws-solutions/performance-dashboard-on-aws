@@ -15,7 +15,6 @@ interface Props extends cdk.StackProps {
   identityPoolId: string;
   appClientId: string;
   backendApiUrl: string;
-  frontendDomain: string;
 }
 
 export class FrontendStack extends cdk.Stack {
@@ -82,7 +81,6 @@ export class FrontendStack extends cdk.Stack {
         ],
       }
     );
-    props.frontendDomain = distribution.distributionDomainName;
 
     /**
      * S3 Deploy

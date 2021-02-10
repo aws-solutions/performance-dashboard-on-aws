@@ -43,6 +43,6 @@ p {
   overflow: auto;
 }
 
-div > .recharts-surface {
-  margin-top: 24px;
+.recharts-legend-wrapper {
+  top: -24px !important;
 }

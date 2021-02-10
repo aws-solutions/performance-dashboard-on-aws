@@ -53,9 +53,15 @@ const BarChartPreview = (props: Props) => {
 
   return (
     <div>
-      <h2 className="margin-left-1 margin-bottom-1">{props.title}</h2>
+      <h2
+        className={`margin-left-1 margin-bottom-${
+          props.summaryBelow ? "4" : "1"
+        }`}
+      >
+        {props.title}
+      </h2>
       {!props.summaryBelow && (
-        <p className="margin-left-1 margin-top-0 margin-bottom-2">
+        <p className="margin-left-1 margin-top-0 margin-bottom-4">
           {props.summary}
         </p>
       )}
@@ -122,7 +128,7 @@ const BarChartPreview = (props: Props) => {
         </ResponsiveContainer>
       )}
       {props.summaryBelow && (
-        <p className="margin-left-1 margin-top-3 margin-bottom-0">
+        <p className="margin-left-1 margin-top-1 margin-bottom-0">
           {props.summary}
         </p>
       )}

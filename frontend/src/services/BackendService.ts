@@ -8,6 +8,7 @@ import {
   Widget,
   User,
   DatasetSchema,
+  DashboardAuditLog,
 } from "../models";
 
 const apiName = "BackendApi";
@@ -35,6 +36,15 @@ async function fetchDashboardVersions(
 ): Promise<Array<DashboardVersion>> {
   const headers = await authHeaders();
   return await API.get(apiName, `dashboard/${parentDashboardId}/versions`, {
+    headers,
+  });
+}
+
+async function fetchDashboardHistory(
+  parentDashboardId: string
+): Promise<Array<DashboardAuditLog>> {
+  const headers = await authHeaders();
+  return await API.get(apiName, `dashboard/${parentDashboardId}/auditlogs`, {
     headers,
   });
 }
@@ -438,6 +448,7 @@ const BackendService = {
   createDraft,
   moveToDraft,
   fetchDashboardVersions,
+  fetchDashboardHistory,
   fetchUsers,
   addUsers,
   resendInvite,

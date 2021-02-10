@@ -62,6 +62,19 @@ export type DashboardVersion = {
   state: DashboardState;
 };
 
+export type DashboardAuditLog = {
+  itemId: string;
+  timestamp: Date;
+  version: number;
+  userId: string;
+  event: "Create" | "Update" | "Delete";
+  modifiedProperties?: Array<{
+    property: string;
+    oldValue: any;
+    newValue: any;
+  }>;
+};
+
 export enum WidgetType {
   Text = "Text",
   Chart = "Chart",

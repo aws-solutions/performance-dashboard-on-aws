@@ -18,6 +18,7 @@ import EditDetails from "./containers/EditDetails";
 import AddContent from "./containers/AddContent";
 import EditDashboard from "./containers/EditDashboard";
 import DashboardPreview from "./containers/DashboardPreview";
+import DashboardHistory from "./containers/DashboardHistory";
 import ViewDashboard from "./containers/ViewDashboard";
 import ViewDashboardAdmin from "./containers/ViewDashboardAdmin";
 import PublishDashboard from "./containers/PublishDashboard";
@@ -192,6 +193,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/dashboard/:dashboardId/preview",
     component: DashboardPreview,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/history",
+    component: DashboardHistory,
   },
   {
     path: "/admin/dashboard/:dashboardId/publish",

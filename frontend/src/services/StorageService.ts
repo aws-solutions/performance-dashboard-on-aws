@@ -29,6 +29,7 @@ const imageFileTypes: ValidFileTypes = {
   "image/png": ".png",
   "image/jpeg": ".jpg",
   "image/svg": ".svg",
+  "image/svg+xml": ".svg",
 };
 
 async function downloadFile(s3Key: string): Promise<File> {

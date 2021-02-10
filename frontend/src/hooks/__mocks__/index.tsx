@@ -5,7 +5,12 @@
  */
 import dayjs from "dayjs";
 import { useState, useCallback } from "react";
-import { DashboardState, DatasetType, SourceType } from "../../models";
+import {
+  DashboardState,
+  DatasetType,
+  SourceType,
+  DashboardAuditLog,
+} from "../../models";
 
 const dummyDashboard = {
   id: "123",
@@ -397,13 +402,6 @@ export function useUsers() {
   };
 }
 
-type CurrentUserHook = {
-  username: string;
-  isAdmin: boolean;
-  isEditor: boolean;
-  isPublisher: boolean;
-};
-
 export function useCurrentAuthenticatedUser() {
   const [username] = useState("johndoe");
   const [roles] = useState({
@@ -417,5 +415,36 @@ export function useCurrentAuthenticatedUser() {
     isAdmin: roles.isAdmin,
     isEditor: roles.isEditor,
     isPublisher: roles.isPublisher,
+  };
+}
+
+export function useDashboardHistory() {
+  const [loading] = useState(false);
+  const [auditlogs] = useState<DashboardAuditLog[]>([
+    {
+      itemId: "001",
+      timestamp: new Date("2020-12-08T22:56:13.721Z"),
+      event: "Create",
+      version: 1,
+      userId: "johndoe",
+    },
+    {
+      itemId: "001",
+      timestamp: new Date("2020-12-09T00:10:10.600Z"),
+      event: "Update",
+      version: 1,
+      userId: "johndoe",
+      modifiedProperties: [
+        {
+          property: "state",
+          oldValue: "Draft",
+          newValue: "PublishPending",
+        },
+      ],
+    },
+  ]);
+  return {
+    loading,
+    auditlogs,
   };
 }

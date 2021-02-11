@@ -10,7 +10,7 @@ jest.mock("../../factories/user-factory");
 
 const user: User = { userId: "johndoe" };
 const repository = mocked(UserRepository.prototype);
-const req = ({} as any) as Request;
+let req = ({} as any) as Request;
 let res: Response;
 
 beforeEach(() => {
@@ -23,7 +23,6 @@ beforeEach(() => {
 });
 
 describe("addUser", () => {
-  let req: Request;
   beforeEach(() => {
     req = ({
       user,
@@ -75,7 +74,6 @@ describe("addUser", () => {
 });
 
 describe("resendInvite", () => {
-  let req: Request;
   beforeEach(() => {
     req = ({
       user,
@@ -106,7 +104,6 @@ describe("resendInvite", () => {
 });
 
 describe("changeRole", () => {
-  let req: Request;
   beforeEach(() => {
     req = ({
       user,
@@ -173,5 +170,25 @@ describe("getUsers", () => {
 
     await UserCtrl.getUsers(req, res);
     expect(res.json).toBeCalledWith(expect.objectContaining([user]));
+  });
+});
+
+describe("removeUsers", () => {
+  beforeEach(() => {
+    req = ({
+      body: {},
+    } as any) as Request;
+  });
+
+  it("returns a 400 error when usernames is not specified", async () => {
+    await UserCtrl.removeUsers(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith(expect.stringContaining("usernames"));
+  });
+
+  it("calls user repo to delete users", async () => {
+    req.body = { usernames: ["johndoe", "alice", "bob"] };
+    await UserCtrl.removeUsers(req, res);
+    expect(repository.removeUsers).toBeCalledWith(["johndoe", "alice", "bob"]);
   });
 });

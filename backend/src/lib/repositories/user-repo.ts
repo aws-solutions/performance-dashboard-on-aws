@@ -1,6 +1,7 @@
 import { User } from "../models/user";
 import UserFactory from "../factories/user-factory";
 import CognitoService from "../services/cognito";
+import logger from "../services/logger";
 
 class UserRepository {
   protected static instance: UserRepository;
@@ -51,6 +52,21 @@ class UserRepository {
         });
       }
     } catch (error) {
+      throw error;
+    }
+  }
+
+  public async removeUsers(users: Array<string>) {
+    try {
+      for (const user of users) {
+        logger.debug("Deleting %s from userPool %s", user, this.userPoolId);
+        await this.cognito.removeUser({
+          UserPoolId: this.userPoolId,
+          Username: user,
+        });
+      }
+    } catch (error) {
+      logger.error("Failed to delete user(s) in Cognito %o", error);
       throw error;
     }
   }

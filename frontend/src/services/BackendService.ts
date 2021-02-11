@@ -392,6 +392,16 @@ async function addUsers(role: string, emails: Array<string>) {
   });
 }
 
+async function removeUsers(usernames: Array<string>) {
+  const headers = await authHeaders();
+  return await API.del(apiName, "user", {
+    headers,
+    body: {
+      usernames,
+    },
+  });
+}
+
 async function resendInvite(emails: Array<string>) {
   const headers = await authHeaders();
   return await API.post(apiName, "user/invite", {
@@ -451,6 +461,7 @@ const BackendService = {
   fetchDashboardHistory,
   fetchUsers,
   addUsers,
+  removeUsers,
   resendInvite,
   changeRole,
 };

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$comment": "Request object for the RemoveUsers endpoint",
+  "type": "object",
+  "properties": {
+    "usernames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["usernames"]
+}

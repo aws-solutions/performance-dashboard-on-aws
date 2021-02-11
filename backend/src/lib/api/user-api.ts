@@ -10,6 +10,7 @@ router.use(auth);
 
 router.get("/", rbac(Role.Admin), errorHandler(UserCtrl.getUsers));
 router.post("/", rbac(Role.Admin), errorHandler(UserCtrl.addUsers));
+router.delete("/", rbac(Role.Admin), errorHandler(UserCtrl.removeUsers));
 router.post("/invite", rbac(Role.Admin), errorHandler(UserCtrl.resendInvite));
 router.put("/role", rbac(Role.Admin), errorHandler(UserCtrl.changeRole));
 

@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import UserRepository from "../repositories/user-repo";
 import UserFactory from "../factories/user-factory";
+import { validate } from "jsonschema";
+import RemoveUsersSchema from "../jsonschema/api/RemoveUsers.json";
 import { Role } from "../models/user";
+import logger from "../services/logger";
 
 async function getUsers(req: Request, res: Response) {
   const repo = UserRepository.getInstance();
@@ -49,6 +52,24 @@ async function addUsers(req: Request, res: Response) {
   } catch (error) {
     res.status(500).send(error);
   }
+}
+
+async function removeUsers(req: Request, res: Response) {
+  const validationResult = validate(req.body, RemoveUsersSchema);
+  if (!validationResult.valid) {
+    res.status(400);
+    logger.warn("Invalid request to remove users %o", validationResult.errors);
+    return res.send(validationResult.toString());
+  }
+
+  const { usernames } = req.body;
+  const repo = UserRepository.getInstance();
+
+  logger.info("Deleting users %o", usernames);
+  repo.removeUsers(usernames);
+
+  logger.info("Users deleted successfully");
+  return res.send();
 }
 
 async function resendInvite(req: Request, res: Response) {
@@ -125,4 +146,5 @@ export default {
   addUsers,
   resendInvite,
   changeRole,
+  removeUsers,
 };

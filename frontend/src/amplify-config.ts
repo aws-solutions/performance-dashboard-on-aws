@@ -50,15 +50,12 @@ export const samlConfig = {
 };
 
 export function amplifyConfig(): {} {
-  var configuration: { [k: string]: any } = { ...config };
-  if (isFederatedLogin()) {
+  var configuration: { [k: string]: any } = config;
+
+  if (EnvConfig.samlProvider) {
     configuration.oauth = oauthConfig;
   }
   return configuration;
-}
-
-export function isFederatedLogin(): boolean {
-  return EnvConfig.samlProvider ? true : false;
 }
 
 export default config;

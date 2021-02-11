@@ -13,12 +13,12 @@ interface LayoutProps {
 }
 
 function AdminLayout(props: LayoutProps) {
-  const { username, isAdmin } = useCurrentAuthenticatedUser();
+  const { username, isAdmin, isFederatedId } = useCurrentAuthenticatedUser();
   const { settings } = useSettings();
 
   const signOut = async (event: React.MouseEvent) => {
     try {
-      if (isFederatedLogin()) {
+      if (isFederatedId) {
         event.preventDefault();
       }
       await Auth.signOut();

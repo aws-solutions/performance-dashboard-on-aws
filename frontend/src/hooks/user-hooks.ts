@@ -8,6 +8,7 @@ type CurrentUserHook = {
   isAdmin: boolean;
   isEditor: boolean;
   isPublisher: boolean;
+  isFederatedId: boolean;
 };
 
 function getRoleFromUser(user: any): string {
@@ -25,6 +26,7 @@ function getRoleFromUser(user: any): string {
 
 export function useCurrentAuthenticatedUser(): CurrentUserHook {
   const [username, setUser] = useState<string>("");
+  const [federated, setFederated] = useState(false);
   const [roles, setRoles] = useState<{
     isAdmin: boolean;
     isEditor: boolean;
@@ -39,6 +41,7 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
     const user = await Auth.currentAuthenticatedUser();
     
     setUser(user.username);
+    setFederated(!(user.attributes && user.attributes["custom:roles"]));
 
     const userRoles = getRoleFromUser(user);
     setRoles({
@@ -55,6 +58,7 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
   return {
     username,
     isAdmin: roles.isAdmin,
+    isFederatedId: federated,
     isEditor: roles.isEditor,
     isPublisher: roles.isPublisher,
   };

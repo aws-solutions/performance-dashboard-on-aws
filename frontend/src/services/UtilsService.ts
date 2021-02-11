@@ -47,10 +47,15 @@ function emailIsValid(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function timeout(delay: number) {
+  return new Promise((res) => setTimeout(res, delay));
+}
+
 const UtilsService = {
   groupByTopicArea,
   getChartTypeLabel,
   validateEmails,
+  timeout,
 };
 
 export default UtilsService;

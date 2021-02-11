@@ -245,8 +245,10 @@ function EditChart() {
   const handleChange = async (event: React.FormEvent<HTMLFieldSetElement>) => {
     const target = event.target as HTMLInputElement;
     if (target.name === "datasetType") {
+      setDatasetLoading(true);
       const datasetType = target.value as DatasetType;
       setDatasetType(datasetType);
+      await UtilsService.timeout(0);
       if (datasetType === DatasetType.DynamicDataset) {
         setCurrentJson(dynamicJson);
       }
@@ -256,6 +258,7 @@ function EditChart() {
       if (datasetType === DatasetType.CsvFileUpload) {
         setCurrentJson(csvJson);
       }
+      setDatasetLoading(false);
     }
   };
 

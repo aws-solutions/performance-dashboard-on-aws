@@ -1,6 +1,8 @@
 import * as cdk from "@aws-cdk/core";
 import * as cognito from "@aws-cdk/aws-cognito";
 import * as iam from "@aws-cdk/aws-iam";
+import * as lambda from "@aws-cdk/aws-lambda";
+import logs = require("@aws-cdk/aws-logs");
 import * as fs from "fs";
 import { StringAttribute } from "@aws-cdk/aws-cognito";
 //import { CfnCondition, CfnParameter, Fn } from "@aws-cdk/core";
@@ -85,6 +87,8 @@ export class AuthStack extends cdk.Stack {
         },
       ],
     });
+
+    this.buildPreTokenGenerationTrigger(pool.userPoolId);
 
     /**
      * Outputs
@@ -239,5 +243,26 @@ export class AuthStack extends cdk.Stack {
         "sts:AssumeRoleWithWebIdentity"
       ),
     });
+  }
+
+  private buildPreTokenGenerationTrigger(userPoolId: string) {
+    const lambdaFunction = new lambda.Function(this, "PreTokenGeneration", {
+      runtime: lambda.Runtime.NODEJS_12_X,
+      description: "Allow for customization of the role of an identity token",
+      code: lambda.Code.fromAsset("build/lib/auth/pretokengeneration"),
+      handler: "index.handler",
+      tracing: lambda.Tracing.ACTIVE,
+      memorySize: 128,
+      timeout: cdk.Duration.seconds(10),
+      reservedConcurrentExecutions: 25,
+      logRetention: logs.RetentionDays.TEN_YEARS,
+      environment: {
+        USER_POOL_ID: userPoolId,
+      },
+    });
+
+    lambdaFunction.role?.addManagedPolicy(
+      iam.ManagedPolicy.fromAwsManagedPolicyName("AmazonCognitoReadOnly")
+    );
   }
 }

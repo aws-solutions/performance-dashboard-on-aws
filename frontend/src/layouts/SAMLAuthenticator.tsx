@@ -13,7 +13,8 @@ import {
 } from "@aws-amplify/ui-react";
 import { onAuthUIStateChange, AuthState } from "@aws-amplify/ui-components";
 import { Logger } from "@aws-amplify/core";
-import { isFederatedLogin, samlConfig } from "../amplify-config";
+import { samlConfig } from "../amplify-config";
+import EnvConfig from "../services/EnvConfig";
 
 const logger = new Logger("withAuthenticator");
 
@@ -54,13 +55,9 @@ export function withSAMLAuthenticator(
 
     function signInWithSAML(event: any) {
       event.preventDefault();
-      if (
-        samlConfig &&
-        samlConfig.oauthConfig &&
-        samlConfig.oauthConfig.customProvider
-      ) {
+      if (EnvConfig.samlProvider) {
         Auth.federatedSignIn({
-          customProvider: samlConfig.oauthConfig.customProvider,
+          customProvider: EnvConfig.samlProvider,
         });
       } else {
         Auth.federatedSignIn();
@@ -71,7 +68,7 @@ export function withSAMLAuthenticator(
       return (
         <AmplifyContainer>
           <AmplifyAuthenticator {...authenticatorProps} {...props}>
-            {isFederatedLogin() && (
+            {EnvConfig.samlProvider && (
               <AmplifySignIn federated={samlConfig} slot="sign-in">
                 <AmplifyFederatedButtons federated={samlConfig} />
                 <div slot="federated-buttons">
@@ -79,10 +76,8 @@ export function withSAMLAuthenticator(
                     handleButtonClick={(event) => signInWithSAML(event)}
                   >
                     <span className="content">
-                      {samlConfig &&
-                      samlConfig.oauthConfig &&
-                      samlConfig.oauthConfig.label
-                        ? samlConfig.oauthConfig.label
+                      {EnvConfig.enterpriseLoginLabel
+                        ? EnvConfig.enterpriseLoginLabel
                         : "Enterprise Sign-in"}
                     </span>
                   </AmplifyButton>

@@ -20,8 +20,10 @@ import {
 interface Props extends cdk.StackProps {
   privateApiFunction: lambda.Function;
   publicApiFunction: lambda.Function;
+  dynamodbStreamsFunction: lambda.Function;
   restApi: apigateway.RestApi;
   mainTable: dynamodb.Table;
+  auditTrailTable: dynamodb.Table;
 }
 
 const ENABLE_ALARM_SNS_NOTIFICATIONS = true;
@@ -45,6 +47,10 @@ export class OpsStack extends cdk.Stack {
 
     this.createLambdaAlarms("PrivateApiFunction", props.privateApiFunction);
     this.createLambdaAlarms("PublicApiFunction", props.publicApiFunction);
+    this.createLambdaAlarms(
+      "DynamoDBStreamsFunction",
+      props.dynamodbStreamsFunction
+    );
     this.createOpsDashboard();
 
     new cdk.CfnOutput(this, "OpsNotificationsTopic", {
@@ -138,12 +144,30 @@ export class OpsStack extends cdk.Stack {
       "Public Users"
     );
 
+    const dynamodbStreamsInvocations = this.createLambdaInvocationsWidget(
+      this.props.dynamodbStreamsFunction,
+      "DynamoDB Streams Processor",
+      24
+    );
+
     const mainTableLatency = this.createDynamoDBLatencyWidget(
-      this.props.mainTable
+      this.props.mainTable,
+      "DynamoDB Main Table - Latency by Request Type"
     );
 
     const mainTableErrors = this.createDynamoDBErrorsWidget(
-      this.props.mainTable
+      this.props.mainTable,
+      "DynamoDB Main Table - Errors"
+    );
+
+    const auditTrailTableLatency = this.createDynamoDBLatencyWidget(
+      this.props.mainTable,
+      "DynamoDB Audit Trail Table - Latency by Request Type"
+    );
+
+    const auditTrailTableErrors = this.createDynamoDBErrorsWidget(
+      this.props.mainTable,
+      "DynamoDB Audit Trail Table - Errors"
     );
 
     dashboard.addWidgets(alarmsWidget);
@@ -155,8 +179,11 @@ export class OpsStack extends cdk.Stack {
     dashboard.addWidgets(apiRequests);
     dashboard.addWidgets(apiLatency);
     dashboard.addWidgets(privateApiInvocations, publicApiInvocations);
+    dashboard.addWidgets(dynamodbStreamsInvocations);
     dashboard.addWidgets(mainTableLatency);
     dashboard.addWidgets(mainTableErrors);
+    dashboard.addWidgets(auditTrailTableLatency);
+    dashboard.addWidgets(auditTrailTableErrors);
 
     return dashboard;
   }
@@ -289,9 +316,12 @@ export class OpsStack extends cdk.Stack {
     });
   }
 
-  createDynamoDBLatencyWidget(table: dynamodb.Table): GraphWidget {
+  createDynamoDBLatencyWidget(
+    table: dynamodb.Table,
+    title: string
+  ): GraphWidget {
     return new GraphWidget({
-      title: "DynamoDB Latency by Request Type",
+      title: title,
       width: 24,
       height: DASHBOARD_WIDGET_HEIGHT,
       left: [
@@ -365,9 +395,12 @@ export class OpsStack extends cdk.Stack {
     });
   }
 
-  createDynamoDBErrorsWidget(table: dynamodb.Table): GraphWidget {
+  createDynamoDBErrorsWidget(
+    table: dynamodb.Table,
+    title: string
+  ): GraphWidget {
     return new GraphWidget({
-      title: "DynamoDB Errors",
+      title: title,
       width: 24,
       height: DASHBOARD_WIDGET_HEIGHT,
       left: [

@@ -47,8 +47,10 @@ const operations = new OpsStack(app, "Ops", {
   stackName: stackPrefix.concat("-Ops"),
   privateApiFunction: backend.privateApiFunction,
   publicApiFunction: backend.publicApiFunction,
+  dynamodbStreamsFunction: backend.dynamodbStreamsFunction,
   restApi: backend.restApi,
   mainTable: backend.mainTable,
+  auditTrailTable: backend.auditTrailTable,
 });
 
 Tags.of(auth).add("app-id", APP_ID);

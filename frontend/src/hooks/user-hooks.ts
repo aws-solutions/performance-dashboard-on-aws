@@ -12,13 +12,17 @@ type CurrentUserHook = {
 };
 
 function getRoleFromUser(user: any): string {
-
   let roles = "";
 
   if (user.attributes && user.attributes["custom:roles"])
     roles = user.attributes["custom:roles"] + " ";
-  
-  if (user.signInUserSession && user.signInUserSession.idToken && user.signInUserSession.idToken.payload && user.signInUserSession.idToken.payload["custom:roles"])
+
+  if (
+    user.signInUserSession &&
+    user.signInUserSession.idToken &&
+    user.signInUserSession.idToken.payload &&
+    user.signInUserSession.idToken.payload["custom:roles"]
+  )
     roles = roles + user.signInUserSession.idToken.payload["custom:roles"];
 
   return roles;
@@ -39,7 +43,7 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
 
   const fetchData = useCallback(async () => {
     const user = await Auth.currentAuthenticatedUser();
-    
+
     setUser(user.username);
     setFederated(!(user.attributes && user.attributes["custom:roles"]));
 

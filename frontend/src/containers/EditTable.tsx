@@ -119,7 +119,7 @@ function EditTable() {
       }
       setDatasetLoading(true);
       parse(data, {
-        header: true,
+        header: false,
         dynamicTyping: true,
         skipEmptyLines: true,
         comments: "#",
@@ -130,8 +130,29 @@ function EditTable() {
             setCurrentJson([]);
           } else {
             setCsvErrors(undefined);
-            setCsvJson(results.data);
-            setCurrentJson(results.data);
+
+            const csvJson = new Array<any>();
+            if (results.data.length) {
+              const headers = results.data[0] as Array<any>;
+              for (let i = 1; i < results.data.length; i++) {
+                let row: any = {};
+                const entry = results.data[i] as Array<any>;
+                for (let j = 0; j < headers.length; j++) {
+                  const header = headers[j];
+                  const value = entry[j];
+                  row = {
+                    ...row,
+                    [typeof header === "number"
+                      ? `"${header}"`
+                      : header]: value,
+                  };
+                }
+                csvJson.push(row);
+              }
+            }
+
+            setCsvJson(csvJson);
+            setCurrentJson(csvJson);
           }
           setDatasetLoading(false);
         },

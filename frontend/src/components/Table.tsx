@@ -17,12 +17,13 @@ interface Props {
   className?: string;
   onSelection?: Function;
   rows: Array<object>;
-  width?: string;
+  width?: string | number | undefined;
   columns: Array<{
     accessor?: string | Function;
     Header: string;
     Cell?: Function;
     id?: string;
+    minWidth?: string | number | undefined;
   }>;
 }
 
@@ -113,10 +114,19 @@ function Table(props: Props) {
                 scope="col"
                 {...column.getHeaderProps()}
                 style={
-                  props.selection !== "none" ? { padding: "0.5rem 1rem" } : {}
+                  props.selection !== "none"
+                    ? { padding: "0.5rem 1rem" }
+                    : { minWidth: column.minWidth }
                 }
               >
-                {column.render("Header")}
+                <span>
+                  {typeof column.render("Header") === "string"
+                    ? (column.render("Header") as string)
+                        .split('"')
+                        .filter(Boolean)
+                        .join()
+                    : column.render("Header")}
+                </span>
                 {props.selection !== "none" && i === 0 ? null : (
                   <button
                     className="margin-left-1 usa-button usa-button--unstyled"

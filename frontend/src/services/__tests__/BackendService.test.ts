@@ -398,7 +398,7 @@ test("fetchDashboardHistory makes a GET request to dashboard API", async () => {
   );
 });
 
-test("removeUsers makes a GET request to the users API", async () => {
+test("removeUsers makes a DELETE request to the users API", async () => {
   await BackendService.removeUsers(["Bob", "Alice"]);
   expect(API.del).toBeCalledWith(
     "BackendApi",

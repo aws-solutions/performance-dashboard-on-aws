@@ -18,6 +18,7 @@ interface BackendStackProps extends cdk.StackProps {
 export class BackendStack extends cdk.Stack {
   public readonly privateApiFunction: lambda.Function;
   public readonly publicApiFunction: lambda.Function;
+  public readonly dynamodbStreamsFunction: lambda.Function;
   public readonly mainTable: dynamodb.Table;
   public readonly auditTrailTable: dynamodb.Table;
   public readonly restApi: apigateway.RestApi;
@@ -48,6 +49,7 @@ export class BackendStack extends cdk.Stack {
      */
     this.privateApiFunction = lambdas.apiHandler;
     this.publicApiFunction = lambdas.publicApiHandler;
+    this.dynamodbStreamsFunction = lambdas.ddbStreamProcessor;
     this.mainTable = database.mainTable;
     this.restApi = backendApi.api;
 

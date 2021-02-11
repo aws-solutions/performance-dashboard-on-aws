@@ -41,7 +41,8 @@ const EnvConfigService = {
   topicAreasLabel: (config && config.topicAreasLabel) || "Topic areas",
   cognitoDomain: (config && config.cognitoDomain) || "",
   samlProvider: (config && config.samlProvider) || "",
-  enterpriseLoginLabel: (config && config.enterpriseLoginLabel) || "Enterprise Sign-In",
+  enterpriseLoginLabel:
+    (config && config.enterpriseLoginLabel) || "Enterprise Sign-In",
   frontendDomain: (config && config.frontendDomain) || "",
 } as EnvConfig;
 

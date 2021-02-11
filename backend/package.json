@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Performance Dashboard on AWS Backend",
   "scripts": {
-    "test": "jest --coverage --watchAll",
+    "test": "LOG_LEVEL=SILENT jest --coverage --watchAll",
     "test:ci": "jest --coverage --ci",
     "build": "npm run clean && tsc && npm run install:prod",
     "copy:package": "cp package.json build/",

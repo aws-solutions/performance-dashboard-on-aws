@@ -111,3 +111,17 @@ describe("changeRole", () => {
     });
   });
 });
+
+describe("removeUsers", () => {
+  it("should delete the users from the Cognito User Pool", async () => {
+    await repo.removeUsers(["Bob", "Alice"]);
+    expect(cognito.removeUser).toHaveBeenCalledWith({
+      UserPoolId: "abc",
+      Username: "Bob",
+    });
+    expect(cognito.removeUser).toHaveBeenCalledWith({
+      UserPoolId: "abc",
+      Username: "Alice",
+    });
+  });
+});

@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import UserRepository from "../repositories/user-repo";
 import UserFactory from "../factories/user-factory";
+import { validate } from "jsonschema";
+import RemoveUsersSchema from "../jsonschema/api/RemoveUsers.json";
 import { Role } from "../models/user";
+import logger from "../services/logger";
 
 async function getUsers(req: Request, res: Response) {
   const repo = UserRepository.getInstance();
@@ -52,31 +55,21 @@ async function addUsers(req: Request, res: Response) {
 }
 
 async function removeUsers(req: Request, res: Response) {
-  const { role, emails } = req.body;
-
-  if (!role) {
-    res.status(400).send("Missing required body `role`");
-    return;
+  const validationResult = validate(req.body, RemoveUsersSchema);
+  if (!validationResult.valid) {
+    res.status(400);
+    logger.warn("Invalid request to remove users %o", validationResult.errors);
+    return res.send(validationResult.toString());
   }
 
-  if (role !== Role.Admin && role !== Role.Editor && role !== Role.Publisher) {
-    res.status(400).send("Invalid role value");
-    return;
-  }
+  const { usernames } = req.body;
+  const repo = UserRepository.getInstance();
 
-  if (!emails) {
-    res.status(400).send("Missing required body `emails`");
-    return;
-  }
+  logger.info("Deleting users %o", usernames);
+  repo.removeUsers(usernames);
 
-  const userEmails = (emails as string).split(",");
-
-  for (const userEmail of userEmails) {
-    if (!emailIsValid(userEmail)) {
-      res.status(400).send(`Invalid email: ${userEmail}`);
-      return;
-    }
-  }
+  logger.info("Users deleted successfully");
+  return res.send();
 }
 
 async function resendInvite(req: Request, res: Response) {

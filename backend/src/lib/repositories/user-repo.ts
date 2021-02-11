@@ -34,9 +34,12 @@ class UserRepository {
       return [];
     }
 
-    return result.Users.map((cognitoUser) =>
-      UserFactory.fromCognitoUser(cognitoUser)
-    );
+    return result.Users.reduce(function (result, cognitoUser) {
+      if (cognitoUser.UserStatus !== "EXTERNAL_PROVIDER") {
+        result.push(UserFactory.fromCognitoUser(cognitoUser));
+      }
+      return result;
+    }, [] as User[]);
   }
 
   public async addUsers(users: Array<User>) {

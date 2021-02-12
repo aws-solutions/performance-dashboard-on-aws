@@ -29,7 +29,7 @@ const PartWholeChartPreview = (props: Props) => {
 
   const { data, parts } = props;
   useMemo(() => {
-    if (data) {
+    if (data && data.length) {
       let bar = {};
       total.current = 0;
       partWholeParts.current = [];
@@ -102,13 +102,13 @@ const PartWholeChartPreview = (props: Props) => {
       {partWholeData.current.length && (
         <ResponsiveContainer
           width="100%"
-          height={data && data.length > 15 ? 600 : 300}
+          height={data && data.length > 15 ? 600 : 250}
         >
           <BarChart
             data={partWholeData.current}
             layout="vertical"
             margin={{ right: -50, left: -50 }}
-            maxBarSize={100}
+            barSize={100}
           >
             <CartesianGrid horizontal={false} vertical={false} />
             <XAxis
@@ -126,6 +126,7 @@ const PartWholeChartPreview = (props: Props) => {
               tick={false}
               tickLine={false}
               type="category"
+              padding={{ top: 40 }}
             />
             <YAxis
               yAxisId="right"
@@ -133,6 +134,7 @@ const PartWholeChartPreview = (props: Props) => {
               tick={false}
               tickLine={false}
               type="category"
+              padding={{ top: 40 }}
             />
             <Legend
               verticalAlign="top"

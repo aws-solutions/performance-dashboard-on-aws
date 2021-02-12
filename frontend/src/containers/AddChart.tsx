@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
@@ -170,37 +170,42 @@ function AddChart() {
     setChartType((event.target as HTMLInputElement).value as ChartType);
   };
 
-  const onFileProcessed = (data: File) => {
-    if (!data) {
-      return;
-    }
-    setDatasetLoading(true);
-    parse(data, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true,
-      comments: "#",
-      complete: function (results: ParseResult<object>) {
-        if (results.errors.length) {
-          setCsvErrors(results.errors);
-          setCsvJson([]);
-          setCurrentJson([]);
-        } else {
-          setCsvErrors(undefined);
-          setCsvJson(results.data);
-          setCurrentJson(results.data);
-        }
-        setDatasetLoading(false);
-      },
-    });
-    setCsvFile(data);
-  };
+  const onFileProcessed = useCallback(
+    async (data: File) => {
+      if (!data) {
+        return;
+      }
+      setDatasetLoading(true);
+      parse(data, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true,
+        comments: "#",
+        complete: async function (results: ParseResult<object>) {
+          if (results.errors.length) {
+            setCsvErrors(results.errors);
+            setCsvJson([]);
+            setCurrentJson([]);
+          } else {
+            setCsvErrors(undefined);
+            setCsvJson(results.data);
+            setCurrentJson(results.data);
+          }
+          setDatasetLoading(false);
+        },
+      });
+      setCsvFile(data);
+    },
+    [setCurrentJson, setCsvJson]
+  );
 
-  const handleChange = (event: React.FormEvent<HTMLFieldSetElement>) => {
+  const handleChange = async (event: React.FormEvent<HTMLFieldSetElement>) => {
     const target = event.target as HTMLInputElement;
     if (target.name === "datasetType") {
+      setDatasetLoading(true);
       const datasetType = target.value as DatasetType;
       setDatasetType(datasetType);
+      await UtilsService.timeout(0);
       if (datasetType === DatasetType.DynamicDataset) {
         setCurrentJson(dynamicJson);
       }
@@ -210,6 +215,7 @@ function AddChart() {
       if (datasetType === DatasetType.CsvFileUpload) {
         setCurrentJson(csvJson);
       }
+      setDatasetLoading(false);
     }
   };
 

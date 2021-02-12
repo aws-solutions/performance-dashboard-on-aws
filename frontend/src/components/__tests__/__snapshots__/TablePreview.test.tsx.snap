@@ -3,7 +3,7 @@
 exports[`table preview should match snapshot 1`] = `
 <div>
   <div
-    class="preview-container"
+    class="overflow-hidden"
   >
     <h2
       class="margin-left-1 margin-bottom-1"
@@ -27,8 +27,11 @@ exports[`table preview should match snapshot 1`] = `
             colspan="1"
             role="columnheader"
             scope="col"
+            style="min-width: 150px;"
           >
-            test
+            <span>
+              test
+            </span>
             <button
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"

@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { Dataset, DatasetType } from "../models";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
+import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
@@ -119,7 +120,7 @@ function EditTable() {
       }
       setDatasetLoading(true);
       parse(data, {
-        header: true,
+        header: false,
         dynamicTyping: true,
         skipEmptyLines: true,
         comments: "#",
@@ -130,8 +131,11 @@ function EditTable() {
             setCurrentJson([]);
           } else {
             setCsvErrors(undefined);
-            setCsvJson(results.data);
-            setCurrentJson(results.data);
+            const csvJson = DatasetParsingService.createHeaderRowJson(
+              results.data
+            );
+            setCsvJson(csvJson);
+            setCurrentJson(csvJson);
           }
           setDatasetLoading(false);
         },

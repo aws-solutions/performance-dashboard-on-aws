@@ -13,7 +13,7 @@ const TablePreview = (props: Props) => {
   const { headers, data, summaryBelow, summary, title } = props;
 
   return (
-    <div className="preview-container">
+    <div className="overflow-hidden">
       <h2 className="margin-left-1 margin-bottom-1">{title}</h2>
       {!summaryBelow && (
         <p className="margin-left-1 margin-top-0 margin-bottom-3">{summary}</p>
@@ -30,6 +30,7 @@ const TablePreview = (props: Props) => {
                 Header: header,
                 id: String(i),
                 accessor: header,
+                minWidth: 150,
                 Cell: (props: any) => {
                   const row = props.row.original;
                   return row[header] || null;

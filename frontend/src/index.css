@@ -46,3 +46,7 @@ p {
 .recharts-legend-wrapper {
   top: -24px !important;
 }
+
+.overflow-hidden:hover {
+  overflow-x: visible;
+}

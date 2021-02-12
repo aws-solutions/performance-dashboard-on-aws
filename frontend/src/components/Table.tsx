@@ -120,12 +120,19 @@ function Table(props: Props) {
                 }
               >
                 <span>
-                  {typeof column.render("Header") === "string"
-                    ? (column.render("Header") as string)
-                        .split('"')
-                        .filter(Boolean)
-                        .join()
-                    : column.render("Header")}
+                  {
+                    /**
+                     * The split is to remove the quotes from the
+                     * string, the filter to remove the resulted
+                     * empty ones, and the join to form it again.
+                     */
+                    typeof column.render("Header") === "string"
+                      ? (column.render("Header") as string)
+                          .split('"')
+                          .filter(Boolean)
+                          .join()
+                      : column.render("Header")
+                  }
                 </span>
                 {props.selection !== "none" && i === 0 ? null : (
                   <button

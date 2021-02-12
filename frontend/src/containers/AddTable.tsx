@@ -5,6 +5,7 @@ import { Dataset, DatasetType, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
 import { useDashboard, useDateTimeFormatter } from "../hooks";
 import StorageService from "../services/StorageService";
+import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
@@ -160,7 +161,7 @@ function AddTable() {
     }
     setDatasetLoading(true);
     parse(data, {
-      header: true,
+      header: false,
       dynamicTyping: true,
       skipEmptyLines: true,
       comments: "#",
@@ -171,8 +172,11 @@ function AddTable() {
           setCurrentJson([]);
         } else {
           setCsvErrors(undefined);
-          setCsvJson(results.data);
-          setCurrentJson(results.data);
+          const csvJson = DatasetParsingService.createHeaderRowJson(
+            results.data
+          );
+          setCsvJson(csvJson);
+          setCurrentJson(csvJson);
         }
         setDatasetLoading(false);
       },

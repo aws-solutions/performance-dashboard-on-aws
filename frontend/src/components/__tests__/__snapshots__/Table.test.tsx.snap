@@ -14,8 +14,11 @@ exports[`renders a basic table 1`] = `
           colspan="1"
           role="columnheader"
           scope="col"
+          style="min-width: 0;"
         >
-          ID
+          <span>
+            ID
+          </span>
           <button
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
@@ -42,8 +45,11 @@ exports[`renders a basic table 1`] = `
           colspan="1"
           role="columnheader"
           scope="col"
+          style="min-width: 0;"
         >
-          Name
+          <span>
+            Name
+          </span>
           <button
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
@@ -70,8 +76,11 @@ exports[`renders a basic table 1`] = `
           colspan="1"
           role="columnheader"
           scope="col"
+          style="min-width: 0;"
         >
-          Last Updated
+          <span>
+            Last Updated
+          </span>
           <button
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
@@ -180,11 +189,13 @@ exports[`sorting buttons are clickable 1`] = `
           scope="col"
           style="padding: 0.5rem 1rem;"
         >
-          <input
-            style="cursor: pointer;"
-            title="Toggle All Rows Selected"
-            type="checkbox"
-          />
+          <span>
+            <input
+              style="cursor: pointer;"
+              title="Toggle All Rows Selected"
+              type="checkbox"
+            />
+          </span>
         </th>
         <th
           colspan="1"
@@ -192,7 +203,9 @@ exports[`sorting buttons are clickable 1`] = `
           scope="col"
           style="padding: 0.5rem 1rem;"
         >
-          ID
+          <span>
+            ID
+          </span>
           <button
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
@@ -221,7 +234,9 @@ exports[`sorting buttons are clickable 1`] = `
           scope="col"
           style="padding: 0.5rem 1rem;"
         >
-          Name
+          <span>
+            Name
+          </span>
           <button
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
@@ -250,7 +265,9 @@ exports[`sorting buttons are clickable 1`] = `
           scope="col"
           style="padding: 0.5rem 1rem;"
         >
-          Last Updated
+          <span>
+            Last Updated
+          </span>
           <button
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
@@ -383,11 +400,13 @@ exports[`sorting buttons are clickable 2`] = `
           scope="col"
           style="padding: 0.5rem 1rem;"
         >
-          <input
-            style="cursor: pointer;"
-            title="Toggle All Rows Selected"
-            type="checkbox"
-          />
+          <span>
+            <input
+              style="cursor: pointer;"
+              title="Toggle All Rows Selected"
+              type="checkbox"
+            />
+          </span>
         </th>
         <th
           colspan="1"
@@ -395,7 +414,9 @@ exports[`sorting buttons are clickable 2`] = `
           scope="col"
           style="padding: 0.5rem 1rem;"
         >
-          ID
+          <span>
+            ID
+          </span>
           <button
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
@@ -424,7 +445,9 @@ exports[`sorting buttons are clickable 2`] = `
           scope="col"
           style="padding: 0.5rem 1rem;"
         >
-          Name
+          <span>
+            Name
+          </span>
           <button
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
@@ -453,7 +476,9 @@ exports[`sorting buttons are clickable 2`] = `
           scope="col"
           style="padding: 0.5rem 1rem;"
         >
-          Last Updated
+          <span>
+            Last Updated
+          </span>
           <button
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"

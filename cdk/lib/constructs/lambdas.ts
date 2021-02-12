@@ -132,6 +132,7 @@ export class LambdaFunctions extends cdk.Construct {
       actions: [
         "cognito-idp:ListUsers",
         "cognito-idp:AdminCreateUser",
+        "cognito-idp:AdminDeleteUser",
         "cognito-idp:AdminUpdateUserAttributes",
       ],
     });

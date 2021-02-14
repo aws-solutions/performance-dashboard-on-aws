@@ -109,7 +109,7 @@ describe("changeRole", () => {
       user,
       body: {
         role: "Editor",
-        emails: "test1@test.com,test2@test.com",
+        usernames: ["test1", "test2"],
       },
     } as any) as Request;
   });
@@ -129,17 +129,10 @@ describe("changeRole", () => {
   });
 
   it("returns a 400 error when emails is missing", async () => {
-    delete req.body.emails;
+    delete req.body.usernames;
     await UserCtrl.changeRole(req, res);
     expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Missing required body `emails`");
-  });
-
-  it("returns a 400 error when emails have an invalid email", async () => {
-    req.body.emails = "wrong email";
-    await UserCtrl.changeRole(req, res);
-    expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Invalid email: wrong email");
+    expect(res.send).toBeCalledWith("Missing required body `usernames`");
   });
 
   it("change role", async () => {

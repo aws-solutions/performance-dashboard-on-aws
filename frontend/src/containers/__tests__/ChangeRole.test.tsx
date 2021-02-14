@@ -16,6 +16,7 @@ describe("ChangeRoleForm", () => {
     history.location.state = {
       ...history.location.state,
       emails: "test@test.com",
+      usernames: ["test1"],
     };
     jest.spyOn(history, "push");
     BackendService.createDashboard = jest.fn();
@@ -38,9 +39,7 @@ describe("ChangeRoleForm", () => {
       fireEvent.submit(screen.getByTestId("ChangeRoleForm"));
     });
 
-    expect(BackendService.changeRole).toBeCalledWith("Admin", [
-      "test@test.com",
-    ]);
+    expect(BackendService.changeRole).toBeCalledWith("Admin", ["test1"]);
   });
 
   test("invokes cancel function when use clicks cancel", async () => {

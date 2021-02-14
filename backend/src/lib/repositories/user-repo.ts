@@ -88,7 +88,6 @@ class UserRepository {
   public async changeRole(usernames: Array<string>, role: string) {
     try {
       for (const username of usernames) {
-        console.log(username);
         await this.cognito.updateUserAttributes({
           UserPoolId: this.userPoolId,
           Username: username,
@@ -98,8 +97,6 @@ class UserRepository {
         });
       }
     } catch (error) {
-      console.log(error.Stack);
-      console.log(error.message);
       throw error;
     }
   }

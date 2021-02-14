@@ -15,15 +15,9 @@ function getRoleFromUser(user: any): string {
   let roles = "";
 
   if (user.attributes && user.attributes["custom:roles"])
-    roles = user.attributes["custom:roles"] + " ";
-
-  if (
-    user.signInUserSession &&
-    user.signInUserSession.idToken &&
-    user.signInUserSession.idToken.payload &&
-    user.signInUserSession.idToken.payload["custom:roles"]
-  )
-    roles = roles + user.signInUserSession.idToken.payload["custom:roles"];
+    roles = user.attributes["custom:roles"];
+  else if (user.attributes && user.attributes["custom:groups"])
+    roles = user.attributes["custom:groups"];
 
   return roles;
 }
@@ -45,7 +39,17 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
     const user = await Auth.currentAuthenticatedUser();
 
     setUser(user.username);
-    setFederated(!(user.attributes && user.attributes["custom:roles"]));
+
+    // did the user do Single Sign In, if so we'll have to do Single Sign Out
+    // attributes: {identities:"[{"providerType":"SAML"}]"}
+    if (user.attributes && user.attributes["identities"]) {
+      const identity = JSON.parse(user.attributes.identities);
+      if (Array.isArray(identity) && identity[0].providerType) {
+        setFederated(true);
+      }
+    } else {
+      setFederated(false);
+    }
 
     const userRoles = getRoleFromUser(user);
     setRoles({

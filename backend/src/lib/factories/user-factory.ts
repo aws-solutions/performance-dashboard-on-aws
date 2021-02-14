@@ -10,6 +10,22 @@ function createNew(email: string, role: string): User {
 }
 
 function fromCognitoUser(cognitoUser: UserType): User {
+  var userRole = cognitoUser.Attributes
+    ? JSON.parse(
+        cognitoUser.Attributes.find((a) => a.Name === "custom:roles")?.Value ||
+          '[""]'
+      )
+    : [""];
+
+  if (!userRole[0]) {
+    userRole = cognitoUser.Attributes
+      ? JSON.parse(
+          cognitoUser.Attributes.find((a) => a.Name === "custom:groups")
+            ?.Value || '[""]'
+        )
+      : [""];
+  }
+
   return {
     userId: cognitoUser.Username || "",
     enabled: cognitoUser.Enabled,
@@ -20,12 +36,7 @@ function fromCognitoUser(cognitoUser: UserType): User {
     email: cognitoUser.Attributes
       ? cognitoUser.Attributes.find((a) => a.Name === "email")?.Value
       : "",
-    roles: cognitoUser.Attributes
-      ? JSON.parse(
-          cognitoUser.Attributes.find((a) => a.Name === "custom:roles")
-            ?.Value || '[""]'
-        )
-      : [""],
+    roles: userRole,
     createdAt: cognitoUser.UserCreateDate
       ? cognitoUser.UserCreateDate
       : new Date(),

@@ -34,12 +34,9 @@ class UserRepository {
       return [];
     }
 
-    return result.Users.reduce(function (result, cognitoUser) {
-      if (cognitoUser.UserStatus !== "EXTERNAL_PROVIDER") {
-        result.push(UserFactory.fromCognitoUser(cognitoUser));
-      }
-      return result;
-    }, [] as User[]);
+    return result.Users.map((cognitoUser) =>
+      UserFactory.fromCognitoUser(cognitoUser)
+    );
   }
 
   public async addUsers(users: Array<User>) {
@@ -91,6 +88,7 @@ class UserRepository {
   public async changeRole(usernames: Array<string>, role: string) {
     try {
       for (const username of usernames) {
+        console.log(username);
         await this.cognito.updateUserAttributes({
           UserPoolId: this.userPoolId,
           Username: username,
@@ -100,6 +98,8 @@ class UserRepository {
         });
       }
     } catch (error) {
+      console.log(error.Stack);
+      console.log(error.message);
       throw error;
     }
   }

@@ -5,7 +5,6 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { withAuthenticator } from "@aws-amplify/ui-react";
 import SettingsProvider from "./context/SettingsProvider";
 import withSAMLAuthenticator from "./layouts/SAMLAuthenticator";
 

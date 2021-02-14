@@ -50,6 +50,12 @@ function userFromClaims(claims: any): User {
     } catch (err) {
       console.error("Invalid value for custom:roles in JWT token claims", err);
     }
+  } else if (claims["custom:groups"]) {
+    try {
+      roles = JSON.parse(claims["custom:groups"]);
+    } catch (err) {
+      console.error("Invalid value for custom:groups in JWT token claims", err);
+    }
   }
 
   return {

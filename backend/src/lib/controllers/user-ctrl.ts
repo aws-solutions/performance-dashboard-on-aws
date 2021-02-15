@@ -99,7 +99,13 @@ async function resendInvite(req: Request, res: Response) {
 }
 
 async function changeRole(req: Request, res: Response) {
-  const { role, usernames } = req.body;
+  // Temporarily disabling this feature
+  res.status(404).send("Not found");
+  return;
+
+  /*
+
+  const { role, emails } = req.body;
 
   if (!role) {
     res.status(400).send("Missing required body `role`");

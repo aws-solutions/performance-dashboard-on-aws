@@ -99,7 +99,6 @@ async function resendInvite(req: Request, res: Response) {
 }
 
 async function changeRole(req: Request, res: Response) {
-
   // Temporarily disabling this feature
   res.status(404).send("Not found");
   return;

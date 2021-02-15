@@ -114,6 +114,12 @@ describe("changeRole", () => {
     } as any) as Request;
   });
 
+  it("returns a 404 status", async () => {
+    await UserCtrl.changeRole(req, res);
+    expect(res.status).toBeCalledWith(404);
+  });
+
+  /*
   it("returns a 400 error when role is missing", async () => {
     delete req.body.role;
     await UserCtrl.changeRole(req, res);
@@ -142,6 +148,7 @@ describe("changeRole", () => {
       Role.Editor
     );
   });
+  */
 });
 
 describe("getUsers", () => {

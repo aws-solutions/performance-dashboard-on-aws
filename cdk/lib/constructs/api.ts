@@ -175,6 +175,7 @@ export class BackendApi extends cdk.Construct {
     const user = this.api.root.addResource("user");
     user.addMethod("GET", apiIntegration, methodProps);
     user.addMethod("POST", apiIntegration, methodProps);
+    user.addMethod("DELETE", apiIntegration, methodProps);
 
     const resendInvite = user.addResource("invite");
     resendInvite.addMethod("POST", apiIntegration, methodProps);

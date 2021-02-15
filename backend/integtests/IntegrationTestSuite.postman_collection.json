@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dfd10275-0bc3-47b8-b6c7-6eda5f99b5e3",
+		"_postman_id": "bcd51d8d-d894-424e-9451-42ee787c3a23",
 		"name": "Integration Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -2260,6 +2260,65 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Update role",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b6787cb6-f5e4-4da2-8e9d-4d293cdb1d72",
+						"exec": [
+							"pm.test(\"returns 404 Not Found\", () => {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"role\":\"Admin\",\"emails\":\"trietlu@amazon.com\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/role",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"role"
+					]
+				},
+				"description": "Change the role of a user"
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -2284,108 +2343,162 @@
 	],
 	"variable": [
 		{
+			"id": "886083be-2919-46d8-b64d-ec64387366f5",
 			"key": "baseUrl",
-			"value": "http://localhost:8080"
+			"value": "http://localhost:8080",
+			"type": "string"
 		},
 		{
+			"id": "4eb35727-f7c3-4160-a7c8-842efd7b2d06",
 			"key": "token",
-			"value": ""
-		},
-		{
-			"key": "apiKey",
-			"value": ""
-		},
-		{
-			"key": "testId",
-			"value": ""
-		},
-		{
-			"key": "topicarea.id",
-			"value": ""
-		},
-		{
-			"key": "topicarea.name",
-			"value": ""
-		},
-		{
-			"key": "dashboard.id",
-			"value": ""
-		},
-		{
-			"key": "dashboard.name",
-			"value": ""
-		},
-		{
-			"key": "dashboard.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "dashboard.friendlyURL",
-			"value": ""
-		},
-		{
-			"key": "dashboard2.id",
-			"value": ""
-		},
-		{
-			"key": "textwidget.id",
-			"value": ""
-		},
-		{
-			"key": "textwidget.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "chartwidget.id",
-			"value": ""
-		},
-		{
-			"key": "chartwidget.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "settings.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "settings.publishingGuidance",
-			"value": ""
-		},
-		{
-			"key": "homepage.title",
-			"value": ""
-		},
-		{
-			"key": "homepage.description",
-			"value": ""
-		},
-		{
-			"key": "homepage.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "dataset.id",
-			"value": ""
-		},
-		{
-			"key": "dataset.s3Key",
-			"value": ""
-		},
-		{
-			"key": "dataset.s3Key.json",
-			"value": ""
-		},
-		{
-			"key": "metricsdataset.id",
-			"value": ""
-		},
-		{
-			"key": "imagewidget.id",
-			"value": ""
-		},
-		{
 			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "1570beed-619e-4a00-94dc-fc1c15dbe840",
+			"key": "apiKey",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "4423878b-efbc-4c51-b5a4-08c761fb96e0",
+			"key": "testId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "b035dae1-01ba-4274-9eb9-f5776df6f22b",
+			"key": "topicarea.id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "5160ee6d-5faf-4be9-9c00-72f74a4584bc",
+			"key": "topicarea.name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "4676a882-a98d-4b09-a0db-12e464da4efe",
+			"key": "dashboard.id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "aa3f9cb2-00a9-4e36-ba08-14a349ef8445",
+			"key": "dashboard.name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "ce3729fe-f54a-44db-a511-1e3cb9096eaa",
+			"key": "dashboard.updatedAt",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "597fd01a-794d-43a5-826b-96b585821fa4",
+			"key": "dashboard.friendlyURL",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "e2ed5cbe-7820-4488-95bd-d1764bc69dc3",
+			"key": "dashboard2.id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "3b3c04f7-5002-4e05-ae67-efcc507ada93",
+			"key": "textwidget.id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "9883f0fa-9570-40c1-8832-22fad9872502",
+			"key": "textwidget.updatedAt",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "a3e375e0-37f1-4511-9b20-c55d8d0f88ba",
+			"key": "chartwidget.id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "4aebdd46-9a60-4c7b-9859-1b5518a718fb",
+			"key": "chartwidget.updatedAt",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "f2797891-f88d-4b31-9e4d-d14fa92f61a1",
+			"key": "settings.updatedAt",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "18d347b4-f81d-4430-b867-43e0e54d5c82",
+			"key": "settings.publishingGuidance",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "58eb8b5f-54ba-429e-8006-91980a2d2a99",
+			"key": "homepage.title",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "43cd423e-261b-4fbb-a843-17b5b733b50e",
+			"key": "homepage.description",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "1adca44e-9da5-4088-b15b-7a2082b3c6a4",
+			"key": "homepage.updatedAt",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "68ddf44c-ddd1-4d8c-8e2c-9da66409cfbe",
+			"key": "dataset.id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "a3d6dbd1-3d51-4e22-89f3-ad32eb65e5a2",
+			"key": "dataset.s3Key",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "8f8bb42c-4dd3-4536-86bb-af09d9b4c760",
+			"key": "dataset.s3Key.json",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "7732aba3-b1e4-4e5a-b547-f4a3b8279465",
+			"key": "metricsdataset.id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "31863295-7d45-4ec6-9c97-f58c7fbf55a1",
+			"key": "imagewidget.id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "aa301377-8a40-46da-9711-f6085a01bfe4",
+			"key": "aa301377-8a40-46da-9711-f6085a01bfe4",
+			"value": "",
+			"type": "string",
 			"disabled": true
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

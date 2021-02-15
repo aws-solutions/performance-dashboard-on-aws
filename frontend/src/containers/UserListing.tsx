@@ -17,6 +17,7 @@ function UserListing() {
   const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<Array<User>>([]);
   const [isOpenResendInviteModal, setIsOpenResendInviteModal] = useState(false);
+  const [isOpenRemoveUsersModal, setIsOpenRemoveUsersModal] = useState(false);
 
   const addUsers = () => {
     history.push("/admin/users/add");
@@ -28,6 +29,31 @@ function UserListing() {
     });
   };
 
+  const removeUsers = async () => {
+    if (selected.length) {
+      try {
+        const usernames = selected.map((user) => user.userId);
+        await BackendService.removeUsers(usernames);
+        history.replace("/admin/users", {
+          alert: {
+            type: "success",
+            message: `Successfully removed ${selected.length} users`,
+          },
+        });
+      } catch (err) {
+        history.replace("/admin/users", {
+          alert: {
+            type: "error",
+            message: "Failed to delete users",
+          },
+        });
+      } finally {
+        await reloadUsers();
+        setIsOpenRemoveUsersModal(false);
+      }
+    }
+  };
+
   const onSearch = useCallback((query) => {
     setFilter(query);
   }, []);
@@ -36,12 +62,20 @@ function UserListing() {
     setSelected(selectedUsers);
   }, []);
 
+  const closeRemoveUsersModal = () => {
+    setIsOpenRemoveUsersModal(false);
+  };
+
   const closeResendInviteModal = () => {
     setIsOpenResendInviteModal(false);
   };
 
   const onResendInvite = () => {
     setIsOpenResendInviteModal(true);
+  };
+
+  const onRemoveUsers = () => {
+    setIsOpenRemoveUsersModal(true);
   };
 
   const resendInvite = async () => {
@@ -85,13 +119,24 @@ function UserListing() {
         buttonAction={resendInvite}
       />
 
+      <Modal
+        isOpen={isOpenRemoveUsersModal}
+        closeModal={closeRemoveUsersModal}
+        title={"Remove users"}
+        message={`Are you sure you want to remove ${selected.length} ${
+          selected.length > 1 ? "users" : "user"
+        }?`}
+        buttonType="Delete"
+        buttonAction={removeUsers}
+      />
+
       <p>
         These are all of the users who have access. You can change user roles,
         temporarily disable users and permanently remove them.
       </p>
       <AlertContainer />
       <div className="grid-row margin-y-3">
-        <div className="tablet:grid-col-5 text-left padding-top-1px">
+        <div className="tablet:grid-col-4 text-left padding-top-1px">
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
               <span>
@@ -100,7 +145,7 @@ function UserListing() {
             </li>
           </ul>
         </div>
-        <div className="tablet:grid-col-7 text-right">
+        <div className="tablet:grid-col-8 text-right">
           <span>
             <span data-for="resend" data-tip="">
               <Button
@@ -134,6 +179,15 @@ function UserListing() {
               onClick={changeRole}
             >
               Change role
+            </Button>
+          </span>
+          <span>
+            <Button
+              variant="outline"
+              disabled={selected.length === 0}
+              onClick={onRemoveUsers}
+            >
+              Remove user(s)
             </Button>
           </span>
           <span>

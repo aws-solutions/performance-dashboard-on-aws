@@ -6,7 +6,9 @@ import "@testing-library/jest-dom/extend-expect";
 import "mutationobserver-shim";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import ReactModal from "react-modal";
 
 jest.mock("./hooks");
 
 dayjs.extend(relativeTime);
+ReactModal.setAppElement(document.createElement("div"));

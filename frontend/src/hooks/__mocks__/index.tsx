@@ -399,6 +399,7 @@ export function useUsers() {
   return {
     loading: false,
     users,
+    reloadUsers: jest.fn(),
   };
 }
 

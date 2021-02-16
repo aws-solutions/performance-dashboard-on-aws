@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Link from "../components/Link";
-import { useTranslation } from "react-i18next";
 import { usePublicHomepage, useDateTimeFormatter } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
@@ -13,7 +12,6 @@ import "./Home.css";
 function Home() {
   const [filter, setFilter] = useState("");
   const { homepage, loading } = usePublicHomepage();
-  const { t, i18n } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
 
   const onSearch = (query: string) => {
@@ -96,7 +94,7 @@ function Home() {
                       )}
                       <br />
                       <span className="text-base text-italic">
-                        {t("Last updated")} {updatedAt}
+                        Last updated {updatedAt}
                       </span>
                     </div>
                   );
@@ -104,13 +102,6 @@ function Home() {
               </Accordion.Item>
             ))}
           </Accordion>
-          <h3>Numbers</h3>
-          <ul>
-            <li>
-              <b>Locale {i18n.language}: </b>
-              {Intl.NumberFormat(i18n.language).format(5.45)}
-            </li>
-          </ul>
         </div>
       </div>
     </>

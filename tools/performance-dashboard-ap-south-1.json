@@ -1,18 +1,28 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "adminEmail": {
+      "Type": "String",
+      "Description": "Email address for the admin user",
+      "MinLength": 5
+    }
+  },
   "Resources": {
     "authStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Auth-0.4.0-beta.json",
-        "TimeoutInMinutes": "60"
+        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Auth-0.7.0-beta.json",
+        "TimeoutInMinutes": "60",
+        "Parameters": {
+          "adminEmail": {"Ref" : "adminEmail"}
+        }
       }
     },
     "backendStack": {
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "authStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Backend-0.4.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Backend-0.7.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     },
@@ -20,7 +30,7 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "backendStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Frontend-0.4.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Frontend-0.7.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     },
@@ -28,7 +38,7 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "frontendStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Ops-0.4.0-beta.json",
+        "TemplateURL": "https://performance-dashboard-on-aws-ap-south-1.s3.ap-south-1.amazonaws.com/Ops-0.7.0-beta.json",
         "TimeoutInMinutes": "60"
       }
     }

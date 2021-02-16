@@ -19,6 +19,7 @@ const stackPrefix = "PerformanceDash-".concat(envName);
 const accountId = cdk.Aws.ACCOUNT_ID;
 const region = cdk.Aws.REGION;
 const datasetsBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-datasets`;
+const contentBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-customcontent`;
 
 const auth = new AuthStack(app, "Auth", {
   stackName: stackPrefix.concat("-Auth"),
@@ -32,11 +33,13 @@ const backend = new BackendStack(app, "Backend", {
     arn: auth.userPoolArn,
   },
   datasetsBucketName: datasetsBucketName,
+  contentBucketName: contentBucketName,
 });
 
 const frontend = new FrontendStack(app, "Frontend", {
   stackName: stackPrefix.concat("-Frontend"),
   datasetsBucket: datasetsBucketName,
+  contentBucket: contentBucketName,
   userPoolId: auth.userPoolId,
   identityPoolId: auth.identityPoolId,
   appClientId: auth.appClientId,

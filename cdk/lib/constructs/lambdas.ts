@@ -10,6 +10,7 @@ interface Props {
   mainTable: dynamodb.Table;
   auditTrailTable: dynamodb.Table;
   datasetsBucket: s3.Bucket;
+  contentBucket: s3.Bucket;
   userPool: {
     id: string;
     arn: string;
@@ -38,6 +39,7 @@ export class LambdaFunctions extends cdk.Construct {
         MAIN_TABLE: props.mainTable.tableName,
         AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
+        CONTENT_BUCKET: props.contentBucket.bucketName,
         USER_POOL_ID: props.userPool.id,
         LOG_LEVEL: "info",
       },
@@ -58,6 +60,7 @@ export class LambdaFunctions extends cdk.Construct {
       environment: {
         MAIN_TABLE: props.mainTable.tableName,
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
+        CONTENT_BUCKET: props.contentBucket.bucketName,
         LOG_LEVEL: "info",
       },
     });

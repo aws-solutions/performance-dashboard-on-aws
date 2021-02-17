@@ -11,6 +11,7 @@ import { BucketAccessControl } from "@aws-cdk/aws-s3";
 
 interface Props extends cdk.StackProps {
   datasetsBucket: string;
+  contentBucket: string;
   userPoolId: string;
   identityPoolId: string;
   appClientId: string;
@@ -133,6 +134,7 @@ export class FrontendStack extends cdk.Stack {
         USER_POOL_ID: props.userPoolId,
         APP_CLIENT_ID: props.appClientId,
         DATASETS_BUCKET: props.datasetsBucket,
+        CONTENT_BUCKET: props.contentBucket,
         IDENTITY_POOL_ID: props.identityPoolId,
         CONTACT_EMAIL: "support@example.com",
         BRAND_NAME: "Performance Dashboard",

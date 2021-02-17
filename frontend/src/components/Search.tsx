@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import Button from "./Button";
 
 interface Props {
@@ -17,6 +18,7 @@ interface FormValues {
 
 function Search(props: Props) {
   const { register, handleSubmit, reset } = useForm<FormValues>();
+  const { t } = useTranslation();
 
   const onSubmit = (values: FormValues) => {
     if (props.onSubmit) {
@@ -44,7 +46,7 @@ function Search(props: Props) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <label className="usa-sr-only" htmlFor={props.id}>
-          Search
+          {t("Search")}
         </label>
         <input
           className="usa-input"
@@ -64,7 +66,7 @@ function Search(props: Props) {
               props.size === "small" ? "usa-sr-only" : "usa-search__submit-text"
             }
           >
-            Search
+            {t("Search")}
           </span>
         </button>
       </form>
@@ -77,7 +79,7 @@ function Search(props: Props) {
             className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
             onClick={onClear}
           >
-            Clear search items
+            {t("Clear search items")}
           </Button>
         </div>
       )}

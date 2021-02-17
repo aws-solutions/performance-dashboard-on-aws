@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Link from "../components/Link";
 import { usePublicHomepage, useDateTimeFormatter } from "../hooks";
+import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
@@ -12,6 +13,7 @@ import "./Home.css";
 function Home() {
   const [filter, setFilter] = useState("");
   const { homepage, loading } = usePublicHomepage();
+  const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
 
   const onSearch = (query: string) => {
@@ -94,7 +96,7 @@ function Home() {
                       )}
                       <br />
                       <span className="text-base text-italic">
-                        Last updated {updatedAt}
+                        {t("Last updated")} {updatedAt}
                       </span>
                     </div>
                   );

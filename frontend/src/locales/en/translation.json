@@ -1,6 +1,6 @@
 {
-  "Last updated": "Last updated",
-  "Search": "Search",
-  "Clear search items": "Clear search items",
-  "All Dashboards": "All Dashboards"
+  "LastUpdatedLabel": "Last updated",
+  "SearchButton": "Search",
+  "ClearSearchText": "Clear search items",
+  "AllDashboardsLink": "All Dashboards"
 }

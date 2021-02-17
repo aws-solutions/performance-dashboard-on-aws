@@ -32,7 +32,7 @@ function DashboardHeader(props: Props) {
         <div className="text-base text-italic margin-bottom-2">
           {props.topicAreaName}
           {props.lastUpdated &&
-            ` | ${t("Last updated")} ${dateFormatter(props.lastUpdated)}`}
+            ` | ${t("LastUpdatedLabel")} ${dateFormatter(props.lastUpdated)}`}
         </div>
       </div>
       <div className={props.unpublished ? "" : "margin-y-2"}>

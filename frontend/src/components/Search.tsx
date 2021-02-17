@@ -46,7 +46,7 @@ function Search(props: Props) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <label className="usa-sr-only" htmlFor={props.id}>
-          {t("Search")}
+          {t("SearchButton")}
         </label>
         <input
           className="usa-input"
@@ -66,7 +66,7 @@ function Search(props: Props) {
               props.size === "small" ? "usa-sr-only" : "usa-search__submit-text"
             }
           >
-            {t("Search")}
+            {t("SearchButton")}
           </span>
         </button>
       </form>
@@ -79,7 +79,7 @@ function Search(props: Props) {
             className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
             onClick={onClear}
           >
-            {t("Clear search items")}
+            {t("ClearSearchText")}
           </Button>
         </div>
       )}

@@ -36,7 +36,7 @@ function ViewDashboard() {
   ) : (
     <>
       <Link to="/">
-        <FontAwesomeIcon icon={faArrowLeft} /> {t("All Dashboards")}
+        <FontAwesomeIcon icon={faArrowLeft} /> {t("AllDashboardsLink")}
       </Link>
       <DashboardHeader
         name={dashboard.name}

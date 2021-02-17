@@ -96,7 +96,7 @@ function Home() {
                       )}
                       <br />
                       <span className="text-base text-italic">
-                        {t("Last updated")} {updatedAt}
+                        {t("LastUpdatedLabel")} {updatedAt}
                       </span>
                     </div>
                   );

@@ -7,6 +7,8 @@ import * as serviceWorker from "./serviceWorker";
 import config from "./amplify-config";
 import App from "./App";
 import ReactModal from "react-modal";
+import i18n from "./i18n";
+
 import "uswds/dist/css/uswds.min.css";
 import "uswds/dist/js/uswds.min.js";
 import "./index.css";
@@ -22,6 +24,7 @@ ReactModal.setAppElement("#root"); //this is important for accessibility
 
 dayjs.extend(relativeTime);
 Amplify.configure(config);
+i18n();
 
 ReactDOM.render(
   <React.StrictMode>

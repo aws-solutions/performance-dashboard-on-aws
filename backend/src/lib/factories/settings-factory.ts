@@ -15,6 +15,7 @@ function getDefaultSettings(): Settings {
       singular: "Topic Area",
       plural: "Topic Areas",
     },
+    customLogoS3ID: undefined,
   };
 }
 
@@ -32,6 +33,9 @@ function fromItem(item: SettingsItem): Settings {
     topicAreaLabels: item.topicAreaLabels
       ? item.topicAreaLabels
       : defaults.topicAreaLabels,
+    customLogoS3ID: item.customLogoS3ID
+      ? item.customLogoS3ID
+      : defaults.customLogoS3ID,
   };
 }
 
@@ -47,6 +51,9 @@ function toPublicSettings(settings: Settings): PublicSettings {
     topicAreaLabels: settings.topicAreaLabels
       ? settings.topicAreaLabels
       : defaults.topicAreaLabels,
+    customLogoS3ID: settings.customLogoS3ID
+      ? settings.customLogoS3ID
+      : defaults.customLogoS3ID,
   };
 }
 

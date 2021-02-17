@@ -10,6 +10,7 @@ export interface Settings {
     singular: string;
     plural: string;
   };
+  customLogoS3ID: string | undefined;
 }
 
 export interface PublicSettings {
@@ -22,6 +23,7 @@ export interface PublicSettings {
     singular: string;
     plural: string;
   };
+  customLogoS3ID: string | undefined;
 }
 
 export interface SettingsItem {
@@ -39,4 +41,5 @@ export interface SettingsItem {
     singular: string;
     plural: string;
   };
+  customLogoS3ID: string | undefined;
 }

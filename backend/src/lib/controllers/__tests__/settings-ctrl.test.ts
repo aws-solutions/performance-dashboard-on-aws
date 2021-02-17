@@ -117,6 +117,17 @@ describe("updateSettings", () => {
       user
     );
   });
+
+  it("updates customLogoS3ID setting", async () => {
+    req.body.customLogoS3ID = "abc";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "customLogoS3ID",
+      "abc",
+      now.toISOString(),
+      user
+    );
+  });
 });
 
 describe("getPublicSettings", () => {

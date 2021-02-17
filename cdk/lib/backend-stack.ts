@@ -6,6 +6,7 @@ import { BackendApi } from "./constructs/api";
 import { Database } from "./constructs/database";
 import { LambdaFunctions } from "./constructs/lambdas";
 import { DatasetStorage } from "./constructs/datastorage";
+import { ContentStorage } from "./constructs/contentstorage";
 
 interface BackendStackProps extends cdk.StackProps {
   userPool: {
@@ -13,6 +14,7 @@ interface BackendStackProps extends cdk.StackProps {
     arn: string;
   };
   datasetsBucketName: string;
+  contentBucketName: string;
 }
 
 export class BackendStack extends cdk.Stack {
@@ -30,11 +32,16 @@ export class BackendStack extends cdk.Stack {
       datasetsBucketName: props.datasetsBucketName,
     });
 
+    const contentStorage = new ContentStorage(this, "ContentStorage", {
+      contentBucketName: props.contentBucketName,
+    });
+
     const database = new Database(this, "Database");
     const lambdas = new LambdaFunctions(this, "Functions", {
       mainTable: database.mainTable,
       auditTrailTable: database.auditTrailTable,
       datasetsBucket: dataStorage.datasetsBucket,
+      contentBucket: contentStorage.contentBucket,
       userPool: props.userPool,
     });
 

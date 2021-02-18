@@ -10,6 +10,7 @@ import {
   Tooltip,
 } from "recharts";
 import { useColors } from "../hooks";
+import UtilsService from "../services/UtilsService";
 
 type Props = {
   title: string;
@@ -17,6 +18,7 @@ type Props = {
   columns: Array<string>;
   data?: Array<any>;
   summaryBelow: boolean;
+  isPreview?: boolean;
 };
 
 const ColumnChartPreview = (props: Props) => {
@@ -50,8 +52,15 @@ const ColumnChartPreview = (props: Props) => {
     }
   };
 
+  const widthPercent =
+    (UtilsService.getLargestHeader(columns, data) *
+      (data ? data.length : 0) *
+      8 *
+      100) /
+    (props.isPreview ? 480 : 960);
+
   return (
-    <div>
+    <div className="overflow-hidden">
       <h2
         className={`margin-left-1 margin-bottom-${
           props.summaryBelow ? "4" : "1"
@@ -64,8 +73,11 @@ const ColumnChartPreview = (props: Props) => {
           {props.summary}
         </p>
       )}
-      {props.data && props.data.length && (
-        <ResponsiveContainer width="100%" height={300}>
+      {data && data.length && (
+        <ResponsiveContainer
+          width={`${Math.max(widthPercent, 100)}%`}
+          height={300}
+        >
           <BarChart data={props.data} margin={{ right: 0, left: 0 }}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -73,6 +85,7 @@ const ColumnChartPreview = (props: Props) => {
               type={xAxisType()}
               padding={{ left: 20, right: 20 }}
               domain={[0, "dataMax"]}
+              interval={0}
             />
             <YAxis type="number" domain={[0, "dataMax"]} />
             <Tooltip cursor={{ fill: "#F0F0F0" }} />

@@ -680,6 +680,7 @@ function EditChart() {
                         }
                         data={currentJson}
                         summaryBelow={summaryBelow}
+                        isPreview={true}
                       />
                     )}
                     {chartType === ChartType.ColumnChart && (
@@ -693,6 +694,7 @@ function EditChart() {
                         }
                         data={currentJson}
                         summaryBelow={summaryBelow}
+                        isPreview={true}
                       />
                     )}
                     {chartType === ChartType.BarChart && (

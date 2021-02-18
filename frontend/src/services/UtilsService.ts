@@ -51,11 +51,21 @@ function timeout(delay: number) {
   return new Promise((res) => setTimeout(res, delay));
 }
 
+function getLargestHeader(headers: Array<string>, data?: Array<any>) {
+  return (
+    data
+      ?.map((d) => (d as any)[headers.length ? headers[0] : ""])
+      .map((c) => (c as string).length)
+      .reduce((a, b) => (a > b ? a : b), 0) || 0
+  );
+}
+
 const UtilsService = {
   groupByTopicArea,
   getChartTypeLabel,
   validateEmails,
   timeout,
+  getLargestHeader,
 };
 
 export default UtilsService;

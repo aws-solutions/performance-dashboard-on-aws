@@ -4,13 +4,13 @@ import { initReactI18next } from "react-i18next";
 import english from "./locales/en/translation.json";
 import spanish from "./locales/es/translation.json";
 
-export default function init() {
+export default function init(defaultLanguage?: string) {
   i18n
     .use(initReactI18next)
     // For all configuration options read:
     // https://www.i18next.com/overview/configuration-options
     .init({
-      lng: window.navigator.language || "en",
+      lng: defaultLanguage || window.navigator.language,
       fallbackLng: "en",
       debug: false,
       resources: {

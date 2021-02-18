@@ -13,4 +13,4 @@ jest.mock("./hooks");
 
 dayjs.extend(relativeTime);
 ReactModal.setAppElement(document.createElement("div"));
-i18n();
+i18n("en"); // run unit tests with English translations

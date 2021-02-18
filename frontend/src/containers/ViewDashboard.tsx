@@ -4,6 +4,7 @@ import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { usePublicDashboard } from "../hooks";
+import { useTranslation } from "react-i18next";
 import WidgetRender from "../components/WidgetRender";
 import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
@@ -14,6 +15,7 @@ interface PathParams {
 
 function ViewDashboard() {
   const { friendlyURL } = useParams<PathParams>();
+  const { t } = useTranslation();
   const { dashboard, loading, dashboardNotFound } = usePublicDashboard(
     friendlyURL
   );
@@ -34,7 +36,7 @@ function ViewDashboard() {
   ) : (
     <>
       <Link to="/">
-        <FontAwesomeIcon icon={faArrowLeft} /> All Dashboards
+        <FontAwesomeIcon icon={faArrowLeft} /> {t("AllDashboardsLink")}
       </Link>
       <DashboardHeader
         name={dashboard.name}

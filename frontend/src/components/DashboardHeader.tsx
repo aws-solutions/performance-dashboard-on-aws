@@ -1,5 +1,6 @@
 import React from "react";
 import { useDateTimeFormatter } from "../hooks";
+import { useTranslation } from "react-i18next";
 import MarkdownRender from "../components/MarkdownRender";
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 
 function DashboardHeader(props: Props) {
   const dateFormatter = useDateTimeFormatter();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -30,7 +32,7 @@ function DashboardHeader(props: Props) {
         <div className="text-base text-italic margin-bottom-2">
           {props.topicAreaName}
           {props.lastUpdated &&
-            ` | Last updated ${dateFormatter(props.lastUpdated)}`}
+            ` | ${t("LastUpdatedLabel")} ${dateFormatter(props.lastUpdated)}`}
         </div>
       </div>
       <div className={props.unpublished ? "" : "margin-y-2"}>

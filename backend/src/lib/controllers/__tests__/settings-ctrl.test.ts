@@ -117,6 +117,17 @@ describe("updateSettings", () => {
       user
     );
   });
+
+  it("updates customLogoS3Key setting", async () => {
+    req.body.customLogoS3Key = "abc";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "customLogoS3Key",
+      "abc",
+      now.toISOString(),
+      user
+    );
+  });
 });
 
 describe("getPublicSettings", () => {

@@ -19,7 +19,7 @@ async function updateSettings(req: Request, res: Response) {
     dateTimeFormat,
     navbarTitle,
     topicAreaLabels,
-    customLogoS3ID,
+    customLogoS3Key,
   } = req.body;
 
   if (!updatedAt) {
@@ -77,10 +77,10 @@ async function updateSettings(req: Request, res: Response) {
     );
   }
 
-  if (customLogoS3ID) {
+  if (customLogoS3Key) {
     updatedAt = await repo.updateSetting(
-      "customLogoS3ID",
-      customLogoS3ID,
+      "customLogoS3Key",
+      customLogoS3Key,
       updatedAt,
       user
     );

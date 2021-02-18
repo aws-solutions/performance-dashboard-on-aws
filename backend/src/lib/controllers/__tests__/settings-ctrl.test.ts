@@ -118,11 +118,11 @@ describe("updateSettings", () => {
     );
   });
 
-  it("updates customLogoS3ID setting", async () => {
-    req.body.customLogoS3ID = "abc";
+  it("updates customLogoS3Key setting", async () => {
+    req.body.customLogoS3Key = "abc";
     await SettingsCtrl.updateSettings(req, res);
     expect(repository.updateSetting).toHaveBeenCalledWith(
-      "customLogoS3ID",
+      "customLogoS3Key",
       "abc",
       now.toISOString(),
       user

@@ -38,7 +38,7 @@ describe("fromItem", () => {
         singular: "Topic Area",
         plural: "Topic Areas",
       },
-      customLogoS3ID: "12345",
+      customLogoS3Key: "12345",
     };
 
     const settings = SettingsFactory.fromItem(item);
@@ -54,7 +54,7 @@ describe("fromItem", () => {
         singular: "Topic Area",
         plural: "Topic Areas",
       },
-      customLogoS3ID: "12345",
+      customLogoS3Key: "12345",
     });
   });
 });
@@ -73,7 +73,7 @@ describe("toPublicSettings", () => {
         singular: "Topic Area",
         plural: "Topic Areas",
       },
-      customLogoS3ID: "12345",
+      customLogoS3Key: "12345",
     };
 
     const publicSettings = SettingsFactory.toPublicSettings(settings);
@@ -87,7 +87,7 @@ describe("toPublicSettings", () => {
         singular: "Topic Area",
         plural: "Topic Areas",
       },
-      customLogoS3ID: "12345",
+      customLogoS3Key: "12345",
     });
   });
 });

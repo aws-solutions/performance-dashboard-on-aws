@@ -67,7 +67,9 @@ const ColumnChartPreview = (props: Props) => {
     (props.isPreview ? previewWidth : fullWidth);
 
   return (
-    <div className="overflow-hidden">
+    <div
+      className={`overflow-hidden${widthPercent > 100 ? " right-shadow" : ""}`}
+    >
       <h2
         className={`margin-left-1 margin-bottom-${
           props.summaryBelow ? "4" : "1"

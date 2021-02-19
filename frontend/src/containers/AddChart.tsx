@@ -573,6 +573,7 @@ function AddChart() {
                     }
                     data={currentJson}
                     summaryBelow={summaryBelow}
+                    isPreview={true}
                   />
                 )}
                 {chartType === ChartType.ColumnChart && (
@@ -586,6 +587,7 @@ function AddChart() {
                     }
                     data={currentJson}
                     summaryBelow={summaryBelow}
+                    isPreview={true}
                   />
                 )}
                 {chartType === ChartType.BarChart && (

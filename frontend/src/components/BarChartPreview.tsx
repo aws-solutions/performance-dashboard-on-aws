@@ -25,6 +25,9 @@ const BarChartPreview = (props: Props) => {
   const [barsHover, setBarsHover] = useState(null);
   const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
   const colors = useColors(props.bars.length);
+  const pixelsByCharacter = 8;
+  const yAxisWidthOffset = 24;
+  const yAxisLabelMaxWidth = 220;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -91,8 +94,10 @@ const BarChartPreview = (props: Props) => {
               dataKey={props.bars.length ? props.bars[0] : ""}
               type={yAxisType()}
               width={Math.min(
-                UtilsService.getLargestHeader(props.bars, props.data) * 8 + 24,
-                220
+                UtilsService.getLargestHeader(props.bars, props.data) *
+                  pixelsByCharacter +
+                  yAxisWidthOffset,
+                yAxisLabelMaxWidth
               )}
               minTickGap={0}
               domain={[0, "dataMax + 1"]}

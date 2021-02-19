@@ -25,6 +25,9 @@ const ColumnChartPreview = (props: Props) => {
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
   const colors = useColors(props.columns.length);
+  const pixelsByCharacter = 8;
+  const previewWidth = 480;
+  const fullWidth = 960;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -52,12 +55,16 @@ const ColumnChartPreview = (props: Props) => {
     }
   };
 
+  /**
+   * Calculate the width percent out of the total width
+   * depending on the container.
+   */
   const widthPercent =
     (UtilsService.getLargestHeader(columns, data) *
       (data ? data.length : 0) *
-      8 *
+      pixelsByCharacter *
       100) /
-    (props.isPreview ? 480 : 960);
+    (props.isPreview ? previewWidth : fullWidth);
 
   return (
     <div className="overflow-hidden">

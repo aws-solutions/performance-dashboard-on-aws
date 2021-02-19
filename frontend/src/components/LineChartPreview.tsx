@@ -25,6 +25,9 @@ const LineChartPreview = (props: Props) => {
   const [linesHover, setLinesHover] = useState(null);
   const [hiddenLines, setHiddenLines] = useState<Array<string>>([]);
   const colors = useColors(props.lines.length);
+  const pixelsByCharacter = 8;
+  const previewWidth = 480;
+  const fullWidth = 960;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -52,12 +55,16 @@ const LineChartPreview = (props: Props) => {
     }
   };
 
+  /**
+   * Calculate the width percent out of the total width
+   * depending on the container.
+   */
   const widthPercent =
     (UtilsService.getLargestHeader(lines, data) *
       (data ? data.length : 0) *
-      8 *
+      pixelsByCharacter *
       100) /
-    (props.isPreview ? 480 : 960);
+    (props.isPreview ? previewWidth : fullWidth);
 
   return (
     <div className="overflow-hidden">

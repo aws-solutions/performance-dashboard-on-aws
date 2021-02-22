@@ -43,8 +43,32 @@ function getActionFromDashboardAuditLog({
   return action;
 }
 
+/**
+ * Given a list of Dashboard audit logs, it removes those for
+ * which the only modified property is `updatedAt`. These logs are
+ * noise for users because `updatedAt` is a property that changes
+ * too often and it doesn't add value to see all these records.
+ */
+function removeNosiyAuditLogs(
+  auditlogs: DashboardAuditLog[]
+): DashboardAuditLog[] {
+  if (!auditlogs) return [];
+  const noisyProperties = ["updatedAt"];
+  return auditlogs.filter(({ event, modifiedProperties }) => {
+    if (event === "Create" || event === "Delete") return true;
+    if (!modifiedProperties) return false;
+
+    const remainingProperties = modifiedProperties.filter(
+      (prop) => !noisyProperties.includes(prop.property)
+    );
+
+    return remainingProperties.length > 0;
+  });
+}
+
 const AuditLogService = {
   getActionFromDashboardAuditLog,
+  removeNosiyAuditLogs,
 };
 
 export default AuditLogService;

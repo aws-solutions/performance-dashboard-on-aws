@@ -118,3 +118,84 @@ describe("getActionFromDashboardAuditLog", () => {
     expect(action).toEqual("Returned to draft");
   });
 });
+
+describe("removeNoisyAuditLogs", () => {
+  test("it does not remove a Create event", () => {
+    const createAuditLog: DashboardAuditLog = {
+      itemId: "001",
+      timestamp: new Date(),
+      event: "Create",
+      userId: "johndoe",
+      version: 1,
+    };
+
+    const auditlogs = [createAuditLog];
+    const result = AuditTrailService.removeNosiyAuditLogs(auditlogs);
+    expect(result).toContain(createAuditLog);
+  });
+
+  test("it does not remove a Delete event", () => {
+    const deleteAuditLog: DashboardAuditLog = {
+      itemId: "001",
+      timestamp: new Date(),
+      event: "Delete",
+      userId: "johndoe",
+      version: 1,
+    };
+
+    const auditlogs = [deleteAuditLog];
+    const result = AuditTrailService.removeNosiyAuditLogs(auditlogs);
+    expect(result).toContain(deleteAuditLog);
+  });
+
+  test("it does not remove an Update event with other interesting properties", () => {
+    const updateAuditLog: DashboardAuditLog = {
+      itemId: "001",
+      timestamp: new Date(),
+      event: "Update",
+      userId: "johndoe",
+      version: 1,
+      modifiedProperties: [
+        {
+          property: "updatedAt",
+          oldValue: "foo",
+          newValue: "bar",
+        },
+        {
+          property: "state",
+          oldValue: "Draft",
+          newValue: "PublishPending",
+        },
+      ],
+    };
+
+    const auditlogs = [updateAuditLog];
+    const result = AuditTrailService.removeNosiyAuditLogs(auditlogs);
+
+    expect(result).toHaveLength(1);
+    expect(result).toContain(updateAuditLog);
+  });
+
+  test("it removes an Update event with `updatedAt` as only property", () => {
+    const updateAuditLog: DashboardAuditLog = {
+      itemId: "001",
+      timestamp: new Date(),
+      event: "Update",
+      userId: "johndoe",
+      version: 1,
+      modifiedProperties: [
+        {
+          property: "updatedAt",
+          oldValue: "foo",
+          newValue: "bar",
+        },
+      ],
+    };
+
+    const auditlogs = [updateAuditLog];
+    const result = AuditTrailService.removeNosiyAuditLogs(auditlogs);
+
+    expect(result).toHaveLength(0);
+    expect(result).not.toContain(updateAuditLog);
+  });
+});

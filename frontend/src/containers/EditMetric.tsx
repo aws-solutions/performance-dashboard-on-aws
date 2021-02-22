@@ -31,7 +31,7 @@ function EditMetric() {
 
   const onSubmit = async (values: FormValues) => {
     const editedMetric =
-      state && state.metrics && state.position
+      state && state.metrics && state.position !== undefined
         ? state.metrics[state.position]
         : undefined;
     if (editedMetric) {

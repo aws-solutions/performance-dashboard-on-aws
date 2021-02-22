@@ -128,6 +128,20 @@ describe("updateSettings", () => {
       user
     );
   });
+
+  it("updates colors setting", async () => {
+    req.body.colors = { primary: "#ffffff", secondary: "#fff" };
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "colors",
+      {
+        primary: "#ffffff",
+        secondary: "#fff",
+      },
+      now.toISOString(),
+      user
+    );
+  });
 });
 
 describe("getPublicSettings", () => {

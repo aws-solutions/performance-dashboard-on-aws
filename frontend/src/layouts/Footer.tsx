@@ -1,5 +1,6 @@
 import React from "react";
 import EnvConfig from "../services/EnvConfig";
+import packagejson from "../../package.json";
 
 function Footer() {
   return (
@@ -13,6 +14,7 @@ function Footer() {
         >
           Contact support
         </a>
+        <span className="float-right">v{packagejson.version}</span>
       </div>
     </footer>
   );

@@ -10,6 +10,9 @@ import ReactModal from "react-modal";
 import i18n from "./i18n";
 
 jest.mock("./hooks");
+jest.mock("../package.json", () => ({
+  version: "v1.0.0",
+}));
 
 dayjs.extend(relativeTime);
 ReactModal.setAppElement(document.createElement("div"));

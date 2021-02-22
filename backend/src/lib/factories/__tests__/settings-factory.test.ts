@@ -16,6 +16,11 @@ describe("getDefaultSettings", () => {
         singular: "Topic Area",
         plural: "Topic Areas",
       },
+      customLogoS3ID: undefined,
+      colors: {
+        primary: "#2491ff",
+        secondary: "#54278f",
+      },
     });
   });
 });
@@ -37,6 +42,7 @@ describe("fromItem", () => {
         singular: "Topic Area",
         plural: "Topic Areas",
       },
+      customLogoS3Key: "12345",
     };
 
     const settings = SettingsFactory.fromItem(item);
@@ -51,6 +57,11 @@ describe("fromItem", () => {
       topicAreaLabels: {
         singular: "Topic Area",
         plural: "Topic Areas",
+      },
+      customLogoS3Key: "12345",
+      colors: {
+        primary: "#2491ff",
+        secondary: "#54278f",
       },
     });
   });
@@ -70,6 +81,11 @@ describe("toPublicSettings", () => {
         singular: "Topic Area",
         plural: "Topic Areas",
       },
+      customLogoS3Key: "12345",
+      colors: {
+        primary: "#ffffff",
+        secondary: "#ffffff",
+      },
     };
 
     const publicSettings = SettingsFactory.toPublicSettings(settings);
@@ -82,6 +98,11 @@ describe("toPublicSettings", () => {
       topicAreaLabels: {
         singular: "Topic Area",
         plural: "Topic Areas",
+      },
+      customLogoS3Key: "12345",
+      colors: {
+        primary: "#ffffff",
+        secondary: "#ffffff",
       },
     });
   });

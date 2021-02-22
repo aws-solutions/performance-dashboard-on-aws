@@ -15,6 +15,11 @@ function getDefaultSettings(): Settings {
       singular: "Topic Area",
       plural: "Topic Areas",
     },
+    customLogoS3Key: undefined,
+    colors: {
+      primary: "#2491ff",
+      secondary: "#54278f",
+    },
   };
 }
 
@@ -32,6 +37,10 @@ function fromItem(item: SettingsItem): Settings {
     topicAreaLabels: item.topicAreaLabels
       ? item.topicAreaLabels
       : defaults.topicAreaLabels,
+    customLogoS3Key: item.customLogoS3Key
+      ? item.customLogoS3Key
+      : defaults.customLogoS3Key,
+    colors: item.colors ? item.colors : defaults.colors,
   };
 }
 
@@ -47,6 +56,10 @@ function toPublicSettings(settings: Settings): PublicSettings {
     topicAreaLabels: settings.topicAreaLabels
       ? settings.topicAreaLabels
       : defaults.topicAreaLabels,
+    customLogoS3Key: settings.customLogoS3Key
+      ? settings.customLogoS3Key
+      : defaults.customLogoS3Key,
+    colors: settings.colors ? settings.colors : defaults.colors,
   };
 }
 

@@ -10,6 +10,11 @@ export interface Settings {
     singular: string;
     plural: string;
   };
+  customLogoS3Key: string | undefined;
+  colors?: {
+    primary: string;
+    secondary: string;
+  };
 }
 
 export interface PublicSettings {
@@ -21,6 +26,11 @@ export interface PublicSettings {
   topicAreaLabels: {
     singular: string;
     plural: string;
+  };
+  customLogoS3Key: string | undefined;
+  colors?: {
+    primary: string;
+    secondary: string;
   };
 }
 
@@ -38,5 +48,10 @@ export interface SettingsItem {
   topicAreaLabels?: {
     singular: string;
     plural: string;
+  };
+  customLogoS3Key: string | undefined;
+  colors?: {
+    primary: string;
+    secondary: string;
   };
 }

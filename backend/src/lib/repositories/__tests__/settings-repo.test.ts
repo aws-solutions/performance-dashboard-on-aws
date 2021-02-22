@@ -51,6 +51,7 @@ describe("getSettings", () => {
         singular: "Topic Area",
         plural: "Topic Areas",
       },
+      customLogoS3Key: "12345",
     };
 
     dynamodb.get = jest.fn().mockReturnValueOnce({ Item: item });

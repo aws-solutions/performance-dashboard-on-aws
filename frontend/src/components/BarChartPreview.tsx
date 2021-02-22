@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "recharts";
 import { useColors } from "../hooks";
+import UtilsService from "../services/UtilsService";
 
 type Props = {
   title: string;
@@ -24,6 +25,9 @@ const BarChartPreview = (props: Props) => {
   const [barsHover, setBarsHover] = useState(null);
   const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
   const colors = useColors(props.bars.length);
+  const pixelsByCharacter = 8;
+  const yAxisWidthOffset = 24;
+  const yAxisLabelMaxWidth = 220;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -51,6 +55,9 @@ const BarChartPreview = (props: Props) => {
     }
   };
 
+  const formatYAxisLabel = (label: string) =>
+    label.length > 27 ? label.substr(0, 27).concat("...") : label;
+
   return (
     <div>
       <h2
@@ -65,10 +72,10 @@ const BarChartPreview = (props: Props) => {
           {props.summary}
         </p>
       )}
-      {props.data && props.data.length && (
+      {data && data.length && (
         <ResponsiveContainer
           width="100%"
-          height={props.data && props.data.length > 15 ? 600 : 300}
+          height={data && data.length > 15 ? 600 : 300}
         >
           <BarChart
             data={props.data}
@@ -86,18 +93,15 @@ const BarChartPreview = (props: Props) => {
             <YAxis
               dataKey={props.bars.length ? props.bars[0] : ""}
               type={yAxisType()}
-              width={
-                (props.data
-                  ?.map(
-                    (d) => (d as any)[props.bars.length ? props.bars[0] : ""]
-                  )
-                  .map((c) => (c as string).length)
-                  .reduce((a, b) => (a > b ? a : b), 0) || 0) *
-                  8 +
-                24
-              }
+              width={Math.min(
+                UtilsService.getLargestHeader(props.bars, props.data) *
+                  pixelsByCharacter +
+                  yAxisWidthOffset,
+                yAxisLabelMaxWidth
+              )}
               minTickGap={0}
               domain={[0, "dataMax + 1"]}
+              tickFormatter={formatYAxisLabel}
             />
             <Tooltip cursor={{ fill: "#F0F0F0" }} />
             <Legend

@@ -46,6 +46,12 @@ exports[`renders a FourZeroFour component 1`] = `
       >
         Contact support
       </a>
+      <span
+        class="float-right"
+      >
+        v
+        v1.0.0
+      </span>
     </div>
   </footer>
 </div>

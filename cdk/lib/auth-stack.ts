@@ -7,6 +7,7 @@ import { StringAttribute } from "@aws-cdk/aws-cognito";
 
 interface Props extends cdk.StackProps {
   datasetsBucketName: string;
+  contentBucketName: string;
 }
 
 export class AuthStack extends cdk.Stack {
@@ -47,10 +48,19 @@ export class AuthStack extends cdk.Stack {
     });
 
     const stack = cdk.Stack.of(this);
-    const bucketArn = `arn:${stack.partition}:s3:::${props.datasetsBucketName}`;
+    const datasetsBucketArn = `arn:${stack.partition}:s3:::${props.datasetsBucketName}`;
+    const contentBucketArn = `arn:${stack.partition}:s3:::${props.contentBucketName}`;
 
-    const authenticatedRole = this.buildAuthRole(identityPool, bucketArn);
-    const publicRole = this.buildPublicRole(identityPool, bucketArn);
+    const authenticatedRole = this.buildAuthRole(
+      identityPool,
+      datasetsBucketArn,
+      contentBucketArn
+    );
+    const publicRole = this.buildPublicRole(
+      identityPool,
+      datasetsBucketArn,
+      contentBucketArn
+    );
 
     new cognito.CfnIdentityPoolRoleAttachment(this, "AuthRoleAttachment", {
       identityPoolId: identityPool.ref,
@@ -110,7 +120,8 @@ export class AuthStack extends cdk.Stack {
 
   private buildPublicRole(
     identityPool: cognito.CfnIdentityPool,
-    bucketArn: string
+    datasetsBucketArn: string,
+    contentBucketArn: string
   ): iam.Role {
     const publicRole = this.buildIdentityPoolRole(
       "CognitoPublicRole",
@@ -128,10 +139,15 @@ export class AuthStack extends cdk.Stack {
         effect: iam.Effect.ALLOW,
         actions: ["s3:GetObject"],
         resources: [
-          bucketArn.concat("/public/*.json"),
-          bucketArn.concat("/public/*.png"),
-          bucketArn.concat("/public/*.jpg"),
-          bucketArn.concat("/public/*.svg"),
+          datasetsBucketArn.concat("/public/*.json"),
+          datasetsBucketArn.concat("/public/*.png"),
+          datasetsBucketArn.concat("/public/*.jpg"),
+          datasetsBucketArn.concat("/public/*.svg"),
+
+          contentBucketArn.concat("/public/*.json"),
+          contentBucketArn.concat("/public/*.png"),
+          contentBucketArn.concat("/public/*.jpg"),
+          contentBucketArn.concat("/public/*.svg"),
         ],
       })
     );
@@ -141,7 +157,8 @@ export class AuthStack extends cdk.Stack {
 
   private buildAuthRole(
     identityPool: cognito.CfnIdentityPool,
-    bucketArn: string
+    datasetsBucketArn: string,
+    contentBucketArn: string
   ): iam.Role {
     const authRole = this.buildIdentityPoolRole(
       "CognitoAuthRole",
@@ -158,11 +175,21 @@ export class AuthStack extends cdk.Stack {
         effect: iam.Effect.ALLOW,
         actions: ["s3:GetObject", "s3:PutObject"],
         resources: [
-          bucketArn.concat("/public/*"),
-          bucketArn.concat(
+          datasetsBucketArn.concat("/public/*"),
+          datasetsBucketArn.concat(
             "/protected/${cognito-identity.amazonaws.com:sub}/*"
           ),
-          bucketArn.concat("/private/${cognito-identity.amazonaws.com:sub}/*"),
+          datasetsBucketArn.concat(
+            "/private/${cognito-identity.amazonaws.com:sub}/*"
+          ),
+
+          contentBucketArn.concat("/public/*"),
+          contentBucketArn.concat(
+            "/protected/${cognito-identity.amazonaws.com:sub}/*"
+          ),
+          contentBucketArn.concat(
+            "/private/${cognito-identity.amazonaws.com:sub}/*"
+          ),
         ],
       })
     );
@@ -171,7 +198,10 @@ export class AuthStack extends cdk.Stack {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:PutObject"],
-        resources: [bucketArn.concat("/uploads/*")],
+        resources: [
+          datasetsBucketArn.concat("/uploads/*"),
+          contentBucketArn.concat("/uploads/*"),
+        ],
       })
     );
 
@@ -179,7 +209,10 @@ export class AuthStack extends cdk.Stack {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:GetObject"],
-        resources: [bucketArn.concat("/protected/*")],
+        resources: [
+          datasetsBucketArn.concat("/protected/*"),
+          contentBucketArn.concat("/protected/*"),
+        ],
       })
     );
 

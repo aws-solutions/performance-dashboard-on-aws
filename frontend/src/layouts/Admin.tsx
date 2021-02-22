@@ -5,7 +5,7 @@ import { useSettings, useCurrentAuthenticatedUser } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
-import logo from "../logo.svg";
+import Logo from "../components/Logo";
 
 interface LayoutProps {
   children: ReactNode;
@@ -32,7 +32,10 @@ function AdminLayout(props: LayoutProps) {
           <div className="usa-navbar navbar-long">
             <div className="usa-logo margin-top-2" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
-                <img src={logo} alt="logo" className="logo" />
+                <div className="logo">
+                  <Logo />
+                </div>
+
                 <Link to="/admin" title="Home" aria-label="Home" className="">
                   {settings.navbarTitle}
                 </Link>

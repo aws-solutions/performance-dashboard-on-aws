@@ -195,6 +195,7 @@ export type PublicSettings = {
     singular: string;
     plural: string;
   };
+  customLogoS3ID: string | undefined;
 };
 
 export type Settings = {
@@ -209,6 +210,7 @@ export type Settings = {
     singular: string;
     plural: string;
   };
+  customLogoS3ID: string | undefined;
 };
 
 export type Metric = {

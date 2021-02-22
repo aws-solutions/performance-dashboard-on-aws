@@ -14,6 +14,7 @@ interface EnvConfig {
   userPoolId: string;
   appClientId: string;
   datasetsBucket: string;
+  contentBucket: string;
   identityPoolId: string;
   contactEmail: string;
   brandName: string;

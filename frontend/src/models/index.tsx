@@ -191,6 +191,10 @@ export type PublicSettings = {
     time: string;
   };
   navbarTitle?: string;
+  colors: {
+    primary: string;
+    secondary: string;
+  };
   topicAreaLabels?: {
     singular: string;
     plural: string;
@@ -205,6 +209,10 @@ export type Settings = {
   };
   updatedAt?: Date;
   navbarTitle?: string;
+  colors: {
+    primary: string;
+    secondary: string;
+  };
   topicAreaLabels: {
     singular: string;
     plural: string;

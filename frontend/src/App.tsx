@@ -44,6 +44,7 @@ import EditHomepageContent from "./containers/EditHomepageContent";
 import CreateTopicArea from "./containers/CreateTopicArea";
 import EditTopicArea from "./containers/EditTopicArea";
 import EditTopicAreaLabel from "./containers/EditTopicAreaLabel";
+import EditColors from "./containers/EditColors";
 import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
 import FormattingCSV from "./containers/FormattingCSV";
@@ -113,6 +114,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/settings/topicarea/editlabel",
     component: EditTopicAreaLabel,
+  },
+  {
+    path: "/admin/settings/topicarea/editcolors",
+    component: EditColors,
   },
   {
     path: "/admin/dashboards",

@@ -20,6 +20,8 @@ async function updateSettings(req: Request, res: Response) {
     navbarTitle,
     topicAreaLabels,
     customLogoS3Key,
+    primaryColor,
+    secondaryColor,
   } = req.body;
 
   if (!updatedAt) {
@@ -85,6 +87,25 @@ async function updateSettings(req: Request, res: Response) {
       user
     );
   }
+
+  if (primaryColor) {
+    updatedAt = await repo.updateSetting(
+      "primaryColor",
+      primaryColor,
+      updatedAt,
+      user
+    );
+  }
+
+  if (secondaryColor) {
+    updatedAt = await repo.updateSetting(
+      "secondaryColor",
+      secondaryColor,
+      updatedAt,
+      user
+    );
+  }
+
   res.send();
 }
 

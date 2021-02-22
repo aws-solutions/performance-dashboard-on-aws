@@ -11,6 +11,8 @@ export interface Settings {
     plural: string;
   };
   customLogoS3Key: string | undefined;
+  primaryColor?: string;
+  secondaryColor?: string;
 }
 
 export interface PublicSettings {
@@ -24,6 +26,8 @@ export interface PublicSettings {
     plural: string;
   };
   customLogoS3Key: string | undefined;
+  primaryColor?: string;
+  secondaryColor?: string;
 }
 
 export interface SettingsItem {
@@ -42,4 +46,6 @@ export interface SettingsItem {
     plural: string;
   };
   customLogoS3Key: string | undefined;
+  primaryColor?: string;
+  secondaryColor?: string;
 }

@@ -17,6 +17,8 @@ describe("getDefaultSettings", () => {
         plural: "Topic Areas",
       },
       customLogoS3ID: undefined,
+      primaryColor: "#2491ff",
+      secondaryColor: "#54278f",
     });
   });
 });
@@ -55,6 +57,8 @@ describe("fromItem", () => {
         plural: "Topic Areas",
       },
       customLogoS3Key: "12345",
+      primaryColor: "#2491ff",
+      secondaryColor: "#54278f",
     });
   });
 });
@@ -74,6 +78,8 @@ describe("toPublicSettings", () => {
         plural: "Topic Areas",
       },
       customLogoS3Key: "12345",
+      primaryColor: "#ffffff",
+      secondaryColor: "#ffffff",
     };
 
     const publicSettings = SettingsFactory.toPublicSettings(settings);
@@ -88,6 +94,8 @@ describe("toPublicSettings", () => {
         plural: "Topic Areas",
       },
       customLogoS3Key: "12345",
+      primaryColor: "#ffffff",
+      secondaryColor: "#ffffff",
     });
   });
 });

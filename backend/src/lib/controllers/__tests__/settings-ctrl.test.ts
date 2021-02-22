@@ -129,23 +129,15 @@ describe("updateSettings", () => {
     );
   });
 
-  it("updates primaryColor setting", async () => {
-    req.body.primaryColor = "#ffffff";
+  it("updates colors setting", async () => {
+    req.body.colors = { primary: "#ffffff", secondary: "#fff" };
     await SettingsCtrl.updateSettings(req, res);
     expect(repository.updateSetting).toHaveBeenCalledWith(
-      "primaryColor",
-      "#ffffff",
-      now.toISOString(),
-      user
-    );
-  });
-
-  it("updates secondaryColor setting", async () => {
-    req.body.secondaryColor = "#fff";
-    await SettingsCtrl.updateSettings(req, res);
-    expect(repository.updateSetting).toHaveBeenCalledWith(
-      "secondaryColor",
-      "#fff",
+      "colors",
+      {
+        primary: "#ffffff",
+        secondary: "#fff",
+      },
       now.toISOString(),
       user
     );

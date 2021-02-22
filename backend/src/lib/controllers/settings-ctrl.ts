@@ -20,8 +20,7 @@ async function updateSettings(req: Request, res: Response) {
     navbarTitle,
     topicAreaLabels,
     customLogoS3Key,
-    primaryColor,
-    secondaryColor,
+    colors,
   } = req.body;
 
   if (!updatedAt) {
@@ -88,22 +87,13 @@ async function updateSettings(req: Request, res: Response) {
     );
   }
 
-  if (primaryColor) {
-    updatedAt = await repo.updateSetting(
-      "primaryColor",
-      primaryColor,
-      updatedAt,
-      user
-    );
-  }
+  if (colors) {
+    if (!colors.primary || !colors.secondary) {
+      res.status(400);
+      return res.send("Missing fields `primary` or `secondary` in colors");
+    }
 
-  if (secondaryColor) {
-    updatedAt = await repo.updateSetting(
-      "secondaryColor",
-      secondaryColor,
-      updatedAt,
-      user
-    );
+    updatedAt = await repo.updateSetting("colors", colors, updatedAt, user);
   }
 
   res.send();

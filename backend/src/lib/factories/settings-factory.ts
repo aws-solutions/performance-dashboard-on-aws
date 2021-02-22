@@ -16,8 +16,10 @@ function getDefaultSettings(): Settings {
       plural: "Topic Areas",
     },
     customLogoS3Key: undefined,
-    primaryColor: "#2491ff",
-    secondaryColor: "#54278f",
+    colors: {
+      primary: "#2491ff",
+      secondary: "#54278f",
+    },
   };
 }
 
@@ -38,10 +40,7 @@ function fromItem(item: SettingsItem): Settings {
     customLogoS3Key: item.customLogoS3Key
       ? item.customLogoS3Key
       : defaults.customLogoS3Key,
-    primaryColor: item.primaryColor ? item.primaryColor : defaults.primaryColor,
-    secondaryColor: item.secondaryColor
-      ? item.secondaryColor
-      : defaults.secondaryColor,
+    colors: item.colors ? item.colors : defaults.colors,
   };
 }
 
@@ -60,12 +59,7 @@ function toPublicSettings(settings: Settings): PublicSettings {
     customLogoS3Key: settings.customLogoS3Key
       ? settings.customLogoS3Key
       : defaults.customLogoS3Key,
-    primaryColor: settings.primaryColor
-      ? settings.primaryColor
-      : defaults.primaryColor,
-    secondaryColor: settings.secondaryColor
-      ? settings.secondaryColor
-      : defaults.secondaryColor,
+    colors: settings.colors ? settings.colors : defaults.colors,
   };
 }
 

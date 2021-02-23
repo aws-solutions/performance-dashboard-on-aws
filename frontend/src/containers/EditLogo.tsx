@@ -7,13 +7,12 @@ import ContentService from "../services/ContentService";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
-import Spinner from "../components/Spinner";
 import defaultLogo from "../logo.svg";
 
 function EditLogo() {
   const history = useHistory();
-  const { settings, reloadSettings, loadingSettings } = useSettings(true);
-  const { logo, loadingFile } = useLogo(settings.customLogoS3Key);
+  const { settings, reloadSettings } = useSettings(true);
+  const { logo } = useLogo(settings.customLogoS3Key);
   const { register, handleSubmit } = useForm();
 
   const [currentLogo, setCurrentLogo] = useState(logo);
@@ -83,45 +82,39 @@ function EditLogo() {
           name and in the published site header.
         </p>
 
-        {loadingSettings || loadingFile ? (
-          <Spinner className="text-center margin-top-9" label="Loading" />
-        ) : (
-          <>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="usa-form usa-form--large"
-            >
-              <FileInput
-                id="dataset"
-                name="image"
-                label="File upload"
-                accept=".png,.jpeg,.jpg,.svg"
-                loading={imageUploading}
-                register={register}
-                hint={<span>Must be a PNG, JPEG, or SVG file</span>}
-                fileName={
-                  currentLogo
-                    ? currentLogo.name
-                    : defaultLogo.replace(/^.*[\\\/]/, "")
-                }
-                onFileProcessed={onFileProcessed}
-              />
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="usa-form usa-form--large"
+        >
+          <FileInput
+            id="dataset"
+            name="image"
+            label="File upload"
+            accept=".png,.jpeg,.jpg,.svg"
+            loading={imageUploading}
+            register={register}
+            hint={<span>Must be a PNG, JPEG, or SVG file</span>}
+            fileName={
+              currentLogo
+                ? currentLogo.name
+                : defaultLogo.replace(/^.*[\\\/]/, "")
+            }
+            onFileProcessed={onFileProcessed}
+          />
 
-              <br />
-              <Button type="submit" disabled={!settings.updatedAt}>
-                Save
-              </Button>
-              <Button
-                variant="unstyled"
-                type="button"
-                className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-                onClick={onCancel}
-              >
-                Cancel
-              </Button>
-            </form>
-          </>
-        )}
+          <br />
+          <Button type="submit" disabled={!settings.updatedAt}>
+            Save
+          </Button>
+          <Button
+            variant="unstyled"
+            type="button"
+            className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+            onClick={onCancel}
+          >
+            Cancel
+          </Button>
+        </form>
       </div>
     </div>
   );

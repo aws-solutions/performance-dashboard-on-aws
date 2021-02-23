@@ -10,14 +10,14 @@ jest.mock("../../hooks");
 jest.mock("../../services/BackendService");
 
 const history = createMemoryHistory();
-history.push("/admin/settings/topicarea/editcolors");
+history.push("/admin/settings/brandingandstyling/editcolors");
 jest.spyOn(history, "push");
 
 beforeEach(async () => {
   await act(async () => {
     render(
       <Router history={history}>
-        <Route path="/admin/settings/topicarea/editcolors">
+        <Route path="/admin/settings/brandingandstyling/editcolors">
           <EditColors />
         </Route>
       </Router>
@@ -54,5 +54,7 @@ test("invokes cancel function when use clicks cancel", async () => {
   await act(async () => {
     fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
   });
-  expect(history.push).toHaveBeenCalledWith("/admin/settings/topicarea");
+  expect(history.push).toHaveBeenCalledWith(
+    "/admin/settings/brandingandstyling"
+  );
 });

@@ -125,7 +125,7 @@ const routes: Array<AppRoute> = [
     component: EditTopicAreaLabel,
   },
   {
-    path: "/admin/settings/topicarea/editcolors",
+    path: "/admin/settings/brandingandstyling/editcolors",
     component: EditColors,
   },
   {

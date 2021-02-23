@@ -324,6 +324,23 @@ export function useDatasets() {
   };
 }
 
+export function useColors(numberOfColors: number) {
+  return [
+    "#29B4BB",
+    "#3F29C8",
+    "#E17316",
+    "#CE167E",
+    "#7D70F9",
+    "#40E15D",
+    "#2168E5",
+    "#5B20A2",
+    "#D7B40A",
+    "#BE5B0F",
+    "#217C59",
+    "#8DED43",
+  ];
+}
+
 export function useDashboardVersions(parentDashboardId: string) {
   return {
     loading: false,

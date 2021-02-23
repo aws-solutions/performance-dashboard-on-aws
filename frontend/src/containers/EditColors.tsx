@@ -44,7 +44,7 @@ function EditColors() {
       new Date()
     );
 
-    history.push("/admin/settings/topicarea", {
+    history.push("/admin/settings/brandingandstyling", {
       alert: {
         type: "success",
         message: "Colors were successfully edited",
@@ -53,7 +53,7 @@ function EditColors() {
   };
 
   const onCancel = () => {
-    history.push("/admin/settings/topicarea");
+    history.push("/admin/settings/brandingandstyling");
   };
 
   const onFormChange = () => {
@@ -67,11 +67,11 @@ function EditColors() {
   const crumbs = [
     {
       label: "Settings",
-      url: "/admin/settings/topicarea",
+      url: "/admin/settings",
     },
     {
       label: "Branding and style",
-      url: "/admin/settings/topicarea",
+      url: "/admin/settings/brandingandstyling",
     },
     {
       label: "Edit colors",

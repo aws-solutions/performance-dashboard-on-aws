@@ -21,6 +21,7 @@ const defaultSettings: Settings = {
     singular: "Topic Area",
     plural: "Topic Areas",
   },
+  customLogoS3Key: undefined,
 };
 
 interface SettingsContextProps {

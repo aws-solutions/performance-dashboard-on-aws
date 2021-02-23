@@ -39,7 +39,7 @@ function PublishDashboard() {
   const published = versions.find((v) => v.state === DashboardState.Published);
 
   const onPreview = () => {
-    history.push(`/admin/dashboard/${dashboardId}/preview`);
+    history.push(`/admin/dashboard/${dashboardId}`);
   };
 
   const onContinue = async () => {

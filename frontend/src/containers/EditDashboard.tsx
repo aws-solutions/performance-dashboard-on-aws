@@ -47,7 +47,7 @@ function EditDashboard() {
   };
 
   const onPreview = () => {
-    history.push(`/admin/dashboard/${dashboardId}/preview`);
+    history.push(`/admin/dashboard/${dashboardId}`);
   };
 
   const closePublishModal = () => {

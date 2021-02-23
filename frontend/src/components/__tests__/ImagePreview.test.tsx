@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import ImagePreview from "../ImagePreview";
 
@@ -11,8 +11,8 @@ const imageFile = {
 
 window.URL.createObjectURL = jest.fn();
 
-test("renders the title and summary of the image preview component", async () => {
-  const { getByText } = render(
+test("renders the image title", async () => {
+  render(
     <ImagePreview
       title="test title"
       summary="test summary"
@@ -22,13 +22,11 @@ test("renders the title and summary of the image preview component", async () =>
     />,
     { wrapper: MemoryRouter }
   );
-  expect(getByText("test title")).toBeInTheDocument();
-  expect(getByText("test summary")).toBeInTheDocument();
-  expect(getByText("test summary").nextSibling).toContainHTML("img");
+  expect(screen.getByText("test title")).toBeInTheDocument();
 });
 
-test("renders the image preview component with the summary below the chart", async () => {
-  const { getByText } = render(
+test("renders the summary below the image", async () => {
+  render(
     <ImagePreview
       title="test title"
       summary="test summary"
@@ -38,9 +36,27 @@ test("renders the image preview component with the summary below the chart", asy
     />,
     { wrapper: MemoryRouter }
   );
-  expect(getByText("test title")).toBeInTheDocument();
-  expect(getByText("test summary")).toBeInTheDocument();
-  expect(getByText("test summary").previousSibling).toContainHTML("img");
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("imageSummaryBelow");
+});
+
+test("renders the summary above the image", async () => {
+  render(
+    <ImagePreview
+      title="test title"
+      summary="test summary"
+      file={imageFile}
+      summaryBelow={false}
+      altText="alt text"
+    />,
+    { wrapper: MemoryRouter }
+  );
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("imageSummaryAbove");
 });
 
 test("image preview should match snapshot", async () => {

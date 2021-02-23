@@ -6,7 +6,7 @@ type UseLogoHook = {
   logo: File | undefined;
 };
 
-export function useLogo(s3Key: string | undefined): UseLogoHook {
+export function useLogo(s3Key?: string): UseLogoHook {
   const [loading, setLoading] = useState<boolean>(false);
   const [logo, setFile] = useState<File>();
 

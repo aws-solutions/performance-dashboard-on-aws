@@ -34,8 +34,7 @@ function BrandingAndStylingSettings() {
         <div className="grid-col flex-1 text-left">
           <Logo />
         </div>
-        <div className="grid-col flex-9">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div className="grid-col flex-9 padding-left-3">
           <Button className="margin-top-2" variant="outline" onClick={onEdit}>
             Edit
           </Button>

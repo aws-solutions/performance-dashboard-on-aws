@@ -41,8 +41,14 @@ function EditLogo() {
           },
         });
       } catch (err) {
-        console.log("Failed to save logo", err);
         setImageUploading(false);
+
+        history.push("/admin/settings/brandingandstyling", {
+          alert: {
+            type: "error",
+            message: "Failed to update logo",
+          },
+        });
       }
     }
   };

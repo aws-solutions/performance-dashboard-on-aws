@@ -1,7 +1,6 @@
 import React from "react";
 import { useSettings, useLogo } from "../hooks";
 import defaultLogo from "../logo.svg";
-import Spinner from "../components/Spinner";
 
 function Logo() {
   const { settings, loadingSettings } = useSettings();
@@ -10,10 +9,13 @@ function Logo() {
   return (
     <>
       {loadingFile || loadingSettings ? (
-        <Spinner className="margin-top-3 text-center" label="Loading" />
+        <div />
       ) : (
         <>
-          <img src={logo ? URL.createObjectURL(logo) : defaultLogo}></img>
+          <img
+            src={logo ? URL.createObjectURL(logo) : defaultLogo}
+            alt="Organization logo"
+          ></img>
         </>
       )}
     </>

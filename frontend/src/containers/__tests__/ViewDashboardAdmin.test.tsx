@@ -1,67 +1,141 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { DashboardState } from "../../models";
 import ViewDashboardAdmin from "../ViewDashboardAdmin";
+import * as hooks from "../../hooks";
 
 jest.mock("../../hooks");
 
-test("renders dashboard version", () => {
-  const { getByText } = render(<ViewDashboardAdmin />, {
-    wrapper: MemoryRouter,
+const dummyDashboard = {
+  id: "123",
+  name: "AWS Dashboard",
+  topicAreaId: "abc",
+  topicAreaName: "Bananas",
+  parentDashboardId: "123",
+  description: "Some description",
+  updatedAt: "2021-01-19T18:27:00Z",
+  updatedBy: "johndoe",
+  createdBy: "test user",
+  state: DashboardState.Published,
+  version: 1,
+  widgets: [],
+};
+
+describe("general dashboard details", () => {
+  beforeEach(() => {
+    render(<ViewDashboardAdmin />, {
+      wrapper: MemoryRouter,
+    });
   });
-  expect(getByText("Version 1")).toBeInTheDocument();
+
+  test("renders dashboard version", () => {
+    expect(screen.getByText("Version 1")).toBeInTheDocument();
+  });
+
+  test("renders dashboard title", () => {
+    expect(
+      screen.getByRole("heading", { name: "My AWS Dashboard" })
+    ).toBeInTheDocument();
+  });
+
+  test("renders dashboard topic area", () => {
+    expect(screen.getByText("Bananas")).toBeInTheDocument();
+  });
+
+  test("renders dashboard description", () => {
+    expect(screen.getByText("Some description")).toBeInTheDocument();
+  });
+
+  test("renders a back link to homepage", async () => {
+    expect(
+      screen.getByRole("link", { name: "Dashboards" })
+    ).toBeInTheDocument();
+  });
 });
 
-test("renders show version notes button", async () => {
-  const { getByRole } = render(<ViewDashboardAdmin />, {
-    wrapper: MemoryRouter,
+describe("dashboard in draft", () => {
+  beforeEach(() => {
+    // Override the useDashboard mock to return a dashboard in Draft
+    const draft = { ...dummyDashboard, state: DashboardState.Draft };
+    (hooks.useDashboard as any) = jest.fn().mockReturnValue({
+      loading: false,
+      dashboard: draft,
+    });
+
+    render(<ViewDashboardAdmin />, {
+      wrapper: MemoryRouter,
+    });
   });
-  const viewButton = getByRole("button", {
-    name: "Show version notes",
+
+  test("renders a close preview button", async () => {
+    expect(
+      screen.getByRole("button", { name: "Close Preview" })
+    ).toBeInTheDocument();
   });
-  expect(viewButton).toBeInTheDocument();
+
+  test("renders a publish button", async () => {
+    expect(screen.getByRole("button", { name: "Publish" })).toBeInTheDocument();
+  });
+
+  test("renders an information alert", async () => {
+    expect(
+      screen.getByText(
+        "Below is a preview of what the published dashboard will look like. " +
+          "If everything looks right, you can publish the dashboard to be " +
+          "viewable on the published site."
+      )
+    ).toBeInTheDocument();
+  });
 });
 
-test("renders dashboard title", () => {
-  const { getByRole } = render(<ViewDashboardAdmin />, {
-    wrapper: MemoryRouter,
+describe("dashboard published", () => {
+  beforeEach(() => {
+    // Override the useDashboard mock to return a dashboard in Published state
+    const published = { ...dummyDashboard, state: DashboardState.Published };
+    (hooks.useDashboard as any) = jest.fn().mockReturnValue({
+      loading: false,
+      dashboard: published,
+    });
+
+    render(<ViewDashboardAdmin />, {
+      wrapper: MemoryRouter,
+    });
   });
-  expect(
-    getByRole("heading", { name: "My AWS Dashboard" })
-  ).toBeInTheDocument();
+
+  test("renders an archive button", async () => {
+    expect(screen.getByRole("button", { name: "Archive" })).toBeInTheDocument();
+  });
+
+  test("renders an update button", async () => {
+    expect(screen.getByRole("button", { name: "Update" })).toBeInTheDocument();
+  });
+
+  test("renders show version notes button", async () => {
+    const viewButton = screen.getByRole("button", {
+      name: "Show version notes",
+    });
+    expect(viewButton).toBeInTheDocument();
+  });
 });
 
-test("renders dashboard topic area", () => {
-  const { getByText } = render(<ViewDashboardAdmin />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Bananas")).toBeInTheDocument();
-});
+describe("dashboard archived", () => {
+  beforeEach(() => {
+    // Override the useDashboard mock to return a dashboard in Archived state
+    const archived = { ...dummyDashboard, state: DashboardState.Archived };
+    (hooks.useDashboard as any) = jest.fn().mockReturnValue({
+      loading: false,
+      dashboard: archived,
+    });
 
-test("renders dashboard description", () => {
-  const { getByText } = render(<ViewDashboardAdmin />, {
-    wrapper: MemoryRouter,
+    render(<ViewDashboardAdmin />, {
+      wrapper: MemoryRouter,
+    });
   });
-  expect(getByText("Some description")).toBeInTheDocument();
-});
 
-test("renders a back link to homepage", async () => {
-  const { getByRole } = render(<ViewDashboardAdmin />, {
-    wrapper: MemoryRouter,
+  test("renders a re-publish button", async () => {
+    expect(
+      screen.getByRole("button", { name: "Re-publish" })
+    ).toBeInTheDocument();
   });
-  expect(getByRole("link", { name: "Dashboards" })).toBeInTheDocument();
-});
-
-test("renders an update button", async () => {
-  const { getByRole } = render(<ViewDashboardAdmin />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByRole("button", { name: "Update" })).toBeInTheDocument();
-});
-
-test("renders an archive button", async () => {
-  const { getByRole } = render(<ViewDashboardAdmin />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByRole("button", { name: "Archive" })).toBeInTheDocument();
 });

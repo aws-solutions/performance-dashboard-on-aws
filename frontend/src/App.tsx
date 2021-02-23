@@ -17,12 +17,10 @@ import CreateDashboard from "./containers/CreateDashboard";
 import EditDetails from "./containers/EditDetails";
 import AddContent from "./containers/AddContent";
 import EditDashboard from "./containers/EditDashboard";
-import DashboardPreview from "./containers/DashboardPreview";
 import DashboardHistory from "./containers/DashboardHistory";
 import ViewDashboard from "./containers/ViewDashboard";
 import ViewDashboardAdmin from "./containers/ViewDashboardAdmin";
 import PublishDashboard from "./containers/PublishDashboard";
-import ArchivedDashboard from "./containers/ArchivedDashboard";
 import AddChart from "./containers/AddChart";
 import AddImage from "./containers/AddImage";
 import EditImage from "./containers/EditImage";
@@ -141,10 +139,6 @@ const routes: Array<AppRoute> = [
     component: EditDashboard,
   },
   {
-    path: "/admin/dashboard/archived/:dashboardId",
-    component: ArchivedDashboard,
-  },
-  {
     path: "/admin/dashboard/edit/:dashboardId/details",
     component: EditDetails,
   },
@@ -199,10 +193,6 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/dashboard/:dashboardId/add-content",
     component: AddContent,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/preview",
-    component: DashboardPreview,
   },
   {
     path: "/admin/dashboard/:dashboardId/history",

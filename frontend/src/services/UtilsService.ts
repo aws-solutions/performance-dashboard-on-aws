@@ -1,6 +1,7 @@
 import {
   ChartType,
   Dashboard,
+  DashboardState,
   PublicDashboard,
   PublicTopicArea,
 } from "../models";
@@ -60,12 +61,34 @@ function getLargestHeader(headers: Array<string>, data?: Array<any>) {
   );
 }
 
+/**
+ * Given a dashboard, it returns the URL path of the screen
+ * where the user should be redirected: /dashboard/edit/{id},
+ * /dashboard/{id}, etc. This depends on the dashboard state.
+ */
+function getDashboardUrlPath(dashboard?: Dashboard) {
+  if (!dashboard) return "/admin/dashboards";
+  switch (dashboard.state) {
+    case DashboardState.Draft:
+      return `/admin/dashboard/edit/${dashboard.id}`;
+    case DashboardState.PublishPending:
+      return `/admin/dashboard/${dashboard.id}/publish`;
+    case DashboardState.Archived:
+      return `/admin/dashboard/${dashboard.id}`;
+    case DashboardState.Published:
+      return `/admin/dashboard/${dashboard.id}`;
+    default:
+      return "/admin/dashboards";
+  }
+}
+
 const UtilsService = {
   groupByTopicArea,
   getChartTypeLabel,
   validateEmails,
   timeout,
   getLargestHeader,
+  getDashboardUrlPath,
 };
 
 export default UtilsService;

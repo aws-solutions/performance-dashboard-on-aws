@@ -4,6 +4,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import Table from "../components/Table";
 import Spinner from "../components/Spinner";
 import AuditTrailService from "../services/AuditTrailService";
+import UtilsService from "../services/UtilsService";
 import Search from "../components/Search";
 import {
   useDashboard,
@@ -65,7 +66,7 @@ function DashboardHistory() {
           },
           {
             label: dashboard?.name,
-            url: `/admin/dashboard/${dashboardId}`,
+            url: UtilsService.getDashboardUrlPath(dashboard),
           },
           {
             label: "History",

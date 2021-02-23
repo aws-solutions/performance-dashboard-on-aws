@@ -7,6 +7,7 @@ import {
   PublicDashboard,
 } from "../models";
 import BackendService from "../services/BackendService";
+import AuditTrailService from "../services/AuditTrailService";
 
 type UseDashboardHook = {
   loading: boolean;
@@ -219,7 +220,13 @@ export function useDashboardHistory(
         const data = await BackendService.fetchDashboardHistory(
           parentDashboardId
         );
-        setAuditlogs(data);
+
+        // Filter out noisy logs first
+        const logs = AuditTrailService.removeNosiyAuditLogs(
+          data as DashboardAuditLog[]
+        );
+
+        setAuditlogs(logs);
         setLoading(false);
       };
       fetchData();

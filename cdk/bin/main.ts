@@ -24,6 +24,7 @@ const contentBucketName = `performancedash-${envName.toLowerCase()}-${accountId}
 const auth = new AuthStack(app, "Auth", {
   stackName: stackPrefix.concat("-Auth"),
   datasetsBucketName: datasetsBucketName,
+  contentBucketName: contentBucketName,
 });
 
 const backend = new BackendStack(app, "Backend", {

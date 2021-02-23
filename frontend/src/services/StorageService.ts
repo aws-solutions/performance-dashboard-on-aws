@@ -1,5 +1,6 @@
 import Storage from "@aws-amplify/storage";
 import { v4 as uuidv4 } from "uuid";
+import EnvConfig from "../services/EnvConfig";
 
 type UploadDatasetResult = {
   s3Keys: {
@@ -32,18 +33,33 @@ const imageFileTypes: ValidFileTypes = {
   "image/svg+xml": ".svg",
 };
 
-async function downloadFile(s3Key: string): Promise<File> {
-  const data: any = await Storage.get(s3Key, {
-    download: true,
-    level: accessLevel,
-    serverSideEncryption,
-  });
+async function downloadFile(
+  path: string,
+  alternativeBucket?: string
+): Promise<File> {
+  const data: any = alternativeBucket
+    ? await Storage.get(path, {
+        bucket: alternativeBucket,
+        download: true,
+        level: accessLevel,
+        serverSideEncryption,
+      })
+    : await Storage.get(path, {
+        download: true,
+        level: accessLevel,
+        serverSideEncryption,
+      });
   if (!data || !data.Body) {
     throw new Error(
       "The query using the provided S3 key, returned no results."
     );
   }
   return data.Body as File;
+}
+
+async function downloadLogo(s3Key: string) {
+  const path = "logo/".concat(s3Key);
+  return await downloadFile(path, EnvConfig.contentBucket);
 }
 
 async function downloadJson(s3Key: string): Promise<Array<any>> {
@@ -70,17 +86,25 @@ async function downloadJson(s3Key: string): Promise<Array<any>> {
   }
 }
 
-async function uploadFile(rawFile: File, fileS3Key: string) {
-  await Storage.put(fileS3Key, rawFile, {
-    level: accessLevel,
-    /**
-     * ContentDisposition metadata allows the original filename
-     * to be preserved on the S3 object for future downloads.
-     */
-    contentDisposition: `attachment; filename="${rawFile.name}"`,
-    contentType: rawFile.type,
-    serverSideEncryption,
-  });
+async function uploadFile(
+  rawFile: File,
+  fileS3Key: string,
+  alternativeBucket?: string
+) {
+  alternativeBucket
+    ? await Storage.put(fileS3Key, rawFile, {
+        bucket: alternativeBucket,
+        level: accessLevel,
+        contentDisposition: `attachment; filename="${rawFile.name}"`,
+        contentType: rawFile.type,
+        serverSideEncryption,
+      })
+    : await Storage.put(fileS3Key, rawFile, {
+        level: accessLevel,
+        contentDisposition: `attachment; filename="${rawFile.name}"`,
+        contentType: rawFile.type,
+        serverSideEncryption,
+      });
 }
 
 async function uploadJson(jsonFile: string, jsonS3Key: string) {
@@ -130,7 +154,11 @@ async function uploadMetric(jsonFile: string): Promise<UploadDatasetResult> {
   };
 }
 
-async function uploadImage(rawFile: File): Promise<string> {
+async function uploadImage(
+  rawFile: File,
+  directory?: string,
+  alternativeBucket?: string
+): Promise<string> {
   const mimeType = rawFile.type;
   const extension = imageFileTypes[mimeType as keyof ValidFileTypes];
 
@@ -139,9 +167,15 @@ async function uploadImage(rawFile: File): Promise<string> {
   }
 
   const fileS3Key = uuidv4().concat(extension);
-  await uploadFile(rawFile, fileS3Key);
+  const dir = directory ? directory + "/" : "";
+
+  await uploadFile(rawFile, dir.concat(fileS3Key), alternativeBucket);
 
   return fileS3Key;
+}
+
+async function uploadLogo(rawFile: File): Promise<string> {
+  return await uploadImage(rawFile, "logo", EnvConfig.contentBucket);
 }
 
 const StorageService = {
@@ -150,6 +184,8 @@ const StorageService = {
   uploadDataset,
   uploadMetric,
   uploadImage,
+  uploadLogo,
+  downloadLogo,
   imageFileTypes,
 };
 

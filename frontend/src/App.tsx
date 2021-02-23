@@ -52,6 +52,8 @@ import EditNavbar from "./containers/EditNavbar";
 import UserListing from "./containers/UserListing";
 import AddUsers from "./containers/AddUsers";
 import ChangeRole from "./containers/ChangeRole";
+import BrandingAndStylingSettings from "./containers/BrandingAndStylingSettings";
+import EditLogo from "./containers/EditLogo";
 
 interface AppRoute {
   path: string;
@@ -71,6 +73,14 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/settings/topicarea",
     component: TopicareaSettings,
+  },
+  {
+    path: "/admin/settings/brandingandstyling",
+    component: BrandingAndStylingSettings,
+  },
+  {
+    path: "/admin/settings/brandingandstyling/editlogo",
+    component: EditLogo,
   },
   {
     path: "/admin/settings/publishingguidance",

@@ -127,3 +127,17 @@ describe("downloadJson", () => {
     expect(json).toEqual([]);
   });
 });
+
+describe("download logo", () => {
+  test("downloads a image file from S3", async () => {
+    Storage.get = jest.fn().mockReturnValue({
+      Body: "body",
+    });
+    await StorageService.downloadLogo("123.json");
+    expect(Storage.get).toBeCalledWith("logo/123.json", {
+      download: true,
+      level: "public",
+      serverSideEncryption: "aws:kms",
+    });
+  });
+});

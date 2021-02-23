@@ -19,6 +19,7 @@ function SettingsLayout(props: LayoutProps) {
     publishingguidance: "Publishing guidance",
     publishedsite: "Published site",
     dateformat: "Date and time format",
+    brandingandstyling: "Branding and styling",
   };
 
   const queryString = pathname.split("/");
@@ -81,6 +82,20 @@ function SettingsLayout(props: LayoutProps) {
                             to="/admin/settings/publishingguidance"
                           >
                             {`${validSettings["publishingguidance"]}`}
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className="usa-sidenav__sublist">
+                        <li className="usa-sidenav__item">
+                          <Link
+                            className={
+                              currentSetting === "brandingandstyling"
+                                ? "usa-current"
+                                : ""
+                            }
+                            to="/admin/settings/brandingandstyling"
+                          >
+                            {`${validSettings["brandingandstyling"]}`}
                           </Link>
                         </li>
                       </ul>

@@ -1,4 +1,4 @@
-import { PublicDashboard } from "../../models";
+import { Dashboard, DashboardState, PublicDashboard } from "../../models";
 import UtilsService from "../UtilsService";
 
 describe("groupByTopicArea", () => {
@@ -35,5 +35,35 @@ describe("groupByTopicArea", () => {
     const topicarea2 = topicareas.find((topicarea) => topicarea.id === "abc");
     expect(topicarea2).toBeDefined();
     expect(topicarea2?.dashboards).toContain(dashboard2);
+  });
+});
+
+describe("getDashboardUrlPath", () => {
+  const dashboard = {
+    id: "001",
+  } as Dashboard;
+
+  test("returns the url to EditDashboard for a dashboard in Draft", () => {
+    dashboard.state = DashboardState.Draft;
+    const path = UtilsService.getDashboardUrlPath(dashboard);
+    expect(path).toEqual("/admin/dashboard/edit/001");
+  });
+
+  test("returns the url to the PublishWorkflow for a dashboard in PublishPending", () => {
+    dashboard.state = DashboardState.PublishPending;
+    const path = UtilsService.getDashboardUrlPath(dashboard);
+    expect(path).toEqual("/admin/dashboard/001/publish");
+  });
+
+  test("returns the url to ViewDashboard for a Published dashboard", () => {
+    dashboard.state = DashboardState.Published;
+    const path = UtilsService.getDashboardUrlPath(dashboard);
+    expect(path).toEqual("/admin/dashboard/001");
+  });
+
+  test("returns the url to ArchivedDashboard for an archived dashboard", () => {
+    dashboard.state = DashboardState.Archived;
+    const path = UtilsService.getDashboardUrlPath(dashboard);
+    expect(path).toEqual("/admin/dashboard/001");
   });
 });

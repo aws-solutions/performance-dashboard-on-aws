@@ -60,7 +60,7 @@ function ArchivedTab(props: Props) {
               Cell: (props: any) => {
                 const dashboard = props.row.original as Dashboard;
                 return (
-                  <Link to={`/admin/dashboard/archived/${dashboard.id}`}>
+                  <Link to={`/admin/dashboard/${dashboard.id}`}>
                     <span className="text-bold text-base-darkest">
                       {dashboard.name}
                     </span>

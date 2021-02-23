@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   XAxis,
   YAxis,
@@ -8,7 +14,8 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import { useColors } from "../hooks";
+import { useSettings } from "../hooks";
+import UtilsService from "../services/UtilsService";
 import "./PartWholeChartPreview.css";
 
 type Props = {
@@ -17,11 +24,29 @@ type Props = {
   parts: Array<string>;
   data?: Array<object>;
   summaryBelow: boolean;
+  colors?: {
+    primary: string | undefined;
+    secondary: string | undefined;
+  };
 };
 
 const PartWholeChartPreview = (props: Props) => {
   const [partsHover, setPartsHover] = useState(null);
   const [hiddenParts, setHiddenParts] = useState<Array<string>>([]);
+
+  const [chartColors, setChartColors] = useState<Array<string>>([]);
+  const { settings } = useSettings();
+
+  useEffect(() => {
+    if (settings && settings.colors) {
+      const colors = UtilsService.getColors(
+        props.parts.length,
+        props.colors?.primary || settings.colors.primary,
+        props.colors?.secondary || settings.colors.secondary
+      );
+      setChartColors(colors);
+    }
+  }, [settings, props.parts, props.colors]);
 
   const partWholeData = useRef<Array<object>>([]);
   const partWholeParts = useRef<Array<string>>([]);
@@ -51,8 +76,6 @@ const PartWholeChartPreview = (props: Props) => {
       partWholeData.current.push(bar);
     }
   }, [data, parts, partWholeData, partWholeParts, hiddenParts]);
-
-  const colors = useColors(partWholeParts.current.length);
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -84,6 +107,10 @@ const PartWholeChartPreview = (props: Props) => {
       </span>
     );
   };
+
+  if (chartColors.length <= 0) {
+    return null;
+  }
 
   return (
     <div>
@@ -156,7 +183,7 @@ const PartWholeChartPreview = (props: Props) => {
                   stackId={"a"}
                   dataKey={part}
                   key={index}
-                  fill={colors[index]}
+                  fill={chartColors[index]}
                   fillOpacity={getOpacity(part)}
                   stroke="white"
                   strokeWidth={2}

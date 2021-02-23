@@ -5,7 +5,7 @@ import {
   useDashboardVersions,
   useDashboardHistory,
 } from "./dashboard-hooks";
-import { useWidget, useColors } from "./widget-hooks";
+import { useWidget } from "./widget-hooks";
 import { useTopicAreas, useTopicArea } from "./topicarea-hooks";
 import { useHomepage, usePublicHomepage } from "./homepage-hooks";
 import { useSettings, usePublicSettings } from "./settings-hooks";
@@ -29,7 +29,6 @@ export {
   usePublicDashboard,
   useDashboards,
   useWidget,
-  useColors,
   useTopicAreas,
   useTopicArea,
   usePublicHomepage,

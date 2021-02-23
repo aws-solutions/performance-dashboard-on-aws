@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   XAxis,
   YAxis,
@@ -9,7 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useColors } from "../hooks";
+import { useSettings } from "../hooks";
 import UtilsService from "../services/UtilsService";
 
 type Props = {
@@ -19,12 +19,30 @@ type Props = {
   data?: Array<any>;
   summaryBelow: boolean;
   isPreview?: boolean;
+  hideLegend?: boolean;
+  colors?: {
+    primary: string | undefined;
+    secondary: string | undefined;
+  };
 };
 
 const ColumnChartPreview = (props: Props) => {
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
-  const colors = useColors(props.columns.length);
+  const [chartColors, setChartColors] = useState<Array<string>>([]);
+  const { settings } = useSettings();
+
+  useEffect(() => {
+    if (settings && settings.colors) {
+      const colors = UtilsService.getColors(
+        props.columns.length,
+        props.colors?.primary || settings.colors.primary,
+        props.colors?.secondary || settings.colors.secondary
+      );
+      setChartColors(colors);
+    }
+  }, [settings, props.columns, props.colors]);
+
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
@@ -66,6 +84,10 @@ const ColumnChartPreview = (props: Props) => {
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
+  if (chartColors.length <= 0) {
+    return null;
+  }
+
   return (
     <div
       className={`overflow-hidden${widthPercent > 100 ? " right-shadow" : ""}`}
@@ -98,18 +120,20 @@ const ColumnChartPreview = (props: Props) => {
             />
             <YAxis type="number" domain={[0, "dataMax"]} />
             <Tooltip cursor={{ fill: "#F0F0F0" }} />
-            <Legend
-              verticalAlign="top"
-              onClick={toggleColumns}
-              onMouseLeave={(e) => setColumnsHover(null)}
-              onMouseEnter={(e) => setColumnsHover(e.dataKey)}
-            />
+            {!props.hideLegend && (
+              <Legend
+                verticalAlign="top"
+                onClick={toggleColumns}
+                onMouseLeave={(e) => setColumnsHover(null)}
+                onMouseEnter={(e) => setColumnsHover(e.dataKey)}
+              />
+            )}
             {props.columns.length &&
               props.columns.slice(1).map((column, index) => {
                 return (
                   <Bar
                     dataKey={column}
-                    fill={colors[index]}
+                    fill={chartColors[index]}
                     key={index}
                     fillOpacity={getOpacity(column)}
                     hide={hiddenColumns.includes(column)}

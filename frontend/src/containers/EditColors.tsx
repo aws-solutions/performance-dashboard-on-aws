@@ -1,45 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useSettings } from "../hooks";
+import { useSampleDataset, useSettings } from "../hooks";
 import BackendService from "../services/BackendService";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import TextField from "../components/TextField";
 import Combobox from "../components/Combobox";
+import BarChartPreview from "../components/BarChartPreview";
+import ColumnChartPreview from "../components/ColumnChartPreview";
+import UtilsService from "../services/UtilsService";
 
 interface FormValues {
   primary: string;
   secondary: string;
 }
 
+const EDIT_COLORS_CSV_COLUMN = "EditColors-CSV-Column.csv";
+const EDIT_COLORS_CSV_BAR = "EditColors-CSV-Bar.csv";
+
 function EditColors() {
   const history = useHistory();
   const { settings, loadingSettings } = useSettings();
+  const datasetColumn = useSampleDataset(EDIT_COLORS_CSV_COLUMN);
+  const datasetBar = useSampleDataset(EDIT_COLORS_CSV_BAR);
   const [primaryColor, setPrimaryColor] = useState<string | undefined>(
     undefined
   );
   const [secondaryColor, setSecondaryColor] = useState<string | undefined>(
     undefined
   );
-  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
-
-  useEffect(() => {
-    if (settings) {
-      const primary = (settings.colors && settings.colors.primary) || "#2491ff";
-      const secondary =
-        (settings.colors && settings.colors.secondary) || "#54278f";
-
-      reset({
-        primary,
-        secondary,
-      });
-
-      setPrimaryColor(primary);
-      setSecondaryColor(secondary);
-    }
-  }, [settings, reset]);
+  const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.updateSetting(
@@ -63,20 +55,12 @@ function EditColors() {
     history.push("/admin/settings/topicarea");
   };
 
-  const onEditPrimaryColor = async (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    event.persist();
-    setPrimaryColor((event.target as HTMLInputElement).value);
-    event.stopPropagation();
-  };
-
-  const onEditSecondaryColor = async (
-    event: React.FormEvent<HTMLSelectElement>
-  ) => {
-    event.persist();
-    setSecondaryColor((event.target as HTMLInputElement).value);
-    event.stopPropagation();
+  const onFormChange = () => {
+    const { primary, secondary } = getValues();
+    if (UtilsService.rgbHexColorIsValid(primary)) {
+      setPrimaryColor(primary);
+    }
+    setSecondaryColor(secondary);
   };
 
   const crumbs = [
@@ -94,36 +78,65 @@ function EditColors() {
   ];
 
   return (
-    <div className="grid-row">
-      <div className="grid-col-8">
-        <Breadcrumbs crumbs={crumbs} />
-        <h1>Edit colors</h1>
+    <>
+      <Breadcrumbs crumbs={crumbs} />
+      <h1>Edit colors</h1>
 
-        <p>
-          Customize these colors to make your dashboards appear similar in style
-          to your organization's branch or color palette.
-        </p>
+      <p>
+        Customize these colors to make your dashboards appear similar in style
+        to your organization's branch or color palette.
+      </p>
 
-        {loadingSettings ? (
-          <Spinner className="text-center margin-top-9" label="Loading" />
-        ) : (
-          <>
+      {loadingSettings && datasetColumn && datasetBar ? (
+        <Spinner className="text-center margin-top-9" label="Loading" />
+      ) : (
+        <div className="grid-row width-desktop">
+          <div className="grid-col-6">
             <form
               onSubmit={handleSubmit(onSubmit)}
+              onChange={onFormChange}
               className="edit-homepage-content-form usa-form usa-form--large"
               data-testid="EditColors"
             >
-              <TextField
-                id="primary"
-                name="primary"
-                label="Primary color"
-                hint="This color will be the first color used in data visualizations and the color of buttons. Must be a valid HEX color (Ex #00FF00, #0f0)."
-                error={errors.primary && "Please specify a color"}
-                defaultValue={primaryColor}
-                register={register}
-                onChange={onEditPrimaryColor}
-                required
-              />
+              <label htmlFor="fieldset" className="usa-label text-bold">
+                Primary color
+              </label>
+              <div className="usa-hint">
+                This color will be the first color used in data visualizations
+                and the color of buttons. Must be a valid HEX color (Ex.
+                #00FF00, #0f0).
+              </div>
+
+              <div className="grid-row">
+                <div className="grid-col flex-11">
+                  <TextField
+                    id="primary"
+                    name="primary"
+                    label=""
+                    error={
+                      errors.primary &&
+                      (errors.primary.type === "validate"
+                        ? "Color is not a valid HEX color value"
+                        : "Please specify a color")
+                    }
+                    defaultValue={settings.colors && settings.colors.primary}
+                    register={register}
+                    required
+                    validate={UtilsService.rgbHexColorIsValid}
+                  />
+                </div>
+                <div className="grid-col flex-1">
+                  <div
+                    className="radius-md"
+                    style={{
+                      backgroundColor: primaryColor,
+                      margin: "32px 10px 10px 10px",
+                      width: 25,
+                      height: 25,
+                    }}
+                  ></div>
+                </div>
+              </div>
 
               <label htmlFor="fieldset" className="usa-label text-bold">
                 Data visualization second color
@@ -134,68 +147,30 @@ function EditColors() {
                 accessibility standards.
               </div>
 
-              <Combobox
-                id="secondary"
-                name="secondary"
-                label=""
-                options={[
-                  {
-                    value: "#2491ff",
-                    content: "#2491ff",
-                  },
-                  {
-                    value: "#54278f",
-                    content: "#54278f",
-                  },
-                  {
-                    value: "#c05600",
-                    content: "#c05600",
-                  },
-                  {
-                    value: "#002d3f",
-                    content: "#002d3f",
-                  },
-                  {
-                    value: "#00a398",
-                    content: "#00a398",
-                  },
-                  {
-                    value: "#c2850c",
-                    content: "#c2850c",
-                  },
-                  {
-                    value: "#fd4496",
-                    content: "#fd4496",
-                  },
-                  {
-                    value: "#3e4ded",
-                    content: "#3e4ded",
-                  },
-                  {
-                    value: "#008817",
-                    content: "#008817",
-                  },
-                  {
-                    value: "#5c1111",
-                    content: "#5c1111",
-                  },
-                  {
-                    value: "#e52207",
-                    content: "#e52207",
-                  },
-                  {
-                    value: "#ab2165",
-                    content: "#ab2165",
-                  },
-                  {
-                    value: "#0f6460",
-                    content: "#0f6460",
-                  },
-                ]}
-                defaultValue="#54278f"
-                register={register}
-                onChange={onEditSecondaryColor}
-              />
+              <div className="grid-row">
+                <div className="grid-col flex-11">
+                  <Combobox
+                    id="secondary"
+                    name="secondary"
+                    label=""
+                    options={UtilsService.getSecondaryOptions()}
+                    defaultValue={settings.colors && settings.colors.secondary}
+                    register={register}
+                  />
+                </div>
+                <div className="grid-col flex-1">
+                  <div
+                    className="radius-md"
+                    style={{
+                      backgroundColor: secondaryColor,
+                      margin: "16px 10px 10px 10px",
+                      width: 25,
+                      height: 25,
+                    }}
+                  ></div>
+                </div>
+              </div>
+
               <br />
               <Button type="submit" disabled={loadingSettings}>
                 Save
@@ -209,10 +184,36 @@ function EditColors() {
                 Cancel
               </Button>
             </form>
-          </>
-        )}
-      </div>
-    </div>
+          </div>
+          <div className="grid-col-6">
+            <div className="grid-row">
+              <div className="grid-col-5">
+                <BarChartPreview
+                  title=""
+                  summary=""
+                  bars={datasetBar.dataset.headers}
+                  data={datasetBar.dataset.data}
+                  summaryBelow={false}
+                  hideLegend={true}
+                  colors={{ primary: primaryColor, secondary: secondaryColor }}
+                />
+              </div>
+              <div className="grid-col-7">
+                <ColumnChartPreview
+                  title=""
+                  summary=""
+                  columns={datasetColumn.dataset.headers}
+                  data={datasetColumn.dataset.data}
+                  summaryBelow={false}
+                  hideLegend={true}
+                  colors={{ primary: primaryColor, secondary: secondaryColor }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

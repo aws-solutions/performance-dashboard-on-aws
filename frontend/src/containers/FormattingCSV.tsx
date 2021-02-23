@@ -101,6 +101,7 @@ function FormattingCSV() {
           summary=""
           columns={column.dataset.headers}
           data={column.dataset.data}
+          summaryBelow={false}
         />
       </div>
 
@@ -136,6 +137,7 @@ function FormattingCSV() {
           summary=""
           parts={partToWhole.dataset.headers}
           data={partToWhole.dataset.data}
+          summaryBelow={false}
         />
       </div>
 
@@ -168,6 +170,7 @@ function FormattingCSV() {
           summary=""
           headers={table.dataset.headers}
           data={table.dataset.data}
+          summaryBelow={false}
         />
       </div>
     </>

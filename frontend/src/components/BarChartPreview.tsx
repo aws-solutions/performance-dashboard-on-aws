@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   XAxis,
   YAxis,
@@ -10,7 +10,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useColors } from "../hooks";
+import { useSettings } from "../hooks";
 import UtilsService from "../services/UtilsService";
 
 type Props = {
@@ -19,12 +19,30 @@ type Props = {
   bars: Array<string>;
   data?: Array<any>;
   summaryBelow: boolean;
+  hideLegend?: boolean;
+  colors?: {
+    primary: string | undefined;
+    secondary: string | undefined;
+  };
 };
 
 const BarChartPreview = (props: Props) => {
   const [barsHover, setBarsHover] = useState(null);
   const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
-  const colors = useColors(props.bars.length);
+  const [chartColors, setChartColors] = useState<Array<string>>([]);
+  const { settings } = useSettings();
+
+  useEffect(() => {
+    if (settings && settings.colors) {
+      const colors = UtilsService.getColors(
+        props.bars.length,
+        props.colors?.primary || settings.colors.primary,
+        props.colors?.secondary || settings.colors.secondary
+      );
+      setChartColors(colors);
+    }
+  }, [settings, props.bars, props.colors]);
+
   const pixelsByCharacter = 8;
   const yAxisWidthOffset = 24;
   const yAxisLabelMaxWidth = 220;
@@ -58,6 +76,10 @@ const BarChartPreview = (props: Props) => {
   const formatYAxisLabel = (label: string) =>
     label.length > 27 ? label.substr(0, 27).concat("...") : label;
 
+  if (chartColors.length <= 0) {
+    return null;
+  }
+
   return (
     <div>
       <h2
@@ -87,7 +109,7 @@ const BarChartPreview = (props: Props) => {
               type="number"
               domain={[
                 (dataMin) => 0,
-                (dataMax) => dataMax + Math.floor(dataMax * 0.1),
+                (dataMax) => dataMax + Math.floor(dataMax * 0.2),
               ]}
             />
             <YAxis
@@ -104,18 +126,20 @@ const BarChartPreview = (props: Props) => {
               tickFormatter={formatYAxisLabel}
             />
             <Tooltip cursor={{ fill: "#F0F0F0" }} />
-            <Legend
-              verticalAlign="top"
-              onClick={toggleBars}
-              onMouseLeave={(e) => setBarsHover(null)}
-              onMouseEnter={(e) => setBarsHover(e.dataKey)}
-            />
+            {!props.hideLegend && (
+              <Legend
+                verticalAlign="top"
+                onClick={toggleBars}
+                onMouseLeave={(e) => setBarsHover(null)}
+                onMouseEnter={(e) => setBarsHover(e.dataKey)}
+              />
+            )}
             {props.bars.length &&
               props.bars.slice(1).map((bar, index) => {
                 return (
                   <Bar
                     dataKey={bar}
-                    fill={colors[index]}
+                    fill={chartColors[index]}
                     key={index}
                     fillOpacity={getOpacity(bar)}
                     hide={hiddenBars.includes(bar)}

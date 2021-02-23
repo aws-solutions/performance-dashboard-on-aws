@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSettings, useLogo } from "../hooks";
 import BackendService from "../services/BackendService";
-import ContentService from "../services/ContentService";
+import StorageService from "../services/StorageService";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -23,7 +23,7 @@ function EditLogo() {
       try {
         setImageUploading(true);
 
-        const s3Key = await ContentService.uploadLogo(currentLogo);
+        const s3Key = await StorageService.uploadLogo(currentLogo);
 
         await BackendService.updateSetting(
           "customLogoS3Key",

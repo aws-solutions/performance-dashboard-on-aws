@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import ContentService from "../services/ContentService";
+import StorageService from "../services/StorageService";
 
 type UseLogoHook = {
   loadingFile: boolean;
@@ -14,7 +14,7 @@ export function useLogo(s3Key?: string): UseLogoHook {
     if (s3Key) {
       try {
         setLoading(true);
-        const data = await ContentService.downloadLogo(s3Key);
+        const data = await StorageService.downloadLogo(s3Key);
         setFile(data);
         setLoading(false);
       } catch (err) {

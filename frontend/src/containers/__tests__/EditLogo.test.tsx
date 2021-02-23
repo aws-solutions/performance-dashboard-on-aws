@@ -8,16 +8,16 @@ import {
 } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
-import ContentService from "../../services/ContentService";
+import StorageService from "../../services/StorageService";
 import EditLogo from "../EditLogo";
 
 jest.mock("../../services/BackendService");
-jest.mock("../../services/ContentService");
+jest.mock("../../services/StorageService");
 jest.mock("../../hooks");
 
 beforeEach(() => {
   BackendService.updateSetting = jest.fn();
-  ContentService.downloadLogo = jest.fn();
+  StorageService.downloadLogo = jest.fn();
   window.URL.createObjectURL = jest.fn();
 });
 
@@ -65,5 +65,5 @@ test("on submit, it calls updateSetting and upload logo", async () => {
   });
 
   expect(BackendService.updateSetting).toHaveBeenCalled();
-  expect(ContentService.uploadLogo).toHaveBeenCalled();
+  expect(StorageService.uploadLogo).toHaveBeenCalled();
 });

@@ -56,6 +56,7 @@ export class AuthStack extends cdk.Stack {
       datasetsBucketArn,
       contentBucketArn
     );
+
     const publicRole = this.buildPublicRole(
       identityPool,
       datasetsBucketArn,

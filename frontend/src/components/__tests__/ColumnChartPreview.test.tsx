@@ -1,10 +1,10 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import ColumnChartPreview from "../ColumnChartPreview";
 
-test("renders the title and summary of the column chart preview component", async () => {
-  const { getByText } = render(
+test("renders the chart title", async () => {
+  render(
     <ColumnChartPreview
       title="test title"
       summary="test summary"
@@ -14,15 +14,28 @@ test("renders the title and summary of the column chart preview component", asyn
     />,
     { wrapper: MemoryRouter }
   );
-  expect(getByText("test title")).toBeInTheDocument();
-  expect(getByText("test summary")).toBeInTheDocument();
-  expect(getByText("test summary").nextSibling).toHaveClass(
-    "recharts-responsive-container"
-  );
+  expect(screen.getByText("test title")).toBeInTheDocument();
 });
 
-test("renders the title and summary of the column chart preview component with the summary below the chart", async () => {
-  const { getByText } = render(
+test("renders chart summary above the chart", async () => {
+  render(
+    <ColumnChartPreview
+      title="test title"
+      summary="test summary"
+      columns={["test"]}
+      data={[{ test: 1 }]}
+      summaryBelow={false}
+    />,
+    { wrapper: MemoryRouter }
+  );
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("chartSummaryAbove");
+});
+
+test("renders chart summary below the chart", async () => {
+  render(
     <ColumnChartPreview
       title="test title"
       summary="test summary"
@@ -32,9 +45,8 @@ test("renders the title and summary of the column chart preview component with t
     />,
     { wrapper: MemoryRouter }
   );
-  expect(getByText("test title")).toBeInTheDocument();
-  expect(getByText("test summary")).toBeInTheDocument();
-  expect(getByText("test summary").previousSibling).toHaveClass(
-    "recharts-responsive-container"
-  );
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("chartSummaryBelow");
 });

@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { useColors } from "../hooks";
 import UtilsService from "../services/UtilsService";
+import MarkdownRender from "./MarkdownRender";
 
 type Props = {
   title: string;
@@ -89,9 +90,10 @@ const ColumnChartPreview = (props: Props) => {
         {props.title}
       </h2>
       {!props.summaryBelow && (
-        <p className="margin-left-1 margin-top-0 margin-bottom-4">
-          {props.summary}
-        </p>
+        <MarkdownRender
+          source={props.summary}
+          className="margin-left-1 margin-top-0 margin-bottom-4 chartSummaryAbove"
+        />
       )}
       {data && data.length && (
         <ResponsiveContainer
@@ -133,9 +135,10 @@ const ColumnChartPreview = (props: Props) => {
         </ResponsiveContainer>
       )}
       {props.summaryBelow && (
-        <p className="margin-left-1 margin-top-1 margin-bottom-0">
-          {props.summary}
-        </p>
+        <MarkdownRender
+          source={props.summary}
+          className="margin-left-1 margin-top-1 margin-bottom-0 chartSummaryBelow"
+        />
       )}
     </div>
   );

@@ -3,6 +3,8 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import LineChartPreview from "../LineChartPreview";
 
+jest.mock("../../hooks");
+
 test("renders the title and summary of the line chart preview component", async () => {
   const { getByText } = render(
     <LineChartPreview

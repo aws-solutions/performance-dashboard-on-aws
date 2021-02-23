@@ -96,9 +96,9 @@ function EditColors() {
               onSubmit={handleSubmit(onSubmit)}
               onChange={onFormChange}
               className="edit-homepage-content-form usa-form usa-form--large"
-              data-testid="EditColors"
+              data-testid="EditColorsForm"
             >
-              <label htmlFor="fieldset" className="usa-label text-bold">
+              <label htmlFor="primary" className="usa-label text-bold">
                 Primary color
               </label>
               <div className="usa-hint">
@@ -138,7 +138,7 @@ function EditColors() {
                 </div>
               </div>
 
-              <label htmlFor="fieldset" className="usa-label text-bold">
+              <label htmlFor="secondary" className="usa-label text-bold">
                 Data visualization second color
               </label>
               <div className="usa-hint">

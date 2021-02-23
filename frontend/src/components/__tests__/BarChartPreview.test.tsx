@@ -3,6 +3,8 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BarChartPreview from "../BarChartPreview";
 
+jest.mock("../../hooks");
+
 test("renders the title and summary of the bar chart preview component", async () => {
   const { getByText } = render(
     <BarChartPreview

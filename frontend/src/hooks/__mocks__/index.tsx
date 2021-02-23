@@ -77,6 +77,10 @@ export function useSettings() {
       "dashboard and it is ready to publish",
     updatedAt: new Date("2020-12-08T22:56:13.721Z"),
     navbarTitle: "Performance Dashboard",
+    colors: {
+      primary: "#ffffff",
+      secondary: "#0f6460",
+    },
     topicAreaLabels: {
       singular: "Ministry",
       plural: "Ministries",

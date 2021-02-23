@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   XAxis,
   YAxis,
@@ -9,7 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useSettings } from "../hooks";
+import { useColors } from "../hooks/widget-hooks";
 import UtilsService from "../services/UtilsService";
 
 type Props = {
@@ -28,19 +28,12 @@ type Props = {
 const LineChartPreview = (props: Props) => {
   const [linesHover, setLinesHover] = useState(null);
   const [hiddenLines, setHiddenLines] = useState<Array<string>>([]);
-  const [chartColors, setChartColors] = useState<Array<string>>([]);
-  const { settings } = useSettings();
 
-  useEffect(() => {
-    if (settings && settings.colors) {
-      const colors = UtilsService.getColors(
-        props.lines.length,
-        props.colors?.primary || settings.colors.primary,
-        props.colors?.secondary || settings.colors.secondary
-      );
-      setChartColors(colors);
-    }
-  }, [settings, props.lines, props.colors]);
+  const colors = useColors(
+    props.lines.length,
+    props.colors?.primary,
+    props.colors?.secondary
+  );
 
   const pixelsByCharacter = 8;
   const previewWidth = 480;
@@ -82,10 +75,6 @@ const LineChartPreview = (props: Props) => {
       pixelsByCharacter *
       100) /
     (props.isPreview ? previewWidth : fullWidth);
-
-  if (chartColors.length <= 0) {
-    return null;
-  }
 
   return (
     <div
@@ -131,7 +120,7 @@ const LineChartPreview = (props: Props) => {
                   <Line
                     dataKey={line}
                     type="monotone"
-                    stroke={chartColors[index]}
+                    stroke={colors[index]}
                     key={index}
                     strokeWidth={3}
                     strokeOpacity={getOpacity(line)}

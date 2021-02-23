@@ -3,8 +3,6 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import PartWholeChartPreview from "../PartWholeChartPreview";
 
-jest.mock("../../hooks");
-
 test("renders the title and summary of part whole chart preview component", async () => {
   const { getByText } = render(
     <PartWholeChartPreview

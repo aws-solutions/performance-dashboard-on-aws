@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   XAxis,
   YAxis,
@@ -10,7 +10,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useSettings } from "../hooks";
+import { useColors } from "../hooks/widget-hooks";
 import UtilsService from "../services/UtilsService";
 
 type Props = {
@@ -29,19 +29,12 @@ type Props = {
 const BarChartPreview = (props: Props) => {
   const [barsHover, setBarsHover] = useState(null);
   const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
-  const [chartColors, setChartColors] = useState<Array<string>>([]);
-  const { settings } = useSettings();
 
-  useEffect(() => {
-    if (settings && settings.colors) {
-      const colors = UtilsService.getColors(
-        props.bars.length,
-        props.colors?.primary || settings.colors.primary,
-        props.colors?.secondary || settings.colors.secondary
-      );
-      setChartColors(colors);
-    }
-  }, [settings, props.bars, props.colors]);
+  const colors = useColors(
+    props.bars.length,
+    props.colors?.primary,
+    props.colors?.secondary
+  );
 
   const pixelsByCharacter = 8;
   const yAxisWidthOffset = 24;
@@ -75,10 +68,6 @@ const BarChartPreview = (props: Props) => {
 
   const formatYAxisLabel = (label: string) =>
     label.length > 27 ? label.substr(0, 27).concat("...") : label;
-
-  if (chartColors.length <= 0) {
-    return null;
-  }
 
   return (
     <div>
@@ -139,7 +128,7 @@ const BarChartPreview = (props: Props) => {
                 return (
                   <Bar
                     dataKey={bar}
-                    fill={chartColors[index]}
+                    fill={colors[index]}
                     key={index}
                     fillOpacity={getOpacity(bar)}
                     hide={hiddenBars.includes(bar)}

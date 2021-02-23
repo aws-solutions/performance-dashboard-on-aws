@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   XAxis,
   YAxis,
@@ -9,7 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useSettings } from "../hooks";
+import { useColors } from "../hooks/widget-hooks";
 import UtilsService from "../services/UtilsService";
 
 type Props = {
@@ -29,19 +29,12 @@ type Props = {
 const ColumnChartPreview = (props: Props) => {
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
-  const [chartColors, setChartColors] = useState<Array<string>>([]);
-  const { settings } = useSettings();
 
-  useEffect(() => {
-    if (settings && settings.colors) {
-      const colors = UtilsService.getColors(
-        props.columns.length,
-        props.colors?.primary || settings.colors.primary,
-        props.colors?.secondary || settings.colors.secondary
-      );
-      setChartColors(colors);
-    }
-  }, [settings, props.columns, props.colors]);
+  const colors = useColors(
+    props.columns.length,
+    props.colors?.primary,
+    props.colors?.secondary
+  );
 
   const pixelsByCharacter = 8;
   const previewWidth = 480;
@@ -83,10 +76,6 @@ const ColumnChartPreview = (props: Props) => {
       pixelsByCharacter *
       100) /
     (props.isPreview ? previewWidth : fullWidth);
-
-  if (chartColors.length <= 0) {
-    return null;
-  }
 
   return (
     <div
@@ -133,7 +122,7 @@ const ColumnChartPreview = (props: Props) => {
                 return (
                   <Bar
                     dataKey={column}
-                    fill={chartColors[index]}
+                    fill={colors[index]}
                     key={index}
                     fillOpacity={getOpacity(column)}
                     hide={hiddenColumns.includes(column)}

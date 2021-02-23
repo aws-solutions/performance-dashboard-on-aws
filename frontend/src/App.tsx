@@ -51,6 +51,7 @@ import FormattingCSV from "./containers/FormattingCSV";
 import DateFormatSettings from "./containers/DateFormatSettings";
 import EditDateFormat from "./containers/EditDateFormat";
 import APIHelpPage from "./containers/APIHelpPage";
+import ColorsHelpPage from "./containers/ColorsHelpPage";
 import EditNavbar from "./containers/EditNavbar";
 import UserListing from "./containers/UserListing";
 import AddUsers from "./containers/AddUsers";
@@ -218,6 +219,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/apihelp",
     component: APIHelpPage,
+  },
+  {
+    path: "/admin/colorshelp",
+    component: ColorsHelpPage,
   },
   {
     path: "/admin/users",

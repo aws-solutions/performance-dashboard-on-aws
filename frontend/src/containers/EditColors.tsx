@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSampleDataset, useSettings } from "../hooks";
@@ -10,7 +10,8 @@ import TextField from "../components/TextField";
 import Combobox from "../components/Combobox";
 import BarChartPreview from "../components/BarChartPreview";
 import ColumnChartPreview from "../components/ColumnChartPreview";
-import UtilsService from "../services/UtilsService";
+import ColorPaletteService from "../services/ColorPaletteService";
+import Link from "../components/Link";
 
 interface FormValues {
   primary: string;
@@ -57,7 +58,7 @@ function EditColors() {
 
   const onFormChange = () => {
     const { primary, secondary } = getValues();
-    if (UtilsService.rgbHexColorIsValid(primary)) {
+    if (ColorPaletteService.rgbHexColorIsValid(primary)) {
       setPrimaryColor(primary);
     }
     setSecondaryColor(secondary);
@@ -105,6 +106,11 @@ function EditColors() {
                 This color will be the first color used in data visualizations
                 and the color of buttons. Must be a valid HEX color (Ex.
                 #00FF00, #0f0).
+                <div>
+                  <Link to="/admin/colorshelp" target="_blank" external>
+                    Learn more
+                  </Link>
+                </div>
               </div>
 
               <div className="grid-row">
@@ -122,7 +128,7 @@ function EditColors() {
                     defaultValue={settings.colors && settings.colors.primary}
                     register={register}
                     required
-                    validate={UtilsService.rgbHexColorIsValid}
+                    validate={ColorPaletteService.rgbHexColorIsValid}
                   />
                 </div>
                 <div className="grid-col flex-1">
@@ -153,7 +159,9 @@ function EditColors() {
                     id="secondary"
                     name="secondary"
                     label=""
-                    options={UtilsService.getSecondaryOptions()}
+                    options={ColorPaletteService.getSecondaryOptions(
+                      primaryColor
+                    )}
                     defaultValue={settings.colors && settings.colors.secondary}
                     register={register}
                   />

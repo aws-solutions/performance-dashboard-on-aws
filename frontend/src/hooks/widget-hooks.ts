@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from "react";
 import { DatasetType, Widget, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
+import ColorPaletteService from "../services/ColorPaletteService";
+import { useSettings } from "./settings-hooks";
 
 type UseWidgetHook = {
   loading: boolean;
@@ -91,4 +93,27 @@ export function useWidget(
     setCsvJson,
     setWidget,
   };
+}
+
+export function useColors(
+  numberOfColors: number,
+  primaryColor?: string,
+  secondaryColor?: string
+): Array<string> {
+  const { settings } = useSettings();
+  const [colors, setColors] = useState<Array<string>>([]);
+
+  useEffect(() => {
+    if (settings && settings.colors) {
+      setColors(
+        ColorPaletteService.getColors(
+          numberOfColors,
+          primaryColor || settings.colors.primary,
+          secondaryColor || settings.colors.secondary
+        )
+      );
+    }
+  }, [settings, numberOfColors, primaryColor, secondaryColor]);
+
+  return colors;
 }

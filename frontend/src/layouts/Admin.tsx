@@ -32,8 +32,9 @@ function AdminLayout(props: LayoutProps) {
           <div className="usa-navbar navbar-long">
             <div className="usa-logo margin-top-2" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
-                <div className="logo"></div>
-                <Logo />
+                <div className="logo">
+                  <Logo />
+                </div>
 
                 <Link to="/admin" title="Home" aria-label="Home" className="">
                   {settings.navbarTitle}

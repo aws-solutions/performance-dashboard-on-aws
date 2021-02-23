@@ -1,10 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useSettings, useLogo } from "../hooks";
 import SettingsLayout from "../layouts/Settings";
 import Button from "../components/Button";
 import AlertContainer from "./AlertContainer";
-import Spinner from "../components/Spinner";
 import "./PublishingGuidanceSettings.css";
 import Logo from "../components/Logo";
 

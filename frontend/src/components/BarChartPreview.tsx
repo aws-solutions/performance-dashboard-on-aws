@@ -19,12 +19,23 @@ type Props = {
   bars: Array<string>;
   data?: Array<any>;
   summaryBelow: boolean;
+  hideLegend?: boolean;
+  colors?: {
+    primary: string | undefined;
+    secondary: string | undefined;
+  };
 };
 
 const BarChartPreview = (props: Props) => {
   const [barsHover, setBarsHover] = useState(null);
   const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
-  const colors = useColors(props.bars.length);
+
+  const colors = useColors(
+    props.bars.length,
+    props.colors?.primary,
+    props.colors?.secondary
+  );
+
   const pixelsByCharacter = 8;
   const yAxisWidthOffset = 24;
   const yAxisLabelMaxWidth = 220;
@@ -87,7 +98,7 @@ const BarChartPreview = (props: Props) => {
               type="number"
               domain={[
                 (dataMin) => 0,
-                (dataMax) => dataMax + Math.floor(dataMax * 0.1),
+                (dataMax) => dataMax + Math.floor(dataMax * 0.2),
               ]}
             />
             <YAxis
@@ -104,12 +115,14 @@ const BarChartPreview = (props: Props) => {
               tickFormatter={formatYAxisLabel}
             />
             <Tooltip cursor={{ fill: "#F0F0F0" }} />
-            <Legend
-              verticalAlign="top"
-              onClick={toggleBars}
-              onMouseLeave={(e) => setBarsHover(null)}
-              onMouseEnter={(e) => setBarsHover(e.dataKey)}
-            />
+            {!props.hideLegend && (
+              <Legend
+                verticalAlign="top"
+                onClick={toggleBars}
+                onMouseLeave={(e) => setBarsHover(null)}
+                onMouseEnter={(e) => setBarsHover(e.dataKey)}
+              />
+            )}
             {props.bars.length &&
               props.bars.slice(1).map((bar, index) => {
                 return (

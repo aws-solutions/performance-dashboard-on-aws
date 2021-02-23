@@ -19,12 +19,23 @@ type Props = {
   data?: Array<any>;
   summaryBelow: boolean;
   isPreview?: boolean;
+  hideLegend?: boolean;
+  colors?: {
+    primary: string | undefined;
+    secondary: string | undefined;
+  };
 };
 
 const ColumnChartPreview = (props: Props) => {
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
-  const colors = useColors(props.columns.length);
+
+  const colors = useColors(
+    props.columns.length,
+    props.colors?.primary,
+    props.colors?.secondary
+  );
+
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
@@ -98,12 +109,14 @@ const ColumnChartPreview = (props: Props) => {
             />
             <YAxis type="number" domain={[0, "dataMax"]} />
             <Tooltip cursor={{ fill: "#F0F0F0" }} />
-            <Legend
-              verticalAlign="top"
-              onClick={toggleColumns}
-              onMouseLeave={(e) => setColumnsHover(null)}
-              onMouseEnter={(e) => setColumnsHover(e.dataKey)}
-            />
+            {!props.hideLegend && (
+              <Legend
+                verticalAlign="top"
+                onClick={toggleColumns}
+                onMouseLeave={(e) => setColumnsHover(null)}
+                onMouseEnter={(e) => setColumnsHover(e.dataKey)}
+              />
+            )}
             {props.columns.length &&
               props.columns.slice(1).map((column, index) => {
                 return (

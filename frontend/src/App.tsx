@@ -42,12 +42,14 @@ import EditHomepageContent from "./containers/EditHomepageContent";
 import CreateTopicArea from "./containers/CreateTopicArea";
 import EditTopicArea from "./containers/EditTopicArea";
 import EditTopicAreaLabel from "./containers/EditTopicAreaLabel";
+import EditColors from "./containers/EditColors";
 import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
 import FormattingCSV from "./containers/FormattingCSV";
 import DateFormatSettings from "./containers/DateFormatSettings";
 import EditDateFormat from "./containers/EditDateFormat";
 import APIHelpPage from "./containers/APIHelpPage";
+import ColorsHelpPage from "./containers/ColorsHelpPage";
 import EditNavbar from "./containers/EditNavbar";
 import UserListing from "./containers/UserListing";
 import AddUsers from "./containers/AddUsers";
@@ -121,6 +123,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/settings/topicarea/editlabel",
     component: EditTopicAreaLabel,
+  },
+  {
+    path: "/admin/settings/brandingandstyling/editcolors",
+    component: EditColors,
   },
   {
     path: "/admin/dashboards",
@@ -213,6 +219,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/apihelp",
     component: APIHelpPage,
+  },
+  {
+    path: "/admin/colorshelp",
+    component: ColorsHelpPage,
   },
   {
     path: "/admin/users",

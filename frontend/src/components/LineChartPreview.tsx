@@ -19,12 +19,22 @@ type Props = {
   data?: Array<any>;
   summaryBelow: boolean;
   isPreview?: boolean;
+  colors?: {
+    primary: string | undefined;
+    secondary: string | undefined;
+  };
 };
 
 const LineChartPreview = (props: Props) => {
   const [linesHover, setLinesHover] = useState(null);
   const [hiddenLines, setHiddenLines] = useState<Array<string>>([]);
-  const colors = useColors(props.lines.length);
+
+  const colors = useColors(
+    props.lines.length,
+    props.colors?.primary,
+    props.colors?.secondary
+  );
+
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;

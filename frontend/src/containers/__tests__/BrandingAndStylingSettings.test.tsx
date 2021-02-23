@@ -41,10 +41,29 @@ test("renders the logo description", async () => {
   ).toBeInTheDocument();
 });
 
-test("renders a button to edit", async () => {
+test("renders the colors title", async () => {
+  const { getByRole } = render(<BrandingAndStylingSettings />, {
+    wrapper: MemoryRouter,
+  });
+  expect(getByRole("heading", { name: "Colors" })).toBeInTheDocument();
+});
+
+test("renders the colors description", async () => {
+  const { getByText } = render(<BrandingAndStylingSettings />, {
+    wrapper: MemoryRouter,
+  });
+  expect(
+    getByText(
+      "Customize these colors to make your dashboards appear similar in style to your organization's brand and color palette."
+    )
+  ).toBeInTheDocument();
+});
+
+test("renders two  buttons to edit", async () => {
   const { getAllByRole } = render(<BrandingAndStylingSettings />, {
     wrapper: MemoryRouter,
   });
   const buttons = getAllByRole("button", { name: "Edit" });
   expect(buttons[0]).toBeInTheDocument();
+  expect(buttons[1]).toBeInTheDocument();
 });

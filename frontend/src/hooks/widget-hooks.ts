@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from "react";
 import { DatasetType, Widget, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
+import ColorPaletteService from "../services/ColorPaletteService";
+import { useSettings } from "./settings-hooks";
 
 type UseWidgetHook = {
   loading: boolean;
@@ -93,35 +95,25 @@ export function useWidget(
   };
 }
 
-const sprectrumColors = [
-  "#29B4BB",
-  "#3F29C8",
-  "#E17316",
-  "#CE167E",
-  "#7D70F9",
-  "#40E15D",
-  "#2168E5",
-  "#5B20A2",
-  "#D7B40A",
-  "#BE5B0F",
-  "#217C59",
-  "#8DED43",
-];
-
-const getColors = (numberOfColors: number): Array<string> => {
-  const colors = new Array<string>();
-  for (let i = 0; i < numberOfColors; i++) {
-    colors.push(sprectrumColors[i % sprectrumColors.length]);
-  }
-  return colors;
-};
-
-export function useColors(numberOfColors: number): Array<string> {
+export function useColors(
+  numberOfColors: number,
+  primaryColor?: string,
+  secondaryColor?: string
+): Array<string> {
+  const { settings } = useSettings();
   const [colors, setColors] = useState<Array<string>>([]);
 
   useEffect(() => {
-    setColors(getColors(numberOfColors));
-  }, [numberOfColors]);
+    if (settings && settings.colors) {
+      setColors(
+        ColorPaletteService.getColors(
+          numberOfColors,
+          primaryColor || settings.colors.primary,
+          secondaryColor || settings.colors.secondary
+        )
+      );
+    }
+  }, [settings, numberOfColors, primaryColor, secondaryColor]);
 
   return colors;
 }

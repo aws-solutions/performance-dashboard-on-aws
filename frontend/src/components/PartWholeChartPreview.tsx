@@ -17,6 +17,10 @@ type Props = {
   parts: Array<string>;
   data?: Array<object>;
   summaryBelow: boolean;
+  colors?: {
+    primary: string | undefined;
+    secondary: string | undefined;
+  };
 };
 
 const PartWholeChartPreview = (props: Props) => {
@@ -52,7 +56,11 @@ const PartWholeChartPreview = (props: Props) => {
     }
   }, [data, parts, partWholeData, partWholeParts, hiddenParts]);
 
-  const colors = useColors(partWholeParts.current.length);
+  const colors = useColors(
+    partWholeParts.current.length,
+    props.colors?.primary,
+    props.colors?.secondary
+  );
 
   const getOpacity = useCallback(
     (dataKey) => {

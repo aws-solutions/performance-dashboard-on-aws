@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 // @ts-ignore
 import comboBox from "uswds/src/js/components/combo-box";
+import "./Combobox.css";
 
 interface Props {
   id: string;

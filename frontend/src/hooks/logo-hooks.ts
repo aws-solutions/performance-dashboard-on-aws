@@ -12,10 +12,15 @@ export function useLogo(s3Key: string | undefined): UseLogoHook {
 
   const fetchData = useCallback(async () => {
     if (s3Key) {
-      setLoading(true);
-      const data = await ContentService.downloadFile(s3Key);
-      setFile(data);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const data = await ContentService.downloadLogo(s3Key);
+        setFile(data);
+        setLoading(false);
+      } catch (err) {
+        console.log("Can't retrieve logo from S3", err);
+        setLoading(false);
+      }
     }
   }, [s3Key]);
 

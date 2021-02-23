@@ -23,8 +23,8 @@ const imageFileTypes: ValidFileTypes = {
   "image/svg+xml": ".svg",
 };
 
-async function downloadFile(s3Key: string): Promise<File> {
-  const data: any = await Storage.get(s3Key, {
+async function downloadFile(path: string): Promise<File> {
+  const data: any = await Storage.get(path, {
     bucket: EnvConfig.contentBucket,
     download: true,
     level: accessLevel,
@@ -38,8 +38,12 @@ async function downloadFile(s3Key: string): Promise<File> {
   return data.Body as File;
 }
 
+async function downloadLogo(s3Key: string): Promise<File> {
+  const path = "logo/".concat(s3Key);
+  return await downloadFile(path);
+}
+
 async function uploadFile(rawFile: File, fileS3Key: string) {
-  console.log(EnvConfig.contentBucket);
   await Storage.put(fileS3Key, rawFile, {
     bucket: EnvConfig.contentBucket,
     level: accessLevel,
@@ -49,7 +53,7 @@ async function uploadFile(rawFile: File, fileS3Key: string) {
   });
 }
 
-async function uploadImage(rawFile: File): Promise<string> {
+async function uploadImage(rawFile: File, directory: string): Promise<string> {
   const mimeType = rawFile.type;
   const extension = imageFileTypes[mimeType as keyof ValidFileTypes];
 
@@ -57,15 +61,21 @@ async function uploadImage(rawFile: File): Promise<string> {
     throw new Error("File type is not supported");
   }
 
+  const formattedDir = directory + "/";
+
   const fileS3Key = uuidv4().concat(extension);
-  await uploadFile(rawFile, fileS3Key);
+  await uploadFile(rawFile, formattedDir.concat(fileS3Key));
 
   return fileS3Key;
 }
 
+async function uploadLogo(rawFile: File): Promise<string> {
+  return await uploadImage(rawFile, "logo");
+}
+
 const StorageService = {
-  downloadFile,
-  uploadImage,
+  downloadLogo,
+  uploadLogo,
   imageFileTypes,
 };
 

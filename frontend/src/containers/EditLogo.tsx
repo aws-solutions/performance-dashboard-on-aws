@@ -13,7 +13,7 @@ import defaultLogo from "../logo.svg";
 function EditLogo() {
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
-  const { logo, loadingFile } = useLogo(settings.customLogoS3ID);
+  const { logo, loadingFile } = useLogo(settings.customLogoS3Key);
   const { register, handleSubmit } = useForm();
 
   const [currentLogo, setCurrentLogo] = useState(logo);
@@ -24,9 +24,13 @@ function EditLogo() {
       try {
         setImageUploading(true);
 
-        const s3Key = await ContentService.uploadImage(currentLogo);
+        const s3Key = await ContentService.uploadLogo(currentLogo);
 
-        await BackendService.updateSetting("customLogoS3ID", s3Key, new Date());
+        await BackendService.updateSetting(
+          "customLogoS3Key",
+          s3Key,
+          new Date()
+        );
         await reloadSettings();
 
         setImageUploading(false);

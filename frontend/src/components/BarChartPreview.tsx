@@ -10,7 +10,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useColors } from "../hooks/widget-hooks";
+import { useColors } from "../hooks";
 import UtilsService from "../services/UtilsService";
 
 type Props = {

@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import { useColors } from "../hooks/widget-hooks";
+import { useColors } from "../hooks";
 import "./PartWholeChartPreview.css";
 
 type Props = {

@@ -51,6 +51,15 @@ function BrandingAndStylingSettings() {
         </div>
       </div>
 
+      <hr
+        style={{
+          border: "none",
+          height: "1px",
+          backgroundColor: "#dfe1e2",
+          margin: "2rem 0",
+        }}
+      />
+
       <h3 className="margin-top-2-important">Colors</h3>
       <p>
         Customize these colors to make your dashboards appear similar in style

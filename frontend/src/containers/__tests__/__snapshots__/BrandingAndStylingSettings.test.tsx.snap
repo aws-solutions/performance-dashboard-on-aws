@@ -1,0 +1,232 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`branding and styling settings should match snapshot 1`] = `
+<div>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb padding-top-0"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          aria-label=""
+          class="link"
+          href="/admin/settings/topicarea"
+          target=""
+        >
+          <span>
+            <span>
+              Settings
+            </span>
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current cursor-default"
+      >
+        <span>
+          Ministries
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <div
+    class="usa-section padding-top-3"
+  >
+    <div
+      class="grid-container padding-x-0"
+    >
+      <div
+        class="grid-row grid-gap"
+      >
+        <div
+          class="desktop:grid-col-3"
+        >
+          <nav
+            aria-label="Left navigation"
+          >
+            <ul
+              class="usa-sidenav"
+            >
+              <li
+                class="usa-sidenav__item"
+              >
+                <a
+                  class="usa-current"
+                  href="/admin/settings"
+                >
+                  Settings
+                </a>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class="usa-current"
+                      href="/admin/settings/topicarea"
+                    >
+                      Ministries
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/publishingguidance"
+                    >
+                      Publishing guidance
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/brandingandstyling"
+                    >
+                      Branding and styling
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/publishedsite"
+                    >
+                      Published site
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/dateformat"
+                    >
+                      Date and time format
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <main
+          class="desktop:grid-col-9 usa-prose"
+          id="main-content"
+        >
+          <h1>
+            Branding and styling
+          </h1>
+          <p>
+            Customize your performance dashboard.
+          </p>
+          <br />
+          <h3
+            class="margin-top-2-important"
+          >
+            Logo
+          </h3>
+          <p>
+            This logo will appear in the header next to the performance dashboard name and in the published site header.
+          </p>
+          <br />
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-1 text-left"
+            >
+              <img
+                alt="Organization logo"
+                src="logo.svg"
+              />
+            </div>
+            <div
+              class="grid-col flex-9 padding-left-3"
+            >
+              <button
+                class="usa-button usa-button--outline margin-top-2"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+          <hr
+            style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
+          />
+          <h3
+            class="margin-top-2-important"
+          >
+            Colors
+          </h3>
+          <p>
+            Customize these colors to make your dashboards appear similar in style to your organization's brand and color palette.
+          </p>
+          <br />
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-1 text-left"
+            >
+              <div
+                class="text-bold grid-col flex-1 text-left"
+              >
+                Primary color
+              </div>
+              <div
+                class="grid-row margin-top-0-important"
+              >
+                <div
+                  class="radius-md"
+                  style="background-color: rgb(255, 255, 255); margin: 10px 0px; width: 25px; height: 25px;"
+                />
+                <div
+                  class="font-sans-lg grid-col flex-9 margin-left-1 margin-top-05"
+                >
+                  #ffffff
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-col flex-3 grid-col flex-3 text-right"
+            >
+              <button
+                class="usa-button usa-button--outline margin-top-2"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+`;

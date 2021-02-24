@@ -69,3 +69,8 @@ test("renders a button to edit", async () => {
   expect(buttons[0]).toBeInTheDocument();
   expect(buttons[1]).toBeInTheDocument();
 });
+
+test("published site settings should match snapshot", async () => {
+  const wrapper = render(<PublishedSiteSettings />, { wrapper: MemoryRouter });
+  expect(wrapper.container).toMatchSnapshot();
+});

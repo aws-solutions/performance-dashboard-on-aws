@@ -1,0 +1,212 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`date format settings should match snapshot 1`] = `
+<div>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb padding-top-0"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          aria-label=""
+          class="link"
+          href="/admin/settings/topicarea"
+          target=""
+        >
+          <span>
+            <span>
+              Settings
+            </span>
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current cursor-default"
+      >
+        <span>
+          Ministries
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <div
+    class="usa-section padding-top-3"
+  >
+    <div
+      class="grid-container padding-x-0"
+    >
+      <div
+        class="grid-row grid-gap"
+      >
+        <div
+          class="desktop:grid-col-3"
+        >
+          <nav
+            aria-label="Left navigation"
+          >
+            <ul
+              class="usa-sidenav"
+            >
+              <li
+                class="usa-sidenav__item"
+              >
+                <a
+                  class="usa-current"
+                  href="/admin/settings"
+                >
+                  Settings
+                </a>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class="usa-current"
+                      href="/admin/settings/topicarea"
+                    >
+                      Ministries
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/publishingguidance"
+                    >
+                      Publishing guidance
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/brandingandstyling"
+                    >
+                      Branding and styling
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/publishedsite"
+                    >
+                      Published site
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/dateformat"
+                    >
+                      Date and time format
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <main
+          class="desktop:grid-col-9 usa-prose"
+          id="main-content"
+        >
+          <h1>
+            Date and time format
+          </h1>
+          <p>
+            Customize how your performance dashboard displays date and time in the user interface.
+          </p>
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <p
+                class="text-bold"
+              >
+                Date format
+              </p>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            >
+              <button
+                class="usa-button usa-button--outline margin-top-2"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <div
+                class="published-site font-sans-lg"
+              >
+                2020-12-09
+                 (
+                YYYY-MM-DD
+                )
+              </div>
+              <div
+                class="grid-col flex-9"
+              >
+                <p
+                  class="text-bold"
+                >
+                  Time format
+                </p>
+              </div>
+              <div
+                class="font-sans-lg"
+              >
+                03:30
+                 (
+                HH:mm
+                )
+              </div>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            />
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+`;

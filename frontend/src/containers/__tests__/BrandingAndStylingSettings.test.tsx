@@ -67,3 +67,10 @@ test("renders two  buttons to edit", async () => {
   expect(buttons[0]).toBeInTheDocument();
   expect(buttons[1]).toBeInTheDocument();
 });
+
+test("branding and styling settings should match snapshot", async () => {
+  const wrapper = render(<BrandingAndStylingSettings />, {
+    wrapper: MemoryRouter,
+  });
+  expect(wrapper.container).toMatchSnapshot();
+});

@@ -184,3 +184,10 @@ test("filters topic areas based on createdBy search input", async () => {
   // Topic area one should appear
   expect(topicarea).toBeInTheDocument();
 });
+
+test("topic area settings should match snapshot", async () => {
+  const wrapper = render(<TopicareaSettings />, {
+    wrapper: MemoryRouter,
+  });
+  expect(wrapper.container).toMatchSnapshot();
+});

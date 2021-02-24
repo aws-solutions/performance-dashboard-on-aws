@@ -1,0 +1,485 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`topic area settings should match snapshot 1`] = `
+<div>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb padding-top-0"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          aria-label=""
+          class="link"
+          href="/admin/settings/topicarea"
+          target=""
+        >
+          <span>
+            <span>
+              Settings
+            </span>
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current cursor-default"
+      >
+        <span>
+          Ministries
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <div
+    class="usa-section padding-top-3"
+  >
+    <div
+      class="grid-container padding-x-0"
+    >
+      <div
+        class="grid-row grid-gap"
+      >
+        <div
+          class="desktop:grid-col-3"
+        >
+          <nav
+            aria-label="Left navigation"
+          >
+            <ul
+              class="usa-sidenav"
+            >
+              <li
+                class="usa-sidenav__item"
+              >
+                <a
+                  class="usa-current"
+                  href="/admin/settings"
+                >
+                  Settings
+                </a>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class="usa-current"
+                      href="/admin/settings/topicarea"
+                    >
+                      Ministries
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/publishingguidance"
+                    >
+                      Publishing guidance
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/brandingandstyling"
+                    >
+                      Branding and styling
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/publishedsite"
+                    >
+                      Published site
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/dateformat"
+                    >
+                      Date and time format
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <main
+          class="desktop:grid-col-9 usa-prose"
+          id="main-content"
+        >
+          <h1>
+            Ministries
+          </h1>
+          <p>
+            Dashboards are organized by topic areas. A dashboard must have a topic area and can have only one topic area.
+          </p>
+          <h3
+            class="margin-top-2-important"
+          >
+            Topic area name
+          </h3>
+          <p>
+            You can customize the name "topic area" and it will be replaced throughout the interface. For example, "topic area" can be renamed to "department", "ministry", "program", "agency", etc.
+          </p>
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <p
+                class="text-bold"
+              >
+                Single topic area name
+              </p>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            >
+              <button
+                class="usa-button usa-button--outline margin-top-2"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+          <div
+            class="grid-row margin-top-0-important margin-bottom-4"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <div
+                class="published-site font-sans-lg"
+              >
+                <div
+                  class="Markdown undefined"
+                >
+                  <p>
+                    Ministry
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            />
+          </div>
+          <div
+            class="grid-col flex-9"
+          >
+            <p
+              class="text-bold"
+            >
+              Multiple topic areas name
+            </p>
+          </div>
+          <div
+            class="grid-row margin-top-0-important margin-bottom-4"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <div
+                class="published-site font-sans-lg"
+              >
+                <div
+                  class="Markdown undefined"
+                >
+                  <p>
+                    Ministries
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            />
+          </div>
+          <hr
+            style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
+          />
+          <h3
+            id="section-heading-h3"
+          >
+            Ministries (2)
+          </h3>
+          <div
+            class="grid-row margin-y-3"
+          >
+            <div
+              class="tablet:grid-col-4 padding-top-1px"
+            >
+              <form
+                class="usa-search usa-search--small"
+                role="search"
+              >
+                <label
+                  class="usa-sr-only"
+                  for="search"
+                >
+                  Search
+                </label>
+                <input
+                  class="usa-input"
+                  id="search"
+                  name="query"
+                  style="height: 37px;"
+                  type="search"
+                />
+                <button
+                  class="usa-button usa-button--base"
+                  style="height: 37px;"
+                  type="submit"
+                >
+                  <span
+                    class="usa-sr-only"
+                  >
+                    Search
+                  </span>
+                </button>
+              </form>
+            </div>
+            <div
+              class="tablet:grid-col-8 text-right"
+            >
+              <span
+                class="text-underline"
+                data-border="true"
+                data-for="delete"
+                data-tip=""
+              >
+                <span>
+                  <button
+                    class="usa-button usa-button--outline"
+                    disabled=""
+                  >
+                    Delete
+                  </button>
+                </span>
+              </span>
+              <span>
+                <button
+                  class="usa-button usa-button--outline"
+                  disabled=""
+                >
+                  Edit
+                </button>
+              </span>
+              <span>
+                <button
+                  class="usa-button usa-button--base"
+                >
+                  Create new ministry
+                </button>
+              </span>
+            </div>
+          </div>
+          <table
+            class="usa-table usa-table--borderless"
+            width="100%"
+          >
+            <thead>
+              <tr>
+                <th />
+                <th>
+                  <span
+                    class="font-sans-xs"
+                  >
+                    Ministry
+                  </span>
+                  <button
+                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="svg-inline--fa fa-chevron-down fa-w-14 "
+                      data-icon="chevron-down"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th>
+                  <span
+                    class="font-sans-xs"
+                  >
+                    Dashboards
+                  </span>
+                  <button
+                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darkest"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="svg-inline--fa fa-chevron-down fa-w-14 "
+                      data-icon="chevron-down"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th>
+                  <span
+                    class="font-sans-xs"
+                  >
+                    Created by
+                  </span>
+                  <button
+                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="svg-inline--fa fa-chevron-down fa-w-14 "
+                      data-icon="chevron-down"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <label
+                    class="usa-sr-only"
+                    for="987654321"
+                  >
+                    Topic Area Grapes
+                  </label>
+                  <input
+                    id="987654321"
+                    type="radio"
+                  />
+                </td>
+                <td>
+                  <span
+                    class="text-bold text-base-darkest font-sans-md"
+                  >
+                    Topic Area Grapes
+                  </span>
+                </td>
+                <td>
+                  <span
+                    class="font-sans-md"
+                  >
+                    10
+                  </span>
+                </td>
+                <td>
+                  <span
+                    class="font-sans-md"
+                  >
+                    test user 2
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label
+                    class="usa-sr-only"
+                    for="123456789"
+                  >
+                    Topic Area Bananas
+                  </label>
+                  <input
+                    id="123456789"
+                    type="radio"
+                  />
+                </td>
+                <td>
+                  <span
+                    class="text-bold text-base-darkest font-sans-md"
+                  >
+                    Topic Area Bananas
+                  </span>
+                </td>
+                <td>
+                  <span
+                    class="font-sans-md"
+                  >
+                    4
+                  </span>
+                </td>
+                <td>
+                  <span
+                    class="font-sans-md"
+                  >
+                    test user 1
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            class="text-right"
+          >
+            <button
+              class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
+            >
+              Return to top
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+`;

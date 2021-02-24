@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas, useDashboard, useSettings } from "../hooks";
@@ -9,6 +9,7 @@ import Dropdown from "../components/Dropdown";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
+import DashboardHeader from "../components/DashboardHeader";
 
 interface FormValues {
   name: string;
@@ -26,7 +27,18 @@ function EditDetails() {
   const { topicareas } = useTopicAreas();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
-  const { register, errors, handleSubmit } = useForm<FormValues>();
+  const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
+  const [name, setName] = useState("");
+  const [topicAreaName, setTopicAreaName] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (dashboard) {
+      setName(dashboard.name);
+      setTopicAreaName(dashboard.topicAreaName);
+      setDescription(dashboard.description || "");
+    }
+  }, [dashboard]);
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.editDashboard(
@@ -44,6 +56,13 @@ function EditDetails() {
       },
       id: "top-alert",
     });
+  };
+
+  const onFormChange = () => {
+    const { name, topicAreaId, description } = getValues();
+    setName(name);
+    setTopicAreaName(topicareas.find((t) => t.id === topicAreaId)?.name || "");
+    setDescription(description);
   };
 
   const onCancel = () => {
@@ -76,62 +95,82 @@ function EditDetails() {
       {loading || !dashboard || !topicareas || topicareas.length === 0 ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
-        <>
-          <div className="grid-row">
-            <div className="grid-col-12">
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="edit-details-form usa-form usa-form--large"
-                data-testid="EditDetailsForm"
-              >
-                <TextField
-                  id="name"
-                  name="name"
-                  label="Dashboard Name"
-                  error={errors.name && "Please specify a name"}
-                  defaultValue={dashboard?.name}
-                  register={register}
-                  required
-                />
-
-                <Dropdown
-                  id="topicAreaId"
-                  name="topicAreaId"
-                  label={settings.topicAreaLabels.singular}
-                  hint={`Select an existing ${settings.topicAreaLabels.singular.toLowerCase()}`}
-                  defaultValue={dashboard?.topicAreaId}
-                  register={register}
-                  options={topicareas.map((topicarea) => ({
-                    value: topicarea.id,
-                    label: topicarea.name,
-                  }))}
-                />
-
-                <Markdown
-                  id="description"
-                  name="description"
-                  label="Description - optional"
-                  defaultValue={dashboard?.description}
-                  register={register}
-                  hint="Give your dashboard a description to explain it in more depth."
-                />
-
-                <br />
-                <Button type="submit" disabled={loading}>
-                  Save
-                </Button>
-                <Button
-                  variant="unstyled"
-                  type="button"
-                  className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-                  onClick={onCancel}
+        <div className="grid-row width-desktop">
+          <div className="grid-col-6">
+            <div className="grid-row">
+              <div className="grid-col-12">
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="edit-details-form usa-form usa-form--large"
+                  onChange={onFormChange}
+                  data-testid="EditDetailsForm"
                 >
-                  Cancel
-                </Button>
-              </form>
+                  <TextField
+                    id="name"
+                    name="name"
+                    label="Dashboard Name"
+                    error={errors.name && "Please specify a name"}
+                    defaultValue={dashboard?.name}
+                    register={register}
+                    required
+                  />
+
+                  <Dropdown
+                    id="topicAreaId"
+                    name="topicAreaId"
+                    label={settings.topicAreaLabels.singular}
+                    hint={`Select an existing ${settings.topicAreaLabels.singular.toLowerCase()}`}
+                    defaultValue={dashboard?.topicAreaId}
+                    register={register}
+                    options={topicareas.map((topicarea) => ({
+                      value: topicarea.id,
+                      label: topicarea.name,
+                    }))}
+                  />
+
+                  <Markdown
+                    id="description"
+                    name="description"
+                    label="Description - optional"
+                    defaultValue={dashboard?.description}
+                    register={register}
+                    hint="Give your dashboard a description to explain it in more depth."
+                  />
+
+                  <br />
+                  <Button type="submit" disabled={loading}>
+                    Save
+                  </Button>
+                  <Button
+                    variant="unstyled"
+                    type="button"
+                    className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+                    onClick={onCancel}
+                  >
+                    Cancel
+                  </Button>
+                </form>
+              </div>
             </div>
           </div>
-        </>
+          <div className="grid-col-6">
+            <div className="margin-left-3 margin-top-2">
+              <DashboardHeader
+                name={name}
+                topicAreaName={topicAreaName}
+                description={description}
+              />
+              <hr
+                style={{
+                  border: "none",
+                  height: "1px",
+                  backgroundColor: "#dfe1e2",
+                  margin: "2rem 0",
+                }}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import { Route, Router } from "react-router-dom";
+import { MemoryRouter, Route, Router } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import EditDetails from "../EditDetails";
 
@@ -43,4 +43,9 @@ test("invokes cancel function when use clicks cancel", async () => {
     fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
   });
   expect(history.push).toHaveBeenCalledWith("/admin/dashboard/edit/123");
+});
+
+test("edit details should match snapshot", async () => {
+  const wrapper = render(<EditDetails />, { wrapper: MemoryRouter });
+  expect(wrapper.container).toMatchSnapshot();
 });

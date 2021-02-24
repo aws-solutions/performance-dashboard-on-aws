@@ -131,8 +131,8 @@ function UserListing() {
       />
 
       <p>
-        These are all of the users who have access. You can change user roles,
-        temporarily disable users and permanently remove them.
+        These are all of the users who have access. You can add and remove
+        users, change users' roles, or resend email invites.
       </p>
       <AlertContainer />
       <div className="grid-row margin-y-3">

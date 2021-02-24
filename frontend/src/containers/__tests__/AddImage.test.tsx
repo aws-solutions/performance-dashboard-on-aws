@@ -74,7 +74,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     expect(getByText("Image alt text")).toBeInTheDocument();
     expect(
       getByText(
-        "Invisible description of the image which is read aloud to users with visual impairments on a screen reader."
+        "Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard."
       )
     ).toBeInTheDocument();
 

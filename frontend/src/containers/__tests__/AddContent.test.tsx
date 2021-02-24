@@ -26,11 +26,21 @@ test("renders text option", async () => {
   expect(description).toBeInTheDocument();
 });
 
+test("renders metrics option", async () => {
+  const { findByText } = render(<AddContent />, { wrapper: MemoryRouter });
+  const header = await findByText("Metrics");
+  const description = await findByText(
+    "Add one or more metrics to show point-in-time numerical data and trends."
+  );
+  expect(header).toBeInTheDocument();
+  expect(description).toBeInTheDocument();
+});
+
 test("renders chart option", async () => {
   const { findByText } = render(<AddContent />, { wrapper: MemoryRouter });
   const header = await findByText("Chart");
   const description = await findByText(
-    "Upload a CSV file to display data as a visualization, including line, bar, column and part-to-whole charts."
+    "Display data as a visualization, including line, bar, column and part-to-whole charts."
   );
   expect(header).toBeInTheDocument();
   expect(description).toBeInTheDocument();
@@ -40,7 +50,7 @@ test("renders table option", async () => {
   const { findByText } = render(<AddContent />, { wrapper: MemoryRouter });
   const header = await findByText("Table");
   const description = await findByText(
-    "Upload a CSV file to display data formatted in rows and columns."
+    "Display data formatted in rows and columns."
   );
   expect(header).toBeInTheDocument();
   expect(description).toBeInTheDocument();

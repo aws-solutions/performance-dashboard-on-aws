@@ -1,0 +1,307 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`published site settings should match snapshot 1`] = `
+<div>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb padding-top-0"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          aria-label=""
+          class="link"
+          href="/admin/settings/topicarea"
+          target=""
+        >
+          <span>
+            <span>
+              Settings
+            </span>
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current cursor-default"
+      >
+        <span>
+          Ministries
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <div
+    class="usa-section padding-top-3"
+  >
+    <div
+      class="grid-container padding-x-0"
+    >
+      <div
+        class="grid-row grid-gap"
+      >
+        <div
+          class="desktop:grid-col-3"
+        >
+          <nav
+            aria-label="Left navigation"
+          >
+            <ul
+              class="usa-sidenav"
+            >
+              <li
+                class="usa-sidenav__item"
+              >
+                <a
+                  class="usa-current"
+                  href="/admin/settings"
+                >
+                  Settings
+                </a>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class="usa-current"
+                      href="/admin/settings/topicarea"
+                    >
+                      Ministries
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/publishingguidance"
+                    >
+                      Publishing guidance
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/brandingandstyling"
+                    >
+                      Branding and styling
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/publishedsite"
+                    >
+                      Published site
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/dateformat"
+                    >
+                      Date and time format
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <main
+          class="desktop:grid-col-9 usa-prose"
+          id="main-content"
+        >
+          <h1>
+            Published site
+          </h1>
+          <p>
+            Customize your published site.
+             
+            <a
+              aria-label=""
+              class="link"
+              href="/"
+              target="_blank"
+            >
+              <span>
+                View published site
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
+                  data-icon="external-link-alt"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 512 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+            </a>
+          </p>
+          <h3
+            class="margin-top-2-important"
+          >
+            Navigation Bar
+          </h3>
+          <p>
+            You can customize the header and navigation of the published site.
+          </p>
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <p
+                class="text-bold"
+              >
+                Title
+              </p>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            >
+              <button
+                class="usa-button usa-button--outline margin-top-2"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+          <div
+            class="grid-row margin-top-0-important margin-bottom-4"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <div
+                class="published-site font-sans-lg"
+              >
+                <div
+                  class="Markdown undefined"
+                >
+                  <p>
+                    Performance Dashboard
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            />
+          </div>
+          <hr
+            style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
+          />
+          <h3
+            class="margin-top-2-important"
+          >
+            Homepage content
+          </h3>
+          <p>
+            This components appear on the homepage of your published site and explain what your published site is about.
+          </p>
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <p
+                class="text-bold"
+              >
+                Headline
+              </p>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            >
+              <button
+                class="usa-button usa-button--outline margin-top-2"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <div
+                class="published-site font-sans-lg"
+              >
+                <div
+                  class="Markdown undefined"
+                >
+                  <p>
+                    Kingdom of Wakanda
+                  </p>
+                </div>
+              </div>
+              <div
+                class="grid-col flex-9"
+              >
+                <p
+                  class="text-bold"
+                >
+                  Description
+                </p>
+              </div>
+              <div
+                class="font-sans-lg"
+              >
+                <div
+                  class="Markdown undefined"
+                >
+                  <p>
+                    Welcome to our dashboard
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            />
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+`;

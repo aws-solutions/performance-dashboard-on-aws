@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { MemoryRouter, Router } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import CreateDashboard from "../CreateDashboard";
 
@@ -52,5 +52,10 @@ describe("CreateDashboardForm", () => {
       fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
     });
     expect(history.push).toHaveBeenCalledWith("/admin/dashboards");
+  });
+
+  test("edit details should match snapshot", async () => {
+    const wrapper = render(<CreateDashboard />, { wrapper: MemoryRouter });
+    expect(wrapper.container).toMatchSnapshot();
   });
 });

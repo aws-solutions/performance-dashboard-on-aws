@@ -37,18 +37,14 @@ async function downloadFile(
   path: string,
   alternativeBucket?: string
 ): Promise<File> {
-  const data: any = alternativeBucket
-    ? await Storage.get(path, {
-        bucket: alternativeBucket,
-        download: true,
-        level: accessLevel,
-        serverSideEncryption,
-      })
-    : await Storage.get(path, {
-        download: true,
-        level: accessLevel,
-        serverSideEncryption,
-      });
+  // Note: if alternativeBucket is undefined, it will get routed to datasets by default.
+  const data: any = await Storage.get(path, {
+    bucket: alternativeBucket,
+    download: true,
+    level: accessLevel,
+    serverSideEncryption,
+  });
+
   if (!data || !data.Body) {
     throw new Error(
       "The query using the provided S3 key, returned no results."
@@ -169,6 +165,8 @@ async function uploadImage(
   const fileS3Key = uuidv4().concat(extension);
   const dir = directory ? directory + "/" : "";
 
+  console.log(dir.concat(fileS3Key));
+  console.log(alternativeBucket);
   await uploadFile(rawFile, dir.concat(fileS3Key), alternativeBucket);
 
   return fileS3Key;

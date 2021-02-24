@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import MarkdownRender from "./MarkdownRender";
 import Table from "./Table";
 
 type Props = {
@@ -16,7 +17,10 @@ const TablePreview = (props: Props) => {
     <div className="overflow-hidden">
       <h2 className="margin-left-1 margin-bottom-1">{title}</h2>
       {!summaryBelow && (
-        <p className="margin-left-1 margin-top-0 margin-bottom-3">{summary}</p>
+        <MarkdownRender
+          source={summary}
+          className="margin-left-1 margin-top-0 margin-bottom-3 tableSummaryAbove"
+        />
       )}
       <Table
         selection="none"
@@ -41,7 +45,10 @@ const TablePreview = (props: Props) => {
         )}
       />
       {summaryBelow && (
-        <p className="margin-left-1 margin-top-3 margin-bottom-0">{summary}</p>
+        <MarkdownRender
+          source={summary}
+          className="margin-left-1 margin-top-3 margin-bottom-0 tableSummaryBelow"
+        />
       )}
     </div>
   );

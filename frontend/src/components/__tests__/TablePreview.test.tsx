@@ -8,8 +8,8 @@ import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faCaretUp, faCaretDown);
 
-test("renders the title and summary of the table preview component", async () => {
-  const { getByText } = render(
+test("renders the table title", async () => {
+  render(
     <TablePreview
       title="test title"
       summary="test summary"
@@ -18,13 +18,16 @@ test("renders the title and summary of the table preview component", async () =>
     />,
     { wrapper: MemoryRouter }
   );
-  expect(getByText("test title")).toBeInTheDocument();
-  expect(getByText("test summary")).toBeInTheDocument();
-  expect(getByText("test summary").nextSibling).toHaveClass("usa-table");
+
+  expect(screen.getByText("test title")).toBeInTheDocument();
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("tableSummaryAbove");
 });
 
-test("renders the table preview component with the summary below the chart", async () => {
-  const { getByText } = render(
+test("renders the summary below the chart", async () => {
+  render(
     <TablePreview
       title="test title"
       summary="test summary"
@@ -33,9 +36,9 @@ test("renders the table preview component with the summary below the chart", asy
     />,
     { wrapper: MemoryRouter }
   );
-  expect(getByText("test title")).toBeInTheDocument();
-  expect(getByText("test summary")).toBeInTheDocument();
-  expect(getByText("test summary").previousSibling).toHaveClass("usa-table");
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("tableSummaryBelow");
 });
 
 test("table preview should match snapshot", async () => {
@@ -52,7 +55,7 @@ test("table preview should match snapshot", async () => {
 });
 
 test("table should not crash when a column header is an empty string", async () => {
-  const wrapper = render(
+  render(
     <TablePreview
       title="test title"
       summary="test summary"

@@ -1,10 +1,10 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import PartWholeChartPreview from "../PartWholeChartPreview";
 
-test("renders the title and summary of part whole chart preview component", async () => {
-  const { getByText } = render(
+test("renders the chart title", async () => {
+  render(
     <PartWholeChartPreview
       title="test title"
       summary="test summary"
@@ -14,15 +14,28 @@ test("renders the title and summary of part whole chart preview component", asyn
     />,
     { wrapper: MemoryRouter }
   );
-  expect(getByText("test title")).toBeInTheDocument();
-  expect(getByText("test summary")).toBeInTheDocument();
-  expect(getByText("test summary").nextSibling).toHaveClass(
-    "recharts-responsive-container"
-  );
+  expect(screen.getByText("test title")).toBeInTheDocument();
 });
 
-test("renders the part whole chart preview component with the summary below the chart", async () => {
-  const { getByText } = render(
+test("renders the summary above the chart", async () => {
+  render(
+    <PartWholeChartPreview
+      title="test title"
+      summary="test summary"
+      parts={["test"]}
+      summaryBelow={false}
+      data={[{}]}
+    />,
+    { wrapper: MemoryRouter }
+  );
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("chartSummaryAbove");
+});
+
+test("renders the summary below the chart", async () => {
+  render(
     <PartWholeChartPreview
       title="test title"
       summary="test summary"
@@ -32,9 +45,8 @@ test("renders the part whole chart preview component with the summary below the 
     />,
     { wrapper: MemoryRouter }
   );
-  expect(getByText("test title")).toBeInTheDocument();
-  expect(getByText("test summary")).toBeInTheDocument();
-  expect(getByText("test summary").previousSibling).toHaveClass(
-    "recharts-responsive-container"
-  );
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("chartSummaryBelow");
 });

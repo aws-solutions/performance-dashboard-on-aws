@@ -184,7 +184,7 @@ function WidgetList(props: Props) {
         <div className="text-center radius-lg padding-5 margin-y-3 border-base border-dashed bg-base-lightest border">
           <p>
             This dashboard is empty. Build the dashboard by adding <br />
-            charts, tables, and text as content.
+            charts, tables, text, and more as content.
           </p>
           <div className="text-center margin-top-4">
             <Button

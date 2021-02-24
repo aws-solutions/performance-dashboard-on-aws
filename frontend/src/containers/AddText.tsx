@@ -146,7 +146,7 @@ function AddText() {
                     label="Text"
                     hint={
                       <>
-                        Enter text here. This field supports markdown.
+                        Enter text here. This field supports markdown.{" "}
                         <Link target="_blank" to={"/admin/markdown"} external>
                           View Markdown Syntax
                         </Link>

@@ -10,11 +10,13 @@ exports[`image preview should match snapshot 1`] = `
     >
       test title
     </h2>
-    <p
-      class="margin-left-1 margin-top-0 margin-bottom-3"
+    <div
+      class="Markdown margin-left-1 margin-top-0 margin-bottom-3 imageSummaryAbove"
     >
-      test summary
-    </p>
+      <p>
+        test summary
+      </p>
+    </div>
     <div
       class="margin-left-1"
     >

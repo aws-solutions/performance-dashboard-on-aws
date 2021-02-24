@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { useColors } from "../hooks";
 import UtilsService from "../services/UtilsService";
+import MarkdownRender from "./MarkdownRender";
 
 type Props = {
   title: string;
@@ -79,9 +80,10 @@ const BarChartPreview = (props: Props) => {
         {props.title}
       </h2>
       {!props.summaryBelow && (
-        <p className="margin-left-1 margin-top-0 margin-bottom-4">
-          {props.summary}
-        </p>
+        <MarkdownRender
+          source={props.summary}
+          className="margin-left-1 margin-top-0 margin-bottom-4 chartSummaryAbove"
+        />
       )}
       {data && data.length && (
         <ResponsiveContainer
@@ -97,8 +99,8 @@ const BarChartPreview = (props: Props) => {
             <XAxis
               type="number"
               domain={[
-                (dataMin) => 0,
-                (dataMax) => dataMax + Math.floor(dataMax * 0.2),
+                (dataMin: number) => 0,
+                (dataMax: number) => dataMax + Math.floor(dataMax * 0.2),
               ]}
             />
             <YAxis
@@ -145,9 +147,10 @@ const BarChartPreview = (props: Props) => {
         </ResponsiveContainer>
       )}
       {props.summaryBelow && (
-        <p className="margin-left-1 margin-top-1 margin-bottom-0">
-          {props.summary}
-        </p>
+        <MarkdownRender
+          source={props.summary}
+          className="margin-left-1 margin-top-1 margin-bottom-0 chartSummaryBelow"
+        />
       )}
     </div>
   );

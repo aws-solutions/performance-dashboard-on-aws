@@ -113,6 +113,7 @@ describe("buildDashboardAuditLogFromEvent", () => {
       createdBy: "johndoe",
       updatedBy: "johndoe",
       updatedAt: new Date(),
+      deletedBy: "johndoe",
       state: DashboardState.Draft,
     };
 
@@ -126,7 +127,7 @@ describe("buildDashboardAuditLogFromEvent", () => {
     expect(auditLog.sk).toEqual(timestamp.toISOString());
     expect(auditLog.pk).toEqual("Dashboard#d5f6b6e4bb22");
     expect(auditLog.type).toEqual(DASHBOARD_ITEM_TYPE);
-    expect(auditLog.userId).toEqual("unknown");
+    expect(auditLog.userId).toEqual("johndoe");
     expect(auditLog.version).toEqual(1);
   });
 });

@@ -513,10 +513,10 @@ describe("deleteDashboards", () => {
 
   it("deletes the dashboard", async () => {
     await DashboardCtrl.deleteDashboards(req, res);
-    expect(repository.deleteDashboardsAndWidgets).toBeCalledWith([
-      "090b0410",
-      "76546546",
-    ]);
+    expect(repository.deleteDashboardsAndWidgets).toBeCalledWith(
+      ["090b0410", "76546546"],
+      user
+    );
   });
 });
 

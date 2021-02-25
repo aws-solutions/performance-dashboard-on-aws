@@ -845,7 +845,47 @@ describe("DashboardRepository.deleteDashboardsAndWidgets", () => {
         id: "456",
         state: DashboardState.Draft,
       });
-    await repo.deleteDashboardsAndWidgets(["123", "456"]);
+
+    await repo.deleteDashboardsAndWidgets(["123", "456"], user);
+    expect(dynamodb.transactWrite).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TransactItems: [
+          {
+            Update: {
+              TableName: tableName,
+              Key: {
+                pk: DashboardFactory.itemId("123"),
+                sk: DashboardFactory.itemId("123"),
+              },
+              UpdateExpression: "set #deletedBy = :userId",
+              ExpressionAttributeValues: {
+                ":userId": user.userId,
+              },
+              ExpressionAttributeNames: {
+                "#deletedBy": "deletedBy",
+              },
+            },
+          },
+          {
+            Update: {
+              TableName: tableName,
+              Key: {
+                pk: DashboardFactory.itemId("456"),
+                sk: DashboardFactory.itemId("456"),
+              },
+              UpdateExpression: "set #deletedBy = :userId",
+              ExpressionAttributeValues: {
+                ":userId": user.userId,
+              },
+              ExpressionAttributeNames: {
+                "#deletedBy": "deletedBy",
+              },
+            },
+          },
+        ],
+      })
+    );
+
     expect(dynamodb.transactWrite).toHaveBeenCalledWith(
       expect.objectContaining({
         TransactItems: [

@@ -451,9 +451,13 @@ class DashboardRepository extends BaseRepository {
    * Deletes the dashboards and widgets identified
    * by the params `ids`.
    */
-  public async deleteDashboardsAndWidgets(dashboardIds: Array<string>) {
-    const transactions: DocumentClient.TransactWriteItemList = [];
+  public async deleteDashboardsAndWidgets(
+    dashboardIds: Array<string>,
+    user: User
+  ) {
+    let transactions: DocumentClient.TransactWriteItemList = [];
 
+    const dashboards: DashboardList = [];
     for (let dashboardId of dashboardIds) {
       const dashboard = await this.getDashboardWithWidgets(dashboardId);
 
@@ -462,11 +466,36 @@ class DashboardRepository extends BaseRepository {
       }
 
       transactions.push({
-        Delete: {
+        Update: {
           TableName: this.tableName,
           Key: {
             pk: DashboardFactory.itemId(dashboardId),
             sk: DashboardFactory.itemId(dashboardId),
+          },
+          UpdateExpression: "set #deletedBy = :userId",
+          ExpressionAttributeValues: {
+            ":userId": user.userId,
+          },
+          ExpressionAttributeNames: {
+            "#deletedBy": "deletedBy",
+          },
+        },
+      });
+      dashboards.push(dashboard);
+    }
+
+    await this.dynamodb.transactWrite({
+      TransactItems: transactions,
+    });
+
+    transactions = [];
+    for (let dashboard of dashboards) {
+      transactions.push({
+        Delete: {
+          TableName: this.tableName,
+          Key: {
+            pk: DashboardFactory.itemId(dashboard.id),
+            sk: DashboardFactory.itemId(dashboard.id),
           },
         },
       });
@@ -477,7 +506,7 @@ class DashboardRepository extends BaseRepository {
             Delete: {
               TableName: this.tableName,
               Key: {
-                pk: WidgetFactory.itemPk(dashboardId),
+                pk: WidgetFactory.itemPk(dashboard.id),
                 sk: WidgetFactory.itemSk(widget.id),
               },
             },

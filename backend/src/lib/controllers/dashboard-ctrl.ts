@@ -296,6 +296,7 @@ async function deleteDashboard(req: Request, res: Response) {
 }
 
 async function deleteDashboards(req: Request, res: Response) {
+  const user = req.user;
   const { ids } = req.query;
 
   if (!ids) {
@@ -306,7 +307,7 @@ async function deleteDashboards(req: Request, res: Response) {
   const dashboardIds = (ids as string).split(",");
 
   const repo = DashboardRepository.getInstance();
-  await repo.deleteDashboardsAndWidgets(dashboardIds);
+  await repo.deleteDashboardsAndWidgets(dashboardIds, user);
   return res.send();
 }
 

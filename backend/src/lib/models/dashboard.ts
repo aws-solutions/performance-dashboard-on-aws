@@ -27,6 +27,7 @@ export interface Dashboard {
   createdBy: string;
   updatedAt: Date;
   updatedBy?: string;
+  deletedBy?: string;
   state: DashboardState;
   releaseNotes?: string;
   widgets?: Array<Widget>;
@@ -48,6 +49,7 @@ export interface DashboardItem {
   createdBy: string;
   updatedAt: string;
   updatedBy?: string;
+  deletedBy?: string;
   state: string;
   releaseNotes?: string;
   friendlyURL?: string;

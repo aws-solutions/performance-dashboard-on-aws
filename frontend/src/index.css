@@ -4,9 +4,8 @@ p {
 
 .logo {
   margin-right: 0.5rem;
-  max-width: 2rem;
-  width: auto;
-  max-height: 2rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 @media (min-width: 64em) {

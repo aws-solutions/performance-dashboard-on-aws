@@ -1,6 +1,7 @@
 import * as cdk from "@aws-cdk/core";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as lambda from "@aws-cdk/aws-lambda";
+import * as logs from "@aws-cdk/aws-logs";
 import {
   AnyPrincipal,
   Effect,
@@ -60,9 +61,19 @@ export class BackendApi extends cdk.Construct {
       ],
     });
 
+    const apigatewayLogGroup = new logs.LogGroup(scope, "ApiAccessLogs", {
+      retention: logs.RetentionDays.TEN_YEARS,
+    });
+
     this.api = new apigateway.RestApi(scope, "ApiGateway", {
       description: "Performance Dashboard backend API",
-      deployOptions: { tracingEnabled: true },
+      deployOptions: {
+        tracingEnabled: true,
+        accessLogFormat: apigateway.AccessLogFormat.jsonWithStandardFields(),
+        accessLogDestination: new apigateway.LogGroupLogDestination(
+          apigatewayLogGroup
+        ),
+      },
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,

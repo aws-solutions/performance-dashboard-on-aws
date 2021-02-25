@@ -125,8 +125,8 @@ function AddContent() {
                 </div>
                 <div className="grid-col flex-7">
                   <div className="usa-prose text-base margin-left-4">
-                    Add one or more metrics. Great for showing point-in-time
-                    numerical data and trends.
+                    Add one or more metrics to show point-in-time numerical data
+                    and trends.
                   </div>
                 </div>
               </div>
@@ -152,8 +152,8 @@ function AddContent() {
                 </div>
                 <div className="grid-col flex-7">
                   <div className="usa-prose text-base margin-left-4">
-                    Upload a CSV file to display data as a visualization,
-                    including line, bar, column and part-to-whole charts.
+                    Display data as a visualization, including line, bar, column
+                    and part-to-whole charts.
                   </div>
                 </div>
               </div>
@@ -179,8 +179,7 @@ function AddContent() {
                 </div>
                 <div className="grid-col flex-7">
                   <div className="usa-prose text-base margin-left-4">
-                    Upload a CSV file to display data formatted in rows and
-                    columns.
+                    Display data formatted in rows and columns.
                   </div>
                 </div>
               </div>

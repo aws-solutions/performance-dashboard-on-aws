@@ -232,7 +232,7 @@ function EditImage() {
                         id="altText"
                         name="altText"
                         label="Image alt text"
-                        hint="Invisible description of the image which is read aloud to users with visual impairments on a screen reader."
+                        hint="Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard."
                         register={register}
                         defaultValue={widget.content.imageAltText}
                         multiline

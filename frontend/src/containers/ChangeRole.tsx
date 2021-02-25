@@ -131,8 +131,7 @@ function ChangeRole() {
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      Have the same permissions as Editors, but can also publish
-                      and unpublish/archive dashboards.
+                      Create, edit, and publish dashboards.
                     </div>
                   </div>
                 </div>
@@ -158,9 +157,8 @@ function ChangeRole() {
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      Have the same permissions as Publishers but have access to
-                      all dashboards. Also manage users and the context of the
-                      external homepage.
+                      In addition to Editor permissions, manage users and
+                      website settings.
                     </div>
                   </div>
                 </div>

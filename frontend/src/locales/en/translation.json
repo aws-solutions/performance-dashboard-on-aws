@@ -2,5 +2,6 @@
   "LastUpdatedLabel": "Last updated",
   "SearchButton": "Search",
   "ClearSearchText": "Clear search items",
-  "AllDashboardsLink": "All Dashboards"
+  "AllDashboardsLink": "All Dashboards",
+  "ArchivedTabDescription": "These are your organization's archived dashboards. Archived dashboards are not viewable on the published site. Click on any dashboard name to view the dashboard. You can also re-publish archived dashboards to the published site."
 }

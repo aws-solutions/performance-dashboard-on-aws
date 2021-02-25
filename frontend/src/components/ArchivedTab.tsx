@@ -5,6 +5,7 @@ import Search from "./Search";
 import ScrollTop from "./ScrollTop";
 import Link from "./Link";
 import Table from "./Table";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -17,6 +18,8 @@ function ArchivedTab(props: Props) {
   const dateFormatter = useDateTimeFormatter();
   const { dashboards } = props;
 
+  const { t } = useTranslation();
+
   const onSearch = (query: string) => {
     setFilter(query);
   };
@@ -27,12 +30,7 @@ function ArchivedTab(props: Props) {
 
   return (
     <div>
-      <p>
-        These are your organization's archived dashboards. Archived dashboards
-        are not viewable on the published site. Click on any dashboard name to
-        view the dashboard. You can also re-publish archived dashboards to the
-        published site.
-      </p>
+      <p>{t("ArchivedTabDescription")}</p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-7 text-left padding-top-1px">
           <ul className="usa-button-group">

@@ -12,7 +12,7 @@ import defaultLogo from "../logo.svg";
 function EditLogo() {
   const history = useHistory();
   const { settings, reloadSettings } = useSettings(true);
-  const { logo } = useLogo(settings.customLogoS3Key);
+  const { loadingFile, logo } = useLogo(settings.customLogoS3Key);
   const { register, handleSubmit } = useForm();
 
   const [currentLogo, setCurrentLogo] = useState(logo);
@@ -50,6 +50,8 @@ function EditLogo() {
           },
         });
       }
+    } else {
+      history.push("/admin/settings/brandingandstyling");
     }
   };
 
@@ -87,41 +89,65 @@ function EditLogo() {
           This logo will appear in the header next to the performance dashboard
           name and in the published site header.
         </p>
-
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="usa-form usa-form--large"
-        >
-          <FileInput
-            id="dataset"
-            name="image"
-            label="File upload"
-            accept=".png,.jpeg,.jpg,.svg"
-            loading={imageUploading}
-            register={register}
-            hint={<span>Must be a PNG, JPEG, or SVG file</span>}
-            fileName={
-              currentLogo
-                ? currentLogo.name
-                : defaultLogo.replace(/^.*[\\\/]/, "")
-            }
-            onFileProcessed={onFileProcessed}
-          />
-
-          <br />
-          <Button type="submit" disabled={!settings.updatedAt}>
-            Save
-          </Button>
-          <Button
-            variant="unstyled"
-            type="button"
-            className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-            onClick={onCancel}
-          >
-            Cancel
-          </Button>
-        </form>
       </div>
+
+      {loadingFile ? (
+        <div></div>
+      ) : (
+        <>
+          <div className="grid-col-7">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="usa-form usa-form--large"
+            >
+              <FileInput
+                id="dataset"
+                name="image"
+                label="File upload"
+                accept=".png,.jpeg,.jpg,.svg"
+                loading={imageUploading}
+                register={register}
+                hint={<span>Must be a PNG, JPEG, or SVG file</span>}
+                fileName={
+                  currentLogo
+                    ? currentLogo.name
+                    : defaultLogo.replace(/^.*[\\\/]/, "")
+                }
+                onFileProcessed={onFileProcessed}
+              />
+
+              <br />
+              <Button type="submit" disabled={!settings.updatedAt}>
+                Save
+              </Button>
+              <Button
+                variant="unstyled"
+                type="button"
+                className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+                onClick={onCancel}
+              >
+                Cancel
+              </Button>
+            </form>
+          </div>
+          <div className="grid-col-5">
+            <h4 className="margin-top-4">Preview</h4>
+            <div className="grid-row">
+              <div className="grid-col-2 text-left">
+                {currentLogo && (
+                  <img src={URL.createObjectURL(currentLogo)}></img>
+                )}
+                {!currentLogo && (
+                  <img
+                    src={logo ? URL.createObjectURL(logo) : defaultLogo}
+                    alt="Organization logo"
+                  ></img>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

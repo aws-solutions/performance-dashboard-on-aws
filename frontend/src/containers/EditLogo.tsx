@@ -50,6 +50,8 @@ function EditLogo() {
           },
         });
       }
+    } else {
+      history.push("/admin/settings/brandingandstyling");
     }
   };
 

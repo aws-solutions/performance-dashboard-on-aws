@@ -165,8 +165,6 @@ async function uploadImage(
   const fileS3Key = uuidv4().concat(extension);
   const dir = directory ? directory + "/" : "";
 
-  console.log(dir.concat(fileS3Key));
-  console.log(alternativeBucket);
   await uploadFile(rawFile, dir.concat(fileS3Key), alternativeBucket);
 
   return fileS3Key;

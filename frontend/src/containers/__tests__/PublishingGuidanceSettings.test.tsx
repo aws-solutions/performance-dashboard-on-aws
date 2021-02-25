@@ -53,3 +53,10 @@ test("renders a button to edit", async () => {
   const button = getByRole("button", { name: "Edit" });
   expect(button).toBeInTheDocument();
 });
+
+test("publishing guidance settings should match snapshot", async () => {
+  const wrapper = render(<PublishingGuidanceSettings />, {
+    wrapper: MemoryRouter,
+  });
+  expect(wrapper.container).toMatchSnapshot();
+});

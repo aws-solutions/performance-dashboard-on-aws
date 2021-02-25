@@ -73,7 +73,14 @@ function PublishedSiteSettings() {
         </div>
       )}
 
-      <hr className="border-gray-5" />
+      <hr
+        style={{
+          border: "none",
+          height: "1px",
+          backgroundColor: "#dfe1e2",
+          margin: "2rem 0",
+        }}
+      />
 
       <h3 className="margin-top-2-important">Homepage content</h3>
 

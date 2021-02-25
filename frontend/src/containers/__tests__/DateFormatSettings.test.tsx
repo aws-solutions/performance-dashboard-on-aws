@@ -29,3 +29,10 @@ test("renders the time format", async () => {
   const timeFormat = screen.getByText("03:30 (HH:mm)");
   expect(timeFormat).toBeInTheDocument();
 });
+
+test("date format settings should match snapshot", async () => {
+  const wrapper = render(<DateFormatSettings />, {
+    wrapper: MemoryRouter,
+  });
+  expect(wrapper.container).toMatchSnapshot();
+});

@@ -123,19 +123,18 @@ exports[`edit details should match snapshot 1`] = `
               </select>
             </div>
             <div
-              class="markdown"
+              class="usa-form-group"
             >
               <label
                 class="usa-label text-bold"
-                for="markdownarea"
+                for="description"
               >
                 Description - optional
               </label>
-              <span
+              <div
                 class="usa-hint"
               >
-                Give your dashboard a description to explain it in more depth.
-                 This text area supports limited Markdown.
+                Give your dashboard a description to explain it in more depth. This text area supports limited markdown.
                  
                 <a
                   aria-label=""
@@ -145,65 +144,33 @@ exports[`edit details should match snapshot 1`] = `
                 >
                   <span>
                     View Markdown Syntax
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
-                      data-icon="external-link-alt"
-                      data-prefix="fas"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                        fill="currentColor"
-                      />
-                    </svg>
                   </span>
+                  <svg
+                    aria-hidden="true"
+                    class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
+                    data-icon="external-link-alt"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                      fill="currentColor"
+                    />
+                  </svg>
                 </a>
-              </span>
-              <div
-                class="usa-checkbox margin-top-2"
+              </div>
+              <textarea
+                class="usa-textarea"
+                id="description"
+                name="description"
+                rows="10"
+                style="height: auto;"
               >
-                <input
-                  class="usa-checkbox__input"
-                  id="toggle"
-                  name="toggle"
-                  type="checkbox"
-                  value="preview"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="toggle"
-                >
-                  Preview live text
-                </label>
-              </div>
-              <div>
-                <textarea
-                  class="usa-textarea"
-                  id="description"
-                  name="description"
-                  placeholder="Enter text here"
-                  rows="6"
-                >
-                  Some description
-                </textarea>
-              </div>
-              <div
-                class="markdown-box"
-                hidden=""
-                style="height: 144px;"
-              >
-                <div
-                  class="Markdown undefined"
-                >
-                  <p>
-                    Some description
-                  </p>
-                </div>
-              </div>
+                Some description
+              </textarea>
             </div>
             <br />
             <button

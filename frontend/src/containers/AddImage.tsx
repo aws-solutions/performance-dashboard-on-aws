@@ -10,6 +10,7 @@ import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import ImagePreview from "../components/ImagePreview";
+import Link from "../components/Link";
 
 interface FormValues {
   title: string;
@@ -216,7 +217,17 @@ function AddImage() {
                     id="summary"
                     name="summary"
                     label="Image description - optional"
-                    hint="Give your image a description to explain it in more depth."
+                    hint={
+                      <>
+                        Give your chart a summary to explain it in more depth.
+                        It can also be read by screen readers to describe the
+                        chart for those with visual impairments. This field
+                        supports markdown.{" "}
+                        <Link target="_blank" to={"/admin/markdown"} external>
+                          View Markdown Syntax
+                        </Link>
+                      </>
+                    }
                     register={register}
                     onChange={handleSummaryChange}
                     multiline

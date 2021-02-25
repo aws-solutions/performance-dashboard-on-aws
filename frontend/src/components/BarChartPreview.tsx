@@ -116,7 +116,7 @@ const BarChartPreview = (props: Props) => {
               domain={[0, "dataMax + 1"]}
               tickFormatter={formatYAxisLabel}
             />
-            <Tooltip cursor={{ fill: "#F0F0F0" }} />
+            <Tooltip cursor={{ fill: "#F0F0F0" }} isAnimationActive={false} />
             {!props.hideLegend && (
               <Legend
                 verticalAlign="top"

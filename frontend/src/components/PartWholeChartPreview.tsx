@@ -106,7 +106,7 @@ const PartWholeChartPreview = (props: Props) => {
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="margin-left-1 margin-top-1 margin-bottom-0 chartSummaryAbove"
+          className="margin-left-1 margin-top-1 margin-bottom-4 chartSummaryAbove"
         />
       )}
       {partWholeData.current.length && (

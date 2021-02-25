@@ -611,9 +611,21 @@ function EditChart() {
                         id="summary"
                         name="summary"
                         label="Chart summary - optional"
-                        hint="Give your chart a summary to explain it in more depth.
-                    It can also be read by screen readers to describe the chart
-                    for those with visual impairments."
+                        hint={
+                          <>
+                            Give your chart a summary to explain it in more
+                            depth. It can also be read by screen readers to
+                            describe the chart for those with visual
+                            impairments. This field supports markdown.{" "}
+                            <Link
+                              target="_blank"
+                              to={"/admin/markdown"}
+                              external
+                            >
+                              View Markdown Syntax
+                            </Link>
+                          </>
+                        }
                         register={register}
                         defaultValue={summary}
                         multiline

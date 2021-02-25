@@ -110,7 +110,7 @@ const ColumnChartPreview = (props: Props) => {
               interval={0}
             />
             <YAxis type="number" domain={[0, "dataMax"]} />
-            <Tooltip cursor={{ fill: "#F0F0F0" }} />
+            <Tooltip cursor={{ fill: "#F0F0F0" }} isAnimationActive={false} />
             {!props.hideLegend && (
               <Legend
                 verticalAlign="top"

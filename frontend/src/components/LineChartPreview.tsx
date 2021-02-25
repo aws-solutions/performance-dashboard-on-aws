@@ -111,7 +111,7 @@ const LineChartPreview = (props: Props) => {
               interval={0}
             />
             <YAxis type="number" />
-            <Tooltip cursor={{ fill: "#F0F0F0" }} />
+            <Tooltip cursor={{ fill: "#F0F0F0" }} isAnimationActive={false} />
             <Legend
               verticalAlign="top"
               onClick={toggleLines}

@@ -10,6 +10,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
+import Link from "../components/Link";
 
 interface FormValues {
   name: string;
@@ -128,13 +129,23 @@ function EditDetails() {
                     }))}
                   />
 
-                  <Markdown
+                  <TextField
                     id="description"
                     name="description"
                     label="Description - optional"
                     defaultValue={dashboard?.description}
+                    hint={
+                      <>
+                        Give your dashboard a description to explain it in more
+                        depth. This text area supports limited markdown.{" "}
+                        <Link target="_blank" to={"/admin/markdown"} external>
+                          View Markdown Syntax
+                        </Link>
+                      </>
+                    }
                     register={register}
-                    hint="Give your dashboard a description to explain it in more depth."
+                    multiline
+                    rows={10}
                   />
 
                   <br />

@@ -32,6 +32,12 @@ function FormattingCSV() {
           items. Below are examples of content types with formatted CSV files
           for your reference.
         </p>
+        <h3>Mac Operating Systems</h3>
+        <p>
+          CSV files created in excel will have issues displaying special
+          characters on the website. The workaround is to save the file in excel
+          as a CSV UTF-8 file.
+        </p>
       </div>
 
       <h2>Line chart</h2>

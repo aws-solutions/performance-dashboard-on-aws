@@ -224,7 +224,7 @@ async function publishDashboard(req: Request, res: Response) {
 async function publishPendingDashboard(req: Request, res: Response) {
   const user = req.user;
   const { id } = req.params;
-  const { updatedAt } = req.body;
+  const { updatedAt, releaseNotes } = req.body;
 
   if (!updatedAt) {
     res.status(400).send("Missing required body `updatedAt`");
@@ -232,15 +232,23 @@ async function publishPendingDashboard(req: Request, res: Response) {
   }
 
   const repo = DashboardRepository.getInstance();
-
   const dashboard = await repo.getDashboardById(id);
-  if (dashboard.state !== DashboardState.Draft) {
+  if (
+    dashboard.state !== DashboardState.Draft &&
+    dashboard.state !== DashboardState.PublishPending
+  ) {
     res.status(409);
-    return res.send("Dashboard must be in draft state");
+    return res.send("Dashboard must be in draft or publish pending state");
   }
 
-  await repo.publishPendingDashboard(id, updatedAt, user);
-  res.send();
+  const updatedDashboard = await repo.publishPendingDashboard(
+    id,
+    updatedAt,
+    user,
+    releaseNotes
+  );
+
+  res.json(updatedDashboard);
 }
 
 async function archiveDashboard(req: Request, res: Response) {

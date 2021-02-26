@@ -29,6 +29,9 @@ function buildDashboardAuditLogFromEvent(
     case ItemEvent.Update:
       userId = dashboard.updatedBy ?? "unknown";
       break;
+    case ItemEvent.Delete:
+      userId = dashboard.deletedBy ?? "unknown";
+      break;
   }
 
   const auditLog: DashboardAuditLogItem = {

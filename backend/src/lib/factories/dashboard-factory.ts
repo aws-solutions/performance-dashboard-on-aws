@@ -85,6 +85,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
     createdBy: dashboard.createdBy,
     updatedAt: dashboard.updatedAt.toISOString(),
     updatedBy: dashboard.updatedBy,
+    deletedBy: dashboard.deletedBy,
     releaseNotes: dashboard.releaseNotes,
     friendlyURL: dashboard.friendlyURL,
   };
@@ -104,6 +105,7 @@ function fromItem(item: DashboardItem): Dashboard {
     parentDashboardId: item.parentDashboardId,
     updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
     updatedBy: item.updatedBy,
+    deletedBy: item.deletedBy,
     state: (item.state as DashboardState) || DashboardState.Draft,
     releaseNotes: item.releaseNotes,
     friendlyURL: item.friendlyURL,

@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a default dropdown menu 1`] = `
+<div>
+  <button
+    aria-controls="menu--1"
+    aria-haspopup="true"
+    class="usa-button usa-button--base"
+    data-reach-menu-button=""
+    id="menu-button--menu--1"
+    type="button"
+  >
+    Example text
+     
+    <span
+      aria-hidden="true"
+    >
+      ▾
+    </span>
+  </button>
+</div>
+`;
+
+exports[`renders a secondary menu button 1`] = `
+<div>
+  <button
+    aria-controls="menu--12"
+    aria-haspopup="true"
+    class="usa-button usa-button--secondary"
+    data-reach-menu-button=""
+    id="menu-button--menu--12"
+    type="button"
+  >
+    Example text
+     
+    <span
+      aria-hidden="true"
+    >
+      ▾
+    </span>
+  </button>
+</div>
+`;
+
+exports[`renders an accent menu button 1`] = `
+<div>
+  <button
+    aria-controls="menu--17"
+    aria-haspopup="true"
+    class="usa-button usa-button--accent-cool"
+    data-reach-menu-button=""
+    id="menu-button--menu--17"
+    type="button"
+  >
+    Example text
+     
+    <span
+      aria-hidden="true"
+    >
+      ▾
+    </span>
+  </button>
+</div>
+`;
+
+exports[`renders an outlined menu button 1`] = `
+<div>
+  <button
+    aria-controls="menu--7"
+    aria-haspopup="true"
+    class="usa-button usa-button--outline"
+    data-reach-menu-button=""
+    id="menu-button--menu--7"
+    type="button"
+  >
+    Example text
+     
+    <span
+      aria-hidden="true"
+    >
+      ▾
+    </span>
+  </button>
+</div>
+`;
+
+exports[`renders an unstyled menu button 1`] = `
+<div>
+  <button
+    aria-controls="menu--22"
+    aria-haspopup="true"
+    class="usa-button usa-button--unstyled"
+    data-reach-menu-button=""
+    id="menu-button--menu--22"
+    type="button"
+  >
+    Example text
+     
+    <span
+      aria-hidden="true"
+    >
+      ▾
+    </span>
+  </button>
+</div>
+`;

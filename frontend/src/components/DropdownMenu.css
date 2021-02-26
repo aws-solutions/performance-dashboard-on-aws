@@ -1,0 +1,25 @@
+[data-reach-menu-item] {
+  cursor: pointer;
+  margin-bottom: 10px;
+  margin-right: 40px;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+[data-reach-menu-item]:last-child {
+  margin-bottom: 0px;
+}
+
+[data-reach-menu-item][aria-disabled="true"] {
+  cursor: default;
+}
+
+[data-reach-menu-list] {
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+[data-reach-menu-list][tabindex]:focus {
+  outline: none;
+}

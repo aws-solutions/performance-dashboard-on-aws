@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
+    "@reach/menu-button": "^0.11.0",
     "@testing-library/jest-dom": "^5.11.3",
     "@testing-library/react": "^10.4.9",
     "@testing-library/user-event": "^12.1.1",

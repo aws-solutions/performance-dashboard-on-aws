@@ -352,13 +352,15 @@ async function createDraft(dashboardId: string): Promise<Dashboard> {
 
 async function publishPending(
   dashboardId: string,
-  lastUpdatedAt: Date
+  lastUpdatedAt: Date,
+  releaseNotes?: string
 ): Promise<Dashboard> {
   const headers = await authHeaders();
   return await API.put(apiName, `dashboard/${dashboardId}/publishpending`, {
     headers,
     body: {
       updatedAt: lastUpdatedAt,
+      releaseNotes: releaseNotes,
     },
   });
 }

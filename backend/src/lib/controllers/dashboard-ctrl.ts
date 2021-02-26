@@ -238,7 +238,7 @@ async function publishPendingDashboard(req: Request, res: Response) {
     dashboard.state !== DashboardState.PublishPending
   ) {
     res.status(409);
-    return res.send("Dashboard must be in draft state");
+    return res.send("Dashboard must be in draft or publish pending state");
   }
 
   const updatedDashboard = await repo.publishPendingDashboard(

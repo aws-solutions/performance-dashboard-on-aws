@@ -113,8 +113,10 @@ const BarChartPreview = (props: Props) => {
                 yAxisLabelMaxWidth
               )}
               minTickGap={0}
-              domain={[0, "dataMax + 1"]}
+              domain={["dataMin - 1", "dataMax + 1"]}
+              scale={yAxisType() === "number" ? "linear" : "auto"}
               tickFormatter={formatYAxisLabel}
+              reversed={true}
             />
             <Tooltip cursor={{ fill: "#F0F0F0" }} isAnimationActive={false} />
             {!props.hideLegend && (

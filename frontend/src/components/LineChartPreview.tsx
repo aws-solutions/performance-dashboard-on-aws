@@ -107,8 +107,9 @@ const LineChartPreview = (props: Props) => {
               dataKey={props.lines.length ? props.lines[0] : ""}
               type={xAxisType()}
               padding={{ left: 50, right: 50 }}
-              domain={[0, "dataMax"]}
+              domain={["dataMin", "dataMax"]}
               interval={0}
+              scale={xAxisType() === "number" ? "linear" : "auto"}
             />
             <YAxis type="number" />
             <Tooltip cursor={{ fill: "#F0F0F0" }} isAnimationActive={false} />

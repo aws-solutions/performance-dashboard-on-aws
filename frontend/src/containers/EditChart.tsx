@@ -111,7 +111,7 @@ function EditChart() {
       setTitle(title);
       setShowTitle(showTitle);
       setSummary(summary);
-      setSummary(summaryBelow);
+      setSummaryBelow(summaryBelow);
       setChartType(chartType);
       setDynamicDataset(
         dynamicDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)

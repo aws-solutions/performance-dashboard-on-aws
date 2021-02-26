@@ -103,7 +103,8 @@ function ChangeRole() {
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      Can create and revise draft dashboards.
+                      Upcoming feature. Can create, edit, and publish
+                      dashboards.
                     </div>
                   </div>
                 </div>
@@ -131,7 +132,8 @@ function ChangeRole() {
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      Create, edit, and publish dashboards.
+                      Have the same permissions as Editors, but can also publish
+                      and unpublish/archive dashboards.
                     </div>
                   </div>
                 </div>

@@ -106,7 +106,8 @@ function AddUsers() {
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      Upcoming feature. Can create and revise draft dashboards.
+                      Upcoming feature. Can create, edit, and publish
+                      dashboards.
                     </div>
                   </div>
                 </div>
@@ -161,9 +162,8 @@ function AddUsers() {
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      Have the same permissions as Publishers but have access to
-                      all dashboards. Also manage users and the context of the
-                      external homepage.
+                      In addition to Editor permissions, can manage users and
+                      website settings.
                     </div>
                   </div>
                 </div>

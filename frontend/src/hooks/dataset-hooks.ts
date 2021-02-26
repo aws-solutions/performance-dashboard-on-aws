@@ -103,6 +103,7 @@ export function useSampleDataset(sampleCSV: string): SampleDatasetsHook {
         dynamicTyping: true,
         skipEmptyLines: true,
         comments: "#",
+        encoding: "ISO-8859-1",
         complete: (results: ParseResult<object>) => {
           if (results.errors.length === 0) {
             setDataset({

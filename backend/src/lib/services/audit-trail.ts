@@ -6,7 +6,7 @@ import AuditLogRepository from "../repositories/auditlog-repo";
 import logger from "./logger";
 
 /**
- * Handles a Create, Delete or Updat eevent that happened to
+ * Handles a Create, Delete or Update event that happened to
  * a DynamoDB item on the main table. i.e. Dashboard was updated.
  */
 async function handleItemEvent(

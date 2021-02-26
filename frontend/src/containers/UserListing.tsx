@@ -9,7 +9,8 @@ import BackendService from "../services/BackendService";
 import { useHistory } from "react-router-dom";
 import Modal from "../components/Modal";
 import AlertContainer from "./AlertContainer";
-import Tooltip from "../components/Tooltip";
+import { MenuItem } from "@reach/menu-button";
+import DropdownMenu from "../components/DropdownMenu";
 
 function UserListing() {
   const history = useHistory<LocationState>();
@@ -107,7 +108,6 @@ function UserListing() {
   return (
     <>
       <h1>Manage users</h1>
-
       <Modal
         isOpen={isOpenResendInviteModal}
         closeModal={closeResendInviteModal}
@@ -118,7 +118,6 @@ function UserListing() {
         buttonType="Resend"
         buttonAction={resendInvite}
       />
-
       <Modal
         isOpen={isOpenRemoveUsersModal}
         closeModal={closeRemoveUsersModal}
@@ -129,7 +128,6 @@ function UserListing() {
         buttonType="Delete"
         buttonAction={removeUsers}
       />
-
       <p>
         These are all of the users who have access. You can add and remove
         users, change users' roles, or resend email invites.
@@ -147,39 +145,21 @@ function UserListing() {
         </div>
         <div className="tablet:grid-col-8 text-right">
           <span>
-            <span data-for="resend" data-tip="">
-              <Button
-                variant="outline"
+            <DropdownMenu buttonText="Actions" variant="outline">
+              <MenuItem
+                onSelect={onResendInvite}
                 disabled={resendInviteEmailDisabled()}
-                onClick={onResendInvite}
+                title="Resend invite emails to unconfirmed users"
               >
                 Resend invite email
-              </Button>
-            </span>
-            {resendInviteEmailDisabled() ? (
-              <Tooltip
-                id="resend"
-                place="bottom"
-                effect="solid"
-                offset={{ bottom: 8 }}
-                getContent={() => (
-                  <div className="font-sans-sm">
-                    You can only resend invite emails to not confirmed users
-                  </div>
-                )}
-              />
-            ) : (
-              ""
-            )}
-          </span>
-          <span>
-            <Button
-              variant="outline"
-              disabled={selected.length === 0}
-              onClick={onRemoveUsers}
-            >
-              Remove user(s)
-            </Button>
+              </MenuItem>
+              <MenuItem
+                onSelect={onRemoveUsers}
+                disabled={selected.length === 0}
+              >
+                Remove users
+              </MenuItem>
+            </DropdownMenu>
           </span>
           <span>
             <Button variant="base" onClick={addUsers}>

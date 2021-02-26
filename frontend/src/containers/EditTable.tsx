@@ -124,6 +124,7 @@ function EditTable() {
         dynamicTyping: true,
         skipEmptyLines: true,
         comments: "#",
+        encoding: "ISO-8859-1",
         complete: function (results: ParseResult<object>) {
           if (results.errors.length) {
             setCsvErrors(results.errors);

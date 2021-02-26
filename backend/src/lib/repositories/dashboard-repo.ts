@@ -287,34 +287,43 @@ class DashboardRepository extends BaseRepository {
 
   /**
    * Set a Dashboard identified by the param `dashboardId` to publish pending state.
+   * Returns the updated dashboard object.
    */
   public async publishPendingDashboard(
     dashboardId: string,
     lastUpdatedAt: string,
-    user: User
-  ) {
+    user: User,
+    releaseNotes: string = ""
+  ): Promise<Dashboard> {
     try {
-      await this.dynamodb.update({
+      const result = await this.dynamodb.update({
+        ReturnValues: "ALL_NEW",
         TableName: this.tableName,
         Key: {
           pk: DashboardFactory.itemId(dashboardId),
           sk: DashboardFactory.itemId(dashboardId),
         },
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+          "#releaseNotes = :releaseNotes",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":state": DashboardState.PublishPending,
           ":lastUpdatedAt": lastUpdatedAt,
           ":updatedAt": new Date().toISOString(),
           ":userId": user.userId,
+          ":releaseNotes": releaseNotes,
         },
         ExpressionAttributeNames: {
           "#state": "state",
           "#updatedBy": "updatedBy",
           "#updatedAt": "updatedAt",
+          "#releaseNotes": "releaseNotes",
         },
       });
+
+      // Return the updated dashboard
+      return DashboardFactory.fromItem(result.Attributes as DashboardItem);
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
         console.error(

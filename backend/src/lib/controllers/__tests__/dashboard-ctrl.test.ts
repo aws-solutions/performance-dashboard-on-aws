@@ -306,10 +306,41 @@ describe("publishPendingDashboard", () => {
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishPendingDashboard(req, res);
     expect(res.status).toBeCalledWith(409);
-    expect(res.send).toBeCalledWith("Dashboard must be in draft state");
+    expect(res.send).toBeCalledWith(
+      "Dashboard must be in draft or publish pending state"
+    );
   });
 
-  it("update the dashboard", async () => {
+  it("allows the update of release notes", async () => {
+    const dashboard: Dashboard = {
+      id: "123",
+      version: 1,
+      parentDashboardId: "123",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.PublishPending, // dashboard can already be in publish pending
+      description: "",
+      widgets: [],
+      releaseNotes: "",
+    };
+
+    req.body.releaseNotes = "Lorem ipsum";
+    repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
+    await DashboardCtrl.publishPendingDashboard(req, res);
+
+    expect(res.json).toBeCalled();
+    expect(repository.publishPendingDashboard).toHaveBeenCalledWith(
+      "123",
+      now.toISOString(),
+      user,
+      "Lorem ipsum"
+    );
+  });
+
+  it("sets the dashboard to publish pending", async () => {
     const dashboard: Dashboard = {
       id: "123",
       version: 1,
@@ -324,12 +355,15 @@ describe("publishPendingDashboard", () => {
       widgets: [],
       releaseNotes: "release note test",
     };
+
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishPendingDashboard(req, res);
+
     expect(repository.publishPendingDashboard).toHaveBeenCalledWith(
       "123",
       now.toISOString(),
-      user
+      user,
+      undefined
     );
   });
 });

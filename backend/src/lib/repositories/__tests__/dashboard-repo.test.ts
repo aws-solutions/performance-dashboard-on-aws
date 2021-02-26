@@ -370,11 +370,22 @@ describe("DashboardRepository.publishDashboard", () => {
   });
 });
 
-describe("DashboardRepository.publishPendingDashboard", () => {
-  it("should call update with the correct keys", async () => {
-    const now = new Date();
+describe("publishPendingDashboard", () => {
+  let updatedDashboard: Dashboard;
+  const now = new Date();
+
+  beforeEach(() => {
+    const updateResult = { Attributes: {} };
+    dynamodb.update = jest.fn().mockReturnValue(updateResult);
+    jest
+      .spyOn(DashboardFactory, "fromItem")
+      .mockReturnValueOnce(updatedDashboard);
+
     jest.useFakeTimers("modern");
     jest.setSystemTime(now);
+  });
+
+  it("should call update with the correct keys", async () => {
     await repo.publishPendingDashboard("123", now.toISOString(), user);
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -388,20 +399,40 @@ describe("DashboardRepository.publishPendingDashboard", () => {
   });
 
   it("should call update with all the fields", async () => {
-    const now = new Date();
-    jest.useFakeTimers("modern");
-    jest.setSystemTime(now);
-    await repo.publishPendingDashboard("123", now.toISOString(), user);
+    await repo.publishPendingDashboard(
+      "123",
+      now.toISOString(),
+      user,
+      "Lorem ipsum"
+    );
+
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+          "#releaseNotes = :releaseNotes",
         ExpressionAttributeValues: {
           ":state": "PublishPending",
           ":lastUpdatedAt": now.toISOString(),
           ":updatedAt": now.toISOString(),
           ":userId": user.userId,
+          ":releaseNotes": "Lorem ipsum",
         },
+      })
+    );
+  });
+
+  it("returns the updated dashboard", async () => {
+    const dashboard = await repo.publishPendingDashboard(
+      "123",
+      now.toISOString(),
+      user
+    );
+
+    expect(dashboard).toBe(updatedDashboard);
+    expect(dynamodb.update).toBeCalledWith(
+      expect.objectContaining({
+        ReturnValues: "ALL_NEW",
       })
     );
   });

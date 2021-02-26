@@ -106,10 +106,11 @@ const ColumnChartPreview = (props: Props) => {
               dataKey={props.columns.length ? props.columns[0] : ""}
               type={xAxisType()}
               padding={{ left: 20, right: 20 }}
-              domain={[0, "dataMax"]}
+              domain={["dataMin", "dataMax"]}
               interval={0}
+              scale={xAxisType() === "number" ? "linear" : "auto"}
             />
-            <YAxis type="number" domain={[0, "dataMax"]} />
+            <YAxis type="number" />
             <Tooltip cursor={{ fill: "#F0F0F0" }} isAnimationActive={false} />
             {!props.hideLegend && (
               <Legend

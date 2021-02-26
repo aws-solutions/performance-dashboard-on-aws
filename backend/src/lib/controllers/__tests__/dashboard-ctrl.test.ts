@@ -306,7 +306,9 @@ describe("publishPendingDashboard", () => {
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishPendingDashboard(req, res);
     expect(res.status).toBeCalledWith(409);
-    expect(res.send).toBeCalledWith("Dashboard must be in draft state");
+    expect(res.send).toBeCalledWith(
+      "Dashboard must be in draft or publish pending state"
+    );
   });
 
   it("allows the update of release notes", async () => {

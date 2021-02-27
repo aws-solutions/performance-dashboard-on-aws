@@ -24,6 +24,7 @@ ReactModal.setAppElement("#root"); //this is important for accessibility
 
 dayjs.extend(relativeTime);
 Amplify.configure(amplifyConfig());
+i18n();
 
 ReactDOM.render(
   <React.StrictMode>

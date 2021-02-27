@@ -117,3 +117,42 @@ export function useColors(
 
   return colors;
 }
+
+type UseJsonDatasetHook = {
+  loading: boolean;
+  json: any[];
+  jsonHeaders: string[];
+};
+
+export function useWidgetDataset(widget: Widget): UseJsonDatasetHook {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [json, setJson] = useState<any[]>([]);
+  const [jsonHeaders, setJsonHeaders] = useState<string[]>([]);
+
+  const fetchData = useCallback(async (jsonS3Key: string) => {
+    setLoading(true);
+    const data = await StorageService.downloadJson(jsonS3Key);
+    if (data && data.length > 0) {
+      const headers = Object.keys(data[0] as Array<string>);
+      setJson(data);
+      setJsonHeaders(headers);
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (widget) {
+      const { content } = widget;
+      const jsonS3Key = content && content.s3Key ? content.s3Key.json : null;
+      if (jsonS3Key) {
+        fetchData(jsonS3Key);
+      }
+    }
+  }, [widget]);
+
+  return {
+    loading,
+    json,
+    jsonHeaders,
+  };
+}

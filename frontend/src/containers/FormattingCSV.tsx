@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useSampleDataset } from "../hooks";
 import LineChartPreview from "../components/LineChartPreview";
-import TablePreview from "../components/TablePreview";
+import TableWidget from "../components/TableWidget";
 import ColumnChartPreview from "../components/ColumnChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
 import Button from "../components/Button";
@@ -171,7 +171,7 @@ function FormattingCSV() {
       </div>
       <hr />
       <div>
-        <TablePreview
+        <TableWidget
           title=""
           summary=""
           headers={table.dataset.headers}

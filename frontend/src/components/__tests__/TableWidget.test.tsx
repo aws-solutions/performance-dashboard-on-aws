@@ -1,31 +1,73 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import { WidgetType, TableWidget } from "../../models";
-import TableWidgetComponent from "../TableWidget";
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import TableWidget from "../TableWidget";
 
-jest.mock("../../hooks");
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
-const table: TableWidget = {
-  id: "123",
-  name: "Bananas table",
-  dashboardId: "abc",
-  updatedAt: new Date(),
-  widgetType: WidgetType.Table,
-  order: 0,
-  showTitle: true,
-  content: {
-    title: "Bananas table",
-    summary: "This is a banana table",
-    summaryBelow: false,
-    datasetId: "0000",
-    s3Key: {
-      json: "123.json",
-      raw: "123.csv",
-    },
-  },
-};
+library.add(faCaretUp, faCaretDown);
 
-test("renders a table with title", async () => {
-  const { getByText } = render(<TableWidgetComponent widget={table} />);
-  expect(getByText("Bananas table")).toBeInTheDocument();
+test("renders the table title", async () => {
+  render(
+    <TableWidget
+      title="test title"
+      summary="test summary"
+      headers={["test"]}
+      summaryBelow={false}
+    />,
+    { wrapper: MemoryRouter }
+  );
+
+  expect(screen.getByText("test title")).toBeInTheDocument();
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("tableSummaryAbove");
+});
+
+test("renders the summary below the chart", async () => {
+  render(
+    <TableWidget
+      title="test title"
+      summary="test summary"
+      headers={["test"]}
+      summaryBelow={true}
+    />,
+    { wrapper: MemoryRouter }
+  );
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("tableSummaryBelow");
+});
+
+test("table preview should match snapshot", async () => {
+  const wrapper = render(
+    <TableWidget
+      title="test title"
+      summary="test summary"
+      headers={["test"]}
+      summaryBelow={false}
+    />,
+    { wrapper: MemoryRouter }
+  );
+  expect(wrapper.container).toMatchSnapshot();
+});
+
+test("table should not crash when a column header is an empty string", async () => {
+  render(
+    <TableWidget
+      title="test title"
+      summary="test summary"
+      headers={["", "something"]}
+      data={[{ "": "foo", something: "bar" }]}
+      summaryBelow={false}
+    />,
+    { wrapper: MemoryRouter }
+  );
+
+  expect(screen.getByRole("table")).toBeInTheDocument();
+  expect(screen.getByText("foo")).toBeInTheDocument();
+  expect(screen.getByText("bar")).toBeInTheDocument();
+  expect(screen.getByText("something")).toBeInTheDocument();
 });

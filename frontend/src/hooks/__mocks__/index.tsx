@@ -10,6 +10,7 @@ import {
   DatasetType,
   SourceType,
   DashboardAuditLog,
+  Widget,
 } from "../../models";
 
 const dummyDashboard = {
@@ -458,5 +459,26 @@ export function useDashboardHistory() {
   return {
     loading,
     auditlogs,
+  };
+}
+
+export function useWidgetDataset(widget: Widget) {
+  const [loading] = useState<boolean>(false);
+  const [jsonHeaders] = useState<string[]>(["City", "Jobs"]);
+  const [json] = useState<any[]>([
+    {
+      City: "Seattle",
+      Jobs: 300,
+    },
+    {
+      City: "San Francisco",
+      Jobs: 150,
+    },
+  ]);
+
+  return {
+    loading,
+    json,
+    jsonHeaders,
   };
 }

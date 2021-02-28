@@ -6,14 +6,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
 import Logo from "../components/Logo";
+<<<<<<< HEAD
 import Header from "../components/Header";
+=======
+import Alert from "../components/Alert";
+import EnvConfig from "../services/EnvConfig";
+>>>>>>> Re-enable Change Role functionality.  Removed ability to map group membership from IdP. Create Alert message if signed in  user is not Editor or Admin
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 function AdminLayout(props: LayoutProps) {
-  const { username, isAdmin, isFederatedId } = useCurrentAuthenticatedUser();
+  const {
+    username,
+    isAdmin,
+    isFederatedId,
+    isEditor,
+  } = useCurrentAuthenticatedUser();
   const { settings } = useSettings();
 
   const signOut = async (event: React.MouseEvent) => {
@@ -52,11 +62,17 @@ function AdminLayout(props: LayoutProps) {
               <FontAwesomeIcon icon={faWindowClose} size="lg" role="img" />
             </button>
             <ul className="usa-nav__primary usa-accordion">
-              <li className="usa-nav__primary-item">
-                <Link className="usa-nav__link" to="/admin/dashboards">
-                  Dashboards
-                </Link>
-              </li>
+              {isAdmin || isEditor ? (
+                <>
+                  <li className="usa-nav__primary-item">
+                    <Link className="usa-nav__link" to="/admin/dashboards">
+                      Dashboards
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                ""
+              )}
               {isAdmin ? (
                 <>
                   <li className="usa-nav__primary-item">
@@ -98,7 +114,36 @@ function AdminLayout(props: LayoutProps) {
         </div>
       </Header>
       <main className="padding-y-3">
-        <div className="grid-container">{props.children}</div>
+        {isAdmin || isEditor ? (
+          <>
+            <div className="grid-container">{props.children}</div>
+          </>
+        ) : (
+          <>
+            <div className="text-center margin-top-5 grid-container">
+              <Alert
+                type="warning"
+                hideIcon
+                slim
+                message={
+                  <div>
+                    You haven't been granted access. You can{" "}
+                    <a
+                      href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance - Request Access`}
+                      className="text-base"
+                    >
+                      contact support
+                    </a>{" "}
+                    to request the Editor or Admin role or view{" "}
+                    <a href="/" className="text-base">
+                      published dashboards
+                    </a>
+                  </div>
+                }
+              ></Alert>
+            </div>
+          </>
+        )}
       </main>
       <Footer />
     </>

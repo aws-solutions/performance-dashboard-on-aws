@@ -114,12 +114,6 @@ describe("changeRole", () => {
     } as any) as Request;
   });
 
-  it("returns a 404 status", async () => {
-    await UserCtrl.changeRole(req, res);
-    expect(res.status).toBeCalledWith(404);
-  });
-
-  /*
   it("returns a 400 error when role is missing", async () => {
     delete req.body.role;
     await UserCtrl.changeRole(req, res);
@@ -134,7 +128,7 @@ describe("changeRole", () => {
     expect(res.send).toBeCalledWith("Invalid role value");
   });
 
-  it("returns a 400 error when emails is missing", async () => {
+  it("returns a 400 error when usernames field is missing", async () => {
     delete req.body.usernames;
     await UserCtrl.changeRole(req, res);
     expect(res.status).toBeCalledWith(400);
@@ -148,7 +142,6 @@ describe("changeRole", () => {
       Role.Editor
     );
   });
-  */
 });
 
 describe("getUsers", () => {

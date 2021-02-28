@@ -99,13 +99,7 @@ async function resendInvite(req: Request, res: Response) {
 }
 
 async function changeRole(req: Request, res: Response) {
-  // Temporarily disabling this feature
-  res.status(404).send("Not found");
-  return;
-
-  /*
-
-  const { role, emails } = req.body;
+  const { role, usernames } = req.body;
 
   if (!role) {
     res.status(400).send("Missing required body `role`");
@@ -129,8 +123,6 @@ async function changeRole(req: Request, res: Response) {
   } catch (error) {
     res.status(500).send(error);
   }
-
-  */
 }
 
 function emailIsValid(email: string) {

@@ -111,8 +111,18 @@ const LineChartPreview = (props: Props) => {
               interval={0}
               scale={xAxisType() === "number" ? "linear" : "auto"}
             />
-            <YAxis type="number" />
-            <Tooltip cursor={{ fill: "#F0F0F0" }} isAnimationActive={false} />
+            <YAxis
+              type="number"
+              tickFormatter={(tick) => {
+                return tick.toLocaleString();
+              }}
+            />
+
+            <Tooltip
+              cursor={{ fill: "#F0F0F0" }}
+              isAnimationActive={false}
+              formatter={(value: Number | String) => value.toLocaleString()}
+            />
             <Legend
               verticalAlign="top"
               onClick={toggleLines}

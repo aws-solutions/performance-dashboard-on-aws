@@ -2,7 +2,7 @@ import React from "react";
 import { useJsonDataset } from "../hooks";
 import { ChartWidget, ChartType } from "../models";
 import LineChartPreview from "../components/LineChartPreview";
-import ColumnChartPreview from "../components/ColumnChartPreview";
+import ColumnChartWidget from "./ColumnChartWidget";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
 
@@ -33,7 +33,7 @@ function ChartWidgetComponent(props: Props) {
 
     case ChartType.ColumnChart:
       return (
-        <ColumnChartPreview
+        <ColumnChartWidget
           title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
           summaryBelow={content.summaryBelow}

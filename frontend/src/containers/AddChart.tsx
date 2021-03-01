@@ -12,7 +12,7 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import RadioButtons from "../components/RadioButtons";
 import LineChartPreview from "../components/LineChartPreview";
-import ColumnChartPreview from "../components/ColumnChartPreview";
+import ColumnChartWidget from "../components/ColumnChartWidget";
 import BarChartPreview from "../components/BarChartPreview";
 import PartWholeChartPreview from "../components/PartWholeChartPreview";
 import UtilsService from "../services/UtilsService";
@@ -586,7 +586,7 @@ function AddChart() {
                   />
                 )}
                 {chartType === ChartType.ColumnChart && (
-                  <ColumnChartPreview
+                  <ColumnChartWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     columns={

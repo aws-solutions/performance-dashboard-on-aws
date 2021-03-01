@@ -9,7 +9,7 @@ import Spinner from "../components/Spinner";
 import TextField from "../components/TextField";
 import Combobox from "../components/Combobox";
 import BarChartPreview from "../components/BarChartPreview";
-import ColumnChartPreview from "../components/ColumnChartPreview";
+import ColumnChartWidget from "../components/ColumnChartWidget";
 import ColorPaletteService from "../services/ColorPaletteService";
 import Link from "../components/Link";
 
@@ -207,7 +207,7 @@ function EditColors() {
                 />
               </div>
               <div className="grid-col-7">
-                <ColumnChartPreview
+                <ColumnChartWidget
                   title=""
                   summary=""
                   columns={datasetColumn.dataset.headers}

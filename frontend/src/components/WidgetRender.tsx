@@ -25,11 +25,10 @@ function WidgetRender({ widget }: Props) {
     case WidgetType.Chart:
       return <ChartWidgetComponent widget={widget as ChartWidget} />;
     case WidgetType.Table:
+    case WidgetType.Metrics:
       return <WidgetWithDataset widget={widget} />;
     case WidgetType.Image:
       return <WidgetWithImage widget={widget as ImageWidget} />;
-    case WidgetType.Metrics:
-      return <MetricsWidgetComponent widget={widget as MetricsWidget} />;
     default:
       return null;
   }
@@ -63,6 +62,15 @@ function WidgetWithDataset({ widget }: Props) {
           headers={jsonHeaders}
           data={json}
           summaryBelow={tableWidget.content.summaryBelow}
+        />
+      );
+    case WidgetType.Metrics:
+      const metricsWidget = widget as MetricsWidget;
+      return (
+        <MetricsWidgetComponent
+          title={metricsWidget.showTitle ? metricsWidget.content.title : ""}
+          metrics={json}
+          metricPerRow={metricsWidget.content.oneMetricPerRow ? 1 : 3}
         />
       );
     default:

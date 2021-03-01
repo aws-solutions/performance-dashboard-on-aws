@@ -1,10 +1,10 @@
 import React from "react";
 import { useJsonDataset } from "../hooks";
 import { ChartWidget, ChartType } from "../models";
-import LineChartPreview from "../components/LineChartPreview";
+import LineChartWidget from "./LineChartWidget";
 import ColumnChartWidget from "./ColumnChartWidget";
-import BarChartPreview from "../components/BarChartPreview";
-import PartWholeChartPreview from "../components/PartWholeChartPreview";
+import BarChartWidget from "./BarChartWidget";
+import PartWholeChartWidget from "./PartWholeChartWidget";
 
 interface Props {
   widget: ChartWidget;
@@ -22,7 +22,7 @@ function ChartWidgetComponent(props: Props) {
   switch (content.chartType) {
     case ChartType.LineChart:
       return (
-        <LineChartPreview
+        <LineChartWidget
           title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -44,7 +44,7 @@ function ChartWidgetComponent(props: Props) {
 
     case ChartType.BarChart:
       return (
-        <BarChartPreview
+        <BarChartWidget
           title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -55,7 +55,7 @@ function ChartWidgetComponent(props: Props) {
 
     case ChartType.PartWholeChart:
       return (
-        <PartWholeChartPreview
+        <PartWholeChartWidget
           title={props.widget.showTitle ? content.title : ""}
           summary={content.summary}
           summaryBelow={content.summaryBelow}

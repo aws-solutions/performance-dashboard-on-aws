@@ -2,10 +2,10 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useSampleDataset } from "../hooks";
-import LineChartPreview from "../components/LineChartPreview";
+import LineChartWidget from "../components/LineChartWidget";
 import TableWidget from "../components/TableWidget";
 import ColumnChartWidget from "../components/ColumnChartWidget";
-import PartWholeChartPreview from "../components/PartWholeChartPreview";
+import PartWholeChartWidget from "../components/PartWholeChartWidget";
 import Button from "../components/Button";
 
 const LINE_CHART_CSV = "Example-CSV-Line.csv";
@@ -66,7 +66,7 @@ function FormattingCSV() {
       </div>
       <hr />
       <div>
-        <LineChartPreview
+        <LineChartWidget
           title=""
           summary=""
           lines={lineChart.dataset.headers}
@@ -138,7 +138,7 @@ function FormattingCSV() {
       </div>
       <hr />
       <div>
-        <PartWholeChartPreview
+        <PartWholeChartWidget
           title=""
           summary=""
           parts={partToWhole.dataset.headers}

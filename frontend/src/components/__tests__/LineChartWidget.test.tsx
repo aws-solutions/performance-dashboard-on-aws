@@ -1,14 +1,14 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import BarChartPreview from "../BarChartPreview";
+import LineChartWidget from "../LineChartWidget";
 
 test("renders the chart title", async () => {
   render(
-    <BarChartPreview
+    <LineChartWidget
       title="test title"
       summary="test summary"
-      bars={["test"]}
+      lines={["test"]}
       data={[{ test: 1 }]}
       summaryBelow={false}
     />,
@@ -19,10 +19,10 @@ test("renders the chart title", async () => {
 
 test("renders chart summary above the chart", async () => {
   render(
-    <BarChartPreview
+    <LineChartWidget
       title="test title"
       summary="test summary"
-      bars={["test"]}
+      lines={["test"]}
       data={[{ test: 1 }]}
       summaryBelow={false}
     />,
@@ -36,10 +36,10 @@ test("renders chart summary above the chart", async () => {
 
 test("renders chart summary below the chart", async () => {
   render(
-    <BarChartPreview
+    <LineChartWidget
       title="test title"
       summary="test summary"
-      bars={["test"]}
+      lines={["test"]}
       data={[{ test: 1 }]}
       summaryBelow={true}
     />,

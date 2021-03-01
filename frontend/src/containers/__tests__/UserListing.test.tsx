@@ -3,6 +3,7 @@ import { fireEvent, render, screen, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserListing from "../UserListing";
 import BackendService from "../../services/BackendService";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("../../hooks");
 jest.mock("../../services/BackendService");
@@ -40,16 +41,48 @@ test("renders a table with users", () => {
   expect(screen.getByText("johndoe@example.com")).toBeInTheDocument();
 });
 
-test("remove user button deletes selected users", async () => {
-  render(<UserListing />, { wrapper: MemoryRouter });
+test("renders the dropdown menu", () => {
+  render(<UserListing />, {
+    wrapper: MemoryRouter,
+  });
+  expect(screen.getByText("Actions")).toBeInTheDocument();
+});
 
+test("dropdown menu expands when clicked", () => {
+  render(<UserListing />, {
+    wrapper: MemoryRouter,
+  });
+  userEvent.click(screen.getByText("Actions"));
+  expect(screen.getByText("Resend invite email")).toBeInTheDocument();
+  expect(screen.getByText("Remove users")).toBeInTheDocument();
+});
+
+test("dropdown menu options are disabled when approptiate", () => {
+  render(<UserListing />, {
+    wrapper: MemoryRouter,
+  });
+  userEvent.click(screen.getByText("Actions"));
+  expect(screen.getByText("Resend invite email")).toHaveAttribute(
+    "aria-disabled",
+    "true"
+  );
+  expect(screen.getByText("Remove users")).toHaveAttribute(
+    "aria-disabled",
+    "true"
+  );
+});
+
+test("remove user button deletes selected users", async () => {
+  render(<UserListing />, {
+    wrapper: MemoryRouter,
+  });
   // First select user from the table
   const checkbox = screen.getByRole("checkbox", { name: "johndoe" });
   fireEvent.click(checkbox);
 
   // Click remove users button
-  const removeButton = screen.getByRole("button", { name: "Remove user(s)" });
-  fireEvent.click(removeButton);
+  userEvent.click(screen.getByText("Actions"));
+  userEvent.click(screen.getByText("Remove users"));
 
   // Wait for confirmation modal to show
   await screen.findByText("Are you sure you want to remove 1 user?");

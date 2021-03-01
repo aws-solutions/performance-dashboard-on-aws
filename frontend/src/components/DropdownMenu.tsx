@@ -7,7 +7,6 @@ import {
   MenuLink,
 } from "@reach/menu-button";
 import React, { ReactNode } from "react";
-import Dropdown from "./Dropdown";
 
 type Variant =
   | "base"

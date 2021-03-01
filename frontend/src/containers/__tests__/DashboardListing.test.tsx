@@ -20,12 +20,11 @@ test("renders the tabs", async () => {
   expect(getByText("Published (1)")).toBeInTheDocument();
 });
 
-test("renders a button to delete", async () => {
-  const { getByRole } = render(<DashboardListing />, {
+test("renders a dropdown menu", async () => {
+  const { getByText } = render(<DashboardListing />, {
     wrapper: MemoryRouter,
   });
-  const button = getByRole("button", { name: "Delete" });
-  expect(button).toBeInTheDocument();
+  expect(getByText("Actions")).toBeInTheDocument();
 });
 
 test("renders a button to create dashboard", async () => {

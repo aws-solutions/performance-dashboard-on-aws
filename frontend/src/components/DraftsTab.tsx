@@ -7,6 +7,9 @@ import Search from "./Search";
 import ScrollTop from "./ScrollTop";
 import Table from "./Table";
 import Link from "./Link";
+import DropdownMenu from "../components/DropdownMenu";
+
+const { MenuItem, MenuLink } = DropdownMenu;
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -45,13 +48,24 @@ function DraftsTab(props: Props) {
         </div>
         <div className="tablet:grid-col-9 text-right">
           <span>
-            <Button
-              variant="outline"
-              disabled={selected.length === 0}
-              onClick={() => props.onDelete(selected)}
-            >
-              Delete
-            </Button>
+            <DropdownMenu buttonText="Actions" variant="outline">
+              <MenuLink
+                href={
+                  selected.length === 1
+                    ? `/admin/dashboard/${selected[0].id}/history`
+                    : "#"
+                }
+                disabled={selected.length !== 1}
+              >
+                View history
+              </MenuLink>
+              <MenuItem
+                onSelect={() => props.onDelete(selected)}
+                disabled={selected.length === 0}
+              >
+                Delete
+              </MenuItem>
+            </DropdownMenu>
           </span>
           <span>
             <Button onClick={createDashboard}>Create dashboard</Button>

@@ -248,16 +248,27 @@ test("createDraft makes a POST request to dashboard API", async () => {
 
 test("publishPending makes a PUT request to dashboard API", async () => {
   const lastUpdatedAt = new Date();
-  await BackendService.publishPending("123", lastUpdatedAt);
+  const releaseNotes = "Lorem ipsum";
+  await BackendService.publishPending("123", lastUpdatedAt, releaseNotes);
   expect(API.put).toBeCalledWith(
     "BackendApi",
     "dashboard/123/publishpending",
     expect.objectContaining({
       body: {
         updatedAt: lastUpdatedAt,
+        releaseNotes: releaseNotes,
       },
     })
   );
+});
+
+test("publishPending returns the updated dashboard", async () => {
+  const lastUpdatedAt = new Date();
+  const updatedDashboard = {};
+  API.put = jest.fn().mockReturnValueOnce(updatedDashboard);
+
+  const dashboard = await BackendService.publishPending("123", lastUpdatedAt);
+  expect(dashboard).toBe(updatedDashboard);
 });
 
 test("moveToDraft makes a PUT request to dashboard API", async () => {

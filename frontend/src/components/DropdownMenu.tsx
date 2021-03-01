@@ -1,6 +1,13 @@
 import "./DropdownMenu.css";
-import { Menu, MenuList, MenuButton } from "@reach/menu-button";
+import {
+  Menu,
+  MenuList,
+  MenuButton,
+  MenuItem,
+  MenuLink,
+} from "@reach/menu-button";
 import React, { ReactNode } from "react";
+import Dropdown from "./Dropdown";
 
 type Variant =
   | "base"
@@ -58,5 +65,8 @@ function DropdownMenu(props: DropdownProps) {
     </Menu>
   );
 }
+
+DropdownMenu.MenuItem = MenuItem;
+DropdownMenu.MenuLink = MenuLink;
 
 export default DropdownMenu;

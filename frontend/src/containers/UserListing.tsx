@@ -9,8 +9,9 @@ import BackendService from "../services/BackendService";
 import { useHistory } from "react-router-dom";
 import Modal from "../components/Modal";
 import AlertContainer from "./AlertContainer";
-import { MenuItem } from "@reach/menu-button";
 import DropdownMenu from "../components/DropdownMenu";
+
+const MenuItem = DropdownMenu.MenuItem;
 
 function UserListing() {
   const history = useHistory<LocationState>();

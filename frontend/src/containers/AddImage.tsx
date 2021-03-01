@@ -9,7 +9,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
-import ImagePreview from "../components/ImagePreview";
+import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
 
 interface FormValues {
@@ -276,7 +276,7 @@ function AddImage() {
         </div>
         <div className="grid-col-6">
           <h4 className="margin-top-4">Preview</h4>
-          <ImagePreview
+          <ImageWidget
             title={showTitle ? title : ""}
             summary={summary}
             file={imageFile}

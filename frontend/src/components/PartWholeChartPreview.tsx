@@ -88,8 +88,16 @@ const PartWholeChartPreview = (props: Props) => {
     const amount = value.substring(index + 1);
     return (
       <span>
-        <span className="margin-left-05 font-sans-md text-bottom">{label}</span>
-        <div className="margin-left-4 margin-bottom-1 text-bold">{amount}</div>
+        <span className="margin-left-05 font-sans-md text-bottom">
+          {label.toLocaleString()}
+        </span>
+        <div className="margin-left-4 margin-bottom-1 text-bold">
+          {amount && amount !== "null" ? (
+            Number(amount).toLocaleString()
+          ) : (
+            <br />
+          )}
+        </div>
       </span>
     );
   };
@@ -129,6 +137,9 @@ const PartWholeChartPreview = (props: Props) => {
               interval="preserveStartEnd"
               type="number"
               padding={{ left: 2, right: 2 }}
+              tickFormatter={(tick) => {
+                return tick.toLocaleString();
+              }}
             />
             <YAxis
               orientation="left"

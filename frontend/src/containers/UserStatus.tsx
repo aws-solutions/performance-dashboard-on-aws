@@ -8,7 +8,9 @@ const UserStatus = () => {
       <p className="font-sans-lg">
         Users in the system have different statuses. These statuses are being
         pulled directly from AWS Cognito but we explain what they mean below.{" "}
-        <a href="https://aws.amazon.com/cognito/">Learn about AWS Cognito.</a>
+        <a href="https://aws.amazon.com/cognito/" target="_blank">
+          Learn about AWS Cognito.
+        </a>
       </p>
 
       <h3 className="margin-top-5">UNCONFIRMED</h3>

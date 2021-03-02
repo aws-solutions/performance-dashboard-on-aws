@@ -102,6 +102,9 @@ const BarChartPreview = (props: Props) => {
                 (dataMin: number) => 0,
                 (dataMax: number) => dataMax + Math.floor(dataMax * 0.2),
               ]}
+              tickFormatter={(tick) => {
+                return tick.toLocaleString();
+              }}
             />
             <YAxis
               dataKey={props.bars.length ? props.bars[0] : ""}
@@ -118,7 +121,11 @@ const BarChartPreview = (props: Props) => {
               tickFormatter={formatYAxisLabel}
               reversed={true}
             />
-            <Tooltip cursor={{ fill: "#F0F0F0" }} isAnimationActive={false} />
+            <Tooltip
+              cursor={{ fill: "#F0F0F0" }}
+              isAnimationActive={false}
+              formatter={(value: Number | String) => value.toLocaleString()}
+            />
             {!props.hideLegend && (
               <Legend
                 verticalAlign="top"
@@ -138,7 +145,13 @@ const BarChartPreview = (props: Props) => {
                     hide={hiddenBars.includes(bar)}
                   >
                     {props.bars.length <= 3 ? (
-                      <LabelList dataKey={bar} position="right" />
+                      <LabelList
+                        dataKey={bar}
+                        position="right"
+                        formatter={(value: Number | String) =>
+                          value.toLocaleString()
+                        }
+                      />
                     ) : (
                       ""
                     )}

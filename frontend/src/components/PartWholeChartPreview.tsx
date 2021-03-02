@@ -92,7 +92,11 @@ const PartWholeChartPreview = (props: Props) => {
           {label.toLocaleString()}
         </span>
         <div className="margin-left-4 margin-bottom-1 text-bold">
-          {Number(amount).toLocaleString()}
+          {amount && amount !== "null" ? (
+            Number(amount).toLocaleString()
+          ) : (
+            <br />
+          )}
         </div>
       </span>
     );

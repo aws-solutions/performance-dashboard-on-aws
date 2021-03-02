@@ -54,3 +54,7 @@ p {
 .right-shadow {
   box-shadow: inset -25px 0 10px -20px rgba(224, 224, 224, 0.5);
 }
+
+.z-index-logout {
+  z-index: 100000;
+}

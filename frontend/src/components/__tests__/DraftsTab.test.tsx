@@ -3,6 +3,7 @@ import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import DraftsTab from "../DraftsTab";
 import { Dashboard } from "../../models";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("../../hooks");
 
@@ -32,17 +33,6 @@ const dashboards: Array<Dashboard> = [
     widgets: [],
   },
 ];
-
-test("renders a button to delete", async () => {
-  const { getByRole } = render(
-    <DraftsTab dashboards={[]} onDelete={() => {}} />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
-  const button = getByRole("button", { name: "Delete" });
-  expect(button).toBeInTheDocument();
-});
 
 test("renders a button to create dashboard", async () => {
   const { getByRole } = render(
@@ -101,4 +91,45 @@ test("filters dashboards based on search input", async () => {
   // Dashboard one should dissapear
   expect(dashboard1).not.toBeInTheDocument();
   expect(dashboard2).toBeInTheDocument();
+});
+
+test("renders the dropdown menu", () => {
+  const { getByText } = render(
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+  expect(getByText("Actions")).toBeInTheDocument();
+});
+
+test("when no dashboard is selected both dropdown options are disabled", () => {
+  const { getByText } = render(
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+  userEvent.click(getByText("Actions"));
+  expect(getByText("View history")).toHaveAttribute("aria-disabled", "true");
+  expect(getByText("Delete")).toHaveAttribute("aria-disabled", "true");
+});
+
+test("view history navigates to the correct location", () => {
+  const { getByText, getByRole } = render(
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+
+  const checkbox = getByRole("checkbox", { name: "Dashboard One" });
+  userEvent.click(checkbox);
+
+  userEvent.click(getByText("Actions"));
+
+  expect(getByText("View history").closest("a")).toHaveAttribute(
+    "href",
+    "/admin/dashboard/abc/history"
+  );
 });

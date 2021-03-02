@@ -79,7 +79,7 @@ function AdminLayout(props: LayoutProps) {
                 </button>
                 <ul
                   id="basic-nav-section-one"
-                  className="usa-nav__submenu"
+                  className="usa-nav__submenu z-index-logout"
                   hidden
                 >
                   <li className="usa-nav__submenu-item">

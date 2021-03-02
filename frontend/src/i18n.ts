@@ -3,6 +3,7 @@ import { initReactI18next } from "react-i18next";
 
 import english from "./locales/en/translation.json";
 import spanish from "./locales/es/translation.json";
+import portuguese from "./locales/pt/translation.json";
 
 export default function init(defaultLanguage?: string) {
   i18n
@@ -16,6 +17,7 @@ export default function init(defaultLanguage?: string) {
       resources: {
         en: { translation: english },
         es: { translation: spanish },
+        pt: { translation: portuguese },
       },
     });
 }

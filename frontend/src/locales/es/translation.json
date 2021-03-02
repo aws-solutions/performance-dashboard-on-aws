@@ -1,6 +1,7 @@
 {
   "LastUpdatedLabel": "Última actualización",
   "SearchButton": "Buscar",
-  "ClearSearchText": "Limpiar parámetros de búsqueda",
-  "AllDashboardsLink": "Todos los dashboards"
+  "ClearSearchText": "Borrar elementos de búsqueda",
+  "AllDashboardsLink": "Todos los paneles",
+  "ArchivedTabDescription": "Estos son los paneles archivados de la organización. Los paneles archivados no se pueden visualizar en el sitio publicado. Para ver un panel, haga clic en el nombre del panel. También puede volver a publicar los paneles archivados en el sitio publicado."
 }

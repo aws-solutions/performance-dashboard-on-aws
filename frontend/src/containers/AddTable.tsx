@@ -16,6 +16,9 @@ import Link from "../components/Link";
 import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";
 import Spinner from "../components/Spinner";
+import Alert from "../components/Alert";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface FormValues {
   title: string;
@@ -59,6 +62,7 @@ function AddTable() {
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     undefined
   );
+  const [showAlert, setShowAlert] = useState(true);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -536,17 +540,54 @@ function AddTable() {
             {datasetLoading ? (
               <Spinner className="text-center margin-top-6" label="Loading" />
             ) : (
-              <TablePreview
-                title={showTitle ? title : ""}
-                summary={summary}
-                summaryBelow={summaryBelow}
-                headers={
-                  currentJson.length
-                    ? (Object.keys(currentJson[0]) as Array<string>)
-                    : []
-                }
-                data={currentJson}
-              />
+              <>
+                {showAlert && datasetType === DatasetType.CsvFileUpload && (
+                  <div className="margin-left-1">
+                    <Alert
+                      type="info"
+                      message={
+                        <div className="grid-row margin-left-4">
+                          <div className="grid-col-11">
+                            Does the chart look correct?{" "}
+                            <Link
+                              to="/admin/formattingcsv"
+                              target="_blank"
+                              external
+                            >
+                              Learn how to format your CSV data.
+                            </Link>
+                          </div>
+                          <div className="grid-col-1">
+                            <div className="margin-left-4">
+                              <Button
+                                variant="unstyled"
+                                className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                                onClick={() => setShowAlert(false)}
+                                type="button"
+                                ariaLabel="Close"
+                              >
+                                <FontAwesomeIcon icon={faTimes} size="sm" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                      slim
+                    />
+                  </div>
+                )}
+                <TablePreview
+                  title={showTitle ? title : ""}
+                  summary={summary}
+                  summaryBelow={summaryBelow}
+                  headers={
+                    currentJson.length
+                      ? (Object.keys(currentJson[0]) as Array<string>)
+                      : []
+                  }
+                  data={currentJson}
+                />
+              </>
             )}
           </div>
         </div>

@@ -576,7 +576,7 @@ function AddTable() {
                     />
                   </div>
                 )}
-                <TablePreview
+                <TableWidget
                   title={showTitle ? title : ""}
                   summary={summary}
                   summaryBelow={summaryBelow}

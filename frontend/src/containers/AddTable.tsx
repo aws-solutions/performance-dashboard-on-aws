@@ -11,7 +11,7 @@ import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
-import TablePreview from "../components/TablePreview";
+import TableWidget from "../components/TableWidget";
 import Link from "../components/Link";
 import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";

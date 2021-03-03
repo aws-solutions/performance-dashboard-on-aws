@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import ColumnChartPreview from "../ColumnChartPreview";
+import ColumnChartWidget from "../ColumnChartWidget";
 
 test("renders the chart title", async () => {
   render(
-    <ColumnChartPreview
+    <ColumnChartWidget
       title="test title"
       summary="test summary"
       columns={["test"]}
@@ -19,7 +19,7 @@ test("renders the chart title", async () => {
 
 test("renders chart summary above the chart", async () => {
   render(
-    <ColumnChartPreview
+    <ColumnChartWidget
       title="test title"
       summary="test summary"
       columns={["test"]}
@@ -36,7 +36,7 @@ test("renders chart summary above the chart", async () => {
 
 test("renders chart summary below the chart", async () => {
   render(
-    <ColumnChartPreview
+    <ColumnChartWidget
       title="test title"
       summary="test summary"
       columns={["test"]}

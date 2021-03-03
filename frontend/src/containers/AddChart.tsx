@@ -11,10 +11,10 @@ import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import RadioButtons from "../components/RadioButtons";
-import LineChartPreview from "../components/LineChartPreview";
-import ColumnChartPreview from "../components/ColumnChartPreview";
-import BarChartPreview from "../components/BarChartPreview";
-import PartWholeChartPreview from "../components/PartWholeChartPreview";
+import LineChartWidget from "../components/LineChartWidget";
+import ColumnChartWidget from "../components/ColumnChartWidget";
+import BarChartWidget from "../components/BarChartWidget";
+import PartWholeChartWidget from "../components/PartWholeChartWidget";
 import UtilsService from "../services/UtilsService";
 import Link from "../components/Link";
 import ComboBox from "../components/Combobox";
@@ -611,7 +611,7 @@ function AddChart() {
                   </div>
                 )}
                 {chartType === ChartType.LineChart && (
-                  <LineChartPreview
+                  <LineChartWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     lines={
@@ -625,7 +625,7 @@ function AddChart() {
                   />
                 )}
                 {chartType === ChartType.ColumnChart && (
-                  <ColumnChartPreview
+                  <ColumnChartWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     columns={
@@ -639,7 +639,7 @@ function AddChart() {
                   />
                 )}
                 {chartType === ChartType.BarChart && (
-                  <BarChartPreview
+                  <BarChartWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     bars={
@@ -652,7 +652,7 @@ function AddChart() {
                   />
                 )}
                 {chartType === ChartType.PartWholeChart && (
-                  <PartWholeChartPreview
+                  <PartWholeChartWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     parts={

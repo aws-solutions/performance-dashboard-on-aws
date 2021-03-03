@@ -5,7 +5,7 @@ import { Metric, LocationState, Dataset, DatasetSchema } from "../models";
 import { useDashboard, useWidget } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import MetricsPreview from "../components/MetricsPreview";
+import MetricsWidget from "../components/MetricsWidget";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
 import MetricsList from "../components/MetricsList";
@@ -290,7 +290,7 @@ function EditMetrics() {
           </div>
           <div className="grid-col-6">
             <h4 className="margin-top-4">Preview</h4>
-            <MetricsPreview
+            <MetricsWidget
               title={showTitle ? title : ""}
               metrics={metrics}
               metricPerRow={oneMetricPerRow ? 1 : 3}

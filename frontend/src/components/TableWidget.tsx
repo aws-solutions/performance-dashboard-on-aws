@@ -1,30 +1,57 @@
-import React from "react";
-import { useJsonDataset } from "../hooks";
-import { TableWidget } from "../models";
-import TablePreview from "../components/TablePreview";
+import React, { useMemo } from "react";
+import MarkdownRender from "./MarkdownRender";
+import Table from "./Table";
 
-interface Props {
-  widget: TableWidget;
-}
+type Props = {
+  title: string;
+  summary: string;
+  headers: Array<string>;
+  data?: Array<object>;
+  summaryBelow: boolean;
+};
 
-function TableWidgetComponent(props: Props) {
-  const { content, showTitle } = props.widget;
-  const { json } = useJsonDataset(content.s3Key.json);
+const TableWidget = (props: Props) => {
+  const { headers, data, summaryBelow, summary, title } = props;
 
-  if (!json || json.length === 0) {
-    return null;
-  }
-
-  const keys = Object.keys(json[0] as Array<string>);
   return (
-    <TablePreview
-      title={showTitle ? content.title : ""}
-      summary={content.summary}
-      headers={keys}
-      data={json}
-      summaryBelow={content.summaryBelow}
-    />
+    <div className="overflow-hidden">
+      <h2 className="margin-left-1 margin-bottom-1">{title}</h2>
+      {!summaryBelow && (
+        <MarkdownRender
+          source={summary}
+          className="margin-left-1 margin-top-0 margin-bottom-3 tableSummaryAbove"
+        />
+      )}
+      <Table
+        selection="none"
+        rows={useMemo(() => data || [], [data])}
+        className="margin-left-1"
+        initialSortAscending
+        columns={useMemo(
+          () =>
+            headers.map((header, i) => {
+              return {
+                Header: header,
+                id: String(i),
+                accessor: header,
+                minWidth: 150,
+                Cell: (props: any) => {
+                  const row = props.row.original;
+                  return row[header] ? row[header].toLocaleString() : null;
+                },
+              };
+            }),
+          [headers]
+        )}
+      />
+      {summaryBelow && (
+        <MarkdownRender
+          source={summary}
+          className="margin-left-1 margin-top-3 margin-bottom-0 tableSummaryBelow"
+        />
+      )}
+    </div>
   );
-}
+};
 
-export default TableWidgetComponent;
+export default TableWidget;

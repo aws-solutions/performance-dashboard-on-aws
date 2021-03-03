@@ -26,7 +26,7 @@ type Props = {
   };
 };
 
-const LineChartPreview = (props: Props) => {
+const LineChartWidget = (props: Props) => {
   const [linesHover, setLinesHover] = useState(null);
   const [hiddenLines, setHiddenLines] = useState<Array<string>>([]);
 
@@ -156,4 +156,4 @@ const LineChartPreview = (props: Props) => {
   );
 };
 
-export default LineChartPreview;
+export default LineChartWidget;

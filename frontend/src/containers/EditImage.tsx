@@ -9,7 +9,7 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import { useDashboard, useWidget, useImage } from "../hooks";
 import Spinner from "../components/Spinner";
-import ImagePreview from "../components/ImagePreview";
+import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
 
 interface FormValues {
@@ -309,7 +309,7 @@ function EditImage() {
                     label="Loading"
                   />
                 ) : (
-                  <ImagePreview
+                  <ImageWidget
                     title={widget.showTitle ? widget.content.title : ""}
                     summary={widget.content.summary}
                     file={newImageFile ? newImageFile : file}

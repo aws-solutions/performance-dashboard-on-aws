@@ -10,7 +10,7 @@ import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
-import TablePreview from "../components/TablePreview";
+import TableWidget from "../components/TableWidget";
 import { useWidget, useDashboard, useDateTimeFormatter } from "../hooks";
 import Spinner from "../components/Spinner";
 import Link from "../components/Link";
@@ -651,7 +651,7 @@ function EditTable() {
                     label="Loading"
                   />
                 ) : (
-                  <TablePreview
+                  <TableWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     headers={tableHeaders}

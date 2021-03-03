@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import { useColors } from "../hooks";
 import MarkdownRender from "./MarkdownRender";
-import "./PartWholeChartPreview.css";
+import "./PartWholeChartWidget.css";
 
 type Props = {
   title: string;
@@ -24,7 +24,7 @@ type Props = {
   };
 };
 
-const PartWholeChartPreview = (props: Props) => {
+const PartWholeChartWidget = (props: Props) => {
   const [partsHover, setPartsHover] = useState(null);
   const [hiddenParts, setHiddenParts] = useState<Array<string>>([]);
 
@@ -198,4 +198,4 @@ const PartWholeChartPreview = (props: Props) => {
   );
 };
 
-export default PartWholeChartPreview;
+export default PartWholeChartWidget;

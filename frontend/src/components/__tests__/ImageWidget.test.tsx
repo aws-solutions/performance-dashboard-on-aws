@@ -1,32 +1,74 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import { WidgetType, ImageWidget } from "../../models";
-import ImageWidgetComponent from "../ImageWidget";
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import ImageWidget from "../ImageWidget";
 
-jest.mock("../../hooks");
+const imageFile = {
+  type: "image/png",
+  name: "myphoto.png",
+  size: 100,
+} as File;
+
 window.URL.createObjectURL = jest.fn();
 
-const image: ImageWidget = {
-  id: "123",
-  name: "Test Image",
-  dashboardId: "abc",
-  updatedAt: new Date(),
-  widgetType: WidgetType.Image,
-  order: 0,
-  showTitle: true,
-  content: {
-    title: "Test Image",
-    imageAltText: "Test Alt Text",
-    summary: "test summary",
-    summaryBelow: false,
-    s3Key: {
-      raw: "123.csv",
-    },
-    filename: "123.csv",
-  },
-};
+test("renders the image title", async () => {
+  render(
+    <ImageWidget
+      title="test title"
+      summary="test summary"
+      file={imageFile}
+      summaryBelow={false}
+      altText="alt text"
+    />,
+    { wrapper: MemoryRouter }
+  );
+  expect(screen.getByText("test title")).toBeInTheDocument();
+});
 
-test("renders an image with title", async () => {
-  const { getByText } = render(<ImageWidgetComponent widget={image} />);
-  expect(getByText("Test Image")).toBeInTheDocument();
+test("renders the summary below the image", async () => {
+  render(
+    <ImageWidget
+      title="test title"
+      summary="test summary"
+      file={imageFile}
+      summaryBelow={true}
+      altText="alt text"
+    />,
+    { wrapper: MemoryRouter }
+  );
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("imageSummaryBelow");
+});
+
+test("renders the summary above the image", async () => {
+  render(
+    <ImageWidget
+      title="test title"
+      summary="test summary"
+      file={imageFile}
+      summaryBelow={false}
+      altText="alt text"
+    />,
+    { wrapper: MemoryRouter }
+  );
+
+  const summary = screen.getByText("test summary");
+  expect(summary).toBeInTheDocument();
+  expect(summary.closest("div")).toHaveClass("imageSummaryAbove");
+});
+
+test("image preview should match snapshot", async () => {
+  const wrapper = render(
+    <ImageWidget
+      title="test title"
+      summary="test summary"
+      file={imageFile}
+      summaryBelow={false}
+      altText="alt text"
+    />,
+    { wrapper: MemoryRouter }
+  );
+  expect(wrapper.container).toMatchSnapshot();
 });

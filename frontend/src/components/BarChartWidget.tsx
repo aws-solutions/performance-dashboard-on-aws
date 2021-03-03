@@ -27,7 +27,7 @@ type Props = {
   };
 };
 
-const BarChartPreview = (props: Props) => {
+const BarChartWidget = (props: Props) => {
   const [barsHover, setBarsHover] = useState(null);
   const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
 
@@ -171,4 +171,4 @@ const BarChartPreview = (props: Props) => {
   );
 };
 
-export default BarChartPreview;
+export default BarChartWidget;

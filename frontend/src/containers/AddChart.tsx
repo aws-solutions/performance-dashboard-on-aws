@@ -11,15 +11,18 @@ import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import RadioButtons from "../components/RadioButtons";
-import LineChartPreview from "../components/LineChartPreview";
-import ColumnChartPreview from "../components/ColumnChartPreview";
-import BarChartPreview from "../components/BarChartPreview";
-import PartWholeChartPreview from "../components/PartWholeChartPreview";
+import LineChartWidget from "../components/LineChartWidget";
+import ColumnChartWidget from "../components/ColumnChartWidget";
+import BarChartWidget from "../components/BarChartWidget";
+import PartWholeChartWidget from "../components/PartWholeChartWidget";
 import UtilsService from "../services/UtilsService";
 import Link from "../components/Link";
 import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";
 import Spinner from "../components/Spinner";
+import Alert from "../components/Alert";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface FormValues {
   title: string;
@@ -65,6 +68,7 @@ function AddChart() {
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     undefined
   );
+  const [showAlert, setShowAlert] = useState(true);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -571,8 +575,43 @@ function AddChart() {
               <Spinner className="text-center margin-top-6" label="Loading" />
             ) : (
               <>
+                {showAlert && datasetType === DatasetType.CsvFileUpload && (
+                  <div className="margin-left-1">
+                    <Alert
+                      type="info"
+                      message={
+                        <div className="grid-row margin-left-4">
+                          <div className="grid-col-11">
+                            Does the chart look correct?{" "}
+                            <Link
+                              to="/admin/formattingcsv"
+                              target="_blank"
+                              external
+                            >
+                              Learn how to format your CSV data.
+                            </Link>
+                          </div>
+                          <div className="grid-col-1">
+                            <div className="margin-left-4">
+                              <Button
+                                variant="unstyled"
+                                className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                                onClick={() => setShowAlert(false)}
+                                type="button"
+                                ariaLabel="Close"
+                              >
+                                <FontAwesomeIcon icon={faTimes} size="sm" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                      slim
+                    />
+                  </div>
+                )}
                 {chartType === ChartType.LineChart && (
-                  <LineChartPreview
+                  <LineChartWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     lines={
@@ -586,7 +625,7 @@ function AddChart() {
                   />
                 )}
                 {chartType === ChartType.ColumnChart && (
-                  <ColumnChartPreview
+                  <ColumnChartWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     columns={
@@ -600,7 +639,7 @@ function AddChart() {
                   />
                 )}
                 {chartType === ChartType.BarChart && (
-                  <BarChartPreview
+                  <BarChartWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     bars={
@@ -613,7 +652,7 @@ function AddChart() {
                   />
                 )}
                 {chartType === ChartType.PartWholeChart && (
-                  <PartWholeChartPreview
+                  <PartWholeChartWidget
                     title={showTitle ? title : ""}
                     summary={summary}
                     parts={

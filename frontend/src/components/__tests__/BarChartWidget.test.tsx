@@ -1,30 +1,30 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import PartWholeChartPreview from "../PartWholeChartPreview";
+import BarChartWidget from "../BarChartWidget";
 
 test("renders the chart title", async () => {
   render(
-    <PartWholeChartPreview
+    <BarChartWidget
       title="test title"
       summary="test summary"
-      parts={["test"]}
+      bars={["test"]}
+      data={[{ test: 1 }]}
       summaryBelow={false}
-      data={[{}]}
     />,
     { wrapper: MemoryRouter }
   );
   expect(screen.getByText("test title")).toBeInTheDocument();
 });
 
-test("renders the summary above the chart", async () => {
+test("renders chart summary above the chart", async () => {
   render(
-    <PartWholeChartPreview
+    <BarChartWidget
       title="test title"
       summary="test summary"
-      parts={["test"]}
+      bars={["test"]}
+      data={[{ test: 1 }]}
       summaryBelow={false}
-      data={[{}]}
     />,
     { wrapper: MemoryRouter }
   );
@@ -34,14 +34,14 @@ test("renders the summary above the chart", async () => {
   expect(summary.closest("div")).toHaveClass("chartSummaryAbove");
 });
 
-test("renders the summary below the chart", async () => {
+test("renders chart summary below the chart", async () => {
   render(
-    <PartWholeChartPreview
+    <BarChartWidget
       title="test title"
       summary="test summary"
-      parts={["test"]}
+      bars={["test"]}
+      data={[{ test: 1 }]}
       summaryBelow={true}
-      data={[{}]}
     />,
     { wrapper: MemoryRouter }
   );

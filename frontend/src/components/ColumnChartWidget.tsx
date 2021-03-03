@@ -27,7 +27,7 @@ type Props = {
   };
 };
 
-const ColumnChartPreview = (props: Props) => {
+const ColumnChartWidget = (props: Props) => {
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
 
@@ -154,4 +154,4 @@ const ColumnChartPreview = (props: Props) => {
   );
 };
 
-export default ColumnChartPreview;
+export default ColumnChartWidget;

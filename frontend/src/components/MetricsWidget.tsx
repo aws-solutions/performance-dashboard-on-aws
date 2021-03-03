@@ -1,27 +1,28 @@
 import React from "react";
-import { useJsonDataset } from "../hooks";
-import { MetricsWidget } from "../models";
-import MetricsPreview from "./MetricsPreview";
+import { Metric } from "../models";
+import MetricsCardGroup from "../components/MetricsCardGroup";
 
-interface Props {
-  widget: MetricsWidget;
-}
+type Props = {
+  title: string;
+  metrics: Array<Metric>;
+  metricPerRow: number;
+};
 
-function MetricsWidgetComponent(props: Props) {
-  const { showTitle, content } = props.widget;
-  const { json } = useJsonDataset(content.s3Key.json);
-
-  if (!json) {
-    return null;
-  }
+const MetricsWidget = (props: Props) => {
+  const { title, metrics, metricPerRow } = props;
 
   return (
-    <MetricsPreview
-      title={showTitle ? content.title : ""}
-      metrics={json}
-      metricPerRow={content.oneMetricPerRow ? 1 : 3}
-    />
+    <>
+      <h2 className="margin-top-4 margin-left-1">{title}</h2>
+      {metrics.length ? (
+        <div className="margin-left-1">
+          <MetricsCardGroup metrics={metrics} metricPerRow={metricPerRow} />
+        </div>
+      ) : (
+        ""
+      )}
+    </>
   );
-}
+};
 
-export default MetricsWidgetComponent;
+export default MetricsWidget;

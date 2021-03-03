@@ -4,7 +4,7 @@ import MarkdownRender from "../components/MarkdownRender";
 const UserStatus = () => {
   return (
     <>
-      <h1>User Management Status Help Page</h1>
+      <h1>User Statuses</h1>
       <p className="font-sans-lg">
         Users in the system have different statuses. These statuses are being
         pulled directly from AWS Cognito but we explain what they mean below.{" "}

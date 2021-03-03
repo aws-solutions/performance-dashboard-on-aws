@@ -1,6 +1,6 @@
 {
   "name": "performance-dashboard-frontend",
-  "version": "0.7.0-beta",
+  "version": "0.8.0-beta",
   "private": true,
   "description": "Performance Dashboard on AWS Frontend",
   "dependencies": {

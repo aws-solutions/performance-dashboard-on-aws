@@ -177,6 +177,7 @@ async function publishDashboard(req: Request, res: Response) {
   const user = req.user;
   const { id } = req.params;
   const { updatedAt, releaseNotes } = req.body;
+  let { friendlyURL } = req.body;
 
   if (!updatedAt) {
     res.status(400).send("Missing required body `updatedAt`");
@@ -194,9 +195,12 @@ async function publishDashboard(req: Request, res: Response) {
     return res.send("Dashboard must be in publish pending or archived state");
   }
 
-  // Automatically generate a friendlyURL for this dashboard. In a future sprint,
-  // we will allow the user to define the URL in the UI before publishing.
-  const friendlyURL = DashboardFactory.generateFriendlyURL(dashboard.name);
+  if (!friendlyURL) {
+    // For backwards compatibility, if the request comes without a friendlyURL,
+    // we generate one based on the dashboard name.
+    friendlyURL = DashboardFactory.generateFriendlyURL(dashboard.name);
+  }
+
   try {
     // Make sure the URL is not being used already by another dashboard family
     const existingDashboard = await repo.getDashboardByFriendlyURL(friendlyURL);

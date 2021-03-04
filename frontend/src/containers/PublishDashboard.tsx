@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDashboard, useDashboardVersions, useSettings } from "../hooks";
+import {
+  useDashboard,
+  useDashboardVersions,
+  useSettings,
+  useFriendlyUrl,
+} from "../hooks";
 import { DashboardState, LocationState } from "../models";
 import BackendService from "../services/BackendService";
 import Alert from "../components/Alert";
@@ -36,6 +41,7 @@ function PublishDashboard() {
     dashboardId
   );
 
+  const { friendlyURL } = useFriendlyUrl(dashboard);
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
   const {
     register,
@@ -260,6 +266,7 @@ function PublishDashboard() {
               error={errors.friendlyURL && "Please enter a valid URL"}
               hint="Edit or confirm the URL that will be used to publish this dashboard."
               register={register}
+              defaultValue={friendlyURL}
             />
 
             <div className="margin-top-3">

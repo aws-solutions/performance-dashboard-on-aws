@@ -180,6 +180,22 @@ You can replace the logo displayed on the PDoA web page header. Go to the S3 con
 
 You have added the administrative users, and created the topic areas. You are now ready to use PDoA. Refer to the [User Guide](user-guide.pdf) for information on using PDoA to create and publish dashboards.
 
+## Updating PDoA
+
+The PDoA team follows an agile development methodology that results in frequent releases of new versions. You can update your existing system to make use of the latest version. The updating process is similar to initial installation with just a few minor differences.
+
+First, copy the latest CFT version for the region where your performance dashboard is running.
+
+Go to the CFT console to identify and select the parent stack. In the example below, the parent stack is MyCorp-PerfDash.
+
+![View stacks created](images/installation/stacks-created.png)
+
+Once the stack is selected, click on the "Update" button. You'll be presented with three options. Select the "Replace current template" option. This will create a new pane on the page where you can specify the template to be used. Select the "Amazon S3 URL" option and paste the latest CFT version into the URL field. Select the "Next" button to proceed.
+
+Specify an admin in the field. This can be either an existing admin user or a new one. Select the "Next button to proceed. The "Configure stack options" pages have optional configurations. You can accept the defaults and select "Next" to proceed to the final review step. This page presents the information that we've provided during the update stack process. At the bottom of the page, check the two "Capabilities" checkboxes. Select the "Update stack" button.
+
+Similar to the initial installation, the update should only take about 15-25 minutes to complete. This is communicated in the CloudFormation console via the "UPDATE_COMPLETE" status event for the parent stack (MyCorp-PerfDash in this example).
+
 ## Uninstall PDoA
 
 ### Uninstall using CFT

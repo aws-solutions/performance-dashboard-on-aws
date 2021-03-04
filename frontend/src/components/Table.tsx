@@ -25,6 +25,8 @@ interface Props {
   className?: string;
   onSelection?: Function;
   rows: Array<object>;
+  pageSize?: 5 | 10 | 20 | 25 | 50 | 100;
+  disablePagination?: boolean;
   width?: string | number | undefined;
   columns: Array<{
     accessor?: string | Function;
@@ -55,6 +57,7 @@ function Table(props: Props) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    rows,
     page,
     canPreviousPage,
     canNextPage,
@@ -72,12 +75,14 @@ function Table(props: Props) {
       columns: props.columns,
       data: props.rows,
       disableSortRemove: true,
-      initialState: {
-        selectedRowIds: {},
-        pageIndex: 0,
-        pageSize: 25,
-        sortBy: initialSortBy,
-      },
+      initialState: props.disablePagination
+        ? { selectedRowIds: {}, sortBy: initialSortBy }
+        : {
+            selectedRowIds: {},
+            sortBy: initialSortBy,
+            pageIndex: 0,
+            pageSize: props.pageSize || 25,
+          },
     },
     useGlobalFilter,
     useSortBy,
@@ -119,6 +124,8 @@ function Table(props: Props) {
       onSelection(values);
     }
   }, [selectedFlatRows, onSelection]);
+
+  const currentRows = props.disablePagination ? rows : page;
 
   return (
     <>
@@ -179,7 +186,7 @@ function Table(props: Props) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
+          {currentRows.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -197,7 +204,7 @@ function Table(props: Props) {
           })}
         </tbody>
       </table>
-      {props.rows.length ? (
+      {!props.disablePagination && props.rows.length ? (
         <div className="grid-row font-sans-sm">
           <div className="grid-col-3 text-left text-base text-italic">
             {`Showing ${pageIndex * pageSize + 1}-${Math.min(
@@ -245,7 +252,7 @@ function Table(props: Props) {
                 setPageSize(Number(e.target.value));
               }}
             >
-              {[5, 10, 25, 50].map((pageSize) => (
+              {[5, 10, 20, 25, 50, 100].map((pageSize) => (
                 <option key={pageSize} value={pageSize}>
                   Show {pageSize}
                 </option>

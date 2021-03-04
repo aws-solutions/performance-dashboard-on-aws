@@ -290,6 +290,11 @@ exports[`renders a basic table 1`] = `
           Show 10
         </option>
         <option
+          value="20"
+        >
+          Show 20
+        </option>
+        <option
           value="25"
         >
           Show 25
@@ -299,9 +304,188 @@ exports[`renders a basic table 1`] = `
         >
           Show 50
         </option>
+        <option
+          value="100"
+        >
+          Show 100
+        </option>
       </select>
     </div>
   </div>
+</div>
+`;
+
+exports[`renders a basic table without pagination 1`] = `
+<div>
+  <table
+    class="usa-table usa-table--borderless"
+    role="table"
+  >
+    <thead>
+      <tr
+        role="row"
+      >
+        <th
+          colspan="1"
+          role="columnheader"
+          scope="col"
+          style="min-width: 0;"
+        >
+          <span>
+            ID
+          </span>
+          <button
+            class="margin-left-1 usa-button usa-button--unstyled"
+            style="cursor: pointer;"
+            title="Toggle SortBy ID"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              data-icon="chevron-up"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </th>
+        <th
+          colspan="1"
+          role="columnheader"
+          scope="col"
+          style="min-width: 0;"
+        >
+          <span>
+            Name
+          </span>
+          <button
+            class="margin-left-1 usa-button usa-button--unstyled"
+            style="cursor: pointer;"
+            title="Toggle SortBy Name"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              data-icon="chevron-up"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </th>
+        <th
+          colspan="1"
+          role="columnheader"
+          scope="col"
+          style="min-width: 0;"
+        >
+          <span>
+            Last Updated
+          </span>
+          <button
+            class="margin-left-1 usa-button usa-button--unstyled"
+            style="cursor: pointer;"
+            title="Toggle SortBy Last Updated"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              data-icon="chevron-up"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      role="rowgroup"
+    >
+      <tr
+        role="row"
+      >
+        <th
+          role="cell"
+          scope="row"
+        >
+          1
+        </th>
+        <td
+          role="cell"
+        >
+          Banana
+        </td>
+        <td
+          role="cell"
+        >
+          2021-11-11
+        </td>
+      </tr>
+      <tr
+        role="row"
+      >
+        <th
+          role="cell"
+          scope="row"
+        >
+          2
+        </th>
+        <td
+          role="cell"
+        >
+          Chocolate
+        </td>
+        <td
+          role="cell"
+        >
+          2020-11-11
+        </td>
+      </tr>
+      <tr
+        role="row"
+      >
+        <th
+          role="cell"
+          scope="row"
+        >
+          3
+        </th>
+        <td
+          role="cell"
+        >
+          Vanilla
+        </td>
+        <td
+          role="cell"
+        >
+          2019-11-11
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
 </div>
 `;
 
@@ -633,6 +817,11 @@ exports[`sorting buttons are clickable 1`] = `
           Show 10
         </option>
         <option
+          value="20"
+        >
+          Show 20
+        </option>
+        <option
           value="25"
         >
           Show 25
@@ -641,6 +830,11 @@ exports[`sorting buttons are clickable 1`] = `
           value="50"
         >
           Show 50
+        </option>
+        <option
+          value="100"
+        >
+          Show 100
         </option>
       </select>
     </div>
@@ -976,6 +1170,11 @@ exports[`sorting buttons are clickable 2`] = `
           Show 10
         </option>
         <option
+          value="20"
+        >
+          Show 20
+        </option>
+        <option
           value="25"
         >
           Show 25
@@ -984,6 +1183,11 @@ exports[`sorting buttons are clickable 2`] = `
           value="50"
         >
           Show 50
+        </option>
+        <option
+          value="100"
+        >
+          Show 100
         </option>
       </select>
     </div>

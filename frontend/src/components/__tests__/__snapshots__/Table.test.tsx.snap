@@ -170,6 +170,138 @@ exports[`renders a basic table 1`] = `
       </tr>
     </tbody>
   </table>
+  <div
+    class="grid-row font-sans-sm"
+  >
+    <div
+      class="grid-col-3 text-left text-base text-italic"
+    >
+      Showing 1-3 of 3
+    </div>
+    <div
+      class="grid-col-6 text-center"
+    >
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-double-left fa-w-14 "
+          data-icon="angle-double-left"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+       
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-left fa-w-8 "
+          data-icon="angle-left"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 256 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+       
+      <span>
+        Page 
+      </span>
+      <span>
+        <input
+          max="1"
+          min="1"
+          pattern="\\\\d*"
+          style="width: 40px;"
+          type="text"
+          value="1"
+        />
+         of 1 
+      </span>
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-right fa-w-8 "
+          data-icon="angle-right"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 256 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+       
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-double-right fa-w-14 "
+          data-icon="angle-double-right"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="grid-col-3 text-right"
+    >
+      <select>
+        <option
+          value="5"
+        >
+          Show 5
+        </option>
+        <option
+          value="10"
+        >
+          Show 10
+        </option>
+        <option
+          value="25"
+        >
+          Show 25
+        </option>
+        <option
+          value="50"
+        >
+          Show 50
+        </option>
+      </select>
+    </div>
+  </div>
 </div>
 `;
 
@@ -381,6 +513,138 @@ exports[`sorting buttons are clickable 1`] = `
       </tr>
     </tbody>
   </table>
+  <div
+    class="grid-row font-sans-sm"
+  >
+    <div
+      class="grid-col-3 text-left text-base text-italic"
+    >
+      Showing 1-3 of 3
+    </div>
+    <div
+      class="grid-col-6 text-center"
+    >
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-double-left fa-w-14 "
+          data-icon="angle-double-left"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+       
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-left fa-w-8 "
+          data-icon="angle-left"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 256 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+       
+      <span>
+        Page 
+      </span>
+      <span>
+        <input
+          max="1"
+          min="1"
+          pattern="\\\\d*"
+          style="width: 40px;"
+          type="text"
+          value="1"
+        />
+         of 1 
+      </span>
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-right fa-w-8 "
+          data-icon="angle-right"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 256 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+       
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-double-right fa-w-14 "
+          data-icon="angle-double-right"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="grid-col-3 text-right"
+    >
+      <select>
+        <option
+          value="5"
+        >
+          Show 5
+        </option>
+        <option
+          value="10"
+        >
+          Show 10
+        </option>
+        <option
+          value="25"
+        >
+          Show 25
+        </option>
+        <option
+          value="50"
+        >
+          Show 50
+        </option>
+      </select>
+    </div>
+  </div>
 </div>
 `;
 
@@ -592,5 +856,137 @@ exports[`sorting buttons are clickable 2`] = `
       </tr>
     </tbody>
   </table>
+  <div
+    class="grid-row font-sans-sm"
+  >
+    <div
+      class="grid-col-3 text-left text-base text-italic"
+    >
+      Showing 1-3 of 3
+    </div>
+    <div
+      class="grid-col-6 text-center"
+    >
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-double-left fa-w-14 "
+          data-icon="angle-double-left"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+       
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-left fa-w-8 "
+          data-icon="angle-left"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 256 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+       
+      <span>
+        Page 
+      </span>
+      <span>
+        <input
+          max="1"
+          min="1"
+          pattern="\\\\d*"
+          style="width: 40px;"
+          type="text"
+          value="1"
+        />
+         of 1 
+      </span>
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-right fa-w-8 "
+          data-icon="angle-right"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 256 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+       
+      <button
+        disabled=""
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-angle-double-right fa-w-14 "
+          data-icon="angle-double-right"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="grid-col-3 text-right"
+    >
+      <select>
+        <option
+          value="5"
+        >
+          Show 5
+        </option>
+        <option
+          value="10"
+        >
+          Show 10
+        </option>
+        <option
+          value="25"
+        >
+          Show 25
+        </option>
+        <option
+          value="50"
+        >
+          Show 50
+        </option>
+      </select>
+    </div>
+  </div>
 </div>
 `;

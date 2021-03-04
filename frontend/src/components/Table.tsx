@@ -1,6 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faChevronUp,
+  faAngleLeft,
+  faAngleDoubleLeft,
+  faAngleRight,
+  faAngleDoubleRight,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   useTable,
   useSortBy,
@@ -190,59 +197,65 @@ function Table(props: Props) {
           })}
         </tbody>
       </table>
-      <div className="padding-1 grid-row">
-        <div className="grid-col-4 text-left">
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            {"<<"}
-          </button>{" "}
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            {"<"}
-          </button>{" "}
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            {">"}
-          </button>{" "}
-          <button
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            {">>"}
-          </button>{" "}
-        </div>
-        <div className="grid-col-4 text-center">
-          <span>
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{" "}
-          </span>
-          <span>
-            | Go to page:{" "}
-            <input
-              type="number"
-              defaultValue={pageIndex + 1}
+      {props.rows.length ? (
+        <div className="grid-row font-sans-sm">
+          <div className="grid-col-3 text-left text-base text-italic">
+            {`Showing ${pageIndex * pageSize + 1}-${Math.min(
+              pageIndex * pageSize + pageSize,
+              props.rows.length
+            )} of ${props.rows.length}`}
+          </div>
+          <div className="grid-col-6 text-center">
+            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+              <FontAwesomeIcon icon={faAngleDoubleLeft} />
+            </button>{" "}
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+              <FontAwesomeIcon icon={faAngleLeft} />
+            </button>{" "}
+            <span>Page </span>
+            <span>
+              <input
+                type="text"
+                value={pageIndex + 1}
+                onChange={(e) => {
+                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                  gotoPage(page);
+                }}
+                style={{ width: "40px" }}
+                min={1}
+                max={pageOptions.length}
+                pattern="\d*"
+              />
+              {` of ${pageOptions.length} `}
+            </span>
+            <button onClick={() => nextPage()} disabled={!canNextPage}>
+              <FontAwesomeIcon icon={faAngleRight} />
+            </button>{" "}
+            <button
+              onClick={() => gotoPage(pageCount - 1)}
+              disabled={!canNextPage}
+            >
+              <FontAwesomeIcon icon={faAngleDoubleRight} />
+            </button>
+          </div>
+          <div className="grid-col-3 text-right">
+            <select
+              value={pageSize}
               onChange={(e) => {
-                const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                gotoPage(page);
+                setPageSize(Number(e.target.value));
               }}
-              style={{ width: "100px" }}
-            />
-          </span>
+            >
+              {[5, 10, 25, 50].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div className="grid-col-4 text-right">
-          <select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[1, 5, 10, 20, 25].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+      ) : (
+        ""
+      )}
     </>
   );
 }

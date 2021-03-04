@@ -227,6 +227,46 @@ describe("publishDashboard", () => {
     );
   });
 
+  it("takes the friendlyURL from the request if one is provided", async () => {
+    // Dashboard being published
+    repository.getDashboardById = jest.fn().mockReturnValue({
+      id: "123",
+      version: 1,
+      parentDashboardId: "456",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.PublishPending,
+      description: "",
+    });
+
+    // Simulate friendlyURL is not already taken
+    repository.getDashboardByFriendlyURL = jest
+      .fn()
+      .mockImplementationOnce(() => {
+        throw new ItemNotFound();
+      });
+
+    req.body.friendlyURL = "user-provided-friendly-url";
+    await DashboardCtrl.publishDashboard(req, res);
+
+    expect(repository.publishDashboard).toHaveBeenCalledWith(
+      "123",
+      "456",
+      now.toISOString(),
+      "release note test",
+      user,
+      "user-provided-friendly-url"
+    );
+
+    // Also make sure that we validate the friendlyURL is not taken
+    expect(repository.getDashboardByFriendlyURL).toBeCalledWith(
+      "user-provided-friendly-url"
+    );
+  });
+
   it("publishes the dashboard", async () => {
     const dashboard: Dashboard = {
       id: "123",

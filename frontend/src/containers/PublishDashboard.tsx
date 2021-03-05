@@ -215,6 +215,8 @@ function PublishDashboard() {
               label: "Review and publish",
             },
           ]}
+          showStepChart={true}
+          showStepText={true}
         />
       </div>
       <form

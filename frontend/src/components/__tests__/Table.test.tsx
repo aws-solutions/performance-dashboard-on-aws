@@ -145,3 +145,15 @@ test("filters out data when filterQuery is provided", async () => {
   expect(screen.queryByText("Vanilla")).not.toBeInTheDocument();
   expect(screen.queryByText("Banana")).not.toBeInTheDocument();
 });
+
+test("renders a basic table without pagination", async () => {
+  const { container } = render(
+    <Table
+      selection="none"
+      columns={columns}
+      rows={rows}
+      disablePagination={true}
+    />
+  );
+  expect(container).toMatchSnapshot();
+});

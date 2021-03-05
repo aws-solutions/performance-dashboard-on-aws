@@ -482,3 +482,10 @@ export function useWidgetDataset(widget: Widget) {
     jsonHeaders,
   };
 }
+
+export function useFriendlyUrl() {
+  const [friendlyURL] = useState("/foo");
+  return {
+    friendlyURL,
+  };
+}

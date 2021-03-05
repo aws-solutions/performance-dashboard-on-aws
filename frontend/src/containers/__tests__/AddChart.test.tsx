@@ -71,14 +71,14 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     fireEvent.click(radioButton);
   });
 
-  await act(async () => {
-    fireEvent.click(continueButton);
-  });
-
   fireEvent.change(getByLabelText("Static datasets"), {
     target: {
       files: ["dataset.csv"],
     },
+  });
+
+  await act(async () => {
+    fireEvent.click(continueButton);
   });
 
   fireEvent.input(getByLabelText("Chart title"), {
@@ -87,7 +87,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  const submitButton = getByRole("button", { name: "Add Chart" });
+  const submitButton = getByText("Add Chart");
 
   await waitFor(() => {
     expect(parseSpy).toHaveBeenCalled();

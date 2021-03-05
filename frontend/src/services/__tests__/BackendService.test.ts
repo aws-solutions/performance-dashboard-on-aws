@@ -83,8 +83,14 @@ test("publishDashboard should make a PUT request with payload", async () => {
   const dashboardId = "123";
   const updatedAt = new Date("2020-09-17T21:01:00.780Z");
   const releaseNotes = "Made changes to the revenue metrics";
+  const friendlyURL = "bananas";
 
-  await BackendService.publishDashboard(dashboardId, updatedAt, releaseNotes);
+  await BackendService.publishDashboard(
+    dashboardId,
+    updatedAt,
+    releaseNotes,
+    friendlyURL
+  );
 
   expect(API.put).toHaveBeenCalledWith(
     "BackendApi",
@@ -93,6 +99,7 @@ test("publishDashboard should make a PUT request with payload", async () => {
       body: {
         updatedAt,
         releaseNotes,
+        friendlyURL,
       },
     })
   );

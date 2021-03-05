@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDashboard, useDashboardVersions, useSettings } from "../hooks";
+import {
+  useDashboard,
+  useDashboardVersions,
+  useSettings,
+  useFriendlyUrl,
+} from "../hooks";
 import { DashboardState, LocationState } from "../models";
 import BackendService from "../services/BackendService";
 import Alert from "../components/Alert";
@@ -24,6 +29,7 @@ interface PathParams {
 interface FormValues {
   releaseNotes: string;
   acknowledge: boolean;
+  friendlyURL: string;
 }
 
 function PublishDashboard() {
@@ -35,6 +41,7 @@ function PublishDashboard() {
     dashboardId
   );
 
+  const { friendlyURL } = useFriendlyUrl(dashboard);
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
   const {
     register,
@@ -112,7 +119,8 @@ function PublishDashboard() {
         await BackendService.publishDashboard(
           dashboardId,
           dashboard.updatedAt,
-          values.releaseNotes
+          values.releaseNotes,
+          values.friendlyURL || undefined
         );
 
         history.push(`/admin/dashboards?tab=published`, {
@@ -212,6 +220,9 @@ function PublishDashboard() {
               label: "Internal version notes",
             },
             {
+              label: "Confirm URL",
+            },
+            {
               label: "Review and publish",
             },
           ]}
@@ -234,9 +245,49 @@ function PublishDashboard() {
               required
               multiline
             />
+
+            <div className="margin-top-3">
+              <Button
+                variant="default"
+                type="button"
+                onClick={onContinue}
+                disabled={!releaseNotes}
+              >
+                Continue
+              </Button>
+            </div>
           </div>
 
-          <div hidden={step !== 1} className="padding-y-1">
+          <div hidden={step !== 1}>
+            <TextField
+              id="friendlyURL"
+              name="friendlyURL"
+              label="Dashboard URL"
+              error={errors.friendlyURL && "Please enter a valid URL"}
+              hint="Edit or confirm the URL that will be used to publish this dashboard."
+              register={register}
+              defaultValue={friendlyURL}
+            />
+
+            <div className="margin-top-3">
+              <Button
+                variant="outline"
+                type="button"
+                onClick={() => setStep(step - 1)}
+              >
+                Back
+              </Button>
+              <Button
+                variant="default"
+                type="button"
+                onClick={() => setStep(step + 1)}
+              >
+                Continue
+              </Button>
+            </div>
+          </div>
+
+          <div hidden={step !== 2} className="padding-y-1">
             <table
               className="usa-table border-hidden"
               style={{ width: "100%" }}
@@ -284,33 +335,19 @@ function PublishDashboard() {
                 </tr>
               </tbody>
             </table>
+            <div className="margin-top-3">
+              <Button
+                variant="outline"
+                type="button"
+                onClick={() => setStep(step - 1)}
+              >
+                Back
+              </Button>
+              <Button variant="default" type="submit" disabled={!acknowledge}>
+                Publish
+              </Button>
+            </div>
           </div>
-        </div>
-        <div>
-          <span hidden={step === 0}>
-            <Button
-              variant="outline"
-              type="button"
-              onClick={() => setStep(step - 1)}
-            >
-              Back
-            </Button>
-          </span>
-          <span hidden={step === 1}>
-            <Button
-              variant="default"
-              type="button"
-              onClick={onContinue}
-              disabled={!releaseNotes}
-            >
-              Continue
-            </Button>
-          </span>
-          <span hidden={step < 1}>
-            <Button variant="default" type="submit" disabled={!acknowledge}>
-              Publish
-            </Button>
-          </span>
         </div>
       </form>
     </>

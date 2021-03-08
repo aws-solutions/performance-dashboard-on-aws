@@ -1,5 +1,11 @@
 import React from "react";
-import { render, fireEvent, act, screen } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  act,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import BackendService from "../../services/BackendService";
@@ -35,7 +41,7 @@ test("renders topic area", () => {
 
 test("renders step indicator in step 1", () => {
   expect(
-    screen.getByRole("heading", { name: "Step 1 of 2 Internal version notes" })
+    screen.getByRole("heading", { name: "Step 1 of 3 Internal version notes" })
   ).toBeInTheDocument();
 });
 
@@ -62,7 +68,7 @@ test("continue button advances to step 2 and saves releaseNotes", async () => {
 
   expect(
     screen.getByRole("heading", {
-      name: "Step 2 of 2 Review and publish",
+      name: "Step 2 of 3 Confirm URL",
     })
   ).toBeInTheDocument();
 });
@@ -74,6 +80,15 @@ test("publish button invokes BackendService", async () => {
     },
   });
 
+  // Move to step 2
+  fireEvent.click(
+    screen.getByRole("button", {
+      name: "Continue",
+    })
+  );
+
+  // Move to step 3, but wait for release notes to be saved first
+  await waitFor(() => expect(BackendService.publishPending).toHaveBeenCalled());
   fireEvent.click(
     screen.getByRole("button", {
       name: "Continue",
@@ -83,6 +98,12 @@ test("publish button invokes BackendService", async () => {
   await act(async () => {
     fireEvent.click(screen.getByTestId("AcknowledgementCheckboxLabel"));
   });
+
+  expect(
+    screen.getByRole("heading", {
+      name: "Step 3 of 3 Review and publish",
+    })
+  ).toBeInTheDocument();
 
   await act(async () => {
     fireEvent.click(

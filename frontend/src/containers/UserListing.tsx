@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import Modal from "../components/Modal";
 import AlertContainer from "./AlertContainer";
 import DropdownMenu from "../components/DropdownMenu";
+import Link from "../components/Link";
 
 const MenuItem = DropdownMenu.MenuItem;
 
@@ -131,7 +132,10 @@ function UserListing() {
       />
       <p>
         These are all of the users who have access. You can add and remove
-        users, change users' roles, or resend email invites.
+        users, change users' roles, or resend email invites.{" "}
+        <Link target="_blank" to={"/admin/userstatus"} external>
+          What do the statuses mean?
+        </Link>
       </p>
       <AlertContainer />
       <div className="grid-row margin-y-3">

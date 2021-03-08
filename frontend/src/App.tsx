@@ -56,7 +56,7 @@ import AddUsers from "./containers/AddUsers";
 import ChangeRole from "./containers/ChangeRole";
 import BrandingAndStylingSettings from "./containers/BrandingAndStylingSettings";
 import EditLogo from "./containers/EditLogo";
-import ChooseStaticDataset from "./containers/ChooseStaticDataset";
+import UserStatus from "./containers/UserStatus";
 
 interface AppRoute {
   path: string;
@@ -216,6 +216,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/markdown",
     component: MarkdownSyntax,
+  },
+  {
+    path: "/admin/userstatus",
+    component: UserStatus,
   },
   {
     path: "/admin/formattingcsv",

@@ -62,6 +62,7 @@ exports[`table preview should match snapshot 1`] = `
         role="rowgroup"
       />
     </table>
+    
   </div>
 </div>
 `;

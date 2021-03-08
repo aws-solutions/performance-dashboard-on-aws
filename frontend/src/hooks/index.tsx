@@ -4,6 +4,7 @@ import {
   usePublicDashboard,
   useDashboardVersions,
   useDashboardHistory,
+  useFriendlyUrl,
 } from "./dashboard-hooks";
 import { useWidget, useColors, useWidgetDataset } from "./widget-hooks";
 import { useTopicAreas, useTopicArea } from "./topicarea-hooks";
@@ -46,4 +47,5 @@ export {
   useCurrentAuthenticatedUser,
   useImage,
   useLogo,
+  useFriendlyUrl,
 };

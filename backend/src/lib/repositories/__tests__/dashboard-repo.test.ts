@@ -171,6 +171,7 @@ describe("getDashboardVersions", () => {
       dashboardName: "My Health Dashboard",
       description: "A relevant description",
       createdBy: "johndoe",
+      updatedBy: "johndoe",
       updatedAt: new Date().toISOString(),
       state: "Draft",
       releaseNotes: "",

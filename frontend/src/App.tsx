@@ -56,6 +56,7 @@ import AddUsers from "./containers/AddUsers";
 import ChangeRole from "./containers/ChangeRole";
 import BrandingAndStylingSettings from "./containers/BrandingAndStylingSettings";
 import EditLogo from "./containers/EditLogo";
+import ChooseStaticDataset from "./containers/ChooseStaticDataset";
 
 interface AppRoute {
   path: string;
@@ -163,6 +164,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/dashboard/:dashboardId/add-chart",
     component: AddChart,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/add-chart/choose-static-dataset",
+    component: ChooseStaticDataset,
   },
   {
     path: "/admin/dashboard/:dashboardId/add-image",

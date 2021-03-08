@@ -6,15 +6,17 @@ import {
   Dashboard,
   DashboardVersion,
 } from "../../models/dashboard";
-import { ItemNotFound } from "../../errors";
+import { InvalidFriendlyURL, ItemNotFound } from "../../errors";
 import DashboardCtrl from "../dashboard-ctrl";
 import DashboardFactory from "../../factories/dashboard-factory";
+import FriendlyURLService from "../../services/friendlyurl-service";
 import DashboardRepository from "../../repositories/dashboard-repo";
 import TopicAreaRepository from "../../repositories/topicarea-repo";
 import dashboardCtrl from "../dashboard-ctrl";
 
 jest.mock("../../repositories/dashboard-repo");
 jest.mock("../../repositories/topicarea-repo");
+jest.mock("../../services/friendlyurl-service");
 
 const user: User = { userId: "johndoe" };
 const repository = mocked(DashboardRepository.prototype);
@@ -181,20 +183,13 @@ describe("publishDashboard", () => {
       description: "",
     });
 
-    // Dashboard with the friendlyURL
-    repository.getDashboardByFriendlyURL = jest.fn().mockReturnValue({
-      id: "001",
-      version: 1,
-      parentDashboardId: "xyz", // parentDashboardId is different
-      name: "The Dashboard With The Friendly URL",
-      topicAreaId: "abc",
-      topicAreaName: "My Topic Area",
-      updatedAt: new Date(),
-      createdBy: "johndoe",
-      state: DashboardState.Published,
-      description: "",
-      friendlyURL: "my-dashboard",
-    });
+    FriendlyURLService.generateOrValidate = jest
+      .fn()
+      .mockImplementationOnce(() => {
+        throw new InvalidFriendlyURL(
+          "The friendlyURL my-dashboard is already being used"
+        );
+      });
 
     await DashboardCtrl.publishDashboard(req, res);
 
@@ -242,12 +237,9 @@ describe("publishDashboard", () => {
       description: "",
     });
 
-    // Simulate friendlyURL is not already taken
-    repository.getDashboardByFriendlyURL = jest
+    FriendlyURLService.generateOrValidate = jest
       .fn()
-      .mockImplementationOnce(() => {
-        throw new ItemNotFound();
-      });
+      .mockReturnValueOnce("user-provided-friendly-url");
 
     req.body.friendlyURL = "user-provided-friendly-url";
     await DashboardCtrl.publishDashboard(req, res);
@@ -261,8 +253,9 @@ describe("publishDashboard", () => {
       "user-provided-friendly-url"
     );
 
-    // Also make sure that we validate the friendlyURL is not taken
-    expect(repository.getDashboardByFriendlyURL).toBeCalledWith(
+    // Also make sure that we validate the friendlyURL
+    expect(FriendlyURLService.generateOrValidate).toBeCalledWith(
+      expect.anything(),
       "user-provided-friendly-url"
     );
   });
@@ -283,12 +276,9 @@ describe("publishDashboard", () => {
       releaseNotes: "release note test",
     };
 
-    // Simulate friendlyURL is not already taken
-    repository.getDashboardByFriendlyURL = jest
+    FriendlyURLService.generateOrValidate = jest
       .fn()
-      .mockImplementationOnce(() => {
-        throw new ItemNotFound();
-      });
+      .mockReturnValueOnce("my-dashboard");
 
     repository.getDashboardById = jest.fn().mockReturnValue(dashboard);
     await DashboardCtrl.publishDashboard(req, res);

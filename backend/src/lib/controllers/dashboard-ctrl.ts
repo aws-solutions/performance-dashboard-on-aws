@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { ItemNotFound } from "../errors";
+import { InvalidFriendlyURL, ItemNotFound } from "../errors";
 import { Dashboard, DashboardState } from "../models/dashboard";
+import FriendlyUrlService from "../services/friendlyurl-service";
 import DashboardFactory from "../factories/dashboard-factory";
 import DashboardRepository from "../repositories/dashboard-repo";
 import TopicAreaRepository from "../repositories/topicarea-repo";
@@ -195,23 +196,14 @@ async function publishDashboard(req: Request, res: Response) {
     return res.send("Dashboard must be in publish pending or archived state");
   }
 
-  if (!friendlyURL) {
-    // For backwards compatibility, if the request comes without a friendlyURL,
-    // we generate one based on the dashboard name.
-    friendlyURL = DashboardFactory.generateFriendlyURL(dashboard.name);
-  }
-
   try {
-    // Make sure the URL is not being used already by another dashboard family
-    const existingDashboard = await repo.getDashboardByFriendlyURL(friendlyURL);
-    if (existingDashboard.parentDashboardId !== dashboard.parentDashboardId) {
-      res.status(409);
-      return res.send(`The friendlyURL ${friendlyURL} is already being used`);
-    }
+    friendlyURL = await FriendlyUrlService.generateOrValidate(
+      dashboard,
+      friendlyURL
+    );
   } catch (err) {
-    if (!(err instanceof ItemNotFound)) {
-      throw err;
-    }
+    res.status(409);
+    return res.send(err.message);
   }
 
   await repo.publishDashboard(
@@ -222,7 +214,8 @@ async function publishDashboard(req: Request, res: Response) {
     user,
     friendlyURL
   );
-  res.send();
+
+  return res.send();
 }
 
 async function publishPendingDashboard(req: Request, res: Response) {

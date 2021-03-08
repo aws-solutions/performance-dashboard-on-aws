@@ -142,16 +142,6 @@ function toVersion(dashboard: Dashboard): DashboardVersion {
   };
 }
 
-function generateFriendlyURL(dashboardName: string): string {
-  return dashboardName
-    .trim()
-    .toLocaleLowerCase()
-    .replace(/[!#$&'\(\)\*\+,\/:;=\?@\[\]]+/g, " ") // remove RFC-3986 reserved characters
-    .replace(/\s+/g, "-") // replace spaces for dashes
-    .replace(/-+/g, "-") // convert consecutive dashes to singular dash
-    .replace(/^-+|-+$/g, ""); // remove dashes at the end and beginning
-}
-
 export default {
   createNew,
   createDraftFromDashboard,
@@ -160,6 +150,5 @@ export default {
   itemId,
   toPublic,
   toVersion,
-  generateFriendlyURL,
   dashboardIdFromPk,
 };

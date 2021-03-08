@@ -92,8 +92,8 @@ function PublishedTab(props: Props) {
               Cell: (props: any) => dateFormatter(props.value),
             },
             {
-              Header: "Created by",
-              accessor: "createdBy",
+              Header: "Published by",
+              accessor: "publishedBy",
             },
           ],
           [dateFormatter, settings]

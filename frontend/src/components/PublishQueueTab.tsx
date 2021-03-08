@@ -88,8 +88,8 @@ function PublishQueueTab(props: Props) {
               Cell: (props: any) => dateFormatter(props.value),
             },
             {
-              Header: "Created by",
-              accessor: "createdBy",
+              Header: "Submitted by",
+              accessor: "submittedBy",
             },
           ],
           [dateFormatter, settings]

@@ -6,6 +6,8 @@ interface Props {
   segments: Array<{
     label: string;
   }>;
+  showStepChart: boolean;
+  showStepText: boolean;
 }
 
 function StepIndicator(props: Props) {
@@ -13,40 +15,48 @@ function StepIndicator(props: Props) {
     return null;
   }
 
+  const stepChart = (
+    <ol className="usa-step-indicator__segments">
+      {props.segments.map((segment, index) => {
+        return (
+          <Segment
+            key={index}
+            current={props.current === index}
+            complete={index < props.current}
+            label={segment.label}
+          />
+        );
+      })}
+    </ol>
+  );
+
+  const stepText = (
+    <div className="usa-step-indicator__header">
+      <h2 className="usa-step-indicator__heading">
+        <span className="usa-step-indicator__heading-counter">
+          <span className="usa-sr-only">Step</span>
+          <span className="usa-step-indicator__current-step bg-base-dark">
+            {props.current + 1}
+          </span>
+          <span className="usa-step-indicator__total-steps text-base-dark margin-left-2px">
+            of {props.segments.length}
+          </span>
+        </span>
+        <span className="usa-step-indicator__heading-text">
+          {props.current < props.segments.length &&
+            props.segments[props.current].label}
+        </span>
+      </h2>
+    </div>
+  );
+
   return (
     <div
       className="usa-step-indicator usa-step-indicator--counters-sm"
       aria-label="progress"
     >
-      <ol className="usa-step-indicator__segments">
-        {props.segments.map((segment, index) => {
-          return (
-            <Segment
-              key={index}
-              current={props.current === index}
-              complete={index < props.current}
-              label={segment.label}
-            />
-          );
-        })}
-      </ol>
-      <div className="usa-step-indicator__header">
-        <h2 className="usa-step-indicator__heading">
-          <span className="usa-step-indicator__heading-counter">
-            <span className="usa-sr-only">Step</span>
-            <span className="usa-step-indicator__current-step bg-base-dark">
-              {props.current + 1}
-            </span>
-            <span className="usa-step-indicator__total-steps text-base-dark margin-left-2px">
-              of {props.segments.length}
-            </span>
-          </span>
-          <span className="usa-step-indicator__heading-text">
-            {props.current < props.segments.length &&
-              props.segments[props.current].label}
-          </span>
-        </h2>
-      </div>
+      {props.showStepChart ? stepChart : ""}
+      {props.showStepText ? stepText : ""}
     </div>
   );
 }

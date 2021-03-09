@@ -313,7 +313,7 @@ function ViewDashboardAdmin() {
           <>
             <div className="margin-top-3 text-bold font-sans-sm">
               {`Version ${dashboard?.version} notes from `}
-              <span className="text-underline">{dashboard?.createdBy}</span>
+              <span className="text-underline">{dashboard?.publishedBy}</span>
             </div>
             <div className="margin-top-2 text-base">
               {dashboard?.releaseNotes}

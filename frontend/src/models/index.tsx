@@ -42,6 +42,9 @@ export type Dashboard = {
   state: string;
   updatedAt: Date;
   createdBy: string;
+  submittedBy?: string;
+  publishedBy?: string;
+  archivedBy?: string;
   friendlyURL?: string;
 };
 

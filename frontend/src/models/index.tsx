@@ -248,6 +248,7 @@ export type LocationState = {
   oneMetricPerRow?: boolean;
   metricTitle?: string;
   origin?: string;
+  json?: string;
 };
 
 export enum UserRoles {

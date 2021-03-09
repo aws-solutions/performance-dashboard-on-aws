@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -17,7 +17,7 @@ import {
 } from "react-table";
 
 interface Props {
-  selection: "multiple" | "none";
+  selection: "multiple" | "single" | "none";
   initialSortByField?: string;
   initialSortAscending?: boolean;
   screenReaderField?: string;
@@ -39,6 +39,12 @@ interface Props {
 
 function Table(props: Props) {
   const className = props.className ? ` ${props.className}` : "";
+
+  const [selectedRowId, setSelectedRowId] = useState<any>(null);
+  const selectedRowIds = [];
+  if (selectedRowId) {
+    selectedRowIds.push(selectedRowId);
+  }
 
   const { initialSortByField, initialSortAscending } = props;
   const initialSortBy = React.useMemo(() => {
@@ -89,7 +95,35 @@ function Table(props: Props) {
     usePagination,
     useRowSelect,
     (hooks) => {
-      if (props.selection !== "none") {
+      if (props.selection === "single") {
+        hooks.visibleColumns.push((columns) => [
+          // Let's make a column for selection
+          {
+            id: "selection",
+            // The header can use the table's getToggleAllRowsSelectedProps method
+            // to render a checkbox
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <div>
+                <IndeterminateCheckbox2
+                  onClick={() => {}}
+                  {...getToggleAllRowsSelectedProps()}
+                />
+              </div>
+            ),
+            // The cell can use the individual row's getToggleRowSelectedProps method
+            // to the render a checkbox
+            Cell: ({ row }) => (
+              <div>
+                <IndeterminateCheckbox2
+                  onClick={() => setSelectedRowId(row.id)}
+                  {...row.getToggleRowSelectedProps()}
+                />
+              </div>
+            ),
+          },
+          ...columns,
+        ]);
+      } else if (props.selection === "multiple") {
         hooks.visibleColumns.push((columns) => [
           {
             id: "selection",
@@ -270,7 +304,11 @@ function Table(props: Props) {
 // Taken from example: https://react-table.tanstack.com/docs/examples/row-selection
 const IndeterminateCheckbox = React.forwardRef<
   HTMLInputElement,
-  { indeterminate?: boolean; title?: string }
+  {
+    indeterminate?: boolean;
+    title?: string;
+    checked?: boolean;
+  }
 >(({ indeterminate, title, ...rest }, ref) => {
   const defaultRef = React.useRef(null);
   const resolvedRef = ref || defaultRef;
@@ -280,6 +318,29 @@ const IndeterminateCheckbox = React.forwardRef<
   }, [resolvedRef, indeterminate]);
 
   return <input type="checkbox" title={title} ref={resolvedRef} {...rest} />;
+});
+
+const IndeterminateCheckbox2 = React.forwardRef<
+  HTMLInputElement,
+  {
+    indeterminate?: boolean;
+    title?: string;
+    checked?: boolean;
+    onClick?: any;
+  }
+>(({ indeterminate, ...rest }, ref) => {
+  const defaultRef = React.useRef();
+  const resolvedRef = ref || defaultRef;
+
+  React.useEffect(() => {
+    (resolvedRef as any).current.indeterminate = indeterminate;
+  }, [resolvedRef, indeterminate]);
+
+  return (
+    <>
+      <input type="radio" ref={resolvedRef as any} {...rest} />
+    </>
+  );
 });
 
 export default Table;

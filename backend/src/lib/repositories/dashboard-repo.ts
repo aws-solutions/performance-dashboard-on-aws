@@ -251,7 +251,7 @@ class DashboardRepository extends BaseRepository {
           UpdateExpression:
             "set #state = :state, #updatedAt = :updatedAt, " +
             "#releaseNotes = :releaseNotes, #updatedBy = :userId, " +
-            "#friendlyURL = :friendlyURL",
+            "#publishedBy = :userId, #friendlyURL = :friendlyURL",
           ConditionExpression: "#updatedAt <= :lastUpdatedAt",
           ExpressionAttributeValues: {
             ":state": DashboardState.Published,
@@ -264,6 +264,7 @@ class DashboardRepository extends BaseRepository {
           ExpressionAttributeNames: {
             "#state": "state",
             "#updatedBy": "updatedBy",
+            "#publishedBy": "publishedBy",
             "#releaseNotes": "releaseNotes",
             "#updatedAt": "updatedAt",
             "#friendlyURL": "friendlyURL",
@@ -305,7 +306,7 @@ class DashboardRepository extends BaseRepository {
         },
         UpdateExpression:
           "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
-          "#releaseNotes = :releaseNotes",
+          "#submittedBy = :userId, #releaseNotes = :releaseNotes",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":state": DashboardState.PublishPending,
@@ -317,6 +318,7 @@ class DashboardRepository extends BaseRepository {
         ExpressionAttributeNames: {
           "#state": "state",
           "#updatedBy": "updatedBy",
+          "#submittedBy": "submittedBy",
           "#updatedAt": "updatedAt",
           "#releaseNotes": "releaseNotes",
         },
@@ -351,8 +353,8 @@ class DashboardRepository extends BaseRepository {
           sk: DashboardFactory.itemId(dashboardId),
         },
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId " +
-          "REMOVE #friendlyURL",
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+          "#archivedBy = :userId REMOVE #friendlyURL",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":state": DashboardState.Archived,
@@ -363,6 +365,7 @@ class DashboardRepository extends BaseRepository {
         ExpressionAttributeNames: {
           "#state": "state",
           "#updatedBy": "updatedBy",
+          "#archivedBy": "archivedBy",
           "#updatedAt": "updatedAt",
           "#friendlyURL": "friendlyURL",
         },
@@ -394,17 +397,19 @@ class DashboardRepository extends BaseRepository {
           sk: DashboardFactory.itemId(dashboardId),
         },
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, #submittedBy = :noUserId",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":state": DashboardState.Draft,
           ":lastUpdatedAt": lastUpdatedAt,
           ":updatedAt": new Date().toISOString(),
           ":userId": user.userId,
+          ":noUserId": "",
         },
         ExpressionAttributeNames: {
           "#state": "state",
           "#updatedBy": "updatedBy",
+          "#submittedBy": "submittedBy",
           "#updatedAt": "updatedAt",
         },
       });

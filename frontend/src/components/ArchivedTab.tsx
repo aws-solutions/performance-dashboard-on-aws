@@ -76,8 +76,8 @@ function ArchivedTab(props: Props) {
               Cell: (props: any) => dateFormatter(props.value),
             },
             {
-              Header: "Created by",
-              accessor: "createdBy",
+              Header: "Archived by",
+              accessor: "archivedBy",
             },
           ],
           [dateFormatter, settings]

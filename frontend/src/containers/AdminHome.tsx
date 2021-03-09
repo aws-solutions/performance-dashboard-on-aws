@@ -43,7 +43,7 @@ function AdminHome() {
   }
 
   return (
-    <>
+    <div className="usa-prose">
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
           <h1 className="font-sans-3xl">
@@ -173,7 +173,7 @@ function AdminHome() {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

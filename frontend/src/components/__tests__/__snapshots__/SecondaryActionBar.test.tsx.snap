@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a secondary action bar 1`] = `
+<div>
+  <div
+    class="border-base-lighter border-1px shadow-2 z-300 radius-md padding-2 position-sticky bg-white undefined"
+  >
+    <p>
+      Test
+    </p>
+  </div>
+</div>
+`;

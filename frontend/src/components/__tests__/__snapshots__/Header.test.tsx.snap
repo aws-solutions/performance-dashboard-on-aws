@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a header 1`] = `
+<div>
+  <header
+    class="border-base-lighter border-width-1px shadow-2 z-500 position-sticky top-0 bg-white undefined"
+  >
+    <p>
+      Test
+    </p>
+  </header>
+</div>
+`;

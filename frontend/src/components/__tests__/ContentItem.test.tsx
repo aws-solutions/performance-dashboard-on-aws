@@ -4,7 +4,7 @@ import ContentItem from "../ContentItem";
 
 test("renders a content item", async () => {
   const wrapper = render(
-    <ContentItem>
+    <ContentItem className="margin-y-1">
       <p>Test</p>
     </ContentItem>
   );

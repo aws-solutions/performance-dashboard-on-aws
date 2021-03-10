@@ -4,7 +4,7 @@ import Header from "../Header";
 
 test("renders a header", async () => {
   const wrapper = render(
-    <Header>
+    <Header className="bg-red">
       <p>Test</p>
     </Header>
   );

@@ -3,7 +3,7 @@
 exports[`renders a header 1`] = `
 <div>
   <header
-    class="border-base-lighter border-width-1px shadow-2 z-500 position-sticky top-0 bg-white undefined"
+    class="border-base-lighter border-width-1px shadow-2 z-500 position-sticky top-0 bg-white bg-red"
   >
     <p>
       Test

@@ -4,7 +4,7 @@ import PrimaryActionBar from "../PrimaryActionBar";
 
 test("renders a primary action bar", async () => {
   const wrapper = render(
-    <PrimaryActionBar>
+    <PrimaryActionBar className="bg-red">
       <p>Test</p>
     </PrimaryActionBar>
   );

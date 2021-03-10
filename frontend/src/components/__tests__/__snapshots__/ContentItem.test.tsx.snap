@@ -3,7 +3,7 @@
 exports[`renders a content item 1`] = `
 <div>
   <div
-    class="border-base-lighter border-1px shadow-1 z-200 radius-lg undefined"
+    class="border-base-lighter border-1px shadow-1 z-200 radius-lg margin-y-1"
   >
     <p>
       Test

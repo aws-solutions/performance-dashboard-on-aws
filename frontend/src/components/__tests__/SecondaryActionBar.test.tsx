@@ -4,7 +4,7 @@ import SecondaryActionBar from "../SecondaryActionBar";
 
 test("renders a secondary action bar", async () => {
   const wrapper = render(
-    <SecondaryActionBar>
+    <SecondaryActionBar stickyPosition={75}>
       <p>Test</p>
     </SecondaryActionBar>
   );

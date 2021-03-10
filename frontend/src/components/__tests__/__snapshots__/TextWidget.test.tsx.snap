@@ -9,7 +9,7 @@ exports[`renders markdown text 1`] = `
       Benefits of Bananas
     </h2>
     <div
-      class="Markdown undefined"
+      class="Markdown usa-prose"
     >
       <p>
         This 

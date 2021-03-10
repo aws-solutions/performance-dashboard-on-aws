@@ -143,6 +143,7 @@ const BarChartWidget = (props: Props) => {
                     key={index}
                     fillOpacity={getOpacity(bar)}
                     hide={hiddenBars.includes(bar)}
+                    isAnimationActive={false}
                   >
                     {props.bars.length <= 3 ? (
                       <LabelList

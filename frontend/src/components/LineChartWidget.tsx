@@ -1,4 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+// @ts-ignore
+import { CategoricalChartWrapper } from "recharts";
 import {
   XAxis,
   YAxis,
@@ -29,6 +31,8 @@ type Props = {
 const LineChartWidget = (props: Props) => {
   const [linesHover, setLinesHover] = useState(null);
   const [hiddenLines, setHiddenLines] = useState<Array<string>>([]);
+  const [yAxisMargin, setYAxisMargin] = useState(0);
+  const [chartLoaded, setChartLoaded] = useState(false);
 
   const colors = useColors(
     props.lines.length,
@@ -39,6 +43,20 @@ const LineChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
+
+  const lineChartRef = useRef(null);
+  useEffect(() => {
+    if (lineChartRef && lineChartRef.current) {
+      const yAxisMap = (lineChartRef.current as CategoricalChartWrapper).state
+        .yAxisMap;
+      if (yAxisMap && yAxisMap.length) {
+        setYAxisMargin(
+          yAxisMap[0].niceTicks.toLocaleString().match(/,/g)?.length +
+            pixelsByCharacter
+        );
+      }
+    }
+  }, [lineChartRef, lineChartRef.current, chartLoaded]);
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -68,12 +86,15 @@ const LineChartWidget = (props: Props) => {
 
   /**
    * Calculate the width percent out of the total width
-   * depending on the container.
+   * depending on the container. Width: (largestHeader + 1) *
+   * headersCount * pixelsByCharacter + marginLeft + marginRight
    */
   const widthPercent =
-    (UtilsService.getLargestHeader(lines, data) *
+    (((UtilsService.getLargestHeader(lines, data) + 1) *
       (data ? data.length : 0) *
-      pixelsByCharacter *
+      pixelsByCharacter +
+      50 +
+      50) *
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
@@ -101,7 +122,14 @@ const LineChartWidget = (props: Props) => {
           height={300}
           data-testid="chartContainer"
         >
-          <LineChart data={props.data} margin={{ right: 0, left: 0 }}>
+          <LineChart
+            data={props.data}
+            margin={{ right: 0, left: yAxisMargin }}
+            ref={(el: CategoricalChartWrapper) => {
+              lineChartRef.current = el;
+              setChartLoaded(!!el);
+            }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey={props.lines.length ? props.lines[0] : ""}
@@ -140,6 +168,7 @@ const LineChartWidget = (props: Props) => {
                     strokeWidth={3}
                     strokeOpacity={getOpacity(line)}
                     hide={hiddenLines.includes(line)}
+                    isAnimationActive={false}
                   />
                 );
               })}

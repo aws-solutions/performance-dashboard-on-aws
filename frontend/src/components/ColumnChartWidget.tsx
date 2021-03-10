@@ -1,4 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+// @ts-ignore
+import { CategoricalChartWrapper } from "recharts";
 import {
   XAxis,
   YAxis,
@@ -30,6 +32,8 @@ type Props = {
 const ColumnChartWidget = (props: Props) => {
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
+  const [yAxisMargin, setYAxisMargin] = useState(0);
+  const [chartLoaded, setChartLoaded] = useState(false);
 
   const colors = useColors(
     props.columns.length,
@@ -40,6 +44,20 @@ const ColumnChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
+
+  const columnChartRef = useRef(null);
+  useEffect(() => {
+    if (columnChartRef && columnChartRef.current) {
+      const yAxisMap = (columnChartRef.current as CategoricalChartWrapper).state
+        .yAxisMap;
+      if (yAxisMap && yAxisMap.length) {
+        setYAxisMargin(
+          yAxisMap[0].niceTicks.toLocaleString().match(/,/g)?.length +
+            pixelsByCharacter
+        );
+      }
+    }
+  }, [columnChartRef, columnChartRef.current, chartLoaded]);
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -69,12 +87,15 @@ const ColumnChartWidget = (props: Props) => {
 
   /**
    * Calculate the width percent out of the total width
-   * depending on the container.
+   * depending on the container. Width: (largestHeader + 1) *
+   * headersCount * pixelsByCharacter + marginLeft + marginRight
    */
   const widthPercent =
-    (UtilsService.getLargestHeader(columns, data) *
+    (((UtilsService.getLargestHeader(columns, data) + 1) *
       (data ? data.length : 0) *
-      pixelsByCharacter *
+      pixelsByCharacter +
+      50 +
+      50) *
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
@@ -100,7 +121,14 @@ const ColumnChartWidget = (props: Props) => {
           width={`${Math.max(widthPercent, 100)}%`}
           height={300}
         >
-          <BarChart data={props.data} margin={{ right: 0, left: 0 }}>
+          <BarChart
+            data={props.data}
+            margin={{ right: 0, left: yAxisMargin }}
+            ref={(el: CategoricalChartWrapper) => {
+              columnChartRef.current = el;
+              setChartLoaded(!!el);
+            }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey={props.columns.length ? props.columns[0] : ""}
@@ -138,6 +166,7 @@ const ColumnChartWidget = (props: Props) => {
                     key={index}
                     fillOpacity={getOpacity(column)}
                     hide={hiddenColumns.includes(column)}
+                    isAnimationActive={false}
                   />
                 );
               })}

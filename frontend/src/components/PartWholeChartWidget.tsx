@@ -182,6 +182,7 @@ const PartWholeChartWidget = (props: Props) => {
                   stroke="white"
                   strokeWidth={2}
                   hide={hiddenParts.includes(part)}
+                  isAnimationActive={false}
                 />
               );
             })}

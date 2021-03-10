@@ -3,28 +3,32 @@
 exports[`renders a dashboard header for a published view 1`] = `
 <div>
   <div
-    class="margin-top-2"
+    class="usa-prose"
   >
-    <h1
-      class="display-inline-block margin-bottom-1 font-sans-2xl"
-    >
-      Dashboard 1
-    </h1>
     <div
-      class="text-base text-italic margin-bottom-2"
+      class="margin-top-2"
     >
-      Test Topic Area
+      <h1
+        class="display-inline-block margin-bottom-1 font-sans-2xl"
+      >
+        Dashboard 1
+      </h1>
+      <div
+        class="text-base text-italic margin-bottom-2"
+      >
+        Test Topic Area
+      </div>
     </div>
-  </div>
-  <div
-    class="margin-y-2"
-  >
     <div
-      class="Markdown font-sans-lg usa-prose margin-top-0"
+      class="margin-y-2"
     >
-      <p>
-        A test descripttion
-      </p>
+      <div
+        class="Markdown font-sans-lg usa-prose margin-top-0"
+      >
+        <p>
+          A test descripttion
+        </p>
+      </div>
     </div>
   </div>
 </div>
@@ -33,28 +37,32 @@ exports[`renders a dashboard header for a published view 1`] = `
 exports[`renders a dashboard header for an unpublished view 1`] = `
 <div>
   <div
-    class=""
+    class="usa-prose"
   >
-    <h1
-      class="display-inline-block margin-bottom-0"
-    >
-      Dashboard 1
-    </h1>
     <div
-      class="text-base text-italic margin-bottom-2"
+      class=""
     >
-      Test Topic Area
+      <h1
+        class="display-inline-block margin-bottom-0"
+      >
+        Dashboard 1
+      </h1>
+      <div
+        class="text-base text-italic margin-bottom-2"
+      >
+        Test Topic Area
+      </div>
     </div>
-  </div>
-  <div
-    class=""
-  >
     <div
-      class="Markdown "
+      class=""
     >
-      <p>
-        A test descripttion
-      </p>
+      <div
+        class="Markdown "
+      >
+        <p>
+          A test descripttion
+        </p>
+      </div>
     </div>
   </div>
 </div>
@@ -63,29 +71,33 @@ exports[`renders a dashboard header for an unpublished view 1`] = `
 exports[`renders a dashboard header for an unpublished view with a link 1`] = `
 <div>
   <div
-    class=""
+    class="usa-prose"
   >
-    <h1
-      class="display-inline-block margin-bottom-0"
-    >
-      Dashboard 1
-    </h1>
-    A test link
     <div
-      class="text-base text-italic margin-bottom-2"
+      class=""
     >
-      Test Topic Area
+      <h1
+        class="display-inline-block margin-bottom-0"
+      >
+        Dashboard 1
+      </h1>
+      A test link
+      <div
+        class="text-base text-italic margin-bottom-2"
+      >
+        Test Topic Area
+      </div>
     </div>
-  </div>
-  <div
-    class=""
-  >
     <div
-      class="Markdown "
+      class=""
     >
-      <p>
-        A test descripttion
-      </p>
+      <div
+        class="Markdown "
+      >
+        <p>
+          A test descripttion
+        </p>
+      </div>
     </div>
   </div>
 </div>

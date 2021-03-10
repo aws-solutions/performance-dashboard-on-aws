@@ -48,7 +48,7 @@ function Home() {
       label="Loading"
     />
   ) : (
-    <>
+    <div className="usa-prose">
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
           <h1 className="font-sans-3xl">{homepage.title}</h1>
@@ -59,7 +59,7 @@ function Home() {
         </div>
       </div>
       <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8 padding-y-3">
+        <div className="grid-col-12 tablet:grid-col-8 padding-y-3 usa-prose">
           <Search
             id="search"
             onSubmit={onSearch}
@@ -71,7 +71,7 @@ function Home() {
         </div>
       </div>
       <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8">
+        <div className="grid-col-12 tablet:grid-col-8 usa-prose">
           <Accordion>
             {topicareas.map((topicarea) => (
               <Accordion.Item
@@ -106,7 +106,7 @@ function Home() {
           </Accordion>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

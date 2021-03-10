@@ -336,7 +336,7 @@ function ViewDashboardAdmin() {
           <hr />
           {dashboard?.widgets.map((widget, index) => {
             return (
-              <div className="margin-top-5" key={index}>
+              <div className="margin-top-6 usa-prose" key={index}>
                 <WidgetRender widget={widget} />
               </div>
             );

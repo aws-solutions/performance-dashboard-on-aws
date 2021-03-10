@@ -528,7 +528,7 @@ function AddChart() {
           </div>
 
           <div hidden={step !== 1}>
-            <div className="grid-row">
+            <div className="grid-row width-desktop">
               <div className="grid-col-5">
                 <TextField
                   id="title"

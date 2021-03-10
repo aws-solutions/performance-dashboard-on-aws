@@ -27,6 +27,7 @@ const TableWidget = (props: Props) => {
         rows={useMemo(() => data || [], [data])}
         className="margin-left-1"
         initialSortAscending
+        disablePagination={true}
         columns={useMemo(
           () =>
             headers.map((header, i) => {

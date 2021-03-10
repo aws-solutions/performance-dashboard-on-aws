@@ -178,20 +178,24 @@ exports[`CreateDashboardForm edit details should match snapshot 1`] = `
         class="margin-left-3 margin-top-2"
       >
         <div
-          class="margin-top-2"
+          class="usa-prose"
         >
-          <h1
-            class="display-inline-block margin-bottom-1 font-sans-2xl"
-          />
           <div
-            class="text-base text-italic margin-bottom-2"
+            class="margin-top-2"
           >
-            
+            <h1
+              class="display-inline-block margin-bottom-1 font-sans-2xl"
+            />
+            <div
+              class="text-base text-italic margin-bottom-2"
+            >
+              
+            </div>
           </div>
+          <div
+            class="margin-y-2"
+          />
         </div>
-        <div
-          class="margin-y-2"
-        />
         <hr
           style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
         />

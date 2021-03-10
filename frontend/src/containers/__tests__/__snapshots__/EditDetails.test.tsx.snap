@@ -196,28 +196,32 @@ exports[`edit details should match snapshot 1`] = `
         class="margin-left-3 margin-top-2"
       >
         <div
-          class="margin-top-2"
+          class="usa-prose"
         >
-          <h1
-            class="display-inline-block margin-bottom-1 font-sans-2xl"
-          >
-            My AWS Dashboard
-          </h1>
           <div
-            class="text-base text-italic margin-bottom-2"
+            class="margin-top-2"
           >
-            Bananas
+            <h1
+              class="display-inline-block margin-bottom-1 font-sans-2xl"
+            >
+              My AWS Dashboard
+            </h1>
+            <div
+              class="text-base text-italic margin-bottom-2"
+            >
+              Bananas
+            </div>
           </div>
-        </div>
-        <div
-          class="margin-y-2"
-        >
           <div
-            class="Markdown font-sans-lg usa-prose margin-top-0"
+            class="margin-y-2"
           >
-            <p>
-              Some description
-            </p>
+            <div
+              class="Markdown font-sans-lg usa-prose margin-top-0"
+            >
+              <p>
+                Some description
+              </p>
+            </div>
           </div>
         </div>
         <hr

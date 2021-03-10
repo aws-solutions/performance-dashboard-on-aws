@@ -57,7 +57,7 @@ import ChangeRole from "./containers/ChangeRole";
 import BrandingAndStylingSettings from "./containers/BrandingAndStylingSettings";
 import EditLogo from "./containers/EditLogo";
 import UserStatus from "./containers/UserStatus";
-import ChooseStaticDataset from "./containers/ChooseStaticDataset";
+import ChooseStaticDataset from "./components/ChooseStaticDataset";
 
 interface AppRoute {
   path: string;

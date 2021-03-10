@@ -1,8 +1,12 @@
 import React, { useState, useCallback } from "react";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useHistory, useParams } from "react-router-dom";
-import { useDashboard, useDateTimeFormatter, useSettings } from "../hooks";
-import { useDatasets } from "../hooks/dataset-hooks";
+import {
+  useDashboard,
+  useDateTimeFormatter,
+  useSettings,
+  useDatasets,
+} from "../hooks";
 import Table from "../components/Table";
 import Button from "../components/Button";
 import Search from "../components/Search";

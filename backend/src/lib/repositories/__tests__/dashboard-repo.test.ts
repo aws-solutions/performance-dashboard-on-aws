@@ -171,6 +171,7 @@ describe("getDashboardVersions", () => {
       dashboardName: "My Health Dashboard",
       description: "A relevant description",
       createdBy: "johndoe",
+      updatedBy: "johndoe",
       updatedAt: new Date().toISOString(),
       state: "Draft",
       releaseNotes: "",
@@ -216,7 +217,7 @@ describe("DashboardRepository.publishDashboard", () => {
             UpdateExpression:
               "set #state = :state, #updatedAt = :updatedAt, " +
               "#releaseNotes = :releaseNotes, #updatedBy = :userId, " +
-              "#friendlyURL = :friendlyURL",
+              "#publishedBy = :userId, #friendlyURL = :friendlyURL",
             ExpressionAttributeValues: {
               ":state": "Published",
               ":lastUpdatedAt": now.toISOString(),
@@ -231,6 +232,7 @@ describe("DashboardRepository.publishDashboard", () => {
               "#state": "state",
               "#updatedAt": "updatedAt",
               "#updatedBy": "updatedBy",
+              "#publishedBy": "publishedBy",
               "#friendlyURL": "friendlyURL",
             },
           },
@@ -410,7 +412,7 @@ describe("publishPendingDashboard", () => {
       expect.objectContaining({
         UpdateExpression:
           "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
-          "#releaseNotes = :releaseNotes",
+          "#submittedBy = :userId, #releaseNotes = :releaseNotes",
         ExpressionAttributeValues: {
           ":state": "PublishPending",
           ":lastUpdatedAt": now.toISOString(),
@@ -464,8 +466,8 @@ describe("DashboardRepository.archiveDashboard", () => {
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId " +
-          "REMOVE #friendlyURL",
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+          "#archivedBy = :userId REMOVE #friendlyURL",
         ExpressionAttributeValues: {
           ":state": "Archived",
           ":lastUpdatedAt": now.toISOString(),
@@ -503,12 +505,13 @@ describe("DashboardRepository.moveToDraft", () => {
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #state = :state, #updatedAt = :updatedAt, #updatedBy = :userId, #submittedBy = :noUserId",
         ExpressionAttributeValues: {
           ":state": "Draft",
           ":lastUpdatedAt": now.toISOString(),
           ":updatedAt": now.toISOString(),
           ":userId": user.userId,
+          ":noUserId": "",
         },
       })
     );
@@ -558,6 +561,11 @@ describe("listDashboards", () => {
           dashboardName: "Test name",
           description: "description test",
           createdBy: "test",
+          updatedBy: "test",
+          submittedBy: "test",
+          publishedBy: "test",
+          archivedBy: "test",
+          deletedBy: "test",
           updatedAt: now.toISOString(),
           state: "Draft",
         },
@@ -573,6 +581,11 @@ describe("listDashboards", () => {
       topicAreaName: "Topic 1",
       description: "description test",
       createdBy: "test",
+      updatedBy: "test",
+      submittedBy: "test",
+      publishedBy: "test",
+      archivedBy: "test",
+      deletedBy: "test",
       updatedAt: now,
       state: "Draft",
     });
@@ -590,6 +603,11 @@ describe("listDashboards", () => {
         dashboardName: "Test name",
         description: "description test",
         createdBy: "test",
+        updatedBy: "test",
+        submittedBy: "test",
+        publishedBy: "test",
+        archivedBy: "test",
+        deletedBy: "test",
         updatedAt: now.toISOString(),
         state: "Draft",
       },
@@ -603,6 +621,11 @@ describe("listDashboards", () => {
       topicAreaName: "Topic 1",
       description: "description test",
       createdBy: "test",
+      updatedBy: "test",
+      submittedBy: "test",
+      publishedBy: "test",
+      archivedBy: "test",
+      deletedBy: "test",
       updatedAt: now,
       state: "Draft",
     });
@@ -639,6 +662,11 @@ describe("listDashboards", () => {
           dashboardName: "Test name",
           description: "description test",
           createdBy: "test",
+          updatedBy: "test",
+          submittedBy: "test",
+          publishedBy: "test",
+          archivedBy: "test",
+          deletedBy: "test",
           updatedAt: now.toISOString(),
           state: "Draft",
         },
@@ -654,6 +682,11 @@ describe("listDashboards", () => {
       topicAreaName: "Topic 1",
       description: "description test",
       createdBy: "test",
+      updatedBy: "test",
+      submittedBy: "test",
+      publishedBy: "test",
+      archivedBy: "test",
+      deletedBy: "test",
       updatedAt: now,
       state: "Draft",
     });

@@ -70,6 +70,10 @@ describe("toItem", () => {
     parentDashboardId: "123",
     createdBy: user.userId,
     updatedBy: user.userId,
+    submittedBy: user.userId,
+    publishedBy: user.userId,
+    archivedBy: user.userId,
+    deletedBy: user.userId,
     updatedAt: now,
     state: DashboardState.Draft,
     releaseNotes: "release note test",
@@ -99,6 +103,10 @@ describe("toItem", () => {
     expect(item.topicAreaName).toEqual("Topic 1");
     expect(item.createdBy).toEqual(dashboard.createdBy);
     expect(item.updatedBy).toEqual(dashboard.updatedBy);
+    expect(item.submittedBy).toEqual(dashboard.submittedBy);
+    expect(item.publishedBy).toEqual(dashboard.publishedBy);
+    expect(item.archivedBy).toEqual(dashboard.archivedBy);
+    expect(item.deletedBy).toEqual(dashboard.deletedBy);
     expect(item.updatedAt).toEqual(now.toISOString());
     expect(item.state).toEqual("Draft");
     expect(item.version).toEqual(1);
@@ -121,6 +129,10 @@ describe("fromItem", () => {
     description: "Description test",
     createdBy: user.userId,
     updatedBy: user.userId,
+    submittedBy: user.userId,
+    publishedBy: user.userId,
+    archivedBy: user.userId,
+    deletedBy: user.userId,
     parentDashboardId: "123",
     updatedAt: now,
     state: "Draft",
@@ -137,6 +149,10 @@ describe("fromItem", () => {
     expect(dashboard.topicAreaName).toEqual("Topic 1");
     expect(dashboard.createdBy).toEqual(item.createdBy);
     expect(dashboard.updatedBy).toEqual(item.updatedBy);
+    expect(dashboard.submittedBy).toEqual(item.submittedBy);
+    expect(dashboard.publishedBy).toEqual(item.publishedBy);
+    expect(dashboard.archivedBy).toEqual(item.archivedBy);
+    expect(dashboard.deletedBy).toEqual(item.deletedBy);
     expect(dashboard.updatedAt).toEqual(new Date(now));
     expect(dashboard.state).toEqual(DashboardState.Draft);
     expect(dashboard.version).toEqual(1);
@@ -280,26 +296,5 @@ describe("createDraftFromDashboard", () => {
       nextVersion
     );
     expect(draft.friendlyURL).toBeUndefined();
-  });
-});
-
-describe("generateFriendlyURL", () => {
-  test("generates a sanitized URL", () => {
-    expect(factory.generateFriendlyURL("COVID-19")).toEqual("covid-19");
-    expect(factory.generateFriendlyURL("La Construcción")).toEqual(
-      "la-construcción"
-    );
-    expect(factory.generateFriendlyURL("Jen'O Brien")).toEqual("jen-o-brien");
-    expect(factory.generateFriendlyURL("Performance Dashboard @ AWS")).toEqual(
-      "performance-dashboard-aws"
-    );
-    expect(factory.generateFriendlyURL("This is - great")).toEqual(
-      "this-is-great"
-    );
-    expect(factory.generateFriendlyURL("A Construção")).toEqual("a-construção");
-    expect(factory.generateFriendlyURL("訳サービスで、テキストや")).toEqual(
-      "訳サービスで、テキストや"
-    );
-    expect(factory.generateFriendlyURL("!	#	$	&	'	(	)	*	+	,	/	:	;	=	?	@	[	] hi")).toEqual("hi");
   });
 });

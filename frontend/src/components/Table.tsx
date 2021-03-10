@@ -76,11 +76,13 @@ function Table(props: Props) {
     state: { pageIndex, pageSize },
     selectedFlatRows,
     setGlobalFilter,
+    toggleAllRowsSelected,
   } = useTable(
     {
       columns: props.columns,
       data: props.rows,
       disableSortRemove: true,
+      autoResetSelectedRows: false,
       initialState: props.disablePagination
         ? { selectedRowIds: {}, sortBy: initialSortBy }
         : {
@@ -97,25 +99,16 @@ function Table(props: Props) {
     (hooks) => {
       if (props.selection === "single") {
         hooks.visibleColumns.push((columns) => [
-          // Let's make a column for selection
           {
             id: "selection",
-            // The header can use the table's getToggleAllRowsSelectedProps method
-            // to render a checkbox
-            Header: ({ getToggleAllRowsSelectedProps }) => (
-              <div>
-                <IndeterminateCheckbox2
-                  onClick={() => {}}
-                  {...getToggleAllRowsSelectedProps()}
-                />
-              </div>
-            ),
-            // The cell can use the individual row's getToggleRowSelectedProps method
-            // to the render a checkbox
+            Header: ({}) => <div></div>,
             Cell: ({ row }) => (
               <div>
-                <IndeterminateCheckbox2
-                  onClick={() => setSelectedRowId(row.id)}
+                <IndeterminateRadio
+                  onClick={() => {
+                    toggleAllRowsSelected(false);
+                    row.toggleRowSelected();
+                  }}
                   {...row.getToggleRowSelectedProps()}
                 />
               </div>
@@ -320,7 +313,7 @@ const IndeterminateCheckbox = React.forwardRef<
   return <input type="checkbox" title={title} ref={resolvedRef} {...rest} />;
 });
 
-const IndeterminateCheckbox2 = React.forwardRef<
+const IndeterminateRadio = React.forwardRef<
   HTMLInputElement,
   {
     indeterminate?: boolean;

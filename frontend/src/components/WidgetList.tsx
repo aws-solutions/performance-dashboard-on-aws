@@ -7,6 +7,8 @@ import "./WidgetList.css";
 import Link from "./Link";
 import AlertContainer from "../containers/AlertContainer";
 import UtilsService from "../services/UtilsService";
+import SecondaryActionBar from "./SecondaryActionBar";
+import ContentItem from "./ContentItem";
 
 interface Props {
   onClick: Function;
@@ -72,10 +74,12 @@ function WidgetList(props: Props) {
     <div>
       {props.widgets && props.widgets.length ? (
         <div>
-          <h3 className="margin-bottom-0">Dashboard content</h3>
-          <p className="margin-top-2px">
-            Build the dashboard by adding charts, tables, and text as content.
-          </p>
+          <SecondaryActionBar stickyPosition={75}>
+            <h3 className="margin-bottom-0 margin-top-0">Dashboard content</h3>
+            <p className="margin-top-2px margin-bottom-0">
+              Build the dashboard by adding charts, tables, and text as content.
+            </p>
+          </SecondaryActionBar>
           <AlertContainer />
           <div className="grid-row radius-lg padding-top-1 margin-left-1 margin-bottom-2 text-bold font-sans-sm">
             <div className="grid-col flex-1 text-center">Order</div>
@@ -88,9 +92,9 @@ function WidgetList(props: Props) {
           </div>
           {props.widgets.map((widget, index) => {
             return (
-              <div
-                key={index}
+              <ContentItem
                 className="grid-row radius-lg border-base border margin-y-1"
+                key={index}
               >
                 <div className="grid-row grid-col flex-1 padding-1">
                   <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md">
@@ -164,7 +168,7 @@ function WidgetList(props: Props) {
                     </Button>
                   </div>
                 </div>
-              </div>
+              </ContentItem>
             );
           })}
           <div className="text-center margin-top-2">

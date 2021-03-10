@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from "react";
-import Breadcrumbs from "./Breadcrumbs";
+import Breadcrumbs from "../components/Breadcrumbs";
 import { useHistory, useParams } from "react-router-dom";
 import { useDashboard, useDateTimeFormatter, useSettings } from "../hooks";
 import { useDatasets } from "../hooks/dataset-hooks";
-import Table from "./Table";
-import Button from "./Button";
-import Search from "./Search";
-import ScrollTop from "./ScrollTop";
+import Table from "../components/Table";
+import Button from "../components/Button";
+import Search from "../components/Search";
+import ScrollTop from "../components/ScrollTop";
 import { Dataset } from "../models";
 
 interface PathParams {

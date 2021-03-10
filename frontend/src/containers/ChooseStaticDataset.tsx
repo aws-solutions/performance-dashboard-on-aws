@@ -42,8 +42,8 @@ function ChooseStaticDataset() {
       url: `/admin/dashboard/${dashboardId}`,
     },
     {
-      label: "Add chart",
-      url: `/admin/dashboard/${dashboardId}/add-chart`,
+      label: state.crumbLabel,
+      url: state.redirectUrl,
     },
     {
       label: "Choose static dataset",

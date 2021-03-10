@@ -253,6 +253,7 @@ export type LocationState = {
   origin?: string;
   json?: string;
   redirectUrl?: string;
+  crumbLabel?: string;
 };
 
 export enum UserRoles {

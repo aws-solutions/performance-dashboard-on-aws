@@ -171,6 +171,7 @@ function AddChart() {
       pathname: `/admin/dashboard/${dashboardId}/add-chart/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/add-chart/`,
+        crumbLabel: "Add chart",
       },
     });
   };

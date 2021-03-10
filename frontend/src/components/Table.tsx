@@ -40,12 +40,6 @@ interface Props {
 function Table(props: Props) {
   const className = props.className ? ` ${props.className}` : "";
 
-  const [selectedRowId, setSelectedRowId] = useState<any>(null);
-  const selectedRowIds = [];
-  if (selectedRowId) {
-    selectedRowIds.push(selectedRowId);
-  }
-
   const { initialSortByField, initialSortAscending } = props;
   const initialSortBy = React.useMemo(() => {
     return initialSortByField
@@ -82,7 +76,6 @@ function Table(props: Props) {
       columns: props.columns,
       data: props.rows,
       disableSortRemove: true,
-      autoResetSelectedRows: false,
       initialState: props.disablePagination
         ? { selectedRowIds: {}, sortBy: initialSortBy }
         : {
@@ -300,7 +293,6 @@ const IndeterminateCheckbox = React.forwardRef<
   {
     indeterminate?: boolean;
     title?: string;
-    checked?: boolean;
   }
 >(({ indeterminate, title, ...rest }, ref) => {
   const defaultRef = React.useRef(null);

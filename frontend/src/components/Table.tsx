@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -290,10 +290,7 @@ function Table(props: Props) {
 // Taken from example: https://react-table.tanstack.com/docs/examples/row-selection
 const IndeterminateCheckbox = React.forwardRef<
   HTMLInputElement,
-  {
-    indeterminate?: boolean;
-    title?: string;
-  }
+  { indeterminate?: boolean; title?: string }
 >(({ indeterminate, title, ...rest }, ref) => {
   const defaultRef = React.useRef(null);
   const resolvedRef = ref || defaultRef;

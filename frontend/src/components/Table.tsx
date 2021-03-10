@@ -308,7 +308,7 @@ const IndeterminateRadio = React.forwardRef<
     indeterminate?: boolean;
     title?: string;
     checked?: boolean;
-    onClick?: any;
+    onClick?: Function;
   }
 >(({ indeterminate, ...rest }, ref) => {
   const defaultRef = React.useRef();

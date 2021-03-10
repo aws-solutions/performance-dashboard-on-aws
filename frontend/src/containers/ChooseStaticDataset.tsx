@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useHistory, useParams } from "react-router-dom";
+import { LocationState } from "../models";
 import {
   useDashboard,
   useDateTimeFormatter,
@@ -18,7 +19,9 @@ interface PathParams {
 }
 
 function ChooseStaticDataset() {
-  const history = useHistory();
+  const history = useHistory<LocationState>();
+  const { state } = history.location;
+
   const dateFormatter = useDateTimeFormatter();
 
   const { dashboardId } = useParams<PathParams>();
@@ -62,7 +65,7 @@ function ChooseStaticDataset() {
 
   const onSubmit = () => {
     history.replace({
-      pathname: `/admin/dashboard/${dashboardId}/add-chart`,
+      pathname: state.redirectUrl,
       state: {
         json: selected[0].s3Key.json,
       },

@@ -252,6 +252,7 @@ export type LocationState = {
   metricTitle?: string;
   origin?: string;
   json?: string;
+  redirectUrl?: string;
 };
 
 export enum UserRoles {

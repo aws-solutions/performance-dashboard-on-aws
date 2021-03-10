@@ -18,7 +18,6 @@ import BarChartWidget from "../components/BarChartWidget";
 import PartWholeChartWidget from "../components/PartWholeChartWidget";
 import UtilsService from "../services/UtilsService";
 import Link from "../components/Link";
-import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";
 import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
@@ -43,7 +42,6 @@ interface PathParams {
 function AddChart() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
-  const location = useLocation();
 
   const { dashboardId } = useParams<PathParams>();
   const dateFormatter = useDateTimeFormatter();
@@ -169,9 +167,12 @@ function AddChart() {
   };
 
   const browseDatasets = () => {
-    history.push(
-      `/admin/dashboard/${dashboardId}/add-chart/choose-static-dataset`
-    );
+    history.push({
+      pathname: `/admin/dashboard/${dashboardId}/add-chart/choose-static-dataset`,
+      state: {
+        redirectUrl: `/admin/dashboard/${dashboardId}/add-chart/`,
+      },
+    });
   };
 
   const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {

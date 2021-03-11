@@ -17,7 +17,7 @@ import {
 } from "react-table";
 
 interface Props {
-  selection: "multiple" | "none";
+  selection: "multiple" | "single" | "none";
   initialSortByField?: string;
   initialSortAscending?: boolean;
   screenReaderField?: string;
@@ -70,6 +70,7 @@ function Table(props: Props) {
     state: { pageIndex, pageSize },
     selectedFlatRows,
     setGlobalFilter,
+    toggleAllRowsSelected,
   } = useTable(
     {
       columns: props.columns,
@@ -89,7 +90,26 @@ function Table(props: Props) {
     usePagination,
     useRowSelect,
     (hooks) => {
-      if (props.selection !== "none") {
+      if (props.selection === "single") {
+        hooks.visibleColumns.push((columns) => [
+          {
+            id: "selection",
+            Header: ({}) => <div></div>,
+            Cell: ({ row }) => (
+              <div>
+                <IndeterminateRadio
+                  onClick={() => {
+                    toggleAllRowsSelected(false);
+                    row.toggleRowSelected();
+                  }}
+                  {...row.getToggleRowSelectedProps()}
+                />
+              </div>
+            ),
+          },
+          ...columns,
+        ]);
+      } else if (props.selection === "multiple") {
         hooks.visibleColumns.push((columns) => [
           {
             id: "selection",
@@ -280,6 +300,29 @@ const IndeterminateCheckbox = React.forwardRef<
   }, [resolvedRef, indeterminate]);
 
   return <input type="checkbox" title={title} ref={resolvedRef} {...rest} />;
+});
+
+const IndeterminateRadio = React.forwardRef<
+  HTMLInputElement,
+  {
+    indeterminate?: boolean;
+    title?: string;
+    checked?: boolean;
+    onClick?: Function;
+  }
+>(({ indeterminate, ...rest }, ref) => {
+  const defaultRef = React.useRef();
+  const resolvedRef = ref || defaultRef;
+
+  React.useEffect(() => {
+    (resolvedRef as any).current.indeterminate = indeterminate;
+  }, [resolvedRef, indeterminate]);
+
+  return (
+    <>
+      <input type="radio" ref={resolvedRef as any} {...rest} />
+    </>
+  );
 });
 
 export default Table;

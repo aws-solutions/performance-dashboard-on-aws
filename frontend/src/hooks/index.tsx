@@ -15,6 +15,7 @@ import { useUsers, useCurrentAuthenticatedUser } from "./user-hooks";
 import { useDateTimeFormatter } from "./datetime-hooks";
 import { useImage } from "./image-hooks";
 import { useLogo } from "./logo-hooks";
+import { useDatasets } from "./dataset-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -48,4 +49,5 @@ export {
   useImage,
   useLogo,
   useFriendlyUrl,
+  useDatasets,
 };

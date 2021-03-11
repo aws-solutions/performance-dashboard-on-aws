@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas, useSettings } from "../hooks";
@@ -22,13 +22,7 @@ function CreateDashboard() {
   const history = useHistory();
   const { settings } = useSettings();
   const { topicareas, loading } = useTopicAreas();
-  const {
-    register,
-    errors,
-    handleSubmit,
-    getValues,
-    watch,
-  } = useForm<FormValues>();
+  const { register, errors, handleSubmit, watch } = useForm<FormValues>();
 
   const name = watch("name");
   const description = watch("description");

@@ -81,7 +81,7 @@ function WidgetList(props: Props) {
             </p>
           </SecondaryActionBar>
           <AlertContainer />
-          <div className="grid-row radius-lg padding-top-1 margin-left-1 margin-bottom-2 text-bold font-sans-sm">
+          <div className="grid-row radius-lg padding-top-2 margin-left-1 margin-bottom-2 text-bold font-sans-sm">
             <div className="grid-col flex-1 text-center">Order</div>
             <div className="grid-col flex-6">
               <div className="margin-left-3">Name</div>

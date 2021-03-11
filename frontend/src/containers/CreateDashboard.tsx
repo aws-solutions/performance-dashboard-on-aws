@@ -3,13 +3,13 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas, useSettings } from "../hooks";
 import BackendService from "../services/BackendService";
-import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
 
 interface FormValues {
@@ -22,10 +22,17 @@ function CreateDashboard() {
   const history = useHistory();
   const { settings } = useSettings();
   const { topicareas, loading } = useTopicAreas();
-  const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
-  const [name, setName] = useState("");
-  const [topicAreaName, setTopicAreaName] = useState("");
-  const [description, setDescription] = useState("");
+  const {
+    register,
+    errors,
+    handleSubmit,
+    getValues,
+    watch,
+  } = useForm<FormValues>();
+
+  const name = watch("name");
+  const description = watch("description");
+  const topicAreaId = watch("topicAreaId");
 
   const onSubmit = async (values: FormValues) => {
     const dashboard = await BackendService.createDashboard(
@@ -43,16 +50,17 @@ function CreateDashboard() {
     });
   };
 
-  const onFormChange = () => {
-    const { name, topicAreaId, description } = getValues();
-    setName(name);
-    setTopicAreaName(topicareas.find((t) => t.id === topicAreaId)?.name || "");
-    setDescription(description);
+  const getTopicAreaName = (topicAreaId: string) => {
+    return topicareas.find((t) => t.id === topicAreaId)?.name || "";
   };
 
   const onCancel = () => {
     history.push("/admin/dashboards");
   };
+
+  if (loading) {
+    return <Spinner className="text-center margin-top-9" label="Loading" />;
+  }
 
   return (
     <>
@@ -67,25 +75,23 @@ function CreateDashboard() {
           },
         ]}
       />
-      <h1>Create new dashboard</h1>
 
-      {loading ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
-      ) : (
-        <div className="grid-row width-desktop">
-          <div className="grid-col-6">
-            <div className="grid-row">
-              <div className="grid-col-12">
+      <div className="grid-row width-desktop">
+        <div className="grid-col-6">
+          <div className="grid-row">
+            <div className="grid-col-12">
+              <PrimaryActionBar>
+                <h1 className="margin-top-0">Create dashboard</h1>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="usa-form usa-form--large"
-                  onChange={onFormChange}
                   data-testid="CreateDashboardForm"
                 >
                   <TextField
                     id="name"
                     name="name"
                     label="Dashboard Name"
+                    hint="Give your dashboard a descriptive name"
                     register={register}
                     error={errors.name && "Please specify a name"}
                     required
@@ -122,6 +128,7 @@ function CreateDashboard() {
                   />
 
                   <br />
+                  <hr />
                   <Button type="submit">Create</Button>
                   <Button
                     className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
@@ -132,28 +139,29 @@ function CreateDashboard() {
                     Cancel
                   </Button>
                 </form>
-              </div>
-            </div>
-          </div>
-          <div className="grid-col-6">
-            <div className="margin-left-3 margin-top-2">
-              <DashboardHeader
-                name={name}
-                topicAreaName={topicAreaName}
-                description={description}
-              />
-              <hr
-                style={{
-                  border: "none",
-                  height: "1px",
-                  backgroundColor: "#dfe1e2",
-                  margin: "2rem 0",
-                }}
-              />
+              </PrimaryActionBar>
             </div>
           </div>
         </div>
-      )}
+        <div className="grid-col-6">
+          <div className="margin-left-3 margin-top-2">
+            <DashboardHeader
+              name={name}
+              topicAreaName={getTopicAreaName(topicAreaId)}
+              description={description}
+            />
+            <hr
+              hidden={!name}
+              style={{
+                border: "none",
+                height: "1px",
+                backgroundColor: "#dfe1e2",
+                margin: "2rem 0",
+              }}
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

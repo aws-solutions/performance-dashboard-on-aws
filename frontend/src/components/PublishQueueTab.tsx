@@ -5,6 +5,7 @@ import Search from "./Search";
 import ScrollTop from "./ScrollTop";
 import Link from "./Link";
 import Table from "./Table";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -17,6 +18,8 @@ function PublishQueueTab(props: Props) {
   const dateFormatter = useDateTimeFormatter();
   const { dashboards } = props;
 
+  const { t } = useTranslation();
+
   const onSearch = (query: string) => {
     setFilter(query);
   };
@@ -27,9 +30,7 @@ function PublishQueueTab(props: Props) {
 
   return (
     <div>
-      <p>
-        These are all of the dashboards that have been submitted for publishing.
-      </p>
+      <p>{t("PublishQueueTabDescription")}</p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-7 text-left padding-top-1px">
           <ul className="usa-button-group">

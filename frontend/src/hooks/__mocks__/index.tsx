@@ -312,6 +312,8 @@ export function useDatasets() {
         raw: "abc.csv",
         json: "abc.json",
       },
+      createdBy: "andrew",
+      updatedAt: "1/1/2000",
       sourceType: SourceType.FileUpload,
     },
   ]);

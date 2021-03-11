@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
+import { LocationState } from "../models";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType, WidgetType, DatasetType } from "../models";
 import { useDashboard, useDateTimeFormatter, useSettings } from "../hooks";
@@ -17,7 +18,6 @@ import BarChartWidget from "../components/BarChartWidget";
 import PartWholeChartWidget from "../components/PartWholeChartWidget";
 import UtilsService from "../services/UtilsService";
 import Link from "../components/Link";
-import ComboBox from "../components/Combobox";
 import { useDatasets } from "../hooks/dataset-hooks";
 import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
@@ -40,7 +40,9 @@ interface PathParams {
 }
 
 function AddChart() {
-  const history = useHistory();
+  const history = useHistory<LocationState>();
+  const { state } = history.location;
+
   const { dashboardId } = useParams<PathParams>();
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
@@ -159,6 +161,19 @@ function AddChart() {
 
   const backStep = () => {
     setStep(0);
+    if (state && state.json) {
+      state.json = undefined;
+    }
+  };
+
+  const browseDatasets = () => {
+    history.push({
+      pathname: `/admin/dashboard/${dashboardId}/add-chart/choose-static-dataset`,
+      state: {
+        redirectUrl: `/admin/dashboard/${dashboardId}/add-chart/`,
+        crumbLabel: "Add chart",
+      },
+    });
   };
 
   const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -258,13 +273,10 @@ function AddChart() {
     event.stopPropagation();
   };
 
-  const onSelectStaticDataset = async (
-    event: React.FormEvent<HTMLSelectElement>
-  ) => {
-    event.persist();
+  const onSelectStaticDataset = async () => {
     setDatasetLoading(true);
 
-    const jsonFile = (event.target as HTMLInputElement).value;
+    const jsonFile = state.json;
     if (jsonFile) {
       const dataset = await StorageService.downloadJson(jsonFile);
       setStaticJson(dataset);
@@ -276,8 +288,9 @@ function AddChart() {
       setStaticDataset(undefined);
     }
 
+    state.json = undefined;
+
     setDatasetLoading(false);
-    event.stopPropagation();
   };
 
   const crumbs = [
@@ -296,6 +309,13 @@ function AddChart() {
       label: "Add chart",
       url: "",
     });
+  }
+
+  if (state && state.json !== undefined) {
+    if (step !== 1) {
+      setStep(1);
+      onSelectStaticDataset();
+    }
   }
 
   return (
@@ -449,6 +469,7 @@ function AddChart() {
                       variant="outline"
                       type="button"
                       className="datasetsButton"
+                      onClick={browseDatasets}
                     >
                       Browse datasets
                     </Button>
@@ -509,7 +530,7 @@ function AddChart() {
           </div>
 
           <div hidden={step !== 1}>
-            <div className="grid-row">
+            <div className="grid-row width-desktop">
               <div className="grid-col-5">
                 <TextField
                   id="title"

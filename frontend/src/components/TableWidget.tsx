@@ -15,17 +15,16 @@ const TableWidget = (props: Props) => {
 
   return (
     <div className="overflow-hidden">
-      <h2 className="margin-left-1 margin-bottom-1">{title}</h2>
+      <h2 className="margin-bottom-1">{title}</h2>
       {!summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="margin-left-1 margin-top-0 margin-bottom-3 tableSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-3 tableSummaryAbove"
         />
       )}
       <Table
         selection="none"
         rows={useMemo(() => data || [], [data])}
-        className="margin-left-1"
         initialSortAscending
         disablePagination={true}
         columns={useMemo(
@@ -48,7 +47,7 @@ const TableWidget = (props: Props) => {
       {summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="margin-left-1 margin-top-3 margin-bottom-0 tableSummaryBelow"
+          className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow"
         />
       )}
     </div>

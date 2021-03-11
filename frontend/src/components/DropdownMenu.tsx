@@ -6,7 +6,10 @@ import {
   MenuItem,
   MenuLink,
 } from "@reach/menu-button";
+import "@reach/menu-button/styles.css";
 import React, { ReactNode } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 type Variant =
   | "base"
@@ -58,9 +61,10 @@ function DropdownMenu(props: DropdownProps) {
         className={`usa-button${variantClassName}${additionalClasses}`}
         aria-label={props.ariaLabel}
       >
-        {props.buttonText} <span aria-hidden>▾</span>
+        {props.buttonText}
+        <FontAwesomeIcon icon={faCaretDown} className="margin-left-1" />
       </MenuButton>
-      <MenuList>{props.children}</MenuList>
+      <MenuList className="font-sans-xs">{props.children}</MenuList>
     </Menu>
   );
 }

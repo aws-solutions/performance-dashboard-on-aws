@@ -204,13 +204,13 @@ function Table(props: Props) {
           })}
         </tbody>
       </table>
-      {!props.disablePagination && props.rows.length ? (
+      {!props.disablePagination && rows.length ? (
         <div className="grid-row font-sans-sm">
           <div className="grid-col-3 text-left text-base text-italic">
             {`Showing ${pageIndex * pageSize + 1}-${Math.min(
               pageIndex * pageSize + pageSize,
-              props.rows.length
-            )} of ${props.rows.length}`}
+              rows.length
+            )} of ${rows.length}`}
           </div>
           <div className="grid-col-6 text-center">
             <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>

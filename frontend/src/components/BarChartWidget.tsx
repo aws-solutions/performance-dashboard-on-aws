@@ -72,17 +72,13 @@ const BarChartWidget = (props: Props) => {
 
   return (
     <div>
-      <h2
-        className={`margin-left-1 margin-bottom-${
-          props.summaryBelow ? "4" : "1"
-        }`}
-      >
+      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
       </h2>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="margin-left-1 margin-top-0 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
         />
       )}
       {data && data.length && (
@@ -91,6 +87,7 @@ const BarChartWidget = (props: Props) => {
           height={data && data.length > 15 ? 600 : 300}
         >
           <BarChart
+            className="bar-chart"
             data={props.data}
             layout="vertical"
             margin={{ right: 0, left: 0 }}
@@ -165,7 +162,7 @@ const BarChartWidget = (props: Props) => {
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="margin-left-1 margin-top-1 margin-bottom-0 chartSummaryBelow"
+          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
     </div>

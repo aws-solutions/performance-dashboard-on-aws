@@ -11,12 +11,21 @@ exports[`renders a default dropdown menu 1`] = `
     type="button"
   >
     Example text
-     
-    <span
+    <svg
       aria-hidden="true"
+      class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+      data-icon="caret-down"
+      data-prefix="fas"
+      focusable="false"
+      role="img"
+      viewBox="0 0 320 512"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      ▾
-    </span>
+      <path
+        d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+        fill="currentColor"
+      />
+    </svg>
   </button>
 </div>
 `;
@@ -32,12 +41,21 @@ exports[`renders a secondary menu button 1`] = `
     type="button"
   >
     Example text
-     
-    <span
+    <svg
       aria-hidden="true"
+      class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+      data-icon="caret-down"
+      data-prefix="fas"
+      focusable="false"
+      role="img"
+      viewBox="0 0 320 512"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      ▾
-    </span>
+      <path
+        d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+        fill="currentColor"
+      />
+    </svg>
   </button>
 </div>
 `;
@@ -53,12 +71,21 @@ exports[`renders an accent menu button 1`] = `
     type="button"
   >
     Example text
-     
-    <span
+    <svg
       aria-hidden="true"
+      class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+      data-icon="caret-down"
+      data-prefix="fas"
+      focusable="false"
+      role="img"
+      viewBox="0 0 320 512"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      ▾
-    </span>
+      <path
+        d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+        fill="currentColor"
+      />
+    </svg>
   </button>
 </div>
 `;
@@ -74,12 +101,21 @@ exports[`renders an outlined menu button 1`] = `
     type="button"
   >
     Example text
-     
-    <span
+    <svg
       aria-hidden="true"
+      class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+      data-icon="caret-down"
+      data-prefix="fas"
+      focusable="false"
+      role="img"
+      viewBox="0 0 320 512"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      ▾
-    </span>
+      <path
+        d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+        fill="currentColor"
+      />
+    </svg>
   </button>
 </div>
 `;
@@ -95,12 +131,21 @@ exports[`renders an unstyled menu button 1`] = `
     type="button"
   >
     Example text
-     
-    <span
+    <svg
       aria-hidden="true"
+      class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+      data-icon="caret-down"
+      data-prefix="fas"
+      focusable="false"
+      role="img"
+      viewBox="0 0 320 512"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      ▾
-    </span>
+      <path
+        d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+        fill="currentColor"
+      />
+    </svg>
   </button>
 </div>
 `;

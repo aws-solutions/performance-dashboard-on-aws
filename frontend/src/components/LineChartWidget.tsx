@@ -44,16 +44,23 @@ const LineChartWidget = (props: Props) => {
   const previewWidth = 480;
   const fullWidth = 960;
 
+  /**
+   * Calculate the YAxis margin needed. This is important after we started
+   * showing the ticks numbers as locale strings and commas are being
+   * added. Margin: Count the commas in the largestTick to locale string, and
+   * multiply by pixelsByCharacter.
+   */
   const lineChartRef = useRef(null);
   useEffect(() => {
     if (lineChartRef && lineChartRef.current) {
       const yAxisMap = (lineChartRef.current as CategoricalChartWrapper).state
         .yAxisMap;
-      if (yAxisMap && yAxisMap.length) {
-        setYAxisMargin(
-          yAxisMap[0].niceTicks.toLocaleString().match(/,/g)?.length +
-            pixelsByCharacter
-        );
+      if (yAxisMap && yAxisMap[0]) {
+        const largestTick: number = Math.max(...yAxisMap[0].niceTicks);
+        const largestTickLocaleString: string = largestTick.toLocaleString();
+        const numberOfCommas: number =
+          largestTickLocaleString.match(/,/g)?.length || 0;
+        setYAxisMargin(numberOfCommas * pixelsByCharacter);
       }
     }
   }, [lineChartRef, lineChartRef.current, chartLoaded]);
@@ -102,17 +109,13 @@ const LineChartWidget = (props: Props) => {
     <div
       className={`overflow-hidden${widthPercent > 100 ? " right-shadow" : ""}`}
     >
-      <h2
-        className={`margin-left-1 margin-bottom-${
-          props.summaryBelow ? "4" : "1"
-        }`}
-      >
+      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
       </h2>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="margin-left-1 margin-top-0 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
         />
       )}
       {data && data.length && (
@@ -123,6 +126,7 @@ const LineChartWidget = (props: Props) => {
           data-testid="chartContainer"
         >
           <LineChart
+            className="line-chart"
             data={props.data}
             margin={{ right: 0, left: yAxisMargin }}
             ref={(el: CategoricalChartWrapper) => {
@@ -178,7 +182,7 @@ const LineChartWidget = (props: Props) => {
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="margin-left-1 margin-top-1 margin-bottom-0 chartSummaryBelow"
+          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
     </div>

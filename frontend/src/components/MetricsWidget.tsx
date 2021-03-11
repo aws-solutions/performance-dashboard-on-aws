@@ -12,16 +12,16 @@ const MetricsWidget = (props: Props) => {
   const { title, metrics, metricPerRow } = props;
 
   return (
-    <>
-      <h2 className="margin-top-4 margin-left-1">{title}</h2>
+    <div>
+      <h2 className="margin-top-4">{title}</h2>
       {metrics.length ? (
-        <div className="margin-left-1">
+        <div>
           <MetricsCardGroup metrics={metrics} metricPerRow={metricPerRow} />
         </div>
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 };
 

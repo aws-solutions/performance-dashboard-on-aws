@@ -10,9 +10,9 @@ function TextWidget(props: Props) {
   const { content, showTitle, name } = props.widget;
 
   return (
-    <div className="margin-left-1">
+    <div>
       {showTitle && <h2>{name}</h2>}
-      <MarkdownRender source={content.text} />
+      <MarkdownRender className="usa-prose" source={content.text} />
     </div>
   );
 }

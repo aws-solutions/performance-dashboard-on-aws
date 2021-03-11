@@ -6,20 +6,18 @@ exports[`image preview should match snapshot 1`] = `
     class="preview-container"
   >
     <h2
-      class="margin-left-1 margin-top-1"
+      class="margin-top-1"
     >
       test title
     </h2>
     <div
-      class="Markdown margin-left-1 margin-top-0 margin-bottom-3 imageSummaryAbove"
+      class="Markdown usa-prose margin-top-0 margin-bottom-3 imageSummaryAbove"
     >
       <p>
         test summary
       </p>
     </div>
-    <div
-      class="margin-left-1"
-    >
+    <div>
       <img
         alt="alt text"
       />

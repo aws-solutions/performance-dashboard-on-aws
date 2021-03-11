@@ -2,14 +2,12 @@
 
 exports[`renders markdown text 1`] = `
 <div>
-  <div
-    class="margin-left-1"
-  >
+  <div>
     <h2>
       Benefits of Bananas
     </h2>
     <div
-      class="Markdown undefined"
+      class="Markdown usa-prose"
     >
       <p>
         This 

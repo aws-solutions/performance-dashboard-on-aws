@@ -1,7 +1,13 @@
 import React from "react";
-import { render, fireEvent, act, screen } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  act,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import { MemoryRouter, Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import CreateDashboard from "../CreateDashboard";
 
@@ -54,8 +60,23 @@ describe("CreateDashboardForm", () => {
     expect(history.push).toHaveBeenCalledWith("/admin/dashboards");
   });
 
-  test("edit details should match snapshot", async () => {
-    const wrapper = render(<CreateDashboard />, { wrapper: MemoryRouter });
-    expect(wrapper.container).toMatchSnapshot();
+  test("renders a preview of dashboard name and description", async () => {
+    fireEvent.input(screen.getByLabelText("Dashboard Name"), {
+      target: {
+        value: "Foo Bar",
+      },
+    });
+
+    fireEvent.input(screen.getByLabelText("Description - optional"), {
+      target: {
+        value: "FizzBuzz",
+      },
+    });
+
+    const description = screen.getByText("FizzBuzz");
+    const name = screen.getByRole("heading", { name: "Foo Bar" });
+
+    await waitFor(() => expect(name).toBeInTheDocument());
+    await waitFor(() => expect(description).toBeInTheDocument());
   });
 });

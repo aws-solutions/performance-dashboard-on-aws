@@ -17,6 +17,8 @@ type DatasetInfo = {
   };
   sourceType: SourceType;
   schema?: string;
+  description?: string;
+  tags?: Array<string>;
 };
 
 function createNew(info: DatasetInfo): Dataset {
@@ -35,6 +37,8 @@ function createNew(info: DatasetInfo): Dataset {
     updatedAt: new Date(),
     sourceType: info.sourceType,
     schema,
+    description: info.description,
+    tags: info.tags,
   };
 }
 

@@ -4,7 +4,12 @@ import { useHistory, useParams, useLocation } from "react-router-dom";
 import { LocationState } from "../models";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType, WidgetType, DatasetType } from "../models";
-import { useDashboard, useDateTimeFormatter, useSettings } from "../hooks";
+import {
+  useDashboard,
+  useDateTimeFormatter,
+  useSettings,
+  useDatasets,
+} from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -18,7 +23,6 @@ import BarChartWidget from "../components/BarChartWidget";
 import PartWholeChartWidget from "../components/PartWholeChartWidget";
 import UtilsService from "../services/UtilsService";
 import Link from "../components/Link";
-import { useDatasets } from "../hooks/dataset-hooks";
 import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -155,6 +159,10 @@ function AddChart() {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
+  const onSelect = useCallback((selectedDataset: Array<Dataset>) => {
+    selectDynamicDataset(selectedDataset[0]);
+  }, []);
+
   const advanceStep = () => {
     setStep(1);
   };
@@ -251,14 +259,16 @@ function AddChart() {
     }
   };
 
-  const onSelectDynamicDataset = async (
-    event: React.FormEvent<HTMLSelectElement>
-  ) => {
-    event.persist();
+  const selectDynamicDataset = async (selectedDataset: Dataset) => {
     setDatasetLoading(true);
 
-    const jsonFile = (event.target as HTMLInputElement).value;
-    if (jsonFile) {
+    if (
+      selectedDataset &&
+      selectedDataset.s3Key &&
+      selectedDataset.s3Key.json
+    ) {
+      const jsonFile = selectedDataset.s3Key.json;
+
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicJson(dataset);
       setCurrentJson(dataset);
@@ -270,7 +280,6 @@ function AddChart() {
     }
 
     setDatasetLoading(false);
-    event.stopPropagation();
   };
 
   const onSelectStaticDataset = async () => {
@@ -332,9 +341,6 @@ function AddChart() {
                 segments={[
                   {
                     label: "Choose data",
-                  },
-                  {
-                    label: "Check data",
                   },
                   {
                     label: "Visualize",
@@ -449,7 +455,7 @@ function AddChart() {
                       register={register}
                       hint={
                         <span>
-                          Upload a dataset from a CSV or XLS file, or choose an
+                          Upload a dataset from a CSV file, or choose an
                           existing static dataset.{" "}
                           <Link
                             to="/admin/formattingcsv"
@@ -478,35 +484,51 @@ function AddChart() {
               </div>
 
               <div hidden={datasetType !== DatasetType.DynamicDataset}>
-                <Table
-                  selection="multiple"
-                  initialSortByField="updatedAt"
-                  filterQuery={filter}
-                  rows={React.useMemo(() => dynamicDatasets, [dynamicDatasets])}
-                  screenReaderField="name"
-                  width="100%"
-                  columns={React.useMemo(
-                    () => [
-                      {
-                        Header: "Name",
-                        accessor: "fileName",
-                      },
-                      {
-                        Header: "Last updated",
-                        accessor: "updatedAt",
-                      },
-                      {
-                        Header: "Description",
-                        accessor: "description",
-                      },
-                      {
-                        Header: "Tags",
-                        accessor: "tags",
-                      },
-                    ],
-                    [dateFormatter, settings]
-                  )}
-                />
+                <div className="overflow-hidden">
+                  <Table
+                    selection="single"
+                    initialSortByField="updatedAt"
+                    filterQuery={filter}
+                    rows={React.useMemo(() => dynamicDatasets, [
+                      dynamicDatasets,
+                    ])}
+                    screenReaderField="name"
+                    width="100%"
+                    onSelection={onSelect}
+                    columns={React.useMemo(
+                      () => [
+                        {
+                          Header: "Name",
+                          accessor: "fileName",
+                        },
+                        {
+                          Header: "Last updated",
+                          accessor: "updatedAt",
+                        },
+                        {
+                          Header: "Description",
+                          accessor: "description",
+                          Cell: (props: any) => {
+                            if (props.value) {
+                              if (props.value.length > 11) {
+                                return props.value.substring(0, 11) + "...";
+                              } else {
+                                return props.value;
+                              }
+                            }
+
+                            return "";
+                          },
+                        },
+                        {
+                          Header: "Tags",
+                          accessor: "tags",
+                        },
+                      ],
+                      [dateFormatter, settings]
+                    )}
+                  />
+                </div>
               </div>
             </fieldset>
             <br />

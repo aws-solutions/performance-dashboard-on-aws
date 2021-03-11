@@ -19,6 +19,8 @@ export interface Dataset {
   updatedAt: Date;
   sourceType: SourceType;
   schema?: DatasetSchema;
+  description?: string;
+  tags?: Array<string>;
 }
 
 export type DatasetContent = Array<object>;

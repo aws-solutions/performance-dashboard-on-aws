@@ -93,6 +93,7 @@ export class FrontendStack extends cdk.Stack {
       {
         sources: [s3Deploy.Source.asset("../frontend/build")],
         destinationBucket: this.frontendBucket,
+        memoryLimit: 512,
         prune: false,
         distribution,
       }

@@ -9,14 +9,8 @@ interface PathParams {
   isOpen: boolean;
   closeModal: Function;
   title: string;
-  message: string;
-  buttonType:
-    | "Delete"
-    | "Prepare for publishing"
-    | "Archive"
-    | "Create draft"
-    | "Re-publish"
-    | "Resend";
+  message: string | React.ReactNode;
+  buttonType: string;
   buttonAction: Function;
   ariaHideApp?: boolean;
 }

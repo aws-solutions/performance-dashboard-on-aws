@@ -244,14 +244,26 @@ type UseFriendlyUrlHook = {
   friendlyURL: string;
 };
 
-export function useFriendlyUrl(dashboard?: Dashboard): UseFriendlyUrlHook {
+export function useFriendlyUrl(
+  dashboard?: Dashboard,
+  versions?: DashboardVersion[]
+): UseFriendlyUrlHook {
   const [friendlyURL, setFriendlyURL] = useState("");
   useEffect(() => {
     if (dashboard) {
-      const url = dashboard.friendlyURL
-        ? dashboard.friendlyURL
-        : FriendlyURLGenerator.generateFromDashboardName(dashboard.name);
-      setFriendlyURL(url);
+      const published = versions?.find(
+        (version) => version.state === DashboardState.Published
+      );
+
+      if (dashboard.friendlyURL) {
+        setFriendlyURL(dashboard.friendlyURL);
+      } else if (published && published.friendlyURL) {
+        setFriendlyURL(published.friendlyURL);
+      } else {
+        setFriendlyURL(
+          FriendlyURLGenerator.generateFromDashboardName(dashboard.name)
+        );
+      }
     }
   }, [dashboard]);
 

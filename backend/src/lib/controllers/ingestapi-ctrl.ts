@@ -55,7 +55,6 @@ async function createDataset(req: Request, res: Response) {
     await repo.saveDataset(dataset);
     res.json(dataset);
   } catch (err) {
-    console.log(err);
     logger.error("Failed to create dataset %o, %o", metadata, parsedData);
     res.status(400).send("Unable to create dataset");
   }

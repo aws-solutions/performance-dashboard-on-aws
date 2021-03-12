@@ -208,10 +208,11 @@ describe("toVersion", () => {
   };
 
   it("should expose fields that are part of the version", () => {
-    const publicDashboard = factory.toVersion(dashboard);
-    expect(publicDashboard.id).toEqual(dashboard.id);
-    expect(publicDashboard.version).toEqual(dashboard.version);
-    expect(publicDashboard.state).toEqual(dashboard.state);
+    const dashboardVersion = factory.toVersion(dashboard);
+    expect(dashboardVersion.id).toEqual(dashboard.id);
+    expect(dashboardVersion.version).toEqual(dashboard.version);
+    expect(dashboardVersion.state).toEqual(dashboard.state);
+    expect(dashboardVersion.friendlyURL).toEqual(dashboard.friendlyURL);
   });
 });
 

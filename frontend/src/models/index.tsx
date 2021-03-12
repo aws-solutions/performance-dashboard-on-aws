@@ -63,6 +63,7 @@ export type DashboardVersion = {
   id: string;
   version: number;
   state: DashboardState;
+  friendlyURL?: string;
 };
 
 export type DashboardAuditLog = {

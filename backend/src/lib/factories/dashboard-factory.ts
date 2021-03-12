@@ -145,6 +145,7 @@ function toVersion(dashboard: Dashboard): DashboardVersion {
     id: dashboard.id,
     version: dashboard.version,
     state: dashboard.state,
+    friendlyURL: dashboard.friendlyURL,
   };
 }
 

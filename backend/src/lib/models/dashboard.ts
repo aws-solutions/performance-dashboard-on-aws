@@ -14,6 +14,7 @@ export interface DashboardVersion {
   id: string;
   version: number;
   state: DashboardState;
+  friendlyURL?: string;
 }
 
 export interface Dashboard {

@@ -500,6 +500,16 @@ function AddChart() {
                         {
                           Header: "Name",
                           accessor: "fileName",
+                          Cell: (props: any) => {
+                            return (
+                              <div className="tooltip">
+                                {props.value}
+                                <span className="tooltiptext">
+                                  Tooltip text
+                                </span>
+                              </div>
+                            );
+                          },
                         },
                         {
                           Header: "Last updated",
@@ -511,9 +521,23 @@ function AddChart() {
                           Cell: (props: any) => {
                             if (props.value) {
                               if (props.value.length > 11) {
-                                return props.value.substring(0, 11) + "...";
+                                return (
+                                  <div className="tooltip">
+                                    {props.value.substring(0, 11) + "..."}
+                                    <span className="tooltiptext">
+                                      {props.value}
+                                    </span>
+                                  </div>
+                                );
                               } else {
-                                return props.value;
+                                return (
+                                  <div className="tooltip">
+                                    {props.value}
+                                    <span className="tooltiptext">
+                                      {props.value}
+                                    </span>
+                                  </div>
+                                );
                               }
                             }
 

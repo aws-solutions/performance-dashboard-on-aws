@@ -12,7 +12,7 @@ beforeEach(() => {
 
 test("renders the preview of the URL", async () => {
   const hostname = window.location.hostname;
-  expect(screen.getByText(`${hostname}/foo-bar`)).toBeInTheDocument();
+  expect(screen.getByText(`https://${hostname}/foo-bar`)).toBeInTheDocument();
 });
 
 test("edit link opens a modal to modify the URL", async () => {
@@ -30,5 +30,5 @@ test("edit link opens a modal to modify the URL", async () => {
 
   fireEvent.click(screen.getByRole("button", { name: "Save" }));
   const hostname = window.location.hostname;
-  await waitFor(() => screen.getByText(`${hostname}/fizzbuzz`));
+  await waitFor(() => screen.getByText(`https://${hostname}/fizzbuzz`));
 });

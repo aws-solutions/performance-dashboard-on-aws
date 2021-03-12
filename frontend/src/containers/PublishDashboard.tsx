@@ -235,10 +235,7 @@ function PublishDashboard() {
           showStepText={true}
         />
       </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="usa-form usa-form--large"
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="margin-y-2">
           <div hidden={step !== 0}>
             <TextField
@@ -271,7 +268,7 @@ function PublishDashboard() {
               value={desiredUrl || suggestedUrl.friendlyURL}
               showWarning={hasPublishedVersion()}
             />
-
+            <br />
             <div className="margin-top-3">
               <Button
                 variant="outline"
@@ -291,50 +288,44 @@ function PublishDashboard() {
           </div>
 
           <div hidden={step !== 2} className="padding-y-1">
-            <table
-              className="usa-table border-hidden"
-              style={{ width: "100%" }}
-            >
-              <tbody>
-                <tr>
-                  <td className="border-hidden text-top">
-                    <div className="usa-checkbox">
-                      <input
-                        type="checkbox"
-                        id="acknowledge"
-                        name="acknowledge"
-                        className="usa-checkbox__input"
-                        ref={register}
-                      />
-                      <label
-                        className="usa-checkbox__label margin-top-1"
-                        htmlFor="acknowledge"
-                        data-testid="AcknowledgementCheckboxLabel"
-                      />
-                    </div>
-                  </td>
-                  <td className="publishing-guidance border-hidden">
-                    <span className=" font-sans-sm">
-                      <MarkdownRender
-                        source={`${settings.publishingGuidance}${
-                          settings.publishingGuidance[
-                            settings.publishingGuidance.length - 1
-                          ] === "."
-                            ? ""
-                            : "."
-                        }`}
-                      />
-                    </span>
-                    {hasPublishedVersion() && (
-                      <p>
-                        I also understand that this will overwrite the existing
-                        published version of the dashboard.
-                      </p>
-                    )}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="display-flex padding-bottom-3">
+              <div>
+                <div className="usa-checkbox">
+                  <input
+                    type="checkbox"
+                    id="acknowledge"
+                    name="acknowledge"
+                    className="usa-checkbox__input"
+                    ref={register}
+                  />
+                  <label
+                    className="usa-checkbox__label margin-top-1"
+                    htmlFor="acknowledge"
+                    data-testid="AcknowledgementCheckboxLabel"
+                  />
+                </div>
+              </div>
+              <div>
+                <span className="font-sans-sm">
+                  <MarkdownRender
+                    className="margin-left-2 measure-2 publishing-guidance"
+                    source={`${settings.publishingGuidance}${
+                      settings.publishingGuidance[
+                        settings.publishingGuidance.length - 1
+                      ] === "."
+                        ? ""
+                        : "."
+                    }`}
+                  />
+                </span>
+                {hasPublishedVersion() && (
+                  <p>
+                    I also understand that this will overwrite the existing
+                    published version of the dashboard.
+                  </p>
+                )}
+              </div>
+            </div>
             <div className="margin-top-3">
               <Button
                 variant="outline"

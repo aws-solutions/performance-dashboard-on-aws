@@ -104,7 +104,7 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
         Edit or confirm the URL that will be used to publish this dashboard.
       </div>
       <p className="font-sans-lg margin-top-0">
-        {window.location.hostname}/{friendlyURL}
+        https://{window.location.hostname}/{friendlyURL}
         <Button
           type="button"
           variant="unstyled"

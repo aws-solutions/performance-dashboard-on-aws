@@ -185,25 +185,27 @@ function WidgetList(props: Props) {
           </div>
         </div>
       ) : (
-        <div className="text-center radius-lg padding-5 margin-y-3 border-base border-dashed bg-base-lightest border">
-          <p>
-            This dashboard is empty. Build the dashboard by adding <br />
-            charts, tables, text, and more as content.
-          </p>
-          <div className="text-center margin-top-4">
-            <Button
-              className="margin-top-1"
-              variant="base"
-              onClick={() => {
-                if (props.onClick) {
-                  props.onClick();
-                }
-              }}
-            >
-              + Add content
-            </Button>
+        <SecondaryActionBar className="text-center padding-5 margin-y-3">
+          <div>
+            <p>
+              This dashboard is empty. Build the dashboard by adding <br />
+              charts, tables, text, and more as content.
+            </p>
+            <div className="text-center margin-top-4">
+              <Button
+                className="margin-top-1"
+                variant="base"
+                onClick={() => {
+                  if (props.onClick) {
+                    props.onClick();
+                  }
+                }}
+              >
+                + Add content item
+              </Button>
+            </div>
           </div>
-        </div>
+        </SecondaryActionBar>
       )}
     </div>
   );

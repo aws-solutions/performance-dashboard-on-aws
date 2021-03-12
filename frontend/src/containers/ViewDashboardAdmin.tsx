@@ -15,6 +15,7 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import UtilsService from "../services/UtilsService";
 import "./ViewDashboardAdmin.css";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 
 interface PathParams {
   dashboardId: string;
@@ -177,150 +178,150 @@ function ViewDashboardAdmin() {
           buttonType="Prepare for publishing"
           buttonAction={onPublishDashboard}
         />
+        <PrimaryActionBar>
+          {dashboard.state === DashboardState.Published &&
+            draftOrPublishPending && (
+              <Alert
+                type="info"
+                message={
+                  <div>
+                    <FontAwesomeIcon icon={faCopy} className="margin-right-2" />
+                    A draft has been created to update this dashboard. Only one
+                    draft at a time is allowed.
+                    <div className="float-right">
+                      <Link
+                        to={`/admin/dashboard/${
+                          draftOrPublishPending.state === DashboardState.Draft
+                            ? "edit/" + draftOrPublishPending.id
+                            : draftOrPublishPending.id + "/publish"
+                        }`}
+                      >
+                        {`${
+                          draftOrPublishPending.state === DashboardState.Draft
+                            ? "Edit"
+                            : "Publish"
+                        } draft`}
+                      </Link>
+                    </div>
+                  </div>
+                }
+                hideIcon
+                slim
+              />
+            )}
 
-        {dashboard.state === DashboardState.Published && draftOrPublishPending && (
-          <Alert
-            type="info"
-            message={
-              <div>
-                <FontAwesomeIcon icon={faCopy} className="margin-right-2" />A
-                draft has been created to update this dashboard. Only one draft
-                at a time is allowed.
-                <div className="float-right">
-                  <Link
-                    to={`/admin/dashboard/${
-                      draftOrPublishPending.state === DashboardState.Draft
-                        ? "edit/" + draftOrPublishPending.id
-                        : draftOrPublishPending.id + "/publish"
-                    }`}
-                  >
-                    {`${
-                      draftOrPublishPending.state === DashboardState.Draft
-                        ? "Edit"
-                        : "Publish"
-                    } draft`}
-                  </Link>
-                </div>
-              </div>
-            }
-            hideIcon
-            slim
-          />
-        )}
-
-        {(dashboard.state === DashboardState.Draft ||
-          dashboard.state === DashboardState.PublishPending) && (
-          <Alert
-            type="info"
-            message="Below is a preview of what the published dashboard will look like.
+          {(dashboard.state === DashboardState.Draft ||
+            dashboard.state === DashboardState.PublishPending) && (
+            <Alert
+              type="info"
+              message="Below is a preview of what the published dashboard will look like.
               If everything looks right, you can publish the dashboard to be
               viewable on the published site."
-            slim
-          />
-        )}
+              slim
+            />
+          )}
 
-        {dashboard.state === DashboardState.Archived && (
-          <Alert
-            type="info"
-            slim
-            message="This dashboard is archived. It is not viewable on the published site unless it is re-published"
-          />
-        )}
-
-        <div className="grid-row margin-top-2">
-          <div className="grid-col text-left">
-            <ul className="usa-button-group">
-              <li className="usa-button-group__item">
-                <span
-                  className="usa-tag text-middle"
-                  style={{ cursor: "text" }}
-                >
-                  {dashboard?.state}
-                </span>
-              </li>
-              <li className="usa-button-group__item">
-                <span className="text-underline text-middle">
-                  <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
-                  Version {dashboard?.version}
-                </span>
-              </li>
-              <li>
-                {dashboard.state === DashboardState.Published && (
-                  <Button
-                    variant="unstyled"
-                    type="button"
-                    className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-                    onClick={() => setShowVersionNotes(!showVersionNotes)}
+          {dashboard.state === DashboardState.Archived && (
+            <Alert
+              type="info"
+              slim
+              message="This dashboard is archived. It is not viewable on the published site unless it is re-published"
+            />
+          )}
+          <div className="grid-row margin-top-2">
+            <div className="grid-col text-left flex-row flex-align-center display-flex">
+              <ul className="usa-button-group">
+                <li className="usa-button-group__item">
+                  <span
+                    className="usa-tag text-middle"
+                    style={{ cursor: "text" }}
                   >
-                    {`${showVersionNotes ? "Hide" : "Show"} version notes`}
+                    {dashboard?.state}
+                  </span>
+                </li>
+                <li className="usa-button-group__item">
+                  <span className="text-underline text-middle">
+                    <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
+                    Version {dashboard?.version}
+                  </span>
+                </li>
+                <li>
+                  {dashboard.state === DashboardState.Published && (
+                    <Button
+                      variant="unstyled"
+                      type="button"
+                      className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+                      onClick={() => setShowVersionNotes(!showVersionNotes)}
+                    >
+                      {`${showVersionNotes ? "Hide" : "Show"} version notes`}
+                    </Button>
+                  )}
+                </li>
+              </ul>
+            </div>
+            <div className="grid-col text-right">
+              {dashboard.state === DashboardState.Published && (
+                <>
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={() => setIsOpenArchiveModal(true)}
+                  >
+                    Archive
                   </Button>
-                )}
-              </li>
-            </ul>
-          </div>
-          <div className="grid-col text-right">
-            {dashboard.state === DashboardState.Published && (
-              <>
-                <Button
-                  variant="outline"
-                  type="button"
-                  onClick={() => setIsOpenArchiveModal(true)}
-                >
-                  Archive
-                </Button>
+                  <Button
+                    variant="base"
+                    onClick={() => setIsOpenUpdateModal(true)}
+                    disabled={!!draftOrPublishPending}
+                  >
+                    Update
+                  </Button>
+                </>
+              )}
+
+              {dashboard.state === DashboardState.Archived && (
                 <Button
                   variant="base"
-                  onClick={() => setIsOpenUpdateModal(true)}
-                  disabled={!!draftOrPublishPending}
-                >
-                  Update
-                </Button>
-              </>
-            )}
-
-            {dashboard.state === DashboardState.Archived && (
-              <Button
-                variant="base"
-                type="button"
-                onClick={() => setIsOpenRepublishModal(true)}
-              >
-                Re-publish
-              </Button>
-            )}
-
-            {(dashboard.state === DashboardState.Draft ||
-              dashboard.state === DashboardState.PublishPending) && (
-              <>
-                <Button
-                  variant="outline"
                   type="button"
-                  onClick={onClosePreview}
+                  onClick={() => setIsOpenRepublishModal(true)}
                 >
-                  Close Preview
+                  Re-publish
                 </Button>
-                <Button
-                  variant="base"
-                  onClick={() => setIsOpenPublishModal(true)}
-                  disabled={dashboard.state === DashboardState.PublishPending}
-                >
-                  Publish
-                </Button>
-              </>
-            )}
+              )}
+
+              {(dashboard.state === DashboardState.Draft ||
+                dashboard.state === DashboardState.PublishPending) && (
+                <>
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={onClosePreview}
+                  >
+                    Close Preview
+                  </Button>
+                  <Button
+                    variant="base"
+                    onClick={() => setIsOpenPublishModal(true)}
+                    disabled={dashboard.state === DashboardState.PublishPending}
+                  >
+                    Publish
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-        {showVersionNotes && (
-          <>
-            <div className="margin-top-3 text-bold font-sans-sm">
-              {`Version ${dashboard?.version} notes from `}
-              <span className="text-underline">{dashboard?.publishedBy}</span>
-            </div>
-            <div className="margin-top-2 text-base">
-              {dashboard?.releaseNotes}
-            </div>
-          </>
-        )}
-        <div className="margin-top-2 gradient height-2" />
+          {showVersionNotes && (
+            <>
+              <div className="margin-top-3 text-bold font-sans-sm">
+                {`Version ${dashboard?.version} notes from `}
+                <span className="text-underline">{dashboard?.publishedBy}</span>
+              </div>
+              <div className="margin-top-2 text-base">
+                {dashboard?.releaseNotes}
+              </div>
+            </>
+          )}
+        </PrimaryActionBar>
       </div>
 
       {loading ? (

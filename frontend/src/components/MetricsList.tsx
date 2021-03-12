@@ -15,6 +15,7 @@ interface Props {
   metrics: Array<Metric>;
   register?: Function;
   defaultChecked?: boolean;
+  allowAddMetric: boolean;
 }
 
 function MetricsList(props: Props) {
@@ -182,20 +183,22 @@ function MetricsList(props: Props) {
               </div>
             );
           })}
-          <div className="text-center margin-top-2">
-            <Button
-              variant="outline"
-              type="button"
-              className="margin-top-0-important"
-              onClick={() => {
-                if (props.onClick) {
-                  props.onClick();
-                }
-              }}
-            >
-              + Add metric
-            </Button>
-          </div>
+          {props.allowAddMetric && (
+            <div className="text-center margin-top-2">
+              <Button
+                variant="outline"
+                type="button"
+                className="margin-top-0-important"
+                onClick={() => {
+                  if (props.onClick) {
+                    props.onClick();
+                  }
+                }}
+              >
+                + Add metric
+              </Button>
+            </div>
+          )}
         </div>
       ) : (
         <div className="text-center radius-lg padding-3 margin-y-1 border-base border-dashed bg-base-lightest border">

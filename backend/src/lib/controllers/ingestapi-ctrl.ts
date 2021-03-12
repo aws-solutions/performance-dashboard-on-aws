@@ -22,25 +22,6 @@ async function createDataset(req: Request, res: Response) {
     return res.status(400).send("Missing required field `data`");
   }
 
-  if (metadata.tags) {
-    if (!Array.isArray(metadata.tags)) {
-      return res.status(400).send("Tags must be sent as a list");
-    }
-    if (metadata.tags.length > 5) {
-      return res
-        .status(400)
-        .send("You have exceeded the maximum allowed tags of 5.");
-    }
-  }
-
-  if (metadata.description && metadata.description.length > 140) {
-    return res
-      .status(400)
-      .send(
-        "You have provided a description that exceeded the maximum allowed length of 140 characters."
-      );
-  }
-
   if (
     metadata.schema &&
     !Object.values(DatasetSchema).includes(metadata.schema)
@@ -69,13 +50,12 @@ async function createDataset(req: Request, res: Response) {
       },
       sourceType: SourceType.IngestApi,
       schema: metadata.schema,
-      description: metadata.description,
-      tags: metadata.tags,
     });
 
     await repo.saveDataset(dataset);
     res.json(dataset);
   } catch (err) {
+    console.log(err);
     logger.error("Failed to create dataset %o, %o", metadata, parsedData);
     res.status(400).send("Unable to create dataset");
   }

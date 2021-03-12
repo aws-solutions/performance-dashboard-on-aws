@@ -4,21 +4,23 @@ exports[`renders an empty box 1`] = `
 <div>
   <div>
     <div
-      class="text-center radius-lg padding-5 margin-y-3 border-base border-dashed bg-base-lightest border"
+      class="border-base-lighter border-1px shadow-2 z-300 radius-md padding-2 position-sticky bg-white text-center padding-5 margin-y-3"
     >
-      <p>
-        This dashboard is empty. Build the dashboard by adding 
-        <br />
-        charts, tables, text, and more as content.
-      </p>
-      <div
-        class="text-center margin-top-4"
-      >
-        <button
-          class="usa-button usa-button--base margin-top-1"
+      <div>
+        <p>
+          This dashboard is empty. Build the dashboard by adding 
+          <br />
+          charts, tables, text, and more as content.
+        </p>
+        <div
+          class="text-center margin-top-4"
         >
-          + Add content
-        </button>
+          <button
+            class="usa-button usa-button--base margin-top-1"
+          >
+            + Add content item
+          </button>
+        </div>
       </div>
     </div>
   </div>

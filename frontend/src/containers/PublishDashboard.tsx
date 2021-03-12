@@ -8,6 +8,8 @@ import {
   useFriendlyUrl,
 } from "../hooks";
 import { DashboardState, LocationState } from "../models";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
 import Alert from "../components/Alert";
 import AlertContainer from "../containers/AlertContainer";
@@ -17,9 +19,8 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import dayjs from "dayjs";
 import Spinner from "../components/Spinner";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import MarkdownRender from "../components/MarkdownRender";
+import FriendlyURLInput from "../components/FriendlyURLInput";
 import "./PublishDashboard.css";
 
 interface PathParams {
@@ -29,20 +30,21 @@ interface PathParams {
 interface FormValues {
   releaseNotes: string;
   acknowledge: boolean;
-  friendlyURL: string;
 }
 
 function PublishDashboard() {
   const { dashboardId } = useParams<PathParams>();
   const history = useHistory<LocationState>();
-  const [step, setStep] = useState<number>(0);
+  const [step, setStep] = useState(0);
   const { settings } = useSettings();
   const { dashboard, reloadDashboard, setDashboard } = useDashboard(
     dashboardId
   );
 
-  const { friendlyURL } = useFriendlyUrl(dashboard);
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
+  const [desiredUrl, setDesiredUrl] = useState("");
+  const suggestedUrl = useFriendlyUrl(dashboard, versions);
+
   const {
     register,
     errors,
@@ -54,10 +56,13 @@ function PublishDashboard() {
 
   const releaseNotes = watch("releaseNotes");
   const acknowledge = watch("acknowledge");
-  const published = versions.find((v) => v.state === DashboardState.Published);
 
   const onPreview = () => {
     history.push(`/admin/dashboard/${dashboardId}`);
+  };
+
+  const hasPublishedVersion = (): boolean => {
+    return !!versions.find((v) => v.state === DashboardState.Published);
   };
 
   const onContinue = async () => {
@@ -120,7 +125,7 @@ function PublishDashboard() {
           dashboardId,
           dashboard.updatedAt,
           values.releaseNotes,
-          values.friendlyURL || undefined
+          desiredUrl || suggestedUrl.friendlyURL
         );
 
         history.push(`/admin/dashboards?tab=published`, {
@@ -144,7 +149,7 @@ function PublishDashboard() {
     }
   };
 
-  if (!dashboard) {
+  if (!dashboard || !suggestedUrl) {
     return <Spinner className="text-center margin-top-9" label="Loading" />;
   }
 
@@ -261,14 +266,10 @@ function PublishDashboard() {
           </div>
 
           <div hidden={step !== 1}>
-            <TextField
-              id="friendlyURL"
-              name="friendlyURL"
-              label="Dashboard URL"
-              error={errors.friendlyURL && "Please enter a valid URL"}
-              hint="Edit or confirm the URL that will be used to publish this dashboard."
-              register={register}
-              defaultValue={friendlyURL}
+            <FriendlyURLInput
+              onChange={(url: string) => setDesiredUrl(url)}
+              value={desiredUrl || suggestedUrl.friendlyURL}
+              showWarning={hasPublishedVersion()}
             />
 
             <div className="margin-top-3">
@@ -324,14 +325,11 @@ function PublishDashboard() {
                         }`}
                       />
                     </span>
-                    {published &&
-                    published.state === DashboardState.Published ? (
+                    {hasPublishedVersion() && (
                       <p>
                         I also understand that this will overwrite the existing
                         published version of the dashboard.
                       </p>
-                    ) : (
-                      ""
                     )}
                   </td>
                 </tr>

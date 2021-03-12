@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { Metric, LocationState, Dataset, DatasetSchema } from "../models";
+import {
+  Metric,
+  LocationState,
+  Dataset,
+  DatasetSchema,
+  DatasetType,
+} from "../models";
 import { useDashboard, useWidget } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -113,6 +119,7 @@ function EditMetrics() {
           datasetId: newDataset.id,
           s3Key: newDataset.s3Key,
           oneMetricPerRow: values.oneMetricPerRow,
+          datasetType: DatasetType.CreateNew,
         },
         widget.updatedAt
       );
@@ -267,6 +274,7 @@ function EditMetrics() {
                   onMoveDown={onMoveMetricDown}
                   defaultChecked={oneMetricPerRow}
                   register={register}
+                  allowAddMetric
                 />
               </fieldset>
               <br />

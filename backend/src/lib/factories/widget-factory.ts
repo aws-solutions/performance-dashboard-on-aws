@@ -245,6 +245,7 @@ function createMetricsWidget(widget: Widget): MetricsWidget {
       datasetId: widget.content.datasetId,
       oneMetricPerRow: widget.content.oneMetricPerRow,
       s3Key: widget.content.s3Key,
+      datasetType: widget.content.datasetType,
     },
   };
 }

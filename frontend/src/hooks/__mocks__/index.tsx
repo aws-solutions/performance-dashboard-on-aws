@@ -290,6 +290,15 @@ export function useDatasets() {
       },
       sourceType: SourceType.IngestApi,
     },
+    {
+      id: "456",
+      fileName: "def",
+      s3Key: {
+        raw: "",
+        json: "def.json",
+      },
+      sourceType: SourceType.IngestApi,
+    },
   ]);
 
   const [dynamicDatasets] = useState([
@@ -299,6 +308,18 @@ export function useDatasets() {
       s3Key: {
         raw: "",
         json: "abc.json",
+      },
+      sourceType: SourceType.IngestApi,
+    },
+  ]);
+
+  const [dynamicMetricDatasets] = useState([
+    {
+      id: "456",
+      fileName: "def",
+      s3Key: {
+        raw: "",
+        json: "def.json",
       },
       sourceType: SourceType.IngestApi,
     },
@@ -322,6 +343,7 @@ export function useDatasets() {
     loadingDatasets: false,
     datasets: datasets,
     dynamicDatasets: dynamicDatasets,
+    dynamicMetricDatasets: dynamicMetricDatasets,
     staticDatasets: staticDatasets,
     reloadDatasets: jest.fn(),
   };

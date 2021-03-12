@@ -32,8 +32,6 @@ test("renders title and subtitles", async () => {
   expect(
     await screen.findByRole("heading", { name: "Add metrics" })
   ).toBeInTheDocument();
-  expect(await screen.findByText("Configure metrics")).toBeInTheDocument();
-  expect(await screen.findByText("Step 2 of 2")).toBeInTheDocument();
 });
 
 test("renders a textfield for metrics title", async () => {
@@ -51,7 +49,20 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     wrapper: MemoryRouter,
   });
 
-  const submitButton = getByRole("button", { name: "Add metrics" });
+  const continueButton = getByRole("button", { name: "Continue" });
+
+  const radioButton = getByLabelText("Create new");
+
+  await waitFor(() => {
+    continueButton.removeAttribute("disabled");
+    fireEvent.click(radioButton);
+  });
+
+  await act(async () => {
+    fireEvent.click(continueButton);
+  });
+
+  const submitButton = getByText("Add Metrics");
 
   fireEvent.input(getByLabelText("Metrics title"), {
     target: {

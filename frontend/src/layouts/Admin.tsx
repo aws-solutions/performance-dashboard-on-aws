@@ -6,12 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
 import Logo from "../components/Logo";
-<<<<<<< HEAD
 import Header from "../components/Header";
-=======
 import Alert from "../components/Alert";
 import EnvConfig from "../services/EnvConfig";
->>>>>>> Re-enable Change Role functionality.  Removed ability to map group membership from IdP. Create Alert message if signed in  user is not Editor or Admin
 
 interface LayoutProps {
   children: ReactNode;

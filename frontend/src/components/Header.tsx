@@ -8,7 +8,7 @@ interface Props {
 function Header(props: Props) {
   return (
     <header
-      className={`border-base-lighter border-width-1px shadow-2 z-500 position-sticky top-0 bg-white ${props.className}`}
+      className={`border-base-lighter border-width-1px shadow-2 z-top position-sticky top-0 bg-white ${props.className}`}
     >
       {props.children}
     </header>

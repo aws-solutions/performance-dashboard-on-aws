@@ -8,7 +8,7 @@ interface Props {
 function PrimaryActionBar(props: Props) {
   return (
     <div
-      className={`border-base-lighter border-1px shadow-3 z-top radius-md padding-2 ${props.className}`}
+      className={`border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white ${props.className}`}
     >
       {props.children}
     </div>

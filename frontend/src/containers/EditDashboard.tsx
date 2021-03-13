@@ -278,7 +278,7 @@ function EditDashboard() {
               </Link>
             }
           />
-          <hr />
+          <div className="border-base-lighter border-bottom" />
           <WidgetList
             widgets={dashboard ? dashboard.widgets : []}
             onClick={onAddContent}

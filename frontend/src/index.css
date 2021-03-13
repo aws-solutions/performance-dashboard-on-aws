@@ -78,3 +78,7 @@ p {
 .recharts-legend-item {
   margin-right: 16px !important;
 }
+
+body {
+  background-color: #fafafa;
+}

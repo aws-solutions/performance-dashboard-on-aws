@@ -8,7 +8,7 @@ interface Props {
 function ContentItem(props: Props) {
   return (
     <div
-      className={`border-base-lighter border-1px shadow-1 z-200 radius-lg ${props.className}`}
+      className={`border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white ${props.className}`}
     >
       {props.children}
     </div>

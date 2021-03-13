@@ -8,6 +8,7 @@ type UseDatasetsHook = {
   loadingDatasets: boolean;
   datasets: Array<Dataset>;
   dynamicDatasets: Array<Dataset>;
+  dynamicMetricDatasets: Array<Dataset>;
   staticDatasets: Array<Dataset>;
   reloadDatasets: Function;
 };
@@ -16,6 +17,9 @@ export function useDatasets(): UseDatasetsHook {
   const [loadingDatasets, setLoadingDatasets] = useState(false);
   const [datasets, setDatasets] = useState<Dataset[]>([]);
   const [dynamicDatasets, setDynamicDatasets] = useState<Dataset[]>([]);
+  const [dynamicMetricDatasets, setDynamicMetricDatasets] = useState<Dataset[]>(
+    []
+  );
   const [staticDatasets, setStaticDatasets] = useState<Dataset[]>([]);
 
   const fetchData = useCallback(async () => {
@@ -24,7 +28,19 @@ export function useDatasets(): UseDatasetsHook {
     if (data) {
       setDatasets(data);
       setDynamicDatasets(
-        data.filter((dataset) => dataset.sourceType === SourceType.IngestApi)
+        data.filter(
+          (dataset) =>
+            dataset.sourceType === SourceType.IngestApi &&
+            dataset.schema === DatasetSchema.None
+        )
+      );
+
+      setDynamicMetricDatasets(
+        data.filter(
+          (dataset) =>
+            dataset.sourceType === SourceType.IngestApi &&
+            dataset.schema === DatasetSchema.Metrics
+        )
       );
 
       setStaticDatasets(
@@ -47,6 +63,7 @@ export function useDatasets(): UseDatasetsHook {
     loadingDatasets,
     datasets,
     dynamicDatasets,
+    dynamicMetricDatasets,
     staticDatasets,
     reloadDatasets: fetchData,
   };

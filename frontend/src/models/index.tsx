@@ -27,6 +27,7 @@ export enum DatasetType {
   DynamicDataset = "DynamicDataset",
   StaticDataset = "StaticDataset",
   CsvFileUpload = "CsvFileUpload",
+  CreateNew = "CreateNew",
 }
 
 export type Dashboard = {
@@ -152,6 +153,7 @@ export interface MetricsWidget extends Widget {
     title: string;
     datasetId: string;
     oneMetricPerRow: boolean;
+    datasetType?: DatasetType;
     s3Key: {
       raw: string;
       json: string;

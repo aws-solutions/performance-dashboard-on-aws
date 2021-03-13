@@ -14,6 +14,7 @@ import papaparse from "papaparse";
 
 jest.mock("../../services/BackendService");
 jest.mock("../../services/StorageService");
+jest.mock("../../hooks");
 jest.mock("papaparse");
 
 beforeEach(() => {
@@ -54,6 +55,16 @@ test("renders a file upload input", async () => {
   fireEvent.click(radioButton);
 
   expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();
+});
+
+test("renders table for dynamic dataset", async () => {
+  render(<AddChart />, { wrapper: MemoryRouter });
+
+  const radioButton = await screen.findByLabelText("Dynamic dataset");
+  fireEvent.click(radioButton);
+
+  expect(screen.getByRole("table")).toBeInTheDocument();
+  expect(screen.getByText("abc")).toBeInTheDocument();
 });
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {

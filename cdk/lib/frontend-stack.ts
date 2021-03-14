@@ -89,7 +89,7 @@ export class FrontendStack extends cdk.Stack {
      */
     const frontendDeploy = new s3Deploy.BucketDeployment(
       this,
-      "DeployWithInvalidation",
+      "DeployFrontend",
       {
         sources: [s3Deploy.Source.asset("../frontend/build")],
         destinationBucket: this.frontendBucket,

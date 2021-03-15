@@ -129,7 +129,8 @@ async function editDashboard(
 async function publishDashboard(
   dashboardId: string,
   updatedAt: Date,
-  releaseNotes: string
+  releaseNotes: string,
+  friendlyURL?: string
 ) {
   const headers = await authHeaders();
   return await API.put(apiName, `dashboard/${dashboardId}/publish`, {
@@ -137,6 +138,7 @@ async function publishDashboard(
     body: {
       updatedAt,
       releaseNotes,
+      friendlyURL,
     },
   });
 }

@@ -27,6 +27,7 @@ export enum DatasetType {
   DynamicDataset = "DynamicDataset",
   StaticDataset = "StaticDataset",
   CsvFileUpload = "CsvFileUpload",
+  CreateNew = "CreateNew",
 }
 
 export type Dashboard = {
@@ -42,6 +43,9 @@ export type Dashboard = {
   state: string;
   updatedAt: Date;
   createdBy: string;
+  submittedBy?: string;
+  publishedBy?: string;
+  archivedBy?: string;
   friendlyURL?: string;
 };
 
@@ -60,6 +64,7 @@ export type DashboardVersion = {
   id: string;
   version: number;
   state: DashboardState;
+  friendlyURL?: string;
 };
 
 export type DashboardAuditLog = {
@@ -148,6 +153,7 @@ export interface MetricsWidget extends Widget {
     title: string;
     datasetId: string;
     oneMetricPerRow: boolean;
+    datasetType?: DatasetType;
     s3Key: {
       raw: string;
       json: string;
@@ -248,6 +254,9 @@ export type LocationState = {
   oneMetricPerRow?: boolean;
   metricTitle?: string;
   origin?: string;
+  json?: string;
+  redirectUrl?: string;
+  crumbLabel?: string;
 };
 
 export enum UserRoles {

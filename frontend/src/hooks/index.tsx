@@ -4,6 +4,7 @@ import {
   usePublicDashboard,
   useDashboardVersions,
   useDashboardHistory,
+  useFriendlyUrl,
 } from "./dashboard-hooks";
 import { useWidget, useColors, useWidgetDataset } from "./widget-hooks";
 import { useTopicAreas, useTopicArea } from "./topicarea-hooks";
@@ -14,6 +15,7 @@ import { useUsers, useCurrentAuthenticatedUser } from "./user-hooks";
 import { useDateTimeFormatter } from "./datetime-hooks";
 import { useImage } from "./image-hooks";
 import { useLogo } from "./logo-hooks";
+import { useDatasets } from "./dataset-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -46,4 +48,6 @@ export {
   useCurrentAuthenticatedUser,
   useImage,
   useLogo,
+  useFriendlyUrl,
+  useDatasets,
 };

@@ -85,6 +85,9 @@ function toItem(dashboard: Dashboard): DashboardItem {
     createdBy: dashboard.createdBy,
     updatedAt: dashboard.updatedAt.toISOString(),
     updatedBy: dashboard.updatedBy,
+    submittedBy: dashboard.submittedBy,
+    publishedBy: dashboard.publishedBy,
+    archivedBy: dashboard.archivedBy,
     deletedBy: dashboard.deletedBy,
     releaseNotes: dashboard.releaseNotes,
     friendlyURL: dashboard.friendlyURL,
@@ -105,6 +108,9 @@ function fromItem(item: DashboardItem): Dashboard {
     parentDashboardId: item.parentDashboardId,
     updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
     updatedBy: item.updatedBy,
+    submittedBy: item.submittedBy || item.createdBy,
+    publishedBy: item.publishedBy || item.createdBy,
+    archivedBy: item.archivedBy || item.createdBy,
     deletedBy: item.deletedBy,
     state: (item.state as DashboardState) || DashboardState.Draft,
     releaseNotes: item.releaseNotes,
@@ -139,17 +145,8 @@ function toVersion(dashboard: Dashboard): DashboardVersion {
     id: dashboard.id,
     version: dashboard.version,
     state: dashboard.state,
+    friendlyURL: dashboard.friendlyURL,
   };
-}
-
-function generateFriendlyURL(dashboardName: string): string {
-  return dashboardName
-    .trim()
-    .toLocaleLowerCase()
-    .replace(/[!#$&'\(\)\*\+,\/:;=\?@\[\]]+/g, " ") // remove RFC-3986 reserved characters
-    .replace(/\s+/g, "-") // replace spaces for dashes
-    .replace(/-+/g, "-") // convert consecutive dashes to singular dash
-    .replace(/^-+|-+$/g, ""); // remove dashes at the end and beginning
 }
 
 export default {
@@ -160,6 +157,5 @@ export default {
   itemId,
   toPublic,
   toVersion,
-  generateFriendlyURL,
   dashboardIdFromPk,
 };

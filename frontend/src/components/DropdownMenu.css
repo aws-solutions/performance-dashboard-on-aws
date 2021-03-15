@@ -1,9 +1,18 @@
 [data-reach-menu-item] {
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
   margin-right: 10px;
   margin-left: 10px;
-  font-size: 15px;
+  border-radius: 0.2rem;
+}
+
+[data-reach-menu-list],
+[data-reach-menu-items] {
+  padding: 0.7rem 0 0.8rem 0 !important;
+}
+
+[data-reach-menu-item][data-selected] {
+  background: #565c65 !important;
 }
 
 [data-reach-menu-link] {
@@ -17,8 +26,8 @@
   min-width: 120px;
 }
 
-[data-reach-menu-item][aria-disabled="true"] {
-  cursor: default;
+[data-reach-menu-item][aria-disabled] {
+  cursor: default !important;
 }
 
 [data-reach-menu-list] {

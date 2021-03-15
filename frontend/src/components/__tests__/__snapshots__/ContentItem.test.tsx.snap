@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a content item 1`] = `
+<div>
+  <div
+    class="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white margin-y-1"
+  >
+    <p>
+      Test
+    </p>
+  </div>
+</div>
+`;

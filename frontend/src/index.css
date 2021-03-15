@@ -43,8 +43,15 @@ p {
   overflow: auto;
 }
 
-.recharts-legend-wrapper {
+.line-chart > .recharts-legend-wrapper,
+.column-chart > .recharts-legend-wrapper {
   top: -24px !important;
+  left: 0 !important;
+}
+
+.bar-chart > .recharts-legend-wrapper,
+.part-to-whole-chart > .recharts-legend-wrapper {
+  top: -20px !important;
 }
 
 .overflow-hidden:hover {
@@ -57,4 +64,54 @@ p {
 
 .z-index-logout {
   z-index: 100000;
+}
+
+.recharts-default-legend {
+  text-align: left !important;
+}
+
+.bar-chart > * .recharts-default-legend,
+.part-to-whole-chart > * .recharts-default-legend {
+  margin-left: 8px !important;
+}
+
+.recharts-legend-item {
+  margin-right: 16px !important;
+}
+
+body {
+  background-color: #fafafa;
+}
+
+.usa-header--basic .usa-nav__primary-item > .usa-current::after,
+.usa-header--basic .usa-nav__link:hover::after {
+  background-color: #71767a !important;
+}
+
+.usa-header--basic .usa-nav__primary-item > .usa-current::after,
+.usa-header--basic .usa-nav__link:hover::after {
+  background-color: #71767a !important;
+}
+
+@media all and (min-width: 64em) {
+  .usa-nav__primary > .usa-nav__primary-item > a:hover {
+    color: #71767a !important;
+  }
+}
+
+.usa-nav__primary button:hover {
+  color: #71767a !important;
+}
+
+@media all and (min-width: 64em) {
+  .usa-nav__primary button[aria-expanded="true"] {
+    background-color: #71767a !important;
+    color: white !important;
+  }
+}
+
+@media all and (min-width: 64em) {
+  .usa-nav__submenu {
+    background-color: #71767a !important;
+  }
 }

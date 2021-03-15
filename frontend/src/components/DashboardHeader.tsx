@@ -17,7 +17,7 @@ function DashboardHeader(props: Props) {
   const { t } = useTranslation();
 
   return (
-    <>
+    <div className="usa-prose">
       <div className={props.unpublished ? "" : "margin-top-2"}>
         <h1
           className={`display-inline-block ${
@@ -45,7 +45,7 @@ function DashboardHeader(props: Props) {
           />
         )}
       </div>
-    </>
+    </div>
   );
 }
 

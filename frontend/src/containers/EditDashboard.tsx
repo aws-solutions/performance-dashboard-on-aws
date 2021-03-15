@@ -18,6 +18,7 @@ import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import UtilsService from "../services/UtilsService";
 import AlertContainer from "../containers/AlertContainer";
 import DashboardHeader from "../components/DashboardHeader";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 
 interface PathParams {
   dashboardId: string;
@@ -178,8 +179,8 @@ function EditDashboard() {
       ) : (
         <>
           <AlertContainer id="top-alert" />
-          <div className="grid-row">
-            <div className="grid-col text-left">
+          <PrimaryActionBar className="grid-row">
+            <div className="grid-col text-left flex-row flex-align-center display-flex">
               <ul className="usa-button-group">
                 <li className="usa-button-group__item">
                   <span className="usa-tag" style={{ cursor: "text" }}>
@@ -265,7 +266,7 @@ function EditDashboard() {
                 )}
               />
             </div>
-          </div>
+          </PrimaryActionBar>
           <DashboardHeader
             name={dashboard?.name}
             topicAreaName={dashboard?.topicAreaName}
@@ -277,7 +278,7 @@ function EditDashboard() {
               </Link>
             }
           />
-          <hr />
+          <div className="border-base-lighter border-bottom" />
           <WidgetList
             widgets={dashboard ? dashboard.widgets : []}
             onClick={onAddContent}

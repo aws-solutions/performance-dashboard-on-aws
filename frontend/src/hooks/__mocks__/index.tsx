@@ -290,6 +290,15 @@ export function useDatasets() {
       },
       sourceType: SourceType.IngestApi,
     },
+    {
+      id: "456",
+      fileName: "def",
+      s3Key: {
+        raw: "",
+        json: "def.json",
+      },
+      sourceType: SourceType.IngestApi,
+    },
   ]);
 
   const [dynamicDatasets] = useState([
@@ -304,6 +313,18 @@ export function useDatasets() {
     },
   ]);
 
+  const [dynamicMetricDatasets] = useState([
+    {
+      id: "456",
+      fileName: "def",
+      s3Key: {
+        raw: "",
+        json: "def.json",
+      },
+      sourceType: SourceType.IngestApi,
+    },
+  ]);
+
   const [staticDatasets] = useState([
     {
       id: "123",
@@ -312,6 +333,8 @@ export function useDatasets() {
         raw: "abc.csv",
         json: "abc.json",
       },
+      createdBy: "andrew",
+      updatedAt: "1/1/2000",
       sourceType: SourceType.FileUpload,
     },
   ]);
@@ -320,6 +343,7 @@ export function useDatasets() {
     loadingDatasets: false,
     datasets: datasets,
     dynamicDatasets: dynamicDatasets,
+    dynamicMetricDatasets: dynamicMetricDatasets,
     staticDatasets: staticDatasets,
     reloadDatasets: jest.fn(),
   };
@@ -480,5 +504,12 @@ export function useWidgetDataset(widget: Widget) {
     loading,
     json,
     jsonHeaders,
+  };
+}
+
+export function useFriendlyUrl() {
+  const [friendlyURL] = useState("/foo");
+  return {
+    friendlyURL,
   };
 }

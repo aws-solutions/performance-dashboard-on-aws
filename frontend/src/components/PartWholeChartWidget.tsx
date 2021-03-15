@@ -10,7 +10,6 @@ import {
 } from "recharts";
 import { useColors } from "../hooks";
 import MarkdownRender from "./MarkdownRender";
-import "./PartWholeChartWidget.css";
 
 type Props = {
   title: string;
@@ -104,17 +103,13 @@ const PartWholeChartWidget = (props: Props) => {
 
   return (
     <div>
-      <h2
-        className={`margin-left-1 margin-bottom-${
-          props.summaryBelow ? "4" : "1"
-        }`}
-      >
+      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
       </h2>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="margin-left-1 margin-top-1 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove"
         />
       )}
       {partWholeData.current.length && (
@@ -123,6 +118,7 @@ const PartWholeChartWidget = (props: Props) => {
           height={data && data.length > 15 ? 600 : 250}
         >
           <BarChart
+            className="part-to-whole-chart"
             data={partWholeData.current}
             layout="vertical"
             margin={{ right: -50, left: -50 }}
@@ -182,6 +178,7 @@ const PartWholeChartWidget = (props: Props) => {
                   stroke="white"
                   strokeWidth={2}
                   hide={hiddenParts.includes(part)}
+                  isAnimationActive={false}
                 />
               );
             })}
@@ -191,7 +188,7 @@ const PartWholeChartWidget = (props: Props) => {
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="margin-left-1 margin-top-1 margin-bottom-0 chartSummaryBelow"
+          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
     </div>

@@ -14,6 +14,7 @@ import papaparse from "papaparse";
 
 jest.mock("../../services/BackendService");
 jest.mock("../../services/StorageService");
+jest.mock("../../hooks");
 jest.mock("papaparse");
 
 beforeEach(() => {
@@ -34,8 +35,12 @@ test("renders title and subtitles", async () => {
   expect(
     await screen.findByRole("heading", { name: "Add chart" })
   ).toBeInTheDocument();
-  expect(await screen.findByText("Configure chart")).toBeInTheDocument();
-  expect(await screen.findByText("Step 2 of 2")).toBeInTheDocument();
+  expect(await screen.findByText("Data")).toBeInTheDocument();
+  expect(
+    await screen.findByText(
+      "Choose an existing dataset or create a new one to populate this chart."
+    )
+  ).toBeInTheDocument();
 });
 
 test("renders a textfield for chart title", async () => {
@@ -46,12 +51,20 @@ test("renders a textfield for chart title", async () => {
 test("renders a file upload input", async () => {
   render(<AddChart />, { wrapper: MemoryRouter });
 
-  const radioButton = await screen.findByLabelText(
-    "Create a new dataset from file"
-  );
+  const radioButton = await screen.findByLabelText("Static dataset");
   fireEvent.click(radioButton);
 
-  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
+  expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();
+});
+
+test("renders table for dynamic dataset", async () => {
+  render(<AddChart />, { wrapper: MemoryRouter });
+
+  const radioButton = await screen.findByLabelText("Dynamic dataset");
+  fireEvent.click(radioButton);
+
+  expect(screen.getByRole("table")).toBeInTheDocument();
+  expect(screen.getByText("abc")).toBeInTheDocument();
 });
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
@@ -60,10 +73,24 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     wrapper: MemoryRouter,
   });
 
-  const submitButton = getByRole("button", { name: "Add chart" });
+  const continueButton = getByRole("button", { name: "Continue" });
 
-  const radioButton = getByLabelText("Create a new dataset from file");
-  fireEvent.click(radioButton);
+  const radioButton = getByLabelText("Static dataset");
+
+  await waitFor(() => {
+    continueButton.removeAttribute("disabled");
+    fireEvent.click(radioButton);
+  });
+
+  fireEvent.change(getByLabelText("Static datasets"), {
+    target: {
+      files: ["dataset.csv"],
+    },
+  });
+
+  await act(async () => {
+    fireEvent.click(continueButton);
+  });
 
   fireEvent.input(getByLabelText("Chart title"), {
     target: {
@@ -71,11 +98,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  fireEvent.change(getByLabelText("File upload"), {
-    target: {
-      files: ["dataset.csv"],
-    },
-  });
+  const submitButton = getByText("Add Chart");
 
   await waitFor(() => {
     expect(parseSpy).toHaveBeenCalled();

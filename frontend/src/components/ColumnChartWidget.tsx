@@ -1,4 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+// @ts-ignore
+import { CategoricalChartWrapper } from "recharts";
 import {
   XAxis,
   YAxis,
@@ -30,6 +32,8 @@ type Props = {
 const ColumnChartWidget = (props: Props) => {
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
+  const [yAxisMargin, setYAxisMargin] = useState(0);
+  const [chartLoaded, setChartLoaded] = useState(false);
 
   const colors = useColors(
     props.columns.length,
@@ -40,6 +44,27 @@ const ColumnChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
+
+  /**
+   * Calculate the YAxis margin needed. This is important after we started
+   * showing the ticks numbers as locale strings and commas are being
+   * added. Margin: Count the commas in the largestTick to locale string, and
+   * multiply by pixelsByCharacter.
+   */
+  const columnChartRef = useRef(null);
+  useEffect(() => {
+    if (columnChartRef && columnChartRef.current) {
+      const yAxisMap = (columnChartRef.current as CategoricalChartWrapper).state
+        .yAxisMap;
+      if (yAxisMap && yAxisMap[0]) {
+        const largestTick: number = Math.max(...yAxisMap[0].niceTicks);
+        const largestTickLocaleString: string = largestTick.toLocaleString();
+        const numberOfCommas: number =
+          largestTickLocaleString.match(/,/g)?.length || 0;
+        setYAxisMargin(numberOfCommas * pixelsByCharacter);
+      }
+    }
+  }, [columnChartRef, columnChartRef.current, chartLoaded]);
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -69,12 +94,15 @@ const ColumnChartWidget = (props: Props) => {
 
   /**
    * Calculate the width percent out of the total width
-   * depending on the container.
+   * depending on the container. Width: (largestHeader + 1) *
+   * headersCount * pixelsByCharacter + marginLeft + marginRight
    */
   const widthPercent =
-    (UtilsService.getLargestHeader(columns, data) *
+    (((UtilsService.getLargestHeader(columns, data) + 1) *
       (data ? data.length : 0) *
-      pixelsByCharacter *
+      pixelsByCharacter +
+      50 +
+      50) *
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
@@ -82,17 +110,13 @@ const ColumnChartWidget = (props: Props) => {
     <div
       className={`overflow-hidden${widthPercent > 100 ? " right-shadow" : ""}`}
     >
-      <h2
-        className={`margin-left-1 margin-bottom-${
-          props.summaryBelow ? "4" : "1"
-        }`}
-      >
+      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
       </h2>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="margin-left-1 margin-top-0 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
         />
       )}
       {data && data.length && (
@@ -100,7 +124,15 @@ const ColumnChartWidget = (props: Props) => {
           width={`${Math.max(widthPercent, 100)}%`}
           height={300}
         >
-          <BarChart data={props.data} margin={{ right: 0, left: 0 }}>
+          <BarChart
+            className="column-chart"
+            data={props.data}
+            margin={{ right: 0, left: yAxisMargin }}
+            ref={(el: CategoricalChartWrapper) => {
+              columnChartRef.current = el;
+              setChartLoaded(!!el);
+            }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey={props.columns.length ? props.columns[0] : ""}
@@ -138,6 +170,7 @@ const ColumnChartWidget = (props: Props) => {
                     key={index}
                     fillOpacity={getOpacity(column)}
                     hide={hiddenColumns.includes(column)}
+                    isAnimationActive={false}
                   />
                 );
               })}
@@ -147,7 +180,7 @@ const ColumnChartWidget = (props: Props) => {
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="margin-left-1 margin-top-1 margin-bottom-0 chartSummaryBelow"
+          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
     </div>

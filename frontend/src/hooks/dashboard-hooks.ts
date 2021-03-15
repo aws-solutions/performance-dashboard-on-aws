@@ -8,6 +8,7 @@ import {
 } from "../models";
 import BackendService from "../services/BackendService";
 import AuditTrailService from "../services/AuditTrailService";
+import FriendlyURLGenerator from "../services/FriendlyURLGenerator";
 
 type UseDashboardHook = {
   loading: boolean;
@@ -236,5 +237,37 @@ export function useDashboardHistory(
   return {
     loading,
     auditlogs,
+  };
+}
+
+type UseFriendlyUrlHook = {
+  friendlyURL: string;
+};
+
+export function useFriendlyUrl(
+  dashboard?: Dashboard,
+  versions?: DashboardVersion[]
+): UseFriendlyUrlHook {
+  const [friendlyURL, setFriendlyURL] = useState("");
+  useEffect(() => {
+    if (dashboard) {
+      const published = versions?.find(
+        (version) => version.state === DashboardState.Published
+      );
+
+      if (dashboard.friendlyURL) {
+        setFriendlyURL(dashboard.friendlyURL);
+      } else if (published && published.friendlyURL) {
+        setFriendlyURL(published.friendlyURL);
+      } else {
+        setFriendlyURL(
+          FriendlyURLGenerator.generateFromDashboardName(dashboard.name)
+        );
+      }
+    }
+  }, [dashboard]);
+
+  return {
+    friendlyURL,
   };
 }

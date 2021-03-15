@@ -14,20 +14,20 @@ const ImageWidget = (props: Props) => {
 
   return (
     <div className="preview-container">
-      <h2 className="margin-left-1 margin-top-1">{title}</h2>
+      <h2 className="margin-top-1">{title}</h2>
       {!summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="margin-left-1 margin-top-0 margin-bottom-3 imageSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-3 imageSummaryAbove"
         />
       )}
-      <div className="margin-left-1">
+      <div>
         <img src={file ? URL.createObjectURL(file) : ""} alt={altText}></img>
       </div>
       {summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="margin-left-1 margin-top-3 margin-bottom-0 imageSummaryBelow"
+          className="usa-prose margin-top-3 margin-bottom-0 imageSummaryBelow"
         />
       )}
     </div>

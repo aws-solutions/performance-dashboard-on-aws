@@ -2,55 +2,55 @@
 
 exports[`metrics preview should match snapshot 1`] = `
 <div>
-  <h2
-    class="margin-top-4 margin-left-1"
-  >
-    test title
-  </h2>
-  <div
-    class="margin-left-1"
-  >
-    <div
-      class="grid-col"
+  <div>
+    <h2
+      class="margin-top-4"
     >
+      test title
+    </h2>
+    <div>
       <div
-        class="grid-row flex-column"
+        class="grid-col"
       >
         <div
-          class="grid-col grid-row flex-row"
+          class="grid-row flex-column"
         >
           <div
-            class="grid-col-4 padding-05"
+            class="grid-col grid-row flex-row"
           >
             <div
-              class="display-flex flex-column border-base-lightest border-2px height-card padding-1"
+              class="grid-col-4 padding-05"
             >
               <div
-                class="flex-5"
+                class="display-flex flex-column border-base-lightest border-2px height-card padding-1"
               >
-                <p
-                  class="text-base-darkest text-bold margin-0"
+                <div
+                  class="flex-5"
                 >
-                  test title
-                </p>
-              </div>
-              <div
-                class="flex-3 usa-tooltip"
-                data-position="bottom"
-                title="1"
-              >
-                <h1
-                  class="margin-0 text-no-wrap overflow-hidden text-overflow-ellipsis"
+                  <p
+                    class="text-base-darkest text-bold margin-0"
+                  >
+                    test title
+                  </p>
+                </div>
+                <div
+                  class="flex-3 usa-tooltip"
+                  data-position="bottom"
+                  title="1"
                 >
-                  1
-                </h1>
+                  <h1
+                    class="margin-0 text-no-wrap overflow-hidden text-overflow-ellipsis"
+                  >
+                    1
+                  </h1>
+                </div>
+                <div
+                  class="flex-2"
+                />
+                <div
+                  class="flex-2"
+                />
               </div>
-              <div
-                class="flex-2"
-              />
-              <div
-                class="flex-2"
-              />
             </div>
           </div>
         </div>

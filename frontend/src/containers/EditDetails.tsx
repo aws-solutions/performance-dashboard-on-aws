@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas, useDashboard, useSettings } from "../hooks";
 import BackendService from "../services/BackendService";
-import Markdown from "../components/Markdown";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
 
 interface FormValues {
@@ -28,18 +28,11 @@ function EditDetails() {
   const { topicareas } = useTopicAreas();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
-  const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
-  const [name, setName] = useState("");
-  const [topicAreaName, setTopicAreaName] = useState("");
-  const [description, setDescription] = useState("");
+  const { register, errors, handleSubmit, watch } = useForm<FormValues>();
 
-  useEffect(() => {
-    if (dashboard) {
-      setName(dashboard.name);
-      setTopicAreaName(dashboard.topicAreaName);
-      setDescription(dashboard.description || "");
-    }
-  }, [dashboard]);
+  const name = watch("name");
+  const description = watch("description");
+  const topicAreaId = watch("topicAreaId");
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.editDashboard(
@@ -59,51 +52,45 @@ function EditDetails() {
     });
   };
 
-  const onFormChange = () => {
-    const { name, topicAreaId, description } = getValues();
-    setName(name);
-    setTopicAreaName(topicareas.find((t) => t.id === topicAreaId)?.name || "");
-    setDescription(description);
+  const getTopicAreaName = (topicAreaId: string) => {
+    return topicareas.find((t) => t.id === topicAreaId)?.name || "";
   };
 
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
-  const crumbs = [
-    {
-      label: "Dashboards",
-      url: "/admin/dashboards",
-    },
-    {
-      label: dashboard?.name,
-      url: `/admin/dashboard/edit/${dashboard?.id}`,
-    },
-  ];
-
-  if (!loading) {
-    crumbs.push({
-      label: "Edit details",
-      url: "",
-    });
+  if (loading || !dashboard || !topicareas || topicareas.length === 0) {
+    return <Spinner className="text-center margin-top-9" label="Loading" />;
   }
 
   return (
     <>
-      <Breadcrumbs crumbs={crumbs} />
-      <h1>Edit Details</h1>
+      <Breadcrumbs
+        crumbs={[
+          {
+            label: "Dashboards",
+            url: "/admin/dashboards",
+          },
+          {
+            label: dashboard.name,
+            url: `/admin/dashboard/edit/${dashboard?.id}`,
+          },
+          {
+            label: "Edit details",
+          },
+        ]}
+      />
 
-      {loading || !dashboard || !topicareas || topicareas.length === 0 ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
-      ) : (
-        <div className="grid-row width-desktop">
-          <div className="grid-col-6">
-            <div className="grid-row">
-              <div className="grid-col-12">
+      <div className="grid-row width-desktop">
+        <div className="grid-col-6">
+          <div className="grid-row">
+            <div className="grid-col-12">
+              <PrimaryActionBar>
+                <h1 className="margin-top-0">Edit Details</h1>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="edit-details-form usa-form usa-form--large"
-                  onChange={onFormChange}
                   data-testid="EditDetailsForm"
                 >
                   <TextField
@@ -111,7 +98,7 @@ function EditDetails() {
                     name="name"
                     label="Dashboard Name"
                     error={errors.name && "Please specify a name"}
-                    defaultValue={dashboard?.name}
+                    defaultValue={dashboard.name}
                     register={register}
                     required
                   />
@@ -133,7 +120,7 @@ function EditDetails() {
                     id="description"
                     name="description"
                     label="Description - optional"
-                    defaultValue={dashboard?.description}
+                    defaultValue={dashboard.description}
                     hint={
                       <>
                         Give your dashboard a description to explain it in more
@@ -161,28 +148,28 @@ function EditDetails() {
                     Cancel
                   </Button>
                 </form>
-              </div>
-            </div>
-          </div>
-          <div className="grid-col-6">
-            <div className="margin-left-3 margin-top-2">
-              <DashboardHeader
-                name={name}
-                topicAreaName={topicAreaName}
-                description={description}
-              />
-              <hr
-                style={{
-                  border: "none",
-                  height: "1px",
-                  backgroundColor: "#dfe1e2",
-                  margin: "2rem 0",
-                }}
-              />
+              </PrimaryActionBar>
             </div>
           </div>
         </div>
-      )}
+        <div className="grid-col-6">
+          <div className="margin-left-3 margin-top-2">
+            <DashboardHeader
+              name={name}
+              topicAreaName={getTopicAreaName(topicAreaId)}
+              description={description}
+            />
+            <hr
+              style={{
+                border: "none",
+                height: "1px",
+                backgroundColor: "#dfe1e2",
+                margin: "2rem 0",
+              }}
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

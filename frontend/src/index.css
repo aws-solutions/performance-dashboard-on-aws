@@ -115,3 +115,12 @@ body {
     background-color: #71767a !important;
   }
 }
+
+.usa-breadcrumb {
+  background-color: #fafafa;
+}
+
+.usa-table td,
+.usa-table th {
+  background-color: #fafafa;
+}

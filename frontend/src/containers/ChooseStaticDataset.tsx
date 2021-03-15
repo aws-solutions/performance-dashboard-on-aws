@@ -12,6 +12,7 @@ import Table from "../components/Table";
 import Button from "../components/Button";
 import Search from "../components/Search";
 import ScrollTop from "../components/ScrollTop";
+import StorageService from "../services/StorageService";
 import { Dataset } from "../models";
 
 interface PathParams {
@@ -30,7 +31,10 @@ function ChooseStaticDataset() {
   const { settings } = useSettings();
 
   const [filter, setFilter] = useState("");
-  const [selected, setSelected] = useState<Array<Dataset>>([]);
+  const [json, setJson] = useState<Array<any>>([]);
+  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
+    undefined
+  );
 
   const crumbs = [
     {
@@ -59,15 +63,32 @@ function ChooseStaticDataset() {
     history.goBack();
   };
 
-  const onSelect = useCallback((selectedDataset: Array<Dataset>) => {
-    setSelected(selectedDataset);
-  }, []);
+  const onSelect = useCallback(
+    (selectedDataset: Array<Dataset>) => {
+      selectStaticDataset(selectedDataset);
+    },
+    [staticDatasets]
+  );
+
+  const selectStaticDataset = async (selectedDataset: Array<Dataset>) => {
+    if (selectedDataset[0] && selectedDataset[0].s3Key) {
+      const jsonFile = selectedDataset[0].s3Key.json;
+
+      const downloadedJson = await StorageService.downloadJson(jsonFile);
+      setJson(downloadedJson);
+      setStaticDataset(staticDatasets.find((d) => d.s3Key.json === jsonFile));
+    } else {
+      setJson([]);
+      setStaticDataset(undefined);
+    }
+  };
 
   const onSubmit = () => {
     history.replace({
       pathname: state.redirectUrl,
       state: {
-        json: selected[0].s3Key.json,
+        json: json,
+        staticDataset: staticDataset,
       },
     });
   };
@@ -129,7 +150,7 @@ function ChooseStaticDataset() {
       <Button
         onClick={onSubmit}
         type="submit"
-        disabled={selected === undefined || selected.length == 0}
+        disabled={json === undefined || json.length == 0}
       >
         Select and continue
       </Button>

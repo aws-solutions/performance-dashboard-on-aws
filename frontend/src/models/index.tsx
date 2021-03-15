@@ -254,7 +254,8 @@ export type LocationState = {
   oneMetricPerRow?: boolean;
   metricTitle?: string;
   origin?: string;
-  json?: string;
+  json?: Array<any>;
+  staticDataset?: Dataset | undefined;
   redirectUrl?: string;
   crumbLabel?: string;
 };

@@ -63,16 +63,19 @@ function ChooseStaticDataset() {
     history.goBack();
   };
 
-  const onSelect = useCallback((selectedDataset: Array<Dataset>) => {
-    selectStaticDataset(selectedDataset);
-  }, []);
+  const onSelect = useCallback(
+    (selectedDataset: Array<Dataset>) => {
+      selectStaticDataset(selectedDataset);
+    },
+    [staticDatasets]
+  );
 
   const selectStaticDataset = async (selectedDataset: Array<Dataset>) => {
     if (selectedDataset[0] && selectedDataset[0].s3Key) {
       const jsonFile = selectedDataset[0].s3Key.json;
 
-      const dataset = await StorageService.downloadJson(jsonFile);
-      setJson(dataset);
+      const downloadedJson = await StorageService.downloadJson(jsonFile);
+      setJson(downloadedJson);
       setStaticDataset(staticDatasets.find((d) => d.s3Key.json === jsonFile));
     } else {
       setJson([]);

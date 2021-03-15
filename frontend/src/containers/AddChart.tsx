@@ -51,7 +51,7 @@ function AddChart() {
   const { dashboardId } = useParams<PathParams>();
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
-  const { dynamicDatasets, staticDatasets } = useDatasets();
+  const { dynamicDatasets } = useDatasets();
   const { register, errors, handleSubmit, reset } = useForm<FormValues>();
   const [currentJson, setCurrentJson] = useState<Array<any>>(
     state && state.json ? state.json : []

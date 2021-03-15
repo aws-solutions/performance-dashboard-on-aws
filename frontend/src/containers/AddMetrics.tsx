@@ -279,8 +279,6 @@ function AddMetrics() {
 
   const backStep = () => {
     setStep(0);
-    console.log(metrics);
-    console.log(datasetType);
   };
 
   const crumbs = [

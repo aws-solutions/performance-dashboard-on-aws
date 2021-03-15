@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { LocationState } from "../models";
@@ -37,6 +37,7 @@ interface FormValues {
   chartType: string;
   showTitle: boolean;
   summaryBelow: boolean;
+  datasetType: string;
 }
 
 interface PathParams {
@@ -51,16 +52,20 @@ function AddChart() {
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets } = useDatasets();
-  const { register, errors, handleSubmit } = useForm<FormValues>();
-  const [currentJson, setCurrentJson] = useState<Array<any>>([]);
+  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
+  const [currentJson, setCurrentJson] = useState<Array<any>>(
+    state && state.json ? state.json : []
+  );
   const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
-  const [staticJson, setStaticJson] = useState<Array<any>>([]);
+  const [staticJson, setStaticJson] = useState<Array<any>>(
+    state && state.json ? state.json : []
+  );
   const [csvJson, setCsvJson] = useState<Array<any>>([]);
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
   );
   const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
-    undefined
+    state && state.staticDataset ? state.staticDataset : undefined
   );
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
     undefined
@@ -75,10 +80,10 @@ function AddChart() {
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
-    undefined
+    state && state.json ? DatasetType.StaticDataset : undefined
   );
   const [showAlert, setShowAlert] = useState(true);
-  const [step, setStep] = useState<number>(0);
+  const [step, setStep] = useState<number>(state && state.json ? 1 : 0);
   const [filter, setFilter] = useState("");
 
   const { settings } = useSettings();
@@ -159,9 +164,14 @@ function AddChart() {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
-  const onSelect = useCallback((selectedDataset: Array<Dataset>) => {
-    selectDynamicDataset(selectedDataset[0]);
-  }, []);
+  const onSelect = useCallback(
+    (selectedDataset: Array<Dataset>) => {
+      if (datasetType === DatasetType.DynamicDataset) {
+        selectDynamicDataset(selectedDataset[0]);
+      }
+    },
+    [datasetType]
+  );
 
   const advanceStep = () => {
     setStep(1);
@@ -169,9 +179,6 @@ function AddChart() {
 
   const backStep = () => {
     setStep(0);
-    if (state && state.json) {
-      state.json = undefined;
-    }
   };
 
   const browseDatasets = () => {
@@ -282,26 +289,6 @@ function AddChart() {
     setDatasetLoading(false);
   };
 
-  const onSelectStaticDataset = async () => {
-    setDatasetLoading(true);
-
-    const jsonFile = state.json;
-    if (jsonFile) {
-      const dataset = await StorageService.downloadJson(jsonFile);
-      setStaticJson(dataset);
-      setCurrentJson(dataset);
-      setStaticDataset(staticDatasets.find((d) => d.s3Key.json === jsonFile));
-    } else {
-      setStaticJson([]);
-      setCurrentJson([]);
-      setStaticDataset(undefined);
-    }
-
-    state.json = undefined;
-
-    setDatasetLoading(false);
-  };
-
   const crumbs = [
     {
       label: "Dashboards",
@@ -320,12 +307,13 @@ function AddChart() {
     });
   }
 
-  if (state && state.json !== undefined) {
-    if (step !== 1) {
-      setStep(1);
-      onSelectStaticDataset();
+  useEffect(() => {
+    if (datasetType) {
+      reset({
+        datasetType,
+      });
     }
-  }
+  }, []);
 
   return (
     <>

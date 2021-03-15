@@ -217,14 +217,6 @@ export class AuthStack extends cdk.Stack {
       })
     );
 
-    authRole.addToPolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["cognito-sync:*", "cognito-identity:*"],
-        resources: ["*"],
-      })
-    );
-
     return authRole;
   }
 

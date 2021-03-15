@@ -137,7 +137,7 @@ const ColumnChartWidget = (props: Props) => {
             <XAxis
               dataKey={props.columns.length ? props.columns[0] : ""}
               type={xAxisType()}
-              padding={{ left: 20, right: 20 }}
+              padding={{ left: 50, right: 50 }}
               domain={["dataMin", "dataMax"]}
               interval={0}
               scale={xAxisType() === "number" ? "linear" : "auto"}

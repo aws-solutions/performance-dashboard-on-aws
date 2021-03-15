@@ -85,7 +85,7 @@ function EditColors() {
 
       <p>
         Customize these colors to make your dashboards appear similar in style
-        to your organization's branch or color palette.
+        to your organization's brand or color palette.
       </p>
 
       {loadingSettings && datasetColumn && datasetBar ? (

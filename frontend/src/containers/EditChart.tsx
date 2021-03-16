@@ -148,8 +148,6 @@ function EditChart() {
     dynamicDatasets,
   ]);
 
-  console.log(datasetType);
-
   useEffect(() => {
     if (datasetType) {
       reset({

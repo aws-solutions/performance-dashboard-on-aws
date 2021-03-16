@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
@@ -21,10 +21,18 @@ beforeEach(() => {
   StorageService.downloadFile = jest.fn();
 });
 
-test("renders title", async () => {
-  render(<EditChart />, { wrapper: MemoryRouter });
+test("renders title and subtitles", async () => {
+  render(<EditChart />, {
+    wrapper: MemoryRouter,
+  });
   expect(
     await screen.findByRole("heading", { name: "Edit chart" })
+  ).toBeInTheDocument();
+  expect(await screen.findByText("Data")).toBeInTheDocument();
+  expect(
+    await screen.findByText(
+      "Choose an existing dataset or create a new one to populate this chart."
+    )
   ).toBeInTheDocument();
 });
 
@@ -35,5 +43,9 @@ test("renders a textfield for chart title", async () => {
 
 test("renders a file upload input", async () => {
   render(<EditChart />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
+
+  const radioButton = await screen.findByLabelText("Static dataset");
+  fireEvent.click(radioButton);
+
+  expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();
 });

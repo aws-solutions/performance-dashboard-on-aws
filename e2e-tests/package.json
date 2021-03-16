@@ -1,0 +1,13 @@
+{
+  "name": "performance-dashboard-uitests",
+  "version": "0.8.0-beta",
+  "description": "Performance Dashboard on AWS UI Tests",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.35",
+    "cypress": "^6.7.1",
+    "typescript": "^3.8.1"
+  }
+}

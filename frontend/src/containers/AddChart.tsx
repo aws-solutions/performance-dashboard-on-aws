@@ -183,7 +183,7 @@ function AddChart() {
 
   const browseDatasets = () => {
     history.push({
-      pathname: `/admin/dashboard/${dashboardId}/add-chart/choose-static-dataset`,
+      pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/add-chart/`,
         crumbLabel: "Add chart",

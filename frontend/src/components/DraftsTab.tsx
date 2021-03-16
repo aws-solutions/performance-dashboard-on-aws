@@ -8,6 +8,7 @@ import ScrollTop from "./ScrollTop";
 import Table from "./Table";
 import Link from "./Link";
 import DropdownMenu from "../components/DropdownMenu";
+import { useTranslation } from "react-i18next";
 
 const { MenuItem, MenuLink } = DropdownMenu;
 
@@ -24,6 +25,8 @@ function DraftsTab(props: Props) {
   const history = useHistory();
   const { dashboards } = props;
 
+  const { t } = useTranslation();
+
   const createDashboard = () => {
     history.push("/admin/dashboard/create");
   };
@@ -38,10 +41,7 @@ function DraftsTab(props: Props) {
 
   return (
     <div>
-      <p>
-        You have access to view, edit, and/or publish the draft dashboards in
-        this table.
-      </p>
+      <p>{t("DraftTabDescription")}</p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-3 padding-top-1px">
           <Search id="search" onSubmit={onSearch} size="small" />

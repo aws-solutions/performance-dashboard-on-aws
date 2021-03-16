@@ -6,6 +6,9 @@ declare namespace Cypress {
     /**
      * Custom command login with Cognito authentication
      */
-    login(): Chainable<Element>;
+    login(): void;
+    createDashboard(name: string, description: string): void;
+    navigateTo(screen: string): void;
+    deleteDraftDashboard(name: string): void;
   }
 }

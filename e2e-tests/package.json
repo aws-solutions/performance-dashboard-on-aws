@@ -6,7 +6,10 @@
     "test": "cypress open"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^7.0.4",
+    "@types/chance": "^1.1.1",
     "@types/node": "^14.14.35",
+    "chance": "^1.1.7",
     "cypress": "^6.7.1",
     "typescript": "^3.8.1"
   }

@@ -1,21 +1,15 @@
-// ***********************************************
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-
-export const labels = {
+const labels = {
   signInLabel: "Sign In",
 };
 
-export const selectors = {
+const selectors = {
   signInSlot: 'slot[name="sign-in"]',
   signInUsernameInput: '[data-test="sign-in-username-input"]',
   signInPasswordInput: '[data-test="sign-in-password-input"]',
   signInSignInButton: '[data-test="sign-in-sign-in-button"]',
 };
 
-Cypress.Commands.add("login", () => {
+function login() {
   const username = Cypress.env("username");
   const password = Cypress.env("password");
 
@@ -39,4 +33,6 @@ Cypress.Commands.add("login", () => {
     .find(selectors.signInSignInButton, { includeShadowDom: true })
     .contains(labels.signInLabel)
     .click();
-});
+}
+
+export default login;

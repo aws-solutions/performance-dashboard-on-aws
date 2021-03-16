@@ -158,14 +158,10 @@ function EditChart() {
   ]);
 
   useEffect(() => {
-    // if (datasetType) {
-    //   reset({
-    //     datasetType,
-    //   });
-    // }
-    if (currentJson) {
-      console.log("are we ever here");
-      setDisplayedJson(state && state.json ? state.json : currentJson);
+    if (datasetType) {
+      reset({
+        datasetType,
+      });
     }
 
     if (

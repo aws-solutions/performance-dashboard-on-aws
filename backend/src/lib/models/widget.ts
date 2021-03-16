@@ -67,6 +67,8 @@ export interface ChartWidget extends Widget {
     };
     fileName: string;
     columnsMetadata: ColumnMetadata[];
+    sortByColumn?: string;
+    sortByDesc?: boolean;
   };
 }
 
@@ -83,6 +85,8 @@ export interface TableWidget extends Widget {
     };
     fileName: string;
     columnsMetadata: ColumnMetadata[];
+    sortByColumn?: string;
+    sortByDesc?: boolean;
   };
 }
 

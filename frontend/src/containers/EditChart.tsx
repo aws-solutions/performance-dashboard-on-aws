@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
-import { Dataset, ChartType, DatasetType } from "../models";
+import { Dataset, ChartType, DatasetType, LocationState } from "../models";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -44,7 +44,9 @@ interface PathParams {
 }
 
 function EditChart() {
-  const history = useHistory();
+  const history = useHistory<LocationState>();
+  const { state } = history.location;
+
   const { dashboardId, widgetId } = useParams<PathParams>();
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
@@ -90,6 +92,11 @@ function EditChart() {
   const [summaryBelow, setSummaryBelow] = useState(false);
   const [chartType, setChartType] = useState("");
   const [filter, setFilter] = useState("");
+
+  const [displayedJson, setDisplayedJson] = useState<Array<any>>([]);
+  const [displayedDatasetType, setDisplayedDatasetType] = useState<
+    DatasetType | undefined
+  >();
 
   const { settings } = useSettings();
 
@@ -149,13 +156,19 @@ function EditChart() {
   ]);
 
   useEffect(() => {
-    if (datasetType) {
-      reset({
-        datasetType,
-      });
-    }
+    // if (datasetType) {
+    //   reset({
+    //     datasetType,
+    //   });
+    // }
 
-    if (widget && dynamicDatasets && staticDatasets) {
+    if (
+      widget &&
+      dynamicDatasets &&
+      staticDatasets &&
+      currentJson &&
+      datasetType
+    ) {
       const title = widget.content.title;
       const showTitle = widget.showTitle;
       const summary = widget.content.summary;
@@ -164,6 +177,8 @@ function EditChart() {
 
       reset({
         title,
+        datasetType:
+          state && state.json ? DatasetType.StaticDataset : datasetType,
         showTitle,
         summary,
         summaryBelow,
@@ -178,6 +193,11 @@ function EditChart() {
             : "",
       });
 
+      setDisplayedJson(state && state.json ? state.json : currentJson);
+      setDisplayedDatasetType(
+        state && state.json ? DatasetType.StaticDataset : datasetType
+      );
+
       setTitle(title);
       setShowTitle(showTitle);
       setSummary(summary);
@@ -190,7 +210,15 @@ function EditChart() {
         staticDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
       );
     }
-  }, [widget, dynamicDatasets, staticDatasets, reset]);
+  }, [
+    widget,
+    dynamicDatasets,
+    staticDatasets,
+    reset,
+    state,
+    currentJson,
+    datasetType,
+  ]);
 
   const onFileProcessed = useCallback(
     async (data: File) => {
@@ -208,18 +236,18 @@ function EditChart() {
           if (results.errors.length) {
             setCsvErrors(results.errors);
             setCsvJson([]);
-            setCurrentJson([]);
+            setDisplayedJson([]);
           } else {
             setCsvErrors(undefined);
             setCsvJson(results.data);
-            setCurrentJson(results.data);
+            setDisplayedJson(results.data);
           }
           setDatasetLoading(false);
         },
       });
       setCsvFile(data);
     },
-    [setCurrentJson, setCsvJson]
+    [setDisplayedJson, setCsvJson]
   );
 
   const uploadDataset = async (): Promise<Dataset | null> => {
@@ -240,7 +268,7 @@ function EditChart() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(currentJson)
+      JSON.stringify(displayedJson)
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -274,20 +302,20 @@ function EditChart() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           chartType: values.chartType,
-          datasetType: datasetType,
+          datasetType: displayedDatasetType,
           datasetId: newDataset
             ? newDataset.id
-            : datasetType === DatasetType.DynamicDataset
+            : displayedDatasetType === DatasetType.DynamicDataset
             ? dynamicDataset?.id
             : staticDataset?.id,
           s3Key: newDataset
             ? newDataset.s3Key
-            : datasetType === DatasetType.DynamicDataset
+            : displayedDatasetType === DatasetType.DynamicDataset
             ? dynamicDataset?.s3Key
             : staticDataset?.s3Key,
           fileName: csvFile
             ? csvFile.name
-            : datasetType === DatasetType.DynamicDataset
+            : displayedDatasetType === DatasetType.DynamicDataset
             ? dynamicDataset?.fileName
             : staticDataset?.fileName,
         },
@@ -318,16 +346,16 @@ function EditChart() {
     if (target.name === "datasetType") {
       setDatasetLoading(true);
       const datasetType = target.value as DatasetType;
-      setDatasetType(datasetType);
+      setDisplayedDatasetType(datasetType);
       await UtilsService.timeout(0);
       if (datasetType === DatasetType.DynamicDataset) {
-        setCurrentJson(dynamicJson);
+        setDisplayedJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        setCurrentJson(staticJson);
+        setDisplayedJson(staticJson);
       }
       if (datasetType === DatasetType.CsvFileUpload) {
-        setCurrentJson(csvJson);
+        setDisplayedJson(csvJson);
       }
       setDatasetLoading(false);
     }
@@ -372,11 +400,11 @@ function EditChart() {
 
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicJson(dataset);
-      setCurrentJson(dataset);
+      setDisplayedJson(dataset);
       setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
     } else {
       setDynamicJson([]);
-      setCurrentJson([]);
+      setDisplayedJson([]);
       setDynamicDataset(undefined);
     }
 
@@ -385,11 +413,11 @@ function EditChart() {
 
   const onSelect = useCallback(
     (selectedDataset: Array<Dataset>) => {
-      if (datasetType === DatasetType.DynamicDataset) {
+      if (displayedDatasetType === DatasetType.DynamicDataset) {
         selectDynamicDataset(selectedDataset[0]);
       }
     },
-    [datasetType]
+    [displayedDatasetType]
   );
 
   const crumbs = [
@@ -415,7 +443,11 @@ function EditChart() {
       <Breadcrumbs crumbs={crumbs} />
       <h1>Edit chart</h1>
 
-      {loading || loadingDatasets || !widget || !datasetType ? (
+      {loading ||
+      loadingDatasets ||
+      !widget ||
+      !displayedDatasetType ||
+      !displayedJson ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
@@ -476,7 +508,7 @@ function EditChart() {
                       <div className="usa-radio">
                         <div
                           className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                            datasetType === "StaticDataset"
+                            displayedDatasetType === "StaticDataset"
                               ? " bg-base-lightest"
                               : "-lighter"
                           } border-2px padding-2 margin-y-1`}
@@ -510,7 +542,7 @@ function EditChart() {
                       <div className="usa-radio">
                         <div
                           className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                            datasetType === "DynamicDataset"
+                            displayedDatasetType === "DynamicDataset"
                               ? " bg-base-lightest"
                               : "-lighter"
                           } border-2px padding-2 margin-y-1`}
@@ -542,7 +574,9 @@ function EditChart() {
                     </div>
                   </div>
 
-                  <div hidden={datasetType !== DatasetType.StaticDataset}>
+                  <div
+                    hidden={displayedDatasetType !== DatasetType.StaticDataset}
+                  >
                     <div className="grid-row">
                       <div className="grid-col-5">
                         <FileInput
@@ -583,7 +617,9 @@ function EditChart() {
                     </div>
                   </div>
 
-                  <div hidden={datasetType !== DatasetType.DynamicDataset}>
+                  <div
+                    hidden={displayedDatasetType !== DatasetType.DynamicDataset}
+                  >
                     <div className="overflow-hidden">
                       <Table
                         selection="single"
@@ -604,7 +640,7 @@ function EditChart() {
                 <Button
                   type="button"
                   onClick={advanceStep}
-                  disabled={!currentJson.length}
+                  disabled={!displayedJson.length}
                 >
                   Continue
                 </Button>
@@ -650,7 +686,7 @@ function EditChart() {
                       </div>
 
                       {widget ? (
-                        <div hidden={!currentJson.length}>
+                        <div>
                           <RadioButtons
                             id="chartType"
                             name="chartType"
@@ -729,7 +765,7 @@ function EditChart() {
                     </fieldset>
                   </div>
                   <div className="grid-col-7">
-                    <div hidden={!currentJson.length} className="margin-left-4">
+                    <div className="margin-left-4">
                       <h4>Preview</h4>
                       {datasetLoading ? (
                         <Spinner
@@ -743,13 +779,13 @@ function EditChart() {
                               title={showTitle ? title : ""}
                               summary={summary}
                               lines={
-                                currentJson.length > 0
+                                displayedJson.length > 0
                                   ? (Object.keys(
-                                      currentJson[0]
+                                      displayedJson[0]
                                     ) as Array<string>)
                                   : []
                               }
-                              data={currentJson}
+                              data={displayedJson}
                               summaryBelow={summaryBelow}
                               isPreview={true}
                             />
@@ -759,13 +795,13 @@ function EditChart() {
                               title={showTitle ? title : ""}
                               summary={summary}
                               columns={
-                                currentJson.length > 0
+                                displayedJson.length > 0
                                   ? (Object.keys(
-                                      currentJson[0]
+                                      displayedJson[0]
                                     ) as Array<string>)
                                   : []
                               }
-                              data={currentJson}
+                              data={displayedJson}
                               summaryBelow={summaryBelow}
                               isPreview={true}
                             />
@@ -775,13 +811,13 @@ function EditChart() {
                               title={showTitle ? title : ""}
                               summary={summary}
                               bars={
-                                currentJson.length > 0
+                                displayedJson.length > 0
                                   ? (Object.keys(
-                                      currentJson[0]
+                                      displayedJson[0]
                                     ) as Array<string>)
                                   : []
                               }
-                              data={currentJson}
+                              data={displayedJson}
                               summaryBelow={summaryBelow}
                             />
                           )}
@@ -790,13 +826,13 @@ function EditChart() {
                               title={showTitle ? title : ""}
                               summary={summary}
                               parts={
-                                currentJson.length > 0
+                                displayedJson.length > 0
                                   ? (Object.keys(
-                                      currentJson[0]
+                                      displayedJson[0]
                                     ) as Array<string>)
                                   : []
                               }
-                              data={currentJson}
+                              data={displayedJson}
                               summaryBelow={summaryBelow}
                             />
                           )}
@@ -814,7 +850,7 @@ function EditChart() {
                 <Button
                   onClick={advanceStep}
                   type="submit"
-                  disabled={!currentJson.length || !title || fileLoading}
+                  disabled={!displayedJson.length || !title || fileLoading}
                 >
                   Save
                 </Button>

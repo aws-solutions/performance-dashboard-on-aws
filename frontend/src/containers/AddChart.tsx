@@ -57,14 +57,14 @@ function AddChart() {
     state && state.json ? state.json : []
   );
   const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
-  const [staticJson, setStaticJson] = useState<Array<any>>(
+  const [staticJson] = useState<Array<any>>(
     state && state.json ? state.json : []
   );
   const [csvJson, setCsvJson] = useState<Array<any>>([]);
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
   );
-  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
+  const [staticDataset] = useState<Dataset | undefined>(
     state && state.staticDataset ? state.staticDataset : undefined
   );
   const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
@@ -84,7 +84,6 @@ function AddChart() {
   );
   const [showAlert, setShowAlert] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 0);
-  const [filter, setFilter] = useState("");
 
   const { settings } = useSettings();
 
@@ -476,7 +475,7 @@ function AddChart() {
                   <Table
                     selection="single"
                     initialSortByField="updatedAt"
-                    filterQuery={filter}
+                    filterQuery={""}
                     rows={React.useMemo(() => dynamicDatasets, [
                       dynamicDatasets,
                     ])}
@@ -673,7 +672,9 @@ function AddChart() {
                     />
                   ) : (
                     <>
-                      {showAlert && datasetType === DatasetType.CsvFileUpload && (
+                      {showAlert &&
+                      datasetType === DatasetType.StaticDataset &&
+                      csvJson.length ? (
                         <div className="margin-left-1">
                           <Alert
                             type="info"
@@ -710,6 +711,8 @@ function AddChart() {
                             slim
                           />
                         </div>
+                      ) : (
+                        ""
                       )}
                       {chartType === ChartType.LineChart && (
                         <LineChartWidget

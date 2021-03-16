@@ -61,7 +61,9 @@ test("renders table for dynamic dataset", async () => {
   render(<AddChart />, { wrapper: MemoryRouter });
 
   const radioButton = await screen.findByLabelText("Dynamic dataset");
-  fireEvent.click(radioButton);
+  await act(async () => {
+    fireEvent.click(radioButton);
+  });
 
   expect(screen.getByRole("table")).toBeInTheDocument();
   expect(screen.getByText("abc")).toBeInTheDocument();

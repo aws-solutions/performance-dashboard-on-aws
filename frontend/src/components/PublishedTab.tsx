@@ -6,6 +6,7 @@ import Search from "./Search";
 import Table from "./Table";
 import ScrollTop from "./ScrollTop";
 import Link from "./Link";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -19,6 +20,8 @@ function PublishedTab(props: Props) {
   const [selected, setSelected] = useState<Array<Dashboard>>([]);
   const { dashboards } = props;
 
+  const { t } = useTranslation();
+
   const onSearch = (query: string) => {
     setFilter(query);
   };
@@ -30,10 +33,9 @@ function PublishedTab(props: Props) {
   return (
     <div>
       <p>
-        These are all of the published dashboards. You can view all dashboards
-        but you need editor access in order to update a published dashboard.{" "}
+        {t("PublishedTabDescription")}{" "}
         <Link target="_blank" to={"/"} external>
-          View the published site
+          {t("PublishedTabDescriptionLink")}
         </Link>
       </p>
       <div className="grid-row margin-y-3">

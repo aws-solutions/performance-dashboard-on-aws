@@ -6,7 +6,7 @@
       "Description": "Email address for the admin user",
       "MinLength": 5
     }
-  }, 
+  },
   "Resources": {
     "authStack": {
       "Type": "AWS::CloudFormation::Stack",
@@ -14,7 +14,7 @@
         "TemplateURL": "https://performance-dashboard-on-aws-us-east-2.s3.us-east-2.amazonaws.com/Auth-0.8.0-beta.json",
         "TimeoutInMinutes": "60",
         "Parameters": {
-          "adminEmail": {"Ref" : "adminEmail"}
+          "adminEmail": { "Ref": "adminEmail" }
         }
       }
     },

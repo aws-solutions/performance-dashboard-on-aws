@@ -32,7 +32,8 @@ function PublishedTab(props: Props) {
 
   return (
     <div>
-      <p>{t("PublishedTabDescription")}{" "}
+      <p>
+        {t("PublishedTabDescription")}{" "}
         <Link target="_blank" to={"/"} external>
           {t("PublishedTabDescriptionLink")}
         </Link>

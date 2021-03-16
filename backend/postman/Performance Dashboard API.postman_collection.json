@@ -1,1537 +1,1319 @@
 {
-	"info": {
-		"_postman_id": "79c446a7-7929-4ff4-9988-0b535154b55c",
-		"name": "Performance Dashboard API",
-		"description": "This API defines the endpoints available in the Performance Dashboard on AWS Rest API. It includes public endpoints and private endpoints that require authentication",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Dashboards",
-			"item": [
-				{
-					"name": "List Dashboards",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/dashboard",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List Audit Logs",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/auditlogs",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"auditlogs"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1dcde43a-9700-41d3-b651-ceee60f7bdf8"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Dashboard",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"topicAreaId\": \"3ffdb1ef-081d-4534-97e9-b69cdbb687d0\",\n    \"description\": \"{{$randomLoremParagraph}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Draft from Published",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Triet Lu\",\n    \"topicAreaId\": \"30f1a179-4df9-4f49-aece-0ab81152d875\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Dashboard By Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "12b362e5-fe3e-4536-ac17-8e81f16b6e86",
-									"description": "Dashboard Id"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Dashboard",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"COVID-19\",\n    \"topicAreaId\": \"df402dce-b434-4a12-8802-7d67d5f4b2de\",\n    \"description\": \"You can add **markdown** here\",\n    \"updatedAt\": \"\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1ed4158c-da3c-4b5d-b970-685daf27acf8",
-									"description": "Dashboard Id"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Publish Dashboard",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/publish",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"publish"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Move Dashboard to Draft",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/draft",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"draft"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Archive Dashboard",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/archive",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"archive"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Set to Publish Pending",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/publishpending",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"publishpending"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Dashboard",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "25575268-e1c1-40e8-88f2-237d36a7bfe6"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Topic Areas",
-			"item": [
-				{
-					"name": "Create Topic Area",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomProductAdjective}} {{$randomJobArea}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/topicarea",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"topicarea"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List Topic Areas",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/topicarea",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"topicarea"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Topic Area",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Home\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/topicarea/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"topicarea",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "bdcbc56c-fd98-40db-ad65-7b4c03a2d569",
-									"description": "TopicArea Id"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Topic Area",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/topicarea/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"topicarea",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "7c2e5ca2-eb33-4302-b01a-2c4ef7802b23",
-									"description": "Topic Area Id to delete"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Topic Area by Id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/topicarea/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"topicarea",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "3ffdb1ef-081d-4534-97e9-b69cdbb687d0"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Widgets",
-			"item": [
-				{
-					"name": "Create Text Widget",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Text\",\n    \"content\": {\n        \"text\": \"{{$randomLoremParagraph}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/widget",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"widget"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "3577417e-859e-4538-bcf7-d43b99ddd3a0",
-									"description": "Dashboard ID"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Chart Widget",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"COVID Chart\",\n    \"widgetType\": \"Chart\",\n    \"content\": {\n        \"title\": \"Correlation of COVID cases to deaths\",\n        \"chartType\": \"LineChart\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"fileName\": \"MyData.csv\",\n        \"s3Key\": {\n            \"raw\": \"123.csv\",\n            \"json\": \"123.json\"\n        }\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/090b0410-001e-4880-87fd-bab3de102574/widget",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								"090b0410-001e-4880-87fd-bab3de102574",
-								"widget"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Table Widget",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"COVID Table\",\n    \"widgetType\": \"Table\",\n    \"content\": {\n        \"title\": \"COVID cases to by state\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"fileName\": \"MyData.csv\",\n        \"s3Key\": {\n            \"raw\": \"123.csv\",\n            \"json\": \"123.json\"\n        }\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/090b0410-001e-4880-87fd-bab3de102574/widget",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								"090b0410-001e-4880-87fd-bab3de102574",
-								"widget"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Metrics Widget",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomAdjective}} {{$randomProductName}}\",\n    \"widgetType\": \"Metrics\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"s3Key\": {\n            \"json\": \"123.json\",\n            \"raw\": \"123.json\"\n        }\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/widget",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"widget"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "235cd5a3-dd65-4706-88b5-35fe3c785584"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Image Widget",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Image\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"summaryBelow\": false,\n        \"imageAltText\": \"{{$randomWord}}\",\n        \"fileName\": \"123.png\",\n        \"s3Key\": {\n            \"raw\": \"123.png\"\n        }\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/widget",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"widget"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "235cd5a3-dd65-4706-88b5-35fe3c785584"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete widget",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/widget/:widgetId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"widget",
-								":widgetId"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "090b0410-001e-4880-87fd-bab3de102574",
-									"description": "Dashboard Id"
-								},
-								{
-									"key": "widgetId",
-									"value": "b230baac-9747-42dc-8083-b35542890028",
-									"description": "Widget Id"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Set Widget Order",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"widgets\": [\n        {\n            \"id\": \"070bc674-1139-4944-851f-7439f99a5f99\",\n            \"order\": 3,\n            \"updatedAt\": \"2020-09-17T01:39:02.602Z\"\n        },\n        {\n            \"id\": \"6154341a-9d40-44b2-9651-a4e83d90ae9a\",\n            \"order\": 2,\n            \"updatedAt\": \"2020-09-17T01:39:02.602Z\"\n        },\n        {\n            \"id\": \"bede2e72-39ec-4b31-804a-1dff1f537b90\",\n            \"order\": 1,\n            \"updatedAt\": \"2020-09-17T01:39:02.602Z\"\n        }\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dashboard/:id/widgetorder",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dashboard",
-								":id",
-								"widgetorder"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "090b0410-001e-4880-87fd-bab3de102574",
-									"description": "Dashboard Id"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Datasets",
-			"item": [
-				{
-					"name": "Create dataset",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"fileName\": \"fcc2a280.json\",\n    \"s3Key\": {\n        \"raw\": \"fcc2a280.json\",\n        \"json\": \"fcc2a280.json\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/dataset",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dataset"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List datasets",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/dataset",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dataset"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get dataset by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/dataset/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"dataset",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "08ccddad-1e9d-4ac2-b817-65d1fadbacfd"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Public API",
-			"item": [
-				{
-					"name": "Get Dashboard by Id",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/public/dashboard/:id",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"public",
-								"dashboard",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "b2028eb0-d846-4e50-aeec-1e3788681244"
-								}
-							]
-						},
-						"description": "Retrieves a dashboard that has been published"
-					},
-					"response": []
-				},
-				{
-					"name": "Homepage",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/public/homepage",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"public",
-								"homepage"
-							]
-						},
-						"description": "Returns homepage title, description and a list of dashboards"
-					},
-					"response": []
-				},
-				{
-					"name": "Get dashboard by friendly URL",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/public/dashboard/friendly-url/:friendlyURL",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"public",
-								"dashboard",
-								"friendly-url",
-								":friendlyURL"
-							],
-							"variable": [
-								{
-									"key": "friendlyURL",
-									"value": "san-diego-dogs-in-adoption"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Public Settings",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/public/settings",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"public",
-								"settings"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"auth": {
-				"type": "noauth"
-			},
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Settings",
-			"item": [
-				{
-					"name": "Get Settings",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/settings",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"settings"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Settings",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"publishingGuidance\": \"I acknowledge that I have reviewed the dashboard and it is ready to publish\",\n     \"updatedAt\": \"2020-12-01T20:14:22.190Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/settings",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"settings"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Homepage",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Performance Dashboard\",\n    \"description\": \"The Performance Dashboard makes data open and accessible to provide transparency and help drive the ongoing improvement of digital services.\",\n    \"updatedAt\": \"2020-12-03T17:22:20.464Z\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/settings/homepage",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"settings",
-								"homepage"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Homepage",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/settings/homepage",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"settings",
-								"homepage"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Ingest Api",
-			"item": [
-				{
-					"name": "Create a metrics dataset",
-					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "value",
-									"value": "{{apiKey}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-api-key",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"schema\": \"Metrics\"\n    },\n    \"data\": [\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"changeOverTime\": \"+6%\",\n            \"startDate\": \"{{$randomDatePast}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        },\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"changeOverTime\": \"+1000\",\n            \"startDate\": \"{{$randomDateRecent}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        }\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/ingestapi/dataset",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"ingestapi",
-								"dataset"
-							]
-						},
-						"description": "Unlike regular Datasets, a Metrics dataset has a defined schema to populate Content Items of type \"Metrics\". "
-					},
-					"response": []
-				},
-				{
-					"name": "Create dataset",
-					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "value",
-									"value": "{{apiKey}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-api-key",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomAdjective}} {{$randomDepartment}}\"\n    },\n    \"data\": [{ \"foo\": \"bar\" }]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/ingestapi/dataset",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"ingestapi",
-								"dataset"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update dataset",
-					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "value",
-									"value": "{{apiKey}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-api-key",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"metadata\": {\n        \"name\": \"Toys\"\n    },\n    \"data\": [\n        {\n            \"Day\": \"12/15\",\n            \"Metro Users\": 20300,\n            \"Train Users\": 11100\n        },\n        {\n            \"Day\": \"12/16\",\n            \"Metro Users\": 16200,\n            \"Train Users\": 12420\n        },\n        {\n            \"Day\": \"12/17\",\n            \"Metro Users\": 16999,\n            \"Train Users\": 13120\n        },\n        {\n            \"Day\": \"12/18\",\n            \"Metro Users\": 15103,\n            \"Train Users\": 14350\n        },\n        {\n            \"Day\": \"12/19\",\n            \"Metro Users\": 15800,\n            \"Train Users\": 11000\n        },\n        {\n            \"Day\": \"12/20\",\n            \"Metro Users\": 16350,\n            \"Train Users\": 19780\n        },\n        {\n            \"Day\": \"12/21\",\n            \"Metro Users\": 19000,\n            \"Train Users\": 18500\n        }\n        ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"ingestapi",
-								"dataset",
-								":datasetId"
-							],
-							"variable": [
-								{
-									"key": "datasetId",
-									"value": "08ccddad-1e9d-4ac2-b817-65d1fadbacfd"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete dataset",
-					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "value",
-									"value": "{{apiKey}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-api-key",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"ingestapi",
-								"dataset",
-								":datasetId"
-							],
-							"variable": [
-								{
-									"key": "datasetId",
-									"value": "5778d4c3-d4ae-42a9-864a-a5337ef3aeb4"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Users",
-			"item": [
-				{
-					"name": "List users",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/user",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add user",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"role\": \"Admin\",\n    \"emails\": \"{{$randomEmail}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/user",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Resend invite",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"emails\": \"miguelpdiaz8@gmail.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/user/invite",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"user",
-								"invite"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Change role",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"role\": \"Admin\",\n    \"emails\": \"caromull@amazon.co.uk\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/user/role",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"user",
-								"role"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"auth": {
-		"type": "bearer",
-		"bearer": [
-			{
-				"key": "token",
-				"value": "{{token}}",
-				"type": "string"
-			}
-		]
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "baseUrl",
-			"value": "http://localhost:8080"
-		},
-		{
-			"key": "token",
-			"value": ""
-		},
-		{
-			"key": "apiKey",
-			"value": ""
-		}
-	]
+  "info": {
+    "_postman_id": "79c446a7-7929-4ff4-9988-0b535154b55c",
+    "name": "Performance Dashboard API",
+    "description": "This API defines the endpoints available in the Performance Dashboard on AWS Rest API. It includes public endpoints and private endpoints that require authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Dashboards",
+      "item": [
+        {
+          "name": "List Dashboards",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Audit Logs",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/auditlogs",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "auditlogs"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1dcde43a-9700-41d3-b651-ceee60f7bdf8"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Dashboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"topicAreaId\": \"3ffdb1ef-081d-4534-97e9-b69cdbb687d0\",\n    \"description\": \"{{$randomLoremParagraph}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Draft from Published",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Triet Lu\",\n    \"topicAreaId\": \"30f1a179-4df9-4f49-aece-0ab81152d875\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Dashboard By Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "12b362e5-fe3e-4536-ac17-8e81f16b6e86",
+                  "description": "Dashboard Id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Dashboard",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"COVID-19\",\n    \"topicAreaId\": \"df402dce-b434-4a12-8802-7d67d5f4b2de\",\n    \"description\": \"You can add **markdown** here\",\n    \"updatedAt\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1ed4158c-da3c-4b5d-b970-685daf27acf8",
+                  "description": "Dashboard Id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Dashboard",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/publish",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "publish"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Move Dashboard to Draft",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/draft",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "draft"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Archive Dashboard",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/archive",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "archive"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Set to Publish Pending",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/publishpending",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "publishpending"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "c840d081-e23c-4bd8-acf5-87f4eaf25db5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Dashboard",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "25575268-e1c1-40e8-88f2-237d36a7bfe6"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Topic Areas",
+      "item": [
+        {
+          "name": "Create Topic Area",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"{{$randomProductAdjective}} {{$randomJobArea}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/topicarea",
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Topic Areas",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/topicarea",
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Topic Area",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Home\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/topicarea/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "bdcbc56c-fd98-40db-ad65-7b4c03a2d569",
+                  "description": "TopicArea Id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Topic Area",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/topicarea/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "7c2e5ca2-eb33-4302-b01a-2c4ef7802b23",
+                  "description": "Topic Area Id to delete"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Topic Area by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/topicarea/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3ffdb1ef-081d-4534-97e9-b69cdbb687d0"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Widgets",
+      "item": [
+        {
+          "name": "Create Text Widget",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Text\",\n    \"content\": {\n        \"text\": \"{{$randomLoremParagraph}}\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/widget",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widget"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3577417e-859e-4538-bcf7-d43b99ddd3a0",
+                  "description": "Dashboard ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Chart Widget",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"COVID Chart\",\n    \"widgetType\": \"Chart\",\n    \"content\": {\n        \"title\": \"Correlation of COVID cases to deaths\",\n        \"chartType\": \"LineChart\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"fileName\": \"MyData.csv\",\n        \"s3Key\": {\n            \"raw\": \"123.csv\",\n            \"json\": \"123.json\"\n        }\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/090b0410-001e-4880-87fd-bab3de102574/widget",
+              "host": ["{{baseUrl}}"],
+              "path": [
+                "dashboard",
+                "090b0410-001e-4880-87fd-bab3de102574",
+                "widget"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Table Widget",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"COVID Table\",\n    \"widgetType\": \"Table\",\n    \"content\": {\n        \"title\": \"COVID cases to by state\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"fileName\": \"MyData.csv\",\n        \"s3Key\": {\n            \"raw\": \"123.csv\",\n            \"json\": \"123.json\"\n        }\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/090b0410-001e-4880-87fd-bab3de102574/widget",
+              "host": ["{{baseUrl}}"],
+              "path": [
+                "dashboard",
+                "090b0410-001e-4880-87fd-bab3de102574",
+                "widget"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Metrics Widget",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"{{$randomAdjective}} {{$randomProductName}}\",\n    \"widgetType\": \"Metrics\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"s3Key\": {\n            \"json\": \"123.json\",\n            \"raw\": \"123.json\"\n        }\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/widget",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widget"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "235cd5a3-dd65-4706-88b5-35fe3c785584"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Image Widget",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Image\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"summaryBelow\": false,\n        \"imageAltText\": \"{{$randomWord}}\",\n        \"fileName\": \"123.png\",\n        \"s3Key\": {\n            \"raw\": \"123.png\"\n        }\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/widget",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widget"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "235cd5a3-dd65-4706-88b5-35fe3c785584"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete widget",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/widget/:widgetId",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widget", ":widgetId"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "090b0410-001e-4880-87fd-bab3de102574",
+                  "description": "Dashboard Id"
+                },
+                {
+                  "key": "widgetId",
+                  "value": "b230baac-9747-42dc-8083-b35542890028",
+                  "description": "Widget Id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Set Widget Order",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"widgets\": [\n        {\n            \"id\": \"070bc674-1139-4944-851f-7439f99a5f99\",\n            \"order\": 3,\n            \"updatedAt\": \"2020-09-17T01:39:02.602Z\"\n        },\n        {\n            \"id\": \"6154341a-9d40-44b2-9651-a4e83d90ae9a\",\n            \"order\": 2,\n            \"updatedAt\": \"2020-09-17T01:39:02.602Z\"\n        },\n        {\n            \"id\": \"bede2e72-39ec-4b31-804a-1dff1f537b90\",\n            \"order\": 1,\n            \"updatedAt\": \"2020-09-17T01:39:02.602Z\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/widgetorder",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widgetorder"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "090b0410-001e-4880-87fd-bab3de102574",
+                  "description": "Dashboard Id"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Datasets",
+      "item": [
+        {
+          "name": "Create dataset",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"fileName\": \"fcc2a280.json\",\n    \"s3Key\": {\n        \"raw\": \"fcc2a280.json\",\n        \"json\": \"fcc2a280.json\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dataset",
+              "host": ["{{baseUrl}}"],
+              "path": ["dataset"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List datasets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dataset",
+              "host": ["{{baseUrl}}"],
+              "path": ["dataset"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get dataset by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dataset/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["dataset", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "08ccddad-1e9d-4ac2-b817-65d1fadbacfd"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Public API",
+      "item": [
+        {
+          "name": "Get Dashboard by Id",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/public/dashboard/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["public", "dashboard", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "b2028eb0-d846-4e50-aeec-1e3788681244"
+                }
+              ]
+            },
+            "description": "Retrieves a dashboard that has been published"
+          },
+          "response": []
+        },
+        {
+          "name": "Homepage",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/public/homepage",
+              "host": ["{{baseUrl}}"],
+              "path": ["public", "homepage"]
+            },
+            "description": "Returns homepage title, description and a list of dashboards"
+          },
+          "response": []
+        },
+        {
+          "name": "Get dashboard by friendly URL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/public/dashboard/friendly-url/:friendlyURL",
+              "host": ["{{baseUrl}}"],
+              "path": ["public", "dashboard", "friendly-url", ":friendlyURL"],
+              "variable": [
+                {
+                  "key": "friendlyURL",
+                  "value": "san-diego-dogs-in-adoption"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Public Settings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/public/settings",
+              "host": ["{{baseUrl}}"],
+              "path": ["public", "settings"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "noauth"
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [""]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [""]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "Get Settings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/settings",
+              "host": ["{{baseUrl}}"],
+              "path": ["settings"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Settings",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"publishingGuidance\": \"I acknowledge that I have reviewed the dashboard and it is ready to publish\",\n     \"updatedAt\": \"2020-12-01T20:14:22.190Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/settings",
+              "host": ["{{baseUrl}}"],
+              "path": ["settings"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Homepage",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Performance Dashboard\",\n    \"description\": \"The Performance Dashboard makes data open and accessible to provide transparency and help drive the ongoing improvement of digital services.\",\n    \"updatedAt\": \"2020-12-03T17:22:20.464Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/settings/homepage",
+              "host": ["{{baseUrl}}"],
+              "path": ["settings", "homepage"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Homepage",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/settings/homepage",
+              "host": ["{{baseUrl}}"],
+              "path": ["settings", "homepage"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ingest Api",
+      "item": [
+        {
+          "name": "Create a metrics dataset",
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"schema\": \"Metrics\"\n    },\n    \"data\": [\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"changeOverTime\": \"+6%\",\n            \"startDate\": \"{{$randomDatePast}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        },\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"changeOverTime\": \"+1000\",\n            \"startDate\": \"{{$randomDateRecent}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ingestapi/dataset",
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset"]
+            },
+            "description": "Unlike regular Datasets, a Metrics dataset has a defined schema to populate Content Items of type \"Metrics\". "
+          },
+          "response": []
+        },
+        {
+          "name": "Create dataset",
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomAdjective}} {{$randomDepartment}}\"\n    },\n    \"data\": [{ \"foo\": \"bar\" }]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ingestapi/dataset",
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update dataset",
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"name\": \"Toys\"\n    },\n    \"data\": [\n        {\n            \"Day\": \"12/15\",\n            \"Metro Users\": 20300,\n            \"Train Users\": 11100\n        },\n        {\n            \"Day\": \"12/16\",\n            \"Metro Users\": 16200,\n            \"Train Users\": 12420\n        },\n        {\n            \"Day\": \"12/17\",\n            \"Metro Users\": 16999,\n            \"Train Users\": 13120\n        },\n        {\n            \"Day\": \"12/18\",\n            \"Metro Users\": 15103,\n            \"Train Users\": 14350\n        },\n        {\n            \"Day\": \"12/19\",\n            \"Metro Users\": 15800,\n            \"Train Users\": 11000\n        },\n        {\n            \"Day\": \"12/20\",\n            \"Metro Users\": 16350,\n            \"Train Users\": 19780\n        },\n        {\n            \"Day\": \"12/21\",\n            \"Metro Users\": 19000,\n            \"Train Users\": 18500\n        }\n        ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset", ":datasetId"],
+              "variable": [
+                {
+                  "key": "datasetId",
+                  "value": "08ccddad-1e9d-4ac2-b817-65d1fadbacfd"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete dataset",
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset", ":datasetId"],
+              "variable": [
+                {
+                  "key": "datasetId",
+                  "value": "5778d4c3-d4ae-42a9-864a-a5337ef3aeb4"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": ["{{baseUrl}}"],
+              "path": ["user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"role\": \"Admin\",\n    \"emails\": \"{{$randomEmail}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": ["{{baseUrl}}"],
+              "path": ["user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Resend invite",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"emails\": \"miguelpdiaz8@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user/invite",
+              "host": ["{{baseUrl}}"],
+              "path": ["user", "invite"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change role",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"role\": \"Admin\",\n    \"emails\": \"caromull@amazon.co.uk\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user/role",
+              "host": ["{{baseUrl}}"],
+              "path": ["user", "role"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "apiKey",
+      "value": ""
+    }
+  ]
 }

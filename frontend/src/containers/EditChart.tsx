@@ -86,6 +86,8 @@ function EditChart() {
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
 
+  console.log(currentJson);
+
   const [title, setTitle] = useState("");
   const [showTitle, setShowTitle] = useState(false);
   const [summary, setSummary] = useState("");
@@ -161,6 +163,10 @@ function EditChart() {
     //     datasetType,
     //   });
     // }
+    if (currentJson) {
+      console.log("are we ever here");
+      setDisplayedJson(state && state.json ? state.json : currentJson);
+    }
 
     if (
       widget &&
@@ -218,6 +224,7 @@ function EditChart() {
     state,
     currentJson,
     datasetType,
+    displayedJson,
   ]);
 
   const onFileProcessed = useCallback(

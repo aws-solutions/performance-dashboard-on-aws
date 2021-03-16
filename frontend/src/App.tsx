@@ -167,7 +167,7 @@ const routes: Array<AppRoute> = [
     component: AddChart,
   },
   {
-    path: "/admin/dashboard/:dashboardId/add-chart/choose-static-dataset",
+    path: "/admin/dashboard/:dashboardId/choose-static-dataset",
     component: ChooseStaticDataset,
   },
   {

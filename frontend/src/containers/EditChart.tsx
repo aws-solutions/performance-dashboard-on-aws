@@ -86,8 +86,6 @@ function EditChart() {
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
 
-  console.log(currentJson);
-
   const [title, setTitle] = useState("");
   const [showTitle, setShowTitle] = useState(false);
   const [summary, setSummary] = useState("");
@@ -158,12 +156,6 @@ function EditChart() {
   ]);
 
   useEffect(() => {
-    if (datasetType) {
-      reset({
-        datasetType,
-      });
-    }
-
     if (
       widget &&
       dynamicDatasets &&
@@ -179,9 +171,12 @@ function EditChart() {
 
       reset({
         title,
-        datasetType:
-          state && state.json ? DatasetType.StaticDataset : datasetType,
         showTitle,
+        datasetType: displayedDatasetType
+          ? displayedDatasetType
+          : state && state.json
+          ? DatasetType.StaticDataset
+          : datasetType,
         summary,
         summaryBelow,
         chartType,
@@ -195,10 +190,15 @@ function EditChart() {
             : "",
       });
 
-      setDisplayedJson(state && state.json ? state.json : currentJson);
-      setDisplayedDatasetType(
-        state && state.json ? DatasetType.StaticDataset : datasetType
-      );
+      if (!displayedDatasetType) {
+        setDisplayedDatasetType(
+          state && state.json ? DatasetType.StaticDataset : datasetType
+        );
+      }
+
+      if (!displayedJson.length) {
+        setDisplayedJson(state && state.json ? state.json : currentJson);
+      }
 
       setTitle(title);
       setShowTitle(showTitle);
@@ -219,8 +219,8 @@ function EditChart() {
     reset,
     state,
     currentJson,
-    datasetType,
     displayedJson,
+    datasetType,
   ]);
 
   const onFileProcessed = useCallback(

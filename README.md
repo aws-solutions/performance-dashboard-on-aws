@@ -40,7 +40,7 @@ PDoA comes with pre-built code to provision an instance in your AWS account. You
 The mainline branch of this repository develops rapidly. If you want to obtain the latest stable copy of the code, clone this repository using the tag of the most recent release, which currently is 0.4.0-beta.
 
 ```
-$ git clone -b 0.8.0-beta https://github.com/awslabs/performance-dashboard-on-aws.git
+$ git clone -b 0.9.0-beta https://github.com/awslabs/performance-dashboard-on-aws.git
 ```
 
 ## Security

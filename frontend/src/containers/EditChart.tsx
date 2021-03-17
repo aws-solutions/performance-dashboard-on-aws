@@ -75,14 +75,11 @@ function EditChart() {
   const {
     widget,
     datasetType,
-    setDatasetType,
     currentJson,
     dynamicJson,
     staticJson,
     csvJson,
-    setCurrentJson,
     setDynamicJson,
-    setStaticJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
 
@@ -91,7 +88,6 @@ function EditChart() {
   const [summary, setSummary] = useState("");
   const [summaryBelow, setSummaryBelow] = useState(false);
   const [chartType, setChartType] = useState("");
-  const [filter, setFilter] = useState("");
 
   const [displayedJson, setDisplayedJson] = useState<Array<any>>([]);
   const [displayedDatasetType, setDisplayedDatasetType] = useState<
@@ -205,12 +201,18 @@ function EditChart() {
       setSummary(summary);
       setSummaryBelow(summaryBelow);
       setChartType(chartType);
-      setDynamicDataset(
-        dynamicDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
-      );
-      setStaticDataset(
-        staticDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
-      );
+      if (!dynamicDataset) {
+        setDynamicDataset(
+          dynamicDatasets.find(
+            (d) => d.s3Key.json === widget.content.s3Key.json
+          )
+        );
+      }
+      if (!staticDataset) {
+        setStaticDataset(
+          staticDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
+        );
+      }
     }
   }, [
     widget,
@@ -402,13 +404,13 @@ function EditChart() {
       const jsonFile = selectedDataset.s3Key.json;
 
       const dataset = await StorageService.downloadJson(jsonFile);
+      setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
       setDynamicJson(dataset);
       setDisplayedJson(dataset);
-      setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
     } else {
+      setDynamicDataset(undefined);
       setDynamicJson([]);
       setDisplayedJson([]);
-      setDynamicDataset(undefined);
     }
 
     setDatasetLoading(false);
@@ -467,6 +469,7 @@ function EditChart() {
                             : "usa-button"
                         }
                         type="button"
+                        onClick={backStep}
                       >
                         Choose data
                       </button>
@@ -479,6 +482,7 @@ function EditChart() {
                             : "usa-button"
                         }
                         type="button"
+                        onClick={advanceStep}
                       >
                         Visualize
                       </button>
@@ -627,7 +631,7 @@ function EditChart() {
                       <Table
                         selection="single"
                         initialSortByField="updatedAt"
-                        filterQuery={filter}
+                        filterQuery={""}
                         rows={dynamicDatasetsTableRows}
                         screenReaderField="name"
                         width="100%"
@@ -853,7 +857,12 @@ function EditChart() {
                 <Button
                   onClick={advanceStep}
                   type="submit"
-                  disabled={!displayedJson.length || !title || fileLoading}
+                  disabled={
+                    !displayedJson.length ||
+                    !title ||
+                    fileLoading ||
+                    editingWidget
+                  }
                 >
                   Save
                 </Button>

@@ -3,5 +3,9 @@
   "SearchButton": "Search",
   "ClearSearchText": "Clear search items",
   "AllDashboardsLink": "All Dashboards",
-  "ArchivedTabDescription": "These are your organization's archived dashboards. Archived dashboards are not viewable on the published site. Click on any dashboard name to view the dashboard. You can also re-publish archived dashboards to the published site."
+  "ArchivedTabDescription": "These are your organization's archived dashboards. Archived dashboards are not viewable on the published site. Click on any dashboard name to view the dashboard. You can also re-publish archived dashboards to the published site.",
+  "PublishedTabDescription": "These are all of the published dashboards. You can view all dashboards but you need editor access in order to update a published dashboard.",
+  "PublishedTabDescriptionLink": "View the published site",
+  "DraftTabDescription": "You have access to view, edit, and/or publish the draft dashboards in this table.",
+  "PublishQueueTabDescription": "These are all of the dashboards that have been submitted for publishing."
 }

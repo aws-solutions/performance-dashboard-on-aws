@@ -13,6 +13,17 @@ export enum ChartType {
   PartWholeChart = "PartWholeChart",
 }
 
+export enum ColumnDataType {
+  Number = "Number",
+  Text = "Text",
+}
+
+export interface ColumnMetadata {
+  columnName: string;
+  dataType: ColumnDataType;
+  hidden: boolean;
+}
+
 export interface Widget {
   id: string;
   name: string;
@@ -55,6 +66,9 @@ export interface ChartWidget extends Widget {
       json: string;
     };
     fileName: string;
+    columnsMetadata: ColumnMetadata[];
+    sortByColumn?: string;
+    sortByDesc?: boolean;
   };
 }
 
@@ -70,6 +84,9 @@ export interface TableWidget extends Widget {
       json: string;
     };
     fileName: string;
+    columnsMetadata: ColumnMetadata[];
+    sortByColumn?: string;
+    sortByDesc?: boolean;
   };
 }
 

@@ -9,6 +9,7 @@ import {
   ChartType,
   MetricsWidget,
   ImageWidget,
+  ColumnDataType,
 } from "../../models/widget";
 
 const dummyWidgetName = "Some widget";
@@ -76,6 +77,20 @@ describe("createChartWidget", () => {
         json: "abc.json",
       },
       fileName: "abc.csv",
+      sortByColumn: "cases",
+      sortByDesc: false,
+      columnsMetadata: [
+        {
+          hidden: false,
+          columnName: "cases",
+          dataType: "Number",
+        },
+        {
+          hidden: false,
+          columnName: "deaths",
+          dataType: "Number",
+        },
+      ],
     };
 
     const widget = WidgetFactory.createWidget({
@@ -97,6 +112,9 @@ describe("createChartWidget", () => {
     expect(widget.content.summary).toEqual("test summary");
     expect(widget.content.chartType).toEqual("LineChart");
     expect(widget.content.summaryBelow).toBe(false);
+    expect(widget.content.columnsMetadata).toHaveLength(2);
+    expect(widget.content.sortByColumn).toEqual("cases");
+    expect(widget.content.sortByDesc).toBe(false);
   });
 
   it("throws an error if chart title is undefined", () => {
@@ -216,6 +234,20 @@ describe("createTableWidget", () => {
         json: "abc.json",
       },
       fileName: "abc.csv",
+      sortByColumn: "cases",
+      sortByDesc: false,
+      columnsMetadata: [
+        {
+          hidden: false,
+          columnName: "cases",
+          dataType: "Number",
+        },
+        {
+          hidden: false,
+          columnName: "deaths",
+          dataType: "Number",
+        },
+      ],
     };
 
     const widget = WidgetFactory.createWidget({
@@ -235,6 +267,9 @@ describe("createTableWidget", () => {
       "Correlation of COVID cases to deaths"
     );
     expect(widget.content.summaryBelow).toBe(false);
+    expect(widget.content.columnsMetadata).toHaveLength(2);
+    expect(widget.content.sortByColumn).toEqual("cases");
+    expect(widget.content.sortByDesc).toBe(false);
   });
 
   it("throws an error if table title is undefined", () => {
@@ -308,6 +343,15 @@ describe("fromItem", () => {
         summary: "test summary",
         summaryBelow: false,
         datasetId: "090b0410",
+        sortByColumn: "foo",
+        sortByDesc: false,
+        columnsMetadata: [
+          {
+            columnName: "foo",
+            dataType: "Text",
+            hidden: false,
+          },
+        ],
       },
     };
 
@@ -327,6 +371,15 @@ describe("fromItem", () => {
     expect(widget.content.summary).toEqual("test summary");
     expect(widget.content.summaryBelow).toBe(false);
     expect(widget.content.chartType).toEqual("LineChart");
+    expect(widget.content.sortByColumn).toEqual("foo");
+    expect(widget.content.sortByDesc).toBe(false);
+    expect(widget.content.columnsMetadata).toEqual([
+      {
+        columnName: "foo",
+        dataType: ColumnDataType.Text,
+        hidden: false,
+      },
+    ]);
   });
 
   it("converts a dynamodb item into a TableWidget object", () => {
@@ -344,6 +397,15 @@ describe("fromItem", () => {
         datasetId: "090b0410",
         summary: "test summary",
         summaryBelow: false,
+        sortByColumn: "foo",
+        sortByDesc: false,
+        columnsMetadata: [
+          {
+            columnName: "foo",
+            dataType: "Text",
+            hidden: false,
+          },
+        ],
       },
     };
 
@@ -362,6 +424,15 @@ describe("fromItem", () => {
     );
     expect(widget.content.summary).toEqual("test summary");
     expect(widget.content.summaryBelow).toBe(false);
+    expect(widget.content.sortByColumn).toEqual("foo");
+    expect(widget.content.sortByDesc).toBe(false);
+    expect(widget.content.columnsMetadata).toEqual([
+      {
+        columnName: "foo",
+        dataType: ColumnDataType.Text,
+        hidden: false,
+      },
+    ]);
   });
 
   it("handles an invalid widget type gracefully", () => {
@@ -442,6 +513,20 @@ describe("toItem", () => {
           json: "abc.json",
         },
         fileName: "abc.csv",
+        sortByColumn: "cases",
+        sortByDesc: true,
+        columnsMetadata: [
+          {
+            hidden: false,
+            columnName: "cases",
+            dataType: ColumnDataType.Number,
+          },
+          {
+            hidden: false,
+            columnName: "deaths",
+            dataType: ColumnDataType.Number,
+          },
+        ],
       },
     };
 
@@ -466,6 +551,20 @@ describe("toItem", () => {
         json: "abc.json",
       },
       fileName: "abc.csv",
+      sortByColumn: "cases",
+      sortByDesc: true,
+      columnsMetadata: [
+        {
+          hidden: false,
+          columnName: "cases",
+          dataType: "Number",
+        },
+        {
+          hidden: false,
+          columnName: "deaths",
+          dataType: "Number",
+        },
+      ],
     });
   });
 
@@ -489,6 +588,20 @@ describe("toItem", () => {
           json: "abc.json",
         },
         fileName: "abc.csv",
+        sortByColumn: "deaths",
+        sortByDesc: true,
+        columnsMetadata: [
+          {
+            hidden: false,
+            columnName: "cases",
+            dataType: ColumnDataType.Number,
+          },
+          {
+            hidden: false,
+            columnName: "deaths",
+            dataType: ColumnDataType.Number,
+          },
+        ],
       },
     };
 
@@ -512,6 +625,20 @@ describe("toItem", () => {
         json: "abc.json",
       },
       fileName: "abc.csv",
+      sortByColumn: "deaths",
+      sortByDesc: true,
+      columnsMetadata: [
+        {
+          hidden: false,
+          columnName: "cases",
+          dataType: "Number",
+        },
+        {
+          hidden: false,
+          columnName: "deaths",
+          dataType: "Number",
+        },
+      ],
     });
   });
 });

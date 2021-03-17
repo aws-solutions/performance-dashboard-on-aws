@@ -164,6 +164,9 @@ function createChartWidget(widget: Widget): ChartWidget {
       s3Key: widget.content.s3Key,
       fileName: widget.content.fileName,
       datasetType: widget.content.datasetType,
+      columnsMetadata: widget.content.columnsMetadata || [],
+      sortByColumn: widget.content.sortByColumn,
+      sortByDesc: widget.content.sortByDesc,
     },
   };
 }
@@ -195,6 +198,9 @@ function createTableWidget(widget: Widget): TableWidget {
       s3Key: widget.content.s3Key,
       fileName: widget.content.fileName,
       datasetType: widget.content.datasetType,
+      columnsMetadata: widget.content.columnsMetadata || [],
+      sortByColumn: widget.content.sortByColumn,
+      sortByDesc: widget.content.sortByDesc,
     },
   };
 }

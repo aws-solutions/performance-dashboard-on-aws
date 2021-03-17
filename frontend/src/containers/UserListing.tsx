@@ -43,7 +43,14 @@ function UserListing() {
             message: `Successfully removed ${selected.length} users`,
           },
         });
+
+        // Reload users but also update the UI optimistically because
+        // the backend sometimes returns the same list of users including
+        // the deleted one due to eventual consistency.
+        await reloadUsers();
+        setUsers(users.filter((user) => !usernames.includes(user.userId)));
       } catch (err) {
+        await reloadUsers();
         history.replace("/admin/users", {
           alert: {
             type: "error",
@@ -51,12 +58,6 @@ function UserListing() {
           },
         });
       } finally {
-        // Reload users but also update the UI optimistically because
-        // the backend sometimes returns the same list of users including
-        // the deleted one due to eventual consistency.
-        await reloadUsers();
-        setUsers(users.filter((user) => !usernames.includes(user.userId)));
-
         setIsOpenRemoveUsersModal(false);
       }
     }

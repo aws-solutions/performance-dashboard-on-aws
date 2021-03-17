@@ -1,0 +1,47 @@
+describe("Admin users", () => {
+  it("are taken to the admin homepage after login", () => {
+    cy.login();
+
+    // Assert the welcome message is present
+    cy.contains("Welcome to the Performance Dashboard");
+
+    // Assert the 4 buttons are present
+    cy.get("button").contains("Create dashboard");
+    cy.get("button").contains("Manage users");
+    cy.get("button").contains("View settings");
+    cy.get("button").contains("View the published site");
+  });
+});
+
+describe("Public users", () => {
+  it("can see the homepage with dashboards grouped by topic area", () => {
+    // Load our dummy data for the homepage
+    cy.fixture("homepage.json").then((homepage: any) => {
+      cy.intercept("GET", "prod/public/homepage", homepage);
+      cy.visit("/");
+
+      // A search bar should be present
+      cy.findByRole("searchbox").should("exist");
+
+      // Website name and description are present
+      cy.findByRole("heading", {
+        name: "Performance Dashboard",
+      }).should("exist");
+
+      cy.findByText(
+        "We make data open and accessible to provide " +
+          "transparency and help improve digital services."
+      ).should("exist");
+
+      // Make sure each dashboard is also present
+      cy.findByText("Gorgeous Cotton Gloves").should("exist");
+      cy.findByText("Ergonomic Wooden Soap").should("exist");
+      cy.findByText("Treutel Group").should("exist");
+
+      // And the topic areas as well
+      cy.findByText("Shoes and Sandals").should("exist");
+      cy.findByText("Hauck LLC").should("exist");
+      cy.findByText("Schaden and Sons").should("exist");
+    });
+  });
+});

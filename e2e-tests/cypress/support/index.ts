@@ -11,8 +11,7 @@
 import "@testing-library/cypress/add-commands";
 
 beforeEach(() => {
-  // Run all tests in a desktop view by default
-  cy.viewport(1280, 720);
+  cy.viewport(1280, 720); // Run all tests in a desktop view by default
 });
 
 // ***********************************************

@@ -1,0 +1,33 @@
+{
+  "title": "Performance Dashboard",
+  "description": "We make data open and accessible to provide transparency and help improve digital services.",
+  "dashboards": [
+    {
+      "id": "00d2849d-52c5-4c7b-9750-74500ed6983b",
+      "name": "Gorgeous Cotton Gloves",
+      "topicAreaId": "9e1f2869-cf04-405c-b37e-8687409ef34a",
+      "topicAreaName": "Shoes and Sandals",
+      "description": "Voluptatem autem ut ab. Et in quo aut.",
+      "updatedAt": "2021-03-10T21:15:20.397Z",
+      "friendlyURL": "gorgeous-cotton-gloves"
+    },
+    {
+      "id": "01e5ddec-4291-4515-af59-f1b67c3e12ed",
+      "name": "Ergonomic Wooden Soap",
+      "topicAreaId": "50658c69-39e5-476a-81c6-eab92dbf1fcb",
+      "topicAreaName": "Hauck LLC",
+      "description": "Dolorem est placeat impedit nihil velit alias eaque et totam.",
+      "updatedAt": "2021-03-10T21:17:43.789Z",
+      "friendlyURL": "ergonomic-wooden-soap"
+    },
+    {
+      "id": "095774a5-f4ef-4e5c-9dd0-02e47959b5fa",
+      "name": "Treutel Group",
+      "topicAreaId": "f710ea34-ac76-4190-b20e-2f13430df95d",
+      "topicAreaName": "Schaden and Sons",
+      "description": "Dignissimos mollitia tempora dolores aut.",
+      "updatedAt": "2021-03-12T02:40:30.613Z",
+      "friendlyURL": "treutel-group"
+    }
+  ]
+}

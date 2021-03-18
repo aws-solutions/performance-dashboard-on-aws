@@ -20,7 +20,10 @@ class DashboardListingPage {
     cy.get("form[role='search']").submit();
 
     // select it by clicking the checkbox
-    cy.get(`input[title="${dashboardName}"]`).click();
+    cy.get(`input[title="${dashboardName}"]`).click({
+      force: true,
+      multiple: true,
+    });
 
     // Click delete from the actions dropdown menu
     cy.findByRole("button", { name: "Actions" }).click();

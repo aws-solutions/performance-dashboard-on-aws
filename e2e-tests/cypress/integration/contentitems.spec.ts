@@ -3,6 +3,7 @@ import EditDashboardPage from "pages/EditDashboard";
 import CreateDashboardPage from "../pages/CreateDashboard";
 import AddMetricsPage from "../pages/AddMetrics";
 import AddTextPage from "../pages/AddText";
+import AddChartPage from "../pages/AddChart";
 import LoginPage from "../pages/Login";
 
 const random = new Chance();
@@ -64,8 +65,6 @@ describe("Admin user", () => {
 
     // Step 1. Select create from scratch
     addMetricsPage.selectCreateFromScratch();
-
-    // Create from scratch and fill in content item details
     const metricsTitle = random.word();
     addMetricsPage.fillTitle(metricsTitle);
 
@@ -86,6 +85,48 @@ describe("Admin user", () => {
     editDashboardPage.waitUntilDashboardLoads(dashboardName);
     cy.contains(`"${metricsTitle}" metrics have been successfully added`);
     cy.contains(metricsTitle);
+
+    // Delete the dashboard
+    const dashboardListingPage = editDashboardPage.goToDashboardListing();
+    dashboardListingPage.deleteDashboard(dashboardName);
+  });
+
+  it("can add a Line Chart content item to a dashboard", () => {
+    editDashboardPage.waitUntilDashboardLoads(dashboardName);
+
+    const addContentItemPage = editDashboardPage.goToAddContentItem();
+    addContentItemPage.selectChartContentItem();
+    const addChartPage = addContentItemPage.clickContinue() as AddChartPage;
+
+    // Step 1. Choose static dataset
+    addChartPage.selectStaticDataset();
+    addChartPage.uploadDataset("linechart.csv");
+
+    // Step 2. Enter chart details
+    const chartTitle = random.word();
+    addChartPage.fillTitle(chartTitle);
+
+    const chartSummary = random.sentence();
+    addChartPage.fillSummary(chartSummary);
+
+    // Verify Chart renders data from fixture linechart.csv
+    cy.contains("Series 1");
+    cy.contains("Series 2");
+    cy.contains("Series 3");
+    cy.contains("Series 4");
+    cy.contains("Series 5");
+
+    // Verify chart title and summary are also rendered in preview
+    cy.contains(chartSummary).should("exist");
+    cy.findByRole("heading", { name: chartTitle }).should("exist");
+
+    // Submit form
+    editDashboardPage = addChartPage.submit();
+
+    // Verify new content item shows up
+    editDashboardPage.waitUntilDashboardLoads(dashboardName);
+    cy.contains(`"${chartTitle}" line chart has been successfully added`);
+    cy.contains(chartTitle);
 
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();

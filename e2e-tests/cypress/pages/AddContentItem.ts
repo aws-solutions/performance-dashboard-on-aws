@@ -1,3 +1,4 @@
+import AddChartPage from "./AddChart";
 import AddMetricsPage from "./AddMetrics";
 import AddTextPage from "./AddText";
 
@@ -31,13 +32,15 @@ class AddContentItemPage {
     cy.findByLabelText("Image").check({ force: true });
   }
 
-  clickContinue(): AddMetricsPage | AddTextPage {
+  clickContinue(): AddMetricsPage | AddTextPage | AddChartPage {
     cy.get("button").contains("Continue").click();
     switch (this.selectedContentItem) {
       case "Text":
         return new AddTextPage();
       case "Metrics":
         return new AddMetricsPage();
+      case "Chart":
+        return new AddChartPage();
     }
   }
 }

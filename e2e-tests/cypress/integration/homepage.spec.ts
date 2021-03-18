@@ -1,4 +1,5 @@
 import LoginPage from "../pages/Login";
+import PublicHomepage from "../pages/PublicHomepage";
 
 describe("Admin users", () => {
   it("are taken to the admin homepage after login", () => {
@@ -19,15 +20,11 @@ describe("Admin users", () => {
 
 describe("Public users", () => {
   it("can see the homepage with dashboards grouped by topic area", () => {
-    // Load our dummy data for the homepage
-    cy.fixture("homepage.json").then((homepage: any) => {
-      cy.intercept("GET", "prod/public/homepage", homepage);
-      cy.visit("/");
-
-      // A search bar should be present
+    const publicHomepage = new PublicHomepage();
+    publicHomepage.visitWithDummyData("homepage.json").then((homepage: any) => {
       cy.findByRole("searchbox").should("exist");
 
-      // Website name and description are present
+      // Verify site name and description are present
       cy.findByRole("heading", {
         name: "Performance Dashboard",
       }).should("exist");
@@ -37,7 +34,7 @@ describe("Public users", () => {
           "transparency and help improve digital services."
       ).should("exist");
 
-      // Make sure each dashboard is also present
+      // Make sure each dashboard in the dummy data is also present
       cy.findByText("Gorgeous Cotton Gloves").should("exist");
       cy.findByText("Ergonomic Wooden Soap").should("exist");
       cy.findByText("Treutel Group").should("exist");

@@ -52,6 +52,7 @@ type UsersHook = {
   users: User[];
   loading: boolean;
   reloadUsers: Function;
+  setUsers: Function;
 };
 
 export function useUsers(): UsersHook {
@@ -73,5 +74,6 @@ export function useUsers(): UsersHook {
     loading,
     users,
     reloadUsers: fetchData,
+    setUsers,
   };
 }

@@ -5,7 +5,14 @@ class DashboardListingPage {
   constructor() {}
 
   visit() {
+    // Capture the http request
+    cy.intercept({
+      method: "GET",
+      url: "/prod/dashboard",
+    }).as("listDashboardsRequest");
+
     cy.get(selectors.navBar).get("a").contains("Dashboards").click();
+    cy.wait(["@listDashboardsRequest"]);
   }
 
   goToCreateDashboard(): CreateDashboardPage {

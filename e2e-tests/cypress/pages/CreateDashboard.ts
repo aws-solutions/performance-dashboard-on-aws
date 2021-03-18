@@ -1,6 +1,13 @@
 import EditDashboardPage from "./EditDashboard";
+import DashboardListingPage from "./DashboardListing";
 
 class CreateDashboardPage {
+  visit() {
+    const dashboardListingPage = new DashboardListingPage();
+    dashboardListingPage.visit();
+    dashboardListingPage.goToCreateDashboard();
+  }
+
   fillName(name: string) {
     cy.findByLabelText("Dashboard Name").type(name);
   }

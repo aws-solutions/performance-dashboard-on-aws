@@ -5,23 +5,20 @@ import LoginPage from "../pages/Login";
 const random = new Chance();
 
 describe("Admin user", () => {
-  it("creates a new dashboard with content items and publishes it", () => {
-    /**
-     * Login as admin user
-     */
+  beforeEach(() => {
     const loginPage = new LoginPage();
     loginPage.visit();
     loginPage.loginAsAdmin();
+  });
 
-    /**
-     * Create dashboard
-     */
+  it("can create a new dashboard and delete it", () => {
     const dashboardListingPage = new DashboardListingPage();
     dashboardListingPage.visit();
     const createDashboardPage = dashboardListingPage.goToCreateDashboard();
 
     const dashboardName = random.company();
     const description = random.sentence();
+
     createDashboardPage.fillName(dashboardName);
     createDashboardPage.fillDescription(description);
 
@@ -31,29 +28,16 @@ describe("Admin user", () => {
 
     // Submit form and user is taken to the Edit Dashboard page
     let editDashboardPage = createDashboardPage.submit();
-
-    /**
-     * Add Text content item
-     */
     editDashboardPage.waitUntilDashboardLoads(dashboardName);
-    const addContentItemPage = editDashboardPage.goToAddContentItem();
-    addContentItemPage.selectTextContentItem();
-    const addTextContentItemPage = addContentItemPage.clickContinue();
 
-    const textTitle = random.word();
-    const textContent = random.paragraph();
-    addTextContentItemPage.fillTitle(textTitle);
-    addTextContentItemPage.fillTextContent(textContent);
+    // Verify success alert shows up
+    cy.contains(`"${dashboardName}" draft dashboard successfully created`);
 
-    // Verify preview renders
-    cy.findByRole("heading", { name: textTitle }).should("exist");
-    cy.findByText(textContent).should("exist");
+    // Go back to the dashboard listing page and delete the dashboard
+    dashboardListingPage.visit();
+    dashboardListingPage.deleteDashboard(dashboardName);
 
-    editDashboardPage = addTextContentItemPage.submit();
-
-    // Verify new content item shows up
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
-    cy.contains(`"${textTitle}" text has been successfully added`);
-    cy.contains(textTitle);
+    // Verify success alert shows up
+    cy.contains(`${dashboardName} draft dashboard was successfully deleted`);
   });
 });

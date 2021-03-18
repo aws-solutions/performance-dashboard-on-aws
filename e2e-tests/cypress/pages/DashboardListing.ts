@@ -2,6 +2,8 @@ import selectors from "../utils/selectors";
 import CreateDashboardPage from "./CreateDashboard";
 
 class DashboardListingPage {
+  constructor() {}
+
   visit() {
     cy.get(selectors.navBar).get("a").contains("Dashboards").click();
   }

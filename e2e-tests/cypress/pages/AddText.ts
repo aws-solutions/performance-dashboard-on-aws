@@ -1,6 +1,6 @@
 import EditDashboardPage from "./EditDashboard";
 
-class AddTextContentItem {
+class AddTextPage {
   constructor() {
     cy.contains("Configure text content");
   }
@@ -14,9 +14,18 @@ class AddTextContentItem {
   }
 
   submit(): EditDashboardPage {
+    // Capture the http request
+    cy.intercept({
+      method: "POST",
+      url: new RegExp(/\/prod\/dashboard\/.+\/widget/),
+    }).as("createWidgetRequest");
+
+    // Click the create button and wait for request to finish
     cy.get("button").contains("Add text").click();
+    cy.wait(["@createWidgetRequest"]);
+
     return new EditDashboardPage();
   }
 }
 
-export default AddTextContentItem;
+export default AddTextPage;

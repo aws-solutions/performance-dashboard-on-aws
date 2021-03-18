@@ -1,6 +1,10 @@
+import LoginPage from "../pages/Login";
+
 describe("Admin users", () => {
   it("are taken to the admin homepage after login", () => {
-    cy.login();
+    const loginPage = new LoginPage();
+    loginPage.visit();
+    loginPage.loginAsAdmin();
 
     // Assert the welcome message is present
     cy.contains("Welcome to the Performance Dashboard");

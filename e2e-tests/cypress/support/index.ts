@@ -20,12 +20,3 @@ beforeEach(() => {
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-import login from "./commands/login";
-import createDashboard from "./commands/create-dashboard";
-import deleteDraftDashboard from "./commands/delete-dashboard";
-import navigateTo from "./commands/navigate";
-
-Cypress.Commands.add("login", login);
-Cypress.Commands.add("createDashboard", createDashboard);
-Cypress.Commands.add("deleteDraftDashboard", deleteDraftDashboard);
-Cypress.Commands.add("navigateTo", navigateTo);

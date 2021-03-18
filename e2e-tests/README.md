@@ -32,6 +32,14 @@ Replace the values in the JSON file according to your specific installation of P
 
 ## Run the tests
 
+To run them on visual mode
+
+```bash
+npm run start
+```
+
+To run them on CLI mode
+
 ```bash
 npm run test
 ```

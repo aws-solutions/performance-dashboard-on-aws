@@ -15,7 +15,9 @@ it("create a new dashboard and publish it", () => {
   cy.contains(`"${name}" draft dashboard successfully created`);
 
   /**
+   *
    * Add Text content item
+   *
    */
 
   // Click the button to add a content item
@@ -43,7 +45,9 @@ it("create a new dashboard and publish it", () => {
   cy.contains(textTitle);
 
   /**
+   *
    * Add Metrics content item
+   *
    */
 
   // Click the button to add a content item
@@ -80,9 +84,50 @@ it("create a new dashboard and publish it", () => {
   cy.contains("Metric successfully added");
   cy.contains(metricTitle);
   cy.contains(metricValue);
-  cy.get("button").contains("Add metrics").click();
+  cy.get("button").contains("Add Metrics").click();
 
   // Verify content item was added
   cy.contains(`"${metricsTitle}" metrics have been successfully added`);
   cy.contains(metricsTitle);
+
+  /**
+   *
+   * Add Chart content item
+   *
+   */
+  // Click the button to add a content item
+  cy.get("button").contains("Add content item").click();
+
+  // User is taken to the Add content item screen.
+  cy.contains("Select the type of content you want to add");
+  cy.findByLabelText("Chart").check({ force: true });
+  cy.get("button").contains("Continue").click();
+  cy.contains("Add chart");
+
+  // Select static dataset
+  cy.findByLabelText("Static dataset").check({ force: true });
+  // Upload dataset
+  cy.contains("Drag file here or choose from folder");
+  cy.findByLabelText("Static datasets").attachFile("linechart.csv");
+  cy.get("button").contains("Continue").click();
+
+  // User is taken to the Add chart screen
+  // Verify chart renders data from the CSV fixture
+  cy.contains("Series 1");
+  cy.contains("Series 2");
+  cy.contains("Series 3");
+  cy.contains("Series 4");
+  cy.contains("Series 5");
+  cy.screenshot();
+
+  // Enter chart details
+  const chartTitle = random.word();
+  const chartSummary = random.sentence();
+  cy.findByLabelText("Chart title").type(chartTitle);
+  cy.findByLabelText("Chart summary - optional").type(chartSummary);
+
+  // Save and verify chart was added
+  cy.get("button").contains("Add Chart").click();
+  cy.contains(`"${chartTitle}" line chart has been successfully added`);
+  cy.contains(chartTitle);
 });

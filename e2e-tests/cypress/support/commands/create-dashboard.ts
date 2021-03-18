@@ -10,8 +10,15 @@ function createDashboard(name: string, description: string) {
   cy.findByRole("heading", { name: name }).should("exist");
   cy.findByText(description).should("exist");
 
-  // Click the create button
+  // Wait for the request to finish
+  cy.intercept({
+    method: "POST",
+    url: "/prod/dashboard",
+  }).as("createDashboardRequest");
+
+  // Click the create button and wait
   cy.get("form").submit();
+  cy.wait(["@createDashboardRequest"]);
 }
 
 export default createDashboard;

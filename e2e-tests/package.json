@@ -3,7 +3,8 @@
   "version": "0.8.0-beta",
   "description": "Performance Dashboard on AWS UI Tests",
   "scripts": {
-    "test": "cypress open"
+    "start": "cypress open",
+    "test": "cypress run"
   },
   "devDependencies": {
     "@testing-library/cypress": "^7.0.4",
@@ -11,6 +12,7 @@
     "@types/node": "^14.14.35",
     "chance": "^1.1.7",
     "cypress": "^6.7.1",
+    "cypress-file-upload": "^5.0.2",
     "typescript": "^3.8.1"
   }
 }

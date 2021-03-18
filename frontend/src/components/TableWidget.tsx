@@ -37,7 +37,9 @@ const TableWidget = (props: Props) => {
                 minWidth: 150,
                 Cell: (props: any) => {
                   const row = props.row.original;
-                  return row[header] ? row[header].toLocaleString() : null;
+                  return row[header] !== null
+                    ? row[header].toLocaleString()
+                    : null;
                 },
               };
             }),

@@ -39,7 +39,7 @@ const TableWidget = (props: Props) => {
                   const row = props.row.original;
                   return row[header] !== null
                     ? row[header].toLocaleString()
-                    : null;
+                    : "-";
                 },
               };
             }),

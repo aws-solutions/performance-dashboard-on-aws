@@ -34,8 +34,12 @@ test("renders title and subtitles", async () => {
   expect(
     await screen.findByRole("heading", { name: "Add table" })
   ).toBeInTheDocument();
-  expect(await screen.findByText("Configure table")).toBeInTheDocument();
-  expect(await screen.findByText("Step 2 of 2")).toBeInTheDocument();
+  expect(await screen.findByText("Data")).toBeInTheDocument();
+  expect(
+    await screen.findByText(
+      "Choose an existing dataset or create a new one to populate this table."
+    )
+  ).toBeInTheDocument();
 });
 
 test("renders a textfield for table title", async () => {
@@ -44,14 +48,12 @@ test("renders a textfield for table title", async () => {
 });
 
 test("renders a file upload input", async () => {
-  const { getByLabelText } = render(<AddTable />, { wrapper: MemoryRouter });
+  render(<AddTable />, { wrapper: MemoryRouter });
 
-  const radioButton = getByLabelText("Create a new dataset from file");
-  await act(async () => {
-    fireEvent.click(radioButton);
-  });
+  const radioButton = await screen.findByLabelText("Static dataset");
+  fireEvent.click(radioButton);
 
-  expect(getByLabelText("File upload")).toBeInTheDocument();
+  expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();
 });
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
@@ -60,11 +62,22 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     wrapper: MemoryRouter,
   });
 
-  const submitButton = getByRole("button", { name: "Add table" });
+  const continueButton = getByRole("button", { name: "Continue" });
+  const radioButton = getByLabelText("Static dataset");
 
-  const radioButton = getByLabelText("Create a new dataset from file");
-  await act(async () => {
+  await waitFor(() => {
+    continueButton.removeAttribute("disabled");
     fireEvent.click(radioButton);
+  });
+
+  fireEvent.change(getByLabelText("Static datasets"), {
+    target: {
+      files: ["dataset.csv"],
+    },
+  });
+
+  await act(async () => {
+    fireEvent.click(continueButton);
   });
 
   fireEvent.input(getByLabelText("Table title"), {
@@ -73,11 +86,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  fireEvent.change(getByLabelText("File upload"), {
-    target: {
-      files: ["dataset.csv"],
-    },
-  });
+  const submitButton = getByText("Add Table");
 
   await waitFor(() => {
     expect(parseSpy).toHaveBeenCalled();
@@ -85,7 +94,6 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
   });
 
   await waitFor(() => expect(submitButton).toBeEnabled());
-
   await waitFor(() => {
     expect(getByText("Preview")).toBeInTheDocument();
   });

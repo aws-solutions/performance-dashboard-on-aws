@@ -1,3 +1,7 @@
+.usa-step-indicator {
+  background-color: transparent !important;
+}
+
 .usa-step-indicator__segment--current::after {
   background-color: #565c65 !important;
 }

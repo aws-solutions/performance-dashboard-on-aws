@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { LocationState } from "../models";
@@ -14,8 +14,7 @@ import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
 import TableWidget from "../components/TableWidget";
 import Link from "../components/Link";
-import ComboBox from "../components/Combobox";
-import { useDatasets } from "../hooks/dataset-hooks";
+import { useDatasets } from "../hooks";
 import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +27,7 @@ interface FormValues {
   summary: string;
   showTitle: boolean;
   summaryBelow: boolean;
+  datasetType: string;
 }
 
 interface PathParams {
@@ -42,8 +42,8 @@ function AddTable() {
   const { dashboardId } = useParams<PathParams>();
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
-  const { dynamicDatasets, staticDatasets } = useDatasets();
-  const { register, errors, handleSubmit } = useForm<FormValues>();
+  const { dynamicDatasets } = useDatasets();
+  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
   const [currentJson, setCurrentJson] = useState<Array<any>>(
     state && state.json ? state.json : []
   );
@@ -263,27 +263,13 @@ function AddTable() {
     }
   };
 
-  const onSelectDynamicDataset = async (
-    event: React.FormEvent<HTMLSelectElement>
-  ) => {
-    event.persist();
-    setDatasetLoading(true);
-
-    const jsonFile = (event.target as HTMLInputElement).value;
-    if (jsonFile) {
-      const dataset = await StorageService.downloadJson(jsonFile);
-      setDynamicJson(dataset);
-      setCurrentJson(dataset);
-      setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
-    } else {
-      setDynamicJson([]);
-      setCurrentJson([]);
-      setDynamicDataset(undefined);
+  useEffect(() => {
+    if (datasetType) {
+      reset({
+        datasetType,
+      });
     }
-
-    setDatasetLoading(false);
-    event.stopPropagation();
-  };
+  }, []);
 
   const crumbs = [
     {

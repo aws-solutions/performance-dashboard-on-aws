@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { LocationState } from "../models";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, ChartType, WidgetType, DatasetType } from "../models";
@@ -29,6 +29,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import StepIndicator from "../components/StepIndicator";
 import Table from "../components/Table";
+import CheckData from "../components/CheckData";
 import "./AddChart.css";
 
 interface FormValues {
@@ -84,6 +85,12 @@ function AddChart() {
   );
   const [showAlert, setShowAlert] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 0);
+  const [selectedHeaders, setSelectedHeaders] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
+    new Set<string>()
+  );
 
   const { settings } = useSettings();
 
@@ -173,11 +180,11 @@ function AddChart() {
   );
 
   const advanceStep = () => {
-    setStep(1);
+    setStep(step + 1);
   };
 
   const backStep = () => {
-    setStep(0);
+    setStep(step - 1);
   };
 
   const browseDatasets = () => {
@@ -328,6 +335,9 @@ function AddChart() {
                 segments={[
                   {
                     label: "Choose data",
+                  },
+                  {
+                    label: "Check data",
                   },
                   {
                     label: "Visualize",
@@ -563,6 +573,20 @@ function AddChart() {
           </div>
 
           <div hidden={step !== 1}>
+            <CheckData
+              data={currentJson}
+              advanceStep={advanceStep}
+              backStep={backStep}
+              selectedHeaders={selectedHeaders}
+              setSelectedHeaders={setSelectedHeaders}
+              hiddenColumns={hiddenColumns}
+              setHiddenColumns={setHiddenColumns}
+              onCancel={onCancel}
+              register={register}
+            />
+          </div>
+
+          <div hidden={step !== 2}>
             <div className="grid-row width-desktop">
               <div className="grid-col-5">
                 <TextField

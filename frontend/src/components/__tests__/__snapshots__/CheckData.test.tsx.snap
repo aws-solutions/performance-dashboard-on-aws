@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a file input element 1`] = `
+<div>
+  <div
+    class="grid-col-6"
+  >
+    Please make sure that the system formats your data correctly. Select columns to format as numbers, dates, or text. Also select columns to hide or show from the chart.
+  </div>
+  <div
+    class="grid-row width-desktop"
+  >
+    
+    <div
+      class="grid-col-12"
+    >
+      <table
+        class="usa-table"
+        role="table"
+      >
+        <thead />
+        <tbody
+          role="rowgroup"
+        />
+      </table>
+      
+    </div>
+  </div>
+  <hr />
+  <button
+    class="usa-button usa-button--outline"
+    type="button"
+  >
+    Back
+  </button>
+  <button
+    class="usa-button usa-button--base"
+    disabled=""
+    type="button"
+  >
+    Continue
+  </button>
+  <button
+    class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
+    type="button"
+  >
+    Cancel
+  </button>
+</div>
+`;

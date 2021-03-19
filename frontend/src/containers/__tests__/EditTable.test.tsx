@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
@@ -35,5 +35,7 @@ test("renders a textfield for table title", async () => {
 
 test("renders a file upload input", async () => {
   render(<EditTable />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
+  const radioButton = await screen.findByLabelText("Static dataset");
+  fireEvent.click(radioButton);
+  expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();
 });

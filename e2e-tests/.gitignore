@@ -1,0 +1,5 @@
+node_modules/
+cypress.json
+cypress/screenshots
+cypress/downloads
+cypress/videos

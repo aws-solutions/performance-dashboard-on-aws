@@ -12,6 +12,8 @@ interface Props {
   advanceStep: Function;
   onCancel: Function;
   data: Array<any>;
+  setSortByColumn: Function;
+  setSortByDesc: Function;
 }
 
 function CheckData(props: Props) {
@@ -133,8 +135,10 @@ function CheckData(props: Props) {
             disablePagination={true}
             disableBorderless={true}
             columns={checkDataTableColumns}
-            hiddenColumns={Array.from(props.hiddenColumns)}
             selectedHeaders={props.selectedHeaders}
+            addNumbersColumn={true}
+            setSortByColumn={props.setSortByColumn}
+            setSortByDesc={props.setSortByDesc}
           />
         </div>
       </div>

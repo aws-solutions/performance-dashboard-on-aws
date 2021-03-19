@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -36,8 +36,10 @@ interface Props {
     id?: string;
     minWidth?: string | number | undefined;
   }>;
-  hiddenColumns?: Array<string>;
   selectedHeaders?: Set<string>;
+  addNumbersColumn?: boolean;
+  setSortByColumn?: Function;
+  setSortByDesc?: Function;
 }
 
 function Table(props: Props) {
@@ -64,6 +66,7 @@ function Table(props: Props) {
     headerGroups,
     prepareRow,
     rows,
+    columns,
     page,
     canPreviousPage,
     canNextPage,
@@ -76,7 +79,6 @@ function Table(props: Props) {
     state: { pageIndex, pageSize },
     selectedFlatRows,
     setGlobalFilter,
-    setHiddenColumns,
     toggleAllRowsSelected,
   } = useTable(
     {
@@ -87,12 +89,10 @@ function Table(props: Props) {
         ? {
             selectedRowIds: {},
             sortBy: initialSortBy,
-            hiddenColumns: props.hiddenColumns ?? [],
           }
         : {
             selectedRowIds: {},
             sortBy: initialSortBy,
-            hiddenColumns: props.hiddenColumns ?? [],
             pageIndex: 0,
             pageSize: props.pageSize || 25,
           },
@@ -141,39 +141,64 @@ function Table(props: Props) {
           },
           ...columns,
         ]);
+      } else if (props.addNumbersColumn) {
+        hooks.visibleColumns.push((columns) => [
+          {
+            id: "numbersListing",
+            Header: () => {
+              return <div>1</div>;
+            },
+            Cell: ({ row }) => {
+              return <div>{row.index + 2}</div>;
+            },
+          },
+          ...columns,
+        ]);
       }
     }
   );
 
   const { onSelection, filterQuery } = props;
-  React.useEffect(() => {
+  useEffect(() => {
     setGlobalFilter(filterQuery);
   }, [filterQuery, setGlobalFilter]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (onSelection) {
       const values = selectedFlatRows.map((flatRow) => flatRow.original);
       onSelection(values);
     }
   }, [selectedFlatRows, onSelection]);
 
-  React.useEffect(() => {
-    setHiddenColumns(props.hiddenColumns ?? []);
-  }, [setHiddenColumns, props.hiddenColumns]);
+  useMemo(() => {
+    for (const headerGroup of headerGroups) {
+      for (const header of headerGroup.headers) {
+        if (header.isSorted) {
+          if (props.setSortByColumn) {
+            props.setSortByColumn(header.Header);
+          }
+          if (props.setSortByDesc) {
+            props.setSortByDesc(header.isSortedDesc);
+          }
+          return;
+        }
+      }
+    }
+  }, [headerGroups]);
 
   const currentRows = props.disablePagination ? rows : page;
 
   const getCellBackground = useCallback(
-    (id: string) => {
+    (id: string, defaultColor: string) => {
       if (id.startsWith("checkbox")) {
         for (const selectedHeader of Array.from(props.selectedHeaders ?? [])) {
           if (id.includes(selectedHeader)) {
             return "#97d4ea";
           }
         }
-        return "inherit";
+        return defaultColor;
       } else {
-        return props.selectedHeaders?.has(id) ? "#97d4ea" : "inherit";
+        return props.selectedHeaders?.has(id) ? "#97d4ea" : defaultColor;
       }
     },
     [props.selectedHeaders]
@@ -200,7 +225,10 @@ function Table(props: Props) {
                         }
                       : {
                           minWidth: column.minWidth,
-                          backgroundColor: `${getCellBackground(column.id)}`,
+                          backgroundColor: `${getCellBackground(
+                            column.id,
+                            ""
+                          )}`,
                         }
                   }
                 >
@@ -220,7 +248,9 @@ function Table(props: Props) {
                     }
                   </span>
                   {(props.selection !== "none" && i === 0) ||
-                  (column.id && column.id.startsWith("checkbox")) ? null : (
+                  (column.id && column.id.startsWith("checkbox")) ||
+                  (column.id &&
+                    column.id.startsWith("numbersListing")) ? null : (
                     <button
                       className="margin-left-1 usa-button usa-button--unstyled"
                       {...column.getSortByToggleProps()}
@@ -252,7 +282,10 @@ function Table(props: Props) {
                   return j === 0 && props.selection === "none" ? (
                     <th
                       style={{
-                        backgroundColor: `${getCellBackground(cell.column.id)}`,
+                        backgroundColor: `${getCellBackground(
+                          cell.column.id,
+                          props.addNumbersColumn ? "#f0f0f0" : ""
+                        )}`,
                       }}
                       scope="row"
                       {...cell.getCellProps()}
@@ -262,7 +295,10 @@ function Table(props: Props) {
                   ) : (
                     <td
                       style={{
-                        backgroundColor: `${getCellBackground(cell.column.id)}`,
+                        backgroundColor: `${getCellBackground(
+                          cell.column.id,
+                          ""
+                        )}`,
                       }}
                       {...cell.getCellProps()}
                     >

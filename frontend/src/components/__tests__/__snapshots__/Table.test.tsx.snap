@@ -14,7 +14,7 @@ exports[`renders a basic table 1`] = `
           colspan="1"
           role="columnheader"
           scope="col"
-          style="min-width: 0; background-color: inherit;"
+          style="min-width: 0;"
         >
           <span>
             ID
@@ -45,7 +45,7 @@ exports[`renders a basic table 1`] = `
           colspan="1"
           role="columnheader"
           scope="col"
-          style="min-width: 0; background-color: inherit;"
+          style="min-width: 0;"
         >
           <span>
             Name
@@ -76,7 +76,7 @@ exports[`renders a basic table 1`] = `
           colspan="1"
           role="columnheader"
           scope="col"
-          style="min-width: 0; background-color: inherit;"
+          style="min-width: 0;"
         >
           <span>
             Last Updated
@@ -114,19 +114,16 @@ exports[`renders a basic table 1`] = `
         <th
           role="cell"
           scope="row"
-          style="background-color: inherit;"
         >
           1
         </th>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Banana
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2021-11-11
         </td>
@@ -137,19 +134,16 @@ exports[`renders a basic table 1`] = `
         <th
           role="cell"
           scope="row"
-          style="background-color: inherit;"
         >
           2
         </th>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Chocolate
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2020-11-11
         </td>
@@ -160,19 +154,16 @@ exports[`renders a basic table 1`] = `
         <th
           role="cell"
           scope="row"
-          style="background-color: inherit;"
         >
           3
         </th>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Vanilla
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2019-11-11
         </td>
@@ -338,7 +329,7 @@ exports[`renders a basic table without pagination 1`] = `
           colspan="1"
           role="columnheader"
           scope="col"
-          style="min-width: 0; background-color: inherit;"
+          style="min-width: 0;"
         >
           <span>
             ID
@@ -369,7 +360,7 @@ exports[`renders a basic table without pagination 1`] = `
           colspan="1"
           role="columnheader"
           scope="col"
-          style="min-width: 0; background-color: inherit;"
+          style="min-width: 0;"
         >
           <span>
             Name
@@ -400,7 +391,7 @@ exports[`renders a basic table without pagination 1`] = `
           colspan="1"
           role="columnheader"
           scope="col"
-          style="min-width: 0; background-color: inherit;"
+          style="min-width: 0;"
         >
           <span>
             Last Updated
@@ -438,19 +429,16 @@ exports[`renders a basic table without pagination 1`] = `
         <th
           role="cell"
           scope="row"
-          style="background-color: inherit;"
         >
           1
         </th>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Banana
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2021-11-11
         </td>
@@ -461,19 +449,16 @@ exports[`renders a basic table without pagination 1`] = `
         <th
           role="cell"
           scope="row"
-          style="background-color: inherit;"
         >
           2
         </th>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Chocolate
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2020-11-11
         </td>
@@ -484,19 +469,16 @@ exports[`renders a basic table without pagination 1`] = `
         <th
           role="cell"
           scope="row"
-          style="background-color: inherit;"
         >
           3
         </th>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Vanilla
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2019-11-11
         </td>
@@ -634,7 +616,6 @@ exports[`sorting buttons are clickable 1`] = `
       >
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           <input
             style="cursor: pointer;"
@@ -644,19 +625,16 @@ exports[`sorting buttons are clickable 1`] = `
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           3
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Vanilla
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2019-11-11
         </td>
@@ -666,7 +644,6 @@ exports[`sorting buttons are clickable 1`] = `
       >
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           <input
             style="cursor: pointer;"
@@ -676,19 +653,16 @@ exports[`sorting buttons are clickable 1`] = `
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Chocolate
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2020-11-11
         </td>
@@ -698,7 +672,6 @@ exports[`sorting buttons are clickable 1`] = `
       >
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           <input
             style="cursor: pointer;"
@@ -708,19 +681,16 @@ exports[`sorting buttons are clickable 1`] = `
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           1
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Banana
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2021-11-11
         </td>
@@ -999,7 +969,6 @@ exports[`sorting buttons are clickable 2`] = `
       >
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           <input
             style="cursor: pointer;"
@@ -1009,19 +978,16 @@ exports[`sorting buttons are clickable 2`] = `
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           1
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Banana
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2021-11-11
         </td>
@@ -1031,7 +997,6 @@ exports[`sorting buttons are clickable 2`] = `
       >
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           <input
             style="cursor: pointer;"
@@ -1041,19 +1006,16 @@ exports[`sorting buttons are clickable 2`] = `
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Chocolate
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2020-11-11
         </td>
@@ -1063,7 +1025,6 @@ exports[`sorting buttons are clickable 2`] = `
       >
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           <input
             style="cursor: pointer;"
@@ -1073,19 +1034,16 @@ exports[`sorting buttons are clickable 2`] = `
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           3
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           Vanilla
         </td>
         <td
           role="cell"
-          style="background-color: inherit;"
         >
           2019-11-11
         </td>

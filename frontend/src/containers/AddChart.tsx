@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { LocationState } from "../models";
@@ -62,6 +62,7 @@ function AddChart() {
     state && state.json ? state.json : []
   );
   const [csvJson, setCsvJson] = useState<Array<any>>([]);
+  const [filteredJson, setFilteredJson] = useState<Array<any>>(currentJson);
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
   );
@@ -91,8 +92,30 @@ function AddChart() {
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
+  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
+    undefined
+  );
+  const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
 
   const { settings } = useSettings();
+
+  useMemo(() => {
+    let headers = currentJson.length
+      ? (Object.keys(currentJson[0]) as Array<string>)
+      : [];
+    headers = headers.filter((h) => !hiddenColumns.has(h));
+    const newFilteredJson = new Array<any>();
+    for (const row of currentJson) {
+      const filteredRow = headers.reduce((obj: any, key: any) => {
+        obj[key] = row[key];
+        return obj;
+      }, {});
+      if (filteredRow !== {}) {
+        newFilteredJson.push(filteredRow);
+      }
+    }
+    setFilteredJson(newFilteredJson);
+  }, [currentJson, hiddenColumns]);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -583,6 +606,8 @@ function AddChart() {
               setHiddenColumns={setHiddenColumns}
               onCancel={onCancel}
               register={register}
+              setSortByColumn={setSortByColumn}
+              setSortByDesc={setSortByDesc}
             />
           </div>
 
@@ -687,7 +712,7 @@ function AddChart() {
               </div>
 
               <div className="grid-col-7">
-                <div hidden={!currentJson.length} className="margin-left-4">
+                <div hidden={!filteredJson.length} className="margin-left-4">
                   <h4>Preview</h4>
                   {datasetLoading ? (
                     <Spinner
@@ -743,11 +768,11 @@ function AddChart() {
                           title={showTitle ? title : ""}
                           summary={summary}
                           lines={
-                            currentJson.length
-                              ? (Object.keys(currentJson[0]) as Array<string>)
+                            filteredJson.length
+                              ? (Object.keys(filteredJson[0]) as Array<string>)
                               : []
                           }
-                          data={currentJson}
+                          data={filteredJson}
                           summaryBelow={summaryBelow}
                           isPreview={true}
                         />
@@ -757,11 +782,11 @@ function AddChart() {
                           title={showTitle ? title : ""}
                           summary={summary}
                           columns={
-                            currentJson.length
-                              ? (Object.keys(currentJson[0]) as Array<string>)
+                            filteredJson.length
+                              ? (Object.keys(filteredJson[0]) as Array<string>)
                               : []
                           }
-                          data={currentJson}
+                          data={filteredJson}
                           summaryBelow={summaryBelow}
                           isPreview={true}
                         />
@@ -771,11 +796,11 @@ function AddChart() {
                           title={showTitle ? title : ""}
                           summary={summary}
                           bars={
-                            currentJson.length
-                              ? (Object.keys(currentJson[0]) as Array<string>)
+                            filteredJson.length
+                              ? (Object.keys(filteredJson[0]) as Array<string>)
                               : []
                           }
-                          data={currentJson}
+                          data={filteredJson}
                           summaryBelow={summaryBelow}
                         />
                       )}
@@ -784,11 +809,11 @@ function AddChart() {
                           title={showTitle ? title : ""}
                           summary={summary}
                           parts={
-                            currentJson.length
-                              ? (Object.keys(currentJson[0]) as Array<string>)
+                            filteredJson.length
+                              ? (Object.keys(filteredJson[0]) as Array<string>)
                               : []
                           }
-                          data={currentJson}
+                          data={filteredJson}
                           summaryBelow={summaryBelow}
                         />
                       )}
@@ -807,7 +832,7 @@ function AddChart() {
               onClick={advanceStep}
               type="submit"
               disabled={
-                !currentJson.length || !title || fileLoading || creatingWidget
+                !filteredJson.length || !title || fileLoading || creatingWidget
               }
             >
               Add Chart

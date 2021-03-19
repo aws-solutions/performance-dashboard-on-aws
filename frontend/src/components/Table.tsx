@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -27,6 +27,7 @@ interface Props {
   rows: Array<object>;
   pageSize?: 5 | 10 | 20 | 25 | 50 | 100;
   disablePagination?: boolean;
+  disableBorderless?: boolean;
   width?: string | number | undefined;
   columns: Array<{
     accessor?: string | Function;
@@ -35,9 +36,16 @@ interface Props {
     id?: string;
     minWidth?: string | number | undefined;
   }>;
+  selectedHeaders?: Set<string>;
+  addNumbersColumn?: boolean;
+  setSortByColumn?: Function;
+  setSortByDesc?: Function;
 }
 
 function Table(props: Props) {
+  const borderlessClassName = !props.disableBorderless
+    ? " usa-table--borderless"
+    : "";
   const className = props.className ? ` ${props.className}` : "";
 
   const { initialSortByField, initialSortAscending } = props;
@@ -58,6 +66,7 @@ function Table(props: Props) {
     headerGroups,
     prepareRow,
     rows,
+    columns,
     page,
     canPreviousPage,
     canNextPage,
@@ -77,7 +86,10 @@ function Table(props: Props) {
       data: props.rows,
       disableSortRemove: true,
       initialState: props.disablePagination
-        ? { selectedRowIds: {}, sortBy: initialSortBy }
+        ? {
+            selectedRowIds: {},
+            sortBy: initialSortBy,
+          }
         : {
             selectedRowIds: {},
             sortBy: initialSortBy,
@@ -129,28 +141,73 @@ function Table(props: Props) {
           },
           ...columns,
         ]);
+      } else if (props.addNumbersColumn) {
+        hooks.visibleColumns.push((columns) => [
+          {
+            id: "numbersListing",
+            Header: () => {
+              return <div>1</div>;
+            },
+            Cell: ({ row }) => {
+              return <div>{row.index + 2}</div>;
+            },
+          },
+          ...columns,
+        ]);
       }
     }
   );
 
   const { onSelection, filterQuery } = props;
-  React.useEffect(() => {
+  useEffect(() => {
     setGlobalFilter(filterQuery);
   }, [filterQuery, setGlobalFilter]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (onSelection) {
       const values = selectedFlatRows.map((flatRow) => flatRow.original);
       onSelection(values);
     }
   }, [selectedFlatRows, onSelection]);
 
+  useMemo(() => {
+    for (const headerGroup of headerGroups) {
+      for (const header of headerGroup.headers) {
+        if (header.isSorted) {
+          if (props.setSortByColumn) {
+            props.setSortByColumn(header.Header);
+          }
+          if (props.setSortByDesc) {
+            props.setSortByDesc(header.isSortedDesc);
+          }
+          return;
+        }
+      }
+    }
+  }, [headerGroups]);
+
   const currentRows = props.disablePagination ? rows : page;
+
+  const getCellBackground = useCallback(
+    (id: string, defaultColor: string) => {
+      if (id.startsWith("checkbox")) {
+        for (const selectedHeader of Array.from(props.selectedHeaders ?? [])) {
+          if (id.includes(selectedHeader)) {
+            return "#97d4ea";
+          }
+        }
+        return defaultColor;
+      } else {
+        return props.selectedHeaders?.has(id) ? "#97d4ea" : defaultColor;
+      }
+    },
+    [props.selectedHeaders]
+  );
 
   return (
     <>
       <table
-        className={`usa-table usa-table--borderless${className}`}
+        className={`usa-table${borderlessClassName}${className}`}
         width={props.width}
         {...getTableProps()}
       >
@@ -163,8 +220,16 @@ function Table(props: Props) {
                   {...column.getHeaderProps()}
                   style={
                     props.selection !== "none"
-                      ? { padding: "0.5rem 1rem" }
-                      : { minWidth: column.minWidth }
+                      ? {
+                          padding: "0.5rem 1rem",
+                        }
+                      : {
+                          minWidth: column.minWidth,
+                          backgroundColor: `${getCellBackground(
+                            column.id,
+                            ""
+                          )}`,
+                        }
                   }
                 >
                   <span>
@@ -182,7 +247,10 @@ function Table(props: Props) {
                         : column.render("Header")
                     }
                   </span>
-                  {props.selection !== "none" && i === 0 ? null : (
+                  {(props.selection !== "none" && i === 0) ||
+                  (column.id && column.id.startsWith("checkbox")) ||
+                  (column.id &&
+                    column.id.startsWith("numbersListing")) ? null : (
                     <button
                       className="margin-left-1 usa-button usa-button--unstyled"
                       {...column.getSortByToggleProps()}
@@ -212,11 +280,30 @@ function Table(props: Props) {
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell, j) => {
                   return j === 0 && props.selection === "none" ? (
-                    <th scope="row" {...cell.getCellProps()}>
+                    <th
+                      style={{
+                        backgroundColor: `${getCellBackground(
+                          cell.column.id,
+                          props.addNumbersColumn ? "#f0f0f0" : ""
+                        )}`,
+                      }}
+                      scope="row"
+                      {...cell.getCellProps()}
+                    >
                       {cell.render("Cell")}
                     </th>
                   ) : (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <td
+                      style={{
+                        backgroundColor: `${getCellBackground(
+                          cell.column.id,
+                          ""
+                        )}`,
+                      }}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </td>
                   );
                 })}
               </tr>

@@ -23,7 +23,7 @@ import {
 import Spinner from "../components/Spinner";
 import UtilsService from "../services/UtilsService";
 import Link from "../components/Link";
-import { useDatasets } from "../hooks/dataset-hooks";
+import { useDatasets } from "../hooks";
 import Table from "../components/Table";
 import "./EditChart.css";
 

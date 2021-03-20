@@ -134,7 +134,7 @@
   "UserListingLink": "What do the statuses mean?",
   "UserListingDropdownMenuActions": "Actions",
   "UserListingDropdownResendInviteText": "Resend invite emails to unconfirmed users",
-  "UserListingActionsResendInvites": "Resend invite emails",
+  "UserListingActionsResendInvites": "Resend invite email",
   "UserListingActionsRemoveUsers": "Remove users",
   "UserListingAddUsers": "Add user(s)",
   "UserListingModalTitleResendInvites": "Resend invite email",

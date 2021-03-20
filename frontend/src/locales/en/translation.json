@@ -12,7 +12,11 @@
   "UserListingLink": "What do the statuses mean?",
   "UserListingDropdownMenuActions": "Actions",
   "UserListingDropdownResendInviteText": "Resend invite emails to unconfirmed users",
+<<<<<<< HEAD
   "UserListingActionsResendInvites": "Resend invite email",
+=======
+  "UserListingActionsResendInvites": "Resend invite emails",
+>>>>>>> c74bbf8d4a0053d0112fdec9f912f5513486473b
   "UserListingActionsRemoveUsers": "Remove users",
   "UserListingAddUsers": "Add user(s)",
   "UserListingModalTitleResendInvites": "Resend invite email",

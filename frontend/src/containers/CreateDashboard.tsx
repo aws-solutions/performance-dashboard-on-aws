@@ -11,6 +11,7 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   name: string;
@@ -28,6 +29,8 @@ function CreateDashboard() {
   const description = watch("description");
   const topicAreaId = watch("topicAreaId");
 
+  const { t } = useTranslation();
+
   const onSubmit = async (values: FormValues) => {
     const dashboard = await BackendService.createDashboard(
       values.name,
@@ -38,7 +41,7 @@ function CreateDashboard() {
     history.push(`/admin/dashboard/edit/${dashboard.id}`, {
       alert: {
         type: "success",
-        message: `"${dashboard.name}" draft dashboard successfully created`,
+        message: `"${dashboard.name}" {t("CreateEditDashboardSuccess")}`,
       },
       id: "top-alert",
     });
@@ -109,11 +112,15 @@ function CreateDashboard() {
                     label="Description - optional"
                     hint={
                       <>
+<<<<<<< HEAD
                         Give your dashboard a description that provides an
                         initial summary. This text area supports limited
                         markdown.{" "}
+=======
+                        {t("CreateEditDashboardDetails")}{" "}
+>>>>>>> 094169a... Partial work on CreateDashboard + EditDetails
                         <Link target="_blank" to={"/admin/markdown"} external>
-                          View Markdown Syntax
+                          {t("CreateEditDashboardDetailsLink")}
                         </Link>
                       </>
                     }

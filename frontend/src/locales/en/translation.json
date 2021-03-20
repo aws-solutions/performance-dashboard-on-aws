@@ -118,5 +118,8 @@
   "GlobalSearch": "search",
   "UserListingUsername": "Username",
   "UserListingEmail": "Email",
-  "UserListingRemoveUserFail": "Failed to delete users"
+  "UserListingRemoveUserFail": "Failed to delete users",
+  "CreateEditDashboardDetails": "Gives your dashboard a description to explain it in more depth. This text area supports limited markdown.",
+  "CreateEditDashboardDetailsLink": "View Markdown Syntax",
+  "CreateEditDashboardSuccess": "draft dashboard successfully created"
 }

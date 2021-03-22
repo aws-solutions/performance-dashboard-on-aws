@@ -6,7 +6,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
-import { useWidget, useDashboard } from "../hooks";
+import { useWidget, useDashboard, useFullPreview } from "../hooks";
 import Spinner from "../components/Spinner";
 import Link from "../components/Link";
 
@@ -28,6 +28,7 @@ function EditText() {
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, setWidget } = useWidget(dashboardId, widgetId);
+  const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
     if (!widget) {
@@ -98,7 +99,7 @@ function EditText() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Edit text</h1>
+      <h1 hidden={fullPreview}>Edit text</h1>
 
       {loading || !widget || editingWidget ? (
         <Spinner
@@ -108,7 +109,7 @@ function EditText() {
       ) : (
         <>
           <div className="grid-row width-desktop">
-            <div className="grid-col-6">
+            <div className="grid-col-6" hidden={fullPreview}>
               <form
                 className="usa-form usa-form--large"
                 onChange={onFormChange}
@@ -179,7 +180,8 @@ function EditText() {
                 </Button>
               </form>
             </div>
-            <div className="grid-col-6">
+            <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+              {fullPreviewButton}
               <h4 className="margin-top-4">Preview</h4>
               {widget.showTitle ? (
                 <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>

@@ -9,6 +9,7 @@ import {
   useDateTimeFormatter,
   useSettings,
   useDatasets,
+  useFullPreview,
 } from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
@@ -98,6 +99,11 @@ function AddChart() {
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
 
   const { settings } = useSettings();
+  const {
+    fullPreviewToggle,
+    fullPreviewButton,
+    fullPreview,
+  } = useFullPreview();
 
   useMemo(() => {
     let headers = currentJson.length
@@ -347,12 +353,12 @@ function AddChart() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Add chart</h1>
+      <h1 hidden={fullPreview}>Add chart</h1>
 
       <div className="grid-row width-desktop">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid-col-12">
-            <div className="grid-col-6">
+            <div className="grid-col-6" hidden={fullPreview}>
               <StepIndicator
                 current={step}
                 segments={[
@@ -613,7 +619,7 @@ function AddChart() {
 
           <div hidden={step !== 2}>
             <div className="grid-row width-desktop">
-              <div className="grid-col-5">
+              <div className="grid-col-5" hidden={fullPreview}>
                 <TextField
                   id="title"
                   name="title"
@@ -709,10 +715,37 @@ function AddChart() {
                     Show summary below chart
                   </label>
                 </div>
+                <br />
+                <br />
+                <hr />
+                <Button variant="outline" type="button" onClick={backStep}>
+                  Back
+                </Button>
+                <Button
+                  onClick={advanceStep}
+                  type="submit"
+                  disabled={
+                    !filteredJson.length ||
+                    !title ||
+                    fileLoading ||
+                    creatingWidget
+                  }
+                >
+                  Add Chart
+                </Button>
+                <Button
+                  variant="unstyled"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
               </div>
 
-              <div className="grid-col-7">
+              <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
                 <div hidden={!filteredJson.length} className="margin-left-4">
+                  {fullPreviewButton}
                   <h4>Preview</h4>
                   {datasetLoading ? (
                     <Spinner
@@ -822,29 +855,6 @@ function AddChart() {
                 </div>
               </div>
             </div>
-            <br />
-            <br />
-            <hr />
-            <Button variant="outline" type="button" onClick={backStep}>
-              Back
-            </Button>
-            <Button
-              onClick={advanceStep}
-              type="submit"
-              disabled={
-                !filteredJson.length || !title || fileLoading || creatingWidget
-              }
-            >
-              Add Chart
-            </Button>
-            <Button
-              variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
           </div>
         </form>
       </div>

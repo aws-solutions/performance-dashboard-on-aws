@@ -52,3 +52,8 @@ test("on submit, it calls createWidget api", async () => {
 
   expect(BackendService.createWidget).toHaveBeenCalled();
 });
+
+test("renders the expand preview button", async () => {
+  const { getByRole } = render(<AddText />, { wrapper: MemoryRouter });
+  expect(getByRole("button", { name: "Expand preview" })).toBeInTheDocument();
+});

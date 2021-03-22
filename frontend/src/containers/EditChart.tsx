@@ -19,6 +19,7 @@ import {
   useDashboard,
   useDateTimeFormatter,
   useSettings,
+  useFullPreview,
 } from "../hooks";
 import Spinner from "../components/Spinner";
 import UtilsService from "../services/UtilsService";
@@ -82,6 +83,11 @@ function EditChart() {
     setDynamicJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
+  const {
+    fullPreviewToggle,
+    fullPreviewButton,
+    fullPreview,
+  } = useFullPreview();
 
   const [title, setTitle] = useState("");
   const [showTitle, setShowTitle] = useState(false);
@@ -446,7 +452,7 @@ function EditChart() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Edit chart</h1>
+      <h1 hidden={fullPreview}>Edit chart</h1>
 
       {loading ||
       loadingDatasets ||
@@ -459,7 +465,7 @@ function EditChart() {
           <div className="grid-row width-desktop">
             <form onChange={onFormChange} onSubmit={handleSubmit(onSubmit)}>
               <div className="grid-col-12">
-                <div className="grid-col-6">
+                <div className="grid-col-6" hidden={fullPreview}>
                   <ul className="usa-button-group usa-button-group--segmented">
                     <li className="usa-button-group__item">
                       <button
@@ -662,7 +668,7 @@ function EditChart() {
               </div>
               <div hidden={step !== 1}>
                 <div className="grid-row width-desktop">
-                  <div className="grid-col-5">
+                  <div className="grid-col-5" hidden={fullPreview}>
                     <fieldset className="usa-fieldset">
                       <TextField
                         id="title"
@@ -765,14 +771,45 @@ function EditChart() {
                               Show summary below chart
                             </label>
                           </div>
+                          <br />
+                          <br />
+                          <hr />
+                          <Button
+                            variant="outline"
+                            type="button"
+                            onClick={backStep}
+                          >
+                            Back
+                          </Button>
+                          <Button
+                            onClick={advanceStep}
+                            type="submit"
+                            disabled={
+                              !displayedJson.length ||
+                              !title ||
+                              fileLoading ||
+                              editingWidget
+                            }
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            variant="unstyled"
+                            className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                            type="button"
+                            onClick={onCancel}
+                          >
+                            Cancel
+                          </Button>
                         </div>
                       ) : (
                         ""
                       )}
                     </fieldset>
                   </div>
-                  <div className="grid-col-7">
+                  <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
                     <div className="margin-left-4">
+                      {fullPreviewButton}
                       <h4>Preview</h4>
                       {datasetLoading ? (
                         <Spinner
@@ -848,32 +885,6 @@ function EditChart() {
                     </div>
                   </div>
                 </div>
-                <br />
-                <br />
-                <hr />
-                <Button variant="outline" type="button" onClick={backStep}>
-                  Back
-                </Button>
-                <Button
-                  onClick={advanceStep}
-                  type="submit"
-                  disabled={
-                    !displayedJson.length ||
-                    !title ||
-                    fileLoading ||
-                    editingWidget
-                  }
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="unstyled"
-                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                  type="button"
-                  onClick={onCancel}
-                >
-                  Cancel
-                </Button>
               </div>
             </form>
           </div>

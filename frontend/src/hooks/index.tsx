@@ -16,6 +16,7 @@ import { useDateTimeFormatter } from "./datetime-hooks";
 import { useImage } from "./image-hooks";
 import { useLogo } from "./logo-hooks";
 import { useDatasets } from "./dataset-hooks";
+import { useFullPreview } from "./dashboard-preview-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -50,4 +51,5 @@ export {
   useLogo,
   useFriendlyUrl,
   useDatasets,
+  useFullPreview,
 };

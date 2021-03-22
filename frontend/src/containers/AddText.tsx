@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { WidgetType } from "../models";
-import { useDashboard } from "../hooks";
+import { useDashboard, useFullPreview } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
@@ -31,6 +31,11 @@ function AddText() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [showTitle, setShowTitle] = useState(true);
+  const {
+    fullPreview,
+    fullPreviewToggle,
+    fullPreviewButton,
+  } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -94,19 +99,20 @@ function AddText() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Add text</h1>
+      <div hidden={fullPreview}>
+        <h1>Add text</h1>
 
-      <div className="text-base text-italic">Step 2 of 2</div>
-      <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-        Configure text content
+        <div className="text-base text-italic">Step 2 of 2</div>
+        <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
+          Configure text content
+        </div>
       </div>
-
       {creatingWidget ? (
         <Spinner className="text-center margin-top-6" label="Creating text" />
       ) : (
         <>
           <div className="grid-row width-desktop">
-            <div className="grid-col-6">
+            <div className="grid-col-6" hidden={fullPreview}>
               <form
                 className="usa-form usa-form--large"
                 onChange={onFormChange}
@@ -178,7 +184,8 @@ function AddText() {
                 </Button>
               </form>
             </div>
-            <div className="grid-col-6">
+            <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+              {fullPreviewButton}
               <h4 className="margin-top-4">Preview</h4>
               {showTitle ? (
                 <h2 className="margin-top-4 margin-left-2px">{title}</h2>

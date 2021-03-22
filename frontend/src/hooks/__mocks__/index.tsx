@@ -12,6 +12,7 @@ import {
   DashboardAuditLog,
   Widget,
 } from "../../models";
+import React from "react";
 
 const dummyDashboard = {
   id: "123",
@@ -511,5 +512,12 @@ export function useFriendlyUrl() {
   const [friendlyURL] = useState("/foo");
   return {
     friendlyURL,
+  };
+}
+
+export function useFullPreview() {
+  return {
+    fullPreview: false,
+    fullPreviewButton: <button type="button">Expand preview</button>,
   };
 }

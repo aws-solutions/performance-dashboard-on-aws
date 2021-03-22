@@ -616,7 +616,7 @@ function AddTable() {
                 </div>
               </div>
 
-              <div className={fullPreview ? "gril-col-12" : "grid-col-7"}>
+              <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
                 <div hidden={!currentJson.length} className="margin-left-4">
                   {fullPreviewButton}
                   <h4>Preview</h4>

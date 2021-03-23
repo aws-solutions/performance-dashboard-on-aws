@@ -207,6 +207,28 @@ exports[`renders the Check Data component 1`] = `
           Show summary below chart
         </label>
       </div>
+      <br />
+      <br />
+      <hr />
+      <button
+        class="usa-button usa-button--outline"
+        type="button"
+      >
+        Back
+      </button>
+      <button
+        class="usa-button usa-button--base"
+        disabled=""
+        type="submit"
+      >
+        Add Chart
+      </button>
+      <button
+        class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
+        type="button"
+      >
+        Cancel
+      </button>
     </div>
     <div
       class="grid-col-7"
@@ -236,27 +258,5 @@ exports[`renders the Check Data component 1`] = `
       </div>
     </div>
   </div>
-  <br />
-  <br />
-  <hr />
-  <button
-    class="usa-button usa-button--outline"
-    type="button"
-  >
-    Back
-  </button>
-  <button
-    class="usa-button usa-button--base"
-    disabled=""
-    type="submit"
-  >
-    Add Chart
-  </button>
-  <button
-    class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
-    type="button"
-  >
-    Cancel
-  </button>
 </div>
 `;

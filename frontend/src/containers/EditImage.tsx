@@ -7,7 +7,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
-import { useDashboard, useWidget, useImage } from "../hooks";
+import { useDashboard, useWidget, useImage, useFullPreview } from "../hooks";
 import Spinner from "../components/Spinner";
 import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
@@ -38,6 +38,12 @@ function EditImage() {
   const [imageUploading, setImageUploading] = useState(false);
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
+
+  const {
+    fullPreview,
+    fullPreviewToggle,
+    fullPreviewButton,
+  } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
     if (!widget) {
@@ -166,14 +172,14 @@ function EditImage() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Edit Image</h1>
+      <h1 hidden={fullPreview}>Edit Image</h1>
 
       {!widget || loading || loadingFile ? (
         <Spinner className="text-center margin-top-6" label="Loading" />
       ) : (
         <>
           <div className="grid-row width-desktop">
-            <div className="grid-col-6">
+            <div className="grid-col-6" hidden={fullPreview}>
               <form
                 className="usa-form usa-form--large"
                 onSubmit={handleSubmit(onSubmit)}
@@ -300,8 +306,9 @@ function EditImage() {
                 </Button>
               </form>
             </div>
-            <div className="grid-col-6">
+            <div className={fullPreview ? "gril-col-12" : "grid-col-6"}>
               <div hidden={false} className="margin-left-4">
+                {fullPreviewButton}
                 <h4>Preview</h4>
                 {loadingFile ? (
                   <Spinner

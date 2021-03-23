@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { LocationState } from "../models";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, WidgetType, DatasetType, ColumnDataType } from "../models";
-import { useDashboard, useDatasets } from "../hooks";
+import { useDashboard, useDatasets, useFullPreview } from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -72,6 +72,11 @@ function AddChart() {
     undefined
   );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
+  const {
+    fullPreviewToggle,
+    fullPreviewButton,
+    fullPreview,
+  } = useFullPreview();
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
@@ -302,12 +307,12 @@ function AddChart() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Add chart</h1>
+      <h1 hidden={fullPreview}>Add chart</h1>
 
       <div className="grid-row width-desktop">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid-col-12">
-            <div className="grid-col-6">
+            <div className="grid-col-6" hidden={fullPreview}>
               <StepIndicator
                 current={step}
                 segments={[
@@ -376,6 +381,8 @@ function AddChart() {
               advanceStep={advanceStep}
               fileLoading={fileLoading}
               creatingWidget={creatingWidget}
+              fullPreviewButton={fullPreviewButton}
+              fullPreview={fullPreview}
             />
           </div>
         </form>

@@ -4,7 +4,12 @@ import { useHistory, useParams } from "react-router-dom";
 import { LocationState } from "../models";
 import { Dataset, DatasetType, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
-import { useDashboard, useDateTimeFormatter, useSettings } from "../hooks";
+import {
+  useDashboard,
+  useDateTimeFormatter,
+  useSettings,
+  useFullPreview,
+} from "../hooks";
 import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -74,6 +79,11 @@ function AddTable() {
   );
   const [showAlert, setShowAlert] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 0);
+  const {
+    fullPreview,
+    fullPreviewToggle,
+    fullPreviewButton,
+  } = useFullPreview();
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -292,12 +302,12 @@ function AddTable() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Add table</h1>
+      <h1 hidden={fullPreview}>Add table</h1>
 
       <div className="grid-row width-desktop">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid-col-12">
-            <div className="grid-col-6">
+            <div className="grid-col-6" hidden={fullPreview}>
               <StepIndicator
                 current={step}
                 segments={[
@@ -539,7 +549,7 @@ function AddTable() {
 
           <div hidden={step !== 1}>
             <div className="grid-row width-desktop">
-              <div className="grid-col-5">
+              <div className="grid-col-5" hidden={fullPreview}>
                 <TextField
                   id="title"
                   name="title"
@@ -606,8 +616,9 @@ function AddTable() {
                 </div>
               </div>
 
-              <div className="grid-col-7">
+              <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
                 <div hidden={!currentJson.length} className="margin-left-4">
+                  {fullPreviewButton}
                   <h4>Preview</h4>
                   {datasetLoading ? (
                     <Spinner

@@ -93,3 +93,10 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
   expect(BackendService.createWidget).toHaveBeenCalled();
   expect(StorageService.uploadImage).toHaveBeenCalled();
 });
+
+test("renders the expand preview button", async () => {
+  render(<AddImage />, { wrapper: MemoryRouter });
+  expect(
+    screen.getByRole("button", { name: "Expand preview" })
+  ).toBeInTheDocument();
+});

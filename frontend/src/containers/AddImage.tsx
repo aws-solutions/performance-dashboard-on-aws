@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { WidgetType } from "../models";
 import BackendService from "../services/BackendService";
-import { useDashboard } from "../hooks";
+import { useDashboard, useFullPreview } from "../hooks";
 import StorageService from "../services/StorageService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
@@ -37,6 +37,12 @@ function AddImage() {
   const [imageUploading, setImageUploading] = useState(false);
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
+
+  const {
+    fullPreview,
+    fullPreviewToggle,
+    fullPreviewButton,
+  } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -133,15 +139,16 @@ function AddImage() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Add Image</h1>
+      <div hidden={fullPreview}>
+        <h1>Add Image</h1>
 
-      <div className="text-base text-italic">Step 2 of 2</div>
-      <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-        Configure image
+        <div className="text-base text-italic">Step 2 of 2</div>
+        <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
+          Configure image
+        </div>
       </div>
-
       <div className="grid-row width-desktop">
-        <div className="grid-col-6">
+        <div className="grid-col-6" hidden={fullPreview}>
           <form
             className="usa-form usa-form--large"
             onSubmit={handleSubmit(onSubmit)}
@@ -274,7 +281,8 @@ function AddImage() {
             </Button>
           </form>
         </div>
-        <div className="grid-col-6">
+        <div className={fullPreview ? "gril-col-12" : "grid-col-6"}>
+          {fullPreviewButton}
           <h4 className="margin-top-4">Preview</h4>
           <ImageWidget
             title={showTitle ? title : ""}

@@ -8,7 +8,7 @@ import {
   DatasetSchema,
   DatasetType,
 } from "../models";
-import { useDashboard, useWidget } from "../hooks";
+import { useDashboard, useWidget, useFullPreview } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import MetricsWidget from "../components/MetricsWidget";
@@ -50,6 +50,11 @@ function EditMetrics() {
   const [showTitle, setShowTitle] = useState(false);
   const [oneMetricPerRow, setOneMetricPerRow] = useState(false);
   const [metrics, setMetrics] = useState<Array<Metric>>([]);
+  const {
+    fullPreview,
+    fullPreviewToggle,
+    fullPreviewButton,
+  } = useFullPreview();
 
   useEffect(() => {
     if (widget && currentJson) {
@@ -215,7 +220,7 @@ function EditMetrics() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Edit metrics</h1>
+      <h1 hidden={fullPreview}>Edit metrics</h1>
 
       {loading || !widget || !currentJson || fileLoading || editingWidget ? (
         <Spinner
@@ -230,7 +235,7 @@ function EditMetrics() {
         />
       ) : (
         <div className="grid-row width-desktop">
-          <div className="grid-col-6">
+          <div className="grid-col-6" hidden={fullPreview}>
             <form
               className="usa-form usa-form--large"
               onChange={onFormChange}
@@ -296,7 +301,8 @@ function EditMetrics() {
               </Button>
             </form>
           </div>
-          <div className="grid-col-6">
+          <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+            {fullPreviewButton}
             <h4 className="margin-top-4">Preview</h4>
             <MetricsWidget
               title={showTitle ? title : ""}

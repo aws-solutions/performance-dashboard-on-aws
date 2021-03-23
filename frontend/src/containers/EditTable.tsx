@@ -11,7 +11,12 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
 import TableWidget from "../components/TableWidget";
-import { useWidget, useDashboard, useDateTimeFormatter } from "../hooks";
+import {
+  useWidget,
+  useDashboard,
+  useDateTimeFormatter,
+  useFullPreview,
+} from "../hooks";
 import Spinner from "../components/Spinner";
 import Link from "../components/Link";
 import { useDatasets, useSettings } from "../hooks";
@@ -74,6 +79,11 @@ function EditTable() {
     setDynamicJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
+  const {
+    fullPreview,
+    fullPreviewToggle,
+    fullPreviewButton,
+  } = useFullPreview();
 
   const [title, setTitle] = useState("");
   const [showTitle, setShowTitle] = useState(false);
@@ -438,7 +448,7 @@ function EditTable() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Edit table</h1>
+      <h1 hidden={fullPreview}>Edit table</h1>
 
       {loading ||
       loadingDatasets ||
@@ -451,7 +461,7 @@ function EditTable() {
           <div className="grid-row width-desktop">
             <form onChange={onFormChange} onSubmit={handleSubmit(onSubmit)}>
               <div className="grid-col-12">
-                <div className="grid-col-6">
+                <div className="grid-col-6" hidden={fullPreview}>
                   <ul className="usa-button-group usa-button-group--segmented">
                     <li className="usa-button-group__item">
                       <button
@@ -654,7 +664,7 @@ function EditTable() {
               </div>
               <div hidden={step !== 1}>
                 <div className="grid-row width-desktop">
-                  <div className="grid-col-5">
+                  <div className="grid-col-5" hidden={fullPreview}>
                     <fieldset className="usa-fieldset">
                       <TextField
                         id="title"
@@ -730,8 +740,9 @@ function EditTable() {
                       )}
                     </fieldset>
                   </div>
-                  <div className="grid-col-7">
+                  <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
                     <div className="margin-left-4">
+                      {fullPreviewButton}
                       <h4>Preview</h4>
                       {datasetLoading ? (
                         <Spinner

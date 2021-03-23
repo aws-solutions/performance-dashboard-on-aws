@@ -14,6 +14,7 @@ import {
   useDateTimeFormatter,
   useSettings,
   useDatasets,
+  useFullPreview,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -77,6 +78,11 @@ function AddMetrics() {
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.metrics ? DatasetType.CreateNew : undefined
   );
+  const {
+    fullPreview,
+    fullPreviewToggle,
+    fullPreviewButton,
+  } = useFullPreview();
 
   useEffect(() => {
     if (datasetType) {
@@ -302,7 +308,7 @@ function AddMetrics() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Add metrics</h1>
+      <h1 hidden={fullPreview}>Add metrics</h1>
 
       {fileLoading || creatingWidget ? (
         <Spinner
@@ -313,7 +319,7 @@ function AddMetrics() {
         <div className="grid-row width-desktop">
           <form onChange={onFormChange} onSubmit={handleSubmit(onSubmit)}>
             <div className="grid-col-12">
-              <div className="grid-col-6">
+              <div className="grid-col-6" hidden={fullPreview}>
                 <StepIndicator
                   current={step}
                   segments={[
@@ -463,7 +469,7 @@ function AddMetrics() {
 
             <div hidden={step !== 1}>
               <div className="grid-row width-desktop">
-                <div className="grid-col-5">
+                <div className="grid-col-5" hidden={fullPreview}>
                   <fieldset className="usa-fieldset">
                     <TextField
                       id="title"
@@ -526,7 +532,8 @@ function AddMetrics() {
                     Cancel
                   </Button>
                 </div>
-                <div className="grid-col-7">
+                <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
+                  {fullPreviewButton}
                   <div className="margin-left-4">
                     <h4 className="margin-top-4">Preview</h4>
                     <MetricsWidget

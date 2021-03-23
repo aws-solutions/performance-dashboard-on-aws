@@ -290,20 +290,105 @@ paths:
 
     put:
       operationId: UpdateWidget
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+        - name: widgetId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateWidgetRequest"
+      responses:
+        "200":
+          description: Widget updated successfully
 
     delete:
       operationId: DeleteWidget
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+        - name: widgetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Widget deleted successfully
 
   /dashboard/{id}/versions:
     get:
       operationId: ListDashboardVersions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of dashboard versions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DashboardVersion"
 
   /dashboard/{id}/widgetorder:
-    put: {}
+    put:
+      operationId: SetWidgetOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetWidgetOrderRequest"
+      responses:
+        "200":
+          description: Widget order saved successfully
 
   /dashboard/{id}/auditlogs:
     get:
       operationId: ListDashboardAuditLogs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of dashboard audit logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DashboardAuditLog"
 
   /settings:
     get:
@@ -470,13 +555,7 @@ components:
         deletedBy:
           type: string
         state:
-          type: string
-          enum:
-            - Draft
-            - Published
-            - Archived
-            - PublishPending
-            - Inactive
+          $ref: "#/components/schemas/DashboardState"
         friendlyURL:
           type: string
         releaseNotes:
@@ -485,6 +564,50 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Widget"
+
+    DashboardVersion:
+      type: object
+      properties:
+        id:
+          type: string
+        state:
+          $ref: "#/components/schemas/DashboardState"
+        version:
+          type: number
+        friendlyURL:
+          type: string
+
+    DashboardState:
+      type: string
+      enum:
+        - Draft
+        - Published
+        - Archived
+        - PublishPending
+        - Inactive
+
+    DashboardAuditLog:
+      type: object
+      properties:
+        itemId:
+          type: string
+        timestamp:
+          type: string
+        userId:
+          type: string
+        event:
+          type: string
+        modifiedProperties:
+          type: array
+          items:
+            type: object
+            properties:
+              property:
+                type: string
+              oldValue:
+                type: string
+              newValue:
+                type: string
 
     Widget:
       type: object
@@ -746,3 +869,52 @@ components:
           $ref: "#/components/schemas/WidgetType"
         showTitle:
           type: boolean
+      required:
+        - name
+        - content
+        - widgetType
+
+    UpdateWidgetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        content:
+          type: object
+          oneOf:
+            - $ref: "#/components/schemas/TextWidgetContent"
+            - $ref: "#/components/schemas/ChartWidgetContent"
+            - $ref: "#/components/schemas/TableWidgetContent"
+            - $ref: "#/components/schemas/ImageWidgetContent"
+            - $ref: "#/components/schemas/MetricsWidgetContent"
+        updatedAt:
+          type: string
+        showTitle:
+          type: boolean
+      required:
+        - name
+        - content
+        - updatedAt
+
+    SetWidgetOrderRequest:
+      type: object
+      properties:
+        widgets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Widget Id
+              order:
+                type: number
+              updatedAt:
+                type: string
+                description: Last updated time
+            required:
+              - id
+              - order
+              - updatedAt
+      required:
+        - widgets

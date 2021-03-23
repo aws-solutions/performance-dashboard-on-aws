@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useJsonDataset } from "../hooks";
 import { ChartWidget, ChartType } from "../models";
 import LineChartWidget from "./LineChartWidget";
@@ -13,12 +13,34 @@ interface Props {
 function ChartWidgetComponent(props: Props) {
   const { content } = props.widget;
   const { json } = useJsonDataset(content.s3Key.json);
+  const [filteredJson, setFilteredJson] = useState<Array<any>>([]);
 
-  if (!json || json.length === 0) {
+  useMemo(() => {
+    let headers = json.length ? (Object.keys(json[0]) as Array<string>) : [];
+    headers = headers.filter((h) => {
+      const metadata = content.columnsMetadata
+        ? content.columnsMetadata.find((c) => c.columnName === h)
+        : undefined;
+      return !metadata || !metadata.hidden;
+    });
+    const newFilteredJson = new Array<any>();
+    for (const row of json) {
+      const filteredRow = headers.reduce((obj: any, key: any) => {
+        obj[key] = row[key];
+        return obj;
+      }, {});
+      if (filteredRow !== {}) {
+        newFilteredJson.push(filteredRow);
+      }
+    }
+    setFilteredJson(newFilteredJson);
+  }, [json, props.widget]);
+
+  if (!filteredJson || filteredJson.length === 0) {
     return null;
   }
 
-  const keys = Object.keys(json[0] as Array<string>);
+  const keys = Object.keys(filteredJson[0] as Array<string>);
   switch (content.chartType) {
     case ChartType.LineChart:
       return (
@@ -27,7 +49,7 @@ function ChartWidgetComponent(props: Props) {
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           lines={keys}
-          data={json}
+          data={filteredJson}
         />
       );
 
@@ -38,7 +60,7 @@ function ChartWidgetComponent(props: Props) {
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           columns={keys}
-          data={json}
+          data={filteredJson}
         />
       );
 
@@ -49,7 +71,7 @@ function ChartWidgetComponent(props: Props) {
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           bars={keys}
-          data={json}
+          data={filteredJson}
         />
       );
 
@@ -60,7 +82,7 @@ function ChartWidgetComponent(props: Props) {
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           parts={keys}
-          data={json}
+          data={filteredJson}
         />
       );
 

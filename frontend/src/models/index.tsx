@@ -118,6 +118,9 @@ export interface ChartWidget extends Widget {
       raw: string;
       json: string;
     };
+    columnsMetadata: ColumnMetadata[];
+    sortByColumn?: string;
+    sortByDesc?: boolean;
   };
 }
 
@@ -276,3 +279,14 @@ export type User = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export enum ColumnDataType {
+  Number = "Number",
+  Text = "Text",
+}
+
+export interface ColumnMetadata {
+  columnName: string;
+  dataType?: ColumnDataType;
+  hidden: boolean;
+}

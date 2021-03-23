@@ -16,6 +16,7 @@ interface Props {
   defaultValue?: string;
   error?: string;
   onChange?: Function;
+  labelClassName?: string;
 }
 
 function Combobox(props: Props) {
@@ -40,7 +41,12 @@ function Combobox(props: Props) {
 
   return (
     <div className={formGroupClassName} ref={formGroupRef}>
-      <label className="usa-label margin-top-1" htmlFor={props.id}>
+      <label
+        className={`usa-label margin-top-1${
+          props.labelClassName ? " " + props.labelClassName : ""
+        }`}
+        htmlFor={props.id}
+      >
         {props.label}
       </label>
       {props.error && (

@@ -1,11 +1,15 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import CheckData from "../CheckData";
+import Visualize from "../Visualize";
+import { MemoryRouter } from "react-router-dom";
+import { DatasetType } from "../../models";
 
 test("renders the Check Data component", async () => {
   const wrapper = render(
-    <CheckData
-      data={[
+    <Visualize
+      errors={[]}
+      register={() => {}}
+      json={[
         {
           id: "1",
           name: "Banana",
@@ -22,19 +26,16 @@ test("renders the Check Data component", async () => {
           updatedAt: "2019-11-11",
         },
       ]}
-      advanceStep={() => {}}
-      backStep={() => {}}
+      csvJson={[]}
+      datasetLoading={false}
+      datasetType={DatasetType.DynamicDataset}
       onCancel={() => {}}
-      setSelectedHeaders={() => {}}
-      setHiddenColumns={() => {}}
-      selectedHeaders={new Set<string>()}
-      hiddenColumns={new Set<string>()}
-      register={() => {}}
-      setSortByColumn={() => {}}
-      setSortByDesc={() => {}}
-      dataTypes={new Map()}
-      setDataTypes={() => {}}
-    />
+      backStep={() => {}}
+      advanceStep={() => {}}
+      fileLoading={false}
+      creatingWidget={false}
+    />,
+    { wrapper: MemoryRouter }
   );
   expect(wrapper.container).toMatchSnapshot();
 });

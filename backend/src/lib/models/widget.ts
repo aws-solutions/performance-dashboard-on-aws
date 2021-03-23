@@ -20,7 +20,7 @@ export enum ColumnDataType {
 
 export interface ColumnMetadata {
   columnName: string;
-  dataType: ColumnDataType;
+  dataType?: ColumnDataType;
   hidden: boolean;
 }
 

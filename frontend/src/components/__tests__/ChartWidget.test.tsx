@@ -23,6 +23,7 @@ const chart: ChartWidget = {
       raw: "123.csv",
     },
     summaryBelow: false,
+    columnsMetadata: [],
   },
 };
 

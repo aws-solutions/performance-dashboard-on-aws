@@ -255,7 +255,7 @@ export function usePublicDashboard(dashboardId: string) {
 }
 
 export function useJsonDataset(s3Key: string) {
-  return {
+  const [jsonDataset] = useState({
     loading: false,
     json: [
       {
@@ -267,7 +267,8 @@ export function useJsonDataset(s3Key: string) {
         Jobs: 150,
       },
     ],
-  };
+  });
+  return jsonDataset;
 }
 
 export function useDatasets() {

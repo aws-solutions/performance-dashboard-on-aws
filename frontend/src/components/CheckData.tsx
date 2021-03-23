@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
+import { ColumnDataType } from "../models";
 import Button from "./Button";
+import Combobox from "./Combobox";
 import Table from "./Table";
 
 interface Props {
@@ -14,6 +16,8 @@ interface Props {
   data: Array<any>;
   setSortByColumn: Function;
   setSortByDesc: Function;
+  dataTypes: Map<string, ColumnDataType>;
+  setDataTypes: Function;
 }
 
 function CheckData(props: Props) {
@@ -45,6 +49,25 @@ function CheckData(props: Props) {
       }
     }
     props.setHiddenColumns(newHiddenColumns);
+  };
+
+  const handleDataTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const newDataTypes = new Map(props.dataTypes);
+    if (target.value === ColumnDataType.Text) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newDataTypes.set(selectedHeader, ColumnDataType.Text);
+      }
+    } else if (target.value === ColumnDataType.Number) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newDataTypes.set(selectedHeader, ColumnDataType.Number);
+      }
+    } else {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newDataTypes.delete(selectedHeader);
+      }
+    }
+    props.setDataTypes(newDataTypes);
   };
 
   const checkDataTableRows = useMemo(() => props.data || [], [props.data]);
@@ -79,15 +102,27 @@ function CheckData(props: Props) {
               id: header,
               accessor: header,
               minWidth: 150,
-              Cell: (props: any) => {
-                const row = props.row.original;
-                return row[header] ? row[header].toLocaleString() : null;
+              Cell: (properties: any) => {
+                const row = properties.row.original;
+                if (props.dataTypes.has(header)) {
+                  if (props.dataTypes.get(header) === ColumnDataType.Number) {
+                    return typeof row[header] === "number" ? (
+                      row[header].toLocaleString()
+                    ) : (
+                      <div className="text-secondary-vivid">! None</div>
+                    );
+                  } else {
+                    return row[header] ? row[header].toLocaleString() : "None";
+                  }
+                } else {
+                  return row[header] ? row[header].toLocaleString() : "None";
+                }
               },
             },
           ],
         };
       }),
-    [props.data, props.selectedHeaders]
+    [props.data, props.selectedHeaders, props.dataTypes]
   );
 
   return (
@@ -101,7 +136,7 @@ function CheckData(props: Props) {
       <div className="grid-row width-desktop">
         {props.selectedHeaders.size ? (
           <div className="grid-col-3 margin-top-3">
-            <div className="font-sans-md">
+            <div className="font-sans-md text-bold">
               {`Edit column${
                 props.selectedHeaders.size > 1 ? "s" : ""
               } "${Array.from(props.selectedHeaders).join(", ")}"`}
@@ -122,6 +157,22 @@ function CheckData(props: Props) {
               >
                 Hide from visualization
               </label>
+            </div>
+            <div className="margin-top-3 margin-right-3">
+              <Combobox
+                id="dataType"
+                name="dataType"
+                label="Data format"
+                options={[
+                  { value: ColumnDataType.Text, content: ColumnDataType.Text },
+                  {
+                    value: ColumnDataType.Number,
+                    content: ColumnDataType.Number,
+                  },
+                ]}
+                labelClassName={"text-bold"}
+                onChange={handleDataTypeChange}
+              />
             </div>
           </div>
         ) : (

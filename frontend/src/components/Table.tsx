@@ -15,6 +15,7 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table";
+import UtilsService from "../services/UtilsService";
 
 interface Props {
   selection: "multiple" | "single" | "none";
@@ -66,7 +67,6 @@ function Table(props: Props) {
     headerGroups,
     prepareRow,
     rows,
-    columns,
     page,
     canPreviousPage,
     canNextPage,
@@ -170,10 +170,11 @@ function Table(props: Props) {
     }
   }, [selectedFlatRows, onSelection]);
 
-  useMemo(() => {
+  useMemo(async () => {
     for (const headerGroup of headerGroups) {
       for (const header of headerGroup.headers) {
         if (header.isSorted) {
+          await UtilsService.timeout(0);
           if (props.setSortByColumn) {
             props.setSortByColumn(header.Header);
           }
@@ -184,7 +185,7 @@ function Table(props: Props) {
         }
       }
     }
-  }, [headerGroups]);
+  }, [headerGroups, rows]);
 
   const currentRows = props.disablePagination ? rows : page;
 

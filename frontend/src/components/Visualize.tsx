@@ -181,7 +181,7 @@ function Visualize(props: Props) {
               props.creatingWidget
             }
           >
-            Add Chart
+            {props.submitButtonLabel}
           </Button>
           <Button
             variant="unstyled"
@@ -299,32 +299,6 @@ function Visualize(props: Props) {
           </div>
         </div>
       </div>
-      <br />
-      <br />
-      <hr />
-      <Button variant="outline" type="button" onClick={props.backStep}>
-        Back
-      </Button>
-      <Button
-        onClick={props.advanceStep}
-        type="submit"
-        disabled={
-          !props.json.length ||
-          !title ||
-          props.fileLoading ||
-          props.creatingWidget
-        }
-      >
-        {props.submitButtonLabel}
-      </Button>
-      <Button
-        variant="unstyled"
-        className="text-base-dark hover:text-base-darker active:text-base-darkest"
-        type="button"
-        onClick={props.onCancel}
-      >
-        Cancel
-      </Button>
     </>
   );
 }

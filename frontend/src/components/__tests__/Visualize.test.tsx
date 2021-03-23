@@ -3,6 +3,7 @@ import { render } from "@testing-library/react";
 import Visualize from "../Visualize";
 import { MemoryRouter } from "react-router-dom";
 import { DatasetType } from "../../models";
+import Button from "../Button";
 
 test("renders the Check Data component", async () => {
   const wrapper = render(
@@ -34,7 +35,10 @@ test("renders the Check Data component", async () => {
       advanceStep={() => {}}
       fileLoading={false}
       creatingWidget={false}
+      fullPreview={false}
+      fullPreviewButton={<Button>Full preview</Button>}
       submitButtonLabel="Add Chart"
+      summaryBelow={false}
     />,
     { wrapper: MemoryRouter }
   );

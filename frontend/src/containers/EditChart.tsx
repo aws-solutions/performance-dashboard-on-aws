@@ -1,31 +1,25 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { parse, ParseResult } from "papaparse";
-import { Dataset, ChartType, DatasetType, LocationState } from "../models";
+import {
+  ChartType,
+  ColumnDataType,
+  Dataset,
+  DatasetType,
+  LocationState,
+} from "../models";
+import { useWidget, useDashboard, useDatasets, useFullPreview } from "../hooks";
+
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import TextField from "../components/TextField";
-import FileInput from "../components/FileInput";
-import Button from "../components/Button";
-import RadioButtons from "../components/RadioButtons";
-import LineChartWidget from "../components/LineChartWidget";
-import ColumnChartWidget from "../components/ColumnChartWidget";
-import BarChartWidget from "../components/BarChartWidget";
-import PartWholeChartWidget from "../components/PartWholeChartWidget";
-import {
-  useWidget,
-  useDashboard,
-  useDateTimeFormatter,
-  useSettings,
-  useFullPreview,
-} from "../hooks";
+import Visualize from "../components/Visualize";
+import ChooseData from "../components/ChooseData";
+import CheckData from "../components/CheckData";
 import Spinner from "../components/Spinner";
 import UtilsService from "../services/UtilsService";
-import Link from "../components/Link";
-import { useDatasets } from "../hooks";
-import Table from "../components/Table";
+
 import "./EditChart.css";
 
 interface FormValues {
@@ -49,15 +43,14 @@ function EditChart() {
   const { state } = history.location;
 
   const { dashboardId, widgetId } = useParams<PathParams>();
-  const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
   const {
     register,
     errors,
     handleSubmit,
-    getValues,
     reset,
+    watch,
   } = useForm<FormValues>();
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
@@ -72,7 +65,7 @@ function EditChart() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(2);
   const {
     widget,
     datasetType,
@@ -83,79 +76,51 @@ function EditChart() {
     setDynamicJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
-  const {
-    fullPreviewToggle,
-    fullPreviewButton,
-    fullPreview,
-  } = useFullPreview();
+  const { fullPreviewButton, fullPreview } = useFullPreview();
 
-  const [title, setTitle] = useState("");
-  const [showTitle, setShowTitle] = useState(false);
-  const [summary, setSummary] = useState("");
-  const [summaryBelow, setSummaryBelow] = useState(false);
-  const [chartType, setChartType] = useState("");
+  const [selectedHeaders, setSelectedHeaders] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
+    undefined
+  );
+  const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
+  const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
+    new Map<string, ColumnDataType>()
+  );
 
-  const [displayedJson, setDisplayedJson] = useState<Array<any>>([]);
+  const title = watch("title");
+  const showTitle = watch("showTitle");
+  const summary = watch("summary");
+  const summaryBelow = watch("summaryBelow");
+  const chartType = watch("chartType");
+
+  const [displayedJson, setDisplayedJson] = useState<any[]>([]);
+  const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const [displayedDatasetType, setDisplayedDatasetType] = useState<
     DatasetType | undefined
   >();
 
-  const { settings } = useSettings();
-
-  const dynamicDatasetsTableCols = React.useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "fileName",
-        Cell: (props: any) => {
-          return (
-            <div className="tooltip">
-              {props.value}
-              <span className="tooltiptext">Tooltip text</span>
-            </div>
-          );
-        },
-      },
-      {
-        Header: "Last updated",
-        accessor: "updatedAt",
-      },
-      {
-        Header: "Description",
-        accessor: "description",
-        Cell: (props: any) => {
-          if (props.value) {
-            if (props.value.length > 11) {
-              return (
-                <div className="tooltip">
-                  {props.value.substring(0, 11) + "..."}
-                  <span className="tooltiptext">{props.value}</span>
-                </div>
-              );
-            } else {
-              return (
-                <div className="tooltip">
-                  {props.value}
-                  <span className="tooltiptext">{props.value}</span>
-                </div>
-              );
-            }
-          }
-
-          return "";
-        },
-      },
-      {
-        Header: "Tags",
-        accessor: "tags",
-      },
-    ],
-    [dateFormatter, settings]
-  );
-
-  const dynamicDatasetsTableRows = React.useMemo(() => dynamicDatasets, [
-    dynamicDatasets,
-  ]);
+  useMemo(() => {
+    let headers = displayedJson.length
+      ? (Object.keys(displayedJson[0]) as Array<string>)
+      : [];
+    headers = headers.filter((h) => !hiddenColumns.has(h));
+    const newFilteredJson = new Array<any>();
+    for (const row of displayedJson) {
+      const filteredRow = headers.reduce((obj: any, key: any) => {
+        obj[key] = row[key];
+        return obj;
+      }, {});
+      if (filteredRow !== {}) {
+        newFilteredJson.push(filteredRow);
+      }
+    }
+    setFilteredJson(newFilteredJson);
+  }, [displayedJson, hiddenColumns]);
 
   useEffect(() => {
     if (
@@ -202,11 +167,6 @@ function EditChart() {
         setDisplayedJson(state && state.json ? state.json : currentJson);
       }
 
-      setTitle(title);
-      setShowTitle(showTitle);
-      setSummary(summary);
-      setSummaryBelow(summaryBelow);
-      setChartType(chartType);
       if (!dynamicDataset) {
         setDynamicDataset(
           dynamicDatasets.find(
@@ -218,6 +178,34 @@ function EditChart() {
         setStaticDataset(
           staticDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
         );
+      }
+
+      // Initialize fields related to columns metadata
+      if (widget.content.columnsMetadata) {
+        const columnsMetadata = widget.content.columnsMetadata;
+
+        const hidden = new Set<string>();
+        columnsMetadata
+          .filter((column: any) => column.hidden)
+          .forEach((column: any) => hidden.add(column.columnName));
+
+        const dataTypes = new Map<string, ColumnDataType>();
+        columnsMetadata
+          .filter((column: any) => !!column.dataType)
+          .forEach((column: any) =>
+            dataTypes.set(column.columnName, column.dataType)
+          );
+
+        const headers = new Set<string>();
+        columnsMetadata.forEach((column: any) =>
+          headers.add(column.columnName)
+        );
+
+        setSelectedHeaders(headers);
+        setHiddenColumns(hidden);
+        setDataTypes(dataTypes);
+        setSortByColumn(widget.content.sortByColumn);
+        setSortByDesc(widget.content.sortByDesc || false);
       }
     }
   }, [
@@ -329,11 +317,22 @@ function EditChart() {
             : displayedDatasetType === DatasetType.DynamicDataset
             ? dynamicDataset?.fileName
             : staticDataset?.fileName,
+          sortByColumn,
+          sortByDesc,
+          columnsMetadata: Array.from(selectedHeaders).map((header) => {
+            return {
+              columnName: header,
+              hidden: hiddenColumns.has(header),
+              dataType: dataTypes.has(header)
+                ? dataTypes.get(header)
+                : undefined,
+            };
+          }),
         },
         widget.updatedAt
       );
-      setEditingWidget(false);
 
+      setEditingWidget(false);
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
@@ -372,21 +371,12 @@ function EditChart() {
     }
   };
 
-  const onFormChange = () => {
-    const { title, showTitle, summary, summaryBelow, chartType } = getValues();
-    setTitle(title);
-    setShowTitle(showTitle);
-    setSummary(summary);
-    setSummaryBelow(summaryBelow);
-    setChartType(chartType);
-  };
-
   const advanceStep = () => {
-    setStep(1);
+    setStep(step + 1);
   };
 
   const backStep = () => {
-    setStep(0);
+    setStep(step - 1);
   };
 
   const browseDatasets = () => {
@@ -422,15 +412,6 @@ function EditChart() {
     setDatasetLoading(false);
   };
 
-  const onSelect = useCallback(
-    (selectedDataset: Array<Dataset>) => {
-      if (displayedDatasetType === DatasetType.DynamicDataset) {
-        selectDynamicDataset(selectedDataset[0]);
-      }
-    },
-    [displayedDatasetType]
-  );
-
   const crumbs = [
     {
       label: "Dashboards",
@@ -458,433 +439,111 @@ function EditChart() {
       loadingDatasets ||
       !widget ||
       !displayedDatasetType ||
-      !displayedJson ? (
+      !filteredJson ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
           <div className="grid-row width-desktop">
-            <form onChange={onFormChange} onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid-col-12">
-                <div className="grid-col-6" hidden={fullPreview}>
-                  <ul className="usa-button-group usa-button-group--segmented">
-                    <li className="usa-button-group__item">
-                      <button
-                        className={
-                          step === 1
-                            ? "usa-button usa-button--outline"
-                            : "usa-button"
-                        }
-                        type="button"
-                        onClick={backStep}
-                      >
-                        Choose data
-                      </button>
-                    </li>
-                    <li className="usa-button-group__item">
-                      <button
-                        className={
-                          step === 0
-                            ? "usa-button usa-button--outline"
-                            : "usa-button"
-                        }
-                        type="button"
-                        onClick={advanceStep}
-                      >
-                        Visualize
-                      </button>
-                    </li>
-                  </ul>
-                </div>
+                <ul className="usa-button-group usa-button-group--segmented">
+                  <li className="usa-button-group__item">
+                    <button
+                      className={
+                        step !== 0
+                          ? "usa-button usa-button--outline"
+                          : "usa-button"
+                      }
+                      type="button"
+                      onClick={() => setStep(0)}
+                    >
+                      Choose data
+                    </button>
+                  </li>
+                  <li className="usa-button-group__item">
+                    <button
+                      className={
+                        step !== 1
+                          ? "usa-button usa-button--outline"
+                          : "usa-button"
+                      }
+                      type="button"
+                      onClick={() => setStep(1)}
+                    >
+                      Check data
+                    </button>
+                  </li>
+                  <li className="usa-button-group__item">
+                    <button
+                      className={
+                        step !== 2
+                          ? "usa-button usa-button--outline"
+                          : "usa-button"
+                      }
+                      type="button"
+                      onClick={() => setStep(2)}
+                    >
+                      Visualize
+                    </button>
+                  </li>
+                </ul>
               </div>
               <div hidden={step !== 0}>
-                <div className="grid-col-6">
-                  <label htmlFor="fieldset" className="usa-label text-bold">
-                    Data
-                  </label>
-                  <div className="usa-hint">
-                    Choose an existing dataset or create a new one to populate
-                    this chart.{" "}
-                    <Link to="/admin/apihelp" target="_blank" external>
-                      How do I add datasets?
-                    </Link>
-                  </div>
-                </div>
-                <fieldset
-                  id="fieldset"
-                  className="usa-fieldset"
-                  onChange={handleChange}
-                >
-                  <legend className="usa-sr-only">Content item types</legend>
-
-                  <div className="grid-row">
-                    <div className="grid-col-4 padding-right-2">
-                      <div className="usa-radio">
-                        <div
-                          className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                            displayedDatasetType === "StaticDataset"
-                              ? " bg-base-lightest"
-                              : "-lighter"
-                          } border-2px padding-2 margin-y-1`}
-                        >
-                          <div className="grid-col flex-5">
-                            <input
-                              className="usa-radio__input"
-                              id="staticDataset"
-                              value="StaticDataset"
-                              type="radio"
-                              name="datasetType"
-                              ref={register()}
-                            />
-                            <label
-                              className="usa-radio__label"
-                              htmlFor="staticDataset"
-                            >
-                              Static dataset
-                            </label>
-                          </div>
-                          <div className="grid-col flex-7">
-                            <div className="usa-prose text-base margin-left-4">
-                              Upload a new dataset from file or elect an
-                              existing dataset.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="grid-col-4 padding-left-2">
-                      <div className="usa-radio">
-                        <div
-                          className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                            displayedDatasetType === "DynamicDataset"
-                              ? " bg-base-lightest"
-                              : "-lighter"
-                          } border-2px padding-2 margin-y-1`}
-                        >
-                          <div className="grid-col flex-5">
-                            <input
-                              className="usa-radio__input"
-                              id="dynamicDataset"
-                              value="DynamicDataset"
-                              type="radio"
-                              name="datasetType"
-                              ref={register()}
-                            />
-                            <label
-                              className="usa-radio__label"
-                              htmlFor="dynamicDataset"
-                            >
-                              Dynamic dataset
-                            </label>
-                          </div>
-                          <div className="grid-col flex-7">
-                            <div className="usa-prose text-base margin-left-4">
-                              Choose from a list of continuously updated
-                              datasets.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    hidden={displayedDatasetType !== DatasetType.StaticDataset}
-                  >
-                    <div className="grid-row">
-                      <div className="grid-col-5">
-                        <FileInput
-                          id="dataset"
-                          name="dataset"
-                          label="Static datasets"
-                          accept=".csv"
-                          loading={fileLoading}
-                          errors={csvErrors}
-                          register={register}
-                          hint={
-                            <span>
-                              Upload a dataset from a CSV file, or choose an
-                              existing static dataset.{" "}
-                              <Link
-                                to="/admin/formattingcsv"
-                                target="_blank"
-                                external
-                              >
-                                How do I format my CSV file?
-                              </Link>
-                            </span>
-                          }
-                          fileName={csvFile && csvFile.name}
-                          onFileProcessed={onFileProcessed}
-                        />
-                      </div>
-                      <div className="grid-col-3 padding-left-3">
-                        <Button
-                          variant="outline"
-                          type="button"
-                          className="datasetsButton"
-                          onClick={browseDatasets}
-                        >
-                          Browse datasets
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    hidden={displayedDatasetType !== DatasetType.DynamicDataset}
-                  >
-                    <div className="overflow-hidden">
-                      <Table
-                        selection="single"
-                        initialSortByField="updatedAt"
-                        filterQuery={""}
-                        rows={dynamicDatasetsTableRows}
-                        screenReaderField="name"
-                        width="100%"
-                        onSelection={onSelect}
-                        columns={dynamicDatasetsTableCols}
-                      />
-                    </div>
-                  </div>
-                </fieldset>
-                <br />
-                <br />
-                <hr />
-                <Button
-                  type="button"
-                  onClick={advanceStep}
-                  disabled={!displayedJson.length}
-                >
-                  Continue
-                </Button>
-                <Button
-                  variant="unstyled"
-                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                  type="button"
-                  onClick={onCancel}
-                >
-                  Cancel
-                </Button>
+                <ChooseData
+                  selectDynamicDataset={selectDynamicDataset}
+                  dynamicDatasets={dynamicDatasets}
+                  datasetType={displayedDatasetType}
+                  onFileProcessed={onFileProcessed}
+                  handleChange={handleChange}
+                  advanceStep={advanceStep}
+                  fileLoading={fileLoading}
+                  browseDatasets={browseDatasets}
+                  continueButtonDisabled={!currentJson.length}
+                  csvErrors={csvErrors}
+                  csvFile={csvFile}
+                  onCancel={onCancel}
+                  register={register}
+                />
               </div>
               <div hidden={step !== 1}>
-                <div className="grid-row width-desktop">
-                  <div className="grid-col-5" hidden={fullPreview}>
-                    <fieldset className="usa-fieldset">
-                      <TextField
-                        id="title"
-                        name="title"
-                        label="Chart title"
-                        hint="Give your chart a descriptive title."
-                        error={errors.title && "Please specify a chart title"}
-                        defaultValue={title}
-                        required
-                        register={register}
-                      />
-
-                      <div className="usa-checkbox">
-                        <input
-                          className="usa-checkbox__input"
-                          id="display-title"
-                          type="checkbox"
-                          name="showTitle"
-                          defaultChecked={showTitle}
-                          ref={register()}
-                        />
-                        <label
-                          className="usa-checkbox__label"
-                          htmlFor="display-title"
-                        >
-                          Show title on dashboard
-                        </label>
-                      </div>
-
-                      {widget ? (
-                        <div>
-                          <RadioButtons
-                            id="chartType"
-                            name="chartType"
-                            label="Chart type"
-                            hint="Choose a chart type."
-                            register={register}
-                            error={
-                              errors.chartType && "Please select a chart type"
-                            }
-                            defaultValue={chartType}
-                            required
-                            options={[
-                              {
-                                value: ChartType.BarChart,
-                                label: "Bar",
-                              },
-                              {
-                                value: ChartType.ColumnChart,
-                                label: "Column",
-                              },
-                              {
-                                value: ChartType.LineChart,
-                                label: "Line",
-                              },
-                              {
-                                value: ChartType.PartWholeChart,
-                                label: "Part-to-whole",
-                              },
-                            ]}
-                          />
-
-                          <TextField
-                            id="summary"
-                            name="summary"
-                            label="Chart summary - optional"
-                            hint={
-                              <>
-                                Give your chart a summary to explain it in more
-                                depth. It can also be read by screen readers to
-                                describe the chart for those with visual
-                                impairments. This field supports markdown.{" "}
-                                <Link
-                                  target="_blank"
-                                  to={"/admin/markdown"}
-                                  external
-                                >
-                                  View Markdown Syntax
-                                </Link>
-                              </>
-                            }
-                            register={register}
-                            defaultValue={summary}
-                            multiline
-                            rows={5}
-                          />
-                          <div className="usa-checkbox">
-                            <input
-                              className="usa-checkbox__input"
-                              id="summary-below"
-                              type="checkbox"
-                              name="summaryBelow"
-                              defaultChecked={summaryBelow}
-                              ref={register()}
-                            />
-                            <label
-                              className="usa-checkbox__label"
-                              htmlFor="summary-below"
-                            >
-                              Show summary below chart
-                            </label>
-                          </div>
-                          <br />
-                          <br />
-                          <hr />
-                          <Button
-                            variant="outline"
-                            type="button"
-                            onClick={backStep}
-                          >
-                            Back
-                          </Button>
-                          <Button
-                            onClick={advanceStep}
-                            type="submit"
-                            disabled={
-                              !displayedJson.length ||
-                              !title ||
-                              fileLoading ||
-                              editingWidget
-                            }
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            variant="unstyled"
-                            className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                            type="button"
-                            onClick={onCancel}
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </fieldset>
-                  </div>
-                  <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
-                    <div className="margin-left-4">
-                      {fullPreviewButton}
-                      <h4>Preview</h4>
-                      {datasetLoading ? (
-                        <Spinner
-                          className="text-center margin-top-6"
-                          label="Loading"
-                        />
-                      ) : (
-                        <>
-                          {chartType === ChartType.LineChart && (
-                            <LineChartWidget
-                              title={showTitle ? title : ""}
-                              summary={summary}
-                              lines={
-                                displayedJson.length > 0
-                                  ? (Object.keys(
-                                      displayedJson[0]
-                                    ) as Array<string>)
-                                  : []
-                              }
-                              data={displayedJson}
-                              summaryBelow={summaryBelow}
-                              isPreview={true}
-                            />
-                          )}
-                          {chartType === ChartType.ColumnChart && (
-                            <ColumnChartWidget
-                              title={showTitle ? title : ""}
-                              summary={summary}
-                              columns={
-                                displayedJson.length > 0
-                                  ? (Object.keys(
-                                      displayedJson[0]
-                                    ) as Array<string>)
-                                  : []
-                              }
-                              data={displayedJson}
-                              summaryBelow={summaryBelow}
-                              isPreview={true}
-                            />
-                          )}
-                          {chartType === ChartType.BarChart && (
-                            <BarChartWidget
-                              title={showTitle ? title : ""}
-                              summary={summary}
-                              bars={
-                                displayedJson.length > 0
-                                  ? (Object.keys(
-                                      displayedJson[0]
-                                    ) as Array<string>)
-                                  : []
-                              }
-                              data={displayedJson}
-                              summaryBelow={summaryBelow}
-                            />
-                          )}
-                          {chartType === ChartType.PartWholeChart && (
-                            <PartWholeChartWidget
-                              title={showTitle ? title : ""}
-                              summary={summary}
-                              parts={
-                                displayedJson.length > 0
-                                  ? (Object.keys(
-                                      displayedJson[0]
-                                    ) as Array<string>)
-                                  : []
-                              }
-                              data={displayedJson}
-                              summaryBelow={summaryBelow}
-                            />
-                          )}
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <CheckData
+                  data={filteredJson}
+                  advanceStep={advanceStep}
+                  backStep={backStep}
+                  selectedHeaders={selectedHeaders}
+                  setSelectedHeaders={setSelectedHeaders}
+                  hiddenColumns={hiddenColumns}
+                  setHiddenColumns={setHiddenColumns}
+                  onCancel={onCancel}
+                  register={register}
+                  setSortByColumn={setSortByColumn}
+                  setSortByDesc={setSortByDesc}
+                  dataTypes={dataTypes}
+                  setDataTypes={setDataTypes}
+                />
+              </div>
+              <div hidden={step !== 2}>
+                <Visualize
+                  errors={errors}
+                  register={register}
+                  json={filteredJson}
+                  csvJson={csvJson}
+                  datasetLoading={datasetLoading}
+                  datasetType={displayedDatasetType}
+                  onCancel={onCancel}
+                  backStep={backStep}
+                  advanceStep={advanceStep}
+                  fileLoading={fileLoading}
+                  creatingWidget={editingWidget} // TODO: Rename the property in the Visualize component
+                  title={title}
+                  summary={summary}
+                  chartType={chartType as ChartType}
+                  summaryBelow={summaryBelow}
+                  showTitle={showTitle}
+                  fullPreviewButton={fullPreviewButton}
+                  fullPreview={fullPreview}
+                  submitButtonLabel="Save"
+                />
               </div>
             </form>
           </div>

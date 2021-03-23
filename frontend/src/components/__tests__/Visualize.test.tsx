@@ -34,6 +34,7 @@ test("renders the Check Data component", async () => {
       advanceStep={() => {}}
       fileLoading={false}
       creatingWidget={false}
+      submitButtonLabel="Add Chart"
     />,
     { wrapper: MemoryRouter }
   );

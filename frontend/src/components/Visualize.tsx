@@ -27,15 +27,27 @@ interface Props {
   creatingWidget: boolean;
   fullPreviewButton: JSX.Element;
   fullPreview: boolean;
+  submitButtonLabel: string;
+  title?: string;
+  summary?: string;
+  chartType?: ChartType;
+  showTitle?: boolean;
+  summaryBelow?: boolean;
 }
 
 function Visualize(props: Props) {
   const [showAlert, setShowAlert] = useState(true);
-  const [title, setTitle] = useState("");
-  const [summary, setSummary] = useState("");
-  const [chartType, setChartType] = useState<ChartType>(ChartType.LineChart);
-  const [showTitle, setShowTitle] = useState(true);
-  const [summaryBelow, setSummaryBelow] = useState(false);
+  const [title, setTitle] = useState(props.title || "");
+  const [summary, setSummary] = useState(props.summary || "");
+  const [chartType, setChartType] = useState<ChartType>(
+    props.chartType || ChartType.LineChart
+  );
+  const [showTitle, setShowTitle] = useState(
+    props.showTitle === undefined ? true : props.showTitle
+  );
+  const [summaryBelow, setSummaryBelow] = useState<boolean>(
+    props.summaryBelow === undefined ? true : props.summaryBelow
+  );
 
   const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setTitle((event.target as HTMLInputElement).value);
@@ -287,6 +299,32 @@ function Visualize(props: Props) {
           </div>
         </div>
       </div>
+      <br />
+      <br />
+      <hr />
+      <Button variant="outline" type="button" onClick={props.backStep}>
+        Back
+      </Button>
+      <Button
+        onClick={props.advanceStep}
+        type="submit"
+        disabled={
+          !props.json.length ||
+          !title ||
+          props.fileLoading ||
+          props.creatingWidget
+        }
+      >
+        {props.submitButtonLabel}
+      </Button>
+      <Button
+        variant="unstyled"
+        className="text-base-dark hover:text-base-darker active:text-base-darkest"
+        type="button"
+        onClick={props.onCancel}
+      >
+        Cancel
+      </Button>
     </>
   );
 }

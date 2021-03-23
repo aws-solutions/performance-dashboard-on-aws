@@ -383,6 +383,7 @@ function AddChart() {
               creatingWidget={creatingWidget}
               fullPreviewButton={fullPreviewButton}
               fullPreview={fullPreview}
+              submitButtonLabel="Add Chart"
             />
           </div>
         </form>

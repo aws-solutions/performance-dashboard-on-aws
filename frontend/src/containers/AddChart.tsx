@@ -72,7 +72,6 @@ function AddChart() {
     undefined
   );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
-  const { settings } = useSettings();
   const {
     fullPreviewToggle,
     fullPreviewButton,
@@ -382,6 +381,8 @@ function AddChart() {
               advanceStep={advanceStep}
               fileLoading={fileLoading}
               creatingWidget={creatingWidget}
+              fullPreviewButton={fullPreviewButton}
+              fullPreview={fullPreview}
             />
           </div>
         </form>

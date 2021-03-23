@@ -25,6 +25,8 @@ interface Props {
   advanceStep: Function;
   fileLoading: boolean;
   creatingWidget: boolean;
+  fullPreviewButton: JSX.Element;
+  fullPreview: boolean;
 }
 
 function Visualize(props: Props) {
@@ -62,7 +64,7 @@ function Visualize(props: Props) {
   return (
     <>
       <div className="grid-row width-desktop">
-        <div className="grid-col-5">
+        <div className="grid-col-5" hidden={props.fullPreview}>
           <TextField
             id="title"
             name="title"
@@ -151,10 +153,37 @@ function Visualize(props: Props) {
               Show summary below chart
             </label>
           </div>
+          <br />
+          <br />
+          <hr />
+          <Button variant="outline" type="button" onClick={props.backStep}>
+            Back
+          </Button>
+          <Button
+            onClick={props.advanceStep}
+            type="submit"
+            disabled={
+              !props.json.length ||
+              !title ||
+              props.fileLoading ||
+              props.creatingWidget
+            }
+          >
+            Add Chart
+          </Button>
+          <Button
+            variant="unstyled"
+            className="text-base-dark hover:text-base-darker active:text-base-darkest"
+            type="button"
+            onClick={props.onCancel}
+          >
+            Cancel
+          </Button>
         </div>
 
-        <div className="grid-col-7">
+        <div className={props.fullPreview ? "grid-col-12" : "grid-col-7"}>
           <div hidden={!props.json.length} className="margin-left-4">
+            {props.fullPreviewButton}
             <h4>Preview</h4>
             {props.datasetLoading ? (
               <Spinner className="text-center margin-top-6" label="Loading" />
@@ -258,32 +287,6 @@ function Visualize(props: Props) {
           </div>
         </div>
       </div>
-      <br />
-      <br />
-      <hr />
-      <Button variant="outline" type="button" onClick={props.backStep}>
-        Back
-      </Button>
-      <Button
-        onClick={props.advanceStep}
-        type="submit"
-        disabled={
-          !props.json.length ||
-          !title ||
-          props.fileLoading ||
-          props.creatingWidget
-        }
-      >
-        Add Chart
-      </Button>
-      <Button
-        variant="unstyled"
-        className="text-base-dark hover:text-base-darker active:text-base-darkest"
-        type="button"
-        onClick={props.onCancel}
-      >
-        Cancel
-      </Button>
     </>
   );
 }

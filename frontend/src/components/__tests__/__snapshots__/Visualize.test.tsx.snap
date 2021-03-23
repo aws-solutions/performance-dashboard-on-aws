@@ -236,6 +236,11 @@ exports[`renders the Check Data component 1`] = `
       <div
         class="margin-left-4"
       >
+        <button
+          class="usa-button usa-button--base"
+        >
+          Full preview
+        </button>
         <h4>
           Preview
         </h4>

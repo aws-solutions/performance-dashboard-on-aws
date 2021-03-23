@@ -1,0 +1,748 @@
+openapi: "3.0.1"
+info:
+  title: "Performance Dashboard on AWS"
+  description: "Backend REST API"
+  version: "2021-02-15T15:50:32Z"
+
+security:
+  - cognito-authorizer: []
+
+paths:
+  # ------------------------------------
+  # Public endpoints
+  # ------------------------------------
+  /public/homepage:
+    get:
+      operationId: GetPublicHomepage
+      security: []
+      responses:
+        "200":
+          description: Contains site information and a list of dashboards
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Homepage"
+
+  /public/dashboard/friendly-url/{friendlyURL}:
+    get:
+      operationId: GetPublicDashboardByFriendlyURL
+      security: []
+      parameters:
+        - name: friendlyURL
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A public representation of a dashboard including its widgets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicDashboard"
+
+  /public/dashboard/{id}:
+    get:
+      operationId: GetPublicDashboardById
+      security: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A public representation of a dashboard including its widgets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicDashboard"
+
+  /public/settings:
+    get:
+      operationId: GetPublicSettings
+      security: []
+      responses:
+        "200":
+          description: Public configuration settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicSettings"
+
+  # ------------------------------------
+  # Cognito-authenticated endpoints
+  # ------------------------------------
+  /dashboard:
+    get:
+      operationId: ListDashboards
+      responses:
+        "200":
+          description: List of dashboards
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Dashboard"
+
+    post:
+      operationId: CreateDashboard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDashboardRequest"
+      responses:
+        "200":
+          description: Newly created dashboard
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+
+  /dashboard/{id}:
+    get:
+      operationId: GetDashboardById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dashboard with widgets
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+
+    put:
+      operationId: UpdateDashboard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDashboardRequest"
+      responses:
+        "200":
+          description: Dashboard updated successfully
+
+    delete:
+      operationId: DeleteDashboard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dashboard deleted successfully
+
+  /dashboard/{id}/archive:
+    put:
+      operationId: ArchiveDashboard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArchiveDashboardRequest"
+      responses:
+        "200":
+          description: Dashboard archived successfully
+        "409":
+          description: Dashboard is not in the expected state
+
+  /dashboard/{id}/publish:
+    put:
+      operationId: PublishDashboard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublishDashboardRequest"
+      responses:
+        "200":
+          description: Dashboard published successfully
+        "409":
+          description: Dashboard is not in the expected state
+
+  /dashboard/{id}/draft:
+    put:
+      operationId: MoveDashboardToDraft
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoveDashboardToDraftRequest"
+      responses:
+        "200":
+          description: Dashboard moved to draft successfully
+        "409":
+          description: Dashboard is not in the expected state
+
+  /dashboard/{id}/publishpending:
+    put:
+      operationId: MoveDashboardToPublishQueue
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoveDashboardToPublishQueueRequest"
+      responses:
+        "200":
+          description: Dashboard moved to publish queue successfully
+        "409":
+          description: Dashboard is not in the expected state
+
+  /dashboard/{id}/widget:
+    post:
+      operationId: CreateWidget
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWidgetRequest"
+      responses:
+        "200":
+          description: Widget created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+
+  /dashboard/{id}/widget/{widgetId}:
+    get:
+      operationId: GetWidgetById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dashboard Id
+          schema:
+            type: string
+        - name: widgetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Widget
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+
+    put:
+      operationId: UpdateWidget
+
+    delete:
+      operationId: DeleteWidget
+
+  /dashboard/{id}/versions:
+    get:
+      operationId: ListDashboardVersions
+
+  /dashboard/{id}/widgetorder:
+    put: {}
+
+  /dashboard/{id}/auditlogs:
+    get:
+      operationId: ListDashboardAuditLogs
+
+  /settings:
+    get:
+      operationId: GetSettings
+
+    put:
+      operationId: UpdateSettings
+
+  /settings/homepage:
+    get:
+      operationId: GetHomepage
+
+    put:
+      operationId: UpdateHomepage
+
+  /dataset:
+    get:
+      operationId: ListDatasets
+
+    post:
+      operationId: CreateDataset
+
+  /dataset/{id}:
+    get:
+      operationId: GetDatasetById
+
+  /topicarea:
+    get:
+      operationId: ListTopicareas
+
+    post:
+      operationId: CreateTopicarea
+
+  /topicarea/{id}:
+    get:
+      operationId: GetTopicareaById
+
+    put:
+      operationId: UpdateTopicarea
+
+    delete:
+      operationId: DeleteTopicarea
+
+  /user:
+    get:
+      operationId: ListUsers
+
+    post:
+      operationId: CreateUsers
+
+    delete:
+      operationId: DeleteUsers
+
+  /user/role:
+    put:
+      operationId: UpdateUsersRole
+
+  /user/invite:
+    post:
+      operationId: InviteUsers
+
+  # ------------------------------------
+  # Dataset Ingestion API endpoints
+  # Authenticated via API keys
+  # ------------------------------------
+  /ingestapi/dataset:
+    post:
+      operationId: CreateDynamicDataset
+      security:
+        - api_key: []
+
+  /ingestapi/dataset/{id}:
+    put:
+      operationId: UpdateDynamicDataset
+      security:
+        - api_key: []
+
+    delete:
+      operationId: DeleteDynamicDataset
+      security:
+        - api_key: []
+
+components:
+  securitySchemes:
+    cognito-authorizer:
+      type: "apiKey"
+      name: "Authorization"
+      in: "header"
+      x-amazon-apigateway-authtype: "cognito_user_pools"
+
+    api_key:
+      type: "apiKey"
+      name: "x-api-key"
+      in: "header"
+
+  # -----------------------------------------
+  # Request/Response schemas
+  # ------------------------------------------
+  schemas:
+    Homepage:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        dashboards:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicDashboard"
+
+    PublicDashboard:
+      type: object
+      description: Public representation of a dashboard
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        topicAreaId:
+          type: string
+        topicAreaName:
+          type: string
+        description:
+          type: string
+        updatedAt:
+          type: string
+        friendlyURL:
+          type: string
+        widgets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Widget"
+
+    Dashboard:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        version:
+          type: number
+        parentDashboardId:
+          type: string
+        topicAreaId:
+          type: string
+        topicAreaName:
+          type: string
+        description:
+          type: string
+        createdBy:
+          type: string
+        updatedAt:
+          type: string
+        updatedBy:
+          type: string
+        submittedBy:
+          type: string
+        publishedBy:
+          type: string
+        archivedBy:
+          type: string
+        deletedBy:
+          type: string
+        state:
+          type: string
+          enum:
+            - Draft
+            - Published
+            - Archived
+            - PublishPending
+            - Inactive
+        friendlyURL:
+          type: string
+        releaseNotes:
+          type: string
+        widgets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Widget"
+
+    Widget:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        widgetType:
+          $ref: "#/components/schemas/WidgetType"
+        dashboardId:
+          type: string
+        order:
+          type: number
+        updatedAt:
+          type: string
+        showTitle:
+          type: boolean
+        content:
+          type: object
+          oneOf:
+            - $ref: "#/components/schemas/TextWidgetContent"
+            - $ref: "#/components/schemas/ChartWidgetContent"
+            - $ref: "#/components/schemas/MetricsWidgetContent"
+            - $ref: "#/components/schemas/ImageWidgetContent"
+            - $ref: "#/components/schemas/TableWidgetContent"
+
+    WidgetType:
+      type: string
+      enum:
+        - Text
+        - Chart
+        - Metrics
+        - Table
+        - Image
+
+    TextWidgetContent:
+      type: object
+      properties:
+        text:
+          type: string
+
+    ChartWidgetContent:
+      type: object
+      properties:
+        title:
+          type: string
+        chartType:
+          type: string
+          enum:
+            - LineChart
+            - ColumnChart
+            - BarChart
+            - PartWholeChart
+        datasetId:
+          type: string
+        summary:
+          type: string
+        summaryBelow:
+          type: boolean
+        datasetType:
+          type: string
+        s3Key:
+          $ref: "#/components/schemas/DatasetS3Key"
+        fileName:
+          type: string
+        columnsMetadata:
+          $ref: "#/components/schemas/DatasetColumnMetadata"
+        sortByColumn:
+          type: string
+        sortByDesc:
+          type: boolean
+
+    MetricsWidgetContent:
+      type: object
+      properties:
+        title:
+          type: string
+        datasetId:
+          type: string
+        oneMetricPerRow:
+          type: boolean
+        datasetType:
+          type: string
+        s3Key:
+          $ref: "#/components/schemas/DatasetS3Key"
+
+    ImageWidgetContent:
+      type: object
+      properties:
+        title:
+          type: string
+        imageAltText:
+          type: string
+        summary:
+          type: string
+        summaryBelow:
+          type: boolean
+        s3Key:
+          $ref: "#/components/schemas/DatasetS3Key"
+        fileName:
+          type: string
+
+    TableWidgetContent:
+      type: object
+      properties:
+        title:
+          type: string
+        datasetId:
+          type: string
+        summary:
+          type: string
+        summaryBelow:
+          type: boolean
+        datasetType:
+          type: string
+        s3Key:
+          $ref: "#/components/schemas/DatasetS3Key"
+        fileName:
+          type: string
+        columnsMetadata:
+          $ref: "#/components/schemas/DatasetColumnMetadata"
+        sortByColumn:
+          type: string
+        sortByDesc:
+          type: boolean
+
+    DatasetColumnMetadata:
+      type: object
+      properties:
+        columnName:
+          type: string
+        dataType:
+          type: string
+          enum:
+            - Number
+            - Text
+        hidden:
+          type: boolean
+
+    DatasetS3Key:
+      type: object
+      properties:
+        raw:
+          type: string
+        json:
+          type: string
+
+    PublicSettings:
+      type: object
+      properties:
+        dateTimeFormat:
+          type: object
+          properties:
+            date:
+              type: string
+            time:
+              type: string
+        navBarTitle:
+          type: string
+        topicAreaLabels:
+          type: object
+          properties:
+            singular:
+              type: string
+            plural:
+              type: string
+        customLogoS3Key:
+          type: string
+        colors:
+          type: object
+          properties:
+            primary:
+              type: string
+            secondary:
+              type: string
+
+    CreateDashboardRequest:
+      type: object
+      properties:
+        topicAreaId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - topicAreaId
+        - name
+
+    UpdateDashboardRequest:
+      type: object
+      properties:
+        topicAreaId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - topicAreaId
+        - name
+        - updatedAt
+
+    ArchiveDashboardRequest:
+      type: object
+      properties:
+        updatedAt:
+          type: string
+      required:
+        - updatedAt
+
+    PublishDashboardRequest:
+      type: object
+      properties:
+        updatedAt:
+          type: string
+        releaseNotes:
+          type: string
+        friendlyURL:
+          type: string
+      required:
+        - updatedAt
+
+    MoveDashboardToDraftRequest:
+      type: object
+      properties:
+        updatedAt:
+          type: string
+      required:
+        - updatedAt
+
+    MoveDashboardToPublishQueueRequest:
+      type: object
+      properties:
+        updatedAt:
+          type: string
+        releaseNotes:
+          type: string
+      required:
+        - updatedAt
+
+    CreateWidgetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        content:
+          type: object
+          oneOf:
+            - $ref: "#/components/schemas/TextWidgetContent"
+            - $ref: "#/components/schemas/ChartWidgetContent"
+            - $ref: "#/components/schemas/TableWidgetContent"
+            - $ref: "#/components/schemas/ImageWidgetContent"
+            - $ref: "#/components/schemas/MetricsWidgetContent"
+        widgetType:
+          $ref: "#/components/schemas/WidgetType"
+        showTitle:
+          type: boolean

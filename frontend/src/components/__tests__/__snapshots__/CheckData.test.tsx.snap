@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders the Check Data component 1`] = `
+exports[`renders the CheckData component 1`] = `
 <div>
   <div
     class="grid-col-6"

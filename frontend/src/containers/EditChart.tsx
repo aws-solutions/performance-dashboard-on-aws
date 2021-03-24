@@ -14,12 +14,11 @@ import { useWidget, useDashboard, useDatasets, useFullPreview } from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import Visualize from "../components/Visualize";
+import VisualizeChart from "../components/VisualizeChart";
 import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
 import Spinner from "../components/Spinner";
 import UtilsService from "../services/UtilsService";
-
 import "./EditChart.css";
 
 interface FormValues {
@@ -523,7 +522,7 @@ function EditChart() {
                 />
               </div>
               <div hidden={step !== 2}>
-                <Visualize
+                <VisualizeChart
                   errors={errors}
                   register={register}
                   json={filteredJson}
@@ -534,7 +533,7 @@ function EditChart() {
                   backStep={backStep}
                   advanceStep={advanceStep}
                   fileLoading={fileLoading}
-                  creatingWidget={editingWidget} // TODO: Rename the property in the Visualize component
+                  processingWidget={editingWidget}
                   title={title}
                   summary={summary}
                   chartType={chartType as ChartType}

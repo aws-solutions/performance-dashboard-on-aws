@@ -20,6 +20,7 @@ interface Props {
   selectDynamicDataset: Function;
   dynamicDatasets: Array<Dataset>;
   continueButtonDisabled: boolean;
+  widgetType?: "chart" | "table";
 }
 
 function ChooseData(props: Props) {
@@ -42,7 +43,9 @@ function ChooseData(props: Props) {
           Data
         </label>
         <div className="usa-hint">
-          Choose an existing dataset or create a new one to populate this chart.{" "}
+          {`Choose an existing dataset or create a new one to populate this ${
+            props.widgetType || "chart"
+          }. `}
           <Link to="/admin/apihelp" target="_blank" external>
             How do I add datasets?
           </Link>

@@ -12,7 +12,7 @@ import UtilsService from "../services/UtilsService";
 import StepIndicator from "../components/StepIndicator";
 import CheckData from "../components/CheckData";
 import ChooseData from "../components/ChooseData";
-import Visualize from "../components/Visualize";
+import Visualize from "../components/VisualizeChart";
 import "./AddChart.css";
 
 interface FormValues {
@@ -347,6 +347,7 @@ function AddChart() {
               csvFile={csvFile}
               onCancel={onCancel}
               register={register}
+              widgetType="chart"
             />
           </div>
 
@@ -380,7 +381,7 @@ function AddChart() {
               backStep={backStep}
               advanceStep={advanceStep}
               fileLoading={fileLoading}
-              creatingWidget={creatingWidget}
+              processingWidget={creatingWidget}
               fullPreviewButton={fullPreviewButton}
               fullPreview={fullPreview}
               submitButtonLabel="Add Chart"

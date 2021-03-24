@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import CheckData from "../CheckData";
 
-test("renders the Check Data component", async () => {
+test("renders the CheckData component", async () => {
   const wrapper = render(
     <CheckData
       data={[

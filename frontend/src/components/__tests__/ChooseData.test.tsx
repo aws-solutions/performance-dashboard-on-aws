@@ -4,7 +4,7 @@ import ChooseData from "../ChooseData";
 import { DatasetType, SourceType } from "../../models";
 import { MemoryRouter } from "react-router-dom";
 
-test("renders the Check Data component", async () => {
+test("renders the ChooseData component", async () => {
   const wrapper = render(
     <ChooseData
       selectDynamicDataset={() => {}}
@@ -30,6 +30,7 @@ test("renders the Check Data component", async () => {
       csvFile={undefined}
       onCancel={() => {}}
       register={() => {}}
+      widgetType="chart"
     />,
     { wrapper: MemoryRouter }
   );

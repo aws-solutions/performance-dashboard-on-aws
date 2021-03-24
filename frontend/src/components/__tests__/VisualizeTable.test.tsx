@@ -1,13 +1,13 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Visualize from "../Visualize";
+import VisualizeTable from "../VisualizeTable";
 import { MemoryRouter } from "react-router-dom";
 import { DatasetType } from "../../models";
 import Button from "../Button";
 
-test("renders the Check Data component", async () => {
+test("renders the VisualizeTable component", async () => {
   const wrapper = render(
-    <Visualize
+    <VisualizeTable
       errors={[]}
       register={() => {}}
       json={[
@@ -34,10 +34,10 @@ test("renders the Check Data component", async () => {
       backStep={() => {}}
       advanceStep={() => {}}
       fileLoading={false}
-      creatingWidget={false}
+      processingWidget={false}
       fullPreview={false}
       fullPreviewButton={<Button>Full preview</Button>}
-      submitButtonLabel="Add Chart"
+      submitButtonLabel="Add Table"
       summaryBelow={false}
     />,
     { wrapper: MemoryRouter }

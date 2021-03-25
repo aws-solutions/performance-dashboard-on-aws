@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo } from "react";
 import { ColumnDataType } from "../models";
 import Button from "./Button";
 import Combobox from "./Combobox";
@@ -14,8 +14,6 @@ interface Props {
   advanceStep: Function;
   onCancel: Function;
   data: Array<any>;
-  setSortByColumn: Function;
-  setSortByDesc: Function;
   dataTypes: Map<string, ColumnDataType>;
   setDataTypes: Function;
 }
@@ -188,8 +186,6 @@ function CheckData(props: Props) {
             columns={checkDataTableColumns}
             selectedHeaders={props.selectedHeaders}
             addNumbersColumn={true}
-            setSortByColumn={props.setSortByColumn}
-            setSortByDesc={props.setSortByDesc}
           />
         </div>
       </div>
@@ -202,6 +198,7 @@ function CheckData(props: Props) {
         type="button"
         onClick={props.advanceStep}
         disabled={!props.data.length}
+        data-testid="continue-button"
       >
         Continue
       </Button>

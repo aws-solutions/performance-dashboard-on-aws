@@ -127,6 +127,7 @@ exports[`renders the CheckData component 1`] = `
                 class="margin-left-1 usa-button usa-button--unstyled"
                 style="cursor: pointer;"
                 title="Toggle SortBy id"
+                type="button"
               >
                 <svg
                   aria-hidden="true"
@@ -158,6 +159,7 @@ exports[`renders the CheckData component 1`] = `
                 class="margin-left-1 usa-button usa-button--unstyled"
                 style="cursor: pointer;"
                 title="Toggle SortBy name"
+                type="button"
               >
                 <svg
                   aria-hidden="true"
@@ -189,6 +191,7 @@ exports[`renders the CheckData component 1`] = `
                 class="margin-left-1 usa-button usa-button--unstyled"
                 style="cursor: pointer;"
                 title="Toggle SortBy updatedAt"
+                type="button"
               >
                 <svg
                   aria-hidden="true"

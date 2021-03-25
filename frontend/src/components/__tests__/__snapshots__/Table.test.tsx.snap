@@ -23,6 +23,7 @@ exports[`renders a basic table 1`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy ID"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -54,6 +55,7 @@ exports[`renders a basic table 1`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy Name"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -85,6 +87,7 @@ exports[`renders a basic table 1`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy Last Updated"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -338,6 +341,7 @@ exports[`renders a basic table without pagination 1`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy ID"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -369,6 +373,7 @@ exports[`renders a basic table without pagination 1`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy Name"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -400,6 +405,7 @@ exports[`renders a basic table without pagination 1`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy Last Updated"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -526,6 +532,7 @@ exports[`sorting buttons are clickable 1`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy ID"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -557,6 +564,7 @@ exports[`sorting buttons are clickable 1`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy Name"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -588,6 +596,7 @@ exports[`sorting buttons are clickable 1`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy Last Updated"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -879,6 +888,7 @@ exports[`sorting buttons are clickable 2`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy ID"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -910,6 +920,7 @@ exports[`sorting buttons are clickable 2`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy Name"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -941,6 +952,7 @@ exports[`sorting buttons are clickable 2`] = `
             class="margin-left-1 usa-button usa-button--unstyled"
             style="cursor: pointer;"
             title="Toggle SortBy Last Updated"
+            type="button"
           >
             <svg
               aria-hidden="true"

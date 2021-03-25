@@ -10,7 +10,6 @@ import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
 import AddChart from "../AddChart";
-import papaparse from "papaparse";
 
 jest.mock("../../services/BackendService");
 jest.mock("../../services/StorageService");
@@ -43,11 +42,6 @@ test("renders title and subtitles", async () => {
   ).toBeInTheDocument();
 });
 
-test("renders a textfield for chart title", async () => {
-  render(<AddChart />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("Chart title")).toBeInTheDocument();
-});
-
 test("renders a file upload input", async () => {
   render(<AddChart />, { wrapper: MemoryRouter });
 
@@ -69,8 +63,7 @@ test("renders table for dynamic dataset", async () => {
   expect(screen.getByText("abc")).toBeInTheDocument();
 });
 
-test("on submit, it calls createWidget api and uploads dataset", async () => {
-  const parseSpy = jest.spyOn(papaparse, "parse");
+test("change from ChooseData to CheckData", async () => {
   const { getByRole, getByText, getByLabelText } = render(<AddChart />, {
     wrapper: MemoryRouter,
   });
@@ -94,29 +87,13 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     fireEvent.click(continueButton);
   });
 
-  fireEvent.input(getByLabelText("Chart title"), {
-    target: {
-      value: "COVID Cases",
-    },
-  });
-
-  const submitButton = getByText("Add Chart");
-
   await waitFor(() => {
-    expect(parseSpy).toHaveBeenCalled();
-    submitButton.removeAttribute("disabled");
+    expect(
+      getByText(
+        "Please make sure that the system formats your data correctly." +
+          " Select columns to format as numbers, dates, or text. Also select" +
+          " columns to hide or show from the chart."
+      )
+    ).toBeInTheDocument();
   });
-
-  await waitFor(() => expect(submitButton).toBeEnabled());
-  await waitFor(() => {
-    expect(getByText("Preview")).toBeInTheDocument();
-  });
-
-  await act(async () => {
-    fireEvent.click(submitButton);
-  });
-
-  expect(BackendService.createWidget).toHaveBeenCalled();
-  expect(StorageService.uploadDataset).toHaveBeenCalled();
-  expect(BackendService.createDataset).toHaveBeenCalled();
 });

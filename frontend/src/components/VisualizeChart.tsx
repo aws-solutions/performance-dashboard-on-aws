@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ChartType, DatasetType } from "../models";
 import Alert from "./Alert";
 import BarChartWidget from "./BarChartWidget";
@@ -12,6 +12,7 @@ import RadioButtons from "./RadioButtons";
 import Spinner from "./Spinner";
 import TextField from "./TextField";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import Dropdown from "./Dropdown";
 
 interface Props {
   errors: any;
@@ -28,6 +29,10 @@ interface Props {
   fullPreviewButton: JSX.Element;
   fullPreview: boolean;
   submitButtonLabel: string;
+  sortByColumn?: string;
+  sortByDesc?: boolean;
+  setSortByColumn: Function;
+  setSortByDesc: Function;
   title?: string;
   summary?: string;
   chartType?: ChartType;
@@ -72,6 +77,34 @@ function VisualizeChart(props: Props) {
   ) => {
     setChartType((event.target as HTMLInputElement).value as ChartType);
   };
+
+  const handleSortDataChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    if (target.value !== "") {
+      const sortData = target.value.split("###");
+      const header = sortData[0];
+      const desc = sortData[1] === "desc";
+      props.setSortByColumn(header);
+      props.setSortByDesc(desc);
+    } else {
+      props.setSortByColumn(undefined);
+      props.setSortByDesc(undefined);
+    }
+  };
+
+  const headers = props.json.length
+    ? (Object.keys(props.json[0]) as Array<string>)
+    : [];
+  const sortOptions: any = [{ value: "", label: "Select an option" }];
+  headers.forEach((h) => {
+    const sortTypeAsc = typeof h === "string" ? "A-Z" : "low to high";
+    const sortTypeDesc = typeof h === "string" ? "Z-A" : "high - low";
+    sortOptions.push({ value: `${h}###asc`, label: `"${h}" ${sortTypeAsc}` });
+    sortOptions.push({
+      value: `${h}###desc`,
+      label: `"${h}" ${sortTypeDesc}`,
+    });
+  });
 
   return (
     <div className="grid-row width-desktop">
@@ -131,6 +164,21 @@ function VisualizeChart(props: Props) {
             },
           ]}
         />
+        <div className="margin-top-3 grid-col-6">
+          <Dropdown
+            id="sortData"
+            name="sortData"
+            label="Sort data"
+            options={sortOptions}
+            onChange={handleSortDataChange}
+            defaultValue={
+              props.sortByColumn
+                ? `${props.sortByColumn}###${props.sortByDesc ? "desc" : "asc"}`
+                : ""
+            }
+            register={props.register}
+          />
+        </div>
         <TextField
           id="summary"
           name="summary"

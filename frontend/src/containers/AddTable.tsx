@@ -54,17 +54,12 @@ function AddTable() {
     undefined
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
-  const [title, setTitle] = useState("");
-  const [summary, setSummary] = useState("");
-  const [showTitle, setShowTitle] = useState(true);
-  const [summaryBelow, setSummaryBelow] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.json ? DatasetType.StaticDataset : undefined
   );
-  const [showAlert, setShowAlert] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 0);
   const [selectedHeaders, setSelectedHeaders] = useState<Set<string>>(
     new Set<string>()
@@ -222,24 +217,6 @@ function AddTable() {
         crumbLabel: "Add table",
       },
     });
-  };
-
-  const handleChangeTitle = (event: React.FormEvent<HTMLInputElement>) => {
-    setTitle((event.target as HTMLInputElement).value);
-  };
-
-  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    setSummary((event.target as HTMLTextAreaElement).value);
-  };
-
-  const handleSummaryBelowChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    setSummaryBelow((event.target as HTMLInputElement).checked);
-  };
-
-  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setShowTitle((event.target as HTMLInputElement).checked);
   };
 
   const onFileProcessed = (data: File) => {

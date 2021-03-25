@@ -72,11 +72,7 @@ function AddChart() {
     undefined
   );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
-  const {
-    fullPreviewToggle,
-    fullPreviewButton,
-    fullPreview,
-  } = useFullPreview();
+  const { fullPreviewButton, fullPreview } = useFullPreview();
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
@@ -362,14 +358,12 @@ function AddChart() {
               setHiddenColumns={setHiddenColumns}
               onCancel={onCancel}
               register={register}
-              setSortByColumn={setSortByColumn}
-              setSortByDesc={setSortByDesc}
               dataTypes={dataTypes}
               setDataTypes={setDataTypes}
             />
           </div>
 
-          <div hidden={step !== 2}>
+          {step === 2 && (
             <Visualize
               errors={errors}
               register={register}
@@ -385,8 +379,12 @@ function AddChart() {
               fullPreviewButton={fullPreviewButton}
               fullPreview={fullPreview}
               submitButtonLabel="Add Chart"
+              sortByColumn={sortByColumn}
+              sortByDesc={sortByDesc}
+              setSortByColumn={setSortByColumn}
+              setSortByDesc={setSortByDesc}
             />
-          </div>
+          )}
         </form>
       </div>
     </>

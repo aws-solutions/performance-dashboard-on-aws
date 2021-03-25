@@ -213,8 +213,8 @@ function ViewDashboardAdmin() {
           <Alert
             type="info"
             message="Below is a preview of what the published dashboard will look like.
-              If everything looks right, you can publish the dashboard to be
-              viewable on the published site."
+              If ready to proceed, you can publish the dashboard to make it
+              available on the published site."
             slim
           />
         )}

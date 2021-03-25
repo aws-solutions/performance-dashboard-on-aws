@@ -1,59 +1,46 @@
 import React from "react";
 import Link from "../components/Link";
 import EnvConfig from "../services/EnvConfig";
+import { useTranslation } from "react-i18next";
 
 const APIHelpPage = () => {
+  const { t } = useTranslation();
+
   return (
     <>
-      <h1 className="font-sans-2xl">
-        Use datasets to create data visualizations
-      </h1>
+      <h1 className="font-sans-2xl">{t("APIHelpTitle")}</h1>
       <div className="font-sans-lg usa-prose">
-        <p>
-          There are three methods to populate chart or table data
-          visualizations:
-        </p>
+        <p>{t("APIHelpByline")}</p>
       </div>
-      <h2>Select a dynamic dataset</h2>
+      <h2>{t("APIHelpSelectDynamicDatasetTitle")}</h2>
       <div className="usa-prose">
         <p>
-          These datasets update the data visualization automatically as new data
-          is added to the source. Dynamic datasets are useful for visualizing
-          streaming data that is updated frequently. Dynamic datasets are not
-          configurable in the interface. If you have a dynamic dataset that
-          needs to be configured,{" "}
+          {t("APIHelpSelectDynamicDatasetBody")}{" "}
           <a
             href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
             className="text-base-darkest"
           >
-            contact support
+            {t("APIHelpSelectDynamicDatasetSupport")}
           </a>
-          . If you want to learn more about how to set up dynamic datasets,{" "}
+          {t("APIHelpSelectDynamicDatasetLearn")}{" "}
           <a
             href="https://github.com/awslabs/performance-dashboard-on-aws"
             className="text-base-darkest"
           >
-            read our documentation.
+            {t("APIHelpSelectDynamicDatasetDoc")}
           </a>
         </p>
       </div>
-      <h2>Select a static dataset </h2>
+      <h2>{t("APIHelpSelectStaticDatasetTitle")}</h2>
       <div className="usa-prose">
-        <p>
-          This is a fixed dataset that has to be manually updated to update the
-          data visualization. To update this data, you must make changes to the
-          data on your local device, then upload the new dataset as a CSV file.
-        </p>
+        <p>{t("APIHelpSelectStaticDatasetBody")}</p>
       </div>
-      <h2>Creating a new dataset from a file</h2>
+      <h2>{t("APIHelpSelectFileDatasetTitle")}</h2>
       <div className="usa-prose">
         <p>
-          Upload a CSV file to create a new dataset. If you want to use a
-          dataset that has already been uploaded, you can choose “select a
-          static dataset” and browse existing datasets. If you need help
-          formatting your CSV,{" "}
+          {t("APIHelpSelectFileDatasetBody")}{" "}
           <Link to="/admin/formattingcsv" target="_blank" external>
-            read our documentation
+            {t("APIHelpSelectFileDatasetDoc")}
           </Link>
         </p>
       </div>

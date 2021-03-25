@@ -6,6 +6,7 @@ import TextField from "../components/TextField";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useSettings } from "../hooks";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   name: string;
@@ -17,6 +18,7 @@ function CreateTopicArea() {
   const history = useHistory();
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
     const topicarea = await BackendService.createTopicArea(values.name);
@@ -40,7 +42,7 @@ function CreateTopicArea() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Settings",
+            label: `${t("Settings")}`,
             url: "/admin/settings/topicarea",
           },
           {
@@ -48,11 +50,15 @@ function CreateTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
-            label: `Create new ${settings.topicAreaLabels.singular.toLowerCase()}`,
+            label: `${t(
+              "CreateNew"
+            )} ${settings.topicAreaLabels.singular.toLowerCase()}`,
           },
         ]}
       />
-      <h1>{`Create new ${settings.topicAreaLabels.singular.toLowerCase()}`}</h1>
+      <h1>
+        {`${t("CreateNew")} ${settings.topicAreaLabels.singular.toLowerCase()}`}
+      </h1>
 
       <div className="grid-row">
         <div className="grid-col-12">
@@ -64,21 +70,25 @@ function CreateTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={`${settings.topicAreaLabels.singular} name`}
+              label={`${settings.topicAreaLabels.singular} ${t("Name")}`}
               register={register}
               error={errors.name && "Please specify a name"}
               required
             />
 
             <br />
-            <Button type="submit">{`Create ${settings.topicAreaLabels.singular.toLowerCase()}`}</Button>
+            <Button type="submit">
+              {`${t(
+                "Create"
+              )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
+            </Button>
             <Button
               className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               variant="unstyled"
               type="button"
               onClick={onCancel}
             >
-              Cancel
+              {t("Cancel")}
             </Button>
           </form>
         </div>

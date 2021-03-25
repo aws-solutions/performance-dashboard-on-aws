@@ -13,6 +13,7 @@ interface Props {
   hint?: string;
   error?: string;
   required?: boolean;
+  onChange?: Function;
 }
 
 function Dropdown(props: Props) {
@@ -20,6 +21,12 @@ function Dropdown(props: Props) {
   if (props.error) {
     formGroupClassName += " usa-form-group--error";
   }
+
+  const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
+    if (props.onChange) {
+      props.onChange(event);
+    }
+  };
 
   return (
     <div className={formGroupClassName}>
@@ -43,6 +50,7 @@ function Dropdown(props: Props) {
         defaultValue={props.defaultValue}
         ref={props.register && props.register({ required: props.required })}
         name={props.name}
+        onChange={handleChange}
         className="usa-select"
       >
         {props.options.map((option) => {

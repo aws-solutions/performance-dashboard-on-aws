@@ -30,8 +30,6 @@ test("renders the CheckData component", async () => {
       selectedHeaders={new Set<string>()}
       hiddenColumns={new Set<string>()}
       register={() => {}}
-      setSortByColumn={() => {}}
-      setSortByDesc={() => {}}
       dataTypes={new Map()}
       setDataTypes={() => {}}
     />

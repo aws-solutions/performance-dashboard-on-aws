@@ -39,8 +39,6 @@ interface Props {
   }>;
   selectedHeaders?: Set<string>;
   addNumbersColumn?: boolean;
-  setSortByColumn?: Function;
-  setSortByDesc?: Function;
 }
 
 function Table(props: Props) {
@@ -170,23 +168,6 @@ function Table(props: Props) {
     }
   }, [selectedFlatRows, onSelection]);
 
-  useMemo(async () => {
-    for (const headerGroup of headerGroups) {
-      for (const header of headerGroup.headers) {
-        if (header.isSorted) {
-          await UtilsService.timeout(0);
-          if (props.setSortByColumn) {
-            props.setSortByColumn(header.Header);
-          }
-          if (props.setSortByDesc) {
-            props.setSortByDesc(header.isSortedDesc);
-          }
-          return;
-        }
-      }
-    }
-  }, [headerGroups, rows]);
-
   const currentRows = props.disablePagination ? rows : page;
 
   const getCellBackground = useCallback(
@@ -256,6 +237,7 @@ function Table(props: Props) {
                       className="margin-left-1 usa-button usa-button--unstyled"
                       {...column.getSortByToggleProps()}
                       title={`Toggle SortBy ${column.Header}`}
+                      type="button"
                     >
                       <FontAwesomeIcon
                         className={`hover:text-base-light ${

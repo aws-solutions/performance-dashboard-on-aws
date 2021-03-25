@@ -39,6 +39,8 @@ test("renders the VisualizeTable component", async () => {
       fullPreviewButton={<Button>Full preview</Button>}
       submitButtonLabel="Add Table"
       summaryBelow={false}
+      setSortByColumn={() => {}}
+      setSortByDesc={() => {}}
     />,
     { wrapper: MemoryRouter }
   );

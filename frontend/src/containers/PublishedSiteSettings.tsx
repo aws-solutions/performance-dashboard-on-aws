@@ -29,7 +29,7 @@ function PublishedSiteSettings() {
       <h1>Published site</h1>
 
       <p>
-        Customize your published site.{" "}
+        Customize your published site. Your saved edits will take effect immediately on the published site. {" "}
         <Link target="_blank" to={"/"}>
           View published site
           <FontAwesomeIcon

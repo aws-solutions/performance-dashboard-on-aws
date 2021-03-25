@@ -66,7 +66,7 @@ function AdminHome() {
                 <p>
                   Build draft dashboards by adding charts, tables and text as
                   content. Publish dashboards to share results, track progress,
-                  or tell stories about a project, program, service, etc.
+                  or provide insights about a project, program, service, etc.
                   <br />
                   <br />
                 </p>

@@ -48,6 +48,66 @@ exports[`renders the VisualizeTable component 1`] = `
         </label>
       </div>
       <div
+        class="margin-top-3 grid-col-6"
+      >
+        <div
+          class="usa-form-group"
+        >
+          <label
+            class="usa-label text-bold"
+            for="sortData"
+          >
+            Sort data
+          </label>
+          <div
+            class="usa-hint"
+            id="event-date-start-hint"
+          />
+          <select
+            class="usa-select"
+            id="sortData"
+            name="sortData"
+          >
+            <option
+              selected=""
+              value=""
+            >
+              Select an option
+            </option>
+            <option
+              value="id###asc"
+            >
+              "id" A-Z
+            </option>
+            <option
+              value="id###desc"
+            >
+              "id" Z-A
+            </option>
+            <option
+              value="name###asc"
+            >
+              "name" A-Z
+            </option>
+            <option
+              value="name###desc"
+            >
+              "name" Z-A
+            </option>
+            <option
+              value="updatedAt###asc"
+            >
+              "updatedAt" A-Z
+            </option>
+            <option
+              value="updatedAt###desc"
+            >
+              "updatedAt" Z-A
+            </option>
+          </select>
+        </div>
+      </div>
+      <div
         class="usa-form-group"
       >
         <label

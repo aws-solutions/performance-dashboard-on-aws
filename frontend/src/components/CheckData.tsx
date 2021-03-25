@@ -198,7 +198,6 @@ function CheckData(props: Props) {
         type="button"
         onClick={props.advanceStep}
         disabled={!props.data.length}
-        data-testid="continue-button"
       >
         Continue
       </Button>

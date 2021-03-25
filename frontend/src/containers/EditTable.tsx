@@ -1,28 +1,20 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { Dataset, DatasetType, LocationState } from "../models";
+import { ColumnDataType, Dataset, DatasetType, LocationState } from "../models";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import TextField from "../components/TextField";
-import FileInput from "../components/FileInput";
-import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
-import TableWidget from "../components/TableWidget";
-import {
-  useWidget,
-  useDashboard,
-  useDateTimeFormatter,
-  useFullPreview,
-} from "../hooks";
+import { useWidget, useDashboard, useFullPreview } from "../hooks";
 import Spinner from "../components/Spinner";
-import Link from "../components/Link";
-import { useDatasets, useSettings } from "../hooks";
-import Table from "../components/Table";
+import { useDatasets } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import "./EditTable.css";
+import ChooseData from "../components/ChooseData";
+import CheckData from "../components/CheckData";
+import Visualize from "../components/VisualizeTable";
 
 interface FormValues {
   title: string;
@@ -32,6 +24,7 @@ interface FormValues {
   staticDatasets: string;
   summaryBelow: boolean;
   datasetType: string;
+  sortData: string;
 }
 
 interface PathParams {
@@ -43,15 +36,13 @@ function EditTable() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
   const { dashboardId, widgetId } = useParams<PathParams>();
-  const dateFormatter = useDateTimeFormatter();
-  const { settings } = useSettings();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
   const {
     register,
     errors,
     handleSubmit,
-    getValues,
+    watch,
     reset,
   } = useForm<FormValues>();
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
@@ -67,7 +58,7 @@ function EditTable() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const {
     widget,
     datasetType,
@@ -77,78 +68,53 @@ function EditTable() {
     csvJson,
     setCurrentJson,
     setDynamicJson,
+    setStaticJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
-  const {
-    fullPreview,
-    fullPreviewToggle,
-    fullPreviewButton,
-  } = useFullPreview();
+  const { fullPreview, fullPreviewButton } = useFullPreview();
 
-  const [title, setTitle] = useState("");
-  const [showTitle, setShowTitle] = useState(false);
-  const [summary, setSummary] = useState("");
-  const [summaryBelow, setSummaryBelow] = useState(false);
+  const [selectedHeaders, setSelectedHeaders] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
+    undefined
+  );
+  const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
+  const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
+    new Map<string, ColumnDataType>()
+  );
 
+  const title = watch("title");
+  const showTitle = watch("showTitle");
+  const summary = watch("summary");
+  const summaryBelow = watch("summaryBelow");
+
+  const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const [displayedJson, setDisplayedJson] = useState<Array<any>>([]);
   const [displayedDatasetType, setDisplayedDatasetType] = useState<
     DatasetType | undefined
   >();
 
-  const dynamicDatasetsTableCols = React.useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "fileName",
-        Cell: (props: any) => {
-          return (
-            <div className="tooltip">
-              {props.value}
-              <span className="tooltiptext">Tooltip text</span>
-            </div>
-          );
-        },
-      },
-      {
-        Header: "Last updated",
-        accessor: "updatedAt",
-      },
-      {
-        Header: "Description",
-        accessor: "description",
-        Cell: (props: any) => {
-          if (props.value) {
-            if (props.value.length > 11) {
-              return (
-                <div className="tooltip">
-                  {props.value.substring(0, 11) + "..."}
-                  <span className="tooltiptext">{props.value}</span>
-                </div>
-              );
-            } else {
-              return (
-                <div className="tooltip">
-                  {props.value}
-                  <span className="tooltiptext">{props.value}</span>
-                </div>
-              );
-            }
-          }
-
-          return "";
-        },
-      },
-      {
-        Header: "Tags",
-        accessor: "tags",
-      },
-    ],
-    [dateFormatter, settings]
-  );
-
-  const dynamicDatasetsTableRows = React.useMemo(() => dynamicDatasets, [
-    dynamicDatasets,
-  ]);
+  useMemo(() => {
+    let headers = displayedJson.length
+      ? (Object.keys(displayedJson[0]) as Array<string>)
+      : [];
+    headers = headers.filter((h) => !hiddenColumns.has(h));
+    const newFilteredJson = new Array<any>();
+    for (const row of displayedJson) {
+      const filteredRow = headers.reduce((obj: any, key: any) => {
+        obj[key] = row[key];
+        return obj;
+      }, {});
+      if (filteredRow !== {}) {
+        newFilteredJson.push(filteredRow);
+      }
+    }
+    setFilteredJson(newFilteredJson);
+  }, [displayedJson, hiddenColumns]);
 
   useEffect(() => {
     if (
@@ -181,22 +147,29 @@ function EditTable() {
           widget.content.datasetType === DatasetType.StaticDataset
             ? widget.content.s3Key.json
             : "",
+        sortData: widget.content.sortByColumn
+          ? `${widget.content.sortByColumn}###${
+              widget.content.sortByDesc ? "desc" : "asc"
+            }`
+          : "",
       });
+
+      if (state && state.json) {
+        setStaticJson(state.json);
+        setCurrentJson(state.json);
+      }
 
       if (!displayedDatasetType) {
         setDisplayedDatasetType(
-          state && state.json ? DatasetType.StaticDataset : datasetType
+          state && state.json && state.staticDataset
+            ? DatasetType.StaticDataset
+            : datasetType
         );
       }
 
       if (!displayedJson.length) {
         setDisplayedJson(state && state.json ? state.json : currentJson);
       }
-
-      setTitle(title);
-      setShowTitle(showTitle);
-      setSummary(summary);
-      setSummaryBelow(summaryBelow);
 
       if (!dynamicDataset) {
         setDynamicDataset(
@@ -207,8 +180,40 @@ function EditTable() {
       }
       if (!staticDataset) {
         setStaticDataset(
-          staticDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
+          state && state.staticDataset
+            ? state.staticDataset
+            : staticDatasets.find(
+                (d) => d.s3Key.json === widget.content.s3Key.json
+              )
         );
+      }
+
+      // Initialize fields related to columns metadata
+      if (widget.content.columnsMetadata) {
+        const columnsMetadata = widget.content.columnsMetadata;
+
+        const hidden = new Set<string>();
+        columnsMetadata
+          .filter((column: any) => column.hidden)
+          .forEach((column: any) => hidden.add(column.columnName));
+
+        const dataTypes = new Map<string, ColumnDataType>();
+        columnsMetadata
+          .filter((column: any) => !!column.dataType)
+          .forEach((column: any) =>
+            dataTypes.set(column.columnName, column.dataType)
+          );
+
+        const headers = new Set<string>();
+        columnsMetadata.forEach((column: any) =>
+          headers.add(column.columnName)
+        );
+
+        setSelectedHeaders(headers);
+        setHiddenColumns(hidden);
+        setDataTypes(dataTypes);
+        setSortByColumn(widget.content.sortByColumn);
+        setSortByDesc(widget.content.sortByDesc || false);
       }
     }
   }, [
@@ -322,6 +327,17 @@ function EditTable() {
             : displayedDatasetType === DatasetType.DynamicDataset
             ? dynamicDataset?.fileName
             : staticDataset?.fileName,
+          sortByColumn,
+          sortByDesc,
+          columnsMetadata: Array.from(selectedHeaders).map((header) => {
+            return {
+              columnName: header,
+              hidden: hiddenColumns.has(header),
+              dataType: dataTypes.has(header)
+                ? dataTypes.get(header)
+                : undefined,
+            };
+          }),
         },
         widget.updatedAt
       );
@@ -363,20 +379,12 @@ function EditTable() {
     }
   };
 
-  const onFormChange = () => {
-    const { title, showTitle, summary, summaryBelow } = getValues();
-    setTitle(title);
-    setShowTitle(showTitle);
-    setSummary(summary);
-    setSummaryBelow(summaryBelow);
-  };
-
   const advanceStep = () => {
-    setStep(1);
+    setStep(step + 1);
   };
 
   const backStep = () => {
-    setStep(0);
+    setStep(step - 1);
   };
 
   const browseDatasets = () => {
@@ -412,15 +420,6 @@ function EditTable() {
     setDatasetLoading(false);
   };
 
-  const onSelect = useCallback(
-    (selectedDataset: Array<Dataset>) => {
-      if (displayedDatasetType === DatasetType.DynamicDataset) {
-        selectDynamicDataset(selectedDataset[0]);
-      }
-    },
-    [displayedDatasetType]
-  );
-
   const crumbs = [
     {
       label: "Dashboards",
@@ -439,12 +438,6 @@ function EditTable() {
     });
   }
 
-  const tableHeaders = useMemo(() => {
-    return currentJson.length > 0
-      ? (Object.keys(currentJson[0]) as Array<string>)
-      : [];
-  }, [currentJson]);
-
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
@@ -454,24 +447,24 @@ function EditTable() {
       loadingDatasets ||
       !widget ||
       !displayedDatasetType ||
-      !displayedJson ? (
+      !filteredJson ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
           <div className="grid-row width-desktop">
-            <form onChange={onFormChange} onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid-col-12">
                 <div className="grid-col-6" hidden={fullPreview}>
                   <ul className="usa-button-group usa-button-group--segmented">
                     <li className="usa-button-group__item">
                       <button
                         className={
-                          step === 1
+                          step !== 0
                             ? "usa-button usa-button--outline"
                             : "usa-button"
                         }
                         type="button"
-                        onClick={backStep}
+                        onClick={() => setStep(0)}
                       >
                         Choose data
                       </button>
@@ -479,12 +472,25 @@ function EditTable() {
                     <li className="usa-button-group__item">
                       <button
                         className={
-                          step === 0
+                          step !== 1
                             ? "usa-button usa-button--outline"
                             : "usa-button"
                         }
                         type="button"
-                        onClick={advanceStep}
+                        onClick={() => setStep(1)}
+                      >
+                        Check data
+                      </button>
+                    </li>
+                    <li className="usa-button-group__item">
+                      <button
+                        className={
+                          step !== 2
+                            ? "usa-button usa-button--outline"
+                            : "usa-button"
+                        }
+                        type="button"
+                        onClick={() => setStep(2)}
                       >
                         Visualize
                       </button>
@@ -493,302 +499,65 @@ function EditTable() {
                 </div>
               </div>
               <div hidden={step !== 0}>
-                <div className="grid-col-6">
-                  <label htmlFor="fieldset" className="usa-label text-bold">
-                    Data
-                  </label>
-                  <div className="usa-hint">
-                    Choose an existing dataset or create a new one to populate
-                    this table
-                    <Link to="/admin/apihelp" target="_blank" external>
-                      How do I add datasets?
-                    </Link>
-                  </div>
-                </div>
-                <fieldset
-                  id="fieldset"
-                  className="usa-fieldset"
-                  onChange={handleChange}
-                >
-                  <legend className="usa-sr-only">Content item types</legend>
-
-                  <div className="grid-row">
-                    <div className="grid-col-4 padding-right-2">
-                      <div className="usa-radio">
-                        <div
-                          className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                            displayedDatasetType === "StaticDataset"
-                              ? " bg-base-lightest"
-                              : "-lighter"
-                          } border-2px padding-2 margin-y-1`}
-                        >
-                          <div className="grid-col flex-5">
-                            <input
-                              className="usa-radio__input"
-                              id="staticDataset"
-                              value="StaticDataset"
-                              type="radio"
-                              name="datasetType"
-                              ref={register()}
-                            />
-                            <label
-                              className="usa-radio__label"
-                              htmlFor="staticDataset"
-                            >
-                              Static dataset
-                            </label>
-                          </div>
-                          <div className="grid-col flex-7">
-                            <div className="usa-prose text-base margin-left-4">
-                              Upload a new dataset from file or elect an
-                              existing dataset.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="grid-col-4 padding-left-2">
-                      <div className="usa-radio">
-                        <div
-                          className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                            displayedDatasetType === "DynamicDataset"
-                              ? " bg-base-lightest"
-                              : "-lighter"
-                          } border-2px padding-2 margin-y-1`}
-                        >
-                          <div className="grid-col flex-5">
-                            <input
-                              className="usa-radio__input"
-                              id="dynamicDataset"
-                              value="DynamicDataset"
-                              type="radio"
-                              name="datasetType"
-                              ref={register()}
-                            />
-                            <label
-                              className="usa-radio__label"
-                              htmlFor="dynamicDataset"
-                            >
-                              Dynamic dataset
-                            </label>
-                          </div>
-                          <div className="grid-col flex-7">
-                            <div className="usa-prose text-base margin-left-4">
-                              Choose from a list of continuously updated
-                              datasets.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    hidden={displayedDatasetType !== DatasetType.StaticDataset}
-                  >
-                    <div className="grid-row">
-                      <div className="grid-col-5">
-                        <FileInput
-                          id="dataset"
-                          name="dataset"
-                          label="Static datasets"
-                          accept=".csv"
-                          loading={fileLoading}
-                          errors={csvErrors}
-                          register={register}
-                          hint={
-                            <span>
-                              Upload a dataset from a CSV file, or choose an
-                              existing static dataset.{" "}
-                              <Link
-                                to="/admin/formattingcsv"
-                                target="_blank"
-                                external
-                              >
-                                How do I format my CSV file?
-                              </Link>
-                            </span>
-                          }
-                          fileName={csvFile && csvFile.name}
-                          onFileProcessed={onFileProcessed}
-                        />
-                      </div>
-                      <div className="grid-col-3 padding-left-3">
-                        <Button
-                          variant="outline"
-                          type="button"
-                          className="datasetsButton"
-                          onClick={browseDatasets}
-                        >
-                          Browse datasets
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    hidden={displayedDatasetType !== DatasetType.DynamicDataset}
-                  >
-                    <div className="overflow-hidden">
-                      <Table
-                        selection="single"
-                        initialSortByField="updatedAt"
-                        filterQuery={""}
-                        rows={dynamicDatasetsTableRows}
-                        screenReaderField="name"
-                        width="100%"
-                        onSelection={onSelect}
-                        columns={dynamicDatasetsTableCols}
-                      />
-                    </div>
-                  </div>
-                </fieldset>
-                <br />
-                <br />
-                <hr />
-                <Button
-                  type="button"
-                  onClick={advanceStep}
-                  disabled={!displayedJson.length}
-                >
-                  Continue
-                </Button>
-                <Button
-                  variant="unstyled"
-                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                  type="button"
-                  onClick={onCancel}
-                >
-                  Cancel
-                </Button>
+                <ChooseData
+                  selectDynamicDataset={selectDynamicDataset}
+                  dynamicDatasets={dynamicDatasets}
+                  datasetType={displayedDatasetType}
+                  onFileProcessed={onFileProcessed}
+                  handleChange={handleChange}
+                  advanceStep={advanceStep}
+                  fileLoading={fileLoading}
+                  browseDatasets={browseDatasets}
+                  continueButtonDisabled={!currentJson.length}
+                  csvErrors={csvErrors}
+                  csvFile={csvFile}
+                  onCancel={onCancel}
+                  register={register}
+                  widgetType="table"
+                />
               </div>
+
               <div hidden={step !== 1}>
-                <div className="grid-row width-desktop">
-                  <div className="grid-col-5" hidden={fullPreview}>
-                    <fieldset className="usa-fieldset">
-                      <TextField
-                        id="title"
-                        name="title"
-                        label="Table title"
-                        hint="Give your table a descriptive title."
-                        error={errors.title && "Please specify a table title"}
-                        defaultValue={title}
-                        required
-                        register={register}
-                      />
+                <CheckData
+                  data={currentJson}
+                  advanceStep={advanceStep}
+                  backStep={backStep}
+                  selectedHeaders={selectedHeaders}
+                  setSelectedHeaders={setSelectedHeaders}
+                  hiddenColumns={hiddenColumns}
+                  setHiddenColumns={setHiddenColumns}
+                  onCancel={onCancel}
+                  register={register}
+                  dataTypes={dataTypes}
+                  setDataTypes={setDataTypes}
+                />
+              </div>
 
-                      <div className="usa-checkbox">
-                        <input
-                          className="usa-checkbox__input"
-                          id="display-title"
-                          type="checkbox"
-                          name="showTitle"
-                          defaultChecked={showTitle}
-                          ref={register()}
-                        />
-                        <label
-                          className="usa-checkbox__label"
-                          htmlFor="display-title"
-                        >
-                          Show title on dashboard
-                        </label>
-                      </div>
-
-                      {widget ? (
-                        <div>
-                          <TextField
-                            id="summary"
-                            name="summary"
-                            label="Table summary - optional"
-                            hint={
-                              <>
-                                Give your table a summary to explain it in more
-                                depth. This field supports markdown.
-                                <Link
-                                  target="_blank"
-                                  to={"/admin/markdown"}
-                                  external
-                                >
-                                  View Markdown Syntax
-                                </Link>
-                              </>
-                            }
-                            register={register}
-                            defaultValue={summary}
-                            multiline
-                            rows={5}
-                          />
-                          <div className="usa-checkbox">
-                            <input
-                              className="usa-checkbox__input"
-                              id="summary-below"
-                              type="checkbox"
-                              name="summaryBelow"
-                              defaultChecked={summaryBelow}
-                              ref={register()}
-                            />
-                            <label
-                              className="usa-checkbox__label"
-                              htmlFor="summary-below"
-                            >
-                              Show summary below table
-                            </label>
-                          </div>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </fieldset>
-                  </div>
-                  <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
-                    <div className="margin-left-4">
-                      {fullPreviewButton}
-                      <h4>Preview</h4>
-                      {datasetLoading ? (
-                        <Spinner
-                          className="text-center margin-top-6"
-                          label="Loading"
-                        />
-                      ) : (
-                        <>
-                          <TableWidget
-                            title={showTitle ? title : ""}
-                            summary={summary}
-                            headers={tableHeaders}
-                            summaryBelow={summaryBelow}
-                            data={currentJson}
-                          />
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <br />
-                <br />
-                <hr />
-                <Button variant="outline" type="button" onClick={backStep}>
-                  Back
-                </Button>
-                <Button
-                  onClick={advanceStep}
-                  type="submit"
-                  disabled={
-                    !displayedJson.length ||
-                    !title ||
-                    fileLoading ||
-                    editingWidget
-                  }
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="unstyled"
-                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                  type="button"
-                  onClick={onCancel}
-                >
-                  Cancel
-                </Button>
+              <div hidden={step !== 2}>
+                <Visualize
+                  errors={errors}
+                  register={register}
+                  json={filteredJson}
+                  csvJson={csvJson}
+                  datasetLoading={datasetLoading}
+                  datasetType={datasetType}
+                  onCancel={onCancel}
+                  backStep={backStep}
+                  advanceStep={advanceStep}
+                  fileLoading={fileLoading}
+                  processingWidget={editingWidget}
+                  fullPreviewButton={fullPreviewButton}
+                  fullPreview={fullPreview}
+                  submitButtonLabel="Save"
+                  title={title}
+                  summary={summary}
+                  summaryBelow={summaryBelow}
+                  showTitle={showTitle}
+                  sortByColumn={sortByColumn}
+                  sortByDesc={sortByDesc}
+                  setSortByColumn={setSortByColumn}
+                  setSortByDesc={setSortByDesc}
+                />
               </div>
             </form>
           </div>

@@ -350,8 +350,6 @@ function AddTable() {
               setHiddenColumns={setHiddenColumns}
               onCancel={onCancel}
               register={register}
-              setSortByColumn={setSortByColumn}
-              setSortByDesc={setSortByDesc}
               dataTypes={dataTypes}
               setDataTypes={setDataTypes}
             />
@@ -373,6 +371,10 @@ function AddTable() {
               fullPreviewButton={fullPreviewButton}
               fullPreview={fullPreview}
               submitButtonLabel="Add Table"
+              sortByColumn={sortByColumn}
+              sortByDesc={sortByDesc}
+              setSortByColumn={setSortByColumn}
+              setSortByDesc={setSortByDesc}
             />
           </div>
         </form>

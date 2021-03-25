@@ -65,7 +65,7 @@ function EditChart() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
-  const [step, setStep] = useState<number>(2);
+  const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const {
     widget,
     datasetType,
@@ -164,7 +164,9 @@ function EditChart() {
 
       if (!displayedDatasetType) {
         setDisplayedDatasetType(
-          state && state.json ? DatasetType.StaticDataset : datasetType
+          state && state.json && state.staticDataset
+            ? DatasetType.StaticDataset
+            : datasetType
         );
       }
 
@@ -181,7 +183,11 @@ function EditChart() {
       }
       if (!staticDataset) {
         setStaticDataset(
-          staticDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
+          state && state.staticDataset
+            ? state.staticDataset
+            : staticDatasets.find(
+                (d) => d.s3Key.json === widget.content.s3Key.json
+              )
         );
       }
 
@@ -507,6 +513,7 @@ function EditChart() {
                 csvFile={csvFile}
                 onCancel={onCancel}
                 register={register}
+                widgetType="chart"
               />
             </div>
             <div hidden={step !== 1}>
@@ -520,10 +527,6 @@ function EditChart() {
                 setHiddenColumns={setHiddenColumns}
                 onCancel={onCancel}
                 register={register}
-                sortByColumn={sortByColumn}
-                sortByDesc={sortByDesc}
-                setSortByColumn={setSortByColumn}
-                setSortByDesc={setSortByDesc}
                 dataTypes={dataTypes}
                 setDataTypes={setDataTypes}
               />

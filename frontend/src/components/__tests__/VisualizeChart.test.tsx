@@ -37,7 +37,7 @@ test("renders the VisualizeChart component", async () => {
       processingWidget={false}
       fullPreview={false}
       fullPreviewButton={<Button>Full preview</Button>}
-      submitButtonLabel="Add Chart"
+      submitButtonLabel="Add chart"
       summaryBelow={false}
       setSortByColumn={() => {}}
       setSortByDesc={() => {}}

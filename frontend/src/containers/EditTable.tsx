@@ -447,13 +447,15 @@ function EditTable() {
       loadingDatasets ||
       !widget ||
       !displayedDatasetType ||
-      !filteredJson ? (
+      !filteredJson ||
+      fileLoading ||
+      editingWidget ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
           <div className="grid-row width-desktop">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid-col-12">
+              <div hidden={fullPreview} className="grid-col-12">
                 <div className="grid-col-6" hidden={fullPreview}>
                   <ul className="usa-button-group usa-button-group--segmented">
                     <li className="usa-button-group__item">
@@ -540,7 +542,7 @@ function EditTable() {
                   json={filteredJson}
                   csvJson={csvJson}
                   datasetLoading={datasetLoading}
-                  datasetType={datasetType}
+                  datasetType={displayedDatasetType}
                   onCancel={onCancel}
                   backStep={backStep}
                   advanceStep={advanceStep}

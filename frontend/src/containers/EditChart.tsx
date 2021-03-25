@@ -450,12 +450,14 @@ function EditChart() {
       loadingDatasets ||
       !widget ||
       !displayedDatasetType ||
-      !filteredJson ? (
+      !filteredJson ||
+      fileLoading ||
+      editingWidget ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <div className="grid-row width-desktop">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid-col-12">
+            <div hidden={fullPreview} className="grid-col-12">
               <ul className="usa-button-group usa-button-group--segmented">
                 <li className="usa-button-group__item">
                   <button

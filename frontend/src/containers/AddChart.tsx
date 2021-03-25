@@ -363,7 +363,7 @@ function AddChart() {
             />
           </div>
 
-          {step === 2 && (
+          <div hidden={step !== 2}>
             <Visualize
               errors={errors}
               register={register}
@@ -384,7 +384,7 @@ function AddChart() {
               setSortByColumn={setSortByColumn}
               setSortByDesc={setSortByDesc}
             />
-          )}
+          </div>
         </form>
       </div>
     </>

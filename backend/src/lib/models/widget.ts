@@ -61,14 +61,15 @@ export interface ChartWidget extends Widget {
     summary?: string;
     summaryBelow: boolean;
     datasetType?: string;
-    s3Key: {
-      raw: string;
-      json: string;
-    };
     fileName: string;
     columnsMetadata: ColumnMetadata[];
     sortByColumn?: string;
     sortByDesc?: boolean;
+    significantDigitLabels: boolean;
+    s3Key: {
+      raw: string;
+      json: string;
+    };
   };
 }
 
@@ -79,14 +80,15 @@ export interface TableWidget extends Widget {
     summary?: string;
     summaryBelow: boolean;
     datasetType?: string;
-    s3Key: {
-      raw: string;
-      json: string;
-    };
     fileName: string;
     columnsMetadata: ColumnMetadata[];
     sortByColumn?: string;
     sortByDesc?: boolean;
+    significantDigitLabels: boolean;
+    s3Key: {
+      raw: string;
+      json: string;
+    };
   };
 }
 
@@ -96,10 +98,10 @@ export interface ImageWidget extends Widget {
     imageAltText: string;
     summary?: string;
     summaryBelow: boolean;
+    fileName: string;
     s3Key: {
       raw: string;
     };
-    fileName: string;
   };
 }
 
@@ -109,6 +111,7 @@ export interface MetricsWidget extends Widget {
     datasetId: string;
     oneMetricPerRow: boolean;
     datasetType?: string;
+    significantDigitLabels: boolean;
     s3Key: {
       raw: string;
       json: string;

@@ -79,6 +79,7 @@ describe("createChartWidget", () => {
       fileName: "abc.csv",
       sortByColumn: "cases",
       sortByDesc: false,
+      significantDigitLabels: true,
       columnsMetadata: [
         {
           hidden: false,
@@ -115,6 +116,7 @@ describe("createChartWidget", () => {
     expect(widget.content.columnsMetadata).toHaveLength(2);
     expect(widget.content.sortByColumn).toEqual("cases");
     expect(widget.content.sortByDesc).toBe(false);
+    expect(widget.content.significantDigitLabels).toBe(true);
   });
 
   it("throws an error if chart title is undefined", () => {
@@ -236,6 +238,7 @@ describe("createTableWidget", () => {
       fileName: "abc.csv",
       sortByColumn: "cases",
       sortByDesc: false,
+      significantDigitLabels: true,
       columnsMetadata: [
         {
           hidden: false,
@@ -270,6 +273,7 @@ describe("createTableWidget", () => {
     expect(widget.content.columnsMetadata).toHaveLength(2);
     expect(widget.content.sortByColumn).toEqual("cases");
     expect(widget.content.sortByDesc).toBe(false);
+    expect(widget.content.significantDigitLabels).toBe(true);
   });
 
   it("throws an error if table title is undefined", () => {
@@ -345,6 +349,7 @@ describe("fromItem", () => {
         datasetId: "090b0410",
         sortByColumn: "foo",
         sortByDesc: false,
+        significantDigitLabels: false,
         columnsMetadata: [
           {
             columnName: "foo",
@@ -373,6 +378,7 @@ describe("fromItem", () => {
     expect(widget.content.chartType).toEqual("LineChart");
     expect(widget.content.sortByColumn).toEqual("foo");
     expect(widget.content.sortByDesc).toBe(false);
+    expect(widget.content.significantDigitLabels).toBe(false);
     expect(widget.content.columnsMetadata).toEqual([
       {
         columnName: "foo",
@@ -399,6 +405,7 @@ describe("fromItem", () => {
         summaryBelow: false,
         sortByColumn: "foo",
         sortByDesc: false,
+        significantDigitLabels: true,
         columnsMetadata: [
           {
             columnName: "foo",
@@ -426,6 +433,7 @@ describe("fromItem", () => {
     expect(widget.content.summaryBelow).toBe(false);
     expect(widget.content.sortByColumn).toEqual("foo");
     expect(widget.content.sortByDesc).toBe(false);
+    expect(widget.content.significantDigitLabels).toBe(true);
     expect(widget.content.columnsMetadata).toEqual([
       {
         columnName: "foo",
@@ -515,6 +523,7 @@ describe("toItem", () => {
         fileName: "abc.csv",
         sortByColumn: "cases",
         sortByDesc: true,
+        significantDigitLabels: true,
         columnsMetadata: [
           {
             hidden: false,
@@ -553,6 +562,7 @@ describe("toItem", () => {
       fileName: "abc.csv",
       sortByColumn: "cases",
       sortByDesc: true,
+      significantDigitLabels: true,
       columnsMetadata: [
         {
           hidden: false,
@@ -590,6 +600,7 @@ describe("toItem", () => {
         fileName: "abc.csv",
         sortByColumn: "deaths",
         sortByDesc: true,
+        significantDigitLabels: true,
         columnsMetadata: [
           {
             hidden: false,
@@ -627,6 +638,7 @@ describe("toItem", () => {
       fileName: "abc.csv",
       sortByColumn: "deaths",
       sortByDesc: true,
+      significantDigitLabels: true,
       columnsMetadata: [
         {
           hidden: false,
@@ -704,6 +716,7 @@ describe("createMetricsWidget", () => {
       json: "abc.json",
     },
     oneMetricPerRow: false,
+    significantDigitLabels: true,
   };
 
   it("builds a metrics widget", () => {
@@ -726,6 +739,7 @@ describe("createMetricsWidget", () => {
       json: "abc.json",
     });
     expect(widget.content.oneMetricPerRow).toEqual(false);
+    expect(widget.content.significantDigitLabels).toEqual(true);
   });
 
   it("throws an error if datasetId is undefined", () => {

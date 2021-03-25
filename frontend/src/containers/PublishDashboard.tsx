@@ -242,8 +242,8 @@ function PublishDashboard() {
                 <TextField
                   id="releaseNotes"
                   name="releaseNotes"
-                  label="Internal release notes"
-                  error={errors.releaseNotes && "Please enter release notes"}
+                  label="Internal version notes"
+                  error={errors.releaseNotes && "Please enter version notes"}
                   hint="Describe what changes you are publishing to the dashboard."
                   register={register}
                   defaultValue={dashboard.releaseNotes}

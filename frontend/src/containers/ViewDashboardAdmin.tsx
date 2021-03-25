@@ -59,7 +59,7 @@ function ViewDashboardAdmin() {
       history.push(`/admin/dashboard/edit/${draft.id}`, {
         alert: {
           type: "success",
-          message: `A new draft version of "${draft.name}" dashboard has been created`,
+          message: `A new draft version of "${draft.name}" dashboard has been created.`,
         },
         id: "top-alert",
       });
@@ -80,7 +80,7 @@ function ViewDashboardAdmin() {
     history.push("/admin/dashboards?tab=archived", {
       alert: {
         type: "success",
-        message: `${dashboard.name} was successfully archived`,
+        message: `${dashboard.name} was successfully archived.`,
       },
     });
   };

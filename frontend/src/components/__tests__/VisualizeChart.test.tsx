@@ -39,6 +39,8 @@ test("renders the VisualizeChart component", async () => {
       fullPreviewButton={<Button>Full preview</Button>}
       submitButtonLabel="Add Chart"
       summaryBelow={false}
+      setSortByColumn={() => {}}
+      setSortByDesc={() => {}}
     />,
     { wrapper: MemoryRouter }
   );

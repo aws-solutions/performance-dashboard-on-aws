@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { DatasetType } from "../models";
 import Alert from "./Alert";
 import Button from "./Button";
@@ -8,6 +8,7 @@ import Spinner from "./Spinner";
 import TextField from "./TextField";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import TableWidget from "./TableWidget";
+import Dropdown from "./Dropdown";
 
 interface Props {
   errors: any;
@@ -24,6 +25,10 @@ interface Props {
   fullPreviewButton: JSX.Element;
   fullPreview: boolean;
   submitButtonLabel: string;
+  sortByColumn?: string;
+  sortByDesc?: boolean;
+  setSortByColumn: Function;
+  setSortByDesc: Function;
   title?: string;
   summary?: string;
   showTitle?: boolean;
@@ -59,6 +64,34 @@ function VisualizeTable(props: Props) {
     setShowTitle((event.target as HTMLInputElement).checked);
   };
 
+  const handleSortDataChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    if (target.value !== "") {
+      const sortData = target.value.split("###");
+      const header = sortData[0];
+      const desc = sortData[1] === "desc";
+      props.setSortByColumn(header);
+      props.setSortByDesc(desc);
+    } else {
+      props.setSortByColumn(undefined);
+      props.setSortByDesc(undefined);
+    }
+  };
+
+  const headers = props.json.length
+    ? (Object.keys(props.json[0]) as Array<string>)
+    : [];
+  const sortOptions: any = [{ value: "", label: "Select an option" }];
+  headers.forEach((h) => {
+    const sortTypeAsc = typeof h === "string" ? "A-Z" : "low to high";
+    const sortTypeDesc = typeof h === "string" ? "Z-A" : "high - low";
+    sortOptions.push({ value: `${h}###asc`, label: `"${h}" ${sortTypeAsc}` });
+    sortOptions.push({
+      value: `${h}###desc`,
+      label: `"${h}" ${sortTypeDesc}`,
+    });
+  });
+
   return (
     <div className="grid-row width-desktop">
       <div className="grid-col-5" hidden={props.fullPreview}>
@@ -86,6 +119,22 @@ function VisualizeTable(props: Props) {
           <label className="usa-checkbox__label" htmlFor="display-title">
             Show title on dashboard
           </label>
+        </div>
+
+        <div className="margin-top-3 grid-col-6">
+          <Dropdown
+            id="sortData"
+            name="sortData"
+            label="Sort data"
+            options={sortOptions}
+            onChange={handleSortDataChange}
+            defaultValue={
+              props.sortByColumn
+                ? `${props.sortByColumn}###${props.sortByDesc ? "desc" : "asc"}`
+                : ""
+            }
+            register={props.register}
+          />
         </div>
 
         <TextField
@@ -149,7 +198,10 @@ function VisualizeTable(props: Props) {
       </div>
 
       <div className={props.fullPreview ? "grid-col-12" : "grid-col-7"}>
-        <div hidden={!props.json.length} className="margin-left-4">
+        <div
+          hidden={!props.json.length}
+          className={`${!props.fullPreview ? "margin-left-4" : ""}`}
+        >
           {props.fullPreviewButton}
           <h4>Preview</h4>
           {props.datasetLoading ? (

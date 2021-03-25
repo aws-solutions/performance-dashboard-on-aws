@@ -86,15 +86,81 @@ function fromItem(item: WidgetItem): Widget {
   switch (item.widgetType) {
     case WidgetType.Text:
       return widget as TextWidget;
+
     case WidgetType.Chart:
-      return widget as ChartWidget;
+      return fromChartItem(widget);
+
     case WidgetType.Table:
-      return widget as TableWidget;
+      return fromTableItem(widget);
+
     case WidgetType.Metrics:
-      return widget as MetricsWidget;
+      return fromMetricsItem(widget);
+
     default:
       return widget;
   }
+}
+
+function fromChartItem(widget: Widget): ChartWidget {
+  const chartWidget = widget as ChartWidget;
+  return {
+    ...widget,
+    content: {
+      ...widget.content,
+      /**
+       * This is an opportunity to define default values for
+       * properties that may not exist in the dynamodb item.
+       */
+      sortByDesc:
+        chartWidget.content.sortByDesc !== undefined
+          ? chartWidget.content.sortByDesc
+          : false,
+      significantDigitLabels:
+        chartWidget.content.significantDigitLabels !== undefined
+          ? chartWidget.content.significantDigitLabels
+          : false,
+    },
+  };
+}
+
+function fromTableItem(widget: Widget): TableWidget {
+  const tableWidget = widget as TableWidget;
+  return {
+    ...widget,
+    content: {
+      ...widget.content,
+      /**
+       * This is an opportunity to define default values for
+       * properties that may not exist in the dynamodb item.
+       */
+      sortByDesc:
+        tableWidget.content.sortByDesc !== undefined
+          ? tableWidget.content.sortByDesc
+          : false,
+      significantDigitLabels:
+        tableWidget.content.significantDigitLabels !== undefined
+          ? tableWidget.content.significantDigitLabels
+          : false,
+    },
+  };
+}
+
+function fromMetricsItem(widget: Widget): MetricsWidget {
+  const metricsWidget = widget as MetricsWidget;
+  return {
+    ...widget,
+    content: {
+      ...metricsWidget.content,
+      /**
+       * This is an opportunity to define default values for
+       * properties that may not exist in the dynamodb item.
+       */
+      significantDigitLabels:
+        metricsWidget.content.significantDigitLabels !== undefined
+          ? metricsWidget.content.significantDigitLabels
+          : false,
+    },
+  };
 }
 
 function fromItems(items: Array<WidgetItem>): Array<Widget> {
@@ -167,6 +233,10 @@ function createChartWidget(widget: Widget): ChartWidget {
       columnsMetadata: widget.content.columnsMetadata || [],
       sortByColumn: widget.content.sortByColumn,
       sortByDesc: widget.content.sortByDesc,
+      significantDigitLabels:
+        widget.content.significantDigitLabels !== undefined
+          ? widget.content.significantDigitLabels
+          : false,
     },
   };
 }
@@ -201,6 +271,10 @@ function createTableWidget(widget: Widget): TableWidget {
       columnsMetadata: widget.content.columnsMetadata || [],
       sortByColumn: widget.content.sortByColumn,
       sortByDesc: widget.content.sortByDesc,
+      significantDigitLabels:
+        widget.content.significantDigitLabels !== undefined
+          ? widget.content.significantDigitLabels
+          : false,
     },
   };
 }
@@ -252,6 +326,10 @@ function createMetricsWidget(widget: Widget): MetricsWidget {
       oneMetricPerRow: widget.content.oneMetricPerRow,
       s3Key: widget.content.s3Key,
       datasetType: widget.content.datasetType,
+      significantDigitLabels:
+        widget.content.significantDigitLabels !== undefined
+          ? widget.content.significantDigitLabels
+          : false,
     },
   };
 }

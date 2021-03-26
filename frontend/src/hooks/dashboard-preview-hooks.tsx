@@ -11,7 +11,12 @@ export function useFullPreview() {
   };
 
   const fullPreviewButton = fullPreview ? (
-    <Button onClick={fullPreviewToggle} variant="outline" type="button">
+    <Button
+      onClick={fullPreviewToggle}
+      variant="outline"
+      type="button"
+      className="margin-top-1"
+    >
       <FontAwesomeIcon icon={faMinusSquare} className={"margin-right-1"} />
       Close preview
     </Button>

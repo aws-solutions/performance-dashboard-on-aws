@@ -21,6 +21,8 @@ type Props = {
   lines: Array<string>;
   data?: Array<any>;
   summaryBelow: boolean;
+  horizontalScroll?: boolean;
+  setWidthPercent?: (widthPercent: number) => void;
   isPreview?: boolean;
   colors?: {
     primary: string | undefined;
@@ -105,9 +107,19 @@ const LineChartWidget = (props: Props) => {
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
+  useEffect(() => {
+    if (props.setWidthPercent) {
+      props.setWidthPercent(widthPercent);
+    }
+  }, [widthPercent]);
+
   return (
     <div
-      className={`overflow-hidden${widthPercent > 100 ? " right-shadow" : ""}`}
+      className={`overflow-hidden${
+        widthPercent > 100 && props.horizontalScroll
+          ? " scroll-shadow border-x-1px border-base-lighter"
+          : ""
+      }`}
     >
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
@@ -121,7 +133,9 @@ const LineChartWidget = (props: Props) => {
       {data && data.length && (
         <ResponsiveContainer
           id={props.title}
-          width={`${Math.max(widthPercent, 100)}%`}
+          width={
+            props.horizontalScroll ? `${Math.max(widthPercent, 100)}%` : "100%"
+          }
           height={300}
           data-testid="chartContainer"
         >
@@ -140,7 +154,7 @@ const LineChartWidget = (props: Props) => {
               type={xAxisType()}
               padding={{ left: 50, right: 50 }}
               domain={["dataMin", "dataMax"]}
-              interval={0}
+              interval={props.horizontalScroll ? 0 : "preserveStartEnd"}
               scale={xAxisType() === "number" ? "linear" : "auto"}
             />
             <YAxis

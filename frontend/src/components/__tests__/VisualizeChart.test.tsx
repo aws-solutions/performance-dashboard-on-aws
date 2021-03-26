@@ -37,10 +37,54 @@ test("renders the VisualizeChart component", async () => {
       processingWidget={false}
       fullPreview={false}
       fullPreviewButton={<Button>Full preview</Button>}
+      submitButtonLabel="Add chart"
+      summaryBelow={false}
+      setSortByColumn={() => {}}
+      setSortByDesc={() => {}}
+      horizontalScroll={true}
+    />,
+    { wrapper: MemoryRouter }
+  );
+  expect(wrapper.container).toMatchSnapshot();
+});
+
+test("renders the VisualizeChart component without horizontal scrolling", async () => {
+  const wrapper = render(
+    <VisualizeChart
+      errors={[]}
+      register={() => {}}
+      json={[
+        {
+          id: "1",
+          name: "Banana",
+          updatedAt: "2021-11-11",
+        },
+        {
+          id: "2",
+          name: "Chocolate",
+          updatedAt: "2020-11-11",
+        },
+        {
+          id: "3",
+          name: "Vanilla",
+          updatedAt: "2019-11-11",
+        },
+      ]}
+      csvJson={[]}
+      datasetLoading={false}
+      datasetType={DatasetType.DynamicDataset}
+      onCancel={() => {}}
+      backStep={() => {}}
+      advanceStep={() => {}}
+      fileLoading={false}
+      processingWidget={false}
+      fullPreview={false}
+      fullPreviewButton={<Button>Full preview</Button>}
       submitButtonLabel="Add Chart"
       summaryBelow={false}
       setSortByColumn={() => {}}
       setSortByDesc={() => {}}
+      horizontalScroll={false}
     />,
     { wrapper: MemoryRouter }
   );

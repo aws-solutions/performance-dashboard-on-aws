@@ -40,7 +40,7 @@ function UserListing() {
         history.replace("/admin/users", {
           alert: {
             type: "success",
-            message: `Successfully removed ${selected.length} users`,
+            message: `Successfully removed ${selected.length} users.`,
           },
         });
 
@@ -54,7 +54,7 @@ function UserListing() {
         history.replace("/admin/users", {
           alert: {
             type: "error",
-            message: "Failed to delete users",
+            message: "Failed to delete users.",
           },
         });
       } finally {

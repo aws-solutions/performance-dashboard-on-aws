@@ -144,7 +144,7 @@ exports[`published site settings should match snapshot 1`] = `
             Published site
           </h1>
           <p>
-            Customize your published site.
+            Customize your published site. Your saved edits will take effect immediately on the published site.
              
             <a
               aria-label=""

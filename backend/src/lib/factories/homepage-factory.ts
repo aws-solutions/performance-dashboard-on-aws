@@ -5,7 +5,7 @@ function getDefaultHomepage(): Homepage {
     title: "Performance Dashboard",
     description:
       "The Performance Dashboard makes data open " +
-      "and accessible to provide transparency and help drive the " +
+      "and accessible to provide transparency and helps drive the " +
       "ongoing improvement of digital services.",
     updatedAt: new Date(),
   };

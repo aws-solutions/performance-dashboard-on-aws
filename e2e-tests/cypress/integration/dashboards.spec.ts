@@ -31,13 +31,13 @@ describe("Admin user", () => {
     editDashboardPage.waitUntilDashboardLoads(dashboardName);
 
     // Verify success alert shows up
-    cy.contains(`"${dashboardName}" draft dashboard successfully created`);
+    cy.contains(`"${dashboardName}" draft dashboard successfully created.`);
 
     // Go back to the dashboard listing page and delete the dashboard
     dashboardListingPage.visit();
     dashboardListingPage.deleteDashboard(dashboardName);
 
     // Verify success alert shows up
-    cy.contains(`${dashboardName} draft dashboard was successfully deleted`);
+    cy.contains(`${dashboardName} draft dashboard was successfully deleted.`);
   });
 });

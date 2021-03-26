@@ -93,7 +93,7 @@ function EditDashboard() {
                   widgetToDelete.content.chartType
                 ).toLowerCase()
               : widgetToDelete.widgetType.toLowerCase()
-          } was successfully deleted`,
+          } was successfully deleted.`,
         },
       });
 

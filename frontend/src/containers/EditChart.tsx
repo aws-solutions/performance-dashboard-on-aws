@@ -31,6 +31,7 @@ interface FormValues {
   summaryBelow: boolean;
   datasetType: string;
   sortData: string;
+  horizontalScroll?: boolean;
 }
 
 interface PathParams {
@@ -97,6 +98,7 @@ function EditChart() {
   const summary = watch("summary");
   const summaryBelow = watch("summaryBelow");
   const chartType = watch("chartType");
+  const horizontalScroll = watch("horizontalScroll");
 
   const [displayedJson, setDisplayedJson] = useState<any[]>([]);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
@@ -135,6 +137,7 @@ function EditChart() {
       const summary = widget.content.summary;
       const summaryBelow = widget.content.summaryBelow;
       const chartType = widget.content.chartType;
+      const horizontalScroll = widget.content.horizontalScroll;
 
       reset({
         title,
@@ -147,6 +150,7 @@ function EditChart() {
         summary,
         summaryBelow,
         chartType,
+        horizontalScroll,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
             ? widget.content.s3Key.json
@@ -312,6 +316,9 @@ function EditChart() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           chartType: values.chartType,
+          ...(values.chartType === ChartType.LineChart && {
+            horizontalScroll: values.horizontalScroll,
+          }),
           datasetType: displayedDatasetType,
           datasetId: newDataset
             ? newDataset.id
@@ -558,6 +565,7 @@ function EditChart() {
                 sortByDesc={sortByDesc}
                 setSortByColumn={setSortByColumn}
                 setSortByDesc={setSortByDesc}
+                horizontalScroll={horizontalScroll}
               />
             </div>
           </form>

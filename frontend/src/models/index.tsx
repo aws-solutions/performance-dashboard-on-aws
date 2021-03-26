@@ -121,6 +121,7 @@ export interface ChartWidget extends Widget {
     columnsMetadata: ColumnMetadata[];
     sortByColumn?: string;
     sortByDesc?: boolean;
+    horizontalScroll?: boolean;
   };
 }
 

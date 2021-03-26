@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { LocationState } from "../models";
+import { ChartType, LocationState } from "../models";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, WidgetType, DatasetType, ColumnDataType } from "../models";
 import { useDashboard, useDatasets, useFullPreview } from "../hooks";
@@ -12,7 +12,7 @@ import UtilsService from "../services/UtilsService";
 import StepIndicator from "../components/StepIndicator";
 import CheckData from "../components/CheckData";
 import ChooseData from "../components/ChooseData";
-import Visualize from "../components/VisualizeChart";
+import VisualizeChart from "../components/VisualizeChart";
 import "./AddChart.css";
 
 interface FormValues {
@@ -22,6 +22,7 @@ interface FormValues {
   showTitle: boolean;
   summaryBelow: boolean;
   datasetType: string;
+  horizontalScroll?: boolean;
 }
 
 interface PathParams {
@@ -133,6 +134,9 @@ function AddChart() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           chartType: values.chartType,
+          ...(values.chartType === ChartType.LineChart && {
+            horizontalScroll: values.horizontalScroll,
+          }),
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
@@ -364,7 +368,7 @@ function AddChart() {
           </div>
 
           <div hidden={step !== 2}>
-            <Visualize
+            <VisualizeChart
               errors={errors}
               register={register}
               json={filteredJson}

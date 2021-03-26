@@ -38,6 +38,7 @@ interface Props {
   chartType?: ChartType;
   showTitle?: boolean;
   summaryBelow?: boolean;
+  horizontalScroll?: boolean;
 }
 
 function VisualizeChart(props: Props) {
@@ -53,6 +54,10 @@ function VisualizeChart(props: Props) {
   const [summaryBelow, setSummaryBelow] = useState<boolean>(
     props.summaryBelow === undefined ? true : props.summaryBelow
   );
+  const [horizontalScroll, setHorizontalScroll] = useState<boolean>(
+    props.horizontalScroll === undefined ? true : props.horizontalScroll
+  );
+  const [widthPercent, setWidthPercent] = useState(0);
 
   const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setTitle((event.target as HTMLInputElement).value);
@@ -105,6 +110,12 @@ function VisualizeChart(props: Props) {
       label: `"${h}" ${sortTypeDesc}`,
     });
   });
+
+  const handleHorizontalScrollChange = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setHorizontalScroll((event.target as HTMLInputElement).checked);
+  };
 
   return (
     <div className="grid-row width-desktop">
@@ -179,6 +190,25 @@ function VisualizeChart(props: Props) {
             register={props.register}
           />
         </div>
+
+        <div hidden={chartType !== ChartType.LineChart || widthPercent <= 100}>
+          <legend className="usa-legend text-bold">Line chart options</legend>
+          <div className="usa-checkbox">
+            <input
+              className="usa-checkbox__input"
+              id="horizontalScroll"
+              type="checkbox"
+              name="horizontalScroll"
+              defaultChecked
+              onChange={handleHorizontalScrollChange}
+              ref={props.register()}
+            />
+            <label className="usa-checkbox__label" htmlFor="horizontalScroll">
+              Display with horizontal scroll
+            </label>
+          </div>
+        </div>
+
         <TextField
           id="summary"
           name="summary"
@@ -302,6 +332,8 @@ function VisualizeChart(props: Props) {
                   data={props.json}
                   summaryBelow={summaryBelow}
                   isPreview={true}
+                  horizontalScroll={horizontalScroll}
+                  setWidthPercent={setWidthPercent}
                 />
               )}
               {chartType === ChartType.ColumnChart && (

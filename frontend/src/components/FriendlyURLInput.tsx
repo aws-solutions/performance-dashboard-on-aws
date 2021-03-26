@@ -76,7 +76,7 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
               {showWarning
                 ? "Are you sure you want to edit this dashboard's URL? " +
                   "Users will not be able to access the dashboard with the old URL."
-                : "Edit the URL that will be used to publish this dashboard"}
+                : "Edit the URL that will be used to publish this dashboard.Domain name cannot be edited."}
             </div>
             {errors.friendlyURL && (
               <span

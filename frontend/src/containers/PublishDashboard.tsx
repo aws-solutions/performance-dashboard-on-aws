@@ -242,9 +242,9 @@ function PublishDashboard() {
                 <TextField
                   id="releaseNotes"
                   name="releaseNotes"
-                  label="Internal release notes"
-                  error={errors.releaseNotes && "Please enter release notes"}
-                  hint="Describe what changes you are publishing to the dashboard."
+                  label="Internal version notes"
+                  error={errors.releaseNotes && "Please enter version notes"}
+                  hint="Describe what changes you are publishing to the dashboard. The version notes can only be accessed by admins and editors."
                   register={register}
                   defaultValue={dashboard.releaseNotes}
                   required

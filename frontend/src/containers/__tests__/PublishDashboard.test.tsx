@@ -46,7 +46,7 @@ test("renders step indicator in step 1", () => {
 });
 
 test("continue button advances to step 2 and saves releaseNotes", async () => {
-  fireEvent.input(screen.getByLabelText("Internal release notes"), {
+  fireEvent.input(screen.getByLabelText("Internal version notes"), {
     target: {
       value: "Some release notes",
     },
@@ -74,7 +74,7 @@ test("continue button advances to step 2 and saves releaseNotes", async () => {
 });
 
 test("publish button invokes BackendService", async () => {
-  fireEvent.input(screen.getByLabelText("Internal release notes"), {
+  fireEvent.input(screen.getByLabelText("Internal version notes"), {
     target: {
       value: "Some release notes",
     },

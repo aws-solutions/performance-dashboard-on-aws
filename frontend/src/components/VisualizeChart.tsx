@@ -147,11 +147,7 @@ function VisualizeChart(props: Props) {
           />
         </div>
 
-        <div
-          hidden={
-            props.chartType !== ChartType.LineChart || widthPercent <= 100
-          }
-        >
+        <div>
           <label className="usa-label text-bold">
             {t("ChartOptionsLabel")}
           </label>
@@ -173,7 +169,12 @@ function VisualizeChart(props: Props) {
             </label>
           </div>
 
-          <div className="usa-checkbox">
+          <div
+            className="usa-checkbox"
+            hidden={
+              props.chartType !== ChartType.LineChart || widthPercent <= 100
+            }
+          >
             <input
               className="usa-checkbox__input"
               id="horizontalScroll"

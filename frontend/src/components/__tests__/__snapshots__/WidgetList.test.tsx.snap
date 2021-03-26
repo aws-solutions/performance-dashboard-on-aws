@@ -8,7 +8,8 @@ exports[`renders an empty box 1`] = `
     >
       <div>
         <p>
-          This dashboard has no content items. Build the dashboard by adding 
+          This dashboard has no content items. Build the dashboard by adding
+           
           <br />
           charts, tables, text, and more as content.
         </p>

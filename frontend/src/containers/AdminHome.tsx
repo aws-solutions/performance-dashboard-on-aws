@@ -64,9 +64,10 @@ function AdminHome() {
             <Card title="Create a new dashboard" col={7}>
               <CardBody>
                 <p>
-                  Build draft dashboards by adding charts, tables, text, and more as
-                  content. Publish dashboards to share results, track progress,
-                  or provide insights about a project, program, service, etc.
+                  Build draft dashboards by adding charts, tables, text, and
+                  more as content. Publish dashboards to share results, track
+                  progress, or provide insights about a project, program,
+                  service, etc.
                   <br />
                   <br />
                 </p>
@@ -107,9 +108,10 @@ function AdminHome() {
             <Card title="Create a new dashboard" col={4}>
               <CardBody>
                 <p>
-                  Build draft dashboards by adding charts, tables, text, and more as
-                  content. Publish dashboards to share results, track progress,
-                  or provide insights about a project, program, service, etc.
+                  Build draft dashboards by adding charts, tables, text, and
+                  more as content. Publish dashboards to share results, track
+                  progress, or provide insights about a project, program,
+                  service, etc.
                   <br />
                   <br />
                 </p>

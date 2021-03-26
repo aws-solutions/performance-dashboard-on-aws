@@ -109,7 +109,9 @@ function CreateDashboard() {
                     label="Description - optional"
                     hint={
                       <>
-                        Give your dashboard a description that provides an initial summary. This text area supports limited markdown.{" "}
+                        Give your dashboard a description that provides an
+                        initial summary. This text area supports limited
+                        markdown.{" "}
                         <Link target="_blank" to={"/admin/markdown"} external>
                           View Markdown Syntax
                         </Link>

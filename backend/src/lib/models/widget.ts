@@ -16,6 +16,7 @@ export enum ChartType {
 export enum ColumnDataType {
   Number = "Number",
   Text = "Text",
+  Date = "Date",
 }
 
 export interface ColumnMetadata {

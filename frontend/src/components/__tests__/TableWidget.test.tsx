@@ -13,8 +13,25 @@ test("renders the table title", async () => {
     <TableWidget
       title="test title"
       summary="test summary"
-      headers={["test"]}
+      data={[
+        {
+          id: "1",
+          name: "Banana",
+          updatedAt: "2021-11-11",
+        },
+        {
+          id: "2",
+          name: "Chocolate",
+          updatedAt: "2020-11-11",
+        },
+        {
+          id: "3",
+          name: "Vanilla",
+          updatedAt: "2019-11-11",
+        },
+      ]}
       summaryBelow={false}
+      columnsMetadata={[]}
     />,
     { wrapper: MemoryRouter }
   );
@@ -31,8 +48,25 @@ test("renders the summary below the chart", async () => {
     <TableWidget
       title="test title"
       summary="test summary"
-      headers={["test"]}
+      data={[
+        {
+          id: "1",
+          name: "Banana",
+          updatedAt: "2021-11-11",
+        },
+        {
+          id: "2",
+          name: "Chocolate",
+          updatedAt: "2020-11-11",
+        },
+        {
+          id: "3",
+          name: "Vanilla",
+          updatedAt: "2019-11-11",
+        },
+      ]}
       summaryBelow={true}
+      columnsMetadata={[]}
     />,
     { wrapper: MemoryRouter }
   );
@@ -46,8 +80,25 @@ test("table preview should match snapshot", async () => {
     <TableWidget
       title="test title"
       summary="test summary"
-      headers={["test"]}
+      data={[
+        {
+          id: "1",
+          name: "Banana",
+          updatedAt: "2021-11-11",
+        },
+        {
+          id: "2",
+          name: "Chocolate",
+          updatedAt: "2020-11-11",
+        },
+        {
+          id: "3",
+          name: "Vanilla",
+          updatedAt: "2019-11-11",
+        },
+      ]}
       summaryBelow={false}
+      columnsMetadata={[]}
     />,
     { wrapper: MemoryRouter }
   );
@@ -59,15 +110,31 @@ test("table should not crash when a column header is an empty string", async () 
     <TableWidget
       title="test title"
       summary="test summary"
-      headers={["", "something"]}
-      data={[{ "": "foo", something: "bar" }]}
+      data={[
+        {
+          id: "",
+          name: "Banana",
+          updatedAt: "2021-11-11",
+        },
+        {
+          id: "2",
+          name: "Chocolate",
+          updatedAt: "2020-11-11",
+        },
+        {
+          id: "3",
+          name: "Vanilla",
+          updatedAt: "2019-11-11",
+        },
+      ]}
       summaryBelow={false}
+      columnsMetadata={[]}
     />,
     { wrapper: MemoryRouter }
   );
 
   expect(screen.getByRole("table")).toBeInTheDocument();
-  expect(screen.getByText("foo")).toBeInTheDocument();
-  expect(screen.getByText("bar")).toBeInTheDocument();
-  expect(screen.getByText("something")).toBeInTheDocument();
+  expect(screen.getByText("Banana")).toBeInTheDocument();
+  expect(screen.getByText("Chocolate")).toBeInTheDocument();
+  expect(screen.getByText("Vanilla")).toBeInTheDocument();
 });

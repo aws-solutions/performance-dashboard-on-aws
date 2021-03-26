@@ -14,6 +14,8 @@ import CheckData from "../components/CheckData";
 import ChooseData from "../components/ChooseData";
 import VisualizeChart from "../components/VisualizeChart";
 import "./AddChart.css";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
+import DatasetParsingService from "../services/DatasetParsingService";
 
 interface FormValues {
   title: string;
@@ -24,6 +26,7 @@ interface FormValues {
   datasetType: string;
   horizontalScroll: boolean;
   significantDigitLabels: boolean;
+  sortData: string;
 }
 
 interface PathParams {
@@ -94,20 +97,10 @@ function AddChart() {
   const significantDigitLabels = watch("significantDigitLabels");
 
   useMemo(() => {
-    let headers = currentJson.length
-      ? (Object.keys(currentJson[0]) as Array<string>)
-      : [];
-    headers = headers.filter((h) => !hiddenColumns.has(h));
-    const newFilteredJson = new Array<any>();
-    for (const row of currentJson) {
-      const filteredRow = headers.reduce((obj: any, key: any) => {
-        obj[key] = row[key];
-        return obj;
-      }, {});
-      if (filteredRow !== {}) {
-        newFilteredJson.push(filteredRow);
-      }
-    }
+    const newFilteredJson = DatasetParsingService.getFilteredJson(
+      currentJson,
+      hiddenColumns
+    );
     setFilteredJson(newFilteredJson);
   }, [currentJson, hiddenColumns]);
 
@@ -171,15 +164,10 @@ function AddChart() {
           sortByColumn,
           sortByDesc,
           significantDigitLabels: values.significantDigitLabels,
-          columnsMetadata: Array.from(selectedHeaders).map((header) => {
-            return {
-              columnName: header,
-              dataType: dataTypes.has(header)
-                ? dataTypes.get(header)
-                : undefined,
-              hidden: hiddenColumns.has(header),
-            };
-          }),
+          columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
+            hiddenColumns,
+            dataTypes
+          ),
         }
       );
       setCreatingWidget(false);
@@ -377,9 +365,13 @@ function AddChart() {
               hiddenColumns={hiddenColumns}
               setHiddenColumns={setHiddenColumns}
               onCancel={onCancel}
-              register={register}
               dataTypes={dataTypes}
               setDataTypes={setDataTypes}
+              sortByColumn={sortByColumn}
+              sortByDesc={sortByDesc}
+              setSortByColumn={setSortByColumn}
+              setSortByDesc={setSortByDesc}
+              reset={reset}
             />
           </div>
 
@@ -388,6 +380,12 @@ function AddChart() {
               errors={errors}
               register={register}
               json={filteredJson}
+              headers={
+                currentJson.length
+                  ? (Object.keys(currentJson[0]) as Array<string>)
+                  : []
+              }
+              originalJson={currentJson}
               csvJson={csvJson}
               datasetLoading={datasetLoading}
               datasetType={datasetType}

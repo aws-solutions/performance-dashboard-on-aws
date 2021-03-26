@@ -75,34 +75,34 @@ exports[`renders the VisualizeTable component 1`] = `
               Select an option
             </option>
             <option
-              value="id###asc"
+              value="1###asc"
             >
-              "id" A-Z
+              "1" A-Z
             </option>
             <option
-              value="id###desc"
+              value="1###desc"
             >
-              "id" Z-A
+              "1" Z-A
             </option>
             <option
-              value="name###asc"
+              value="2###asc"
             >
-              "name" A-Z
+              "2" A-Z
             </option>
             <option
-              value="name###desc"
+              value="2###desc"
             >
-              "name" Z-A
+              "2" Z-A
             </option>
             <option
-              value="updatedAt###asc"
+              value="3###asc"
             >
-              "updatedAt" A-Z
+              "3" A-Z
             </option>
             <option
-              value="updatedAt###desc"
+              value="3###desc"
             >
-              "updatedAt" Z-A
+              "3" Z-A
             </option>
           </select>
         </div>

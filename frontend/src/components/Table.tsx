@@ -15,7 +15,6 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table";
-import UtilsService from "../services/UtilsService";
 
 interface Props {
   selection: "multiple" | "single" | "none";
@@ -38,7 +37,13 @@ interface Props {
     minWidth?: string | number | undefined;
   }>;
   selectedHeaders?: Set<string>;
+  hiddenColumns?: Set<string>;
   addNumbersColumn?: boolean;
+  sortByColumn?: string;
+  sortByDesc?: boolean;
+  setSortByColumn?: Function;
+  setSortByDesc?: Function;
+  reset?: Function;
 }
 
 function Table(props: Props) {
@@ -47,8 +52,17 @@ function Table(props: Props) {
     : "";
   const className = props.className ? ` ${props.className}` : "";
 
-  const { initialSortByField, initialSortAscending } = props;
-  const initialSortBy = React.useMemo(() => {
+  const {
+    initialSortByField,
+    initialSortAscending,
+    sortByColumn,
+    sortByDesc,
+    setSortByColumn,
+    setSortByDesc,
+    reset,
+  } = props;
+
+  const initialSortBy = useMemo(() => {
     return initialSortByField
       ? [
           {
@@ -63,6 +77,7 @@ function Table(props: Props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    toggleSortBy,
     prepareRow,
     rows,
     page,
@@ -155,6 +170,34 @@ function Table(props: Props) {
       }
     }
   );
+
+  useEffect(() => {
+    if (setSortByColumn && setSortByDesc && reset) {
+      for (const headerGroup of headerGroups) {
+        for (const header of headerGroup.headers) {
+          if (
+            header.isSorted &&
+            (sortByColumn !== header.id || sortByDesc !== header.isSortedDesc)
+          ) {
+            reset({
+              sortData: header.id
+                ? `${header.id}###${header.isSortedDesc ? "desc" : "asc"}`
+                : "",
+            });
+            setSortByColumn(header.id);
+            setSortByDesc(header.isSortedDesc);
+            break;
+          }
+        }
+      }
+    }
+  }, [rows]);
+
+  useEffect(() => {
+    if (sortByColumn) {
+      toggleSortBy(sortByColumn, sortByDesc);
+    }
+  }, [sortByColumn, sortByDesc]);
 
   const { onSelection, filterQuery } = props;
   useEffect(() => {
@@ -280,7 +323,9 @@ function Table(props: Props) {
                       style={{
                         backgroundColor: `${getCellBackground(
                           cell.column.id,
-                          ""
+                          props.hiddenColumns?.has(cell.column.id)
+                            ? "#adadad"
+                            : ""
                         )}`,
                       }}
                       {...cell.getCellProps()}

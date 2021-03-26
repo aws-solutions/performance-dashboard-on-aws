@@ -190,7 +190,10 @@ function EditText() {
               )}
               {widget.content.text ? (
                 <div className="padding-left-05">
-                  <MarkdownRender source={widget.content.text} />
+                  <MarkdownRender
+                    className="usa-prose"
+                    source={widget.content.text}
+                  />
                 </div>
               ) : (
                 ""

@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { ChartType, DatasetType } from "../models";
+import { useTranslation } from "react-i18next";
 import Alert from "./Alert";
 import BarChartWidget from "./BarChartWidget";
 import Button from "./Button";
@@ -39,9 +40,11 @@ interface Props {
   showTitle?: boolean;
   summaryBelow?: boolean;
   horizontalScroll?: boolean;
+  significantDigitLabels: boolean;
 }
 
 function VisualizeChart(props: Props) {
+  const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(true);
   const [title, setTitle] = useState(props.title || "");
   const [summary, setSummary] = useState(props.summary || "");
@@ -192,7 +195,27 @@ function VisualizeChart(props: Props) {
         </div>
 
         <div hidden={chartType !== ChartType.LineChart || widthPercent <= 100}>
-          <legend className="usa-legend text-bold">Line chart options</legend>
+          <label className="usa-label text-bold">
+            {t("ChartOptionsLabel")}
+          </label>
+          <div className="usa-hint">{t("ChartOptionsDescription")}</div>
+          <div className="usa-checkbox">
+            <input
+              className="usa-checkbox__input"
+              id="significantDigitLabels"
+              type="checkbox"
+              name="significantDigitLabels"
+              defaultChecked={false}
+              ref={props.register()}
+            />
+            <label
+              className="usa-checkbox__label"
+              htmlFor="significantDigitLabels"
+            >
+              {t("SignificantDigitLabels")}
+            </label>
+          </div>
+
           <div className="usa-checkbox">
             <input
               className="usa-checkbox__input"

@@ -82,7 +82,7 @@ describe("dashboard in draft", () => {
     expect(
       screen.getByText(
         "Below is a preview of what the published dashboard will look like. " +
-          "If ready to proceed, you can publish the dashboard make it " +
+          "If ready to proceed, you can publish the dashboard to make it " +
           "available on the published site."
       )
     ).toBeInTheDocument();

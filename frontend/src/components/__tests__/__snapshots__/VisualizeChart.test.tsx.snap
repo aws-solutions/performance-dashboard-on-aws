@@ -203,16 +203,36 @@ exports[`renders the VisualizeChart component 1`] = `
           </select>
         </div>
       </div>
-      <div
-        hidden=""
-      >
-        <legend
-          class="usa-legend text-bold"
+      <div>
+        <label
+          class="usa-label text-bold"
         >
-          Line chart options
-        </legend>
+          Chart Options
+        </label>
+        <div
+          class="usa-hint"
+        >
+          Format your line chart
+        </div>
         <div
           class="usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="significantDigitLabels"
+            name="significantDigitLabels"
+            type="checkbox"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="significantDigitLabels"
+          >
+            Significant digit labels (123K, 1.2M)
+          </label>
+        </div>
+        <div
+          class="usa-checkbox"
+          hidden=""
         >
           <input
             checked=""
@@ -331,21 +351,6 @@ exports[`renders the VisualizeChart component 1`] = `
           Preview
         </h4>
         
-        <div
-          class="overflow-hidden"
-        >
-          <h2
-            class="margin-bottom-1"
-          />
-          <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
-          />
-          <div
-            class="recharts-responsive-container"
-            id=""
-            style="width: 100%; height: 300px;"
-          />
-        </div>
       </div>
     </div>
   </div>
@@ -555,16 +560,36 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           </select>
         </div>
       </div>
-      <div
-        hidden=""
-      >
-        <legend
-          class="usa-legend text-bold"
+      <div>
+        <label
+          class="usa-label text-bold"
         >
-          Line chart options
-        </legend>
+          Chart Options
+        </label>
+        <div
+          class="usa-hint"
+        >
+          Format your line chart
+        </div>
         <div
           class="usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="significantDigitLabels"
+            name="significantDigitLabels"
+            type="checkbox"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="significantDigitLabels"
+          >
+            Significant digit labels (123K, 1.2M)
+          </label>
+        </div>
+        <div
+          class="usa-checkbox"
+          hidden=""
         >
           <input
             checked=""
@@ -683,21 +708,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           Preview
         </h4>
         
-        <div
-          class="overflow-hidden"
-        >
-          <h2
-            class="margin-bottom-1"
-          />
-          <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
-          />
-          <div
-            class="recharts-responsive-container"
-            id=""
-            style="width: 100%; height: 300px;"
-          />
-        </div>
       </div>
     </div>
   </div>

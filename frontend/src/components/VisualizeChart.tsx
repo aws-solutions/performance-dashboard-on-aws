@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { ChartType, DatasetType } from "../models";
+import { useTranslation } from "react-i18next";
 import Alert from "./Alert";
 import BarChartWidget from "./BarChartWidget";
 import Button from "./Button";
@@ -33,55 +34,19 @@ interface Props {
   sortByDesc?: boolean;
   setSortByColumn: Function;
   setSortByDesc: Function;
-  title?: string;
-  summary?: string;
-  chartType?: ChartType;
-  showTitle?: boolean;
-  summaryBelow?: boolean;
-  horizontalScroll?: boolean;
+  title: string;
+  summary: string;
+  chartType: ChartType;
+  showTitle: boolean;
+  summaryBelow: boolean;
+  significantDigitLabels: boolean;
+  horizontalScroll: boolean;
 }
 
 function VisualizeChart(props: Props) {
+  const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(true);
-  const [title, setTitle] = useState(props.title || "");
-  const [summary, setSummary] = useState(props.summary || "");
-  const [chartType, setChartType] = useState<ChartType>(
-    props.chartType || ChartType.LineChart
-  );
-  const [showTitle, setShowTitle] = useState(
-    props.showTitle === undefined ? true : props.showTitle
-  );
-  const [summaryBelow, setSummaryBelow] = useState<boolean>(
-    props.summaryBelow === undefined ? true : props.summaryBelow
-  );
-  const [horizontalScroll, setHorizontalScroll] = useState<boolean>(
-    props.horizontalScroll === undefined ? true : props.horizontalScroll
-  );
   const [widthPercent, setWidthPercent] = useState(0);
-
-  const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setTitle((event.target as HTMLInputElement).value);
-  };
-
-  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    setSummary((event.target as HTMLTextAreaElement).value);
-  };
-
-  const handleSummaryBelowChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    setSummaryBelow((event.target as HTMLInputElement).checked);
-  };
-
-  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setShowTitle((event.target as HTMLInputElement).checked);
-  };
-
-  const handleChartTypeChange = (
-    event: React.FormEvent<HTMLFieldSetElement>
-  ) => {
-    setChartType((event.target as HTMLInputElement).value as ChartType);
-  };
 
   const handleSortDataChange = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
@@ -111,12 +76,6 @@ function VisualizeChart(props: Props) {
     });
   });
 
-  const handleHorizontalScrollChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    setHorizontalScroll((event.target as HTMLInputElement).checked);
-  };
-
   return (
     <div className="grid-row width-desktop">
       <div className="grid-col-5" hidden={props.fullPreview}>
@@ -126,7 +85,6 @@ function VisualizeChart(props: Props) {
           label="Chart title"
           hint="Give your chart a descriptive title."
           error={props.errors.title && "Please specify a chart title"}
-          onChange={handleTitleChange}
           required
           register={props.register}
         />
@@ -138,7 +96,6 @@ function VisualizeChart(props: Props) {
             type="checkbox"
             name="showTitle"
             defaultChecked={true}
-            onChange={handleShowTitleChange}
             ref={props.register()}
           />
           <label className="usa-checkbox__label" htmlFor="display-title">
@@ -153,7 +110,6 @@ function VisualizeChart(props: Props) {
           hint="Choose a chart type."
           register={props.register}
           error={props.errors.chartType && "Please select a chart type"}
-          onChange={handleChartTypeChange}
           defaultValue={ChartType.LineChart}
           required
           options={[
@@ -191,16 +147,40 @@ function VisualizeChart(props: Props) {
           />
         </div>
 
-        <div hidden={chartType !== ChartType.LineChart || widthPercent <= 100}>
-          <legend className="usa-legend text-bold">Line chart options</legend>
+        <div>
+          <label className="usa-label text-bold">
+            {t("ChartOptionsLabel")}
+          </label>
+          <div className="usa-hint">{t("ChartOptionsDescription")}</div>
           <div className="usa-checkbox">
+            <input
+              className="usa-checkbox__input"
+              id="significantDigitLabels"
+              type="checkbox"
+              name="significantDigitLabels"
+              defaultChecked={false}
+              ref={props.register()}
+            />
+            <label
+              className="usa-checkbox__label"
+              htmlFor="significantDigitLabels"
+            >
+              {t("SignificantDigitLabels")}
+            </label>
+          </div>
+
+          <div
+            className="usa-checkbox"
+            hidden={
+              props.chartType !== ChartType.LineChart || widthPercent <= 100
+            }
+          >
             <input
               className="usa-checkbox__input"
               id="horizontalScroll"
               type="checkbox"
               name="horizontalScroll"
               defaultChecked
-              onChange={handleHorizontalScrollChange}
               ref={props.register()}
             />
             <label className="usa-checkbox__label" htmlFor="horizontalScroll">
@@ -224,7 +204,6 @@ function VisualizeChart(props: Props) {
             </>
           }
           register={props.register}
-          onChange={handleSummaryChange}
           multiline
           rows={5}
         />
@@ -235,7 +214,6 @@ function VisualizeChart(props: Props) {
             type="checkbox"
             name="summaryBelow"
             defaultChecked={false}
-            onChange={handleSummaryBelowChange}
             ref={props.register()}
           />
           <label className="usa-checkbox__label" htmlFor="summary-below">
@@ -253,7 +231,7 @@ function VisualizeChart(props: Props) {
           type="submit"
           disabled={
             !props.json.length ||
-            !title ||
+            !props.title ||
             props.fileLoading ||
             props.processingWidget
           }
@@ -320,60 +298,60 @@ function VisualizeChart(props: Props) {
               ) : (
                 ""
               )}
-              {chartType === ChartType.LineChart && (
+              {props.chartType === ChartType.LineChart && (
                 <LineChartWidget
-                  title={showTitle ? title : ""}
-                  summary={summary}
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
                   lines={
                     props.json.length
                       ? (Object.keys(props.json[0]) as Array<string>)
                       : []
                   }
                   data={props.json}
-                  summaryBelow={summaryBelow}
+                  summaryBelow={props.summaryBelow}
                   isPreview={true}
-                  horizontalScroll={horizontalScroll}
+                  horizontalScroll={props.horizontalScroll}
                   setWidthPercent={setWidthPercent}
                 />
               )}
-              {chartType === ChartType.ColumnChart && (
+              {props.chartType === ChartType.ColumnChart && (
                 <ColumnChartWidget
-                  title={showTitle ? title : ""}
-                  summary={summary}
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
                   columns={
                     props.json.length
                       ? (Object.keys(props.json[0]) as Array<string>)
                       : []
                   }
                   data={props.json}
-                  summaryBelow={summaryBelow}
+                  summaryBelow={props.summaryBelow}
                   isPreview={true}
                 />
               )}
-              {chartType === ChartType.BarChart && (
+              {props.chartType === ChartType.BarChart && (
                 <BarChartWidget
-                  title={showTitle ? title : ""}
-                  summary={summary}
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
                   bars={
                     props.json.length
                       ? (Object.keys(props.json[0]) as Array<string>)
                       : []
                   }
                   data={props.json}
-                  summaryBelow={summaryBelow}
+                  summaryBelow={props.summaryBelow}
                 />
               )}
-              {chartType === ChartType.PartWholeChart && (
+              {props.chartType === ChartType.PartWholeChart && (
                 <PartWholeChartWidget
-                  title={showTitle ? title : ""}
-                  summary={summary}
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
                   parts={
                     props.json.length
                       ? (Object.keys(props.json[0]) as Array<string>)
                       : []
                   }
                   data={props.json}
-                  summaryBelow={summaryBelow}
+                  summaryBelow={props.summaryBelow}
                 />
               )}
             </>

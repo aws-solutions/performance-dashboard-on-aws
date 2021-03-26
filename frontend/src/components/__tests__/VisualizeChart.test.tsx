@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import VisualizeChart from "../VisualizeChart";
 import { MemoryRouter } from "react-router-dom";
-import { DatasetType } from "../../models";
+import { ChartType, DatasetType } from "../../models";
 import Button from "../Button";
 
 test("renders the VisualizeChart component", async () => {
@@ -42,6 +42,7 @@ test("renders the VisualizeChart component", async () => {
       setSortByColumn={() => {}}
       setSortByDesc={() => {}}
       horizontalScroll={true}
+      significantDigitLabels={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -85,6 +86,7 @@ test("renders the VisualizeChart component without horizontal scrolling", async 
       setSortByColumn={() => {}}
       setSortByDesc={() => {}}
       horizontalScroll={false}
+      significantDigitLabels={false}
     />,
     { wrapper: MemoryRouter }
   );

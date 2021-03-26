@@ -32,6 +32,7 @@ interface FormValues {
   datasetType: string;
   sortData: string;
   horizontalScroll?: boolean;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -99,6 +100,7 @@ function EditChart() {
   const summaryBelow = watch("summaryBelow");
   const chartType = watch("chartType");
   const horizontalScroll = watch("horizontalScroll");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   const [displayedJson, setDisplayedJson] = useState<any[]>([]);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
@@ -151,6 +153,7 @@ function EditChart() {
         summaryBelow,
         chartType,
         horizontalScroll,
+        significantDigitLabels: widget.content.significantDigitLabels,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
             ? widget.content.s3Key.json
@@ -337,6 +340,7 @@ function EditChart() {
             : staticDataset?.fileName,
           sortByColumn,
           sortByDesc,
+          significantDigitLabels: values.significantDigitLabels,
           columnsMetadata: Array.from(selectedHeaders).map((header) => {
             return {
               columnName: header,
@@ -566,6 +570,7 @@ function EditChart() {
                 setSortByColumn={setSortByColumn}
                 setSortByDesc={setSortByDesc}
                 horizontalScroll={horizontalScroll}
+                significantDigitLabels={significantDigitLabels}
               />
             </div>
           </form>

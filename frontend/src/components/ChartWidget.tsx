@@ -50,6 +50,7 @@ function ChartWidgetComponent(props: Props) {
           summaryBelow={content.summaryBelow}
           lines={keys}
           data={filteredJson}
+          horizontalScroll={content.horizontalScroll}
         />
       );
 

@@ -237,6 +237,9 @@ function createChartWidget(widget: Widget): ChartWidget {
         widget.content.significantDigitLabels !== undefined
           ? widget.content.significantDigitLabels
           : false,
+      ...(widget.content.horizontalScroll && {
+        horizontalScroll: widget.content.horizontalScroll,
+      }),
     },
   };
 }

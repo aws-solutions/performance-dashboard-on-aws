@@ -108,7 +108,11 @@ const ColumnChartWidget = (props: Props) => {
 
   return (
     <div
-      className={`overflow-hidden${widthPercent > 100 ? " right-shadow" : ""}`}
+      className={`overflow-hidden${
+        widthPercent > 100
+          ? "scroll-shadow border-x-1px border-base-lighter"
+          : ""
+      }`}
     >
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}

@@ -64,9 +64,10 @@ function AdminHome() {
             <Card title="Create a new dashboard" col={7}>
               <CardBody>
                 <p>
-                  Build draft dashboards by adding charts, tables and text as
-                  content. Publish dashboards to share results, track progress,
-                  or tell stories about a project, program, service, etc.
+                  Build draft dashboards by adding charts, tables, text, and
+                  more as content. Publish dashboards to share results, track
+                  progress, or provide insights about a project, program,
+                  service, etc.
                   <br />
                   <br />
                 </p>
@@ -107,9 +108,10 @@ function AdminHome() {
             <Card title="Create a new dashboard" col={4}>
               <CardBody>
                 <p>
-                  Build draft dashboards by adding charts, tables and text as
-                  content. Publish dashboards to share results, track progress,
-                  or tell stories about a project, program, service, etc.
+                  Build draft dashboards by adding charts, tables, text, and
+                  more as content. Publish dashboards to share results, track
+                  progress, or provide insights about a project, program,
+                  service, etc.
                   <br />
                   <br />
                 </p>
@@ -127,7 +129,7 @@ function AdminHome() {
             <Card title="Add other users" col={4}>
               <CardBody>
                 <p>
-                  Allow other users in your organization to create, edit, and/or
+                  Allow other users in your organization to create, edit, and
                   publish dashboards. Manage their access to dashboards and set
                   their roles. You may also add other admins.
                 </p>
@@ -165,7 +167,7 @@ function AdminHome() {
         <div className="grid-col">
           <p className="font-sans-md">
             This site is where you manage the performance dashboard. <br /> Do
-            you want to see what your audience see?
+            you want to see what your audience sees?
           </p>
           <Button type="button" variant="outline" onClick={onViewPublicWebsite}>
             View the published site{" "}

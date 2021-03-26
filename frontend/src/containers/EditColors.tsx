@@ -108,7 +108,7 @@ function EditColors() {
                 #00FF00, #0f0).
                 <div>
                   <Link to="/admin/colorshelp" target="_blank" external>
-                    Learn more
+                    Learn more about how color relates to accessibility.
                   </Link>
                 </div>
               </div>

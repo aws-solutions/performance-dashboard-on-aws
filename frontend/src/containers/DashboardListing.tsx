@@ -66,7 +66,7 @@ function DashboardListing() {
               : selectedDashboards[0].name
           } dashboard${selectedDashboards.length > 1 ? "s" : ""} ${
             selectedDashboards.length > 1 ? "were" : "was"
-          } successfully archived`,
+          } successfully archived.`,
         },
       });
 
@@ -91,7 +91,7 @@ function DashboardListing() {
               : selectedDashboards[0].name
           } draft dashboard${selectedDashboards.length > 1 ? "s" : ""} ${
             selectedDashboards.length > 1 ? "were" : "was"
-          } successfully deleted`,
+          } successfully deleted.`,
         },
       });
 

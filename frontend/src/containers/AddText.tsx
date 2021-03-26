@@ -194,7 +194,7 @@ function AddText() {
               )}
               {text ? (
                 <div className="padding-left-05">
-                  <MarkdownRender source={text} />
+                  <MarkdownRender className="usa-prose" source={text} />
                 </div>
               ) : (
                 ""

@@ -1,13 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { ColumnDataType } from "../models";
 import Button from "./Button";
-import Combobox from "./Combobox";
+import Dropdown from "./Dropdown";
 import Table from "./Table";
-
 interface Props {
   selectedHeaders: Set<string>;
   hiddenColumns: Set<string>;
-  register: Function;
   setSelectedHeaders: Function;
   setHiddenColumns: Function;
   backStep: Function;
@@ -16,9 +14,15 @@ interface Props {
   data: Array<any>;
   dataTypes: Map<string, ColumnDataType>;
   setDataTypes: Function;
+  sortByColumn?: string;
+  sortByDesc?: boolean;
+  setSortByColumn?: Function;
+  setSortByDesc?: Function;
+  reset?: Function;
 }
 
 function CheckData(props: Props) {
+  const [dataType, setDataType] = useState<string>("");
   const handleSelectedHeadersChange = (
     event: React.FormEvent<HTMLInputElement>
   ) => {
@@ -28,6 +32,14 @@ function CheckData(props: Props) {
       newSelectedHeaders.add(target.name);
     } else {
       newSelectedHeaders.delete(target.name);
+    }
+    if (newSelectedHeaders.size === 1) {
+      const selectedHeader = Array.from(newSelectedHeaders)[0];
+      if (props.dataTypes.has(selectedHeader)) {
+        setDataType(props.dataTypes.get(selectedHeader) || "");
+      } else {
+        setDataType("");
+      }
     }
     props.setSelectedHeaders(newSelectedHeaders);
   };
@@ -52,6 +64,7 @@ function CheckData(props: Props) {
   const handleDataTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
     const newDataTypes = new Map(props.dataTypes);
+    setDataType(target.value);
     if (target.value === ColumnDataType.Text) {
       for (const selectedHeader of Array.from(props.selectedHeaders)) {
         newDataTypes.set(selectedHeader, ColumnDataType.Text);
@@ -59,6 +72,10 @@ function CheckData(props: Props) {
     } else if (target.value === ColumnDataType.Number) {
       for (const selectedHeader of Array.from(props.selectedHeaders)) {
         newDataTypes.set(selectedHeader, ColumnDataType.Number);
+      }
+    } else if (target.value === ColumnDataType.Date) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newDataTypes.set(selectedHeader, ColumnDataType.Date);
       }
     } else {
       for (const selectedHeader of Array.from(props.selectedHeaders)) {
@@ -85,7 +102,6 @@ function CheckData(props: Props) {
                 name={header}
                 defaultChecked={props.selectedHeaders.has(header)}
                 onChange={handleSelectedHeadersChange}
-                ref={props.register()}
               />
               <label
                 className="usa-checkbox__label"
@@ -107,7 +123,19 @@ function CheckData(props: Props) {
                     return typeof row[header] === "number" ? (
                       row[header].toLocaleString()
                     ) : (
-                      <div className="text-secondary-vivid">! None</div>
+                      <div className="text-secondary-vivid">{`! ${
+                        row[header] ? row[header].toLocaleString() : "None"
+                      }`}</div>
+                    );
+                  } else if (
+                    props.dataTypes.get(header) === ColumnDataType.Date
+                  ) {
+                    return !isNaN(Date.parse(row[header])) ? (
+                      row[header].toLocaleString()
+                    ) : (
+                      <div className="text-secondary-vivid">{`! ${
+                        row[header] ? row[header].toLocaleString() : "None"
+                      }`}</div>
                     );
                   } else {
                     return row[header] ? row[header].toLocaleString() : "None";
@@ -125,7 +153,7 @@ function CheckData(props: Props) {
 
   return (
     <>
-      <div className="grid-col-6">
+      <div className="grid-col-6 margin-top-3 margin-bottom-1">
         Please make sure that the system formats your data correctly. Select
         columns to format as numbers, dates, or text. Also select columns to
         hide or show from the chart.
@@ -142,50 +170,71 @@ function CheckData(props: Props) {
             <div className="usa-checkbox margin-top-3 margin-bottom-1">
               <input
                 className="usa-checkbox__input"
-                id="hide-from-visualization"
+                id="hideFromVisualization"
                 type="checkbox"
                 name="hideFromVisualization"
-                defaultChecked={false}
+                checked={Array.from(props.selectedHeaders).every((s) =>
+                  props.hiddenColumns.has(s)
+                )}
                 onChange={handleHideFromVisualizationChange}
-                ref={props.register()}
               />
               <label
                 className="usa-checkbox__label"
-                htmlFor="hide-from-visualization"
+                htmlFor="hideFromVisualization"
               >
                 Hide from visualization
               </label>
             </div>
-            <div className="margin-top-3 margin-right-3">
-              <Combobox
-                id="dataType"
-                name="dataType"
-                label="Data format"
-                options={[
-                  { value: ColumnDataType.Text, content: ColumnDataType.Text },
-                  {
-                    value: ColumnDataType.Number,
-                    content: ColumnDataType.Number,
-                  },
-                ]}
-                labelClassName={"text-bold"}
-                onChange={handleDataTypeChange}
-              />
-            </div>
+            {props.selectedHeaders.size === 1 && (
+              <div className="margin-top-3 margin-right-3">
+                <Dropdown
+                  id="dataType"
+                  name="dataType"
+                  label="Data format"
+                  options={[
+                    { value: "", label: "Select an option" },
+                    { value: ColumnDataType.Text, label: ColumnDataType.Text },
+                    {
+                      value: ColumnDataType.Number,
+                      label: ColumnDataType.Number,
+                    },
+                    {
+                      value: ColumnDataType.Date,
+                      label: ColumnDataType.Date,
+                    },
+                  ]}
+                  value={dataType}
+                  onChange={handleDataTypeChange}
+                />
+              </div>
+            )}
           </div>
         ) : (
           ""
         )}
-        <div className={`grid-col-${props.selectedHeaders.size > 0 ? 9 : 12}`}>
+        <div
+          className={`overflow-hidden grid-col-${
+            props.selectedHeaders.size > 0 ? 9 : 12
+          }`}
+        >
           <Table
             selection="none"
             rows={checkDataTableRows}
-            initialSortAscending
+            initialSortAscending={
+              props.sortByDesc !== undefined ? !props.sortByDesc : true
+            }
+            initialSortByField={props.sortByColumn}
             disablePagination={true}
             disableBorderless={true}
             columns={checkDataTableColumns}
             selectedHeaders={props.selectedHeaders}
+            hiddenColumns={props.hiddenColumns}
             addNumbersColumn={true}
+            sortByColumn={props.sortByColumn}
+            sortByDesc={props.sortByDesc}
+            setSortByColumn={props.setSortByColumn}
+            setSortByDesc={props.setSortByDesc}
+            reset={props.reset}
           />
         </div>
       </div>

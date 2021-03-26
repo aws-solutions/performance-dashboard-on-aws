@@ -11,6 +11,7 @@ import { useWidget, useDashboard, useFullPreview } from "../hooks";
 import Spinner from "../components/Spinner";
 import { useDatasets } from "../hooks";
 import UtilsService from "../services/UtilsService";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import "./EditTable.css";
 import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
@@ -99,22 +100,12 @@ function EditTable() {
   >();
 
   useMemo(() => {
-    let headers = displayedJson.length
-      ? (Object.keys(displayedJson[0]) as Array<string>)
-      : [];
-    headers = headers.filter((h) => !hiddenColumns.has(h));
-    const newFilteredJson = new Array<any>();
-    for (const row of displayedJson) {
-      const filteredRow = headers.reduce((obj: any, key: any) => {
-        obj[key] = row[key];
-        return obj;
-      }, {});
-      if (filteredRow !== {}) {
-        newFilteredJson.push(filteredRow);
-      }
-    }
+    const newFilteredJson = DatasetParsingService.getFilteredJson(
+      currentJson,
+      hiddenColumns
+    );
     setFilteredJson(newFilteredJson);
-  }, [displayedJson, hiddenColumns]);
+  }, [currentJson, hiddenColumns]);
 
   useEffect(() => {
     if (
@@ -192,25 +183,12 @@ function EditTable() {
       if (widget.content.columnsMetadata) {
         const columnsMetadata = widget.content.columnsMetadata;
 
-        const hidden = new Set<string>();
-        columnsMetadata
-          .filter((column: any) => column.hidden)
-          .forEach((column: any) => hidden.add(column.columnName));
+        const {
+          hiddenColumns,
+          dataTypes,
+        } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
 
-        const dataTypes = new Map<string, ColumnDataType>();
-        columnsMetadata
-          .filter((column: any) => !!column.dataType)
-          .forEach((column: any) =>
-            dataTypes.set(column.columnName, column.dataType)
-          );
-
-        const headers = new Set<string>();
-        columnsMetadata.forEach((column: any) =>
-          headers.add(column.columnName)
-        );
-
-        setSelectedHeaders(headers);
-        setHiddenColumns(hidden);
+        setHiddenColumns(hiddenColumns);
         setDataTypes(dataTypes);
         setSortByColumn(widget.content.sortByColumn);
         setSortByDesc(widget.content.sortByDesc || false);
@@ -329,15 +307,10 @@ function EditTable() {
             : staticDataset?.fileName,
           sortByColumn,
           sortByDesc,
-          columnsMetadata: Array.from(selectedHeaders).map((header) => {
-            return {
-              columnName: header,
-              hidden: hiddenColumns.has(header),
-              dataType: dataTypes.has(header)
-                ? dataTypes.get(header)
-                : undefined,
-            };
-          }),
+          columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
+            hiddenColumns,
+            dataTypes
+          ),
         },
         widget.updatedAt
       );
@@ -529,9 +502,13 @@ function EditTable() {
                   hiddenColumns={hiddenColumns}
                   setHiddenColumns={setHiddenColumns}
                   onCancel={onCancel}
-                  register={register}
                   dataTypes={dataTypes}
                   setDataTypes={setDataTypes}
+                  sortByColumn={sortByColumn}
+                  sortByDesc={sortByDesc}
+                  setSortByColumn={setSortByColumn}
+                  setSortByDesc={setSortByDesc}
+                  reset={reset}
                 />
               </div>
 
@@ -540,6 +517,12 @@ function EditTable() {
                   errors={errors}
                   register={register}
                   json={filteredJson}
+                  originalJson={displayedJson}
+                  headers={
+                    displayedJson.length
+                      ? (Object.keys(displayedJson[0]) as Array<string>)
+                      : []
+                  }
                   csvJson={csvJson}
                   datasetLoading={datasetLoading}
                   datasetType={displayedDatasetType}
@@ -559,6 +542,10 @@ function EditTable() {
                   sortByDesc={sortByDesc}
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
+                  columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                    hiddenColumns,
+                    dataTypes
+                  )}
                 />
               </div>
             </form>

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { DatasetType } from "../models";
 import Alert from "./Alert";
 import Button from "./Button";
@@ -9,11 +9,14 @@ import TextField from "./TextField";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import TableWidget from "./TableWidget";
 import Dropdown from "./Dropdown";
+import DatasetParsingService from "../services/DatasetParsingService";
 
 interface Props {
   errors: any;
   register: Function;
   json: Array<any>;
+  originalJson: Array<any>;
+  headers: Array<string>;
   csvJson: Array<any>;
   datasetLoading: boolean;
   datasetType: DatasetType | undefined;
@@ -33,6 +36,7 @@ interface Props {
   summary?: string;
   showTitle?: boolean;
   summaryBelow?: boolean;
+  columnsMetadata: Array<any>;
 }
 
 function VisualizeTable(props: Props) {
@@ -78,20 +82,6 @@ function VisualizeTable(props: Props) {
     }
   };
 
-  const headers = props.json.length
-    ? (Object.keys(props.json[0]) as Array<string>)
-    : [];
-  const sortOptions: any = [{ value: "", label: "Select an option" }];
-  headers.forEach((h) => {
-    const sortTypeAsc = typeof h === "string" ? "A-Z" : "low to high";
-    const sortTypeDesc = typeof h === "string" ? "Z-A" : "high - low";
-    sortOptions.push({ value: `${h}###asc`, label: `"${h}" ${sortTypeAsc}` });
-    sortOptions.push({
-      value: `${h}###desc`,
-      label: `"${h}" ${sortTypeDesc}`,
-    });
-  });
-
   return (
     <div className="grid-row width-desktop">
       <div className="grid-col-5" hidden={props.fullPreview}>
@@ -126,7 +116,10 @@ function VisualizeTable(props: Props) {
             id="sortData"
             name="sortData"
             label="Sort data"
-            options={sortOptions}
+            options={DatasetParsingService.getDatasetSortOptions(
+              props.originalJson,
+              props.headers
+            )}
             onChange={handleSortDataChange}
             defaultValue={
               props.sortByColumn
@@ -251,12 +244,10 @@ function VisualizeTable(props: Props) {
                 title={showTitle ? title : ""}
                 summary={summary}
                 summaryBelow={summaryBelow}
-                headers={
-                  props.json.length
-                    ? (Object.keys(props.json[0]) as Array<string>)
-                    : []
-                }
                 data={props.json}
+                columnsMetadata={props.columnsMetadata}
+                sortByColumn={props.sortByColumn}
+                sortByDesc={props.sortByDesc}
               />
             </>
           )}

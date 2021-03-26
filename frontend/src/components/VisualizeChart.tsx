@@ -14,11 +14,14 @@ import Spinner from "./Spinner";
 import TextField from "./TextField";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "./Dropdown";
+import DatasetParsingService from "../services/DatasetParsingService";
 
 interface Props {
   errors: any;
   register: Function;
   json: Array<any>;
+  originalJson: Array<any>;
+  headers: Array<string>;
   csvJson: Array<any>;
   datasetLoading: boolean;
   datasetType: DatasetType | undefined;
@@ -40,7 +43,7 @@ interface Props {
   showTitle: boolean;
   summaryBelow: boolean;
   significantDigitLabels: boolean;
-  horizontalScroll: boolean;
+  horizontalScroll?: boolean;
 }
 
 function VisualizeChart(props: Props) {
@@ -61,20 +64,6 @@ function VisualizeChart(props: Props) {
       props.setSortByDesc(undefined);
     }
   };
-
-  const headers = props.json.length
-    ? (Object.keys(props.json[0]) as Array<string>)
-    : [];
-  const sortOptions: any = [{ value: "", label: "Select an option" }];
-  headers.forEach((h) => {
-    const sortTypeAsc = typeof h === "string" ? "A-Z" : "low to high";
-    const sortTypeDesc = typeof h === "string" ? "Z-A" : "high - low";
-    sortOptions.push({ value: `${h}###asc`, label: `"${h}" ${sortTypeAsc}` });
-    sortOptions.push({
-      value: `${h}###desc`,
-      label: `"${h}" ${sortTypeDesc}`,
-    });
-  });
 
   return (
     <div className="grid-row width-desktop">
@@ -136,7 +125,10 @@ function VisualizeChart(props: Props) {
             id="sortData"
             name="sortData"
             label="Sort data"
-            options={sortOptions}
+            options={DatasetParsingService.getDatasetSortOptions(
+              props.originalJson,
+              props.headers
+            )}
             onChange={handleSortDataChange}
             defaultValue={
               props.sortByColumn

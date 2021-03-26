@@ -174,9 +174,9 @@ function FormattingCSV() {
         <TableWidget
           title=""
           summary=""
-          headers={table.dataset.headers}
           data={table.dataset.data}
           summaryBelow={false}
+          columnsMetadata={[]}
         />
       </div>
     </>

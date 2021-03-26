@@ -136,6 +136,9 @@ export interface TableWidget extends Widget {
       raw: string;
       json: string;
     };
+    columnsMetadata: ColumnMetadata[];
+    sortByColumn?: string;
+    sortByDesc?: boolean;
   };
 }
 
@@ -284,6 +287,7 @@ export type User = {
 export enum ColumnDataType {
   Number = "Number",
   Text = "Text",
+  Date = "Date",
 }
 
 export interface ColumnMetadata {

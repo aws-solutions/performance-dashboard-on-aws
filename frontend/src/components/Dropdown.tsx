@@ -9,6 +9,7 @@ interface Props {
     label: string;
   }>;
   defaultValue?: string;
+  value?: string;
   register?: Function;
   hint?: string;
   error?: string;
@@ -48,6 +49,7 @@ function Dropdown(props: Props) {
       <select
         id={props.id}
         defaultValue={props.defaultValue}
+        value={props.value}
         ref={props.register && props.register({ required: props.required })}
         name={props.name}
         onChange={handleChange}

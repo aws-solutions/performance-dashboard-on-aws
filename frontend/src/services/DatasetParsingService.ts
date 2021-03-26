@@ -23,8 +23,52 @@ function createHeaderRowJson(data: Array<any>): Array<any> {
   return csvJson;
 }
 
+function getFilteredJson(
+  json: Array<any>,
+  hiddenColumns: Set<string>
+): Array<any> {
+  let headers = json.length ? (Object.keys(json[0]) as Array<string>) : [];
+  headers = headers.filter((h) => !hiddenColumns.has(h));
+  const newFilteredJson = new Array<any>();
+  for (const row of json) {
+    const filteredRow = headers.reduce((obj: any, key: any) => {
+      obj[key] = row[key];
+      return obj;
+    }, {});
+    if (filteredRow !== {}) {
+      newFilteredJson.push(filteredRow);
+    }
+  }
+  return newFilteredJson;
+}
+
+function getDatasetSortOptions(json: Array<any>, headers: Array<string>): any {
+  const sortOptions: any = [{ value: "", label: "Select an option" }];
+
+  headers.forEach((h) => {
+    const column = [];
+    for (const row of json) {
+      column.push(row[h]);
+    }
+    const isNumberOrDate =
+      column.every((c) => typeof c === "number") ||
+      column.every((c) => !isNaN(Date.parse(c)));
+    const sortTypeAsc = isNumberOrDate ? "low to high" : "A-Z";
+    const sortTypeDesc = isNumberOrDate ? "high to low" : "Z-A";
+    sortOptions.push({ value: `${h}###asc`, label: `"${h}" ${sortTypeAsc}` });
+    sortOptions.push({
+      value: `${h}###desc`,
+      label: `"${h}" ${sortTypeDesc}`,
+    });
+  });
+
+  return sortOptions;
+}
+
 const DatasetParsingService = {
   createHeaderRowJson,
+  getFilteredJson,
+  getDatasetSortOptions,
 };
 
 export default DatasetParsingService;

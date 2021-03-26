@@ -14,6 +14,7 @@ import StepIndicator from "../components/StepIndicator";
 import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
 import Visualize from "../components/VisualizeTable";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
 
 interface FormValues {
   title: string;
@@ -21,6 +22,7 @@ interface FormValues {
   showTitle: boolean;
   summaryBelow: boolean;
   datasetType: string;
+  sortData: string;
 }
 
 interface PathParams {
@@ -77,20 +79,10 @@ function AddTable() {
   );
 
   useMemo(() => {
-    let headers = currentJson.length
-      ? (Object.keys(currentJson[0]) as Array<string>)
-      : [];
-    headers = headers.filter((h) => !hiddenColumns.has(h));
-    const newFilteredJson = new Array<any>();
-    for (const row of currentJson) {
-      const filteredRow = headers.reduce((obj: any, key: any) => {
-        obj[key] = row[key];
-        return obj;
-      }, {});
-      if (filteredRow !== {}) {
-        newFilteredJson.push(filteredRow);
-      }
-    }
+    const newFilteredJson = DatasetParsingService.getFilteredJson(
+      currentJson,
+      hiddenColumns
+    );
     setFilteredJson(newFilteredJson);
   }, [currentJson, hiddenColumns]);
 
@@ -149,15 +141,10 @@ function AddTable() {
             : staticDataset?.fileName,
           sortByColumn,
           sortByDesc,
-          columnsMetadata: Array.from(selectedHeaders).map((header) => {
-            return {
-              columnName: header,
-              dataType: dataTypes.has(header)
-                ? dataTypes.get(header)
-                : undefined,
-              hidden: hiddenColumns.has(header),
-            };
-          }),
+          columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
+            hiddenColumns,
+            dataTypes
+          ),
         }
       );
       setCreatingWidget(false);
@@ -349,9 +336,13 @@ function AddTable() {
               hiddenColumns={hiddenColumns}
               setHiddenColumns={setHiddenColumns}
               onCancel={onCancel}
-              register={register}
               dataTypes={dataTypes}
               setDataTypes={setDataTypes}
+              sortByColumn={sortByColumn}
+              sortByDesc={sortByDesc}
+              setSortByColumn={setSortByColumn}
+              setSortByDesc={setSortByDesc}
+              reset={reset}
             />
           </div>
 
@@ -360,6 +351,12 @@ function AddTable() {
               errors={errors}
               register={register}
               json={filteredJson}
+              originalJson={currentJson}
+              headers={
+                currentJson.length
+                  ? (Object.keys(currentJson[0]) as Array<string>)
+                  : []
+              }
               csvJson={csvJson}
               datasetLoading={datasetLoading}
               datasetType={datasetType}
@@ -375,6 +372,10 @@ function AddTable() {
               sortByDesc={sortByDesc}
               setSortByColumn={setSortByColumn}
               setSortByDesc={setSortByDesc}
+              columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                hiddenColumns,
+                dataTypes
+              )}
             />
           </div>
         </form>

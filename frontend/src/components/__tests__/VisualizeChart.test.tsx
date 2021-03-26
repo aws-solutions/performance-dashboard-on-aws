@@ -43,6 +43,28 @@ test("renders the VisualizeChart component", async () => {
       setSortByDesc={() => {}}
       horizontalScroll={true}
       significantDigitLabels={false}
+      originalJson={[
+        {
+          id: "1",
+          name: "Banana",
+          updatedAt: "2021-11-11",
+        },
+        {
+          id: "2",
+          name: "Chocolate",
+          updatedAt: "2020-11-11",
+        },
+        {
+          id: "3",
+          name: "Vanilla",
+          updatedAt: "2019-11-11",
+        },
+      ]}
+      chartType={ChartType.LineChart}
+      headers={["1", "2", "3"]}
+      showTitle={true}
+      summary={"summary"}
+      title={"title"}
     />,
     { wrapper: MemoryRouter }
   );
@@ -87,6 +109,28 @@ test("renders the VisualizeChart component without horizontal scrolling", async 
       setSortByDesc={() => {}}
       horizontalScroll={false}
       significantDigitLabels={false}
+      chartType={ChartType.LineChart}
+      headers={["1", "2", "3"]}
+      showTitle={true}
+      summary={"summary"}
+      title={"title"}
+      originalJson={[
+        {
+          id: "1",
+          name: "Banana",
+          updatedAt: "2021-11-11",
+        },
+        {
+          id: "2",
+          name: "Chocolate",
+          updatedAt: "2020-11-11",
+        },
+        {
+          id: "3",
+          name: "Vanilla",
+          updatedAt: "2019-11-11",
+        },
+      ]}
     />,
     { wrapper: MemoryRouter }
   );

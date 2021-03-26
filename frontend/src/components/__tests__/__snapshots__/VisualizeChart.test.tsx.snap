@@ -684,7 +684,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
       </button>
       <button
         class="usa-button usa-button--base"
-        disabled=""
         type="submit"
       >
         Add Chart
@@ -716,13 +715,19 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         >
           <h2
             class="margin-bottom-1"
-          />
+          >
+            My Line Chart
+          </h2>
           <div
             class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
-          />
+          >
+            <p>
+              Lorem ipsum
+            </p>
+          </div>
           <div
             class="recharts-responsive-container"
-            id=""
+            id="My Line Chart"
             style="width: 100%; height: 300px;"
           />
         </div>

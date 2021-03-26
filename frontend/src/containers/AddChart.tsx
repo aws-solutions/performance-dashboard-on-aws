@@ -22,7 +22,8 @@ interface FormValues {
   showTitle: boolean;
   summaryBelow: boolean;
   datasetType: string;
-  horizontalScroll?: boolean;
+  horizontalScroll: boolean;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -36,7 +37,13 @@ function AddChart() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
+  const {
+    register,
+    errors,
+    handleSubmit,
+    reset,
+    watch,
+  } = useForm<FormValues>();
   const [currentJson, setCurrentJson] = useState<Array<any>>(
     state && state.json ? state.json : []
   );
@@ -77,6 +84,14 @@ function AddChart() {
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
+
+  const title = watch("title");
+  const summary = watch("summary");
+  const summaryBelow = watch("summaryBelow");
+  const chartType = watch("chartType");
+  const showTitle = watch("showTitle");
+  const horizontalScroll = watch("horizontalScroll");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   useMemo(() => {
     let headers = currentJson.length
@@ -155,6 +170,7 @@ function AddChart() {
             : staticDataset?.fileName,
           sortByColumn,
           sortByDesc,
+          significantDigitLabels: values.significantDigitLabels,
           columnsMetadata: Array.from(selectedHeaders).map((header) => {
             return {
               columnName: header,
@@ -387,6 +403,13 @@ function AddChart() {
               sortByDesc={sortByDesc}
               setSortByColumn={setSortByColumn}
               setSortByDesc={setSortByDesc}
+              title={title}
+              summary={summary}
+              summaryBelow={summaryBelow}
+              showTitle={showTitle}
+              chartType={chartType as ChartType}
+              significantDigitLabels={significantDigitLabels}
+              horizontalScroll={horizontalScroll}
             />
           </div>
         </form>

@@ -307,7 +307,7 @@ exports[`renders the VisualizeChart component 1`] = `
         disabled=""
         type="submit"
       >
-        Add Chart
+        Add chart
       </button>
       <button
         class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
@@ -659,7 +659,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         disabled=""
         type="submit"
       >
-        Add chart
+        Add Chart
       </button>
       <button
         class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"

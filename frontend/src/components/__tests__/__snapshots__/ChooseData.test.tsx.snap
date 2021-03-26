@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders the Check Data component 1`] = `
+exports[`renders the ChooseData component 1`] = `
 <div>
   <div
     class="grid-col-6"
@@ -14,8 +14,7 @@ exports[`renders the Check Data component 1`] = `
     <div
       class="usa-hint"
     >
-      Choose an existing dataset or create a new one to populate this chart.
-       
+      Choose an existing dataset or create a new one to populate this chart. 
       <a
         aria-label=""
         class="link"
@@ -267,6 +266,7 @@ exports[`renders the Check Data component 1`] = `
                   class="margin-left-1 usa-button usa-button--unstyled"
                   style="cursor: pointer;"
                   title="Toggle SortBy Name"
+                  type="button"
                 >
                   <svg
                     aria-hidden="true"
@@ -298,6 +298,7 @@ exports[`renders the Check Data component 1`] = `
                   class="margin-left-1 usa-button usa-button--unstyled"
                   style="cursor: pointer;"
                   title="Toggle SortBy Last updated"
+                  type="button"
                 >
                   <svg
                     aria-hidden="true"
@@ -329,6 +330,7 @@ exports[`renders the Check Data component 1`] = `
                   class="margin-left-1 usa-button usa-button--unstyled"
                   style="cursor: pointer;"
                   title="Toggle SortBy Description"
+                  type="button"
                 >
                   <svg
                     aria-hidden="true"
@@ -360,6 +362,7 @@ exports[`renders the Check Data component 1`] = `
                   class="margin-left-1 usa-button usa-button--unstyled"
                   style="cursor: pointer;"
                   title="Toggle SortBy Tags"
+                  type="button"
                 >
                   <svg
                     aria-hidden="true"

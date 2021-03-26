@@ -11,6 +11,7 @@ import Modal from "../components/Modal";
 import { useHistory } from "react-router-dom";
 import Tooltip from "../components/Tooltip";
 import { useSettings } from "../hooks";
+import { useTranslation } from "react-i18next";
 
 function TopicareaListing() {
   const history = useHistory<LocationState>();
@@ -22,6 +23,8 @@ function TopicareaListing() {
   const [selected, setSelected] = useState<TopicArea | undefined>(undefined);
 
   const { settings } = useSettings();
+
+  const { t } = useTranslation();
 
   const createTopicArea = () => {
     history.push("/admin/settings/topicarea/create");
@@ -62,7 +65,9 @@ function TopicareaListing() {
           type: "success",
           message: `"${
             selected.name
-          }" ${settings.topicAreaLabels.singular.toLowerCase()} successfully deleted`,
+          }" ${settings.topicAreaLabels.singular.toLowerCase()} ${t(
+            "SuccessfullyDeleted"
+          )}`,
         },
       });
 
@@ -95,10 +100,12 @@ function TopicareaListing() {
       <Modal
         isOpen={isOpenDeleteModal}
         closeModal={closeDeleteModal}
-        title={`Delete "${
+        title={`${t("Delete")} "${
           selected?.name
         }" ${settings.topicAreaLabels.singular.toLowerCase()}?`}
-        message={`Are you sure you want to delete this ${settings.topicAreaLabels.singular.toLowerCase()}?`}
+        message={`${t(
+          "SureDelete"
+        )} ${settings.topicAreaLabels.singular.toLowerCase()}?`}
         buttonType="Delete"
         buttonAction={deleteTopicArea}
       />
@@ -125,7 +132,7 @@ function TopicareaListing() {
                     disabled={!selected || selected.dashboardCount > 0}
                     onClick={() => onDeleteTopicArea()}
                   >
-                    Delete
+                    {t("Delete")}
                   </Button>
                 </span>
               </span>
@@ -138,8 +145,10 @@ function TopicareaListing() {
                   getContent={() => (
                     <div className="font-sans-sm">
                       <p className="margin-y-0">
-                        {`You can only delete ${settings.topicAreaLabels.plural.toLocaleLowerCase()} ` +
-                          `that have zero dashboards`}
+                        {`${t(
+                          "CanDelete"
+                        )} ${settings.topicAreaLabels.plural.toLocaleLowerCase()} ` +
+                          `${t("ZeroDashboards")}`}
                       </p>
                     </div>
                   )}
@@ -147,13 +156,13 @@ function TopicareaListing() {
               )}
               <span>
                 <Button variant="outline" disabled={!selected} onClick={onEdit}>
-                  Edit
+                  {t("Edit")}
                 </Button>
               </span>
               <span>
-                <Button
-                  onClick={createTopicArea}
-                >{`Create new ${settings.topicAreaLabels.singular.toLowerCase()}`}</Button>
+                <Button onClick={createTopicArea}>{`${t(
+                  "CreateNew"
+                )} ${settings.topicAreaLabels.singular.toLowerCase()}`}</Button>
               </span>
             </div>
           </div>

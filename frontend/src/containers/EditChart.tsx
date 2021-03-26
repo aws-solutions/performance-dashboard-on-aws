@@ -14,12 +14,11 @@ import { useWidget, useDashboard, useDatasets, useFullPreview } from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import Visualize from "../components/Visualize";
+import VisualizeChart from "../components/VisualizeChart";
 import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
 import Spinner from "../components/Spinner";
 import UtilsService from "../services/UtilsService";
-
 import "./EditChart.css";
 
 interface FormValues {
@@ -31,6 +30,7 @@ interface FormValues {
   staticDatasets: string;
   summaryBelow: boolean;
   datasetType: string;
+  sortData: string;
 }
 
 interface PathParams {
@@ -65,7 +65,7 @@ function EditChart() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
-  const [step, setStep] = useState<number>(2);
+  const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const {
     widget,
     datasetType,
@@ -155,11 +155,18 @@ function EditChart() {
           widget.content.datasetType === DatasetType.StaticDataset
             ? widget.content.s3Key.json
             : "",
+        sortData: widget.content.sortByColumn
+          ? `${widget.content.sortByColumn}###${
+              widget.content.sortByDesc ? "desc" : "asc"
+            }`
+          : "",
       });
 
       if (!displayedDatasetType) {
         setDisplayedDatasetType(
-          state && state.json ? DatasetType.StaticDataset : datasetType
+          state && state.json && state.staticDataset
+            ? DatasetType.StaticDataset
+            : datasetType
         );
       }
 
@@ -176,7 +183,11 @@ function EditChart() {
       }
       if (!staticDataset) {
         setStaticDataset(
-          staticDatasets.find((d) => d.s3Key.json === widget.content.s3Key.json)
+          state && state.staticDataset
+            ? state.staticDataset
+            : staticDatasets.find(
+                (d) => d.s3Key.json === widget.content.s3Key.json
+              )
         );
       }
 
@@ -439,115 +450,118 @@ function EditChart() {
       loadingDatasets ||
       !widget ||
       !displayedDatasetType ||
-      !filteredJson ? (
+      !filteredJson ||
+      fileLoading ||
+      editingWidget ? (
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
-        <>
-          <div className="grid-row width-desktop">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid-col-12">
-                <ul className="usa-button-group usa-button-group--segmented">
-                  <li className="usa-button-group__item">
-                    <button
-                      className={
-                        step !== 0
-                          ? "usa-button usa-button--outline"
-                          : "usa-button"
-                      }
-                      type="button"
-                      onClick={() => setStep(0)}
-                    >
-                      Choose data
-                    </button>
-                  </li>
-                  <li className="usa-button-group__item">
-                    <button
-                      className={
-                        step !== 1
-                          ? "usa-button usa-button--outline"
-                          : "usa-button"
-                      }
-                      type="button"
-                      onClick={() => setStep(1)}
-                    >
-                      Check data
-                    </button>
-                  </li>
-                  <li className="usa-button-group__item">
-                    <button
-                      className={
-                        step !== 2
-                          ? "usa-button usa-button--outline"
-                          : "usa-button"
-                      }
-                      type="button"
-                      onClick={() => setStep(2)}
-                    >
-                      Visualize
-                    </button>
-                  </li>
-                </ul>
-              </div>
-              <div hidden={step !== 0}>
-                <ChooseData
-                  selectDynamicDataset={selectDynamicDataset}
-                  dynamicDatasets={dynamicDatasets}
-                  datasetType={displayedDatasetType}
-                  onFileProcessed={onFileProcessed}
-                  handleChange={handleChange}
-                  advanceStep={advanceStep}
-                  fileLoading={fileLoading}
-                  browseDatasets={browseDatasets}
-                  continueButtonDisabled={!currentJson.length}
-                  csvErrors={csvErrors}
-                  csvFile={csvFile}
-                  onCancel={onCancel}
-                  register={register}
-                />
-              </div>
-              <div hidden={step !== 1}>
-                <CheckData
-                  data={filteredJson}
-                  advanceStep={advanceStep}
-                  backStep={backStep}
-                  selectedHeaders={selectedHeaders}
-                  setSelectedHeaders={setSelectedHeaders}
-                  hiddenColumns={hiddenColumns}
-                  setHiddenColumns={setHiddenColumns}
-                  onCancel={onCancel}
-                  register={register}
-                  setSortByColumn={setSortByColumn}
-                  setSortByDesc={setSortByDesc}
-                  dataTypes={dataTypes}
-                  setDataTypes={setDataTypes}
-                />
-              </div>
-              <div hidden={step !== 2}>
-                <Visualize
-                  errors={errors}
-                  register={register}
-                  json={filteredJson}
-                  csvJson={csvJson}
-                  datasetLoading={datasetLoading}
-                  datasetType={displayedDatasetType}
-                  onCancel={onCancel}
-                  backStep={backStep}
-                  advanceStep={advanceStep}
-                  fileLoading={fileLoading}
-                  creatingWidget={editingWidget} // TODO: Rename the property in the Visualize component
-                  title={title}
-                  summary={summary}
-                  chartType={chartType as ChartType}
-                  summaryBelow={summaryBelow}
-                  showTitle={showTitle}
-                  fullPreviewButton={fullPreviewButton}
-                  fullPreview={fullPreview}
-                  submitButtonLabel="Save"
-                />
-              </div>
-            </form>
-          </div>
-        </>
+        <div className="grid-row width-desktop">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div hidden={fullPreview} className="grid-col-12">
+              <ul className="usa-button-group usa-button-group--segmented">
+                <li className="usa-button-group__item">
+                  <button
+                    className={
+                      step !== 0
+                        ? "usa-button usa-button--outline"
+                        : "usa-button"
+                    }
+                    type="button"
+                    onClick={() => setStep(0)}
+                  >
+                    Choose data
+                  </button>
+                </li>
+                <li className="usa-button-group__item">
+                  <button
+                    className={
+                      step !== 1
+                        ? "usa-button usa-button--outline"
+                        : "usa-button"
+                    }
+                    type="button"
+                    onClick={() => setStep(1)}
+                  >
+                    Check data
+                  </button>
+                </li>
+                <li className="usa-button-group__item">
+                  <button
+                    className={
+                      step !== 2
+                        ? "usa-button usa-button--outline"
+                        : "usa-button"
+                    }
+                    type="button"
+                    onClick={() => setStep(2)}
+                  >
+                    Visualize
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div hidden={step !== 0}>
+              <ChooseData
+                selectDynamicDataset={selectDynamicDataset}
+                dynamicDatasets={dynamicDatasets}
+                datasetType={displayedDatasetType}
+                onFileProcessed={onFileProcessed}
+                handleChange={handleChange}
+                advanceStep={advanceStep}
+                fileLoading={fileLoading}
+                browseDatasets={browseDatasets}
+                continueButtonDisabled={!currentJson.length}
+                csvErrors={csvErrors}
+                csvFile={csvFile}
+                onCancel={onCancel}
+                register={register}
+                widgetType="chart"
+              />
+            </div>
+            <div hidden={step !== 1}>
+              <CheckData
+                data={currentJson}
+                advanceStep={advanceStep}
+                backStep={backStep}
+                selectedHeaders={selectedHeaders}
+                setSelectedHeaders={setSelectedHeaders}
+                hiddenColumns={hiddenColumns}
+                setHiddenColumns={setHiddenColumns}
+                onCancel={onCancel}
+                register={register}
+                dataTypes={dataTypes}
+                setDataTypes={setDataTypes}
+              />
+            </div>
+            <div hidden={step !== 2}>
+              <VisualizeChart
+                errors={errors}
+                register={register}
+                json={filteredJson}
+                csvJson={csvJson}
+                datasetLoading={datasetLoading}
+                datasetType={displayedDatasetType}
+                onCancel={onCancel}
+                backStep={backStep}
+                advanceStep={advanceStep}
+                fileLoading={fileLoading}
+                processingWidget={editingWidget}
+                title={title}
+                summary={summary}
+                chartType={chartType as ChartType}
+                summaryBelow={summaryBelow}
+                showTitle={showTitle}
+                fullPreviewButton={fullPreviewButton}
+                fullPreview={fullPreview}
+                submitButtonLabel="Save"
+                sortByColumn={sortByColumn}
+                sortByDesc={sortByDesc}
+                setSortByColumn={setSortByColumn}
+                setSortByDesc={setSortByDesc}
+              />
+            </div>
+          </form>
+        </div>
       )}
     </>
   );

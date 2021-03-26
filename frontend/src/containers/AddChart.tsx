@@ -12,7 +12,7 @@ import UtilsService from "../services/UtilsService";
 import StepIndicator from "../components/StepIndicator";
 import CheckData from "../components/CheckData";
 import ChooseData from "../components/ChooseData";
-import Visualize from "../components/Visualize";
+import Visualize from "../components/VisualizeChart";
 import "./AddChart.css";
 
 interface FormValues {
@@ -72,11 +72,7 @@ function AddChart() {
     undefined
   );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
-  const {
-    fullPreviewToggle,
-    fullPreviewButton,
-    fullPreview,
-  } = useFullPreview();
+  const { fullPreviewButton, fullPreview } = useFullPreview();
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
@@ -347,6 +343,7 @@ function AddChart() {
               csvFile={csvFile}
               onCancel={onCancel}
               register={register}
+              widgetType="chart"
             />
           </div>
 
@@ -361,8 +358,6 @@ function AddChart() {
               setHiddenColumns={setHiddenColumns}
               onCancel={onCancel}
               register={register}
-              setSortByColumn={setSortByColumn}
-              setSortByDesc={setSortByDesc}
               dataTypes={dataTypes}
               setDataTypes={setDataTypes}
             />
@@ -380,10 +375,14 @@ function AddChart() {
               backStep={backStep}
               advanceStep={advanceStep}
               fileLoading={fileLoading}
-              creatingWidget={creatingWidget}
+              processingWidget={creatingWidget}
               fullPreviewButton={fullPreviewButton}
               fullPreview={fullPreview}
               submitButtonLabel="Add Chart"
+              sortByColumn={sortByColumn}
+              sortByDesc={sortByDesc}
+              setSortByColumn={setSortByColumn}
+              setSortByDesc={setSortByDesc}
             />
           </div>
         </form>

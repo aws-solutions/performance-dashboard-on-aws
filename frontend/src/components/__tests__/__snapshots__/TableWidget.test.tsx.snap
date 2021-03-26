@@ -38,6 +38,7 @@ exports[`table preview should match snapshot 1`] = `
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
               title="Toggle SortBy test"
+              type="button"
             >
               <svg
                 aria-hidden="true"

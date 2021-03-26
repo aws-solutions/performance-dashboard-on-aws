@@ -1,31 +1,19 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { LocationState } from "../models";
+import { ColumnDataType, LocationState } from "../models";
 import { Dataset, DatasetType, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
-import {
-  useDashboard,
-  useDateTimeFormatter,
-  useSettings,
-  useFullPreview,
-} from "../hooks";
+import { useDashboard, useFullPreview } from "../hooks";
 import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import TextField from "../components/TextField";
-import FileInput from "../components/FileInput";
-import Button from "../components/Button";
 import { parse, ParseResult } from "papaparse";
-import TableWidget from "../components/TableWidget";
-import Link from "../components/Link";
 import { useDatasets } from "../hooks";
-import Spinner from "../components/Spinner";
-import Alert from "../components/Alert";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StepIndicator from "../components/StepIndicator";
-import Table from "../components/Table";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import ChooseData from "../components/ChooseData";
+import CheckData from "../components/CheckData";
+import Visualize from "../components/VisualizeTable";
 
 interface FormValues {
   title: string;
@@ -42,10 +30,8 @@ interface PathParams {
 function AddTable() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
-  const { settings } = useSettings();
 
   const { dashboardId } = useParams<PathParams>();
-  const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
   const { register, errors, handleSubmit, reset } = useForm<FormValues>();
@@ -57,6 +43,7 @@ function AddTable() {
     state && state.json ? state.json : []
   );
   const [csvJson, setCsvJson] = useState<Array<any>>([]);
+  const [filteredJson, setFilteredJson] = useState<Array<any>>(currentJson);
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
   );
@@ -67,23 +54,45 @@ function AddTable() {
     undefined
   );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
-  const [title, setTitle] = useState("");
-  const [summary, setSummary] = useState("");
-  const [showTitle, setShowTitle] = useState(true);
-  const [summaryBelow, setSummaryBelow] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.json ? DatasetType.StaticDataset : undefined
   );
-  const [showAlert, setShowAlert] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 0);
-  const {
-    fullPreview,
-    fullPreviewToggle,
-    fullPreviewButton,
-  } = useFullPreview();
+  const [selectedHeaders, setSelectedHeaders] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
+    new Set<string>()
+  );
+  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
+    undefined
+  );
+  const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
+  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
+    new Map<string, ColumnDataType>()
+  );
+
+  useMemo(() => {
+    let headers = currentJson.length
+      ? (Object.keys(currentJson[0]) as Array<string>)
+      : [];
+    headers = headers.filter((h) => !hiddenColumns.has(h));
+    const newFilteredJson = new Array<any>();
+    for (const row of currentJson) {
+      const filteredRow = headers.reduce((obj: any, key: any) => {
+        obj[key] = row[key];
+        return obj;
+      }, {});
+      if (filteredRow !== {}) {
+        newFilteredJson.push(filteredRow);
+      }
+    }
+    setFilteredJson(newFilteredJson);
+  }, [currentJson, hiddenColumns]);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -138,6 +147,17 @@ function AddTable() {
             : datasetType === DatasetType.DynamicDataset
             ? dynamicDataset?.fileName
             : staticDataset?.fileName,
+          sortByColumn,
+          sortByDesc,
+          columnsMetadata: Array.from(selectedHeaders).map((header) => {
+            return {
+              columnName: header,
+              dataType: dataTypes.has(header)
+                ? dataTypes.get(header)
+                : undefined,
+              hidden: hiddenColumns.has(header),
+            };
+          }),
         }
       );
       setCreatingWidget(false);
@@ -159,11 +179,11 @@ function AddTable() {
   };
 
   const advanceStep = () => {
-    setStep(1);
+    setStep(step + 1);
   };
 
   const backStep = () => {
-    setStep(0);
+    setStep(step - 1);
   };
 
   const selectDynamicDataset = async (selectedDataset: Dataset) => {
@@ -189,15 +209,6 @@ function AddTable() {
     setDatasetLoading(false);
   };
 
-  const onSelect = useCallback(
-    (selectedDataset: Array<Dataset>) => {
-      if (datasetType === DatasetType.DynamicDataset) {
-        selectDynamicDataset(selectedDataset[0]);
-      }
-    },
-    [datasetType]
-  );
-
   const browseDatasets = () => {
     history.push({
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
@@ -206,24 +217,6 @@ function AddTable() {
         crumbLabel: "Add table",
       },
     });
-  };
-
-  const handleChangeTitle = (event: React.FormEvent<HTMLInputElement>) => {
-    setTitle((event.target as HTMLInputElement).value);
-  };
-
-  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    setSummary((event.target as HTMLTextAreaElement).value);
-  };
-
-  const handleSummaryBelowChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    setSummaryBelow((event.target as HTMLInputElement).checked);
-  };
-
-  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setShowTitle((event.target as HTMLInputElement).checked);
   };
 
   const onFileProcessed = (data: File) => {
@@ -315,6 +308,9 @@ function AddTable() {
                     label: "Choose data",
                   },
                   {
+                    label: "Check data",
+                  },
+                  {
                     label: "Visualize",
                   },
                 ]}
@@ -325,389 +321,61 @@ function AddTable() {
           </div>
 
           <div hidden={step !== 0}>
-            <div className="grid-col-6">
-              <label htmlFor="fieldset" className="usa-label text-bold">
-                Data
-              </label>
-              <div className="usa-hint">
-                Choose an existing dataset or create a new one to populate this
-                table.
-                <Link to="/admin/apihelp" target="_blank" external>
-                  How do I add datasets?
-                </Link>
-              </div>
-            </div>
-            <fieldset
-              id="fieldset"
-              className="usa-fieldset"
-              onChange={handleChange}
-            >
-              <legend className="usa-sr-only">Content item types</legend>
-
-              <div className="grid-row">
-                <div className="grid-col-4 padding-right-2">
-                  <div className="usa-radio">
-                    <div
-                      className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                        datasetType === "StaticDataset"
-                          ? " bg-base-lightest"
-                          : "-lighter"
-                      } border-2px padding-2 margin-y-1`}
-                    >
-                      <div className="grid-col flex-5">
-                        <input
-                          className="usa-radio__input"
-                          id="staticDataset"
-                          value="StaticDataset"
-                          type="radio"
-                          name="datasetType"
-                          ref={register()}
-                        />
-                        <label
-                          className="usa-radio__label"
-                          htmlFor="staticDataset"
-                        >
-                          Static dataset
-                        </label>
-                      </div>
-                      <div className="grid-col flex-7">
-                        <div className="usa-prose text-base margin-left-4">
-                          Upload a new dataset from file or elect an existing
-                          dataset.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="grid-col-4 padding-left-2">
-                  <div className="usa-radio">
-                    <div
-                      className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                        datasetType === "DynamicDataset"
-                          ? " bg-base-lightest"
-                          : "-lighter"
-                      } border-2px padding-2 margin-y-1`}
-                    >
-                      <div className="grid-col flex-5">
-                        <input
-                          className="usa-radio__input"
-                          id="dynamicDataset"
-                          value="DynamicDataset"
-                          type="radio"
-                          name="datasetType"
-                          ref={register()}
-                        />
-                        <label
-                          className="usa-radio__label"
-                          htmlFor="dynamicDataset"
-                        >
-                          Dynamic dataset
-                        </label>
-                      </div>
-                      <div className="grid-col flex-7">
-                        <div className="usa-prose text-base margin-left-4">
-                          Choose from a list of continuously updated datasets.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div hidden={datasetType !== DatasetType.StaticDataset}>
-                <div className="grid-row">
-                  <div className="grid-col-5">
-                    <FileInput
-                      id="dataset"
-                      name="dataset"
-                      label="Static datasets"
-                      accept=".csv"
-                      loading={fileLoading}
-                      errors={csvErrors}
-                      register={register}
-                      hint={
-                        <span>
-                          Upload a dataset from a CSV file, or choose an
-                          existing static dataset.{" "}
-                          <Link
-                            to="/admin/formattingcsv"
-                            target="_blank"
-                            external
-                          >
-                            How do I format my CSV file?
-                          </Link>
-                        </span>
-                      }
-                      fileName={csvFile && csvFile.name}
-                      onFileProcessed={onFileProcessed}
-                    />
-                  </div>
-                  <div className="grid-col-3 padding-left-3">
-                    <Button
-                      variant="outline"
-                      type="button"
-                      className="datasetsButton"
-                      onClick={browseDatasets}
-                    >
-                      Browse datasets
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              <div hidden={datasetType !== DatasetType.DynamicDataset}>
-                <div className="overflow-hidden">
-                  <Table
-                    selection="single"
-                    initialSortByField="updatedAt"
-                    filterQuery={""}
-                    rows={React.useMemo(() => dynamicDatasets, [
-                      dynamicDatasets,
-                    ])}
-                    screenReaderField="name"
-                    width="100%"
-                    onSelection={onSelect}
-                    columns={React.useMemo(
-                      () => [
-                        {
-                          Header: "Name",
-                          accessor: "fileName",
-                          Cell: (props: any) => {
-                            return (
-                              <div className="tooltip">
-                                {props.value}
-                                <span className="tooltiptext">
-                                  Tooltip text
-                                </span>
-                              </div>
-                            );
-                          },
-                        },
-                        {
-                          Header: "Last updated",
-                          accessor: "updatedAt",
-                        },
-                        {
-                          Header: "Description",
-                          accessor: "description",
-                          Cell: (props: any) => {
-                            if (props.value) {
-                              if (props.value.length > 11) {
-                                return (
-                                  <div className="tooltip">
-                                    {props.value.substring(0, 11) + "..."}
-                                    <span className="tooltiptext">
-                                      {props.value}
-                                    </span>
-                                  </div>
-                                );
-                              } else {
-                                return (
-                                  <div className="tooltip">
-                                    {props.value}
-                                    <span className="tooltiptext">
-                                      {props.value}
-                                    </span>
-                                  </div>
-                                );
-                              }
-                            }
-
-                            return "";
-                          },
-                        },
-                        {
-                          Header: "Tags",
-                          accessor: "tags",
-                        },
-                      ],
-                      [dateFormatter, settings]
-                    )}
-                  />
-                </div>
-              </div>
-            </fieldset>
-            <br />
-            <br />
-            <hr />
-            <Button
-              type="button"
-              onClick={advanceStep}
-              disabled={!currentJson.length}
-            >
-              Continue
-            </Button>
-            <Button
-              variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
+            <ChooseData
+              selectDynamicDataset={selectDynamicDataset}
+              dynamicDatasets={dynamicDatasets}
+              datasetType={datasetType}
+              onFileProcessed={onFileProcessed}
+              handleChange={handleChange}
+              advanceStep={advanceStep}
+              fileLoading={fileLoading}
+              browseDatasets={browseDatasets}
+              continueButtonDisabled={!currentJson.length}
+              csvErrors={csvErrors}
+              csvFile={csvFile}
+              onCancel={onCancel}
+              register={register}
+              widgetType="table"
+            />
           </div>
 
           <div hidden={step !== 1}>
-            <div className="grid-row width-desktop">
-              <div className="grid-col-5" hidden={fullPreview}>
-                <TextField
-                  id="title"
-                  name="title"
-                  label="Table title"
-                  hint="Give your table a descriptive title."
-                  error={errors.title && "Please specify a table title"}
-                  onChange={handleChangeTitle}
-                  required
-                  register={register}
-                />
+            <CheckData
+              data={currentJson}
+              advanceStep={advanceStep}
+              backStep={backStep}
+              selectedHeaders={selectedHeaders}
+              setSelectedHeaders={setSelectedHeaders}
+              hiddenColumns={hiddenColumns}
+              setHiddenColumns={setHiddenColumns}
+              onCancel={onCancel}
+              register={register}
+              dataTypes={dataTypes}
+              setDataTypes={setDataTypes}
+            />
+          </div>
 
-                <div className="usa-checkbox">
-                  <input
-                    className="usa-checkbox__input"
-                    id="display-title"
-                    type="checkbox"
-                    name="showTitle"
-                    defaultChecked={true}
-                    onChange={handleShowTitleChange}
-                    ref={register()}
-                  />
-                  <label
-                    className="usa-checkbox__label"
-                    htmlFor="display-title"
-                  >
-                    Show title on dashboard
-                  </label>
-                </div>
-
-                <TextField
-                  id="summary"
-                  name="summary"
-                  label="Table summary - optional"
-                  hint={
-                    <>
-                      Give your table a summary to explain it in more depth.
-                      This field supports markdown.
-                      <Link target="_blank" to={"/admin/markdown"} external>
-                        View Markdown Syntax
-                      </Link>
-                    </>
-                  }
-                  register={register}
-                  onChange={handleSummaryChange}
-                  multiline
-                  rows={5}
-                />
-                <div className="usa-checkbox">
-                  <input
-                    className="usa-checkbox__input"
-                    id="summary-below"
-                    type="checkbox"
-                    name="summaryBelow"
-                    defaultChecked={false}
-                    onChange={handleSummaryBelowChange}
-                    ref={register()}
-                  />
-                  <label
-                    className="usa-checkbox__label"
-                    htmlFor="summary-below"
-                  >
-                    Show summary below table
-                  </label>
-                </div>
-              </div>
-
-              <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
-                <div hidden={!currentJson.length} className="margin-left-4">
-                  {fullPreviewButton}
-                  <h4>Preview</h4>
-                  {datasetLoading ? (
-                    <Spinner
-                      className="text-center margin-top-6"
-                      label="Loading"
-                    />
-                  ) : (
-                    <>
-                      {showAlert &&
-                      datasetType === DatasetType.StaticDataset &&
-                      csvJson.length ? (
-                        <div className="margin-left-1">
-                          <Alert
-                            type="info"
-                            message={
-                              <div className="grid-row margin-left-4">
-                                <div className="grid-col-11">
-                                  Does the table look correct?
-                                  <Link
-                                    to="/admin/formattingcsv"
-                                    target="_blank"
-                                    external
-                                  >
-                                    Learn how to format your CSV data.
-                                  </Link>
-                                </div>
-                                <div className="grid-col-1">
-                                  <div className="margin-left-4">
-                                    <Button
-                                      variant="unstyled"
-                                      className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
-                                      onClick={() => setShowAlert(false)}
-                                      type="button"
-                                      ariaLabel="Close"
-                                    >
-                                      <FontAwesomeIcon
-                                        icon={faTimes}
-                                        size="sm"
-                                      />
-                                    </Button>
-                                  </div>
-                                </div>
-                              </div>
-                            }
-                            slim
-                          />
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                      <TableWidget
-                        title={showTitle ? title : ""}
-                        summary={summary}
-                        summaryBelow={summaryBelow}
-                        headers={
-                          currentJson.length
-                            ? (Object.keys(currentJson[0]) as Array<string>)
-                            : []
-                        }
-                        data={currentJson}
-                      />
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-            <br />
-            <br />
-            <hr />
-            <Button variant="outline" type="button" onClick={backStep}>
-              Back
-            </Button>
-            <Button
-              onClick={advanceStep}
-              type="submit"
-              disabled={
-                !currentJson.length || !title || fileLoading || creatingWidget
-              }
-            >
-              Add Table
-            </Button>
-            <Button
-              variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
+          <div hidden={step !== 2}>
+            <Visualize
+              errors={errors}
+              register={register}
+              json={filteredJson}
+              csvJson={csvJson}
+              datasetLoading={datasetLoading}
+              datasetType={datasetType}
+              onCancel={onCancel}
+              backStep={backStep}
+              advanceStep={advanceStep}
+              fileLoading={fileLoading}
+              processingWidget={creatingWidget}
+              fullPreviewButton={fullPreviewButton}
+              fullPreview={fullPreview}
+              submitButtonLabel="Add Table"
+              sortByColumn={sortByColumn}
+              sortByDesc={sortByDesc}
+              setSortByColumn={setSortByColumn}
+              setSortByDesc={setSortByDesc}
+            />
           </div>
         </form>
       </div>

@@ -71,11 +71,14 @@ test("renders table for dynamic dataset", async () => {
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
   const parseSpy = jest.spyOn(papaparse, "parse");
-  const { getByRole, getByText, getByLabelText } = render(<AddChart />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByRole, getByText, getByLabelText, getAllByText } = render(
+    <AddChart />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
 
-  const continueButton = getByRole("button", { name: "Continue" });
+  let continueButton = getByRole("button", { name: "Continue" });
 
   const radioButton = getByLabelText("Static dataset");
 
@@ -91,6 +94,21 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
   });
 
   await act(async () => {
+    fireEvent.click(continueButton);
+  });
+
+  await waitFor(() => {
+    expect(
+      getByText(
+        "Please make sure that the system formats your data correctly." +
+          " Select columns to format as numbers, dates, or text. Also select" +
+          " columns to hide or show from the chart."
+      )
+    ).toBeInTheDocument();
+  });
+
+  await waitFor(() => {
+    continueButton = getAllByText("Continue")[1];
     fireEvent.click(continueButton);
   });
 

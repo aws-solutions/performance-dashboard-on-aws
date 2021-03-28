@@ -43,7 +43,7 @@ interface Props {
   showTitle: boolean;
   summaryBelow: boolean;
   significantDigitLabels: boolean;
-  horizontalScroll?: boolean;
+  horizontalScroll: boolean;
 }
 
 function VisualizeChart(props: Props) {
@@ -304,6 +304,7 @@ function VisualizeChart(props: Props) {
                   isPreview={true}
                   horizontalScroll={props.horizontalScroll}
                   setWidthPercent={setWidthPercent}
+                  significantDigitLabels={props.significantDigitLabels}
                 />
               )}
               {props.chartType === ChartType.ColumnChart && (
@@ -318,6 +319,7 @@ function VisualizeChart(props: Props) {
                   data={props.json}
                   summaryBelow={props.summaryBelow}
                   isPreview={true}
+                  significantDigitLabels={props.significantDigitLabels}
                 />
               )}
               {props.chartType === ChartType.BarChart && (
@@ -331,6 +333,7 @@ function VisualizeChart(props: Props) {
                   }
                   data={props.json}
                   summaryBelow={props.summaryBelow}
+                  significantDigitLabels={props.significantDigitLabels}
                 />
               )}
               {props.chartType === ChartType.PartWholeChart && (
@@ -344,6 +347,7 @@ function VisualizeChart(props: Props) {
                   }
                   data={props.json}
                   summaryBelow={props.summaryBelow}
+                  significantDigitLabels={props.significantDigitLabels}
                 />
               )}
             </>

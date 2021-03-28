@@ -6,6 +6,25 @@ const THOUSANDS_LABEL = "K";
 const MILLIONS_LABEL = "M";
 const BILLIONS_LABEL = "B";
 
+function format(
+  tick: any,
+  largestTick: number,
+  significantDigitLabels: boolean
+): string {
+  switch (typeof tick) {
+    case "string":
+      return formatString(tick);
+    case "number":
+      return formatNumber(tick, largestTick, significantDigitLabels);
+    default:
+      return tick;
+  }
+}
+
+function formatString(tick: string) {
+  return tick.toLocaleString();
+}
+
 function formatNumber(
   num: number,
   largestTick: number,
@@ -38,7 +57,7 @@ function formatNumber(
 }
 
 const TickFormatter = {
-  formatNumber,
+  format,
 };
 
 export default TickFormatter;

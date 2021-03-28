@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 // @ts-ignore
 import { CategoricalChartWrapper } from "recharts";
 import {
@@ -11,8 +11,9 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useColors } from "../hooks";
+import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
+import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 
 type Props = {
@@ -23,6 +24,7 @@ type Props = {
   summaryBelow: boolean;
   isPreview?: boolean;
   hideLegend?: boolean;
+  significantDigitLabels: boolean;
   colors?: {
     primary: string | undefined;
     secondary: string | undefined;
@@ -30,10 +32,15 @@ type Props = {
 };
 
 const ColumnChartWidget = (props: Props) => {
+  const chartRef = useRef(null);
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
-  const [yAxisMargin, setYAxisMargin] = useState(0);
   const [chartLoaded, setChartLoaded] = useState(false);
+  const { yAxisLargestValue, yAxisMargin } = useYAxisMetadata(
+    chartRef,
+    chartLoaded,
+    props.significantDigitLabels
+  );
 
   const colors = useColors(
     props.columns.length,
@@ -44,27 +51,6 @@ const ColumnChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
-
-  /**
-   * Calculate the YAxis margin needed. This is important after we started
-   * showing the ticks numbers as locale strings and commas are being
-   * added. Margin: Count the commas in the largestTick to locale string, and
-   * multiply by pixelsByCharacter.
-   */
-  const columnChartRef = useRef(null);
-  useEffect(() => {
-    if (columnChartRef && columnChartRef.current) {
-      const yAxisMap = (columnChartRef.current as CategoricalChartWrapper).state
-        .yAxisMap;
-      if (yAxisMap && yAxisMap[0]) {
-        const largestTick: number = Math.max(...yAxisMap[0].niceTicks);
-        const largestTickLocaleString: string = largestTick.toLocaleString();
-        const numberOfCommas: number =
-          largestTickLocaleString.match(/,/g)?.length || 0;
-        setYAxisMargin(numberOfCommas * pixelsByCharacter);
-      }
-    }
-  }, [columnChartRef, columnChartRef.current, chartLoaded]);
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -133,7 +119,7 @@ const ColumnChartWidget = (props: Props) => {
             data={props.data}
             margin={{ right: 0, left: yAxisMargin }}
             ref={(el: CategoricalChartWrapper) => {
-              columnChartRef.current = el;
+              chartRef.current = el;
               setChartLoaded(!!el);
             }}
           >
@@ -148,8 +134,12 @@ const ColumnChartWidget = (props: Props) => {
             />
             <YAxis
               type="number"
-              tickFormatter={(tick) => {
-                return tick.toLocaleString();
+              tickFormatter={(tick: any) => {
+                return TickFormatter.format(
+                  Number(tick),
+                  yAxisLargestValue,
+                  props.significantDigitLabels
+                );
               }}
             />
             <Tooltip

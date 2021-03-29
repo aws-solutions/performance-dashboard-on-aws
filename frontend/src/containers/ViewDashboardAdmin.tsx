@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 import { useDashboard, useDashboardVersions } from "../hooks";
 import { Dashboard, DashboardState, LocationState } from "../models";
 import BackendService from "../services/BackendService";
@@ -32,6 +33,8 @@ function ViewDashboardAdmin() {
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [showVersionNotes, setShowVersionNotes] = useState(false);
 
+  const { t } = useTranslation();
+
   const draftOrPublishPending = versions.find(
     (v) =>
       v.state === DashboardState.Draft ||
@@ -59,7 +62,9 @@ function ViewDashboardAdmin() {
       history.push(`/admin/dashboard/edit/${draft.id}`, {
         alert: {
           type: "success",
-          message: `A new draft version of "${draft.name}" dashboard has been created.`,
+          message: `${t("NewDraftDashboardCreated", {
+            name: `${draft.name}`,
+          })}`,
         },
         id: "top-alert",
       });
@@ -80,7 +85,7 @@ function ViewDashboardAdmin() {
     history.push("/admin/dashboards?tab=archived", {
       alert: {
         type: "success",
-        message: `${dashboard.name} was successfully archived.`,
+        message: `${dashboard.name} ${t("DashboardWasArchived")}`,
       },
     });
   };
@@ -96,9 +101,9 @@ function ViewDashboardAdmin() {
       history.push(`/admin/dashboards?tab=published`, {
         alert: {
           type: "success",
-          message: `${dashboard.name} dashboard was successfully re-published.`,
+          message: `${dashboard.name} ${t("DashboardWasRepublished")}`,
           to: `/${dashboardId}`,
-          linkLabel: "View the published dashboard",
+          linkLabel: `${t("ViewPublishedDashboard")}`,
         },
       });
     }
@@ -118,7 +123,12 @@ function ViewDashboardAdmin() {
   };
 
   if (!dashboard) {
-    return <Spinner className="text-center margin-top-9" label="Loading" />;
+    return (
+      <Spinner
+        className="text-center margin-top-9"
+        label={t("LoadingSpinnerLabel")}
+      />
+    );
   }
 
   return (
@@ -126,7 +136,7 @@ function ViewDashboardAdmin() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Dashboards",
+            label: `${t("Dashboards")}`,
             url: dashboardListUrl(dashboard),
           },
           {
@@ -138,43 +148,40 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenUpdateModal}
         closeModal={() => setIsOpenUpdateModal(false)}
-        title={`Update "${dashboard?.name}" dashboard`}
-        message={
-          "This will create a new draft of the dashboard that will allow you to edit the content," +
-          " then publish the new version to the published site."
-        }
-        buttonType="Create draft"
+        title={t("CreateDraftDasboardModalTitle", { name: dashboard?.name })}
+        message={t("CreateDraftDasboardModalMessage")}
+        buttonType={t("CreateDraftDasboardModalButton")}
         buttonAction={onUpdateDashboard}
       />
 
       <Modal
         isOpen={isOpenArchiveModal}
         closeModal={() => setIsOpenArchiveModal(false)}
-        title={`Archive "${dashboard?.name}" dashboard`}
-        message={`This will remove "${dashboard?.name}" dashboard from the published site. You can re-publish archived dashboards at any time.`}
-        buttonType="Archive"
+        title={t("ArchiveDashboardModalTitle", { name: dashboard?.name })}
+        message={t("ArchiveDashboardModalMessage", { name: dashboard?.name })}
+        buttonType={t("ArchiveDashboardModalButton")}
         buttonAction={onArchiveDashboard}
       />
 
       <Modal
         isOpen={isOpenRepublishModal}
         closeModal={() => setIsOpenRepublishModal(false)}
-        title={`Re-publish "${dashboard?.name}" dashboard`}
-        message="Are you sure you want to re-publish this dashboard?"
-        buttonType="Re-publish"
+        title={t("RepublishDashboardModalTitle", { name: dashboard?.name })}
+        message={t("RepublishDashboardModalMessage")}
+        buttonType={t("RepublishDashboardModalButton")}
         buttonAction={onRepublishDashboard}
       />
 
       <Modal
         isOpen={isOpenPublishModal}
         closeModal={() => setIsOpenPublishModal(false)}
-        title={`Prepare "${dashboard?.name}" dashboard for publishing`}
+        title={t("PreparePublishingModalTitle", { name: dashboard?.name })}
         message={`${
           dashboard?.widgets.length === 0
-            ? "This dashboard has no content items. "
+            ? `${t("PreparePublishingModalMessage.part1")}`
             : ""
-        }Are you sure you want to prepare this dashboard for publishing?`}
-        buttonType="Prepare for publishing"
+        }${t("PreparePublishingModalMessage.part2")}`}
+        buttonType={t("PreparePublishingModalButton")}
         buttonAction={onPublishDashboard}
       />
       <PrimaryActionBar stickyPosition={75}>
@@ -183,9 +190,8 @@ function ViewDashboardAdmin() {
             type="info"
             message={
               <div>
-                <FontAwesomeIcon icon={faCopy} className="margin-right-2" />A
-                draft has been created to update this dashboard. Only one draft
-                at a time is allowed.
+                <FontAwesomeIcon icon={faCopy} className="margin-right-2" />
+                {t("OnlyOneDraftDashboardAtATime")}
                 <div className="float-right">
                   <Link
                     to={`/admin/dashboard/${
@@ -196,9 +202,9 @@ function ViewDashboardAdmin() {
                   >
                     {`${
                       draftOrPublishPending.state === DashboardState.Draft
-                        ? "Edit"
-                        : "Publish"
-                    } draft`}
+                        ? `${t("EditOrPublishDraft.Edit")}`
+                        : `${t("EditOrPublishDraft.Publish")}`
+                    } ${t("EditOrPublishDraft.Draft")}`}
                   </Link>
                 </div>
               </div>
@@ -212,19 +218,13 @@ function ViewDashboardAdmin() {
           dashboard.state === DashboardState.PublishPending) && (
           <Alert
             type="info"
-            message="Below is a preview of what the published dashboard will look like.
-              If ready to proceed, you can publish the dashboard to make it
-              available on the published site."
+            message={t("DashboardPreviewPublishedMessage")}
             slim
           />
         )}
 
         {dashboard.state === DashboardState.Archived && (
-          <Alert
-            type="info"
-            slim
-            message="This dashboard is archived. It is not viewable on the published site unless it is re-published"
-          />
+          <Alert type="info" slim message={t("RepublishDashboardToView")} />
         )}
         <div className="grid-row margin-top-2">
           <div className="grid-col text-left flex-row flex-align-center display-flex">
@@ -240,7 +240,7 @@ function ViewDashboardAdmin() {
               <li className="usa-button-group__item">
                 <span className="text-underline text-middle">
                   <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
-                  Version {dashboard?.version}
+                  {t("ViewDashboardAlertVersion")} {dashboard?.version}
                 </span>
               </li>
               <li>
@@ -251,7 +251,11 @@ function ViewDashboardAdmin() {
                     className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                     onClick={() => setShowVersionNotes(!showVersionNotes)}
                   >
-                    {`${showVersionNotes ? "Hide" : "Show"} version notes`}
+                    {`${
+                      showVersionNotes
+                        ? `${t("ViewDashboardAlertVersionNotes.Hide")}`
+                        : `${t("ViewDashboardAlertVersionNotes.Show")}`
+                    } ${t("ViewDashboardAlertVersionNotes.VersionNotes")}`}
                   </Button>
                 )}
               </li>
@@ -265,14 +269,14 @@ function ViewDashboardAdmin() {
                   type="button"
                   onClick={() => setIsOpenArchiveModal(true)}
                 >
-                  Archive
+                  {t("ViewDashboardAlertButton.Archive")}
                 </Button>
                 <Button
                   variant="base"
                   onClick={() => setIsOpenUpdateModal(true)}
                   disabled={!!draftOrPublishPending}
                 >
-                  Update
+                  {t("ViewDashboardAlertButton.Update")}
                 </Button>
               </>
             )}
@@ -283,7 +287,7 @@ function ViewDashboardAdmin() {
                 type="button"
                 onClick={() => setIsOpenRepublishModal(true)}
               >
-                Re-publish
+                {t("ViewDashboardAlertButton.Re-publish")}
               </Button>
             )}
 
@@ -295,14 +299,14 @@ function ViewDashboardAdmin() {
                   type="button"
                   onClick={onClosePreview}
                 >
-                  Close Preview
+                  {t("ViewDashboardAlertButton.ClosePreview")}
                 </Button>
                 <Button
                   variant="base"
                   onClick={() => setIsOpenPublishModal(true)}
                   disabled={dashboard.state === DashboardState.PublishPending}
                 >
-                  Publish
+                  {t("ViewDashboardAlertButton.Publish")}
                 </Button>
               </>
             )}
@@ -311,7 +315,9 @@ function ViewDashboardAdmin() {
         {showVersionNotes && (
           <>
             <div className="margin-top-3 text-bold font-sans-sm">
-              {`Version ${dashboard?.version} notes from `}
+              {t("ViewDashboardAlertVersionNotesFrom", {
+                version: dashboard?.version,
+              })}
               <span className="text-underline">{dashboard?.publishedBy}</span>
             </div>
             <div className="margin-top-2 text-base">

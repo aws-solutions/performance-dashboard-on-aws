@@ -1,4 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
+// @ts-ignore
+import { CategoricalChartWrapper } from "recharts";
 import {
   XAxis,
   YAxis,
@@ -10,8 +12,9 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useColors } from "../hooks";
+import { useColors, useXAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
+import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 
 type Props = {
@@ -21,6 +24,7 @@ type Props = {
   data?: Array<any>;
   summaryBelow: boolean;
   hideLegend?: boolean;
+  significantDigitLabels: boolean;
   colors?: {
     primary: string | undefined;
     secondary: string | undefined;
@@ -28,8 +32,15 @@ type Props = {
 };
 
 const BarChartWidget = (props: Props) => {
+  const chartRef = useRef(null);
   const [barsHover, setBarsHover] = useState(null);
   const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
+  const [chartLoaded, setChartLoaded] = useState(false);
+  const { xAxisLargestValue } = useXAxisMetadata(
+    chartRef,
+    chartLoaded,
+    props.significantDigitLabels
+  );
 
   const colors = useColors(
     props.bars.length,
@@ -91,6 +102,10 @@ const BarChartWidget = (props: Props) => {
             data={props.data}
             layout="vertical"
             margin={{ right: 0, left: 0 }}
+            ref={(el: CategoricalChartWrapper) => {
+              chartRef.current = el;
+              setChartLoaded(!!el);
+            }}
           >
             <CartesianGrid horizontal={false} />
             <XAxis
@@ -99,9 +114,13 @@ const BarChartWidget = (props: Props) => {
                 (dataMin: number) => 0,
                 (dataMax: number) => dataMax + Math.floor(dataMax * 0.2),
               ]}
-              tickFormatter={(tick) => {
-                return tick.toLocaleString();
-              }}
+              tickFormatter={(tick) =>
+                TickFormatter.format(
+                  tick,
+                  xAxisLargestValue,
+                  props.significantDigitLabels
+                )
+              }
             />
             <YAxis
               dataKey={props.bars.length ? props.bars[0] : ""}
@@ -146,8 +165,12 @@ const BarChartWidget = (props: Props) => {
                       <LabelList
                         dataKey={bar}
                         position="right"
-                        formatter={(value: Number | String) =>
-                          value.toLocaleString()
+                        formatter={(tick: any) =>
+                          TickFormatter.format(
+                            tick,
+                            xAxisLargestValue,
+                            props.significantDigitLabels
+                          )
                         }
                       />
                     ) : (

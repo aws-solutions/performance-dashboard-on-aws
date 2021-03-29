@@ -44,6 +44,7 @@ interface Props {
   summaryBelow: boolean;
   significantDigitLabels: boolean;
   horizontalScroll: boolean;
+  columnsMetadata: Array<any>;
 }
 
 function VisualizeChart(props: Props) {
@@ -164,7 +165,9 @@ function VisualizeChart(props: Props) {
           <div
             className="usa-checkbox"
             hidden={
-              props.chartType !== ChartType.LineChart || widthPercent <= 100
+              (props.chartType !== ChartType.LineChart &&
+                props.chartType !== ChartType.ColumnChart) ||
+              widthPercent <= 100
             }
           >
             <input
@@ -305,6 +308,7 @@ function VisualizeChart(props: Props) {
                   horizontalScroll={props.horizontalScroll}
                   setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}
+                  columnsMetadata={props.columnsMetadata}
                 />
               )}
               {props.chartType === ChartType.ColumnChart && (
@@ -319,7 +323,10 @@ function VisualizeChart(props: Props) {
                   data={props.json}
                   summaryBelow={props.summaryBelow}
                   isPreview={true}
+                  horizontalScroll={props.horizontalScroll}
+                  setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}
+                  columnsMetadata={props.columnsMetadata}
                 />
               )}
               {props.chartType === ChartType.BarChart && (
@@ -334,6 +341,7 @@ function VisualizeChart(props: Props) {
                   data={props.json}
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
+                  columnsMetadata={props.columnsMetadata}
                 />
               )}
               {props.chartType === ChartType.PartWholeChart && (

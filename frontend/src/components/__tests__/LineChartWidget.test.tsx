@@ -11,6 +11,8 @@ test("renders the chart title", async () => {
       lines={["test"]}
       data={[{ test: 1 }]}
       summaryBelow={false}
+      columnsMetadata={[]}
+      significantDigitLabels={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -25,6 +27,8 @@ test("renders chart summary above the chart", async () => {
       lines={["test"]}
       data={[{ test: 1 }]}
       summaryBelow={false}
+      columnsMetadata={[]}
+      significantDigitLabels={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -42,6 +46,8 @@ test("renders chart summary below the chart", async () => {
       lines={["test"]}
       data={[{ test: 1 }]}
       summaryBelow={true}
+      columnsMetadata={[]}
+      significantDigitLabels={false}
     />,
     { wrapper: MemoryRouter }
   );

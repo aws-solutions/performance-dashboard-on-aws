@@ -5,9 +5,11 @@ import { parse, ParseResult } from "papaparse";
 import {
   ChartType,
   ColumnDataType,
+  CurrencyDataType,
   Dataset,
   DatasetType,
   LocationState,
+  NumberDataType,
 } from "../models";
 import { useWidget, useDashboard, useDatasets, useFullPreview } from "../hooks";
 
@@ -95,6 +97,12 @@ function EditChart() {
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
+  const [numberTypes, setNumberTypes] = useState<Map<string, NumberDataType>>(
+    new Map<string, NumberDataType>()
+  );
+  const [currencyTypes, setCurrencyTypes] = useState<
+    Map<string, CurrencyDataType>
+  >(new Map<string, CurrencyDataType>());
 
   const title = watch("title");
   const showTitle = watch("showTitle");
@@ -115,8 +123,13 @@ function EditChart() {
       currentJson,
       hiddenColumns
     );
+    DatasetParsingService.sortFilteredJson(
+      newFilteredJson,
+      sortByColumn,
+      sortByDesc
+    );
     setFilteredJson(newFilteredJson);
-  }, [currentJson, hiddenColumns]);
+  }, [currentJson, hiddenColumns, sortByColumn, sortByDesc]);
 
   useEffect(() => {
     if (
@@ -197,10 +210,14 @@ function EditChart() {
         const {
           hiddenColumns,
           dataTypes,
+          numberTypes,
+          currencyTypes,
         } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
 
         setHiddenColumns(hiddenColumns);
         setDataTypes(dataTypes);
+        setNumberTypes(numberTypes);
+        setCurrencyTypes(currencyTypes);
         setSortByColumn(widget.content.sortByColumn);
         setSortByDesc(widget.content.sortByDesc || false);
       }
@@ -298,7 +315,8 @@ function EditChart() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           chartType: values.chartType,
-          ...(values.chartType === ChartType.LineChart && {
+          ...((values.chartType === ChartType.LineChart ||
+            values.chartType === ChartType.ColumnChart) && {
             horizontalScroll: values.horizontalScroll,
           }),
           datasetType: displayedDatasetType,
@@ -322,7 +340,9 @@ function EditChart() {
           significantDigitLabels: values.significantDigitLabels,
           columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
             hiddenColumns,
-            dataTypes
+            dataTypes,
+            numberTypes,
+            currencyTypes
           ),
         },
         widget.updatedAt
@@ -515,6 +535,10 @@ function EditChart() {
                 onCancel={onCancel}
                 dataTypes={dataTypes}
                 setDataTypes={setDataTypes}
+                numberTypes={numberTypes}
+                setNumberTypes={setNumberTypes}
+                currencyTypes={currencyTypes}
+                setCurrencyTypes={setCurrencyTypes}
                 sortByColumn={sortByColumn}
                 sortByDesc={sortByDesc}
                 setSortByColumn={setSortByColumn}
@@ -555,6 +579,12 @@ function EditChart() {
                 setSortByDesc={setSortByDesc}
                 horizontalScroll={horizontalScroll}
                 significantDigitLabels={significantDigitLabels}
+                columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                  hiddenColumns,
+                  dataTypes,
+                  numberTypes,
+                  currencyTypes
+                )}
               />
             </div>
           </form>

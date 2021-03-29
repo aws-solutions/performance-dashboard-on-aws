@@ -1,7 +1,14 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { ColumnDataType, Dataset, DatasetType, LocationState } from "../models";
+import {
+  ColumnDataType,
+  CurrencyDataType,
+  Dataset,
+  DatasetType,
+  LocationState,
+  NumberDataType,
+} from "../models";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
@@ -87,6 +94,12 @@ function EditTable() {
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
+  const [numberTypes, setNumberTypes] = useState<Map<string, NumberDataType>>(
+    new Map<string, NumberDataType>()
+  );
+  const [currencyTypes, setCurrencyTypes] = useState<
+    Map<string, CurrencyDataType>
+  >(new Map<string, CurrencyDataType>());
 
   const title = watch("title");
   const showTitle = watch("showTitle");
@@ -186,10 +199,14 @@ function EditTable() {
         const {
           hiddenColumns,
           dataTypes,
+          numberTypes,
+          currencyTypes,
         } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
 
         setHiddenColumns(hiddenColumns);
         setDataTypes(dataTypes);
+        setNumberTypes(numberTypes);
+        setCurrencyTypes(currencyTypes);
         setSortByColumn(widget.content.sortByColumn);
         setSortByDesc(widget.content.sortByDesc || false);
       }
@@ -309,7 +326,9 @@ function EditTable() {
           sortByDesc,
           columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
             hiddenColumns,
-            dataTypes
+            dataTypes,
+            numberTypes,
+            currencyTypes
           ),
         },
         widget.updatedAt
@@ -504,6 +523,10 @@ function EditTable() {
                   onCancel={onCancel}
                   dataTypes={dataTypes}
                   setDataTypes={setDataTypes}
+                  numberTypes={numberTypes}
+                  setNumberTypes={setNumberTypes}
+                  currencyTypes={currencyTypes}
+                  setCurrencyTypes={setCurrencyTypes}
                   sortByColumn={sortByColumn}
                   sortByDesc={sortByDesc}
                   setSortByColumn={setSortByColumn}
@@ -544,7 +567,9 @@ function EditTable() {
                   setSortByDesc={setSortByDesc}
                   columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                     hiddenColumns,
-                    dataTypes
+                    dataTypes,
+                    numberTypes,
+                    currencyTypes
                   )}
                 />
               </div>

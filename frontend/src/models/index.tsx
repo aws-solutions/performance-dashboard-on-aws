@@ -293,8 +293,22 @@ export enum ColumnDataType {
   Date = "Date",
 }
 
+export enum NumberDataType {
+  Percentage = "Percentage",
+  Currency = "Currency",
+  "With thousands separators" = "With thousands separators",
+}
+
+export enum CurrencyDataType {
+  "Dollar $" = "Dollar $",
+  "Euro €" = "Euro €",
+  "Pound £" = "Pound £",
+}
+
 export interface ColumnMetadata {
   columnName: string;
   dataType?: ColumnDataType;
+  numberType?: NumberDataType;
+  currencyType?: CurrencyDataType;
   hidden: boolean;
 }

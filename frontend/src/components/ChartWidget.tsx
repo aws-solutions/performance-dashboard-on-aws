@@ -5,6 +5,7 @@ import LineChartWidget from "./LineChartWidget";
 import ColumnChartWidget from "./ColumnChartWidget";
 import BarChartWidget from "./BarChartWidget";
 import PartWholeChartWidget from "./PartWholeChartWidget";
+import DatasetParsingService from "../services/DatasetParsingService";
 
 interface Props {
   widget: ChartWidget;
@@ -23,6 +24,7 @@ function ChartWidgetComponent(props: Props) {
         : undefined;
       return !metadata || !metadata.hidden;
     });
+
     const newFilteredJson = new Array<any>();
     for (const row of json) {
       const filteredRow = headers.reduce((obj: any, key: any) => {
@@ -33,6 +35,12 @@ function ChartWidgetComponent(props: Props) {
         newFilteredJson.push(filteredRow);
       }
     }
+
+    DatasetParsingService.sortFilteredJson(
+      newFilteredJson,
+      props.widget.content.sortByColumn,
+      props.widget.content.sortByDesc
+    );
     setFilteredJson(newFilteredJson);
   }, [json, props.widget]);
 
@@ -52,6 +60,7 @@ function ChartWidgetComponent(props: Props) {
           data={filteredJson}
           horizontalScroll={content.horizontalScroll}
           significantDigitLabels={content.significantDigitLabels}
+          columnsMetadata={content.columnsMetadata}
         />
       );
 
@@ -64,6 +73,7 @@ function ChartWidgetComponent(props: Props) {
           columns={keys}
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
+          columnsMetadata={content.columnsMetadata}
         />
       );
 
@@ -76,6 +86,7 @@ function ChartWidgetComponent(props: Props) {
           bars={keys}
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
+          columnsMetadata={content.columnsMetadata}
         />
       );
 

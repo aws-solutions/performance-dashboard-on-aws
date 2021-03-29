@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
-import { ColumnDataType } from "../models";
+import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Table from "./Table";
@@ -14,6 +15,10 @@ interface Props {
   data: Array<any>;
   dataTypes: Map<string, ColumnDataType>;
   setDataTypes: Function;
+  numberTypes: Map<string, NumberDataType>;
+  setNumberTypes: Function;
+  currencyTypes: Map<string, CurrencyDataType>;
+  setCurrencyTypes: Function;
   sortByColumn?: string;
   sortByDesc?: boolean;
   setSortByColumn?: Function;
@@ -23,6 +28,9 @@ interface Props {
 
 function CheckData(props: Props) {
   const [dataType, setDataType] = useState<string>("");
+  const [numberType, setNumberType] = useState<string>("");
+  const [currencyType, setCurrencyType] = useState<string>("");
+
   const handleSelectedHeadersChange = (
     event: React.FormEvent<HTMLInputElement>
   ) => {
@@ -37,9 +45,29 @@ function CheckData(props: Props) {
       const selectedHeader = Array.from(newSelectedHeaders)[0];
       if (props.dataTypes.has(selectedHeader)) {
         setDataType(props.dataTypes.get(selectedHeader) || "");
+        if (
+          props.dataTypes.get(selectedHeader) === ColumnDataType.Number &&
+          props.numberTypes.has(selectedHeader)
+        ) {
+          setNumberType(props.numberTypes.get(selectedHeader) || "");
+          if (
+            props.numberTypes.get(selectedHeader) === NumberDataType.Currency &&
+            props.currencyTypes.has(selectedHeader)
+          ) {
+            setCurrencyType(props.currencyTypes.get(selectedHeader) || "");
+          } else {
+            setCurrencyType("");
+          }
+        } else {
+          setNumberType("");
+        }
       } else {
         setDataType("");
       }
+    } else {
+      setDataType("");
+      setNumberType("");
+      setCurrencyType("");
     }
     props.setSelectedHeaders(newSelectedHeaders);
   };
@@ -65,6 +93,8 @@ function CheckData(props: Props) {
     const target = event.target as HTMLInputElement;
     const newDataTypes = new Map(props.dataTypes);
     setDataType(target.value);
+    setNumberType("");
+    setCurrencyType("");
     if (target.value === ColumnDataType.Text) {
       for (const selectedHeader of Array.from(props.selectedHeaders)) {
         newDataTypes.set(selectedHeader, ColumnDataType.Text);
@@ -83,6 +113,60 @@ function CheckData(props: Props) {
       }
     }
     props.setDataTypes(newDataTypes);
+  };
+
+  const handleNumberTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const newNumberTypes = new Map(props.numberTypes);
+    setNumberType(target.value);
+    setCurrencyType("");
+    if (target.value === NumberDataType.Percentage) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newNumberTypes.set(selectedHeader, NumberDataType.Percentage);
+      }
+    } else if (target.value === NumberDataType.Currency) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newNumberTypes.set(selectedHeader, NumberDataType.Currency);
+      }
+    } else if (target.value === NumberDataType["With thousands separators"]) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newNumberTypes.set(
+          selectedHeader,
+          NumberDataType["With thousands separators"]
+        );
+      }
+    } else {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newNumberTypes.delete(selectedHeader);
+      }
+    }
+    props.setNumberTypes(newNumberTypes);
+  };
+
+  const handleCurrencyTypeChange = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    const target = event.target as HTMLInputElement;
+    const newCurrencyTypes = new Map(props.currencyTypes);
+    setCurrencyType(target.value);
+    if (target.value === CurrencyDataType["Dollar $"]) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newCurrencyTypes.set(selectedHeader, CurrencyDataType["Dollar $"]);
+      }
+    } else if (target.value === CurrencyDataType["Euro €"]) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newCurrencyTypes.set(selectedHeader, CurrencyDataType["Euro €"]);
+      }
+    } else if (target.value === CurrencyDataType["Pound £"]) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newCurrencyTypes.set(selectedHeader, CurrencyDataType["Pound £"]);
+      }
+    } else {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newCurrencyTypes.delete(selectedHeader);
+      }
+    }
+    props.setCurrencyTypes(newCurrencyTypes);
   };
 
   const checkDataTableRows = useMemo(() => props.data || [], [props.data]);
@@ -121,7 +205,11 @@ function CheckData(props: Props) {
                 if (props.dataTypes.has(header)) {
                   if (props.dataTypes.get(header) === ColumnDataType.Number) {
                     return typeof row[header] === "number" ? (
-                      row[header].toLocaleString()
+                      ColumnsMetadataService.formatNumber(
+                        row[header],
+                        props.numberTypes.get(header),
+                        props.currencyTypes.get(header)
+                      )
                     ) : (
                       <div className="text-secondary-vivid">{`! ${
                         row[header] ? row[header].toLocaleString() : "None"
@@ -148,7 +236,13 @@ function CheckData(props: Props) {
           ],
         };
       }),
-    [props.data, props.selectedHeaders, props.dataTypes]
+    [
+      props.data,
+      props.selectedHeaders,
+      props.dataTypes,
+      props.numberTypes,
+      props.currencyTypes,
+    ]
   );
 
   return (
@@ -208,6 +302,61 @@ function CheckData(props: Props) {
                 />
               </div>
             )}
+            {props.selectedHeaders.size === 1 &&
+              dataType === ColumnDataType.Number && (
+                <div className="margin-top-3 margin-right-3">
+                  <Dropdown
+                    id="numberType"
+                    name="numberType"
+                    label="Number format"
+                    options={[
+                      { value: "", label: "Select an option" },
+                      {
+                        value: NumberDataType.Percentage,
+                        label: NumberDataType.Percentage,
+                      },
+                      {
+                        value: NumberDataType.Currency,
+                        label: NumberDataType.Currency,
+                      },
+                      {
+                        value: NumberDataType["With thousands separators"],
+                        label: NumberDataType["With thousands separators"],
+                      },
+                    ]}
+                    value={numberType}
+                    onChange={handleNumberTypeChange}
+                  />
+                </div>
+              )}
+            {props.selectedHeaders.size === 1 &&
+              dataType === ColumnDataType.Number &&
+              numberType === NumberDataType.Currency && (
+                <div className="margin-top-3 margin-right-3">
+                  <Dropdown
+                    id="currencyType"
+                    name="currencyType"
+                    label="Currency"
+                    options={[
+                      { value: "", label: "Select an option" },
+                      {
+                        value: CurrencyDataType["Dollar $"],
+                        label: CurrencyDataType["Dollar $"],
+                      },
+                      {
+                        value: CurrencyDataType["Euro €"],
+                        label: CurrencyDataType["Euro €"],
+                      },
+                      {
+                        value: CurrencyDataType["Pound £"],
+                        label: CurrencyDataType["Pound £"],
+                      },
+                    ]}
+                    value={currencyType}
+                    onChange={handleCurrencyTypeChange}
+                  />
+                </div>
+              )}
           </div>
         ) : (
           ""

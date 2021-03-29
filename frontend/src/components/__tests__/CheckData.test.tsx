@@ -29,9 +29,12 @@ test("renders the CheckData component", async () => {
       setHiddenColumns={() => {}}
       selectedHeaders={new Set<string>()}
       hiddenColumns={new Set<string>()}
-      register={() => {}}
       dataTypes={new Map()}
       setDataTypes={() => {}}
+      currencyTypes={new Map()}
+      numberTypes={new Map()}
+      setCurrencyTypes={() => {}}
+      setNumberTypes={() => {}}
     />
   );
   expect(wrapper.container).toMatchSnapshot();

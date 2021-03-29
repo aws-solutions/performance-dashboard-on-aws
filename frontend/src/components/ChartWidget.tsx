@@ -51,6 +51,7 @@ function ChartWidgetComponent(props: Props) {
           lines={keys}
           data={filteredJson}
           horizontalScroll={content.horizontalScroll}
+          significantDigitLabels={content.significantDigitLabels}
         />
       );
 
@@ -62,6 +63,7 @@ function ChartWidgetComponent(props: Props) {
           summaryBelow={content.summaryBelow}
           columns={keys}
           data={filteredJson}
+          significantDigitLabels={content.significantDigitLabels}
         />
       );
 
@@ -73,6 +75,7 @@ function ChartWidgetComponent(props: Props) {
           summaryBelow={content.summaryBelow}
           bars={keys}
           data={filteredJson}
+          significantDigitLabels={content.significantDigitLabels}
         />
       );
 
@@ -84,6 +87,7 @@ function ChartWidgetComponent(props: Props) {
           summaryBelow={content.summaryBelow}
           parts={keys}
           data={filteredJson}
+          significantDigitLabels={content.significantDigitLabels}
         />
       );
 

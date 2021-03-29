@@ -522,3 +522,19 @@ export function useFullPreview() {
     fullPreviewButton: <button type="button">Expand preview</button>,
   };
 }
+
+export function useYAxisMetadata() {
+  const [yAxisLargestValue] = useState(100);
+  const [yAxisMargin] = useState(0);
+  return {
+    yAxisLargestValue,
+    yAxisMargin,
+  };
+}
+
+export function useXAxisMetadata() {
+  const [xAxisLargestValue] = useState(0);
+  return {
+    xAxisLargestValue,
+  };
+}

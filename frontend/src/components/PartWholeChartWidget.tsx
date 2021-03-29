@@ -9,6 +9,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { useColors } from "../hooks";
+import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 
 type Props = {
@@ -17,6 +18,7 @@ type Props = {
   parts: Array<string>;
   data?: Array<object>;
   summaryBelow: boolean;
+  significantDigitLabels: boolean;
   colors?: {
     primary: string | undefined;
     secondary: string | undefined;
@@ -26,6 +28,7 @@ type Props = {
 const PartWholeChartWidget = (props: Props) => {
   const [partsHover, setPartsHover] = useState(null);
   const [hiddenParts, setHiddenParts] = useState<Array<string>>([]);
+  const [xAxisLargestValue, setXAxisLargestValue] = useState(0);
 
   const partWholeData = useRef<Array<object>>([]);
   const partWholeParts = useRef<Array<string>>([]);
@@ -38,6 +41,7 @@ const PartWholeChartWidget = (props: Props) => {
       total.current = 0;
       partWholeParts.current = [];
       partWholeData.current = [];
+      let maxTick = -Infinity;
       for (let i = 0; i < data.length; i++) {
         const key = data[i][parts[0] as keyof object];
         const value = data[i][parts[1] as keyof object];
@@ -51,8 +55,10 @@ const PartWholeChartWidget = (props: Props) => {
           continue;
         }
         total.current += isNaN(value) ? 0 : value;
+        maxTick = Math.max(maxTick, value);
       }
       partWholeData.current.push(bar);
+      setXAxisLargestValue(maxTick);
     }
   }, [data, parts, partWholeData, partWholeParts, hiddenParts]);
 
@@ -92,7 +98,11 @@ const PartWholeChartWidget = (props: Props) => {
         </span>
         <div className="margin-left-4 margin-bottom-1 text-bold">
           {amount && amount !== "null" ? (
-            Number(amount).toLocaleString()
+            TickFormatter.format(
+              Number(amount),
+              xAxisLargestValue,
+              props.significantDigitLabels
+            )
           ) : (
             <br />
           )}
@@ -133,9 +143,13 @@ const PartWholeChartWidget = (props: Props) => {
               interval="preserveStartEnd"
               type="number"
               padding={{ left: 2, right: 2 }}
-              tickFormatter={(tick) => {
-                return tick.toLocaleString();
-              }}
+              tickFormatter={(tick) =>
+                TickFormatter.format(
+                  tick,
+                  xAxisLargestValue,
+                  props.significantDigitLabels
+                )
+              }
             />
             <YAxis
               orientation="left"

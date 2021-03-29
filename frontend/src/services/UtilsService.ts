@@ -62,6 +62,22 @@ function getLargestHeader(headers: Array<string>, data?: Array<any>) {
 }
 
 /**
+ * Calculate the YAxis margin needed. This is important after we started
+ * showing the ticks numbers as locale strings and commas or periods are being
+ * added. Margin: Count the commas or periods in the largestTick to locale string,
+ * and multiply by pixelsByCharacter.
+ */
+function calculateYAxisMargin(
+  largestTick: number,
+  significantDigitLabels: boolean
+): number {
+  const pixelsByCharacter = significantDigitLabels ? 2 : 8;
+  const tickLocaleString: string = largestTick.toLocaleString();
+  const numberOfCommas: number = tickLocaleString.match(/,|\./g)?.length || 0;
+  return numberOfCommas * pixelsByCharacter;
+}
+
+/**
  * Given a dashboard, it returns the URL path of the screen
  * where the user should be redirected: /dashboard/edit/{id},
  * /dashboard/{id}, etc. This depends on the dashboard state.
@@ -89,6 +105,7 @@ const UtilsService = {
   timeout,
   getLargestHeader,
   getDashboardUrlPath,
+  calculateYAxisMargin,
 };
 
 export default UtilsService;

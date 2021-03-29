@@ -122,6 +122,7 @@ export interface ChartWidget extends Widget {
     sortByColumn?: string;
     sortByDesc?: boolean;
     horizontalScroll?: boolean;
+    significantDigitLabels: boolean;
   };
 }
 
@@ -139,6 +140,7 @@ export interface TableWidget extends Widget {
     columnsMetadata: ColumnMetadata[];
     sortByColumn?: string;
     sortByDesc?: boolean;
+    significantDigitLabels: boolean;
   };
 }
 
@@ -161,6 +163,7 @@ export interface MetricsWidget extends Widget {
     datasetId: string;
     oneMetricPerRow: boolean;
     datasetType?: DatasetType;
+    significantDigitLabels: boolean;
     s3Key: {
       raw: string;
       json: string;

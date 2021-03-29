@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from "react";
-import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
-import ColumnsMetadataService from "../services/ColumnsMetadataService";
+import { ColumnMetadata } from "../models";
+import { useTableMetadata } from "../hooks";
 import MarkdownRender from "./MarkdownRender";
+import TickFormatter from "../services/TickFormatter";
 import Table from "./Table";
 
 type Props = {
@@ -9,14 +10,24 @@ type Props = {
   summary: string;
   data?: Array<object>;
   summaryBelow: boolean;
-  columnsMetadata: Array<any>;
+  columnsMetadata: ColumnMetadata[];
   sortByColumn?: string;
   sortByDesc?: boolean;
+  significantDigitLabels: boolean;
 };
 
-const TableWidget = (props: Props) => {
-  const { data, summaryBelow, summary, title, columnsMetadata } = props;
-  const [filteredJson, setFilteredJson] = useState<Array<any>>([]);
+const TableWidget = ({
+  data,
+  summaryBelow,
+  summary,
+  title,
+  columnsMetadata,
+  sortByDesc,
+  sortByColumn,
+  significantDigitLabels,
+}: Props) => {
+  const { largestTickByColumn } = useTableMetadata(data);
+  const [filteredJson, setFilteredJson] = useState<any[]>([]);
 
   useMemo(() => {
     let headers =
@@ -52,28 +63,23 @@ const TableWidget = (props: Props) => {
           id: header,
           accessor: header,
           minWidth: 150,
-          Cell: (properties: any) => {
-            const row = properties.row.original;
+          Cell: (props: any) => {
+            const row = props.row.original;
+
+            // Check if there is metadata for this column
+            const columnMetadata = columnsMetadata.find(
+              (cm) => cm.columnName === header
+            );
+
             return row[header] !== null &&
               row[header] !== undefined &&
               row[header] !== ""
-              ? columnsMetadata &&
-                columnsMetadata.some((c) => c.columnName === header) &&
-                columnsMetadata.find((c) => c.columnName === header)
-                  .dataType === ColumnDataType.Number &&
-                typeof row[header] === "number"
-                ? ColumnsMetadataService.formatNumber(
-                    row[header],
-                    columnsMetadata.some((c) => c.columnName === header)
-                      ? columnsMetadata.find((c) => c.columnName === header)
-                          .numberType
-                      : undefined,
-                    columnsMetadata.some((c) => c.columnName === header)
-                      ? columnsMetadata.find((c) => c.columnName === header)
-                          .currencyType
-                      : undefined
-                  )
-                : row[header].toLocaleString()
+              ? TickFormatter.format(
+                  row[header],
+                  largestTickByColumn[header],
+                  significantDigitLabels,
+                  columnMetadata
+                )
               : "-";
           },
         };
@@ -97,14 +103,12 @@ const TableWidget = (props: Props) => {
       <Table
         selection="none"
         rows={rows}
-        initialSortAscending={
-          props.sortByDesc !== undefined ? !props.sortByDesc : true
-        }
-        initialSortByField={props.sortByColumn}
+        initialSortAscending={sortByDesc !== undefined ? !sortByDesc : true}
+        initialSortByField={sortByColumn}
         disablePagination={true}
         columns={columns}
-        sortByColumn={props.sortByColumn}
-        sortByDesc={props.sortByDesc}
+        sortByColumn={sortByColumn}
+        sortByDesc={sortByDesc}
       />
       {summaryBelow && (
         <MarkdownRender

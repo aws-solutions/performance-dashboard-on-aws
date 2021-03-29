@@ -213,7 +213,7 @@ exports[`renders the VisualizeChart component 1`] = `
         <div
           class="usa-hint"
         >
-          Format your line chart
+          Format your chart
         </div>
         <div
           class="usa-checkbox"
@@ -591,7 +591,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         <div
           class="usa-hint"
         >
-          Format your line chart
+          Format your chart
         </div>
         <div
           class="usa-checkbox"

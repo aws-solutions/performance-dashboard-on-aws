@@ -1,3 +1,5 @@
+import { ColumnMetadata, ColumnDataType } from "../models";
+
 const ONE_THOUSAND = 1000;
 const ONE_MILLION = 1000000;
 const ONE_BILLION = 1000000000;
@@ -9,9 +11,15 @@ const BILLIONS_LABEL = "B";
 function format(
   tick: any,
   largestTick: number,
-  significantDigitLabels: boolean
+  significantDigitLabels: boolean,
+  columnMetadata?: ColumnMetadata
 ): string {
-  switch (typeof tick) {
+  const dataType =
+    columnMetadata && columnMetadata.dataType
+      ? getDataTypeFromMetadata(columnMetadata)
+      : typeof tick;
+
+  switch (dataType) {
     case "string":
       return formatString(tick);
     case "number":
@@ -21,8 +29,22 @@ function format(
   }
 }
 
+function getDataTypeFromMetadata(
+  columnMetadata: ColumnMetadata
+): "string" | "number" {
+  if (columnMetadata.dataType === ColumnDataType.Number) {
+    return "number";
+  }
+
+  if (columnMetadata.dataType === ColumnDataType.Text) {
+    return "string";
+  }
+
+  return "string";
+}
+
 function formatString(tick: string) {
-  return tick.toLocaleString();
+  return String(tick).toLocaleString();
 }
 
 function formatNumber(

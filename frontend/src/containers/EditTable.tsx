@@ -33,6 +33,7 @@ interface FormValues {
   summaryBelow: boolean;
   datasetType: string;
   sortData: string;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -105,6 +106,7 @@ function EditTable() {
   const showTitle = watch("showTitle");
   const summary = watch("summary");
   const summaryBelow = watch("summaryBelow");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const [displayedJson, setDisplayedJson] = useState<Array<any>>([]);
@@ -132,6 +134,7 @@ function EditTable() {
       const showTitle = widget.showTitle;
       const summary = widget.content.summary;
       const summaryBelow = widget.content.summaryBelow;
+      const significantDigitLabels = widget.content.significantDigitLabels;
 
       reset({
         title,
@@ -143,6 +146,7 @@ function EditTable() {
           : datasetType,
         summary,
         summaryBelow,
+        significantDigitLabels: significantDigitLabels,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
             ? widget.content.s3Key.json
@@ -307,6 +311,7 @@ function EditTable() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           datasetType: displayedDatasetType,
+          significantDigitLabels: values.significantDigitLabels,
           datasetId: newDataset
             ? newDataset.id
             : displayedDatasetType === DatasetType.DynamicDataset
@@ -565,6 +570,7 @@ function EditTable() {
                   sortByDesc={sortByDesc}
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
+                  significantDigitLabels={significantDigitLabels}
                   columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                     hiddenColumns,
                     dataTypes,

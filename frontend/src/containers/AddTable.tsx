@@ -28,6 +28,7 @@ interface FormValues {
   summaryBelow: boolean;
   datasetType: string;
   sortData: string;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -41,7 +42,13 @@ function AddTable() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
+  const {
+    register,
+    errors,
+    handleSubmit,
+    reset,
+    watch,
+  } = useForm<FormValues>();
   const [currentJson, setCurrentJson] = useState<Array<any>>(
     state && state.json ? state.json : []
   );
@@ -89,6 +96,12 @@ function AddTable() {
     Map<string, CurrencyDataType>
   >(new Map<string, CurrencyDataType>());
 
+  const title = watch("title");
+  const showTitle = watch("showTitle");
+  const summary = watch("summary");
+  const summaryBelow = watch("summaryBelow");
+  const significantDigitLabels = watch("significantDigitLabels");
+
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
       currentJson,
@@ -135,6 +148,7 @@ function AddTable() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           datasetType: datasetType,
+          significantDigitLabels: values.significantDigitLabels,
           datasetId: newDataset
             ? newDataset.id
             : datasetType === DatasetType.DynamicDataset
@@ -390,6 +404,11 @@ function AddTable() {
               sortByDesc={sortByDesc}
               setSortByColumn={setSortByColumn}
               setSortByDesc={setSortByDesc}
+              title={title}
+              showTitle={showTitle}
+              significantDigitLabels={significantDigitLabels}
+              summary={summary}
+              summaryBelow={summaryBelow}
               columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                 hiddenColumns,
                 dataTypes,

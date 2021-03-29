@@ -18,6 +18,7 @@ import { useLogo } from "./logo-hooks";
 import { useDatasets } from "./dataset-hooks";
 import { useFullPreview } from "./dashboard-preview-hooks";
 import { useYAxisMetadata, useXAxisMetadata } from "./chart-hooks";
+import { useTableMetadata } from "./table-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -55,4 +56,5 @@ export {
   useFullPreview,
   useYAxisMetadata,
   useXAxisMetadata,
+  useTableMetadata,
 };

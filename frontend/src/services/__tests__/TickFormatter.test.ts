@@ -1,3 +1,4 @@
+import { ColumnDataType } from "../../models";
 import TickFormatter from "../TickFormatter";
 
 describe("format handles ticks of type string", () => {
@@ -49,5 +50,29 @@ describe("formatNumber with significantDigitLabels disabled", () => {
   it("returns number in locale string", () => {
     const largestTick = 25000;
     expect(TickFormatter.format(25000, largestTick, false)).toEqual("25,000");
+  });
+});
+
+describe("format when columnMetadata is provided", () => {
+  it("returns a string when dataType is Text", () => {
+    const largestTick = 1000;
+    expect(
+      TickFormatter.format(2018, largestTick, true, {
+        columnName: "Year",
+        hidden: false,
+        dataType: ColumnDataType.Text,
+      })
+    ).toEqual("2018");
+  });
+
+  it("returns a number when dataType is Number", () => {
+    const largestTick = 1000;
+    expect(
+      TickFormatter.format(2018, largestTick, true, {
+        columnName: "Year",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+      })
+    ).toEqual("2.018K");
   });
 });

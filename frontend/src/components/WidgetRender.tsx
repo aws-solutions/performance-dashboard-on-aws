@@ -64,6 +64,7 @@ function WidgetWithDataset({ widget }: Props) {
           columnsMetadata={tableWidget.content.columnsMetadata}
           sortByColumn={tableWidget.content.sortByColumn}
           sortByDesc={tableWidget.content.sortByDesc}
+          significantDigitLabels={tableWidget.content.significantDigitLabels}
         />
       );
     case WidgetType.Metrics:

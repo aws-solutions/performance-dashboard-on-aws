@@ -538,3 +538,10 @@ export function useXAxisMetadata() {
     xAxisLargestValue,
   };
 }
+
+export function useTableMetadata() {
+  const [largestTickByColumn] = useState({});
+  return {
+    largestTickByColumn,
+  };
+}

@@ -213,7 +213,14 @@ function AddContent() {
           </fieldset>
           <br />
           <hr />
-          <Button variant="base" disabled={!widgetType} type="submit">
+          <Button
+            variant="base"
+            disabled={!widgetType}
+            type="submit"
+            disabledToolTip={
+              !widgetType ? "Choose a content item to continue" : ""
+            }
+          >
             Continue
           </Button>
           <Button

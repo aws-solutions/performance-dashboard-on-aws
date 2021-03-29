@@ -29,6 +29,7 @@ import Link from "../components/Link";
 import Table from "../components/Table";
 import UtilsService from "../services/UtilsService";
 import Spinner from "../components/Spinner";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -74,6 +75,9 @@ function AddMetrics() {
   const [metrics, setMetrics] = useState<Array<Metric>>(
     state && state.metrics ? [...state.metrics] : []
   );
+  const [submittedMetricsNum, setSubmittedMetricsNum] = useState<
+    number | undefined
+  >();
   const [step, setStep] = useState<number>(state && state.metrics ? 1 : 0);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.metrics ? DatasetType.CreateNew : undefined
@@ -147,6 +151,11 @@ function AddMetrics() {
   };
 
   const onSubmit = async (values: FormValues) => {
+    if (metrics.length === 0) {
+      setSubmittedMetricsNum(0);
+      return;
+    }
+
     try {
       if (datasetType) {
         let newDataset;
@@ -454,6 +463,11 @@ function AddMetrics() {
                   (datasetType === DatasetType.DynamicDataset &&
                     !metrics.length)
                 }
+                disabledToolTip={
+                  datasetType === DatasetType.DynamicDataset
+                    ? "You must select a dataset to continue"
+                    : "Choose a dataset to continue"
+                }
               >
                 Continue
               </Button>
@@ -471,6 +485,18 @@ function AddMetrics() {
               <div className="grid-row width-desktop">
                 <div className="grid-col-5" hidden={fullPreview}>
                   <fieldset className="usa-fieldset">
+                    {errors.title || submittedMetricsNum === 0 ? (
+                      <Alert
+                        type="error"
+                        message={
+                          submittedMetricsNum === 0
+                            ? "Enter at least one metric to continue"
+                            : "Resolve error(s) to add the text"
+                        }
+                      ></Alert>
+                    ) : (
+                      ""
+                    )}
                     <TextField
                       id="title"
                       name="title"
@@ -518,7 +544,7 @@ function AddMetrics() {
                     Back
                   </Button>
                   <Button
-                    disabled={!title || creatingWidget || fileLoading}
+                    disabled={creatingWidget || fileLoading}
                     type="submit"
                   >
                     Add Metrics

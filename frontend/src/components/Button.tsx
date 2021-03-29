@@ -17,6 +17,7 @@ interface Props {
   disabled?: boolean;
   type?: "submit" | "reset" | "button";
   ariaLabel?: string;
+  disabledToolTip?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
@@ -47,7 +48,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     additionalClasses = ` ${props.className}`;
   }
 
-  return (
+  const button = (
     <button
       aria-label={props.ariaLabel}
       className={`usa-button${variantClassName}${additionalClasses}`}
@@ -63,6 +64,21 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       {props.children}
     </button>
   );
+
+  // show disabled tooltips
+  if (props.disabled && props.disabledToolTip) {
+    return (
+      <span
+        data-toggle="tooltip"
+        data-placement="top"
+        title={props.disabledToolTip}
+      >
+        {button}
+      </span>
+    );
+  }
+
+  return button;
 });
 
 export default Button;

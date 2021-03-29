@@ -20,6 +20,7 @@ interface Props {
   selectDynamicDataset: Function;
   dynamicDatasets: Array<Dataset>;
   continueButtonDisabled: boolean;
+  continueButtonDisabledTooltip?: string;
   widgetType?: "chart" | "table";
 }
 
@@ -231,6 +232,13 @@ function ChooseData(props: Props) {
         type="button"
         onClick={props.advanceStep}
         disabled={props.continueButtonDisabled}
+        disabledToolTip={
+          props.datasetType === DatasetType.DynamicDataset
+            ? "You must select a dataset to continue"
+            : props.datasetType === DatasetType.StaticDataset
+            ? "You must upload a file or choose a dataset to continue"
+            : props.continueButtonDisabledTooltip
+        }
       >
         Continue
       </Button>

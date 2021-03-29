@@ -16,6 +16,7 @@ import { useColors, useXAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
 
 type Props = {
   title: string;
@@ -29,6 +30,7 @@ type Props = {
     primary: string | undefined;
     secondary: string | undefined;
   };
+  columnsMetadata: Array<any>;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -140,7 +142,23 @@ const BarChartWidget = (props: Props) => {
             <Tooltip
               cursor={{ fill: "#F0F0F0" }}
               isAnimationActive={false}
-              formatter={(value: Number | String) => value.toLocaleString()}
+              formatter={(value: Number | String, name: string) => {
+                return typeof value === "number"
+                  ? ColumnsMetadataService.formatNumber(
+                      value,
+                      props.columnsMetadata.some((c) => c.columnName === name)
+                        ? props.columnsMetadata.find(
+                            (c) => c.columnName === name
+                          ).numberType
+                        : undefined,
+                      props.columnsMetadata.some((c) => c.columnName === name)
+                        ? props.columnsMetadata.find(
+                            (c) => c.columnName === name
+                          ).currencyType
+                        : undefined
+                    )
+                  : value.toLocaleString();
+              }}
             />
             {!props.hideLegend && (
               <Legend

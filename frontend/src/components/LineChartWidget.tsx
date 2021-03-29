@@ -15,6 +15,7 @@ import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
 
 type Props = {
   title: string;
@@ -30,6 +31,7 @@ type Props = {
     primary: string | undefined;
     secondary: string | undefined;
   };
+  columnsMetadata: Array<any>;
 };
 
 const LineChartWidget = (props: Props) => {
@@ -102,9 +104,7 @@ const LineChartWidget = (props: Props) => {
   return (
     <div
       className={`overflow-hidden${
-        widthPercent > 100 && props.horizontalScroll
-          ? " scroll-shadow border-x-1px border-base-lighter"
-          : ""
+        widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
@@ -157,7 +157,23 @@ const LineChartWidget = (props: Props) => {
             <Tooltip
               cursor={{ fill: "#F0F0F0" }}
               isAnimationActive={false}
-              formatter={(value: Number | String) => value.toLocaleString()}
+              formatter={(value: Number | String, name: string) => {
+                return typeof value === "number"
+                  ? ColumnsMetadataService.formatNumber(
+                      value,
+                      props.columnsMetadata.some((c) => c.columnName === name)
+                        ? props.columnsMetadata.find(
+                            (c) => c.columnName === name
+                          ).numberType
+                        : undefined,
+                      props.columnsMetadata.some((c) => c.columnName === name)
+                        ? props.columnsMetadata.find(
+                            (c) => c.columnName === name
+                          ).currencyType
+                        : undefined
+                    )
+                  : value.toLocaleString();
+              }}
             />
             <Legend
               verticalAlign="top"

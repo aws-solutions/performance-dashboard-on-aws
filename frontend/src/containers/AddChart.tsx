@@ -1,7 +1,12 @@
 import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { ChartType, LocationState } from "../models";
+import {
+  ChartType,
+  CurrencyDataType,
+  LocationState,
+  NumberDataType,
+} from "../models";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, WidgetType, DatasetType, ColumnDataType } from "../models";
 import { useDashboard, useDatasets, useFullPreview } from "../hooks";
@@ -87,6 +92,12 @@ function AddChart() {
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
+  const [numberTypes, setNumberTypes] = useState<Map<string, NumberDataType>>(
+    new Map<string, NumberDataType>()
+  );
+  const [currencyTypes, setCurrencyTypes] = useState<
+    Map<string, CurrencyDataType>
+  >(new Map<string, CurrencyDataType>());
 
   const title = watch("title");
   const summary = watch("summary");
@@ -101,8 +112,13 @@ function AddChart() {
       currentJson,
       hiddenColumns
     );
+    DatasetParsingService.sortFilteredJson(
+      newFilteredJson,
+      sortByColumn,
+      sortByDesc
+    );
     setFilteredJson(newFilteredJson);
-  }, [currentJson, hiddenColumns]);
+  }, [currentJson, hiddenColumns, sortByColumn, sortByDesc]);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -142,7 +158,8 @@ function AddChart() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           chartType: values.chartType,
-          ...(values.chartType === ChartType.LineChart && {
+          ...((values.chartType === ChartType.LineChart ||
+            values.chartType === ChartType.ColumnChart) && {
             horizontalScroll: values.horizontalScroll,
           }),
           datasetType: datasetType,
@@ -166,7 +183,9 @@ function AddChart() {
           significantDigitLabels: values.significantDigitLabels,
           columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
             hiddenColumns,
-            dataTypes
+            dataTypes,
+            numberTypes,
+            currencyTypes
           ),
         }
       );
@@ -367,6 +386,10 @@ function AddChart() {
               onCancel={onCancel}
               dataTypes={dataTypes}
               setDataTypes={setDataTypes}
+              numberTypes={numberTypes}
+              setNumberTypes={setNumberTypes}
+              currencyTypes={currencyTypes}
+              setCurrencyTypes={setCurrencyTypes}
               sortByColumn={sortByColumn}
               sortByDesc={sortByDesc}
               setSortByColumn={setSortByColumn}
@@ -408,6 +431,12 @@ function AddChart() {
               chartType={chartType as ChartType}
               significantDigitLabels={significantDigitLabels}
               horizontalScroll={horizontalScroll}
+              columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                hiddenColumns,
+                dataTypes,
+                numberTypes,
+                currencyTypes
+              )}
             />
           </div>
         </form>

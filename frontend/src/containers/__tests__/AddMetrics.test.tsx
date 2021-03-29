@@ -70,6 +70,28 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
+  const addMetric = getByText("+ Add metric");
+
+  await act(async () => {
+    fireEvent.click(addMetric);
+  });
+
+  fireEvent.input(getByRole("input", { name: "title" }), {
+    target: {
+      value: "123",
+    },
+  });
+  fireEvent.input(getByRole("input", { name: "value" }), {
+    target: {
+      value: "123",
+    },
+  });
+
+  const addMetricButton = getByRole("button", { name: "Add metric" });
+  await act(async () => {
+    fireEvent.click(addMetricButton);
+  });
+
   await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {
     expect(getByText("Preview")).toBeInTheDocument();

@@ -8,6 +8,7 @@ exports[`renders the VisualizeTable component 1`] = `
     <div
       class="grid-col-5"
     >
+      
       <div
         class="usa-form-group"
       >
@@ -182,7 +183,6 @@ exports[`renders the VisualizeTable component 1`] = `
       </button>
       <button
         class="usa-button usa-button--base"
-        disabled=""
         type="submit"
       >
         Add Table

@@ -33,7 +33,7 @@ interface FormValues {
   summaryBelow: boolean;
   datasetType: string;
   sortData: string;
-  horizontalScroll?: boolean;
+  horizontalScroll: boolean;
   significantDigitLabels: boolean;
 }
 

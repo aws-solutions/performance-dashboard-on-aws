@@ -31,9 +31,6 @@
   "SureDelete": "Are you sure you want to delete this",
   "ZeroDashboards": "that have zero dashboards",
   "CanDelete": "You can only delete",
-  "SignificantDigitLabels": "Significant digit labels (123K, 1.2M)",
-  "ChartOptionsLabel": "Chart Options",
-  "ChartOptionsDescription": "Format your line chart",
   "WhatYouCanDoAsAdmin": "You role is admin. Below are some the things you can do as an admin to get you started.",
   "WhatYouCanDoAsNotAdmin": "This is where you will manage your performance dashboard.",
   "WelcomeToPDoA": "Welcome to the Performance Dashboard",
@@ -101,5 +98,10 @@
   "BrandingAndStylingLogoDescription": "This logo will appear in the header next to the performance dashboard name and in the published site header.",
   "BrandingAndStylingColors": "Colors",
   "BrandingAndStylingColorsDescription": "Customize these colors to make your dashboards appear similar in style to your organization's brand and color palette.",
-  "BrandingAndStylingPrimaryColor": "Primary color"
+  "BrandingAndStylingPrimaryColor": "Primary color",
+  "SignificantDigitLabels": "Significant digit labels (123K, 1.2M)",
+  "ChartOptionsLabel": "Chart Options",
+  "ChartOptionsDescription": "Format your chart",
+  "TableOptionsLabel": "Table Options",
+  "TableOptionsDescription": "Format your table"
 }

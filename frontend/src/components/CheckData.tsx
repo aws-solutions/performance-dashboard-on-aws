@@ -1,9 +1,11 @@
 import React, { useMemo, useState } from "react";
 import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
-import ColumnsMetadataService from "../services/ColumnsMetadataService";
+import TickFormatter from "../services/TickFormatter";
+import UtilsService from "../services/UtilsService";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Table from "./Table";
+
 interface Props {
   selectedHeaders: Set<string>;
   hiddenColumns: Set<string>;
@@ -205,14 +207,18 @@ function CheckData(props: Props) {
                 if (props.dataTypes.has(header)) {
                   if (props.dataTypes.get(header) === ColumnDataType.Number) {
                     return typeof row[header] === "number" ? (
-                      ColumnsMetadataService.formatNumber(
-                        row[header],
-                        props.numberTypes.get(header),
-                        props.currencyTypes.get(header)
-                      )
+                      TickFormatter.format(row[header], 0, false, {
+                        columnName: header,
+                        hidden: props.hiddenColumns.has(header),
+                        dataType: ColumnDataType.Number,
+                        numberType: props.numberTypes.get(header),
+                        currencyType: props.currencyTypes.get(header),
+                      })
                     ) : (
                       <div className="text-secondary-vivid">{`! ${
-                        row[header] ? row[header].toLocaleString() : "None"
+                        !UtilsService.isCellEmpty(row[header])
+                          ? row[header].toLocaleString()
+                          : "-"
                       }`}</div>
                     );
                   } else if (
@@ -222,14 +228,26 @@ function CheckData(props: Props) {
                       row[header].toLocaleString()
                     ) : (
                       <div className="text-secondary-vivid">{`! ${
-                        row[header] ? row[header].toLocaleString() : "None"
+                        !UtilsService.isCellEmpty(row[header])
+                          ? row[header].toLocaleString()
+                          : "-"
                       }`}</div>
                     );
+                  } else if (
+                    props.dataTypes.get(header) === ColumnDataType.Text
+                  ) {
+                    return !UtilsService.isCellEmpty(row[header])
+                      ? row[header]
+                      : "-";
                   } else {
-                    return row[header] ? row[header].toLocaleString() : "None";
+                    return !UtilsService.isCellEmpty(row[header])
+                      ? row[header].toLocaleString()
+                      : "-";
                   }
                 } else {
-                  return row[header] ? row[header].toLocaleString() : "None";
+                  return !UtilsService.isCellEmpty(row[header])
+                    ? row[header].toLocaleString()
+                    : "-";
                 }
               },
             },

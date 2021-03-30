@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { ColumnDataType, LocationState } from "../models";
+import {
+  ColumnDataType,
+  CurrencyDataType,
+  LocationState,
+  NumberDataType,
+} from "../models";
 import { Dataset, DatasetType, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
 import { useDashboard, useFullPreview } from "../hooks";
@@ -77,6 +82,12 @@ function AddTable() {
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
+  const [numberTypes, setNumberTypes] = useState<Map<string, NumberDataType>>(
+    new Map<string, NumberDataType>()
+  );
+  const [currencyTypes, setCurrencyTypes] = useState<
+    Map<string, CurrencyDataType>
+  >(new Map<string, CurrencyDataType>());
 
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
@@ -143,7 +154,9 @@ function AddTable() {
           sortByDesc,
           columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
             hiddenColumns,
-            dataTypes
+            dataTypes,
+            numberTypes,
+            currencyTypes
           ),
         }
       );
@@ -339,6 +352,10 @@ function AddTable() {
               onCancel={onCancel}
               dataTypes={dataTypes}
               setDataTypes={setDataTypes}
+              numberTypes={numberTypes}
+              setNumberTypes={setNumberTypes}
+              currencyTypes={currencyTypes}
+              setCurrencyTypes={setCurrencyTypes}
               sortByColumn={sortByColumn}
               sortByDesc={sortByDesc}
               setSortByColumn={setSortByColumn}
@@ -375,7 +392,9 @@ function AddTable() {
               setSortByDesc={setSortByDesc}
               columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                 hiddenColumns,
-                dataTypes
+                dataTypes,
+                numberTypes,
+                currencyTypes
               )}
             />
           </div>

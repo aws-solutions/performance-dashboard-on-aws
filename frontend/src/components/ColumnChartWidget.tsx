@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 // @ts-ignore
 import { CategoricalChartWrapper } from "recharts";
 import {
@@ -15,6 +15,7 @@ import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
 
 type Props = {
   title: string;
@@ -24,11 +25,14 @@ type Props = {
   summaryBelow: boolean;
   isPreview?: boolean;
   hideLegend?: boolean;
+  horizontalScroll?: boolean;
+  setWidthPercent?: (widthPercent: number) => void;
   significantDigitLabels: boolean;
   colors?: {
     primary: string | undefined;
     secondary: string | undefined;
   };
+  columnsMetadata: Array<any>;
 };
 
 const ColumnChartWidget = (props: Props) => {
@@ -92,12 +96,16 @@ const ColumnChartWidget = (props: Props) => {
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
+  useEffect(() => {
+    if (props.setWidthPercent) {
+      props.setWidthPercent(widthPercent);
+    }
+  }, [widthPercent]);
+
   return (
     <div
       className={`overflow-hidden${
-        widthPercent > 100
-          ? "scroll-shadow border-x-1px border-base-lighter"
-          : ""
+        widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
@@ -111,7 +119,9 @@ const ColumnChartWidget = (props: Props) => {
       )}
       {data && data.length && (
         <ResponsiveContainer
-          width={`${Math.max(widthPercent, 100)}%`}
+          width={
+            props.horizontalScroll ? `${Math.max(widthPercent, 100)}%` : "100%"
+          }
           height={300}
         >
           <BarChart
@@ -129,7 +139,7 @@ const ColumnChartWidget = (props: Props) => {
               type={xAxisType()}
               padding={{ left: 50, right: 50 }}
               domain={["dataMin", "dataMax"]}
-              interval={0}
+              interval={props.horizontalScroll ? 0 : "preserveStartEnd"}
               scale={xAxisType() === "number" ? "linear" : "auto"}
             />
             <YAxis
@@ -145,7 +155,23 @@ const ColumnChartWidget = (props: Props) => {
             <Tooltip
               cursor={{ fill: "#F0F0F0" }}
               isAnimationActive={false}
-              formatter={(value: Number | String) => value.toLocaleString()}
+              formatter={(value: Number | String, name: string) => {
+                return typeof value === "number"
+                  ? ColumnsMetadataService.formatNumber(
+                      value,
+                      props.columnsMetadata.some((c) => c.columnName === name)
+                        ? props.columnsMetadata.find(
+                            (c) => c.columnName === name
+                          ).numberType
+                        : undefined,
+                      props.columnsMetadata.some((c) => c.columnName === name)
+                        ? props.columnsMetadata.find(
+                            (c) => c.columnName === name
+                          ).currencyType
+                        : undefined
+                    )
+                  : value.toLocaleString();
+              }}
             />
             {!props.hideLegend && (
               <Legend

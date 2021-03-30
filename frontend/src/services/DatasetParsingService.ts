@@ -65,10 +65,36 @@ function getDatasetSortOptions(json: Array<any>, headers: Array<string>): any {
   return sortOptions;
 }
 
+function sortFilteredJson(
+  filteredJson: Array<any>,
+  sortByColumn: string | undefined,
+  sortByDesc: boolean | undefined
+): void {
+  if (sortByColumn !== undefined && sortByDesc !== undefined) {
+    filteredJson.sort((row1: any, row2: any) => {
+      if (
+        row1[sortByColumn || ""] !== undefined &&
+        row2[sortByColumn || ""] !== undefined
+      ) {
+        return row1[sortByColumn || ""] < row2[sortByColumn || ""]
+          ? sortByDesc
+            ? 1
+            : -1
+          : sortByDesc
+          ? -1
+          : 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+}
+
 const DatasetParsingService = {
   createHeaderRowJson,
   getFilteredJson,
   getDatasetSortOptions,
+  sortFilteredJson,
 };
 
 export default DatasetParsingService;

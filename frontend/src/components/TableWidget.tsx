@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from "react";
+import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import MarkdownRender from "./MarkdownRender";
 import Table from "./Table";
 
@@ -36,7 +38,7 @@ const TableWidget = (props: Props) => {
       }
     }
     setFilteredJson(newFilteredJson);
-  }, [data, props.columnsMetadata]);
+  }, [data, columnsMetadata]);
 
   const keys = filteredJson.length
     ? Object.keys(filteredJson[0] as Array<string>)
@@ -50,12 +52,28 @@ const TableWidget = (props: Props) => {
           id: header,
           accessor: header,
           minWidth: 150,
-          Cell: (props: any) => {
-            const row = props.row.original;
+          Cell: (properties: any) => {
+            const row = properties.row.original;
             return row[header] !== null &&
               row[header] !== undefined &&
               row[header] !== ""
-              ? row[header].toLocaleString()
+              ? columnsMetadata &&
+                columnsMetadata.some((c) => c.columnName === header) &&
+                columnsMetadata.find((c) => c.columnName === header)
+                  .dataType === ColumnDataType.Number &&
+                typeof row[header] === "number"
+                ? ColumnsMetadataService.formatNumber(
+                    row[header],
+                    columnsMetadata.some((c) => c.columnName === header)
+                      ? columnsMetadata.find((c) => c.columnName === header)
+                          .numberType
+                      : undefined,
+                    columnsMetadata.some((c) => c.columnName === header)
+                      ? columnsMetadata.find((c) => c.columnName === header)
+                          .currencyType
+                      : undefined
+                  )
+                : row[header].toLocaleString()
               : "-";
           },
         };

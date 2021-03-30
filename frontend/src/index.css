@@ -59,7 +59,7 @@ p {
 }
 
 .scroll-shadow {
-  box-shadow: inset 0px 0px 8px 8px #ffffff;
+  box-shadow: inset -25px 0px 8px -20px rgba(224, 224, 224, 0.5);
 }
 
 .z-index-logout {

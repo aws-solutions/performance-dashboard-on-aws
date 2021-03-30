@@ -24,6 +24,7 @@ const chart: ChartWidget = {
     },
     summaryBelow: false,
     columnsMetadata: [],
+    significantDigitLabels: false,
   },
 };
 

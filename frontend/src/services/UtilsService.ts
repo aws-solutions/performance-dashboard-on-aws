@@ -55,7 +55,7 @@ function timeout(delay: number) {
 function getLargestHeader(headers: Array<string>, data?: Array<any>) {
   return (
     data
-      ?.map((d) => (d as any)[headers.length ? headers[0] : ""])
+      ?.map((d) => (d as any)[headers.length ? headers[0] : ""] || "")
       .map((c) => c.toString().length)
       .reduce((a, b) => (a > b ? a : b), 0) || 0
   );

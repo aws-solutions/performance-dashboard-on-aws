@@ -69,6 +69,15 @@ function VisualizeChart(props: Props) {
   return (
     <div className="grid-row width-desktop">
       <div className="grid-col-5" hidden={props.fullPreview}>
+        {props.errors.title ? (
+          <Alert
+            type="error"
+            message="Resolve error(s) to add the chart"
+          ></Alert>
+        ) : (
+          ""
+        )}
+
         <TextField
           id="title"
           name="title"
@@ -222,13 +231,9 @@ function VisualizeChart(props: Props) {
           Back
         </Button>
         <Button
-          onClick={props.advanceStep}
           type="submit"
           disabled={
-            !props.json.length ||
-            !props.title ||
-            props.fileLoading ||
-            props.processingWidget
+            !props.json.length || props.fileLoading || props.processingWidget
           }
         >
           {props.submitButtonLabel}

@@ -331,6 +331,7 @@ function AddTable() {
               fileLoading={fileLoading}
               browseDatasets={browseDatasets}
               continueButtonDisabled={!currentJson.length}
+              continueButtonDisabledTooltip="Choose a dataset to continue"
               csvErrors={csvErrors}
               csvFile={csvFile}
               onCancel={onCancel}

@@ -44,10 +44,13 @@ test("renders the Metrics title", async () => {
   expect(await screen.findByText("Metrics")).toBeInTheDocument();
 });
 
-test("on submit, it calls createWidget api and uploads dataset", async () => {
-  const { getByRole, getByText, getByLabelText } = render(<AddMetrics />, {
-    wrapper: MemoryRouter,
-  });
+test("on submit, it does not call createWidget api and upload dataset without a metric added", async () => {
+  const { getByRole, getByText, getByLabelText, findByLabelText } = render(
+    <AddMetrics />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
 
   const continueButton = getByRole("button", { name: "Continue" });
 
@@ -79,6 +82,6 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     fireEvent.click(submitButton);
   });
 
-  expect(BackendService.createWidget).toHaveBeenCalled();
-  expect(StorageService.uploadMetric).toHaveBeenCalled();
+  expect(BackendService.createWidget).not.toHaveBeenCalled();
+  expect(StorageService.uploadMetric).not.toHaveBeenCalled();
 });

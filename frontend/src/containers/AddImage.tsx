@@ -11,10 +11,12 @@ import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
   summary: string;
+  altText: string;
   showTitle: boolean;
   summaryBelow: boolean;
 }
@@ -154,6 +156,14 @@ function AddImage() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <fieldset className="usa-fieldset">
+              {errors.title || errors.summary ? (
+                <Alert
+                  type="error"
+                  message="Resolve error(s) to add the image"
+                ></Alert>
+              ) : (
+                ""
+              )}
               <TextField
                 id="title"
                 name="title"
@@ -215,6 +225,8 @@ function AddImage() {
                     label="Image alt text"
                     hint="Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard."
                     register={register}
+                    error={errors.altText && "Please specify image alt text"}
+                    required
                     onChange={handleAltTextChange}
                     multiline
                     rows={1}
@@ -266,8 +278,9 @@ function AddImage() {
               Back
             </Button>
             <Button
-              disabled={!imageFile || !title || !altText || imageUploading}
+              disabled={!imageFile || imageUploading}
               type="submit"
+              disabledToolTip="Upload a file to continue"
             >
               Add image
             </Button>

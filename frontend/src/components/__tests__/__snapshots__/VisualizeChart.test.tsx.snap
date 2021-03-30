@@ -8,6 +8,7 @@ exports[`renders the VisualizeChart component 1`] = `
     <div
       class="grid-col-5"
     >
+      
       <div
         class="usa-form-group"
       >
@@ -385,6 +386,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
     <div
       class="grid-col-5"
     >
+      
       <div
         class="usa-form-group"
       >

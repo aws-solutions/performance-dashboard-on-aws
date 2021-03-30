@@ -485,7 +485,7 @@ function AddMetrics() {
               <div className="grid-row width-desktop">
                 <div className="grid-col-5" hidden={fullPreview}>
                   <fieldset className="usa-fieldset">
-                    {errors.title || submittedMetricsNum === 0 ? (
+                    {(errors.title || submittedMetricsNum === 0) && (
                       <Alert
                         type="error"
                         message={
@@ -494,8 +494,6 @@ function AddMetrics() {
                             : "Resolve error(s) to add the text"
                         }
                       ></Alert>
-                    ) : (
-                      ""
                     )}
                     <TextField
                       id="title"

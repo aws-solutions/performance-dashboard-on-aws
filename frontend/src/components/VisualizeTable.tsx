@@ -86,13 +86,11 @@ function VisualizeTable(props: Props) {
   return (
     <div className="grid-row width-desktop">
       <div className="grid-col-5" hidden={props.fullPreview}>
-        {props.errors.title ? (
+        {props.errors.title && (
           <Alert
             type="error"
             message="Resolve error(s) to add the table"
           ></Alert>
-        ) : (
-          ""
         )}
         <TextField
           id="title"

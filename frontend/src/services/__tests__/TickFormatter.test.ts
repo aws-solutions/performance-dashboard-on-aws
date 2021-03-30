@@ -1,4 +1,4 @@
-import { ColumnDataType } from "../../models";
+import { ColumnDataType, CurrencyDataType, NumberDataType } from "../../models";
 import TickFormatter from "../TickFormatter";
 
 describe("format handles ticks of type string", () => {
@@ -67,12 +67,76 @@ describe("format when columnMetadata is provided", () => {
 
   it("returns a number when dataType is Number", () => {
     const largestTick = 1000;
+    const significantDigitLabels = true;
+
     expect(
-      TickFormatter.format(2018, largestTick, true, {
+      TickFormatter.format(2018, largestTick, significantDigitLabels, {
         columnName: "Year",
         hidden: false,
         dataType: ColumnDataType.Number,
       })
     ).toEqual("2.018K");
+  });
+});
+
+describe("format when columnMetadata is Currency", () => {
+  it("appends currency symbol", () => {
+    const largestTick = 100000;
+    const significantDigitLabels = false;
+
+    expect(
+      TickFormatter.format(100000, largestTick, significantDigitLabels, {
+        columnName: "Revenue",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Currency,
+        currencyType: CurrencyDataType["Euro €"],
+      })
+    ).toEqual("€100,000.00");
+  });
+
+  it("appends currency symbol and ignores significant digit label", () => {
+    const largestTick = 100000;
+    const significantDigitLabels = true;
+
+    expect(
+      TickFormatter.format(100000, largestTick, significantDigitLabels, {
+        columnName: "Revenue",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Currency,
+        currencyType: CurrencyDataType["Euro €"],
+      })
+    ).toEqual("€100,000.00");
+  });
+});
+
+describe("format when columnMetadata is Percentage", () => {
+  it("appends percentage symbol", () => {
+    const largestTick = 100000;
+    const significantDigitLabels = false;
+
+    expect(
+      TickFormatter.format(100000, largestTick, significantDigitLabels, {
+        columnName: "Revenue",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Percentage,
+      })
+    ).toEqual("100,000%");
+  });
+
+  it("appends currency symbol and ignores significant digit label", () => {
+    const largestTick = 100000;
+    const significantDigitLabels = true;
+
+    expect(
+      TickFormatter.format(100000, largestTick, significantDigitLabels, {
+        columnName: "Revenue",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Percentage,
+      })
+    ).toEqual("100,000%");
   });
 });

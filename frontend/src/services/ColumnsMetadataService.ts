@@ -86,6 +86,10 @@ function parseColumnsMetadata(columnsMetadata: Array<any>): ColumnMetadata {
   return { hiddenColumns, dataTypes, numberTypes, currencyTypes };
 }
 
+// 1000000
+// Currency USD
+// Enable significant digit labels
+
 function formatNumber(
   value: number,
   numberType: NumberDataType | undefined,

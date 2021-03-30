@@ -1,4 +1,5 @@
-import { ColumnMetadata, ColumnDataType } from "../models";
+import { ColumnMetadata, ColumnDataType, NumberDataType } from "../models";
+import ColumnsMetadataService from "./ColumnsMetadataService";
 
 const ONE_THOUSAND = 1000;
 const ONE_MILLION = 1000000;
@@ -23,7 +24,12 @@ function format(
     case "string":
       return formatString(tick);
     case "number":
-      return formatNumber(tick, largestTick, significantDigitLabels);
+      return formatNumber(
+        tick,
+        largestTick,
+        significantDigitLabels,
+        columnMetadata
+      );
     default:
       return tick;
   }
@@ -50,10 +56,23 @@ function formatString(tick: string) {
 function formatNumber(
   num: number,
   largestTick: number,
-  significantDigitLabels: boolean
+  significantDigitLabels: boolean,
+  columnMetadata?: ColumnMetadata
 ): string {
   if (isNaN(num)) {
     return "";
+  }
+
+  if (
+    columnMetadata &&
+    (columnMetadata.numberType === NumberDataType.Currency ||
+      columnMetadata.numberType === NumberDataType.Percentage)
+  ) {
+    return ColumnsMetadataService.formatNumber(
+      num,
+      columnMetadata.numberType,
+      columnMetadata.currencyType
+    );
   }
 
   if (!significantDigitLabels || num === 0) {

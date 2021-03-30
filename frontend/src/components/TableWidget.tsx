@@ -3,6 +3,7 @@ import { ColumnMetadata } from "../models";
 import { useTableMetadata } from "../hooks";
 import MarkdownRender from "./MarkdownRender";
 import TickFormatter from "../services/TickFormatter";
+import UtilsService from "../services/UtilsService";
 import Table from "./Table";
 
 type Props = {
@@ -67,13 +68,14 @@ const TableWidget = ({
             const row = props.row.original;
 
             // Check if there is metadata for this column
-            const columnMetadata = columnsMetadata.find(
-              (cm) => cm.columnName === header
-            );
+            let columnMetadata;
+            if (columnsMetadata) {
+              columnMetadata = columnsMetadata.find(
+                (cm) => cm.columnName === header
+              );
+            }
 
-            return row[header] !== null &&
-              row[header] !== undefined &&
-              row[header] !== ""
+            return !UtilsService.isCellEmpty(row[header])
               ? TickFormatter.format(
                   row[header],
                   largestTickByColumn[header],

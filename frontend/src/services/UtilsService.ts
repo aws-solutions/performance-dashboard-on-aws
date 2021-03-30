@@ -52,6 +52,10 @@ function timeout(delay: number) {
   return new Promise((res) => setTimeout(res, delay));
 }
 
+function isCellEmpty(value: any): boolean {
+  return value === undefined || value === null || value === "";
+}
+
 function getLargestHeader(headers: Array<string>, data?: Array<any>) {
   return (
     data
@@ -106,6 +110,7 @@ const UtilsService = {
   getLargestHeader,
   getDashboardUrlPath,
   calculateYAxisMargin,
+  isCellEmpty,
 };
 
 export default UtilsService;

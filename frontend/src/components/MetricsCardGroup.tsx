@@ -2,11 +2,13 @@ import React from "react";
 import { Metric } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import TickFormatter from "../services/TickFormatter";
 import dayjs from "dayjs";
 
 interface Props {
   metrics: Array<Metric>;
   metricPerRow: number;
+  significantDigitLabels: boolean;
 }
 
 function MetricsCardGroup(props: Props) {
@@ -23,7 +25,12 @@ function MetricsCardGroup(props: Props) {
     }
     rows.push(row);
   }
-  return props.metrics.length ? (
+
+  if (!props.metrics.length) {
+    return null;
+  }
+
+  return (
     <div className="grid-col">
       {rows.map((row, i) => {
         return (
@@ -47,11 +54,15 @@ function MetricsCardGroup(props: Props) {
                         title={metric.value ? metric.value.toString() : ""}
                       >
                         <h1 className="margin-0 text-no-wrap overflow-hidden text-overflow-ellipsis">
-                          {metric.value}
+                          {TickFormatter.format(
+                            Number(metric.value),
+                            Number(metric.value),
+                            props.significantDigitLabels
+                          )}
                         </h1>
                       </div>
                       <div className="flex-2">
-                        {metric.changeOverTime ? (
+                        {metric.changeOverTime && (
                           <div className="margin-top-05">
                             <FontAwesomeIcon
                               size="xs"
@@ -64,8 +75,6 @@ function MetricsCardGroup(props: Props) {
                             />
                             {metric.changeOverTime.substring(1)}
                           </div>
-                        ) : (
-                          ""
                         )}
                       </div>
                       <div className="flex-2">
@@ -90,7 +99,7 @@ function MetricsCardGroup(props: Props) {
         );
       })}
     </div>
-  ) : null;
+  );
 }
 
 export default MetricsCardGroup;

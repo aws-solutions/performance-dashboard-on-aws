@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Metric,
   LocationState,
@@ -23,6 +24,7 @@ interface FormValues {
   title: string;
   showTitle: boolean;
   oneMetricPerRow: boolean;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -31,6 +33,7 @@ interface PathParams {
 }
 
 function EditMetrics() {
+  const { t } = useTranslation();
   const history = useHistory<LocationState>();
   const { state } = history.location;
   const { dashboardId, widgetId } = useParams<PathParams>();
@@ -39,22 +42,20 @@ function EditMetrics() {
     register,
     errors,
     handleSubmit,
-    getValues,
     reset,
+    watch,
   } = useForm<FormValues>();
+
   const [fileLoading, setFileLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, currentJson } = useWidget(dashboardId, widgetId);
-
-  const [title, setTitle] = useState("");
-  const [showTitle, setShowTitle] = useState(false);
-  const [oneMetricPerRow, setOneMetricPerRow] = useState(false);
   const [metrics, setMetrics] = useState<Array<Metric>>([]);
-  const {
-    fullPreview,
-    fullPreviewToggle,
-    fullPreviewButton,
-  } = useFullPreview();
+  const { fullPreview, fullPreviewButton } = useFullPreview();
+
+  const title = watch("title");
+  const showTitle = watch("showTitle");
+  const oneMetricPerRow = watch("oneMetricPerRow");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   useEffect(() => {
     if (widget && currentJson) {
@@ -62,22 +63,29 @@ function EditMetrics() {
         state && state.metricTitle !== undefined
           ? state.metricTitle
           : widget.content.title;
+
       const showTitle =
         state && state.showTitle !== undefined
           ? state.showTitle
           : widget.showTitle;
+
       const oneMetricPerRow =
         state && state.oneMetricPerRow !== undefined
           ? state.oneMetricPerRow
           : widget.content.oneMetricPerRow;
+
+      const significantDigitLabels =
+        state && state.significantDigitLabels !== undefined
+          ? state.significantDigitLabels
+          : widget.content.significantDigitLabels;
+
       reset({
         title,
         showTitle,
         oneMetricPerRow,
+        significantDigitLabels,
       });
-      setTitle(title);
-      setShowTitle(showTitle);
-      setOneMetricPerRow(oneMetricPerRow);
+
       setMetrics(
         state && state.metrics
           ? [...state.metrics]
@@ -125,6 +133,7 @@ function EditMetrics() {
           s3Key: newDataset.s3Key,
           oneMetricPerRow: values.oneMetricPerRow,
           datasetType: DatasetType.CreateNew,
+          significantDigitLabels: values.significantDigitLabels,
         },
         widget.updatedAt
       );
@@ -192,13 +201,6 @@ function EditMetrics() {
     setMetrics(widgets);
   };
 
-  const onFormChange = () => {
-    const { title, showTitle, oneMetricPerRow } = getValues();
-    setTitle(title);
-    setShowTitle(showTitle);
-    setOneMetricPerRow(oneMetricPerRow);
-  };
-
   const crumbs = [
     {
       label: "Dashboards",
@@ -238,7 +240,6 @@ function EditMetrics() {
           <div className="grid-col-6" hidden={fullPreview}>
             <form
               className="usa-form usa-form--large"
-              onChange={onFormChange}
               onSubmit={handleSubmit(onSubmit)}
             >
               <fieldset className="usa-fieldset">
@@ -267,6 +268,27 @@ function EditMetrics() {
                     htmlFor="display-title"
                   >
                     Show title on dashboard
+                  </label>
+                </div>
+
+                <label className="usa-label text-bold">
+                  {t("MetricsOptionsLabel")}
+                </label>
+                <div className="usa-hint">{t("MetricsOptionsDescription")}</div>
+                <div className="usa-checkbox">
+                  <input
+                    className="usa-checkbox__input"
+                    id="significantDigitLabels"
+                    type="checkbox"
+                    name="significantDigitLabels"
+                    defaultChecked={false}
+                    ref={register()}
+                  />
+                  <label
+                    className="usa-checkbox__label"
+                    htmlFor="significantDigitLabels"
+                  >
+                    {t("SignificantDigitLabels")}
                   </label>
                 </div>
 
@@ -308,6 +330,7 @@ function EditMetrics() {
               title={showTitle ? title : ""}
               metrics={metrics}
               metricPerRow={oneMetricPerRow ? 1 : 3}
+              significantDigitLabels={significantDigitLabels}
             />
           </div>
         </div>

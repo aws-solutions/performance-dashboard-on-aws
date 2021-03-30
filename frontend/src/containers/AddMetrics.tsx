@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Metric,
   WidgetType,
@@ -36,6 +37,7 @@ interface FormValues {
   showTitle: boolean;
   oneMetricPerRow: boolean;
   datasetType: string;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -43,6 +45,7 @@ interface PathParams {
 }
 
 function AddMetrics() {
+  const { t } = useTranslation();
   const history = useHistory<LocationState>();
   const { state } = history.location;
   const { dashboardId } = useParams<PathParams>();
@@ -50,28 +53,25 @@ function AddMetrics() {
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicMetricDatasets } = useDatasets();
   const { settings } = useSettings();
-  const {
-    register,
-    errors,
-    handleSubmit,
-    getValues,
-    reset,
-  } = useForm<FormValues>();
+  const { register, errors, handleSubmit, reset, watch } = useForm<FormValues>({
+    defaultValues: {
+      title: state && state.metricTitle !== undefined ? state.metricTitle : "",
+      showTitle:
+        state && state.showTitle !== undefined ? state.showTitle : true,
+      oneMetricPerRow:
+        state && state.oneMetricPerRow !== undefined
+          ? state.oneMetricPerRow
+          : false,
+    },
+  });
+
   const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
     undefined
   );
   const [fileLoading, setFileLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
-  const [title, setTitle] = useState(
-    state && state.metricTitle !== undefined ? state.metricTitle : ""
-  );
-  const [showTitle, setShowTitle] = useState(
-    state && state.showTitle !== undefined ? state.showTitle : true
-  );
-  const [oneMetricPerRow, setOneMetricPerRow] = useState(
-    state && state.oneMetricPerRow !== undefined ? state.oneMetricPerRow : false
-  );
+
   const [metrics, setMetrics] = useState<Array<Metric>>(
     state && state.metrics ? [...state.metrics] : []
   );
@@ -82,11 +82,12 @@ function AddMetrics() {
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.metrics ? DatasetType.CreateNew : undefined
   );
-  const {
-    fullPreview,
-    fullPreviewToggle,
-    fullPreviewButton,
-  } = useFullPreview();
+  const { fullPreview, fullPreviewButton } = useFullPreview();
+
+  const title = watch("title");
+  const showTitle = watch("showTitle");
+  const oneMetricPerRow = watch("oneMetricPerRow");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   useEffect(() => {
     if (datasetType) {
@@ -177,6 +178,7 @@ function AddMetrics() {
             s3Key: newDataset.s3Key,
             oneMetricPerRow: values.oneMetricPerRow,
             datasetType,
+            significantDigitLabels: values.significantDigitLabels,
           }
         );
         setCreatingWidget(false);
@@ -242,13 +244,6 @@ function AddMetrics() {
     }
 
     setMetrics(widgets);
-  };
-
-  const onFormChange = () => {
-    const { title, showTitle, oneMetricPerRow } = getValues();
-    setTitle(title);
-    setShowTitle(showTitle);
-    setOneMetricPerRow(oneMetricPerRow);
   };
 
   const goBack = () => {
@@ -326,7 +321,7 @@ function AddMetrics() {
         />
       ) : (
         <div className="grid-row width-desktop">
-          <form onChange={onFormChange} onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid-col-12">
               <div className="grid-col-6" hidden={fullPreview}>
                 <StepIndicator
@@ -502,7 +497,6 @@ function AddMetrics() {
                       hint="Give your group of metrics a descriptive title."
                       error={errors.title && "Please specify a content title"}
                       required
-                      defaultValue={title}
                       register={register}
                     />
 
@@ -512,7 +506,7 @@ function AddMetrics() {
                         id="display-title"
                         type="checkbox"
                         name="showTitle"
-                        defaultChecked={showTitle}
+                        defaultChecked={true}
                         ref={register()}
                       />
                       <label
@@ -520,6 +514,29 @@ function AddMetrics() {
                         htmlFor="display-title"
                       >
                         Show title on dashboard
+                      </label>
+                    </div>
+
+                    <label className="usa-label text-bold">
+                      {t("MetricsOptionsLabel")}
+                    </label>
+                    <div className="usa-hint">
+                      {t("MetricsOptionsDescription")}
+                    </div>
+                    <div className="usa-checkbox">
+                      <input
+                        className="usa-checkbox__input"
+                        id="significantDigitLabels"
+                        type="checkbox"
+                        name="significantDigitLabels"
+                        defaultChecked={false}
+                        ref={register()}
+                      />
+                      <label
+                        className="usa-checkbox__label"
+                        htmlFor="significantDigitLabels"
+                      >
+                        {t("SignificantDigitLabels")}
                       </label>
                     </div>
 
@@ -564,6 +581,7 @@ function AddMetrics() {
                       title={showTitle ? title : ""}
                       metrics={metrics}
                       metricPerRow={oneMetricPerRow ? 1 : 3}
+                      significantDigitLabels={significantDigitLabels}
                     />
                   </div>
                 </div>

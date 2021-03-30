@@ -74,6 +74,7 @@ function WidgetWithDataset({ widget }: Props) {
           title={metricsWidget.showTitle ? metricsWidget.content.title : ""}
           metrics={json}
           metricPerRow={metricsWidget.content.oneMetricPerRow ? 1 : 3}
+          significantDigitLabels={metricsWidget.content.significantDigitLabels}
         />
       );
     default:

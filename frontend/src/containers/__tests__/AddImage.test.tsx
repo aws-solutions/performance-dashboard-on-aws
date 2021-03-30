@@ -47,8 +47,6 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     wrapper: MemoryRouter,
   });
 
-  const submitButton = getByRole("button", { name: "Add image" });
-
   fireEvent.input(getByLabelText("Image title"), {
     target: {
       value: "Test Image",
@@ -67,7 +65,9 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  //await waitFor(() => expect(submitButton).toBeEnabled());
+  const submitButton = getByRole("button", { name: "Add image" });
+
+  await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {
     expect(getByText("Preview")).toBeInTheDocument();
 

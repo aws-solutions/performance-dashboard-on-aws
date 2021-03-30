@@ -44,10 +44,13 @@ test("renders the Metrics title", async () => {
   expect(await screen.findByText("Metrics")).toBeInTheDocument();
 });
 
-test("on submit, it calls createWidget api and uploads dataset", async () => {
-  const { getByRole, getByText, getByLabelText } = render(<AddMetrics />, {
-    wrapper: MemoryRouter,
-  });
+test("on submit, it does not call createWidget api and upload dataset without a metric added", async () => {
+  const { getByRole, getByText, getByLabelText, findByLabelText } = render(
+    <AddMetrics />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
 
   const continueButton = getByRole("button", { name: "Continue" });
 
@@ -70,28 +73,6 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  const addMetric = getByText("+ Add metric");
-
-  await act(async () => {
-    fireEvent.click(addMetric);
-  });
-
-  fireEvent.input(getByRole("input", { name: "title" }), {
-    target: {
-      value: "123",
-    },
-  });
-  fireEvent.input(getByRole("input", { name: "value" }), {
-    target: {
-      value: "123",
-    },
-  });
-
-  const addMetricButton = getByRole("button", { name: "Add metric" });
-  await act(async () => {
-    fireEvent.click(addMetricButton);
-  });
-
   await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {
     expect(getByText("Preview")).toBeInTheDocument();
@@ -101,6 +82,6 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     fireEvent.click(submitButton);
   });
 
-  expect(BackendService.createWidget).toHaveBeenCalled();
-  expect(StorageService.uploadMetric).toHaveBeenCalled();
+  expect(BackendService.createWidget).not.toHaveBeenCalled();
+  expect(StorageService.uploadMetric).not.toHaveBeenCalled();
 });

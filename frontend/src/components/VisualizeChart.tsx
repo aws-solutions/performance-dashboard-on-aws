@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { ChartType, DatasetType } from "../models";
+import { useTranslation } from "react-i18next";
 import Alert from "./Alert";
 import BarChartWidget from "./BarChartWidget";
 import Button from "./Button";
@@ -13,11 +14,14 @@ import Spinner from "./Spinner";
 import TextField from "./TextField";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "./Dropdown";
+import DatasetParsingService from "../services/DatasetParsingService";
 
 interface Props {
   errors: any;
   register: Function;
   json: Array<any>;
+  originalJson: Array<any>;
+  headers: Array<string>;
   csvJson: Array<any>;
   datasetLoading: boolean;
   datasetType: DatasetType | undefined;
@@ -33,50 +37,20 @@ interface Props {
   sortByDesc?: boolean;
   setSortByColumn: Function;
   setSortByDesc: Function;
-  title?: string;
-  summary?: string;
-  chartType?: ChartType;
-  showTitle?: boolean;
-  summaryBelow?: boolean;
+  title: string;
+  summary: string;
+  chartType: ChartType;
+  showTitle: boolean;
+  summaryBelow: boolean;
+  significantDigitLabels: boolean;
+  horizontalScroll: boolean;
+  columnsMetadata: Array<any>;
 }
 
 function VisualizeChart(props: Props) {
+  const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(true);
-  const [title, setTitle] = useState(props.title || "");
-  const [summary, setSummary] = useState(props.summary || "");
-  const [chartType, setChartType] = useState<ChartType>(
-    props.chartType || ChartType.LineChart
-  );
-  const [showTitle, setShowTitle] = useState(
-    props.showTitle === undefined ? true : props.showTitle
-  );
-  const [summaryBelow, setSummaryBelow] = useState<boolean>(
-    props.summaryBelow === undefined ? true : props.summaryBelow
-  );
-
-  const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setTitle((event.target as HTMLInputElement).value);
-  };
-
-  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    setSummary((event.target as HTMLTextAreaElement).value);
-  };
-
-  const handleSummaryBelowChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    setSummaryBelow((event.target as HTMLInputElement).checked);
-  };
-
-  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setShowTitle((event.target as HTMLInputElement).checked);
-  };
-
-  const handleChartTypeChange = (
-    event: React.FormEvent<HTMLFieldSetElement>
-  ) => {
-    setChartType((event.target as HTMLInputElement).value as ChartType);
-  };
+  const [widthPercent, setWidthPercent] = useState(0);
 
   const handleSortDataChange = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
@@ -92,30 +66,24 @@ function VisualizeChart(props: Props) {
     }
   };
 
-  const headers = props.json.length
-    ? (Object.keys(props.json[0]) as Array<string>)
-    : [];
-  const sortOptions: any = [{ value: "", label: "Select an option" }];
-  headers.forEach((h) => {
-    const sortTypeAsc = typeof h === "string" ? "A-Z" : "low to high";
-    const sortTypeDesc = typeof h === "string" ? "Z-A" : "high - low";
-    sortOptions.push({ value: `${h}###asc`, label: `"${h}" ${sortTypeAsc}` });
-    sortOptions.push({
-      value: `${h}###desc`,
-      label: `"${h}" ${sortTypeDesc}`,
-    });
-  });
-
   return (
     <div className="grid-row width-desktop">
       <div className="grid-col-5" hidden={props.fullPreview}>
+        {props.errors.title ? (
+          <Alert
+            type="error"
+            message="Resolve error(s) to add the chart"
+          ></Alert>
+        ) : (
+          ""
+        )}
+
         <TextField
           id="title"
           name="title"
           label="Chart title"
           hint="Give your chart a descriptive title."
           error={props.errors.title && "Please specify a chart title"}
-          onChange={handleTitleChange}
           required
           register={props.register}
         />
@@ -127,7 +95,6 @@ function VisualizeChart(props: Props) {
             type="checkbox"
             name="showTitle"
             defaultChecked={true}
-            onChange={handleShowTitleChange}
             ref={props.register()}
           />
           <label className="usa-checkbox__label" htmlFor="display-title">
@@ -142,7 +109,6 @@ function VisualizeChart(props: Props) {
           hint="Choose a chart type."
           register={props.register}
           error={props.errors.chartType && "Please select a chart type"}
-          onChange={handleChartTypeChange}
           defaultValue={ChartType.LineChart}
           required
           options={[
@@ -169,7 +135,10 @@ function VisualizeChart(props: Props) {
             id="sortData"
             name="sortData"
             label="Sort data"
-            options={sortOptions}
+            options={DatasetParsingService.getDatasetSortOptions(
+              props.originalJson,
+              props.headers
+            )}
             onChange={handleSortDataChange}
             defaultValue={
               props.sortByColumn
@@ -179,6 +148,51 @@ function VisualizeChart(props: Props) {
             register={props.register}
           />
         </div>
+
+        <div>
+          <label className="usa-label text-bold">
+            {t("ChartOptionsLabel")}
+          </label>
+          <div className="usa-hint">{t("ChartOptionsDescription")}</div>
+          <div className="usa-checkbox">
+            <input
+              className="usa-checkbox__input"
+              id="significantDigitLabels"
+              type="checkbox"
+              name="significantDigitLabels"
+              defaultChecked={false}
+              ref={props.register()}
+            />
+            <label
+              className="usa-checkbox__label"
+              htmlFor="significantDigitLabels"
+            >
+              {t("SignificantDigitLabels")}
+            </label>
+          </div>
+
+          <div
+            className="usa-checkbox"
+            hidden={
+              (props.chartType !== ChartType.LineChart &&
+                props.chartType !== ChartType.ColumnChart) ||
+              widthPercent <= 100
+            }
+          >
+            <input
+              className="usa-checkbox__input"
+              id="horizontalScroll"
+              type="checkbox"
+              name="horizontalScroll"
+              defaultChecked
+              ref={props.register()}
+            />
+            <label className="usa-checkbox__label" htmlFor="horizontalScroll">
+              Display with horizontal scroll
+            </label>
+          </div>
+        </div>
+
         <TextField
           id="summary"
           name="summary"
@@ -194,7 +208,6 @@ function VisualizeChart(props: Props) {
             </>
           }
           register={props.register}
-          onChange={handleSummaryChange}
           multiline
           rows={5}
         />
@@ -205,7 +218,6 @@ function VisualizeChart(props: Props) {
             type="checkbox"
             name="summaryBelow"
             defaultChecked={false}
-            onChange={handleSummaryBelowChange}
             ref={props.register()}
           />
           <label className="usa-checkbox__label" htmlFor="summary-below">
@@ -219,13 +231,9 @@ function VisualizeChart(props: Props) {
           Back
         </Button>
         <Button
-          onClick={props.advanceStep}
           type="submit"
           disabled={
-            !props.json.length ||
-            !title ||
-            props.fileLoading ||
-            props.processingWidget
+            !props.json.length || props.fileLoading || props.processingWidget
           }
         >
           {props.submitButtonLabel}
@@ -290,58 +298,69 @@ function VisualizeChart(props: Props) {
               ) : (
                 ""
               )}
-              {chartType === ChartType.LineChart && (
+              {props.chartType === ChartType.LineChart && (
                 <LineChartWidget
-                  title={showTitle ? title : ""}
-                  summary={summary}
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
                   lines={
                     props.json.length
                       ? (Object.keys(props.json[0]) as Array<string>)
                       : []
                   }
                   data={props.json}
-                  summaryBelow={summaryBelow}
+                  summaryBelow={props.summaryBelow}
                   isPreview={true}
+                  horizontalScroll={props.horizontalScroll}
+                  setWidthPercent={setWidthPercent}
+                  significantDigitLabels={props.significantDigitLabels}
+                  columnsMetadata={props.columnsMetadata}
                 />
               )}
-              {chartType === ChartType.ColumnChart && (
+              {props.chartType === ChartType.ColumnChart && (
                 <ColumnChartWidget
-                  title={showTitle ? title : ""}
-                  summary={summary}
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
                   columns={
                     props.json.length
                       ? (Object.keys(props.json[0]) as Array<string>)
                       : []
                   }
                   data={props.json}
-                  summaryBelow={summaryBelow}
+                  summaryBelow={props.summaryBelow}
                   isPreview={true}
+                  horizontalScroll={props.horizontalScroll}
+                  setWidthPercent={setWidthPercent}
+                  significantDigitLabels={props.significantDigitLabels}
+                  columnsMetadata={props.columnsMetadata}
                 />
               )}
-              {chartType === ChartType.BarChart && (
+              {props.chartType === ChartType.BarChart && (
                 <BarChartWidget
-                  title={showTitle ? title : ""}
-                  summary={summary}
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
                   bars={
                     props.json.length
                       ? (Object.keys(props.json[0]) as Array<string>)
                       : []
                   }
                   data={props.json}
-                  summaryBelow={summaryBelow}
+                  summaryBelow={props.summaryBelow}
+                  significantDigitLabels={props.significantDigitLabels}
+                  columnsMetadata={props.columnsMetadata}
                 />
               )}
-              {chartType === ChartType.PartWholeChart && (
+              {props.chartType === ChartType.PartWholeChart && (
                 <PartWholeChartWidget
-                  title={showTitle ? title : ""}
-                  summary={summary}
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
                   parts={
                     props.json.length
                       ? (Object.keys(props.json[0]) as Array<string>)
                       : []
                   }
                   data={props.json}
-                  summaryBelow={summaryBelow}
+                  summaryBelow={props.summaryBelow}
+                  significantDigitLabels={props.significantDigitLabels}
                 />
               )}
             </>

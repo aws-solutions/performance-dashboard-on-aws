@@ -11,8 +11,9 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useColors } from "../hooks";
+import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
+import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 
 type Props = {
@@ -23,17 +24,26 @@ type Props = {
   summaryBelow: boolean;
   isPreview?: boolean;
   hideLegend?: boolean;
+  horizontalScroll?: boolean;
+  setWidthPercent?: (widthPercent: number) => void;
+  significantDigitLabels: boolean;
   colors?: {
     primary: string | undefined;
     secondary: string | undefined;
   };
+  columnsMetadata: Array<any>;
 };
 
 const ColumnChartWidget = (props: Props) => {
+  const chartRef = useRef(null);
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
-  const [yAxisMargin, setYAxisMargin] = useState(0);
   const [chartLoaded, setChartLoaded] = useState(false);
+  const { yAxisLargestValue, yAxisMargin } = useYAxisMetadata(
+    chartRef,
+    chartLoaded,
+    props.significantDigitLabels
+  );
 
   const colors = useColors(
     props.columns.length,
@@ -44,27 +54,6 @@ const ColumnChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
-
-  /**
-   * Calculate the YAxis margin needed. This is important after we started
-   * showing the ticks numbers as locale strings and commas are being
-   * added. Margin: Count the commas in the largestTick to locale string, and
-   * multiply by pixelsByCharacter.
-   */
-  const columnChartRef = useRef(null);
-  useEffect(() => {
-    if (columnChartRef && columnChartRef.current) {
-      const yAxisMap = (columnChartRef.current as CategoricalChartWrapper).state
-        .yAxisMap;
-      if (yAxisMap && yAxisMap[0]) {
-        const largestTick: number = Math.max(...yAxisMap[0].niceTicks);
-        const largestTickLocaleString: string = largestTick.toLocaleString();
-        const numberOfCommas: number =
-          largestTickLocaleString.match(/,/g)?.length || 0;
-        setYAxisMargin(numberOfCommas * pixelsByCharacter);
-      }
-    }
-  }, [columnChartRef, columnChartRef.current, chartLoaded]);
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -106,9 +95,17 @@ const ColumnChartWidget = (props: Props) => {
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
+  useEffect(() => {
+    if (props.setWidthPercent) {
+      props.setWidthPercent(widthPercent);
+    }
+  }, [widthPercent]);
+
   return (
     <div
-      className={`overflow-hidden${widthPercent > 100 ? " right-shadow" : ""}`}
+      className={`overflow-hidden${
+        widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
+      }`}
     >
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
@@ -121,7 +118,9 @@ const ColumnChartWidget = (props: Props) => {
       )}
       {data && data.length && (
         <ResponsiveContainer
-          width={`${Math.max(widthPercent, 100)}%`}
+          width={
+            props.horizontalScroll ? `${Math.max(widthPercent, 100)}%` : "100%"
+          }
           height={300}
         >
           <BarChart
@@ -129,7 +128,7 @@ const ColumnChartWidget = (props: Props) => {
             data={props.data}
             margin={{ right: 0, left: yAxisMargin }}
             ref={(el: CategoricalChartWrapper) => {
-              columnChartRef.current = el;
+              chartRef.current = el;
               setChartLoaded(!!el);
             }}
           >
@@ -139,19 +138,38 @@ const ColumnChartWidget = (props: Props) => {
               type={xAxisType()}
               padding={{ left: 50, right: 50 }}
               domain={["dataMin", "dataMax"]}
-              interval={0}
+              interval={props.horizontalScroll ? 0 : "preserveStartEnd"}
               scale={xAxisType() === "number" ? "linear" : "auto"}
             />
             <YAxis
               type="number"
-              tickFormatter={(tick) => {
-                return tick.toLocaleString();
+              tickFormatter={(tick: any) => {
+                return TickFormatter.format(
+                  Number(tick),
+                  yAxisLargestValue,
+                  props.significantDigitLabels
+                );
               }}
             />
             <Tooltip
               cursor={{ fill: "#F0F0F0" }}
               isAnimationActive={false}
-              formatter={(value: Number | String) => value.toLocaleString()}
+              formatter={(value: Number | String, name: string) => {
+                // Check if there is metadata for this column
+                let columnMetadata;
+                if (props.columnsMetadata) {
+                  columnMetadata = props.columnsMetadata.find(
+                    (cm) => cm.columnName === name
+                  );
+                }
+
+                return TickFormatter.format(
+                  value,
+                  yAxisLargestValue,
+                  props.significantDigitLabels,
+                  columnMetadata
+                );
+              }}
             />
             {!props.hideLegend && (
               <Legend

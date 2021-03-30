@@ -1,13 +1,14 @@
-import React, { useMemo } from "react";
-import { ColumnDataType } from "../models";
+import React, { useMemo, useState } from "react";
+import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
+import TickFormatter from "../services/TickFormatter";
+import UtilsService from "../services/UtilsService";
 import Button from "./Button";
-import Combobox from "./Combobox";
+import Dropdown from "./Dropdown";
 import Table from "./Table";
 
 interface Props {
   selectedHeaders: Set<string>;
   hiddenColumns: Set<string>;
-  register: Function;
   setSelectedHeaders: Function;
   setHiddenColumns: Function;
   backStep: Function;
@@ -16,9 +17,22 @@ interface Props {
   data: Array<any>;
   dataTypes: Map<string, ColumnDataType>;
   setDataTypes: Function;
+  numberTypes: Map<string, NumberDataType>;
+  setNumberTypes: Function;
+  currencyTypes: Map<string, CurrencyDataType>;
+  setCurrencyTypes: Function;
+  sortByColumn?: string;
+  sortByDesc?: boolean;
+  setSortByColumn?: Function;
+  setSortByDesc?: Function;
+  reset?: Function;
 }
 
 function CheckData(props: Props) {
+  const [dataType, setDataType] = useState<string>("");
+  const [numberType, setNumberType] = useState<string>("");
+  const [currencyType, setCurrencyType] = useState<string>("");
+
   const handleSelectedHeadersChange = (
     event: React.FormEvent<HTMLInputElement>
   ) => {
@@ -28,6 +42,34 @@ function CheckData(props: Props) {
       newSelectedHeaders.add(target.name);
     } else {
       newSelectedHeaders.delete(target.name);
+    }
+    if (newSelectedHeaders.size === 1) {
+      const selectedHeader = Array.from(newSelectedHeaders)[0];
+      if (props.dataTypes.has(selectedHeader)) {
+        setDataType(props.dataTypes.get(selectedHeader) || "");
+        if (
+          props.dataTypes.get(selectedHeader) === ColumnDataType.Number &&
+          props.numberTypes.has(selectedHeader)
+        ) {
+          setNumberType(props.numberTypes.get(selectedHeader) || "");
+          if (
+            props.numberTypes.get(selectedHeader) === NumberDataType.Currency &&
+            props.currencyTypes.has(selectedHeader)
+          ) {
+            setCurrencyType(props.currencyTypes.get(selectedHeader) || "");
+          } else {
+            setCurrencyType("");
+          }
+        } else {
+          setNumberType("");
+        }
+      } else {
+        setDataType("");
+      }
+    } else {
+      setDataType("");
+      setNumberType("");
+      setCurrencyType("");
     }
     props.setSelectedHeaders(newSelectedHeaders);
   };
@@ -52,6 +94,9 @@ function CheckData(props: Props) {
   const handleDataTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
     const newDataTypes = new Map(props.dataTypes);
+    setDataType(target.value);
+    setNumberType("");
+    setCurrencyType("");
     if (target.value === ColumnDataType.Text) {
       for (const selectedHeader of Array.from(props.selectedHeaders)) {
         newDataTypes.set(selectedHeader, ColumnDataType.Text);
@@ -60,12 +105,70 @@ function CheckData(props: Props) {
       for (const selectedHeader of Array.from(props.selectedHeaders)) {
         newDataTypes.set(selectedHeader, ColumnDataType.Number);
       }
+    } else if (target.value === ColumnDataType.Date) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newDataTypes.set(selectedHeader, ColumnDataType.Date);
+      }
     } else {
       for (const selectedHeader of Array.from(props.selectedHeaders)) {
         newDataTypes.delete(selectedHeader);
       }
     }
     props.setDataTypes(newDataTypes);
+  };
+
+  const handleNumberTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const newNumberTypes = new Map(props.numberTypes);
+    setNumberType(target.value);
+    setCurrencyType("");
+    if (target.value === NumberDataType.Percentage) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newNumberTypes.set(selectedHeader, NumberDataType.Percentage);
+      }
+    } else if (target.value === NumberDataType.Currency) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newNumberTypes.set(selectedHeader, NumberDataType.Currency);
+      }
+    } else if (target.value === NumberDataType["With thousands separators"]) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newNumberTypes.set(
+          selectedHeader,
+          NumberDataType["With thousands separators"]
+        );
+      }
+    } else {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newNumberTypes.delete(selectedHeader);
+      }
+    }
+    props.setNumberTypes(newNumberTypes);
+  };
+
+  const handleCurrencyTypeChange = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    const target = event.target as HTMLInputElement;
+    const newCurrencyTypes = new Map(props.currencyTypes);
+    setCurrencyType(target.value);
+    if (target.value === CurrencyDataType["Dollar $"]) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newCurrencyTypes.set(selectedHeader, CurrencyDataType["Dollar $"]);
+      }
+    } else if (target.value === CurrencyDataType["Euro €"]) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newCurrencyTypes.set(selectedHeader, CurrencyDataType["Euro €"]);
+      }
+    } else if (target.value === CurrencyDataType["Pound £"]) {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newCurrencyTypes.set(selectedHeader, CurrencyDataType["Pound £"]);
+      }
+    } else {
+      for (const selectedHeader of Array.from(props.selectedHeaders)) {
+        newCurrencyTypes.delete(selectedHeader);
+      }
+    }
+    props.setCurrencyTypes(newCurrencyTypes);
   };
 
   const checkDataTableRows = useMemo(() => props.data || [], [props.data]);
@@ -85,7 +188,6 @@ function CheckData(props: Props) {
                 name={header}
                 defaultChecked={props.selectedHeaders.has(header)}
                 onChange={handleSelectedHeadersChange}
-                ref={props.register()}
               />
               <label
                 className="usa-checkbox__label"
@@ -105,27 +207,65 @@ function CheckData(props: Props) {
                 if (props.dataTypes.has(header)) {
                   if (props.dataTypes.get(header) === ColumnDataType.Number) {
                     return typeof row[header] === "number" ? (
+                      TickFormatter.format(row[header], 0, false, {
+                        columnName: header,
+                        hidden: props.hiddenColumns.has(header),
+                        dataType: ColumnDataType.Number,
+                        numberType: props.numberTypes.get(header),
+                        currencyType: props.currencyTypes.get(header),
+                      })
+                    ) : (
+                      <div className="text-secondary-vivid">{`! ${
+                        !UtilsService.isCellEmpty(row[header])
+                          ? row[header].toLocaleString()
+                          : "-"
+                      }`}</div>
+                    );
+                  } else if (
+                    props.dataTypes.get(header) === ColumnDataType.Date
+                  ) {
+                    return !isNaN(Date.parse(row[header])) ? (
                       row[header].toLocaleString()
                     ) : (
-                      <div className="text-secondary-vivid">! None</div>
+                      <div className="text-secondary-vivid">{`! ${
+                        !UtilsService.isCellEmpty(row[header])
+                          ? row[header].toLocaleString()
+                          : "-"
+                      }`}</div>
                     );
+                  } else if (
+                    props.dataTypes.get(header) === ColumnDataType.Text
+                  ) {
+                    return !UtilsService.isCellEmpty(row[header])
+                      ? row[header]
+                      : "-";
                   } else {
-                    return row[header] ? row[header].toLocaleString() : "None";
+                    return !UtilsService.isCellEmpty(row[header])
+                      ? row[header].toLocaleString()
+                      : "-";
                   }
                 } else {
-                  return row[header] ? row[header].toLocaleString() : "None";
+                  return !UtilsService.isCellEmpty(row[header])
+                    ? row[header].toLocaleString()
+                    : "-";
                 }
               },
             },
           ],
         };
       }),
-    [props.data, props.selectedHeaders, props.dataTypes]
+    [
+      props.data,
+      props.selectedHeaders,
+      props.dataTypes,
+      props.numberTypes,
+      props.currencyTypes,
+    ]
   );
 
   return (
     <>
-      <div className="grid-col-6">
+      <div className="grid-col-6 margin-top-3 margin-bottom-1">
         Please make sure that the system formats your data correctly. Select
         columns to format as numbers, dates, or text. Also select columns to
         hide or show from the chart.
@@ -142,50 +282,126 @@ function CheckData(props: Props) {
             <div className="usa-checkbox margin-top-3 margin-bottom-1">
               <input
                 className="usa-checkbox__input"
-                id="hide-from-visualization"
+                id="hideFromVisualization"
                 type="checkbox"
                 name="hideFromVisualization"
-                defaultChecked={false}
+                checked={Array.from(props.selectedHeaders).every((s) =>
+                  props.hiddenColumns.has(s)
+                )}
                 onChange={handleHideFromVisualizationChange}
-                ref={props.register()}
               />
               <label
                 className="usa-checkbox__label"
-                htmlFor="hide-from-visualization"
+                htmlFor="hideFromVisualization"
               >
                 Hide from visualization
               </label>
             </div>
-            <div className="margin-top-3 margin-right-3">
-              <Combobox
-                id="dataType"
-                name="dataType"
-                label="Data format"
-                options={[
-                  { value: ColumnDataType.Text, content: ColumnDataType.Text },
-                  {
-                    value: ColumnDataType.Number,
-                    content: ColumnDataType.Number,
-                  },
-                ]}
-                labelClassName={"text-bold"}
-                onChange={handleDataTypeChange}
-              />
-            </div>
+            {props.selectedHeaders.size === 1 && (
+              <div className="margin-top-3 margin-right-3">
+                <Dropdown
+                  id="dataType"
+                  name="dataType"
+                  label="Data format"
+                  options={[
+                    { value: "", label: "Select an option" },
+                    { value: ColumnDataType.Text, label: ColumnDataType.Text },
+                    {
+                      value: ColumnDataType.Number,
+                      label: ColumnDataType.Number,
+                    },
+                    {
+                      value: ColumnDataType.Date,
+                      label: ColumnDataType.Date,
+                    },
+                  ]}
+                  value={dataType}
+                  onChange={handleDataTypeChange}
+                />
+              </div>
+            )}
+            {props.selectedHeaders.size === 1 &&
+              dataType === ColumnDataType.Number && (
+                <div className="margin-top-3 margin-right-3">
+                  <Dropdown
+                    id="numberType"
+                    name="numberType"
+                    label="Number format"
+                    options={[
+                      { value: "", label: "Select an option" },
+                      {
+                        value: NumberDataType.Percentage,
+                        label: NumberDataType.Percentage,
+                      },
+                      {
+                        value: NumberDataType.Currency,
+                        label: NumberDataType.Currency,
+                      },
+                      {
+                        value: NumberDataType["With thousands separators"],
+                        label: NumberDataType["With thousands separators"],
+                      },
+                    ]}
+                    value={numberType}
+                    onChange={handleNumberTypeChange}
+                  />
+                </div>
+              )}
+            {props.selectedHeaders.size === 1 &&
+              dataType === ColumnDataType.Number &&
+              numberType === NumberDataType.Currency && (
+                <div className="margin-top-3 margin-right-3">
+                  <Dropdown
+                    id="currencyType"
+                    name="currencyType"
+                    label="Currency"
+                    options={[
+                      { value: "", label: "Select an option" },
+                      {
+                        value: CurrencyDataType["Dollar $"],
+                        label: CurrencyDataType["Dollar $"],
+                      },
+                      {
+                        value: CurrencyDataType["Euro €"],
+                        label: CurrencyDataType["Euro €"],
+                      },
+                      {
+                        value: CurrencyDataType["Pound £"],
+                        label: CurrencyDataType["Pound £"],
+                      },
+                    ]}
+                    value={currencyType}
+                    onChange={handleCurrencyTypeChange}
+                  />
+                </div>
+              )}
           </div>
         ) : (
           ""
         )}
-        <div className={`grid-col-${props.selectedHeaders.size > 0 ? 9 : 12}`}>
+        <div
+          className={`overflow-hidden grid-col-${
+            props.selectedHeaders.size > 0 ? 9 : 12
+          }`}
+        >
           <Table
             selection="none"
             rows={checkDataTableRows}
-            initialSortAscending
+            initialSortAscending={
+              props.sortByDesc !== undefined ? !props.sortByDesc : true
+            }
+            initialSortByField={props.sortByColumn}
             disablePagination={true}
             disableBorderless={true}
             columns={checkDataTableColumns}
             selectedHeaders={props.selectedHeaders}
+            hiddenColumns={props.hiddenColumns}
             addNumbersColumn={true}
+            sortByColumn={props.sortByColumn}
+            sortByDesc={props.sortByDesc}
+            setSortByColumn={props.setSortByColumn}
+            setSortByDesc={props.setSortByDesc}
+            reset={props.reset}
           />
         </div>
       </div>

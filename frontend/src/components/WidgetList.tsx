@@ -188,7 +188,8 @@ function WidgetList(props: Props) {
         <SecondaryActionBar className="text-center padding-5 margin-y-3">
           <div>
             <p>
-              This dashboard is empty. Build the dashboard by adding <br />
+              This dashboard has no content items. Build the dashboard by adding{" "}
+              <br />
               charts, tables, text, and more as content.
             </p>
             <div className="text-center margin-top-4">

@@ -1,7 +1,12 @@
 import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { LocationState } from "../models";
+import {
+  ChartType,
+  CurrencyDataType,
+  LocationState,
+  NumberDataType,
+} from "../models";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, WidgetType, DatasetType, ColumnDataType } from "../models";
 import { useDashboard, useDatasets, useFullPreview } from "../hooks";
@@ -12,8 +17,10 @@ import UtilsService from "../services/UtilsService";
 import StepIndicator from "../components/StepIndicator";
 import CheckData from "../components/CheckData";
 import ChooseData from "../components/ChooseData";
-import Visualize from "../components/VisualizeChart";
+import VisualizeChart from "../components/VisualizeChart";
 import "./AddChart.css";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
+import DatasetParsingService from "../services/DatasetParsingService";
 
 interface FormValues {
   title: string;
@@ -22,6 +29,9 @@ interface FormValues {
   showTitle: boolean;
   summaryBelow: boolean;
   datasetType: string;
+  horizontalScroll: boolean;
+  significantDigitLabels: boolean;
+  sortData: string;
 }
 
 interface PathParams {
@@ -35,7 +45,13 @@ function AddChart() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
+  const {
+    register,
+    errors,
+    handleSubmit,
+    reset,
+    watch,
+  } = useForm<FormValues>();
   const [currentJson, setCurrentJson] = useState<Array<any>>(
     state && state.json ? state.json : []
   );
@@ -76,24 +92,33 @@ function AddChart() {
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
+  const [numberTypes, setNumberTypes] = useState<Map<string, NumberDataType>>(
+    new Map<string, NumberDataType>()
+  );
+  const [currencyTypes, setCurrencyTypes] = useState<
+    Map<string, CurrencyDataType>
+  >(new Map<string, CurrencyDataType>());
+
+  const title = watch("title");
+  const summary = watch("summary");
+  const summaryBelow = watch("summaryBelow");
+  const chartType = watch("chartType");
+  const showTitle = watch("showTitle");
+  const horizontalScroll = watch("horizontalScroll");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   useMemo(() => {
-    let headers = currentJson.length
-      ? (Object.keys(currentJson[0]) as Array<string>)
-      : [];
-    headers = headers.filter((h) => !hiddenColumns.has(h));
-    const newFilteredJson = new Array<any>();
-    for (const row of currentJson) {
-      const filteredRow = headers.reduce((obj: any, key: any) => {
-        obj[key] = row[key];
-        return obj;
-      }, {});
-      if (filteredRow !== {}) {
-        newFilteredJson.push(filteredRow);
-      }
-    }
+    const newFilteredJson = DatasetParsingService.getFilteredJson(
+      currentJson,
+      hiddenColumns
+    );
+    DatasetParsingService.sortFilteredJson(
+      newFilteredJson,
+      sortByColumn,
+      sortByDesc
+    );
     setFilteredJson(newFilteredJson);
-  }, [currentJson, hiddenColumns]);
+  }, [currentJson, hiddenColumns, sortByColumn, sortByDesc]);
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
@@ -133,6 +158,10 @@ function AddChart() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           chartType: values.chartType,
+          ...((values.chartType === ChartType.LineChart ||
+            values.chartType === ChartType.ColumnChart) && {
+            horizontalScroll: values.horizontalScroll,
+          }),
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
@@ -151,15 +180,13 @@ function AddChart() {
             : staticDataset?.fileName,
           sortByColumn,
           sortByDesc,
-          columnsMetadata: Array.from(selectedHeaders).map((header) => {
-            return {
-              columnName: header,
-              dataType: dataTypes.has(header)
-                ? dataTypes.get(header)
-                : undefined,
-              hidden: hiddenColumns.has(header),
-            };
-          }),
+          significantDigitLabels: values.significantDigitLabels,
+          columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
+            hiddenColumns,
+            dataTypes,
+            numberTypes,
+            currencyTypes
+          ),
         }
       );
       setCreatingWidget(false);
@@ -339,6 +366,7 @@ function AddChart() {
               fileLoading={fileLoading}
               browseDatasets={browseDatasets}
               continueButtonDisabled={!currentJson.length}
+              continueButtonDisabledTooltip="Choose a dataset to continue"
               csvErrors={csvErrors}
               csvFile={csvFile}
               onCancel={onCancel}
@@ -357,17 +385,31 @@ function AddChart() {
               hiddenColumns={hiddenColumns}
               setHiddenColumns={setHiddenColumns}
               onCancel={onCancel}
-              register={register}
               dataTypes={dataTypes}
               setDataTypes={setDataTypes}
+              numberTypes={numberTypes}
+              setNumberTypes={setNumberTypes}
+              currencyTypes={currencyTypes}
+              setCurrencyTypes={setCurrencyTypes}
+              sortByColumn={sortByColumn}
+              sortByDesc={sortByDesc}
+              setSortByColumn={setSortByColumn}
+              setSortByDesc={setSortByDesc}
+              reset={reset}
             />
           </div>
 
           <div hidden={step !== 2}>
-            <Visualize
+            <VisualizeChart
               errors={errors}
               register={register}
               json={filteredJson}
+              headers={
+                currentJson.length
+                  ? (Object.keys(currentJson[0]) as Array<string>)
+                  : []
+              }
+              originalJson={currentJson}
               csvJson={csvJson}
               datasetLoading={datasetLoading}
               datasetType={datasetType}
@@ -383,6 +425,19 @@ function AddChart() {
               sortByDesc={sortByDesc}
               setSortByColumn={setSortByColumn}
               setSortByDesc={setSortByDesc}
+              title={title}
+              summary={summary}
+              summaryBelow={summaryBelow}
+              showTitle={showTitle}
+              chartType={chartType as ChartType}
+              significantDigitLabels={significantDigitLabels}
+              horizontalScroll={horizontalScroll}
+              columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                hiddenColumns,
+                dataTypes,
+                numberTypes,
+                currencyTypes
+              )}
             />
           </div>
         </form>

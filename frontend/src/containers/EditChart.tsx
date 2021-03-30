@@ -5,9 +5,11 @@ import { parse, ParseResult } from "papaparse";
 import {
   ChartType,
   ColumnDataType,
+  CurrencyDataType,
   Dataset,
   DatasetType,
   LocationState,
+  NumberDataType,
 } from "../models";
 import { useWidget, useDashboard, useDatasets, useFullPreview } from "../hooks";
 
@@ -20,6 +22,8 @@ import CheckData from "../components/CheckData";
 import Spinner from "../components/Spinner";
 import UtilsService from "../services/UtilsService";
 import "./EditChart.css";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
+import DatasetParsingService from "../services/DatasetParsingService";
 
 interface FormValues {
   title: string;
@@ -31,6 +35,8 @@ interface FormValues {
   summaryBelow: boolean;
   datasetType: string;
   sortData: string;
+  horizontalScroll: boolean;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -91,12 +97,20 @@ function EditChart() {
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
+  const [numberTypes, setNumberTypes] = useState<Map<string, NumberDataType>>(
+    new Map<string, NumberDataType>()
+  );
+  const [currencyTypes, setCurrencyTypes] = useState<
+    Map<string, CurrencyDataType>
+  >(new Map<string, CurrencyDataType>());
 
   const title = watch("title");
   const showTitle = watch("showTitle");
   const summary = watch("summary");
   const summaryBelow = watch("summaryBelow");
   const chartType = watch("chartType");
+  const horizontalScroll = watch("horizontalScroll");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   const [displayedJson, setDisplayedJson] = useState<any[]>([]);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
@@ -105,22 +119,17 @@ function EditChart() {
   >();
 
   useMemo(() => {
-    let headers = displayedJson.length
-      ? (Object.keys(displayedJson[0]) as Array<string>)
-      : [];
-    headers = headers.filter((h) => !hiddenColumns.has(h));
-    const newFilteredJson = new Array<any>();
-    for (const row of displayedJson) {
-      const filteredRow = headers.reduce((obj: any, key: any) => {
-        obj[key] = row[key];
-        return obj;
-      }, {});
-      if (filteredRow !== {}) {
-        newFilteredJson.push(filteredRow);
-      }
-    }
+    const newFilteredJson = DatasetParsingService.getFilteredJson(
+      currentJson,
+      hiddenColumns
+    );
+    DatasetParsingService.sortFilteredJson(
+      newFilteredJson,
+      sortByColumn,
+      sortByDesc
+    );
     setFilteredJson(newFilteredJson);
-  }, [displayedJson, hiddenColumns]);
+  }, [currentJson, hiddenColumns, sortByColumn, sortByDesc]);
 
   useEffect(() => {
     if (
@@ -135,6 +144,7 @@ function EditChart() {
       const summary = widget.content.summary;
       const summaryBelow = widget.content.summaryBelow;
       const chartType = widget.content.chartType;
+      const horizontalScroll = widget.content.horizontalScroll;
 
       reset({
         title,
@@ -147,6 +157,8 @@ function EditChart() {
         summary,
         summaryBelow,
         chartType,
+        horizontalScroll,
+        significantDigitLabels: widget.content.significantDigitLabels,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
             ? widget.content.s3Key.json
@@ -195,26 +207,17 @@ function EditChart() {
       if (widget.content.columnsMetadata) {
         const columnsMetadata = widget.content.columnsMetadata;
 
-        const hidden = new Set<string>();
-        columnsMetadata
-          .filter((column: any) => column.hidden)
-          .forEach((column: any) => hidden.add(column.columnName));
+        const {
+          hiddenColumns,
+          dataTypes,
+          numberTypes,
+          currencyTypes,
+        } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
 
-        const dataTypes = new Map<string, ColumnDataType>();
-        columnsMetadata
-          .filter((column: any) => !!column.dataType)
-          .forEach((column: any) =>
-            dataTypes.set(column.columnName, column.dataType)
-          );
-
-        const headers = new Set<string>();
-        columnsMetadata.forEach((column: any) =>
-          headers.add(column.columnName)
-        );
-
-        setSelectedHeaders(headers);
-        setHiddenColumns(hidden);
+        setHiddenColumns(hiddenColumns);
         setDataTypes(dataTypes);
+        setNumberTypes(numberTypes);
+        setCurrencyTypes(currencyTypes);
         setSortByColumn(widget.content.sortByColumn);
         setSortByDesc(widget.content.sortByDesc || false);
       }
@@ -312,6 +315,10 @@ function EditChart() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           chartType: values.chartType,
+          ...((values.chartType === ChartType.LineChart ||
+            values.chartType === ChartType.ColumnChart) && {
+            horizontalScroll: values.horizontalScroll,
+          }),
           datasetType: displayedDatasetType,
           datasetId: newDataset
             ? newDataset.id
@@ -330,15 +337,13 @@ function EditChart() {
             : staticDataset?.fileName,
           sortByColumn,
           sortByDesc,
-          columnsMetadata: Array.from(selectedHeaders).map((header) => {
-            return {
-              columnName: header,
-              hidden: hiddenColumns.has(header),
-              dataType: dataTypes.has(header)
-                ? dataTypes.get(header)
-                : undefined,
-            };
-          }),
+          significantDigitLabels: values.significantDigitLabels,
+          columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
+            hiddenColumns,
+            dataTypes,
+            numberTypes,
+            currencyTypes
+          ),
         },
         widget.updatedAt
       );
@@ -528,9 +533,17 @@ function EditChart() {
                 hiddenColumns={hiddenColumns}
                 setHiddenColumns={setHiddenColumns}
                 onCancel={onCancel}
-                register={register}
                 dataTypes={dataTypes}
                 setDataTypes={setDataTypes}
+                numberTypes={numberTypes}
+                setNumberTypes={setNumberTypes}
+                currencyTypes={currencyTypes}
+                setCurrencyTypes={setCurrencyTypes}
+                sortByColumn={sortByColumn}
+                sortByDesc={sortByDesc}
+                setSortByColumn={setSortByColumn}
+                setSortByDesc={setSortByDesc}
+                reset={reset}
               />
             </div>
             <div hidden={step !== 2}>
@@ -538,6 +551,12 @@ function EditChart() {
                 errors={errors}
                 register={register}
                 json={filteredJson}
+                originalJson={displayedJson}
+                headers={
+                  displayedJson.length
+                    ? (Object.keys(displayedJson[0]) as Array<string>)
+                    : []
+                }
                 csvJson={csvJson}
                 datasetLoading={datasetLoading}
                 datasetType={displayedDatasetType}
@@ -558,6 +577,14 @@ function EditChart() {
                 sortByDesc={sortByDesc}
                 setSortByColumn={setSortByColumn}
                 setSortByDesc={setSortByDesc}
+                horizontalScroll={horizontalScroll}
+                significantDigitLabels={significantDigitLabels}
+                columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                  hiddenColumns,
+                  dataTypes,
+                  numberTypes,
+                  currencyTypes
+                )}
               />
             </div>
           </form>

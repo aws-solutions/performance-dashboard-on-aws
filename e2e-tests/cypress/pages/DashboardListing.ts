@@ -40,7 +40,7 @@ class DashboardListingPage {
     cy.findByRole("button", { name: "Delete" }).click();
 
     // Verify success alert shows up
-    cy.contains(`${dashboardName} draft dashboard was successfully deleted`);
+    cy.contains(`${dashboardName} draft dashboard was successfully deleted.`);
   }
 }
 

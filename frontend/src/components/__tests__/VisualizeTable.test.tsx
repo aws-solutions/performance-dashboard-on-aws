@@ -41,6 +41,25 @@ test("renders the VisualizeTable component", async () => {
       summaryBelow={false}
       setSortByColumn={() => {}}
       setSortByDesc={() => {}}
+      columnsMetadata={[]}
+      headers={["1", "2", "3"]}
+      originalJson={[
+        {
+          id: "1",
+          name: "Banana",
+          updatedAt: "2021-11-11",
+        },
+        {
+          id: "2",
+          name: "Chocolate",
+          updatedAt: "2020-11-11",
+        },
+        {
+          id: "3",
+          name: "Vanilla",
+          updatedAt: "2019-11-11",
+        },
+      ]}
     />,
     { wrapper: MemoryRouter }
   );

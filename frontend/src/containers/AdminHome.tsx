@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { useCurrentAuthenticatedUser } from "../hooks";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Button from "../components/Button";
 import CardGroup from "../components/CardGroup";
 
@@ -11,6 +12,7 @@ const { Card, CardFooter, CardBody } = CardGroup;
 function AdminHome() {
   const history = useHistory();
   const currentAuthenticatedUser = useCurrentAuthenticatedUser();
+  const { t } = useTranslation();
 
   const onCreateDashboard = () => {
     history.push("/admin/dashboard/create");
@@ -46,14 +48,12 @@ function AdminHome() {
     <div className="usa-prose">
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
-          <h1 className="font-sans-3xl">
-            Welcome to the Performance Dashboard
-          </h1>
+          <h1 className="font-sans-3xl">{t("WelcomeToPDoA")}</h1>
           <p className="font-sans-lg usa-prose">
             {`${
               currentAuthenticatedUser.isAdmin
-                ? "You role is admin. Below are some the things you can do as an admin to get you started."
-                : "This is where you will manage your performance dashboard."
+                ? `${t("WhatYouCanDoAsAdmin")}`
+                : `${t("WhatYouCanDoAsNotAdmin")}`
             }`}
           </p>
         </div>
@@ -61,12 +61,10 @@ function AdminHome() {
       <div className="grid-row">
         {currentAuthenticatedUser.isEditor ? (
           <CardGroup>
-            <Card title="Create a new dashboard" col={7}>
+            <Card title={t("CreateANewDashboard")} col={7}>
               <CardBody>
                 <p>
-                  Build draft dashboards by adding charts, tables and text as
-                  content. Publish dashboards to share results, track progress,
-                  or tell stories about a project, program, service, etc.
+                  {t("BuildDraftDashboards")}
                   <br />
                   <br />
                 </p>
@@ -77,16 +75,13 @@ function AdminHome() {
                   variant="base"
                   onClick={onCreateDashboard}
                 >
-                  Create dashboard
+                  {t("CreateDashboard")}
                 </Button>
               </CardFooter>
             </Card>
-            <Card title="View existing dashboards" col={5}>
+            <Card title={t("ViewExistingDashboards")} col={5}>
               <CardBody>
-                <p>
-                  See the dashboards that other editors in your organization
-                  have created.
-                </p>
+                <p>{t("ViewDashboardsCreatedByOthers")}</p>
               </CardBody>
               <CardFooter>
                 <Button
@@ -94,7 +89,7 @@ function AdminHome() {
                   variant="outline"
                   onClick={onViewDashboards}
                 >
-                  View dashboards
+                  {t("CreateDashboard")}
                 </Button>
               </CardFooter>
             </Card>
@@ -104,12 +99,10 @@ function AdminHome() {
         )}
         {currentAuthenticatedUser.isAdmin ? (
           <CardGroup>
-            <Card title="Create a new dashboard" col={4}>
+            <Card title={t("CreateANewDashboard")} col={4}>
               <CardBody>
                 <p>
-                  Build draft dashboards by adding charts, tables and text as
-                  content. Publish dashboards to share results, track progress,
-                  or tell stories about a project, program, service, etc.
+                  {t("BuildDraftDashboards")}
                   <br />
                   <br />
                 </p>
@@ -120,30 +113,23 @@ function AdminHome() {
                   variant="base"
                   onClick={onCreateDashboard}
                 >
-                  Create dashboard
+                  {t("CreateDashboard")}
                 </Button>
               </CardFooter>
             </Card>
-            <Card title="Add other users" col={4}>
+            <Card title={t("AddOtherUsers")} col={4}>
               <CardBody>
-                <p>
-                  Allow other users in your organization to create, edit, and/or
-                  publish dashboards. Manage their access to dashboards and set
-                  their roles. You may also add other admins.
-                </p>
+                <p>{t("AllowOtherUsers")}</p>
               </CardBody>
               <CardFooter>
                 <Button type="button" variant="outline" onClick={onManageUsers}>
-                  Manage users
+                  {t("ManageUsers")}
                 </Button>
               </CardFooter>
             </Card>
-            <Card title="Customize settings" col={4}>
+            <Card title={t("CustomizeSettings")} col={4}>
               <CardBody>
-                <p>
-                  Personalize the dashboard homepage, configure how users get
-                  approval to publish dashboards, and access other settings.
-                </p>
+                <p>{t("PersonalizeDashboard")}</p>
               </CardBody>
               <CardFooter>
                 <Button
@@ -151,7 +137,7 @@ function AdminHome() {
                   variant="outline"
                   onClick={onViewSettings}
                 >
-                  View settings
+                  {t("ViewSettings")}
                 </Button>
               </CardFooter>
             </Card>
@@ -164,11 +150,10 @@ function AdminHome() {
       <div className="grid-row text-center">
         <div className="grid-col">
           <p className="font-sans-md">
-            This site is where you manage the performance dashboard. <br /> Do
-            you want to see what your audience see?
+            {t("PDoASite")} <br /> {t("WantToViewPublishedSite")}
           </p>
           <Button type="button" variant="outline" onClick={onViewPublicWebsite}>
-            View the published site{" "}
+            {t("ViewPublishedSite")}{" "}
             <FontAwesomeIcon size="sm" icon={faExternalLinkAlt} />
           </Button>
         </div>

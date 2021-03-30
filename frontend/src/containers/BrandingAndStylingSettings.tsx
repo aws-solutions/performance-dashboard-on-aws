@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import SettingsLayout from "../layouts/Settings";
 import Button from "../components/Button";
 import AlertContainer from "./AlertContainer";
@@ -11,6 +12,7 @@ import Spinner from "../components/Spinner";
 function BrandingAndStylingSettings() {
   const history = useHistory();
   const { settings } = useSettings(true);
+  const { t } = useTranslation();
 
   const onEditLogo = () => {
     history.push("/admin/settings/brandingandstyling/editlogo");
@@ -22,18 +24,15 @@ function BrandingAndStylingSettings() {
 
   return (
     <SettingsLayout>
-      <h1>Branding and styling</h1>
+      <h1>{t("BrandingAndStyling")}</h1>
 
-      <p>Customize your performance dashboard.</p>
+      <p>{t("BrandingAndStylingDescription")}</p>
       <br></br>
 
       <AlertContainer />
 
-      <h3 className="margin-top-2-important">Logo</h3>
-      <p>
-        This logo will appear in the header next to the performance dashboard
-        name and in the published site header.
-      </p>
+      <h3 className="margin-top-2-important">{t("BrandingAndStylingLogo")}</h3>
+      <p>{t("BrandingAndStylingLogoDescription")}</p>
       <br />
 
       <div className="grid-row margin-top-0-important">
@@ -46,7 +45,7 @@ function BrandingAndStylingSettings() {
             variant="outline"
             onClick={onEditLogo}
           >
-            Edit
+            {t("Edit")}
           </Button>
         </div>
       </div>
@@ -60,17 +59,16 @@ function BrandingAndStylingSettings() {
         }}
       />
 
-      <h3 className="margin-top-2-important">Colors</h3>
-      <p>
-        Customize these colors to make your dashboards appear similar in style
-        to your organization's brand and color palette.
-      </p>
+      <h3 className="margin-top-2-important">
+        {t("BrandingAndStylingColors")}
+      </h3>
+      <p>{t("BrandingAndStylingColorsDescription")}</p>
       <br />
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-1 text-left">
           <div className="text-bold grid-col flex-1 text-left">
-            Primary color
+            {t("BrandingAndStylingPrimaryColor")}
           </div>
           {settings && settings.colors ? (
             <div className="grid-row margin-top-0-important">
@@ -88,7 +86,10 @@ function BrandingAndStylingSettings() {
               </div>
             </div>
           ) : (
-            <Spinner className="margin-top-3 text-center" label="Loading" />
+            <Spinner
+              className="margin-top-3 text-center"
+              label={t("LoadingSpinnerLabel")}
+            />
           )}
         </div>
         <div className="grid-col flex-3 grid-col flex-3 text-right">
@@ -97,7 +98,7 @@ function BrandingAndStylingSettings() {
             variant="outline"
             onClick={onEditColors}
           >
-            Edit
+            {t("Edit")}
           </Button>
         </div>
       </div>

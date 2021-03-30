@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { DatasetType } from "../models";
+import { useTranslation } from "react-i18next";
 import Alert from "./Alert";
 import Button from "./Button";
 import Link from "./Link";
@@ -9,11 +10,14 @@ import TextField from "./TextField";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import TableWidget from "./TableWidget";
 import Dropdown from "./Dropdown";
+import DatasetParsingService from "../services/DatasetParsingService";
 
 interface Props {
   errors: any;
   register: Function;
   json: Array<any>;
+  originalJson: Array<any>;
+  headers: Array<string>;
   csvJson: Array<any>;
   datasetLoading: boolean;
   datasetType: DatasetType | undefined;
@@ -29,40 +33,17 @@ interface Props {
   sortByDesc?: boolean;
   setSortByColumn: Function;
   setSortByDesc: Function;
-  title?: string;
-  summary?: string;
-  showTitle?: boolean;
-  summaryBelow?: boolean;
+  title: string;
+  summary: string;
+  showTitle: boolean;
+  summaryBelow: boolean;
+  columnsMetadata: Array<any>;
+  significantDigitLabels: boolean;
 }
 
 function VisualizeTable(props: Props) {
+  const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(true);
-  const [title, setTitle] = useState(props.title || "");
-  const [summary, setSummary] = useState(props.summary || "");
-  const [showTitle, setShowTitle] = useState(
-    props.showTitle === undefined ? true : props.showTitle
-  );
-  const [summaryBelow, setSummaryBelow] = useState<boolean>(
-    props.summaryBelow === undefined ? true : props.summaryBelow
-  );
-
-  const handleTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setTitle((event.target as HTMLInputElement).value);
-  };
-
-  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    setSummary((event.target as HTMLTextAreaElement).value);
-  };
-
-  const handleSummaryBelowChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    setSummaryBelow((event.target as HTMLInputElement).checked);
-  };
-
-  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setShowTitle((event.target as HTMLInputElement).checked);
-  };
 
   const handleSortDataChange = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
@@ -78,30 +59,21 @@ function VisualizeTable(props: Props) {
     }
   };
 
-  const headers = props.json.length
-    ? (Object.keys(props.json[0]) as Array<string>)
-    : [];
-  const sortOptions: any = [{ value: "", label: "Select an option" }];
-  headers.forEach((h) => {
-    const sortTypeAsc = typeof h === "string" ? "A-Z" : "low to high";
-    const sortTypeDesc = typeof h === "string" ? "Z-A" : "high - low";
-    sortOptions.push({ value: `${h}###asc`, label: `"${h}" ${sortTypeAsc}` });
-    sortOptions.push({
-      value: `${h}###desc`,
-      label: `"${h}" ${sortTypeDesc}`,
-    });
-  });
-
   return (
     <div className="grid-row width-desktop">
       <div className="grid-col-5" hidden={props.fullPreview}>
+        {props.errors.title && (
+          <Alert
+            type="error"
+            message="Resolve error(s) to add the table"
+          ></Alert>
+        )}
         <TextField
           id="title"
           name="title"
           label="Table title"
           hint="Give your table a descriptive title."
           error={props.errors.title && "Please specify a table title"}
-          onChange={handleTitleChange}
           required
           register={props.register}
         />
@@ -113,7 +85,6 @@ function VisualizeTable(props: Props) {
             type="checkbox"
             name="showTitle"
             defaultChecked={true}
-            onChange={handleShowTitleChange}
             ref={props.register()}
           />
           <label className="usa-checkbox__label" htmlFor="display-title">
@@ -121,12 +92,38 @@ function VisualizeTable(props: Props) {
           </label>
         </div>
 
+        <div>
+          <label className="usa-label text-bold">
+            {t("TableOptionsLabel")}
+          </label>
+          <div className="usa-hint">{t("TableOptionsDescription")}</div>
+          <div className="usa-checkbox">
+            <input
+              className="usa-checkbox__input"
+              id="significantDigitLabels"
+              type="checkbox"
+              name="significantDigitLabels"
+              defaultChecked={false}
+              ref={props.register()}
+            />
+            <label
+              className="usa-checkbox__label"
+              htmlFor="significantDigitLabels"
+            >
+              {t("SignificantDigitLabels")}
+            </label>
+          </div>
+        </div>
+
         <div className="margin-top-3 grid-col-6">
           <Dropdown
             id="sortData"
             name="sortData"
             label="Sort data"
-            options={sortOptions}
+            options={DatasetParsingService.getDatasetSortOptions(
+              props.originalJson,
+              props.headers
+            )}
             onChange={handleSortDataChange}
             defaultValue={
               props.sortByColumn
@@ -151,7 +148,6 @@ function VisualizeTable(props: Props) {
             </>
           }
           register={props.register}
-          onChange={handleSummaryChange}
           multiline
           rows={5}
         />
@@ -162,7 +158,6 @@ function VisualizeTable(props: Props) {
             type="checkbox"
             name="summaryBelow"
             defaultChecked={false}
-            onChange={handleSummaryBelowChange}
             ref={props.register()}
           />
           <label className="usa-checkbox__label" htmlFor="summary-below">
@@ -176,11 +171,10 @@ function VisualizeTable(props: Props) {
           Back
         </Button>
         <Button
-          onClick={props.advanceStep}
           type="submit"
           disabled={
+            !props.title ||
             !props.json.length ||
-            !title ||
             props.fileLoading ||
             props.processingWidget
           }
@@ -248,15 +242,14 @@ function VisualizeTable(props: Props) {
                 ""
               )}
               <TableWidget
-                title={showTitle ? title : ""}
-                summary={summary}
-                summaryBelow={summaryBelow}
-                headers={
-                  props.json.length
-                    ? (Object.keys(props.json[0]) as Array<string>)
-                    : []
-                }
+                title={props.showTitle ? props.title : ""}
+                summary={props.summary}
+                summaryBelow={props.summaryBelow}
                 data={props.json}
+                columnsMetadata={props.columnsMetadata}
+                sortByColumn={props.sortByColumn}
+                sortByDesc={props.sortByDesc}
+                significantDigitLabels={props.significantDigitLabels}
               />
             </>
           )}

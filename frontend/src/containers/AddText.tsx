@@ -10,6 +10,7 @@ import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
 import Link from "../components/Link";
 import Spinner from "../components/Spinner";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -119,6 +120,14 @@ function AddText() {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <fieldset className="usa-fieldset">
+                  {errors.title || errors.text ? (
+                    <Alert
+                      type="error"
+                      message="Resolve error(s) to add the text"
+                    ></Alert>
+                  ) : (
+                    ""
+                  )}
                   <TextField
                     id="title"
                     name="title"
@@ -194,7 +203,7 @@ function AddText() {
               )}
               {text ? (
                 <div className="padding-left-05">
-                  <MarkdownRender source={text} />
+                  <MarkdownRender className="usa-prose" source={text} />
                 </div>
               ) : (
                 ""

@@ -76,7 +76,7 @@ function EditHomepageContent() {
                 id="title"
                 name="title"
                 label="Headline"
-                hint="Give your homepage a descriptive headline"
+                hint="Give your homepage a descriptive headline."
                 error={errors.title && "Please specify a name"}
                 defaultValue={homepage.title}
                 register={register}

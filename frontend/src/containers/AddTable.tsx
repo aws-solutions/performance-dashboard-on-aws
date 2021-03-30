@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { ColumnDataType, LocationState } from "../models";
+import {
+  ColumnDataType,
+  CurrencyDataType,
+  LocationState,
+  NumberDataType,
+} from "../models";
 import { Dataset, DatasetType, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
 import { useDashboard, useFullPreview } from "../hooks";
@@ -14,6 +19,7 @@ import StepIndicator from "../components/StepIndicator";
 import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
 import Visualize from "../components/VisualizeTable";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
 
 interface FormValues {
   title: string;
@@ -21,6 +27,8 @@ interface FormValues {
   showTitle: boolean;
   summaryBelow: boolean;
   datasetType: string;
+  sortData: string;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -34,7 +42,13 @@ function AddTable() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset } = useForm<FormValues>();
+  const {
+    register,
+    errors,
+    handleSubmit,
+    reset,
+    watch,
+  } = useForm<FormValues>();
   const [currentJson, setCurrentJson] = useState<Array<any>>(
     state && state.json ? state.json : []
   );
@@ -75,22 +89,24 @@ function AddTable() {
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
+  const [numberTypes, setNumberTypes] = useState<Map<string, NumberDataType>>(
+    new Map<string, NumberDataType>()
+  );
+  const [currencyTypes, setCurrencyTypes] = useState<
+    Map<string, CurrencyDataType>
+  >(new Map<string, CurrencyDataType>());
+
+  const title = watch("title");
+  const showTitle = watch("showTitle");
+  const summary = watch("summary");
+  const summaryBelow = watch("summaryBelow");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   useMemo(() => {
-    let headers = currentJson.length
-      ? (Object.keys(currentJson[0]) as Array<string>)
-      : [];
-    headers = headers.filter((h) => !hiddenColumns.has(h));
-    const newFilteredJson = new Array<any>();
-    for (const row of currentJson) {
-      const filteredRow = headers.reduce((obj: any, key: any) => {
-        obj[key] = row[key];
-        return obj;
-      }, {});
-      if (filteredRow !== {}) {
-        newFilteredJson.push(filteredRow);
-      }
-    }
+    const newFilteredJson = DatasetParsingService.getFilteredJson(
+      currentJson,
+      hiddenColumns
+    );
     setFilteredJson(newFilteredJson);
   }, [currentJson, hiddenColumns]);
 
@@ -132,6 +148,7 @@ function AddTable() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           datasetType: datasetType,
+          significantDigitLabels: values.significantDigitLabels,
           datasetId: newDataset
             ? newDataset.id
             : datasetType === DatasetType.DynamicDataset
@@ -149,15 +166,12 @@ function AddTable() {
             : staticDataset?.fileName,
           sortByColumn,
           sortByDesc,
-          columnsMetadata: Array.from(selectedHeaders).map((header) => {
-            return {
-              columnName: header,
-              dataType: dataTypes.has(header)
-                ? dataTypes.get(header)
-                : undefined,
-              hidden: hiddenColumns.has(header),
-            };
-          }),
+          columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
+            hiddenColumns,
+            dataTypes,
+            numberTypes,
+            currencyTypes
+          ),
         }
       );
       setCreatingWidget(false);
@@ -331,6 +345,7 @@ function AddTable() {
               fileLoading={fileLoading}
               browseDatasets={browseDatasets}
               continueButtonDisabled={!currentJson.length}
+              continueButtonDisabledTooltip="Choose a dataset to continue"
               csvErrors={csvErrors}
               csvFile={csvFile}
               onCancel={onCancel}
@@ -349,9 +364,17 @@ function AddTable() {
               hiddenColumns={hiddenColumns}
               setHiddenColumns={setHiddenColumns}
               onCancel={onCancel}
-              register={register}
               dataTypes={dataTypes}
               setDataTypes={setDataTypes}
+              numberTypes={numberTypes}
+              setNumberTypes={setNumberTypes}
+              currencyTypes={currencyTypes}
+              setCurrencyTypes={setCurrencyTypes}
+              sortByColumn={sortByColumn}
+              sortByDesc={sortByDesc}
+              setSortByColumn={setSortByColumn}
+              setSortByDesc={setSortByDesc}
+              reset={reset}
             />
           </div>
 
@@ -360,6 +383,12 @@ function AddTable() {
               errors={errors}
               register={register}
               json={filteredJson}
+              originalJson={currentJson}
+              headers={
+                currentJson.length
+                  ? (Object.keys(currentJson[0]) as Array<string>)
+                  : []
+              }
               csvJson={csvJson}
               datasetLoading={datasetLoading}
               datasetType={datasetType}
@@ -375,6 +404,17 @@ function AddTable() {
               sortByDesc={sortByDesc}
               setSortByColumn={setSortByColumn}
               setSortByDesc={setSortByDesc}
+              title={title}
+              showTitle={showTitle}
+              significantDigitLabels={significantDigitLabels}
+              summary={summary}
+              summaryBelow={summaryBelow}
+              columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                hiddenColumns,
+                dataTypes,
+                numberTypes,
+                currencyTypes
+              )}
             />
           </div>
         </form>

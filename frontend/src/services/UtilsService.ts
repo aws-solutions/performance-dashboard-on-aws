@@ -52,13 +52,33 @@ function timeout(delay: number) {
   return new Promise((res) => setTimeout(res, delay));
 }
 
+function isCellEmpty(value: any): boolean {
+  return value === undefined || value === null || value === "";
+}
+
 function getLargestHeader(headers: Array<string>, data?: Array<any>) {
   return (
     data
-      ?.map((d) => (d as any)[headers.length ? headers[0] : ""])
+      ?.map((d) => (d as any)[headers.length ? headers[0] : ""] || "")
       .map((c) => c.toString().length)
       .reduce((a, b) => (a > b ? a : b), 0) || 0
   );
+}
+
+/**
+ * Calculate the YAxis margin needed. This is important after we started
+ * showing the ticks numbers as locale strings and commas or periods are being
+ * added. Margin: Count the commas or periods in the largestTick to locale string,
+ * and multiply by pixelsByCharacter.
+ */
+function calculateYAxisMargin(
+  largestTick: number,
+  significantDigitLabels: boolean
+): number {
+  const pixelsByCharacter = significantDigitLabels ? 2 : 8;
+  const tickLocaleString: string = largestTick.toLocaleString();
+  const numberOfCommas: number = tickLocaleString.match(/,|\./g)?.length || 0;
+  return numberOfCommas * pixelsByCharacter;
 }
 
 /**
@@ -89,6 +109,8 @@ const UtilsService = {
   timeout,
   getLargestHeader,
   getDashboardUrlPath,
+  calculateYAxisMargin,
+  isCellEmpty,
 };
 
 export default UtilsService;

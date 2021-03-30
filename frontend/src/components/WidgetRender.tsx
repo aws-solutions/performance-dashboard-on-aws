@@ -51,7 +51,7 @@ function WidgetWithImage({ widget }: Props) {
 }
 
 function WidgetWithDataset({ widget }: Props) {
-  const { json, jsonHeaders } = useWidgetDataset(widget);
+  const { json } = useWidgetDataset(widget);
   switch (widget.widgetType) {
     case WidgetType.Table:
       const tableWidget = widget as TableWidget;
@@ -59,9 +59,12 @@ function WidgetWithDataset({ widget }: Props) {
         <TableWidgetComponent
           title={tableWidget.showTitle ? tableWidget.content.title : ""}
           summary={tableWidget.content.summary}
-          headers={jsonHeaders}
           data={json}
           summaryBelow={tableWidget.content.summaryBelow}
+          columnsMetadata={tableWidget.content.columnsMetadata}
+          sortByColumn={tableWidget.content.sortByColumn}
+          sortByDesc={tableWidget.content.sortByDesc}
+          significantDigitLabels={tableWidget.content.significantDigitLabels}
         />
       );
     case WidgetType.Metrics:

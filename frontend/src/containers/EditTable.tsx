@@ -1,7 +1,14 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { ColumnDataType, Dataset, DatasetType, LocationState } from "../models";
+import {
+  ColumnDataType,
+  CurrencyDataType,
+  Dataset,
+  DatasetType,
+  LocationState,
+  NumberDataType,
+} from "../models";
 import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
@@ -11,6 +18,7 @@ import { useWidget, useDashboard, useFullPreview } from "../hooks";
 import Spinner from "../components/Spinner";
 import { useDatasets } from "../hooks";
 import UtilsService from "../services/UtilsService";
+import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import "./EditTable.css";
 import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
@@ -25,6 +33,7 @@ interface FormValues {
   summaryBelow: boolean;
   datasetType: string;
   sortData: string;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -86,11 +95,18 @@ function EditTable() {
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
+  const [numberTypes, setNumberTypes] = useState<Map<string, NumberDataType>>(
+    new Map<string, NumberDataType>()
+  );
+  const [currencyTypes, setCurrencyTypes] = useState<
+    Map<string, CurrencyDataType>
+  >(new Map<string, CurrencyDataType>());
 
   const title = watch("title");
   const showTitle = watch("showTitle");
   const summary = watch("summary");
   const summaryBelow = watch("summaryBelow");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const [displayedJson, setDisplayedJson] = useState<Array<any>>([]);
@@ -99,22 +115,12 @@ function EditTable() {
   >();
 
   useMemo(() => {
-    let headers = displayedJson.length
-      ? (Object.keys(displayedJson[0]) as Array<string>)
-      : [];
-    headers = headers.filter((h) => !hiddenColumns.has(h));
-    const newFilteredJson = new Array<any>();
-    for (const row of displayedJson) {
-      const filteredRow = headers.reduce((obj: any, key: any) => {
-        obj[key] = row[key];
-        return obj;
-      }, {});
-      if (filteredRow !== {}) {
-        newFilteredJson.push(filteredRow);
-      }
-    }
+    const newFilteredJson = DatasetParsingService.getFilteredJson(
+      currentJson,
+      hiddenColumns
+    );
     setFilteredJson(newFilteredJson);
-  }, [displayedJson, hiddenColumns]);
+  }, [currentJson, hiddenColumns]);
 
   useEffect(() => {
     if (
@@ -128,6 +134,7 @@ function EditTable() {
       const showTitle = widget.showTitle;
       const summary = widget.content.summary;
       const summaryBelow = widget.content.summaryBelow;
+      const significantDigitLabels = widget.content.significantDigitLabels;
 
       reset({
         title,
@@ -139,6 +146,7 @@ function EditTable() {
           : datasetType,
         summary,
         summaryBelow,
+        significantDigitLabels: significantDigitLabels,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
             ? widget.content.s3Key.json
@@ -192,26 +200,17 @@ function EditTable() {
       if (widget.content.columnsMetadata) {
         const columnsMetadata = widget.content.columnsMetadata;
 
-        const hidden = new Set<string>();
-        columnsMetadata
-          .filter((column: any) => column.hidden)
-          .forEach((column: any) => hidden.add(column.columnName));
+        const {
+          hiddenColumns,
+          dataTypes,
+          numberTypes,
+          currencyTypes,
+        } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
 
-        const dataTypes = new Map<string, ColumnDataType>();
-        columnsMetadata
-          .filter((column: any) => !!column.dataType)
-          .forEach((column: any) =>
-            dataTypes.set(column.columnName, column.dataType)
-          );
-
-        const headers = new Set<string>();
-        columnsMetadata.forEach((column: any) =>
-          headers.add(column.columnName)
-        );
-
-        setSelectedHeaders(headers);
-        setHiddenColumns(hidden);
+        setHiddenColumns(hiddenColumns);
         setDataTypes(dataTypes);
+        setNumberTypes(numberTypes);
+        setCurrencyTypes(currencyTypes);
         setSortByColumn(widget.content.sortByColumn);
         setSortByDesc(widget.content.sortByDesc || false);
       }
@@ -312,6 +311,7 @@ function EditTable() {
           summary: values.summary,
           summaryBelow: values.summaryBelow,
           datasetType: displayedDatasetType,
+          significantDigitLabels: values.significantDigitLabels,
           datasetId: newDataset
             ? newDataset.id
             : displayedDatasetType === DatasetType.DynamicDataset
@@ -329,15 +329,12 @@ function EditTable() {
             : staticDataset?.fileName,
           sortByColumn,
           sortByDesc,
-          columnsMetadata: Array.from(selectedHeaders).map((header) => {
-            return {
-              columnName: header,
-              hidden: hiddenColumns.has(header),
-              dataType: dataTypes.has(header)
-                ? dataTypes.get(header)
-                : undefined,
-            };
-          }),
+          columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
+            hiddenColumns,
+            dataTypes,
+            numberTypes,
+            currencyTypes
+          ),
         },
         widget.updatedAt
       );
@@ -529,9 +526,17 @@ function EditTable() {
                   hiddenColumns={hiddenColumns}
                   setHiddenColumns={setHiddenColumns}
                   onCancel={onCancel}
-                  register={register}
                   dataTypes={dataTypes}
                   setDataTypes={setDataTypes}
+                  numberTypes={numberTypes}
+                  setNumberTypes={setNumberTypes}
+                  currencyTypes={currencyTypes}
+                  setCurrencyTypes={setCurrencyTypes}
+                  sortByColumn={sortByColumn}
+                  sortByDesc={sortByDesc}
+                  setSortByColumn={setSortByColumn}
+                  setSortByDesc={setSortByDesc}
+                  reset={reset}
                 />
               </div>
 
@@ -540,6 +545,12 @@ function EditTable() {
                   errors={errors}
                   register={register}
                   json={filteredJson}
+                  originalJson={displayedJson}
+                  headers={
+                    displayedJson.length
+                      ? (Object.keys(displayedJson[0]) as Array<string>)
+                      : []
+                  }
                   csvJson={csvJson}
                   datasetLoading={datasetLoading}
                   datasetType={displayedDatasetType}
@@ -559,6 +570,13 @@ function EditTable() {
                   sortByDesc={sortByDesc}
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
+                  significantDigitLabels={significantDigitLabels}
+                  columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                    hiddenColumns,
+                    dataTypes,
+                    numberTypes,
+                    currencyTypes
+                  )}
                 />
               </div>
             </form>

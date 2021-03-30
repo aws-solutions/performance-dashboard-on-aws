@@ -438,9 +438,27 @@ paths:
 
     post:
       operationId: CreateUsers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+      responses:
+        "200":
+          description: User was created
 
     delete:
       operationId: DeleteUsers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteUserRequest"
+      responses:
+        "200":
+          description: User(s) were created
 
   /user/role:
     put:
@@ -459,17 +477,52 @@ paths:
       operationId: CreateDynamicDataset
       security:
         - api_key: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Dataset"
+      responses:
+        "200":
+          description: dataset was created
 
   /ingestapi/dataset/{id}:
     put:
       operationId: UpdateDynamicDataset
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dataset Id
+          schema:
+            type: string
       security:
         - api_key: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Dataset"
+      responses:
+        "200":
+          description: dataset was created
 
     delete:
       operationId: DeleteDynamicDataset
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dataset Id
+          schema:
+            type: string
       security:
         - api_key: []
+      responses:
+        "200":
+          description: dataset was deleted
 
 components:
   securitySchemes:
@@ -918,3 +971,49 @@ components:
               - updatedAt
       required:
         - widgets
+
+    CreateUserRequest:
+      type: object
+      properties:
+        emails:
+          type: string
+        role:
+          type: string
+      required:
+        - emails
+        - role
+
+    DeleteUserRequest:
+      type: object
+      properties:
+        usernames:
+          type: array
+          items:
+            type: string
+      required:
+        - usernames
+
+    DatasetMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+        schema:
+          type: string
+          enum:
+            - Metrics
+      required:
+        - name
+
+    Dataset:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/DatasetMetadata"
+        data:
+          type: array
+          items:
+            type: object
+      required:
+        - metadata
+        - data

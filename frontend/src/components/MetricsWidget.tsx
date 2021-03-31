@@ -6,17 +6,25 @@ type Props = {
   title: string;
   metrics: Array<Metric>;
   metricPerRow: number;
+  significantDigitLabels: boolean;
 };
 
-const MetricsWidget = (props: Props) => {
-  const { title, metrics, metricPerRow } = props;
-
+const MetricsWidget = ({
+  title,
+  metrics,
+  metricPerRow,
+  significantDigitLabels,
+}: Props) => {
   return (
     <div>
       <h2 className="margin-top-4">{title}</h2>
       {metrics.length ? (
         <div>
-          <MetricsCardGroup metrics={metrics} metricPerRow={metricPerRow} />
+          <MetricsCardGroup
+            metrics={metrics}
+            metricPerRow={metricPerRow}
+            significantDigitLabels={significantDigitLabels}
+          />
         </div>
       ) : (
         ""

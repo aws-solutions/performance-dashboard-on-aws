@@ -262,6 +262,7 @@ export type LocationState = {
   position?: number;
   showTitle?: boolean;
   oneMetricPerRow?: boolean;
+  significantDigitLabels?: boolean;
   metricTitle?: string;
   origin?: string;
   json?: Array<any>;

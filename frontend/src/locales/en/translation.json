@@ -103,5 +103,7 @@
   "ChartOptionsLabel": "Chart Options",
   "ChartOptionsDescription": "Format your chart",
   "TableOptionsLabel": "Table Options",
-  "TableOptionsDescription": "Format your table"
+  "TableOptionsDescription": "Format your table",
+  "MetricsOptionsLabel": "Metrics Options",
+  "MetricsOptionsDescription": "Format your metrics"
 }

@@ -107,6 +107,15 @@ function AddChart() {
   const horizontalScroll = watch("horizontalScroll");
   const significantDigitLabels = watch("significantDigitLabels");
 
+  const initializeColumnsMetadata = () => {
+    setHiddenColumns(new Set<string>());
+    setDataTypes(new Map<string, ColumnDataType>());
+    setNumberTypes(new Map<string, NumberDataType>());
+    setCurrencyTypes(new Map<string, CurrencyDataType>());
+    setSortByColumn(undefined);
+    setSortByDesc(false);
+  };
+
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
       currentJson,
@@ -240,6 +249,7 @@ function AddChart() {
         comments: "#",
         encoding: "ISO-8859-1",
         complete: async function (results: ParseResult<object>) {
+          initializeColumnsMetadata();
           if (results.errors.length) {
             setCsvErrors(results.errors);
             setCsvJson([]);
@@ -263,6 +273,7 @@ function AddChart() {
       setDatasetLoading(true);
       const datasetType = target.value as DatasetType;
       setDatasetType(datasetType);
+      initializeColumnsMetadata();
       await UtilsService.timeout(0);
       if (datasetType === DatasetType.DynamicDataset) {
         setCurrentJson(dynamicJson);
@@ -288,18 +299,23 @@ function AddChart() {
     ) {
       const jsonFile = selectedDataset.s3Key.json;
 
+      initializeColumnsMetadata();
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicJson(dataset);
       setCurrentJson(dataset);
       setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
-    } else {
-      setDynamicJson([]);
-      setCurrentJson([]);
-      setDynamicDataset(undefined);
     }
 
     setDatasetLoading(false);
   };
+
+  useEffect(() => {
+    if (datasetType) {
+      reset({
+        datasetType,
+      });
+    }
+  }, []);
 
   const crumbs = [
     {
@@ -318,14 +334,6 @@ function AddChart() {
       url: "",
     });
   }
-
-  useEffect(() => {
-    if (datasetType) {
-      reset({
-        datasetType,
-      });
-    }
-  }, []);
 
   return (
     <>

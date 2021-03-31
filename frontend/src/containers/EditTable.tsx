@@ -75,9 +75,7 @@ function EditTable() {
     dynamicJson,
     staticJson,
     csvJson,
-    setCurrentJson,
     setDynamicJson,
-    setStaticJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
   const { fullPreview, fullPreviewButton } = useFullPreview();
@@ -114,13 +112,22 @@ function EditTable() {
     DatasetType | undefined
   >();
 
+  const initializeColumnsMetadata = () => {
+    setHiddenColumns(new Set<string>());
+    setDataTypes(new Map<string, ColumnDataType>());
+    setNumberTypes(new Map<string, NumberDataType>());
+    setCurrencyTypes(new Map<string, CurrencyDataType>());
+    setSortByColumn(undefined);
+    setSortByDesc(false);
+  };
+
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
-      currentJson,
+      displayedJson,
       hiddenColumns
     );
     setFilteredJson(newFilteredJson);
-  }, [currentJson, hiddenColumns]);
+  }, [displayedJson, hiddenColumns]);
 
   useEffect(() => {
     if (
@@ -162,21 +169,35 @@ function EditTable() {
           : "",
       });
 
-      if (state && state.json) {
-        setStaticJson(state.json);
-        setCurrentJson(state.json);
-      }
-
       if (!displayedDatasetType) {
         setDisplayedDatasetType(
           state && state.json && state.staticDataset
             ? DatasetType.StaticDataset
             : datasetType
         );
-      }
 
-      if (!displayedJson.length) {
-        setDisplayedJson(state && state.json ? state.json : currentJson);
+        if (!displayedJson.length) {
+          setDisplayedJson(state && state.json ? state.json : currentJson);
+        }
+
+        // Initialize fields related to columns metadata
+        if (widget.content.columnsMetadata && (!state || !state.json)) {
+          const columnsMetadata = widget.content.columnsMetadata;
+
+          const {
+            hiddenColumns,
+            dataTypes,
+            numberTypes,
+            currencyTypes,
+          } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
+
+          setHiddenColumns(hiddenColumns);
+          setDataTypes(dataTypes);
+          setNumberTypes(numberTypes);
+          setCurrencyTypes(currencyTypes);
+          setSortByColumn(widget.content.sortByColumn);
+          setSortByDesc(widget.content.sortByDesc || false);
+        }
       }
 
       if (!dynamicDataset) {
@@ -194,25 +215,6 @@ function EditTable() {
                 (d) => d.s3Key.json === widget.content.s3Key.json
               )
         );
-      }
-
-      // Initialize fields related to columns metadata
-      if (widget.content.columnsMetadata) {
-        const columnsMetadata = widget.content.columnsMetadata;
-
-        const {
-          hiddenColumns,
-          dataTypes,
-          numberTypes,
-          currencyTypes,
-        } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
-
-        setHiddenColumns(hiddenColumns);
-        setDataTypes(dataTypes);
-        setNumberTypes(numberTypes);
-        setCurrencyTypes(currencyTypes);
-        setSortByColumn(widget.content.sortByColumn);
-        setSortByDesc(widget.content.sortByDesc || false);
       }
     }
   }, [
@@ -239,24 +241,25 @@ function EditTable() {
         comments: "#",
         encoding: "ISO-8859-1",
         complete: function (results: ParseResult<object>) {
+          initializeColumnsMetadata();
           if (results.errors.length) {
             setCsvErrors(results.errors);
             setCsvJson([]);
-            setCurrentJson([]);
+            setDisplayedJson([]);
           } else {
             setCsvErrors(undefined);
             const csvJson = DatasetParsingService.createHeaderRowJson(
               results.data
             );
             setCsvJson(csvJson);
-            setCurrentJson(csvJson);
+            setDisplayedJson(csvJson);
           }
           setDatasetLoading(false);
         },
       });
       setCsvFile(data);
     },
-    [setCurrentJson, setCsvJson]
+    [setDisplayedJson, setCsvJson]
   );
 
   const uploadDataset = async (): Promise<Dataset | null> => {
@@ -277,7 +280,7 @@ function EditTable() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(currentJson)
+      JSON.stringify(displayedJson)
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -363,14 +366,16 @@ function EditTable() {
       const datasetType = target.value as DatasetType;
       setDisplayedDatasetType(datasetType);
       await UtilsService.timeout(0);
+      initializeColumnsMetadata();
       if (datasetType === DatasetType.DynamicDataset) {
         setDisplayedJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        setDisplayedJson(staticJson);
-      }
-      if (datasetType === DatasetType.CsvFileUpload) {
-        setDisplayedJson(csvJson);
+        if (csvJson) {
+          setDisplayedJson(csvJson);
+        } else {
+          setDisplayedJson(staticJson);
+        }
       }
       setDatasetLoading(false);
     }
@@ -404,14 +409,11 @@ function EditTable() {
     ) {
       const jsonFile = selectedDataset.s3Key.json;
 
+      initializeColumnsMetadata();
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
       setDynamicJson(dataset);
       setDisplayedJson(dataset);
-    } else {
-      setDynamicDataset(undefined);
-      setDynamicJson([]);
-      setDisplayedJson([]);
     }
 
     setDatasetLoading(false);
@@ -477,6 +479,7 @@ function EditTable() {
                         }
                         type="button"
                         onClick={() => setStep(1)}
+                        disabled={!displayedJson.length}
                       >
                         Check data
                       </button>
@@ -490,6 +493,7 @@ function EditTable() {
                         }
                         type="button"
                         onClick={() => setStep(2)}
+                        disabled={!displayedJson.length}
                       >
                         Visualize
                       </button>
@@ -507,7 +511,7 @@ function EditTable() {
                   advanceStep={advanceStep}
                   fileLoading={fileLoading}
                   browseDatasets={browseDatasets}
-                  continueButtonDisabled={!currentJson.length}
+                  continueButtonDisabled={!displayedJson.length}
                   csvErrors={csvErrors}
                   csvFile={csvFile}
                   onCancel={onCancel}
@@ -518,7 +522,7 @@ function EditTable() {
 
               <div hidden={step !== 1}>
                 <CheckData
-                  data={currentJson}
+                  data={displayedJson}
                   advanceStep={advanceStep}
                   backStep={backStep}
                   selectedHeaders={selectedHeaders}

@@ -205,39 +205,37 @@ function VisualizeTable(props: Props) {
               {showAlert &&
               props.datasetType === DatasetType.StaticDataset &&
               props.csvJson.length ? (
-                <div className="margin-left-1">
-                  <Alert
-                    type="info"
-                    message={
-                      <div className="grid-row margin-left-4">
-                        <div className="grid-col-11">
-                          Does the table look correct?
-                          <Link
-                            to="/admin/formattingcsv"
-                            target="_blank"
-                            external
+                <Alert
+                  type="info"
+                  message={
+                    <div className="grid-row margin-left-4">
+                      <div className="grid-col-11">
+                        Does the table look correct?
+                        <Link
+                          to="/admin/formattingcsv"
+                          target="_blank"
+                          external
+                        >
+                          Learn how to format your CSV data.
+                        </Link>
+                      </div>
+                      <div className="grid-col-1">
+                        <div className="margin-left-4">
+                          <Button
+                            variant="unstyled"
+                            className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                            onClick={() => setShowAlert(false)}
+                            type="button"
+                            ariaLabel="Close"
                           >
-                            Learn how to format your CSV data.
-                          </Link>
-                        </div>
-                        <div className="grid-col-1">
-                          <div className="margin-left-4">
-                            <Button
-                              variant="unstyled"
-                              className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
-                              onClick={() => setShowAlert(false)}
-                              type="button"
-                              ariaLabel="Close"
-                            >
-                              <FontAwesomeIcon icon={faTimes} size="sm" />
-                            </Button>
-                          </div>
+                            <FontAwesomeIcon icon={faTimes} size="sm" />
+                          </Button>
                         </div>
                       </div>
-                    }
-                    slim
-                  />
-                </div>
+                    </div>
+                  }
+                  slim
+                />
               ) : (
                 ""
               )}

@@ -60,6 +60,10 @@ test("renders the VisualizeTable component", async () => {
           updatedAt: "2019-11-11",
         },
       ]}
+      showTitle={true}
+      significantDigitLabels={false}
+      summary={""}
+      title={""}
     />,
     { wrapper: MemoryRouter }
   );

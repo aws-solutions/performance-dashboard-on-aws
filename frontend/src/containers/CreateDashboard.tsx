@@ -41,7 +41,7 @@ function CreateDashboard() {
     history.push(`/admin/dashboard/edit/${dashboard.id}`, {
       alert: {
         type: "success",
-        message: `"${dashboard.name}" {t("CreateEditDashboardSuccess")}`,
+        message: `"${dashboard.name}" ${t("CreateEditDashboardSuccess")}`,
       },
       id: "top-alert",
     });
@@ -56,7 +56,12 @@ function CreateDashboard() {
   };
 
   if (loading) {
-    return <Spinner className="text-center margin-top-9" label="Loading" />;
+    return (
+      <Spinner
+        className="text-center margin-top-9"
+        label={t("LoadingSpinnerLabel")}
+      />
+    );
   }
 
   return (
@@ -64,11 +69,11 @@ function CreateDashboard() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Dashboards",
+            label: t("Dashboards"),
             url: "/admin/dashboards",
           },
           {
-            label: "Create new dashboard",
+            label: t("CreateNewDashboard"),
           },
         ]}
       />
@@ -78,7 +83,7 @@ function CreateDashboard() {
           <div className="grid-row">
             <div className="grid-col-12">
               <PrimaryActionBar>
-                <h1 className="margin-top-0">Create dashboard</h1>
+                <h1 className="margin-top-0">{t("CreateDashboard")}</h1>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="usa-form usa-form--large"
@@ -87,10 +92,10 @@ function CreateDashboard() {
                   <TextField
                     id="name"
                     name="name"
-                    label="Dashboard Name"
-                    hint="Give your dashboard a descriptive name"
+                    label={t("DashboardName")}
+                    hint={t("DashboardDescriptiveName")}
                     register={register}
-                    error={errors.name && "Please specify a name"}
+                    error={errors.name && t("ErrorNameSpecify")}
                     required
                   />
 
@@ -98,7 +103,9 @@ function CreateDashboard() {
                     id="topicAreaId"
                     name="topicAreaId"
                     label={settings.topicAreaLabels.singular}
-                    hint={`Select an existing ${settings.topicAreaLabels.singular.toLowerCase()}`}
+                    hint={`${t(
+                      "SelectExistingLeading"
+                    )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
                     register={register}
                     options={topicareas.map((topicarea) => ({
                       value: topicarea.id,
@@ -109,16 +116,10 @@ function CreateDashboard() {
                   <TextField
                     id="description"
                     name="description"
-                    label="Description - optional"
+                    label={t("DescriptionOptional")}
                     hint={
                       <>
-<<<<<<< HEAD
-                        Give your dashboard a description that provides an
-                        initial summary. This text area supports limited
-                        markdown.{" "}
-=======
                         {t("CreateEditDashboardDetails")}{" "}
->>>>>>> 094169a... Partial work on CreateDashboard + EditDetails
                         <Link target="_blank" to={"/admin/markdown"} external>
                           {t("CreateEditDashboardDetailsLink")}
                         </Link>
@@ -131,14 +132,14 @@ function CreateDashboard() {
 
                   <br />
                   <hr />
-                  <Button type="submit">Create</Button>
+                  <Button type="submit">{t("Create")}</Button>
                   <Button
                     className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                     variant="unstyled"
                     type="button"
                     onClick={onCancel}
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                 </form>
               </PrimaryActionBar>

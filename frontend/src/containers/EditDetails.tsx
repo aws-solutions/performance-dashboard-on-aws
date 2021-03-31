@@ -126,14 +126,8 @@ function EditDetails() {
                     defaultValue={dashboard.description}
                     hint={
                       <>
-<<<<<<< HEAD
-                        Give your dashboard a description that provides an
-                        initial summary. This text area supports limited
-                        markdown.{" "}
-=======
-                        Givesss your dashboard a description to explain it in
-                        more depth. This text area supports limited markdown.{" "}
->>>>>>> 094169a... Partial work on CreateDashboard + EditDetails
+                        Gives your dashboard a description to explain it in more
+                        depth. This text area supports limited markdown.{" "}
                         <Link target="_blank" to={"/admin/markdown"} external>
                           View Markdown Syntax
                         </Link>

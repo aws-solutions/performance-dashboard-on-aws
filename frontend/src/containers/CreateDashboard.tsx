@@ -119,9 +119,6 @@ function CreateDashboard() {
                     label={t("DescriptionOptional")}
                     hint={
                       <>
-                        {t("CreateEditDashboardDetails")} Give your dashboard a
-                        description that provides an initial summary. This text
-                        area supports limited markdown.{" "}
                         {t("CreateEditDashboardDetails")}{" "}
                         <Link target="_blank" to={"/admin/markdown"} external>
                           {t("CreateEditDashboardDetailsLink")}

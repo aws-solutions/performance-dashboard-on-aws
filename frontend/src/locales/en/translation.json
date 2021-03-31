@@ -127,5 +127,7 @@
   "DashboardDescriptiveName": "Give your dashboard a descriptive name",
   "SelectExistingLeading": "select an existing",
   "DescriptionOptional": "Description - optional",
-  "ErrorNameSpecify": "Please specify a name"
+  "ErrorNameSpecify": "Please specify a name",
+  "MetricsOptionsLabel": "Metrics Options",
+  "MetricsOptionsDescription": "Format your metrics"
 }

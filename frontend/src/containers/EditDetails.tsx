@@ -11,6 +11,7 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   name: string;
@@ -33,6 +34,8 @@ function EditDetails() {
   const name = watch("name");
   const description = watch("description");
   const topicAreaId = watch("topicAreaId");
+
+  const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.editDashboard(
@@ -123,9 +126,8 @@ function EditDetails() {
                     defaultValue={dashboard.description}
                     hint={
                       <>
-                        Give your dashboard a description that provides an
-                        initial summary. This text area supports limited
-                        markdown.{" "}
+                        Gives your dashboard a description to explain it in more
+                        depth. This text area supports limited markdown.{" "}
                         <Link target="_blank" to={"/admin/markdown"} external>
                           View Markdown Syntax
                         </Link>

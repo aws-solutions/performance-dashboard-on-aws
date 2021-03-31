@@ -11,6 +11,7 @@ import Modal from "../components/Modal";
 import AlertContainer from "./AlertContainer";
 import DropdownMenu from "../components/DropdownMenu";
 import Link from "../components/Link";
+import { useTranslation } from "react-i18next";
 
 const MenuItem = DropdownMenu.MenuItem;
 
@@ -21,6 +22,8 @@ function UserListing() {
   const [selected, setSelected] = useState<Array<User>>([]);
   const [isOpenResendInviteModal, setIsOpenResendInviteModal] = useState(false);
   const [isOpenRemoveUsersModal, setIsOpenRemoveUsersModal] = useState(false);
+
+  const { t } = useTranslation();
 
   const addUsers = () => {
     history.push("/admin/users/add");
@@ -119,7 +122,7 @@ function UserListing() {
       <Modal
         isOpen={isOpenResendInviteModal}
         closeModal={closeResendInviteModal}
-        title={"Resend invite email"}
+        title={t("UserListingModalTitleResendInvites")}
         message={`Are you sure you want to resend the invite${
           selected.length === 1 ? " for this user?" : "s for these users?"
         }`}
@@ -133,14 +136,13 @@ function UserListing() {
         message={`Are you sure you want to remove ${selected.length} ${
           selected.length > 1 ? "users" : "user"
         }?`}
-        buttonType="Delete"
+        buttonType={t("GlobalDelete")}
         buttonAction={removeUsers}
       />
       <p>
-        These are all of the users who have access. You can add and remove
-        users, change users' roles, or resend email invites.{" "}
+        {t("UserListingDescription")}{" "}
         <Link target="_blank" to={"/admin/userstatus"} external>
-          What do the statuses mean?
+          {t("UserListingLink")}
         </Link>
       </p>
       <AlertContainer />
@@ -149,32 +151,39 @@ function UserListing() {
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
               <span>
-                <Search id="search" onSubmit={onSearch} size="small" />
+                <Search
+                  id={t("GlobalSearch")}
+                  onSubmit={onSearch}
+                  size="small"
+                />
               </span>
             </li>
           </ul>
         </div>
         <div className="tablet:grid-col-8 text-right">
           <span>
-            <DropdownMenu buttonText="Actions" variant="outline">
+            <DropdownMenu
+              buttonText={t("UserListingDropdownMenuActions")}
+              variant="outline"
+            >
               <MenuItem
                 onSelect={onResendInvite}
                 disabled={resendInviteEmailDisabled()}
-                title="Resend invite emails to unconfirmed users"
+                title={t("UserListingDropdownResendInviteText")}
               >
-                Resend invite email
+                {t("UserListingActionsResendInvites")}
               </MenuItem>
               <MenuItem
                 onSelect={onRemoveUsers}
                 disabled={selected.length === 0}
               >
-                Remove users
+                {t("UserListingActionsRemoveUsers")}
               </MenuItem>
             </DropdownMenu>
           </span>
           <span>
             <Button variant="base" onClick={addUsers}>
-              Add user(s)
+              {t("UserListingAddUsers")}
             </Button>
           </span>
         </div>

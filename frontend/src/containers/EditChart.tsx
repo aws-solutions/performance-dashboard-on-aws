@@ -116,11 +116,20 @@ function EditChart() {
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const [displayedDatasetType, setDisplayedDatasetType] = useState<
     DatasetType | undefined
-  >();
+  >(undefined);
+
+  const initializeColumnsMetadata = () => {
+    setHiddenColumns(new Set<string>());
+    setDataTypes(new Map<string, ColumnDataType>());
+    setNumberTypes(new Map<string, NumberDataType>());
+    setCurrencyTypes(new Map<string, CurrencyDataType>());
+    setSortByColumn(undefined);
+    setSortByDesc(false);
+  };
 
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
-      currentJson,
+      displayedJson,
       hiddenColumns
     );
     DatasetParsingService.sortFilteredJson(
@@ -129,7 +138,7 @@ function EditChart() {
       sortByDesc
     );
     setFilteredJson(newFilteredJson);
-  }, [currentJson, hiddenColumns, sortByColumn, sortByDesc]);
+  }, [displayedJson, hiddenColumns, sortByColumn, sortByDesc]);
 
   useEffect(() => {
     if (
@@ -180,10 +189,29 @@ function EditChart() {
             ? DatasetType.StaticDataset
             : datasetType
         );
-      }
 
-      if (!displayedJson.length) {
-        setDisplayedJson(state && state.json ? state.json : currentJson);
+        if (!displayedJson.length) {
+          setDisplayedJson(state && state.json ? state.json : currentJson);
+        }
+
+        // Initialize fields related to columns metadata
+        if (widget.content.columnsMetadata && (!state || !state.json)) {
+          const columnsMetadata = widget.content.columnsMetadata;
+
+          const {
+            hiddenColumns,
+            dataTypes,
+            numberTypes,
+            currencyTypes,
+          } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
+
+          setHiddenColumns(hiddenColumns);
+          setDataTypes(dataTypes);
+          setNumberTypes(numberTypes);
+          setCurrencyTypes(currencyTypes);
+          setSortByColumn(widget.content.sortByColumn);
+          setSortByDesc(widget.content.sortByDesc || false);
+        }
       }
 
       if (!dynamicDataset) {
@@ -201,25 +229,6 @@ function EditChart() {
                 (d) => d.s3Key.json === widget.content.s3Key.json
               )
         );
-      }
-
-      // Initialize fields related to columns metadata
-      if (widget.content.columnsMetadata) {
-        const columnsMetadata = widget.content.columnsMetadata;
-
-        const {
-          hiddenColumns,
-          dataTypes,
-          numberTypes,
-          currencyTypes,
-        } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
-
-        setHiddenColumns(hiddenColumns);
-        setDataTypes(dataTypes);
-        setNumberTypes(numberTypes);
-        setCurrencyTypes(currencyTypes);
-        setSortByColumn(widget.content.sortByColumn);
-        setSortByDesc(widget.content.sortByDesc || false);
       }
     }
   }, [
@@ -246,6 +255,7 @@ function EditChart() {
         comments: "#",
         encoding: "ISO-8859-1",
         complete: function (results: ParseResult<object>) {
+          initializeColumnsMetadata();
           if (results.errors.length) {
             setCsvErrors(results.errors);
             setCsvJson([]);
@@ -373,15 +383,17 @@ function EditChart() {
       setDatasetLoading(true);
       const datasetType = target.value as DatasetType;
       setDisplayedDatasetType(datasetType);
+      initializeColumnsMetadata();
       await UtilsService.timeout(0);
       if (datasetType === DatasetType.DynamicDataset) {
         setDisplayedJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        setDisplayedJson(staticJson);
-      }
-      if (datasetType === DatasetType.CsvFileUpload) {
-        setDisplayedJson(csvJson);
+        if (csvJson) {
+          setDisplayedJson(csvJson);
+        } else {
+          setDisplayedJson(staticJson);
+        }
       }
       setDatasetLoading(false);
     }
@@ -415,14 +427,11 @@ function EditChart() {
     ) {
       const jsonFile = selectedDataset.s3Key.json;
 
+      initializeColumnsMetadata();
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
       setDynamicJson(dataset);
       setDisplayedJson(dataset);
-    } else {
-      setDynamicDataset(undefined);
-      setDynamicJson([]);
-      setDisplayedJson([]);
     }
 
     setDatasetLoading(false);
@@ -486,6 +495,7 @@ function EditChart() {
                     }
                     type="button"
                     onClick={() => setStep(1)}
+                    disabled={!displayedJson.length}
                   >
                     Check data
                   </button>
@@ -499,6 +509,7 @@ function EditChart() {
                     }
                     type="button"
                     onClick={() => setStep(2)}
+                    disabled={!displayedJson.length}
                   >
                     Visualize
                   </button>
@@ -515,7 +526,7 @@ function EditChart() {
                 advanceStep={advanceStep}
                 fileLoading={fileLoading}
                 browseDatasets={browseDatasets}
-                continueButtonDisabled={!currentJson.length}
+                continueButtonDisabled={!displayedJson.length}
                 csvErrors={csvErrors}
                 csvFile={csvFile}
                 onCancel={onCancel}
@@ -525,7 +536,7 @@ function EditChart() {
             </div>
             <div hidden={step !== 1}>
               <CheckData
-                data={currentJson}
+                data={displayedJson}
                 advanceStep={advanceStep}
                 backStep={backStep}
                 selectedHeaders={selectedHeaders}

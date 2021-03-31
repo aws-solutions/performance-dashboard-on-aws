@@ -20,6 +20,7 @@ import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
 import Visualize from "../components/VisualizeTable";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
+import UtilsService from "../services/UtilsService";
 
 interface FormValues {
   title: string;
@@ -101,6 +102,15 @@ function AddTable() {
   const summary = watch("summary");
   const summaryBelow = watch("summaryBelow");
   const significantDigitLabels = watch("significantDigitLabels");
+
+  const initializeColumnsMetadata = () => {
+    setHiddenColumns(new Set<string>());
+    setDataTypes(new Map<string, ColumnDataType>());
+    setNumberTypes(new Map<string, NumberDataType>());
+    setCurrencyTypes(new Map<string, CurrencyDataType>());
+    setSortByColumn(undefined);
+    setSortByDesc(false);
+  };
 
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
@@ -210,14 +220,11 @@ function AddTable() {
     ) {
       const jsonFile = selectedDataset.s3Key.json;
 
+      initializeColumnsMetadata();
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicJson(dataset);
       setCurrentJson(dataset);
       setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
-    } else {
-      setDynamicJson([]);
-      setCurrentJson([]);
-      setDynamicDataset(undefined);
     }
 
     setDatasetLoading(false);
@@ -245,6 +252,7 @@ function AddTable() {
       comments: "#",
       encoding: "ISO-8859-1",
       complete: function (results: ParseResult<object>) {
+        initializeColumnsMetadata();
         if (results.errors.length) {
           setCsvErrors(results.errors);
           setCsvJson([]);
@@ -263,19 +271,22 @@ function AddTable() {
     setCsvFile(data);
   };
 
-  const handleChange = (event: React.FormEvent<HTMLFieldSetElement>) => {
+  const handleChange = async (event: React.FormEvent<HTMLFieldSetElement>) => {
     const target = event.target as HTMLInputElement;
     if (target.name === "datasetType") {
       const datasetType = target.value as DatasetType;
       setDatasetType(datasetType);
+      initializeColumnsMetadata();
+      await UtilsService.timeout(0);
       if (datasetType === DatasetType.DynamicDataset) {
         setCurrentJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        setCurrentJson(staticJson);
-      }
-      if (datasetType === DatasetType.CsvFileUpload) {
-        setCurrentJson(csvJson);
+        if (csvJson) {
+          setCurrentJson(csvJson);
+        } else {
+          setCurrentJson(staticJson);
+        }
       }
     }
   };

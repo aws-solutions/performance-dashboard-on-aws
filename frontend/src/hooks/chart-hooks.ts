@@ -65,3 +65,29 @@ export function useXAxisMetadata(
     xAxisLargestValue,
   };
 }
+
+type UseWindowSizeHook = {
+  width: number;
+  height: number;
+};
+
+export function useWindowSize(): UseWindowSizeHook {
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  React.useEffect(() => {
+    function handleResize() {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return size;
+}

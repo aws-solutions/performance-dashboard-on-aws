@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import { useColors } from "../hooks";
+import { useColors, useWindowSize } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 
@@ -29,6 +29,7 @@ const PartWholeChartWidget = (props: Props) => {
   const [partsHover, setPartsHover] = useState(null);
   const [hiddenParts, setHiddenParts] = useState<Array<string>>([]);
   const [xAxisLargestValue, setXAxisLargestValue] = useState(0);
+  const windowSize = useWindowSize();
 
   const partWholeData = useRef<Array<object>>([]);
   const partWholeParts = useRef<Array<string>>([]);
@@ -111,6 +112,28 @@ const PartWholeChartWidget = (props: Props) => {
     );
   };
 
+  const calculateChartHeight = (): number => {
+    const minHeight = 250;
+    const minHeightMobile = 300;
+    const maxHeight = 500;
+
+    if (!data || !data.length) {
+      return minHeight;
+    }
+
+    // Handle very small screens where width is less than 300 pixels
+    if (windowSize.width <= 300) {
+      if (data.length < 5) {
+        return minHeightMobile;
+      } else {
+        // For every part in the chart, add 20 pixels
+        return minHeightMobile + Math.min(maxHeight, data.length * 20);
+      }
+    }
+
+    return data.length < 15 ? minHeight : maxHeight;
+  };
+
   return (
     <div>
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
@@ -123,10 +146,7 @@ const PartWholeChartWidget = (props: Props) => {
         />
       )}
       {partWholeData.current.length && (
-        <ResponsiveContainer
-          width="100%"
-          height={data && data.length > 15 ? 600 : 250}
-        >
+        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
           <BarChart
             className="part-to-whole-chart"
             data={partWholeData.current}

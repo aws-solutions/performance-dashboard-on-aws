@@ -545,3 +545,12 @@ export function useTableMetadata() {
     largestTickByColumn,
   };
 }
+
+export function useWindowSize() {
+  const [size] = useState({
+    width: 1024,
+    height: 768,
+  });
+
+  return size;
+}

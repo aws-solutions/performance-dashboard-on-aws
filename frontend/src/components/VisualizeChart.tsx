@@ -307,7 +307,7 @@ function VisualizeChart(props: Props) {
                   }
                   data={props.json}
                   summaryBelow={props.summaryBelow}
-                  isPreview={true}
+                  isPreview={!props.fullPreview}
                   horizontalScroll={props.horizontalScroll}
                   setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}
@@ -325,7 +325,7 @@ function VisualizeChart(props: Props) {
                   }
                   data={props.json}
                   summaryBelow={props.summaryBelow}
-                  isPreview={true}
+                  isPreview={!props.fullPreview}
                   horizontalScroll={props.horizontalScroll}
                   setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}

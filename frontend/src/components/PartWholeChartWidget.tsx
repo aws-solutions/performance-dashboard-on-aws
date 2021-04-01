@@ -116,6 +116,7 @@ const PartWholeChartWidget = (props: Props) => {
     const minHeight = 250;
     const minHeightMobile = 300;
     const maxHeight = 500;
+    const pixelsByPart = 28;
 
     if (!data || !data.length) {
       return minHeight;
@@ -127,7 +128,9 @@ const PartWholeChartWidget = (props: Props) => {
         return minHeightMobile;
       } else {
         // For every part in the chart, add 20 pixels
-        return minHeightMobile + Math.min(maxHeight, data.length * 20);
+        return (
+          minHeightMobile + Math.min(maxHeight, data.length * pixelsByPart)
+        );
       }
     }
 

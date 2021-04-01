@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Dashboard } from "../models";
 import { useDateTimeFormatter, useSettings } from "../hooks";
 import Button from "./Button";
@@ -6,7 +7,9 @@ import Search from "./Search";
 import Table from "./Table";
 import ScrollTop from "./ScrollTop";
 import Link from "./Link";
-import { useTranslation } from "react-i18next";
+import DropdownMenu from "../components/DropdownMenu";
+
+const { MenuItem, MenuLink } = DropdownMenu;
 
 interface Props {
   dashboards: Array<Dashboard>;
@@ -14,13 +17,12 @@ interface Props {
 }
 
 function PublishedTab(props: Props) {
+  const { t } = useTranslation();
   const { settings } = useSettings();
   const dateFormatter = useDateTimeFormatter();
   const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<Array<Dashboard>>([]);
   const { dashboards } = props;
-
-  const { t } = useTranslation();
 
   const onSearch = (query: string) => {
     setFilter(query);
@@ -50,13 +52,24 @@ function PublishedTab(props: Props) {
         </div>
         <div className="tablet:grid-col-5 text-right">
           <span>
-            <Button
-              variant="outline"
-              disabled={selected.length === 0}
-              onClick={() => props.onArchive(selected)}
-            >
-              Archive
-            </Button>
+            <DropdownMenu buttonText="Actions" variant="outline">
+              <MenuLink
+                disabled={selected.length !== 1}
+                href={
+                  selected.length === 1
+                    ? `/admin/dashboard/${selected[0].id}/history`
+                    : "#"
+                }
+              >
+                {t("ViewHistoryLink")}
+              </MenuLink>
+              <MenuItem
+                onSelect={() => props.onArchive(selected)}
+                disabled={selected.length === 0}
+              >
+                {t("ArchiveButton")}
+              </MenuItem>
+            </DropdownMenu>
           </span>
         </div>
       </div>

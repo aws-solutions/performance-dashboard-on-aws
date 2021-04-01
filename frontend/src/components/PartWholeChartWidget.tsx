@@ -116,21 +116,21 @@ const PartWholeChartWidget = (props: Props) => {
     const minHeight = 250;
     const minHeightMobile = 300;
     const maxHeight = 500;
-    const pixelsByPart = 28;
+    const pixelsByPart = 20;
+    const smallScreenPixels = 800;
 
     if (!data || !data.length) {
       return minHeight;
     }
 
     // Handle very small screens where width is less than 300 pixels
-    if (windowSize.width <= 300) {
+    if (windowSize.width <= smallScreenPixels) {
       if (data.length < 5) {
         return minHeightMobile;
       } else {
         // For every part in the chart, add 20 pixels
-        return (
-          minHeightMobile + Math.min(maxHeight, data.length * pixelsByPart)
-        );
+        const additional = Math.min(maxHeight, data.length * pixelsByPart);
+        return minHeightMobile + additional;
       }
     }
 

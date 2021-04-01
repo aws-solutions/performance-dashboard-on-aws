@@ -53,6 +53,7 @@ const LineChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
+  const padding = 60;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -137,7 +138,7 @@ const LineChartWidget = (props: Props) => {
             <XAxis
               dataKey={props.lines.length ? props.lines[0] : ""}
               type={xAxisType()}
-              padding={{ left: 50, right: 50 }}
+              padding={{ left: padding, right: padding }}
               domain={["dataMin", "dataMax"]}
               interval={props.horizontalScroll ? 0 : "preserveStartEnd"}
               scale={xAxisType() === "number" ? "linear" : "auto"}

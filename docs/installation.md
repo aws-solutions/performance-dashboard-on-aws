@@ -67,10 +67,10 @@ The following instructions assume that you have local AWS credentials in `~/.aws
 
 ### 1. Clone this repository
 
-The mainline branch of this repository develops rapidly. If you want to obtain the latest stable copy of the code, clone this repository using the tag of the most recent release, which currently is 0.4.0-beta.
+The mainline branch of this repository develops rapidly. If you want to obtain the latest stable copy of the code, clone this repository using the tag of the most recent release, which currently is 0.10.0-beta.
 
 ```bash
-git clone -b 0.9.0-beta https://github.com/awslabs/performance-dashboard-on-aws.git
+git clone -b 0.10.0-beta https://github.com/awslabs/performance-dashboard-on-aws.git
 cd performance-dashboard-on-aws
 ```
 

@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Dashboard } from "../models";
 import { useDateTimeFormatter, useSettings } from "../hooks";
-import Button from "./Button";
 import Search from "./Search";
 import Table from "./Table";
 import ScrollTop from "./ScrollTop";

@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, act } from "@testing-library/react";
+import { render, fireEvent, act, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import PublishedTab from "../PublishedTab";
 import { Dashboard } from "../../models";
@@ -34,14 +34,15 @@ const dashboards: Array<Dashboard> = [
 ];
 
 test("renders a button to archive", async () => {
-  const { getByRole } = render(
-    <PublishedTab dashboards={[]} onArchive={() => {}} />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
-  const button = getByRole("button", { name: "Archive" });
-  expect(button).toBeInTheDocument();
+  render(<PublishedTab dashboards={[]} onArchive={() => {}} />, {
+    wrapper: MemoryRouter,
+  });
+
+  const actionsButton = screen.getByRole("button", { name: "Actions" });
+  fireEvent.click(actionsButton);
+
+  const archiveButton = screen.getByText("Archive");
+  expect(archiveButton).toBeInTheDocument();
 });
 
 test("renders a dashboard table", async () => {

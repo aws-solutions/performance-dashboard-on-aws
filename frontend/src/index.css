@@ -54,8 +54,8 @@ p {
   top: -20px !important;
 }
 
-.overflow-hidden:hover {
-  overflow-x: visible;
+.overflow-x-hidden:hover {
+  overflow-x: scroll;
 }
 
 .scroll-shadow {

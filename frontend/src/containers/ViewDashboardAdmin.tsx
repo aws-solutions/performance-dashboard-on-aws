@@ -15,8 +15,8 @@ import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import UtilsService from "../services/UtilsService";
-import "./ViewDashboardAdmin.css";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import "./ViewDashboardAdmin.css";
 
 interface PathParams {
   dashboardId: string;
@@ -88,6 +88,12 @@ function ViewDashboardAdmin() {
         message: `${dashboard.name} ${t("DashboardWasArchived")}`,
       },
     });
+  };
+
+  const onDashboardHistory = () => {
+    if (dashboard) {
+      history.push(`/admin/dashboard/${dashboard.id}/history`);
+    }
   };
 
   const onRepublishDashboard = async () => {
@@ -282,13 +288,22 @@ function ViewDashboardAdmin() {
             )}
 
             {dashboard.state === DashboardState.Archived && (
-              <Button
-                variant="base"
-                type="button"
-                onClick={() => setIsOpenRepublishModal(true)}
-              >
-                {t("ViewDashboardAlertButton.Re-publish")}
-              </Button>
+              <>
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={onDashboardHistory}
+                >
+                  {t("ViewHistoryLink")}
+                </Button>
+                <Button
+                  variant="base"
+                  type="button"
+                  onClick={() => setIsOpenRepublishModal(true)}
+                >
+                  {t("ViewDashboardAlertButton.Re-publish")}
+                </Button>
+              </>
             )}
 
             {(dashboard.state === DashboardState.Draft ||

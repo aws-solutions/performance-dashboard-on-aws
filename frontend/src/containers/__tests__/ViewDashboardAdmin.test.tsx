@@ -138,4 +138,10 @@ describe("dashboard archived", () => {
       screen.getByRole("button", { name: "Re-publish" })
     ).toBeInTheDocument();
   });
+
+  test("renders a view history button", async () => {
+    expect(
+      screen.getByRole("button", { name: "View history" })
+    ).toBeInTheDocument();
+  });
 });

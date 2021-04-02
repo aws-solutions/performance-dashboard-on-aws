@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import Dropdown from "../components/Dropdown";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   dateFormat: string;
@@ -27,6 +28,7 @@ function EditDateFormat() {
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
   const { register, handleSubmit, reset } = useForm<FormValues>();
+  const { t } useTranslation();
 
   useEffect(() => {
     // Reset the form values when the newly fetched Settings
@@ -53,7 +55,7 @@ function EditDateFormat() {
     history.push("/admin/settings/dateformat", {
       alert: {
         type: "success",
-        message: "Date and time format successfully edited",
+        message: {t("SettingsDateTimeFormatEditSuccess")},
       },
     });
   };
@@ -64,15 +66,15 @@ function EditDateFormat() {
 
   const crumbs = [
     {
-      label: "Settings",
+      label:  {t("Settings")},
       url: "/admin/settings",
     },
     {
-      label: "Date and time format",
+      label:  {t("SettingsDateTimeFormat")},
       url: "/admin/settings/dateformat",
     },
     {
-      label: "Edit date and time format",
+      label:  {t("SettingsDateTimeFormatEdit")},
     },
   ];
 
@@ -80,15 +82,14 @@ function EditDateFormat() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>Edit date and time format</h1>
+        <h1>{t("SettingsDateTimeFormatEdit")}</h1>
 
         <p>
-          Customize how your performance dashboard displays date and time in the
-          user interface.
+        {t("SettingsDateTimeFormatDescription")}
         </p>
 
         {loadingSettings ? (
-          <Spinner className="margin-top-9 text-center" label="Loading" />
+          <Spinner className="margin-top-9 text-center" label={t("LoadingSpinnerLabel")} />
         ) : (
           <>
             <form
@@ -98,8 +99,8 @@ function EditDateFormat() {
               <Dropdown
                 id="dateFormat"
                 name="dateFormat"
-                label="Date format"
-                hint="Choose a date format from the list"
+                label={t("SettingsDateFormat")}
+                hint={t("SettingsDateFormatHint")}
                 register={register}
                 required
                 options={dateFormats.map((format) => ({
@@ -111,8 +112,8 @@ function EditDateFormat() {
               <Dropdown
                 id="timeFormat"
                 name="timeFormat"
-                label="Time format"
-                hint="Choose a time format from the list"
+                label={t("SettingsTimeFormat")}
+                hint={t("SettingsTimeFormatHint")}
                 register={register}
                 required
                 options={timeFormats.map((format) => ({
@@ -123,7 +124,7 @@ function EditDateFormat() {
 
               <br />
               <Button type="submit" disabled={!settings.updatedAt}>
-                Save
+                 {t("Save")}
               </Button>
               <Button
                 variant="unstyled"
@@ -131,7 +132,7 @@ function EditDateFormat() {
                 className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                 onClick={onCancel}
               >
-                Cancel
+                 {t("Cancel")}
               </Button>
             </form>
           </>

@@ -28,6 +28,7 @@
   "Create": "Create",
   "SuccessfullyDeleted": "successfully deleted",
   "Delete": "Delete",
+  "Save": "Save",
   "Edit": "Edit",
   "SureDelete": "Are you sure you want to delete this",
   "ZeroDashboards": "that have zero dashboards",
@@ -151,5 +152,14 @@
     "MissingVersionNotesError": "Please enter version notes",
     "ReturnToDraftSuccessAlert": "{{dashboardName}} dashboard successfully returned to draft",
     "PublishedSuccessAlert": "{{dashboardName}} dashboard was successfully published."
-  }
+  },
+  "SettingsDateTimeFormat": "Date and time format",
+  "SettingsDateTimeFormatEdit": "Edit date and time format",
+  "SettingsDateTimeFormatDescription": "Customize how your performance dashboard displays date and time in the user interface.",
+  "SettingsDateFormat": "Date format",
+  "SettingsDateFormatHint": "Choose a date format from the list.",
+  "SettingsTimeFormat": "Time format",
+  "SettingsTimeFormatHint": "Choose a time format from the list.",
+  "SettingsDateTimeFormatEditSuccess" : "Date and time format successfully edited."
+ 
 }

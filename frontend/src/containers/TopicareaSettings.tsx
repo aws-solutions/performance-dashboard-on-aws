@@ -6,10 +6,12 @@ import TopicareaListing from "./TopicareaListing";
 import SettingsLayout from "../layouts/Settings";
 import AlertContainer from "./AlertContainer";
 import MarkdownRender from "../components/MarkdownRender";
+import { useTranslation } from "react-i18next";
 
 function TopicareaSettings() {
   const { settings, loadingSettings } = useSettings(true);
   const history = useHistory();
+  const { t } useTranslation();
 
   const onTopicAreaLabelEdit = () => {
     history.push("/admin/settings/topicarea/editlabel");
@@ -24,21 +26,18 @@ function TopicareaSettings() {
           <h1>{settings.topicAreaLabels.plural}</h1>
 
           <p>
-            Dashboards are organized by topic areas. A dashboard must have a
-            topic area and can have only one topic area.
+            {t("SettingsTopicAreaDescription")}
           </p>
           <AlertContainer />
-          <h3 className="margin-top-2-important">Topic area name</h3>
+          <h3 className="margin-top-2-important">{t("TopicAreaName")}</h3>
 
           <p>
-            You can customize the name "topic area" and it will be replaced
-            throughout the interface. For example, "topic area" can be renamed
-            to "department", "ministry", "program", "agency", etc.
+            {t("SettingsTopicAreaNameDescription")}
           </p>
 
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
-              <p className="text-bold">Single topic area name</p>
+              <p className="text-bold">{t("TopicAreaNameSingle")}</p>
             </div>
             <div className="grid-col flex-3 text-right">
               <Button
@@ -46,7 +45,7 @@ function TopicareaSettings() {
                 variant="outline"
                 onClick={onTopicAreaLabelEdit}
               >
-                Edit
+                {t("Edit")}
               </Button>
             </div>
           </div>
@@ -59,7 +58,7 @@ function TopicareaSettings() {
             <div className="grid-col flex-3 text-right"></div>
           </div>
           <div className="grid-col flex-9">
-            <p className="text-bold">Multiple topic areas name</p>
+            <p className="text-bold">{t("TopicAreaNamePlural")}</p>
           </div>
 
           <div className="grid-row margin-top-0-important margin-bottom-4">

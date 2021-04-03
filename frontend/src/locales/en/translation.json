@@ -160,6 +160,13 @@
   "SettingsDateFormatHint": "Choose a date format from the list.",
   "SettingsTimeFormat": "Time format",
   "SettingsTimeFormatHint": "Choose a time format from the list.",
-  "SettingsDateTimeFormatEditSuccess" : "Date and time format successfully edited."
+  "SettingsDateTimeFormatEditSuccess" : "Date and time format successfully edited.",
+  "SettingsPublishedSite": "Published site",
+  "SettingsNavBarEdit": "Edit navigation bar",
+  "SettingsNavBarEditDescription": "Customize the title of your dashboard",
+  "SettingsTitle": "Title",
+  "SettingsTitleHint": "This is the title of the website",
+  "SettingsTitleError": "Please specify a title.",
+  "SettingsNavBarEditSuccess": "Navigation bar successfully edited."
  
 }

@@ -127,6 +127,9 @@
   "CreateNewDashboard": "Create new dashboard",
   "DashboardName": "Dashboard Name",
   "DashboardDescriptiveName": "Give your dashboard a descriptive name",
+  "TopicAreaName": "Topic area name",
+  "TopicAreaNameSingle": "Single topic area name",
+  "TopicAreaNamePlural": "Multiple topic areas name",
   "SelectExistingLeading": "select an existing",
   "DescriptionOptional": "Description - optional",
   "ErrorNameSpecify": "Please specify a name",
@@ -163,10 +166,13 @@
   "SettingsDateTimeFormatEditSuccess" : "Date and time format successfully edited.",
   "SettingsPublishedSite": "Published site",
   "SettingsNavBarEdit": "Edit navigation bar",
+  "SettingsNavBarEditSuccess": "Navigation bar successfully edited.",
   "SettingsNavBarEditDescription": "Customize the title of your dashboard",
   "SettingsTitle": "Title",
   "SettingsTitleHint": "This is the title of the website",
   "SettingsTitleError": "Please specify a title.",
-  "SettingsNavBarEditSuccess": "Navigation bar successfully edited."
+  "SettingsTopicAreaDescription": "Dashboards are organized by topic areas. A dashboard must have topic area and can have only one topic area.",
+  "SettingsTopicAreaNameDescription": "You can customize the name 'topic area' and it will be replaced throughout the interface. For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc.",
+  
  
 }

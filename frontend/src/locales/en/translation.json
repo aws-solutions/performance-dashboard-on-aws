@@ -142,6 +142,12 @@
   "PublishButton": "Publish",
   "ContinueButton": "Continue",
   "PublishPendingStateLabel": "Publish Pending",
+  "PublishingGuidance": "Publishing guidance",
+  "PublishingGuidanceEdit": "Edit publishing guidance",
+  "PublishingGuidanceEditSuccess": "Publishing guidance successfully edited",
+  "PublishingGuidanceEditDescription": "Publishing guidance is text that users must acknowledge before they publish a dashboard. For example, use this text to remind them to check for errors or mistakes, sensitive or confidential data, or guidance specific to your organization.",
+  "PublishingGuidanceDescription": "Publishing guidance is text that users must acknowledge before they publish a dashboard. For example, use this text to remind them to check for errors or mistakes, sensitive or confidential data, or guidance specific to your organization.",
+  "AcknowledgeStatement": "Acknowledge statement",
   "PublishWorkflow": {
     "OverwriteWarning": "I also understand that this will overwrite the existing published version of the dashboard.",
     "InternalVersionNotes": "Internal version notes",

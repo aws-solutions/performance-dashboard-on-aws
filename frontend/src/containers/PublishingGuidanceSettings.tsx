@@ -7,10 +7,12 @@ import MarkdownRender from "../components/MarkdownRender";
 import AlertContainer from "./AlertContainer";
 import Spinner from "../components/Spinner";
 import "./PublishingGuidanceSettings.css";
+import { useTranslation } from "react-i18next";
 
 function PublishingGuidanceSettings() {
   const history = useHistory();
   const { settings, loadingSettings } = useSettings();
+  const { t } useTranslation();
 
   const onEdit = () => {
     history.push("/admin/settings/publishingguidance/edit");
@@ -18,24 +20,21 @@ function PublishingGuidanceSettings() {
 
   return (
     <SettingsLayout>
-      <h1>Publishing guidance</h1>
+      <h1>{t("PublishingGuidance")}</h1>
 
       <p>
-        Publishing guidance is text that users must acknowledge before they
-        publish a dashboard. For example, use this text to remind them to check
-        for errors or mistakes, sensitive or confidential data, or guidance
-        specific to your organization.
+        {t("PublishingGuidanceDescription")}
       </p>
 
       <AlertContainer />
 
       {loadingSettings ? (
-        <Spinner className="margin-top-3 text-center" label="Loading" />
+        <Spinner className="margin-top-3 text-center" label={t("LoadingSpinnerLabel")} />
       ) : (
         <>
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
-              <p className="text-bold">Acknowledgement statement</p>
+              <p className="text-bold">{t("AcknowledgeStatement")}</p>
             </div>
             <div className="grid-col flex-3 text-right">
               <Button
@@ -43,7 +42,7 @@ function PublishingGuidanceSettings() {
                 variant="outline"
                 onClick={onEdit}
               >
-                Edit
+                {t("Edit")}
               </Button>
             </div>
           </div>

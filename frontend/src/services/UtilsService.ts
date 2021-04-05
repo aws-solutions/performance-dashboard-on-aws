@@ -68,8 +68,8 @@ function getLargestHeader(headers: Array<string>, data?: Array<any>) {
 /**
  * Calculate the YAxis margin needed. This is important after we started
  * showing the ticks numbers as locale strings and commas or periods are being
- * added. Margin: Count the commas or periods in the largestTick to locale string,
- * and multiply by pixelsByCharacter.
+ * added. Margin: Count the commas or periods in the largestTick to locale string
+ * plus some extra margin, and multiply by pixelsByCharacter.
  */
 function calculateYAxisMargin(
   largestTick: number,
@@ -77,7 +77,8 @@ function calculateYAxisMargin(
 ): number {
   const pixelsByCharacter = significantDigitLabels ? 2 : 8;
   const tickLocaleString: string = largestTick.toLocaleString();
-  const numberOfCommas: number = tickLocaleString.match(/,|\./g)?.length || 0;
+  const numberOfCommas: number =
+    (tickLocaleString.match(/,|\./g)?.length || 0) + 3;
   return numberOfCommas * pixelsByCharacter;
 }
 

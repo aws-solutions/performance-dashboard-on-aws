@@ -10,7 +10,9 @@ interface Props {
 function PrimaryActionBar(props: Props) {
   return (
     <div
-      className={`border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white position-sticky ${props.className}`}
+      className={`border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white position-sticky ${
+        props.className || ""
+      }`}
       style={{ top: props.stickyPosition }}
     >
       {props.children}

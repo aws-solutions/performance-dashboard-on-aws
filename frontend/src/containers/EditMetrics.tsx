@@ -19,6 +19,7 @@ import MetricsList from "../components/MetricsList";
 import OrderingService from "../services/OrderingService";
 import StorageService from "../services/StorageService";
 import Spinner from "../components/Spinner";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 
 interface FormValues {
   title: string;
@@ -222,7 +223,6 @@ function EditMetrics() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Edit metrics</h1>
 
       {loading || !widget || !currentJson || fileLoading || editingWidget ? (
         <Spinner
@@ -236,92 +236,97 @@ function EditMetrics() {
           }`}
         />
       ) : (
-        <div className="grid-row width-desktop">
+        <div className="grid-row width-desktop grid-gap">
           <div className="grid-col-6" hidden={fullPreview}>
-            <form
-              className="usa-form usa-form--large"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <fieldset className="usa-fieldset">
-                <TextField
-                  id="title"
-                  name="title"
-                  label="Metrics title"
-                  hint="Give your group of metrics a descriptive title."
-                  error={errors.title && "Please specify a content title"}
-                  required
-                  defaultValue={title}
-                  register={register}
-                />
-
-                <div className="usa-checkbox">
-                  <input
-                    className="usa-checkbox__input"
-                    id="display-title"
-                    type="checkbox"
-                    name="showTitle"
-                    defaultChecked={showTitle}
-                    ref={register()}
-                  />
-                  <label
-                    className="usa-checkbox__label"
-                    htmlFor="display-title"
-                  >
-                    Show title on dashboard
-                  </label>
-                </div>
-
-                <label className="usa-label text-bold">
-                  {t("MetricsOptionsLabel")}
-                </label>
-                <div className="usa-hint">{t("MetricsOptionsDescription")}</div>
-                <div className="usa-checkbox">
-                  <input
-                    className="usa-checkbox__input"
-                    id="significantDigitLabels"
-                    type="checkbox"
-                    name="significantDigitLabels"
-                    defaultChecked={false}
-                    ref={register()}
-                  />
-                  <label
-                    className="usa-checkbox__label"
-                    htmlFor="significantDigitLabels"
-                  >
-                    {t("SignificantDigitLabels")}
-                  </label>
-                </div>
-
-                <MetricsList
-                  metrics={metrics}
-                  onClick={onAddMetric}
-                  onEdit={onEditMetric}
-                  onDelete={onDeleteMetric}
-                  onMoveUp={onMoveMetricUp}
-                  onMoveDown={onMoveMetricDown}
-                  defaultChecked={oneMetricPerRow}
-                  register={register}
-                  allowAddMetric
-                />
-              </fieldset>
-              <br />
-              <br />
-              <hr />
-              <Button
-                disabled={!title || editingWidget || fileLoading}
-                type="submit"
+            <PrimaryActionBar>
+              <h1 className="margin-top-0">Edit metrics</h1>
+              <form
+                className="usa-form usa-form--large"
+                onSubmit={handleSubmit(onSubmit)}
               >
-                Save
-              </Button>
-              <Button
-                variant="unstyled"
-                className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                type="button"
-                onClick={onCancel}
-              >
-                Cancel
-              </Button>
-            </form>
+                <fieldset className="usa-fieldset">
+                  <TextField
+                    id="title"
+                    name="title"
+                    label="Metrics title"
+                    hint="Give your group of metrics a descriptive title."
+                    error={errors.title && "Please specify a content title"}
+                    required
+                    defaultValue={title}
+                    register={register}
+                  />
+
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="display-title"
+                      type="checkbox"
+                      name="showTitle"
+                      defaultChecked={showTitle}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="display-title"
+                    >
+                      Show title on dashboard
+                    </label>
+                  </div>
+
+                  <label className="usa-label text-bold">
+                    {t("MetricsOptionsLabel")}
+                  </label>
+                  <div className="usa-hint">
+                    {t("MetricsOptionsDescription")}
+                  </div>
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="significantDigitLabels"
+                      type="checkbox"
+                      name="significantDigitLabels"
+                      defaultChecked={false}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="significantDigitLabels"
+                    >
+                      {t("SignificantDigitLabels")}
+                    </label>
+                  </div>
+
+                  <MetricsList
+                    metrics={metrics}
+                    onClick={onAddMetric}
+                    onEdit={onEditMetric}
+                    onDelete={onDeleteMetric}
+                    onMoveUp={onMoveMetricUp}
+                    onMoveDown={onMoveMetricDown}
+                    defaultChecked={oneMetricPerRow}
+                    register={register}
+                    allowAddMetric
+                  />
+                </fieldset>
+                <br />
+                <br />
+                <hr />
+                <Button
+                  disabled={!title || editingWidget || fileLoading}
+                  type="submit"
+                >
+                  Save
+                </Button>
+                <Button
+                  variant="unstyled"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
+              </form>
+            </PrimaryActionBar>
           </div>
           <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
             {fullPreviewButton}

@@ -271,7 +271,7 @@ function CheckData(props: Props) {
         hide or show from the chart.
       </div>
 
-      <div className="grid-row width-desktop">
+      <div className="grid-row">
         {props.selectedHeaders.size ? (
           <div className="grid-col-3 margin-top-3">
             <div className="font-sans-md text-bold">

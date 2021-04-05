@@ -8,7 +8,7 @@ exports[`renders the CheckData component 1`] = `
     Please make sure that the system formats your data correctly. Select columns to format as numbers, dates, or text. Also select columns to hide or show from the chart.
   </div>
   <div
-    class="grid-row width-desktop"
+    class="grid-row"
   >
     
     <div

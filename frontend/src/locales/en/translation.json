@@ -186,7 +186,5 @@
   "SettingsTitleHint": "This is the title of the website",
   "SettingsTitleError": "Please specify a title.",
   "SettingsTopicAreaDescription": "Dashboards are organized by topic areas. A dashboard must have topic area and can have only one topic area.",
-  "SettingsTopicAreaNameDescription": "You can customize the name 'topic area' and it will be replaced throughout the interface. For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc.",
-  
- 
+  "SettingsTopicAreaNameDescription": "You can customize the name 'topic area' and it will be replaced throughout the interface. For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc."
 }

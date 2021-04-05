@@ -12,7 +12,7 @@ exports[`renders the CheckData component 1`] = `
   >
     
     <div
-      class="overflow-hidden grid-col-12"
+      class="check-data-table grid-col-12"
     >
       <table
         class="usa-table"

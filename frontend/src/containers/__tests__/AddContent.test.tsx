@@ -66,7 +66,23 @@ describe("Add content screen", () => {
 
   test("renders preview thumbnail for each content item", async () => {
     fireEvent.click(screen.getByLabelText("Text"));
-    const thumbnail = screen.getByAltText("Text Content Item Preview");
+    let thumbnail = screen.getByAltText("Text Content Item Preview");
+    expect(thumbnail).toBeInTheDocument();
+
+    fireEvent.click(screen.getByLabelText("Metrics"));
+    thumbnail = screen.getByAltText("Metrics Content Item Preview");
+    expect(thumbnail).toBeInTheDocument();
+
+    fireEvent.click(screen.getByLabelText("Chart"));
+    thumbnail = screen.getByAltText("Chart Content Item Preview");
+    expect(thumbnail).toBeInTheDocument();
+
+    fireEvent.click(screen.getByLabelText("Table"));
+    thumbnail = screen.getByAltText("Table Content Item Preview");
+    expect(thumbnail).toBeInTheDocument();
+
+    fireEvent.click(screen.getByLabelText("Image"));
+    thumbnail = screen.getByAltText("Image Content Item Preview");
     expect(thumbnail).toBeInTheDocument();
   });
 });

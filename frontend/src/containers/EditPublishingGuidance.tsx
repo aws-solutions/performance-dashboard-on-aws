@@ -17,7 +17,7 @@ function EditPublishingGuidance() {
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
   const { register, handleSubmit, reset } = useForm<FormValues>();
-  const { t } useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Set the form values when the newly fetched Settings
@@ -37,7 +37,7 @@ function EditPublishingGuidance() {
     history.push("/admin/settings/publishingguidance", {
       alert: {
         type: "success",
-        message: {t("PublishingGuidanceEditSuccess")},
+        message: t("PublishingGuidanceEditSuccess"),
       },
     });
   };
@@ -48,15 +48,15 @@ function EditPublishingGuidance() {
 
   const crumbs = [
     {
-      label: {t("Settings")},
+      label: t("Settings"),
       url: "/admin/settings",
     },
     {
-      label: {t("PublishingGuidance")},
+      label: t("PublishingGuidance"),
       url: "/admin/settings/publishingguidance",
     },
     {
-      label: {t("PublishingGuidanceEdit")},
+      label: t("PublishingGuidanceEdit"),
     },
   ];
 
@@ -66,12 +66,13 @@ function EditPublishingGuidance() {
         <Breadcrumbs crumbs={crumbs} />
         <h1>{t("PublishingGuidanceEdit")}</h1>
 
-        <p>
-          {t("PublishingGuidanceEditDescription")}
-        </p>
+        <p>{t("PublishingGuidanceEditDescription")}</p>
 
         {loadingSettings ? (
-          <Spinner className="text-center margin-top-9" label={t("LoadingSpinnerLabel")} />
+          <Spinner
+            className="text-center margin-top-9"
+            label={t("LoadingSpinnerLabel")}
+          />
         ) : (
           <>
             <form

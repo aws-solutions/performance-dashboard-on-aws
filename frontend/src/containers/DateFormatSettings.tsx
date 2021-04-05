@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 function DateFormatSettings() {
   const history = useHistory();
   const { settings, loadingSettings } = useSettings();
-  const { t } useTranslation();
+  const { t } = useTranslation();
 
   const onEdit = () => {
     history.push("/admin/settings/dateformat/edit");
@@ -22,9 +22,7 @@ function DateFormatSettings() {
     <SettingsLayout>
       <h1>{t("SettingsDateTimeFormat")}</h1>
 
-      <p>
-        {t("SettingsDateTimeFormatDescription")}
-      </p>
+      <p>{t("SettingsDateTimeFormatDescription")}</p>
 
       <AlertContainer />
 

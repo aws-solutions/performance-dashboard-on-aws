@@ -28,7 +28,7 @@ function EditDateFormat() {
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
   const { register, handleSubmit, reset } = useForm<FormValues>();
-  const { t } useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Reset the form values when the newly fetched Settings
@@ -55,7 +55,7 @@ function EditDateFormat() {
     history.push("/admin/settings/dateformat", {
       alert: {
         type: "success",
-        message: {t("SettingsDateTimeFormatEditSuccess")},
+        message: t("SettingsDateTimeFormatEditSuccess"),
       },
     });
   };
@@ -66,15 +66,15 @@ function EditDateFormat() {
 
   const crumbs = [
     {
-      label:  {t("Settings")},
+      label: t("Settings"),
       url: "/admin/settings",
     },
     {
-      label:  {t("SettingsDateTimeFormat")},
+      label: t("SettingsDateTimeFormat"),
       url: "/admin/settings/dateformat",
     },
     {
-      label:  {t("SettingsDateTimeFormatEdit")},
+      label: t("SettingsDateTimeFormatEdit"),
     },
   ];
 
@@ -84,12 +84,13 @@ function EditDateFormat() {
         <Breadcrumbs crumbs={crumbs} />
         <h1>{t("SettingsDateTimeFormatEdit")}</h1>
 
-        <p>
-        {t("SettingsDateTimeFormatDescription")}
-        </p>
+        <p>{t("SettingsDateTimeFormatDescription")}</p>
 
         {loadingSettings ? (
-          <Spinner className="margin-top-9 text-center" label={t("LoadingSpinnerLabel")} />
+          <Spinner
+            className="margin-top-9 text-center"
+            label={t("LoadingSpinnerLabel")}
+          />
         ) : (
           <>
             <form
@@ -124,7 +125,7 @@ function EditDateFormat() {
 
               <br />
               <Button type="submit" disabled={!settings.updatedAt}>
-                 {t("Save")}
+                {t("Save")}
               </Button>
               <Button
                 variant="unstyled"
@@ -132,7 +133,7 @@ function EditDateFormat() {
                 className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                 onClick={onCancel}
               >
-                 {t("Cancel")}
+                {t("Cancel")}
               </Button>
             </form>
           </>

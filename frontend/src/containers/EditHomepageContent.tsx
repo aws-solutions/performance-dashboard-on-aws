@@ -19,7 +19,7 @@ function EditHomepageContent() {
   const history = useHistory();
   const { homepage, loading } = useHomepage();
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const { t } useTranslation();
+  const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.editHomepage(
@@ -31,7 +31,7 @@ function EditHomepageContent() {
     history.push("/admin/settings/publishedsite", {
       alert: {
         type: "success",
-        message: {t("SettingsHomePageContentEditSuccess")},
+        message: t("SettingsHomePageContentEditSuccess"),
       },
     });
   };
@@ -42,15 +42,15 @@ function EditHomepageContent() {
 
   const crumbs = [
     {
-      label: {t("Settings")},
+      label: t("Settings"),
       url: "/admin/settings/topicarea",
     },
     {
-      label: {t("SettingsPublishedSite")},
+      label: t("SettingsPublishedSite"),
       url: "/admin/settings/publishedsite",
     },
     {
-      label: {t("SettingsHomePageContentEdit")},
+      label: t("SettingsHomePageContentEdit"),
     },
   ];
 
@@ -60,12 +60,13 @@ function EditHomepageContent() {
         <Breadcrumbs crumbs={crumbs} />
         <h1>{t("SettingsHomePageContentEdit")}</h1>
 
-        <p>
-           {t("SettingsHomePageContentEditDescription")}
-        </p>
+        <p>{t("SettingsHomePageContentEditDescription")}</p>
 
         {loading ? (
-          <Spinner className="text-center margin-top-9" label={t("LoadingSpinnerLabel")} />
+          <Spinner
+            className="text-center margin-top-9"
+            label={t("LoadingSpinnerLabel")}
+          />
         ) : (
           <>
             <form
@@ -78,7 +79,7 @@ function EditHomepageContent() {
                 name="title"
                 label={t("SettingsHomepageHeadline")}
                 hint={t("SettingsHomepageHeadlineHint")}
-                error={errors.title && {t("SettingsHomepageHeadlineErrors")}}
+                error={errors.title && t("SettingsHomepageHeadlineErrors")}
                 defaultValue={homepage.title}
                 register={register}
                 required

@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 function PublishingGuidanceSettings() {
   const history = useHistory();
   const { settings, loadingSettings } = useSettings();
-  const { t } useTranslation();
+  const { t } = useTranslation();
 
   const onEdit = () => {
     history.push("/admin/settings/publishingguidance/edit");
@@ -22,14 +22,15 @@ function PublishingGuidanceSettings() {
     <SettingsLayout>
       <h1>{t("PublishingGuidance")}</h1>
 
-      <p>
-        {t("PublishingGuidanceDescription")}
-      </p>
+      <p>{t("PublishingGuidanceDescription")}</p>
 
       <AlertContainer />
 
       {loadingSettings ? (
-        <Spinner className="margin-top-3 text-center" label={t("LoadingSpinnerLabel")} />
+        <Spinner
+          className="margin-top-3 text-center"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <div className="grid-row margin-top-0-important">

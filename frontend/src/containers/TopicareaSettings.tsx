@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 function TopicareaSettings() {
   const { settings, loadingSettings } = useSettings(true);
   const history = useHistory();
-  const { t } useTranslation();
+  const { t } = useTranslation();
 
   const onTopicAreaLabelEdit = () => {
     history.push("/admin/settings/topicarea/editlabel");
@@ -25,15 +25,11 @@ function TopicareaSettings() {
         <>
           <h1>{settings.topicAreaLabels.plural}</h1>
 
-          <p>
-            {t("SettingsTopicAreaDescription")}
-          </p>
+          <p>{t("SettingsTopicAreaDescription")}</p>
           <AlertContainer />
           <h3 className="margin-top-2-important">{t("TopicAreaName")}</h3>
 
-          <p>
-            {t("SettingsTopicAreaNameDescription")}
-          </p>
+          <p>{t("SettingsTopicAreaNameDescription")}</p>
 
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">

@@ -17,7 +17,7 @@ function EditNavBar() {
   const history = useHistory();
   const { settings, loadingSettings } = useSettings();
   const { register, errors, handleSubmit } = useForm<FormValues>();
-  const { t } useTranslation();
+  const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.updateSetting("navbarTitle", values.title, new Date());
@@ -25,7 +25,7 @@ function EditNavBar() {
     history.push("/admin/settings/publishedsite", {
       alert: {
         type: "success",
-        message: {t("SettingsNavBarEditSuccess")},
+        message: t("SettingsNavBarEditSuccess"),
       },
     });
   };
@@ -36,15 +36,15 @@ function EditNavBar() {
 
   const crumbs = [
     {
-      label: {t("Settings")},
+      label: t("Settings"),
       url: "/admin/settings/topicarea",
     },
     {
-      label: {t("SettingsPublishedSite")},
+      label: t("SettingsPublishedSite"),
       url: "/admin/settings/publishedsite",
     },
     {
-      label: {t("SettingsNavBarEdit")},
+      label: t("SettingsNavBarEdit"),
     },
   ];
 
@@ -70,7 +70,7 @@ function EditNavBar() {
                 name="title"
                 label={t("SettingsTitle")}
                 hint={t("SettingsTitleHint")}
-                error={errors.title && {t("SettingsTitleError")}}
+                error={errors.title && t("SettingsTitleError")}
                 defaultValue={settings.navbarTitle}
                 register={register}
                 required
@@ -78,7 +78,7 @@ function EditNavBar() {
 
               <br />
               <Button type="submit" disabled={loadingSettings}>
-                 {t("Save")}
+                {t("Save")}
               </Button>
               <Button
                 variant="unstyled"

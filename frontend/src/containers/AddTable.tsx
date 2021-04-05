@@ -21,6 +21,7 @@ import CheckData from "../components/CheckData";
 import Visualize from "../components/VisualizeTable";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import UtilsService from "../services/UtilsService";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 
 interface FormValues {
   title: string;
@@ -317,76 +318,86 @@ function AddTable() {
     });
   }
 
+  const configHeader = (
+    <div>
+      <h1 className="margin-top-0">Add table</h1>
+      <StepIndicator
+        current={step}
+        segments={[
+          {
+            label: "Choose data",
+          },
+          {
+            label: "Check data",
+          },
+          {
+            label: "Visualize",
+          },
+        ]}
+        showStepChart={true}
+        showStepText={false}
+      />
+    </div>
+  );
+
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Add table</h1>
 
       <div className="grid-row width-desktop">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid-col-12">
-            <div className="grid-col-6" hidden={fullPreview}>
-              <StepIndicator
-                current={step}
-                segments={[
-                  {
-                    label: "Choose data",
-                  },
-                  {
-                    label: "Check data",
-                  },
-                  {
-                    label: "Visualize",
-                  },
-                ]}
-                showStepChart={true}
-                showStepText={false}
-              />
-            </div>
-          </div>
+          <div className="grid-col-12"></div>
 
           <div hidden={step !== 0}>
-            <ChooseData
-              selectDynamicDataset={selectDynamicDataset}
-              dynamicDatasets={dynamicDatasets}
-              datasetType={datasetType}
-              onFileProcessed={onFileProcessed}
-              handleChange={handleChange}
-              advanceStep={advanceStep}
-              fileLoading={fileLoading}
-              browseDatasets={browseDatasets}
-              continueButtonDisabled={!currentJson.length}
-              continueButtonDisabledTooltip="Choose a dataset to continue"
-              csvErrors={csvErrors}
-              csvFile={csvFile}
-              onCancel={onCancel}
-              register={register}
-              widgetType="table"
-            />
+            <PrimaryActionBar>
+              {configHeader}
+              <ChooseData
+                selectDynamicDataset={selectDynamicDataset}
+                dynamicDatasets={dynamicDatasets}
+                datasetType={datasetType}
+                onFileProcessed={onFileProcessed}
+                handleChange={handleChange}
+                advanceStep={advanceStep}
+                fileLoading={fileLoading}
+                browseDatasets={browseDatasets}
+                continueButtonDisabled={!currentJson.length}
+                continueButtonDisabledTooltip="Choose a dataset to continue"
+                csvErrors={csvErrors}
+                csvFile={csvFile}
+                onCancel={onCancel}
+                register={register}
+                widgetType="table"
+              />
+            </PrimaryActionBar>
           </div>
 
           <div hidden={step !== 1}>
-            <CheckData
-              data={currentJson}
-              advanceStep={advanceStep}
-              backStep={backStep}
-              selectedHeaders={selectedHeaders}
-              setSelectedHeaders={setSelectedHeaders}
-              hiddenColumns={hiddenColumns}
-              setHiddenColumns={setHiddenColumns}
-              onCancel={onCancel}
-              dataTypes={dataTypes}
-              setDataTypes={setDataTypes}
-              numberTypes={numberTypes}
-              setNumberTypes={setNumberTypes}
-              currencyTypes={currencyTypes}
-              setCurrencyTypes={setCurrencyTypes}
-              sortByColumn={sortByColumn}
-              sortByDesc={sortByDesc}
-              setSortByColumn={setSortByColumn}
-              setSortByDesc={setSortByDesc}
-              reset={reset}
-            />
+            <div className="grid-col-8">
+              <PrimaryActionBar>
+                {configHeader}
+                <CheckData
+                  data={currentJson}
+                  advanceStep={advanceStep}
+                  backStep={backStep}
+                  selectedHeaders={selectedHeaders}
+                  setSelectedHeaders={setSelectedHeaders}
+                  hiddenColumns={hiddenColumns}
+                  setHiddenColumns={setHiddenColumns}
+                  onCancel={onCancel}
+                  dataTypes={dataTypes}
+                  setDataTypes={setDataTypes}
+                  numberTypes={numberTypes}
+                  setNumberTypes={setNumberTypes}
+                  currencyTypes={currencyTypes}
+                  setCurrencyTypes={setCurrencyTypes}
+                  sortByColumn={sortByColumn}
+                  sortByDesc={sortByDesc}
+                  setSortByColumn={setSortByColumn}
+                  setSortByDesc={setSortByDesc}
+                  reset={reset}
+                />
+              </PrimaryActionBar>
+            </div>
           </div>
 
           <div hidden={step !== 2}>
@@ -426,6 +437,7 @@ function AddTable() {
                 numberTypes,
                 currencyTypes
               )}
+              configHeader={configHeader}
             />
           </div>
         </form>

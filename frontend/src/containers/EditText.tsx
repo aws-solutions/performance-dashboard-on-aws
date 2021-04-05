@@ -9,6 +9,7 @@ import MarkdownRender from "../components/MarkdownRender";
 import { useWidget, useDashboard, useFullPreview } from "../hooks";
 import Spinner from "../components/Spinner";
 import Link from "../components/Link";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 
 interface FormValues {
   title: string;
@@ -99,7 +100,6 @@ function EditText() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Edit text</h1>
 
       {loading || !widget || editingWidget ? (
         <Spinner
@@ -108,77 +108,80 @@ function EditText() {
         />
       ) : (
         <>
-          <div className="grid-row width-desktop">
+          <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
-              <form
-                className="usa-form usa-form--large"
-                onChange={onFormChange}
-                onSubmit={handleSubmit(onSubmit)}
-              >
-                <fieldset className="usa-fieldset">
-                  <TextField
-                    id="title"
-                    name="title"
-                    label="Text title"
-                    hint="Give your content a descriptive title."
-                    error={errors.title && "Please specify a content title"}
-                    defaultValue={widget.name}
-                    required
-                    register={register}
-                  />
-
-                  <div className="usa-checkbox">
-                    <input
-                      className="usa-checkbox__input"
-                      id="display-title"
-                      type="checkbox"
-                      name="showTitle"
-                      defaultChecked={widget.showTitle}
-                      ref={register()}
-                    />
-                    <label
-                      className="usa-checkbox__label"
-                      htmlFor="display-title"
-                    >
-                      Show title on dashboard
-                    </label>
-                  </div>
-
-                  <TextField
-                    id="text"
-                    name="text"
-                    label="Text"
-                    hint={
-                      <>
-                        Enter text here. This field supports markdown.{" "}
-                        <Link target="_blank" to={"/admin/markdown"} external>
-                          View Markdown Syntax
-                        </Link>
-                      </>
-                    }
-                    error={errors.text && "Please specify a text content"}
-                    required
-                    register={register}
-                    defaultValue={widget.content.text}
-                    multiline
-                    rows={10}
-                  />
-                </fieldset>
-                <br />
-                <br />
-                <hr />
-                <Button disabled={editingWidget} type="submit">
-                  Save
-                </Button>
-                <Button
-                  variant="unstyled"
-                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                  type="button"
-                  onClick={onCancel}
+              <PrimaryActionBar>
+                <h1 className="margin-top-0">Edit text</h1>
+                <form
+                  className="usa-form usa-form--large"
+                  onChange={onFormChange}
+                  onSubmit={handleSubmit(onSubmit)}
                 >
-                  Cancel
-                </Button>
-              </form>
+                  <fieldset className="usa-fieldset">
+                    <TextField
+                      id="title"
+                      name="title"
+                      label="Text title"
+                      hint="Give your content a descriptive title."
+                      error={errors.title && "Please specify a content title"}
+                      defaultValue={widget.name}
+                      required
+                      register={register}
+                    />
+
+                    <div className="usa-checkbox">
+                      <input
+                        className="usa-checkbox__input"
+                        id="display-title"
+                        type="checkbox"
+                        name="showTitle"
+                        defaultChecked={widget.showTitle}
+                        ref={register()}
+                      />
+                      <label
+                        className="usa-checkbox__label"
+                        htmlFor="display-title"
+                      >
+                        Show title on dashboard
+                      </label>
+                    </div>
+
+                    <TextField
+                      id="text"
+                      name="text"
+                      label="Text"
+                      hint={
+                        <>
+                          Enter text here. This field supports markdown.{" "}
+                          <Link target="_blank" to={"/admin/markdown"} external>
+                            View Markdown Syntax
+                          </Link>
+                        </>
+                      }
+                      error={errors.text && "Please specify a text content"}
+                      required
+                      register={register}
+                      defaultValue={widget.content.text}
+                      multiline
+                      rows={10}
+                    />
+                  </fieldset>
+                  <br />
+                  <br />
+                  <hr />
+                  <Button disabled={editingWidget} type="submit">
+                    Save
+                  </Button>
+                  <Button
+                    variant="unstyled"
+                    className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                    type="button"
+                    onClick={onCancel}
+                  >
+                    Cancel
+                  </Button>
+                </form>
+              </PrimaryActionBar>
             </div>
             <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
               {fullPreviewButton}

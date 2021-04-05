@@ -96,7 +96,7 @@ function ChooseStaticDataset() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Choose static dataset</h1>
+      <h1 className="margin-top-0">Choose static dataset</h1>
 
       <div className="grid-row">
         <div className="grid-col-9">

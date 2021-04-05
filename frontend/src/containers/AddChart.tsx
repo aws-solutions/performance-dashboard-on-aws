@@ -21,6 +21,7 @@ import VisualizeChart from "../components/VisualizeChart";
 import "./AddChart.css";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 
 interface FormValues {
   title: string;
@@ -335,120 +336,129 @@ function AddChart() {
     });
   }
 
+  const configHeader = (
+    <div>
+      <h1 className="margin-top-0">Add chart</h1>
+      <StepIndicator
+        current={step}
+        segments={[
+          {
+            label: "Choose data",
+          },
+          {
+            label: "Check data",
+          },
+          {
+            label: "Visualize",
+          },
+        ]}
+        showStepChart={true}
+        showStepText={false}
+      />
+    </div>
+  );
+
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Add chart</h1>
 
-      <div className="grid-row width-desktop">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid-col-12">
-            <div className="grid-col-6" hidden={fullPreview}>
-              <StepIndicator
-                current={step}
-                segments={[
-                  {
-                    label: "Choose data",
-                  },
-                  {
-                    label: "Check data",
-                  },
-                  {
-                    label: "Visualize",
-                  },
-                ]}
-                showStepChart={true}
-                showStepText={false}
+      <div className="grid-row">
+        <div className="grid-col-12">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div hidden={step !== 0}>
+              <PrimaryActionBar>
+                {configHeader}
+                <ChooseData
+                  selectDynamicDataset={selectDynamicDataset}
+                  dynamicDatasets={dynamicDatasets}
+                  datasetType={datasetType}
+                  onFileProcessed={onFileProcessed}
+                  handleChange={handleChange}
+                  advanceStep={advanceStep}
+                  fileLoading={fileLoading}
+                  browseDatasets={browseDatasets}
+                  continueButtonDisabled={!currentJson.length}
+                  continueButtonDisabledTooltip="Choose a dataset to continue"
+                  csvErrors={csvErrors}
+                  csvFile={csvFile}
+                  onCancel={onCancel}
+                  register={register}
+                  widgetType="chart"
+                />
+              </PrimaryActionBar>
+            </div>
+
+            <div hidden={step !== 1}>
+              <PrimaryActionBar>
+                {configHeader}
+                <CheckData
+                  data={currentJson}
+                  advanceStep={advanceStep}
+                  backStep={backStep}
+                  selectedHeaders={selectedHeaders}
+                  setSelectedHeaders={setSelectedHeaders}
+                  hiddenColumns={hiddenColumns}
+                  setHiddenColumns={setHiddenColumns}
+                  onCancel={onCancel}
+                  dataTypes={dataTypes}
+                  setDataTypes={setDataTypes}
+                  numberTypes={numberTypes}
+                  setNumberTypes={setNumberTypes}
+                  currencyTypes={currencyTypes}
+                  setCurrencyTypes={setCurrencyTypes}
+                  sortByColumn={sortByColumn}
+                  sortByDesc={sortByDesc}
+                  setSortByColumn={setSortByColumn}
+                  setSortByDesc={setSortByDesc}
+                  reset={reset}
+                />
+              </PrimaryActionBar>
+            </div>
+
+            <div hidden={step !== 2}>
+              <VisualizeChart
+                errors={errors}
+                register={register}
+                json={filteredJson}
+                headers={
+                  currentJson.length
+                    ? (Object.keys(currentJson[0]) as Array<string>)
+                    : []
+                }
+                originalJson={currentJson}
+                csvJson={csvJson}
+                datasetLoading={datasetLoading}
+                datasetType={datasetType}
+                onCancel={onCancel}
+                backStep={backStep}
+                advanceStep={advanceStep}
+                fileLoading={fileLoading}
+                processingWidget={creatingWidget}
+                fullPreviewButton={fullPreviewButton}
+                fullPreview={fullPreview}
+                submitButtonLabel="Add Chart"
+                sortByColumn={sortByColumn}
+                sortByDesc={sortByDesc}
+                setSortByColumn={setSortByColumn}
+                setSortByDesc={setSortByDesc}
+                title={title}
+                summary={summary}
+                summaryBelow={summaryBelow}
+                showTitle={showTitle}
+                chartType={chartType as ChartType}
+                significantDigitLabels={significantDigitLabels}
+                horizontalScroll={horizontalScroll}
+                columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                  hiddenColumns,
+                  dataTypes,
+                  numberTypes,
+                  currencyTypes
+                )}
+                configHeader={configHeader}
               />
             </div>
-          </div>
-
-          <div hidden={step !== 0}>
-            <ChooseData
-              selectDynamicDataset={selectDynamicDataset}
-              dynamicDatasets={dynamicDatasets}
-              datasetType={datasetType}
-              onFileProcessed={onFileProcessed}
-              handleChange={handleChange}
-              advanceStep={advanceStep}
-              fileLoading={fileLoading}
-              browseDatasets={browseDatasets}
-              continueButtonDisabled={!currentJson.length}
-              continueButtonDisabledTooltip="Choose a dataset to continue"
-              csvErrors={csvErrors}
-              csvFile={csvFile}
-              onCancel={onCancel}
-              register={register}
-              widgetType="chart"
-            />
-          </div>
-
-          <div hidden={step !== 1}>
-            <CheckData
-              data={currentJson}
-              advanceStep={advanceStep}
-              backStep={backStep}
-              selectedHeaders={selectedHeaders}
-              setSelectedHeaders={setSelectedHeaders}
-              hiddenColumns={hiddenColumns}
-              setHiddenColumns={setHiddenColumns}
-              onCancel={onCancel}
-              dataTypes={dataTypes}
-              setDataTypes={setDataTypes}
-              numberTypes={numberTypes}
-              setNumberTypes={setNumberTypes}
-              currencyTypes={currencyTypes}
-              setCurrencyTypes={setCurrencyTypes}
-              sortByColumn={sortByColumn}
-              sortByDesc={sortByDesc}
-              setSortByColumn={setSortByColumn}
-              setSortByDesc={setSortByDesc}
-              reset={reset}
-            />
-          </div>
-
-          <div hidden={step !== 2}>
-            <VisualizeChart
-              errors={errors}
-              register={register}
-              json={filteredJson}
-              headers={
-                currentJson.length
-                  ? (Object.keys(currentJson[0]) as Array<string>)
-                  : []
-              }
-              originalJson={currentJson}
-              csvJson={csvJson}
-              datasetLoading={datasetLoading}
-              datasetType={datasetType}
-              onCancel={onCancel}
-              backStep={backStep}
-              advanceStep={advanceStep}
-              fileLoading={fileLoading}
-              processingWidget={creatingWidget}
-              fullPreviewButton={fullPreviewButton}
-              fullPreview={fullPreview}
-              submitButtonLabel="Add Chart"
-              sortByColumn={sortByColumn}
-              sortByDesc={sortByDesc}
-              setSortByColumn={setSortByColumn}
-              setSortByDesc={setSortByDesc}
-              title={title}
-              summary={summary}
-              summaryBelow={summaryBelow}
-              showTitle={showTitle}
-              chartType={chartType as ChartType}
-              significantDigitLabels={significantDigitLabels}
-              horizontalScroll={horizontalScroll}
-              columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
-                hiddenColumns,
-                dataTypes,
-                numberTypes,
-                currencyTypes
-              )}
-            />
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </>
   );

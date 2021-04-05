@@ -11,6 +11,7 @@ import MarkdownRender from "../components/MarkdownRender";
 import Link from "../components/Link";
 import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 
 interface FormValues {
   title: string;
@@ -100,114 +101,117 @@ function AddText() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <div hidden={fullPreview}>
-        <h1>Add text</h1>
 
-        <div className="text-base text-italic">Step 2 of 2</div>
-        <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-          Configure text content
-        </div>
-      </div>
       {creatingWidget ? (
         <Spinner className="text-center margin-top-6" label="Creating text" />
       ) : (
         <>
-          <div className="grid-row width-desktop">
+          <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
-              <form
-                className="usa-form usa-form--large"
-                onChange={onFormChange}
-                onSubmit={handleSubmit(onSubmit)}
-              >
-                <fieldset className="usa-fieldset">
-                  {errors.title || errors.text ? (
-                    <Alert
-                      type="error"
-                      message="Resolve error(s) to add the text"
-                    ></Alert>
-                  ) : (
-                    ""
-                  )}
-                  <TextField
-                    id="title"
-                    name="title"
-                    label="Text title"
-                    hint="Give your content a descriptive title."
-                    error={errors.title && "Please specify a content title"}
-                    required
-                    register={register}
-                  />
+              <PrimaryActionBar>
+                <h1 className="margin-top-0">Add text</h1>
 
-                  <div className="usa-checkbox">
-                    <input
-                      className="usa-checkbox__input"
-                      id="display-title"
-                      type="checkbox"
-                      name="showTitle"
-                      defaultChecked={true}
-                      ref={register()}
-                    />
-                    <label
-                      className="usa-checkbox__label"
-                      htmlFor="display-title"
-                    >
-                      Show title on dashboard
-                    </label>
-                  </div>
-
-                  <TextField
-                    id="text"
-                    name="text"
-                    label="Text"
-                    hint={
-                      <>
-                        Enter text here. This field supports markdown.{" "}
-                        <Link target="_blank" to={"/admin/markdown"} external>
-                          View Markdown Syntax
-                        </Link>
-                      </>
-                    }
-                    error={errors.text && "Please specify a text content"}
-                    required
-                    register={register}
-                    multiline
-                    rows={10}
-                  />
-                </fieldset>
-                <br />
-                <br />
-                <hr />
-                <Button variant="outline" type="button" onClick={goBack}>
-                  Back
-                </Button>
-                <Button disabled={creatingWidget} type="submit">
-                  Add text
-                </Button>
-                <Button
-                  variant="unstyled"
-                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                  type="button"
-                  onClick={onCancel}
+                <div className="text-base text-italic">Step 2 of 2</div>
+                <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
+                  Configure text content
+                </div>
+                <form
+                  className="usa-form usa-form--large"
+                  onChange={onFormChange}
+                  onSubmit={handleSubmit(onSubmit)}
                 >
-                  Cancel
-                </Button>
-              </form>
+                  <fieldset className="usa-fieldset">
+                    {errors.title || errors.text ? (
+                      <Alert
+                        type="error"
+                        message="Resolve error(s) to add the text"
+                      ></Alert>
+                    ) : (
+                      ""
+                    )}
+                    <TextField
+                      id="title"
+                      name="title"
+                      label="Text title"
+                      hint="Give your content a descriptive title."
+                      error={errors.title && "Please specify a content title"}
+                      required
+                      register={register}
+                    />
+
+                    <div className="usa-checkbox">
+                      <input
+                        className="usa-checkbox__input"
+                        id="display-title"
+                        type="checkbox"
+                        name="showTitle"
+                        defaultChecked={true}
+                        ref={register()}
+                      />
+                      <label
+                        className="usa-checkbox__label"
+                        htmlFor="display-title"
+                      >
+                        Show title on dashboard
+                      </label>
+                    </div>
+
+                    <TextField
+                      id="text"
+                      name="text"
+                      label="Text"
+                      hint={
+                        <>
+                          Enter text here. This field supports markdown.{" "}
+                          <Link target="_blank" to={"/admin/markdown"} external>
+                            View Markdown Syntax
+                          </Link>
+                        </>
+                      }
+                      error={errors.text && "Please specify a text content"}
+                      required
+                      register={register}
+                      multiline
+                      rows={10}
+                    />
+                  </fieldset>
+                  <br />
+                  <br />
+                  <hr />
+                  <Button variant="outline" type="button" onClick={goBack}>
+                    Back
+                  </Button>
+                  <Button disabled={creatingWidget} type="submit">
+                    Add text
+                  </Button>
+                  <Button
+                    variant="unstyled"
+                    className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                    type="button"
+                    onClick={onCancel}
+                  >
+                    Cancel
+                  </Button>
+                </form>
+              </PrimaryActionBar>
             </div>
             <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
-              {fullPreviewButton}
-              <h4 className="margin-top-4">Preview</h4>
-              {showTitle ? (
-                <h2 className="margin-top-4 margin-left-2px">{title}</h2>
-              ) : (
-                ""
-              )}
-              {text ? (
-                <div className="padding-left-05">
-                  <MarkdownRender className="usa-prose" source={text} />
-                </div>
-              ) : (
-                ""
-              )}
+              <div>
+                {fullPreviewButton}
+                <h4 className="margin-top-4">Preview</h4>
+                {showTitle ? (
+                  <h2 className="margin-top-4 margin-left-2px">{title}</h2>
+                ) : (
+                  ""
+                )}
+                {text ? (
+                  <div className="padding-left-05">
+                    <MarkdownRender className="usa-prose" source={text} />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </div>
         </>

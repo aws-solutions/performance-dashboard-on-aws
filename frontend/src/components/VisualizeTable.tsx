@@ -11,6 +11,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import TableWidget from "./TableWidget";
 import Dropdown from "./Dropdown";
 import DatasetParsingService from "../services/DatasetParsingService";
+import PrimaryActionBar from "./PrimaryActionBar";
 
 interface Props {
   errors: any;
@@ -39,6 +40,7 @@ interface Props {
   summaryBelow: boolean;
   columnsMetadata: Array<any>;
   significantDigitLabels: boolean;
+  configHeader: JSX.Element;
 }
 
 function VisualizeTable(props: Props) {
@@ -62,133 +64,139 @@ function VisualizeTable(props: Props) {
   return (
     <div className="grid-row width-desktop">
       <div className="grid-col-5" hidden={props.fullPreview}>
-        {props.errors.title && (
-          <Alert
-            type="error"
-            message="Resolve error(s) to add the table"
-          ></Alert>
-        )}
-        <TextField
-          id="title"
-          name="title"
-          label="Table title"
-          hint="Give your table a descriptive title."
-          error={props.errors.title && "Please specify a table title"}
-          required
-          register={props.register}
-        />
+        <PrimaryActionBar>
+          {props.configHeader}
 
-        <div className="usa-checkbox">
-          <input
-            className="usa-checkbox__input"
-            id="display-title"
-            type="checkbox"
-            name="showTitle"
-            defaultChecked={true}
-            ref={props.register()}
+          {props.errors.title && (
+            <Alert
+              type="error"
+              message="Resolve error(s) to add the table"
+            ></Alert>
+          )}
+          <TextField
+            id="title"
+            name="title"
+            label="Table title"
+            hint="Give your table a descriptive title."
+            error={props.errors.title && "Please specify a table title"}
+            required
+            register={props.register}
           />
-          <label className="usa-checkbox__label" htmlFor="display-title">
-            Show title on dashboard
-          </label>
-        </div>
 
-        <div>
-          <label className="usa-label text-bold">
-            {t("TableOptionsLabel")}
-          </label>
-          <div className="usa-hint">{t("TableOptionsDescription")}</div>
           <div className="usa-checkbox">
             <input
               className="usa-checkbox__input"
-              id="significantDigitLabels"
+              id="display-title"
               type="checkbox"
-              name="significantDigitLabels"
+              name="showTitle"
+              defaultChecked={true}
+              ref={props.register()}
+            />
+            <label className="usa-checkbox__label" htmlFor="display-title">
+              Show title on dashboard
+            </label>
+          </div>
+
+          <div>
+            <label className="usa-label text-bold">
+              {t("TableOptionsLabel")}
+            </label>
+            <div className="usa-hint">{t("TableOptionsDescription")}</div>
+            <div className="usa-checkbox">
+              <input
+                className="usa-checkbox__input"
+                id="significantDigitLabels"
+                type="checkbox"
+                name="significantDigitLabels"
+                defaultChecked={false}
+                ref={props.register()}
+              />
+              <label
+                className="usa-checkbox__label"
+                htmlFor="significantDigitLabels"
+              >
+                {t("SignificantDigitLabels")}
+              </label>
+            </div>
+          </div>
+
+          <div className="margin-top-3 grid-col-6">
+            <Dropdown
+              id="sortData"
+              name="sortData"
+              label="Sort data"
+              options={DatasetParsingService.getDatasetSortOptions(
+                props.originalJson,
+                props.headers
+              )}
+              onChange={handleSortDataChange}
+              defaultValue={
+                props.sortByColumn
+                  ? `${props.sortByColumn}###${
+                      props.sortByDesc ? "desc" : "asc"
+                    }`
+                  : ""
+              }
+              register={props.register}
+            />
+          </div>
+
+          <TextField
+            id="summary"
+            name="summary"
+            label="Table summary - optional"
+            hint={
+              <>
+                Give your table a summary to explain it in more depth. This
+                field supports markdown.{" "}
+                <Link target="_blank" to={"/admin/markdown"} external>
+                  View Markdown Syntax
+                </Link>
+              </>
+            }
+            register={props.register}
+            multiline
+            rows={5}
+          />
+          <div className="usa-checkbox">
+            <input
+              className="usa-checkbox__input"
+              id="summary-below"
+              type="checkbox"
+              name="summaryBelow"
               defaultChecked={false}
               ref={props.register()}
             />
-            <label
-              className="usa-checkbox__label"
-              htmlFor="significantDigitLabels"
-            >
-              {t("SignificantDigitLabels")}
+            <label className="usa-checkbox__label" htmlFor="summary-below">
+              Show summary below table
             </label>
           </div>
-        </div>
-
-        <div className="margin-top-3 grid-col-6">
-          <Dropdown
-            id="sortData"
-            name="sortData"
-            label="Sort data"
-            options={DatasetParsingService.getDatasetSortOptions(
-              props.originalJson,
-              props.headers
-            )}
-            onChange={handleSortDataChange}
-            defaultValue={
-              props.sortByColumn
-                ? `${props.sortByColumn}###${props.sortByDesc ? "desc" : "asc"}`
-                : ""
+          <br />
+          <br />
+          <hr />
+          <Button variant="outline" type="button" onClick={props.backStep}>
+            Back
+          </Button>
+          <Button
+            type="submit"
+            disabled={
+              !props.title ||
+              !props.json.length ||
+              props.fileLoading ||
+              props.processingWidget
             }
-            register={props.register}
-          />
-        </div>
-
-        <TextField
-          id="summary"
-          name="summary"
-          label="Table summary - optional"
-          hint={
-            <>
-              Give your table a summary to explain it in more depth. This field
-              supports markdown.{" "}
-              <Link target="_blank" to={"/admin/markdown"} external>
-                View Markdown Syntax
-              </Link>
-            </>
-          }
-          register={props.register}
-          multiline
-          rows={5}
-        />
-        <div className="usa-checkbox">
-          <input
-            className="usa-checkbox__input"
-            id="summary-below"
-            type="checkbox"
-            name="summaryBelow"
-            defaultChecked={false}
-            ref={props.register()}
-          />
-          <label className="usa-checkbox__label" htmlFor="summary-below">
-            Show summary below table
-          </label>
-        </div>
-        <br />
-        <br />
-        <hr />
-        <Button variant="outline" type="button" onClick={props.backStep}>
-          Back
-        </Button>
-        <Button
-          type="submit"
-          disabled={
-            !props.title ||
-            !props.json.length ||
-            props.fileLoading ||
-            props.processingWidget
-          }
-        >
-          {props.submitButtonLabel}
-        </Button>
-        <Button
-          variant="unstyled"
-          className="text-base-dark hover:text-base-darker active:text-base-darkest"
-          type="button"
-          onClick={props.onCancel}
-        >
-          Cancel
-        </Button>
+          >
+            {props.submitButtonLabel}
+          </Button>
+          <Button
+            variant="unstyled"
+            className="text-base-dark hover:text-base-darker active:text-base-darkest"
+            type="button"
+            onClick={props.onCancel}
+          >
+            Cancel
+          </Button>
+        </PrimaryActionBar>
       </div>
 
       <div className={props.fullPreview ? "grid-col-12" : "grid-col-7"}>

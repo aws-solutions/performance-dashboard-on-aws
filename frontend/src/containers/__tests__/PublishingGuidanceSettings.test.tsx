@@ -32,7 +32,7 @@ test("renders the acknowledgement statement header", async () => {
   const { getByText } = render(<PublishingGuidanceSettings />, {
     wrapper: MemoryRouter,
   });
-  expect(getByText("Acknowledgement statement")).toBeInTheDocument();
+  expect(getByText("Acknowledge statement")).toBeInTheDocument();
 });
 
 test("renders the acknowledgement statement", async () => {

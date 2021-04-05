@@ -25,7 +25,8 @@ test("renders the description", async () => {
   });
   expect(
     getByText(
-      "Dashboards are organized by topic areas. A dashboard must have a topic area and can have only one topic area."
+      "Dashboards are organized by topic areas. A dashboard must have topic area " +
+        "and can have only one topic area."
     )
   ).toBeInTheDocument();
 });
@@ -43,7 +44,8 @@ test("renders the topic area label edit description", async () => {
   });
   expect(
     getByText(
-      'You can customize the name "topic area" and it will be replaced throughout the interface. For example, "topic area" can be renamed to "department", "ministry", "program", "agency", etc.'
+      "You can customize the name 'topic area' and it will be replaced throughout the interface. " +
+        "For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc."
     )
   ).toBeInTheDocument();
 });

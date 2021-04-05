@@ -30,6 +30,8 @@ export function useYAxisMetadata(
         setYAxisLargestValue(largestTick);
         setYAxisMargin(margin);
       }
+    } else {
+      setYAxisMargin(24);
     }
   }, [chartRef, chartRef.current, chartLoaded, significantDigitLabels]);
 

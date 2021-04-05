@@ -31,6 +31,7 @@ import Table from "../components/Table";
 import UtilsService from "../services/UtilsService";
 import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
+import PrimaryActionBar from "../components/PrimaryActionBar";
 
 interface FormValues {
   title: string;
@@ -309,10 +310,28 @@ function AddMetrics() {
     });
   }
 
+  const configHeader = (
+    <div>
+      <h1 className="margin-top-0">Add metrics</h1>
+      <StepIndicator
+        current={step}
+        segments={[
+          {
+            label: "Choose data",
+          },
+          {
+            label: "Visualize",
+          },
+        ]}
+        showStepChart={true}
+        showStepText={false}
+      />
+    </div>
+  );
+
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Add metrics</h1>
 
       {fileLoading || creatingWidget ? (
         <Spinner
@@ -322,258 +341,247 @@ function AddMetrics() {
       ) : (
         <div className="grid-row width-desktop">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid-col-12">
-              <div className="grid-col-6" hidden={fullPreview}>
-                <StepIndicator
-                  current={step}
-                  segments={[
-                    {
-                      label: "Choose data",
-                    },
-                    {
-                      label: "Visualize",
-                    },
-                  ]}
-                  showStepChart={true}
-                  showStepText={false}
-                />
-              </div>
-            </div>
-
             <div hidden={step !== 0}>
-              <div className="grid-col-6">
-                <label htmlFor="fieldset" className="usa-label text-bold">
-                  Data
-                </label>
-                <div className="usa-hint">
-                  Choose an existing dataset or create a new one to populate
-                  this metrics.{" "}
-                  <Link to="/admin/apihelp" target="_blank" external>
-                    How do I add datasets?
-                  </Link>
+              <PrimaryActionBar>
+                {configHeader}
+                <div className="grid-col-6">
+                  <label htmlFor="fieldset" className="usa-label text-bold">
+                    Data
+                  </label>
+                  <div className="usa-hint">
+                    Choose an existing dataset or create a new one to populate
+                    this metrics.{" "}
+                    <Link to="/admin/apihelp" target="_blank" external>
+                      How do I add datasets?
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <fieldset
-                id="fieldset"
-                className="usa-fieldset"
-                onChange={handleChange}
-              >
-                <legend className="usa-sr-only">Content item types</legend>
+                <fieldset
+                  id="fieldset"
+                  className="usa-fieldset"
+                  onChange={handleChange}
+                >
+                  <legend className="usa-sr-only">Content item types</legend>
 
-                <div className="grid-row">
-                  <div className="grid-col-4 padding-right-2">
-                    <div className="usa-radio">
-                      <div
-                        className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                          datasetType === DatasetType.CreateNew
-                            ? " bg-base-lightest"
-                            : "-lighter"
-                        } border-2px padding-2 margin-y-1`}
-                      >
-                        <div className="grid-col flex-5">
-                          <input
-                            className="usa-radio__input"
-                            id="createNew"
-                            value="CreateNew"
-                            type="radio"
-                            name="datasetType"
-                            ref={register()}
-                          />
-                          <label
-                            className="usa-radio__label"
-                            htmlFor="createNew"
-                          >
-                            Create new
-                          </label>
+                  <div className="grid-row">
+                    <div className="grid-col-4 padding-right-2">
+                      <div className="usa-radio">
+                        <div
+                          className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
+                            datasetType === DatasetType.CreateNew
+                              ? " bg-base-lightest"
+                              : "-lighter"
+                          } border-2px padding-2 margin-y-1`}
+                        >
+                          <div className="grid-col flex-5">
+                            <input
+                              className="usa-radio__input"
+                              id="createNew"
+                              value="CreateNew"
+                              type="radio"
+                              name="datasetType"
+                              ref={register()}
+                            />
+                            <label
+                              className="usa-radio__label"
+                              htmlFor="createNew"
+                            >
+                              Create new
+                            </label>
+                          </div>
+                          <div className="grid-col flex-7">
+                            <div className="usa-prose text-base margin-left-4">
+                              Create a metrics group from scratch using the
+                              visual editor
+                            </div>
+                          </div>
                         </div>
-                        <div className="grid-col flex-7">
-                          <div className="usa-prose text-base margin-left-4">
-                            Create a metrics group from scratch using the visual
-                            editor
+                      </div>
+                    </div>
+                    <div className="grid-col-4 padding-left-2">
+                      <div className="usa-radio">
+                        <div
+                          className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
+                            datasetType === DatasetType.DynamicDataset
+                              ? " bg-base-lightest"
+                              : "-lighter"
+                          } border-2px padding-2 margin-y-1`}
+                        >
+                          <div className="grid-col flex-5">
+                            <input
+                              className="usa-radio__input"
+                              id="dynamicDataset"
+                              value="DynamicDataset"
+                              type="radio"
+                              name="datasetType"
+                              ref={register()}
+                            />
+                            <label
+                              className="usa-radio__label"
+                              htmlFor="dynamicDataset"
+                            >
+                              Dynamic dataset
+                            </label>
+                          </div>
+                          <div className="grid-col flex-7">
+                            <div className="usa-prose text-base margin-left-4">
+                              Choose from a list of continuously updated
+                              datasets.
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="grid-col-4 padding-left-2">
-                    <div className="usa-radio">
-                      <div
-                        className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                          datasetType === DatasetType.DynamicDataset
-                            ? " bg-base-lightest"
-                            : "-lighter"
-                        } border-2px padding-2 margin-y-1`}
-                      >
-                        <div className="grid-col flex-5">
-                          <input
-                            className="usa-radio__input"
-                            id="dynamicDataset"
-                            value="DynamicDataset"
-                            type="radio"
-                            name="datasetType"
-                            ref={register()}
-                          />
-                          <label
-                            className="usa-radio__label"
-                            htmlFor="dynamicDataset"
-                          >
-                            Dynamic dataset
-                          </label>
-                        </div>
-                        <div className="grid-col flex-7">
-                          <div className="usa-prose text-base margin-left-4">
-                            Choose from a list of continuously updated datasets.
-                          </div>
-                        </div>
-                      </div>
+
+                  <div hidden={datasetType !== DatasetType.DynamicDataset}>
+                    <div className="overflow-hidden">
+                      <Table
+                        selection="single"
+                        initialSortByField="updatedAt"
+                        rows={rows}
+                        screenReaderField="name"
+                        width="100%"
+                        onSelection={onSelect}
+                        columns={columns}
+                      />
                     </div>
                   </div>
-                </div>
-
-                <div hidden={datasetType !== DatasetType.DynamicDataset}>
-                  <div className="overflow-hidden">
-                    <Table
-                      selection="single"
-                      initialSortByField="updatedAt"
-                      rows={rows}
-                      screenReaderField="name"
-                      width="100%"
-                      onSelection={onSelect}
-                      columns={columns}
-                    />
-                  </div>
-                </div>
-              </fieldset>
-              <br />
-              <br />
-              <hr />
-              <Button variant="outline" type="button" onClick={goBack}>
-                Back
-              </Button>
-              <Button
-                type="button"
-                onClick={advanceStep}
-                disabled={
-                  !datasetType ||
-                  (datasetType === DatasetType.DynamicDataset &&
-                    !metrics.length)
-                }
-                disabledToolTip={
-                  datasetType === DatasetType.DynamicDataset
-                    ? "You must select a dataset to continue"
-                    : "Choose a dataset to continue"
-                }
-              >
-                Continue
-              </Button>
-              <Button
-                variant="unstyled"
-                className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                type="button"
-                onClick={onCancel}
-              >
-                Cancel
-              </Button>
+                </fieldset>
+                <br />
+                <br />
+                <hr />
+                <Button variant="outline" type="button" onClick={goBack}>
+                  Back
+                </Button>
+                <Button
+                  type="button"
+                  onClick={advanceStep}
+                  disabled={
+                    !datasetType ||
+                    (datasetType === DatasetType.DynamicDataset &&
+                      !metrics.length)
+                  }
+                  disabledToolTip={
+                    datasetType === DatasetType.DynamicDataset
+                      ? "You must select a dataset to continue"
+                      : "Choose a dataset to continue"
+                  }
+                >
+                  Continue
+                </Button>
+                <Button
+                  variant="unstyled"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
+              </PrimaryActionBar>
             </div>
 
             <div hidden={step !== 1}>
-              <div className="grid-row width-desktop">
-                <div className="grid-col-5" hidden={fullPreview}>
-                  <fieldset className="usa-fieldset">
-                    {(errors.title || submittedMetricsNum === 0) && (
-                      <Alert
-                        type="error"
-                        message={
-                          submittedMetricsNum === 0
-                            ? "Enter at least one metric to continue"
-                            : "Resolve error(s) to add the text"
-                        }
-                      ></Alert>
-                    )}
-                    <TextField
-                      id="title"
-                      name="title"
-                      label="Metrics title"
-                      hint="Give your group of metrics a descriptive title."
-                      error={errors.title && "Please specify a content title"}
-                      required
-                      register={register}
-                    />
-
-                    <div className="usa-checkbox">
-                      <input
-                        className="usa-checkbox__input"
-                        id="display-title"
-                        type="checkbox"
-                        name="showTitle"
-                        defaultChecked={true}
-                        ref={register()}
+              <div className="grid-row width-desktop grid-gap">
+                <div className="grid-col-6" hidden={fullPreview}>
+                  <PrimaryActionBar>
+                    {configHeader}
+                    <fieldset className="usa-fieldset">
+                      {(errors.title || submittedMetricsNum === 0) && (
+                        <Alert
+                          type="error"
+                          message={
+                            submittedMetricsNum === 0
+                              ? "Enter at least one metric to continue"
+                              : "Resolve error(s) to add the text"
+                          }
+                        ></Alert>
+                      )}
+                      <TextField
+                        id="title"
+                        name="title"
+                        label="Metrics title"
+                        hint="Give your group of metrics a descriptive title."
+                        error={errors.title && "Please specify a content title"}
+                        required
+                        register={register}
                       />
-                      <label
-                        className="usa-checkbox__label"
-                        htmlFor="display-title"
-                      >
-                        Show title on dashboard
-                      </label>
-                    </div>
 
-                    <label className="usa-label text-bold">
-                      {t("MetricsOptionsLabel")}
-                    </label>
-                    <div className="usa-hint">
-                      {t("MetricsOptionsDescription")}
-                    </div>
-                    <div className="usa-checkbox">
-                      <input
-                        className="usa-checkbox__input"
-                        id="significantDigitLabels"
-                        type="checkbox"
-                        name="significantDigitLabels"
-                        defaultChecked={false}
-                        ref={register()}
+                      <div className="usa-checkbox">
+                        <input
+                          className="usa-checkbox__input"
+                          id="display-title"
+                          type="checkbox"
+                          name="showTitle"
+                          defaultChecked={true}
+                          ref={register()}
+                        />
+                        <label
+                          className="usa-checkbox__label"
+                          htmlFor="display-title"
+                        >
+                          Show title on dashboard
+                        </label>
+                      </div>
+
+                      <label className="usa-label text-bold">
+                        {t("MetricsOptionsLabel")}
+                      </label>
+                      <div className="usa-hint">
+                        {t("MetricsOptionsDescription")}
+                      </div>
+                      <div className="usa-checkbox">
+                        <input
+                          className="usa-checkbox__input"
+                          id="significantDigitLabels"
+                          type="checkbox"
+                          name="significantDigitLabels"
+                          defaultChecked={false}
+                          ref={register()}
+                        />
+                        <label
+                          className="usa-checkbox__label"
+                          htmlFor="significantDigitLabels"
+                        >
+                          {t("SignificantDigitLabels")}
+                        </label>
+                      </div>
+
+                      <MetricsList
+                        metrics={metrics}
+                        onClick={onAddMetric}
+                        onEdit={onEditMetric}
+                        onDelete={onDeleteMetric}
+                        onMoveUp={onMoveMetricUp}
+                        onMoveDown={onMoveMetricDown}
+                        defaultChecked={oneMetricPerRow}
+                        register={register}
+                        allowAddMetric={datasetType === DatasetType.CreateNew}
                       />
-                      <label
-                        className="usa-checkbox__label"
-                        htmlFor="significantDigitLabels"
-                      >
-                        {t("SignificantDigitLabels")}
-                      </label>
-                    </div>
-
-                    <MetricsList
-                      metrics={metrics}
-                      onClick={onAddMetric}
-                      onEdit={onEditMetric}
-                      onDelete={onDeleteMetric}
-                      onMoveUp={onMoveMetricUp}
-                      onMoveDown={onMoveMetricDown}
-                      defaultChecked={oneMetricPerRow}
-                      register={register}
-                      allowAddMetric={datasetType === DatasetType.CreateNew}
-                    />
-                  </fieldset>
-                  <br />
-                  <br />
-                  <hr />
-                  <Button variant="outline" type="button" onClick={backStep}>
-                    Back
-                  </Button>
-                  <Button
-                    disabled={creatingWidget || fileLoading}
-                    type="submit"
-                  >
-                    Add Metrics
-                  </Button>
-                  <Button
-                    variant="unstyled"
-                    className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                    type="button"
-                    onClick={onCancel}
-                  >
-                    Cancel
-                  </Button>
+                    </fieldset>
+                    <br />
+                    <br />
+                    <hr />
+                    <Button variant="outline" type="button" onClick={backStep}>
+                      Back
+                    </Button>
+                    <Button
+                      disabled={creatingWidget || fileLoading}
+                      type="submit"
+                    >
+                      Add Metrics
+                    </Button>
+                    <Button
+                      variant="unstyled"
+                      className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                      type="button"
+                      onClick={onCancel}
+                    >
+                      Cancel
+                    </Button>
+                  </PrimaryActionBar>
                 </div>
-                <div className={fullPreview ? "grid-col-12" : "grid-col-7"}>
+                <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
                   {fullPreviewButton}
                   <div className="margin-left-4">
                     <h4 className="margin-top-4">Preview</h4>

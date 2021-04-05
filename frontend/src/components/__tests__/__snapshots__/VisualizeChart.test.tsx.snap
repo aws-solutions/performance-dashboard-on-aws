@@ -8,333 +8,337 @@ exports[`renders the VisualizeChart component 1`] = `
     <div
       class="grid-col-5"
     >
-      
       <div
-        class="usa-form-group"
+        class="border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white position-sticky "
       >
-        <label
-          class="usa-label text-bold"
-          for="title"
-        >
-          Chart title
-        </label>
-        <div
-          class="usa-hint"
-        >
-          Give your chart a descriptive title.
-        </div>
-        <input
-          class="usa-input"
-          id="title"
-          name="title"
-          type="text"
-          value=""
-        />
-      </div>
-      <div
-        class="usa-checkbox"
-      >
-        <input
-          checked=""
-          class="usa-checkbox__input"
-          id="display-title"
-          name="showTitle"
-          type="checkbox"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="display-title"
-        >
-          Show title on dashboard
-        </label>
-      </div>
-      <div
-        class="usa-form-group"
-      >
-        <fieldset
-          class="usa-fieldset"
-        >
-          <legend
-            class="usa-sr-only"
-          >
-            Chart type
-          </legend>
-          <span
-            class="usa-label text-bold"
-          >
-            Chart type
-          </span>
-          <div
-            class="usa-hint"
-          >
-            Choose a chart type.
-          </div>
-          <div
-            class="margin-top-2"
-          >
-            <div
-              class="usa-radio"
-            >
-              <input
-                class="usa-radio__input"
-                id="BarChart"
-                name="chartType"
-                type="radio"
-                value="BarChart"
-              />
-              <label
-                class="usa-radio__label"
-                for="BarChart"
-              >
-                Bar
-              </label>
-            </div>
-            <div
-              class="usa-radio"
-            >
-              <input
-                class="usa-radio__input"
-                id="ColumnChart"
-                name="chartType"
-                type="radio"
-                value="ColumnChart"
-              />
-              <label
-                class="usa-radio__label"
-                for="ColumnChart"
-              >
-                Column
-              </label>
-            </div>
-            <div
-              class="usa-radio"
-            >
-              <input
-                checked=""
-                class="usa-radio__input"
-                id="LineChart"
-                name="chartType"
-                type="radio"
-                value="LineChart"
-              />
-              <label
-                class="usa-radio__label"
-                for="LineChart"
-              >
-                Line
-              </label>
-            </div>
-            <div
-              class="usa-radio"
-            >
-              <input
-                class="usa-radio__input"
-                id="PartWholeChart"
-                name="chartType"
-                type="radio"
-                value="PartWholeChart"
-              />
-              <label
-                class="usa-radio__label"
-                for="PartWholeChart"
-              >
-                Part-to-whole
-              </label>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-      <div
-        class="margin-top-3 grid-col-6"
-      >
+        
         <div
           class="usa-form-group"
         >
           <label
             class="usa-label text-bold"
-            for="sortData"
+            for="title"
           >
-            Sort data
+            Chart title
           </label>
           <div
             class="usa-hint"
-            id="event-date-start-hint"
-          />
-          <select
-            class="usa-select"
-            id="sortData"
-            name="sortData"
           >
-            <option
-              selected=""
-              value=""
-            >
-              Select an option
-            </option>
-            <option
-              value="1###asc"
-            >
-              "1" A-Z
-            </option>
-            <option
-              value="1###desc"
-            >
-              "1" Z-A
-            </option>
-            <option
-              value="2###asc"
-            >
-              "2" A-Z
-            </option>
-            <option
-              value="2###desc"
-            >
-              "2" Z-A
-            </option>
-            <option
-              value="3###asc"
-            >
-              "3" A-Z
-            </option>
-            <option
-              value="3###desc"
-            >
-              "3" Z-A
-            </option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <label
-          class="usa-label text-bold"
-        >
-          Chart Options
-        </label>
-        <div
-          class="usa-hint"
-        >
-          Format your chart
-        </div>
-        <div
-          class="usa-checkbox"
-        >
+            Give your chart a descriptive title.
+          </div>
           <input
-            class="usa-checkbox__input"
-            id="significantDigitLabels"
-            name="significantDigitLabels"
-            type="checkbox"
+            class="usa-input"
+            id="title"
+            name="title"
+            type="text"
+            value=""
           />
-          <label
-            class="usa-checkbox__label"
-            for="significantDigitLabels"
-          >
-            Significant digit labels (123K, 1.2M)
-          </label>
         </div>
         <div
           class="usa-checkbox"
-          hidden=""
         >
           <input
             checked=""
             class="usa-checkbox__input"
-            id="horizontalScroll"
-            name="horizontalScroll"
+            id="display-title"
+            name="showTitle"
             type="checkbox"
           />
           <label
             class="usa-checkbox__label"
-            for="horizontalScroll"
+            for="display-title"
           >
-            Display with horizontal scroll
+            Show title on dashboard
           </label>
         </div>
-      </div>
-      <div
-        class="usa-form-group"
-      >
-        <label
-          class="usa-label text-bold"
-          for="summary"
-        >
-          Chart summary - optional
-        </label>
         <div
-          class="usa-hint"
+          class="usa-form-group"
         >
-          Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
-           
-          <a
-            aria-label=""
-            class="link"
-            href="/admin/markdown"
-            target="_blank"
+          <fieldset
+            class="usa-fieldset"
           >
-            <span>
-              View Markdown Syntax
-            </span>
-            <svg
-              aria-hidden="true"
-              class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
-              data-icon="external-link-alt"
-              data-prefix="fas"
-              focusable="false"
-              role="img"
-              viewBox="0 0 512 512"
-              xmlns="http://www.w3.org/2000/svg"
+            <legend
+              class="usa-sr-only"
             >
-              <path
-                d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                fill="currentColor"
-              />
-            </svg>
-          </a>
+              Chart type
+            </legend>
+            <span
+              class="usa-label text-bold"
+            >
+              Chart type
+            </span>
+            <div
+              class="usa-hint"
+            >
+              Choose a chart type.
+            </div>
+            <div
+              class="margin-top-2"
+            >
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="BarChart"
+                  name="chartType"
+                  type="radio"
+                  value="BarChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="BarChart"
+                >
+                  Bar
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="ColumnChart"
+                  name="chartType"
+                  type="radio"
+                  value="ColumnChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="ColumnChart"
+                >
+                  Column
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  checked=""
+                  class="usa-radio__input"
+                  id="LineChart"
+                  name="chartType"
+                  type="radio"
+                  value="LineChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="LineChart"
+                >
+                  Line
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="PartWholeChart"
+                  name="chartType"
+                  type="radio"
+                  value="PartWholeChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="PartWholeChart"
+                >
+                  Part-to-whole
+                </label>
+              </div>
+            </div>
+          </fieldset>
         </div>
-        <textarea
-          class="usa-textarea"
-          id="summary"
-          name="summary"
-          rows="5"
-          style="height: auto;"
-        />
-      </div>
-      <div
-        class="usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="summary-below"
-          name="summaryBelow"
-          type="checkbox"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="summary-below"
+        <div
+          class="margin-top-3"
         >
-          Show summary below chart
-        </label>
+          <div
+            class="usa-form-group"
+          >
+            <label
+              class="usa-label text-bold"
+              for="sortData"
+            >
+              Sort data
+            </label>
+            <div
+              class="usa-hint"
+              id="event-date-start-hint"
+            />
+            <select
+              class="usa-select"
+              id="sortData"
+              name="sortData"
+            >
+              <option
+                selected=""
+                value=""
+              >
+                Select an option
+              </option>
+              <option
+                value="1###asc"
+              >
+                "1" A-Z
+              </option>
+              <option
+                value="1###desc"
+              >
+                "1" Z-A
+              </option>
+              <option
+                value="2###asc"
+              >
+                "2" A-Z
+              </option>
+              <option
+                value="2###desc"
+              >
+                "2" Z-A
+              </option>
+              <option
+                value="3###asc"
+              >
+                "3" A-Z
+              </option>
+              <option
+                value="3###desc"
+              >
+                "3" Z-A
+              </option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label
+            class="usa-label text-bold"
+          >
+            Chart Options
+          </label>
+          <div
+            class="usa-hint"
+          >
+            Format your chart
+          </div>
+          <div
+            class="usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="significantDigitLabels"
+              name="significantDigitLabels"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="significantDigitLabels"
+            >
+              Significant digit labels (123K, 1.2M)
+            </label>
+          </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
+              checked=""
+              class="usa-checkbox__input"
+              id="horizontalScroll"
+              name="horizontalScroll"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="horizontalScroll"
+            >
+              Display with horizontal scroll
+            </label>
+          </div>
+        </div>
+        <div
+          class="usa-form-group"
+        >
+          <label
+            class="usa-label text-bold"
+            for="summary"
+          >
+            Chart summary - optional
+          </label>
+          <div
+            class="usa-hint"
+          >
+            Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
+             
+            <a
+              aria-label=""
+              class="link"
+              href="/admin/markdown"
+              target="_blank"
+            >
+              <span>
+                View Markdown Syntax
+              </span>
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
+                data-icon="external-link-alt"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+          </div>
+          <textarea
+            class="usa-textarea"
+            id="summary"
+            name="summary"
+            rows="5"
+            style="height: auto;"
+          />
+        </div>
+        <div
+          class="usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="summary-below"
+            name="summaryBelow"
+            type="checkbox"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="summary-below"
+          >
+            Show summary below chart
+          </label>
+        </div>
+        <br />
+        <br />
+        <hr />
+        <button
+          class="usa-button usa-button--outline"
+          type="button"
+        >
+          Back
+        </button>
+        <button
+          class="usa-button usa-button--base"
+          type="submit"
+        >
+          Add chart
+        </button>
+        <button
+          class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
+          type="button"
+        >
+          Cancel
+        </button>
       </div>
-      <br />
-      <br />
-      <hr />
-      <button
-        class="usa-button usa-button--outline"
-        type="button"
-      >
-        Back
-      </button>
-      <button
-        class="usa-button usa-button--base"
-        type="submit"
-      >
-        Add chart
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
-        type="button"
-      >
-        Cancel
-      </button>
     </div>
     <div
       class="grid-col-7"
@@ -386,333 +390,337 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
     <div
       class="grid-col-5"
     >
-      
       <div
-        class="usa-form-group"
+        class="border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white position-sticky "
       >
-        <label
-          class="usa-label text-bold"
-          for="title"
-        >
-          Chart title
-        </label>
-        <div
-          class="usa-hint"
-        >
-          Give your chart a descriptive title.
-        </div>
-        <input
-          class="usa-input"
-          id="title"
-          name="title"
-          type="text"
-          value=""
-        />
-      </div>
-      <div
-        class="usa-checkbox"
-      >
-        <input
-          checked=""
-          class="usa-checkbox__input"
-          id="display-title"
-          name="showTitle"
-          type="checkbox"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="display-title"
-        >
-          Show title on dashboard
-        </label>
-      </div>
-      <div
-        class="usa-form-group"
-      >
-        <fieldset
-          class="usa-fieldset"
-        >
-          <legend
-            class="usa-sr-only"
-          >
-            Chart type
-          </legend>
-          <span
-            class="usa-label text-bold"
-          >
-            Chart type
-          </span>
-          <div
-            class="usa-hint"
-          >
-            Choose a chart type.
-          </div>
-          <div
-            class="margin-top-2"
-          >
-            <div
-              class="usa-radio"
-            >
-              <input
-                class="usa-radio__input"
-                id="BarChart"
-                name="chartType"
-                type="radio"
-                value="BarChart"
-              />
-              <label
-                class="usa-radio__label"
-                for="BarChart"
-              >
-                Bar
-              </label>
-            </div>
-            <div
-              class="usa-radio"
-            >
-              <input
-                class="usa-radio__input"
-                id="ColumnChart"
-                name="chartType"
-                type="radio"
-                value="ColumnChart"
-              />
-              <label
-                class="usa-radio__label"
-                for="ColumnChart"
-              >
-                Column
-              </label>
-            </div>
-            <div
-              class="usa-radio"
-            >
-              <input
-                checked=""
-                class="usa-radio__input"
-                id="LineChart"
-                name="chartType"
-                type="radio"
-                value="LineChart"
-              />
-              <label
-                class="usa-radio__label"
-                for="LineChart"
-              >
-                Line
-              </label>
-            </div>
-            <div
-              class="usa-radio"
-            >
-              <input
-                class="usa-radio__input"
-                id="PartWholeChart"
-                name="chartType"
-                type="radio"
-                value="PartWholeChart"
-              />
-              <label
-                class="usa-radio__label"
-                for="PartWholeChart"
-              >
-                Part-to-whole
-              </label>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-      <div
-        class="margin-top-3 grid-col-6"
-      >
+        
         <div
           class="usa-form-group"
         >
           <label
             class="usa-label text-bold"
-            for="sortData"
+            for="title"
           >
-            Sort data
+            Chart title
           </label>
           <div
             class="usa-hint"
-            id="event-date-start-hint"
-          />
-          <select
-            class="usa-select"
-            id="sortData"
-            name="sortData"
           >
-            <option
-              selected=""
-              value=""
-            >
-              Select an option
-            </option>
-            <option
-              value="1###asc"
-            >
-              "1" A-Z
-            </option>
-            <option
-              value="1###desc"
-            >
-              "1" Z-A
-            </option>
-            <option
-              value="2###asc"
-            >
-              "2" A-Z
-            </option>
-            <option
-              value="2###desc"
-            >
-              "2" Z-A
-            </option>
-            <option
-              value="3###asc"
-            >
-              "3" A-Z
-            </option>
-            <option
-              value="3###desc"
-            >
-              "3" Z-A
-            </option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <label
-          class="usa-label text-bold"
-        >
-          Chart Options
-        </label>
-        <div
-          class="usa-hint"
-        >
-          Format your chart
-        </div>
-        <div
-          class="usa-checkbox"
-        >
+            Give your chart a descriptive title.
+          </div>
           <input
-            class="usa-checkbox__input"
-            id="significantDigitLabels"
-            name="significantDigitLabels"
-            type="checkbox"
+            class="usa-input"
+            id="title"
+            name="title"
+            type="text"
+            value=""
           />
-          <label
-            class="usa-checkbox__label"
-            for="significantDigitLabels"
-          >
-            Significant digit labels (123K, 1.2M)
-          </label>
         </div>
         <div
           class="usa-checkbox"
-          hidden=""
         >
           <input
             checked=""
             class="usa-checkbox__input"
-            id="horizontalScroll"
-            name="horizontalScroll"
+            id="display-title"
+            name="showTitle"
             type="checkbox"
           />
           <label
             class="usa-checkbox__label"
-            for="horizontalScroll"
+            for="display-title"
           >
-            Display with horizontal scroll
+            Show title on dashboard
           </label>
         </div>
-      </div>
-      <div
-        class="usa-form-group"
-      >
-        <label
-          class="usa-label text-bold"
-          for="summary"
-        >
-          Chart summary - optional
-        </label>
         <div
-          class="usa-hint"
+          class="usa-form-group"
         >
-          Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
-           
-          <a
-            aria-label=""
-            class="link"
-            href="/admin/markdown"
-            target="_blank"
+          <fieldset
+            class="usa-fieldset"
           >
-            <span>
-              View Markdown Syntax
-            </span>
-            <svg
-              aria-hidden="true"
-              class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
-              data-icon="external-link-alt"
-              data-prefix="fas"
-              focusable="false"
-              role="img"
-              viewBox="0 0 512 512"
-              xmlns="http://www.w3.org/2000/svg"
+            <legend
+              class="usa-sr-only"
             >
-              <path
-                d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                fill="currentColor"
-              />
-            </svg>
-          </a>
+              Chart type
+            </legend>
+            <span
+              class="usa-label text-bold"
+            >
+              Chart type
+            </span>
+            <div
+              class="usa-hint"
+            >
+              Choose a chart type.
+            </div>
+            <div
+              class="margin-top-2"
+            >
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="BarChart"
+                  name="chartType"
+                  type="radio"
+                  value="BarChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="BarChart"
+                >
+                  Bar
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="ColumnChart"
+                  name="chartType"
+                  type="radio"
+                  value="ColumnChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="ColumnChart"
+                >
+                  Column
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  checked=""
+                  class="usa-radio__input"
+                  id="LineChart"
+                  name="chartType"
+                  type="radio"
+                  value="LineChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="LineChart"
+                >
+                  Line
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="PartWholeChart"
+                  name="chartType"
+                  type="radio"
+                  value="PartWholeChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="PartWholeChart"
+                >
+                  Part-to-whole
+                </label>
+              </div>
+            </div>
+          </fieldset>
         </div>
-        <textarea
-          class="usa-textarea"
-          id="summary"
-          name="summary"
-          rows="5"
-          style="height: auto;"
-        />
-      </div>
-      <div
-        class="usa-checkbox"
-      >
-        <input
-          class="usa-checkbox__input"
-          id="summary-below"
-          name="summaryBelow"
-          type="checkbox"
-        />
-        <label
-          class="usa-checkbox__label"
-          for="summary-below"
+        <div
+          class="margin-top-3"
         >
-          Show summary below chart
-        </label>
+          <div
+            class="usa-form-group"
+          >
+            <label
+              class="usa-label text-bold"
+              for="sortData"
+            >
+              Sort data
+            </label>
+            <div
+              class="usa-hint"
+              id="event-date-start-hint"
+            />
+            <select
+              class="usa-select"
+              id="sortData"
+              name="sortData"
+            >
+              <option
+                selected=""
+                value=""
+              >
+                Select an option
+              </option>
+              <option
+                value="1###asc"
+              >
+                "1" A-Z
+              </option>
+              <option
+                value="1###desc"
+              >
+                "1" Z-A
+              </option>
+              <option
+                value="2###asc"
+              >
+                "2" A-Z
+              </option>
+              <option
+                value="2###desc"
+              >
+                "2" Z-A
+              </option>
+              <option
+                value="3###asc"
+              >
+                "3" A-Z
+              </option>
+              <option
+                value="3###desc"
+              >
+                "3" Z-A
+              </option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label
+            class="usa-label text-bold"
+          >
+            Chart Options
+          </label>
+          <div
+            class="usa-hint"
+          >
+            Format your chart
+          </div>
+          <div
+            class="usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="significantDigitLabels"
+              name="significantDigitLabels"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="significantDigitLabels"
+            >
+              Significant digit labels (123K, 1.2M)
+            </label>
+          </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
+              checked=""
+              class="usa-checkbox__input"
+              id="horizontalScroll"
+              name="horizontalScroll"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="horizontalScroll"
+            >
+              Display with horizontal scroll
+            </label>
+          </div>
+        </div>
+        <div
+          class="usa-form-group"
+        >
+          <label
+            class="usa-label text-bold"
+            for="summary"
+          >
+            Chart summary - optional
+          </label>
+          <div
+            class="usa-hint"
+          >
+            Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
+             
+            <a
+              aria-label=""
+              class="link"
+              href="/admin/markdown"
+              target="_blank"
+            >
+              <span>
+                View Markdown Syntax
+              </span>
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
+                data-icon="external-link-alt"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+          </div>
+          <textarea
+            class="usa-textarea"
+            id="summary"
+            name="summary"
+            rows="5"
+            style="height: auto;"
+          />
+        </div>
+        <div
+          class="usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="summary-below"
+            name="summaryBelow"
+            type="checkbox"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="summary-below"
+          >
+            Show summary below chart
+          </label>
+        </div>
+        <br />
+        <br />
+        <hr />
+        <button
+          class="usa-button usa-button--outline"
+          type="button"
+        >
+          Back
+        </button>
+        <button
+          class="usa-button usa-button--base"
+          type="submit"
+        >
+          Add Chart
+        </button>
+        <button
+          class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
+          type="button"
+        >
+          Cancel
+        </button>
       </div>
-      <br />
-      <br />
-      <hr />
-      <button
-        class="usa-button usa-button--outline"
-        type="button"
-      >
-        Back
-      </button>
-      <button
-        class="usa-button usa-button--base"
-        type="submit"
-      >
-        Add Chart
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
-        type="button"
-      >
-        Cancel
-      </button>
     </div>
     <div
       class="grid-col-7"

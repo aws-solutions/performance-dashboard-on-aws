@@ -380,7 +380,7 @@ function CheckData(props: Props) {
           ""
         )}
         <div
-          className={`overflow-hidden grid-col-${
+          className={`check-data-table grid-col-${
             props.selectedHeaders.size > 0 ? 9 : 12
           }`}
         >

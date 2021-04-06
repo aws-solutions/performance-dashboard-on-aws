@@ -32,6 +32,7 @@ function UserListing() {
   const changeRole = () => {
     history.push("/admin/users/changerole", {
       emails: selected.map((s) => s.email).join(", "),
+      usernames: selected.map((s) => s.userId),
     });
   };
 
@@ -166,6 +167,9 @@ function UserListing() {
               buttonText={t("UserListingDropdownMenuActions")}
               variant="outline"
             >
+              <MenuItem onSelect={changeRole} disabled={selected.length === 0}>
+                Change role
+              </MenuItem>
               <MenuItem
                 onSelect={onResendInvite}
                 disabled={resendInviteEmailDisabled()}

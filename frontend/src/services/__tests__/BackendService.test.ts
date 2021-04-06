@@ -391,17 +391,14 @@ test("resendInvite makes a POST request to users API", async () => {
 });
 
 test("changeRole makes a POST request to users API", async () => {
-  await BackendService.changeRole("Admin", [
-    "test1@test.com",
-    "test2@test.com",
-  ]);
+  await BackendService.changeRole("Admin", ["test1", "test2"]);
   expect(API.put).toHaveBeenCalledWith(
     "BackendApi",
     "user/role",
     expect.objectContaining({
       body: {
         role: "Admin",
-        emails: "test1@test.com,test2@test.com",
+        usernames: ["test1", "test2"],
       },
     })
   );

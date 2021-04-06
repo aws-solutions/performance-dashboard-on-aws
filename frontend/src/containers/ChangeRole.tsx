@@ -20,7 +20,7 @@ function ChangeRole() {
 
   const onSubmit = async (values: FormValues) => {
     const emails = values.emails.split(",").map((email) => email.trim());
-    await BackendService.changeRole(values.role, emails);
+    await BackendService.changeRole(values.role, state.usernames!);
 
     history.push("/admin/users", {
       alert: {

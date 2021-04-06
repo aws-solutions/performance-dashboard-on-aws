@@ -32,6 +32,7 @@ interface FormValues {
   datasetType: string;
   horizontalScroll: boolean;
   significantDigitLabels: boolean;
+  dataLabels: boolean;
   sortData: string;
 }
 
@@ -106,6 +107,7 @@ function AddChart() {
   const chartType = watch("chartType");
   const showTitle = watch("showTitle");
   const horizontalScroll = watch("horizontalScroll");
+  const dataLabels = watch("dataLabels");
   const significantDigitLabels = watch("significantDigitLabels");
 
   const initializeColumnsMetadata = () => {
@@ -172,6 +174,10 @@ function AddChart() {
           ...((values.chartType === ChartType.LineChart ||
             values.chartType === ChartType.ColumnChart) && {
             horizontalScroll: values.horizontalScroll,
+          }),
+          ...((values.chartType === ChartType.BarChart ||
+            values.chartType === ChartType.ColumnChart) && {
+            dataLabels: values.dataLabels,
           }),
           datasetType: datasetType,
           datasetId: newDataset
@@ -449,6 +455,7 @@ function AddChart() {
                 chartType={chartType as ChartType}
                 significantDigitLabels={significantDigitLabels}
                 horizontalScroll={horizontalScroll}
+                dataLabels={dataLabels}
                 columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                   hiddenColumns,
                   dataTypes,

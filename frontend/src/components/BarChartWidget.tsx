@@ -30,6 +30,7 @@ type Props = {
     secondary: string | undefined;
   };
   columnsMetadata: Array<any>;
+  hideDataLabels?: boolean;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -177,7 +178,7 @@ const BarChartWidget = (props: Props) => {
                     hide={hiddenBars.includes(bar)}
                     isAnimationActive={false}
                   >
-                    {props.bars.length <= 3 ? (
+                    {!props.hideDataLabels ? (
                       <LabelList
                         dataKey={bar}
                         position="right"

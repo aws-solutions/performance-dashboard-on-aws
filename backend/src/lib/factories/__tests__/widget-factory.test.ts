@@ -524,6 +524,7 @@ describe("toItem", () => {
         sortByColumn: "cases",
         sortByDesc: true,
         significantDigitLabels: true,
+        dataLabels: true,
         columnsMetadata: [
           {
             hidden: false,
@@ -563,6 +564,7 @@ describe("toItem", () => {
       sortByColumn: "cases",
       sortByDesc: true,
       significantDigitLabels: true,
+      dataLabels: true,
       columnsMetadata: [
         {
           hidden: false,

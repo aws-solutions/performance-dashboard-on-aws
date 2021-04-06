@@ -37,6 +37,7 @@ interface FormValues {
   datasetType: string;
   sortData: string;
   horizontalScroll: boolean;
+  dataLabels: boolean;
   significantDigitLabels: boolean;
 }
 
@@ -111,6 +112,7 @@ function EditChart() {
   const summaryBelow = watch("summaryBelow");
   const chartType = watch("chartType");
   const horizontalScroll = watch("horizontalScroll");
+  const dataLabels = watch("dataLabels");
   const significantDigitLabels = watch("significantDigitLabels");
 
   const [displayedJson, setDisplayedJson] = useState<any[]>([]);
@@ -156,6 +158,7 @@ function EditChart() {
       const summaryBelow = widget.content.summaryBelow;
       const chartType = widget.content.chartType;
       const horizontalScroll = widget.content.horizontalScroll;
+      const dataLabels = widget.content.dataLabels;
 
       reset({
         title,
@@ -169,6 +172,7 @@ function EditChart() {
         summaryBelow,
         chartType,
         horizontalScroll,
+        dataLabels,
         significantDigitLabels: widget.content.significantDigitLabels,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
@@ -330,6 +334,10 @@ function EditChart() {
           ...((values.chartType === ChartType.LineChart ||
             values.chartType === ChartType.ColumnChart) && {
             horizontalScroll: values.horizontalScroll,
+          }),
+          ...((values.chartType === ChartType.BarChart ||
+            values.chartType === ChartType.ColumnChart) && {
+            dataLabels: values.dataLabels,
           }),
           datasetType: displayedDatasetType,
           datasetId: newDataset
@@ -594,6 +602,7 @@ function EditChart() {
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
                   horizontalScroll={horizontalScroll}
+                  dataLabels={dataLabels}
                   significantDigitLabels={significantDigitLabels}
                   columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                     hiddenColumns,

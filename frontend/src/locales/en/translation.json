@@ -30,6 +30,13 @@
   "Delete": "Delete",
   "Save": "Save",
   "Edit": "Edit",
+  "StepOfTotal": "Step {{step}} of {{total}}",
+  "ContentItemTypesLabel": "Content item types",
+  "Text": "Text",
+  "Metrics": "Metrics",
+  "Chart": "Chart",
+  "Table": "Table",
+  "Image": "Image",
   "SureDelete": "Are you sure you want to delete this",
   "ZeroDashboards": "that have zero dashboards",
   "CanDelete": "You can only delete",
@@ -186,5 +193,19 @@
   "SettingsTitleHint": "This is the title of the website",
   "SettingsTitleError": "Please specify a title.",
   "SettingsTopicAreaDescription": "Dashboards are organized by topic areas. A dashboard must have topic area and can have only one topic area.",
-  "SettingsTopicAreaNameDescription": "You can customize the name 'topic area' and it will be replaced throughout the interface. For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc."
+  "SettingsTopicAreaNameDescription": "You can customize the name 'topic area' and it will be replaced throughout the interface. For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc.",
+  "AddContentScreen": {
+    "Title": "Add content item",
+    "Instructions": "Select the type of content you want to add",
+    "TextImageAlt": "Text Content Item Preview",
+    "MetricsImageAlt": "Metrics Content Item Preview",
+    "ChartImageAlt": "Chart Content Item Preview",
+    "TableImageAlt": "Table Content Item Preview",
+    "ImageAlt": "Image Content Item Preview",
+    "TextDescription": "Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.",
+    "MetricsDescription": "Add one or more metrics to show point-in-time numerical data and trends.",
+    "ChartDescription": "Display data as a visualization, including line, bar, column and part-to-whole charts.",
+    "TableDescription": "Display data formatted in rows and columns.",
+    "ImageDescription": "Upload an image to display."
+  }
 }

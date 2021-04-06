@@ -105,6 +105,7 @@ function AddTable() {
   const significantDigitLabels = watch("significantDigitLabels");
 
   const initializeColumnsMetadata = () => {
+    setSelectedHeaders(new Set<string>());
     setHiddenColumns(new Set<string>());
     setDataTypes(new Map<string, ColumnDataType>());
     setNumberTypes(new Map<string, NumberDataType>());

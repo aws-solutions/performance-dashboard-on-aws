@@ -58,6 +58,15 @@ p {
   overflow-x: scroll;
 }
 
+.check-data-table {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.check-data-table:hover {
+  overflow-x: visible;
+}
+
 .scroll-shadow {
   box-shadow: inset -25px 0px 8px -20px rgba(224, 224, 224, 0.5);
 }

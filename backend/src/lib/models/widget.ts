@@ -77,6 +77,7 @@ export interface ChartWidget extends Widget {
     summaryBelow: boolean;
     datasetType?: string;
     horizontalScroll?: boolean;
+    dataLabels: boolean;
     fileName: string;
     columnsMetadata: ColumnMetadata[];
     sortByColumn?: string;

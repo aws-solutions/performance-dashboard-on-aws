@@ -50,7 +50,10 @@ async function addUsers(req: Request, res: Response) {
     );
     return res.send();
   } catch (error) {
-    res.status(500).send(error);
+    logger.error(error);
+    if (error.code === "UsernameExistsException")
+      res.status(400).send("Invalid input");
+    else res.status(400).send(error);
   }
 }
 

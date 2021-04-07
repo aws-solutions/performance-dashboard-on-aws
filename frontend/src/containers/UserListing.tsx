@@ -178,6 +178,7 @@ function UserListing() {
             >
               <MenuItem onSelect={changeRole} disabled={selected.length === 0}>
                 {t("UserListingDropdownChangeRole")}
+                Change role
               </MenuItem>
 
               <MenuItem

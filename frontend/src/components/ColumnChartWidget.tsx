@@ -7,6 +7,7 @@ import {
   BarChart,
   Bar,
   Legend,
+  LabelList,
   ResponsiveContainer,
   CartesianGrid,
   Tooltip,
@@ -25,6 +26,7 @@ type Props = {
   isPreview?: boolean;
   hideLegend?: boolean;
   horizontalScroll?: boolean;
+  hideDataLabels?: boolean;
   setWidthPercent?: (widthPercent: number) => void;
   significantDigitLabels: boolean;
   colors?: {
@@ -80,6 +82,20 @@ const ColumnChartWidget = (props: Props) => {
     } else {
       setHiddenColumns([...hiddenColumns, e.dataKey]);
     }
+  };
+
+  const renderCustomizedLabel = (props: any) => {
+    const { x, y, width, value } = props;
+
+    return (
+      <text z={1} x={x + width / 2} y={y} dy={-6} textAnchor="middle">
+        {TickFormatter.format(
+          value,
+          yAxisLargestValue,
+          props.significantDigitLabels
+        )}
+      </text>
+    );
   };
 
   /**
@@ -190,7 +206,16 @@ const ColumnChartWidget = (props: Props) => {
                     fillOpacity={getOpacity(column)}
                     hide={hiddenColumns.includes(column)}
                     isAnimationActive={false}
-                  />
+                  >
+                    {!props.hideDataLabels ? (
+                      <LabelList
+                        dataKey={column}
+                        content={renderCustomizedLabel}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </Bar>
                 );
               })}
           </BarChart>

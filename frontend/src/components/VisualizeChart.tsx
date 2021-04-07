@@ -45,6 +45,7 @@ interface Props {
   summaryBelow: boolean;
   significantDigitLabels: boolean;
   horizontalScroll: boolean;
+  dataLabels: boolean;
   columnsMetadata: Array<any>;
   configHeader: JSX.Element;
 }
@@ -197,6 +198,26 @@ function VisualizeChart(props: Props) {
                 Display with horizontal scroll
               </label>
             </div>
+
+            <div
+              className="usa-checkbox"
+              hidden={
+                props.chartType !== ChartType.BarChart &&
+                props.chartType !== ChartType.ColumnChart
+              }
+            >
+              <input
+                className="usa-checkbox__input"
+                id="dataLabels"
+                type="checkbox"
+                name="dataLabels"
+                defaultChecked
+                ref={props.register()}
+              />
+              <label className="usa-checkbox__label" htmlFor="dataLabels">
+                Show data labels
+              </label>
+            </div>
           </div>
 
           <TextField
@@ -336,6 +357,7 @@ function VisualizeChart(props: Props) {
                   setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}
                   columnsMetadata={props.columnsMetadata}
+                  hideDataLabels={!props.dataLabels}
                 />
               )}
               {props.chartType === ChartType.BarChart && (
@@ -351,6 +373,7 @@ function VisualizeChart(props: Props) {
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
                   columnsMetadata={props.columnsMetadata}
+                  hideDataLabels={!props.dataLabels}
                 />
               )}
               {props.chartType === ChartType.PartWholeChart && (

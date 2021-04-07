@@ -167,6 +167,10 @@ function UserListing() {
               buttonText={t("UserListingDropdownMenuActions")}
               variant="outline"
             >
+              <MenuItem onSelect={changeRole} disabled={selected.length === 0}>
+                Change role
+              </MenuItem>
+
               <MenuItem
                 onSelect={onResendInvite}
                 disabled={resendInviteEmailDisabled()}

@@ -8,10 +8,12 @@ type CurrentUserHook = {
   isAdmin: boolean;
   isEditor: boolean;
   isPublisher: boolean;
+  isFederatedId: boolean;
 };
 
 export function useCurrentAuthenticatedUser(): CurrentUserHook {
   const [username, setUser] = useState<string>("");
+  const [federated, setFederated] = useState(false);
   const [roles, setRoles] = useState<{
     isAdmin: boolean;
     isEditor: boolean;
@@ -25,6 +27,17 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
   const fetchData = useCallback(async () => {
     const user = await Auth.currentAuthenticatedUser();
     setUser(user.username);
+
+    // did the user do Single Sign In, if so we'll have to do Single Sign Out
+    // attributes: {identities:"[{"providerType":"SAML"}]"}
+    if (user.attributes && user.attributes["identities"]) {
+      const identity = JSON.parse(user.attributes.identities);
+      if (Array.isArray(identity) && identity[0].providerType) {
+        setFederated(true);
+      }
+    } else {
+      setFederated(false);
+    }
 
     if (user.attributes && user.attributes["custom:roles"]) {
       const userRoles = user.attributes["custom:roles"];
@@ -43,6 +56,7 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
   return {
     username,
     isAdmin: roles.isAdmin,
+    isFederatedId: federated,
     isEditor: roles.isEditor,
     isPublisher: roles.isPublisher,
   };

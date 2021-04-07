@@ -39,7 +39,7 @@ export class FrontendStack extends cdk.Stack {
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {
       httpHeaders: {
         "Content-Security-Policy":
-          "default-src 'self'; img-src 'self' blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazonaws.com; block-all-mixed-content;",
+          "default-src 'self'; img-src 'self' blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com; block-all-mixed-content;",
         "Strict-Transport-Security": "max-age=31540000; includeSubdomains",
         "X-XSS-Protection": "1; mode=block",
         "X-Frame-Options": "DENY",
@@ -141,6 +141,10 @@ export class FrontendStack extends cdk.Stack {
         BRAND_NAME: "Performance Dashboard",
         TOPIC_AREA_LABEL: "Topic area",
         TOPIC_AREAS_LABEL: "Topic areas",
+        FRONTEND_DOMAIN: "",
+        COGNITO_DOMAIN: "",
+        SAML_PROVIDER: "",
+        ENTERPRISE_LOGIN_LABEL: "Enterprise Sign-In",
       },
     });
 

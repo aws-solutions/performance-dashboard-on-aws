@@ -20,6 +20,10 @@ interface EnvConfig {
   brandName: string;
   topicAreaLabel: string;
   topicAreasLabel: string;
+  frontendDomain: string;
+  cognitoDomain: string;
+  samlProvider: string;
+  enterpriseLoginLabel: string;
 }
 
 const config = window.EnvironmentConfig;
@@ -35,6 +39,11 @@ const EnvConfigService = {
   brandName: (config && config.brandName) || "Performance Dashboard",
   topicAreaLabel: (config && config.topicAreaLabel) || "Topic area",
   topicAreasLabel: (config && config.topicAreasLabel) || "Topic areas",
+  cognitoDomain: (config && config.cognitoDomain) || "",
+  samlProvider: (config && config.samlProvider) || "",
+  enterpriseLoginLabel:
+    (config && config.enterpriseLoginLabel) || "Enterprise Sign-In",
+  frontendDomain: (config && config.frontendDomain) || "",
 } as EnvConfig;
 
 export default EnvConfigService;

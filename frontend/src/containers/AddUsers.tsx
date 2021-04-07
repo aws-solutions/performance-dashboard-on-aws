@@ -98,7 +98,6 @@ function AddUsers() {
                       type="radio"
                       name="role"
                       ref={register()}
-                      disabled
                     />
                     <label className="usa-radio__label" htmlFor="editor">
                       {UserRoles.Editor}
@@ -106,8 +105,7 @@ function AddUsers() {
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      Upcoming feature. Can create, edit, and publish
-                      dashboards.
+                      Can create, edit, and publish dashboards.
                     </div>
                   </div>
                 </div>

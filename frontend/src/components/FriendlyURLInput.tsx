@@ -101,7 +101,8 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
         }
       />
       <div className="usa-hint">
-        Edit or confirm the URL that will be used to publish this dashboard.
+        Edit or confirm the URL that will be used to publish this dashboard. The
+        domain name cannot be edited.
       </div>
       <p className="font-sans-lg margin-top-0">
         https://{window.location.hostname}/{friendlyURL}

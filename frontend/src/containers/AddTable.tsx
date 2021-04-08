@@ -396,6 +396,7 @@ function AddTable() {
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
                   reset={reset}
+                  widgetType="table"
                 />
               </PrimaryActionBar>
             </div>

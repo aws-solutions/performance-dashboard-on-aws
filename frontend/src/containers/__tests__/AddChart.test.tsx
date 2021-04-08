@@ -118,7 +118,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  const submitButton = getByText("Add Chart");
+  const submitButton = getAllByText("Add chart")[4];
 
   await waitFor(() => {
     expect(parseSpy).toHaveBeenCalled();

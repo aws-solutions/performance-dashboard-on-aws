@@ -418,6 +418,7 @@ function AddChart() {
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
                   reset={reset}
+                  widgetType="chart"
                 />
               </PrimaryActionBar>
             </div>
@@ -443,7 +444,7 @@ function AddChart() {
                 processingWidget={creatingWidget}
                 fullPreviewButton={fullPreviewButton}
                 fullPreview={fullPreview}
-                submitButtonLabel="Add Chart"
+                submitButtonLabel="Add chart"
                 sortByColumn={sortByColumn}
                 sortByDesc={sortByDesc}
                 setSortByColumn={setSortByColumn}

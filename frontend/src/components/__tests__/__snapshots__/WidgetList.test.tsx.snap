@@ -4,7 +4,7 @@ exports[`renders an empty box 1`] = `
 <div>
   <div>
     <div
-      class="border-base-lighter border-1px shadow-2 z-300 radius-md padding-2 position-sticky bg-white text-center padding-5 margin-y-3"
+      class="border-base-lighter border-1px shadow-2 z-300 radius-md padding-x-2 padding-top-2 padding-bottom-1 margin-top-2 margin-bottom-1 position-sticky bg-white text-center padding-5 margin-y-2"
     >
       <div>
         <p>

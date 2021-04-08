@@ -170,6 +170,7 @@ function UserListing() {
               <MenuItem onSelect={changeRole} disabled={selected.length === 0}>
                 Change role
               </MenuItem>
+
               <MenuItem
                 onSelect={onResendInvite}
                 disabled={resendInviteEmailDisabled()}

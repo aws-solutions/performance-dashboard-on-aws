@@ -49,7 +49,7 @@ function EditDetails() {
     history.push(`/admin/dashboard/edit/${dashboardId}`, {
       alert: {
         type: "success",
-        message: `"${values.name}" details successfully edited`,
+        message: `"${values.name}" ${t("EditDetailsSuccess")}`,
       },
       id: "top-alert",
     });
@@ -64,7 +64,12 @@ function EditDetails() {
   };
 
   if (loading || !dashboard || !topicareas || topicareas.length === 0) {
-    return <Spinner className="text-center margin-top-9" label="Loading" />;
+    return (
+      <Spinner
+        className="text-center margin-top-9"
+        label={t("LoadingSpinnerLabel")}
+      />
+    );
   }
 
   return (
@@ -72,7 +77,7 @@ function EditDetails() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Dashboards",
+            label: t("Dashboards"),
             url: "/admin/dashboards",
           },
           {
@@ -80,7 +85,7 @@ function EditDetails() {
             url: `/admin/dashboard/edit/${dashboard?.id}`,
           },
           {
-            label: "Edit details",
+            label: t("EditDetails"),
           },
         ]}
       />
@@ -90,7 +95,7 @@ function EditDetails() {
           <div className="grid-row">
             <div className="grid-col-12">
               <PrimaryActionBar>
-                <h1 className="margin-top-0">Edit Details</h1>
+                <h1 className="margin-top-0">{t("EditDetailsCapital")}</h1>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="edit-details-form usa-form usa-form--large"
@@ -99,8 +104,8 @@ function EditDetails() {
                   <TextField
                     id="name"
                     name="name"
-                    label="Dashboard Name"
-                    error={errors.name && "Please specify a name"}
+                    label={t("DashboardName")}
+                    error={errors.name && t("ErrorNameSpecify")}
                     defaultValue={dashboard.name}
                     register={register}
                     required
@@ -110,7 +115,9 @@ function EditDetails() {
                     id="topicAreaId"
                     name="topicAreaId"
                     label={settings.topicAreaLabels.singular}
-                    hint={`Select an existing ${settings.topicAreaLabels.singular.toLowerCase()}`}
+                    hint={`${t(
+                      "SelectExistingLeading"
+                    )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
                     defaultValue={dashboard?.topicAreaId}
                     register={register}
                     options={topicareas.map((topicarea) => ({
@@ -122,14 +129,13 @@ function EditDetails() {
                   <TextField
                     id="description"
                     name="description"
-                    label="Description - optional"
+                    label={t("DescriptionOptional")}
                     defaultValue={dashboard.description}
                     hint={
                       <>
-                        Gives your dashboard a description to explain it in more
-                        depth. This text area supports limited markdown.{" "}
+                        {t("CreateEditDashboardDetails")}{" "}
                         <Link target="_blank" to={"/admin/markdown"} external>
-                          View Markdown Syntax
+                          {t("CreateEditDashboardDetailsLink")}
                         </Link>
                       </>
                     }
@@ -140,7 +146,7 @@ function EditDetails() {
 
                   <br />
                   <Button type="submit" disabled={loading}>
-                    Save
+                    {t("Save")}
                   </Button>
                   <Button
                     variant="unstyled"
@@ -148,7 +154,7 @@ function EditDetails() {
                     className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                     onClick={onCancel}
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                 </form>
               </PrimaryActionBar>

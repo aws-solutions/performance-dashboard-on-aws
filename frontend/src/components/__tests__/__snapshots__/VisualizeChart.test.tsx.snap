@@ -252,6 +252,24 @@ exports[`renders the VisualizeChart component 1`] = `
               Display with horizontal scroll
             </label>
           </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
+              checked=""
+              class="usa-checkbox__input"
+              id="dataLabels"
+              name="dataLabels"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="dataLabels"
+            >
+              Show data labels
+            </label>
+          </div>
         </div>
         <div
           class="usa-form-group"
@@ -632,6 +650,24 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               for="horizontalScroll"
             >
               Display with horizontal scroll
+            </label>
+          </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
+              checked=""
+              class="usa-checkbox__input"
+              id="dataLabels"
+              name="dataLabels"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="dataLabels"
+            >
+              Show data labels
             </label>
           </div>
         </div>

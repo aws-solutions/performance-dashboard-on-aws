@@ -250,7 +250,6 @@ const routes: Array<AppRoute> = [
   {
     path: "/403/access-denied",
     component: AccessDenied,
-    public: true,
   },
   {
     path: "/:friendlyURL",

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -51,6 +51,7 @@ function Table(props: Props) {
     ? " usa-table--borderless"
     : "";
   const className = props.className ? ` ${props.className}` : "";
+  const [currentPage, setCurrentPage] = useState<string>("1");
 
   const {
     initialSortByField,
@@ -348,33 +349,72 @@ function Table(props: Props) {
             )} of ${rows.length}`}
           </div>
           <div className="grid-col-6 text-center">
-            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            <button
+              className="margin-right-1"
+              onClick={() => {
+                setCurrentPage("1");
+                gotoPage(0);
+              }}
+              disabled={!canPreviousPage}
+            >
               <FontAwesomeIcon icon={faAngleDoubleLeft} />
-            </button>{" "}
-            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            </button>
+            <button
+              className="margin-right-2"
+              onClick={() => {
+                setCurrentPage(`${pageIndex}`);
+                previousPage();
+              }}
+              disabled={!canPreviousPage}
+            >
               <FontAwesomeIcon icon={faAngleLeft} />
-            </button>{" "}
-            <span>Page </span>
-            <span>
+            </button>
+            <span className="margin-right-2px">Page </span>
+            <span className="margin-right-1">
               <input
                 type="text"
-                value={pageIndex + 1}
+                value={`${currentPage}`}
+                className="margin-right-2px"
                 onChange={(e) => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                  gotoPage(page);
+                  setCurrentPage(e.target.value);
                 }}
-                style={{ width: "40px" }}
-                min={1}
-                max={pageOptions.length}
+                style={{ width: "33px" }}
                 pattern="\d*"
               />
               {` of ${pageOptions.length} `}
             </span>
-            <button onClick={() => nextPage()} disabled={!canNextPage}>
-              <FontAwesomeIcon icon={faAngleRight} />
-            </button>{" "}
             <button
-              onClick={() => gotoPage(pageCount - 1)}
+              className="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+              onClick={() => {
+                if (currentPage) {
+                  const currentPageNumber = Number(currentPage);
+                  if (
+                    !isNaN(currentPageNumber) &&
+                    currentPageNumber >= 1 &&
+                    currentPageNumber <= pageOptions.length
+                  ) {
+                    gotoPage(currentPageNumber - 1);
+                  }
+                }
+              }}
+            >
+              Go
+            </button>
+            <button
+              className="margin-right-1"
+              onClick={() => {
+                setCurrentPage(`${pageIndex + 2}`);
+                nextPage();
+              }}
+              disabled={!canNextPage}
+            >
+              <FontAwesomeIcon icon={faAngleRight} />
+            </button>
+            <button
+              onClick={() => {
+                setCurrentPage(`${pageCount}`);
+                gotoPage(pageCount - 1);
+              }}
               disabled={!canNextPage}
             >
               <FontAwesomeIcon icon={faAngleDoubleRight} />

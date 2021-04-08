@@ -9,11 +9,13 @@ type CurrentUserHook = {
   isEditor: boolean;
   isPublisher: boolean;
   isFederatedId: boolean;
+  hasRole: boolean;
 };
 
 export function useCurrentAuthenticatedUser(): CurrentUserHook {
   const [username, setUser] = useState<string>("");
   const [federated, setFederated] = useState(false);
+  const [hasRole, setHasRole] = useState(true);
   const [roles, setRoles] = useState<{
     isAdmin: boolean;
     isEditor: boolean;
@@ -46,6 +48,8 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
         isEditor: userRoles.includes(UserRoles.Editor),
         isPublisher: userRoles.includes(UserRoles.Publisher),
       });
+    } else {
+      setHasRole(false);
     }
   }, []);
 
@@ -59,6 +63,7 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
     isFederatedId: federated,
     isEditor: roles.isEditor,
     isPublisher: roles.isPublisher,
+    hasRole,
   };
 }
 

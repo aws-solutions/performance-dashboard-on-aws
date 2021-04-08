@@ -9,12 +9,7 @@ import rbac from "./middleware/rbac";
 const router = Router();
 router.use(auth);
 
-router.get(
-  "/",
-  rbac(Role.Admin, Role.Editor),
-  errorHandler(SettingsCtrl.getSettings)
-);
-
+router.get("/", errorHandler(SettingsCtrl.getSettings));
 router.put("/", rbac(Role.Admin), errorHandler(SettingsCtrl.updateSettings));
 
 router.get(

@@ -210,5 +210,10 @@
     "ChartDescription": "Display data as a visualization, including line, bar, column and part-to-whole charts.",
     "TableDescription": "Display data formatted in rows and columns.",
     "ImageDescription": "Upload an image to display."
+  },
+  "AccessDeniedScreen": {
+    "RequestAccessButton": "Request access",
+    "CardTitle": "Request access to create dashboards",
+    "Message": "You don't have access. Request access from the admin(s) and you will receive an email when your access is granted."
   }
 }

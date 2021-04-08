@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Auth from "@aws-amplify/auth";
 import { useSettings, useCurrentAuthenticatedUser } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,8 +7,6 @@ import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
-import Alert from "../components/Alert";
-import EnvConfig from "../services/EnvConfig";
 
 interface LayoutProps {
   children: ReactNode;
@@ -20,6 +18,7 @@ function AdminLayout(props: LayoutProps) {
     isAdmin,
     isFederatedId,
     isEditor,
+    hasRole,
   } = useCurrentAuthenticatedUser();
   const { settings } = useSettings();
 
@@ -111,36 +110,8 @@ function AdminLayout(props: LayoutProps) {
         </div>
       </Header>
       <main className="padding-y-3">
-        {isAdmin || isEditor ? (
-          <>
-            <div className="grid-container">{props.children}</div>
-          </>
-        ) : (
-          <>
-            <div className="text-center margin-top-5 grid-container">
-              <Alert
-                type="warning"
-                hideIcon
-                slim
-                message={
-                  <div>
-                    You haven't been granted access. You can{" "}
-                    <a
-                      href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance - Request Access`}
-                      className="text-base"
-                    >
-                      contact support
-                    </a>{" "}
-                    to request the Editor or Admin role or view{" "}
-                    <a href="/" className="text-base">
-                      published dashboards
-                    </a>
-                  </div>
-                }
-              ></Alert>
-            </div>
-          </>
-        )}
+        {!hasRole && <Redirect to="/403/access-denied" />}
+        <div className="grid-container">{props.children}</div>
       </main>
       <Footer />
     </>

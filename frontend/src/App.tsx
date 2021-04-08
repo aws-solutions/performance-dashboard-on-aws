@@ -58,6 +58,7 @@ import BrandingAndStylingSettings from "./containers/BrandingAndStylingSettings"
 import EditLogo from "./containers/EditLogo";
 import UserStatus from "./containers/UserStatus";
 import ChooseStaticDataset from "./containers/ChooseStaticDataset";
+import AccessDenied from "./containers/AccessDenied";
 
 interface AppRoute {
   path: string;
@@ -245,6 +246,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/users/changerole",
     component: ChangeRole,
+  },
+  {
+    path: "/403/access-denied",
+    component: AccessDenied,
   },
   {
     path: "/:friendlyURL",

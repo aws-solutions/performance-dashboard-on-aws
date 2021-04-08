@@ -50,10 +50,9 @@ async function addUsers(req: Request, res: Response) {
     );
     return res.send();
   } catch (error) {
+    // Don't return error which may reveal that user already exists
     logger.error(error);
-    if (error.code === "UsernameExistsException")
-      res.status(400).send("Invalid input");
-    else res.status(400).send(error);
+    res.status(400).send("Bad Request");
   }
 }
 
@@ -124,7 +123,9 @@ async function changeRole(req: Request, res: Response) {
     await repo.changeRole(usernames, role);
     return res.send();
   } catch (error) {
-    res.status(500).send(error);
+    // Don't return error which may reveal that user doesn't exists
+    logger.error(error);
+    res.status(400).send("Bad Request");
   }
 }
 

@@ -18,6 +18,7 @@ function AdminLayout(props: LayoutProps) {
     isAdmin,
     isFederatedId,
     isEditor,
+    hasRole,
   } = useCurrentAuthenticatedUser();
   const { settings } = useSettings();
 
@@ -109,13 +110,8 @@ function AdminLayout(props: LayoutProps) {
         </div>
       </Header>
       <main className="padding-y-3">
-        {isAdmin || isEditor ? (
-          <>
-            <div className="grid-container">{props.children}</div>
-          </>
-        ) : (
-          <Redirect to="/403/access-denied" />
-        )}
+        {!hasRole && <Redirect to="/403/access-denied" />}
+        <div className="grid-container">{props.children}</div>
       </main>
       <Footer />
     </>

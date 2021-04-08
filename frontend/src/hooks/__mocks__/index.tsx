@@ -454,6 +454,7 @@ export function useCurrentAuthenticatedUser() {
     isAdmin: roles.isAdmin,
     isEditor: roles.isEditor,
     isPublisher: roles.isPublisher,
+    hasRole: true,
   };
 }
 

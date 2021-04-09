@@ -205,7 +205,6 @@ function VisualizeTable(props: Props) {
           className={`${!props.fullPreview ? "margin-left-4" : ""}`}
         >
           {props.fullPreviewButton}
-          <h4>Preview</h4>
           {props.datasetLoading ? (
             <Spinner className="text-center margin-top-6" label="Loading" />
           ) : (

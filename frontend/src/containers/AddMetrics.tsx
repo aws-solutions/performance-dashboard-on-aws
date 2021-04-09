@@ -546,19 +546,18 @@ function AddMetrics() {
                           {t("SignificantDigitLabels")}
                         </label>
                       </div>
-
-                      <MetricsList
-                        metrics={metrics}
-                        onClick={onAddMetric}
-                        onEdit={onEditMetric}
-                        onDelete={onDeleteMetric}
-                        onMoveUp={onMoveMetricUp}
-                        onMoveDown={onMoveMetricDown}
-                        defaultChecked={oneMetricPerRow}
-                        register={register}
-                        allowAddMetric={datasetType === DatasetType.CreateNew}
-                      />
                     </fieldset>
+                    <MetricsList
+                      metrics={metrics}
+                      onClick={onAddMetric}
+                      onEdit={onEditMetric}
+                      onDelete={onDeleteMetric}
+                      onMoveUp={onMoveMetricUp}
+                      onMoveDown={onMoveMetricDown}
+                      defaultChecked={oneMetricPerRow}
+                      register={register}
+                      allowAddMetric={datasetType === DatasetType.CreateNew}
+                    />
                     <br />
                     <br />
                     <hr />
@@ -583,15 +582,12 @@ function AddMetrics() {
                 </div>
                 <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
                   {fullPreviewButton}
-                  <div className="margin-left-4">
-                    <h4 className="margin-top-4">Preview</h4>
-                    <MetricsWidget
-                      title={showTitle ? title : ""}
-                      metrics={metrics}
-                      metricPerRow={oneMetricPerRow ? 1 : 3}
-                      significantDigitLabels={significantDigitLabels}
-                    />
-                  </div>
+                  <MetricsWidget
+                    title={showTitle ? title : ""}
+                    metrics={metrics}
+                    metricPerRow={oneMetricPerRow ? 1 : 3}
+                    significantDigitLabels={significantDigitLabels}
+                  />
                 </div>
               </div>
             </div>

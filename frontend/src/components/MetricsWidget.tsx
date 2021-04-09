@@ -17,7 +17,7 @@ const MetricsWidget = ({
 }: Props) => {
   return (
     <div>
-      <h2 className="margin-top-4">{title}</h2>
+      <h2 className="margin-top-3">{title}</h2>
       {metrics.length ? (
         <div>
           <MetricsCardGroup

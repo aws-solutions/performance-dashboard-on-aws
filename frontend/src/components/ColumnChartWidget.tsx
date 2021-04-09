@@ -16,6 +16,7 @@ import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import DataTable from "./DataTable";
 
 type Props = {
   title: string;
@@ -178,8 +179,8 @@ const ColumnChartWidget = (props: Props) => {
               <Legend
                 verticalAlign="top"
                 onClick={toggleColumns}
-                onMouseLeave={(e) => setColumnsHover(null)}
-                onMouseEnter={(e) => setColumnsHover(e.dataKey)}
+                onMouseLeave={() => setColumnsHover(null)}
+                onMouseEnter={(e: any) => setColumnsHover(e.dataKey)}
               />
             )}
             {props.columns.length &&
@@ -220,6 +221,11 @@ const ColumnChartWidget = (props: Props) => {
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
+      <DataTable
+        rows={data || []}
+        columns={columns}
+        columnsMetadata={props.columnsMetadata}
+      />
     </div>
   );
 };

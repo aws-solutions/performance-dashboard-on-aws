@@ -393,6 +393,16 @@ exports[`renders the VisualizeChart component 1`] = `
             id="title"
             style="width: 100%; height: 300px;"
           />
+          <div
+            class="text-right"
+          >
+            <button
+              class="usa-button usa-button--unstyled margin-top-1"
+              type="button"
+            >
+              Show data table
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -793,6 +803,16 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             id="title"
             style="width: 100%; height: 300px;"
           />
+          <div
+            class="text-right"
+          >
+            <button
+              class="usa-button usa-button--unstyled margin-top-1"
+              type="button"
+            >
+              Show data table
+            </button>
+          </div>
         </div>
       </div>
     </div>

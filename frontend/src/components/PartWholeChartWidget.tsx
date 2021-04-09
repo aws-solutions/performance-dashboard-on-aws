@@ -11,6 +11,7 @@ import {
 import { useColors, useWindowSize } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import DataTable from "./DataTable";
 
 type Props = {
   title: string;
@@ -200,8 +201,8 @@ const PartWholeChartWidget = (props: Props) => {
                 width: "100%",
               }}
               onClick={toggleParts}
-              onMouseLeave={(e) => setPartsHover(null)}
-              onMouseEnter={(e) => setPartsHover(e.dataKey)}
+              onMouseLeave={() => setPartsHover(null)}
+              onMouseEnter={(e: any) => setPartsHover(e.dataKey)}
             />
             {partWholeParts.current.map((part, index) => {
               return (
@@ -228,6 +229,7 @@ const PartWholeChartWidget = (props: Props) => {
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
+      <DataTable rows={data || []} columns={parts} />
     </div>
   );
 };

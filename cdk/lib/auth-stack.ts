@@ -42,10 +42,17 @@ export class AuthStack extends cdk.Stack {
     });
     const identityPool = this.buildIdentityPool(pool, client);
 
-    const cliClient = pool.addClient("CLI", {
-      authFlows: { userPassword: true },
-      preventUserExistenceErrors: true,
-    });
+    identityPool.cfnOptions.metadata = {
+      cfn_nag: {
+        rules_to_suppress: [
+          {
+            id: "W57",
+            reason:
+              "Use case allows unauthenticated users to access S3 objects",
+          },
+        ],
+      },
+    };
 
     const stack = cdk.Stack.of(this);
     const datasetsBucketArn = `arn:${stack.partition}:s3:::${props.datasetsBucketName}`;

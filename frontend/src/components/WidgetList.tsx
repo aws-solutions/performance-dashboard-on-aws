@@ -130,7 +130,7 @@ function WidgetList(props: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="border-base border"></div>
+                <div className="border-base-lighter border-left"></div>
                 <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
                   <div
                     className="grid-col flex-7 usa-tooltip text-bold"

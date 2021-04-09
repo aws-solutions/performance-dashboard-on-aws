@@ -240,7 +240,7 @@ function PublishDashboard() {
               },
             ]}
             showStepChart={true}
-            showStepText={true}
+            showStepText={false}
           />
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>

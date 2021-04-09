@@ -26,6 +26,7 @@ interface Props {
   setSortByColumn?: Function;
   setSortByDesc?: Function;
   reset?: Function;
+  widgetType: string;
 }
 
 function CheckData(props: Props) {
@@ -266,9 +267,9 @@ function CheckData(props: Props) {
   return (
     <>
       <div className="grid-col-6 margin-top-3 margin-bottom-1">
-        Please make sure that the system formats your data correctly. Select
+        {`Please make sure that the system formats your data correctly. Select
         columns to format as numbers, dates, or text. Also select columns to
-        hide or show from the chart.
+        hide or show from the ${props.widgetType}.`}
       </div>
 
       <div className="grid-row">

@@ -544,6 +544,7 @@ function EditTable() {
                       setSortByColumn={setSortByColumn}
                       setSortByDesc={setSortByDesc}
                       reset={reset}
+                      widgetType="table"
                     />
                   </PrimaryActionBar>
                 </div>

@@ -84,20 +84,6 @@ const ColumnChartWidget = (props: Props) => {
     }
   };
 
-  const renderCustomizedLabel = (props: any) => {
-    const { x, y, width, value } = props;
-
-    return (
-      <text z={1} x={x + width / 2} y={y} dy={-6} textAnchor="middle">
-        {TickFormatter.format(
-          value,
-          yAxisLargestValue,
-          props.significantDigitLabels
-        )}
-      </text>
-    );
-  };
-
   /**
    * Calculate the width percent out of the total width
    * depending on the container. Width: (largestHeader + 1) *
@@ -169,7 +155,7 @@ const ColumnChartWidget = (props: Props) => {
               }}
             />
             <Tooltip
-              cursor={{ fill: "#F0F0F0" }}
+              itemStyle={{ color: "#1b1b1b" }}
               isAnimationActive={false}
               formatter={(value: Number | String, name: string) => {
                 // Check if there is metadata for this column
@@ -210,7 +196,14 @@ const ColumnChartWidget = (props: Props) => {
                     {!props.hideDataLabels ? (
                       <LabelList
                         dataKey={column}
-                        content={renderCustomizedLabel}
+                        position="top"
+                        formatter={(tick: any) =>
+                          TickFormatter.format(
+                            tick,
+                            yAxisLargestValue,
+                            props.significantDigitLabels
+                          )
+                        }
                       />
                     ) : (
                       ""

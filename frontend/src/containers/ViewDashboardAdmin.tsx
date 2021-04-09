@@ -232,7 +232,14 @@ function ViewDashboardAdmin() {
         {dashboard.state === DashboardState.Archived && (
           <Alert type="info" slim message={t("RepublishDashboardToView")} />
         )}
-        <div className="grid-row margin-top-2">
+        <div
+          className={`grid-row margin-top-${
+            dashboard.state === DashboardState.Published &&
+            !draftOrPublishPending
+              ? "0"
+              : "2"
+          }`}
+        >
           <div className="grid-col text-left flex-row flex-align-center display-flex">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
@@ -244,7 +251,7 @@ function ViewDashboardAdmin() {
                 </span>
               </li>
               <li className="usa-button-group__item">
-                <span className="text-underline text-middle">
+                <span className="text-middle" style={{ cursor: "default" }}>
                   <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
                   {t("ViewDashboardAlertVersion")} {dashboard?.version}
                 </span>
@@ -333,7 +340,7 @@ function ViewDashboardAdmin() {
               {t("ViewDashboardAlertVersionNotesFrom", {
                 version: dashboard?.version,
               })}
-              <span className="text-underline">{dashboard?.publishedBy}</span>
+              <span className="text-underline">{` ${dashboard?.publishedBy}`}</span>
             </div>
             <div className="margin-top-2 text-base">
               {dashboard?.releaseNotes}

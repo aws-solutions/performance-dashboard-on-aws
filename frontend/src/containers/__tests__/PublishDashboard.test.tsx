@@ -39,12 +39,6 @@ test("renders topic area", () => {
   expect(screen.getByText("Bananas")).toBeInTheDocument();
 });
 
-test("renders step indicator in step 1", () => {
-  expect(
-    screen.getByRole("heading", { name: "Step 1 of 3 Internal version notes" })
-  ).toBeInTheDocument();
-});
-
 test("continue button advances to step 2 and saves releaseNotes", async () => {
   fireEvent.input(screen.getByLabelText("Internal version notes"), {
     target: {
@@ -65,12 +59,6 @@ test("continue button advances to step 2 and saves releaseNotes", async () => {
     expect.anything(),
     "Some release notes"
   );
-
-  expect(
-    screen.getByRole("heading", {
-      name: "Step 2 of 3 Confirm URL",
-    })
-  ).toBeInTheDocument();
 });
 
 test("publish button invokes BackendService", async () => {
@@ -98,12 +86,6 @@ test("publish button invokes BackendService", async () => {
   await act(async () => {
     fireEvent.click(screen.getByTestId("AcknowledgementCheckboxLabel"));
   });
-
-  expect(
-    screen.getByRole("heading", {
-      name: "Step 3 of 3 Review and publish",
-    })
-  ).toBeInTheDocument();
 
   await act(async () => {
     fireEvent.click(

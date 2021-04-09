@@ -88,10 +88,6 @@ p {
   margin-right: 16px !important;
 }
 
-body {
-  background-color: #fafafa;
-}
-
 .usa-header--basic .usa-nav__primary-item > .usa-current::after,
 .usa-header--basic .usa-nav__link:hover::after {
   background-color: #71767a !important;
@@ -132,4 +128,8 @@ body {
 .usa-table td,
 .usa-table th {
   background-color: #fafafa;
+}
+
+.__react_component_tooltip.show {
+  opacity: 1 !important;
 }

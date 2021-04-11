@@ -34,14 +34,22 @@ function EditTopicArea() {
       history.push("/admin/settings/topicarea", {
         alert: {
           type: "success",
+<<<<<<< HEAD
           message: t("SettingsTopicAreaNameEditSuccess", { name: values.name }),
+=======
+          message: {t("SettingsTopicAreaNameEditSuccess", { name: ${values.name})},
+>>>>>>> 13668bd... Added localization to EditTopicArea
         },
       });
     } catch (err) {
       history.push(`/admin/settings/topicarea/${topicAreaId}/edit`, {
         alert: {
           type: "error",
+<<<<<<< HEAD
           message: t("SettingsTopicAreaNameEditProblem", { name: values.name }),
+=======
+          message: {t("SettingsTopicAreaNameEditProblem", { name: ${values.name})},
+>>>>>>> 13668bd... Added localization to EditTopicArea
         },
       });
     }
@@ -60,7 +68,11 @@ function EditTopicArea() {
       <Breadcrumbs
         crumbs={[
           {
+<<<<<<< HEAD
             label: t("Settings"),
+=======
+            label: {t("Settings")},
+>>>>>>> 13668bd... Added localization to EditTopicArea
             url: "/admin/settings/topicarea",
           },
           {
@@ -68,17 +80,25 @@ function EditTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
+<<<<<<< HEAD
             label: t("SettingsTopicAreaEdit", { name: topicarea.name }),
+=======
+            label: {t("SettingsTopicAreaEdit", { name: ${topicarea.name})},
+>>>>>>> 13668bd... Added localization to EditTopicArea
           },
         ]}
       />
       <AlertContainer />
+<<<<<<< HEAD
       <h1>
         {" "}
         {t("SettingsTopicAreaNameEdit", {
           singularname: settings.topicAreaLabels.singular,
         })}
       </h1>
+=======
+      <h1> {t("SettingsTopicAreaNameEdit", { singularname: ${settings.topicAreaLabels.singular })}</h1>
+>>>>>>> 13668bd... Added localization to EditTopicArea
       <div className="grid-row">
         <div className="grid-col-12">
           <form
@@ -88,11 +108,17 @@ function EditTopicArea() {
             <TextField
               id="name"
               name="name"
+<<<<<<< HEAD
               label={t("SettingsTopicAreaName", {
                 singularname: settings.topicAreaLabels.singular,
               })}
               register={register}
               error={errors.name && t("SettingsTopicAreaNameEditError")}
+=======
+              label={t("SettingsTopicAreaNameEdit", { singularname: ${settings.topicAreaLabels.singular })}
+              register={register}
+              error={errors.name && {t("SettingsTopicAreaNameEditError")}}
+>>>>>>> 13668bd... Added localization to EditTopicArea
               defaultValue={topicarea?.name}
               required
             />

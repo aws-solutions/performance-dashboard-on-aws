@@ -6,6 +6,7 @@ import Spinner from "../components/Spinner";
 import AuditTrailService from "../services/AuditTrailService";
 import UtilsService from "../services/UtilsService";
 import Search from "../components/Search";
+import { useTranslation } from "react-i18next";
 import {
   useDashboard,
   useDashboardHistory,
@@ -22,26 +23,27 @@ function DashboardHistory() {
   const dateFormatter = useDateTimeFormatter();
   const { dashboard } = useDashboard(dashboardId);
   const { auditlogs } = useDashboardHistory(dashboard?.parentDashboardId);
+  const { t } = useTranslation();
 
   const tableColumns = useMemo(
     () => [
       {
-        Header: "Action",
+        Header: {t("HistoryScreen.Action")},
         accessor: (props: any) => {
           return AuditTrailService.getActionFromDashboardAuditLog(props);
         },
       },
       {
-        Header: "Dashboard version",
+        Header: {t("HistoryScreen.DashboardVersion")},
         accessor: "version",
       },
       {
-        Header: "Date",
+        Header: {t("HistoryScreen.Date")},
         accessor: "timestamp",
         Cell: (props: any) => dateFormatter(props.value),
       },
       {
-        Header: "User",
+        Header: {t("HistoryScreen.User")},
         accessor: "userId",
       },
     ],
@@ -53,7 +55,7 @@ function DashboardHistory() {
   };
 
   if (!dashboard) {
-    return <Spinner className="text-center margin-top-9" label="Loading" />;
+    return <Spinner className="text-center margin-top-9" label={t("Loading")} />;
   }
 
   return (
@@ -61,7 +63,7 @@ function DashboardHistory() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Dashboards",
+            label: {t("Dashboards")},
             url: "/admin/dashboards",
           },
           {
@@ -69,11 +71,11 @@ function DashboardHistory() {
             url: UtilsService.getDashboardUrlPath(dashboard),
           },
           {
-            label: "History",
+            label: {t("History")},
           },
         ]}
       />
-      <h1>History</h1>
+      <h1>{t("History")}</h1>
 
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-3 padding-top-1px">

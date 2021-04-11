@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import AlertContainer from "./AlertContainer";
 import { useSettings } from "../hooks";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   name: string;
@@ -25,6 +26,7 @@ function EditTopicArea() {
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const { topicarea } = useTopicArea(topicAreaId);
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -32,14 +34,14 @@ function EditTopicArea() {
       history.push("/admin/settings/topicarea", {
         alert: {
           type: "success",
-          message: `"${values.name}" was successfully edited`,
+          message: {t("SettingsTopicAreaNameEditSuccess", { name: ${values.name})},
         },
       });
     } catch (err) {
       history.push(`/admin/settings/topicarea/${topicAreaId}/edit`, {
         alert: {
           type: "error",
-          message: `There was a problem editing "${values.name}". Please retry`,
+          message: {t("SettingsTopicAreaNameEditProblem", { name: ${values.name})},
         },
       });
     }
@@ -58,7 +60,7 @@ function EditTopicArea() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Settings",
+            label: {t("Settings")},
             url: "/admin/settings/topicarea",
           },
           {
@@ -66,13 +68,12 @@ function EditTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
-            label: `Edit ${topicarea.name}`,
+            label: {t("SettingsTopicAreaEdit", { name: ${topicarea.name})},
           },
         ]}
       />
       <AlertContainer />
-      <h1>{`Edit ${settings.topicAreaLabels.singular} name`}</h1>
-
+      <h1> {t("SettingsTopicAreaNameEdit", { singularname: ${settings.topicAreaLabels.singular })}</h1>
       <div className="grid-row">
         <div className="grid-col-12">
           <form
@@ -82,22 +83,22 @@ function EditTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={`${settings.topicAreaLabels.singular} name`}
+              label={t("SettingsTopicAreaNameEdit", { singularname: ${settings.topicAreaLabels.singular })}
               register={register}
-              error={errors.name && "Please specify a name"}
+              error={errors.name && {t("SettingsTopicAreaNameEditError")}}
               defaultValue={topicarea?.name}
               required
             />
 
             <br />
-            <Button type="submit">Save</Button>
+            <Button type="submit">{t("Save")}</Button>
             <Button
               className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               variant="unstyled"
               type="button"
               onClick={onCancel}
             >
-              Cancel
+              {t("Cancel")}
             </Button>
           </form>
         </div>

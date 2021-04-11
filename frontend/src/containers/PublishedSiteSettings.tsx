@@ -10,11 +10,13 @@ import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import "./PublishedSiteSettings.css";
+import { useTranslation } from "react-i18next";
 
 function PublishedSiteSettings() {
   const history = useHistory();
   const { homepage, loading } = useHomepage();
   const { settings, loadingSettings } = useSettings(true);
+  const { t } = useTranslation();
 
   const onContentEdit = () => {
     history.push("/admin/settings/publishedsite/contentedit");
@@ -26,13 +28,12 @@ function PublishedSiteSettings() {
 
   return (
     <SettingsLayout>
-      <h1>Published site</h1>
+      <h1>{t("SettingsPublishedSite")}</h1>
 
       <p>
-        Customize your published site. Your saved edits will take effect
-        immediately on the published site.{" "}
+        {t("SettingsPublishedSiteScreen.Description")}{" "}
         <Link target="_blank" to={"/"}>
-          View published site
+          {t("SettingsPublishedSiteScreen.ViewPublishedSite")}
           <FontAwesomeIcon
             className="margin-left-05"
             icon={faExternalLinkAlt}
@@ -42,9 +43,9 @@ function PublishedSiteSettings() {
       </p>
 
       <AlertContainer />
-      <h3 className="margin-top-2-important">Navigation Bar</h3>
+      <h3 className="margin-top-2-important">{t("SettingsPublishedSiteScreen.NavBar")}</h3>
 
-      <p>You can customize the header and navigation of the published site.</p>
+      <p>{t("SettingsPublishedSiteScreen.NavBarDescription")}</p>
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
@@ -56,13 +57,13 @@ function PublishedSiteSettings() {
             variant="outline"
             onClick={onNavbarEdit}
           >
-            Edit
+            {t("Edit")}
           </Button>
         </div>
       </div>
 
       {loadingSettings ? (
-        <Spinner className="margin-top-3 text-center" label="Loading" />
+        <Spinner className="margin-top-3 text-center" label={t("Loading")} />
       ) : (
         <div className="grid-row margin-top-0-important margin-bottom-4">
           <div className="grid-col flex-9">
@@ -83,16 +84,15 @@ function PublishedSiteSettings() {
         }}
       />
 
-      <h3 className="margin-top-2-important">Homepage content</h3>
+      <h3 className="margin-top-2-important">{t("SettingsPublishedSiteScreen.HomepageContent")}</h3>
 
       <p>
-        This components appear on the homepage of your published site and
-        explain what your published site is about.
+        {t("SettingsPublishedSiteScreen.HomepageContentDescription")}
       </p>
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
-          <p className="text-bold">Headline</p>
+          <p className="text-bold">{t("SettingsPublishedSiteScreen.HomepageHeadline")}</p>
         </div>
         <div className="grid-col flex-3 text-right">
           <Button
@@ -100,13 +100,13 @@ function PublishedSiteSettings() {
             variant="outline"
             onClick={onContentEdit}
           >
-            Edit
+            {t("Edit")}
           </Button>
         </div>
       </div>
 
       {loading ? (
-        <Spinner className="margin-top-3 text-center" label="Loading" />
+        <Spinner className="margin-top-3 text-center" label={t("Loading")} />
       ) : (
         <div className="grid-row margin-top-0-important">
           <div className="grid-col flex-9">
@@ -114,7 +114,7 @@ function PublishedSiteSettings() {
               <MarkdownRender source={homepage.title} />
             </div>
             <div className="grid-col flex-9">
-              <p className="text-bold">Description</p>
+              <p className="text-bold">{t("Description")}</p>
             </div>
             <div className="font-sans-lg">
               <MarkdownRender source={homepage.description} />

@@ -12,6 +12,7 @@ import Link from "../components/Link";
 import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -28,6 +29,7 @@ function AddText() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
+  const { t } = useTranslation();
 
   const [creatingWidget, setCreatingWidget] = useState(false);
   const [title, setTitle] = useState("");
@@ -56,11 +58,11 @@ function AddText() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" text has been successfully added`,
+          message: {t("AddTextScreen.AddTextSuccess", { title: ${values.title}})},
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log({t("AddContentFailure")}, err);
       setCreatingWidget(false);
     }
   };
@@ -82,7 +84,7 @@ function AddText() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: {t("Dashboards")},
       url: "/admin/dashboards",
     },
     {
@@ -93,7 +95,7 @@ function AddText() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add text",
+      label: {t("AddTextScreen.AddText")},
       url: "",
     });
   }
@@ -103,17 +105,17 @@ function AddText() {
       <Breadcrumbs crumbs={crumbs} />
 
       {creatingWidget ? (
-        <Spinner className="text-center margin-top-6" label="Creating text" />
+        <Spinner className="text-center margin-top-6" label={t("AddTextScreen.CreatingText")} />
       ) : (
         <>
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">Add text</h1>
+                <h1 className="margin-top-0">{t("AddTextScreen.AddText")}</h1>
 
-                <div className="text-base text-italic">Step 2 of 2</div>
+                <div className="text-base text-italic">{t("StepOfTotal", { step: "1", total: "2"})}</div>
                 <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-                  Configure text content
+                  {t("AddTextScreen.Configure")}
                 </div>
                 <form
                   className="usa-form usa-form--large"
@@ -124,7 +126,7 @@ function AddText() {
                     {errors.title || errors.text ? (
                       <Alert
                         type="error"
-                        message="Resolve error(s) to add the text"
+                        message={t("AddTextScreen.AddTextError")}
                       ></Alert>
                     ) : (
                       ""
@@ -132,9 +134,9 @@ function AddText() {
                     <TextField
                       id="title"
                       name="title"
-                      label="Text title"
-                      hint="Give your content a descriptive title."
-                      error={errors.title && "Please specify a content title"}
+                      label={t("AddTextScreen.TextTitle")}
+                      hint={t("AddTextScreen.TextTitleHint")}
+                      error={errors.title && {t("AddTextScreen.TextTitleError")}}
                       required
                       register={register}
                     />
@@ -152,23 +154,23 @@ function AddText() {
                         className="usa-checkbox__label"
                         htmlFor="display-title"
                       >
-                        Show title on dashboard
+                        {t("AddTextScreen.ShowTitle")}
                       </label>
                     </div>
 
                     <TextField
                       id="text"
                       name="text"
-                      label="Text"
+                      label={t("Text")}
                       hint={
                         <>
-                          Enter text here. This field supports markdown.{" "}
+                          {t("AddTextScreen.TextHint")}{" "}
                           <Link target="_blank" to={"/admin/markdown"} external>
-                            View Markdown Syntax
+                            {t("AddTextScreen.ViewMarkdownSyntax")}
                           </Link>
                         </>
                       }
-                      error={errors.text && "Please specify a text content"}
+                      error={errors.text && {t("AddTextScreen.TextError")}}
                       required
                       register={register}
                       multiline
@@ -179,10 +181,10 @@ function AddText() {
                   <br />
                   <hr />
                   <Button variant="outline" type="button" onClick={goBack}>
-                    Back
+                    {t("BackButton")}
                   </Button>
                   <Button disabled={creatingWidget} type="submit">
-                    Add text
+                    {t("AddTextScreen.AddText")}
                   </Button>
                   <Button
                     variant="unstyled"
@@ -190,7 +192,7 @@ function AddText() {
                     type="button"
                     onClick={onCancel}
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                 </form>
               </PrimaryActionBar>

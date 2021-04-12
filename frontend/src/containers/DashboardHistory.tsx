@@ -28,22 +28,22 @@ function DashboardHistory() {
   const tableColumns = useMemo(
     () => [
       {
-        Header: {t("HistoryScreen.Action")},
+        Header: t("HistoryScreen.Action"),
         accessor: (props: any) => {
           return AuditTrailService.getActionFromDashboardAuditLog(props);
         },
       },
       {
-        Header: {t("HistoryScreen.DashboardVersion")},
+        Header: t("HistoryScreen.DashboardVersion"),
         accessor: "version",
       },
       {
-        Header: {t("HistoryScreen.Date")},
+        Header: t("HistoryScreen.Date"),
         accessor: "timestamp",
         Cell: (props: any) => dateFormatter(props.value),
       },
       {
-        Header: {t("HistoryScreen.User")},
+        Header: t("HistoryScreen.User"),
         accessor: "userId",
       },
     ],
@@ -55,7 +55,7 @@ function DashboardHistory() {
   };
 
   if (!dashboard) {
-    return <Spinner className="text-center margin-top-9" label={t("Loading")} />;
+    return <Spinner className="text-center margin-top-9" label={t("LoadingSpinnerLabel")} />;
   }
 
   return (

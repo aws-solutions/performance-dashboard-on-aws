@@ -105,7 +105,10 @@ function AddText() {
       <Breadcrumbs crumbs={crumbs} />
 
       {creatingWidget ? (
-        <Spinner className="text-center margin-top-6" label={t("AddTextScreen.CreatingText")} />
+        <Spinner
+          className="text-center margin-top-6"
+          label={t("AddTextScreen.CreatingText")}
+        />
       ) : (
         <>
           <div className="grid-row width-desktop grid-gap">
@@ -113,7 +116,9 @@ function AddText() {
               <PrimaryActionBar>
                 <h1 className="margin-top-0">{t("AddTextScreen.AddText")}</h1>
 
-                <div className="text-base text-italic">{t("StepOfTotal", { step: "1", total: "2"})}</div>
+                <div className="text-base text-italic">
+                  {t("StepOfTotal", { step: "1", total: "2" })}
+                </div>
                 <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
                   {t("AddTextScreen.Configure")}
                 </div>

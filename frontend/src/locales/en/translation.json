@@ -273,7 +273,7 @@
     "ColumnChartExampleDownload": "Download column chart example CSV",
     "PartToWholeChart": "Part-to-whole chart",
     "PartToWholeChartDescription": "A part-to-whole chart is divided into blocks, illustrating numerical proportion. In a part-to-whole chart, the length of each block (and consequently its area) is proportional to the quantity it represents. Part-to-whole charts are used to show relative comparison between blocks as part of a total value.",
-    "PartToWholeChartExample": "Part-to-whole Chart Example"
+    "PartToWholeChartExample": "Part-to-whole Chart Example",
     "PartToWholeChartExampleDownload": "Download part-to-whole chart example CSV",
     "TableDescription": "A table is a means of arranging data in rows and columns. Tables are used to show comparison when the granularity of data is desired.",
     "TableExample": "Table Example",

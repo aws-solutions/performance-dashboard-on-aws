@@ -84,7 +84,7 @@ function AddText() {
 
   const crumbs = [
     {
-      label: {t("Dashboards")},
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -95,7 +95,7 @@ function AddText() {
 
   if (!loading) {
     crumbs.push({
-      label: {t("AddTextScreen.AddText")},
+      label: t("AddTextScreen.AddText"),
       url: "",
     });
   }

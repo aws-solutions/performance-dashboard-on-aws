@@ -4,6 +4,7 @@ import * as lambda from "@aws-cdk/aws-lambda";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
 import { SnsAction } from "@aws-cdk/aws-cloudwatch-actions";
+import * as kms from "@aws-cdk/aws-kms";
 import {
   Alarm,
   Metric,
@@ -43,7 +44,15 @@ export class OpsStack extends cdk.Stack {
 
     this.props = props;
     this.alarms = [];
-    this.opsNotifications = new sns.Topic(this, "OpsNotifications");
+
+    const targetKmsKey = new kms.Key(this, "PDoA", {
+      enableKeyRotation: true,
+    });
+    targetKmsKey.addAlias("PDoA/OpsNotifications");
+
+    this.opsNotifications = new sns.Topic(this, "OpsNotifications", {
+      masterKey: targetKmsKey,
+    });
 
     this.createLambdaAlarms("PrivateApiFunction", props.privateApiFunction);
     this.createLambdaAlarms("PublicApiFunction", props.publicApiFunction);

@@ -65,10 +65,14 @@ function EditTopicAreaLabel() {
         <p>{t("EditSettingsTopicAreaNameScreen.Description")}</p>
 
         {loadingSettings ? (
+<<<<<<< HEAD
           <Spinner
             className="text-center margin-top-9"
             label={t("LoadingSpinnerLabel")}
           />
+=======
+          <Spinner className="text-center margin-top-9" label={t("LoadingSpinnerLabel")} />
+>>>>>>> 7521165... Made formatting changes
         ) : (
           <>
             <form

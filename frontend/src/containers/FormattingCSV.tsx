@@ -27,22 +27,18 @@ function FormattingCSV() {
 
   return (
     <>
-      <h1 className="font-sans-2xl">{t("FormatCSVScreen.FormattingCSVFiles")}</h1>
+      <h1 className="font-sans-2xl">
+        {t("FormatCSVScreen.FormattingCSVFiles")}
+      </h1>
       <div className="font-sans-lg usa-prose">
-        <p>
-          {t("FormatCSVScreen.FormattingCSVDescription")}
-        </p>
+        <p>{t("FormatCSVScreen.FormattingCSVDescription")}</p>
         <h3>{t("FormatCSVScreen.MacOS")}</h3>
-        <p>
-          {t("FormatCSVScreen.MacOSDescription")}
-        </p>
+        <p>{t("FormatCSVScreen.MacOSDescription")}</p>
       </div>
 
       <h2>{t("FormatCSVScreen.LineChart")}</h2>
       <div className="usa-prose">
-        <p>
-          {t("FormatCSVScreen.LineChartDescription")}
-        </p>
+        <p>{t("FormatCSVScreen.LineChartDescription")}</p>
         <div className="grid-row">
           <div className="grid-col text-left">
             <b>{t("FormatCSVScreen.LineChartExample")}</b>
@@ -72,9 +68,7 @@ function FormattingCSV() {
 
       <h2>{t("FormatCSVScreen.ColumnChart")}</h2>
       <div className="usa-prose">
-        <p>
-          {t("FormatCSVScreen.ColumnChartDescription")}
-        </p>
+        <p>{t("FormatCSVScreen.ColumnChartDescription")}</p>
         <div className="grid-row">
           <div className="grid-col text-left">
             <b>{t("FormatCSVScreen.ColumnChartExample")}</b>
@@ -104,9 +98,7 @@ function FormattingCSV() {
 
       <h2>{t("FormatCSVScreen.PartToWholeChart")}</h2>
       <div className="usa-prose">
-        <p>
-          {t("FormatCSVScreen.PartToWholeChartDescription")}
-        </p>
+        <p>{t("FormatCSVScreen.PartToWholeChartDescription")}</p>
         <div className="grid-row">
           <div className="grid-col text-left">
             <b>{t("FormatCSVScreen.PartToWholeChartExample")}</b>
@@ -136,9 +128,7 @@ function FormattingCSV() {
 
       <h2>{t("Table")}</h2>
       <div className="usa-prose">
-        <p>
-          {t("FormatCSVScreen.TableDescription")}
-        </p>
+        <p>{t("FormatCSVScreen.TableDescription")}</p>
         <div className="grid-row">
           <div className="grid-col text-left">
             <b>{t("FormatCSVScreen.TableExample")}</b>

@@ -34,14 +34,14 @@ function EditTopicArea() {
       history.push("/admin/settings/topicarea", {
         alert: {
           type: "success",
-          message: t("SettingsTopicAreaNameEditSuccess", { name: ${values.name}),
+          message: t("SettingsTopicAreaNameEditSuccess", { name: values.name }),
         },
       });
     } catch (err) {
       history.push(`/admin/settings/topicarea/${topicAreaId}/edit`, {
         alert: {
           type: "error",
-          message: t("SettingsTopicAreaNameEditProblem", { name: ${values.name}),
+          message: t("SettingsTopicAreaNameEditProblem", { name: values.name }),
         },
       });
     }
@@ -68,12 +68,12 @@ function EditTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
-            label: t("SettingsTopicAreaEdit", { name: ${topicarea.name}),
+            label: t("SettingsTopicAreaEdit", { name: topicarea.name }),
           },
         ]}
       />
       <AlertContainer />
-      <h1> {t("SettingsTopicAreaNameEdit", { singularname: ${settings.topicAreaLabels.singular })}</h1>
+      <h1> {t("SettingsTopicAreaNameEdit", { singularname: settings.topicAreaLabels.singular })}</h1>
       <div className="grid-row">
         <div className="grid-col-12">
           <form
@@ -83,9 +83,9 @@ function EditTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={t("SettingsTopicAreaNameEdit", { singularname: ${settings.topicAreaLabels.singular })}
+              label={t("SettingsTopicAreaNameEdit", { singularname: settings.topicAreaLabels.singular })}
               register={register}
-              error={errors.name && {t("SettingsTopicAreaNameEditError")}}
+              error={errors.name && t("SettingsTopicAreaNameEditError")}
               defaultValue={topicarea?.name}
               required
             />

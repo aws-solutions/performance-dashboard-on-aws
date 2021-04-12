@@ -62,7 +62,7 @@ function AddText() {
         },
       });
     } catch (err) {
-      console.log({t("AddContentFailure")}, err);
+      console.log(t("AddContentFailure"), err);
       setCreatingWidget(false);
     }
   };

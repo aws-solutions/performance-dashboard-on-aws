@@ -211,7 +211,7 @@
    "NavBar": "Navigation bar",
    "NavBarDescription": "You can customize the header and navigation of the published site.",
    "HomepageContent": "Homepage content",
-   "HomepageContentDescription": "This component appears on the homepage of the published site and explains what your published site is about.",
+   "HomepageContentDescription": "This components appear on the homepage of the published site and explains what your published site is about.",
    "HomepageHeadline": "Headline"
   },
   "SettingsNavBarEdit": "Edit navigation bar",

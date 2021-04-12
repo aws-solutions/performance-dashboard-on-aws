@@ -25,6 +25,7 @@ interface DropdownProps {
   className?: string;
   ariaLabel?: string;
   buttonText: string;
+  disabled?: boolean;
 }
 
 function DropdownMenu(props: DropdownProps) {
@@ -60,6 +61,7 @@ function DropdownMenu(props: DropdownProps) {
       <MenuButton
         className={`usa-button${variantClassName}${additionalClasses}`}
         aria-label={props.ariaLabel}
+        disabled={props.disabled}
       >
         {props.buttonText}
         <FontAwesomeIcon icon={faCaretDown} className="margin-left-1" />

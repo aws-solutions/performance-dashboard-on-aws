@@ -104,12 +104,12 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
         Edit or confirm the URL that will be used to publish this dashboard. The
         domain name cannot be edited.
       </div>
-      <p className="font-sans-lg margin-top-0">
+      <p className="font-sans-lg">
         https://{window.location.hostname}/{friendlyURL}
         <Button
           type="button"
           variant="unstyled"
-          className="margin-left-2"
+          className="margin-left-2 text-bold text-base-dark hover:text-base-darker active:text-base-darkest"
           onClick={() => setIsEditing(true)}
         >
           Edit URL

@@ -88,7 +88,7 @@ function EditTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={t("SettingsTopicAreaNameEdit", {
+              label={t("SettingsTopicAreaName", {
                 singularname: settings.topicAreaLabels.singular,
               })}
               register={register}

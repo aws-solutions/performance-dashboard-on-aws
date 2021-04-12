@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 function FourZeroFour() {
   const { t } = useTranslation();
-  
+
   return (
     <>
       <div className="text-center">
@@ -14,8 +14,7 @@ function FourZeroFour() {
         </p>
         <hr className="width-tablet border-base-light" />
         <p className="font-sans-md">
-          {t("PageNotFoundDescription")}{" "}
-          <Link to="/">homepage</Link>.
+          {t("PageNotFoundDescription")} <Link to="/">homepage</Link>.
         </p>
       </div>
       <Footer />

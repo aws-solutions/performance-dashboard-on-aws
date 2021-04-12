@@ -73,7 +73,12 @@ function EditTopicArea() {
         ]}
       />
       <AlertContainer />
-      <h1> {t("SettingsTopicAreaNameEdit", { singularname: settings.topicAreaLabels.singular })}</h1>
+      <h1>
+        {" "}
+        {t("SettingsTopicAreaNameEdit", {
+          singularname: settings.topicAreaLabels.singular,
+        })}
+      </h1>
       <div className="grid-row">
         <div className="grid-col-12">
           <form
@@ -83,7 +88,9 @@ function EditTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={t("SettingsTopicAreaNameEdit", { singularname: settings.topicAreaLabels.singular })}
+              label={t("SettingsTopicAreaNameEdit", {
+                singularname: settings.topicAreaLabels.singular,
+              })}
               register={register}
               error={errors.name && t("SettingsTopicAreaNameEditError")}
               defaultValue={topicarea?.name}

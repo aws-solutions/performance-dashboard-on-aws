@@ -48,7 +48,11 @@ function DraftsTab(props: Props) {
         </div>
         <div className="tablet:grid-col-9 text-right">
           <span>
-            <DropdownMenu buttonText="Actions" variant="outline">
+            <DropdownMenu
+              buttonText="Actions"
+              disabled={selected.length === 0}
+              variant="outline"
+            >
               <MenuLink
                 href={
                   selected.length === 1
@@ -59,10 +63,7 @@ function DraftsTab(props: Props) {
               >
                 View history
               </MenuLink>
-              <MenuItem
-                onSelect={() => props.onDelete(selected)}
-                disabled={selected.length === 0}
-              >
+              <MenuItem onSelect={() => props.onDelete(selected)}>
                 Delete
               </MenuItem>
             </DropdownMenu>

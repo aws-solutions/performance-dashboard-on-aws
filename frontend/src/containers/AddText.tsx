@@ -198,9 +198,8 @@ function AddText() {
             <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
               <div>
                 {fullPreviewButton}
-                <h4 className="margin-top-4">Preview</h4>
                 {showTitle ? (
-                  <h2 className="margin-top-4 margin-left-2px">{title}</h2>
+                  <h2 className="margin-top-3 margin-left-2px">{title}</h2>
                 ) : (
                   ""
                 )}

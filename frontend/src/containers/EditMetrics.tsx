@@ -295,19 +295,18 @@ function EditMetrics() {
                       {t("SignificantDigitLabels")}
                     </label>
                   </div>
-
-                  <MetricsList
-                    metrics={metrics}
-                    onClick={onAddMetric}
-                    onEdit={onEditMetric}
-                    onDelete={onDeleteMetric}
-                    onMoveUp={onMoveMetricUp}
-                    onMoveDown={onMoveMetricDown}
-                    defaultChecked={oneMetricPerRow}
-                    register={register}
-                    allowAddMetric
-                  />
                 </fieldset>
+                <MetricsList
+                  metrics={metrics}
+                  onClick={onAddMetric}
+                  onEdit={onEditMetric}
+                  onDelete={onDeleteMetric}
+                  onMoveUp={onMoveMetricUp}
+                  onMoveDown={onMoveMetricDown}
+                  defaultChecked={oneMetricPerRow}
+                  register={register}
+                  allowAddMetric
+                />
                 <br />
                 <br />
                 <hr />
@@ -330,7 +329,6 @@ function EditMetrics() {
           </div>
           <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
             {fullPreviewButton}
-            <h4 className="margin-top-4">Preview</h4>
             <MetricsWidget
               title={showTitle ? title : ""}
               metrics={metrics}

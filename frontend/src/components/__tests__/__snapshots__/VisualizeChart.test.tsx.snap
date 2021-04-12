@@ -369,9 +369,6 @@ exports[`renders the VisualizeChart component 1`] = `
         >
           Full preview
         </button>
-        <h4>
-          Preview
-        </h4>
         
         <div
           class="overflow-x-hidden"
@@ -649,7 +646,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             hidden=""
           >
             <input
-              checked=""
               class="usa-checkbox__input"
               id="horizontalScroll"
               name="horizontalScroll"
@@ -779,9 +775,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         >
           Full preview
         </button>
-        <h4>
-          Preview
-        </h4>
         
         <div
           class="overflow-x-hidden"

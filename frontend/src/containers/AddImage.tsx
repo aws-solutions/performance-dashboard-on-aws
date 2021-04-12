@@ -300,7 +300,6 @@ function AddImage() {
         </div>
         <div className={fullPreview ? "gril-col-12" : "grid-col-6"}>
           {fullPreviewButton}
-          <h4 className="margin-top-4">Preview</h4>
           <ImageWidget
             title={showTitle ? title : ""}
             summary={summary}

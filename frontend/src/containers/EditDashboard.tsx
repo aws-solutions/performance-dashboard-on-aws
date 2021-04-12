@@ -277,7 +277,6 @@ function EditDashboard() {
               </Link>
             }
           />
-          <div className="border-base-lighter border-bottom" />
           <AlertContainer id="top-alert" />
           <WidgetList
             widgets={dashboard ? dashboard.widgets : []}

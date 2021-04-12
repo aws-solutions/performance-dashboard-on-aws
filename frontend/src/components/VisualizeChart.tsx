@@ -191,7 +191,7 @@ function VisualizeChart(props: Props) {
                 id="horizontalScroll"
                 type="checkbox"
                 name="horizontalScroll"
-                defaultChecked
+                defaultChecked={!!props.horizontalScroll}
                 ref={props.register()}
               />
               <label className="usa-checkbox__label" htmlFor="horizontalScroll">
@@ -281,7 +281,6 @@ function VisualizeChart(props: Props) {
           className={`${!props.fullPreview ? "margin-left-4" : ""}`}
         >
           {props.fullPreviewButton}
-          <h4>Preview</h4>
           {props.datasetLoading ? (
             <Spinner className="text-center margin-top-6" label="Loading" />
           ) : (

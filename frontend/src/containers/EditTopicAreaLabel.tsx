@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import TextField from "../components/TextField";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   singular: string;
@@ -17,6 +18,7 @@ function EditTopicAreaLabel() {
   const history = useHistory();
   const { settings, loadingSettings } = useSettings();
   const { register, errors, handleSubmit } = useForm<FormValues>();
+  const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.updateSetting(
@@ -31,7 +33,7 @@ function EditTopicAreaLabel() {
     history.push("/admin/settings/topicarea", {
       alert: {
         type: "success",
-        message: "Topic area name was successfully edited",
+        message: t("EditSettingsTopicAreaNameScreen.Success"),
       },
     });
   };
@@ -42,7 +44,7 @@ function EditTopicAreaLabel() {
 
   const crumbs = [
     {
-      label: "Settings",
+      label: t("Settings"),
       url: "/admin/settings/topicarea",
     },
     {
@@ -50,7 +52,7 @@ function EditTopicAreaLabel() {
       url: "/admin/settings/topicarea",
     },
     {
-      label: "Edit topic area name",
+      label: t("SettingsTopicAreaNameEditGeneric"),
     },
   ];
 
@@ -58,16 +60,15 @@ function EditTopicAreaLabel() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>Edit topic area name</h1>
+        <h1>{t("SettingsTopicAreaNameEditGeneric")}</h1>
 
-        <p>
-          You can customize the name "topic area" and it will be replaced
-          throughout the interface. For example, "topic area" can be renamed to
-          "department", "ministry", "program", "agency", etc.
-        </p>
+        <p>{t("EditSettingsTopicAreaNameScreen.Description")}</p>
 
         {loadingSettings ? (
-          <Spinner className="text-center margin-top-9" label="Loading" />
+          <Spinner
+            className="text-center margin-top-9"
+            label={t("LoadingSpinnerLabel")}
+          />
         ) : (
           <>
             <form
@@ -78,9 +79,12 @@ function EditTopicAreaLabel() {
               <TextField
                 id="topicAreaSingular"
                 name="singular"
-                label='Rename single "topic area"'
-                hint='For example, "ministry"'
-                error={errors.singular && "Please specify a title"}
+                label={t("EditSettingsTopicAreaNameScreen.RenameSingle")}
+                hint={t("EditSettingsTopicAreaNameScreen.RenameSingleExample")}
+                error={
+                  errors.singular &&
+                  t("EditSettingsTopicAreaNameScreen.RenameError")
+                }
                 defaultValue={settings.topicAreaLabels.singular}
                 register={register}
                 required
@@ -89,9 +93,12 @@ function EditTopicAreaLabel() {
               <TextField
                 id="topicAreaPlural"
                 name="plural"
-                label='Rename multiple "topic areas"'
-                hint='For example, "ministries"'
-                error={errors.plural && "Please specify a title"}
+                label={t("EditSettingsTopicAreaNameScreen.RenamePlural")}
+                hint={t("EditSettingsTopicAreaNameScreen.RenamePluralExample")}
+                error={
+                  errors.plural &&
+                  t("EditSettingsTopicAreaNameScreen.RenameError")
+                }
                 defaultValue={settings.topicAreaLabels.plural}
                 register={register}
                 required
@@ -99,7 +106,7 @@ function EditTopicAreaLabel() {
 
               <br />
               <Button type="submit" disabled={loadingSettings}>
-                Save
+                {t("Save")}
               </Button>
               <Button
                 variant="unstyled"
@@ -107,7 +114,7 @@ function EditTopicAreaLabel() {
                 className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                 onClick={onCancel}
               >
-                Cancel
+                {t("Cancel")}
               </Button>
             </form>
           </>

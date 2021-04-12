@@ -175,7 +175,7 @@ exports[`published site settings should match snapshot 1`] = `
           <h3
             class="margin-top-2-important"
           >
-            Navigation Bar
+            Navigation bar
           </h3>
           <p>
             You can customize the header and navigation of the published site.

@@ -34,14 +34,14 @@ function EditTopicArea() {
       history.push("/admin/settings/topicarea", {
         alert: {
           type: "success",
-          message: {t("SettingsTopicAreaNameEditSuccess", { name: ${values.name})},
+          message: t("SettingsTopicAreaNameEditSuccess", { name: ${values.name}),
         },
       });
     } catch (err) {
       history.push(`/admin/settings/topicarea/${topicAreaId}/edit`, {
         alert: {
           type: "error",
-          message: {t("SettingsTopicAreaNameEditProblem", { name: ${values.name})},
+          message: t("SettingsTopicAreaNameEditProblem", { name: ${values.name}),
         },
       });
     }
@@ -60,7 +60,7 @@ function EditTopicArea() {
       <Breadcrumbs
         crumbs={[
           {
-            label: {t("Settings")},
+            label: t("Settings"),
             url: "/admin/settings/topicarea",
           },
           {
@@ -68,7 +68,7 @@ function EditTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
-            label: {t("SettingsTopicAreaEdit", { name: ${topicarea.name})},
+            label: t("SettingsTopicAreaEdit", { name: ${topicarea.name}),
           },
         ]}
       />

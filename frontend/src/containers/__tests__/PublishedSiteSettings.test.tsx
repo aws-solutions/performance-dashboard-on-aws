@@ -16,7 +16,7 @@ test("renders the navbar title", async () => {
   const { getByRole } = render(<PublishedSiteSettings />, {
     wrapper: MemoryRouter,
   });
-  expect(getByRole("heading", { name: "Navigation Bar" })).toBeInTheDocument();
+  expect(getByRole("heading", { name: "Navigation bar" })).toBeInTheDocument();
 });
 
 test("renders the navigation bar title", async () => {
@@ -41,8 +41,7 @@ test("renders the homepage description", async () => {
   });
   expect(
     getByText(
-      "This components appear on the homepage of your published site and " +
-        "explain what your published site is about."
+      "This components appear on the homepage of your published site and explain what your published site is about."
     )
   ).toBeInTheDocument();
 });

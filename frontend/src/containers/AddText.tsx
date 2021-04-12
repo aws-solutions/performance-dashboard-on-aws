@@ -35,11 +35,7 @@ function AddText() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [showTitle, setShowTitle] = useState(true);
-  const {
-    fullPreview,
-    fullPreviewToggle,
-    fullPreviewButton,
-  } = useFullPreview();
+  const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -117,7 +113,7 @@ function AddText() {
                 <h1 className="margin-top-0">{t("AddTextScreen.AddText")}</h1>
 
                 <div className="text-base text-italic">
-                  {t("StepOfTotal", { step: "1", total: "2" })}
+                  {t("StepOfTotal", { step: "2", total: "2" })}
                 </div>
                 <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
                   {t("AddTextScreen.Configure")}

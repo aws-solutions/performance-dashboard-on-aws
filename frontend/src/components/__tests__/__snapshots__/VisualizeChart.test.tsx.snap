@@ -371,7 +371,7 @@ exports[`renders the VisualizeChart component 1`] = `
         </button>
         
         <div
-          class="overflow-x-hidden"
+          class="overflow-x-hidden overflow-y-hidden"
         >
           <h2
             class="margin-bottom-1"
@@ -777,7 +777,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         </button>
         
         <div
-          class="overflow-x-hidden"
+          class="overflow-x-hidden overflow-y-hidden"
         >
           <h2
             class="margin-bottom-1"

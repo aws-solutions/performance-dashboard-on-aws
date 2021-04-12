@@ -55,7 +55,12 @@ function DashboardHistory() {
   };
 
   if (!dashboard) {
-    return <Spinner className="text-center margin-top-9" label={t("LoadingSpinnerLabel")} />;
+    return (
+      <Spinner
+        className="text-center margin-top-9"
+        label={t("LoadingSpinnerLabel")}
+      />
+    );
   }
 
   return (

@@ -107,7 +107,7 @@ const ColumnChartWidget = (props: Props) => {
 
   return (
     <div
-      className={`overflow-x-hidden${
+      className={`overflow-x-hidden overflow-y-hidden${
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >

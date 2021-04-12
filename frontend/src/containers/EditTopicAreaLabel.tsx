@@ -80,7 +80,7 @@ function EditTopicAreaLabel() {
                 name="singular"
                 label={t("EditSettingsTopicAreaNameScreen.RenameSingle")}
                 hint={t("EditSettingsTopicAreaNameScreen.RenameSingleExample")}
-                error={errors.singular && {t("EditSettingsTopicAreaNameScreen.RenameError")}}
+                error={errors.singular && t("EditSettingsTopicAreaNameScreen.RenameError")}
                 defaultValue={settings.topicAreaLabels.singular}
                 register={register}
                 required
@@ -91,7 +91,7 @@ function EditTopicAreaLabel() {
                 name="plural"
                 label={t("EditSettingsTopicAreaNameScreen.RenamePlural")}
                 hint={t("EditSettingsTopicAreaNameScreen.RenamePluralExample")}
-                error={errors.plural && {t("EditSettingsTopicAreaNameScreen.RenameError")}}
+                error={errors.plural && t("EditSettingsTopicAreaNameScreen.RenameError")}
                 defaultValue={settings.topicAreaLabels.plural}
                 register={register}
                 required

@@ -6,7 +6,7 @@ exports[`image preview should match snapshot 1`] = `
     class="preview-container"
   >
     <h2
-      class="margin-top-1"
+      class="margin-top-3"
     >
       test title
     </h2>

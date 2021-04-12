@@ -77,7 +77,7 @@ function MetricsList(props: Props) {
   };
 
   return (
-    <div>
+    <div className="display-block">
       <h4 className="margin-bottom-0">Metrics</h4>
       <p className="margin-top-2px usa-hint">
         Add metrics here and reorder them. Multiple metrics will automatically

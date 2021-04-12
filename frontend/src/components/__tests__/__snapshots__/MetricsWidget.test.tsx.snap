@@ -4,7 +4,7 @@ exports[`metrics preview should match snapshot 1`] = `
 <div>
   <div>
     <h2
-      class="margin-top-4"
+      class="margin-top-3"
     >
       test title
     </h2>

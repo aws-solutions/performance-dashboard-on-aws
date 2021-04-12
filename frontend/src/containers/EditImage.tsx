@@ -312,7 +312,6 @@ function EditImage() {
             <div className={fullPreview ? "gril-col-12" : "grid-col-6"}>
               <div hidden={false}>
                 {fullPreviewButton}
-                <h4>Preview</h4>
                 {loadingFile ? (
                   <Spinner
                     className="text-center margin-top-6"

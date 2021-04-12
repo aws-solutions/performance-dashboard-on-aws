@@ -14,7 +14,7 @@ const ImageWidget = (props: Props) => {
 
   return (
     <div className="preview-container">
-      <h2 className="margin-top-1">{title}</h2>
+      <h2 className="margin-top-3">{title}</h2>
       {!summaryBelow && (
         <MarkdownRender
           source={summary}

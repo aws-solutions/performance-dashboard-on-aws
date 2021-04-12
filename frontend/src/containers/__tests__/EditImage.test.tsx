@@ -81,8 +81,6 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
 
   await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {
-    expect(getByText("Preview")).toBeInTheDocument();
-
     expect(getByText("Image alt text")).toBeInTheDocument();
     expect(
       getByText(

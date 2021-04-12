@@ -122,7 +122,7 @@ function fromChartItem(widget: Widget): ChartWidget {
       dataLabels:
         chartWidget.content.dataLabels !== undefined
           ? chartWidget.content.dataLabels
-          : true,
+          : false,
     },
   };
 }
@@ -244,7 +244,7 @@ function createChartWidget(widget: Widget): ChartWidget {
       dataLabels:
         widget.content.dataLabels !== undefined
           ? widget.content.dataLabels
-          : true,
+          : false,
       ...(widget.content.horizontalScroll && {
         horizontalScroll: widget.content.horizontalScroll,
       }),

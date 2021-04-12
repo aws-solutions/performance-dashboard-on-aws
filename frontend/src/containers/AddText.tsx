@@ -136,7 +136,7 @@ function AddText() {
                       name="title"
                       label={t("AddTextScreen.TextTitle")}
                       hint={t("AddTextScreen.TextTitleHint")}
-                      error={errors.title && {t("AddTextScreen.TextTitleError")}}
+                      error={errors.title && t("AddTextScreen.TextTitleError")}
                       required
                       register={register}
                     />
@@ -170,7 +170,7 @@ function AddText() {
                           </Link>
                         </>
                       }
-                      error={errors.text && {t("AddTextScreen.TextError")}}
+                      error={errors.text && t("AddTextScreen.TextError")}
                       required
                       register={register}
                       multiline

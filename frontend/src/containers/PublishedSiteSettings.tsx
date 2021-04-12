@@ -43,7 +43,9 @@ function PublishedSiteSettings() {
       </p>
 
       <AlertContainer />
-      <h3 className="margin-top-2-important">{t("SettingsPublishedSiteScreen.NavBar")}</h3>
+      <h3 className="margin-top-2-important">
+        {t("SettingsPublishedSiteScreen.NavBar")}
+      </h3>
 
       <p>{t("SettingsPublishedSiteScreen.NavBarDescription")}</p>
 
@@ -84,15 +86,17 @@ function PublishedSiteSettings() {
         }}
       />
 
-      <h3 className="margin-top-2-important">{t("SettingsPublishedSiteScreen.HomepageContent")}</h3>
+      <h3 className="margin-top-2-important">
+        {t("SettingsPublishedSiteScreen.HomepageContent")}
+      </h3>
 
-      <p>
-        {t("SettingsPublishedSiteScreen.HomepageContentDescription")}
-      </p>
+      <p>{t("SettingsPublishedSiteScreen.HomepageContentDescription")}</p>
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
-          <p className="text-bold">{t("SettingsPublishedSiteScreen.HomepageHeadline")}</p>
+          <p className="text-bold">
+            {t("SettingsPublishedSiteScreen.HomepageHeadline")}
+          </p>
         </div>
         <div className="grid-col flex-3 text-right">
           <Button

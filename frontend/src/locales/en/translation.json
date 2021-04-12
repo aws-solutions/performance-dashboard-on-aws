@@ -104,7 +104,7 @@
     "Publish": "Publish"
   },
   "AddContentFailure": "Failed to save content item",
-  "AddTextScreen":{
+  "AddTextScreen": {
     "AddText": "Add text",
     "AddTextError": "Resolve error(s) to add the text",
     "AddTextSuccess": "{{title}} text has been successfully added.",
@@ -213,7 +213,7 @@
    "HomepageContent": "Homepage content",
    "HomepageContentDescription": "This component appears on the homepage of the published site and explains what your published site is about.",
    "HomepageHeadline": "Headline"
-  }
+  },
   "SettingsNavBarEdit": "Edit navigation bar",
   "SettingsNavBarEditSuccess": "Navigation bar successfully edited.",
   "SettingsNavBarEditDescription": "Customize the title of your dashboard",
@@ -285,7 +285,7 @@
     "DashboardVersion": "Dashboard version",
     "Date": "Date",
     "User": "User"
-  }
+  },
   "ShowDataTableButton": "Show data table",
   "HideDataTableButton": "Hide data table"
 }

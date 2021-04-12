@@ -63,6 +63,8 @@ function FormattingCSV() {
           lines={lineChart.dataset.headers}
           data={lineChart.dataset.data}
           summaryBelow={false}
+          columnsMetadata={[]}
+          significantDigitLabels={false}
         />
       </div>
 
@@ -93,6 +95,8 @@ function FormattingCSV() {
           columns={column.dataset.headers}
           data={column.dataset.data}
           summaryBelow={false}
+          columnsMetadata={[]}
+          significantDigitLabels={false}
         />
       </div>
 
@@ -123,6 +127,7 @@ function FormattingCSV() {
           parts={partToWhole.dataset.headers}
           data={partToWhole.dataset.data}
           summaryBelow={false}
+          significantDigitLabels={false}
         />
       </div>
 
@@ -153,6 +158,7 @@ function FormattingCSV() {
           data={table.dataset.data}
           summaryBelow={false}
           columnsMetadata={[]}
+          significantDigitLabels={false}
         />
       </div>
     </>

@@ -63,7 +63,7 @@ function DashboardHistory() {
       <Breadcrumbs
         crumbs={[
           {
-            label: {t("Dashboards")},
+            label: t("Dashboards"),
             url: "/admin/dashboards",
           },
           {
@@ -71,7 +71,7 @@ function DashboardHistory() {
             url: UtilsService.getDashboardUrlPath(dashboard),
           },
           {
-            label: {t("History")},
+            label: t("History"),
           },
         ]}
       />

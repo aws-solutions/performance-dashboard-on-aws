@@ -33,7 +33,7 @@ function EditTopicAreaLabel() {
     history.push("/admin/settings/topicarea", {
       alert: {
         type: "success",
-        message: {t("EditSettingsTopicAreaNameScreen.Success")},
+        message: t("EditSettingsTopicAreaNameScreen.Success"),
       },
     });
   };
@@ -44,7 +44,7 @@ function EditTopicAreaLabel() {
 
   const crumbs = [
     {
-      label: {t("Settings")},
+      label: t("Settings"),
       url: "/admin/settings/topicarea",
     },
     {
@@ -52,7 +52,7 @@ function EditTopicAreaLabel() {
       url: "/admin/settings/topicarea",
     },
     {
-      label: {t("SettingsTopicAreaNameEditGeneric")},
+      label: t("SettingsTopicAreaNameEditGeneric"),
     },
   ];
 
@@ -67,7 +67,7 @@ function EditTopicAreaLabel() {
         </p>
 
         {loadingSettings ? (
-          <Spinner className="text-center margin-top-9" label={t("Loading")} />
+          <Spinner className="text-center margin-top-9" label={t("LoadingSpinnerLabel")} />
         ) : (
           <>
             <form

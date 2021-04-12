@@ -82,6 +82,24 @@ export class FrontendStack extends cdk.Stack {
         ],
       }
     );
+    let cfnDist: cloudFront.CfnDistribution = distribution.node
+      .defaultChild as cloudFront.CfnDistribution;
+    cfnDist.cfnOptions.metadata = {
+      cfn_nag: {
+        rules_to_suppress: [
+          {
+            id: "W10",
+            reason:
+              "CloudFront Distribution is disabled as there are no user requirements, plus to keep the cost low",
+          },
+          {
+            id: "W70",
+            reason:
+              "If the distribution uses the CloudFront domain name such as d111111abcdef8.cloudfront.net (you set CloudFrontDefaultCertificate to true), CloudFront automatically sets the security policy to TLSv1 regardless of the value that you set here.",
+          },
+        ],
+      },
+    };
 
     /**
      * S3 Deploy

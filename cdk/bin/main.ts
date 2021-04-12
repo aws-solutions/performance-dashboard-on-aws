@@ -5,7 +5,9 @@ import { FrontendStack } from "../lib/frontend-stack";
 import { BackendStack } from "../lib/backend-stack";
 import { AuthStack } from "../lib/auth-stack";
 import { OpsStack } from "../lib/ops-stack";
-import { Tags } from "@aws-cdk/core";
+import { Aspects, Tags } from "@aws-cdk/core";
+import { FunctionInvalidWarningSuppressor } from "../lib/constructs/function-aspect";
+import { PolicyInvalidWarningSuppressor } from "../lib/constructs/policy-aspect";
 
 const APP_ID = "Performance Dashboard on AWS";
 const envName = process.env.CDK_ENV_NAME;
@@ -56,6 +58,9 @@ const operations = new OpsStack(app, "Ops", {
   mainTable: backend.mainTable,
   auditTrailTable: backend.auditTrailTable,
 });
+
+Aspects.of(app).add(new PolicyInvalidWarningSuppressor());
+Aspects.of(app).add(new FunctionInvalidWarningSuppressor());
 
 Tags.of(auth).add("app-id", APP_ID);
 Tags.of(backend).add("app-id", APP_ID);

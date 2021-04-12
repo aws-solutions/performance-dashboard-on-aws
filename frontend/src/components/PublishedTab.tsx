@@ -51,7 +51,11 @@ function PublishedTab(props: Props) {
         </div>
         <div className="tablet:grid-col-5 text-right">
           <span>
-            <DropdownMenu buttonText="Actions" variant="outline">
+            <DropdownMenu
+              buttonText="Actions"
+              disabled={selected.length === 0}
+              variant="outline"
+            >
               <MenuLink
                 disabled={selected.length !== 1}
                 href={
@@ -62,10 +66,7 @@ function PublishedTab(props: Props) {
               >
                 {t("ViewHistoryLink")}
               </MenuLink>
-              <MenuItem
-                onSelect={() => props.onArchive(selected)}
-                disabled={selected.length === 0}
-              >
+              <MenuItem onSelect={() => props.onArchive(selected)}>
                 {t("ArchiveButton")}
               </MenuItem>
             </DropdownMenu>

@@ -74,10 +74,6 @@ test("on submit, it does not call createWidget api and upload dataset without a 
   });
 
   await waitFor(() => expect(submitButton).toBeEnabled());
-  await waitFor(() => {
-    expect(getByText("Preview")).toBeInTheDocument();
-  });
-
   await act(async () => {
     fireEvent.click(submitButton);
   });

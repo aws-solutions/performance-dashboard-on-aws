@@ -5,6 +5,23 @@ export class Database extends cdk.Construct {
   public readonly mainTable: dynamodb.Table;
   public readonly auditTrailTable: dynamodb.Table;
 
+  // Suppress cfn_nag Warn W74: DynamoDB table should have encryption enabled using a CMK stored in KMS
+  private cfn_nag_warn_w58(tbl: dynamodb.Table) {
+    let cfnTable: dynamodb.CfnTable = tbl.node.findChild(
+      "Resource"
+    ) as dynamodb.CfnTable;
+    cfnTable.cfnOptions.metadata = {
+      cfn_nag: {
+        rules_to_suppress: [
+          {
+            id: "W74",
+            reason: "Using default AWS owned CMK",
+          },
+        ],
+      },
+    };
+  }
+
   constructor(scope: cdk.Construct, id: string) {
     super(scope, id);
 
@@ -20,6 +37,7 @@ export class Database extends cdk.Construct {
         type: dynamodb.AttributeType.STRING,
       },
     });
+    this.cfn_nag_warn_w58(mainTable);
 
     mainTable.addGlobalSecondaryIndex({
       indexName: "byType",
@@ -80,6 +98,7 @@ export class Database extends cdk.Construct {
         type: dynamodb.AttributeType.STRING,
       },
     });
+    this.cfn_nag_warn_w58(auditTrailTable);
 
     this.mainTable = mainTable;
     this.auditTrailTable = auditTrailTable;

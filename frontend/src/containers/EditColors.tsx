@@ -26,13 +26,9 @@ function EditColors() {
   const { settings, loadingSettings } = useSettings();
   const datasetColumn = useSampleDataset(EDIT_COLORS_CSV_COLUMN);
   const datasetBar = useSampleDataset(EDIT_COLORS_CSV_BAR);
-  const [primaryColor, setPrimaryColor] = useState<string | undefined>(
-    undefined
-  );
-  const [secondaryColor, setSecondaryColor] = useState<string | undefined>(
-    undefined
-  );
-  const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
+  const { register, errors, handleSubmit, watch } = useForm<FormValues>();
+  const primaryColor = watch("primary");
+  const secondaryColor = watch("secondary");
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.updateSetting(
@@ -54,14 +50,6 @@ function EditColors() {
 
   const onCancel = () => {
     history.push("/admin/settings/brandingandstyling");
-  };
-
-  const onFormChange = () => {
-    const { primary, secondary } = getValues();
-    if (ColorPaletteService.rgbHexColorIsValid(primary)) {
-      setPrimaryColor(primary);
-    }
-    setSecondaryColor(secondary);
   };
 
   const crumbs = [
@@ -95,7 +83,6 @@ function EditColors() {
           <div className="grid-col-6">
             <form
               onSubmit={handleSubmit(onSubmit)}
-              onChange={onFormChange}
               className="edit-homepage-content-form usa-form usa-form--large"
               data-testid="EditColorsForm"
             >
@@ -204,6 +191,9 @@ function EditColors() {
                   summaryBelow={false}
                   hideLegend={true}
                   colors={{ primary: primaryColor, secondary: secondaryColor }}
+                  columnsMetadata={[]}
+                  significantDigitLabels={false}
+                  hideDataLabels={true}
                 />
               </div>
               <div className="grid-col-7">
@@ -215,6 +205,10 @@ function EditColors() {
                   summaryBelow={false}
                   hideLegend={true}
                   colors={{ primary: primaryColor, secondary: secondaryColor }}
+                  columnsMetadata={[]}
+                  significantDigitLabels={false}
+                  hideDataLabels={true}
+                  isPreview={true}
                 />
               </div>
             </div>

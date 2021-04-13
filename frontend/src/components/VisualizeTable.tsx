@@ -70,7 +70,7 @@ function VisualizeTable(props: Props) {
           {props.errors.title && (
             <Alert
               type="error"
-              message=t("VisualizeTableComponent.ResolveErrors")
+              message={t("VisualizeTableComponent.ResolveErrors")}
             ></Alert>
           )}
           <TextField

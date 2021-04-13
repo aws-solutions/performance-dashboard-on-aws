@@ -3,6 +3,7 @@ import Spinner from "./Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile } from "@fortawesome/free-solid-svg-icons";
 import "./FileInput.css";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   id: string;
@@ -19,10 +20,11 @@ interface Props {
 }
 
 function FileInput(props: Props) {
+  const { t } = useTranslation();
   let content = (
     <div className="usa-file-input__instructions" aria-hidden="true">
-      <span className="usa-file-input__drag-text">Drag file here or </span>
-      <span className="usa-file-input__choose">choose from folder</span>
+      <span className="usa-file-input__drag-text">t("DragFileHere") </span>
+      <span className="usa-file-input__choose">t("ChooseFromFolder")</span>
     </div>
   );
 
@@ -30,15 +32,15 @@ function FileInput(props: Props) {
     content = (
       <Spinner
         className="usa-file-input__instructions"
-        label="Uploading file"
+        label= {t("UploadingFile")}
       />
     );
   } else if (props.fileName) {
     content = (
       <div>
         <div className="usa-file-input__preview-heading">
-          Selected file{" "}
-          <span className="usa-file-input__choose">Change file</span>
+          t("SelectedFile"){" "}
+          <span className="usa-file-input__choose">t("ChangeFile")</span>
         </div>
         <div className="usa-file-input__preview" aria-hidden="true">
           <div className="usa-file-input__preview-image">
@@ -72,7 +74,7 @@ function FileInput(props: Props) {
           id="file-input-error-alert"
           role="alert"
         >
-          Invalid file format
+          t("InvalidFileFormat")
         </span>
       )}
       <div

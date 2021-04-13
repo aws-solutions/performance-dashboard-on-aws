@@ -31,8 +31,7 @@ export class FunctionInvalidWarningSuppressor implements cdk.IAspect {
           },
           {
             id: "W89",
-            reason:
-              "VPCs are not used for this use case",
+            reason: "VPCs are not used for this use case",
           },
         ],
       },

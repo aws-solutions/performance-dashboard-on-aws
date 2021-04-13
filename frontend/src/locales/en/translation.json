@@ -23,6 +23,8 @@
   "APIHelpSelectFileDatasetDoc": "read our documentation",
   "Settings": "Settings",
   "CreateNew": "Create new",
+  "Title": "title",
+  "Message": "message",
   "Name": "name",
   "Cancel": "Cancel",
   "Create": "Create",
@@ -32,6 +34,7 @@
   "Edit": "Edit",
   "EditDetails": "Edit details",
   "EditDetailsCapital": "Edit Details",
+  "To": "to",
   "Step": "Step",
   "Of": 'of",
   "Progress": "progress",
@@ -77,9 +80,11 @@
   "DragFileHere": "Drag file here or",
   "ChooseFromFolder": "choose from folder",
   "SelectedFile": "Selected file",
+  "SelectAnOption": "Select an option",
   "MarkdownSupport": "This text area supports limited Markdown.",
   "EnterTextHere": "Enter text here",
   "PreviewLiveText": "Preview live text",
+  "LearnHowToFormatCSV": "Learn how to format your CSV data.",
   "CreatedBy": "Created by",
   "Dashboards": "Dashboards",
   "CreateDraftDasboardModalTitle": "Update {{name}} dashboard",
@@ -110,6 +115,17 @@
     "Hide": "Hide",
     "VersionNotes": "version notes"
   },
+  "VisualizeTableComponent": {
+    "ResolveErrors": "Resolve error(s) to add the table",
+    "TableShowSummary": "Show summary below."
+    "TableSummary": "Table summary - optional",
+    "TableSummaryHint": "Give your table a summary to explain it in more depth. This field supports markdown.",
+    "TableTitle": "Table title",
+    "TableTitleHint": "Give your table a descriptive title.",
+    "TableTitleError": "Please specify a table title",
+    "TableCorrectDisplay": "Does the table look correct?"
+    
+  }
   "ViewDashboardAlertVersionNotesFrom": "Version {{version}} notes from",
   "ViewDashboardAlertVersion": "Version",
   "ViewDashboardAlertButton": {
@@ -142,6 +158,7 @@
   "BrandingAndStylingColors": "Colors",
   "BrandingAndStylingColorsDescription": "Customize these colors to make your dashboards appear similar in style to your organization's brand and color palette.",
   "BrandingAndStylingPrimaryColor": "Primary color",
+  "SortData": "Sort data",
   "SignificantDigitLabels": "Significant digit labels (123K, 1.2M)",
   "ChartOptionsLabel": "Chart Options",
   "ChartOptionsDescription": "Format your chart",

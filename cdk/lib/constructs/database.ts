@@ -27,6 +27,7 @@ export class Database extends cdk.Construct {
 
     const mainTable = new dynamodb.Table(scope, "MainTable", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      pointInTimeRecovery: true,
       stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES,
       partitionKey: {
         name: "pk",
@@ -89,6 +90,7 @@ export class Database extends cdk.Construct {
 
     const auditTrailTable = new dynamodb.Table(scope, "AuditTrail", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      pointInTimeRecovery: true,
       partitionKey: {
         name: "pk",
         type: dynamodb.AttributeType.STRING,

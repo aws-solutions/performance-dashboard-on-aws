@@ -126,14 +126,14 @@
   },
   "VisualizeTableComponent": {
     "ResolveErrors": "Resolve error(s) to add the table",
-    "TableShowSummary": "Show summary below."
+    "TableShowSummary": "Show summary below.",
     "TableSummary": "Table summary - optional",
     "TableSummaryHint": "Give your table a summary to explain it in more depth. This field supports markdown.",
     "TableTitle": "Table title",
     "TableTitleHint": "Give your table a descriptive title.",
     "TableTitleError": "Please specify a table title",
     "TableCorrectDisplay": "Does the table look correct?"
-  }
+  },
   "ViewDashboardAlertVersionNotesFrom": "Version {{version}} notes from",
   "ViewDashboardAlertVersion": "Version",
   "ViewDashboardAlertButton": {
@@ -285,7 +285,7 @@
     "NoAccess": "Users will not be able to access the dashboard with the old URL.",
     "Guidance": "Edit or confirm the URL that will be used to publish this dashboard. The domain name cannot be edited.",
     "Error": "Please enter a valid URL"
-  }
+  },
   "SettingsTopicAreaEdit": "Edit {{name}}",
   "SettingsTopicAreaName": "{{singularname}} name",
   "SettingsTopicAreaNameEdit": "Edit {{singularname}} name",

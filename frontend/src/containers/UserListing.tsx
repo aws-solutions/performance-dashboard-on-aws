@@ -102,9 +102,10 @@ function UserListing() {
       history.replace("/admin/users", {
         alert: {
           type: "success",
-          message: `${selected.length} invitation email${
-            selected.length === 1 ? " was" : "s were"
-          } resent`,
+          message:
+            selected.length === 1
+              ? `${selected.length} ${t("UserListingResentInvites")}`
+              : `${selected.length} ${t("UserListingResentInvitesPlural")}`,
         },
       });
 

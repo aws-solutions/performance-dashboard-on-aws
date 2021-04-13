@@ -304,5 +304,7 @@
   "GlobalResend": "Resend",
   "ForceChangePassword": "FORCE_CHANGE_PASSWORD",
   "SuccessfullyRemoved": "Successfully removed ",
-  "GlobalUsers": "users"
+  "GlobalUsers": "users",
+  "UserListingResentInvites": "invitation email was resent",
+  "UserListingResentInvitesPlural": "invitation emails were resent"
 }

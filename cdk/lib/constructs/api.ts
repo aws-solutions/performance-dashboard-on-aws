@@ -73,7 +73,8 @@ export class BackendApi extends cdk.Construct {
         rules_to_suppress: [
           {
             id: "W84",
-            reason: "CloudWatchLogs LogGroup are encrypted by default.  There are no customer requirements to use KMS in this case, and there is a business goal to keep cost low.",
+            reason:
+              "CloudWatchLogs LogGroup are encrypted by default.  There are no customer requirements to use KMS in this case, and there is a business goal to keep cost low.",
           },
         ],
       },

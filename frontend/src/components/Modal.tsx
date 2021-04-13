@@ -4,6 +4,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "../components/Button";
 import ReactModal from "react-modal";
 import "./Modal.css";
+import { useTranslation } from "react-i18next";
 
 interface PathParams {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface PathParams {
 }
 
 function Modal(props: PathParams) {
+  const { t } = useTranslation();
   return (
     <ReactModal
       isOpen={props.isOpen}
@@ -26,8 +28,8 @@ function Modal(props: PathParams) {
       overlayClassName="overlay"
       shouldFocusAfterRender={false}
       aria={{
-        labelledby: "title",
-        describedby: "message",
+        labelledby: t("title"),
+        describedby: t("message"),
       }}
       ariaHideApp={props.ariaHideApp !== false}
     >
@@ -55,7 +57,7 @@ function Modal(props: PathParams) {
               size="1x"
               style={{ marginTop: "5px" }}
             />
-            Close
+            {t("GlobalClose")}
           </Button>
         </div>
       </div>
@@ -72,7 +74,7 @@ function Modal(props: PathParams) {
         className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
         onClick={props.closeModal}
       >
-        Cancel
+         {t("Cancel")}
       </Button>
     </ReactModal>
   );

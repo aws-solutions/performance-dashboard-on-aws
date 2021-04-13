@@ -25,6 +25,15 @@
   "CreateNew": "Create new",
   "Title": "title",
   "Message": "message",
+  "Order": "Order",
+  "MoveContentItemUp": "Move {{name}} up",
+  "MoveContentItemDown": "Move {{name}} down",
+  "PlusAddContentItem": "+ Add content item",
+  "NoContentItems": "This dashboard has no content items. Build the dashboard by adding",
+  "ChartsTablesMore": "charts, tables, text, and more as content.",
+  "ContentType": "Content type",
+  "DeleteContent": "Delete {{name}},
+  "EditContent": "Edit {{name}}",
   "Name": "name",
   "Cancel": "Cancel",
   "Create": "Create",
@@ -158,6 +167,7 @@
   "BrandingAndStylingColors": "Colors",
   "BrandingAndStylingColorsDescription": "Customize these colors to make your dashboards appear similar in style to your organization's brand and color palette.",
   "BrandingAndStylingPrimaryColor": "Primary color",
+  "BuildDashboardGuidance": "Build the dashboard by adding charts, tables, text, and more as content.",
   "SortData": "Sort data",
   "SignificantDigitLabels": "Significant digit labels (123K, 1.2M)",
   "ChartOptionsLabel": "Chart Options",
@@ -269,6 +279,14 @@
     "RenamePluralExample": "For example, 'ministries'",
     "RenameError": "Please specify a title"
   },
+  "EditURLComponent": {
+    "EditURL": "Edit URL",
+    "DashboardURL": "Dashboard URL",
+    "AreYouSure": "Are you sure you want to edit this dashboard's URL? ",
+    "NoAccess": "Users will not be able to access the dashboard with the old URL.",
+    "Guidance": "Edit or confirm the URL that will be used to publish this dashboard. The domain name cannot be edited.",
+    "Error": "Please enter a valid URL"
+  }
   "SettingsTopicAreaEdit": "Edit {{name}}",
   "SettingsTopicAreaName": "{{singularname}} name",
   "SettingsTopicAreaNameEdit": "Edit {{singularname}} name",

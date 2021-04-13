@@ -1,5 +1,6 @@
 import React from "react";
 import "./StepIndicator.css";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   current: number;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 function StepIndicator(props: Props) {
+  const { t } = useTranslation();
   if (props.current >= props.segments.length || props.current < 0) {
     return null;
   }
@@ -34,12 +36,12 @@ function StepIndicator(props: Props) {
     <div className="usa-step-indicator__header">
       <h2 className="usa-step-indicator__heading">
         <span className="usa-step-indicator__heading-counter">
-          <span className="usa-sr-only">Step</span>
+          <span className="usa-sr-only">{t("Step")}</span>
           <span className="usa-step-indicator__current-step bg-base-dark">
             {props.current + 1}
           </span>
           <span className="usa-step-indicator__total-steps text-base-dark margin-left-2px">
-            of {props.segments.length}
+            {t("Of")} {props.segments.length}
           </span>
         </span>
         <span className="usa-step-indicator__heading-text">
@@ -53,7 +55,7 @@ function StepIndicator(props: Props) {
   return (
     <div
       className="usa-step-indicator usa-step-indicator--counters-sm"
-      aria-label="progress"
+      aria-label={t("Progress")}
     >
       {props.showStepChart ? stepChart : ""}
       {props.showStepText ? stepText : ""}
@@ -86,7 +88,7 @@ function Segment(props: SegmentProps) {
       <li className="usa-step-indicator__segment usa-step-indicator__segment--complete">
         <span className="usa-step-indicator__segment-label">
           <div className="text-base-dark">{props.label}</div>{" "}
-          <span className="usa-sr-only">completed</span>
+          <span className="usa-sr-only">{t("Completed")}</span>
         </span>
       </li>
     );
@@ -96,7 +98,7 @@ function Segment(props: SegmentProps) {
     <li className="usa-step-indicator__segment">
       <span className="usa-step-indicator__segment-label">
         <div className="text-base-dark">{props.label}</div>{" "}
-        <span className="usa-sr-only">not completed</span>
+        <span className="usa-sr-only">{t("NotCompleted")}</span>
       </span>
     </li>
   );

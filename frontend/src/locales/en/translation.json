@@ -179,14 +179,25 @@
   "UserListingDropdownResendInviteText": "Resend invite emails to unconfirmed users",
   "UserListingActionsResendInvites": "Resend invite email",
   "UserListingActionsRemoveUsers": "Remove users",
+  "UserListingActionsRemoveUsersMessage": {
+    "part0": "Are you sure you want to remove ",
+    "part1": "user",
+    "part2": "users"
+  },
   "UserListingAddUsers": "Add user(s)",
   "UserListingModalTitleResendInvites": "Resend invite email",
+  "UserListingModalTitleResendInvitesMessage": {
+    "part1": "Are you sure you want to resend the invite for this user?",
+    "part2": "Are you sure you want to resend the invites for these users?"
+  },
   "GlobalCancel": "Cancel",
   "GlobalClose": "Close",
   "GlobalDelete": "Delete",
   "GlobalSearch": "search",
   "UserListingUsername": "Username",
   "UserListingEmail": "Email",
+  "UserListingRole": "Role",
+  "UserListingStatus": "Status",
   "UserListingRemoveUserFail": "Failed to delete users",
   "CreateEditDashboardDetails": "Gives your dashboard a description to explain it in more depth. This text area supports limited markdown.",
   "CreateEditDashboardDetailsLink": "View Markdown Syntax",
@@ -253,13 +264,13 @@
   "SettingsHomepageHeadlineErrors": "Please specify a name",
   "SettingsPublishedSite": "Published site",
   "SettingsPublishedSiteScreen": {
-   "Description": "Customize your published site. Your saved edits will take effect immediately on the published site.",
-   "ViewPublishedSite": "View published site",
-   "NavBar": "Navigation bar",
-   "NavBarDescription": "You can customize the header and navigation of the published site.",
-   "HomepageContent": "Homepage content",
-   "HomepageContentDescription": "This components appear on the homepage of your published site and explain what your published site is about.",
-   "HomepageHeadline": "Headline"
+    "Description": "Customize your published site. Your saved edits will take effect immediately on the published site.",
+    "ViewPublishedSite": "View published site",
+    "NavBar": "Navigation bar",
+    "NavBarDescription": "You can customize the header and navigation of the published site.",
+    "HomepageContent": "Homepage content",
+    "HomepageContentDescription": "This components appear on the homepage of your published site and explain what your published site is about.",
+    "HomepageHeadline": "Headline"
   },
   "SettingsNavBarEdit": "Edit navigation bar",
   "SettingsNavBarEditSuccess": "Navigation bar successfully edited.",
@@ -344,5 +355,12 @@
   },
   "ShowDataTableButton": "Show data table",
   "HideDataTableButton": "Hide data table",
+  "UserListingDropdownChangeRole": "Change role",
+  "GlobalResend": "Resend",
+  "ForceChangePassword": "FORCE_CHANGE_PASSWORD",
+  "SuccessfullyRemoved": "Successfully removed ",
+  "GlobalUsers": "users",
+  "UserListingResentInvites": "invitation email was resent",
+  "UserListingResentInvitesPlural": "invitation emails were resent",
   "OrganizationLogo": "Organization logo"
 }

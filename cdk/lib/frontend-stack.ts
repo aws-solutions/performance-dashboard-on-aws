@@ -146,6 +146,7 @@ export class FrontendStack extends cdk.Stack {
       timeout: cdk.Duration.seconds(60),
       memorySize: 128,
       logRetention: logs.RetentionDays.TEN_YEARS,
+      reservedConcurrentExecutions: 1,
       environment: {
         FRONTEND_BUCKET: this.frontendBucket.bucketName,
         REGION: cdk.Stack.of(this).region,

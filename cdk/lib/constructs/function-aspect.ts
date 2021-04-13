@@ -19,6 +19,7 @@ export class FunctionInvalidWarningSuppressor implements cdk.IAspect {
   /**
    * Suppress cfn_nag Warn W58: Lambda functions require permission to write CloudWatch Logs
    * Suppress cfn_nag Warn W89: Lambda functions should be deployed inside a VPC
+   * Suppress cfn_nag Warn W92: Lambda functions should define ReservedConcurrentExecutions to reserve simultaneous executions
    */
   private cfn_nag_warn(fcn: lambda.CfnFunction) {
     fcn.cfnOptions.metadata = {
@@ -32,6 +33,11 @@ export class FunctionInvalidWarningSuppressor implements cdk.IAspect {
           {
             id: "W89",
             reason: "VPCs are not used for this use case",
+          },
+          {
+            id: "W92",
+            reason:
+              "ReservedConcurrentExecutions are placed on the Lambda serving Admin traffic to guarantee the Admin console is available under load.  The Lambda serving public traffic should not have an upper bound, and our docs advises the customer to adjust the concurrency appropriately.",
           },
         ],
       },

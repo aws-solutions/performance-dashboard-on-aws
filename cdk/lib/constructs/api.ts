@@ -8,6 +8,7 @@ import {
   PolicyDocument,
   PolicyStatement,
 } from "@aws-cdk/aws-iam";
+import { LogGroup } from "@aws-cdk/aws-logs";
 
 interface ApiProps {
   apiFunction: lambda.Function;
@@ -64,6 +65,20 @@ export class BackendApi extends cdk.Construct {
     const apigatewayLogGroup = new logs.LogGroup(scope, "ApiAccessLogs", {
       retention: logs.RetentionDays.TEN_YEARS,
     });
+    let logGroup: logs.CfnLogGroup = apigatewayLogGroup.node.findChild(
+      "Resource"
+    ) as logs.CfnLogGroup;
+    logGroup.cfnOptions.metadata = {
+      cfn_nag: {
+        rules_to_suppress: [
+          {
+            id: "W84",
+            reason:
+              "CloudWatchLogs LogGroup are encrypted by default.  There are no customer requirements to use KMS in this case, and there is a business goal to keep cost low.",
+          },
+        ],
+      },
+    };
 
     this.api = new apigateway.RestApi(scope, "ApiGateway", {
       description: "Performance Dashboard backend API",

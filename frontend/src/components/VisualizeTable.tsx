@@ -70,15 +70,15 @@ function VisualizeTable(props: Props) {
           {props.errors.title && (
             <Alert
               type="error"
-              message="Resolve error(s) to add the table"
+              message=t("VisualizeTableComponent.ResolveErrors")
             ></Alert>
           )}
           <TextField
             id="title"
             name="title"
-            label="Table title"
-            hint="Give your table a descriptive title."
-            error={props.errors.title && "Please specify a table title"}
+            label={t("VisualizeTableComponent.TableTitle")}
+            hint={t("VisualizeTableComponent.TableTitleHint")}
+            error={props.errors.title && t("VisualizeTableComponent.TableTitleError")}
             required
             register={props.register}
           />
@@ -93,7 +93,7 @@ function VisualizeTable(props: Props) {
               ref={props.register()}
             />
             <label className="usa-checkbox__label" htmlFor="display-title">
-              Show title on dashboard
+              {t("AddTextScreen.ShowTitle")}
             </label>
           </div>
 
@@ -124,7 +124,7 @@ function VisualizeTable(props: Props) {
             <Dropdown
               id="sortData"
               name="sortData"
-              label="Sort data"
+              label={t("SortData")}
               options={DatasetParsingService.getDatasetSortOptions(
                 props.originalJson,
                 props.headers
@@ -144,13 +144,12 @@ function VisualizeTable(props: Props) {
           <TextField
             id="summary"
             name="summary"
-            label="Table summary - optional"
+            label={t("VisualizeTableComponent.TableSummary")}
             hint={
               <>
-                Give your table a summary to explain it in more depth. This
-                field supports markdown.{" "}
+                {t("VisualizeTableComponent.TableSummary")}{" "}
                 <Link target="_blank" to={"/admin/markdown"} external>
-                  View Markdown Syntax
+                  {t("AddTextScreen.ViewMarkdownSyntax")}
                 </Link>
               </>
             }
@@ -168,14 +167,14 @@ function VisualizeTable(props: Props) {
               ref={props.register()}
             />
             <label className="usa-checkbox__label" htmlFor="summary-below">
-              Show summary below table
+              {t("VisualizeTableComponent.TableShowSummary")}
             </label>
           </div>
           <br />
           <br />
           <hr />
           <Button variant="outline" type="button" onClick={props.backStep}>
-            Back
+            {t("BackButton")}
           </Button>
           <Button
             type="submit"
@@ -194,7 +193,7 @@ function VisualizeTable(props: Props) {
             type="button"
             onClick={props.onCancel}
           >
-            Cancel
+            {t("Cancel")}
           </Button>
         </PrimaryActionBar>
       </div>
@@ -206,7 +205,7 @@ function VisualizeTable(props: Props) {
         >
           {props.fullPreviewButton}
           {props.datasetLoading ? (
-            <Spinner className="text-center margin-top-6" label="Loading" />
+            <Spinner className="text-center margin-top-6" label={t("LoadingSpinnerLabel")} />
           ) : (
             <>
               {showAlert &&
@@ -217,13 +216,13 @@ function VisualizeTable(props: Props) {
                   message={
                     <div className="grid-row margin-left-4">
                       <div className="grid-col-11">
-                        Does the table look correct?
+                        {t("LoadingSpinnerLabel")}
                         <Link
                           to="/admin/formattingcsv"
                           target="_blank"
                           external
                         >
-                          Learn how to format your CSV data.
+                          {t("LearnHowToFormatCSV")}
                         </Link>
                       </div>
                       <div className="grid-col-1">
@@ -233,7 +232,7 @@ function VisualizeTable(props: Props) {
                             className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
                             onClick={() => setShowAlert(false)}
                             type="button"
-                            ariaLabel="Close"
+                            ariaLabel={t("GlobalClose")}
                           >
                             <FontAwesomeIcon icon={faTimes} size="sm" />
                           </Button>

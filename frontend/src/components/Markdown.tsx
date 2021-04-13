@@ -32,9 +32,9 @@ const Markdown = (props: MarkdownProps) => {
         {props.label}
       </label>
       <span className="usa-hint">
-        {props.hint} t("MarkdownSupport"){" "}
+        {props.hint} {t("MarkdownSupport")}{" "}
         <Link target="_blank" to={"/admin/markdown"}>
-          t("AddTextScreen.ViewMarkdownSyntax")
+          {t("AddTextScreen.ViewMarkdownSyntax")}
           <FontAwesomeIcon
             className="margin-left-05"
             icon={faExternalLinkAlt}
@@ -53,7 +53,7 @@ const Markdown = (props: MarkdownProps) => {
           className="usa-checkbox__input"
         />
         <label htmlFor="toggle" className="usa-checkbox__label">
-          t("PreviewLiveText")
+          {t("PreviewLiveText")}
         </label>
       </div>
       <div hidden={!disabled}>

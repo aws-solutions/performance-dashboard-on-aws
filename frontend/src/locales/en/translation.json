@@ -126,7 +126,7 @@
   },
   "VisualizeTableComponent": {
     "ResolveErrors": "Resolve error(s) to add the table",
-    "TableShowSummary": "Show summary below.",
+    "TableShowSummary": "Show summary below table",
     "TableSummary": "Table summary - optional",
     "TableSummaryHint": "Give your table a summary to explain it in more depth. This field supports markdown.",
     "TableTitle": "Table title",
@@ -343,5 +343,6 @@
     "User": "User"
   },
   "ShowDataTableButton": "Show data table",
-  "HideDataTableButton": "Hide data table"
+  "HideDataTableButton": "Hide data table",
+  "OrganizationLogo": "Organization logo"
 }

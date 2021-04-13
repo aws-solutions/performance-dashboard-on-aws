@@ -74,7 +74,7 @@ function Modal(props: PathParams) {
         className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
         onClick={props.closeModal}
       >
-         {t("Cancel")}
+        {t("Cancel")}
       </Button>
     </ReactModal>
   );

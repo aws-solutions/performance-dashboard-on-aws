@@ -81,9 +81,7 @@ function MetricsList(props: Props) {
   return (
     <div className="display-block">
       <h4 className="margin-bottom-0">Metrics</h4>
-      <p className="margin-top-2px usa-hint">
-        {t("MetricsGuidance")}
-      </p>
+      <p className="margin-top-2px usa-hint">{t("MetricsGuidance")}</p>
       <div className="usa-checkbox margin-bottom-2">
         <input
           className="usa-checkbox__input"

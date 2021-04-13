@@ -105,7 +105,9 @@ function WidgetList(props: Props) {
                         <Button
                           variant="unstyled"
                           className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                          ariaLabel= {t("MoveContentItemUp", {name: widget.name})}
+                          ariaLabel={t("MoveContentItemUp", {
+                            name: widget.name,
+                          })}
                           onClick={() => onMoveUp(index)}
                           ref={caretUpRefs[index]}
                         >
@@ -118,7 +120,9 @@ function WidgetList(props: Props) {
                         <Button
                           variant="unstyled"
                           className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                          ariaLabel= {t("MoveContentItemDown", {name: widget.name})}
+                          ariaLabel={t("MoveContentItemDown", {
+                            name: widget.name,
+                          })}
                           onClick={() => onMoveDown(index)}
                           ref={caretDownRefs[index]}
                         >
@@ -150,7 +154,7 @@ function WidgetList(props: Props) {
                   </div>
                   <div className="grid-col flex-3 text-right">
                     <Link
-                      ariaLabel={t("EditContent", {name: widget.name})}
+                      ariaLabel={t("EditContent", { name: widget.name })}
                       to={`/admin/dashboard/${
                         widget.dashboardId
                       }/edit-${widget.widgetType.toLowerCase()}/${widget.id}`}
@@ -161,7 +165,7 @@ function WidgetList(props: Props) {
                       variant="unstyled"
                       className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
                       onClick={() => onDelete(widget)}
-                      ariaLabel= {t("DeleteContent", {name: widget.name})}
+                      ariaLabel={t("DeleteContent", { name: widget.name })}
                     >
                       {t("Delete")}
                     </Button>
@@ -187,8 +191,7 @@ function WidgetList(props: Props) {
         <SecondaryActionBar className="text-center padding-5 margin-y-2">
           <div>
             <p>
-              {t("NoContentItems")}{" "}
-              <br />
+              {t("NoContentItems")} <br />
               {t("ChartsTablesMore")}
             </p>
             <div className="text-center margin-top-4">

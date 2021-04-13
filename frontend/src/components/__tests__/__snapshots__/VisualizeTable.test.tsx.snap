@@ -150,7 +150,7 @@ exports[`renders the VisualizeTable component 1`] = `
           <div
             class="usa-hint"
           >
-            Give your table a summary to explain it in more depth. This field supports markdown.
+            Table summary - optional
              
             <a
               aria-label=""

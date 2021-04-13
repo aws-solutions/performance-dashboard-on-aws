@@ -78,7 +78,9 @@ function VisualizeTable(props: Props) {
             name="title"
             label={t("VisualizeTableComponent.TableTitle")}
             hint={t("VisualizeTableComponent.TableTitleHint")}
-            error={props.errors.title && t("VisualizeTableComponent.TableTitleError")}
+            error={
+              props.errors.title && t("VisualizeTableComponent.TableTitleError")
+            }
             required
             register={props.register}
           />
@@ -205,7 +207,10 @@ function VisualizeTable(props: Props) {
         >
           {props.fullPreviewButton}
           {props.datasetLoading ? (
-            <Spinner className="text-center margin-top-6" label={t("LoadingSpinnerLabel")} />
+            <Spinner
+              className="text-center margin-top-6"
+              label={t("LoadingSpinnerLabel")}
+            />
           ) : (
             <>
               {showAlert &&
@@ -216,7 +221,7 @@ function VisualizeTable(props: Props) {
                   message={
                     <div className="grid-row margin-left-4">
                       <div className="grid-col-11">
-                        {t("LoadingSpinnerLabel")}
+                        {t("VisualizeTableComponent.TableCorrectDisplay")}{" "}
                         <Link
                           to="/admin/formattingcsv"
                           target="_blank"

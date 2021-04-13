@@ -70,6 +70,7 @@ interface SegmentProps {
 }
 
 function Segment(props: SegmentProps) {
+  const { t } = useTranslation();
   if (props.current) {
     return (
       <li

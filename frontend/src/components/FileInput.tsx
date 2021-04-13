@@ -23,8 +23,10 @@ function FileInput(props: Props) {
   const { t } = useTranslation();
   let content = (
     <div className="usa-file-input__instructions" aria-hidden="true">
-      <span className="usa-file-input__drag-text">t("DragFileHere") </span>
-      <span className="usa-file-input__choose">t("ChooseFromFolder")</span>
+      <span className="usa-file-input__drag-text">{`${t(
+        "DragFileHere"
+      )} `}</span>
+      <span className="usa-file-input__choose">{t("ChooseFromFolder")}</span>
     </div>
   );
 
@@ -32,15 +34,15 @@ function FileInput(props: Props) {
     content = (
       <Spinner
         className="usa-file-input__instructions"
-        label= {t("UploadingFile")}
+        label={t("UploadingFile")}
       />
     );
   } else if (props.fileName) {
     content = (
       <div>
         <div className="usa-file-input__preview-heading">
-          t("SelectedFile"){" "}
-          <span className="usa-file-input__choose">t("ChangeFile")</span>
+          {t("SelectedFile")}{" "}
+          <span className="usa-file-input__choose">{t("ChangeFile")}</span>
         </div>
         <div className="usa-file-input__preview" aria-hidden="true">
           <div className="usa-file-input__preview-image">
@@ -74,7 +76,7 @@ function FileInput(props: Props) {
           id="file-input-error-alert"
           role="alert"
         >
-          t("InvalidFileFormat")
+          {t("InvalidFileFormat")}
         </span>
       )}
       <div

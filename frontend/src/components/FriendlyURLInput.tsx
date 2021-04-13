@@ -76,9 +76,9 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
             </label>
             <div className="usa-hint">
               {showWarning
-                ? {t("EditURLComponent.AreYouSure")} +
-                  {t("EditURLComponent.NoAccess")}
-                : {t("EditURLComponent.Guidance")}}
+                ? t("EditURLComponent.AreYouSure") +
+                  t("EditURLComponent.NoAccess")
+                : t("EditURLComponent.Guidance")}
             </div>
             {errors.friendlyURL && (
               <span
@@ -102,9 +102,7 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
           </div>
         }
       />
-      <div className="usa-hint">
-        {t("EditURLComponent.Guidance")}
-      </div>
+      <div className="usa-hint">{t("EditURLComponent.Guidance")}</div>
       <p className="font-sans-lg">
         https://{window.location.hostname}/{friendlyURL}
         <Button

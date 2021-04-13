@@ -32,7 +32,7 @@
   "NoContentItems": "This dashboard has no content items. Build the dashboard by adding",
   "ChartsTablesMore": "charts, tables, text, and more as content.",
   "ContentType": "Content type",
-  "DeleteContent": "Delete {{name}},
+  "DeleteContent": "Delete {{name}}",
   "EditContent": "Edit {{name}}",
   "Name": "name",
   "Cancel": "Cancel",
@@ -133,7 +133,6 @@
     "TableTitleHint": "Give your table a descriptive title.",
     "TableTitleError": "Please specify a table title",
     "TableCorrectDisplay": "Does the table look correct?"
-    
   }
   "ViewDashboardAlertVersionNotesFrom": "Version {{version}} notes from",
   "ViewDashboardAlertVersion": "Version",

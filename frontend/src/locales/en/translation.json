@@ -184,6 +184,22 @@
     "part1": "user",
     "part2": "users"
   },
+  "AddUsersInvites": "Add user(s) and send invite",
+  "AddUsersAdmin": "In addition to Editor permissions, can manage users and website settings.",
+  "AddUsersEditor": "Can create, edit, and publish dashboards.",
+  "AddUsersRoleSelect": "Select a role for these users",
+  "AddUsersEmailsHint": "Enter one or more user email addresses separated by a comma (,)",
+  "AddUsersEmails": "User email address(es)",
+  "AddUsers": "Add users",
+  "AddUsersValidate": {
+    "Invalid": "One or more email addresses is invalid.",
+    "PleaseAdd": "Please add an user email address."
+  },
+  "AddUserNewInvite": {
+    "Singular": " new user has been added as",
+    "Plural": " new users have been added as",
+    "Final": " and will receive an invitation email"
+  },
   "UserListingAddUsers": "Add user(s)",
   "UserListingModalTitleResendInvites": "Resend invite email",
   "UserListingModalTitleResendInvitesMessage": {

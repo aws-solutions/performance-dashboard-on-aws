@@ -7,6 +7,7 @@ import TextField from "../components/TextField";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { UserRoles } from "../models";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   emails: string;
@@ -18,6 +19,8 @@ function AddUsers() {
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [role, setRole] = useState("");
 
+  const { t } = useTranslation();
+
   const onSubmit = async (values: FormValues) => {
     const emails = values.emails.split(",").map((email) => email.trim());
     await BackendService.addUsers(values.role, emails);
@@ -25,9 +28,14 @@ function AddUsers() {
     history.push("/admin/users", {
       alert: {
         type: "success",
-        message: `${emails.length} new user${
-          emails.length === 1 ? " has" : "s have"
-        } been added as ${values.role} and will receive an invitation email`,
+        message:
+          emails.length === 1
+            ? `${emails.length} ${t("AddUserNewInvite.Singular")} ${
+                values.role
+              } ${t("AddUserNewInvite.Final")}`
+            : `${emails.length} ${t("AddUserNewInvite.Plural")} ${
+                values.role
+              } ${t("AddUserNewInvite.Final")}`,
       },
     });
   };
@@ -45,16 +53,16 @@ function AddUsers() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Manage users",
+            label: t("ManageUsers"),
             url: "/admin/users",
           },
           {
-            label: "Add users",
+            label: t("AddUsers"),
           },
         ]}
       />
 
-      <h1>Add users</h1>
+      <h1>{t("AddUsers")}</h1>
       <div className="grid-row">
         <div className="grid-col-12">
           <form
@@ -65,23 +73,25 @@ function AddUsers() {
             <TextField
               id="emails"
               name="emails"
-              label="User email address(es)"
-              hint="Enter one or more user email addresses separated by a comma (,)"
+              label={t("AddUsersEmails")}
+              hint={t("AddUsersEmailsHint")}
               multiline
               rows={5}
               register={register}
               error={
                 errors.emails &&
                 (errors.emails.type === "validate"
-                  ? "One or more email addresses is invalid."
-                  : "Please add an user email address.")
+                  ? t("AddUsersValidate.Invalid")
+                  : t("AddUsersValidate.PleaseAdd"))
               }
               required
               validate={UtilsService.validateEmails}
             />
 
-            <label className="usa-label text-bold">Role</label>
-            <div className="usa-hint">Select a role for these users</div>
+            <label className="usa-label text-bold">
+              {t("UserListingRole")}
+            </label>
+            <div className="usa-hint">{t("AddUsersRoleSelect")}</div>
             <fieldset className="usa-fieldset" onChange={handleChange}>
               <legend className="usa-sr-only">Roles</legend>
               <div className="usa-radio">
@@ -105,7 +115,7 @@ function AddUsers() {
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      Can create, edit, and publish dashboards.
+                      {t("AddUsersEditor")}
                     </div>
                   </div>
                 </div>
@@ -160,8 +170,7 @@ function AddUsers() {
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      In addition to Editor permissions, can manage users and
-                      website settings.
+                      {t("AddUsersAdmin")}
                     </div>
                   </div>
                 </div>
@@ -171,7 +180,7 @@ function AddUsers() {
             <br />
             <hr />
             <Button disabled={!role} type="submit">
-              Add user(s) and send invite
+              {t("AddUsersInvites")}
             </Button>
             <Button
               className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
@@ -179,7 +188,7 @@ function AddUsers() {
               type="button"
               onClick={onCancel}
             >
-              Cancel
+              {t("GlobalCancel")}
             </Button>
           </form>
         </div>

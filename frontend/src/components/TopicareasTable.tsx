@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { TopicArea } from "../models";
 import Button from "./Button";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   topicAreas: Array<TopicArea>;
@@ -18,6 +19,7 @@ type ColumnType = "name" | "createdBy" | "dashboards";
 type Direction = "up" | "down";
 
 function TopicareasTable(props: Props) {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<SelectionHashMap>({});
   const [sortedBy, setSortedBy] = useState<ColumnType>("dashboards");
   const [direction, setDirection] = useState<Direction>("down");
@@ -75,7 +77,7 @@ function TopicareasTable(props: Props) {
             </Button>
           </th>
           <th>
-            <span className="font-sans-xs">Dashboards</span>
+            <span className="font-sans-xs">{t("Dashboards")}</span>
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${
@@ -93,7 +95,7 @@ function TopicareasTable(props: Props) {
             </Button>
           </th>
           <th>
-            <span className="font-sans-xs">Created by</span>
+            <span className="font-sans-xs">{t("CreatedBy")}</span>
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${

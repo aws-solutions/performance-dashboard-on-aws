@@ -4,6 +4,7 @@ import Link from "./Link";
 import "./Markdown.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 type MarkdownProps = {
   id: string;
@@ -18,6 +19,7 @@ const Markdown = (props: MarkdownProps) => {
   const [disabled, toggle] = useState(true);
   const [boxHeight, setBoxHeight] = useState(142);
   const text = useRef<HTMLTextAreaElement | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const height = document.querySelector("textarea")?.clientHeight || 142;
@@ -30,9 +32,9 @@ const Markdown = (props: MarkdownProps) => {
         {props.label}
       </label>
       <span className="usa-hint">
-        {props.hint} This text area supports limited Markdown.{" "}
+        {props.hint} {t("MarkdownSupport")}{" "}
         <Link target="_blank" to={"/admin/markdown"}>
-          View Markdown Syntax
+          {t("AddTextScreen.ViewMarkdownSyntax")}
           <FontAwesomeIcon
             className="margin-left-05"
             icon={faExternalLinkAlt}
@@ -51,7 +53,7 @@ const Markdown = (props: MarkdownProps) => {
           className="usa-checkbox__input"
         />
         <label htmlFor="toggle" className="usa-checkbox__label">
-          Preview live text
+          {t("PreviewLiveText")}
         </label>
       </div>
       <div hidden={!disabled}>
@@ -59,7 +61,7 @@ const Markdown = (props: MarkdownProps) => {
           id={props.id}
           name={props.name}
           defaultValue={props.defaultValue}
-          placeholder="Enter text here"
+          placeholder={t("EnterTextHere")}
           rows={6}
           ref={(e) => {
             if (props.register) {

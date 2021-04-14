@@ -33,7 +33,7 @@ test("submits form with the entered values", async () => {
     fireEvent.submit(screen.getByTestId("EditNavbarForm"));
   });
 
-  expect(BackendService.updateSetting).toBeCalledTimes(1);
+  expect(BackendService.updateSetting).toBeCalledTimes(2);
   expect(BackendService.updateSetting).toHaveBeenCalledWith(
     "navbarTitle",
     "A title for your navbar",

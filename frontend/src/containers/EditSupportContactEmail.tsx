@@ -17,7 +17,7 @@ interface FormValues {
 function EditSupportContactEmail() {
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
-  const { register, handleSubmit, reset } = useForm<FormValues>();
+  const { register, handleSubmit, reset, errors } = useForm<FormValues>();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -92,6 +92,7 @@ function EditSupportContactEmail() {
                   "EditSupportContactEmail.SupportContactEmailAddressHint"
                 )}
                 register={register}
+                error={errors.adminContactEmailAddress && t("EmailInvalid")}
                 validate={UtilsService.validateEmails}
               />
 

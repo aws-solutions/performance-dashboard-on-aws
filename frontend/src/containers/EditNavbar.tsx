@@ -102,6 +102,7 @@ function EditNavBar() {
                 hint={t("SettingsContactEmailHint")}
                 defaultValue={settings.contactEmailAddress}
                 register={register}
+                error={errors.contactEmail && t("EmailInvalid")}
                 validate={UtilsService.validateEmails}
               />
 

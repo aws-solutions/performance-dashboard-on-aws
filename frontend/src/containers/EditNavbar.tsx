@@ -8,6 +8,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import TextField from "../components/TextField";
 import { useTranslation } from "react-i18next";
+import UtilsService from "../services/UtilsService";
 
 interface FormValues {
   title: string;
@@ -101,6 +102,7 @@ function EditNavBar() {
                 hint={t("SettingsContactEmailHint")}
                 defaultValue={settings.contactEmailAddress}
                 register={register}
+                validate={UtilsService.validateEmails}
               />
 
               <br />

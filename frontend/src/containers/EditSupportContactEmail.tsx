@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import { useTranslation } from "react-i18next";
+import UtilsService from "../services/UtilsService";
 
 interface FormValues {
   adminContactEmailAddress: string;
@@ -91,6 +92,7 @@ function EditSupportContactEmail() {
                   "EditSupportContactEmail.SupportContactEmailAddressHint"
                 )}
                 register={register}
+                validate={UtilsService.validateEmails}
               />
 
               <br />

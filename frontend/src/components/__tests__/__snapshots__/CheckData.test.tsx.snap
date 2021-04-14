@@ -134,7 +134,7 @@ exports[`renders the CheckData component 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+                    class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
                     data-icon="chevron-up"
                     data-prefix="fas"
                     focusable="false"
@@ -166,7 +166,7 @@ exports[`renders the CheckData component 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+                    class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
                     data-icon="chevron-up"
                     data-prefix="fas"
                     focusable="false"
@@ -198,7 +198,7 @@ exports[`renders the CheckData component 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+                    class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
                     data-icon="chevron-up"
                     data-prefix="fas"
                     focusable="false"

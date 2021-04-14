@@ -109,9 +109,14 @@ function AddMetrics() {
         accessor: "fileName",
         Cell: (props: any) => {
           return (
-            <div className="tooltip">
-              {props.value}
-              <span className="tooltiptext">Tooltip text</span>
+            <div
+              className="usa-tooltip text-middle"
+              data-position="bottom"
+              title={props.value}
+            >
+              <div className="text-no-wrap overflow-hidden text-overflow-ellipsis">
+                {props.value}
+              </div>
             </div>
           );
         },

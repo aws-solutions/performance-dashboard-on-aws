@@ -284,8 +284,10 @@ function Table(props: Props) {
                       type="button"
                     >
                       <FontAwesomeIcon
-                        className={`hover:text-base-light ${
-                          column.isSorted ? "text-base-darkest" : "text-white"
+                        className={`hover:text-base ${
+                          column.isSorted
+                            ? "text-base-darkest"
+                            : "text-base-lighter"
                         }`}
                         icon={
                           column.isSorted && column.isSortedDesc

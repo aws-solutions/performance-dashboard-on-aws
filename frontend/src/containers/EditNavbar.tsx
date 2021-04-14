@@ -8,9 +8,11 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import TextField from "../components/TextField";
 import { useTranslation } from "react-i18next";
+import UtilsService from "../services/UtilsService";
 
 interface FormValues {
   title: string;
+  contactEmail: string;
 }
 
 function EditNavBar() {
@@ -20,7 +22,24 @@ function EditNavBar() {
   const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
-    await BackendService.updateSetting("navbarTitle", values.title, new Date());
+    if (!settings.navbarTitle || settings.navbarTitle != values.title) {
+      await BackendService.updateSetting(
+        "navbarTitle",
+        values.title,
+        new Date()
+      );
+    }
+
+    if (
+      !settings.contactEmailAddress ||
+      settings.contactEmailAddress != values.contactEmail
+    ) {
+      await BackendService.updateSetting(
+        "contactEmailAddress",
+        values.contactEmail,
+        new Date()
+      );
+    }
 
     history.push("/admin/settings/publishedsite", {
       alert: {
@@ -74,6 +93,17 @@ function EditNavBar() {
                 defaultValue={settings.navbarTitle}
                 register={register}
                 required
+              />
+
+              <TextField
+                id="contactEmail"
+                name="contactEmail"
+                label={t("SettingsContactEmailTitle")}
+                hint={t("SettingsContactEmailHint")}
+                defaultValue={settings.contactEmailAddress}
+                register={register}
+                error={errors.contactEmail && t("EmailInvalid")}
+                validate={UtilsService.validateEmails}
               />
 
               <br />

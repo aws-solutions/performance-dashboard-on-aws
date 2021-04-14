@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`branding and styling settings should match snapshot 1`] = `
+exports[`publishing guidance settings should match snapshot 1`] = `
 <div>
   <nav
     aria-label="Breadcrumbs"
@@ -155,34 +155,25 @@ exports[`branding and styling settings should match snapshot 1`] = `
           id="main-content"
         >
           <h1>
-            Branding and styling
+            Admin site
           </h1>
           <p>
-            Customize your performance dashboard.
+            Customize settings for the internal site.
           </p>
-          <br />
-          <h3
-            class="margin-top-2-important"
-          >
-            Logo
-          </h3>
-          <p>
-            This logo will appear in the header next to the performance dashboard name and in the published site header.
-          </p>
-          <br />
           <div
             class="grid-row margin-top-0-important"
           >
             <div
-              class="grid-col flex-1 text-left"
+              class="grid-col flex-9"
             >
-              <img
-                alt="Organization logo"
-                src="logo.svg"
-              />
+              <p
+                class="text-bold"
+              >
+                Support contact email address
+              </p>
             </div>
             <div
-              class="grid-col flex-9 padding-left-3"
+              class="grid-col flex-3 text-right"
             >
               <button
                 class="usa-button usa-button--outline margin-top-2"
@@ -191,52 +182,21 @@ exports[`branding and styling settings should match snapshot 1`] = `
               </button>
             </div>
           </div>
-          <hr
-            style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
-          />
-          <h3
-            class="margin-top-2-important"
-          >
-            Colors
-          </h3>
-          <p>
-            Customize these colors to make your dashboards appear similar in style to your organization's brand and color palette.
-          </p>
-          <br />
           <div
             class="grid-row margin-top-0-important"
           >
             <div
-              class="grid-col flex-1 text-left"
+              class="grid-col flex-9"
             >
               <div
-                class="text-bold grid-col flex-1 text-left"
+                class="published-site font-sans-lg"
               >
-                Primary color
-              </div>
-              <div
-                class="grid-row margin-top-0-important"
-              >
-                <div
-                  class="radius-md"
-                  style="background-color: rgb(255, 255, 255); margin: 10px 0px; width: 25px; height: 25px;"
-                />
-                <div
-                  class="font-sans-lg grid-col flex-9 margin-left-1 margin-top-05"
-                >
-                  #ffffff
-                </div>
+                admin1@aol.com
               </div>
             </div>
             <div
-              class="grid-col flex-3 grid-col flex-3 text-right"
-            >
-              <button
-                class="usa-button usa-button--outline margin-top-2"
-              >
-                Edit
-              </button>
-            </div>
+              class="grid-col flex-3 text-right"
+            />
           </div>
         </main>
       </div>

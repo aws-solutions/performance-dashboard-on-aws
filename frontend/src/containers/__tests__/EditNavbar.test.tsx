@@ -29,14 +29,27 @@ test("submits form with the entered values", async () => {
   userEvent.clear(screen.getByLabelText("Title"));
   userEvent.type(screen.getByLabelText("Title"), "A title for your navbar");
 
+  userEvent.clear(screen.getByLabelText("Contact email address - optional"));
+  userEvent.type(
+    screen.getByLabelText("Contact email address - optional"),
+    "test1234@hotmail.com"
+  );
+
   await act(async () => {
     fireEvent.submit(screen.getByTestId("EditNavbarForm"));
   });
 
-  expect(BackendService.updateSetting).toBeCalledTimes(1);
-  expect(BackendService.updateSetting).toHaveBeenCalledWith(
+  expect(BackendService.updateSetting).toBeCalledTimes(2);
+  expect(BackendService.updateSetting).toHaveBeenNthCalledWith(
+    1,
     "navbarTitle",
     "A title for your navbar",
+    expect.anything()
+  );
+  expect(BackendService.updateSetting).toHaveBeenNthCalledWith(
+    2,
+    "contactEmailAddress",
+    "test1234@hotmail.com",
     expect.anything()
   );
 });

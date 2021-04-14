@@ -43,6 +43,8 @@ describe("fromItem", () => {
         plural: "Topic Areas",
       },
       customLogoS3Key: "12345",
+      contactEmailAddress: "test@aol.com",
+      adminContactEmailAddress: "admin@aol.com",
     };
 
     const settings = SettingsFactory.fromItem(item);
@@ -63,6 +65,8 @@ describe("fromItem", () => {
         primary: "#2491ff",
         secondary: "#54278f",
       },
+      contactEmailAddress: "test@aol.com",
+      adminContactEmailAddress: "admin@aol.com",
     });
   });
 });
@@ -86,6 +90,7 @@ describe("toPublicSettings", () => {
         primary: "#ffffff",
         secondary: "#ffffff",
       },
+      contactEmailAddress: "test@aol.com",
     };
 
     const publicSettings = SettingsFactory.toPublicSettings(settings);
@@ -104,6 +109,7 @@ describe("toPublicSettings", () => {
         primary: "#ffffff",
         secondary: "#ffffff",
       },
+      contactEmailAddress: "test@aol.com",
     });
   });
 });

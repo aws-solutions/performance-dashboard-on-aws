@@ -23,12 +23,12 @@ function Footer() {
         ) : (
           <>
             <hr className="margin-top-9 border-base-lightest" />
-            Having technical issues with the system?{" "}
+            {t("AdminFooter.HelpMessage")}{" "}
             <a
               href={`mailto:${settings.adminContactEmailAddress}?subject=Performance Dashboard Assistance`}
               className="text-base"
             >
-              Contact support
+              {t("AdminFooter.ContactSupport")}
             </a>
             <span className="float-right">v{packagejson.version}</span>
           </>

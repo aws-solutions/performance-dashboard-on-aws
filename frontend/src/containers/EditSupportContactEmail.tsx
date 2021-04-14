@@ -67,13 +67,9 @@ function EditSupportContactEmail() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>Support contact email address</h1>
+        <h1>{t("EditSupportContactEmail.Header")}</h1>
 
-        <p>
-          Set an email address for internal users to contact if they experience
-          technical issues. This email will appear as a 'Contact support' link
-          in the footer of the internal site.
-        </p>
+        <p>{t("EditSupportContactEmail.HeaderDescription")}</p>
 
         {loadingSettings ? (
           <Spinner
@@ -89,8 +85,10 @@ function EditSupportContactEmail() {
               <TextField
                 id="title"
                 name="adminContactEmailAddress"
-                label="Support Contact Email Address"
-                hint="Enter a valid email address"
+                label={t("EditSupportContactEmail.SupportContactEmailAddress")}
+                hint={t(
+                  "EditSupportContactEmail.SupportContactEmailAddressHint"
+                )}
                 register={register}
               />
 

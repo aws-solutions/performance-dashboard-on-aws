@@ -9,12 +9,14 @@ import AlertContainer from "./AlertContainer";
 import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 import "./PublishedSiteSettings.css";
 
 function PublishedSiteSettings() {
   const history = useHistory();
   const { homepage, loading } = useHomepage();
   const { settings, loadingSettings } = useSettings(true);
+  const { t } = useTranslation();
 
   const onContentEdit = () => {
     history.push("/admin/settings/publishedsite/contentedit");
@@ -26,13 +28,12 @@ function PublishedSiteSettings() {
 
   return (
     <SettingsLayout>
-      <h1>Published site</h1>
+      <h1>{t("PublishedSiteSettings.PublishedSite")}</h1>
 
       <p>
-        Customize your published site. Your saved edits will take effect
-        immediately on the published site.{" "}
+        {t("PublishedSiteSettings.HeaderDescription")}{" "}
         <Link target="_blank" to={"/"}>
-          View published site
+          {t("PublishedSiteSettings.ViewPublishedSite")}
           <FontAwesomeIcon
             className="margin-left-05"
             icon={faExternalLinkAlt}
@@ -42,13 +43,15 @@ function PublishedSiteSettings() {
       </p>
 
       <AlertContainer />
-      <h3 className="margin-top-2-important">Navigation Bar</h3>
+      <h3 className="margin-top-2-important">
+        {t("PublishedSiteSettings.NavigationBar")}
+      </h3>
 
-      <p>You can customize the header and navigation of the published site.</p>
+      <p>{t("PublishedSiteSettings.NavagationBarDescription")}</p>
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
-          <p className="text-bold">Title</p>
+          <p className="text-bold">{t("PublishedSiteSettings.Title")}</p>
         </div>
         <div className="grid-col flex-3 text-right">
           <Button
@@ -76,7 +79,9 @@ function PublishedSiteSettings() {
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
-          <p className="text-bold">Contact email address - optional</p>
+          <p className="text-bold">
+            {t("PublishedSiteSettings.ContactEmailAddressLabel")}
+          </p>
         </div>
       </div>
 
@@ -108,16 +113,15 @@ function PublishedSiteSettings() {
         }}
       />
 
-      <h3 className="margin-top-2-important">Homepage content</h3>
+      <h3 className="margin-top-2-important">
+        {t("PublishedSiteSettings.HomepageContentHeader")}
+      </h3>
 
-      <p>
-        This components appear on the homepage of your published site and
-        explain what your published site is about.
-      </p>
+      <p>{t("PublishedSiteSettings.HomepageContentDescription")}</p>
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
-          <p className="text-bold">Headline</p>
+          <p className="text-bold">{t("PublishedSiteSettings.Headline")}</p>
         </div>
         <div className="grid-col flex-3 text-right">
           <Button
@@ -125,7 +129,7 @@ function PublishedSiteSettings() {
             variant="outline"
             onClick={onContentEdit}
           >
-            Edit
+            {t("Edit")}
           </Button>
         </div>
       </div>

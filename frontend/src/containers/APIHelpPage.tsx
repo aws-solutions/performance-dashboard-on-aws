@@ -18,7 +18,9 @@ const APIHelpPage = () => {
         <p>
           {t("APIHelpSelectDynamicDatasetBody")}{" "}
           <a
-            href={`mailto:${settings.adminContactEmailAddress}?subject=Performance Dashboard Assistance`}
+            href={`mailto:${settings.adminContactEmailAddress}?subject=${t(
+              "PerformanceDashboardAssistance"
+            )}`}
             className="text-base-darkest"
           >
             {t("APIHelpSelectDynamicDatasetSupport")}

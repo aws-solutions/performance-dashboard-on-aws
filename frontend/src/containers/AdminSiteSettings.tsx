@@ -20,9 +20,9 @@ function AdminSiteSettings() {
 
   return (
     <SettingsLayout>
-      <h1>Admin site</h1>
+      <h1>{t("AdminSettingsScreen.Header")}</h1>
 
-      <p>Customize settings for the internal site.</p>
+      <p>{t("AdminSettingsScreen.HeaderDescription")}</p>
 
       <AlertContainer />
 
@@ -39,7 +39,7 @@ function AdminSiteSettings() {
         <>
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
-              <p className="text-bold">Support contact email address</p>
+              <p className="text-bold">{t("SuppportContactEmailAddress")}</p>
             </div>
             <div className="grid-col flex-3 text-right">
               <Button

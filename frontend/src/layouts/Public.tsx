@@ -2,9 +2,9 @@ import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import EnvConfig from "../services/EnvConfig";
 import Logo from "../components/Logo";
 import { usePublicSettings } from "../hooks";
+import { useTranslation } from "react-i18next";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -12,6 +12,7 @@ interface LayoutProps {
 
 function PublicLayout(props: LayoutProps) {
   const { settings } = usePublicSettings();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -30,7 +31,7 @@ function PublicLayout(props: LayoutProps) {
                 </Link>
               </em>
             </div>
-            <button className="usa-menu-btn">Menu</button>
+            <button className="usa-menu-btn">{t("Public.Menu")}</button>
           </div>
           <nav aria-label="Primary navigation" className="usa-nav">
             <button className="usa-nav__close">
@@ -39,10 +40,12 @@ function PublicLayout(props: LayoutProps) {
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
                 <a
-                  href={`mailto:${settings.contactEmailAddress}?subject=Performance Dashboard Assistance`}
+                  href={`mailto:${settings.contactEmailAddress}?subject=${t(
+                    "Public.PerformanceDashboardAssistance"
+                  )}`}
                   className="usa-nav__link"
                 >
-                  Contact
+                  {t("Public.Contact")}
                 </a>
               </li>
             </ul>

@@ -184,6 +184,22 @@
     "part1": "user",
     "part2": "users"
   },
+  "AddUsersInvites": "Add user(s) and send invite",
+  "AddUsersAdmin": "In addition to Editor permissions, can manage users and website settings.",
+  "AddUsersEditor": "Can create, edit, and publish dashboards.",
+  "AddUsersRoleSelect": "Select a role for these users",
+  "AddUsersEmailsHint": "Enter one or more user email addresses separated by a comma (,)",
+  "AddUsersEmails": "User email address(es)",
+  "AddUsers": "Add users",
+  "AddUsersValidate": {
+    "Invalid": "One or more email addresses is invalid.",
+    "PleaseAdd": "Please add an user email address."
+  },
+  "AddUserNewInvite": {
+    "Singular": " new user has been added as",
+    "Plural": " new users have been added as",
+    "Final": " and will receive an invitation email"
+  },
   "UserListingAddUsers": "Add user(s)",
   "UserListingModalTitleResendInvites": "Resend invite email",
   "UserListingModalTitleResendInvitesMessage": {
@@ -362,5 +378,24 @@
   "GlobalUsers": "users",
   "UserListingResentInvites": "invitation email was resent",
   "UserListingResentInvitesPlural": "invitation emails were resent",
-  "OrganizationLogo": "Organization logo"
+  "OrganizationLogo": "Organization logo",
+  "UserStatuses": {
+    "UserStatusesH1": "User Statuses",
+    "Unconfirmed": "UNCONFIRMED",
+    "Confirmed": "CONFIRMED",
+    "Archived": "ARCHIVED",
+    "Compromised": "COMPROMISED",
+    "Unknown": "UNKNOWN",
+    "Reset_Required": "RESET_REQUIRED",
+    "Force_Change_Password": "FORCE_CHANGE_PASSWORD",
+    "UserStatusesDesc": "Users in the system have different statuses. These statuses are being pulled directly from AWS Cognito but we explain what they mean below.",
+    "LearnCognitoDesc": "Learn about AWS Cognito.",
+    "UnconfirmedDesc": "This user has been created but not confirmed. They have not logged into the dashboard system. Check that you have the correct email and you can resend the invite email.",
+    "ConfirmedDesc": "This user has been confirmed and they have successfully logged in to the system.",
+    "ArchivedDesc": "User is no longer active in the system.",
+    "CompromisedDesc": "This user has been disabled due to a potential security threat.",
+    "UnknownDesc": "This user status is not known.",
+    "Reset_RequiredDesc": "This user is confirmed, but when the user navigates to the system they must request a code and reset their password before they can sign in.",
+    "Force_Change_PasswordDesc": "The user is confirmed and the user can sign in using a temporary password, but during their first sign-in, the user must change their password to a new value before doing anything else."
+  }
 }

@@ -45,12 +45,9 @@ test("renders the Metrics title", async () => {
 });
 
 test("on submit, it does not call createWidget api and upload dataset without a metric added", async () => {
-  const { getByRole, getByText, getByLabelText, findByLabelText } = render(
-    <AddMetrics />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
+  const { getByRole, getByText, getByLabelText } = render(<AddMetrics />, {
+    wrapper: MemoryRouter,
+  });
 
   const continueButton = getByRole("button", { name: "Continue" });
 

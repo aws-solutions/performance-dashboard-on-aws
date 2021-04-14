@@ -17,6 +17,7 @@ test("renders the ChooseData component", async () => {
             json: "abc.json",
           },
           sourceType: SourceType.IngestApi,
+          updatedAt: new Date("2020-12-09T17:21:42.823Z"),
         },
       ]}
       datasetType={DatasetType.DynamicDataset}

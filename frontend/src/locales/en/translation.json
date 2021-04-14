@@ -378,7 +378,7 @@
     "ConfirmedDesc": "This user has been confirmed and they have successfully logged in to the system.",
     "ArchivedDesc": "User is no longer active in the system.",
     "CompromisedDesc": "This user has been disabled due to a potential security threat.",
-    "UnknownDesc": "The user status is not known.",
+    "UnknownDesc": "This user status is not known.",
     "Reset_RequiredDesc": "This user is confirmed, but when the user navigates to the system they must request a code and reset their password before they can sign in.",
     "Force_Change_PasswordDesc": "The user is confirmed and the user can sign in using a temporary password, but during their first sign-in, the user must change their password to a new value before doing anything else."
   }

@@ -39,7 +39,7 @@ function PublicLayout(props: LayoutProps) {
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
                 <a
-                  href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
+                  href={`mailto:${settings.contactEmailAddress}?subject=Performance Dashboard Assistance`}
                   className="usa-nav__link"
                 >
                   Contact

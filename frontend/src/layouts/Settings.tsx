@@ -20,6 +20,7 @@ function SettingsLayout(props: LayoutProps) {
     publishedsite: "Published site",
     dateformat: "Date and time format",
     brandingandstyling: "Branding and styling",
+    adminsite: "Admin site",
   };
 
   const queryString = pathname.split("/");
@@ -124,6 +125,20 @@ function SettingsLayout(props: LayoutProps) {
                             to="/admin/settings/dateformat"
                           >
                             {`${validSettings["dateformat"]}`}
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className="usa-sidenav__sublist">
+                        <li className="usa-sidenav__item">
+                          <Link
+                            className={
+                              currentSetting === "adminsite"
+                                ? "usa-current"
+                                : ""
+                            }
+                            to="/admin/settings/adminsite"
+                          >
+                            {`${validSettings["adminsite"]}`}
                           </Link>
                         </li>
                       </ul>

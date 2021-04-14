@@ -4,6 +4,7 @@
  * calls to happen and instead returns dummy data.
  */
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { useState, useCallback } from "react";
 import {
   DashboardState,
@@ -419,8 +420,9 @@ export function useTopicArea() {
 }
 
 export function useDateTimeFormatter() {
+  dayjs.extend(utc);
   return useCallback((dateToDisplay: Date) => {
-    return dayjs(dateToDisplay).format("YYYY-MM-DD HH:mm");
+    return dayjs.utc(dateToDisplay).format("YYYY-MM-DD HH:mm");
   }, []);
 }
 

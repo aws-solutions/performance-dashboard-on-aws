@@ -369,12 +369,9 @@ exports[`renders the VisualizeChart component 1`] = `
         >
           Full preview
         </button>
-        <h4>
-          Preview
-        </h4>
         
         <div
-          class="overflow-x-hidden"
+          class="overflow-x-hidden overflow-y-hidden"
         >
           <h2
             class="margin-bottom-1"
@@ -393,6 +390,16 @@ exports[`renders the VisualizeChart component 1`] = `
             id="title"
             style="width: 100%; height: 300px;"
           />
+          <div
+            class="text-right"
+          >
+            <button
+              class="usa-button usa-button--unstyled margin-top-1"
+              type="button"
+            >
+              Show data table
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -639,7 +646,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             hidden=""
           >
             <input
-              checked=""
               class="usa-checkbox__input"
               id="horizontalScroll"
               name="horizontalScroll"
@@ -769,12 +775,9 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         >
           Full preview
         </button>
-        <h4>
-          Preview
-        </h4>
         
         <div
-          class="overflow-x-hidden"
+          class="overflow-x-hidden overflow-y-hidden"
         >
           <h2
             class="margin-bottom-1"
@@ -793,6 +796,16 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             id="title"
             style="width: 100%; height: 300px;"
           />
+          <div
+            class="text-right"
+          >
+            <button
+              class="usa-button usa-button--unstyled margin-top-1"
+              type="button"
+            >
+              Show data table
+            </button>
+          </div>
         </div>
       </div>
     </div>

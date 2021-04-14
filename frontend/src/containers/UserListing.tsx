@@ -44,7 +44,9 @@ function UserListing() {
         history.replace("/admin/users", {
           alert: {
             type: "success",
-            message: `Successfully removed ${selected.length} users.`,
+            message: `${t("SuccessfullyRemoved")} ${selected.length} ${t(
+              "GlobalUsers"
+            )}.`,
           },
         });
 
@@ -58,7 +60,7 @@ function UserListing() {
         history.replace("/admin/users", {
           alert: {
             type: "error",
-            message: "Failed to delete users.",
+            message: `${t("FaUserListingRemoveUserFail")}`,
           },
         });
       } finally {
@@ -100,9 +102,10 @@ function UserListing() {
       history.replace("/admin/users", {
         alert: {
           type: "success",
-          message: `${selected.length} invitation email${
-            selected.length === 1 ? " was" : "s were"
-          } resent`,
+          message:
+            selected.length === 1
+              ? `${selected.length} ${t("UserListingResentInvites")}`
+              : `${selected.length} ${t("UserListingResentInvitesPlural")}`,
         },
       });
 
@@ -119,23 +122,29 @@ function UserListing() {
 
   return (
     <>
-      <h1>Manage users</h1>
+      <h1>{t("ManageUsers")}</h1>
       <Modal
         isOpen={isOpenResendInviteModal}
         closeModal={closeResendInviteModal}
         title={t("UserListingModalTitleResendInvites")}
-        message={`Are you sure you want to resend the invite${
-          selected.length === 1 ? " for this user?" : "s for these users?"
+        message={`${
+          selected.length === 1
+            ? `${t("UserListingModalTitleResendInvitesMessage.part1")}`
+            : `${t("UserListingModalTitleResendInvitesMessage.part2")}`
         }`}
-        buttonType="Resend"
+        buttonType={t("GlobalResend")}
         buttonAction={resendInvite}
       />
       <Modal
         isOpen={isOpenRemoveUsersModal}
         closeModal={closeRemoveUsersModal}
-        title={"Remove users"}
-        message={`Are you sure you want to remove ${selected.length} ${
-          selected.length > 1 ? "users" : "user"
+        title={t("UserListingActionsRemoveUsers")}
+        message={`${t("UserListingActionsRemoveUsersMessage.part0")} ${
+          selected.length
+        } ${
+          selected.length > 1
+            ? `${t("UserListingActionsRemoveUsersMessage.part2")}`
+            : `${t("UserListingActionsRemoveUsersMessage.part1")}`
         }?`}
         buttonType={t("GlobalDelete")}
         buttonAction={removeUsers}
@@ -168,8 +177,9 @@ function UserListing() {
               variant="outline"
             >
               <MenuItem onSelect={changeRole} disabled={selected.length === 0}>
-                Change role
+                {t("UserListingDropdownChangeRole")}
               </MenuItem>
+
               <MenuItem
                 onSelect={onResendInvite}
                 disabled={resendInviteEmailDisabled()}
@@ -203,19 +213,19 @@ function UserListing() {
         columns={useMemo(
           () => [
             {
-              Header: "Username",
+              Header: t("UserListingUsername"),
               accessor: "userId",
             },
             {
-              Header: "Email",
+              Header: t("UserListingEmail"),
               accessor: "email",
             },
             {
-              Header: "Role",
+              Header: t("UserListingRole"),
               accessor: (row: User) => row.roles[0],
             },
             {
-              Header: "Status",
+              Header: t("UserListingStatus"),
               accessor: "userStatus",
             },
           ],

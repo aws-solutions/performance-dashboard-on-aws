@@ -54,7 +54,9 @@ test("renders a dashboard header with lastUpdatedDate", async () => {
 
   expect(
     screen.getByText(
-      `Bananas | Last updated ${dayjs(lastUpdated).format("YYYY-MM-DD HH:mm")}`
+      `Bananas | Last updated ${dayjs
+        .utc(lastUpdated)
+        .format("YYYY-MM-DD HH:mm")}`
     )
   ).toBeInTheDocument();
 });

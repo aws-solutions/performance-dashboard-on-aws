@@ -9,6 +9,7 @@ import AlertContainer from "../containers/AlertContainer";
 import UtilsService from "../services/UtilsService";
 import SecondaryActionBar from "./SecondaryActionBar";
 import ContentItem from "./ContentItem";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   onClick: Function;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 function WidgetList(props: Props) {
+  const { t } = useTranslation();
   const caretUpRefs = props.widgets.map(() => createRef<HTMLButtonElement>());
   const caretDownRefs = props.widgets.map(() => createRef<HTMLButtonElement>());
 
@@ -74,28 +76,25 @@ function WidgetList(props: Props) {
     <div>
       {props.widgets && props.widgets.length ? (
         <div>
-          <SecondaryActionBar stickyPosition={75}>
+          <AlertContainer />
+          <SecondaryActionBar stickyPosition={160}>
             <h3 className="margin-bottom-0 margin-top-0">Dashboard content</h3>
             <p className="margin-top-2px margin-bottom-0">
-              Build the dashboard by adding charts, tables, and text as content.
+              {t("BuildDashboardGuidance")}
             </p>
+            <div className="grid-row radius-lg margin-top-4 text-bold font-sans-sm">
+              <div className="grid-col flex-1">{t("Order")}</div>
+              <div className="grid-col flex-6">
+                <div className="margin-left-2">{t("NameUpperCase")}</div>
+              </div>
+              <div className="grid-col flex-5">
+                <div className="margin-left-5">{t("ContentType")}</div>
+              </div>
+            </div>
           </SecondaryActionBar>
-          <AlertContainer />
-          <div className="grid-row radius-lg padding-top-2 margin-left-1 margin-bottom-2 text-bold font-sans-sm">
-            <div className="grid-col flex-1 text-center">Order</div>
-            <div className="grid-col flex-6">
-              <div className="margin-left-3">Name</div>
-            </div>
-            <div className="grid-col flex-5">
-              <div className="margin-left-4">Content type</div>
-            </div>
-          </div>
           {props.widgets.map((widget, index) => {
             return (
-              <ContentItem
-                className="grid-row radius-lg border-base border margin-y-1"
-                key={index}
-              >
+              <ContentItem className="grid-row margin-y-1" key={index}>
                 <div className="grid-row grid-col flex-1 padding-1">
                   <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md">
                     {index + 1}
@@ -106,7 +105,9 @@ function WidgetList(props: Props) {
                         <Button
                           variant="unstyled"
                           className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                          ariaLabel={`Move ${widget.name} up`}
+                          ariaLabel={t("MoveContentItemUp", {
+                            name: widget.name,
+                          })}
                           onClick={() => onMoveUp(index)}
                           ref={caretUpRefs[index]}
                         >
@@ -119,7 +120,9 @@ function WidgetList(props: Props) {
                         <Button
                           variant="unstyled"
                           className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                          ariaLabel={`Move ${widget.name} down`}
+                          ariaLabel={t("MoveContentItemDown", {
+                            name: widget.name,
+                          })}
                           onClick={() => onMoveDown(index)}
                           ref={caretDownRefs[index]}
                         >
@@ -133,7 +136,7 @@ function WidgetList(props: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="border-base border"></div>
+                <div className="border-base-lighter border-left"></div>
                 <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
                   <div
                     className="grid-col flex-7 usa-tooltip text-bold"
@@ -151,20 +154,20 @@ function WidgetList(props: Props) {
                   </div>
                   <div className="grid-col flex-3 text-right">
                     <Link
-                      ariaLabel={`Edit ${widget.name}`}
+                      ariaLabel={t("EditContent", { name: widget.name })}
                       to={`/admin/dashboard/${
                         widget.dashboardId
                       }/edit-${widget.widgetType.toLowerCase()}/${widget.id}`}
                     >
-                      Edit
+                      {t("Edit")}
                     </Link>
                     <Button
                       variant="unstyled"
                       className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
                       onClick={() => onDelete(widget)}
-                      ariaLabel={`Delete ${widget.name}`}
+                      ariaLabel={t("DeleteContent", { name: widget.name })}
                     >
-                      Delete
+                      {t("Delete")}
                     </Button>
                   </div>
                 </div>
@@ -180,17 +183,16 @@ function WidgetList(props: Props) {
                 }
               }}
             >
-              + Add content item
+              {t("PlusAddContentItem")}
             </button>
           </div>
         </div>
       ) : (
-        <SecondaryActionBar className="text-center padding-5 margin-y-3">
+        <SecondaryActionBar className="text-center padding-5 margin-y-2">
           <div>
             <p>
-              This dashboard has no content items. Build the dashboard by adding{" "}
-              <br />
-              charts, tables, text, and more as content.
+              {t("NoContentItems")} <br />
+              {t("ChartsTablesMore")}
             </p>
             <div className="text-center margin-top-4">
               <Button
@@ -202,7 +204,7 @@ function WidgetList(props: Props) {
                   }
                 }}
               >
-                + Add content item
+                {t("PlusAddContentItem")}
               </Button>
             </div>
           </div>

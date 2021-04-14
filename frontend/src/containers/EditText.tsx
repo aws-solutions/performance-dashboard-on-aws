@@ -185,9 +185,8 @@ function EditText() {
             </div>
             <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
               {fullPreviewButton}
-              <h4 className="margin-top-4">Preview</h4>
               {widget.showTitle ? (
-                <h2 className="margin-top-4 margin-left-2px">{widget.name}</h2>
+                <h2 className="margin-top-3 margin-left-2px">{widget.name}</h2>
               ) : (
                 ""
               )}

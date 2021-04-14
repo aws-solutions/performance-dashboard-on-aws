@@ -8,6 +8,7 @@ import {
   PolicyDocument,
   PolicyStatement,
 } from "@aws-cdk/aws-iam";
+import { LogGroup } from "@aws-cdk/aws-logs";
 
 interface ApiProps {
   apiFunction: lambda.Function;
@@ -64,6 +65,20 @@ export class BackendApi extends cdk.Construct {
     const apigatewayLogGroup = new logs.LogGroup(scope, "ApiAccessLogs", {
       retention: logs.RetentionDays.TEN_YEARS,
     });
+    let logGroup: logs.CfnLogGroup = apigatewayLogGroup.node.findChild(
+      "Resource"
+    ) as logs.CfnLogGroup;
+    logGroup.cfnOptions.metadata = {
+      cfn_nag: {
+        rules_to_suppress: [
+          {
+            id: "W84",
+            reason:
+              "CloudWatchLogs LogGroup are encrypted by default.  There are no customer requirements to use KMS in this case, and there is a business goal to keep cost low.",
+          },
+        ],
+      },
+    };
 
     this.api = new apigateway.RestApi(scope, "ApiGateway", {
       description: "Performance Dashboard backend API",
@@ -106,6 +121,24 @@ export class BackendApi extends cdk.Construct {
       api: this.api,
       stage: this.api.deploymentStage,
     });
+  }
+
+  // Suppress cfn_nag Warn W59: AWS::ApiGateway::Method should not have AuthorizationType set to 'NONE' unless it is of HttpMethod: OPTIONS.
+  private cfn_nag_warn_w59(method: apigateway.Method) {
+    let apimethod: apigateway.CfnMethod = method.node.findChild(
+      "Resource"
+    ) as apigateway.CfnMethod;
+    apimethod.cfnOptions.metadata = {
+      cfn_nag: {
+        rules_to_suppress: [
+          {
+            id: "W59",
+            reason:
+              "AuthorizationType set to None because using API Key and API Gateway resource policy",
+          },
+        ],
+      },
+    };
   }
 
   private addPrivateEndpoints(
@@ -196,15 +229,23 @@ export class BackendApi extends cdk.Construct {
 
     const ingestApi = this.api.root.addResource("ingestapi");
     const ingestApiDatasets = ingestApi.addResource("dataset");
-    ingestApiDatasets.addMethod("POST", apiIntegration, {
-      apiKeyRequired: true,
-    });
+    this.cfn_nag_warn_w59(
+      ingestApiDatasets.addMethod("POST", apiIntegration, {
+        apiKeyRequired: true,
+      })
+    );
 
     const ingestApiDataset = ingestApiDatasets.addResource("{id}");
-    ingestApiDataset.addMethod("PUT", apiIntegration, { apiKeyRequired: true });
-    ingestApiDataset.addMethod("DELETE", apiIntegration, {
-      apiKeyRequired: true,
-    });
+    this.cfn_nag_warn_w59(
+      ingestApiDataset.addMethod("PUT", apiIntegration, {
+        apiKeyRequired: true,
+      })
+    );
+    this.cfn_nag_warn_w59(
+      ingestApiDataset.addMethod("DELETE", apiIntegration, {
+        apiKeyRequired: true,
+      })
+    );
   }
 
   private addPublicEndpoints(apiIntegration: apigateway.LambdaIntegration) {
@@ -215,15 +256,15 @@ export class BackendApi extends cdk.Construct {
     const friendlyURLs = dashboards.addResource("friendly-url");
 
     const dashboard = dashboards.addResource("{id}");
-    dashboard.addMethod("GET", apiIntegration);
+    this.cfn_nag_warn_w59(dashboard.addMethod("GET", apiIntegration));
 
     const byfriendlyURL = friendlyURLs.addResource("{friendlyURL}");
-    byfriendlyURL.addMethod("GET", apiIntegration);
+    this.cfn_nag_warn_w59(byfriendlyURL.addMethod("GET", apiIntegration));
 
     const homepage = publicapi.addResource("homepage");
-    homepage.addMethod("GET", apiIntegration);
+    this.cfn_nag_warn_w59(homepage.addMethod("GET", apiIntegration));
 
     const settings = publicapi.addResource("settings");
-    settings.addMethod("GET", apiIntegration);
+    this.cfn_nag_warn_w59(settings.addMethod("GET", apiIntegration));
   }
 }

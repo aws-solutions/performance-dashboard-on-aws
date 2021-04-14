@@ -178,8 +178,7 @@ function EditDashboard() {
         <Spinner className="text-center margin-top-9" label="Loading" />
       ) : (
         <>
-          <AlertContainer id="top-alert" />
-          <PrimaryActionBar className="grid-row">
+          <PrimaryActionBar className="grid-row" stickyPosition={75}>
             <div className="grid-col text-left flex-row flex-align-center display-flex">
               <ul className="usa-button-group">
                 <li className="usa-button-group__item">
@@ -193,7 +192,7 @@ function EditDashboard() {
                   }`}
                 >
                   <span
-                    className="text-underline"
+                    className={`${publishedOrArchived ? "text-underline" : ""}`}
                     data-for="version"
                     data-tip=""
                     data-event="click"
@@ -278,7 +277,7 @@ function EditDashboard() {
               </Link>
             }
           />
-          <div className="border-base-lighter border-bottom" />
+          <AlertContainer id="top-alert" />
           <WidgetList
             widgets={dashboard ? dashboard.widgets : []}
             onClick={onAddContent}

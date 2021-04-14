@@ -16,6 +16,7 @@ import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import DataTable from "./DataTable";
 
 type Props = {
   title: string;
@@ -84,20 +85,6 @@ const ColumnChartWidget = (props: Props) => {
     }
   };
 
-  const renderCustomizedLabel = (props: any) => {
-    const { x, y, width, value } = props;
-
-    return (
-      <text z={1} x={x + width / 2} y={y} dy={-6} textAnchor="middle">
-        {TickFormatter.format(
-          value,
-          yAxisLargestValue,
-          props.significantDigitLabels
-        )}
-      </text>
-    );
-  };
-
   /**
    * Calculate the width percent out of the total width
    * depending on the container. Width: (largestHeader + 1) *
@@ -120,7 +107,7 @@ const ColumnChartWidget = (props: Props) => {
 
   return (
     <div
-      className={`overflow-x-hidden${
+      className={`overflow-x-hidden overflow-y-hidden${
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >
@@ -169,7 +156,7 @@ const ColumnChartWidget = (props: Props) => {
               }}
             />
             <Tooltip
-              cursor={{ fill: "#F0F0F0" }}
+              itemStyle={{ color: "#1b1b1b" }}
               isAnimationActive={false}
               formatter={(value: Number | String, name: string) => {
                 // Check if there is metadata for this column
@@ -192,8 +179,8 @@ const ColumnChartWidget = (props: Props) => {
               <Legend
                 verticalAlign="top"
                 onClick={toggleColumns}
-                onMouseLeave={(e) => setColumnsHover(null)}
-                onMouseEnter={(e) => setColumnsHover(e.dataKey)}
+                onMouseLeave={() => setColumnsHover(null)}
+                onMouseEnter={(e: any) => setColumnsHover(e.dataKey)}
               />
             )}
             {props.columns.length &&
@@ -210,7 +197,14 @@ const ColumnChartWidget = (props: Props) => {
                     {!props.hideDataLabels ? (
                       <LabelList
                         dataKey={column}
-                        content={renderCustomizedLabel}
+                        position="top"
+                        formatter={(tick: any) =>
+                          TickFormatter.format(
+                            tick,
+                            yAxisLargestValue,
+                            props.significantDigitLabels
+                          )
+                        }
                       />
                     ) : (
                       ""
@@ -227,6 +221,11 @@ const ColumnChartWidget = (props: Props) => {
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
+      <DataTable
+        rows={data || []}
+        columns={columns}
+        columnsMetadata={props.columnsMetadata}
+      />
     </div>
   );
 };

@@ -34,6 +34,7 @@ function PublishedSiteSettings() {
         {t("PublishedSiteSettings.HeaderDescription")}{" "}
         <Link target="_blank" to={"/"}>
           {t("PublishedSiteSettings.ViewPublishedSite")}
+
           <FontAwesomeIcon
             className="margin-left-05"
             icon={faExternalLinkAlt}
@@ -59,13 +60,13 @@ function PublishedSiteSettings() {
             variant="outline"
             onClick={onNavbarEdit}
           >
-            Edit
+            {t("Edit")}
           </Button>
         </div>
       </div>
 
       {loadingSettings ? (
-        <Spinner className="margin-top-3 text-center" label="Loading" />
+        <Spinner className="margin-top-3 text-center" label={t("Loading")} />
       ) : (
         <div className="grid-row margin-top-0-important margin-bottom-4">
           <div className="grid-col flex-9">
@@ -135,7 +136,7 @@ function PublishedSiteSettings() {
       </div>
 
       {loading ? (
-        <Spinner className="margin-top-3 text-center" label="Loading" />
+        <Spinner className="margin-top-3 text-center" label={t("Loading")} />
       ) : (
         <div className="grid-row margin-top-0-important">
           <div className="grid-col flex-9">
@@ -143,7 +144,7 @@ function PublishedSiteSettings() {
               <MarkdownRender source={homepage.title} />
             </div>
             <div className="grid-col flex-9">
-              <p className="text-bold">Description</p>
+              <p className="text-bold">{t("Description")}</p>
             </div>
             <div className="font-sans-lg">
               <MarkdownRender source={homepage.description} />

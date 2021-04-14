@@ -15,6 +15,7 @@ import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import DataTable from "./DataTable";
 
 type Props = {
   title: string;
@@ -103,7 +104,7 @@ const LineChartWidget = (props: Props) => {
 
   return (
     <div
-      className={`overflow-x-hidden${
+      className={`overflow-x-hidden overflow-y-hidden${
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >
@@ -155,7 +156,7 @@ const LineChartWidget = (props: Props) => {
             />
 
             <Tooltip
-              cursor={{ fill: "#F0F0F0" }}
+              itemStyle={{ color: "#1b1b1b" }}
               isAnimationActive={false}
               formatter={(value: Number | String, name: string) => {
                 // Check if there is metadata for this column
@@ -177,8 +178,8 @@ const LineChartWidget = (props: Props) => {
             <Legend
               verticalAlign="top"
               onClick={toggleLines}
-              onMouseLeave={(e) => setLinesHover(null)}
-              onMouseEnter={(e) => setLinesHover(e.dataKey)}
+              onMouseLeave={() => setLinesHover(null)}
+              onMouseEnter={(e: any) => setLinesHover(e.dataKey)}
             />
             {props.lines.length &&
               props.lines.slice(1).map((line, index) => {
@@ -204,6 +205,11 @@ const LineChartWidget = (props: Props) => {
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
+      <DataTable
+        rows={data || []}
+        columns={lines}
+        columnsMetadata={props.columnsMetadata}
+      />
     </div>
   );
 };

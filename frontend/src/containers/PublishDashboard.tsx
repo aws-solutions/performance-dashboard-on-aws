@@ -225,7 +225,7 @@ function PublishDashboard() {
         </div>
       </div>
       <PrimaryActionBar>
-        <div className="margin-y-3">
+        <div className="margin-top-1">
           <StepIndicator
             current={step}
             segments={[
@@ -240,7 +240,7 @@ function PublishDashboard() {
               },
             ]}
             showStepChart={true}
-            showStepText={true}
+            showStepText={false}
           />
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>

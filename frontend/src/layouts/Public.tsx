@@ -5,6 +5,7 @@ import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../components/Logo";
 import { usePublicSettings } from "../hooks";
 import { useTranslation } from "react-i18next";
+import Header from "../components/Header";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -17,7 +18,7 @@ function PublicLayout(props: LayoutProps) {
   return (
     <>
       <div className="usa-overlay"></div>
-      <header className="usa-header usa-header--basic">
+      <Header className="usa-header usa-header--basic">
         <div className="usa-nav-container">
           <div className="usa-navbar navbar-long">
             <div className="usa-logo margin-top-2" id="basic-logo">
@@ -51,7 +52,7 @@ function PublicLayout(props: LayoutProps) {
             </ul>
           </nav>
         </div>
-      </header>
+      </Header>
       <main className="padding-y-3">
         <div className="grid-container">{props.children}</div>
       </main>

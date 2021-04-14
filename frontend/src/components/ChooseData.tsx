@@ -5,6 +5,7 @@ import Button from "./Button";
 import FileInput from "./FileInput";
 import Link from "./Link";
 import Table from "./Table";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   handleChange: React.FormEventHandler<HTMLFieldSetElement>;
@@ -25,6 +26,7 @@ interface Props {
 }
 
 function ChooseData(props: Props) {
+  const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
   const { settings } = useSettings();
 
@@ -41,14 +43,14 @@ function ChooseData(props: Props) {
     <>
       <div className="grid-col-6">
         <label htmlFor="fieldset" className="usa-label text-bold">
-          Data
+          {t("Data")}
         </label>
         <div className="usa-hint">
-          {`Choose an existing dataset or create a new one to populate this ${
-            props.widgetType || "chart"
-          }. `}
+          {t("ChooseDataDescription", {
+            widgetType: props.widgetType || "chart",
+          })}{" "}
           <Link to="/admin/apihelp" target="_blank" external>
-            How do I add datasets?
+            {t("HowDoIAddDatasets")}
           </Link>
         </div>
       </div>
@@ -57,8 +59,7 @@ function ChooseData(props: Props) {
         className="usa-fieldset"
         onChange={props.handleChange}
       >
-        <legend className="usa-sr-only">Content item types</legend>
-
+        <legend className="usa-sr-only">{t("ContentItemTypesLabel")}</legend>
         <div className="grid-row">
           <div className="grid-col-4 padding-right-2">
             <div className="usa-radio">
@@ -79,12 +80,12 @@ function ChooseData(props: Props) {
                     ref={props.register()}
                   />
                   <label className="usa-radio__label" htmlFor="staticDataset">
-                    Static dataset
+                    {t("StaticDataset")}
                   </label>
                 </div>
                 <div className="grid-col flex-7">
                   <div className="usa-prose text-base margin-left-4">
-                    Upload a new dataset from file or elect an existing dataset.
+                    {t("StaticDatasetDescription")}
                   </div>
                 </div>
               </div>
@@ -109,12 +110,12 @@ function ChooseData(props: Props) {
                     ref={props.register()}
                   />
                   <label className="usa-radio__label" htmlFor="dynamicDataset">
-                    Dynamic dataset
+                    {t("DynamicDataset")}
                   </label>
                 </div>
                 <div className="grid-col flex-7">
                   <div className="usa-prose text-base margin-left-4">
-                    Choose from a list of continuously updated datasets.
+                    {t("DynamicDatasetDescription")}
                   </div>
                 </div>
               </div>
@@ -128,17 +129,16 @@ function ChooseData(props: Props) {
               <FileInput
                 id="dataset"
                 name="dataset"
-                label="Static datasets"
+                label={t("StaticDatasets")}
                 accept=".csv"
                 loading={props.fileLoading}
                 errors={props.csvErrors}
                 register={props.register}
                 hint={
                   <span>
-                    Upload a dataset from a CSV file, or choose an existing
-                    static dataset.{" "}
+                    {t("StaticDatasetsHint")}{" "}
                     <Link to="/admin/formattingcsv" target="_blank" external>
-                      How do I format my CSV file?
+                      {t("HowDoIFormatMyCSVFile")}
                     </Link>
                   </span>
                 }
@@ -153,7 +153,7 @@ function ChooseData(props: Props) {
                 className="datasetsButton"
                 onClick={props.browseDatasets}
               >
-                Browse datasets
+                {t("BrowseDatasets")}
               </Button>
             </div>
           </div>
@@ -174,48 +174,33 @@ function ChooseData(props: Props) {
               columns={React.useMemo(
                 () => [
                   {
-                    Header: "Name",
+                    Header: t("NameUpperCase"),
                     accessor: "fileName",
                     Cell: (props: any) => {
                       return (
-                        <div className="tooltip">
-                          {props.value}
-                          <span className="tooltiptext">Tooltip text</span>
+                        <div
+                          className="usa-tooltip text-middle"
+                          data-position="bottom"
+                          title={props.value}
+                        >
+                          <div className="text-no-wrap overflow-hidden text-overflow-ellipsis">
+                            {props.value}
+                          </div>
                         </div>
                       );
                     },
                   },
                   {
-                    Header: "Last updated",
+                    Header: t("LastUpdatedLabel"),
                     accessor: "updatedAt",
+                    Cell: (props: any) => dateFormatter(props.value),
                   },
                   {
-                    Header: "Description",
+                    Header: t("Description"),
                     accessor: "description",
-                    Cell: (props: any) => {
-                      if (props.value) {
-                        if (props.value.length > 11) {
-                          return (
-                            <div className="tooltip">
-                              {props.value.substring(0, 11) + "..."}
-                              <span className="tooltiptext">{props.value}</span>
-                            </div>
-                          );
-                        } else {
-                          return (
-                            <div className="tooltip">
-                              {props.value}
-                              <span className="tooltiptext">{props.value}</span>
-                            </div>
-                          );
-                        }
-                      }
-
-                      return "";
-                    },
                   },
                   {
-                    Header: "Tags",
+                    Header: t("Tags"),
                     accessor: "tags",
                   },
                 ],
@@ -234,13 +219,13 @@ function ChooseData(props: Props) {
         disabled={props.continueButtonDisabled}
         disabledToolTip={
           props.datasetType === DatasetType.DynamicDataset
-            ? "You must select a dataset to continue"
+            ? t("DynamicDatasetContinue")
             : props.datasetType === DatasetType.StaticDataset
-            ? "You must upload a file or choose a dataset to continue"
+            ? t("StaticDatasetContinue")
             : props.continueButtonDisabledTooltip
         }
       >
-        Continue
+        {t("ContinueButton")}
       </Button>
       <Button
         variant="unstyled"
@@ -248,7 +233,7 @@ function ChooseData(props: Props) {
         type="button"
         onClick={props.onCancel}
       >
-        Cancel
+        {t("Cancel")}
       </Button>
     </>
   );

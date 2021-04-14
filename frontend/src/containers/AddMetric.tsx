@@ -10,6 +10,7 @@ import Spinner from "../components/Spinner";
 import DatePicker from "../components/DatePicker";
 import { LocationState } from "../models";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -26,6 +27,7 @@ interface PathParams {
 function AddMetric() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
@@ -44,7 +46,7 @@ function AddMetric() {
       {
         alert: {
           type: "success",
-          message: "Metric successfully added.",
+          message: t("AddMetricScreen.MetricSuccessfullyAdded"),
         },
         metrics: newMetrics,
         showTitle: state.showTitle !== false,
@@ -73,7 +75,7 @@ function AddMetric() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -84,7 +86,7 @@ function AddMetric() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add metric",
+      label: t("AddMetricScreen.AddMetric"),
       url: "",
     });
   }
@@ -94,13 +96,18 @@ function AddMetric() {
       <Breadcrumbs crumbs={crumbs} />
 
       {loading ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <div className="grid-row">
             <div className="grid-col-auto">
               <PrimaryActionBar>
-                <h1 className="margin-top-0">Add metric</h1>
+                <h1 className="margin-top-0">
+                  {t("AddMetricScreen.AddMetric")}
+                </h1>
 
                 <form
                   onSubmit={handleSubmit(onSubmit)}
@@ -110,20 +117,24 @@ function AddMetric() {
                   <TextField
                     id="title"
                     name="title"
-                    label="Metric title"
-                    hint="For example, 'Transactions per year'."
+                    label={t("AddMetricScreen.MetricTitle")}
+                    hint={t("AddMetricScreen.MetricTitleHint")}
                     register={register}
-                    error={errors.title && "Please specify a title"}
+                    error={
+                      errors.title && t("AddMetricScreen.MetricTitleError")
+                    }
                     required
                   />
 
                   <NumberField
                     id="value"
                     name="value"
-                    label="Metric value"
-                    hint="Enter a number here."
+                    label={t("AddMetricScreen.MetricValue")}
+                    hint={t("AddMetricScreen.MetricValueHint")}
                     register={register}
-                    error={errors.value && "Please specify a value"}
+                    error={
+                      errors.value && t("AddMetricScreen.MetricValueError")
+                    }
                     className="width-50"
                     step={0.01}
                     required
@@ -132,14 +143,14 @@ function AddMetric() {
                   <TextField
                     id="changeOverTime"
                     name="changeOverTime"
-                    label="Change over time - optional"
-                    hint='Indicate the increase or decrease since the previous time period. For example, +10.1% or -56%. Most includes "+" or "-".'
+                    label={t("AddMetricScreen.ChangeOverTime")}
+                    hint={t("AddMetricScreen.ChangeOverTimeHint")}
                     register={register}
                     className="width-50"
                     error={
                       errors.changeOverTime &&
                       errors.changeOverTime.type === "validate"
-                        ? 'Must start with "+" or "-".'
+                        ? t("AddMetricScreen.ChangeOverTimeError")
                         : undefined
                     }
                     validate={(input: string) => {
@@ -150,7 +161,7 @@ function AddMetric() {
                   <DatePicker
                     id="startDate"
                     name="startDate"
-                    label="Start date - optional"
+                    label={t("AddMetricScreen.StartDateOptional")}
                     hint="mm/dd/yyyy"
                     register={register}
                     className="width-50"
@@ -159,21 +170,23 @@ function AddMetric() {
                   <DatePicker
                     id="endDate"
                     name="endDate"
-                    label="End date - optional"
+                    label={t("AddMetricScreen.EndDateOptional")}
                     hint="mm/dd/yyyy"
                     register={register}
                     className="width-50"
                   />
 
                   <br />
-                  <Button type="submit">Add metric</Button>
+                  <Button type="submit">
+                    {t("AddMetricScreen.AddMetric")}
+                  </Button>
                   <Button
                     className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                     variant="unstyled"
                     type="button"
                     onClick={onCancel}
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                 </form>
               </PrimaryActionBar>

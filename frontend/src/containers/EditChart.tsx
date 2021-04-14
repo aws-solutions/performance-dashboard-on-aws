@@ -567,6 +567,7 @@ function EditChart() {
                     setSortByColumn={setSortByColumn}
                     setSortByDesc={setSortByDesc}
                     reset={reset}
+                    widgetType="chart"
                   />
                 </PrimaryActionBar>
               </div>

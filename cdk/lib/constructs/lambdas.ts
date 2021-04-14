@@ -79,6 +79,7 @@ export class LambdaFunctions extends cdk.Construct {
         tracing: lambda.Tracing.ACTIVE,
         memorySize: 256,
         timeout: cdk.Duration.seconds(10),
+        reservedConcurrentExecutions: 10,
         logRetention: logs.RetentionDays.TEN_YEARS,
         environment: {
           AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,

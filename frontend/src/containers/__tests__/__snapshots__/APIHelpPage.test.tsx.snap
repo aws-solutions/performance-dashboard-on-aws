@@ -25,7 +25,7 @@ exports[`renders the API Help Page component 1`] = `
        
       <a
         class="text-base-darkest"
-        href="mailto:undefined?subject=Performance Dashboard Assistance"
+        href="mailto:admin1@aol.com?subject=Performance Dashboard Assistance"
       >
         contact support
       </a>

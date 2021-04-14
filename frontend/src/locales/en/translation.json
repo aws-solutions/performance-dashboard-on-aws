@@ -360,7 +360,7 @@
   "AdminSettingsScreen": {
     "Header": "Admin site",
     "HeaderDescription": "Customize settings for the internal site.",
-    "SuppportContactEmailAddress": "Support contact email address"
+    "SupportContactEmailAddress": "Support contact email address"
   },
   "EditSupportContactEmail": {
     "Header": "Support contact email address",
@@ -372,7 +372,7 @@
     "PublishedSite": "Published site",
     "HeaderDescription": "Customize your published site. Your saved edits will take effect immediately on the published site.",
     "ViewPublishedSite": "View published site",
-    "NavigationBar": "Navigation Bar",
+    "NavigationBar": "Navigation bar",
     "NavagationBarDescription": "You can customize the header and navigation of the published site.",
     "Title": "Title",
     "ContactEmailAddressLabel": "Contact email address - optional",

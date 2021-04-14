@@ -81,6 +81,7 @@ function EditSupportContactEmail() {
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="usa-form usa-form--large"
+              data-testid="EditSupportContactEmailForm"
             >
               <TextField
                 id="title"

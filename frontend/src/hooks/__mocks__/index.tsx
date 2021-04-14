@@ -88,6 +88,8 @@ export function useSettings() {
       singular: "Ministry",
       plural: "Ministries",
     },
+    adminContactEmailAddress: "admin1@aol.com",
+    contactEmailAddress: "contact@aol.com",
   });
 
   return {

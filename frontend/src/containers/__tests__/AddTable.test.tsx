@@ -58,7 +58,7 @@ test("renders a file upload input", async () => {
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
   const parseSpy = jest.spyOn(papaparse, "parse");
-  const { getByRole, getByText, getByLabelText } = render(<AddTable />, {
+  const { getByRole, getAllByText, getByLabelText } = render(<AddTable />, {
     wrapper: MemoryRouter,
   });
 
@@ -86,7 +86,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  const submitButton = getByText("Add Table");
+  const submitButton = getAllByText("Add table")[4];
 
   await waitFor(() => {
     expect(parseSpy).toHaveBeenCalled();

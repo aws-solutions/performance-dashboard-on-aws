@@ -22,6 +22,7 @@ import Visualize from "../components/VisualizeTable";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import UtilsService from "../services/UtilsService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -40,7 +41,7 @@ interface PathParams {
 function AddTable() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
-
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
@@ -124,7 +125,7 @@ function AddTable() {
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
-      throw new Error("CSV file not specified");
+      throw new Error(t("CSVFileNotSpecified"));
     }
 
     setFileLoading(true);
@@ -191,11 +192,11 @@ function AddTable() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" table has been successfully added`,
+          message: t("AddTableScreen.AddTableSuccess", { title: values.title }),
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setCreatingWidget(false);
     }
   };
@@ -237,7 +238,7 @@ function AddTable() {
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/add-table/`,
-        crumbLabel: "Add table",
+        crumbLabel: t("AddTableScreen.AddTable"),
       },
     });
   };
@@ -303,7 +304,7 @@ function AddTable() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -314,25 +315,25 @@ function AddTable() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add table",
+      label: t("AddTableScreen.AddTable"),
       url: "",
     });
   }
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">Add table</h1>
+      <h1 className="margin-top-0">{t("AddTableScreen.AddTable")}</h1>
       <StepIndicator
         current={step}
         segments={[
           {
-            label: "Choose data",
+            label: t("AddTableScreen.ChooseData"),
           },
           {
-            label: "Check data",
+            label: t("AddTableScreen.CheckData"),
           },
           {
-            label: "Visualize",
+            label: t("AddTableScreen.Visualize"),
           },
         ]}
         showStepChart={true}
@@ -362,7 +363,9 @@ function AddTable() {
                 fileLoading={fileLoading}
                 browseDatasets={browseDatasets}
                 continueButtonDisabled={!currentJson.length}
-                continueButtonDisabledTooltip="Choose a dataset to continue"
+                continueButtonDisabledTooltip={t(
+                  "AddTableScreen.ChooseDataset"
+                )}
                 csvErrors={csvErrors}
                 csvFile={csvFile}
                 onCancel={onCancel}
@@ -373,33 +376,31 @@ function AddTable() {
           </div>
 
           <div hidden={step !== 1}>
-            <div className="grid-col-8">
-              <PrimaryActionBar>
-                {configHeader}
-                <CheckData
-                  data={currentJson}
-                  advanceStep={advanceStep}
-                  backStep={backStep}
-                  selectedHeaders={selectedHeaders}
-                  setSelectedHeaders={setSelectedHeaders}
-                  hiddenColumns={hiddenColumns}
-                  setHiddenColumns={setHiddenColumns}
-                  onCancel={onCancel}
-                  dataTypes={dataTypes}
-                  setDataTypes={setDataTypes}
-                  numberTypes={numberTypes}
-                  setNumberTypes={setNumberTypes}
-                  currencyTypes={currencyTypes}
-                  setCurrencyTypes={setCurrencyTypes}
-                  sortByColumn={sortByColumn}
-                  sortByDesc={sortByDesc}
-                  setSortByColumn={setSortByColumn}
-                  setSortByDesc={setSortByDesc}
-                  reset={reset}
-                  widgetType="table"
-                />
-              </PrimaryActionBar>
-            </div>
+            <PrimaryActionBar>
+              {configHeader}
+              <CheckData
+                data={currentJson}
+                advanceStep={advanceStep}
+                backStep={backStep}
+                selectedHeaders={selectedHeaders}
+                setSelectedHeaders={setSelectedHeaders}
+                hiddenColumns={hiddenColumns}
+                setHiddenColumns={setHiddenColumns}
+                onCancel={onCancel}
+                dataTypes={dataTypes}
+                setDataTypes={setDataTypes}
+                numberTypes={numberTypes}
+                setNumberTypes={setNumberTypes}
+                currencyTypes={currencyTypes}
+                setCurrencyTypes={setCurrencyTypes}
+                sortByColumn={sortByColumn}
+                sortByDesc={sortByDesc}
+                setSortByColumn={setSortByColumn}
+                setSortByDesc={setSortByDesc}
+                reset={reset}
+                widgetType="table"
+              />
+            </PrimaryActionBar>
           </div>
 
           <div hidden={step !== 2}>
@@ -423,7 +424,7 @@ function AddTable() {
               processingWidget={creatingWidget}
               fullPreviewButton={fullPreviewButton}
               fullPreview={fullPreview}
-              submitButtonLabel="Add Table"
+              submitButtonLabel={t("AddTableScreen.AddTable")}
               sortByColumn={sortByColumn}
               sortByDesc={sortByDesc}
               setSortByColumn={setSortByColumn}

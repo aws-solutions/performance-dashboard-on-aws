@@ -85,7 +85,7 @@ function WidgetList(props: Props) {
             <div className="grid-row radius-lg margin-top-4 text-bold font-sans-sm">
               <div className="grid-col flex-1">{t("Order")}</div>
               <div className="grid-col flex-6">
-                <div className="margin-left-2">{t("Name")}</div>
+                <div className="margin-left-2">{t("NameUpperCase")}</div>
               </div>
               <div className="grid-col flex-5">
                 <div className="margin-left-5">{t("ContentType")}</div>

@@ -521,33 +521,31 @@ function EditTable() {
               </div>
 
               <div hidden={step !== 1}>
-                <div className="grid-col-8">
-                  <PrimaryActionBar>
-                    {configHeader}
-                    <CheckData
-                      data={displayedJson}
-                      advanceStep={advanceStep}
-                      backStep={backStep}
-                      selectedHeaders={selectedHeaders}
-                      setSelectedHeaders={setSelectedHeaders}
-                      hiddenColumns={hiddenColumns}
-                      setHiddenColumns={setHiddenColumns}
-                      onCancel={onCancel}
-                      dataTypes={dataTypes}
-                      setDataTypes={setDataTypes}
-                      numberTypes={numberTypes}
-                      setNumberTypes={setNumberTypes}
-                      currencyTypes={currencyTypes}
-                      setCurrencyTypes={setCurrencyTypes}
-                      sortByColumn={sortByColumn}
-                      sortByDesc={sortByDesc}
-                      setSortByColumn={setSortByColumn}
-                      setSortByDesc={setSortByDesc}
-                      reset={reset}
-                      widgetType="table"
-                    />
-                  </PrimaryActionBar>
-                </div>
+                <PrimaryActionBar>
+                  {configHeader}
+                  <CheckData
+                    data={displayedJson}
+                    advanceStep={advanceStep}
+                    backStep={backStep}
+                    selectedHeaders={selectedHeaders}
+                    setSelectedHeaders={setSelectedHeaders}
+                    hiddenColumns={hiddenColumns}
+                    setHiddenColumns={setHiddenColumns}
+                    onCancel={onCancel}
+                    dataTypes={dataTypes}
+                    setDataTypes={setDataTypes}
+                    numberTypes={numberTypes}
+                    setNumberTypes={setNumberTypes}
+                    currencyTypes={currencyTypes}
+                    setCurrencyTypes={setCurrencyTypes}
+                    sortByColumn={sortByColumn}
+                    sortByDesc={sortByDesc}
+                    setSortByColumn={setSortByColumn}
+                    setSortByDesc={setSortByDesc}
+                    reset={reset}
+                    widgetType="table"
+                  />
+                </PrimaryActionBar>
               </div>
 
               <div hidden={step !== 2}>

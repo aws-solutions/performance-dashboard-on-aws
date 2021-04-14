@@ -116,7 +116,7 @@ function UserListing() {
   const resendInviteEmailDisabled = () => {
     return (
       selected.length === 0 ||
-      selected.some((s) => s.userStatus !== t("ForceChangePassword"))
+      selected.some((s) => s.userStatus !== "FORCE_CHANGE_PASSWORD")
     );
   };
 

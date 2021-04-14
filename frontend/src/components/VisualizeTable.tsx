@@ -149,7 +149,7 @@ function VisualizeTable(props: Props) {
             label={t("VisualizeTableComponent.TableSummary")}
             hint={
               <>
-                {t("VisualizeTableComponent.TableSummary")}{" "}
+                {t("VisualizeTableComponent.TableSummaryHint")}{" "}
                 <Link target="_blank" to={"/admin/markdown"} external>
                   {t("AddTextScreen.ViewMarkdownSyntax")}
                 </Link>

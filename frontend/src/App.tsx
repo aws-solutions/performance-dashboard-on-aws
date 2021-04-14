@@ -47,7 +47,9 @@ import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
 import FormattingCSV from "./containers/FormattingCSV";
 import DateFormatSettings from "./containers/DateFormatSettings";
+import AdminSiteSettings from "./containers/AdminSiteSettings";
 import EditDateFormat from "./containers/EditDateFormat";
+import EditSupportContactEmail from "./containers/EditSupportContactEmail";
 import APIHelpPage from "./containers/APIHelpPage";
 import ColorsHelpPage from "./containers/ColorsHelpPage";
 import EditNavbar from "./containers/EditNavbar";
@@ -118,6 +120,14 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/settings/dateformat/edit",
     component: EditDateFormat,
+  },
+  {
+    path: "/admin/settings/adminsite",
+    component: AdminSiteSettings,
+  },
+  {
+    path: "/admin/settings/supportcontact/edit",
+    component: EditSupportContactEmail,
   },
   {
     path: "/admin/settings/topicarea/:topicAreaId/edit",

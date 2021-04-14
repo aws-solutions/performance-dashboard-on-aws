@@ -41,6 +41,9 @@ function fromItem(item: SettingsItem): Settings {
       ? item.customLogoS3Key
       : defaults.customLogoS3Key,
     colors: item.colors ? item.colors : defaults.colors,
+    contactEmailAddress: item.contactEmailAddress && item.contactEmailAddress,
+    adminContactEmailAddress:
+      item.adminContactEmailAddress && item.adminContactEmailAddress,
   };
 }
 
@@ -60,6 +63,8 @@ function toPublicSettings(settings: Settings): PublicSettings {
       ? settings.customLogoS3Key
       : defaults.customLogoS3Key,
     colors: settings.colors ? settings.colors : defaults.colors,
+    contactEmailAddress:
+      settings.contactEmailAddress && settings.contactEmailAddress,
   };
 }
 

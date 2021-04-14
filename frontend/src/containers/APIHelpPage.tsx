@@ -1,10 +1,11 @@
 import React from "react";
 import Link from "../components/Link";
-import EnvConfig from "../services/EnvConfig";
 import { useTranslation } from "react-i18next";
+import { useSettings } from "../hooks";
 
 const APIHelpPage = () => {
   const { t } = useTranslation();
+  const { settings } = useSettings();
 
   return (
     <>
@@ -17,7 +18,7 @@ const APIHelpPage = () => {
         <p>
           {t("APIHelpSelectDynamicDatasetBody")}{" "}
           <a
-            href={`mailto:${EnvConfig.contactEmail}?subject=Performance Dashboard Assistance`}
+            href={`mailto:${settings.adminContactEmailAddress}?subject=Performance Dashboard Assistance`}
             className="text-base-darkest"
           >
             {t("APIHelpSelectDynamicDatasetSupport")}

@@ -21,6 +21,8 @@ async function updateSettings(req: Request, res: Response) {
     topicAreaLabels,
     customLogoS3Key,
     colors,
+    adminContactEmailAddress,
+    contactEmailAddress,
   } = req.body;
 
   if (!updatedAt) {
@@ -94,6 +96,24 @@ async function updateSettings(req: Request, res: Response) {
     }
 
     updatedAt = await repo.updateSetting("colors", colors, updatedAt, user);
+  }
+
+  if (adminContactEmailAddress) {
+    updatedAt = await repo.updateSetting(
+      "adminContactEmailAddress",
+      adminContactEmailAddress,
+      updatedAt,
+      user
+    );
+  }
+
+  if (contactEmailAddress) {
+    updatedAt = await repo.updateSetting(
+      "contactEmailAddress",
+      contactEmailAddress,
+      updatedAt,
+      user
+    );
   }
 
   res.send();

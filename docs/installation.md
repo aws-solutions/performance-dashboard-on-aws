@@ -43,7 +43,7 @@ To begin installing the prerequisite stack, click on the "Install this first in 
 
 | Region                              | Launch                                                                                                                                                                                                                                                                 |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Install this first in us-east-1** | [![Install this first](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/LambdaEdge-0.8.0-beta.json)                       |
+| **Install this first in us-east-1** | [![Install this first](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-1.s3.amazonaws.com/LambdaEdge-0.11.0-beta.json)                       |
 | Install in us-west-2                | [![Install in us-west-2](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-west-2.s3.amazonaws.com/performance-dashboard-us-west-2.json)           |
 | Install in us-east-2                | [![Install in us-east-2](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-us-east-2.s3.amazonaws.com/performance-dashboard-us-east-2.json)           |
 | Install in eu-west-2                | [![Install in eu-west-2](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-eu-west-2.s3.amazonaws.com/performance-dashboard-eu-west-2.json)           |
@@ -67,10 +67,10 @@ The following instructions assume that you have local AWS credentials in `~/.aws
 
 ### 1. Clone this repository
 
-The mainline branch of this repository develops rapidly. If you want to obtain the latest stable copy of the code, clone this repository using the tag of the most recent release, which currently is 0.10.0-beta.
+The mainline branch of this repository develops rapidly. If you want to obtain the latest stable copy of the code, clone this repository using the tag of the most recent release, which currently is 0.11.0-beta.
 
 ```bash
-git clone -b 0.10.0-beta https://github.com/awslabs/performance-dashboard-on-aws.git
+git clone -b 0.11.0-beta https://github.com/awslabs/performance-dashboard-on-aws.git
 cd performance-dashboard-on-aws
 ```
 

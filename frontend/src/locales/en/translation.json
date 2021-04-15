@@ -585,6 +585,7 @@
   },
   "AddImageScreen": {
     "AddImage": "Add Image",
+    "AddImageButton": "Add image",
     "ConfigureImage": "Configure image",
     "StepTwo": "Step 2 of 2",
     "ResolveError": "Resolve error(s) to add the image",

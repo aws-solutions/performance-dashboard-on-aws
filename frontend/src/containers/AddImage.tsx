@@ -285,7 +285,7 @@ function AddImage() {
                 type="submit"
                 disabledToolTip="Upload a file to continue"
               >
-                {t("AddImageScreen.AddImage")}
+                {t("AddImageScreen.AddImageButton")}
               </Button>
               <Button
                 variant="unstyled"

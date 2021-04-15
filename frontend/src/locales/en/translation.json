@@ -566,6 +566,14 @@
     "Reset_RequiredDesc": "This user is confirmed, but when the user navigates to the system they must request a code and reset their password before they can sign in.",
     "Force_Change_PasswordDesc": "The user is confirmed and the user can sign in using a temporary password, but during their first sign-in, the user must change their password to a new value before doing anything else."
   },
+  "EmailInvalid": "Email provided is invalid.",
+  "AddChartScreen": {
+    "ChooseDataset": "Choose a dataset to continue",
+    "AddChart": "Add chart",
+    "ChooseData": "Choose data",
+    "CheckData": "Check data",
+    "Visualize": "Visualize"
+  },
   "Bar": "Bar",
   "Column": "Column",
   "Line": "Line",
@@ -611,7 +619,6 @@
     "ThirdItem": "- Third item",
     "FourthItem": "+ Fourth item"
   },
-  "EmailInvalid": "Email provided is invalid.",
   "Created": "Created",
   "Deleted": "Deleted",
   "Edited": "Edited",
@@ -631,5 +638,28 @@
   "Version": "Version",
   "VersionDashboard": "A version of this dashboard is",
   "ViewVersion": "View {{state}} version",
-  "LastSaved": "Last saved"
+  "LastSaved": "Last saved",
+  "AddImageScreen": {
+    "AddImage": "Add Image",
+    "AddImageButton": "Add image",
+    "ConfigureImage": "Configure image",
+    "StepTwo": "Step 2 of 2",
+    "ResolveError": "Resolve error(s) to add the image",
+    "Title": "Image title",
+    "Hint": "Give your image a descriptive title.",
+    "TitleError": "Please specify an image title",
+    "ShowTitle": "Show title on dashboard",
+    "FileUpload": "File upload",
+    "FileHint": "Must be a PNG, JPEG, or SVG file",
+    "TableHint": "It is recommended that tables have less than 8 columns. You can still continue.",
+    "AltText": "Image alt text",
+    "TextHint": "Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard.",
+    "TextError": "Please specify image alt text",
+    "SummaryLabel": "Image description - optional",
+    "SummaryHint": "Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.",
+    "MarkdownLink": "View Markdown Syntax",
+    "ToggleSummary": "Show description below image",
+    "Back": "Back",
+    "Cancel": "Cancel"
+  }
 }

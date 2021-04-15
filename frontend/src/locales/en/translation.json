@@ -537,6 +537,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize"
+<<<<<<< HEAD
   },
   "Bar": "Bar",
   "Column": "Column",
@@ -584,4 +585,7 @@
     "FourthItem": "+ Fourth item"
   },
   "EmailInvalid": "Email provided is invalid."
+=======
+  }
+>>>>>>> added localization for AddChart screen
 }

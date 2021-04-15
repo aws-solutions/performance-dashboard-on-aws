@@ -22,6 +22,7 @@ import "./AddChart.css";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -43,7 +44,7 @@ interface PathParams {
 function AddChart() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
-
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
@@ -239,7 +240,7 @@ function AddChart() {
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/add-chart/`,
-        crumbLabel: "Add chart",
+        crumbLabel: t("AddChartScreen.AddChart"),
       },
     });
   };
@@ -327,7 +328,7 @@ function AddChart() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -338,7 +339,7 @@ function AddChart() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add chart",
+      label: t("AddChartScreen.AddChart"),
       url: "",
     });
   }
@@ -350,13 +351,13 @@ function AddChart() {
         current={step}
         segments={[
           {
-            label: "Choose data",
+            label: t("AddChartScreen.ChooseData"),
           },
           {
-            label: "Check data",
+            label: t("AddChartScreen.CheckData"),
           },
           {
-            label: "Visualize",
+            label: t("AddChartScreen.Visualize"),
           },
         ]}
         showStepChart={true}
@@ -385,7 +386,9 @@ function AddChart() {
                   fileLoading={fileLoading}
                   browseDatasets={browseDatasets}
                   continueButtonDisabled={!currentJson.length}
-                  continueButtonDisabledTooltip="Choose a dataset to continue"
+                  continueButtonDisabledTooltip={t(
+                    "AddChartScreen.ChooseDataset"
+                  )}
                   csvErrors={csvErrors}
                   csvFile={csvFile}
                   onCancel={onCancel}
@@ -444,7 +447,7 @@ function AddChart() {
                 processingWidget={creatingWidget}
                 fullPreviewButton={fullPreviewButton}
                 fullPreview={fullPreview}
-                submitButtonLabel="Add chart"
+                submitButtonLabel={t("AddChartScreen.AddChart")}
                 sortByColumn={sortByColumn}
                 sortByDesc={sortByDesc}
                 setSortByColumn={setSortByColumn}

@@ -205,6 +205,37 @@
     "EndDateOptional": "End date - optional",
     "MetricSuccessfullyEdited": "Metric successfully edited."
   },
+  "AddMetricsScreen": {
+    "MetricsAddedSuccessffully": "metrics have been successfully added",
+    "Name": "Name",
+    "LastUpdated": "Last updated",
+    "Description": "Description",
+    "Tags": "Tags",
+    "AddMetrics": "Add metrics",
+    "AddMetricsButton": "Add Metrics",
+    "ChooseData": "Choose data",
+    "Visualize": "Visualize",
+    "UploadingFile": "Uploading file",
+    "CreatingMetrics": "Creating metrics",
+    "Data": "Data",
+    "DataHint": "Choose an existing dataset or create a new one to populate this metrics",
+    "DataHelp": "How do I add datasets?",
+    "ContentItemTypes": "Content item types",
+    "CreateNew": "Create new",
+    "CreateNewDescription": "Create a metrics group from scratch using the visual editor.",
+    "DynamicDataset": "Dynamic dataset",
+    "DynamicDatasetDescription": "Choose from a list of continuously updated datasets.",
+    "Back": "Back",
+    "SelectDataset": "You must select a dataset to continue",
+    "ChooseDataset": "Choose a dataset to continue",
+    "Continue": "Continue",
+    "EnterMetric": "Enter at least one metric to continue",
+    "ResolveErrors": "Resolve error(s) to add the text",
+    "MetricsTitle": "Metrics title",
+    "MetricsTitleHint": "Give your group of metrics a descriptive title.",
+    "MetricsTitleError": "Please specify a content title",
+    "ShowTitle": "Show title on dashboard"
+  },
   "AddTableScreen": {
     "AddTable": "Add table",
     "ChooseData": "Choose data",
@@ -408,6 +439,7 @@
     "MetricsImageAlt": "Metrics Content Item Preview",
     "ChartImageAlt": "Chart Content Item Preview",
     "TableImageAlt": "Table Content Item Preview",
+    "DisabledToolTip": "Choose a content item to continue",
     "ImageAlt": "Image Content Item Preview",
     "TextDescription": "Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.",
     "MetricsDescription": "Add one or more metrics to show point-in-time numerical data and trends.",
@@ -660,6 +692,7 @@
     "MarkdownLink": "View Markdown Syntax",
     "ToggleSummary": "Show description below image",
     "Back": "Back",
+    "DisabledToolTip": "Upload a file to continue",
     "Cancel": "Cancel"
   }
 }

@@ -283,7 +283,7 @@ function AddImage() {
               <Button
                 disabled={!imageFile || imageUploading}
                 type="submit"
-                disabledToolTip="Upload a file to continue"
+                disabledToolTip={t("AddImageScreen.DisabledToolTip")}
               >
                 {t("AddImageScreen.AddImageButton")}
               </Button>

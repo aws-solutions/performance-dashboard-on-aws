@@ -105,7 +105,7 @@ function AddMetrics() {
   const columns = useMemo(
     () => [
       {
-        Header: "Name",
+        Header: t("AddMetricsScreen.Name"),
         accessor: "fileName",
         Cell: (props: any) => {
           return (
@@ -122,16 +122,16 @@ function AddMetrics() {
         },
       },
       {
-        Header: "Last updated",
+        Header: t("AddMetricsScreen.LastUpdated"),
         accessor: "updatedAt",
         Cell: (props: any) => dateFormatter(props.value),
       },
       {
-        Header: "Description",
+        Header: t("AddMetricsScreen.Description"),
         accessor: "description",
       },
       {
-        Header: "Tags",
+        Header: t("AddMetricsScreen.Tags"),
         accessor: "tags",
       },
     ],
@@ -192,7 +192,9 @@ function AddMetrics() {
         history.push(`/admin/dashboard/edit/${dashboardId}`, {
           alert: {
             type: "success",
-            message: `"${values.title}" metrics have been successfully added`,
+            message: `"${values.title}" ${t(
+              "AddMetricsScreen.MetricsAddedSuccessffully"
+            )}`,
           },
         });
       }
@@ -299,7 +301,7 @@ function AddMetrics() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -310,22 +312,22 @@ function AddMetrics() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add metrics",
+      label: t("AddMetricsScreen.AddMetrics"),
       url: "",
     });
   }
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">Add metrics</h1>
+      <h1 className="margin-top-0">{t("AddMetricsScreen.AddMetrics")}</h1>
       <StepIndicator
         current={step}
         segments={[
           {
-            label: "Choose data",
+            label: t("AddMetricsScreen.ChooseData"),
           },
           {
-            label: "Visualize",
+            label: t("AddMetricsScreen.Visualize"),
           },
         ]}
         showStepChart={true}
@@ -341,7 +343,11 @@ function AddMetrics() {
       {fileLoading || creatingWidget ? (
         <Spinner
           className="text-center margin-top-6"
-          label={`${fileLoading ? "Uploading file" : "Creating metrics"}`}
+          label={`${
+            fileLoading
+              ? t("AddMetricsScreen.UploadingFile")
+              : t("AddMetricsScreen.CreatingMetrics")
+          }`}
         />
       ) : (
         <div className="grid-row width-desktop">
@@ -351,13 +357,12 @@ function AddMetrics() {
                 {configHeader}
                 <div className="grid-col-6">
                   <label htmlFor="fieldset" className="usa-label text-bold">
-                    Data
+                    {t("AddMetricsScreen.Data")}
                   </label>
                   <div className="usa-hint">
-                    Choose an existing dataset or create a new one to populate
-                    this metrics.{" "}
+                    {t("AddMetricsScreen.DataHint")}.{" "}
                     <Link to="/admin/apihelp" target="_blank" external>
-                      How do I add datasets?
+                      {t("AddMetricsScreen.DataHelp")}
                     </Link>
                   </div>
                 </div>
@@ -366,7 +371,9 @@ function AddMetrics() {
                   className="usa-fieldset"
                   onChange={handleChange}
                 >
-                  <legend className="usa-sr-only">Content item types</legend>
+                  <legend className="usa-sr-only">
+                    {t("AddMetricsScreen.ContentItemTypes")}
+                  </legend>
 
                   <div className="grid-row">
                     <div className="grid-col-4 padding-right-2">
@@ -391,13 +398,12 @@ function AddMetrics() {
                               className="usa-radio__label"
                               htmlFor="createNew"
                             >
-                              Create new
+                              {t("AddMetricsScreen.CreateNew")}
                             </label>
                           </div>
                           <div className="grid-col flex-7">
                             <div className="usa-prose text-base margin-left-4">
-                              Create a metrics group from scratch using the
-                              visual editor
+                              {t("AddMetricsScreen.CreateNewDescription")}
                             </div>
                           </div>
                         </div>
@@ -425,13 +431,12 @@ function AddMetrics() {
                               className="usa-radio__label"
                               htmlFor="dynamicDataset"
                             >
-                              Dynamic dataset
+                              {t("AddMetricsScreen.DynamicDataset")}
                             </label>
                           </div>
                           <div className="grid-col flex-7">
                             <div className="usa-prose text-base margin-left-4">
-                              Choose from a list of continuously updated
-                              datasets.
+                              {t("AddMetricsScreen.DynamicDatasetDescription")}
                             </div>
                           </div>
                         </div>
@@ -457,7 +462,7 @@ function AddMetrics() {
                 <br />
                 <hr />
                 <Button variant="outline" type="button" onClick={goBack}>
-                  Back
+                  {t("AddMetricsScreen.Back")}
                 </Button>
                 <Button
                   type="button"
@@ -469,11 +474,11 @@ function AddMetrics() {
                   }
                   disabledToolTip={
                     datasetType === DatasetType.DynamicDataset
-                      ? "You must select a dataset to continue"
-                      : "Choose a dataset to continue"
+                      ? t("AddMetricsScreen.SelectDataset")
+                      : t("AddMetricsScreen.ChooseDataset")
                   }
                 >
-                  Continue
+                  {t("AddMetricsScreen.Continue")}
                 </Button>
                 <Button
                   variant="unstyled"
@@ -481,7 +486,7 @@ function AddMetrics() {
                   type="button"
                   onClick={onCancel}
                 >
-                  Cancel
+                  {t("Cancel")}
                 </Button>
               </PrimaryActionBar>
             </div>
@@ -497,8 +502,8 @@ function AddMetrics() {
                           type="error"
                           message={
                             submittedMetricsNum === 0
-                              ? "Enter at least one metric to continue"
-                              : "Resolve error(s) to add the text"
+                              ? t("AddMetricsScreen.EnterMetric")
+                              : t("AddMetricsScreen.ResolveErrors")
                           }
                           slim
                         ></Alert>
@@ -506,9 +511,12 @@ function AddMetrics() {
                       <TextField
                         id="title"
                         name="title"
-                        label="Metrics title"
-                        hint="Give your group of metrics a descriptive title."
-                        error={errors.title && "Please specify a content title"}
+                        label={t("AddMetricsScreen.MetricsTitle")}
+                        hint={t("AddMetricsScreen.MetricsTitleHint")}
+                        error={
+                          errors.title &&
+                          t("AddMetricsScreen.MetricsTitleError")
+                        }
                         required
                         register={register}
                       />
@@ -526,7 +534,7 @@ function AddMetrics() {
                           className="usa-checkbox__label"
                           htmlFor="display-title"
                         >
-                          Show title on dashboard
+                          {t("AddMetricsScreen.ShowTitle")}
                         </label>
                       </div>
 
@@ -568,13 +576,13 @@ function AddMetrics() {
                     <br />
                     <hr />
                     <Button variant="outline" type="button" onClick={backStep}>
-                      Back
+                      {t("AddMetricsScreen.Back")}
                     </Button>
                     <Button
                       disabled={creatingWidget || fileLoading}
                       type="submit"
                     >
-                      Add Metrics
+                      {t("AddMetricsScreen.AddMetricsButton")}
                     </Button>
                     <Button
                       variant="unstyled"
@@ -582,7 +590,7 @@ function AddMetrics() {
                       type="button"
                       onClick={onCancel}
                     >
-                      Cancel
+                      {t("Cancel")}
                     </Button>
                   </PrimaryActionBar>
                 </div>

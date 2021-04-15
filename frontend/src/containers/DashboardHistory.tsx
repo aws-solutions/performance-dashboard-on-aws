@@ -30,7 +30,7 @@ function DashboardHistory() {
       {
         Header: t("HistoryScreen.Action"),
         accessor: (props: any) => {
-          return AuditTrailService.getActionFromDashboardAuditLog(props);
+          return AuditTrailService.getActionFromDashboardAuditLog(props, t);
         },
       },
       {

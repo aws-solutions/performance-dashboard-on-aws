@@ -9,6 +9,7 @@ import { useDashboard } from "../hooks";
 import Spinner from "../components/Spinner";
 import DatePicker from "../components/DatePicker";
 import { LocationState } from "../models";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -25,6 +26,7 @@ interface PathParams {
 function EditMetric() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
@@ -47,7 +49,7 @@ function EditMetric() {
       {
         alert: {
           type: "success",
-          message: "Metric successfully edited.",
+          message: t("EditMetricScreen.MetricSuccessfullyEdited"),
         },
         metrics: newMetrics,
         showTitle: state.showTitle !== false,
@@ -76,7 +78,7 @@ function EditMetric() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -87,7 +89,7 @@ function EditMetric() {
 
   if (!loading) {
     crumbs.push({
-      label: "Edit metric",
+      label: t("EditMetricScreen.EditMetric"),
       url: "",
     });
   }
@@ -95,14 +97,18 @@ function EditMetric() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Edit metric</h1>
 
       {loading ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <div className="grid-row">
             <div className="grid-col-12">
+              <h1>{t("EditMetricScreen.EditMetric")}</h1>
+
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="usa-form usa-form--large"
@@ -111,21 +117,21 @@ function EditMetric() {
                 <TextField
                   id="title"
                   name="title"
-                  label="Metric title"
-                  hint="For example, 'Transactions per year'."
+                  label={t("EditMetricScreen.MetricTitle")}
+                  hint={t("EditMetricScreen.MetricTitleHint")}
                   register={register}
                   defaultValue={state.metric.title}
-                  error={errors.title && "Please specify a title"}
+                  error={errors.title && t("EditMetricScreen.MetricTitleError")}
                   required
                 />
 
                 <NumberField
                   id="value"
                   name="value"
-                  label="Metric value"
-                  hint="Enter a number here."
+                  label={t("EditMetricScreen.MetricValue")}
+                  hint={t("EditMetricScreen.MetricValueHint")}
                   register={register}
-                  error={errors.value && "Please specify a value"}
+                  error={errors.value && t("EditMetricScreen.MetricValueError")}
                   className="width-50"
                   defaultValue={state.metric.value}
                   step={0.01}
@@ -135,15 +141,15 @@ function EditMetric() {
                 <TextField
                   id="changeOverTime"
                   name="changeOverTime"
-                  label="Change over time - optional"
-                  hint='Indicate the increase or decrease since the previous time period. For example, +10.1% or -56%. Most includes "+" or "-".'
+                  label={t("EditMetricScreen.ChangeOverTime")}
+                  hint={t("EditMetricScreen.ChangeOverTimeHint")}
                   register={register}
                   className="width-50"
                   defaultValue={state.metric.changeOverTime}
                   error={
                     errors.changeOverTime &&
                     errors.changeOverTime.type === "validate"
-                      ? 'Must start with "+" or "-".'
+                      ? t("EditMetricScreen.ChangeOverTimeError")
                       : undefined
                   }
                   validate={(input: string) => {
@@ -154,7 +160,7 @@ function EditMetric() {
                 <DatePicker
                   id="startDate"
                   name="startDate"
-                  label="Start date - optional"
+                  label={t("EditMetricScreen.StartDateOptional")}
                   hint="mm/dd/yyyy"
                   register={register}
                   className="width-50"
@@ -164,7 +170,7 @@ function EditMetric() {
                 <DatePicker
                   id="endDate"
                   name="endDate"
-                  label="End date - optional"
+                  label={t("EditMetricScreen.EndDateOptional")}
                   hint="mm/dd/yyyy"
                   register={register}
                   className="width-50"
@@ -172,14 +178,14 @@ function EditMetric() {
                 />
 
                 <br />
-                <Button type="submit">Save</Button>
+                <Button type="submit">{t("Save")}</Button>
                 <Button
                   className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                   variant="unstyled"
                   type="button"
                   onClick={onCancel}
                 >
-                  Cancel
+                  {t("Cancel")}
                 </Button>
               </form>
             </div>

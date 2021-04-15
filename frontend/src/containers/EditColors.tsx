@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSampleDataset, useSettings } from "../hooks";
@@ -12,6 +12,7 @@ import BarChartWidget from "../components/BarChartWidget";
 import ColumnChartWidget from "../components/ColumnChartWidget";
 import ColorPaletteService from "../services/ColorPaletteService";
 import Link from "../components/Link";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   primary: string;
@@ -22,6 +23,7 @@ const EDIT_COLORS_CSV_COLUMN = "EditColors-CSV-Column.csv";
 const EDIT_COLORS_CSV_BAR = "EditColors-CSV-Bar.csv";
 
 function EditColors() {
+  const { t } = useTranslation();
   const history = useHistory();
   const { settings, loadingSettings } = useSettings();
   const datasetColumn = useSampleDataset(EDIT_COLORS_CSV_COLUMN);
@@ -43,7 +45,7 @@ function EditColors() {
     history.push("/admin/settings/brandingandstyling", {
       alert: {
         type: "success",
-        message: "Colors were successfully edited",
+        message: t("SettingsColorEditSuccess"),
       },
     });
   };
@@ -54,30 +56,32 @@ function EditColors() {
 
   const crumbs = [
     {
-      label: "Settings",
+      label: t("Settings"),
       url: "/admin/settings",
     },
     {
-      label: "Branding and style",
+      label: t("BrandingAndStyle"),
       url: "/admin/settings/brandingandstyling",
     },
     {
-      label: "Edit colors",
+      label: t("SettingsColorsEdit"),
     },
   ];
 
   return (
-    <>
-      <Breadcrumbs crumbs={crumbs} />
-      <h1>Edit colors</h1>
+    <div className="grid-row">
+      <div className="grid-col-8">
+        <Breadcrumbs crumbs={crumbs} />
+        <h1>{t("SettingsColorsEdit")}</h1>
 
-      <p>
-        Customize these colors to make your dashboards appear similar in style
-        to your organization's brand or color palette.
-      </p>
+        <p>{t("SettingsColorsDescription")}</p>
+      </div>
 
       {loadingSettings && datasetColumn && datasetBar ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <div className="grid-row width-desktop">
           <div className="grid-col-6">
@@ -87,15 +91,13 @@ function EditColors() {
               data-testid="EditColorsForm"
             >
               <label htmlFor="primary" className="usa-label text-bold">
-                Primary color
+                {t("SettingsColorsPrimaryColor")}
               </label>
               <div className="usa-hint">
-                This color will be the first color used in data visualizations
-                and the color of buttons. Must be a valid HEX color (Ex.
-                #00FF00, #0f0).
+                {t("SettingsColorsPrimaryColorDescription")}
                 <div>
                   <Link to="/admin/colorshelp" target="_blank" external>
-                    Learn more about how color relates to accessibility.
+                    {t("SettingsColorsPrimaryColorLink")}
                   </Link>
                 </div>
               </div>
@@ -109,8 +111,8 @@ function EditColors() {
                     error={
                       errors.primary &&
                       (errors.primary.type === "validate"
-                        ? "Color is not a valid HEX color value"
-                        : "Please specify a color")
+                        ? t("SettingsColorsPrimaryColorInvalid")
+                        : t("SettingsColorsPrimaryColorEmpty"))
                     }
                     defaultValue={settings.colors && settings.colors.primary}
                     register={register}
@@ -132,12 +134,10 @@ function EditColors() {
               </div>
 
               <label htmlFor="secondary" className="usa-label text-bold">
-                Data visualization second color
+                {t("SettingsColorsSecondColor")}
               </label>
               <div className="usa-hint">
-                Choose a color that will follow your primary color in
-                categorical data visualizations. These color were chosen to meet
-                accessibility standards.
+                {t("SettingsColorsSecondColorDescription")}
               </div>
 
               <div className="grid-row">
@@ -168,7 +168,7 @@ function EditColors() {
 
               <br />
               <Button type="submit" disabled={loadingSettings}>
-                Save
+                {t("Save")}
               </Button>
               <Button
                 variant="unstyled"
@@ -176,7 +176,7 @@ function EditColors() {
                 className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                 onClick={onCancel}
               >
-                Cancel
+                {t("Cancel")}
               </Button>
             </form>
           </div>
@@ -215,7 +215,7 @@ function EditColors() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

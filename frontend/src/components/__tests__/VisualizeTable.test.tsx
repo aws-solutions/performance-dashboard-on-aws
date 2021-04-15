@@ -64,6 +64,7 @@ test("renders the VisualizeTable component", async () => {
       significantDigitLabels={false}
       summary={""}
       title={""}
+      configHeader={<></>}
     />,
     { wrapper: MemoryRouter }
   );

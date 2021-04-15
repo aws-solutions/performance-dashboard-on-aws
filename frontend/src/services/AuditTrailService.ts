@@ -8,15 +8,21 @@ import { DashboardAuditLog, DashboardState } from "../models";
  * the action will be "Moved to publish pending". If a dashboard was deleted,
  * the action will be "Deleted version".
  */
-function getActionFromDashboardAuditLog({
-  event,
-  modifiedProperties,
-}: DashboardAuditLog): string {
-  if (event === "Create") return "Created";
-  if (event === "Delete") return "Deleted";
-  if (!modifiedProperties || modifiedProperties.length === 0) return "Edited";
+function getActionFromDashboardAuditLog(
+  { event, modifiedProperties }: DashboardAuditLog,
+  t: Function
+): string {
+  if (event === "Create") {
+    return t("Created");
+  }
+  if (event === "Delete") {
+    return t("Deleted");
+  }
+  if (!modifiedProperties || modifiedProperties.length === 0) {
+    return t("Edited");
+  }
 
-  let action = "Edited";
+  let action = t("Edited");
   // Find if there was a state change
   modifiedProperties.forEach((modifiedProp) => {
     if (
@@ -25,16 +31,16 @@ function getActionFromDashboardAuditLog({
     ) {
       switch (modifiedProp.newValue) {
         case DashboardState.PublishPending:
-          action = "Moved to publish queue";
+          action = t("MovedToPublishQueue");
           break;
         case DashboardState.Published:
-          action = "Published";
+          action = t("Published");
           break;
         case DashboardState.Archived:
-          action = "Archived";
+          action = t("Archived");
           break;
         case DashboardState.Draft:
-          action = "Returned to draft";
+          action = t("ReturnedToDraft");
           break;
       }
     }

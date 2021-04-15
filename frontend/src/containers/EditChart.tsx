@@ -25,6 +25,7 @@ import "./EditChart.css";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -49,7 +50,7 @@ interface PathParams {
 function EditChart() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
-
+  const { t } = useTranslation();
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
@@ -297,7 +298,8 @@ function EditChart() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(displayedJson)
+      JSON.stringify(displayedJson),
+      t
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -373,7 +375,8 @@ function EditChart() {
         alert: {
           type: "success",
           message: `"${values.title}" ${UtilsService.getChartTypeLabel(
-            values.chartType
+            values.chartType,
+            t
           ).toLowerCase()} has been successfully edited`,
         },
       });

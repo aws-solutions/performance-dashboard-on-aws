@@ -17,6 +17,8 @@ test("renders a step indicator with multiple segments", async () => {
           label: "Step 3",
         },
       ]}
+      showStepChart={true}
+      showStepText={false}
     />
   );
   expect(wrapper.container).toMatchSnapshot();
@@ -37,6 +39,8 @@ test("renders a step indicator with one completed step", async () => {
           label: "Step 3",
         },
       ]}
+      showStepChart={true}
+      showStepText={false}
     />
   );
   expect(wrapper.container).toMatchSnapshot();
@@ -51,6 +55,8 @@ test("returns null when current is out of bounds", async () => {
           label: "Step 1",
         },
       ]}
+      showStepChart={true}
+      showStepText={false}
     />
   );
   expect(wrapper.container).toMatchSnapshot();

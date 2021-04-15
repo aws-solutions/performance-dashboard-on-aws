@@ -106,7 +106,8 @@ function VisualizeTable(props: Props) {
               label={t("SortData")}
               options={DatasetParsingService.getDatasetSortOptions(
                 props.originalJson,
-                props.headers
+                props.headers,
+                t
               )}
               onChange={handleSortDataChange}
               defaultValue={

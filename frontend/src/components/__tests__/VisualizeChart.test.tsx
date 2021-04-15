@@ -66,6 +66,8 @@ test("renders the VisualizeChart component", async () => {
       summary={"summary"}
       title={"title"}
       columnsMetadata={[]}
+      configHeader={<></>}
+      dataLabels={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -133,6 +135,8 @@ test("renders the VisualizeChart component without horizontal scrolling", async 
         },
       ]}
       columnsMetadata={[]}
+      configHeader={<></>}
+      dataLabels={false}
     />,
     { wrapper: MemoryRouter }
   );

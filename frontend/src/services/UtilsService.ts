@@ -33,9 +33,9 @@ function groupByTopicArea(
   return Object.values(byId);
 }
 
-function getChartTypeLabel(chartType: string): string {
+function getChartTypeLabel(chartType: string, t: Function): string {
   return chartType === ChartType.PartWholeChart
-    ? "Part-to-whole Chart"
+    ? t("PartToWholeChart")
     : chartType.split(/(?=[A-Z])/).join(" ");
 }
 

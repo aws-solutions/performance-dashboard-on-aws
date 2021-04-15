@@ -24,6 +24,7 @@ import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
 import Visualize from "../components/VisualizeTable";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -45,6 +46,7 @@ interface PathParams {
 function EditTable() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
+  const { t } = useTranslation();
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
@@ -282,7 +284,8 @@ function EditTable() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(displayedJson)
+      JSON.stringify(displayedJson),
+      t
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {

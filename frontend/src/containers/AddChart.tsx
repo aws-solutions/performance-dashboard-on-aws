@@ -142,7 +142,8 @@ function AddChart() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(currentJson)
+      JSON.stringify(currentJson),
+      t
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -213,7 +214,8 @@ function AddChart() {
         alert: {
           type: "success",
           message: `"${values.title}" ${UtilsService.getChartTypeLabel(
-            values.chartType
+            values.chartType,
+            t
           ).toLowerCase()} has been successfully added`,
         },
       });

@@ -354,6 +354,7 @@ function Table(props: Props) {
           </div>
           <div className="grid-col-6 text-center">
             <button
+              type="button"
               className="margin-right-1"
               onClick={() => {
                 setCurrentPage("1");
@@ -364,6 +365,7 @@ function Table(props: Props) {
               <FontAwesomeIcon icon={faAngleDoubleLeft} />
             </button>
             <button
+              type="button"
               className="margin-right-2"
               onClick={() => {
                 setCurrentPage(`${pageIndex}`);
@@ -388,6 +390,7 @@ function Table(props: Props) {
               {` of ${pageOptions.length} `}
             </span>
             <button
+              type="button"
               className="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
               onClick={() => {
                 if (currentPage) {
@@ -405,6 +408,7 @@ function Table(props: Props) {
               {t("Go")}
             </button>
             <button
+              type="button"
               className="margin-right-1"
               onClick={() => {
                 setCurrentPage(`${pageIndex + 2}`);
@@ -415,6 +419,7 @@ function Table(props: Props) {
               <FontAwesomeIcon icon={faAngleRight} />
             </button>
             <button
+              type="button"
               onClick={() => {
                 setCurrentPage(`${pageCount}`);
                 gotoPage(pageCount - 1);

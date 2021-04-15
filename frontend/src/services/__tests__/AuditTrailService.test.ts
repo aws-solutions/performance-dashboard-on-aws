@@ -13,13 +13,23 @@ const baseAuditLog: DashboardAuditLog = {
 describe("getActionFromDashboardAuditLog", () => {
   test("returns `Deleted` when event is Delete", () => {
     const auditLog: DashboardAuditLog = { ...baseAuditLog, event: "Delete" };
-    const action = AuditTrailService.getActionFromDashboardAuditLog(auditLog);
+    const action = AuditTrailService.getActionFromDashboardAuditLog(
+      auditLog,
+      (s: string) => {
+        return "Deleted";
+      }
+    );
     expect(action).toEqual("Deleted");
   });
 
   test("returns `Created` when event is Create", () => {
     const auditLog: DashboardAuditLog = { ...baseAuditLog, event: "Create" };
-    const action = AuditTrailService.getActionFromDashboardAuditLog(auditLog);
+    const action = AuditTrailService.getActionFromDashboardAuditLog(
+      auditLog,
+      (s: string) => {
+        return "Created";
+      }
+    );
     expect(action).toEqual("Created");
   });
 
@@ -28,7 +38,12 @@ describe("getActionFromDashboardAuditLog", () => {
       ...baseAuditLog,
       event: "Update",
     };
-    const action = AuditTrailService.getActionFromDashboardAuditLog(auditLog);
+    const action = AuditTrailService.getActionFromDashboardAuditLog(
+      auditLog,
+      (s: string) => {
+        return "Edited";
+      }
+    );
     expect(action).toEqual("Edited");
   });
 
@@ -38,7 +53,12 @@ describe("getActionFromDashboardAuditLog", () => {
       event: "Update",
       modifiedProperties: [],
     };
-    const action = AuditTrailService.getActionFromDashboardAuditLog(auditLog);
+    const action = AuditTrailService.getActionFromDashboardAuditLog(
+      auditLog,
+      (s: string) => {
+        return "Edited";
+      }
+    );
     expect(action).toEqual("Edited");
   });
 
@@ -54,67 +74,92 @@ describe("getActionFromDashboardAuditLog", () => {
         },
       ],
     };
-    const action = AuditTrailService.getActionFromDashboardAuditLog(auditLog);
+    const action = AuditTrailService.getActionFromDashboardAuditLog(
+      auditLog,
+      (s: string) => {
+        return "Edited";
+      }
+    );
     expect(action).toEqual("Edited");
   });
 
   test("returns `Moved to publish queue` when state changes to PublishPending", () => {
-    const action = AuditTrailService.getActionFromDashboardAuditLog({
-      ...baseAuditLog,
-      event: "Update",
-      modifiedProperties: [
-        {
-          property: "state",
-          oldValue: "Draft",
-          newValue: "PublishPending",
-        },
-      ],
-    });
+    const action = AuditTrailService.getActionFromDashboardAuditLog(
+      {
+        ...baseAuditLog,
+        event: "Update",
+        modifiedProperties: [
+          {
+            property: "state",
+            oldValue: "Draft",
+            newValue: "PublishPending",
+          },
+        ],
+      },
+      (s: string) => {
+        return "Moved to publish queue";
+      }
+    );
     expect(action).toEqual("Moved to publish queue");
   });
 
   test("returns `Published` when state changes to Published", () => {
-    const action = AuditTrailService.getActionFromDashboardAuditLog({
-      ...baseAuditLog,
-      event: "Update",
-      modifiedProperties: [
-        {
-          property: "state",
-          oldValue: "PublishPending",
-          newValue: "Published",
-        },
-      ],
-    });
+    const action = AuditTrailService.getActionFromDashboardAuditLog(
+      {
+        ...baseAuditLog,
+        event: "Update",
+        modifiedProperties: [
+          {
+            property: "state",
+            oldValue: "PublishPending",
+            newValue: "Published",
+          },
+        ],
+      },
+      (s: string) => {
+        return "Published";
+      }
+    );
     expect(action).toEqual("Published");
   });
 
   test("returns `Archived` when state changes to Archived", () => {
-    const action = AuditTrailService.getActionFromDashboardAuditLog({
-      ...baseAuditLog,
-      event: "Update",
-      modifiedProperties: [
-        {
-          property: "state",
-          oldValue: "Published",
-          newValue: "Archived",
-        },
-      ],
-    });
+    const action = AuditTrailService.getActionFromDashboardAuditLog(
+      {
+        ...baseAuditLog,
+        event: "Update",
+        modifiedProperties: [
+          {
+            property: "state",
+            oldValue: "Published",
+            newValue: "Archived",
+          },
+        ],
+      },
+      (s: string) => {
+        return "Archived";
+      }
+    );
     expect(action).toEqual("Archived");
   });
 
   test("returns `Returned to draft` when state changes to Archived", () => {
-    const action = AuditTrailService.getActionFromDashboardAuditLog({
-      ...baseAuditLog,
-      event: "Update",
-      modifiedProperties: [
-        {
-          property: "state",
-          oldValue: "PublishPending",
-          newValue: "Draft",
-        },
-      ],
-    });
+    const action = AuditTrailService.getActionFromDashboardAuditLog(
+      {
+        ...baseAuditLog,
+        event: "Update",
+        modifiedProperties: [
+          {
+            property: "state",
+            oldValue: "PublishPending",
+            newValue: "Draft",
+          },
+        ],
+      },
+      (s: string) => {
+        return "Returned to draft";
+      }
+    );
     expect(action).toEqual("Returned to draft");
   });
 });

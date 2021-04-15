@@ -149,7 +149,10 @@ function WidgetList(props: Props) {
                   </div>
                   <div className="grid-col flex-2 text-italic">
                     {widget.widgetType === WidgetType.Chart
-                      ? UtilsService.getChartTypeLabel(widget.content.chartType)
+                      ? UtilsService.getChartTypeLabel(
+                          widget.content.chartType,
+                          t
+                        )
                       : widget.widgetType}
                   </div>
                   <div className="grid-col flex-3 text-right">

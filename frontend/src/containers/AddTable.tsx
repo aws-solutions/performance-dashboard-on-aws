@@ -131,7 +131,8 @@ function AddTable() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(currentJson)
+      JSON.stringify(currentJson),
+      t
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {

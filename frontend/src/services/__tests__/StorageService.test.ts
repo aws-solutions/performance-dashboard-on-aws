@@ -52,12 +52,14 @@ describe("uploadDataset", () => {
 
   test("throws an error for invalid file type", () => {
     return expect(
-      StorageService.uploadDataset(imageFile, jsonFile)
+      StorageService.uploadDataset(imageFile, jsonFile, (s: string) => {
+        return "Raw file is not an accepted format";
+      })
     ).rejects.toEqual(Error("Raw file is not an accepted format"));
   });
 
   test("uploads raw file", async () => {
-    await StorageService.uploadDataset(rawFile, jsonFile);
+    await StorageService.uploadDataset(rawFile, jsonFile, () => {});
     expect(Storage.put).toBeCalledWith("abc.csv", rawFile, {
       level: "public",
       contentType: "text/csv",
@@ -67,7 +69,7 @@ describe("uploadDataset", () => {
   });
 
   test("uploads json file", async () => {
-    await StorageService.uploadDataset(rawFile, jsonFile);
+    await StorageService.uploadDataset(rawFile, jsonFile, () => {});
     expect(Storage.put).toBeCalledWith("abc.json", jsonFile, {
       level: "public",
       contentType: "application/json",
@@ -76,7 +78,11 @@ describe("uploadDataset", () => {
   });
 
   test("returns the s3Key for the raw and the json files", async () => {
-    const response = await StorageService.uploadDataset(rawFile, jsonFile);
+    const response = await StorageService.uploadDataset(
+      rawFile,
+      jsonFile,
+      () => {}
+    );
     expect(response.s3Keys.raw).toEqual("abc.csv");
     expect(response.s3Keys.json).toEqual("abc.json");
   });
@@ -85,7 +91,7 @@ describe("uploadDataset", () => {
 describe("downloadDataset", () => {
   test("download file", async () => {
     try {
-      await StorageService.downloadFile("123.csv");
+      await StorageService.downloadFile("123.csv", () => {});
     } catch (error) {
       expect(Storage.get).toBeCalledWith("123.csv", {
         download: true,
@@ -133,7 +139,7 @@ describe("download logo", () => {
     Storage.get = jest.fn().mockReturnValue({
       Body: "body",
     });
-    await StorageService.downloadLogo("123.json");
+    await StorageService.downloadLogo("123.json", () => {});
     expect(Storage.get).toBeCalledWith("logo/123.json", {
       download: true,
       level: "public",

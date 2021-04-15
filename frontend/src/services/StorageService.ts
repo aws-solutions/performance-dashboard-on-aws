@@ -35,6 +35,7 @@ const imageFileTypes: ValidFileTypes = {
 
 async function downloadFile(
   path: string,
+  t: Function,
   alternativeBucket?: string
 ): Promise<File> {
   const data: any = alternativeBucket
@@ -50,16 +51,14 @@ async function downloadFile(
         serverSideEncryption,
       });
   if (!data || !data.Body) {
-    throw new Error(
-      "The query using the provided S3 key, returned no results."
-    );
+    throw new Error(t("DownloadFileError"));
   }
   return data.Body as File;
 }
 
-async function downloadLogo(s3Key: string) {
+async function downloadLogo(s3Key: string, t: Function) {
   const path = "logo/".concat(s3Key);
-  return await downloadFile(path, EnvConfig.contentBucket);
+  return await downloadFile(path, t, EnvConfig.contentBucket);
 }
 
 async function downloadJson(s3Key: string): Promise<Array<any>> {
@@ -117,12 +116,13 @@ async function uploadJson(jsonFile: string, jsonS3Key: string) {
 
 async function uploadDataset(
   rawFile: File,
-  jsonFile: string
+  jsonFile: string,
+  t: Function
 ): Promise<UploadDatasetResult> {
   const mimeType = rawFile.type;
   const extension = rawFileTypes[mimeType as keyof ValidFileTypes];
   if (!extension) {
-    throw new Error("Raw file is not an accepted format");
+    throw new Error(t("UploadDatasetError"));
   }
 
   const s3Key = uuidv4();

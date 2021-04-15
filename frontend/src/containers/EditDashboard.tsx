@@ -19,12 +19,14 @@ import UtilsService from "../services/UtilsService";
 import AlertContainer from "../containers/AlertContainer";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface PathParams {
   dashboardId: string;
 }
 
 function EditDashboard() {
+  const { t } = useTranslation();
   const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, reloadDashboard, setDashboard, loading } = useDashboard(
@@ -90,10 +92,11 @@ function EditDashboard() {
           message: `"${widgetToDelete.name}" ${
             widgetToDelete.widgetType === WidgetType.Chart
               ? UtilsService.getChartTypeLabel(
-                  widgetToDelete.content.chartType
+                  widgetToDelete.content.chartType,
+                  t
                 ).toLowerCase()
               : widgetToDelete.widgetType.toLowerCase()
-          } was successfully deleted.`,
+          } ${t("DashboardWasDeleted")}`,
         },
       });
 
@@ -136,7 +139,7 @@ function EditDashboard() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Dashboards",
+            label: t("Dashboards"),
             url: "/admin/dashboards",
           },
           {
@@ -148,13 +151,13 @@ function EditDashboard() {
       <Modal
         isOpen={isOpenPublishModal}
         closeModal={closePublishModal}
-        title={`Prepare "${dashboard?.name}" dashboard for publishing`}
+        title={t("PreparePublishingModalTitle", { name: dashboard?.name })}
         message={`${
           dashboard?.widgets.length === 0
-            ? "This dashboard has no content items. "
+            ? `${t("PreparePublishingModalMessage.part1")}`
             : ""
-        }Are you sure you want to prepare this dashboard for publishing?`}
-        buttonType="Prepare for publishing"
+        }${t("PreparePublishingModalMessage.part2")}`}
+        buttonType={t("PreparePublishingModalButton")}
         buttonAction={publishDashboard}
       />
 
@@ -163,19 +166,21 @@ function EditDashboard() {
         closeModal={closeDeleteModal}
         title={
           widgetToDelete
-            ? `Delete ${widgetToDelete.widgetType.toLowerCase()} content item: "${
-                widgetToDelete.name
-              }"`
+            ? `${t("Delete")} ${widgetToDelete.widgetType.toLowerCase()} ${t(
+                "ContentItem"
+              )}: "${widgetToDelete.name}"`
             : ""
         }
-        message="Deleting this content item cannot be undone. Are you sure you want to
-                continue?"
-        buttonType="Delete"
+        message={t("DeletingContentItem")}
+        buttonType={t("Delete")}
         buttonAction={deleteWidget}
       />
 
       {loading || !versions ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <PrimaryActionBar className="grid-row" stickyPosition={75}>
@@ -199,7 +204,7 @@ function EditDashboard() {
                     data-border={true}
                   >
                     <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
-                    Version {dashboard?.version}
+                    {t("Version")} {dashboard?.version}
                   </span>
                   {publishedOrArchived && (
                     <Tooltip
@@ -211,7 +216,7 @@ function EditDashboard() {
                       getContent={() => (
                         <div className="font-sans-sm">
                           <p className="margin-top-0">
-                            A version of this dashboard is
+                            {t("VersionDashboard")}
                             <br />
                             {publishedOrArchived.state.toLowerCase()}.
                           </p>
@@ -224,8 +229,9 @@ function EditDashboard() {
                                 : ""
                             }/${publishedOrArchived.id}`}
                           >
-                            View {publishedOrArchived.state.toLowerCase()}{" "}
-                            version
+                            {t("ViewVersion", {
+                              state: publishedOrArchived.state.toLowerCase(),
+                            })}
                             <FontAwesomeIcon
                               className="margin-left-1"
                               icon={faExternalLinkAlt}
@@ -243,14 +249,14 @@ function EditDashboard() {
             <div className="grid-col text-right">
               <span className="text-base margin-right-1">
                 {dashboard &&
-                  `Last saved ${dayjs(dashboard.updatedAt).fromNow()}`}
+                  `${t("LastSaved")} ${dayjs(dashboard.updatedAt).fromNow()}`}
               </span>
               <Button variant="outline" onClick={onPreview}>
-                Preview
+                {t("PreviewButton")}
               </Button>
               <span data-for="publish" data-tip="">
                 <Button variant="base" onClick={onPublishDashboard}>
-                  Publish
+                  {t("PublishButton")}
                 </Button>
               </span>
               <Tooltip
@@ -260,7 +266,7 @@ function EditDashboard() {
                 offset={{ bottom: 8 }}
                 getContent={() => (
                   <div className="font-sans-sm">
-                    Prepare dashboard for publishing
+                    {t("PrepareDashboardForPublishing")}
                   </div>
                 )}
               />
@@ -273,7 +279,7 @@ function EditDashboard() {
             unpublished
             link={
               <Link to={`/admin/dashboard/edit/${dashboard?.id}/details`}>
-                <span className="margin-left-2">Edit details</span>
+                <span className="margin-left-2">{t("EditDetails")}</span>
               </Link>
             }
           />

@@ -448,6 +448,7 @@ exports[`renders the ChooseData component 1`] = `
             <button
               class="margin-right-1"
               disabled=""
+              type="button"
             >
               <svg
                 aria-hidden="true"
@@ -468,6 +469,7 @@ exports[`renders the ChooseData component 1`] = `
             <button
               class="margin-right-2"
               disabled=""
+              type="button"
             >
               <svg
                 aria-hidden="true"
@@ -504,12 +506,14 @@ exports[`renders the ChooseData component 1`] = `
             </span>
             <button
               class="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+              type="button"
             >
               Go
             </button>
             <button
               class="margin-right-1"
               disabled=""
+              type="button"
             >
               <svg
                 aria-hidden="true"
@@ -529,6 +533,7 @@ exports[`renders the ChooseData component 1`] = `
             </button>
             <button
               disabled=""
+              type="button"
             >
               <svg
                 aria-hidden="true"

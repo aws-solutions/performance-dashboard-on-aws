@@ -6,7 +6,62 @@ exports[`renders a step indicator with multiple segments 1`] = `
     aria-label="progress"
     class="usa-step-indicator usa-step-indicator--counters-sm"
   >
-    
+    <ol
+      class="usa-step-indicator__segments"
+    >
+      <li
+        aria-current="true"
+        class="usa-step-indicator__segment usa-step-indicator__segment--current"
+      >
+        <span
+          class="usa-step-indicator__segment-label"
+        >
+          <div
+            class="text-base-dark"
+          >
+            Step 1
+          </div>
+        </span>
+      </li>
+      <li
+        class="usa-step-indicator__segment"
+      >
+        <span
+          class="usa-step-indicator__segment-label"
+        >
+          <div
+            class="text-base-dark"
+          >
+            Step 2
+          </div>
+           
+          <span
+            class="usa-sr-only"
+          >
+            not completed
+          </span>
+        </span>
+      </li>
+      <li
+        class="usa-step-indicator__segment"
+      >
+        <span
+          class="usa-step-indicator__segment-label"
+        >
+          <div
+            class="text-base-dark"
+          >
+            Step 3
+          </div>
+           
+          <span
+            class="usa-sr-only"
+          >
+            not completed
+          </span>
+        </span>
+      </li>
+    </ol>
     
   </div>
 </div>
@@ -18,7 +73,62 @@ exports[`renders a step indicator with one completed step 1`] = `
     aria-label="progress"
     class="usa-step-indicator usa-step-indicator--counters-sm"
   >
-    
+    <ol
+      class="usa-step-indicator__segments"
+    >
+      <li
+        class="usa-step-indicator__segment usa-step-indicator__segment--complete"
+      >
+        <span
+          class="usa-step-indicator__segment-label"
+        >
+          <div
+            class="text-base-dark"
+          >
+            Step 1
+          </div>
+           
+          <span
+            class="usa-sr-only"
+          >
+            completed
+          </span>
+        </span>
+      </li>
+      <li
+        aria-current="true"
+        class="usa-step-indicator__segment usa-step-indicator__segment--current"
+      >
+        <span
+          class="usa-step-indicator__segment-label"
+        >
+          <div
+            class="text-base-dark"
+          >
+            Step 2
+          </div>
+        </span>
+      </li>
+      <li
+        class="usa-step-indicator__segment"
+      >
+        <span
+          class="usa-step-indicator__segment-label"
+        >
+          <div
+            class="text-base-dark"
+          >
+            Step 3
+          </div>
+           
+          <span
+            class="usa-sr-only"
+          >
+            not completed
+          </span>
+        </span>
+      </li>
+    </ol>
     
   </div>
 </div>

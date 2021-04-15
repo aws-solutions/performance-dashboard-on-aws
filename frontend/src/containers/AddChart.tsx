@@ -22,6 +22,7 @@ import "./AddChart.css";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -43,7 +44,7 @@ interface PathParams {
 function AddChart() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
-
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
@@ -141,7 +142,8 @@ function AddChart() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(currentJson)
+      JSON.stringify(currentJson),
+      t
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -212,7 +214,8 @@ function AddChart() {
         alert: {
           type: "success",
           message: `"${values.title}" ${UtilsService.getChartTypeLabel(
-            values.chartType
+            values.chartType,
+            t
           ).toLowerCase()} has been successfully added`,
         },
       });

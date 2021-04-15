@@ -216,6 +216,7 @@ export type PublicSettings = {
     plural: string;
   };
   customLogoS3Key?: string;
+  contactEmailAddress?: string;
 };
 
 export type Settings = {
@@ -235,6 +236,8 @@ export type Settings = {
     plural: string;
   };
   customLogoS3Key?: string;
+  contactEmailAddress?: string;
+  adminContactEmailAddress?: string;
 };
 
 export type Metric = {

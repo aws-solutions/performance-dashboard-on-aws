@@ -142,6 +142,28 @@ describe("updateSettings", () => {
       user
     );
   });
+
+  it("updates contact email", async () => {
+    req.body.contactEmailAddress = "test@aol.com";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "contactEmailAddress",
+      "test@aol.com",
+      now.toISOString(),
+      user
+    );
+  });
+
+  it("updates admin contact email", async () => {
+    req.body.adminContactEmailAddress = "test@hotmail.com";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "adminContactEmailAddress",
+      "test@hotmail.com",
+      now.toISOString(),
+      user
+    );
+  });
 });
 
 describe("getPublicSettings", () => {

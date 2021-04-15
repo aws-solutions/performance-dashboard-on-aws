@@ -15,6 +15,8 @@ export interface Settings {
     primary: string;
     secondary: string;
   };
+  contactEmailAddress?: string;
+  adminContactEmailAddress?: string;
 }
 
 export interface PublicSettings {
@@ -32,6 +34,7 @@ export interface PublicSettings {
     primary: string;
     secondary: string;
   };
+  contactEmailAddress?: string;
 }
 
 export interface SettingsItem {
@@ -54,4 +57,6 @@ export interface SettingsItem {
     primary: string;
     secondary: string;
   };
+  contactEmailAddress?: string;
+  adminContactEmailAddress?: string;
 }

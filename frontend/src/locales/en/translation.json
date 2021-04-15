@@ -331,21 +331,14 @@
   "SettingsHomepageHeadlineHint": "Give your homepage a descriptive headline.",
   "SettingsHomepageHeadlineErrors": "Please specify a name",
   "SettingsPublishedSite": "Published site",
-  "SettingsPublishedSiteScreen": {
-    "Description": "Customize your published site. Your saved edits will take effect immediately on the published site.",
-    "ViewPublishedSite": "View published site",
-    "NavBar": "Navigation bar",
-    "NavBarDescription": "You can customize the header and navigation of the published site.",
-    "HomepageContent": "Homepage content",
-    "HomepageContentDescription": "This components appear on the homepage of your published site and explain what your published site is about.",
-    "HomepageHeadline": "Headline"
-  },
   "SettingsNavBarEdit": "Edit navigation bar",
   "SettingsNavBarEditSuccess": "Navigation bar successfully edited.",
   "SettingsNavBarEditDescription": "Customize the title of your dashboard",
   "SettingsTitle": "Title",
   "SettingsTitleHint": "This is the title of the website",
   "SettingsTitleError": "Please specify a title.",
+  "SettingsContactEmailTitle": "Contact email address - optional",
+  "SettingsContactEmailHint": "Set an email address for users to reach out to your organization regarding published dashboards. This email address will appear as a 'contact' link in the navigation bar of the published site",
   "SettingsTopicAreaDescription": "Dashboards are organized by topic areas. A dashboard must have topic area and can have only one topic area.",
   "SettingsTopicAreaNameDescription": "You can customize the name 'topic area' and it will be replaced throughout the interface. For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc.",
   "EditSettingsTopicAreaNameScreen": {
@@ -390,6 +383,40 @@
     "RequestAccessButton": "Request access",
     "CardTitle": "Request access to create dashboards",
     "Message": "You don't have access. Request access from the admin(s) and you will receive an email when your access is granted."
+  },
+  "PerformanceDashboardAssistance": "Performance Dashboard Assistance",
+  "AdminSettingsScreen": {
+    "Header": "Admin site",
+    "HeaderDescription": "Customize settings for the internal site.",
+    "SupportContactEmailAddress": "Support contact email address"
+  },
+  "EditSupportContactEmail": {
+    "Header": "Support contact email address",
+    "HeaderDescription": "Set an email address for internal users to contact if they experience technical issues. This email will appear as a 'Contact support' link in the footer of the internal site.",
+    "SupportContactEmailAddress": "Support Contact Email Address",
+    "SupportContactEmailAddressHint": "Enter a valid email address"
+  },
+  "PublishedSiteSettings": {
+    "PublishedSite": "Published site",
+    "HeaderDescription": "Customize your published site. Your saved edits will take effect immediately on the published site.",
+    "ViewPublishedSite": "View published site",
+    "NavigationBar": "Navigation bar",
+    "NavagationBarDescription": "You can customize the header and navigation of the published site.",
+    "Title": "Title",
+    "ContactEmailAddressLabel": "Contact email address - optional",
+    "HomepageContentHeader": "Homepage content",
+    "HomepageContentDescription": "This components appear on the homepage of your published site and explain what your published site is about.",
+    "Headline": "Headline",
+    "Edit": "Edit"
+  },
+  "AdminFooter": {
+    "HelpMessage": "Having technical issues with the system?",
+    "ContactSupport": "Contact support"
+  },
+  "Public": {
+    "Menu": "Menu",
+    "PerformanceDashboardAssistance": "Performance Dashboard Assistance",
+    "Contact": "Contact"
   },
   "PageNotFound": "404 / Page not found",
   "PageNotFoundDescription": "You may want to double-check your link and try again, or return to the",
@@ -547,5 +574,6 @@
     "SecondItem": "* Second item",
     "ThirdItem": "- Third item",
     "FourthItem": "+ Fourth item"
-  }
+  },
+  "EmailInvalid": "Email provided is invalid."
 }

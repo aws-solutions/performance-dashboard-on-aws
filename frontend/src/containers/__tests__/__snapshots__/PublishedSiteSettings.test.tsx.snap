@@ -132,6 +132,20 @@ exports[`published site settings should match snapshot 1`] = `
                     </a>
                   </li>
                 </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/adminsite"
+                    >
+                      Admin site
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </nav>
@@ -216,6 +230,41 @@ exports[`published site settings should match snapshot 1`] = `
                 >
                   <p>
                     Performance Dashboard
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            />
+          </div>
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <p
+                class="text-bold"
+              >
+                Contact email address - optional
+              </p>
+            </div>
+          </div>
+          <div
+            class="grid-row margin-top-0-important margin-bottom-4"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <div
+                class="published-site font-sans-lg"
+              >
+                <div
+                  class="Markdown undefined"
+                >
+                  <p>
+                    contact@aol.com
                   </p>
                 </div>
               </div>

@@ -66,11 +66,11 @@ function VisualizeTable(props: Props) {
       <div className="grid-col-5" hidden={props.fullPreview}>
         <PrimaryActionBar>
           {props.configHeader}
-
           {props.errors.title && (
             <Alert
               type="error"
               message={t("VisualizeTableComponent.ResolveErrors")}
+              slim
             ></Alert>
           )}
           <TextField
@@ -99,6 +99,27 @@ function VisualizeTable(props: Props) {
             </label>
           </div>
 
+          <div className="margin-top-3 grid-col-6">
+            <Dropdown
+              id="sortData"
+              name="sortData"
+              label={t("SortData")}
+              options={DatasetParsingService.getDatasetSortOptions(
+                props.originalJson,
+                props.headers
+              )}
+              onChange={handleSortDataChange}
+              defaultValue={
+                props.sortByColumn
+                  ? `${props.sortByColumn}###${
+                      props.sortByDesc ? "desc" : "asc"
+                    }`
+                  : ""
+              }
+              register={props.register}
+            />
+          </div>
+
           <div>
             <label className="usa-label text-bold">
               {t("TableOptionsLabel")}
@@ -120,27 +141,6 @@ function VisualizeTable(props: Props) {
                 {t("SignificantDigitLabels")}
               </label>
             </div>
-          </div>
-
-          <div className="margin-top-3 grid-col-6">
-            <Dropdown
-              id="sortData"
-              name="sortData"
-              label={t("SortData")}
-              options={DatasetParsingService.getDatasetSortOptions(
-                props.originalJson,
-                props.headers
-              )}
-              onChange={handleSortDataChange}
-              defaultValue={
-                props.sortByColumn
-                  ? `${props.sortByColumn}###${
-                      props.sortByDesc ? "desc" : "asc"
-                    }`
-                  : ""
-              }
-              register={props.register}
-            />
           </div>
 
           <TextField
@@ -181,10 +181,7 @@ function VisualizeTable(props: Props) {
           <Button
             type="submit"
             disabled={
-              !props.title ||
-              !props.json.length ||
-              props.fileLoading ||
-              props.processingWidget
+              !props.json.length || props.fileLoading || props.processingWidget
             }
           >
             {props.submitButtonLabel}

@@ -128,6 +128,7 @@ function AddText() {
                       <Alert
                         type="error"
                         message={t("AddTextScreen.AddTextError")}
+                        slim
                       ></Alert>
                     ) : (
                       ""

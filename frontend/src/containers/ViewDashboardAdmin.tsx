@@ -109,7 +109,7 @@ function ViewDashboardAdmin() {
           type: "success",
           message: `${dashboard.name} ${t("DashboardWasRepublished")}`,
           to: `/${dashboardId}`,
-          linkLabel: `${t("ViewPublishedDashboard")}`,
+          linkLabel: t("ViewPublishedDashboard"),
         },
       });
     }

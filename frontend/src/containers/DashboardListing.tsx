@@ -12,8 +12,10 @@ import { Dashboard } from "../models";
 import BackendService from "../services/BackendService";
 import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
+import { useTranslation } from "react-i18next";
 
 function DashboardListing() {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory<LocationState>();
   const {
@@ -64,9 +66,11 @@ function DashboardListing() {
             selectedDashboards.length > 1
               ? selectedDashboards.length
               : selectedDashboards[0].name
-          } dashboard${selectedDashboards.length > 1 ? "s" : ""} ${
-            selectedDashboards.length > 1 ? "were" : "was"
-          } successfully archived.`,
+          } ${
+            selectedDashboards.length > 1
+              ? t("DashboardListing.DashboardPlural")
+              : t("DashboardListing.DashboardSingular")
+          } ${t("DashboardListing.SuccessfullyArchived")}`,
         },
       });
 
@@ -89,9 +93,11 @@ function DashboardListing() {
             selectedDashboards.length > 1
               ? selectedDashboards.length
               : selectedDashboards[0].name
-          } draft dashboard${selectedDashboards.length > 1 ? "s" : ""} ${
-            selectedDashboards.length > 1 ? "were" : "was"
-          } successfully deleted.`,
+          } ${
+            selectedDashboards.length > 1
+              ? t("DashboardListing.DraftDashboardPlural")
+              : t("DashboardListing.DraftDashboardSingular")
+          } ${t("DashboardListing.SuccessfullyDeleted")}`,
         },
       });
 
@@ -109,46 +115,56 @@ function DashboardListing() {
 
   const dashboardLabel = `${
     selectedDashboards.length !== 1
-      ? `${selectedDashboards.length} selected`
-      : `"${selectedDashboards[0].name}"`
-  } dashboard${selectedDashboards.length !== 1 ? "s" : ""}`;
+      ? `${selectedDashboards.length} ${t(
+          "DashboardListing.SelectedDashboards"
+        )}`
+      : `"${selectedDashboards[0].name}" ${t("DashboardListing.Dashboard")}`
+  }`;
 
   return (
     <>
-      <h1>Dashboards</h1>
+      <h1>{t("DashboardListing.Dashboards")}</h1>
       <Modal
         isOpen={isOpenArchiveModal}
         closeModal={closeArchiveModal}
-        title={`Archive ${dashboardLabel}`}
-        message={`This will remove ${
+        title={`${t("DashboardListing.Archive")} ${dashboardLabel}`}
+        message={`${t("DashboardListing.ThisWillRemove")} ${
           selectedDashboards.length !== 1
-            ? "these published dashboards"
-            : "this published dashboard"
-        } from the published site. You can re-publish archived dashboards at any time.`}
-        buttonType="Archive"
+            ? t("DashboardListing.PublishedDashboardPlural")
+            : t("DashboardListing.PublishedDashboardSingular")
+        } ${t("DashboardListing.ArchivedModalMessage")}`}
+        buttonType={t("DashboardListing.Archive")}
         buttonAction={archiveDashboards}
       />
 
       <Modal
         isOpen={isOpenDeleteModal}
         closeModal={closeDeleteModal}
-        title={`Delete ${dashboardLabel}`}
-        message={`This will permanently delete ${
+        title={`${t("DashboardListing.Delete")} ${dashboardLabel}`}
+        message={`${t("DashboardListing.ThisWillPermanentlyDelete")} ${
           selectedDashboards.length !== 1
-            ? "these draft dashboards"
-            : "this draft dashboard"
-        }. This action cannot be undone. Are you sure you want to continue?`}
-        buttonType="Delete"
+            ? t("DashboardListing.TheseDraftDashboards")
+            : t("DashboardListing.ThisDraftDashboard")
+        }. ${t("DashboardListing.DeletedModalMessage")}`}
+        buttonType={t("DashboardListing.Delete")}
         buttonAction={deleteDashboards}
       />
 
       {loading ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <AlertContainer />
           <Tabs defaultActive={activeTab}>
-            <div id="drafts" label={`Drafts (${draftsDashboards.length})`}>
+            <div
+              id="drafts"
+              label={`${t("DashboardListing.Drafts")} (${
+                draftsDashboards.length
+              })`}
+            >
               <DraftsTab
                 dashboards={draftsDashboards}
                 onDelete={onDeleteDashboards}
@@ -156,13 +172,17 @@ function DashboardListing() {
             </div>
             <div
               id="pending"
-              label={`Publish queue (${pendingDashboards.length})`}
+              label={`${t("DashboardListing.PublishQueue")} (${
+                pendingDashboards.length
+              })`}
             >
               <PublishQueueTab dashboards={pendingDashboards} />
             </div>
             <div
               id="published"
-              label={`Published (${publishedDashboards.length})`}
+              label={`${t("DashboardListing.Published")} (${
+                publishedDashboards.length
+              })`}
             >
               <PublishedTab
                 dashboards={publishedDashboards}
@@ -171,7 +191,9 @@ function DashboardListing() {
             </div>
             <div
               id="archived"
-              label={`Archived (${archivedDashboards.length})`}
+              label={`${t("DashboardListing.Archived")} (${
+                archivedDashboards.length
+              })`}
             >
               <ArchivedTab dashboards={archivedDashboards} />
             </div>

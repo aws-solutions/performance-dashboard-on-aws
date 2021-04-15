@@ -160,6 +160,7 @@ function AddImage() {
                   <Alert
                     type="error"
                     message="Resolve error(s) to add the image"
+                    slim
                   ></Alert>
                 ) : (
                   ""

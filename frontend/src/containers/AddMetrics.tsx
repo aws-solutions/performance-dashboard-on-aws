@@ -500,6 +500,7 @@ function AddMetrics() {
                               ? "Enter at least one metric to continue"
                               : "Resolve error(s) to add the text"
                           }
+                          slim
                         ></Alert>
                       )}
                       <TextField

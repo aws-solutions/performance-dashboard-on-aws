@@ -1,88 +1,82 @@
 import React from "react";
 import MarkdownRender from "../components/MarkdownRender";
+import { useTranslation } from "react-i18next";
 
 const MarkdownSyntax = () => {
+  const { t } = useTranslation();
+
   return (
     <>
-      <h1>Markdown Syntax</h1>
-      <p className="font-sans-lg">
-        Supported Markdown is limited to bold, hyperlinks and single-level
-        unordered lists. All other text and markdown will be rendered as plain
-        text.
-      </p>
+      <h1>{t("MarkdownSyntax.Label")}</h1>
+      <p className="font-sans-lg">{t("MarkdownSyntax.Description")}</p>
 
-      <h3 className="margin-top-5">Bold</h3>
-      <p>
-        To bold text, add two asterisks or underscores before and after a word
-        or phrase. To bold the middle of a word for emphasis, add two asterisks
-        without spaces around the letters.
-      </p>
+      <h3 className="margin-top-5">{t("MarkdownSyntax.Bold")}</h3>
+      <p>{t("MarkdownSyntax.BoldDescription")}</p>
       <table className="usa-table usa-table--borderless" width="100%">
         <thead>
           <tr>
-            <th style={{ width: "50%" }}>Markdown</th>
-            <th style={{ width: "50%" }}>Rendered output</th>
+            <th style={{ width: "50%" }}>{t("MarkdownSyntax.Markdown")}</th>
+            <th style={{ width: "50%" }}>
+              {t("MarkdownSyntax.RenderedOutput")}
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>I love **bold** text</td>
+            <td>{t("MarkdownSyntax.ILoveBoldText")}</td>
             <td>
-              <MarkdownRender source="I love **bold** text" />
+              <MarkdownRender source={t("MarkdownSyntax.ILoveBoldText")} />
             </td>
           </tr>
         </tbody>
       </table>
 
-      <h3 className="margin-top-7">Hyperlink</h3>
-      <p>
-        To create a link, enclose the link text in brackets (e.g., [AWS]) and
-        then follow it immediately with the URL in parentheses (e.g.,
-        (https://aws.amazon.com)).
-      </p>
+      <h3 className="margin-top-7">{t("MarkdownSyntax.Hyperlink")}</h3>
+      <p>{t("MarkdownSyntax.HyperlinkDescription")}</p>
       <table className="usa-table usa-table--borderless" width="100%">
         <thead>
           <tr>
-            <th style={{ width: "50%" }}>Markdown</th>
-            <th style={{ width: "50%" }}>Rendered output</th>
+            <th style={{ width: "50%" }}>{t("MarkdownSyntax.Markdown")}</th>
+            <th style={{ width: "50%" }}>
+              {t("MarkdownSyntax.RenderedOutput")}
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>I love [AWS](https://aws.amazon.com)</td>
+            <td>{t("MarkdownSyntax.ILoveAWS")}</td>
             <td>
-              <MarkdownRender source="I love [AWS](https://aws.amazon.com)" />
+              <MarkdownRender source={t("MarkdownSyntax.ILoveAWS")} />
             </td>
           </tr>
         </tbody>
       </table>
 
-      <h3 className="margin-top-7">Unordered list</h3>
-      <p>
-        To create an unordered list, add dashes (-), asterisks (*), or plus
-        signs (+) and space in front of line items.
-      </p>
+      <h3 className="margin-top-7">{t("MarkdownSyntax.UnorderedList")}</h3>
+      <p>{t("MarkdownSyntax.UnorderedListDescription")}</p>
       <table className="usa-table usa-table--borderless" width="100%">
         <thead>
           <tr>
-            <th style={{ width: "50%" }}>Markdown</th>
-            <th style={{ width: "50%" }}>Rendered output</th>
+            <th style={{ width: "50%" }}>{t("MarkdownSyntax.Markdown")}</th>
+            <th style={{ width: "50%" }}>
+              {t("MarkdownSyntax.RenderedOutput")}
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>
-              <div>+ First item</div>
-              <div>* Second item</div>
-              <div>- Third item</div>
-              <div>+ Fourth item</div>
+              <div>{t("MarkdownSyntax.FirstItem")}</div>
+              <div>{t("MarkdownSyntax.SecondItem")}</div>
+              <div>{t("MarkdownSyntax.ThirdItem")}</div>
+              <div>{t("MarkdownSyntax.FourthItem")}</div>
             </td>
             <td>
               <MarkdownRender
-                source="+ First item
-* Second item
-- Third item
-+ Fourth item"
+                source={`${t("MarkdownSyntax.FirstItem")}
+${t("MarkdownSyntax.SecondItem")}
+${t("MarkdownSyntax.ThirdItem")}
+${t("MarkdownSyntax.FourthItem")}`}
               />
             </td>
           </tr>

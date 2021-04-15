@@ -582,6 +582,5 @@
     "SecondItem": "* Second item",
     "ThirdItem": "- Third item",
     "FourthItem": "+ Fourth item"
-  },
-  "EmailInvalid": "Email provided is invalid."
+  }
 }

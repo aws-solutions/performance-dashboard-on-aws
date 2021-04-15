@@ -538,7 +538,6 @@
     "CheckData": "Check data",
     "Visualize": "Visualize"
   },
-<<<<<<< HEAD
   "Bar": "Bar",
   "Column": "Column",
   "Line": "Line",
@@ -584,8 +583,6 @@
     "ThirdItem": "- Third item",
     "FourthItem": "+ Fourth item"
   },
-=======
->>>>>>> 55975dbe0b82e33a9adac832b5a3669d0d1af96e
   "AddImageScreen": {
     "AddImage": "Add Image",
     "ConfigureImage": "Configure image",

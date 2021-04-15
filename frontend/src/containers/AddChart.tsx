@@ -240,7 +240,7 @@ function AddChart() {
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/add-chart/`,
-        crumbLabel: "Add chart",
+        crumbLabel: t("AddChartScreen.AddChart"),
       },
     });
   };
@@ -328,7 +328,7 @@ function AddChart() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {

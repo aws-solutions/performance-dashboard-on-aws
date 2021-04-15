@@ -477,5 +477,12 @@
     "Reset_RequiredDesc": "This user is confirmed, but when the user navigates to the system they must request a code and reset their password before they can sign in.",
     "Force_Change_PasswordDesc": "The user is confirmed and the user can sign in using a temporary password, but during their first sign-in, the user must change their password to a new value before doing anything else."
   },
-  "EmailInvalid": "Email provided is invalid."
+  "EmailInvalid": "Email provided is invalid.",
+  "AddChartScreen": {
+    "ChooseDataset": "Choose a dataset to continue",
+    "AddChart": "Add chart",
+    "ChooseData": "Choose data",
+    "CheckData": "Check data",
+    "Visualize": "Visualize"
+  }
 }

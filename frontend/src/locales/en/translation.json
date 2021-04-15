@@ -539,6 +539,7 @@
     "Visualize": "Visualize"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   },
   "Bar": "Bar",
   "Column": "Column",
@@ -588,6 +589,8 @@
   "EmailInvalid": "Email provided is invalid."
 =======
 =======
+=======
+>>>>>>> a8c846dc55aedce1dc94b11f3d371571ca9a7185
   },
   "AddImageScreen": {
     "AddImage": "Add Image",
@@ -610,7 +613,11 @@
     "ToggleSummary": "Show description below image",
     "Back": "Back",
     "Cancel": "Cancel"
+<<<<<<< HEAD
 >>>>>>> translated AddImage screen
   }
 >>>>>>> added localization for AddChart screen
+=======
+  }
+>>>>>>> a8c846dc55aedce1dc94b11f3d371571ca9a7185
 }

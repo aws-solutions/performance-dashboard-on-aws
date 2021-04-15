@@ -163,12 +163,7 @@ function AddImage() {
                 {errors.title || errors.summary ? (
                   <Alert
                     type="error"
-<<<<<<< HEAD
-                    message="Resolve error(s) to add the image"
-                    slim
-=======
                     message={t("AddImageScreen.ResolveError")}
->>>>>>> translated AddImage screen
                   ></Alert>
                 ) : (
                   ""

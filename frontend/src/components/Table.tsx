@@ -15,6 +15,7 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   selection: "multiple" | "single" | "none";
@@ -47,6 +48,7 @@ interface Props {
 }
 
 function Table(props: Props) {
+  const { t } = useTranslation();
   const borderlessClassName = !props.disableBorderless
     ? " usa-table--borderless"
     : "";
@@ -280,7 +282,7 @@ function Table(props: Props) {
                     <button
                       className="margin-left-1 usa-button usa-button--unstyled"
                       {...column.getSortByToggleProps()}
-                      title={`Toggle SortBy ${column.Header}`}
+                      title={`${t("ToggleSortBy")} ${column.Header}`}
                       type="button"
                     >
                       <FontAwesomeIcon
@@ -345,7 +347,7 @@ function Table(props: Props) {
       {!props.disablePagination && rows.length ? (
         <div className="grid-row font-sans-sm">
           <div className="grid-col-3 text-left text-base text-italic">
-            {`Showing ${pageIndex * pageSize + 1}-${Math.min(
+            {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
               pageIndex * pageSize + pageSize,
               rows.length
             )} of ${rows.length}`}
@@ -371,7 +373,7 @@ function Table(props: Props) {
             >
               <FontAwesomeIcon icon={faAngleLeft} />
             </button>
-            <span className="margin-right-2px">Page </span>
+            <span className="margin-right-2px">{`${t("Page")} `}</span>
             <span className="margin-right-1">
               <input
                 type="text"
@@ -400,7 +402,7 @@ function Table(props: Props) {
                 }
               }}
             >
-              Go
+              {t("Go")}
             </button>
             <button
               className="margin-right-1"
@@ -431,7 +433,7 @@ function Table(props: Props) {
             >
               {[5, 10, 20, 25, 50, 100].map((pageSize) => (
                 <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
+                  {t("Show")} {pageSize}
                 </option>
               ))}
             </select>

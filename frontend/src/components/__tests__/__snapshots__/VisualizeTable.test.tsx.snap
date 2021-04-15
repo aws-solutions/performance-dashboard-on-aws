@@ -50,34 +50,6 @@ exports[`renders the VisualizeTable component 1`] = `
             Show title on dashboard
           </label>
         </div>
-        <div>
-          <label
-            class="usa-label text-bold"
-          >
-            Table Options
-          </label>
-          <div
-            class="usa-hint"
-          >
-            Format your table
-          </div>
-          <div
-            class="usa-checkbox"
-          >
-            <input
-              class="usa-checkbox__input"
-              id="significantDigitLabels"
-              name="significantDigitLabels"
-              type="checkbox"
-            />
-            <label
-              class="usa-checkbox__label"
-              for="significantDigitLabels"
-            >
-              Significant digit labels (123K, 1.2M)
-            </label>
-          </div>
-        </div>
         <div
           class="margin-top-3 grid-col-6"
         >
@@ -138,6 +110,34 @@ exports[`renders the VisualizeTable component 1`] = `
             </select>
           </div>
         </div>
+        <div>
+          <label
+            class="usa-label text-bold"
+          >
+            Table Options
+          </label>
+          <div
+            class="usa-hint"
+          >
+            Format your table
+          </div>
+          <div
+            class="usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="significantDigitLabels"
+              name="significantDigitLabels"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="significantDigitLabels"
+            >
+              Significant digit labels (123K, 1.2M)
+            </label>
+          </div>
+        </div>
         <div
           class="usa-form-group"
         >
@@ -150,7 +150,7 @@ exports[`renders the VisualizeTable component 1`] = `
           <div
             class="usa-hint"
           >
-            Give your table a summary to explain it in more depth. This field supports markdown.
+            Give your table a summary to explain it in more depth. It can also be read by screen readers to describe the table for those with visual impairments. This field supports markdown.
              
             <a
               aria-label=""
@@ -213,7 +213,6 @@ exports[`renders the VisualizeTable component 1`] = `
         </button>
         <button
           class="usa-button usa-button--base"
-          disabled=""
           type="submit"
         >
           Add Table

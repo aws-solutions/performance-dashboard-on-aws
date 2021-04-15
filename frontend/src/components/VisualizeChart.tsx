@@ -74,21 +74,21 @@ function VisualizeChart(props: Props) {
       <div className="grid-col-5" hidden={props.fullPreview}>
         <PrimaryActionBar>
           {props.configHeader}
-          {props.errors.title ? (
+          {props.errors.title && (
             <Alert
               type="error"
-              message="Resolve error(s) to add the chart"
+              message={t("VisualizeChartComponent.ResolveErrors")}
+              slim
             ></Alert>
-          ) : (
-            ""
           )}
-
           <TextField
             id="title"
             name="title"
-            label="Chart title"
-            hint="Give your chart a descriptive title."
-            error={props.errors.title && "Please specify a chart title"}
+            label={t("VisualizeChartComponent.ChartTitle")}
+            hint={t("VisualizeChartComponent.ChartTitleHint")}
+            error={
+              props.errors.title && t("VisualizeChartComponent.ChartTitleError")
+            }
             required
             register={props.register}
           />
@@ -103,35 +103,38 @@ function VisualizeChart(props: Props) {
               ref={props.register()}
             />
             <label className="usa-checkbox__label" htmlFor="display-title">
-              Show title on dashboard
+              {t("AddTextScreen.ShowTitle")}
             </label>
           </div>
 
           <RadioButtons
             id="chartType"
             name="chartType"
-            label="Chart type"
-            hint="Choose a chart type."
+            label={t("VisualizeChartComponent.ChartType")}
+            hint={t("VisualizeChartComponent.ChartTypeHint")}
             register={props.register}
-            error={props.errors.chartType && "Please select a chart type"}
+            error={
+              props.errors.chartType &&
+              t("VisualizeChartComponent.ChartTypeError")
+            }
             defaultValue={ChartType.LineChart}
             required
             options={[
               {
                 value: ChartType.BarChart,
-                label: "Bar",
+                label: t("Bar"),
               },
               {
                 value: ChartType.ColumnChart,
-                label: "Column",
+                label: t("Column"),
               },
               {
                 value: ChartType.LineChart,
-                label: "Line",
+                label: t("Line"),
               },
               {
                 value: ChartType.PartWholeChart,
-                label: "Part-to-whole",
+                label: t("PartToWhole"),
               },
             ]}
           />
@@ -139,7 +142,7 @@ function VisualizeChart(props: Props) {
             <Dropdown
               id="sortData"
               name="sortData"
-              label="Sort data"
+              label={t("SortData")}
               options={DatasetParsingService.getDatasetSortOptions(
                 props.originalJson,
                 props.headers
@@ -195,7 +198,7 @@ function VisualizeChart(props: Props) {
                 ref={props.register()}
               />
               <label className="usa-checkbox__label" htmlFor="horizontalScroll">
-                Display with horizontal scroll
+                {t("VisualizeChartComponent.DisplayHorizontalScroll")}
               </label>
             </div>
 
@@ -215,7 +218,7 @@ function VisualizeChart(props: Props) {
                 ref={props.register()}
               />
               <label className="usa-checkbox__label" htmlFor="dataLabels">
-                Show data labels
+                {t("VisualizeChartComponent.ShowDataLabels")}
               </label>
             </div>
           </div>
@@ -223,14 +226,12 @@ function VisualizeChart(props: Props) {
           <TextField
             id="summary"
             name="summary"
-            label="Chart summary - optional"
+            label={t("VisualizeChartComponent.ChartSummary")}
             hint={
               <>
-                Give your chart a summary to explain it in more depth. It can
-                also be read by screen readers to describe the chart for those
-                with visual impairments. This field supports markdown.{" "}
+                {t("VisualizeChartComponent.ChartSummaryHint")}{" "}
                 <Link target="_blank" to={"/admin/markdown"} external>
-                  View Markdown Syntax
+                  {t("AddTextScreen.ViewMarkdownSyntax")}
                 </Link>
               </>
             }
@@ -248,14 +249,14 @@ function VisualizeChart(props: Props) {
               ref={props.register()}
             />
             <label className="usa-checkbox__label" htmlFor="summary-below">
-              Show summary below chart
+              {t("VisualizeChartComponent.ChartShowSummary")}
             </label>
           </div>
           <br />
           <br />
           <hr />
           <Button variant="outline" type="button" onClick={props.backStep}>
-            Back
+            {t("BackButton")}
           </Button>
           <Button
             type="submit"
@@ -271,7 +272,7 @@ function VisualizeChart(props: Props) {
             type="button"
             onClick={props.onCancel}
           >
-            Cancel
+            {t("Cancel")}
           </Button>
         </PrimaryActionBar>
       </div>
@@ -282,7 +283,10 @@ function VisualizeChart(props: Props) {
         >
           {props.fullPreviewButton}
           {props.datasetLoading ? (
-            <Spinner className="text-center margin-top-6" label="Loading" />
+            <Spinner
+              className="text-center margin-top-6"
+              label={t("LoadingSpinnerLabel")}
+            />
           ) : (
             <>
               {showAlert &&
@@ -293,13 +297,13 @@ function VisualizeChart(props: Props) {
                   message={
                     <div className="grid-row margin-left-4">
                       <div className="grid-col-11">
-                        Does the chart look correct?{" "}
+                        {t("VisualizeChartComponent.ChartCorrectDisplay")}{" "}
                         <Link
                           to="/admin/formattingcsv"
                           target="_blank"
                           external
                         >
-                          Learn how to format your CSV data.
+                          {t("LearnHowToFormatCSV")}
                         </Link>
                       </div>
                       <div className="grid-col-1">
@@ -309,7 +313,7 @@ function VisualizeChart(props: Props) {
                             className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
                             onClick={() => setShowAlert(false)}
                             type="button"
-                            ariaLabel="Close"
+                            ariaLabel={t("GlobalClose")}
                           >
                             <FontAwesomeIcon icon={faTimes} size="sm" />
                           </Button>

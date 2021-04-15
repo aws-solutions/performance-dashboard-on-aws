@@ -13,6 +13,7 @@ import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
 import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -28,6 +29,7 @@ interface PathParams {
 
 function AddImage() {
   const history = useHistory();
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
@@ -123,7 +125,7 @@ function AddImage() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -134,7 +136,7 @@ function AddImage() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add image",
+      label: t("AddImageScreen.AddImage"),
       url: "",
     });
   }
@@ -145,11 +147,13 @@ function AddImage() {
       <div className="grid-row width-desktop grid-gap">
         <div className="grid-col-6" hidden={fullPreview}>
           <PrimaryActionBar>
-            <h1 className="margin-top-0">Add Image</h1>
+            <h1 className="margin-top-0">{t("AddImageScreen.AddImage")}</h1>
 
-            <div className="text-base text-italic">Step 2 of 2</div>
+            <div className="text-base text-italic">
+              {t("AddImageScreen.StepTwo")}
+            </div>
             <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-              Configure image
+              {t("AddImageScreen.ConfigureImage")}
             </div>
             <form
               className="usa-form usa-form--large"
@@ -159,8 +163,7 @@ function AddImage() {
                 {errors.title || errors.summary ? (
                   <Alert
                     type="error"
-                    message="Resolve error(s) to add the image"
-                    slim
+                    message={t("AddImageScreen.ResolveError")}
                   ></Alert>
                 ) : (
                   ""
@@ -168,9 +171,9 @@ function AddImage() {
                 <TextField
                   id="title"
                   name="title"
-                  label="Image title"
-                  hint="Give your image a descriptive title."
-                  error={errors.title && "Please specify an image title"}
+                  label={t("AddImageScreen.Title")}
+                  hint={t("AddImageScreen.Hint")}
+                  error={errors.title && t("AddImageScreen.TitleError")}
                   onChange={handleChangeTitle}
                   required
                   register={register}
@@ -190,7 +193,7 @@ function AddImage() {
                     className="usa-checkbox__label"
                     htmlFor="display-title"
                   >
-                    Show title on dashboard
+                    {t("AddImageScreen.ShowTitle")}
                   </label>
                 </div>
 
@@ -198,11 +201,11 @@ function AddImage() {
                   <FileInput
                     id="dataset"
                     name="dataset"
-                    label="File upload"
+                    label={t("AddImageScreen.FileUpload")}
                     accept={supportedImageFileTypes.toString()}
                     loading={imageUploading}
                     register={register}
-                    hint={<span>Must be a PNG, JPEG, or SVG file</span>}
+                    hint={<span>{t("AddImageScreen.FileHint")}</span>}
                     fileName={imageFile && imageFile.name}
                     onFileProcessed={onFileProcessed}
                   />
@@ -213,8 +216,7 @@ function AddImage() {
                     <div className="usa-alert usa-alert--warning margin-top-3">
                       <div className="usa-alert__body">
                         <p className="usa-alert__text">
-                          It is recommended that tables have less than 8
-                          columns. You can still continue.
+                          {t("AddImageScreen.TableHint")}
                         </p>
                       </div>
                     </div>
@@ -226,10 +228,10 @@ function AddImage() {
                     <TextField
                       id="altText"
                       name="altText"
-                      label="Image alt text"
-                      hint="Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard."
+                      label={t("AddImageScreen.AltText")}
+                      hint={t("AddImageScreen.TextHint")}
                       register={register}
-                      error={errors.altText && "Please specify image alt text"}
+                      error={errors.altText && t("AddImageScreen.TextError")}
                       required
                       onChange={handleAltTextChange}
                       multiline
@@ -239,15 +241,12 @@ function AddImage() {
                     <TextField
                       id="summary"
                       name="summary"
-                      label="Image description - optional"
+                      label={t("AddImageScreen.SummaryLabel")}
                       hint={
                         <>
-                          Give your chart a summary to explain it in more depth.
-                          It can also be read by screen readers to describe the
-                          chart for those with visual impairments. This field
-                          supports markdown.{" "}
+                          {t("AddImageScreen.SummaryHint")}{" "}
                           <Link target="_blank" to={"/admin/markdown"} external>
-                            View Markdown Syntax
+                            {t("AddImageScreen.MarkdownLink")}
                           </Link>
                         </>
                       }
@@ -270,7 +269,7 @@ function AddImage() {
                         className="usa-checkbox__label"
                         htmlFor="summary-below"
                       >
-                        Show description below image
+                        {t("AddImageScreen.ToggleSummary")}
                       </label>
                     </div>
                   </div>
@@ -279,14 +278,14 @@ function AddImage() {
               <br />
               <hr />
               <Button variant="outline" type="button" onClick={goBack}>
-                Back
+                {t("AddImageScreen.Back")}
               </Button>
               <Button
                 disabled={!imageFile || imageUploading}
                 type="submit"
                 disabledToolTip="Upload a file to continue"
               >
-                Add image
+                {t("AddImageScreen.AddImage")}
               </Button>
               <Button
                 variant="unstyled"
@@ -294,7 +293,7 @@ function AddImage() {
                 type="button"
                 onClick={onCancel}
               >
-                Cancel
+                {t("AddImageScreen.Cancel")}
               </Button>
             </form>
           </PrimaryActionBar>

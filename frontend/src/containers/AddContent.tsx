@@ -220,7 +220,7 @@ function AddContent() {
               disabled={!widgetType}
               type="submit"
               disabledToolTip={
-                !widgetType ? "Choose a content item to continue" : ""
+                !widgetType ? t("AddContentScreen.DisabledToolTip") : ""
               }
             >
               {t("ContinueButton")}

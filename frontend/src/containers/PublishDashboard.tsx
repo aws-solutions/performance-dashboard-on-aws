@@ -141,7 +141,7 @@ function PublishDashboard() {
               dashboardName: dashboard.name,
             }),
             to: `/${dashboardId}`,
-            linkLabel: "View the published dashboard",
+            linkLabel: t("ViewPublishedDashboard"),
           },
         });
       } catch (err) {
@@ -158,7 +158,12 @@ function PublishDashboard() {
   };
 
   if (!dashboard || !suggestedUrl) {
-    return <Spinner className="text-center margin-top-9" label="Loading" />;
+    return (
+      <Spinner
+        className="text-center margin-top-9"
+        label={t("LoadingSpinnerLabel")}
+      />
+    );
   }
 
   return (

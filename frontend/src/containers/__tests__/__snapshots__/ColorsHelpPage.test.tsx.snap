@@ -31,7 +31,7 @@ exports[`renders the Colors Help Page component 1`] = `
     class="usa-prose"
   >
     <p>
-      In WCAG 2, contrast is a measure of the difference in perceived "luminance" or brightness between two colors. This brightness difference is expressed as a ratio ranging from 1:1 (e.g. white on white) to 21:1 (e.g., black on a white). To give a frame of reference, on a white background:
+      In WCAG 2, contrast is a measure of the difference in perceived “luminance” or brightness between two colors. This brightness difference is expressed as a ratio ranging from 1:1 (e.g. white on white) to 21:1 (e.g., black on a white). To give a frame of reference, on a white background:
     </p>
     <ul>
       <li>

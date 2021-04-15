@@ -11,7 +11,6 @@ exports[`renders the VisualizeChart component 1`] = `
       <div
         class="border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white position-sticky "
       >
-        
         <div
           class="usa-form-group"
         >
@@ -418,7 +417,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
       <div
         class="border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white position-sticky "
       >
-        
         <div
           class="usa-form-group"
         >

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { useSettings } from "../hooks";
+import { useTranslation } from "react-i18next";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -12,6 +13,7 @@ interface LayoutProps {
 function SettingsLayout(props: LayoutProps) {
   const { pathname } = useLocation();
   const { settings, loadingSettings } = useSettings(true);
+  const { t } = useTranslation();
   let currentSetting = "topicarea";
 
   const validSettings: any = {
@@ -36,7 +38,7 @@ function SettingsLayout(props: LayoutProps) {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Settings",
+            label: t("Settings"),
             url: "/admin/settings/topicarea",
           },
           {
@@ -56,7 +58,7 @@ function SettingsLayout(props: LayoutProps) {
                   <ul className="usa-sidenav">
                     <li className="usa-sidenav__item">
                       <Link to="/admin/settings" className="usa-current">
-                        Settings
+                        {t("Settings")}
                       </Link>
                       <ul className="usa-sidenav__sublist">
                         <li className="usa-sidenav__item">

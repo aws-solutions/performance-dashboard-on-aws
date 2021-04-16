@@ -351,11 +351,13 @@ function EditTable() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" table has been successfully edited`,
+          message: t("EditTableScreen.EditTableSuccess", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {
-      console.log("Failed to edit content item", err);
+      console.log(t("AddContentFailure"), err);
       setEditingWidget(false);
     }
   };
@@ -399,7 +401,7 @@ function EditTable() {
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/edit-table/${widgetId}`,
-        crumbLabel: "Edit table",
+        crumbLabel: t("EditTableScreen.EditTable"),
       },
     });
   };
@@ -426,7 +428,7 @@ function EditTable() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -437,14 +439,14 @@ function EditTable() {
 
   if (!loading && widget) {
     crumbs.push({
-      label: "Edit table",
+      label: t("EditTableScreen.EditTable"),
       url: "",
     });
   }
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">Edit table</h1>
+      <h1 className="margin-top-0">{t("EditTableScreen.EditTable")}</h1>
       <ul className="usa-button-group usa-button-group--segmented">
         <li className="usa-button-group__item">
           <button
@@ -454,7 +456,7 @@ function EditTable() {
             type="button"
             onClick={() => setStep(0)}
           >
-            Choose data
+            {t("EditTableScreen.ChooseData")}
           </button>
         </li>
         <li className="usa-button-group__item">
@@ -466,7 +468,7 @@ function EditTable() {
             onClick={() => setStep(1)}
             disabled={!displayedJson.length}
           >
-            Check data
+            {t("EditTableScreen.CheckData")}
           </button>
         </li>
         <li className="usa-button-group__item">
@@ -478,7 +480,7 @@ function EditTable() {
             onClick={() => setStep(2)}
             disabled={!displayedJson.length}
           >
-            Visualize
+            {t("EditTableScreen.Visualize")}
           </button>
         </li>
       </ul>
@@ -496,7 +498,10 @@ function EditTable() {
       !filteredJson ||
       fileLoading ||
       editingWidget ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <div className="grid-row width-desktop">
@@ -572,7 +577,7 @@ function EditTable() {
                   processingWidget={editingWidget}
                   fullPreviewButton={fullPreviewButton}
                   fullPreview={fullPreview}
-                  submitButtonLabel="Save"
+                  submitButtonLabel={t("Save")}
                   title={title}
                   summary={summary}
                   summaryBelow={summaryBelow}

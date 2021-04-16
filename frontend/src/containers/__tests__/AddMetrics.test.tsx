@@ -45,7 +45,7 @@ test("renders the Metrics title", async () => {
 });
 
 test("on submit, it does not call createWidget api and upload dataset without a metric added", async () => {
-  const { getByRole, getByText, getByLabelText } = render(<AddMetrics />, {
+  const { getByRole, getAllByText, getByLabelText } = render(<AddMetrics />, {
     wrapper: MemoryRouter,
   });
 
@@ -62,7 +62,7 @@ test("on submit, it does not call createWidget api and upload dataset without a 
     fireEvent.click(continueButton);
   });
 
-  const submitButton = getByText("Add Metrics");
+  const submitButton = getAllByText("Add metrics")[3];
 
   fireEvent.input(getByLabelText("Metrics title"), {
     target: {

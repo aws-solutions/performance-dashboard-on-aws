@@ -10,6 +10,8 @@ import { useWidget, useDashboard, useFullPreview } from "../hooks";
 import Spinner from "../components/Spinner";
 import Link from "../components/Link";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -27,6 +29,7 @@ function EditText() {
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
+  const { t } = useTranslation();
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, setWidget } = useWidget(dashboardId, widgetId);
   const { fullPreview, fullPreviewButton } = useFullPreview();
@@ -53,11 +56,11 @@ function EditText() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" text has been successfully edited`,
+          message: t("EditTextScreen.EditTextSuccess", { title: values.title }),
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setEditingWidget(false);
     }
   };
@@ -81,7 +84,7 @@ function EditText() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -92,7 +95,7 @@ function EditText() {
 
   if (!loading && widget) {
     crumbs.push({
-      label: "Edit text",
+      label: t("EditTextScreen.EditText"),
       url: "",
     });
   }
@@ -104,26 +107,39 @@ function EditText() {
       {loading || !widget || editingWidget ? (
         <Spinner
           className="text-center margin-top-9"
-          label={`${editingWidget ? "Editing text" : "Loading"}`}
+          label={`${
+            editingWidget
+              ? t("EditTextScreen.EditingText")
+              : t("LoadingSpinnerLabel")
+          }`}
         />
       ) : (
         <>
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">Edit text</h1>
+                <h1 className="margin-top-0">{t("EditTextScreen.EditText")}</h1>
                 <form
                   className="usa-form usa-form--large"
                   onChange={onFormChange}
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <fieldset className="usa-fieldset">
+                    {errors.title || errors.text ? (
+                      <Alert
+                        type="error"
+                        message={t("EditTextScreen.EditTextError")}
+                        slim
+                      ></Alert>
+                    ) : (
+                      ""
+                    )}
                     <TextField
                       id="title"
                       name="title"
-                      label="Text title"
-                      hint="Give your content a descriptive title."
-                      error={errors.title && "Please specify a content title"}
+                      label={t("EditTextScreen.TextTitle")}
+                      hint={t("EditTextScreen.TextTitleHint")}
+                      error={errors.title && t("EditTextScreen.TextTitleError")}
                       defaultValue={widget.name}
                       required
                       register={register}
@@ -142,7 +158,7 @@ function EditText() {
                         className="usa-checkbox__label"
                         htmlFor="display-title"
                       >
-                        Show title on dashboard
+                        {t("EditTextScreen.ShowTitle")}
                       </label>
                     </div>
 
@@ -152,13 +168,13 @@ function EditText() {
                       label="Text"
                       hint={
                         <>
-                          Enter text here. This field supports markdown.{" "}
+                          {t("EditTextScreen.TextHint")}{" "}
                           <Link target="_blank" to={"/admin/markdown"} external>
-                            View Markdown Syntax
+                            {t("EditTextScreen.ViewMarkdownSyntax")}
                           </Link>
                         </>
                       }
-                      error={errors.text && "Please specify a text content"}
+                      error={errors.text && t("EditTextScreen.TextError")}
                       required
                       register={register}
                       defaultValue={widget.content.text}
@@ -170,7 +186,7 @@ function EditText() {
                   <br />
                   <hr />
                   <Button disabled={editingWidget} type="submit">
-                    Save
+                    {t("Save")}
                   </Button>
                   <Button
                     variant="unstyled"
@@ -178,7 +194,7 @@ function EditText() {
                     type="button"
                     onClick={onCancel}
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                 </form>
               </PrimaryActionBar>

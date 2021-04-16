@@ -15,6 +15,7 @@ import { onAuthUIStateChange, AuthState } from "@aws-amplify/ui-components";
 import { Logger } from "@aws-amplify/core";
 import { samlConfig } from "../amplify-config";
 import EnvConfig from "../services/EnvConfig";
+import { useTranslation } from "react-i18next";
 
 const logger = new Logger("withAuthenticator");
 
@@ -24,6 +25,7 @@ export function withSAMLAuthenticator(
 ) {
   const AppWithSAMLAuthenticator: FunctionComponent = (props) => {
     const [signedIn, setSignedIn] = React.useState(false);
+    const { t } = useTranslation();
 
     React.useEffect(() => {
       appendToCognitoUserAgent("withAuthenticator");
@@ -78,7 +80,7 @@ export function withSAMLAuthenticator(
                     <span className="content">
                       {EnvConfig.enterpriseLoginLabel
                         ? EnvConfig.enterpriseLoginLabel
-                        : "Enterprise Sign-in"}
+                        : t("EnterpriseSignIn")}
                     </span>
                   </AmplifyButton>
                   <style></style>

@@ -12,6 +12,8 @@ import Spinner from "../components/Spinner";
 import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -28,7 +30,7 @@ interface PathParams {
 
 function EditImage() {
   const history = useHistory();
-
+  const { t } = useTranslation();
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { setWidget, widget } = useWidget(dashboardId, widgetId);
@@ -40,11 +42,7 @@ function EditImage() {
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
-  const {
-    fullPreview,
-    fullPreviewToggle,
-    fullPreviewButton,
-  } = useFullPreview();
+  const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
     if (!widget) {
@@ -83,11 +81,13 @@ function EditImage() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" image has been successfully edited`,
+          message: `"${values.title}" ${t(
+            "EditImageScreen.ImageEditedSuccessffully"
+          )}`,
         },
       });
     } catch (err) {
-      console.log("Failed to edit content item", err);
+      console.log(t("AddContentFailure"), err);
       setImageUploading(false);
     }
   };
@@ -154,7 +154,7 @@ function EditImage() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -165,7 +165,7 @@ function EditImage() {
 
   if (!loading) {
     crumbs.push({
-      label: "Edit image",
+      label: t("EditImageScreen.EditImage"),
       url: "",
     });
   }
@@ -175,24 +175,38 @@ function EditImage() {
       <Breadcrumbs crumbs={crumbs} />
 
       {!widget || loading || loadingFile ? (
-        <Spinner className="text-center margin-top-6" label="Loading" />
+        <Spinner
+          className="text-center margin-top-6"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">Edit Image</h1>
+                <h1 className="margin-top-0">
+                  {t("EditImageScreen.EditImage")}
+                </h1>
                 <form
                   className="usa-form usa-form--large"
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <fieldset className="usa-fieldset">
+                    {errors.title || errors.altText ? (
+                      <Alert
+                        type="error"
+                        message={t("EditImageScreen.ResolveError")}
+                        slim
+                      ></Alert>
+                    ) : (
+                      ""
+                    )}
                     <TextField
                       id="title"
                       name="title"
-                      label="Image title"
-                      hint="Give your image a descriptive title."
-                      error={errors.title && "Please specify an image title"}
+                      label={t("EditImageScreen.Title")}
+                      hint={t("EditImageScreen.Hint")}
+                      error={errors.title && t("EditImageScreen.TitleError")}
                       onChange={handleChangeTitle}
                       defaultValue={widget.content.title}
                       required
@@ -213,7 +227,7 @@ function EditImage() {
                         className="usa-checkbox__label"
                         htmlFor="display-title"
                       >
-                        Show title on dashboard
+                        {t("EditImageScreen.ShowTitle")}
                       </label>
                     </div>
 
@@ -221,11 +235,11 @@ function EditImage() {
                       <FileInput
                         id="dataset"
                         name="image"
-                        label="File upload"
+                        label={t("EditImageScreen.FileUpload")}
                         accept={supportedImageFileTypes.toString()}
                         loading={imageUploading}
                         register={register}
-                        hint={<span>Must be a PNG, JPEG, or SVG file</span>}
+                        hint={<span>{t("EditImageScreen.FileHint")}</span>}
                         fileName={
                           newImageFile?.name
                             ? newImageFile.name
@@ -236,67 +250,63 @@ function EditImage() {
                     </div>
 
                     <div>
-                      <div hidden={false}>
-                        <TextField
-                          id="altText"
-                          name="altText"
-                          label="Image alt text"
-                          hint="Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard."
-                          register={register}
-                          defaultValue={widget.content.imageAltText}
-                          multiline
-                          rows={1}
-                        />
+                      <TextField
+                        id="altText"
+                        name="altText"
+                        label={t("EditImageScreen.AltText")}
+                        hint={t("EditImageScreen.TextHint")}
+                        register={register}
+                        error={errors.altText && t("EditImageScreen.TextError")}
+                        defaultValue={widget.content.imageAltText}
+                        multiline
+                        rows={1}
+                      />
 
-                        <TextField
-                          id="summary"
-                          name="summary"
-                          label="Image description - optional"
-                          hint={
-                            <>
-                              Give your chart a summary to explain it in more
-                              depth. It can also be read by screen readers to
-                              describe the chart for those with visual
-                              impairments. This field supports markdown.{" "}
-                              <Link
-                                target="_blank"
-                                to={"/admin/markdown"}
-                                external
-                              >
-                                View Markdown Syntax
-                              </Link>
-                            </>
-                          }
-                          register={register}
-                          onChange={handleSummaryChange}
-                          multiline
-                          defaultValue={widget.content.summary}
-                          rows={5}
+                      <TextField
+                        id="summary"
+                        name="summary"
+                        label={t("EditImageScreen.SummaryLabel")}
+                        hint={
+                          <>
+                            {t("EditImageScreen.SummaryHint")}{" "}
+                            <Link
+                              target="_blank"
+                              to={"/admin/markdown"}
+                              external
+                            >
+                              {t("EditImageScreen.MarkdownLink")}
+                            </Link>
+                          </>
+                        }
+                        register={register}
+                        onChange={handleSummaryChange}
+                        multiline
+                        defaultValue={widget.content.summary}
+                        rows={5}
+                      />
+                      <div className="usa-checkbox">
+                        <input
+                          className="usa-checkbox__input"
+                          id="summary-below"
+                          type="checkbox"
+                          name="summaryBelow"
+                          defaultChecked={widget.content.summaryBelow}
+                          onChange={handleSummaryBelowChange}
+                          ref={register()}
                         />
-                        <div className="usa-checkbox">
-                          <input
-                            className="usa-checkbox__input"
-                            id="summary-below"
-                            type="checkbox"
-                            name="summaryBelow"
-                            defaultChecked={widget.content.summaryBelow}
-                            onChange={handleSummaryBelowChange}
-                            ref={register()}
-                          />
-                          <label
-                            className="usa-checkbox__label"
-                            htmlFor="summary-below"
-                          >
-                            Show description below image
-                          </label>
-                        </div>
+                        <label
+                          className="usa-checkbox__label"
+                          htmlFor="summary-below"
+                        >
+                          {t("EditImageScreen.ToggleSummary")}
+                        </label>
                       </div>
                     </div>
                   </fieldset>
                   <br />
                   <hr />
                   <Button disabled={imageUploading} type="submit">
-                    Save
+                    {t("Save")}
                   </Button>
                   <Button
                     variant="unstyled"
@@ -304,7 +314,7 @@ function EditImage() {
                     type="button"
                     onClick={onCancel}
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                 </form>
               </PrimaryActionBar>
@@ -315,7 +325,7 @@ function EditImage() {
                 {loadingFile ? (
                   <Spinner
                     className="text-center margin-top-6"
-                    label="Loading"
+                    label={t("LoadingSpinnerLabel")}
                   />
                 ) : (
                   <ImageWidget

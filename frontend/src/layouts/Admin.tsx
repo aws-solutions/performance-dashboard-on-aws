@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
 import Logo from "../components/Logo";
+import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 
 interface LayoutProps {
@@ -21,6 +22,7 @@ function AdminLayout(props: LayoutProps) {
     hasRole,
   } = useCurrentAuthenticatedUser();
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   const signOut = async (event: React.MouseEvent) => {
     try {
@@ -51,7 +53,7 @@ function AdminLayout(props: LayoutProps) {
                 </Link>
               </em>
             </div>
-            <button className="usa-menu-btn">Menu</button>
+            <button className="usa-menu-btn">{t("Admin.Menu")}</button>
           </div>
           <nav aria-label="Primary navigation" className="usa-nav">
             <button className="usa-nav__close">
@@ -62,7 +64,7 @@ function AdminLayout(props: LayoutProps) {
                 <>
                   <li className="usa-nav__primary-item">
                     <Link className="usa-nav__link" to="/admin/dashboards">
-                      Dashboards
+                      {t("Admin.Dashboards")}
                     </Link>
                   </li>
                 </>
@@ -73,12 +75,12 @@ function AdminLayout(props: LayoutProps) {
                 <>
                   <li className="usa-nav__primary-item">
                     <Link className="usa-nav__link" to="/admin/users">
-                      Manage users
+                      {t("Admin.ManageUsers")}
                     </Link>
                   </li>
                   <li className="usa-nav__primary-item">
                     <Link className="usa-nav__link" to="/admin/settings">
-                      Settings
+                      {t("Admin.Settings")}
                     </Link>
                   </li>
                 </>
@@ -100,7 +102,7 @@ function AdminLayout(props: LayoutProps) {
                 >
                   <li className="usa-nav__submenu-item">
                     <a href="/admin" onClick={signOut} className="usa-link">
-                      Logout
+                      {t("Admin.Logout")}
                     </a>
                   </li>
                 </ul>

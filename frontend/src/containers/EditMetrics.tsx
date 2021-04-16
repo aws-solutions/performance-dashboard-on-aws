@@ -20,6 +20,7 @@ import OrderingService from "../services/OrderingService";
 import StorageService from "../services/StorageService";
 import Spinner from "../components/Spinner";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -51,6 +52,9 @@ function EditMetrics() {
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, currentJson } = useWidget(dashboardId, widgetId);
   const [metrics, setMetrics] = useState<Array<Metric>>([]);
+  const [submittedMetricsNum, setSubmittedMetricsNum] = useState<
+    number | undefined
+  >();
   const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const title = watch("title");
@@ -119,6 +123,11 @@ function EditMetrics() {
       return;
     }
 
+    if (metrics.length === 0) {
+      setSubmittedMetricsNum(0);
+      return;
+    }
+
     try {
       let newDataset = await uploadDataset();
 
@@ -143,11 +152,13 @@ function EditMetrics() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" metrics have been successfully edited`,
+          message: `"${values.title}" ${t(
+            "EditMetricsScreen.MetricsEditedSuccessffully"
+          )}`,
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setEditingWidget(false);
     }
   };
@@ -204,7 +215,7 @@ function EditMetrics() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -215,7 +226,7 @@ function EditMetrics() {
 
   if (!loading && widget) {
     crumbs.push({
-      label: "Edit metrics",
+      label: t("EditMetricsScreen.EditMetrics"),
       url: "",
     });
   }
@@ -229,28 +240,43 @@ function EditMetrics() {
           className="text-center margin-top-9"
           label={`${
             fileLoading
-              ? "Uploading file"
+              ? t("EditMetricsScreen.UploadingFile")
               : editingWidget
-              ? "Editing metrics"
-              : "Loading"
+              ? t("EditMetricsScreen.EditingMetrics")
+              : t("LoadingSpinnerLabel")
           }`}
         />
       ) : (
         <div className="grid-row width-desktop grid-gap">
           <div className="grid-col-6" hidden={fullPreview}>
             <PrimaryActionBar>
-              <h1 className="margin-top-0">Edit metrics</h1>
+              <h1 className="margin-top-0">
+                {t("EditMetricsScreen.EditMetrics")}
+              </h1>
               <form
                 className="usa-form usa-form--large"
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <fieldset className="usa-fieldset">
+                  {(errors.title || submittedMetricsNum === 0) && (
+                    <Alert
+                      type="error"
+                      message={
+                        submittedMetricsNum === 0
+                          ? t("EditMetricsScreen.EnterMetric")
+                          : t("EditMetricsScreen.ResolveErrors")
+                      }
+                      slim
+                    ></Alert>
+                  )}
                   <TextField
                     id="title"
                     name="title"
-                    label="Metrics title"
-                    hint="Give your group of metrics a descriptive title."
-                    error={errors.title && "Please specify a content title"}
+                    label={t("EditMetricsScreen.MetricsTitle")}
+                    hint={t("EditMetricsScreen.MetricsTitleHint")}
+                    error={
+                      errors.title && t("EditMetricsScreen.MetricsTitleError")
+                    }
                     required
                     defaultValue={title}
                     register={register}
@@ -269,7 +295,7 @@ function EditMetrics() {
                       className="usa-checkbox__label"
                       htmlFor="display-title"
                     >
-                      Show title on dashboard
+                      {t("EditMetricsScreen.ShowTitle")}
                     </label>
                   </div>
 
@@ -310,11 +336,8 @@ function EditMetrics() {
                 <br />
                 <br />
                 <hr />
-                <Button
-                  disabled={!title || editingWidget || fileLoading}
-                  type="submit"
-                >
-                  Save
+                <Button disabled={editingWidget || fileLoading} type="submit">
+                  {t("Save")}
                 </Button>
                 <Button
                   variant="unstyled"
@@ -322,7 +345,7 @@ function EditMetrics() {
                   type="button"
                   onClick={onCancel}
                 >
-                  Cancel
+                  {t("Cancel")}
                 </Button>
               </form>
             </PrimaryActionBar>

@@ -43,16 +43,12 @@ function AddImage() {
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
-  const {
-    fullPreview,
-    fullPreviewToggle,
-    fullPreviewButton,
-  } = useFullPreview();
+  const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
     try {
       if (!imageFile) {
-        throw new Error("Image file not specified");
+        throw new Error(t("AddImageScreen.ImageFileNotSpecified"));
       }
       setImageUploading(true);
       const s3Key = await StorageService.uploadImage(imageFile);
@@ -78,11 +74,13 @@ function AddImage() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" image has been successfully added`,
+          message: `"${values.title}" ${t(
+            "AddImageScreen.ImageAddedSuccessffully"
+          )}`,
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setImageUploading(false);
     }
   };
@@ -160,10 +158,11 @@ function AddImage() {
               onSubmit={handleSubmit(onSubmit)}
             >
               <fieldset className="usa-fieldset">
-                {errors.title || errors.summary ? (
+                {errors.title || errors.altText ? (
                   <Alert
                     type="error"
                     message={t("AddImageScreen.ResolveError")}
+                    slim
                   ></Alert>
                 ) : (
                   ""
@@ -212,18 +211,6 @@ function AddImage() {
                 </div>
 
                 <div>
-                  {false && false ? (
-                    <div className="usa-alert usa-alert--warning margin-top-3">
-                      <div className="usa-alert__body">
-                        <p className="usa-alert__text">
-                          {t("AddImageScreen.TableHint")}
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-
                   <div hidden={!imageFile}>
                     <TextField
                       id="altText"
@@ -285,7 +272,7 @@ function AddImage() {
                 type="submit"
                 disabledToolTip={t("AddImageScreen.DisabledToolTip")}
               >
-                {t("AddImageScreen.AddImageButton")}
+                {t("AddImageScreen.AddImage")}
               </Button>
               <Button
                 variant="unstyled"

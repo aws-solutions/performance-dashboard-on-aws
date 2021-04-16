@@ -21,7 +21,6 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
     register,
     reset,
     errors,
-    watch,
     getValues,
     trigger,
     setValue,
@@ -58,8 +57,6 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
     sanitized = sanitized.replace(/[!#$&'\(\)\*\+,\/:;=\?@\[\]]+/g, "");
     setValue("friendlyURL", sanitized);
   };
-
-  const friendlyURL = watch("friendlyURL");
 
   return (
     <>
@@ -104,7 +101,7 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
       />
       <div className="usa-hint">{t("EditURLComponent.Guidance")}</div>
       <p className="font-sans-lg">
-        https://{window.location.hostname}/{friendlyURL}
+        https://{window.location.hostname}/{value}
         <Button
           type="button"
           variant="unstyled"

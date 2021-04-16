@@ -377,11 +377,11 @@ function EditChart() {
           message: `"${values.title}" ${UtilsService.getChartTypeLabel(
             values.chartType,
             t
-          ).toLowerCase()} has been successfully edited`,
+          ).toLowerCase()} ${t("EditChartScreen.EditChartSuccess")}`,
         },
       });
     } catch (err) {
-      console.log("Failed to edit content item", err);
+      console.log(t("AddContentFailure"), err);
       setEditingWidget(false);
     }
   };
@@ -425,7 +425,7 @@ function EditChart() {
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/edit-chart/${widgetId}`,
-        crumbLabel: "Edit chart",
+        crumbLabel: t("EditChartScreen.EditChart"),
       },
     });
   };
@@ -452,7 +452,7 @@ function EditChart() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -463,14 +463,14 @@ function EditChart() {
 
   if (!loading && widget) {
     crumbs.push({
-      label: "Edit chart",
+      label: t("EditChartScreen.EditChart"),
       url: "",
     });
   }
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">Edit chart</h1>
+      <h1 className="margin-top-0">{t("EditChartScreen.EditChart")}</h1>
       <ul className="usa-button-group usa-button-group--segmented">
         <li className="usa-button-group__item">
           <button
@@ -480,7 +480,7 @@ function EditChart() {
             type="button"
             onClick={() => setStep(0)}
           >
-            Choose data
+            {t("EditChartScreen.ChooseData")}
           </button>
         </li>
         <li className="usa-button-group__item">
@@ -492,7 +492,7 @@ function EditChart() {
             onClick={() => setStep(1)}
             disabled={!displayedJson.length}
           >
-            Check data
+            {t("EditChartScreen.CheckData")}
           </button>
         </li>
         <li className="usa-button-group__item">
@@ -504,7 +504,7 @@ function EditChart() {
             onClick={() => setStep(2)}
             disabled={!displayedJson.length}
           >
-            Visualize
+            {t("EditChartScreen.Visualize")}
           </button>
         </li>
       </ul>
@@ -521,7 +521,10 @@ function EditChart() {
       !filteredJson ||
       fileLoading ||
       editingWidget ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <div className="grid-row width-desktop">
           <div className="grid-col-12">
@@ -600,7 +603,7 @@ function EditChart() {
                   showTitle={showTitle}
                   fullPreviewButton={fullPreviewButton}
                   fullPreview={fullPreview}
-                  submitButtonLabel="Save"
+                  submitButtonLabel={t("Save")}
                   sortByColumn={sortByColumn}
                   sortByDesc={sortByDesc}
                   setSortByColumn={setSortByColumn}

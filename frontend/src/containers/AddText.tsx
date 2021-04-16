@@ -30,7 +30,6 @@ function AddText() {
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
   const { t } = useTranslation();
-
   const [creatingWidget, setCreatingWidget] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");

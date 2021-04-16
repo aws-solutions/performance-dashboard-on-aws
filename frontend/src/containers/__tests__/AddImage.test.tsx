@@ -43,7 +43,7 @@ test("renders a file upload input", async () => {
 });
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
-  const { getByRole, getByText, getByLabelText } = render(<AddImage />, {
+  const { getAllByText, getByText, getByLabelText } = render(<AddImage />, {
     wrapper: MemoryRouter,
   });
 
@@ -65,7 +65,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  const submitButton = getByRole("button", { name: "Add image" });
+  const submitButton = getAllByText("Add Image")[2];
 
   await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {

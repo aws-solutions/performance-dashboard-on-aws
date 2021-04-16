@@ -136,7 +136,7 @@ function AddChart() {
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
-      throw new Error("CSV file not specified");
+      throw new Error(t("CSVFileNotSpecified"));
     }
 
     setFileLoading(true);
@@ -216,11 +216,11 @@ function AddChart() {
           message: `"${values.title}" ${UtilsService.getChartTypeLabel(
             values.chartType,
             t
-          ).toLowerCase()} has been successfully added`,
+          ).toLowerCase()} ${t("AddChartScreen.AddChartSuccess")}`,
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setCreatingWidget(false);
     }
   };
@@ -348,7 +348,7 @@ function AddChart() {
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">Add chart</h1>
+      <h1 className="margin-top-0">{t("AddChartScreen.AddChart")}</h1>
       <StepIndicator
         current={step}
         segments={[

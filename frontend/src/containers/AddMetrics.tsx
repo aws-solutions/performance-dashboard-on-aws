@@ -199,7 +199,7 @@ function AddMetrics() {
         });
       }
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setCreatingWidget(false);
     }
   };
@@ -582,7 +582,7 @@ function AddMetrics() {
                       disabled={creatingWidget || fileLoading}
                       type="submit"
                     >
-                      {t("AddMetricsScreen.AddMetricsButton")}
+                      {t("AddMetricsScreen.AddMetrics")}
                     </Button>
                     <Button
                       variant="unstyled"

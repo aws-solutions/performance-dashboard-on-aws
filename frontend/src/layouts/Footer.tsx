@@ -1,7 +1,6 @@
 import React from "react";
 import packagejson from "../../package.json";
 import { useSettings } from "../hooks";
-import Spinner from "../components/Spinner";
 import { useTranslation } from "react-i18next";
 
 function Footer() {
@@ -12,20 +11,15 @@ function Footer() {
     <footer>
       <div className="grid-container margin-bottom-9 text-base font-sans-sm">
         {loadingSettings ? (
-          <Spinner
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-            }}
-            label={t("LoadingSpinnerLabel")}
-          />
+          ""
         ) : (
           <>
             <hr className="margin-top-9 border-base-lightest" />
             {t("AdminFooter.HelpMessage")}{" "}
             <a
-              href={`mailto:${settings.adminContactEmailAddress}?subject=Performance Dashboard Assistance`}
+              href={`mailto:${settings.adminContactEmailAddress}?subject=${t(
+                "AdminFooter.PerformanceDashboardAssistance"
+              )}`}
               className="text-base"
             >
               {t("AdminFooter.ContactSupport")}

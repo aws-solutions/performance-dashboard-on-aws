@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";
 import NumberField from "../components/NumberField";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useDashboard } from "../hooks";
+import { useDashboard, useSettings } from "../hooks";
 import Spinner from "../components/Spinner";
 import DatePicker from "../components/DatePicker";
 import { LocationState } from "../models";
@@ -15,8 +15,6 @@ interface FormValues {
   title: string;
   value: number;
   changeOverTime: string;
-  startDate: string;
-  endDate: string;
 }
 
 interface PathParams {
@@ -27,9 +25,18 @@ function EditMetric() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
   const { t } = useTranslation();
+  const { settings, loadingSettings } = useSettings();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
+  const [startDate, setStartDate] = useState<Date | null>(
+    state.metric && state.metric.startDate
+      ? new Date(state.metric.startDate)
+      : null
+  );
+  const [endDate, setEndDate] = useState<Date | null>(
+    state.metric && state.metric.endDate ? new Date(state.metric.endDate) : null
+  );
 
   const onSubmit = async (values: FormValues) => {
     const editedMetric =
@@ -40,8 +47,8 @@ function EditMetric() {
       editedMetric.title = values.title;
       editedMetric.value = values.value;
       editedMetric.changeOverTime = values.changeOverTime;
-      editedMetric.startDate = values.startDate;
-      editedMetric.endDate = values.endDate;
+      editedMetric.startDate = startDate ? startDate.toISOString() : "";
+      editedMetric.endDate = endDate ? endDate.toISOString() : "";
     }
     const newMetrics = state && state.metrics ? [...state.metrics] : [];
     history.push(
@@ -98,7 +105,7 @@ function EditMetric() {
     <>
       <Breadcrumbs crumbs={crumbs} />
 
-      {loading ? (
+      {loading || loadingSettings ? (
         <Spinner
           className="text-center margin-top-9"
           label={t("LoadingSpinnerLabel")}
@@ -161,22 +168,25 @@ function EditMetric() {
                   id="startDate"
                   name="startDate"
                   label={t("EditMetricScreen.StartDateOptional")}
-                  hint="mm/dd/yyyy"
-                  register={register}
-                  className="width-50"
-                  defaultValue={state.metric.startDate}
+                  hint={settings.dateTimeFormat.date}
+                  date={startDate}
+                  dateFormat={settings.dateTimeFormat.date
+                    .toLowerCase()
+                    .replace(/m/g, "M")}
+                  setDate={setStartDate}
                 />
 
                 <DatePicker
                   id="endDate"
                   name="endDate"
                   label={t("EditMetricScreen.EndDateOptional")}
-                  hint="mm/dd/yyyy"
-                  register={register}
-                  className="width-50"
-                  defaultValue={state.metric.endDate}
+                  hint={settings.dateTimeFormat.date}
+                  date={endDate}
+                  dateFormat={settings.dateTimeFormat.date
+                    .toLowerCase()
+                    .replace(/m/g, "M")}
+                  setDate={setEndDate}
                 />
-
                 <br />
                 <Button type="submit">{t("Save")}</Button>
                 <Button

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";
 import NumberField from "../components/NumberField";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useDashboard } from "../hooks";
+import { useDashboard, useSettings } from "../hooks";
 import Spinner from "../components/Spinner";
 import DatePicker from "../components/DatePicker";
 import { LocationState } from "../models";
@@ -16,8 +16,6 @@ interface FormValues {
   title: string;
   value: number;
   changeOverTime: string;
-  startDate: string;
-  endDate: string;
 }
 
 interface PathParams {
@@ -28,9 +26,12 @@ function AddMetric() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
   const { t } = useTranslation();
+  const { settings, loadingSettings } = useSettings();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   const onSubmit = async (values: FormValues) => {
     const newMetrics = state && state.metrics ? [...state.metrics] : [];
@@ -38,8 +39,8 @@ function AddMetric() {
       title: values.title,
       value: values.value,
       changeOverTime: values.changeOverTime,
-      startDate: values.startDate,
-      endDate: values.endDate,
+      startDate: startDate ? startDate.toISOString() : "",
+      endDate: endDate ? endDate.toISOString() : "",
     });
     history.push(
       (state && state.origin) || `/admin/dashboard/${dashboardId}/add-metrics`,
@@ -95,7 +96,7 @@ function AddMetric() {
     <>
       <Breadcrumbs crumbs={crumbs} />
 
-      {loading ? (
+      {loading || loadingSettings ? (
         <Spinner
           className="text-center margin-top-9"
           label={t("LoadingSpinnerLabel")}
@@ -162,18 +163,24 @@ function AddMetric() {
                     id="startDate"
                     name="startDate"
                     label={t("AddMetricScreen.StartDateOptional")}
-                    hint="mm/dd/yyyy"
-                    register={register}
-                    className="width-50"
+                    hint={settings.dateTimeFormat.date}
+                    date={startDate}
+                    dateFormat={settings.dateTimeFormat.date
+                      .toLowerCase()
+                      .replace(/m/g, "M")}
+                    setDate={setStartDate}
                   />
 
                   <DatePicker
                     id="endDate"
                     name="endDate"
                     label={t("AddMetricScreen.EndDateOptional")}
-                    hint="mm/dd/yyyy"
-                    register={register}
-                    className="width-50"
+                    hint={settings.dateTimeFormat.date}
+                    date={endDate}
+                    dateFormat={settings.dateTimeFormat.date
+                      .toLowerCase()
+                      .replace(/m/g, "M")}
+                    setDate={setEndDate}
                   />
 
                   <br />

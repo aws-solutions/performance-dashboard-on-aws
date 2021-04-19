@@ -1,47 +1,32 @@
-import React, { useEffect, useRef } from "react";
-// @ts-ignore
-import datePicker from "uswds/src/js/components/date-picker";
+import React from "react";
+import DatePicker1 from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
   name: string;
   id: string;
   label: string;
   hint?: string | React.ReactNode;
-  register?: Function;
-  required?: boolean;
   validate?: Function;
   disabled?: boolean;
   defaultValue?: string;
   error?: string;
-  onChange?: Function;
-  rows?: number;
   className?: string;
+  date: Date | null;
+  setDate: Function;
+  dateFormat: string;
 }
 
 function DatePicker(props: Props) {
-  const formGroupRef = useRef(null);
-  useEffect(() => {
-    // initialize
-    if (formGroupRef.current) {
-      datePicker.init(formGroupRef.current);
-    }
-  }, [formGroupRef]);
-
   let formGroupClassName = "usa-form-group";
   if (props.error) {
     formGroupClassName += " usa-form-group--error";
   }
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    if (props.onChange) {
-      props.onChange(event);
-    }
-  };
-
   const className = `usa-input${props.className ? " " + props.className : ""}`;
 
   return (
-    <div className={formGroupClassName} ref={formGroupRef}>
+    <div className={formGroupClassName}>
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
       </label>
@@ -56,24 +41,14 @@ function DatePicker(props: Props) {
         </span>
       )}
 
-      <div className="usa-date-picker" data-default-value={props.defaultValue}>
-        <input
-          id={props.id}
+      <div>
+        <DatePicker1
+          selected={props.date}
+          dateFormat={props.dateFormat}
+          onChange={(date) => {
+            props.setDate(date);
+          }}
           className={className}
-          name={props.name}
-          type="text"
-          defaultValue={props.defaultValue}
-          ref={
-            props.register &&
-            (props.validate
-              ? props.register({
-                  required: props.required,
-                  validate: props.validate,
-                })
-              : props.register({ required: props.required }))
-          }
-          disabled={props.disabled}
-          onChange={handleChange}
         />
       </div>
     </div>

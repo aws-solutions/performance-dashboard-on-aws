@@ -44,9 +44,9 @@ function MetricsCardGroup(props: Props) {
                     className={`grid-col-${12 / props.metricPerRow} padding-05`}
                     key={j}
                   >
-                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1">
+                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto">
                       <div className="flex-5">
-                        <p className="text-base-darkest text-bold margin-0">
+                        <p className="text-base-darkest text-bold margin-0 text-no-wrap">
                           {metric.title}
                         </p>
                       </div>
@@ -55,7 +55,7 @@ function MetricsCardGroup(props: Props) {
                         data-position="bottom"
                         title={metric.value ? metric.value.toString() : ""}
                       >
-                        <h1 className="margin-0 text-no-wrap overflow-hidden text-overflow-ellipsis">
+                        <h1 className="margin-0 text-no-wrap">
                           {TickFormatter.format(
                             Number(metric.value),
                             Number(metric.value),

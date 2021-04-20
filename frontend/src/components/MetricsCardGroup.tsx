@@ -4,6 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import TickFormatter from "../services/TickFormatter";
 import dayjs from "dayjs";
+import "dayjs/locale/en";
+import "dayjs/locale/en-gb";
+import "dayjs/locale/en-au";
+import "dayjs/locale/en-ca";
+import "dayjs/locale/en-in";
+import "dayjs/locale/en-nz";
+import "dayjs/locale/es";
+import "dayjs/locale/es-us";
+import "dayjs/locale/pt";
+import "dayjs/locale/pt-br";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -83,11 +93,15 @@ function MetricsCardGroup(props: Props) {
                         {metric.startDate && metric.endDate && (
                           <div className="margin-top-1px">
                             <span>
-                              {dayjs(metric.startDate).format("MMM YYYY")}
+                              {dayjs(metric.startDate)
+                                .locale(window.navigator.language.toLowerCase())
+                                .format("MMM YYYY")}
                             </span>{" "}
                             {t("To")}{" "}
                             <span>
-                              {dayjs(metric.endDate).format("MMM YYYY")}
+                              {dayjs(metric.endDate)
+                                .locale(window.navigator.language.toLowerCase())
+                                .format("MMM YYYY")}
                             </span>
                           </div>
                         )}

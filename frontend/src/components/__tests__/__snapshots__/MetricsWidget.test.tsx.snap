@@ -22,13 +22,13 @@ exports[`metrics preview should match snapshot 1`] = `
               class="grid-col-4 padding-05"
             >
               <div
-                class="display-flex flex-column border-base-lightest border-2px height-card padding-1"
+                class="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto"
               >
                 <div
                   class="flex-5"
                 >
                   <p
-                    class="text-base-darkest text-bold margin-0"
+                    class="text-base-darkest text-bold margin-0 text-no-wrap"
                   >
                     test title
                   </p>
@@ -39,7 +39,7 @@ exports[`metrics preview should match snapshot 1`] = `
                   title="1"
                 >
                   <h1
-                    class="margin-0 text-no-wrap overflow-hidden text-overflow-ellipsis"
+                    class="margin-0 text-no-wrap"
                   >
                     1
                   </h1>

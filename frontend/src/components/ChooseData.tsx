@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useDateTimeFormatter, useSettings } from "../hooks";
 import { Dataset, DatasetType } from "../models";
 import Button from "./Button";
@@ -6,6 +6,8 @@ import FileInput from "./FileInput";
 import Link from "./Link";
 import Table from "./Table";
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   handleChange: React.FormEventHandler<HTMLFieldSetElement>;
@@ -29,6 +31,8 @@ function ChooseData(props: Props) {
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
   const { settings } = useSettings();
+  const [filter, setFilter] = useState("");
+  const [query, setQuery] = useState("");
 
   const onSelect = useCallback(
     (selectedDataset: Array<Dataset>) => {
@@ -38,6 +42,10 @@ function ChooseData(props: Props) {
     },
     [props.datasetType]
   );
+
+  const onSearch = (query: string) => {
+    setFilter(query);
+  };
 
   return (
     <>
@@ -160,11 +168,48 @@ function ChooseData(props: Props) {
         </div>
 
         <div hidden={props.datasetType !== DatasetType.DynamicDataset}>
+          <div className="grid-row margin-top-3 margin-bottom-1">
+            <div className="tablet:grid-col-4 padding-top-1px">
+              <div role="search" className="usa-search usa-search--small">
+                <label className="usa-sr-only" htmlFor="search">
+                  {t("SearchButton")}
+                </label>
+                <input
+                  className="usa-input"
+                  id="search"
+                  type="search"
+                  name="query"
+                  style={{ height: "37px" }}
+                  value={query}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setQuery(event.target.value)
+                  }
+                />
+                <button
+                  className="usa-button usa-button--base padding-x-2"
+                  type="button"
+                  style={{
+                    height: "37px",
+                    borderTopLeftRadius: "0",
+                    borderBottomLeftRadius: "0",
+                  }}
+                  onClick={() => onSearch(query)}
+                >
+                  <FontAwesomeIcon
+                    style={{ marginTop: "-3px" }}
+                    icon={faSearch}
+                  />
+                  <span className="usa-sr-only">{t("SearchButton")}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className="overflow-hidden">
             <Table
               selection="single"
               initialSortByField="updatedAt"
-              filterQuery={""}
+              filterQuery={filter}
               rows={React.useMemo(() => props.dynamicDatasets, [
                 props.dynamicDatasets,
               ])}
@@ -176,19 +221,6 @@ function ChooseData(props: Props) {
                   {
                     Header: t("NameUpperCase"),
                     accessor: "fileName",
-                    Cell: (props: any) => {
-                      return (
-                        <div
-                          className="usa-tooltip text-middle"
-                          data-position="bottom"
-                          title={props.value}
-                        >
-                          <div className="text-no-wrap overflow-hidden text-overflow-ellipsis">
-                            {props.value}
-                          </div>
-                        </div>
-                      );
-                    },
                   },
                   {
                     Header: t("LastUpdatedLabel"),

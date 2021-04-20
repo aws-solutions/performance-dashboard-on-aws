@@ -36,5 +36,5 @@ test("renders a table with users", () => {
   expect(screen.getByRole("table")).toBeInTheDocument();
   expect(screen.getByText("andrew")).toBeInTheDocument();
   expect(screen.getByText("abc")).toBeInTheDocument();
-  expect(screen.getByText("1/1/2000")).toBeInTheDocument();
+  expect(screen.getByText("2000-01-01 05:00")).toBeInTheDocument();
 });

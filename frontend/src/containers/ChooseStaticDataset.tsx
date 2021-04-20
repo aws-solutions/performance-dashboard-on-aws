@@ -134,6 +134,7 @@ function ChooseStaticDataset() {
             {
               Header: t("UploadedAt"),
               accessor: "updatedAt",
+              Cell: (props: any) => dateFormatter(props.value),
             },
           ],
           [dateFormatter, settings]

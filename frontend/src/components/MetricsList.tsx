@@ -146,16 +146,19 @@ function MetricsList(props: Props) {
                 <div className="border-base border"></div>
                 <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
                   <div
-                    className="grid-col flex-9 font-important usa-tooltip text-bold"
+                    className="grid-col flex-8 font-important usa-tooltip text-bold"
                     data-position="bottom"
                     title={metric.title}
                   >
-                    <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
+                    <div
+                      style={{ marginTop: "2px" }}
+                      className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis"
+                    >
                       {metric.title}
                     </div>
                   </div>
-                  <div className="grid-col grid-row flex-3">
-                    <div className="grid-col flex-6">
+                  <div className="grid-col grid-row flex-4">
+                    <div className="grid-col flex-6 text-right margin-right-1">
                       <Button
                         variant="unstyled"
                         type="button"

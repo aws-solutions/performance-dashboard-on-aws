@@ -10,6 +10,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import defaultLogo from "../logo.svg";
 import { useTranslation } from "react-i18next";
+import Header from "../components/Header";
 
 function EditLogo() {
   const { t } = useTranslation();
@@ -136,17 +137,24 @@ function EditLogo() {
           <div className="grid-col-5">
             <h4 className="margin-top-4">{t("SettingsLogoPreview")}</h4>
             <div className="grid-row">
-              <div className="grid-col-2 text-left">
-                {currentLogo && (
-                  <img src={URL.createObjectURL(currentLogo)}></img>
-                )}
-                {!currentLogo && (
-                  <img
-                    src={logo ? URL.createObjectURL(logo) : defaultLogo}
-                    alt={t("SettingsLogoOrganization")}
-                  ></img>
-                )}
-              </div>
+              <Header className="usa-header usa-header--basic padding-left-2 padding-right-2">
+                <div className="usa-logo margin-top-2" id="basic-logo">
+                  <em className="usa-logo__text display-flex flex-align-center">
+                    <div className="logo">
+                      {currentLogo && (
+                        <img src={URL.createObjectURL(currentLogo)}></img>
+                      )}
+                      {!currentLogo && (
+                        <img
+                          src={logo ? URL.createObjectURL(logo) : defaultLogo}
+                          alt={t("SettingsLogoOrganization")}
+                        ></img>
+                      )}
+                    </div>
+                    {settings.navbarTitle}
+                  </em>
+                </div>
+              </Header>
             </div>
           </div>
         </>

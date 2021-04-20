@@ -54,7 +54,7 @@ function MetricsCardGroup(props: Props) {
                     className={`grid-col-${12 / props.metricPerRow} padding-05`}
                     key={j}
                   >
-                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto">
+                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-hidden">
                       <div className="flex-5">
                         <p className="text-base-darkest text-bold margin-0 text-no-wrap">
                           {metric.title}

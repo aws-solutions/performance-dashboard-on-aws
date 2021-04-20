@@ -22,7 +22,7 @@ exports[`metrics preview should match snapshot 1`] = `
               class="grid-col-4 padding-05"
             >
               <div
-                class="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto"
+                class="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-hidden"
               >
                 <div
                   class="flex-5"

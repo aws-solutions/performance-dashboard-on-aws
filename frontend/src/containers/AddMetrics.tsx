@@ -32,6 +32,8 @@ import UtilsService from "../services/UtilsService";
 import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 interface FormValues {
   title: string;
@@ -65,6 +67,8 @@ function AddMetrics() {
           : false,
     },
   });
+  const [filter, setFilter] = useState("");
+  const [query, setQuery] = useState("");
 
   const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
   const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
@@ -107,19 +111,6 @@ function AddMetrics() {
       {
         Header: t("AddMetricsScreen.Name"),
         accessor: "fileName",
-        Cell: (props: any) => {
-          return (
-            <div
-              className="usa-tooltip text-middle"
-              data-position="bottom"
-              title={props.value}
-            >
-              <div className="text-no-wrap overflow-hidden text-overflow-ellipsis">
-                {props.value}
-              </div>
-            </div>
-          );
-        },
       },
       {
         Header: t("AddMetricsScreen.LastUpdated"),
@@ -299,6 +290,10 @@ function AddMetrics() {
     setStep(0);
   };
 
+  const onSearch = (query: string) => {
+    setFilter(query);
+  };
+
   const crumbs = [
     {
       label: t("Dashboards"),
@@ -445,10 +440,53 @@ function AddMetrics() {
                   </div>
 
                   <div hidden={datasetType !== DatasetType.DynamicDataset}>
+                    <div className="grid-row margin-top-3 margin-bottom-1">
+                      <div className="tablet:grid-col-4 padding-top-1px">
+                        <div
+                          role="search"
+                          className="usa-search usa-search--small"
+                        >
+                          <label className="usa-sr-only" htmlFor="search">
+                            {t("SearchButton")}
+                          </label>
+                          <input
+                            className="usa-input"
+                            id="search"
+                            type="search"
+                            name="query"
+                            style={{ height: "37px" }}
+                            value={query}
+                            onChange={(
+                              event: React.ChangeEvent<HTMLInputElement>
+                            ) => setQuery(event.target.value)}
+                          />
+                          <button
+                            className="usa-button usa-button--base padding-x-2"
+                            type="button"
+                            style={{
+                              height: "37px",
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                            }}
+                            onClick={() => onSearch(query)}
+                          >
+                            <FontAwesomeIcon
+                              style={{ marginTop: "-3px" }}
+                              icon={faSearch}
+                            />
+                            <span className="usa-sr-only">
+                              {t("SearchButton")}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="overflow-hidden">
                       <Table
                         selection="single"
                         initialSortByField="updatedAt"
+                        filterQuery={filter}
                         rows={rows}
                         screenReaderField="name"
                         width="100%"

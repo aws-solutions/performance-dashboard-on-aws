@@ -123,6 +123,7 @@ export interface ChartWidget extends Widget {
     sortByDesc?: boolean;
     horizontalScroll?: boolean;
     significantDigitLabels: boolean;
+    dataLabels: boolean;
   };
 }
 

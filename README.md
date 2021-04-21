@@ -57,4 +57,4 @@ This project is licensed under the Apache-2.0 License.
 
 ## Feedback
 
-We would love to hear from you, contact us at wwps-performance-dashboard@amazon.com.
+We're currently collecting feedback on Performance Dashboard on AWS to ensure the product meets your needs. If you would like to share your thoughts, we'd love to hear from you. Reach out to us at wwps-performance-dashboard@amazon.com.

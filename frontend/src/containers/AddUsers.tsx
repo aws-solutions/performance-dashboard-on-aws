@@ -30,12 +30,12 @@ function AddUsers() {
         type: "success",
         message:
           emails.length === 1
-            ? `${emails.length} ${t("AddUserNewInvite.Singular")} ${
+            ? `${emails.length} ${t("AddUserNewInvite.Singular")} ${t(
                 values.role
-              } ${t("AddUserNewInvite.Final")}`
-            : `${emails.length} ${t("AddUserNewInvite.Plural")} ${
+              )} ${t("AddUserNewInvite.Final")}`
+            : `${emails.length} ${t("AddUserNewInvite.Plural")} ${t(
                 values.role
-              } ${t("AddUserNewInvite.Final")}`,
+              )} ${t("AddUserNewInvite.Final")}`,
       },
     });
   };

@@ -66,7 +66,10 @@ function PublishedSiteSettings() {
       </div>
 
       {loadingSettings ? (
-        <Spinner className="margin-top-3 text-center" label={t("Loading")} />
+        <Spinner
+          className="margin-top-3 text-center"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <div className="grid-row margin-top-0-important margin-bottom-4">
           <div className="grid-col flex-9">
@@ -87,7 +90,10 @@ function PublishedSiteSettings() {
       </div>
 
       {loadingSettings ? (
-        <Spinner className="margin-top-3 text-center" label="Loading" />
+        <Spinner
+          className="margin-top-3 text-center"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <div className="grid-row margin-top-0-important margin-bottom-4">
           <div className="grid-col flex-9">
@@ -136,7 +142,10 @@ function PublishedSiteSettings() {
       </div>
 
       {loading ? (
-        <Spinner className="margin-top-3 text-center" label={t("Loading")} />
+        <Spinner
+          className="margin-top-3 text-center"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <div className="grid-row margin-top-0-important">
           <div className="grid-col flex-9">

@@ -53,6 +53,7 @@ function AddMetric() {
         showTitle: state.showTitle !== false,
         oneMetricPerRow: state.oneMetricPerRow === true,
         metricTitle: state.metricTitle || "",
+        datasetType: state.datasetType || undefined,
       }
     );
   };
@@ -65,6 +66,7 @@ function AddMetric() {
         showTitle: state && state.showTitle !== false,
         oneMetricPerRow: state && state.oneMetricPerRow === true,
         metricTitle: (state && state.metricTitle) || "",
+        datasetType: state.datasetType || undefined,
       }
     );
   };

@@ -4,16 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import TickFormatter from "../services/TickFormatter";
 import dayjs from "dayjs";
-import "dayjs/locale/en";
-import "dayjs/locale/en-gb";
-import "dayjs/locale/en-au";
-import "dayjs/locale/en-ca";
-import "dayjs/locale/en-in";
-import "dayjs/locale/en-nz";
-import "dayjs/locale/es";
-import "dayjs/locale/es-us";
-import "dayjs/locale/pt";
-import "dayjs/locale/pt-br";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -54,7 +44,7 @@ function MetricsCardGroup(props: Props) {
                     className={`grid-col-${12 / props.metricPerRow} padding-05`}
                     key={j}
                   >
-                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-hidden">
+                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-hidden overflow-y-hidden">
                       <div className="flex-5">
                         <p className="text-base-darkest text-bold margin-0 text-no-wrap">
                           {metric.title}

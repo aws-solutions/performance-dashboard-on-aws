@@ -41,7 +41,7 @@ function EditSupportContactEmail() {
     history.push("/admin/settings/adminsite", {
       alert: {
         type: "success",
-        message: "Support contact email successfully edited.",
+        message: t("SupportContactEmailEditSuccess"),
       },
     });
   };

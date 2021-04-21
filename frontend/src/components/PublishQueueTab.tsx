@@ -54,7 +54,7 @@ function PublishQueueTab(props: Props) {
         columns={React.useMemo(
           () => [
             {
-              Header: "Dashboard name",
+              Header: t("DashboardName"),
               accessor: "name",
               Cell: (props: any) => {
                 const dashboard = props.row.original as Dashboard;
@@ -65,9 +65,7 @@ function PublishQueueTab(props: Props) {
                       state: {
                         alert: {
                           type: "info",
-                          message:
-                            "This dashboard is now in the publish pending state and " +
-                            "cannot be edited unless returned to draft",
+                          message: t("PublishWorkflow.InfoAlert"),
                         },
                       },
                     }}
@@ -84,12 +82,12 @@ function PublishQueueTab(props: Props) {
               accessor: "topicAreaName",
             },
             {
-              Header: "Last Updated",
+              Header: t("LastUpdatedLabel"),
               accessor: "updatedAt",
               Cell: (props: any) => dateFormatter(props.value),
             },
             {
-              Header: "Submitted by",
+              Header: t("SubmittedBy"),
               accessor: "submittedBy",
             },
           ],

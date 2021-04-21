@@ -52,7 +52,7 @@ function PublishedTab(props: Props) {
         <div className="tablet:grid-col-5 text-right">
           <span>
             <DropdownMenu
-              buttonText="Actions"
+              buttonText={t("Actions")}
               disabled={selected.length === 0}
               variant="outline"
             >
@@ -84,7 +84,7 @@ function PublishedTab(props: Props) {
         columns={React.useMemo(
           () => [
             {
-              Header: "Dashboard name",
+              Header: t("DashboardName"),
               accessor: "name",
               Cell: (props: any) => {
                 const dashboard = props.row.original as Dashboard;
@@ -102,12 +102,12 @@ function PublishedTab(props: Props) {
               accessor: "topicAreaName",
             },
             {
-              Header: "Last Updated",
+              Header: t("LastUpdatedLabel"),
               accessor: "updatedAt",
               Cell: (props: any) => dateFormatter(props.value),
             },
             {
-              Header: "Published by",
+              Header: t("PublishedBy"),
               accessor: "publishedBy",
             },
           ],

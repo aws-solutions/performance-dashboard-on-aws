@@ -24,7 +24,7 @@ interface Props {
   dynamicDatasets: Array<Dataset>;
   continueButtonDisabled: boolean;
   continueButtonDisabledTooltip?: string;
-  widgetType?: "chart" | "table";
+  widgetType: string;
 }
 
 function ChooseData(props: Props) {
@@ -55,7 +55,7 @@ function ChooseData(props: Props) {
         </label>
         <div className="usa-hint">
           {t("ChooseDataDescription", {
-            widgetType: props.widgetType || "chart",
+            widgetType: props.widgetType,
           })}{" "}
           <Link to="/admin/apihelp" target="_blank" external>
             {t("HowDoIAddDatasets")}

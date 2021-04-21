@@ -106,7 +106,9 @@ function EditDateFormat() {
                 required
                 options={dateFormats.map((format) => ({
                   value: format,
-                  label: `${dayjs().format(format)} (${format})`,
+                  label: `${dayjs()
+                    .locale(window.navigator.language.toLowerCase())
+                    .format(format)} (${format})`,
                 }))}
               />
 
@@ -119,7 +121,9 @@ function EditDateFormat() {
                 required
                 options={timeFormats.map((format) => ({
                   value: format,
-                  label: `${dayjs().format(format)} (${format})`,
+                  label: `${dayjs()
+                    .locale(window.navigator.language.toLowerCase())
+                    .format(format)} (${format})`,
                 }))}
               />
 

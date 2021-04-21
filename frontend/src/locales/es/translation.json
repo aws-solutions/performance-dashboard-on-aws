@@ -70,7 +70,7 @@
   "ViewExistingDashboards": "Ver los paneles existentes",
   "ViewDashboardsCreatedByOthers": "Consulte los paneles que otros editores de su organización han creado.",
   "AddOtherUsers": "Agregar otros usuarios",
-  "AllowOtherUsers": "Permitir que otros usuarios de su organización creen, editen y publiquen paneles. Administre su acceso a los paneles y defina sus roles. También puede agregar otros administradores.",
+  "AllowOtherUsers": "Permita que otros usuarios de su organización creen, editen y publiquen paneles. Administre su acceso a los paneles y defina sus roles. También puede agregar otros administradores.",
   "ManageUsers": "Administrar usuarios",
   "CustomizeSettings": "Personalizar configuración",
   "PersonalizeDashboard": "Personalice la página de inicio del panel, configure cómo los usuarios obtienen aprobación para publicar paneles y obtienen acceso a otros ajustes.",
@@ -127,7 +127,7 @@
     "VersionNotes": "notas de la versión"
   },
   "VisualizeTableComponent": {
-    "ResolveErrors": "Resolver errores al agregar la tabla",
+    "ResolveErrors": "Resolver errores para agregar la tabla",
     "TableShowSummary": "Mostrar resumen a continuación de la tabla",
     "TableSummary": "Resumen de la tabla: opcional",
     "TableSummaryHint": "Incorpore a la tabla un resumen para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la tabla a personas con discapacidades visuales. Este campo admite el marcado.",
@@ -137,7 +137,7 @@
     "TableCorrectDisplay": "¿La tabla parece correcta?"
   },
   "VisualizeChartComponent": {
-    "ResolveErrors": "Resolver errores al agregar el gráfico",
+    "ResolveErrors": "Resolver errores para agregar el gráfico",
     "ChartShowSummary": "Mostrar resumen debajo del gráfico",
     "ChartSummary": "Resumen del gráfico: opcional",
     "ChartSummaryHint": "Incorpore al gráfico un resumen para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir el gráfico a personas con discapacidades visuales. Este campo admite el marcado.",
@@ -164,7 +164,7 @@
   "AddTextScreen": {
     "AddText": "Agregar texto",
     "AddTextError": "Resolver errores al agregar el texto",
-    "AddTextSuccess": "El texto {{title}} se ha agregado correctamente.",
+    "AddTextSuccess": "El texto '{{title}}' se ha agregado correctamente.",
     "CreatingText": "Creación de texto",
     "Configure": "Configurar contenido del texto",
     "TextTitle": "Título del texto",
@@ -178,7 +178,7 @@
   "EditTextScreen": {
     "EditText": "Editar texto",
     "EditTextError": "Resolver errores al editar el texto",
-    "EditTextSuccess": "El texto {{title}} se ha editado correctamente.",
+    "EditTextSuccess": "El texto '{{title}}' se ha editado correctamente.",
     "EditingText": "Editando texto",
     "TextTitle": "Título del texto",
     "TextTitleError": "Especifique un título de texto",
@@ -219,7 +219,7 @@
     "MetricSuccessfullyEdited": "La métrica se ha editado correctamente"
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessffully": "métricas se han agregado correctamente.",
+    "MetricsAddedSuccessffully": "Las métricas '{{title}}' se han agregado correctamente.",
     "Name": "Nombre",
     "LastUpdated": "Última actualización",
     "Description": "Descripción",
@@ -242,14 +242,14 @@
     "ChooseDataset": "Elija un conjunto de datos para continuar",
     "Continue": "Continuar",
     "EnterMetric": "Escriba al menos una métrica para continuar",
-    "ResolveErrors": "Resolver errores al agregar las métricas",
+    "ResolveErrors": "Resolver errores para agregar las métricas",
     "MetricsTitle": "Título de métricas",
     "MetricsTitleHint": "Asigne un título descriptivo al grupo de métricas.",
     "MetricsTitleError": "Especifique un título de contenido",
     "ShowTitle": "Mostrar título en el panel"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessffully": "Las métricas se han editado correctamente.",
+    "MetricsEditedSuccessffully": "Las métricas '{{title}}' se han editado correctamente.",
     "EditMetrics": "Editar métricas",
     "UploadingFile": "Cargando archivo",
     "EditingMetrics": "Editando métricas",
@@ -266,21 +266,21 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "AddChartSuccess": "se ha agregado correctamente."
+    "AddChartSuccess": "El gráfico '{{title}}' se ha agregado correctamente."
   },
   "EditChartScreen": {
     "EditChart": "Editar gráfico",
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "EditChartSuccess": "se ha editado correctamente."
+    "EditChartSuccess": "El gráfico '{{title}}' se ha editado correctamente."
   },
   "AddTableScreen": {
     "AddTable": "Agregar tabla",
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "AddTableSuccess": "La tabla {{title}} se ha agregado correctamente.",
+    "AddTableSuccess": "La tabla '{{title}}' se ha agregado correctamente.",
     "ChooseDataset": "Elija un conjunto de datos para continuar"
   },
   "EditTableScreen": {
@@ -288,7 +288,7 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "EditTableSuccess": "La tabla {{title}} se ha editado correctamente."
+    "EditTableSuccess": "La tabla '{{title}}' se ha editado correctamente."
   },
   "BrandingAndStyling": "Marca y estilo",
   "BrandingAndStylingDescription": "Personalice el panel de rendimiento.",
@@ -328,9 +328,9 @@
     "PleaseAdd": "Agregue una dirección de correo electrónico de usuario."
   },
   "AddUserNewInvite": {
-    "Singular": " se ha agregado un nuevo usuario como",
-    "Plural": " se han agregado nuevos usuarios como",
-    "Final": " y recibirá un correo electrónico de invitación"
+    "Singular": "nuevo usuario se ha agregado como",
+    "Plural": "nuevos usuarios se han agregado como",
+    "Final": "y recibirá un correo electrónico de invitación."
   },
   "ChangeRole": {
     "Label": "Cambiar rol",
@@ -370,7 +370,7 @@
   "TopicAreaName": "Nombre de área de tema",
   "TopicAreaNameSingle": "Nombre de área de tema único",
   "TopicAreaNamePlural": "Nombre de varias áreas de temas",
-  "SelectExistingLeading": "Seleccionar uno existente",
+  "SelectExistingLeading": "Seleccionar un",
   "Description": "Descripción",
   "DescriptionOptional": "Descripción: opcional",
   "ErrorNameSpecify": "Especifique un nombre",
@@ -391,8 +391,7 @@
   "PublishingGuidance": "Orientación sobre publicación",
   "PublishingGuidanceEdit": "Editar orientación para publicación",
   "PublishingGuidanceEditSuccess": "Orientación para publicación editada correctamente.",
-  "PublishingGuidanceEditDescription": "La orientación para publicación es un texto que los usuarios deben leer antes de publicar un panel. Por ejemplo, utilice este texto para recordarles que comprueben errores, si hay información confidencial o confidencial o brindarles orientación específica de su organización.",
-  "PublishingGuidanceDescription": "La orientación para publicación es un texto que los usuarios deben leer antes de publicar un panel. Por ejemplo, utilice este texto para recordarles que comprueben errores, si hay información confidencial o confidencial o brindarles orientación específica de su organización.",
+  "PublishingGuidanceDescription": "La orientación para publicación es un texto que los usuarios deben leer antes de publicar un panel. Por ejemplo, utilice este texto para recordarles que comprueben errores o fallas, si hay información confidencial o sensible o brindarles orientación específica de su organización.",
   "AcknowledgeStatement": "Declaración de conocimiento",
   "PublishWorkflow": {
     "OverwriteWarning": "También sé que esto sobrescribirá la versión publicada existente del panel.",
@@ -526,14 +525,14 @@
   "AdminFooter": {
     "HelpMessage": "¿Tiene problemas técnicos con el sistema?",
     "PerformanceDashboardAssistance": "Asistencia del panel de rendimiento",
-    "ContactSupport": "póngase en contacto con el servicio de soporte."
+    "ContactSupport": "Póngase en contacto con el servicio de soporte."
   },
   "Public": {
     "Menu": "Menú",
     "PerformanceDashboardAssistance": "Asistencia del panel de rendimiento",
     "Contact": "Contacto"
   },
-  "Admin": {
+  "AdminMenu": {
     "Menu": "Menú",
     "Dashboards": "Paneles",
     "ManageUsers": "Administrar usuarios",
@@ -599,13 +598,15 @@
   "HideDataTableButton": "Ocultar tabla de datos",
   "UserListingDropdownChangeRole": "Cambiar rol",
   "GlobalResend": "Volver a enviar",
-  "SuccessfullyRemoved": "Se ha/n eliminado correctamente ",
+  "SuccessfullyRemoved": "Se ha(n) eliminado correctamente ",
   "GlobalUsers": "usuarios",
   "UserListingResentInvites": "se ha reenviado el correo electrónico de invitación",
   "UserListingResentInvitesPlural": "se han reenviado los correos electrónicos de invitación",
   "OrganizationLogo": "Logotipo de organización",
   "CSVFileNotSpecified": "Archivo CSV no especificado",
-  "CheckDataDescription": "Asegúrese de que el sistema da formato a los datos correctamente. Seleccione columnas para dar formato a números, fechas o texto. Seleccione también columnas para ocultarlas o mostrarlas del {{widgetType}}.",
+  "CheckDataDescription": "Asegúrese de que el sistema da formato a los datos correctamente. Seleccione columnas para dar formato a números, fechas o texto. Seleccione también columnas para ocultarlas o mostrarlas en {{widgetType}}.",
+  "CheckDataDescriptionTable": "la tabla",
+  "CheckDataDescriptionChart": "el gráfico",
   "EditColumn": "Editar columna",
   "EditColumns": "Editar columnas",
   "HideFromVisualization": "Ocultar de la visualización",
@@ -620,7 +621,9 @@
   "Euro": "Euro €",
   "Pound": "Libra esterlina £",
   "Data": "Datos",
-  "ChooseDataDescription": "Elija un conjunto de datos existente o cree uno nuevo para rellenar este {{widgetType}}.",
+  "ChooseDataDescription": "Elija un conjunto de datos existente o cree uno nuevo para rellenar {{widgetType}}.",
+  "ChooseDataDescriptionTable": "esta tabla",
+  "ChooseDataDescriptionChart": "este gráfico",
   "HowDoIAddDatasets": "¿Cómo puedo agregar conjuntos de datos?",
   "StaticDataset": "Conjunto de datos estático",
   "StaticDatasetDescription": "Cargue un nuevo conjunto de datos desde un archivo o elija un conjunto de datos existente.",
@@ -711,7 +714,10 @@
   "ZA": "Z-A",
   "DownloadFileError": "La consulta con la clave de S3 proporcionada no ha devuelto ningún resultado.",
   "UploadDatasetError": "El archivo sin procesar no está en un formato aceptado.",
-  "PartToWholeChart": "Gráfico de parte a todo",
+  "PartWholeChart": "Gráfico de parte a todo",
+  "ColumnChart": "Gráfico de columnas",
+  "BarChart": "Gráfico de barras",
+  "LineChart": "Gráfico de líneas",
   "ContentItem": "elemento de contenido",
   "DeletingContentItem": "La eliminación de este elemento de contenido no se puede deshacer. ¿Está seguro de que desea continuar?",
   "Version": "Versión",
@@ -720,7 +726,7 @@
   "LastSaved": "Guardado por último vez",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Archivo de imagen no especificado",
-    "ImageAddedSuccessffully": "la imagen se ha agregado correctamente.",
+    "ImageAddedSuccessffully": "La imagen '{{image}}' se ha agregado correctamente.",
     "AddImage": "Agregar imagen",
     "ConfigureImage": "Configurar imagen",
     "StepTwo": "Paso 2 de 2",
@@ -743,7 +749,7 @@
     "Cancel": "Cancelar"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessffully": "la imagen se ha editado correctamente.",
+    "ImageEditedSuccessffully": "La imagen '{{image}}' se ha editado correctamente.",
     "EditImage": "Editar imagen",
     "ResolveError": "Resolver errores al editar la imagen",
     "Title": "Título de la imagen",
@@ -760,5 +766,18 @@
     "MarkdownLink": "Ver sintaxis de marcado",
     "ToggleSummary": "Mostrar la descripción a continuación de la imagen"
   },
-  "EnterpriseSignIn": "Inicio de sesión empresarial"
+  "EnterpriseSignIn": "Inicio de sesión empresarial",
+  "Actions": "Acciones",
+  "SubmittedBy": "Presentado por",
+  "PublishedBy": "Publicado por",
+  "ArchivedBy": "Archivado por",
+  "AdminSite": "Sitio de administración",
+  "SupportContactEmailEditSuccess": "Dirección de correo electrónico para contactar con soporte editado correctamente.",
+  "Draft": "Borrador",
+  "DashboardContent": "Contenido del panel",
+  "ExpandPreview": "Expandir vista previa",
+  "ClosePreview": "Cerrar vista previa",
+  "Admin": "Administrador",
+  "Editor": "Editor",
+  "GlobalUser": "usuario"
 }

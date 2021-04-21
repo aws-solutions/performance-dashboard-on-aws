@@ -8,6 +8,16 @@ import { amplifyConfig } from "./amplify-config";
 import App from "./App";
 import ReactModal from "react-modal";
 import i18n from "./i18n";
+import "dayjs/locale/en";
+import "dayjs/locale/en-gb";
+import "dayjs/locale/en-au";
+import "dayjs/locale/en-ca";
+import "dayjs/locale/en-in";
+import "dayjs/locale/en-nz";
+import "dayjs/locale/es";
+import "dayjs/locale/es-us";
+import "dayjs/locale/pt";
+import "dayjs/locale/pt-br";
 
 import "uswds/dist/css/uswds.min.css";
 import "uswds/dist/js/uswds.min.js";

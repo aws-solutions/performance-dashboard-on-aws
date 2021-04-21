@@ -78,17 +78,21 @@ function WidgetList(props: Props) {
         <div>
           <AlertContainer />
           <SecondaryActionBar stickyPosition={160}>
-            <h3 className="margin-bottom-0 margin-top-0">Dashboard content</h3>
+            <h3 className="margin-bottom-0 margin-top-0">
+              {t("DashboardContent")}
+            </h3>
             <p className="margin-top-2px margin-bottom-0">
               {t("BuildDashboardGuidance")}
             </p>
             <div className="grid-row radius-lg margin-top-4 text-bold font-sans-sm">
-              <div className="grid-col flex-1">{t("Order")}</div>
-              <div className="grid-col flex-6">
-                <div className="margin-left-2">{t("NameUpperCase")}</div>
+              <div className="grid-col flex-1">
+                <div className="margin-left-1">{t("Order")}</div>
               </div>
               <div className="grid-col flex-5">
-                <div className="margin-left-5">{t("ContentType")}</div>
+                <div className="margin-left-2">{t("NameUpperCase")}</div>
+              </div>
+              <div className="grid-col flex-6">
+                <div className="margin-left-6">{t("ContentType")}</div>
               </div>
             </div>
           </SecondaryActionBar>
@@ -139,7 +143,7 @@ function WidgetList(props: Props) {
                 <div className="border-base-lighter border-left"></div>
                 <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
                   <div
-                    className="grid-col flex-7 usa-tooltip text-bold"
+                    className="grid-col flex-6 usa-tooltip text-bold"
                     data-position="bottom"
                     title={widget.name}
                   >
@@ -147,13 +151,12 @@ function WidgetList(props: Props) {
                       {widget.name}
                     </div>
                   </div>
-                  <div className="grid-col flex-2 text-italic">
-                    {widget.widgetType === WidgetType.Chart
-                      ? UtilsService.getChartTypeLabel(
-                          widget.content.chartType,
-                          t
-                        )
-                      : widget.widgetType}
+                  <div className="grid-col flex-3 text-italic">
+                    {t(
+                      widget.widgetType === WidgetType.Chart
+                        ? widget.content.chartType
+                        : widget.widgetType
+                    )}
                   </div>
                   <div className="grid-col flex-3 text-right">
                     <Link

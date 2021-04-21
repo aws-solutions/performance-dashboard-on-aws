@@ -247,7 +247,7 @@ function ViewDashboardAdmin() {
                   className="usa-tag text-middle"
                   style={{ cursor: "text" }}
                 >
-                  {dashboard?.state}
+                  {t(dashboard?.state)}
                 </span>
               </li>
               <li className="usa-button-group__item">
@@ -350,7 +350,10 @@ function ViewDashboardAdmin() {
       </PrimaryActionBar>
 
       {loading ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <DashboardHeader

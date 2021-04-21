@@ -164,7 +164,7 @@
   "AddTextScreen": {
     "AddText": "Add text",
     "AddTextError": "Resolve error(s) to add the text",
-    "AddTextSuccess": "{{title}} text has been successfully added.",
+    "AddTextSuccess": "'{{title}}' text has been successfully added.",
     "CreatingText": "Creating text",
     "Configure": "Configure text content",
     "TextTitle": "Text title",
@@ -178,7 +178,7 @@
   "EditTextScreen": {
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
-    "EditTextSuccess": "{{title}} text has been successfully edited.",
+    "EditTextSuccess": "'{{title}}' text has been successfully edited.",
     "EditingText": "Editing text",
     "TextTitle": "Text title",
     "TextTitleError": "Please specify a text title",
@@ -219,7 +219,7 @@
     "MetricSuccessfullyEdited": "Metric successfully edited."
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessffully": "metrics have been successfully added.",
+    "MetricsAddedSuccessffully": "Metrics '{{title}}' have been successfully added.",
     "Name": "Name",
     "LastUpdated": "Last updated",
     "Description": "Description",
@@ -249,7 +249,7 @@
     "ShowTitle": "Show title on dashboard"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessffully": "metrics have been successfully edited.",
+    "MetricsEditedSuccessffully": "Metrics '{{title}}' have been successfully edited.",
     "EditMetrics": "Edit metrics",
     "UploadingFile": "Uploading file",
     "EditingMetrics": "Editing metrics",
@@ -266,21 +266,21 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddChartSuccess": "has been successfully added."
+    "AddChartSuccess": "'{{title}}' chart has been successfully added."
   },
   "EditChartScreen": {
     "EditChart": "Edit chart",
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditChartSuccess": "has been successfully edited."
+    "EditChartSuccess": "'{{title}}' chart has been successfully edited."
   },
   "AddTableScreen": {
     "AddTable": "Add table",
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddTableSuccess": "{{title}} table has been successfully added.",
+    "AddTableSuccess": "'{{title}}' table has been successfully added.",
     "ChooseDataset": "Choose a dataset to continue"
   },
   "EditTableScreen": {
@@ -288,7 +288,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditTableSuccess": "{{title}} table has been successfully edited."
+    "EditTableSuccess": "'{{title}}' table has been successfully edited."
   },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",
@@ -328,9 +328,9 @@
     "PleaseAdd": "Please add an user email address."
   },
   "AddUserNewInvite": {
-    "Singular": " new user has been added as",
-    "Plural": " new users have been added as",
-    "Final": " and will receive an invitation email"
+    "Singular": "new user has been added as",
+    "Plural": "new users have been added as",
+    "Final": "and will receive an invitation email."
   },
   "ChangeRole": {
     "Label": "Change role",
@@ -391,7 +391,6 @@
   "PublishingGuidance": "Publishing guidance",
   "PublishingGuidanceEdit": "Edit publishing guidance",
   "PublishingGuidanceEditSuccess": "Publishing guidance successfully edited.",
-  "PublishingGuidanceEditDescription": "Publishing guidance is text that users must acknowledge before they publish a dashboard. For example, use this text to remind them to check for errors or mistakes, sensitive or confidential data, or guidance specific to your organization.",
   "PublishingGuidanceDescription": "Publishing guidance is text that users must acknowledge before they publish a dashboard. For example, use this text to remind them to check for errors or mistakes, sensitive or confidential data, or guidance specific to your organization.",
   "AcknowledgeStatement": "Acknowledge statement",
   "PublishWorkflow": {
@@ -526,14 +525,14 @@
   "AdminFooter": {
     "HelpMessage": "Having technical issues with the system?",
     "PerformanceDashboardAssistance": "Performance Dashboard Assistance",
-    "ContactSupport": "Contact support"
+    "ContactSupport": "Contact support."
   },
   "Public": {
     "Menu": "Menu",
     "PerformanceDashboardAssistance": "Performance Dashboard Assistance",
     "Contact": "Contact"
   },
-  "Admin": {
+  "AdminMenu": {
     "Menu": "Menu",
     "Dashboards": "Dashboards",
     "ManageUsers": "Manage users",
@@ -605,7 +604,9 @@
   "UserListingResentInvitesPlural": "invitation emails were resent",
   "OrganizationLogo": "Organization logo",
   "CSVFileNotSpecified": "CSV file not specified",
-  "CheckDataDescription": "Please make sure that the system formats your data correctly. Select columns to format as numbers, dates, or text. Also select columns to hide or show from the {{widgetType}}.",
+  "CheckDataDescription": "Please make sure that the system formats your data correctly. Select columns to format as numbers, dates, or text. Also select columns to hide or show from {{widgetType}}.",
+  "CheckDataDescriptionTable": "the table",
+  "CheckDataDescriptionChart": "the chart",
   "EditColumn": "Edit column",
   "EditColumns": "Edit columns",
   "HideFromVisualization": "Hide from visualization",
@@ -621,6 +622,8 @@
   "Pound": "Pound £",
   "Data": "Data",
   "ChooseDataDescription": "Choose an existing dataset or create a new one to populate this {{widgetType}}.",
+  "ChooseDataDescriptionTable": "table",
+  "ChooseDataDescriptionChart": "chart",
   "HowDoIAddDatasets": "How do I add datasets?",
   "StaticDataset": "Static dataset",
   "StaticDatasetDescription": "Upload a new dataset from file or elect an existing dataset.",
@@ -711,7 +714,10 @@
   "ZA": "Z-A",
   "DownloadFileError": "The query using the provided S3 key, returned no results.",
   "UploadDatasetError": "Raw file is not an accepted format.",
-  "PartToWholeChart": "Part-to-whole Chart",
+  "PartWholeChart": "Part-to-whole Chart",
+  "ColumnChart": "Column chart",
+  "BarChart": "Bar chart",
+  "LineChart": "Line chart",
   "ContentItem": "content item",
   "DeletingContentItem": "Deleting this content item cannot be undone. Are you sure you want to continue?",
   "Version": "Version",
@@ -720,7 +726,7 @@
   "LastSaved": "Last saved",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Image file not specified",
-    "ImageAddedSuccessffully": "image has been successfully added.",
+    "ImageAddedSuccessffully": "Image '{{image}}' has been successfully added.",
     "AddImage": "Add Image",
     "ConfigureImage": "Configure image",
     "StepTwo": "Step 2 of 2",
@@ -743,7 +749,7 @@
     "Cancel": "Cancel"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessffully": "image has been successfully edited.",
+    "ImageEditedSuccessffully": "Image '{{image}}' has been successfully edited.",
     "EditImage": "Edit Image",
     "ResolveError": "Resolve error(s) to edit the image",
     "Title": "Image title",
@@ -760,5 +766,18 @@
     "MarkdownLink": "View Markdown Syntax",
     "ToggleSummary": "Show description below image"
   },
-  "EnterpriseSignIn": "Enterprise Sign-in"
+  "EnterpriseSignIn": "Enterprise Sign-in",
+  "Actions": "Actions",
+  "SubmittedBy": "Submitted by",
+  "PublishedBy": "Published by",
+  "ArchivedBy": "Archived by",
+  "AdminSite": "Admin site",
+  "SupportContactEmailEditSuccess": "Support contact email successfully edited.",
+  "Draft": "Draft",
+  "DashboardContent": "Dashboard content",
+  "ExpandPreview": "Expand preview",
+  "ClosePreview": "Close preview",
+  "Admin": "Admin",
+  "Editor": "Editor",
+  "GlobalUser": "user"
 }

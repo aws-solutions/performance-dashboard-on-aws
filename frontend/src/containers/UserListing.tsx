@@ -6,6 +6,7 @@ import Search from "../components/Search";
 import Table from "../components/Table";
 import { LocationState, User } from "../models";
 import BackendService from "../services/BackendService";
+import UtilsService from "../services/UtilsService";
 import { useHistory } from "react-router-dom";
 import Modal from "../components/Modal";
 import AlertContainer from "./AlertContainer";
@@ -44,8 +45,8 @@ function UserListing() {
         history.replace("/admin/users", {
           alert: {
             type: "success",
-            message: `${t("SuccessfullyRemoved")} ${selected.length} ${t(
-              "GlobalUsers"
+            message: `${t("SuccessfullyRemoved")}${selected.length} ${t(
+              selected.length === 1 ? "GlobalUser" : "GlobalUsers"
             )}.`,
           },
         });
@@ -222,11 +223,16 @@ function UserListing() {
             },
             {
               Header: t("UserListingRole"),
-              accessor: (row: User) => row.roles[0],
+              accessor: (row: User) => t(row.roles[0]),
             },
             {
               Header: t("UserListingStatus"),
-              accessor: "userStatus",
+              accessor: (row: User) =>
+                t(
+                  `UserStatuses.${UtilsService.getTranslationUserStatusValue(
+                    row.userStatus
+                  )}`
+                ),
             },
           ],
           []

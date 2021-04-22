@@ -44,7 +44,7 @@ test("renders element descriptions", async () => {
   ).toBeInTheDocument();
   expect(
     getByText(
-      "Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown."
+      "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments. This field supports markdown."
     )
   ).toBeInTheDocument();
 });
@@ -91,7 +91,7 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
     expect(getByText("Image description - optional")).toBeInTheDocument();
     expect(
       getByText(
-        "Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown."
+        "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments. This field supports markdown."
       )
     ).toBeInTheDocument();
   });

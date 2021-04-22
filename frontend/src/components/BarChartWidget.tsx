@@ -17,6 +17,7 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import { ColumnDataType } from "../models";
 
 type Props = {
   title: string;
@@ -67,9 +68,19 @@ const BarChartWidget = (props: Props) => {
 
   const { data, bars } = props;
   const yAxisType = useCallback(() => {
-    return data && data.every((row) => typeof row[bars[0]] === "number")
-      ? "number"
-      : "category";
+    let columnMetadata;
+    if (props.columnsMetadata && bars.length) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === bars[0]
+      );
+    }
+    if (columnMetadata && columnMetadata.dataType === ColumnDataType.Text) {
+      return "category";
+    } else {
+      return data && data.every((row) => typeof row[bars[0]] === "number")
+        ? "number"
+        : "category";
+    }
   }, [data, bars]);
 
   const toggleBars = (e: any) => {

@@ -1,5 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { I18n } from "@aws-amplify/core";
+import { Translations } from "@aws-amplify/ui-components";
 
 import english from "./locales/en/translation.json";
 import spanish from "./locales/es/translation.json";
@@ -20,4 +22,20 @@ export default function init(defaultLanguage?: string) {
         pt: { translation: portuguese },
       },
     });
+
+  const dict: any = {};
+  ["es", "pt"].forEach((locale) => {
+    let jsonFile = require(`./amplify-locales/${locale}/translation.json`);
+    let translations: any = {};
+    Object.entries(jsonFile).forEach(([key, value]) => {
+      key = Translations[key as keyof typeof Translations];
+      if (key) {
+        translations[key] = value;
+      }
+    });
+    dict[locale] = translations;
+  });
+
+  I18n.putVocabularies(dict);
+  I18n.setLanguage(defaultLanguage || window.navigator.language);
 }

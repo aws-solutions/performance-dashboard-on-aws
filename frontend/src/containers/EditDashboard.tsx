@@ -89,14 +89,11 @@ function EditDashboard() {
       history.replace(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${widgetToDelete.name}" ${
+          message: `${t(
             widgetToDelete.widgetType === WidgetType.Chart
-              ? UtilsService.getChartTypeLabel(
-                  widgetToDelete.content.chartType,
-                  t
-                ).toLowerCase()
-              : widgetToDelete.widgetType.toLowerCase()
-          } ${t("DashboardWasDeleted")}`,
+              ? widgetToDelete.content.chartType
+              : widgetToDelete.widgetType
+          )} '${widgetToDelete.name}' ${t("DashboardWasDeleted")}`,
         },
       });
 
@@ -184,11 +181,11 @@ function EditDashboard() {
       ) : (
         <>
           <PrimaryActionBar className="grid-row" stickyPosition={75}>
-            <div className="grid-col text-left flex-row flex-align-center display-flex">
+            <div className="grid-col-4 text-left flex-row flex-align-center display-flex">
               <ul className="usa-button-group">
                 <li className="usa-button-group__item">
                   <span className="usa-tag" style={{ cursor: "text" }}>
-                    {dashboard?.state}
+                    {t("Draft")}
                   </span>
                 </li>
                 <li
@@ -246,10 +243,12 @@ function EditDashboard() {
                 </li>
               </ul>
             </div>
-            <div className="grid-col text-right">
+            <div className="grid-col-8 text-right">
               <span className="text-base margin-right-1">
                 {dashboard &&
-                  `${t("LastSaved")} ${dayjs(dashboard.updatedAt).fromNow()}`}
+                  `${t("LastSaved")} ${dayjs(dashboard.updatedAt)
+                    .locale(window.navigator.language.toLowerCase())
+                    .fromNow()}`}
               </span>
               <Button variant="outline" onClick={onPreview}>
                 {t("PreviewButton")}

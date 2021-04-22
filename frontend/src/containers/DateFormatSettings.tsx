@@ -55,15 +55,19 @@ function DateFormatSettings() {
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
               <div className="published-site font-sans-lg">
-                {dayjs().format(settings.dateTimeFormat.date)} (
-                {settings.dateTimeFormat.date})
+                {dayjs()
+                  .locale(window.navigator.language.toLowerCase())
+                  .format(settings.dateTimeFormat.date)}{" "}
+                ({settings.dateTimeFormat.date})
               </div>
               <div className="grid-col flex-9">
                 <p className="text-bold">{t("SettingsTimeFormat")}</p>
               </div>
               <div className="font-sans-lg">
-                {dayjs().format(settings.dateTimeFormat.time)} (
-                {settings.dateTimeFormat.time})
+                {dayjs()
+                  .locale(window.navigator.language.toLowerCase())
+                  .format(settings.dateTimeFormat.time)}{" "}
+                ({settings.dateTimeFormat.time})
               </div>
             </div>
             <div className="grid-col flex-3 text-right"></div>

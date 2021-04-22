@@ -13,7 +13,7 @@
   "APIHelpByline": "Existem três métodos para preencher visualizações de dados em gráficos ou tabelas:",
   "APIHelpSelectDynamicDatasetTitle": "Selecionar um conjunto de dados dinâmico",
   "APIHelpSelectDynamicDatasetBody": "Estes conjuntos de dados atualizam a visualização de dados automaticamente à medida que novos dados são adicionados à fonte. Os conjuntos de dados dinâmicos são úteis para visualizar dados de streaming que são atualizados com frequência. Os conjuntos de dados dinâmicos não são configuráveis na interface. Se você tiver um conjunto de dados dinâmico que precisa ser configurado,",
-  "APIHelpSelectDynamicDatasetSupport": "entrar em contato com o suporte",
+  "APIHelpSelectDynamicDatasetSupport": "entre em contato com o suporte",
   "APIHelpSelectDynamicDatasetLearn": ". Se quiser saber mais sobre como configurar conjuntos de dados dinâmicos,",
   "APIHelpSelectDynamicDatasetDoc": "leia nossa documentação.",
   "APIHelpSelectStaticDatasetTitle": "Selecionar um conjunto de dados estático ",
@@ -140,7 +140,7 @@
     "ResolveErrors": "Resolva o(s) erro(s) para adicionar o gráfico",
     "ChartShowSummary": "Mostrar resumo abaixo do gráfico",
     "ChartSummary": "Resumo do gráfico - opcional",
-    "ChartSummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela, para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
+    "ChartSummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
     "ChartTitle": "Título do gráfico",
     "ChartTitleHint": "Dê um título descritivo para o seu gráfico.",
     "ChartTitleError": "Especifique um título de gráfico",
@@ -164,9 +164,9 @@
   "AddTextScreen": {
     "AddText": "Adicionar texto",
     "AddTextError": "Resolver erros para adicionar o texto",
-    "AddTextSuccess": "O texto {{title}} foi adicionado com êxito.",
+    "AddTextSuccess": "O texto '{{title}}' foi adicionado com êxito.",
     "CreatingText": "Criação de texto",
-    "Configure": "Configurar o conteúdo do texto",
+    "Configure": "Configurar conteúdo do texto",
     "TextTitle": "Título do texto",
     "TextTitleError": "Especifique um título para o texto",
     "TextTitleHint": "Forneça um título descritivo ao seu conteúdo.",
@@ -178,7 +178,7 @@
   "EditTextScreen": {
     "EditText": "Editar texto",
     "EditTextError": "Resolva o(s) erro(s) para editar o texto",
-    "EditTextSuccess": "O texto {{title}} foi editado com êxito.",
+    "EditTextSuccess": "O texto '{{title}}' foi editado com êxito.",
     "EditingText": "Editando texto",
     "TextTitle": "Título do texto",
     "TextTitleError": "Especifique um título para o texto",
@@ -197,7 +197,7 @@
     "MetricValueHint": "Insira um número aqui.",
     "MetricValueError": "Especifique um valor",
     "ChangeOverTime": "Alteração ao longo do tempo - opcional",
-    "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo,+10,1% ou -56%. A maioria inclui “+” ou “-”.",
+    "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo, +10,1% ou -56%. A maioria inclui “+” ou “-”.",
     "ChangeOverTimeError": "Deve começar com “+” ou “-”.",
     "StartDateOptional": "Data de início - opcional",
     "EndDateOptional": "Data de término - opcional",
@@ -212,14 +212,14 @@
     "MetricValueHint": "Insira um número aqui.",
     "MetricValueError": "Especifique um valor",
     "ChangeOverTime": "Alteração ao longo do tempo - opcional",
-    "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo,+10,1% ou -56%. A maioria inclui “+” ou “-”.",
+    "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo, +10,1% ou -56%. A maioria inclui “+” ou “-”.",
     "ChangeOverTimeError": "Deve começar com “+” ou “-”.",
     "StartDateOptional": "Data de início - opcional",
     "EndDateOptional": "Data de término - opcional",
     "MetricSuccessfullyEdited": "Métrica editada com êxito."
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessffully": "métricas foram adicionadas com êxito.",
+    "MetricsAddedSuccessffully": "Métricas '{{title}}' foram adicionadas com êxito.",
     "Name": "Nome",
     "LastUpdated": "Última atualização",
     "Description": "Descrição",
@@ -249,7 +249,7 @@
     "ShowTitle": "Mostrar título no painel"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessffully": "métricas foram editadas com êxito.",
+    "MetricsEditedSuccessffully": "Métricas '{{title}}' foram editadas com êxito.",
     "EditMetrics": "Editar métricas",
     "UploadingFile": "Fazendo upload do arquivo",
     "EditingMetrics": "Editando métricas",
@@ -266,21 +266,21 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "AddChartSuccess": "foi adicionado com êxito."
+    "AddChartSuccess": "O gráfico '{{title}}' foi adicionado com êxito."
   },
   "EditChartScreen": {
     "EditChart": "Editar gráfico",
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "EditChartSuccess": "foi editado com êxito."
+    "EditChartSuccess": "O gráfico '{{title}}' foi editado com êxito."
   },
   "AddTableScreen": {
     "AddTable": "Adicionar tabela",
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "AddTableSuccess": "A tabela {{title}} foi adicionada com êxito.",
+    "AddTableSuccess": "A tabela '{{title}}' foi adicionada com êxito.",
     "ChooseDataset": "Escolha um conjunto de dados para continuar"
   },
   "EditTableScreen": {
@@ -288,7 +288,7 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "EditTableSuccess": "A tabela {{title}} foi editada com êxito."
+    "EditTableSuccess": "A tabela '{{title}}' foi editada com êxito."
   },
   "BrandingAndStyling": "Marca e estilo",
   "BrandingAndStylingDescription": "Personalize seu painel de performance.",
@@ -370,9 +370,9 @@
   "TopicAreaName": "Nome da área do tópico",
   "TopicAreaNameSingle": "Nome da área de tópico único",
   "TopicAreaNamePlural": "Nome de várias áreas de tópicos",
-  "SelectExistingLeading": "Selecionar um item existente",
+  "SelectExistingLeading": "Selecionar um",
   "Description": "Descrição",
-  "DescriptionOptional": "Descrição - opcional",
+  "DescriptionOptional": "Descrição (opcional)",
   "ErrorNameSpecify": "Especifique um nome",
   "MetricsAdd": "+ Adicionar métrica",
   "MetricsOptionsLabel": "Opções de métricas",
@@ -391,7 +391,6 @@
   "PublishingGuidance": "Instruções de publicação",
   "PublishingGuidanceEdit": "Editar instruções de publicação",
   "PublishingGuidanceEditSuccess": "Instruções de publicação editadas com êxito.",
-  "PublishingGuidanceEditDescription": "As instruções de publicação são um texto que os usuários devem confirmar ter lido antes de publicarem um painel. Por exemplo, use esse texto para lembrá-los de verificar erros, dados confidenciais ou orientações específicas para sua organização.",
   "PublishingGuidanceDescription": "As instruções de publicação são um texto que os usuários devem confirmar ter lido antes de publicarem um painel. Por exemplo, use esse texto para lembrá-los de verificar erros, dados confidenciais ou orientações específicas para sua organização.",
   "AcknowledgeStatement": "Declaração de confirmação",
   "PublishWorkflow": {
@@ -526,14 +525,14 @@
   "AdminFooter": {
     "HelpMessage": "Está tendo problemas técnicos com o sistema?",
     "PerformanceDashboardAssistance": "Assistência do painel de performance",
-    "ContactSupport": "Entrar em contato com o suporte"
+    "ContactSupport": "Entrar em contato com o suporte."
   },
   "Public": {
     "Menu": "Menu",
     "PerformanceDashboardAssistance": "Assistência do painel de performance",
     "Contact": "Contato"
   },
-  "Admin": {
+  "AdminMenu": {
     "Menu": "Menu",
     "Dashboards": "Painéis",
     "ManageUsers": "Gerenciar usuários",
@@ -556,7 +555,7 @@
     "ColumnChartExample": "Exemplo de gráfico de colunas",
     "ColumnChartExampleDownload": "Fazer download de um exemplo de gráfico de colunas em CSV",
     "PartToWholeChart": "Gráfico de blocos",
-    "PartToWholeChartDescription": "Este é gráfico dividido em blocos, ilustrando uma proporção numérica. Em um gráfico de blocos, o comprimento de cada bloco (e consequentemente sua área) é proporcional à quantidade que ele representa. Gráficos de blocos são usados para comparar blocos como as partes de um valor total.",
+    "PartToWholeChartDescription": "Este gráfico é dividido em blocos, ilustrando uma proporção numérica. Em um gráfico de blocos, o comprimento de cada bloco (e consequentemente sua área) é proporcional à quantidade que ele representa. Gráficos de blocos são usados para comparar blocos como as partes de um valor total.",
     "PartToWholeChartExample": "Exemplo de gráfico de blocos",
     "PartToWholeChartExampleDownload": "Fazer download de um exemplo de gráfico de blocos em CSV",
     "TableDescription": "Uma tabela é um meio de organizar dados em linhas e colunas. As tabelas são usadas para mostrar uma comparação quando se deseja ter granularidade dos dados.",
@@ -606,6 +605,8 @@
   "OrganizationLogo": "Logotipo da organização",
   "CSVFileNotSpecified": "Arquivo CSV não especificado",
   "CheckDataDescription": "Certifique-se de que o sistema formate seus dados corretamente. Selecione colunas para formatar como números, datas ou texto. Selecione também colunas para ocultar ou mostrar no {{widgetType}}.",
+  "CheckDataDescriptionTable": "tabela",
+  "CheckDataDescriptionChart": "gráfico",
   "EditColumn": "Editar coluna",
   "EditColumns": "Editar colunas",
   "HideFromVisualization": "Ocultar da visualização",
@@ -620,7 +621,9 @@
   "Euro": "Euro €",
   "Pound": "Libra £",
   "Data": "Dados",
-  "ChooseDataDescription": "Escolha um conjunto de dados existente ou crie um novo para preencher este {{widgetType}}.",
+  "ChooseDataDescription": "Escolha um conjunto de dados existente ou crie um novo para preencher {{widgetType}}.",
+  "ChooseDataDescriptionTable": "essa tabela",
+  "ChooseDataDescriptionChart": "este gráfico",
   "HowDoIAddDatasets": "Como adicionar conjuntos de dados?",
   "StaticDataset": "Conjunto de dados estático",
   "StaticDatasetDescription": "Faça upload de um novo conjunto de dados do arquivo ou selecione um conjunto de dados existente.",
@@ -677,7 +680,7 @@
     "ContrastDescription2": "Vermelho puro (#FF0000) tem uma relação de 4:1.",
     "ContrastDescription3": "Verde puro (#00FF00) tem uma relação muito baixa de 1,4:1.",
     "ContrastDescription4": "Azul puro (#0000FF) tem uma relação de contraste de 8,6:1.",
-    "ContrastDescription5": "Se você recebeu um aviso sobre a sua cor primária, é porque ela não tem um contraste mínimo de 4,5:1 em um fundo branco. Você pode continuar, mas seu site não atenderá à maioria dos padrões de acessibilidade. Recomendamos que você escolha outra cor que faça parte da sua marca para usar como a cor primária.",
+    "ContrastDescription5": "Se você recebeu um aviso sobre a sua cor primária, é porque ela não tem um contraste mínimo de 4,5:1 em um fundo branco. Você pode continuar, mas seu site não atenderá à maioria dos padrões de acessibilidade. Recomendamos que escolha outra cor que faça parte da sua marca para usar como a cor primária.",
     "ContrastDescription6": "Há também muitas ferramentas “verificadoras do contraste de cores” gratuitas que você pode encontrar para verificar se as suas cores atendem aos requisitos de contraste de cores das WCAG 2.0, Nível AA."
   },
   "MarkdownSyntax": {
@@ -711,7 +714,10 @@
   "ZA": "Z-A",
   "DownloadFileError": "A consulta usando a chave do S3 fornecida não retornou resultados.",
   "UploadDatasetError": "O arquivo bruto não é um formato aceito.",
-  "PartToWholeChart": "Gráfico de blocos",
+  "PartWholeChart": "Gráfico de blocos",
+  "ColumnChart": "Gráfico de colunas",
+  "BarChart": "Gráfico de barras",
+  "LineChart": "Gráfico de linhas",
   "ContentItem": "item de conteúdo",
   "DeletingContentItem": "A exclusão deste item de conteúdo não pode ser desfeita. Tem certeza de que deseja continuar?",
   "Version": "Versão",
@@ -720,7 +726,7 @@
   "LastSaved": "Salvo pela última vez",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Arquivo de imagem não especificado",
-    "ImageAddedSuccessffully": "imagem adicionada com êxito.",
+    "ImageAddedSuccessffully": "Imagem '{{image}}' adicionada com êxito.",
     "AddImage": "Adicionar imagem",
     "ConfigureImage": "Configurar imagem",
     "StepTwo": "Etapa 2 de 2",
@@ -735,7 +741,7 @@
     "TextHint": "Forneça uma breve descrição da imagem para usuários com deficiência visual que usam leitor de tela. Essa descrição não será exibida no painel.",
     "TextError": "Especificar texto alternativo da imagem",
     "SummaryLabel": "Descrição da imagem - opcional",
-    "SummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela, para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
+    "SummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
     "ToggleSummary": "Mostrar descrição abaixo da imagem",
     "Back": "Voltar",
@@ -743,7 +749,7 @@
     "Cancel": "Cancelar"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessffully": "imagem foi editada com êxito.",
+    "ImageEditedSuccessffully": "Imagem '{{image}}' foi editada com êxito.",
     "EditImage": "Editar imagem",
     "ResolveError": "Resolva o(s) erro(s) para editar a imagem",
     "Title": "Título da imagem",
@@ -756,9 +762,22 @@
     "TextHint": "Forneça uma breve descrição da imagem para usuários com deficiência visual que usam leitor de tela. Essa descrição não será exibida no painel.",
     "TextError": "Especificar texto alternativo da imagem",
     "SummaryLabel": "Descrição da imagem - opcional",
-    "SummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela, para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
+    "SummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
     "ToggleSummary": "Mostrar descrição abaixo da imagem"
   },
-  "EnterpriseSignIn": "Login empresarial"
+  "EnterpriseSignIn": "Login empresarial",
+  "Actions": "Ações",
+  "SubmittedBy": "Submetido por",
+  "PublishedBy": "Publicado por",
+  "ArchivedBy": "Arquivado por",
+  "AdminSite": "Site de administração",
+  "SupportContactEmailEditSuccess": "Endereço de e-mail do contato de suporte editado com êxito.",
+  "Draft": "Rascunho",
+  "DashboardContent": "Conteúdo do painel",
+  "ExpandPreview": "Expandir visualização",
+  "ClosePreview": "Fechar visualização",
+  "Admin": "Administrador",
+  "Editor": "Editor",
+  "GlobalUser": "usuário"
 }

@@ -192,7 +192,8 @@ exports[`date format settings should match snapshot 1`] = `
                 class="published-site font-sans-lg"
               >
                 2020-12-09
-                 (
+                 
+                (
                 YYYY-MM-DD
                 )
               </div>
@@ -209,7 +210,8 @@ exports[`date format settings should match snapshot 1`] = `
                 class="font-sans-lg"
               >
                 03:30
-                 (
+                 
+                (
                 HH:mm
                 )
               </div>

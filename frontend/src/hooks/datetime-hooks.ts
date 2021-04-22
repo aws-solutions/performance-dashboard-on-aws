@@ -7,7 +7,9 @@ export function useDateTimeFormatter(): Function {
   return useCallback(
     (dateToDisplay: Date) => {
       const { date, time } = settings.dateTimeFormat;
-      return dayjs(dateToDisplay).format(`${date} ${time}`);
+      return dayjs(dateToDisplay)
+        .locale(window.navigator.language.toLowerCase())
+        .format(`${date} ${time}`);
     },
     [settings]
   );

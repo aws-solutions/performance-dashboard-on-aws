@@ -45,7 +45,7 @@ function Home() {
         top: "30%",
         left: "50%",
       }}
-      label="Loading"
+      label={t("LoadingSpinnerLabel")}
     />
   ) : (
     <div className="usa-prose">

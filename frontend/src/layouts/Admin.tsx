@@ -53,7 +53,7 @@ function AdminLayout(props: LayoutProps) {
                 </Link>
               </em>
             </div>
-            <button className="usa-menu-btn">{t("Admin.Menu")}</button>
+            <button className="usa-menu-btn">{t("AdminMenu.Menu")}</button>
           </div>
           <nav aria-label="Primary navigation" className="usa-nav">
             <button className="usa-nav__close">
@@ -64,7 +64,7 @@ function AdminLayout(props: LayoutProps) {
                 <>
                   <li className="usa-nav__primary-item">
                     <Link className="usa-nav__link" to="/admin/dashboards">
-                      {t("Admin.Dashboards")}
+                      {t("AdminMenu.Dashboards")}
                     </Link>
                   </li>
                 </>
@@ -75,12 +75,12 @@ function AdminLayout(props: LayoutProps) {
                 <>
                   <li className="usa-nav__primary-item">
                     <Link className="usa-nav__link" to="/admin/users">
-                      {t("Admin.ManageUsers")}
+                      {t("AdminMenu.ManageUsers")}
                     </Link>
                   </li>
                   <li className="usa-nav__primary-item">
                     <Link className="usa-nav__link" to="/admin/settings">
-                      {t("Admin.Settings")}
+                      {t("AdminMenu.Settings")}
                     </Link>
                   </li>
                 </>
@@ -102,7 +102,7 @@ function AdminLayout(props: LayoutProps) {
                 >
                   <li className="usa-nav__submenu-item">
                     <a href="/admin" onClick={signOut} className="usa-link">
-                      {t("Admin.Logout")}
+                      {t("AdminMenu.Logout")}
                     </a>
                   </li>
                 </ul>

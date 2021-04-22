@@ -213,10 +213,7 @@ function AddChart() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" ${UtilsService.getChartTypeLabel(
-            values.chartType,
-            t
-          ).toLowerCase()} ${t("AddChartScreen.AddChartSuccess")}`,
+          message: t("AddChartScreen.AddChartSuccess", { title: values.title }),
         },
       });
     } catch (err) {
@@ -395,7 +392,7 @@ function AddChart() {
                   csvFile={csvFile}
                   onCancel={onCancel}
                   register={register}
-                  widgetType="chart"
+                  widgetType={t("ChooseDataDescriptionChart")}
                 />
               </PrimaryActionBar>
             </div>
@@ -423,7 +420,7 @@ function AddChart() {
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
                   reset={reset}
-                  widgetType="chart"
+                  widgetType={t("CheckDataDescriptionChart")}
                 />
               </PrimaryActionBar>
             </div>

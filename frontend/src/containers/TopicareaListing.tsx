@@ -111,7 +111,10 @@ function TopicareaListing() {
       />
 
       {loading ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <h3 id="section-heading-h3">{`${settings.topicAreaLabels.plural} (${topicareas.length})`}</h3>

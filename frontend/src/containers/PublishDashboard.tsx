@@ -186,12 +186,15 @@ function PublishDashboard() {
           <div className="grid-col text-right display-flex flex-row flex-align-center padding-top-2">
             <ul className="usa-button-group flex-1">
               <li className="usa-button-group__item">
-                <span className="usa-tag" style={{ cursor: "text" }}>
+                <span
+                  className="usa-tag"
+                  style={{ cursor: "text", marginTop: "2px" }}
+                >
                   {t("PublishPendingStateLabel")}
                 </span>
               </li>
-              <li className="usa-button-group__item">
-                <span className="text-underline text-middle">
+              <li className="usa-button-group__item cursor-default">
+                <span>
                   <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
                   {t("ViewDashboardAlertVersion")} {dashboard?.version}
                 </span>
@@ -199,11 +202,11 @@ function PublishDashboard() {
             </ul>
             <span className="text-base margin-right-1">
               {dashboard &&
-                `${t("LastUpdatedLabel")} ${dayjs(
-                  dashboard.updatedAt
-                ).fromNow()}`}
+                `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
+                  .locale(window.navigator.language.toLowerCase())
+                  .fromNow()}`}
             </span>
-            <DropdownMenu buttonText="Actions" variant="outline">
+            <DropdownMenu buttonText={t("Actions")} variant="outline">
               <DropdownMenu.MenuLink
                 href={`/admin/dashboard/${dashboard.id}/history`}
               >
@@ -313,7 +316,7 @@ function PublishDashboard() {
                 }`}
               >
                 <div>
-                  <div className="usa-checkbox marin-top-neg-1">
+                  <div className="usa-checkbox margin-top-neg-1">
                     <input
                       type="checkbox"
                       id="acknowledge"
@@ -338,12 +341,14 @@ function PublishDashboard() {
                         ] === "."
                           ? ""
                           : "."
+                      } ${
+                        hasPublishedVersion()
+                          ? t("PublishWorkflow.OverwriteWarning")
+                          : ""
                       }`}
                     />
                   </span>
-                  {hasPublishedVersion() && (
-                    <p>{t("PublishWorkflow.OverwriteWarning")}</p>
-                  )}
+                  {}
                 </div>
               </div>
               <div className="padding-top-2 border-top border-base-lighter margin-top-4">

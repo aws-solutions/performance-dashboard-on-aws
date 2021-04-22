@@ -371,7 +371,7 @@ function AddTable() {
                 csvFile={csvFile}
                 onCancel={onCancel}
                 register={register}
-                widgetType="table"
+                widgetType={t("ChooseDataDescriptionTable")}
               />
             </PrimaryActionBar>
           </div>
@@ -399,7 +399,7 @@ function AddTable() {
                 setSortByColumn={setSortByColumn}
                 setSortByDesc={setSortByDesc}
                 reset={reset}
-                widgetType="table"
+                widgetType={t("CheckDataDescriptionTable")}
               />
             </PrimaryActionBar>
           </div>

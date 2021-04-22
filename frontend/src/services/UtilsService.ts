@@ -1,5 +1,4 @@
 import {
-  ChartType,
   Dashboard,
   DashboardState,
   PublicDashboard,
@@ -31,12 +30,6 @@ function groupByTopicArea(
     byId[id] = topicarea;
   });
   return Object.values(byId);
-}
-
-function getChartTypeLabel(chartType: string, t: Function): string {
-  return chartType === ChartType.PartWholeChart
-    ? t("PartToWholeChart")
-    : chartType.split(/(?=[A-Z])/).join(" ");
 }
 
 function validateEmails(input: string): boolean {
@@ -103,15 +96,46 @@ function getDashboardUrlPath(dashboard?: Dashboard) {
   }
 }
 
+function getTranslationUserStatusValue(userStatus: string) {
+  let translationUserStatusValue = "";
+  switch (userStatus) {
+    case "UNCONFIRMED":
+      translationUserStatusValue = "Unconfirmed";
+      break;
+    case "CONFIRMED":
+      translationUserStatusValue = "Confirmed";
+      break;
+    case "ARCHIVED":
+      translationUserStatusValue = "Archived";
+      break;
+    case "COMPROMISED":
+      translationUserStatusValue = "Compromised";
+      break;
+    case "UNKNOWN":
+      translationUserStatusValue = "Unknown";
+      break;
+    case "RESET_REQUIRED":
+      translationUserStatusValue = "Reset_Required";
+      break;
+    case "FORCE_CHANGE_PASSWORD":
+      translationUserStatusValue = "Force_Change_Password";
+      break;
+    default:
+      translationUserStatusValue = userStatus;
+      break;
+  }
+  return translationUserStatusValue;
+}
+
 const UtilsService = {
   groupByTopicArea,
-  getChartTypeLabel,
   validateEmails,
   timeout,
   getLargestHeader,
   getDashboardUrlPath,
   calculateYAxisMargin,
   isCellEmpty,
+  getTranslationUserStatusValue,
 };
 
 export default UtilsService;

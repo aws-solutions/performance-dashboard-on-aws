@@ -85,7 +85,7 @@ function AddMetrics() {
   >();
   const [step, setStep] = useState<number>(state && state.metrics ? 1 : 0);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
-    state && state.metrics ? DatasetType.CreateNew : undefined
+    state && state.datasetType ? state.datasetType : undefined
   );
   const { fullPreview, fullPreviewButton } = useFullPreview();
 
@@ -157,7 +157,10 @@ function AddMetrics() {
     try {
       if (datasetType) {
         let newDataset;
-        if (datasetType === DatasetType.DynamicDataset) {
+        if (
+          datasetType === DatasetType.DynamicDataset &&
+          dynamicJson === metrics
+        ) {
           newDataset = { ...dynamicDataset };
         } else {
           newDataset = await uploadDataset();
@@ -174,7 +177,11 @@ function AddMetrics() {
             datasetId: newDataset.id,
             s3Key: newDataset.s3Key,
             oneMetricPerRow: values.oneMetricPerRow,
-            datasetType,
+            datasetType:
+              datasetType === DatasetType.DynamicDataset &&
+              dynamicJson === metrics
+                ? DatasetType.DynamicDataset
+                : DatasetType.CreateNew,
             significantDigitLabels: values.significantDigitLabels,
           }
         );
@@ -183,9 +190,9 @@ function AddMetrics() {
         history.push(`/admin/dashboard/edit/${dashboardId}`, {
           alert: {
             type: "success",
-            message: `"${values.title}" ${t(
-              "AddMetricsScreen.MetricsAddedSuccessffully"
-            )}`,
+            message: t("AddMetricsScreen.MetricsAddedSuccessffully", {
+              title: values.title,
+            }),
           },
         });
       }
@@ -202,6 +209,7 @@ function AddMetrics() {
       oneMetricPerRow,
       metricTitle: title,
       origin: history.location.pathname,
+      datasetType: datasetType,
     });
   };
 
@@ -214,6 +222,7 @@ function AddMetrics() {
       oneMetricPerRow,
       metricTitle: title,
       origin: history.location.pathname,
+      datasetType: datasetType,
     });
   };
 

@@ -274,6 +274,7 @@ export type LocationState = {
   staticDataset?: Dataset | undefined;
   redirectUrl?: string;
   crumbLabel?: string;
+  datasetType?: DatasetType;
 };
 
 export enum UserRoles {

@@ -66,7 +66,7 @@ function EditPublishingGuidance() {
         <Breadcrumbs crumbs={crumbs} />
         <h1>{t("PublishingGuidanceEdit")}</h1>
 
-        <p>{t("PublishingGuidanceEditDescription")}</p>
+        <p>{t("PublishingGuidanceDescription")}</p>
 
         {loadingSettings ? (
           <Spinner

@@ -76,7 +76,10 @@ function EditNavBar() {
         <p>{t("SettingsNavBarEditDescription")}</p>
 
         {loadingSettings ? (
-          <Spinner className="text-center margin-top-9" label={t("Loading")} />
+          <Spinner
+            className="text-center margin-top-9"
+            label={t("LoadingSpinnerLabel")}
+          />
         ) : (
           <>
             <form

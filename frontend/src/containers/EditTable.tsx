@@ -455,6 +455,7 @@ function EditTable() {
             }
             type="button"
             onClick={() => setStep(0)}
+            style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
           >
             {t("EditTableScreen.ChooseData")}
           </button>
@@ -466,6 +467,7 @@ function EditTable() {
             }
             type="button"
             onClick={() => setStep(1)}
+            style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
             disabled={!displayedJson.length}
           >
             {t("EditTableScreen.CheckData")}
@@ -478,6 +480,7 @@ function EditTable() {
             }
             type="button"
             onClick={() => setStep(2)}
+            style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
             disabled={!displayedJson.length}
           >
             {t("EditTableScreen.Visualize")}
@@ -523,7 +526,7 @@ function EditTable() {
                     csvFile={csvFile}
                     onCancel={onCancel}
                     register={register}
-                    widgetType="table"
+                    widgetType={t("ChooseDataDescriptionTable")}
                   />
                 </PrimaryActionBar>
               </div>
@@ -551,7 +554,7 @@ function EditTable() {
                     setSortByColumn={setSortByColumn}
                     setSortByDesc={setSortByDesc}
                     reset={reset}
-                    widgetType="table"
+                    widgetType={t("CheckDataDescriptionTable")}
                   />
                 </PrimaryActionBar>
               </div>

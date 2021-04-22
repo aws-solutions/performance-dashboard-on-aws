@@ -18,11 +18,11 @@ function SettingsLayout(props: LayoutProps) {
 
   const validSettings: any = {
     topicarea: settings.topicAreaLabels.plural,
-    publishingguidance: "Publishing guidance",
-    publishedsite: "Published site",
-    dateformat: "Date and time format",
-    brandingandstyling: "Branding and styling",
-    adminsite: "Admin site",
+    publishingguidance: t("PublishingGuidance"),
+    publishedsite: t("SettingsPublishedSite"),
+    dateformat: t("SettingsDateTimeFormat"),
+    brandingandstyling: t("BrandingAndStyling"),
+    adminsite: t("AdminSite"),
   };
 
   const queryString = pathname.split("/");

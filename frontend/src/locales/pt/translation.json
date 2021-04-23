@@ -741,7 +741,7 @@
     "TextHint": "Forneça uma breve descrição da imagem para usuários com deficiência visual que usam leitor de tela. Essa descrição não será exibida no painel.",
     "TextError": "Especificar texto alternativo da imagem",
     "SummaryLabel": "Descrição da imagem - opcional",
-    "SummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
+    "SummaryHint": "Forneça uma descrição a sua imagem para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever da imagem a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
     "ToggleSummary": "Mostrar descrição abaixo da imagem",
     "Back": "Voltar",
@@ -762,7 +762,7 @@
     "TextHint": "Forneça uma breve descrição da imagem para usuários com deficiência visual que usam leitor de tela. Essa descrição não será exibida no painel.",
     "TextError": "Especificar texto alternativo da imagem",
     "SummaryLabel": "Descrição da imagem - opcional",
-    "SummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
+    "SummaryHint": "Forneça uma descrição a sua imagem para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever da imagem a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
     "ToggleSummary": "Mostrar descrição abaixo da imagem"
   },

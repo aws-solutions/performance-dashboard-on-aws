@@ -17,6 +17,7 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import { ColumnDataType } from "../models";
 
 type Props = {
   title: string;
@@ -71,9 +72,19 @@ const ColumnChartWidget = (props: Props) => {
 
   const { data, columns } = props;
   const xAxisType = useCallback(() => {
-    return data && data.every((row) => typeof row[columns[0]] === "number")
-      ? "number"
-      : "category";
+    let columnMetadata;
+    if (props.columnsMetadata && columns.length) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === columns[0]
+      );
+    }
+    if (columnMetadata && columnMetadata.dataType === ColumnDataType.Text) {
+      return "category";
+    } else {
+      return data && data.every((row) => typeof row[columns[0]] === "number")
+        ? "number"
+        : "category";
+    }
   }, [data, columns]);
 
   const toggleColumns = (e: any) => {

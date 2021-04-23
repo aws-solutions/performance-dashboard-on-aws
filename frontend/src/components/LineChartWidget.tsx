@@ -16,6 +16,7 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import { ColumnDataType } from "../models";
 
 type Props = {
   title: string;
@@ -68,9 +69,19 @@ const LineChartWidget = (props: Props) => {
 
   const { data, lines } = props;
   const xAxisType = useCallback(() => {
-    return data && data.every((row) => typeof row[lines[0]] === "number")
-      ? "number"
-      : "category";
+    let columnMetadata;
+    if (props.columnsMetadata && lines.length) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === lines[0]
+      );
+    }
+    if (columnMetadata && columnMetadata.dataType === ColumnDataType.Text) {
+      return "category";
+    } else {
+      return data && data.every((row) => typeof row[lines[0]] === "number")
+        ? "number"
+        : "category";
+    }
   }, [data, lines]);
 
   const toggleLines = (e: any) => {

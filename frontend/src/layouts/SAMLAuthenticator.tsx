@@ -70,8 +70,12 @@ export function withSAMLAuthenticator(
       return (
         <AmplifyContainer>
           <AmplifyAuthenticator {...authenticatorProps} {...props}>
-            {EnvConfig.samlProvider && (
-              <AmplifySignIn federated={samlConfig} slot="sign-in">
+            {EnvConfig.samlProvider ? (
+              <AmplifySignIn
+                federated={samlConfig}
+                hideSignUp={true}
+                slot="sign-in"
+              >
                 <AmplifyFederatedButtons federated={samlConfig} />
                 <div slot="federated-buttons">
                   <AmplifyButton
@@ -86,6 +90,8 @@ export function withSAMLAuthenticator(
                   <style></style>
                 </div>
               </AmplifySignIn>
+            ) : (
+              <AmplifySignIn hideSignUp={true} slot="sign-in"></AmplifySignIn>
             )}
           </AmplifyAuthenticator>
         </AmplifyContainer>

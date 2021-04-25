@@ -94,7 +94,7 @@ const TableWidget = ({
   }
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-x-hidden">
       <h2 className="margin-bottom-1">{title}</h2>
       {!summaryBelow && (
         <MarkdownRender

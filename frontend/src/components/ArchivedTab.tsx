@@ -53,7 +53,7 @@ function ArchivedTab(props: Props) {
         columns={React.useMemo(
           () => [
             {
-              Header: "Dashboard name",
+              Header: t("DashboardName"),
               accessor: "name",
               Cell: (props: any) => {
                 const dashboard = props.row.original as Dashboard;
@@ -71,12 +71,12 @@ function ArchivedTab(props: Props) {
               accessor: "topicAreaName",
             },
             {
-              Header: "Last Updated",
+              Header: t("LastUpdatedLabel"),
               accessor: "updatedAt",
               Cell: (props: any) => dateFormatter(props.value),
             },
             {
-              Header: "Archived by",
+              Header: t("ArchivedBy"),
               accessor: "archivedBy",
             },
           ],

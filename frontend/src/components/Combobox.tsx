@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 // @ts-ignore
 import comboBox from "uswds/src/js/components/combo-box";
 import "./Combobox.css";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   id: string;
@@ -20,6 +21,7 @@ interface Props {
 }
 
 function Combobox(props: Props) {
+  const { t } = useTranslation();
   const formGroupRef = useRef(null);
   useEffect(() => {
     // initialize
@@ -68,7 +70,7 @@ function Combobox(props: Props) {
           ref={props.register && props.register({ required: props.required })}
         >
           <option key="" value="">
-            Select an option
+            {t("SelectAnOption")}
           </option>
           {props.options.map((option) => (
             <option key={option.value} value={option.value}>

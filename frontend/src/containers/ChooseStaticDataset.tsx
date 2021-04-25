@@ -14,12 +14,14 @@ import Search from "../components/Search";
 import ScrollTop from "../components/ScrollTop";
 import StorageService from "../services/StorageService";
 import { Dataset } from "../models";
+import { useTranslation } from "react-i18next";
 
 interface PathParams {
   dashboardId: string;
 }
 
 function ChooseStaticDataset() {
+  const { t } = useTranslation();
   const history = useHistory<LocationState>();
   const { state } = history.location;
 
@@ -38,7 +40,7 @@ function ChooseStaticDataset() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -50,7 +52,7 @@ function ChooseStaticDataset() {
       url: state?.redirectUrl,
     },
     {
-      label: "Choose static dataset",
+      label: t("ChooseStaticDataset"),
       url: "",
     },
   ];
@@ -96,14 +98,11 @@ function ChooseStaticDataset() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Choose static dataset</h1>
+      <h1 className="margin-top-0">{t("ChooseStaticDataset")}</h1>
 
       <div className="grid-row">
         <div className="grid-col-9">
-          <p>
-            These are all of the static datasets that have been uploaded. Find
-            and select a dataset to use in your visualization.
-          </p>
+          <p>{t("ChooseStaticDatasetDescription")}</p>
         </div>
       </div>
 
@@ -125,16 +124,17 @@ function ChooseStaticDataset() {
         columns={React.useMemo(
           () => [
             {
-              Header: "Name",
+              Header: t("NameUpperCase"),
               accessor: "fileName",
             },
             {
-              Header: "Uploaded by",
+              Header: t("UploadedBy"),
               accessor: "createdBy",
             },
             {
-              Header: "Uploaded at",
+              Header: t("UploadedAt"),
               accessor: "updatedAt",
+              Cell: (props: any) => dateFormatter(props.value),
             },
           ],
           [dateFormatter, settings]
@@ -152,7 +152,7 @@ function ChooseStaticDataset() {
         type="submit"
         disabled={json === undefined || json.length == 0}
       >
-        Select and continue
+        {t("SelectAndContinue")}
       </Button>
       <Button
         variant="unstyled"
@@ -160,7 +160,7 @@ function ChooseStaticDataset() {
         type="button"
         onClick={onCancel}
       >
-        Cancel
+        {t("Cancel")}
       </Button>
     </>
   );

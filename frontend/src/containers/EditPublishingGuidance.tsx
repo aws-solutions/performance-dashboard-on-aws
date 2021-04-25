@@ -7,6 +7,7 @@ import Markdown from "../components/Markdown";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   publishingGuidance: string;
@@ -16,6 +17,7 @@ function EditPublishingGuidance() {
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
   const { register, handleSubmit, reset } = useForm<FormValues>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Set the form values when the newly fetched Settings
@@ -35,7 +37,7 @@ function EditPublishingGuidance() {
     history.push("/admin/settings/publishingguidance", {
       alert: {
         type: "success",
-        message: "Publishing guidance successfully edited",
+        message: t("PublishingGuidanceEditSuccess"),
       },
     });
   };
@@ -46,15 +48,15 @@ function EditPublishingGuidance() {
 
   const crumbs = [
     {
-      label: "Settings",
+      label: t("Settings"),
       url: "/admin/settings",
     },
     {
-      label: "Publishing guidance",
+      label: t("PublishingGuidance"),
       url: "/admin/settings/publishingguidance",
     },
     {
-      label: "Edit publishing guidance",
+      label: t("PublishingGuidanceEdit"),
     },
   ];
 
@@ -62,17 +64,15 @@ function EditPublishingGuidance() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>Edit publishing guidance</h1>
+        <h1>{t("PublishingGuidanceEdit")}</h1>
 
-        <p>
-          Publishing guidance is text that users must acknowledge before they
-          publish a dashboard. For example, use this text to remind them to
-          check for errors or mistakes, sensitive or confidential data, or
-          guidance specific to your organization.
-        </p>
+        <p>{t("PublishingGuidanceDescription")}</p>
 
         {loadingSettings ? (
-          <Spinner className="text-center margin-top-9" label="Loading" />
+          <Spinner
+            className="text-center margin-top-9"
+            label={t("LoadingSpinnerLabel")}
+          />
         ) : (
           <>
             <form
@@ -83,7 +83,7 @@ function EditPublishingGuidance() {
               <Markdown
                 id="publishingGuidance"
                 name="publishingGuidance"
-                label="Acknowledgement statement"
+                label={t("AcknowledgementStatement")}
                 defaultValue={settings.publishingGuidance}
                 register={register}
                 hint=""
@@ -91,7 +91,7 @@ function EditPublishingGuidance() {
 
               <br />
               <Button type="submit" disabled={!settings.updatedAt}>
-                Save
+                {t("Save")}
               </Button>
               <Button
                 variant="unstyled"
@@ -99,7 +99,7 @@ function EditPublishingGuidance() {
                 className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                 onClick={onCancel}
               >
-                Cancel
+                {t("Cancel")}
               </Button>
             </form>
           </>

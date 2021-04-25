@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import {
   useDashboard,
   useDashboardVersions,
@@ -21,8 +22,9 @@ import dayjs from "dayjs";
 import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
 import FriendlyURLInput from "../components/FriendlyURLInput";
-import "./PublishDashboard.css";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import DropdownMenu from "../components/DropdownMenu";
+import "./PublishDashboard.css";
 
 interface PathParams {
   dashboardId: string;
@@ -34,6 +36,7 @@ interface FormValues {
 }
 
 function PublishDashboard() {
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const history = useHistory<LocationState>();
   const [step, setStep] = useState(0);
@@ -86,7 +89,7 @@ function PublishDashboard() {
           id: "top-alert",
           alert: {
             type: "error",
-            message: "Failed to save release notes, please try again",
+            message: t("PublishWorkflow.FailToSaveReleaseNotesError"),
           },
         });
       }
@@ -103,7 +106,9 @@ function PublishDashboard() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${dashboard.name}" dashboard successfully returned to draft`,
+          message: t("PublishWorkflow.ReturnToDraftSuccessAlert", {
+            dashboardName: dashboard.name,
+          }),
         },
         id: "top-alert",
       });
@@ -113,7 +118,7 @@ function PublishDashboard() {
         id: "top-alert",
         alert: {
           type: "error",
-          message: "Failed to return dashboard to draft. Please try again.",
+          message: t("PublishWorkflow.FailToReturnToDraftError"),
         },
       });
     }
@@ -132,9 +137,11 @@ function PublishDashboard() {
         history.push(`/admin/dashboards?tab=published`, {
           alert: {
             type: "success",
-            message: `${dashboard.name} dashboard was successfully published.`,
+            message: t("PublishWorkflow.PublishedSuccessAlert", {
+              dashboardName: dashboard.name,
+            }),
             to: `/${dashboardId}`,
-            linkLabel: "View the published dashboard",
+            linkLabel: t("ViewPublishedDashboard"),
           },
         });
       } catch (err) {
@@ -143,7 +150,7 @@ function PublishDashboard() {
           id: "top-alert",
           alert: {
             type: "error",
-            message: "Failed to publish dashboard. Please try again.",
+            message: t("PublishWorkflow.FailToPublishError"),
           },
         });
       }
@@ -151,7 +158,12 @@ function PublishDashboard() {
   };
 
   if (!dashboard || !suggestedUrl) {
-    return <Spinner className="text-center margin-top-9" label="Loading" />;
+    return (
+      <Spinner
+        className="text-center margin-top-9"
+        label={t("LoadingSpinnerLabel")}
+      />
+    );
   }
 
   return (
@@ -159,7 +171,7 @@ function PublishDashboard() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Dashboards",
+            label: t("Dashboards"),
             url: "/admin/dashboards?tab=pending",
           },
           {
@@ -168,40 +180,44 @@ function PublishDashboard() {
         ]}
       />
       <PrimaryActionBar>
-        <Alert
-          type="info"
-          message={
-            "This dashboard is now in the publish pending state and " +
-            "cannot be edited unless returned to draft"
-          }
-          slim
-        />
-
+        <Alert type="info" message={t("PublishWorkflow.InfoAlert")} slim />
         <AlertContainer id="top-alert" />
         <div className="grid-row">
           <div className="grid-col text-right display-flex flex-row flex-align-center padding-top-2">
             <ul className="usa-button-group flex-1">
               <li className="usa-button-group__item">
-                <span className="usa-tag" style={{ cursor: "text" }}>
-                  Publish Pending
+                <span
+                  className="usa-tag"
+                  style={{ cursor: "text", marginTop: "2px" }}
+                >
+                  {t("PublishPendingStateLabel")}
                 </span>
               </li>
-              <li className="usa-button-group__item">
-                <span className="text-underline text-middle">
+              <li className="usa-button-group__item cursor-default">
+                <span>
                   <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
-                  Version {dashboard?.version}
+                  {t("ViewDashboardAlertVersion")} {dashboard?.version}
                 </span>
               </li>
             </ul>
             <span className="text-base margin-right-1">
               {dashboard &&
-                `Last saved ${dayjs(dashboard.updatedAt).fromNow()}`}
+                `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
+                  .locale(window.navigator.language.toLowerCase())
+                  .fromNow()}`}
             </span>
-            <Button variant="outline" onClick={onPreview}>
-              Preview
-            </Button>
+            <DropdownMenu buttonText={t("Actions")} variant="outline">
+              <DropdownMenu.MenuLink
+                href={`/admin/dashboard/${dashboard.id}/history`}
+              >
+                {t("ViewHistoryLink")}
+              </DropdownMenu.MenuLink>
+              <DropdownMenu.MenuItem onSelect={onPreview}>
+                {t("PreviewButton")}
+              </DropdownMenu.MenuItem>
+            </DropdownMenu>
             <Button variant="outline" onClick={onReturnToDraft}>
-              Return to draft
+              {t("ReturnToDraftButton")}
             </Button>
           </div>
         </div>
@@ -217,22 +233,22 @@ function PublishDashboard() {
         </div>
       </div>
       <PrimaryActionBar>
-        <div className="margin-y-3">
+        <div className="margin-top-1">
           <StepIndicator
             current={step}
             segments={[
               {
-                label: "Internal version notes",
+                label: t("PublishWorkflow.InternalVersionNotes"),
               },
               {
-                label: "Confirm URL",
+                label: t("PublishWorkflow.ConfirmURL"),
               },
               {
-                label: "Review and publish",
+                label: t("PublishWorkflow.ReviewAndPublish"),
               },
             ]}
             showStepChart={true}
-            showStepText={true}
+            showStepText={false}
           />
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -242,9 +258,12 @@ function PublishDashboard() {
                 <TextField
                   id="releaseNotes"
                   name="releaseNotes"
-                  label="Internal version notes"
-                  error={errors.releaseNotes && "Please enter version notes"}
-                  hint="Describe what changes you are publishing to the dashboard. The version notes can only be accessed by admins and editors."
+                  label={t("PublishWorkflow.InternalVersionNotes")}
+                  error={
+                    errors.releaseNotes &&
+                    t("PublishWorkflow.MissingVersionNotesError")
+                  }
+                  hint={t("PublishWorkflow.InternalVersionNotesDescription")}
                   register={register}
                   defaultValue={dashboard.releaseNotes}
                   required
@@ -259,7 +278,7 @@ function PublishDashboard() {
                   onClick={onContinue}
                   disabled={!releaseNotes}
                 >
-                  Continue
+                  {t("ContinueButton")}
                 </Button>
               </div>
             </div>
@@ -277,14 +296,14 @@ function PublishDashboard() {
                   type="button"
                   onClick={() => setStep(step - 1)}
                 >
-                  Back
+                  {t("BackButton")}
                 </Button>
                 <Button
                   variant="default"
                   type="button"
                   onClick={() => setStep(step + 1)}
                 >
-                  Continue
+                  {t("ContinueButton")}
                 </Button>
               </div>
             </div>
@@ -297,7 +316,7 @@ function PublishDashboard() {
                 }`}
               >
                 <div>
-                  <div className="usa-checkbox marin-top-neg-1">
+                  <div className="usa-checkbox margin-top-neg-1">
                     <input
                       type="checkbox"
                       id="acknowledge"
@@ -322,15 +341,14 @@ function PublishDashboard() {
                         ] === "."
                           ? ""
                           : "."
+                      } ${
+                        hasPublishedVersion()
+                          ? t("PublishWorkflow.OverwriteWarning")
+                          : ""
                       }`}
                     />
                   </span>
-                  {hasPublishedVersion() && (
-                    <p>
-                      I also understand that this will overwrite the existing
-                      published version of the dashboard.
-                    </p>
-                  )}
+                  {}
                 </div>
               </div>
               <div className="padding-top-2 border-top border-base-lighter margin-top-4">
@@ -339,10 +357,10 @@ function PublishDashboard() {
                   type="button"
                   onClick={() => setStep(step - 1)}
                 >
-                  Back
+                  {t("BackButton")}
                 </Button>
                 <Button variant="default" type="submit" disabled={!acknowledge}>
-                  Publish
+                  {t("PublishButton")}
                 </Button>
               </div>
             </div>

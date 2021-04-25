@@ -48,7 +48,11 @@ function DraftsTab(props: Props) {
         </div>
         <div className="tablet:grid-col-9 text-right">
           <span>
-            <DropdownMenu buttonText="Actions" variant="outline">
+            <DropdownMenu
+              buttonText={t("Actions")}
+              disabled={selected.length === 0}
+              variant="outline"
+            >
               <MenuLink
                 href={
                   selected.length === 1
@@ -57,18 +61,15 @@ function DraftsTab(props: Props) {
                 }
                 disabled={selected.length !== 1}
               >
-                View history
+                {t("ViewHistoryLink")}
               </MenuLink>
-              <MenuItem
-                onSelect={() => props.onDelete(selected)}
-                disabled={selected.length === 0}
-              >
-                Delete
+              <MenuItem onSelect={() => props.onDelete(selected)}>
+                {t("Delete")}
               </MenuItem>
             </DropdownMenu>
           </span>
           <span>
-            <Button onClick={createDashboard}>Create dashboard</Button>
+            <Button onClick={createDashboard}>{t("CreateDashboard")}</Button>
           </span>
         </div>
       </div>
@@ -83,7 +84,7 @@ function DraftsTab(props: Props) {
         columns={React.useMemo(
           () => [
             {
-              Header: "Dashboard name",
+              Header: t("DashboardName"),
               accessor: "name",
               Cell: (props: any) => {
                 const dashboard = props.row.original as Dashboard;
@@ -101,12 +102,12 @@ function DraftsTab(props: Props) {
               accessor: "topicAreaName",
             },
             {
-              Header: "Last Updated",
+              Header: t("LastUpdatedLabel"),
               accessor: "updatedAt",
               Cell: (props: any) => dateFormatter(props.value),
             },
             {
-              Header: "Created by",
+              Header: t("CreatedBy"),
               accessor: "createdBy",
             },
           ],

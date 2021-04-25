@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Metric,
   LocationState,
@@ -18,11 +19,14 @@ import MetricsList from "../components/MetricsList";
 import OrderingService from "../services/OrderingService";
 import StorageService from "../services/StorageService";
 import Spinner from "../components/Spinner";
+import PrimaryActionBar from "../components/PrimaryActionBar";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
   showTitle: boolean;
   oneMetricPerRow: boolean;
+  significantDigitLabels: boolean;
 }
 
 interface PathParams {
@@ -31,6 +35,7 @@ interface PathParams {
 }
 
 function EditMetrics() {
+  const { t } = useTranslation();
   const history = useHistory<LocationState>();
   const { state } = history.location;
   const { dashboardId, widgetId } = useParams<PathParams>();
@@ -39,22 +44,23 @@ function EditMetrics() {
     register,
     errors,
     handleSubmit,
-    getValues,
     reset,
+    watch,
   } = useForm<FormValues>();
+
   const [fileLoading, setFileLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, currentJson } = useWidget(dashboardId, widgetId);
-
-  const [title, setTitle] = useState("");
-  const [showTitle, setShowTitle] = useState(false);
-  const [oneMetricPerRow, setOneMetricPerRow] = useState(false);
   const [metrics, setMetrics] = useState<Array<Metric>>([]);
-  const {
-    fullPreview,
-    fullPreviewToggle,
-    fullPreviewButton,
-  } = useFullPreview();
+  const [submittedMetricsNum, setSubmittedMetricsNum] = useState<
+    number | undefined
+  >();
+  const { fullPreview, fullPreviewButton } = useFullPreview();
+
+  const title = watch("title");
+  const showTitle = watch("showTitle");
+  const oneMetricPerRow = watch("oneMetricPerRow");
+  const significantDigitLabels = watch("significantDigitLabels");
 
   useEffect(() => {
     if (widget && currentJson) {
@@ -62,22 +68,29 @@ function EditMetrics() {
         state && state.metricTitle !== undefined
           ? state.metricTitle
           : widget.content.title;
+
       const showTitle =
         state && state.showTitle !== undefined
           ? state.showTitle
           : widget.showTitle;
+
       const oneMetricPerRow =
         state && state.oneMetricPerRow !== undefined
           ? state.oneMetricPerRow
           : widget.content.oneMetricPerRow;
+
+      const significantDigitLabels =
+        state && state.significantDigitLabels !== undefined
+          ? state.significantDigitLabels
+          : widget.content.significantDigitLabels;
+
       reset({
         title,
         showTitle,
         oneMetricPerRow,
+        significantDigitLabels,
       });
-      setTitle(title);
-      setShowTitle(showTitle);
-      setOneMetricPerRow(oneMetricPerRow);
+
       setMetrics(
         state && state.metrics
           ? [...state.metrics]
@@ -110,6 +123,11 @@ function EditMetrics() {
       return;
     }
 
+    if (metrics.length === 0) {
+      setSubmittedMetricsNum(0);
+      return;
+    }
+
     try {
       let newDataset = await uploadDataset();
 
@@ -125,6 +143,7 @@ function EditMetrics() {
           s3Key: newDataset.s3Key,
           oneMetricPerRow: values.oneMetricPerRow,
           datasetType: DatasetType.CreateNew,
+          significantDigitLabels: values.significantDigitLabels,
         },
         widget.updatedAt
       );
@@ -133,11 +152,13 @@ function EditMetrics() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" metrics have been successfully edited`,
+          message: t("EditMetricsScreen.MetricsEditedSuccessffully", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setEditingWidget(false);
     }
   };
@@ -192,16 +213,9 @@ function EditMetrics() {
     setMetrics(widgets);
   };
 
-  const onFormChange = () => {
-    const { title, showTitle, oneMetricPerRow } = getValues();
-    setTitle(title);
-    setShowTitle(showTitle);
-    setOneMetricPerRow(oneMetricPerRow);
-  };
-
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -212,7 +226,7 @@ function EditMetrics() {
 
   if (!loading && widget) {
     crumbs.push({
-      label: "Edit metrics",
+      label: t("EditMetricsScreen.EditMetrics"),
       url: "",
     });
   }
@@ -220,56 +234,94 @@ function EditMetrics() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Edit metrics</h1>
 
       {loading || !widget || !currentJson || fileLoading || editingWidget ? (
         <Spinner
           className="text-center margin-top-9"
           label={`${
             fileLoading
-              ? "Uploading file"
+              ? t("EditMetricsScreen.UploadingFile")
               : editingWidget
-              ? "Editing metrics"
-              : "Loading"
+              ? t("EditMetricsScreen.EditingMetrics")
+              : t("LoadingSpinnerLabel")
           }`}
         />
       ) : (
-        <div className="grid-row width-desktop">
+        <div className="grid-row width-desktop grid-gap">
           <div className="grid-col-6" hidden={fullPreview}>
-            <form
-              className="usa-form usa-form--large"
-              onChange={onFormChange}
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <fieldset className="usa-fieldset">
-                <TextField
-                  id="title"
-                  name="title"
-                  label="Metrics title"
-                  hint="Give your group of metrics a descriptive title."
-                  error={errors.title && "Please specify a content title"}
-                  required
-                  defaultValue={title}
-                  register={register}
-                />
-
-                <div className="usa-checkbox">
-                  <input
-                    className="usa-checkbox__input"
-                    id="display-title"
-                    type="checkbox"
-                    name="showTitle"
-                    defaultChecked={showTitle}
-                    ref={register()}
+            <PrimaryActionBar>
+              <h1 className="margin-top-0">
+                {t("EditMetricsScreen.EditMetrics")}
+              </h1>
+              <form
+                className="usa-form usa-form--large"
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <fieldset className="usa-fieldset">
+                  {(errors.title || submittedMetricsNum === 0) && (
+                    <Alert
+                      type="error"
+                      message={
+                        submittedMetricsNum === 0
+                          ? t("EditMetricsScreen.EnterMetric")
+                          : t("EditMetricsScreen.ResolveErrors")
+                      }
+                      slim
+                    ></Alert>
+                  )}
+                  <TextField
+                    id="title"
+                    name="title"
+                    label={t("EditMetricsScreen.MetricsTitle")}
+                    hint={t("EditMetricsScreen.MetricsTitleHint")}
+                    error={
+                      errors.title && t("EditMetricsScreen.MetricsTitleError")
+                    }
+                    required
+                    defaultValue={title}
+                    register={register}
                   />
-                  <label
-                    className="usa-checkbox__label"
-                    htmlFor="display-title"
-                  >
-                    Show title on dashboard
-                  </label>
-                </div>
 
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="display-title"
+                      type="checkbox"
+                      name="showTitle"
+                      defaultChecked={showTitle}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="display-title"
+                    >
+                      {t("EditMetricsScreen.ShowTitle")}
+                    </label>
+                  </div>
+
+                  <label className="usa-label text-bold">
+                    {t("MetricsOptionsLabel")}
+                  </label>
+                  <div className="usa-hint">
+                    {t("MetricsOptionsDescription")}
+                  </div>
+                  <div className="usa-checkbox">
+                    <input
+                      className="usa-checkbox__input"
+                      id="significantDigitLabels"
+                      type="checkbox"
+                      name="significantDigitLabels"
+                      defaultChecked={false}
+                      ref={register()}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="significantDigitLabels"
+                    >
+                      {t("SignificantDigitLabels")}
+                    </label>
+                  </div>
+                </fieldset>
                 <MetricsList
                   metrics={metrics}
                   onClick={onAddMetric}
@@ -281,33 +333,30 @@ function EditMetrics() {
                   register={register}
                   allowAddMetric
                 />
-              </fieldset>
-              <br />
-              <br />
-              <hr />
-              <Button
-                disabled={!title || editingWidget || fileLoading}
-                type="submit"
-              >
-                Save
-              </Button>
-              <Button
-                variant="unstyled"
-                className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                type="button"
-                onClick={onCancel}
-              >
-                Cancel
-              </Button>
-            </form>
+                <br />
+                <br />
+                <hr />
+                <Button disabled={editingWidget || fileLoading} type="submit">
+                  {t("Save")}
+                </Button>
+                <Button
+                  variant="unstyled"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  {t("Cancel")}
+                </Button>
+              </form>
+            </PrimaryActionBar>
           </div>
           <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
             {fullPreviewButton}
-            <h4 className="margin-top-4">Preview</h4>
             <MetricsWidget
               title={showTitle ? title : ""}
               metrics={metrics}
               metricPerRow={oneMetricPerRow ? 1 : 3}
+              significantDigitLabels={significantDigitLabels}
             />
           </div>
         </div>

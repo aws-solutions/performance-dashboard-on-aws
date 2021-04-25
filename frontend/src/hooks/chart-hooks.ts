@@ -30,6 +30,8 @@ export function useYAxisMetadata(
         setYAxisLargestValue(largestTick);
         setYAxisMargin(margin);
       }
+    } else {
+      setYAxisMargin(24);
     }
   }, [chartRef, chartRef.current, chartLoaded, significantDigitLabels]);
 
@@ -64,4 +66,30 @@ export function useXAxisMetadata(
   return {
     xAxisLargestValue,
   };
+}
+
+type UseWindowSizeHook = {
+  width: number;
+  height: number;
+};
+
+export function useWindowSize(): UseWindowSizeHook {
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  React.useEffect(() => {
+    function handleResize() {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return size;
 }

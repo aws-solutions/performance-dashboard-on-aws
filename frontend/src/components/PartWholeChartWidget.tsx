@@ -8,9 +8,10 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import { useColors } from "../hooks";
+import { useColors, useWindowSize } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import DataTable from "./DataTable";
 
 type Props = {
   title: string;
@@ -29,6 +30,7 @@ const PartWholeChartWidget = (props: Props) => {
   const [partsHover, setPartsHover] = useState(null);
   const [hiddenParts, setHiddenParts] = useState<Array<string>>([]);
   const [xAxisLargestValue, setXAxisLargestValue] = useState(0);
+  const windowSize = useWindowSize();
 
   const partWholeData = useRef<Array<object>>([]);
   const partWholeParts = useRef<Array<string>>([]);
@@ -96,7 +98,7 @@ const PartWholeChartWidget = (props: Props) => {
         <span className="margin-left-05 font-sans-md text-bottom">
           {label.toLocaleString()}
         </span>
-        <div className="margin-left-4 margin-bottom-1 text-bold">
+        <div className="margin-left-4 margin-bottom-1 text-base-darkest text-bold">
           {amount && amount !== "null" ? (
             TickFormatter.format(
               Number(amount),
@@ -111,6 +113,31 @@ const PartWholeChartWidget = (props: Props) => {
     );
   };
 
+  const calculateChartHeight = (): number => {
+    const minHeight = 250;
+    const minHeightMobile = 300;
+    const maxHeight = 500;
+    const pixelsByPart = 20;
+    const smallScreenPixels = 800;
+
+    if (!data || !data.length) {
+      return minHeight;
+    }
+
+    // Handle very small screens where width is less than 300 pixels
+    if (windowSize.width <= smallScreenPixels) {
+      if (data.length < 5) {
+        return minHeightMobile;
+      } else {
+        // For every part in the chart, add 20 pixels
+        const additional = Math.min(maxHeight, data.length * pixelsByPart);
+        return minHeightMobile + additional;
+      }
+    }
+
+    return data.length < 15 ? minHeight : maxHeight;
+  };
+
   return (
     <div>
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
@@ -123,10 +150,7 @@ const PartWholeChartWidget = (props: Props) => {
         />
       )}
       {partWholeData.current.length && (
-        <ResponsiveContainer
-          width="100%"
-          height={data && data.length > 15 ? 600 : 250}
-        >
+        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
           <BarChart
             className="part-to-whole-chart"
             data={partWholeData.current}
@@ -177,8 +201,8 @@ const PartWholeChartWidget = (props: Props) => {
                 width: "100%",
               }}
               onClick={toggleParts}
-              onMouseLeave={(e) => setPartsHover(null)}
-              onMouseEnter={(e) => setPartsHover(e.dataKey)}
+              onMouseLeave={() => setPartsHover(null)}
+              onMouseEnter={(e: any) => setPartsHover(e.dataKey)}
             />
             {partWholeParts.current.map((part, index) => {
               return (
@@ -205,6 +229,7 @@ const PartWholeChartWidget = (props: Props) => {
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
+      <DataTable rows={data || []} columns={parts} />
     </div>
   );
 };

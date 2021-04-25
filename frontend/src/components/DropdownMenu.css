@@ -39,3 +39,7 @@
 [data-reach-menu-list][tabindex]:focus {
   outline: none;
 }
+
+[data-reach-popover][data-reach-menu][data-reach-menu-popover] {
+  z-index: 999999;
+}

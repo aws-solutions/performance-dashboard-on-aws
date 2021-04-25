@@ -34,8 +34,8 @@ test("renders a textfield for metric title", async () => {
   expect(await screen.findByLabelText("Metrics title")).toBeInTheDocument();
 });
 
-test("on submit, it calls editWidget api and uploads dataset", async () => {
-  const { getByRole, getByText, getByLabelText } = render(<EditMetrics />, {
+test("on submit, it does not calls editWidget api and uploads dataset without a metric added", async () => {
+  const { getByRole, getByLabelText } = render(<EditMetrics />, {
     wrapper: MemoryRouter,
   });
 
@@ -48,14 +48,10 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
   });
 
   await waitFor(() => expect(submitButton).toBeEnabled());
-  await waitFor(() => {
-    expect(getByText("Preview")).toBeInTheDocument();
-  });
-
   await act(async () => {
     fireEvent.click(submitButton);
   });
 
-  expect(BackendService.editWidget).toHaveBeenCalled();
-  expect(StorageService.uploadMetric).toHaveBeenCalled();
+  expect(BackendService.editWidget).not.toHaveBeenCalled();
+  expect(StorageService.uploadMetric).not.toHaveBeenCalled();
 });

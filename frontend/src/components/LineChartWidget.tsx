@@ -15,6 +15,8 @@ import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import DataTable from "./DataTable";
+import { ColumnDataType } from "../models";
 
 type Props = {
   title: string;
@@ -53,6 +55,7 @@ const LineChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
+  const padding = 60;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -66,9 +69,19 @@ const LineChartWidget = (props: Props) => {
 
   const { data, lines } = props;
   const xAxisType = useCallback(() => {
-    return data && data.every((row) => typeof row[lines[0]] === "number")
-      ? "number"
-      : "category";
+    let columnMetadata;
+    if (props.columnsMetadata && lines.length) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === lines[0]
+      );
+    }
+    if (columnMetadata && columnMetadata.dataType === ColumnDataType.Text) {
+      return "category";
+    } else {
+      return data && data.every((row) => typeof row[lines[0]] === "number")
+        ? "number"
+        : "category";
+    }
   }, [data, lines]);
 
   const toggleLines = (e: any) => {
@@ -102,7 +115,7 @@ const LineChartWidget = (props: Props) => {
 
   return (
     <div
-      className={`overflow-hidden${
+      className={`overflow-x-hidden overflow-y-hidden${
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >
@@ -137,7 +150,7 @@ const LineChartWidget = (props: Props) => {
             <XAxis
               dataKey={props.lines.length ? props.lines[0] : ""}
               type={xAxisType()}
-              padding={{ left: 50, right: 50 }}
+              padding={{ left: padding, right: padding }}
               domain={["dataMin", "dataMax"]}
               interval={props.horizontalScroll ? 0 : "preserveStartEnd"}
               scale={xAxisType() === "number" ? "linear" : "auto"}
@@ -154,7 +167,7 @@ const LineChartWidget = (props: Props) => {
             />
 
             <Tooltip
-              cursor={{ fill: "#F0F0F0" }}
+              itemStyle={{ color: "#1b1b1b" }}
               isAnimationActive={false}
               formatter={(value: Number | String, name: string) => {
                 // Check if there is metadata for this column
@@ -176,8 +189,8 @@ const LineChartWidget = (props: Props) => {
             <Legend
               verticalAlign="top"
               onClick={toggleLines}
-              onMouseLeave={(e) => setLinesHover(null)}
-              onMouseEnter={(e) => setLinesHover(e.dataKey)}
+              onMouseLeave={() => setLinesHover(null)}
+              onMouseEnter={(e: any) => setLinesHover(e.dataKey)}
             />
             {props.lines.length &&
               props.lines.slice(1).map((line, index) => {
@@ -203,6 +216,11 @@ const LineChartWidget = (props: Props) => {
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
+      <DataTable
+        rows={data || []}
+        columns={lines}
+        columnsMetadata={props.columnsMetadata}
+      />
     </div>
   );
 };

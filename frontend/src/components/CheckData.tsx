@@ -5,6 +5,7 @@ import UtilsService from "../services/UtilsService";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Table from "./Table";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   selectedHeaders: Set<string>;
@@ -26,9 +27,11 @@ interface Props {
   setSortByColumn?: Function;
   setSortByDesc?: Function;
   reset?: Function;
+  widgetType: string;
 }
 
 function CheckData(props: Props) {
+  const { t } = useTranslation();
   const [dataType, setDataType] = useState<string>("");
   const [numberType, setNumberType] = useState<string>("");
   const [currencyType, setCurrencyType] = useState<string>("");
@@ -266,17 +269,17 @@ function CheckData(props: Props) {
   return (
     <>
       <div className="grid-col-6 margin-top-3 margin-bottom-1">
-        Please make sure that the system formats your data correctly. Select
-        columns to format as numbers, dates, or text. Also select columns to
-        hide or show from the chart.
+        {t("CheckDataDescription", { widgetType: props.widgetType })}
       </div>
 
-      <div className="grid-row width-desktop">
+      <div className="grid-row">
         {props.selectedHeaders.size ? (
           <div className="grid-col-3 margin-top-3">
             <div className="font-sans-md text-bold">
-              {`Edit column${
-                props.selectedHeaders.size > 1 ? "s" : ""
+              {`${
+                props.selectedHeaders.size > 1
+                  ? t("EditColumns")
+                  : t("EditColumn")
               } "${Array.from(props.selectedHeaders).join(", ")}"`}
             </div>
             <div className="usa-checkbox margin-top-3 margin-bottom-1">
@@ -294,7 +297,7 @@ function CheckData(props: Props) {
                 className="usa-checkbox__label"
                 htmlFor="hideFromVisualization"
               >
-                Hide from visualization
+                {t("HideFromVisualization")}
               </label>
             </div>
             {props.selectedHeaders.size === 1 && (
@@ -302,17 +305,17 @@ function CheckData(props: Props) {
                 <Dropdown
                   id="dataType"
                   name="dataType"
-                  label="Data format"
+                  label={t("DataFormat")}
                   options={[
-                    { value: "", label: "Select an option" },
-                    { value: ColumnDataType.Text, label: ColumnDataType.Text },
+                    { value: "", label: t("SelectAnOption") },
+                    { value: ColumnDataType.Text, label: t("Text") },
                     {
                       value: ColumnDataType.Number,
-                      label: ColumnDataType.Number,
+                      label: t("Number"),
                     },
                     {
                       value: ColumnDataType.Date,
-                      label: ColumnDataType.Date,
+                      label: t("Date"),
                     },
                   ]}
                   value={dataType}
@@ -326,20 +329,20 @@ function CheckData(props: Props) {
                   <Dropdown
                     id="numberType"
                     name="numberType"
-                    label="Number format"
+                    label={t("NumberFormat")}
                     options={[
-                      { value: "", label: "Select an option" },
+                      { value: "", label: t("SelectAnOption") },
                       {
                         value: NumberDataType.Percentage,
-                        label: NumberDataType.Percentage,
+                        label: t("Percentage"),
                       },
                       {
                         value: NumberDataType.Currency,
-                        label: NumberDataType.Currency,
+                        label: t("Currency"),
                       },
                       {
                         value: NumberDataType["With thousands separators"],
-                        label: NumberDataType["With thousands separators"],
+                        label: t("WithThousandsSeparators"),
                       },
                     ]}
                     value={numberType}
@@ -354,20 +357,20 @@ function CheckData(props: Props) {
                   <Dropdown
                     id="currencyType"
                     name="currencyType"
-                    label="Currency"
+                    label={t("Currency")}
                     options={[
-                      { value: "", label: "Select an option" },
+                      { value: "", label: t("SelectAnOption") },
                       {
                         value: CurrencyDataType["Dollar $"],
-                        label: CurrencyDataType["Dollar $"],
+                        label: t("Dollar"),
                       },
                       {
                         value: CurrencyDataType["Euro €"],
-                        label: CurrencyDataType["Euro €"],
+                        label: t("Euro"),
                       },
                       {
                         value: CurrencyDataType["Pound £"],
-                        label: CurrencyDataType["Pound £"],
+                        label: t("Pound"),
                       },
                     ]}
                     value={currencyType}
@@ -380,42 +383,44 @@ function CheckData(props: Props) {
           ""
         )}
         <div
-          className={`overflow-hidden grid-col-${
+          className={`check-data-table grid-col-${
             props.selectedHeaders.size > 0 ? 9 : 12
           }`}
         >
-          <Table
-            selection="none"
-            rows={checkDataTableRows}
-            initialSortAscending={
-              props.sortByDesc !== undefined ? !props.sortByDesc : true
-            }
-            initialSortByField={props.sortByColumn}
-            disablePagination={true}
-            disableBorderless={true}
-            columns={checkDataTableColumns}
-            selectedHeaders={props.selectedHeaders}
-            hiddenColumns={props.hiddenColumns}
-            addNumbersColumn={true}
-            sortByColumn={props.sortByColumn}
-            sortByDesc={props.sortByDesc}
-            setSortByColumn={props.setSortByColumn}
-            setSortByDesc={props.setSortByDesc}
-            reset={props.reset}
-          />
+          <div className="margin-left-2">
+            <Table
+              selection="none"
+              rows={checkDataTableRows}
+              initialSortAscending={
+                props.sortByDesc !== undefined ? !props.sortByDesc : true
+              }
+              initialSortByField={props.sortByColumn}
+              disablePagination={true}
+              disableBorderless={true}
+              columns={checkDataTableColumns}
+              selectedHeaders={props.selectedHeaders}
+              hiddenColumns={props.hiddenColumns}
+              addNumbersColumn={true}
+              sortByColumn={props.sortByColumn}
+              sortByDesc={props.sortByDesc}
+              setSortByColumn={props.setSortByColumn}
+              setSortByDesc={props.setSortByDesc}
+              reset={props.reset}
+            />
+          </div>
         </div>
       </div>
 
       <hr />
       <Button variant="outline" type="button" onClick={props.backStep}>
-        Back
+        {t("BackButton")}
       </Button>
       <Button
         type="button"
         onClick={props.advanceStep}
         disabled={!props.data.length}
       >
-        Continue
+        {t("ContinueButton")}
       </Button>
       <Button
         variant="unstyled"
@@ -423,7 +428,7 @@ function CheckData(props: Props) {
         type="button"
         onClick={props.onCancel}
       >
-        Cancel
+        {t("Cancel")}
       </Button>
     </>
   );

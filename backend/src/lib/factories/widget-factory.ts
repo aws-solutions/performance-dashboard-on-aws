@@ -119,6 +119,10 @@ function fromChartItem(widget: Widget): ChartWidget {
         chartWidget.content.significantDigitLabels !== undefined
           ? chartWidget.content.significantDigitLabels
           : false,
+      dataLabels:
+        chartWidget.content.dataLabels !== undefined
+          ? chartWidget.content.dataLabels
+          : false,
     },
   };
 }
@@ -236,6 +240,10 @@ function createChartWidget(widget: Widget): ChartWidget {
       significantDigitLabels:
         widget.content.significantDigitLabels !== undefined
           ? widget.content.significantDigitLabels
+          : false,
+      dataLabels:
+        widget.content.dataLabels !== undefined
+          ? widget.content.dataLabels
           : false,
       ...(widget.content.horizontalScroll && {
         horizontalScroll: widget.content.horizontalScroll,

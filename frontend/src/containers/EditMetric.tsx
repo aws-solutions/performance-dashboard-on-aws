@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";
 import NumberField from "../components/NumberField";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useDashboard } from "../hooks";
+import { useDashboard, useSettings } from "../hooks";
 import Spinner from "../components/Spinner";
 import DatePicker from "../components/DatePicker";
 import { LocationState } from "../models";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
   value: number;
   changeOverTime: string;
-  startDate: string;
-  endDate: string;
 }
 
 interface PathParams {
@@ -25,9 +24,19 @@ interface PathParams {
 function EditMetric() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
+  const { t } = useTranslation();
+  const { settings, loadingSettings } = useSettings();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
+  const [startDate, setStartDate] = useState<Date | null>(
+    state.metric && state.metric.startDate
+      ? new Date(state.metric.startDate)
+      : null
+  );
+  const [endDate, setEndDate] = useState<Date | null>(
+    state.metric && state.metric.endDate ? new Date(state.metric.endDate) : null
+  );
 
   const onSubmit = async (values: FormValues) => {
     const editedMetric =
@@ -38,8 +47,8 @@ function EditMetric() {
       editedMetric.title = values.title;
       editedMetric.value = values.value;
       editedMetric.changeOverTime = values.changeOverTime;
-      editedMetric.startDate = values.startDate;
-      editedMetric.endDate = values.endDate;
+      editedMetric.startDate = startDate ? startDate.toISOString() : "";
+      editedMetric.endDate = endDate ? endDate.toISOString() : "";
     }
     const newMetrics = state && state.metrics ? [...state.metrics] : [];
     history.push(
@@ -47,12 +56,13 @@ function EditMetric() {
       {
         alert: {
           type: "success",
-          message: "Metric successfully edited.",
+          message: t("EditMetricScreen.MetricSuccessfullyEdited"),
         },
         metrics: newMetrics,
         showTitle: state.showTitle !== false,
         oneMetricPerRow: state.oneMetricPerRow === true,
         metricTitle: state.metricTitle || "",
+        datasetType: state.datasetType || undefined,
       }
     );
   };
@@ -65,6 +75,7 @@ function EditMetric() {
         showTitle: state && state.showTitle !== false,
         oneMetricPerRow: state && state.oneMetricPerRow === true,
         metricTitle: (state && state.metricTitle) || "",
+        datasetType: state.datasetType || undefined,
       }
     );
   };
@@ -76,7 +87,7 @@ function EditMetric() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -87,7 +98,7 @@ function EditMetric() {
 
   if (!loading) {
     crumbs.push({
-      label: "Edit metric",
+      label: t("EditMetricScreen.EditMetric"),
       url: "",
     });
   }
@@ -95,14 +106,18 @@ function EditMetric() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1>Edit metric</h1>
 
-      {loading ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+      {loading || loadingSettings ? (
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <div className="grid-row">
             <div className="grid-col-12">
+              <h1>{t("EditMetricScreen.EditMetric")}</h1>
+
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="usa-form usa-form--large"
@@ -111,21 +126,21 @@ function EditMetric() {
                 <TextField
                   id="title"
                   name="title"
-                  label="Metric title"
-                  hint="For example, 'Transactions per year'."
+                  label={t("EditMetricScreen.MetricTitle")}
+                  hint={t("EditMetricScreen.MetricTitleHint")}
                   register={register}
                   defaultValue={state.metric.title}
-                  error={errors.title && "Please specify a title"}
+                  error={errors.title && t("EditMetricScreen.MetricTitleError")}
                   required
                 />
 
                 <NumberField
                   id="value"
                   name="value"
-                  label="Metric value"
-                  hint="Enter a number here."
+                  label={t("EditMetricScreen.MetricValue")}
+                  hint={t("EditMetricScreen.MetricValueHint")}
                   register={register}
-                  error={errors.value && "Please specify a value"}
+                  error={errors.value && t("EditMetricScreen.MetricValueError")}
                   className="width-50"
                   defaultValue={state.metric.value}
                   step={0.01}
@@ -135,15 +150,15 @@ function EditMetric() {
                 <TextField
                   id="changeOverTime"
                   name="changeOverTime"
-                  label="Change over time - optional"
-                  hint='Indicate the increase or decrease since the previous time period. For example, +10.1% or -56%. Most includes "+" or "-".'
+                  label={t("EditMetricScreen.ChangeOverTime")}
+                  hint={t("EditMetricScreen.ChangeOverTimeHint")}
                   register={register}
                   className="width-50"
                   defaultValue={state.metric.changeOverTime}
                   error={
                     errors.changeOverTime &&
                     errors.changeOverTime.type === "validate"
-                      ? 'Must start with "+" or "-".'
+                      ? t("EditMetricScreen.ChangeOverTimeError")
                       : undefined
                   }
                   validate={(input: string) => {
@@ -154,32 +169,35 @@ function EditMetric() {
                 <DatePicker
                   id="startDate"
                   name="startDate"
-                  label="Start date - optional"
-                  hint="mm/dd/yyyy"
-                  register={register}
-                  className="width-50"
-                  defaultValue={state.metric.startDate}
+                  label={t("EditMetricScreen.StartDateOptional")}
+                  hint={settings.dateTimeFormat.date}
+                  date={startDate}
+                  dateFormat={settings.dateTimeFormat.date
+                    .toLowerCase()
+                    .replace(/m/g, "M")}
+                  setDate={setStartDate}
                 />
 
                 <DatePicker
                   id="endDate"
                   name="endDate"
-                  label="End date - optional"
-                  hint="mm/dd/yyyy"
-                  register={register}
-                  className="width-50"
-                  defaultValue={state.metric.endDate}
+                  label={t("EditMetricScreen.EndDateOptional")}
+                  hint={settings.dateTimeFormat.date}
+                  date={endDate}
+                  dateFormat={settings.dateTimeFormat.date
+                    .toLowerCase()
+                    .replace(/m/g, "M")}
+                  setDate={setEndDate}
                 />
-
                 <br />
-                <Button type="submit">Save</Button>
+                <Button type="submit">{t("Save")}</Button>
                 <Button
                   className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                   variant="unstyled"
                   type="button"
                   onClick={onCancel}
                 >
-                  Cancel
+                  {t("Cancel")}
                 </Button>
               </form>
             </div>

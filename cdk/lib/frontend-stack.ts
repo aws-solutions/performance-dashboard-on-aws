@@ -39,7 +39,7 @@ export class FrontendStack extends cdk.Stack {
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {
       httpHeaders: {
         "Content-Security-Policy":
-          "default-src 'self'; img-src 'self' blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazonaws.com; block-all-mixed-content;",
+          "default-src 'self'; img-src 'self' blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com; block-all-mixed-content;",
         "Strict-Transport-Security": "max-age=31540000; includeSubdomains",
         "X-XSS-Protection": "1; mode=block",
         "X-Frame-Options": "DENY",
@@ -82,6 +82,24 @@ export class FrontendStack extends cdk.Stack {
         ],
       }
     );
+    let cfnDist: cloudFront.CfnDistribution = distribution.node
+      .defaultChild as cloudFront.CfnDistribution;
+    cfnDist.cfnOptions.metadata = {
+      cfn_nag: {
+        rules_to_suppress: [
+          {
+            id: "W10",
+            reason:
+              "CloudFront Distribution is disabled as there are no user requirements, plus to keep the cost low",
+          },
+          {
+            id: "W70",
+            reason:
+              "If the distribution uses the CloudFront domain name such as d111111abcdef8.cloudfront.net (you set CloudFrontDefaultCertificate to true), CloudFront automatically sets the security policy to TLSv1 regardless of the value that you set here.",
+          },
+        ],
+      },
+    };
 
     /**
      * S3 Deploy
@@ -128,6 +146,7 @@ export class FrontendStack extends cdk.Stack {
       timeout: cdk.Duration.seconds(60),
       memorySize: 128,
       logRetention: logs.RetentionDays.TEN_YEARS,
+      reservedConcurrentExecutions: 1,
       environment: {
         FRONTEND_BUCKET: this.frontendBucket.bucketName,
         REGION: cdk.Stack.of(this).region,
@@ -141,6 +160,10 @@ export class FrontendStack extends cdk.Stack {
         BRAND_NAME: "Performance Dashboard",
         TOPIC_AREA_LABEL: "Topic area",
         TOPIC_AREAS_LABEL: "Topic areas",
+        FRONTEND_DOMAIN: "",
+        COGNITO_DOMAIN: "",
+        SAML_PROVIDER: "",
+        ENTERPRISE_LOGIN_LABEL: "Enterprise Sign-In",
       },
     });
 

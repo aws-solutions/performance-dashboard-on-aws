@@ -43,7 +43,7 @@ test("renders a file upload input", async () => {
 });
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
-  const { getByRole, getByText, getByLabelText } = render(<AddImage />, {
+  const { getAllByText, getByText, getByLabelText } = render(<AddImage />, {
     wrapper: MemoryRouter,
   });
 
@@ -65,12 +65,10 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  const submitButton = getByRole("button", { name: "Add image" });
+  const submitButton = getAllByText("Add Image")[2];
 
   await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {
-    expect(getByText("Preview")).toBeInTheDocument();
-
     expect(getByText("Image alt text")).toBeInTheDocument();
     expect(
       getByText(
@@ -81,7 +79,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     expect(getByText("Image description - optional")).toBeInTheDocument();
     expect(
       getByText(
-        "Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown."
+        "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments. This field supports markdown."
       )
     ).toBeInTheDocument();
   });

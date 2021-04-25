@@ -11,6 +11,7 @@ test("renders the chart title", async () => {
       parts={["test"]}
       summaryBelow={false}
       data={[{}]}
+      significantDigitLabels={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -25,6 +26,7 @@ test("renders the summary above the chart", async () => {
       parts={["test"]}
       summaryBelow={false}
       data={[{}]}
+      significantDigitLabels={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -42,6 +44,7 @@ test("renders the summary below the chart", async () => {
       parts={["test"]}
       summaryBelow={true}
       data={[{}]}
+      significantDigitLabels={false}
     />,
     { wrapper: MemoryRouter }
   );

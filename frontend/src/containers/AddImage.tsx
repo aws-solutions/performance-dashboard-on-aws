@@ -12,6 +12,8 @@ import Button from "../components/Button";
 import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
 import Alert from "../components/Alert";
+import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -27,6 +29,7 @@ interface PathParams {
 
 function AddImage() {
   const history = useHistory();
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit } = useForm<FormValues>();
@@ -40,16 +43,12 @@ function AddImage() {
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
-  const {
-    fullPreview,
-    fullPreviewToggle,
-    fullPreviewButton,
-  } = useFullPreview();
+  const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
     try {
       if (!imageFile) {
-        throw new Error("Image file not specified");
+        throw new Error(t("AddImageScreen.ImageFileNotSpecified"));
       }
       setImageUploading(true);
       const s3Key = await StorageService.uploadImage(imageFile);
@@ -75,11 +74,13 @@ function AddImage() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" image has been successfully added`,
+          message: t("AddImageScreen.ImageAddedSuccessffully", {
+            image: values.title,
+          }),
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setImageUploading(false);
     }
   };
@@ -122,7 +123,7 @@ function AddImage() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -133,7 +134,7 @@ function AddImage() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add image",
+      label: t("AddImageScreen.AddImage"),
       url: "",
     });
   }
@@ -141,162 +142,151 @@ function AddImage() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <div hidden={fullPreview}>
-        <h1>Add Image</h1>
-
-        <div className="text-base text-italic">Step 2 of 2</div>
-        <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-          Configure image
-        </div>
-      </div>
-      <div className="grid-row width-desktop">
+      <div className="grid-row width-desktop grid-gap">
         <div className="grid-col-6" hidden={fullPreview}>
-          <form
-            className="usa-form usa-form--large"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <fieldset className="usa-fieldset">
-              {errors.title || errors.summary ? (
-                <Alert
-                  type="error"
-                  message="Resolve error(s) to add the image"
-                ></Alert>
-              ) : (
-                ""
-              )}
-              <TextField
-                id="title"
-                name="title"
-                label="Image title"
-                hint="Give your image a descriptive title."
-                error={errors.title && "Please specify an image title"}
-                onChange={handleChangeTitle}
-                required
-                register={register}
-              />
+          <PrimaryActionBar>
+            <h1 className="margin-top-0">{t("AddImageScreen.AddImage")}</h1>
 
-              <div className="usa-checkbox">
-                <input
-                  className="usa-checkbox__input"
-                  id="display-title"
-                  type="checkbox"
-                  name="showTitle"
-                  defaultChecked={true}
-                  onChange={handleShowTitleChange}
-                  ref={register()}
-                />
-                <label className="usa-checkbox__label" htmlFor="display-title">
-                  Show title on dashboard
-                </label>
-              </div>
-
-              <div>
-                <FileInput
-                  id="dataset"
-                  name="dataset"
-                  label="File upload"
-                  accept={supportedImageFileTypes.toString()}
-                  loading={imageUploading}
-                  register={register}
-                  hint={<span>Must be a PNG, JPEG, or SVG file</span>}
-                  fileName={imageFile && imageFile.name}
-                  onFileProcessed={onFileProcessed}
-                />
-              </div>
-
-              <div>
-                {false && false ? (
-                  <div className="usa-alert usa-alert--warning margin-top-3">
-                    <div className="usa-alert__body">
-                      <p className="usa-alert__text">
-                        It is recommended that tables have less than 8 columns.
-                        You can still continue.
-                      </p>
-                    </div>
-                  </div>
+            <div className="text-base text-italic">
+              {t("AddImageScreen.StepTwo")}
+            </div>
+            <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
+              {t("AddImageScreen.ConfigureImage")}
+            </div>
+            <form
+              className="usa-form usa-form--large"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <fieldset className="usa-fieldset">
+                {errors.title || errors.altText ? (
+                  <Alert
+                    type="error"
+                    message={t("AddImageScreen.ResolveError")}
+                    slim
+                  ></Alert>
                 ) : (
                   ""
                 )}
+                <TextField
+                  id="title"
+                  name="title"
+                  label={t("AddImageScreen.Title")}
+                  hint={t("AddImageScreen.Hint")}
+                  error={errors.title && t("AddImageScreen.TitleError")}
+                  onChange={handleChangeTitle}
+                  required
+                  register={register}
+                />
 
-                <div hidden={!imageFile}>
-                  <TextField
-                    id="altText"
-                    name="altText"
-                    label="Image alt text"
-                    hint="Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard."
-                    register={register}
-                    error={errors.altText && "Please specify image alt text"}
-                    required
-                    onChange={handleAltTextChange}
-                    multiline
-                    rows={1}
+                <div className="usa-checkbox">
+                  <input
+                    className="usa-checkbox__input"
+                    id="display-title"
+                    type="checkbox"
+                    name="showTitle"
+                    defaultChecked={true}
+                    onChange={handleShowTitleChange}
+                    ref={register()}
                   />
+                  <label
+                    className="usa-checkbox__label"
+                    htmlFor="display-title"
+                  >
+                    {t("AddImageScreen.ShowTitle")}
+                  </label>
+                </div>
 
-                  <TextField
-                    id="summary"
-                    name="summary"
-                    label="Image description - optional"
-                    hint={
-                      <>
-                        Give your chart a summary to explain it in more depth.
-                        It can also be read by screen readers to describe the
-                        chart for those with visual impairments. This field
-                        supports markdown.{" "}
-                        <Link target="_blank" to={"/admin/markdown"} external>
-                          View Markdown Syntax
-                        </Link>
-                      </>
-                    }
+                <div>
+                  <FileInput
+                    id="dataset"
+                    name="dataset"
+                    label={t("AddImageScreen.FileUpload")}
+                    accept={supportedImageFileTypes.toString()}
+                    loading={imageUploading}
                     register={register}
-                    onChange={handleSummaryChange}
-                    multiline
-                    rows={5}
+                    hint={<span>{t("AddImageScreen.FileHint")}</span>}
+                    fileName={imageFile && imageFile.name}
+                    onFileProcessed={onFileProcessed}
                   />
-                  <div className="usa-checkbox">
-                    <input
-                      className="usa-checkbox__input"
-                      id="summary-below"
-                      type="checkbox"
-                      name="summaryBelow"
-                      defaultChecked={false}
-                      onChange={handleSummaryBelowChange}
-                      ref={register()}
+                </div>
+
+                <div>
+                  <div hidden={!imageFile}>
+                    <TextField
+                      id="altText"
+                      name="altText"
+                      label={t("AddImageScreen.AltText")}
+                      hint={t("AddImageScreen.TextHint")}
+                      register={register}
+                      error={errors.altText && t("AddImageScreen.TextError")}
+                      required
+                      onChange={handleAltTextChange}
+                      multiline
+                      rows={1}
                     />
-                    <label
-                      className="usa-checkbox__label"
-                      htmlFor="summary-below"
-                    >
-                      Show description below image
-                    </label>
+
+                    <TextField
+                      id="summary"
+                      name="summary"
+                      label={t("AddImageScreen.SummaryLabel")}
+                      hint={
+                        <>
+                          {t("AddImageScreen.SummaryHint")}{" "}
+                          <Link target="_blank" to={"/admin/markdown"} external>
+                            {t("AddImageScreen.MarkdownLink")}
+                          </Link>
+                        </>
+                      }
+                      register={register}
+                      onChange={handleSummaryChange}
+                      multiline
+                      rows={5}
+                    />
+                    <div className="usa-checkbox">
+                      <input
+                        className="usa-checkbox__input"
+                        id="summary-below"
+                        type="checkbox"
+                        name="summaryBelow"
+                        defaultChecked={false}
+                        onChange={handleSummaryBelowChange}
+                        ref={register()}
+                      />
+                      <label
+                        className="usa-checkbox__label"
+                        htmlFor="summary-below"
+                      >
+                        {t("AddImageScreen.ToggleSummary")}
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </fieldset>
-            <br />
-            <hr />
-            <Button variant="outline" type="button" onClick={goBack}>
-              Back
-            </Button>
-            <Button
-              disabled={!imageFile || imageUploading}
-              type="submit"
-              disabledToolTip="Upload a file to continue"
-            >
-              Add image
-            </Button>
-            <Button
-              variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
-              type="button"
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
-          </form>
+              </fieldset>
+              <br />
+              <hr />
+              <Button variant="outline" type="button" onClick={goBack}>
+                {t("AddImageScreen.Back")}
+              </Button>
+              <Button
+                disabled={!imageFile || imageUploading}
+                type="submit"
+                disabledToolTip={t("AddImageScreen.DisabledToolTip")}
+              >
+                {t("AddImageScreen.AddImage")}
+              </Button>
+              <Button
+                variant="unstyled"
+                className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                type="button"
+                onClick={onCancel}
+              >
+                {t("AddImageScreen.Cancel")}
+              </Button>
+            </form>
+          </PrimaryActionBar>
         </div>
         <div className={fullPreview ? "gril-col-12" : "grid-col-6"}>
           {fullPreviewButton}
-          <h4 className="margin-top-4">Preview</h4>
           <ImageWidget
             title={showTitle ? title : ""}
             summary={summary}

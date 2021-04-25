@@ -45,12 +45,9 @@ test("renders the Metrics title", async () => {
 });
 
 test("on submit, it does not call createWidget api and upload dataset without a metric added", async () => {
-  const { getByRole, getByText, getByLabelText, findByLabelText } = render(
-    <AddMetrics />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
+  const { getByRole, getAllByText, getByLabelText } = render(<AddMetrics />, {
+    wrapper: MemoryRouter,
+  });
 
   const continueButton = getByRole("button", { name: "Continue" });
 
@@ -65,7 +62,7 @@ test("on submit, it does not call createWidget api and upload dataset without a 
     fireEvent.click(continueButton);
   });
 
-  const submitButton = getByText("Add Metrics");
+  const submitButton = getAllByText("Add metrics")[3];
 
   fireEvent.input(getByLabelText("Metrics title"), {
     target: {
@@ -74,10 +71,6 @@ test("on submit, it does not call createWidget api and upload dataset without a 
   });
 
   await waitFor(() => expect(submitButton).toBeEnabled());
-  await waitFor(() => {
-    expect(getByText("Preview")).toBeInTheDocument();
-  });
-
   await act(async () => {
     fireEvent.click(submitButton);
   });

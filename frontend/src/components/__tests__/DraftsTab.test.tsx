@@ -103,16 +103,51 @@ test("renders the dropdown menu", () => {
   expect(getByText("Actions")).toBeInTheDocument();
 });
 
-test("when no dashboard is selected both dropdown options are disabled", () => {
+test("when no dashboard is selected Actions button is disabled", () => {
   const { getByText } = render(
     <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
     {
       wrapper: MemoryRouter,
     }
   );
+  expect(getByText("Actions")).toHaveAttribute("disabled");
+});
+
+test("when one dashboard is selected both dropdown options are enabled", () => {
+  const { getByText, getByRole } = render(
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+
+  const checkbox = getByRole("checkbox", { name: "Dashboard One" });
+  userEvent.click(checkbox);
   userEvent.click(getByText("Actions"));
+
+  expect(getByText("View history")).not.toHaveAttribute(
+    "aria-disabled",
+    "true"
+  );
+  expect(getByText("Delete")).not.toHaveAttribute("aria-disabled", "true");
+});
+
+test("when two dashboards are selected only Delete option is enabled", () => {
+  const { getByText, getByRole } = render(
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+
+  const checkbox1 = getByRole("checkbox", { name: "Dashboard One" });
+  userEvent.click(checkbox1);
+  const checkbox2 = getByRole("checkbox", { name: "Dashboard Two" });
+  userEvent.click(checkbox2);
+  userEvent.click(getByText("Actions"));
+
   expect(getByText("View history")).toHaveAttribute("aria-disabled", "true");
-  expect(getByText("Delete")).toHaveAttribute("aria-disabled", "true");
+  expect(getByText("Delete")).not.toHaveAttribute("aria-disabled", "true");
 });
 
 test("view history navigates to the correct location", () => {

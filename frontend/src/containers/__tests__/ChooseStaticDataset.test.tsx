@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import ChooseStaticDataset from "../ChooseStaticDataset";
@@ -36,5 +37,7 @@ test("renders a table with users", () => {
   expect(screen.getByRole("table")).toBeInTheDocument();
   expect(screen.getByText("andrew")).toBeInTheDocument();
   expect(screen.getByText("abc")).toBeInTheDocument();
-  expect(screen.getByText("1/1/2000")).toBeInTheDocument();
+  expect(
+    screen.getByText(dayjs.utc("1/1/2000").format("YYYY-MM-DD HH:mm"))
+  ).toBeInTheDocument();
 });

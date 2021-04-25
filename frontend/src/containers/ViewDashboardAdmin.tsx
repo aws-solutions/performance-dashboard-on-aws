@@ -15,8 +15,8 @@ import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import UtilsService from "../services/UtilsService";
-import "./ViewDashboardAdmin.css";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import "./ViewDashboardAdmin.css";
 
 interface PathParams {
   dashboardId: string;
@@ -90,6 +90,12 @@ function ViewDashboardAdmin() {
     });
   };
 
+  const onDashboardHistory = () => {
+    if (dashboard) {
+      history.push(`/admin/dashboard/${dashboard.id}/history`);
+    }
+  };
+
   const onRepublishDashboard = async () => {
     setIsOpenRepublishModal(false);
     if (dashboard) {
@@ -103,7 +109,7 @@ function ViewDashboardAdmin() {
           type: "success",
           message: `${dashboard.name} ${t("DashboardWasRepublished")}`,
           to: `/${dashboardId}`,
-          linkLabel: `${t("ViewPublishedDashboard")}`,
+          linkLabel: t("ViewPublishedDashboard"),
         },
       });
     }
@@ -226,7 +232,14 @@ function ViewDashboardAdmin() {
         {dashboard.state === DashboardState.Archived && (
           <Alert type="info" slim message={t("RepublishDashboardToView")} />
         )}
-        <div className="grid-row margin-top-2">
+        <div
+          className={`grid-row margin-top-${
+            dashboard.state === DashboardState.Published &&
+            !draftOrPublishPending
+              ? "0"
+              : "2"
+          }`}
+        >
           <div className="grid-col text-left flex-row flex-align-center display-flex">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
@@ -234,11 +247,11 @@ function ViewDashboardAdmin() {
                   className="usa-tag text-middle"
                   style={{ cursor: "text" }}
                 >
-                  {dashboard?.state}
+                  {t(dashboard?.state)}
                 </span>
               </li>
               <li className="usa-button-group__item">
-                <span className="text-underline text-middle">
+                <span className="text-middle" style={{ cursor: "default" }}>
                   <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
                   {t("ViewDashboardAlertVersion")} {dashboard?.version}
                 </span>
@@ -282,13 +295,22 @@ function ViewDashboardAdmin() {
             )}
 
             {dashboard.state === DashboardState.Archived && (
-              <Button
-                variant="base"
-                type="button"
-                onClick={() => setIsOpenRepublishModal(true)}
-              >
-                {t("ViewDashboardAlertButton.Re-publish")}
-              </Button>
+              <>
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={onDashboardHistory}
+                >
+                  {t("ViewHistoryLink")}
+                </Button>
+                <Button
+                  variant="base"
+                  type="button"
+                  onClick={() => setIsOpenRepublishModal(true)}
+                >
+                  {t("ViewDashboardAlertButton.Re-publish")}
+                </Button>
+              </>
             )}
 
             {(dashboard.state === DashboardState.Draft ||
@@ -318,7 +340,7 @@ function ViewDashboardAdmin() {
               {t("ViewDashboardAlertVersionNotesFrom", {
                 version: dashboard?.version,
               })}
-              <span className="text-underline">{dashboard?.publishedBy}</span>
+              <span className="text-underline">{` ${dashboard?.publishedBy}`}</span>
             </div>
             <div className="margin-top-2 text-base">
               {dashboard?.releaseNotes}
@@ -328,7 +350,10 @@ function ViewDashboardAdmin() {
       </PrimaryActionBar>
 
       {loading ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <DashboardHeader

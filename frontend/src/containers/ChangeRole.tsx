@@ -6,6 +6,7 @@ import TextField from "../components/TextField";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { LocationState, UserRoles } from "../models";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   emails: string;
@@ -13,6 +14,7 @@ interface FormValues {
 }
 
 function ChangeRole() {
+  const { t } = useTranslation();
   const history = useHistory<LocationState>();
   const { state } = history.location;
   const { register, handleSubmit } = useForm<FormValues>();
@@ -20,14 +22,16 @@ function ChangeRole() {
 
   const onSubmit = async (values: FormValues) => {
     const emails = values.emails.split(",").map((email) => email.trim());
-    await BackendService.changeRole(values.role, emails);
+    await BackendService.changeRole(values.role, state.usernames!);
 
     history.push("/admin/users", {
       alert: {
         type: "success",
-        message: `${emails.length} user${
-          emails.length === 1 ? " has" : "s have"
-        } changed the role to ${values.role}`,
+        message: `${emails.length} ${
+          emails.length === 1
+            ? t("ChangeRole.Singular")
+            : t("ChangeRole.Plural")
+        } ${t("ChangeRole.Final")} ${values.role}`,
       },
     });
   };
@@ -50,16 +54,16 @@ function ChangeRole() {
       <Breadcrumbs
         crumbs={[
           {
-            label: "Manage users",
+            label: t("ManageUsers"),
             url: "/admin/users",
           },
           {
-            label: "Change role",
+            label: t("ChangeRole.Label"),
           },
         ]}
       />
 
-      <h1>Change role</h1>
+      <h1>{t("ChangeRole.Label")}</h1>
       <div className="grid-row">
         <div className="grid-col-12">
           <form
@@ -70,7 +74,7 @@ function ChangeRole() {
             <TextField
               id="emails"
               name="emails"
-              label="User email address(es)"
+              label={t("AddUsersEmails")}
               multiline
               rows={5}
               defaultValue={state.emails}
@@ -78,10 +82,12 @@ function ChangeRole() {
               disabled
             />
 
-            <label className="usa-label text-bold">Role</label>
-            <div className="usa-hint">Select a role for these users</div>
+            <label className="usa-label text-bold">
+              {t("ChangeRole.Role")}
+            </label>
+            <div className="usa-hint">{t("ChangeRole.RoleDescription")}</div>
             <fieldset className="usa-fieldset" onChange={handleChange}>
-              <legend className="usa-sr-only">Roles</legend>
+              <legend className="usa-sr-only">{t("ChangeRole.Roles")}</legend>
               <div className="usa-radio">
                 <div
                   className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
@@ -98,13 +104,12 @@ function ChangeRole() {
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="editor">
-                      {UserRoles.Editor}
+                      {t(`ChangeRole.${UserRoles.Editor}`)}
                     </label>
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      Upcoming feature. Can create, edit, and publish
-                      dashboards.
+                      {t("ChangeRole.EditorDescription")}
                     </div>
                   </div>
                 </div>
@@ -154,13 +159,12 @@ function ChangeRole() {
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="admin">
-                      {UserRoles.Admin}
+                      {t(`ChangeRole.${UserRoles.Admin}`)}
                     </label>
                   </div>
                   <div className="grid-col flex-7">
                     <div className="usa-prose text-base margin-left-4">
-                      In addition to Editor permissions, manage users and
-                      website settings.
+                      {t("ChangeRole.AdminDescription")}
                     </div>
                   </div>
                 </div>
@@ -170,7 +174,7 @@ function ChangeRole() {
             <br />
             <hr />
             <Button disabled={!role} type="submit">
-              Save
+              {t("Save")}
             </Button>
             <Button
               className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
@@ -178,7 +182,7 @@ function ChangeRole() {
               type="button"
               onClick={onCancel}
             >
-              Cancel
+              {t("Cancel")}
             </Button>
           </form>
         </div>

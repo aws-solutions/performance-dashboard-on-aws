@@ -1,47 +1,72 @@
-import React, { useEffect, useRef } from "react";
-// @ts-ignore
-import datePicker from "uswds/src/js/components/date-picker";
+import React, { useEffect, useState } from "react";
+import DatePicker1, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import {
+  enUS,
+  enGB,
+  enAU,
+  enCA,
+  enIN,
+  enNZ,
+  enZA,
+  es,
+  pt,
+  ptBR,
+} from "date-fns/locale";
 
 interface Props {
   name: string;
   id: string;
   label: string;
   hint?: string | React.ReactNode;
-  register?: Function;
-  required?: boolean;
   validate?: Function;
   disabled?: boolean;
   defaultValue?: string;
   error?: string;
-  onChange?: Function;
-  rows?: number;
   className?: string;
+  date: Date | null;
+  setDate: Function;
+  dateFormat: string;
 }
 
 function DatePicker(props: Props) {
-  const formGroupRef = useRef(null);
+  const [localeRegistered, setLocaleRegistered] = useState(false);
   useEffect(() => {
-    // initialize
-    if (formGroupRef.current) {
-      datePicker.init(formGroupRef.current);
-    }
-  }, [formGroupRef]);
+    registerLocale("en-US", enUS);
+    registerLocale("en-GB", enGB);
+    registerLocale("en-AU", enAU);
+    registerLocale("en-CA", enCA);
+    registerLocale("en-IN", enIN);
+    registerLocale("en-NZ", enNZ);
+    registerLocale("en-ZA", enZA);
+    registerLocale("es", es);
+    registerLocale("es-US", es);
+    registerLocale("es-AR", es);
+    registerLocale("es-CL", es);
+    registerLocale("es-CO", es);
+    registerLocale("es-CR", es);
+    registerLocale("es-HN", es);
+    registerLocale("es-MX", es);
+    registerLocale("es-PE", es);
+    registerLocale("es-ES", es);
+    registerLocale("es-UY", es);
+    registerLocale("es-VE", es);
+    registerLocale("es-419", es);
+    registerLocale("pt", pt);
+    registerLocale("pt-PT", pt);
+    registerLocale("pt-BR", ptBR);
+    setLocaleRegistered(true);
+  }, []);
 
   let formGroupClassName = "usa-form-group";
   if (props.error) {
     formGroupClassName += " usa-form-group--error";
   }
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    if (props.onChange) {
-      props.onChange(event);
-    }
-  };
-
   const className = `usa-input${props.className ? " " + props.className : ""}`;
 
   return (
-    <div className={formGroupClassName} ref={formGroupRef}>
+    <div className={formGroupClassName}>
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
       </label>
@@ -56,24 +81,15 @@ function DatePicker(props: Props) {
         </span>
       )}
 
-      <div className="usa-date-picker" data-default-value={props.defaultValue}>
-        <input
-          id={props.id}
+      <div>
+        <DatePicker1
+          selected={props.date}
+          dateFormat={props.dateFormat}
+          onChange={(date) => {
+            props.setDate(date);
+          }}
           className={className}
-          name={props.name}
-          type="text"
-          defaultValue={props.defaultValue}
-          ref={
-            props.register &&
-            (props.validate
-              ? props.register({
-                  required: props.required,
-                  validate: props.validate,
-                })
-              : props.register({ required: props.required }))
-          }
-          disabled={props.disabled}
-          onChange={handleChange}
+          locale={localeRegistered ? window.navigator.language : ""}
         />
       </div>
     </div>

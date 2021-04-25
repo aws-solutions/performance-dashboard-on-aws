@@ -7,11 +7,15 @@ import StorageService from "../services/StorageService";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
+import Spinner from "../components/Spinner";
 import defaultLogo from "../logo.svg";
+import { useTranslation } from "react-i18next";
+import Header from "../components/Header";
 
 function EditLogo() {
+  const { t } = useTranslation();
   const history = useHistory();
-  const { settings, reloadSettings } = useSettings(true);
+  const { settings, reloadSettings, loadingSettings } = useSettings(true);
   const { loadingFile, logo } = useLogo(settings.customLogoS3Key);
   const { register, handleSubmit } = useForm();
 
@@ -37,7 +41,7 @@ function EditLogo() {
         history.push("/admin/settings/brandingandstyling", {
           alert: {
             type: "success",
-            message: "Logo successfully modified",
+            message: t("SettingsLogoEditSuccess"),
           },
         });
       } catch (err) {
@@ -46,7 +50,7 @@ function EditLogo() {
         history.push("/admin/settings/brandingandstyling", {
           alert: {
             type: "error",
-            message: "Failed to update logo",
+            message: t("SettingsLogoEditFailed"),
           },
         });
       }
@@ -61,15 +65,15 @@ function EditLogo() {
 
   const crumbs = [
     {
-      label: "Settings",
+      label: t("Settings"),
       url: "/admin/settings",
     },
     {
-      label: "Branding and style",
+      label: t("BrandingAndStyle"),
       url: "/admin/settings/brandingandstyling",
     },
     {
-      label: "Edit logo",
+      label: t("SettingsLogoEdit"),
     },
   ];
 
@@ -83,16 +87,16 @@ function EditLogo() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>Edit logo</h1>
+        <h1>{t("SettingsLogoEdit")}</h1>
 
-        <p>
-          This logo will appear in the header next to the performance dashboard
-          name and in the published site header.
-        </p>
+        <p>{t("SettingsLogoDescription")}</p>
       </div>
 
-      {loadingFile ? (
-        <div></div>
+      {loadingSettings || loadingFile ? (
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <div className="grid-col-7">
@@ -103,11 +107,11 @@ function EditLogo() {
               <FileInput
                 id="dataset"
                 name="image"
-                label="File upload"
+                label={t("SettingsLogoFileUpload")}
                 accept=".png,.jpeg,.jpg,.svg"
                 loading={imageUploading}
                 register={register}
-                hint={<span>Must be a PNG, JPEG, or SVG file</span>}
+                hint={<span>{t("SettingsLogoFileUploadHint")}</span>}
                 fileName={
                   currentLogo
                     ? currentLogo.name
@@ -118,7 +122,7 @@ function EditLogo() {
 
               <br />
               <Button type="submit" disabled={!settings.updatedAt}>
-                Save
+                {t("Save")}
               </Button>
               <Button
                 variant="unstyled"
@@ -126,24 +130,31 @@ function EditLogo() {
                 className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                 onClick={onCancel}
               >
-                Cancel
+                {t("Cancel")}
               </Button>
             </form>
           </div>
           <div className="grid-col-5">
-            <h4 className="margin-top-4">Preview</h4>
+            <h4 className="margin-top-4">{t("SettingsLogoPreview")}</h4>
             <div className="grid-row">
-              <div className="grid-col-2 text-left">
-                {currentLogo && (
-                  <img src={URL.createObjectURL(currentLogo)}></img>
-                )}
-                {!currentLogo && (
-                  <img
-                    src={logo ? URL.createObjectURL(logo) : defaultLogo}
-                    alt="Organization logo"
-                  ></img>
-                )}
-              </div>
+              <Header className="usa-header usa-header--basic padding-left-2 padding-right-2">
+                <div className="usa-logo margin-top-2" id="basic-logo">
+                  <em className="usa-logo__text display-flex flex-align-center">
+                    <div className="logo">
+                      {currentLogo && (
+                        <img src={URL.createObjectURL(currentLogo)}></img>
+                      )}
+                      {!currentLogo && (
+                        <img
+                          src={logo ? URL.createObjectURL(logo) : defaultLogo}
+                          alt={t("SettingsLogoOrganization")}
+                        ></img>
+                      )}
+                    </div>
+                    {settings.navbarTitle}
+                  </em>
+                </div>
+              </Header>
             </div>
           </div>
         </>

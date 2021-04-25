@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -15,6 +15,7 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   selection: "multiple" | "single" | "none";
@@ -47,10 +48,12 @@ interface Props {
 }
 
 function Table(props: Props) {
+  const { t } = useTranslation();
   const borderlessClassName = !props.disableBorderless
     ? " usa-table--borderless"
     : "";
   const className = props.className ? ` ${props.className}` : "";
+  const [currentPage, setCurrentPage] = useState<string>("1");
 
   const {
     initialSortByField,
@@ -279,12 +282,14 @@ function Table(props: Props) {
                     <button
                       className="margin-left-1 usa-button usa-button--unstyled"
                       {...column.getSortByToggleProps()}
-                      title={`Toggle SortBy ${column.Header}`}
+                      title={`${t("ToggleSortBy")} ${column.Header}`}
                       type="button"
                     >
                       <FontAwesomeIcon
-                        className={`hover:text-base-light ${
-                          column.isSorted ? "text-base-darkest" : "text-white"
+                        className={`hover:text-base ${
+                          column.isSorted
+                            ? "text-base-darkest"
+                            : "text-base-lighter"
                         }`}
                         icon={
                           column.isSorted && column.isSortedDesc
@@ -342,39 +347,83 @@ function Table(props: Props) {
       {!props.disablePagination && rows.length ? (
         <div className="grid-row font-sans-sm">
           <div className="grid-col-3 text-left text-base text-italic">
-            {`Showing ${pageIndex * pageSize + 1}-${Math.min(
+            {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
               pageIndex * pageSize + pageSize,
               rows.length
             )} of ${rows.length}`}
           </div>
           <div className="grid-col-6 text-center">
-            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            <button
+              type="button"
+              className="margin-right-1"
+              onClick={() => {
+                setCurrentPage("1");
+                gotoPage(0);
+              }}
+              disabled={!canPreviousPage}
+            >
               <FontAwesomeIcon icon={faAngleDoubleLeft} />
-            </button>{" "}
-            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            </button>
+            <button
+              type="button"
+              className="margin-right-2"
+              onClick={() => {
+                setCurrentPage(`${pageIndex}`);
+                previousPage();
+              }}
+              disabled={!canPreviousPage}
+            >
               <FontAwesomeIcon icon={faAngleLeft} />
-            </button>{" "}
-            <span>Page </span>
-            <span>
+            </button>
+            <span className="margin-right-2px">{`${t("Page")} `}</span>
+            <span className="margin-right-1">
               <input
                 type="text"
-                value={pageIndex + 1}
+                value={`${currentPage}`}
+                className="margin-right-2px"
                 onChange={(e) => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                  gotoPage(page);
+                  setCurrentPage(e.target.value);
                 }}
-                style={{ width: "40px" }}
-                min={1}
-                max={pageOptions.length}
+                style={{ width: "33px" }}
                 pattern="\d*"
               />
               {` of ${pageOptions.length} `}
             </span>
-            <button onClick={() => nextPage()} disabled={!canNextPage}>
-              <FontAwesomeIcon icon={faAngleRight} />
-            </button>{" "}
             <button
-              onClick={() => gotoPage(pageCount - 1)}
+              type="button"
+              className="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+              onClick={() => {
+                if (currentPage) {
+                  const currentPageNumber = Number(currentPage);
+                  if (
+                    !isNaN(currentPageNumber) &&
+                    currentPageNumber >= 1 &&
+                    currentPageNumber <= pageOptions.length
+                  ) {
+                    gotoPage(currentPageNumber - 1);
+                  }
+                }
+              }}
+            >
+              {t("Go")}
+            </button>
+            <button
+              type="button"
+              className="margin-right-1"
+              onClick={() => {
+                setCurrentPage(`${pageIndex + 2}`);
+                nextPage();
+              }}
+              disabled={!canNextPage}
+            >
+              <FontAwesomeIcon icon={faAngleRight} />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentPage(`${pageCount}`);
+                gotoPage(pageCount - 1);
+              }}
               disabled={!canNextPage}
             >
               <FontAwesomeIcon icon={faAngleDoubleRight} />
@@ -389,7 +438,7 @@ function Table(props: Props) {
             >
               {[5, 10, 20, 25, 50, 100].map((pageSize) => (
                 <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
+                  {t("Show")} {pageSize}
                 </option>
               ))}
             </select>

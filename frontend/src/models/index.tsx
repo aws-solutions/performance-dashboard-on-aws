@@ -123,6 +123,7 @@ export interface ChartWidget extends Widget {
     sortByDesc?: boolean;
     horizontalScroll?: boolean;
     significantDigitLabels: boolean;
+    dataLabels: boolean;
   };
 }
 
@@ -216,6 +217,7 @@ export type PublicSettings = {
     plural: string;
   };
   customLogoS3Key?: string;
+  contactEmailAddress?: string;
 };
 
 export type Settings = {
@@ -235,6 +237,8 @@ export type Settings = {
     plural: string;
   };
   customLogoS3Key?: string;
+  contactEmailAddress?: string;
+  adminContactEmailAddress?: string;
 };
 
 export type Metric = {
@@ -256,18 +260,21 @@ export type LocationState = {
     linkLabel?: string;
   };
   emails?: string;
+  usernames?: Array<string>;
   id?: string;
   metrics?: Array<Metric>;
   metric?: Metric;
   position?: number;
   showTitle?: boolean;
   oneMetricPerRow?: boolean;
+  significantDigitLabels?: boolean;
   metricTitle?: string;
   origin?: string;
   json?: Array<any>;
   staticDataset?: Dataset | undefined;
   redirectUrl?: string;
   crumbLabel?: string;
+  datasetType?: DatasetType;
 };
 
 export enum UserRoles {

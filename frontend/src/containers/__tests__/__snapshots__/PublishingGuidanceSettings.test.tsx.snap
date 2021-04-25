@@ -132,6 +132,20 @@ exports[`publishing guidance settings should match snapshot 1`] = `
                     </a>
                   </li>
                 </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/adminsite"
+                    >
+                      Admin site
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </nav>
@@ -155,7 +169,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
               <p
                 class="text-bold"
               >
-                Acknowledgement statement
+                Acknowledge statement
               </p>
             </div>
             <div

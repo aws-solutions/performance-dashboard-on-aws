@@ -2,14 +2,18 @@ import React from "react";
 import { Metric } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import TickFormatter from "../services/TickFormatter";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   metrics: Array<Metric>;
   metricPerRow: number;
+  significantDigitLabels: boolean;
 }
 
 function MetricsCardGroup(props: Props) {
+  const { t } = useTranslation();
   let rows = [];
   for (let i = 0; i < props.metrics.length; i += props.metricPerRow) {
     let row = [];
@@ -23,7 +27,12 @@ function MetricsCardGroup(props: Props) {
     }
     rows.push(row);
   }
-  return props.metrics.length ? (
+
+  if (!props.metrics.length) {
+    return null;
+  }
+
+  return (
     <div className="grid-col">
       {rows.map((row, i) => {
         return (
@@ -35,9 +44,9 @@ function MetricsCardGroup(props: Props) {
                     className={`grid-col-${12 / props.metricPerRow} padding-05`}
                     key={j}
                   >
-                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1">
+                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-hidden overflow-y-hidden">
                       <div className="flex-5">
-                        <p className="text-base-darkest text-bold margin-0">
+                        <p className="text-base-darkest text-bold margin-0 text-no-wrap">
                           {metric.title}
                         </p>
                       </div>
@@ -46,12 +55,16 @@ function MetricsCardGroup(props: Props) {
                         data-position="bottom"
                         title={metric.value ? metric.value.toString() : ""}
                       >
-                        <h1 className="margin-0 text-no-wrap overflow-hidden text-overflow-ellipsis">
-                          {metric.value}
+                        <h1 className="margin-0 text-no-wrap">
+                          {TickFormatter.format(
+                            Number(metric.value),
+                            Number(metric.value),
+                            props.significantDigitLabels
+                          )}
                         </h1>
                       </div>
                       <div className="flex-2">
-                        {metric.changeOverTime ? (
+                        {metric.changeOverTime && (
                           <div className="margin-top-05">
                             <FontAwesomeIcon
                               size="xs"
@@ -64,19 +77,21 @@ function MetricsCardGroup(props: Props) {
                             />
                             {metric.changeOverTime.substring(1)}
                           </div>
-                        ) : (
-                          ""
                         )}
                       </div>
                       <div className="flex-2">
                         {metric.startDate && metric.endDate && (
                           <div className="margin-top-1px">
                             <span>
-                              {dayjs(metric.startDate).format("MMM YYYY")}
+                              {dayjs(metric.startDate)
+                                .locale(window.navigator.language.toLowerCase())
+                                .format("MMM YYYY")}
                             </span>{" "}
-                            to{" "}
+                            {t("To")}{" "}
                             <span>
-                              {dayjs(metric.endDate).format("MMM YYYY")}
+                              {dayjs(metric.endDate)
+                                .locale(window.navigator.language.toLowerCase())
+                                .format("MMM YYYY")}
                             </span>
                           </div>
                         )}
@@ -90,7 +105,7 @@ function MetricsCardGroup(props: Props) {
         );
       })}
     </div>
-  ) : null;
+  );
 }
 
 export default MetricsCardGroup;

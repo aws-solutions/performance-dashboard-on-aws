@@ -20,6 +20,9 @@ import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
 import Visualize from "../components/VisualizeTable";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
+import UtilsService from "../services/UtilsService";
+import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -38,7 +41,7 @@ interface PathParams {
 function AddTable() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
-
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
@@ -102,6 +105,16 @@ function AddTable() {
   const summaryBelow = watch("summaryBelow");
   const significantDigitLabels = watch("significantDigitLabels");
 
+  const initializeColumnsMetadata = () => {
+    setSelectedHeaders(new Set<string>());
+    setHiddenColumns(new Set<string>());
+    setDataTypes(new Map<string, ColumnDataType>());
+    setNumberTypes(new Map<string, NumberDataType>());
+    setCurrencyTypes(new Map<string, CurrencyDataType>());
+    setSortByColumn(undefined);
+    setSortByDesc(false);
+  };
+
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
       currentJson,
@@ -112,13 +125,14 @@ function AddTable() {
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
-      throw new Error("CSV file not specified");
+      throw new Error(t("CSVFileNotSpecified"));
     }
 
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(currentJson)
+      JSON.stringify(currentJson),
+      t
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -179,11 +193,11 @@ function AddTable() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" table has been successfully added`,
+          message: t("AddTableScreen.AddTableSuccess", { title: values.title }),
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setCreatingWidget(false);
     }
   };
@@ -210,14 +224,11 @@ function AddTable() {
     ) {
       const jsonFile = selectedDataset.s3Key.json;
 
+      initializeColumnsMetadata();
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicJson(dataset);
       setCurrentJson(dataset);
       setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
-    } else {
-      setDynamicJson([]);
-      setCurrentJson([]);
-      setDynamicDataset(undefined);
     }
 
     setDatasetLoading(false);
@@ -228,7 +239,7 @@ function AddTable() {
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/add-table/`,
-        crumbLabel: "Add table",
+        crumbLabel: t("AddTableScreen.AddTable"),
       },
     });
   };
@@ -245,6 +256,7 @@ function AddTable() {
       comments: "#",
       encoding: "ISO-8859-1",
       complete: function (results: ParseResult<object>) {
+        initializeColumnsMetadata();
         if (results.errors.length) {
           setCsvErrors(results.errors);
           setCsvJson([]);
@@ -263,19 +275,22 @@ function AddTable() {
     setCsvFile(data);
   };
 
-  const handleChange = (event: React.FormEvent<HTMLFieldSetElement>) => {
+  const handleChange = async (event: React.FormEvent<HTMLFieldSetElement>) => {
     const target = event.target as HTMLInputElement;
     if (target.name === "datasetType") {
       const datasetType = target.value as DatasetType;
       setDatasetType(datasetType);
+      initializeColumnsMetadata();
+      await UtilsService.timeout(0);
       if (datasetType === DatasetType.DynamicDataset) {
         setCurrentJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        setCurrentJson(staticJson);
-      }
-      if (datasetType === DatasetType.CsvFileUpload) {
-        setCurrentJson(csvJson);
+        if (csvJson) {
+          setCurrentJson(csvJson);
+        } else {
+          setCurrentJson(staticJson);
+        }
       }
     }
   };
@@ -290,7 +305,7 @@ function AddTable() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -301,81 +316,92 @@ function AddTable() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add table",
+      label: t("AddTableScreen.AddTable"),
       url: "",
     });
   }
 
+  const configHeader = (
+    <div>
+      <h1 className="margin-top-0">{t("AddTableScreen.AddTable")}</h1>
+      <StepIndicator
+        current={step}
+        segments={[
+          {
+            label: t("AddTableScreen.ChooseData"),
+          },
+          {
+            label: t("AddTableScreen.CheckData"),
+          },
+          {
+            label: t("AddTableScreen.Visualize"),
+          },
+        ]}
+        showStepChart={true}
+        showStepText={false}
+      />
+    </div>
+  );
+
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Add table</h1>
 
       <div className="grid-row width-desktop">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid-col-12">
-            <div className="grid-col-6" hidden={fullPreview}>
-              <StepIndicator
-                current={step}
-                segments={[
-                  {
-                    label: "Choose data",
-                  },
-                  {
-                    label: "Check data",
-                  },
-                  {
-                    label: "Visualize",
-                  },
-                ]}
-                showStepChart={true}
-                showStepText={false}
-              />
-            </div>
-          </div>
+          <div className="grid-col-12"></div>
 
           <div hidden={step !== 0}>
-            <ChooseData
-              selectDynamicDataset={selectDynamicDataset}
-              dynamicDatasets={dynamicDatasets}
-              datasetType={datasetType}
-              onFileProcessed={onFileProcessed}
-              handleChange={handleChange}
-              advanceStep={advanceStep}
-              fileLoading={fileLoading}
-              browseDatasets={browseDatasets}
-              continueButtonDisabled={!currentJson.length}
-              continueButtonDisabledTooltip="Choose a dataset to continue"
-              csvErrors={csvErrors}
-              csvFile={csvFile}
-              onCancel={onCancel}
-              register={register}
-              widgetType="table"
-            />
+            <PrimaryActionBar>
+              {configHeader}
+              <ChooseData
+                selectDynamicDataset={selectDynamicDataset}
+                dynamicDatasets={dynamicDatasets}
+                datasetType={datasetType}
+                onFileProcessed={onFileProcessed}
+                handleChange={handleChange}
+                advanceStep={advanceStep}
+                fileLoading={fileLoading}
+                browseDatasets={browseDatasets}
+                continueButtonDisabled={!currentJson.length}
+                continueButtonDisabledTooltip={t(
+                  "AddTableScreen.ChooseDataset"
+                )}
+                csvErrors={csvErrors}
+                csvFile={csvFile}
+                onCancel={onCancel}
+                register={register}
+                widgetType={t("ChooseDataDescriptionTable")}
+              />
+            </PrimaryActionBar>
           </div>
 
           <div hidden={step !== 1}>
-            <CheckData
-              data={currentJson}
-              advanceStep={advanceStep}
-              backStep={backStep}
-              selectedHeaders={selectedHeaders}
-              setSelectedHeaders={setSelectedHeaders}
-              hiddenColumns={hiddenColumns}
-              setHiddenColumns={setHiddenColumns}
-              onCancel={onCancel}
-              dataTypes={dataTypes}
-              setDataTypes={setDataTypes}
-              numberTypes={numberTypes}
-              setNumberTypes={setNumberTypes}
-              currencyTypes={currencyTypes}
-              setCurrencyTypes={setCurrencyTypes}
-              sortByColumn={sortByColumn}
-              sortByDesc={sortByDesc}
-              setSortByColumn={setSortByColumn}
-              setSortByDesc={setSortByDesc}
-              reset={reset}
-            />
+            <PrimaryActionBar>
+              {configHeader}
+              <CheckData
+                data={currentJson}
+                advanceStep={advanceStep}
+                backStep={backStep}
+                selectedHeaders={selectedHeaders}
+                setSelectedHeaders={setSelectedHeaders}
+                hiddenColumns={hiddenColumns}
+                setHiddenColumns={setHiddenColumns}
+                onCancel={onCancel}
+                dataTypes={dataTypes}
+                setDataTypes={setDataTypes}
+                numberTypes={numberTypes}
+                setNumberTypes={setNumberTypes}
+                currencyTypes={currencyTypes}
+                setCurrencyTypes={setCurrencyTypes}
+                sortByColumn={sortByColumn}
+                sortByDesc={sortByDesc}
+                setSortByColumn={setSortByColumn}
+                setSortByDesc={setSortByDesc}
+                reset={reset}
+                widgetType={t("CheckDataDescriptionTable")}
+              />
+            </PrimaryActionBar>
           </div>
 
           <div hidden={step !== 2}>
@@ -399,7 +425,7 @@ function AddTable() {
               processingWidget={creatingWidget}
               fullPreviewButton={fullPreviewButton}
               fullPreview={fullPreview}
-              submitButtonLabel="Add Table"
+              submitButtonLabel={t("AddTableScreen.AddTable")}
               sortByColumn={sortByColumn}
               sortByDesc={sortByDesc}
               setSortByColumn={setSortByColumn}
@@ -415,6 +441,7 @@ function AddTable() {
                 numberTypes,
                 currencyTypes
               )}
+              configHeader={configHeader}
             />
           </div>
         </form>

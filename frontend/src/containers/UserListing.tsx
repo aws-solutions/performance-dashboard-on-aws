@@ -6,11 +6,13 @@ import Search from "../components/Search";
 import Table from "../components/Table";
 import { LocationState, User } from "../models";
 import BackendService from "../services/BackendService";
+import UtilsService from "../services/UtilsService";
 import { useHistory } from "react-router-dom";
 import Modal from "../components/Modal";
 import AlertContainer from "./AlertContainer";
 import DropdownMenu from "../components/DropdownMenu";
 import Link from "../components/Link";
+import { useTranslation } from "react-i18next";
 
 const MenuItem = DropdownMenu.MenuItem;
 
@@ -22,6 +24,8 @@ function UserListing() {
   const [isOpenResendInviteModal, setIsOpenResendInviteModal] = useState(false);
   const [isOpenRemoveUsersModal, setIsOpenRemoveUsersModal] = useState(false);
 
+  const { t } = useTranslation();
+
   const addUsers = () => {
     history.push("/admin/users/add");
   };
@@ -29,6 +33,7 @@ function UserListing() {
   const changeRole = () => {
     history.push("/admin/users/changerole", {
       emails: selected.map((s) => s.email).join(", "),
+      usernames: selected.map((s) => s.userId),
     });
   };
 
@@ -40,7 +45,9 @@ function UserListing() {
         history.replace("/admin/users", {
           alert: {
             type: "success",
-            message: `Successfully removed ${selected.length} users.`,
+            message: `${t("SuccessfullyRemoved")}${selected.length} ${t(
+              selected.length === 1 ? "GlobalUser" : "GlobalUsers"
+            )}.`,
           },
         });
 
@@ -54,7 +61,7 @@ function UserListing() {
         history.replace("/admin/users", {
           alert: {
             type: "error",
-            message: "Failed to delete users.",
+            message: `${t("FaUserListingRemoveUserFail")}`,
           },
         });
       } finally {
@@ -96,9 +103,10 @@ function UserListing() {
       history.replace("/admin/users", {
         alert: {
           type: "success",
-          message: `${selected.length} invitation email${
-            selected.length === 1 ? " was" : "s were"
-          } resent`,
+          message:
+            selected.length === 1
+              ? `${selected.length} ${t("UserListingResentInvites")}`
+              : `${selected.length} ${t("UserListingResentInvitesPlural")}`,
         },
       });
 
@@ -115,32 +123,37 @@ function UserListing() {
 
   return (
     <>
-      <h1>Manage users</h1>
+      <h1>{t("ManageUsers")}</h1>
       <Modal
         isOpen={isOpenResendInviteModal}
         closeModal={closeResendInviteModal}
-        title={"Resend invite email"}
-        message={`Are you sure you want to resend the invite${
-          selected.length === 1 ? " for this user?" : "s for these users?"
+        title={t("UserListingModalTitleResendInvites")}
+        message={`${
+          selected.length === 1
+            ? `${t("UserListingModalTitleResendInvitesMessage.part1")}`
+            : `${t("UserListingModalTitleResendInvitesMessage.part2")}`
         }`}
-        buttonType="Resend"
+        buttonType={t("GlobalResend")}
         buttonAction={resendInvite}
       />
       <Modal
         isOpen={isOpenRemoveUsersModal}
         closeModal={closeRemoveUsersModal}
-        title={"Remove users"}
-        message={`Are you sure you want to remove ${selected.length} ${
-          selected.length > 1 ? "users" : "user"
+        title={t("UserListingActionsRemoveUsers")}
+        message={`${t("UserListingActionsRemoveUsersMessage.part0")} ${
+          selected.length
+        } ${
+          selected.length > 1
+            ? `${t("UserListingActionsRemoveUsersMessage.part2")}`
+            : `${t("UserListingActionsRemoveUsersMessage.part1")}`
         }?`}
-        buttonType="Delete"
+        buttonType={t("GlobalDelete")}
         buttonAction={removeUsers}
       />
       <p>
-        These are all of the users who have access. You can add and remove
-        users, change users' roles, or resend email invites.{" "}
+        {t("UserListingDescription")}{" "}
         <Link target="_blank" to={"/admin/userstatus"} external>
-          What do the statuses mean?
+          {t("UserListingLink")}
         </Link>
       </p>
       <AlertContainer />
@@ -149,32 +162,43 @@ function UserListing() {
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
               <span>
-                <Search id="search" onSubmit={onSearch} size="small" />
+                <Search
+                  id={t("GlobalSearch")}
+                  onSubmit={onSearch}
+                  size="small"
+                />
               </span>
             </li>
           </ul>
         </div>
         <div className="tablet:grid-col-8 text-right">
           <span>
-            <DropdownMenu buttonText="Actions" variant="outline">
+            <DropdownMenu
+              buttonText={t("UserListingDropdownMenuActions")}
+              variant="outline"
+            >
+              <MenuItem onSelect={changeRole} disabled={selected.length === 0}>
+                {t("UserListingDropdownChangeRole")}
+              </MenuItem>
+
               <MenuItem
                 onSelect={onResendInvite}
                 disabled={resendInviteEmailDisabled()}
-                title="Resend invite emails to unconfirmed users"
+                title={t("UserListingDropdownResendInviteText")}
               >
-                Resend invite email
+                {t("UserListingActionsResendInvites")}
               </MenuItem>
               <MenuItem
                 onSelect={onRemoveUsers}
                 disabled={selected.length === 0}
               >
-                Remove users
+                {t("UserListingActionsRemoveUsers")}
               </MenuItem>
             </DropdownMenu>
           </span>
           <span>
             <Button variant="base" onClick={addUsers}>
-              Add user(s)
+              {t("UserListingAddUsers")}
             </Button>
           </span>
         </div>
@@ -190,20 +214,25 @@ function UserListing() {
         columns={useMemo(
           () => [
             {
-              Header: "Username",
+              Header: t("UserListingUsername"),
               accessor: "userId",
             },
             {
-              Header: "Email",
+              Header: t("UserListingEmail"),
               accessor: "email",
             },
             {
-              Header: "Role",
-              accessor: (row: User) => row.roles[0],
+              Header: t("UserListingRole"),
+              accessor: (row: User) => t(row.roles[0]),
             },
             {
-              Header: "Status",
-              accessor: "userStatus",
+              Header: t("UserListingStatus"),
+              accessor: (row: User) =>
+                t(
+                  `UserStatuses.${UtilsService.getTranslationUserStatusValue(
+                    row.userStatus
+                  )}`
+                ),
             },
           ],
           []

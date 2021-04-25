@@ -1,11 +1,12 @@
 import React, { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Auth from "@aws-amplify/auth";
 import { useSettings, useCurrentAuthenticatedUser } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
 import Logo from "../components/Logo";
+import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 
 interface LayoutProps {
@@ -13,11 +14,21 @@ interface LayoutProps {
 }
 
 function AdminLayout(props: LayoutProps) {
-  const { username, isAdmin } = useCurrentAuthenticatedUser();
+  const {
+    username,
+    isAdmin,
+    isFederatedId,
+    isEditor,
+    hasRole,
+  } = useCurrentAuthenticatedUser();
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   const signOut = async (event: React.MouseEvent) => {
     try {
+      if (isFederatedId) {
+        event.preventDefault();
+      }
       await Auth.signOut();
     } catch (error) {
       console.log("error signing out: ", error);
@@ -42,28 +53,34 @@ function AdminLayout(props: LayoutProps) {
                 </Link>
               </em>
             </div>
-            <button className="usa-menu-btn">Menu</button>
+            <button className="usa-menu-btn">{t("AdminMenu.Menu")}</button>
           </div>
           <nav aria-label="Primary navigation" className="usa-nav">
             <button className="usa-nav__close">
               <FontAwesomeIcon icon={faWindowClose} size="lg" role="img" />
             </button>
             <ul className="usa-nav__primary usa-accordion">
-              <li className="usa-nav__primary-item">
-                <Link className="usa-nav__link" to="/admin/dashboards">
-                  Dashboards
-                </Link>
-              </li>
+              {isAdmin || isEditor ? (
+                <>
+                  <li className="usa-nav__primary-item">
+                    <Link className="usa-nav__link" to="/admin/dashboards">
+                      {t("AdminMenu.Dashboards")}
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                ""
+              )}
               {isAdmin ? (
                 <>
                   <li className="usa-nav__primary-item">
                     <Link className="usa-nav__link" to="/admin/users">
-                      Manage users
+                      {t("AdminMenu.ManageUsers")}
                     </Link>
                   </li>
                   <li className="usa-nav__primary-item">
                     <Link className="usa-nav__link" to="/admin/settings">
-                      Settings
+                      {t("AdminMenu.Settings")}
                     </Link>
                   </li>
                 </>
@@ -85,7 +102,7 @@ function AdminLayout(props: LayoutProps) {
                 >
                   <li className="usa-nav__submenu-item">
                     <a href="/admin" onClick={signOut} className="usa-link">
-                      Logout
+                      {t("AdminMenu.Logout")}
                     </a>
                   </li>
                 </ul>
@@ -95,6 +112,7 @@ function AdminLayout(props: LayoutProps) {
         </div>
       </Header>
       <main className="padding-y-3">
+        {!hasRole && <Redirect to="/403/access-denied" />}
         <div className="grid-container">{props.children}</div>
       </main>
       <Footer />

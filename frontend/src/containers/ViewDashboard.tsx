@@ -31,7 +31,7 @@ function ViewDashboard() {
         top: "30%",
         left: "50%",
       }}
-      label="Loading"
+      label={t("LoadingSpinnerLabel")}
     />
   ) : (
     <>

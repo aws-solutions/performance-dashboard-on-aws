@@ -2,17 +2,26 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import FriendlyURLInput from "../FriendlyURLInput";
 
-const onChange = jest.fn();
+let friendlyUrl: string = "foo-bar";
+const newFriendlyUrl: string = "fizzbuzz";
 
 beforeEach(() => {
   render(
-    <FriendlyURLInput value="foo-bar" onChange={onChange} showWarning={false} />
+    <FriendlyURLInput
+      value={friendlyUrl}
+      onChange={() => {
+        friendlyUrl = newFriendlyUrl;
+      }}
+      showWarning={false}
+    />
   );
 });
 
 test("renders the preview of the URL", async () => {
   const hostname = window.location.hostname;
-  expect(screen.getByText(`https://${hostname}/foo-bar`)).toBeInTheDocument();
+  expect(
+    screen.getByText(`https://${hostname}/${friendlyUrl}`)
+  ).toBeInTheDocument();
 });
 
 test("edit link opens a modal to modify the URL", async () => {
@@ -24,11 +33,10 @@ test("edit link opens a modal to modify the URL", async () => {
 
   fireEvent.input(textInput, {
     target: {
-      value: "fizzbuzz",
+      value: newFriendlyUrl,
     },
   });
 
   fireEvent.click(screen.getByRole("button", { name: "Save" }));
-  const hostname = window.location.hostname;
-  await waitFor(() => screen.getByText(`https://${hostname}/fizzbuzz`));
+  await waitFor(() => expect(friendlyUrl).toEqual(newFriendlyUrl));
 });

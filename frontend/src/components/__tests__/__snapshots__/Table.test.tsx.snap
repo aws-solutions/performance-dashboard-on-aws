@@ -27,7 +27,7 @@ exports[`renders a basic table 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -59,7 +59,7 @@ exports[`renders a basic table 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -91,7 +91,7 @@ exports[`renders a basic table 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -185,7 +185,9 @@ exports[`renders a basic table 1`] = `
       class="grid-col-6 text-center"
     >
       <button
+        class="margin-right-1"
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -203,9 +205,10 @@ exports[`renders a basic table 1`] = `
           />
         </svg>
       </button>
-       
       <button
+        class="margin-right-2"
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -223,23 +226,33 @@ exports[`renders a basic table 1`] = `
           />
         </svg>
       </button>
-       
-      <span>
+      <span
+        class="margin-right-2px"
+      >
         Page 
       </span>
-      <span>
+      <span
+        class="margin-right-1"
+      >
         <input
-          max="1"
-          min="1"
+          class="margin-right-2px"
           pattern="\\\\d*"
-          style="width: 40px;"
+          style="width: 33px;"
           type="text"
           value="1"
         />
          of 1 
       </span>
       <button
+        class="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+        type="button"
+      >
+        Go
+      </button>
+      <button
+        class="margin-right-1"
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -257,9 +270,9 @@ exports[`renders a basic table 1`] = `
           />
         </svg>
       </button>
-       
       <button
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -345,7 +358,7 @@ exports[`renders a basic table without pagination 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -377,7 +390,7 @@ exports[`renders a basic table without pagination 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -409,7 +422,7 @@ exports[`renders a basic table without pagination 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -536,7 +549,7 @@ exports[`sorting buttons are clickable 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -568,7 +581,7 @@ exports[`sorting buttons are clickable 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -600,7 +613,7 @@ exports[`sorting buttons are clickable 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-base-darkest"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-darkest"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -718,7 +731,9 @@ exports[`sorting buttons are clickable 1`] = `
       class="grid-col-6 text-center"
     >
       <button
+        class="margin-right-1"
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -736,9 +751,10 @@ exports[`sorting buttons are clickable 1`] = `
           />
         </svg>
       </button>
-       
       <button
+        class="margin-right-2"
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -756,23 +772,33 @@ exports[`sorting buttons are clickable 1`] = `
           />
         </svg>
       </button>
-       
-      <span>
+      <span
+        class="margin-right-2px"
+      >
         Page 
       </span>
-      <span>
+      <span
+        class="margin-right-1"
+      >
         <input
-          max="1"
-          min="1"
+          class="margin-right-2px"
           pattern="\\\\d*"
-          style="width: 40px;"
+          style="width: 33px;"
           type="text"
           value="1"
         />
          of 1 
       </span>
       <button
+        class="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+        type="button"
+      >
+        Go
+      </button>
+      <button
+        class="margin-right-1"
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -790,9 +816,9 @@ exports[`sorting buttons are clickable 1`] = `
           />
         </svg>
       </button>
-       
       <button
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -892,7 +918,7 @@ exports[`sorting buttons are clickable 2`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -924,7 +950,7 @@ exports[`sorting buttons are clickable 2`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base-light text-white"
+              class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
               data-icon="chevron-up"
               data-prefix="fas"
               focusable="false"
@@ -956,7 +982,7 @@ exports[`sorting buttons are clickable 2`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-down fa-w-14 hover:text-base-light text-base-darkest"
+              class="svg-inline--fa fa-chevron-down fa-w-14 hover:text-base text-base-darkest"
               data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
@@ -1074,7 +1100,9 @@ exports[`sorting buttons are clickable 2`] = `
       class="grid-col-6 text-center"
     >
       <button
+        class="margin-right-1"
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -1092,9 +1120,10 @@ exports[`sorting buttons are clickable 2`] = `
           />
         </svg>
       </button>
-       
       <button
+        class="margin-right-2"
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -1112,23 +1141,33 @@ exports[`sorting buttons are clickable 2`] = `
           />
         </svg>
       </button>
-       
-      <span>
+      <span
+        class="margin-right-2px"
+      >
         Page 
       </span>
-      <span>
+      <span
+        class="margin-right-1"
+      >
         <input
-          max="1"
-          min="1"
+          class="margin-right-2px"
           pattern="\\\\d*"
-          style="width: 40px;"
+          style="width: 33px;"
           type="text"
           value="1"
         />
          of 1 
       </span>
       <button
+        class="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+        type="button"
+      >
+        Go
+      </button>
+      <button
+        class="margin-right-1"
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -1146,9 +1185,9 @@ exports[`sorting buttons are clickable 2`] = `
           />
         </svg>
       </button>
-       
       <button
         disabled=""
+        type="button"
       >
         <svg
           aria-hidden="true"

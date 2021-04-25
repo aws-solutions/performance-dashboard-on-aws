@@ -1,5 +1,4 @@
 import {
-  ChartType,
   Dashboard,
   DashboardState,
   PublicDashboard,
@@ -33,12 +32,6 @@ function groupByTopicArea(
   return Object.values(byId);
 }
 
-function getChartTypeLabel(chartType: string): string {
-  return chartType === ChartType.PartWholeChart
-    ? "Part-to-whole Chart"
-    : chartType.split(/(?=[A-Z])/).join(" ");
-}
-
 function validateEmails(input: string): boolean {
   const emails = input.split(",").map((email) => email.trim());
   return emails.every(emailIsValid);
@@ -68,8 +61,8 @@ function getLargestHeader(headers: Array<string>, data?: Array<any>) {
 /**
  * Calculate the YAxis margin needed. This is important after we started
  * showing the ticks numbers as locale strings and commas or periods are being
- * added. Margin: Count the commas or periods in the largestTick to locale string,
- * and multiply by pixelsByCharacter.
+ * added. Margin: Count the commas or periods in the largestTick to locale string
+ * plus some extra margin, and multiply by pixelsByCharacter.
  */
 function calculateYAxisMargin(
   largestTick: number,
@@ -77,7 +70,8 @@ function calculateYAxisMargin(
 ): number {
   const pixelsByCharacter = significantDigitLabels ? 2 : 8;
   const tickLocaleString: string = largestTick.toLocaleString();
-  const numberOfCommas: number = tickLocaleString.match(/,|\./g)?.length || 0;
+  const numberOfCommas: number =
+    (tickLocaleString.match(/,|\./g)?.length || 0) + 3;
   return numberOfCommas * pixelsByCharacter;
 }
 
@@ -102,15 +96,46 @@ function getDashboardUrlPath(dashboard?: Dashboard) {
   }
 }
 
+function getTranslationUserStatusValue(userStatus: string) {
+  let translationUserStatusValue = "";
+  switch (userStatus) {
+    case "UNCONFIRMED":
+      translationUserStatusValue = "Unconfirmed";
+      break;
+    case "CONFIRMED":
+      translationUserStatusValue = "Confirmed";
+      break;
+    case "ARCHIVED":
+      translationUserStatusValue = "Archived";
+      break;
+    case "COMPROMISED":
+      translationUserStatusValue = "Compromised";
+      break;
+    case "UNKNOWN":
+      translationUserStatusValue = "Unknown";
+      break;
+    case "RESET_REQUIRED":
+      translationUserStatusValue = "Reset_Required";
+      break;
+    case "FORCE_CHANGE_PASSWORD":
+      translationUserStatusValue = "Force_Change_Password";
+      break;
+    default:
+      translationUserStatusValue = userStatus;
+      break;
+  }
+  return translationUserStatusValue;
+}
+
 const UtilsService = {
   groupByTopicArea,
-  getChartTypeLabel,
   validateEmails,
   timeout,
   getLargestHeader,
   getDashboardUrlPath,
   calculateYAxisMargin,
   isCellEmpty,
+  getTranslationUserStatusValue,
 };
 
 export default UtilsService;

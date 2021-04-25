@@ -42,8 +42,12 @@ function getFilteredJson(
   return newFilteredJson;
 }
 
-function getDatasetSortOptions(json: Array<any>, headers: Array<string>): any {
-  const sortOptions: any = [{ value: "", label: "Select an option" }];
+function getDatasetSortOptions(
+  json: Array<any>,
+  headers: Array<string>,
+  t: Function
+): any {
+  const sortOptions: any = [{ value: "", label: t("SelectAnOption") }];
 
   headers.forEach((h) => {
     const column = [];
@@ -53,8 +57,8 @@ function getDatasetSortOptions(json: Array<any>, headers: Array<string>): any {
     const isNumberOrDate =
       column.every((c) => typeof c === "number") ||
       column.every((c) => !isNaN(Date.parse(c)));
-    const sortTypeAsc = isNumberOrDate ? "low to high" : "A-Z";
-    const sortTypeDesc = isNumberOrDate ? "high to low" : "Z-A";
+    const sortTypeAsc = isNumberOrDate ? t("LowToHigh") : t("AZ");
+    const sortTypeDesc = isNumberOrDate ? t("HighToLow") : t("Z-A");
     sortOptions.push({ value: `${h}###asc`, label: `"${h}" ${sortTypeAsc}` });
     sortOptions.push({
       value: `${h}###desc`,

@@ -23,6 +23,8 @@ import "./EditTable.css";
 import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
 import Visualize from "../components/VisualizeTable";
+import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -44,6 +46,7 @@ interface PathParams {
 function EditTable() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
+  const { t } = useTranslation();
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
@@ -75,9 +78,7 @@ function EditTable() {
     dynamicJson,
     staticJson,
     csvJson,
-    setCurrentJson,
     setDynamicJson,
-    setStaticJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
   const { fullPreview, fullPreviewButton } = useFullPreview();
@@ -114,13 +115,23 @@ function EditTable() {
     DatasetType | undefined
   >();
 
+  const initializeColumnsMetadata = () => {
+    setSelectedHeaders(new Set<string>());
+    setHiddenColumns(new Set<string>());
+    setDataTypes(new Map<string, ColumnDataType>());
+    setNumberTypes(new Map<string, NumberDataType>());
+    setCurrencyTypes(new Map<string, CurrencyDataType>());
+    setSortByColumn(undefined);
+    setSortByDesc(false);
+  };
+
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
-      currentJson,
+      displayedJson,
       hiddenColumns
     );
     setFilteredJson(newFilteredJson);
-  }, [currentJson, hiddenColumns]);
+  }, [displayedJson, hiddenColumns]);
 
   useEffect(() => {
     if (
@@ -162,21 +173,35 @@ function EditTable() {
           : "",
       });
 
-      if (state && state.json) {
-        setStaticJson(state.json);
-        setCurrentJson(state.json);
-      }
-
       if (!displayedDatasetType) {
         setDisplayedDatasetType(
           state && state.json && state.staticDataset
             ? DatasetType.StaticDataset
             : datasetType
         );
-      }
 
-      if (!displayedJson.length) {
-        setDisplayedJson(state && state.json ? state.json : currentJson);
+        if (!displayedJson.length) {
+          setDisplayedJson(state && state.json ? state.json : currentJson);
+        }
+
+        // Initialize fields related to columns metadata
+        if (widget.content.columnsMetadata && (!state || !state.json)) {
+          const columnsMetadata = widget.content.columnsMetadata;
+
+          const {
+            hiddenColumns,
+            dataTypes,
+            numberTypes,
+            currencyTypes,
+          } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
+
+          setHiddenColumns(hiddenColumns);
+          setDataTypes(dataTypes);
+          setNumberTypes(numberTypes);
+          setCurrencyTypes(currencyTypes);
+          setSortByColumn(widget.content.sortByColumn);
+          setSortByDesc(widget.content.sortByDesc || false);
+        }
       }
 
       if (!dynamicDataset) {
@@ -194,25 +219,6 @@ function EditTable() {
                 (d) => d.s3Key.json === widget.content.s3Key.json
               )
         );
-      }
-
-      // Initialize fields related to columns metadata
-      if (widget.content.columnsMetadata) {
-        const columnsMetadata = widget.content.columnsMetadata;
-
-        const {
-          hiddenColumns,
-          dataTypes,
-          numberTypes,
-          currencyTypes,
-        } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
-
-        setHiddenColumns(hiddenColumns);
-        setDataTypes(dataTypes);
-        setNumberTypes(numberTypes);
-        setCurrencyTypes(currencyTypes);
-        setSortByColumn(widget.content.sortByColumn);
-        setSortByDesc(widget.content.sortByDesc || false);
       }
     }
   }, [
@@ -239,24 +245,25 @@ function EditTable() {
         comments: "#",
         encoding: "ISO-8859-1",
         complete: function (results: ParseResult<object>) {
+          initializeColumnsMetadata();
           if (results.errors.length) {
             setCsvErrors(results.errors);
             setCsvJson([]);
-            setCurrentJson([]);
+            setDisplayedJson([]);
           } else {
             setCsvErrors(undefined);
             const csvJson = DatasetParsingService.createHeaderRowJson(
               results.data
             );
             setCsvJson(csvJson);
-            setCurrentJson(csvJson);
+            setDisplayedJson(csvJson);
           }
           setDatasetLoading(false);
         },
       });
       setCsvFile(data);
     },
-    [setCurrentJson, setCsvJson]
+    [setDisplayedJson, setCsvJson]
   );
 
   const uploadDataset = async (): Promise<Dataset | null> => {
@@ -277,7 +284,8 @@ function EditTable() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(currentJson)
+      JSON.stringify(displayedJson),
+      t
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -343,11 +351,13 @@ function EditTable() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" table has been successfully edited`,
+          message: t("EditTableScreen.EditTableSuccess", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {
-      console.log("Failed to edit content item", err);
+      console.log(t("AddContentFailure"), err);
       setEditingWidget(false);
     }
   };
@@ -363,14 +373,16 @@ function EditTable() {
       const datasetType = target.value as DatasetType;
       setDisplayedDatasetType(datasetType);
       await UtilsService.timeout(0);
+      initializeColumnsMetadata();
       if (datasetType === DatasetType.DynamicDataset) {
         setDisplayedJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        setDisplayedJson(staticJson);
-      }
-      if (datasetType === DatasetType.CsvFileUpload) {
-        setDisplayedJson(csvJson);
+        if (csvJson) {
+          setDisplayedJson(csvJson);
+        } else {
+          setDisplayedJson(staticJson);
+        }
       }
       setDatasetLoading(false);
     }
@@ -389,7 +401,7 @@ function EditTable() {
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/edit-table/${widgetId}`,
-        crumbLabel: "Edit table",
+        crumbLabel: t("EditTableScreen.EditTable"),
       },
     });
   };
@@ -404,14 +416,11 @@ function EditTable() {
     ) {
       const jsonFile = selectedDataset.s3Key.json;
 
+      initializeColumnsMetadata();
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
       setDynamicJson(dataset);
       setDisplayedJson(dataset);
-    } else {
-      setDynamicDataset(undefined);
-      setDynamicJson([]);
-      setDisplayedJson([]);
     }
 
     setDatasetLoading(false);
@@ -419,7 +428,7 @@ function EditTable() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -430,15 +439,60 @@ function EditTable() {
 
   if (!loading && widget) {
     crumbs.push({
-      label: "Edit table",
+      label: t("EditTableScreen.EditTable"),
       url: "",
     });
   }
 
+  const configHeader = (
+    <div>
+      <h1 className="margin-top-0">{t("EditTableScreen.EditTable")}</h1>
+      <ul className="usa-button-group usa-button-group--segmented">
+        <li className="usa-button-group__item">
+          <button
+            className={
+              step !== 0 ? "usa-button usa-button--outline" : "usa-button"
+            }
+            type="button"
+            onClick={() => setStep(0)}
+            style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+          >
+            {t("EditTableScreen.ChooseData")}
+          </button>
+        </li>
+        <li className="usa-button-group__item">
+          <button
+            className={
+              step !== 1 ? "usa-button usa-button--outline" : "usa-button"
+            }
+            type="button"
+            onClick={() => setStep(1)}
+            style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+            disabled={!displayedJson.length}
+          >
+            {t("EditTableScreen.CheckData")}
+          </button>
+        </li>
+        <li className="usa-button-group__item">
+          <button
+            className={
+              step !== 2 ? "usa-button usa-button--outline" : "usa-button"
+            }
+            type="button"
+            onClick={() => setStep(2)}
+            style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+            disabled={!displayedJson.length}
+          >
+            {t("EditTableScreen.Visualize")}
+          </button>
+        </li>
+      </ul>
+    </div>
+  );
+
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Edit table</h1>
 
       {loading ||
       loadingDatasets ||
@@ -447,97 +501,62 @@ function EditTable() {
       !filteredJson ||
       fileLoading ||
       editingWidget ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <div className="grid-row width-desktop">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div hidden={fullPreview} className="grid-col-12">
-                <div className="grid-col-6" hidden={fullPreview}>
-                  <ul className="usa-button-group usa-button-group--segmented">
-                    <li className="usa-button-group__item">
-                      <button
-                        className={
-                          step !== 0
-                            ? "usa-button usa-button--outline"
-                            : "usa-button"
-                        }
-                        type="button"
-                        onClick={() => setStep(0)}
-                      >
-                        Choose data
-                      </button>
-                    </li>
-                    <li className="usa-button-group__item">
-                      <button
-                        className={
-                          step !== 1
-                            ? "usa-button usa-button--outline"
-                            : "usa-button"
-                        }
-                        type="button"
-                        onClick={() => setStep(1)}
-                      >
-                        Check data
-                      </button>
-                    </li>
-                    <li className="usa-button-group__item">
-                      <button
-                        className={
-                          step !== 2
-                            ? "usa-button usa-button--outline"
-                            : "usa-button"
-                        }
-                        type="button"
-                        onClick={() => setStep(2)}
-                      >
-                        Visualize
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
               <div hidden={step !== 0}>
-                <ChooseData
-                  selectDynamicDataset={selectDynamicDataset}
-                  dynamicDatasets={dynamicDatasets}
-                  datasetType={displayedDatasetType}
-                  onFileProcessed={onFileProcessed}
-                  handleChange={handleChange}
-                  advanceStep={advanceStep}
-                  fileLoading={fileLoading}
-                  browseDatasets={browseDatasets}
-                  continueButtonDisabled={!currentJson.length}
-                  csvErrors={csvErrors}
-                  csvFile={csvFile}
-                  onCancel={onCancel}
-                  register={register}
-                  widgetType="table"
-                />
+                <PrimaryActionBar>
+                  {configHeader}
+                  <ChooseData
+                    selectDynamicDataset={selectDynamicDataset}
+                    dynamicDatasets={dynamicDatasets}
+                    datasetType={displayedDatasetType}
+                    onFileProcessed={onFileProcessed}
+                    handleChange={handleChange}
+                    advanceStep={advanceStep}
+                    fileLoading={fileLoading}
+                    browseDatasets={browseDatasets}
+                    continueButtonDisabled={!displayedJson.length}
+                    csvErrors={csvErrors}
+                    csvFile={csvFile}
+                    onCancel={onCancel}
+                    register={register}
+                    widgetType={t("ChooseDataDescriptionTable")}
+                  />
+                </PrimaryActionBar>
               </div>
 
               <div hidden={step !== 1}>
-                <CheckData
-                  data={currentJson}
-                  advanceStep={advanceStep}
-                  backStep={backStep}
-                  selectedHeaders={selectedHeaders}
-                  setSelectedHeaders={setSelectedHeaders}
-                  hiddenColumns={hiddenColumns}
-                  setHiddenColumns={setHiddenColumns}
-                  onCancel={onCancel}
-                  dataTypes={dataTypes}
-                  setDataTypes={setDataTypes}
-                  numberTypes={numberTypes}
-                  setNumberTypes={setNumberTypes}
-                  currencyTypes={currencyTypes}
-                  setCurrencyTypes={setCurrencyTypes}
-                  sortByColumn={sortByColumn}
-                  sortByDesc={sortByDesc}
-                  setSortByColumn={setSortByColumn}
-                  setSortByDesc={setSortByDesc}
-                  reset={reset}
-                />
+                <PrimaryActionBar>
+                  {configHeader}
+                  <CheckData
+                    data={displayedJson}
+                    advanceStep={advanceStep}
+                    backStep={backStep}
+                    selectedHeaders={selectedHeaders}
+                    setSelectedHeaders={setSelectedHeaders}
+                    hiddenColumns={hiddenColumns}
+                    setHiddenColumns={setHiddenColumns}
+                    onCancel={onCancel}
+                    dataTypes={dataTypes}
+                    setDataTypes={setDataTypes}
+                    numberTypes={numberTypes}
+                    setNumberTypes={setNumberTypes}
+                    currencyTypes={currencyTypes}
+                    setCurrencyTypes={setCurrencyTypes}
+                    sortByColumn={sortByColumn}
+                    sortByDesc={sortByDesc}
+                    setSortByColumn={setSortByColumn}
+                    setSortByDesc={setSortByDesc}
+                    reset={reset}
+                    widgetType={t("CheckDataDescriptionTable")}
+                  />
+                </PrimaryActionBar>
               </div>
 
               <div hidden={step !== 2}>
@@ -561,7 +580,7 @@ function EditTable() {
                   processingWidget={editingWidget}
                   fullPreviewButton={fullPreviewButton}
                   fullPreview={fullPreview}
-                  submitButtonLabel="Save"
+                  submitButtonLabel={t("Save")}
                   title={title}
                   summary={summary}
                   summaryBelow={summaryBelow}
@@ -577,6 +596,7 @@ function EditTable() {
                     numberTypes,
                     currencyTypes
                   )}
+                  configHeader={configHeader}
                 />
               </div>
             </form>

@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import TextField from "../components/TextField";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -18,6 +19,7 @@ function EditHomepageContent() {
   const history = useHistory();
   const { homepage, loading } = useHomepage();
   const { register, errors, handleSubmit } = useForm<FormValues>();
+  const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.editHomepage(
@@ -29,7 +31,7 @@ function EditHomepageContent() {
     history.push("/admin/settings/publishedsite", {
       alert: {
         type: "success",
-        message: "Homepage content successfully edited",
+        message: t("SettingsHomePageContentEditSuccess"),
       },
     });
   };
@@ -40,15 +42,15 @@ function EditHomepageContent() {
 
   const crumbs = [
     {
-      label: "Settings",
+      label: t("Settings"),
       url: "/admin/settings/topicarea",
     },
     {
-      label: "Published site",
+      label: t("SettingsPublishedSite"),
       url: "/admin/settings/publishedsite",
     },
     {
-      label: "Edit homepage content",
+      label: t("SettingsHomePageContentEdit"),
     },
   ];
 
@@ -56,15 +58,15 @@ function EditHomepageContent() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>Edit homepage content</h1>
+        <h1>{t("SettingsHomePageContentEdit")}</h1>
 
-        <p>
-          This components appear on the homepage of your published site and
-          explain what your published site is about.
-        </p>
+        <p>{t("SettingsHomePageContentEditDescription")}</p>
 
         {loading ? (
-          <Spinner className="text-center margin-top-9" label="Loading" />
+          <Spinner
+            className="text-center margin-top-9"
+            label={t("LoadingSpinnerLabel")}
+          />
         ) : (
           <>
             <form
@@ -75,9 +77,9 @@ function EditHomepageContent() {
               <TextField
                 id="title"
                 name="title"
-                label="Headline"
-                hint="Give your homepage a descriptive headline."
-                error={errors.title && "Please specify a name"}
+                label={t("SettingsHomepageHeadline")}
+                hint={t("SettingsHomepageHeadlineHint")}
+                error={errors.title && t("SettingsHomepageHeadlineErrors")}
                 defaultValue={homepage.title}
                 register={register}
                 required
@@ -86,7 +88,7 @@ function EditHomepageContent() {
               <Markdown
                 id="description"
                 name="description"
-                label="Description"
+                label={t("SettingsHomePageDescription")}
                 defaultValue={homepage.description}
                 register={register}
                 hint=""
@@ -94,7 +96,7 @@ function EditHomepageContent() {
 
               <br />
               <Button type="submit" disabled={loading}>
-                Save
+                {t("Save")}
               </Button>
               <Button
                 variant="unstyled"
@@ -102,7 +104,7 @@ function EditHomepageContent() {
                 className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                 onClick={onCancel}
               >
-                Cancel
+                {t("Cancel")}
               </Button>
             </form>
           </>

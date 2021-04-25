@@ -4,6 +4,7 @@
  * calls to happen and instead returns dummy data.
  */
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { useState, useCallback } from "react";
 import {
   DashboardState,
@@ -87,6 +88,8 @@ export function useSettings() {
       singular: "Ministry",
       plural: "Ministries",
     },
+    adminContactEmailAddress: "admin1@aol.com",
+    contactEmailAddress: "contact@aol.com",
   });
 
   return {
@@ -419,8 +422,9 @@ export function useTopicArea() {
 }
 
 export function useDateTimeFormatter() {
+  dayjs.extend(utc);
   return useCallback((dateToDisplay: Date) => {
-    return dayjs(dateToDisplay).format("YYYY-MM-DD HH:mm");
+    return dayjs.utc(dateToDisplay).format("YYYY-MM-DD HH:mm");
   }, []);
 }
 
@@ -454,6 +458,7 @@ export function useCurrentAuthenticatedUser() {
     isAdmin: roles.isAdmin,
     isEditor: roles.isEditor,
     isPublisher: roles.isPublisher,
+    hasRole: true,
   };
 }
 
@@ -544,4 +549,13 @@ export function useTableMetadata() {
   return {
     largestTickByColumn,
   };
+}
+
+export function useWindowSize() {
+  const [size] = useState({
+    width: 1024,
+    height: 768,
+  });
+
+  return size;
 }

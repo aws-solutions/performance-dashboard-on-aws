@@ -45,13 +45,13 @@ function Home() {
         top: "30%",
         left: "50%",
       }}
-      label="Loading"
+      label={t("LoadingSpinnerLabel")}
     />
   ) : (
     <div className="usa-prose">
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
-          <h1 className="font-sans-3xl">{homepage.title}</h1>
+          <h1 className="font-sans-3xl line-height-sans-2">{homepage.title}</h1>
           <MarkdownRender
             className="font-sans-lg usa-prose"
             source={homepage.description}

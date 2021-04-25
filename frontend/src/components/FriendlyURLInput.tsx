@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "./Button";
 import Modal from "./Modal";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   value?: string;
@@ -14,12 +15,12 @@ interface FormValues {
 }
 
 function FriendlyURLInput({ value, onChange, showWarning }: Props) {
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const {
     register,
     reset,
     errors,
-    watch,
     getValues,
     trigger,
     setValue,
@@ -57,26 +58,24 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
     setValue("friendlyURL", sanitized);
   };
 
-  const friendlyURL = watch("friendlyURL");
-
   return (
     <>
       <Modal
         isOpen={isEditing}
-        title="Edit URL"
-        buttonType="Save"
+        title={t("EditURLComponent.EditURL")}
+        buttonType={t("Save")}
         buttonAction={onSubmit}
         closeModal={() => setIsEditing(false)}
         message={
           <div className="usa-form-group">
             <label htmlFor="friendlyURL" className="usa-label text-bold">
-              Dashboard URL
+              {t("EditURLComponent.DashboardURL")}
             </label>
             <div className="usa-hint">
               {showWarning
-                ? "Are you sure you want to edit this dashboard's URL? " +
-                  "Users will not be able to access the dashboard with the old URL."
-                : "Edit the URL that will be used to publish this dashboard.Domain name cannot be edited."}
+                ? t("EditURLComponent.AreYouSure") +
+                  t("EditURLComponent.NoAccess")
+                : t("EditURLComponent.Guidance")}
             </div>
             {errors.friendlyURL && (
               <span
@@ -84,7 +83,7 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
                 id="input-error-message"
                 role="alert"
               >
-                Please enter a valid URL
+                {t("EditURLComponent.Error")}
               </span>
             )}
             <input
@@ -100,18 +99,16 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
           </div>
         }
       />
-      <div className="usa-hint">
-        Edit or confirm the URL that will be used to publish this dashboard.
-      </div>
-      <p className="font-sans-lg margin-top-0">
-        https://{window.location.hostname}/{friendlyURL}
+      <div className="usa-hint">{t("EditURLComponent.Guidance")}</div>
+      <p className="font-sans-lg">
+        https://{window.location.hostname}/{value}
         <Button
           type="button"
           variant="unstyled"
-          className="margin-left-2"
+          className="margin-left-2 text-bold text-base-dark hover:text-base-darker active:text-base-darkest"
           onClick={() => setIsEditing(true)}
         >
-          Edit URL
+          {t("EditURLComponent.EditURL")}
         </Button>
       </p>
     </>

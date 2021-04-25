@@ -15,6 +15,7 @@ import TextField from "./TextField";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "./Dropdown";
 import DatasetParsingService from "../services/DatasetParsingService";
+import PrimaryActionBar from "./PrimaryActionBar";
 
 interface Props {
   errors: any;
@@ -44,7 +45,9 @@ interface Props {
   summaryBelow: boolean;
   significantDigitLabels: boolean;
   horizontalScroll: boolean;
+  dataLabels: boolean;
   columnsMetadata: Array<any>;
+  configHeader: JSX.Element;
 }
 
 function VisualizeChart(props: Props) {
@@ -69,232 +72,258 @@ function VisualizeChart(props: Props) {
   return (
     <div className="grid-row width-desktop">
       <div className="grid-col-5" hidden={props.fullPreview}>
-        {props.errors.title ? (
-          <Alert
-            type="error"
-            message="Resolve error(s) to add the chart"
-          ></Alert>
-        ) : (
-          ""
-        )}
-
-        <TextField
-          id="title"
-          name="title"
-          label="Chart title"
-          hint="Give your chart a descriptive title."
-          error={props.errors.title && "Please specify a chart title"}
-          required
-          register={props.register}
-        />
-
-        <div className="usa-checkbox">
-          <input
-            className="usa-checkbox__input"
-            id="display-title"
-            type="checkbox"
-            name="showTitle"
-            defaultChecked={true}
-            ref={props.register()}
-          />
-          <label className="usa-checkbox__label" htmlFor="display-title">
-            Show title on dashboard
-          </label>
-        </div>
-
-        <RadioButtons
-          id="chartType"
-          name="chartType"
-          label="Chart type"
-          hint="Choose a chart type."
-          register={props.register}
-          error={props.errors.chartType && "Please select a chart type"}
-          defaultValue={ChartType.LineChart}
-          required
-          options={[
-            {
-              value: ChartType.BarChart,
-              label: "Bar",
-            },
-            {
-              value: ChartType.ColumnChart,
-              label: "Column",
-            },
-            {
-              value: ChartType.LineChart,
-              label: "Line",
-            },
-            {
-              value: ChartType.PartWholeChart,
-              label: "Part-to-whole",
-            },
-          ]}
-        />
-        <div className="margin-top-3 grid-col-6">
-          <Dropdown
-            id="sortData"
-            name="sortData"
-            label="Sort data"
-            options={DatasetParsingService.getDatasetSortOptions(
-              props.originalJson,
-              props.headers
-            )}
-            onChange={handleSortDataChange}
-            defaultValue={
-              props.sortByColumn
-                ? `${props.sortByColumn}###${props.sortByDesc ? "desc" : "asc"}`
-                : ""
+        <PrimaryActionBar>
+          {props.configHeader}
+          {props.errors.title && (
+            <Alert
+              type="error"
+              message={t("VisualizeChartComponent.ResolveErrors")}
+              slim
+            ></Alert>
+          )}
+          <TextField
+            id="title"
+            name="title"
+            label={t("VisualizeChartComponent.ChartTitle")}
+            hint={t("VisualizeChartComponent.ChartTitleHint")}
+            error={
+              props.errors.title && t("VisualizeChartComponent.ChartTitleError")
             }
+            required
             register={props.register}
           />
-        </div>
 
-        <div>
-          <label className="usa-label text-bold">
-            {t("ChartOptionsLabel")}
-          </label>
-          <div className="usa-hint">{t("ChartOptionsDescription")}</div>
           <div className="usa-checkbox">
             <input
               className="usa-checkbox__input"
-              id="significantDigitLabels"
+              id="display-title"
               type="checkbox"
-              name="significantDigitLabels"
+              name="showTitle"
+              defaultChecked={true}
+              ref={props.register()}
+            />
+            <label className="usa-checkbox__label" htmlFor="display-title">
+              {t("AddTextScreen.ShowTitle")}
+            </label>
+          </div>
+
+          <RadioButtons
+            id="chartType"
+            name="chartType"
+            label={t("VisualizeChartComponent.ChartType")}
+            hint={t("VisualizeChartComponent.ChartTypeHint")}
+            register={props.register}
+            error={
+              props.errors.chartType &&
+              t("VisualizeChartComponent.ChartTypeError")
+            }
+            defaultValue={ChartType.LineChart}
+            required
+            options={[
+              {
+                value: ChartType.BarChart,
+                label: t("Bar"),
+              },
+              {
+                value: ChartType.ColumnChart,
+                label: t("Column"),
+              },
+              {
+                value: ChartType.LineChart,
+                label: t("Line"),
+              },
+              {
+                value: ChartType.PartWholeChart,
+                label: t("PartToWhole"),
+              },
+            ]}
+          />
+          <div className="margin-top-3">
+            <Dropdown
+              id="sortData"
+              name="sortData"
+              label={t("SortData")}
+              options={DatasetParsingService.getDatasetSortOptions(
+                props.originalJson,
+                props.headers,
+                t
+              )}
+              onChange={handleSortDataChange}
+              defaultValue={
+                props.sortByColumn
+                  ? `${props.sortByColumn}###${
+                      props.sortByDesc ? "desc" : "asc"
+                    }`
+                  : ""
+              }
+              register={props.register}
+            />
+          </div>
+
+          <div>
+            <label className="usa-label text-bold">
+              {t("ChartOptionsLabel")}
+            </label>
+            <div className="usa-hint">{t("ChartOptionsDescription")}</div>
+            <div className="usa-checkbox">
+              <input
+                className="usa-checkbox__input"
+                id="significantDigitLabels"
+                type="checkbox"
+                name="significantDigitLabels"
+                defaultChecked={false}
+                ref={props.register()}
+              />
+              <label
+                className="usa-checkbox__label"
+                htmlFor="significantDigitLabels"
+              >
+                {t("SignificantDigitLabels")}
+              </label>
+            </div>
+
+            <div
+              className="usa-checkbox"
+              hidden={
+                (props.chartType !== ChartType.LineChart &&
+                  props.chartType !== ChartType.ColumnChart) ||
+                widthPercent <= 100
+              }
+            >
+              <input
+                className="usa-checkbox__input"
+                id="horizontalScroll"
+                type="checkbox"
+                name="horizontalScroll"
+                defaultChecked={!!props.horizontalScroll}
+                ref={props.register()}
+              />
+              <label className="usa-checkbox__label" htmlFor="horizontalScroll">
+                {t("VisualizeChartComponent.DisplayHorizontalScroll")}
+              </label>
+            </div>
+
+            <div
+              className="usa-checkbox"
+              hidden={
+                props.chartType !== ChartType.BarChart &&
+                props.chartType !== ChartType.ColumnChart
+              }
+            >
+              <input
+                className="usa-checkbox__input"
+                id="dataLabels"
+                type="checkbox"
+                name="dataLabels"
+                defaultChecked
+                ref={props.register()}
+              />
+              <label className="usa-checkbox__label" htmlFor="dataLabels">
+                {t("VisualizeChartComponent.ShowDataLabels")}
+              </label>
+            </div>
+          </div>
+
+          <TextField
+            id="summary"
+            name="summary"
+            label={t("VisualizeChartComponent.ChartSummary")}
+            hint={
+              <>
+                {t("VisualizeChartComponent.ChartSummaryHint")}{" "}
+                <Link target="_blank" to={"/admin/markdown"} external>
+                  {t("AddTextScreen.ViewMarkdownSyntax")}
+                </Link>
+              </>
+            }
+            register={props.register}
+            multiline
+            rows={5}
+          />
+          <div className="usa-checkbox">
+            <input
+              className="usa-checkbox__input"
+              id="summary-below"
+              type="checkbox"
+              name="summaryBelow"
               defaultChecked={false}
               ref={props.register()}
             />
-            <label
-              className="usa-checkbox__label"
-              htmlFor="significantDigitLabels"
-            >
-              {t("SignificantDigitLabels")}
+            <label className="usa-checkbox__label" htmlFor="summary-below">
+              {t("VisualizeChartComponent.ChartShowSummary")}
             </label>
           </div>
-
-          <div
-            className="usa-checkbox"
-            hidden={
-              (props.chartType !== ChartType.LineChart &&
-                props.chartType !== ChartType.ColumnChart) ||
-              widthPercent <= 100
+          <br />
+          <br />
+          <hr />
+          <Button variant="outline" type="button" onClick={props.backStep}>
+            {t("BackButton")}
+          </Button>
+          <Button
+            type="submit"
+            disabled={
+              !props.json.length || props.fileLoading || props.processingWidget
             }
           >
-            <input
-              className="usa-checkbox__input"
-              id="horizontalScroll"
-              type="checkbox"
-              name="horizontalScroll"
-              defaultChecked
-              ref={props.register()}
-            />
-            <label className="usa-checkbox__label" htmlFor="horizontalScroll">
-              Display with horizontal scroll
-            </label>
-          </div>
-        </div>
-
-        <TextField
-          id="summary"
-          name="summary"
-          label="Chart summary - optional"
-          hint={
-            <>
-              Give your chart a summary to explain it in more depth. It can also
-              be read by screen readers to describe the chart for those with
-              visual impairments. This field supports markdown.{" "}
-              <Link target="_blank" to={"/admin/markdown"} external>
-                View Markdown Syntax
-              </Link>
-            </>
-          }
-          register={props.register}
-          multiline
-          rows={5}
-        />
-        <div className="usa-checkbox">
-          <input
-            className="usa-checkbox__input"
-            id="summary-below"
-            type="checkbox"
-            name="summaryBelow"
-            defaultChecked={false}
-            ref={props.register()}
-          />
-          <label className="usa-checkbox__label" htmlFor="summary-below">
-            Show summary below chart
-          </label>
-        </div>
-        <br />
-        <br />
-        <hr />
-        <Button variant="outline" type="button" onClick={props.backStep}>
-          Back
-        </Button>
-        <Button
-          type="submit"
-          disabled={
-            !props.json.length || props.fileLoading || props.processingWidget
-          }
-        >
-          {props.submitButtonLabel}
-        </Button>
-        <Button
-          variant="unstyled"
-          className="text-base-dark hover:text-base-darker active:text-base-darkest"
-          type="button"
-          onClick={props.onCancel}
-        >
-          Cancel
-        </Button>
+            {props.submitButtonLabel}
+          </Button>
+          <Button
+            variant="unstyled"
+            className="text-base-dark hover:text-base-darker active:text-base-darkest"
+            type="button"
+            onClick={props.onCancel}
+          >
+            {t("Cancel")}
+          </Button>
+        </PrimaryActionBar>
       </div>
-
       <div className={props.fullPreview ? "grid-col-12" : "grid-col-7"}>
         <div
           hidden={!props.json.length}
           className={`${!props.fullPreview ? "margin-left-4" : ""}`}
         >
           {props.fullPreviewButton}
-          <h4>Preview</h4>
           {props.datasetLoading ? (
-            <Spinner className="text-center margin-top-6" label="Loading" />
+            <Spinner
+              className="text-center margin-top-6"
+              label={t("LoadingSpinnerLabel")}
+            />
           ) : (
             <>
               {showAlert &&
               props.datasetType === DatasetType.StaticDataset &&
               props.csvJson.length ? (
-                <div className="margin-left-1">
-                  <Alert
-                    type="info"
-                    message={
-                      <div className="grid-row margin-left-4">
-                        <div className="grid-col-11">
-                          Does the chart look correct?{" "}
-                          <Link
-                            to="/admin/formattingcsv"
-                            target="_blank"
-                            external
+                <Alert
+                  type="info"
+                  message={
+                    <div className="grid-row margin-left-4">
+                      <div className="grid-col-11">
+                        {t("VisualizeChartComponent.ChartCorrectDisplay")}{" "}
+                        <Link
+                          to="/admin/formattingcsv"
+                          target="_blank"
+                          external
+                        >
+                          {t("LearnHowToFormatCSV")}
+                        </Link>
+                      </div>
+                      <div className="grid-col-1">
+                        <div className="margin-left-4">
+                          <Button
+                            variant="unstyled"
+                            className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                            onClick={() => setShowAlert(false)}
+                            type="button"
+                            ariaLabel={t("GlobalClose")}
                           >
-                            Learn how to format your CSV data.
-                          </Link>
-                        </div>
-                        <div className="grid-col-1">
-                          <div className="margin-left-4">
-                            <Button
-                              variant="unstyled"
-                              className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
-                              onClick={() => setShowAlert(false)}
-                              type="button"
-                              ariaLabel="Close"
-                            >
-                              <FontAwesomeIcon icon={faTimes} size="sm" />
-                            </Button>
-                          </div>
+                            <FontAwesomeIcon icon={faTimes} size="sm" />
+                          </Button>
                         </div>
                       </div>
-                    }
-                    slim
-                  />
-                </div>
+                    </div>
+                  }
+                  slim
+                />
               ) : (
                 ""
               )}
@@ -309,7 +338,7 @@ function VisualizeChart(props: Props) {
                   }
                   data={props.json}
                   summaryBelow={props.summaryBelow}
-                  isPreview={true}
+                  isPreview={!props.fullPreview}
                   horizontalScroll={props.horizontalScroll}
                   setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}
@@ -327,11 +356,12 @@ function VisualizeChart(props: Props) {
                   }
                   data={props.json}
                   summaryBelow={props.summaryBelow}
-                  isPreview={true}
+                  isPreview={!props.fullPreview}
                   horizontalScroll={props.horizontalScroll}
                   setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}
                   columnsMetadata={props.columnsMetadata}
+                  hideDataLabels={!props.dataLabels}
                 />
               )}
               {props.chartType === ChartType.BarChart && (
@@ -347,6 +377,7 @@ function VisualizeChart(props: Props) {
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
                   columnsMetadata={props.columnsMetadata}
+                  hideDataLabels={!props.dataLabels}
                 />
               )}
               {props.chartType === ChartType.PartWholeChart && (

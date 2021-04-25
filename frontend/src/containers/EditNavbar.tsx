@@ -7,23 +7,44 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import TextField from "../components/TextField";
+import { useTranslation } from "react-i18next";
+import UtilsService from "../services/UtilsService";
 
 interface FormValues {
   title: string;
+  contactEmail: string;
 }
 
 function EditNavBar() {
   const history = useHistory();
   const { settings, loadingSettings } = useSettings();
   const { register, errors, handleSubmit } = useForm<FormValues>();
+  const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
-    await BackendService.updateSetting("navbarTitle", values.title, new Date());
+    if (!settings.navbarTitle || settings.navbarTitle != values.title) {
+      await BackendService.updateSetting(
+        "navbarTitle",
+        values.title,
+        new Date()
+      );
+    }
+
+    if (
+      !settings.contactEmailAddress ||
+      settings.contactEmailAddress != values.contactEmail
+    ) {
+      await BackendService.updateSetting(
+        "contactEmailAddress",
+        values.contactEmail,
+        new Date()
+      );
+    }
 
     history.push("/admin/settings/publishedsite", {
       alert: {
         type: "success",
-        message: "Navigation bar successfully edited",
+        message: t("SettingsNavBarEditSuccess"),
       },
     });
   };
@@ -34,15 +55,15 @@ function EditNavBar() {
 
   const crumbs = [
     {
-      label: "Settings",
+      label: t("Settings"),
       url: "/admin/settings/topicarea",
     },
     {
-      label: "Published site",
+      label: t("SettingsPublishedSite"),
       url: "/admin/settings/publishedsite",
     },
     {
-      label: "Edit navigation bar",
+      label: t("SettingsNavBarEdit"),
     },
   ];
 
@@ -50,12 +71,15 @@ function EditNavBar() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>Edit navigation bar</h1>
+        <h1>{t("SettingsNavBarEdit")}</h1>
 
-        <p>Customize the title of your dashboard.</p>
+        <p>{t("SettingsNavBarEditDescription")}</p>
 
         {loadingSettings ? (
-          <Spinner className="text-center margin-top-9" label="Loading" />
+          <Spinner
+            className="text-center margin-top-9"
+            label={t("LoadingSpinnerLabel")}
+          />
         ) : (
           <>
             <form
@@ -66,17 +90,28 @@ function EditNavBar() {
               <TextField
                 id="title"
                 name="title"
-                label="Title"
-                hint="This is the title of the website"
-                error={errors.title && "Please specify a title"}
+                label={t("SettingsTitle")}
+                hint={t("SettingsTitleHint")}
+                error={errors.title && t("SettingsTitleError")}
                 defaultValue={settings.navbarTitle}
                 register={register}
                 required
               />
 
+              <TextField
+                id="contactEmail"
+                name="contactEmail"
+                label={t("SettingsContactEmailTitle")}
+                hint={t("SettingsContactEmailHint")}
+                defaultValue={settings.contactEmailAddress}
+                register={register}
+                error={errors.contactEmail && t("EmailInvalid")}
+                validate={UtilsService.validateEmails}
+              />
+
               <br />
               <Button type="submit" disabled={loadingSettings}>
-                Save
+                {t("Save")}
               </Button>
               <Button
                 variant="unstyled"
@@ -84,7 +119,7 @@ function EditNavBar() {
                 className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                 onClick={onCancel}
               >
-                Cancel
+                {t("Cancel")}
               </Button>
             </form>
           </>

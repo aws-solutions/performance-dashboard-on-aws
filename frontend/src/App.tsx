@@ -5,8 +5,8 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { withAuthenticator } from "@aws-amplify/ui-react";
 import SettingsProvider from "./context/SettingsProvider";
+import withSAMLAuthenticator from "./layouts/SAMLAuthenticator";
 
 import withPublicLayout from "./layouts/Public";
 import withAdminLayout from "./layouts/Admin";
@@ -47,7 +47,9 @@ import FourZeroFour from "./containers/FourZeroFour";
 import MarkdownSyntax from "./containers/MarkdownSyntax";
 import FormattingCSV from "./containers/FormattingCSV";
 import DateFormatSettings from "./containers/DateFormatSettings";
+import AdminSiteSettings from "./containers/AdminSiteSettings";
 import EditDateFormat from "./containers/EditDateFormat";
+import EditSupportContactEmail from "./containers/EditSupportContactEmail";
 import APIHelpPage from "./containers/APIHelpPage";
 import ColorsHelpPage from "./containers/ColorsHelpPage";
 import EditNavbar from "./containers/EditNavbar";
@@ -58,6 +60,7 @@ import BrandingAndStylingSettings from "./containers/BrandingAndStylingSettings"
 import EditLogo from "./containers/EditLogo";
 import UserStatus from "./containers/UserStatus";
 import ChooseStaticDataset from "./containers/ChooseStaticDataset";
+import AccessDenied from "./containers/AccessDenied";
 
 interface AppRoute {
   path: string;
@@ -117,6 +120,14 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/settings/dateformat/edit",
     component: EditDateFormat,
+  },
+  {
+    path: "/admin/settings/adminsite",
+    component: AdminSiteSettings,
+  },
+  {
+    path: "/admin/settings/supportcontact/edit",
+    component: EditSupportContactEmail,
   },
   {
     path: "/admin/settings/topicarea/:topicAreaId/edit",
@@ -247,6 +258,10 @@ const routes: Array<AppRoute> = [
     component: ChangeRole,
   },
   {
+    path: "/403/access-denied",
+    component: AccessDenied,
+  },
+  {
     path: "/:friendlyURL",
     component: ViewDashboard,
     public: true,
@@ -271,7 +286,7 @@ function App() {
           {routes.map((route) => {
             const component = route.public
               ? withPublicLayout(route.component)
-              : withAuthenticator(withAdminLayout(route.component));
+              : withSAMLAuthenticator(withAdminLayout(route.component));
             return (
               <Route
                 exact

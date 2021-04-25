@@ -4,10 +4,20 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Amplify from "@aws-amplify/core";
 import * as serviceWorker from "./serviceWorker";
-import config from "./amplify-config";
+import { amplifyConfig } from "./amplify-config";
 import App from "./App";
 import ReactModal from "react-modal";
 import i18n from "./i18n";
+import "dayjs/locale/en";
+import "dayjs/locale/en-gb";
+import "dayjs/locale/en-au";
+import "dayjs/locale/en-ca";
+import "dayjs/locale/en-in";
+import "dayjs/locale/en-nz";
+import "dayjs/locale/es";
+import "dayjs/locale/es-us";
+import "dayjs/locale/pt";
+import "dayjs/locale/pt-br";
 
 import "uswds/dist/css/uswds.min.css";
 import "uswds/dist/js/uswds.min.js";
@@ -23,7 +33,7 @@ declare module "react" {
 ReactModal.setAppElement("#root"); //this is important for accessibility
 
 dayjs.extend(relativeTime);
-Amplify.configure(config);
+Amplify.configure(amplifyConfig());
 i18n();
 
 ReactDOM.render(

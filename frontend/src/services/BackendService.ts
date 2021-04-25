@@ -416,13 +416,13 @@ async function resendInvite(emails: Array<string>) {
   });
 }
 
-async function changeRole(role: string, emails: Array<string>) {
+async function changeRole(role: string, usernames: Array<string>) {
   const headers = await authHeaders();
   return await API.put(apiName, "user/role", {
     headers,
     body: {
       role,
-      emails: emails.join(","),
+      usernames: usernames,
     },
   });
 }

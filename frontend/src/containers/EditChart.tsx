@@ -24,6 +24,8 @@ import UtilsService from "../services/UtilsService";
 import "./EditChart.css";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
+import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -36,6 +38,7 @@ interface FormValues {
   datasetType: string;
   sortData: string;
   horizontalScroll: boolean;
+  dataLabels: boolean;
   significantDigitLabels: boolean;
 }
 
@@ -47,7 +50,7 @@ interface PathParams {
 function EditChart() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
-
+  const { t } = useTranslation();
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
@@ -110,17 +113,28 @@ function EditChart() {
   const summaryBelow = watch("summaryBelow");
   const chartType = watch("chartType");
   const horizontalScroll = watch("horizontalScroll");
+  const dataLabels = watch("dataLabels");
   const significantDigitLabels = watch("significantDigitLabels");
 
   const [displayedJson, setDisplayedJson] = useState<any[]>([]);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const [displayedDatasetType, setDisplayedDatasetType] = useState<
     DatasetType | undefined
-  >();
+  >(undefined);
+
+  const initializeColumnsMetadata = () => {
+    setSelectedHeaders(new Set<string>());
+    setHiddenColumns(new Set<string>());
+    setDataTypes(new Map<string, ColumnDataType>());
+    setNumberTypes(new Map<string, NumberDataType>());
+    setCurrencyTypes(new Map<string, CurrencyDataType>());
+    setSortByColumn(undefined);
+    setSortByDesc(false);
+  };
 
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
-      currentJson,
+      displayedJson,
       hiddenColumns
     );
     DatasetParsingService.sortFilteredJson(
@@ -129,7 +143,7 @@ function EditChart() {
       sortByDesc
     );
     setFilteredJson(newFilteredJson);
-  }, [currentJson, hiddenColumns, sortByColumn, sortByDesc]);
+  }, [displayedJson, hiddenColumns, sortByColumn, sortByDesc]);
 
   useEffect(() => {
     if (
@@ -145,6 +159,7 @@ function EditChart() {
       const summaryBelow = widget.content.summaryBelow;
       const chartType = widget.content.chartType;
       const horizontalScroll = widget.content.horizontalScroll;
+      const dataLabels = widget.content.dataLabels;
 
       reset({
         title,
@@ -158,6 +173,7 @@ function EditChart() {
         summaryBelow,
         chartType,
         horizontalScroll,
+        dataLabels,
         significantDigitLabels: widget.content.significantDigitLabels,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
@@ -180,10 +196,29 @@ function EditChart() {
             ? DatasetType.StaticDataset
             : datasetType
         );
-      }
 
-      if (!displayedJson.length) {
-        setDisplayedJson(state && state.json ? state.json : currentJson);
+        if (!displayedJson.length) {
+          setDisplayedJson(state && state.json ? state.json : currentJson);
+        }
+
+        // Initialize fields related to columns metadata
+        if (widget.content.columnsMetadata && (!state || !state.json)) {
+          const columnsMetadata = widget.content.columnsMetadata;
+
+          const {
+            hiddenColumns,
+            dataTypes,
+            numberTypes,
+            currencyTypes,
+          } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
+
+          setHiddenColumns(hiddenColumns);
+          setDataTypes(dataTypes);
+          setNumberTypes(numberTypes);
+          setCurrencyTypes(currencyTypes);
+          setSortByColumn(widget.content.sortByColumn);
+          setSortByDesc(widget.content.sortByDesc || false);
+        }
       }
 
       if (!dynamicDataset) {
@@ -201,25 +236,6 @@ function EditChart() {
                 (d) => d.s3Key.json === widget.content.s3Key.json
               )
         );
-      }
-
-      // Initialize fields related to columns metadata
-      if (widget.content.columnsMetadata) {
-        const columnsMetadata = widget.content.columnsMetadata;
-
-        const {
-          hiddenColumns,
-          dataTypes,
-          numberTypes,
-          currencyTypes,
-        } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
-
-        setHiddenColumns(hiddenColumns);
-        setDataTypes(dataTypes);
-        setNumberTypes(numberTypes);
-        setCurrencyTypes(currencyTypes);
-        setSortByColumn(widget.content.sortByColumn);
-        setSortByDesc(widget.content.sortByDesc || false);
       }
     }
   }, [
@@ -246,6 +262,7 @@ function EditChart() {
         comments: "#",
         encoding: "ISO-8859-1",
         complete: function (results: ParseResult<object>) {
+          initializeColumnsMetadata();
           if (results.errors.length) {
             setCsvErrors(results.errors);
             setCsvJson([]);
@@ -281,7 +298,8 @@ function EditChart() {
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(displayedJson)
+      JSON.stringify(displayedJson),
+      t
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -319,6 +337,10 @@ function EditChart() {
             values.chartType === ChartType.ColumnChart) && {
             horizontalScroll: values.horizontalScroll,
           }),
+          ...((values.chartType === ChartType.BarChart ||
+            values.chartType === ChartType.ColumnChart) && {
+            dataLabels: values.dataLabels,
+          }),
           datasetType: displayedDatasetType,
           datasetId: newDataset
             ? newDataset.id
@@ -352,13 +374,13 @@ function EditChart() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" ${UtilsService.getChartTypeLabel(
-            values.chartType
-          ).toLowerCase()} has been successfully edited`,
+          message: t("EditChartScreen.EditChartSuccess", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {
-      console.log("Failed to edit content item", err);
+      console.log(t("AddContentFailure"), err);
       setEditingWidget(false);
     }
   };
@@ -373,15 +395,17 @@ function EditChart() {
       setDatasetLoading(true);
       const datasetType = target.value as DatasetType;
       setDisplayedDatasetType(datasetType);
+      initializeColumnsMetadata();
       await UtilsService.timeout(0);
       if (datasetType === DatasetType.DynamicDataset) {
         setDisplayedJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        setDisplayedJson(staticJson);
-      }
-      if (datasetType === DatasetType.CsvFileUpload) {
-        setDisplayedJson(csvJson);
+        if (csvJson) {
+          setDisplayedJson(csvJson);
+        } else {
+          setDisplayedJson(staticJson);
+        }
       }
       setDatasetLoading(false);
     }
@@ -400,7 +424,7 @@ function EditChart() {
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/edit-chart/${widgetId}`,
-        crumbLabel: "Edit chart",
+        crumbLabel: t("EditChartScreen.EditChart"),
       },
     });
   };
@@ -415,14 +439,11 @@ function EditChart() {
     ) {
       const jsonFile = selectedDataset.s3Key.json;
 
+      initializeColumnsMetadata();
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
       setDynamicJson(dataset);
       setDisplayedJson(dataset);
-    } else {
-      setDynamicDataset(undefined);
-      setDynamicJson([]);
-      setDisplayedJson([]);
     }
 
     setDatasetLoading(false);
@@ -430,7 +451,7 @@ function EditChart() {
 
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -441,16 +462,60 @@ function EditChart() {
 
   if (!loading && widget) {
     crumbs.push({
-      label: "Edit chart",
+      label: t("EditChartScreen.EditChart"),
       url: "",
     });
   }
 
+  const configHeader = (
+    <div>
+      <h1 className="margin-top-0">{t("EditChartScreen.EditChart")}</h1>
+      <ul className="usa-button-group usa-button-group--segmented">
+        <li className="usa-button-group__item">
+          <button
+            className={
+              step !== 0 ? "usa-button usa-button--outline" : "usa-button"
+            }
+            type="button"
+            onClick={() => setStep(0)}
+            style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+          >
+            {t("EditChartScreen.ChooseData")}
+          </button>
+        </li>
+        <li className="usa-button-group__item">
+          <button
+            className={
+              step !== 1 ? "usa-button usa-button--outline" : "usa-button"
+            }
+            type="button"
+            onClick={() => setStep(1)}
+            style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+            disabled={!displayedJson.length}
+          >
+            {t("EditChartScreen.CheckData")}
+          </button>
+        </li>
+        <li className="usa-button-group__item">
+          <button
+            className={
+              step !== 2 ? "usa-button usa-button--outline" : "usa-button"
+            }
+            type="button"
+            onClick={() => setStep(2)}
+            style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+            disabled={!displayedJson.length}
+          >
+            {t("EditChartScreen.Visualize")}
+          </button>
+        </li>
+      </ul>
+    </div>
+  );
+
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Edit chart</h1>
-
       {loading ||
       loadingDatasets ||
       !widget ||
@@ -458,136 +523,107 @@ function EditChart() {
       !filteredJson ||
       fileLoading ||
       editingWidget ? (
-        <Spinner className="text-center margin-top-9" label="Loading" />
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <div className="grid-row width-desktop">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div hidden={fullPreview} className="grid-col-12">
-              <ul className="usa-button-group usa-button-group--segmented">
-                <li className="usa-button-group__item">
-                  <button
-                    className={
-                      step !== 0
-                        ? "usa-button usa-button--outline"
-                        : "usa-button"
-                    }
-                    type="button"
-                    onClick={() => setStep(0)}
-                  >
-                    Choose data
-                  </button>
-                </li>
-                <li className="usa-button-group__item">
-                  <button
-                    className={
-                      step !== 1
-                        ? "usa-button usa-button--outline"
-                        : "usa-button"
-                    }
-                    type="button"
-                    onClick={() => setStep(1)}
-                  >
-                    Check data
-                  </button>
-                </li>
-                <li className="usa-button-group__item">
-                  <button
-                    className={
-                      step !== 2
-                        ? "usa-button usa-button--outline"
-                        : "usa-button"
-                    }
-                    type="button"
-                    onClick={() => setStep(2)}
-                  >
-                    Visualize
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <div hidden={step !== 0}>
-              <ChooseData
-                selectDynamicDataset={selectDynamicDataset}
-                dynamicDatasets={dynamicDatasets}
-                datasetType={displayedDatasetType}
-                onFileProcessed={onFileProcessed}
-                handleChange={handleChange}
-                advanceStep={advanceStep}
-                fileLoading={fileLoading}
-                browseDatasets={browseDatasets}
-                continueButtonDisabled={!currentJson.length}
-                csvErrors={csvErrors}
-                csvFile={csvFile}
-                onCancel={onCancel}
-                register={register}
-                widgetType="chart"
-              />
-            </div>
-            <div hidden={step !== 1}>
-              <CheckData
-                data={currentJson}
-                advanceStep={advanceStep}
-                backStep={backStep}
-                selectedHeaders={selectedHeaders}
-                setSelectedHeaders={setSelectedHeaders}
-                hiddenColumns={hiddenColumns}
-                setHiddenColumns={setHiddenColumns}
-                onCancel={onCancel}
-                dataTypes={dataTypes}
-                setDataTypes={setDataTypes}
-                numberTypes={numberTypes}
-                setNumberTypes={setNumberTypes}
-                currencyTypes={currencyTypes}
-                setCurrencyTypes={setCurrencyTypes}
-                sortByColumn={sortByColumn}
-                sortByDesc={sortByDesc}
-                setSortByColumn={setSortByColumn}
-                setSortByDesc={setSortByDesc}
-                reset={reset}
-              />
-            </div>
-            <div hidden={step !== 2}>
-              <VisualizeChart
-                errors={errors}
-                register={register}
-                json={filteredJson}
-                originalJson={displayedJson}
-                headers={
-                  displayedJson.length
-                    ? (Object.keys(displayedJson[0]) as Array<string>)
-                    : []
-                }
-                csvJson={csvJson}
-                datasetLoading={datasetLoading}
-                datasetType={displayedDatasetType}
-                onCancel={onCancel}
-                backStep={backStep}
-                advanceStep={advanceStep}
-                fileLoading={fileLoading}
-                processingWidget={editingWidget}
-                title={title}
-                summary={summary}
-                chartType={chartType as ChartType}
-                summaryBelow={summaryBelow}
-                showTitle={showTitle}
-                fullPreviewButton={fullPreviewButton}
-                fullPreview={fullPreview}
-                submitButtonLabel="Save"
-                sortByColumn={sortByColumn}
-                sortByDesc={sortByDesc}
-                setSortByColumn={setSortByColumn}
-                setSortByDesc={setSortByDesc}
-                horizontalScroll={horizontalScroll}
-                significantDigitLabels={significantDigitLabels}
-                columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
-                  hiddenColumns,
-                  dataTypes,
-                  numberTypes,
-                  currencyTypes
-                )}
-              />
-            </div>
-          </form>
+          <div className="grid-col-12">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div hidden={step !== 0}>
+                <PrimaryActionBar>
+                  {configHeader}
+                  <ChooseData
+                    selectDynamicDataset={selectDynamicDataset}
+                    dynamicDatasets={dynamicDatasets}
+                    datasetType={displayedDatasetType}
+                    onFileProcessed={onFileProcessed}
+                    handleChange={handleChange}
+                    advanceStep={advanceStep}
+                    fileLoading={fileLoading}
+                    browseDatasets={browseDatasets}
+                    continueButtonDisabled={!displayedJson.length}
+                    csvErrors={csvErrors}
+                    csvFile={csvFile}
+                    onCancel={onCancel}
+                    register={register}
+                    widgetType={t("ChooseDataDescriptionChart")}
+                  />
+                </PrimaryActionBar>
+              </div>
+              <div hidden={step !== 1}>
+                <PrimaryActionBar>
+                  {configHeader}
+                  <CheckData
+                    data={displayedJson}
+                    advanceStep={advanceStep}
+                    backStep={backStep}
+                    selectedHeaders={selectedHeaders}
+                    setSelectedHeaders={setSelectedHeaders}
+                    hiddenColumns={hiddenColumns}
+                    setHiddenColumns={setHiddenColumns}
+                    onCancel={onCancel}
+                    dataTypes={dataTypes}
+                    setDataTypes={setDataTypes}
+                    numberTypes={numberTypes}
+                    setNumberTypes={setNumberTypes}
+                    currencyTypes={currencyTypes}
+                    setCurrencyTypes={setCurrencyTypes}
+                    sortByColumn={sortByColumn}
+                    sortByDesc={sortByDesc}
+                    setSortByColumn={setSortByColumn}
+                    setSortByDesc={setSortByDesc}
+                    reset={reset}
+                    widgetType={t("CheckDataDescriptionChart")}
+                  />
+                </PrimaryActionBar>
+              </div>
+              <div hidden={step !== 2}>
+                <VisualizeChart
+                  errors={errors}
+                  register={register}
+                  json={filteredJson}
+                  originalJson={displayedJson}
+                  headers={
+                    displayedJson.length
+                      ? (Object.keys(displayedJson[0]) as Array<string>)
+                      : []
+                  }
+                  csvJson={csvJson}
+                  datasetLoading={datasetLoading}
+                  datasetType={displayedDatasetType}
+                  onCancel={onCancel}
+                  backStep={backStep}
+                  advanceStep={advanceStep}
+                  fileLoading={fileLoading}
+                  processingWidget={editingWidget}
+                  title={title}
+                  summary={summary}
+                  chartType={chartType as ChartType}
+                  summaryBelow={summaryBelow}
+                  showTitle={showTitle}
+                  fullPreviewButton={fullPreviewButton}
+                  fullPreview={fullPreview}
+                  submitButtonLabel={t("Save")}
+                  sortByColumn={sortByColumn}
+                  sortByDesc={sortByDesc}
+                  setSortByColumn={setSortByColumn}
+                  setSortByDesc={setSortByDesc}
+                  horizontalScroll={horizontalScroll}
+                  dataLabels={dataLabels}
+                  significantDigitLabels={significantDigitLabels}
+                  columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                    hiddenColumns,
+                    dataTypes,
+                    numberTypes,
+                    currencyTypes
+                  )}
+                  configHeader={configHeader}
+                />
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </>

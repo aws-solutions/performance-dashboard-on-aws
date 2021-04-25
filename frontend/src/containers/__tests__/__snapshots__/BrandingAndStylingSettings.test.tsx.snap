@@ -132,6 +132,20 @@ exports[`branding and styling settings should match snapshot 1`] = `
                     </a>
                   </li>
                 </ul>
+                <ul
+                  class="usa-sidenav__sublist"
+                >
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      href="/admin/settings/adminsite"
+                    >
+                      Admin site
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </nav>

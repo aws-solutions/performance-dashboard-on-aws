@@ -50,7 +50,9 @@ async function addUsers(req: Request, res: Response) {
     );
     return res.send();
   } catch (error) {
-    res.status(500).send(error);
+    // Don't return error which may reveal that user already exists
+    logger.error(error);
+    res.status(400).send("Bad Request");
   }
 }
 
@@ -99,13 +101,7 @@ async function resendInvite(req: Request, res: Response) {
 }
 
 async function changeRole(req: Request, res: Response) {
-  // Temporarily disabling this feature
-  res.status(404).send("Not found");
-  return;
-
-  /*
-
-  const { role, emails } = req.body;
+  const { role, usernames } = req.body;
 
   if (!role) {
     res.status(400).send("Missing required body `role`");
@@ -117,32 +113,20 @@ async function changeRole(req: Request, res: Response) {
     return;
   }
 
-  if (!emails) {
-    res.status(400).send("Missing required body `emails`");
+  if (!usernames) {
+    res.status(400).send("Missing required body `usernames`");
     return;
-  }
-
-  const userEmails = (emails as string).split(",");
-
-  for (const userEmail of userEmails) {
-    if (!emailIsValid(userEmail)) {
-      res.status(400).send(`Invalid email: ${userEmail}`);
-      return;
-    }
   }
 
   const repo = UserRepository.getInstance();
   try {
-    await repo.changeRole(
-      userEmails.map((email) => email.split("@")[0]),
-      role
-    );
+    await repo.changeRole(usernames, role);
     return res.send();
   } catch (error) {
-    res.status(500).send(error);
+    // Don't return error which may reveal that user doesn't exists
+    logger.error(error);
+    res.status(400).send("Bad Request");
   }
-
-  */
 }
 
 function emailIsValid(email: string) {

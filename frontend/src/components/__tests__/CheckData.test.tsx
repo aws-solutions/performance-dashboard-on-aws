@@ -35,6 +35,7 @@ test("renders the CheckData component", async () => {
       numberTypes={new Map()}
       setCurrencyTypes={() => {}}
       setNumberTypes={() => {}}
+      widgetType="the chart"
     />
   );
   expect(wrapper.container).toMatchSnapshot();

@@ -16,6 +16,8 @@ import { useColors, useXAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
+import DataTable from "./DataTable";
+import { ColumnDataType } from "../models";
 
 type Props = {
   title: string;
@@ -30,6 +32,7 @@ type Props = {
     secondary: string | undefined;
   };
   columnsMetadata: Array<any>;
+  hideDataLabels?: boolean;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -65,9 +68,19 @@ const BarChartWidget = (props: Props) => {
 
   const { data, bars } = props;
   const yAxisType = useCallback(() => {
-    return data && data.every((row) => typeof row[bars[0]] === "number")
-      ? "number"
-      : "category";
+    let columnMetadata;
+    if (props.columnsMetadata && bars.length) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === bars[0]
+      );
+    }
+    if (columnMetadata && columnMetadata.dataType === ColumnDataType.Text) {
+      return "category";
+    } else {
+      return data && data.every((row) => typeof row[bars[0]] === "number")
+        ? "number"
+        : "category";
+    }
   }, [data, bars]);
 
   const toggleBars = (e: any) => {
@@ -139,7 +152,7 @@ const BarChartWidget = (props: Props) => {
               reversed={true}
             />
             <Tooltip
-              cursor={{ fill: "#F0F0F0" }}
+              itemStyle={{ color: "#1b1b1b" }}
               isAnimationActive={false}
               formatter={(value: Number | String, name: string) => {
                 // Check if there is metadata for this column
@@ -162,8 +175,8 @@ const BarChartWidget = (props: Props) => {
               <Legend
                 verticalAlign="top"
                 onClick={toggleBars}
-                onMouseLeave={(e) => setBarsHover(null)}
-                onMouseEnter={(e) => setBarsHover(e.dataKey)}
+                onMouseLeave={() => setBarsHover(null)}
+                onMouseEnter={(e: any) => setBarsHover(e.dataKey)}
               />
             )}
             {props.bars.length &&
@@ -177,7 +190,7 @@ const BarChartWidget = (props: Props) => {
                     hide={hiddenBars.includes(bar)}
                     isAnimationActive={false}
                   >
-                    {props.bars.length <= 3 ? (
+                    {!props.hideDataLabels ? (
                       <LabelList
                         dataKey={bar}
                         position="right"
@@ -204,6 +217,11 @@ const BarChartWidget = (props: Props) => {
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
+      <DataTable
+        rows={data || []}
+        columns={bars}
+        columnsMetadata={props.columnsMetadata}
+      />
     </div>
   );
 };

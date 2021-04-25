@@ -49,12 +49,25 @@ p {
   left: 0 !important;
 }
 
-.bar-chart > .recharts-legend-wrapper,
+.bar-chart > .recharts-legend-wrapper {
+  top: -28px !important;
+  left: 0 !important;
+}
+
 .part-to-whole-chart > .recharts-legend-wrapper {
   top: -20px !important;
 }
 
-.overflow-hidden:hover {
+.overflow-x-hidden:hover {
+  overflow-x: auto;
+}
+
+.check-data-table {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.check-data-table:hover {
   overflow-x: visible;
 }
 
@@ -70,17 +83,12 @@ p {
   text-align: left !important;
 }
 
-.bar-chart > * .recharts-default-legend,
 .part-to-whole-chart > * .recharts-default-legend {
   margin-left: 8px !important;
 }
 
 .recharts-legend-item {
   margin-right: 16px !important;
-}
-
-body {
-  background-color: #fafafa;
 }
 
 .usa-header--basic .usa-nav__primary-item > .usa-current::after,
@@ -123,4 +131,12 @@ body {
 .usa-table td,
 .usa-table th {
   background-color: #fafafa;
+}
+
+.__react_component_tooltip.show {
+  opacity: 1 !important;
+}
+
+.usa-breadcrumb {
+  background-color: #fff;
 }

@@ -21,6 +21,8 @@ import VisualizeChart from "../components/VisualizeChart";
 import "./AddChart.css";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
+import PrimaryActionBar from "../components/PrimaryActionBar";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   title: string;
@@ -31,6 +33,7 @@ interface FormValues {
   datasetType: string;
   horizontalScroll: boolean;
   significantDigitLabels: boolean;
+  dataLabels: boolean;
   sortData: string;
 }
 
@@ -41,7 +44,7 @@ interface PathParams {
 function AddChart() {
   const history = useHistory<LocationState>();
   const { state } = history.location;
-
+  const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
@@ -105,7 +108,18 @@ function AddChart() {
   const chartType = watch("chartType");
   const showTitle = watch("showTitle");
   const horizontalScroll = watch("horizontalScroll");
+  const dataLabels = watch("dataLabels");
   const significantDigitLabels = watch("significantDigitLabels");
+
+  const initializeColumnsMetadata = () => {
+    setSelectedHeaders(new Set<string>());
+    setHiddenColumns(new Set<string>());
+    setDataTypes(new Map<string, ColumnDataType>());
+    setNumberTypes(new Map<string, NumberDataType>());
+    setCurrencyTypes(new Map<string, CurrencyDataType>());
+    setSortByColumn(undefined);
+    setSortByDesc(false);
+  };
 
   useMemo(() => {
     const newFilteredJson = DatasetParsingService.getFilteredJson(
@@ -122,13 +136,14 @@ function AddChart() {
 
   const uploadDataset = async (): Promise<Dataset> => {
     if (!csvFile) {
-      throw new Error("CSV file not specified");
+      throw new Error(t("CSVFileNotSpecified"));
     }
 
     setFileLoading(true);
     const uploadResponse = await StorageService.uploadDataset(
       csvFile,
-      JSON.stringify(currentJson)
+      JSON.stringify(currentJson),
+      t
     );
 
     const newDataset = await BackendService.createDataset(csvFile.name, {
@@ -162,6 +177,10 @@ function AddChart() {
             values.chartType === ChartType.ColumnChart) && {
             horizontalScroll: values.horizontalScroll,
           }),
+          ...((values.chartType === ChartType.BarChart ||
+            values.chartType === ChartType.ColumnChart) && {
+            dataLabels: values.dataLabels,
+          }),
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
@@ -194,13 +213,11 @@ function AddChart() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `"${values.title}" ${UtilsService.getChartTypeLabel(
-            values.chartType
-          ).toLowerCase()} has been successfully added`,
+          message: t("AddChartScreen.AddChartSuccess", { title: values.title }),
         },
       });
     } catch (err) {
-      console.log("Failed to save content item", err);
+      console.log(t("AddContentFailure"), err);
       setCreatingWidget(false);
     }
   };
@@ -222,7 +239,7 @@ function AddChart() {
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
       state: {
         redirectUrl: `/admin/dashboard/${dashboardId}/add-chart/`,
-        crumbLabel: "Add chart",
+        crumbLabel: t("AddChartScreen.AddChart"),
       },
     });
   };
@@ -240,6 +257,7 @@ function AddChart() {
         comments: "#",
         encoding: "ISO-8859-1",
         complete: async function (results: ParseResult<object>) {
+          initializeColumnsMetadata();
           if (results.errors.length) {
             setCsvErrors(results.errors);
             setCsvJson([]);
@@ -263,6 +281,7 @@ function AddChart() {
       setDatasetLoading(true);
       const datasetType = target.value as DatasetType;
       setDatasetType(datasetType);
+      initializeColumnsMetadata();
       await UtilsService.timeout(0);
       if (datasetType === DatasetType.DynamicDataset) {
         setCurrentJson(dynamicJson);
@@ -288,22 +307,27 @@ function AddChart() {
     ) {
       const jsonFile = selectedDataset.s3Key.json;
 
+      initializeColumnsMetadata();
       const dataset = await StorageService.downloadJson(jsonFile);
       setDynamicJson(dataset);
       setCurrentJson(dataset);
       setDynamicDataset(dynamicDatasets.find((d) => d.s3Key.json === jsonFile));
-    } else {
-      setDynamicJson([]);
-      setCurrentJson([]);
-      setDynamicDataset(undefined);
     }
 
     setDatasetLoading(false);
   };
 
+  useEffect(() => {
+    if (datasetType) {
+      reset({
+        datasetType,
+      });
+    }
+  }, []);
+
   const crumbs = [
     {
-      label: "Dashboards",
+      label: t("Dashboards"),
       url: "/admin/dashboards",
     },
     {
@@ -314,133 +338,138 @@ function AddChart() {
 
   if (!loading) {
     crumbs.push({
-      label: "Add chart",
+      label: t("AddChartScreen.AddChart"),
       url: "",
     });
   }
 
-  useEffect(() => {
-    if (datasetType) {
-      reset({
-        datasetType,
-      });
-    }
-  }, []);
+  const configHeader = (
+    <div>
+      <h1 className="margin-top-0">{t("AddChartScreen.AddChart")}</h1>
+      <StepIndicator
+        current={step}
+        segments={[
+          {
+            label: t("AddChartScreen.ChooseData"),
+          },
+          {
+            label: t("AddChartScreen.CheckData"),
+          },
+          {
+            label: t("AddChartScreen.Visualize"),
+          },
+        ]}
+        showStepChart={true}
+        showStepText={false}
+      />
+    </div>
+  );
 
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <h1 hidden={fullPreview}>Add chart</h1>
 
-      <div className="grid-row width-desktop">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid-col-12">
-            <div className="grid-col-6" hidden={fullPreview}>
-              <StepIndicator
-                current={step}
-                segments={[
-                  {
-                    label: "Choose data",
-                  },
-                  {
-                    label: "Check data",
-                  },
-                  {
-                    label: "Visualize",
-                  },
-                ]}
-                showStepChart={true}
-                showStepText={false}
+      <div className="grid-row">
+        <div className="grid-col-12">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div hidden={step !== 0}>
+              <PrimaryActionBar>
+                {configHeader}
+                <ChooseData
+                  selectDynamicDataset={selectDynamicDataset}
+                  dynamicDatasets={dynamicDatasets}
+                  datasetType={datasetType}
+                  onFileProcessed={onFileProcessed}
+                  handleChange={handleChange}
+                  advanceStep={advanceStep}
+                  fileLoading={fileLoading}
+                  browseDatasets={browseDatasets}
+                  continueButtonDisabled={!currentJson.length}
+                  continueButtonDisabledTooltip={t(
+                    "AddChartScreen.ChooseDataset"
+                  )}
+                  csvErrors={csvErrors}
+                  csvFile={csvFile}
+                  onCancel={onCancel}
+                  register={register}
+                  widgetType={t("ChooseDataDescriptionChart")}
+                />
+              </PrimaryActionBar>
+            </div>
+
+            <div hidden={step !== 1}>
+              <PrimaryActionBar>
+                {configHeader}
+                <CheckData
+                  data={currentJson}
+                  advanceStep={advanceStep}
+                  backStep={backStep}
+                  selectedHeaders={selectedHeaders}
+                  setSelectedHeaders={setSelectedHeaders}
+                  hiddenColumns={hiddenColumns}
+                  setHiddenColumns={setHiddenColumns}
+                  onCancel={onCancel}
+                  dataTypes={dataTypes}
+                  setDataTypes={setDataTypes}
+                  numberTypes={numberTypes}
+                  setNumberTypes={setNumberTypes}
+                  currencyTypes={currencyTypes}
+                  setCurrencyTypes={setCurrencyTypes}
+                  sortByColumn={sortByColumn}
+                  sortByDesc={sortByDesc}
+                  setSortByColumn={setSortByColumn}
+                  setSortByDesc={setSortByDesc}
+                  reset={reset}
+                  widgetType={t("CheckDataDescriptionChart")}
+                />
+              </PrimaryActionBar>
+            </div>
+
+            <div hidden={step !== 2}>
+              <VisualizeChart
+                errors={errors}
+                register={register}
+                json={filteredJson}
+                headers={
+                  currentJson.length
+                    ? (Object.keys(currentJson[0]) as Array<string>)
+                    : []
+                }
+                originalJson={currentJson}
+                csvJson={csvJson}
+                datasetLoading={datasetLoading}
+                datasetType={datasetType}
+                onCancel={onCancel}
+                backStep={backStep}
+                advanceStep={advanceStep}
+                fileLoading={fileLoading}
+                processingWidget={creatingWidget}
+                fullPreviewButton={fullPreviewButton}
+                fullPreview={fullPreview}
+                submitButtonLabel={t("AddChartScreen.AddChart")}
+                sortByColumn={sortByColumn}
+                sortByDesc={sortByDesc}
+                setSortByColumn={setSortByColumn}
+                setSortByDesc={setSortByDesc}
+                title={title}
+                summary={summary}
+                summaryBelow={summaryBelow}
+                showTitle={showTitle}
+                chartType={chartType as ChartType}
+                significantDigitLabels={significantDigitLabels}
+                horizontalScroll={horizontalScroll}
+                dataLabels={dataLabels}
+                columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
+                  hiddenColumns,
+                  dataTypes,
+                  numberTypes,
+                  currencyTypes
+                )}
+                configHeader={configHeader}
               />
             </div>
-          </div>
-
-          <div hidden={step !== 0}>
-            <ChooseData
-              selectDynamicDataset={selectDynamicDataset}
-              dynamicDatasets={dynamicDatasets}
-              datasetType={datasetType}
-              onFileProcessed={onFileProcessed}
-              handleChange={handleChange}
-              advanceStep={advanceStep}
-              fileLoading={fileLoading}
-              browseDatasets={browseDatasets}
-              continueButtonDisabled={!currentJson.length}
-              continueButtonDisabledTooltip="Choose a dataset to continue"
-              csvErrors={csvErrors}
-              csvFile={csvFile}
-              onCancel={onCancel}
-              register={register}
-              widgetType="chart"
-            />
-          </div>
-
-          <div hidden={step !== 1}>
-            <CheckData
-              data={currentJson}
-              advanceStep={advanceStep}
-              backStep={backStep}
-              selectedHeaders={selectedHeaders}
-              setSelectedHeaders={setSelectedHeaders}
-              hiddenColumns={hiddenColumns}
-              setHiddenColumns={setHiddenColumns}
-              onCancel={onCancel}
-              dataTypes={dataTypes}
-              setDataTypes={setDataTypes}
-              numberTypes={numberTypes}
-              setNumberTypes={setNumberTypes}
-              currencyTypes={currencyTypes}
-              setCurrencyTypes={setCurrencyTypes}
-              sortByColumn={sortByColumn}
-              sortByDesc={sortByDesc}
-              setSortByColumn={setSortByColumn}
-              setSortByDesc={setSortByDesc}
-              reset={reset}
-            />
-          </div>
-
-          <div hidden={step !== 2}>
-            <VisualizeChart
-              errors={errors}
-              register={register}
-              json={filteredJson}
-              headers={
-                currentJson.length
-                  ? (Object.keys(currentJson[0]) as Array<string>)
-                  : []
-              }
-              originalJson={currentJson}
-              csvJson={csvJson}
-              datasetLoading={datasetLoading}
-              datasetType={datasetType}
-              onCancel={onCancel}
-              backStep={backStep}
-              advanceStep={advanceStep}
-              fileLoading={fileLoading}
-              processingWidget={creatingWidget}
-              fullPreviewButton={fullPreviewButton}
-              fullPreview={fullPreview}
-              submitButtonLabel="Add Chart"
-              sortByColumn={sortByColumn}
-              sortByDesc={sortByDesc}
-              setSortByColumn={setSortByColumn}
-              setSortByDesc={setSortByDesc}
-              title={title}
-              summary={summary}
-              summaryBelow={summaryBelow}
-              showTitle={showTitle}
-              chartType={chartType as ChartType}
-              significantDigitLabels={significantDigitLabels}
-              horizontalScroll={horizontalScroll}
-              columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
-                hiddenColumns,
-                dataTypes,
-                numberTypes,
-                currencyTypes
-              )}
-            />
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </>
   );

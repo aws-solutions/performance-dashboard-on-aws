@@ -5,6 +5,7 @@ import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import "./MetricsList.css";
 import AlertContainer from "../containers/AlertContainer";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   onClick: Function;
@@ -21,6 +22,7 @@ interface Props {
 function MetricsList(props: Props) {
   const caretUpRefs = props.metrics.map(() => createRef<HTMLButtonElement>());
   const caretDownRefs = props.metrics.map(() => createRef<HTMLButtonElement>());
+  const { t } = useTranslation();
 
   const onDelete = (metric: Metric) => {
     if (props.onDelete) {
@@ -77,12 +79,9 @@ function MetricsList(props: Props) {
   };
 
   return (
-    <div>
+    <div className="display-block">
       <h4 className="margin-bottom-0">Metrics</h4>
-      <p className="margin-top-2px usa-hint">
-        Add metrics here and reorder them. Multiple metrics will automatically
-        scale to fit and wrap according to the order.
-      </p>
+      <p className="margin-top-2px usa-hint">{t("MetricsGuidance")}</p>
       <div className="usa-checkbox margin-bottom-2">
         <input
           className="usa-checkbox__input"
@@ -93,7 +92,7 @@ function MetricsList(props: Props) {
           defaultChecked={props.defaultChecked}
         />
         <label className="usa-checkbox__label" htmlFor="oneMetricPerRow">
-          One metric per row
+          {t("MetricsOnePerRow")}
         </label>
       </div>
       {props.metrics && props.metrics.length ? (
@@ -147,16 +146,19 @@ function MetricsList(props: Props) {
                 <div className="border-base border"></div>
                 <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
                   <div
-                    className="grid-col flex-9 font-important usa-tooltip text-bold"
+                    className="grid-col flex-8 font-important usa-tooltip text-bold"
                     data-position="bottom"
                     title={metric.title}
                   >
-                    <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
+                    <div
+                      style={{ marginTop: "2px" }}
+                      className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis"
+                    >
                       {metric.title}
                     </div>
                   </div>
-                  <div className="grid-col grid-row flex-3">
-                    <div className="grid-col flex-6">
+                  <div className="grid-col grid-row flex-4">
+                    <div className="grid-col flex-6 text-right margin-right-1">
                       <Button
                         variant="unstyled"
                         type="button"
@@ -164,7 +166,7 @@ function MetricsList(props: Props) {
                         onClick={() => onEdit(metric, index)}
                         ariaLabel={`Edit ${metric.title}`}
                       >
-                        Edit
+                        {t("Edit")}
                       </Button>
                     </div>
                     <div className="grid-col flex-6">
@@ -175,7 +177,7 @@ function MetricsList(props: Props) {
                         onClick={() => onDelete(metric)}
                         ariaLabel={`Delete ${metric.title}`}
                       >
-                        Delete
+                        {t("Delete")}
                       </Button>
                     </div>
                   </div>
@@ -195,14 +197,14 @@ function MetricsList(props: Props) {
                   }
                 }}
               >
-                + Add metric
+                {t("MetricsAdd")}
               </Button>
             </div>
           )}
         </div>
       ) : (
         <div className="text-center radius-lg padding-3 margin-y-1 border-base border-dashed bg-base-lightest border">
-          <p>No metrics added yet.</p>
+          <p>{t("MetricsZero")}</p>
           <div className="text-center">
             <Button
               variant="outline"
@@ -213,7 +215,7 @@ function MetricsList(props: Props) {
                 }
               }}
             >
-              + Add metric
+              {t("MetricsAdd")}
             </Button>
           </div>
         </div>

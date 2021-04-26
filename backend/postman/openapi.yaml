@@ -393,48 +393,174 @@ paths:
   /settings:
     get:
       operationId: GetSettings
+      responses:
+        "200":
+          description: Settings for application
+          content:
+            application/json:
+              schema:
+                type: object
 
     put:
       operationId: UpdateSettings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: New settings saved successfully
 
   /settings/homepage:
     get:
       operationId: GetHomepage
+      responses:
+        "200":
+          description: list of dashboards on homepage
+          content:
+            application/json:
+              schema:
+                type: object
 
     put:
       operationId: UpdateHomepage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: New homepage saved successfully
 
   /dataset:
     get:
       operationId: ListDatasets
+      responses:
+        "200":
+          description: list of datasets
+          content:
+            application/json:
+              schema:
+                type: object
 
     post:
       operationId: CreateDataset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Widget created successfully
 
   /dataset/{id}:
     get:
       operationId: GetDatasetById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Dataset Id
+          schema:
+            type: string
+      responses:
+        "200":
+          description: dataset
+          content:
+            application/json:
+              schema:
+                type: object
+
 
   /topicarea:
     get:
       operationId: ListTopicareas
+      responses:
+        "200":
+          description: list of topic areas
+          content:
+            application/json:
+              schema:
+                type: object
 
     post:
       operationId: CreateTopicarea
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Topic area created successfully
 
   /topicarea/{id}:
     get:
       operationId: GetTopicareaById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Topic area Id
+          schema:
+            type: string
+      responses:
+        "200":
+          description: topic area name
+          content:
+            application/json:
+              schema:
+                type: string
 
     put:
       operationId: UpdateTopicarea
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Topic area Id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Topic area updated successfully
 
     delete:
       operationId: DeleteTopicarea
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Topic area Id
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Topic area deleted successfully
 
   /user:
     get:
       operationId: ListUsers
+      responses:
+        "200":
+          description: list of users
+          content:
+            application/json:
+              schema:
+                type: object
 
     post:
       operationId: CreateUsers
@@ -458,15 +584,33 @@ paths:
               $ref: "#/components/schemas/DeleteUserRequest"
       responses:
         "200":
-          description: User(s) were created
+          description: User(s) were deleted
 
   /user/role:
     put:
       operationId: UpdateUsersRole
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Topic area updated successfully
 
   /user/invite:
     post:
       operationId: InviteUsers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Topic area updated successfully
 
   # ------------------------------------
   # Dataset Ingestion API endpoints

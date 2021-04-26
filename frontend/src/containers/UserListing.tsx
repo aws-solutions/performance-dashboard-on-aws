@@ -61,7 +61,7 @@ function UserListing() {
         history.replace("/admin/users", {
           alert: {
             type: "error",
-            message: `${t("FaUserListingRemoveUserFail")}`,
+            message: `${t("UserListingRemoveUserFail")}`,
           },
         });
       } finally {

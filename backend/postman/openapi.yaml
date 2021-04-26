@@ -21,7 +21,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Homepage"
+                $ref: "#/components/schemas/PublicHomepage"
 
   /public/dashboard/friendly-url/{friendlyURL}:
     get:
@@ -399,7 +399,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Settings"
 
     put:
       operationId: UpdateSettings
@@ -408,7 +408,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: "#/components/schemas/UpdateSettingsRequest"
       responses:
         "200":
           description: New settings saved successfully
@@ -422,7 +422,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Homepage"
 
     put:
       operationId: UpdateHomepage
@@ -431,7 +431,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: "#/components/schemas/UpdateHomepageRequest"
       responses:
         "200":
           description: New homepage saved successfully
@@ -445,7 +445,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
+                items:
+                  $ref: "#/components/schemas/Dataset"
 
     post:
       operationId: CreateDataset
@@ -454,7 +456,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: "#/components/schemas/CreateDatasetRequest"
       responses:
         "200":
           description: Widget created successfully
@@ -475,8 +477,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-
+                $ref: "#/components/schemas/Dataset"
 
   /topicarea:
     get:
@@ -487,7 +488,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
+                items:
+                  $ref: "#/components/schemas/TopicArea"
 
     post:
       operationId: CreateTopicarea
@@ -496,7 +499,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: "#/components/schemas/TopicAreaRequest"
       responses:
         "200":
           description: Topic area created successfully
@@ -510,7 +513,7 @@ paths:
           required: true
           description: Topic area Id
           schema:
-            type: string
+            $ref: "#/components/schemas/TopicArea"
       responses:
         "200":
           description: topic area name
@@ -533,7 +536,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: "#/components/schemas/TopicAreaRequest"
       responses:
         "200":
           description: Topic area updated successfully
@@ -560,7 +563,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
 
     post:
       operationId: CreateUsers
@@ -594,10 +599,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: "#/components/schemas/UpdateUsersRoleRequest"
       responses:
         "200":
-          description: Topic area updated successfully
+          description: User(s) updated successfully
 
   /user/invite:
     post:
@@ -607,10 +612,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: "#/components/schemas/InviteUsersRequest"
       responses:
         "200":
-          description: Topic area updated successfully
+          description: User(s) updated successfully
 
   # ------------------------------------
   # Dataset Ingestion API endpoints
@@ -626,7 +631,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Dataset"
+              $ref: "#/components/schemas/IngestApiDataset"
       responses:
         "200":
           description: dataset was created
@@ -648,7 +653,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Dataset"
+              $ref: "#/components/schemas/IngestApiDataset"
       responses:
         "200":
           description: dataset was created
@@ -686,6 +691,30 @@ components:
   # ------------------------------------------
   schemas:
     Homepage:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        updatedAt:
+          type: string
+
+    UpdateHomepageRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - title
+        - description
+        - updatedAt
+
+    PublicHomepage:
       type: object
       properties:
         title:
@@ -981,6 +1010,84 @@ components:
               type: string
             secondary:
               type: string
+        contactEmailAddress:
+          type: string
+
+    Settings:
+      type: object
+      properties:
+        publishingGuidance:
+          type: string
+        dateTimeFormat:
+          type: object
+          properties:
+            date:
+              type: string
+            time:
+              type: string
+        updatedAt:
+          type: string
+        navBarTitle:
+          type: string
+        topicAreaLabels:
+          type: object
+          properties:
+            singular:
+              type: string
+            plural:
+              type: string
+        customLogoS3Key:
+          type: string
+        colors:
+          type: object
+          properties:
+            primary:
+              type: string
+            secondary:
+              type: string
+        contactEmailAddress:
+          type: string
+        adminContactEmailAddress:
+          type: string
+
+    UpdateSettingsRequest:
+      type: object
+      properties:
+        publishingGuidance:
+          type: string
+        dateTimeFormat:
+          type: object
+          properties:
+            date:
+              type: string
+            time:
+              type: string
+        updatedAt:
+          type: string
+        navBarTitle:
+          type: string
+        topicAreaLabels:
+          type: object
+          properties:
+            singular:
+              type: string
+            plural:
+              type: string
+        customLogoS3Key:
+          type: string
+        colors:
+          type: object
+          properties:
+            primary:
+              type: string
+            secondary:
+              type: string
+        contactEmailAddress:
+          type: string
+        adminContactEmailAddress:
+          type: string
+      required:
+        - updatedAt
 
     CreateDashboardRequest:
       type: object
@@ -1137,6 +1244,25 @@ components:
       required:
         - usernames
 
+    UpdateUsersRoleRequest:
+      type: object
+      properties:
+        usernames:
+          type: string
+        role:
+          type: string
+      required:
+        - usernames
+        - role
+
+    InviteUsersRequest:
+      type: object
+      properties:
+        emails:
+          type: string
+      required:
+        - emails
+
     DatasetMetadata:
       type: object
       properties:
@@ -1149,7 +1275,7 @@ components:
       required:
         - name
 
-    Dataset:
+    IngestApiDataset:
       type: object
       properties:
         metadata:
@@ -1161,3 +1287,106 @@ components:
       required:
         - metadata
         - data
+
+    SourceType:
+      type: string
+      enum:
+        - IngestApi
+        - FileUpload
+
+    DatasetSchema:
+      type: string
+      enum:
+        - None
+        - Metrics
+
+    Dataset:
+      type: object
+      properties:
+        id:
+          type: string
+        createdBy:
+          type: string
+        fileName:
+          type: string
+        s3Key:
+          type: object
+          properties:
+            raw:
+              type: string
+            json:
+              type: string
+        updatedAt:
+          type: string
+        sourceType:
+          $ref: "#/components/schemas/SourceType"
+        schema:
+          $ref: "#/components/schemas/DatasetSchema"
+
+    CreateDatasetRequest:
+      type: object
+      properties:
+        fileName:
+          type: string
+        s3Key:
+          type: object
+          properties:
+            raw:
+              type: string
+            json:
+              type: string
+        schema:
+          $ref: "#/components/schemas/DatasetSchema"
+      required:
+        - fileName
+        - s3Key
+        - schema
+
+    TopicArea:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdBy:
+          type: string
+        dashboardCount:
+          type: number
+
+    TopicAreaRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+
+    Role:
+      type: string
+      enum:
+        - Admin
+        - Editor
+        - Publisher
+
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+        enabled:
+          type: boolean
+        userStatus:
+          type: string
+        sub:
+          type: string
+        email:
+          type: array
+          items:
+            $ref: "#/components/schemas/Role"
+        roles:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string

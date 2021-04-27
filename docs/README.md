@@ -8,6 +8,7 @@
 ## Usage
 
 - [User guide](user-guide.pdf): how to use Performance Dashboard on AWS
+- [Data Ingestion API](api.md): how to use the Data Ingestion API
 
 ## Operations
 

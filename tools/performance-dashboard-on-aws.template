@@ -1,7 +1,8 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "(SO0157) Performance Dashboard on AWS Solution Implementation v1.0.0",
   "Parameters": {
-    "adminEmail": {
+    "AdminEmail": {
       "Type": "String",
       "Description": "Email address for the admin user",
       "MinLength": 5
@@ -11,10 +12,14 @@
     "authStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/Auth-0.11.0-beta.json",
+        "TemplateURL": {
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.0/Auth.template"
+        },
         "TimeoutInMinutes": "60",
         "Parameters": {
-          "adminEmail": {"Ref" : "adminEmail"}
+          "adminEmail": {
+            "Ref": "AdminEmail"
+          }
         }
       }
     },
@@ -22,7 +27,9 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "authStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/Backend-0.11.0-beta.json",
+        "TemplateURL": {
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.0/Backend.template"
+        },
         "TimeoutInMinutes": "60"
       }
     },
@@ -30,7 +37,9 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "backendStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/LambdaEdge-0.11.0-beta.json",
+        "TemplateURL": {
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.0/LambdaEdge.template"
+        },
         "TimeoutInMinutes": "60"
       }
     },
@@ -38,7 +47,9 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "lambdaEdgeStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/Frontend-0.11.0-beta.json",
+        "TemplateURL": {
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.0/Frontend.template"
+        },
         "TimeoutInMinutes": "60"
       }
     },
@@ -46,7 +57,9 @@
       "Type": "AWS::CloudFormation::Stack",
       "DependsOn": "frontendStack",
       "Properties": {
-        "TemplateURL": "https://performance-dashboard-on-aws-us-east-1.s3.us-east-1.amazonaws.com/Ops-0.11.0-beta.json",
+        "TemplateURL": {
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.0/Ops.template"
+        },
         "TimeoutInMinutes": "60"
       }
     }
@@ -59,7 +72,10 @@
     },
     "OutputFromNestedStack": {
       "Value": {
-        "Fn::GetAtt": ["frontendStack", "Outputs.CloudFrontURL"]
+        "Fn::GetAtt": [
+          "frontendStack",
+          "Outputs.CloudFrontURL"
+        ]
       }
     }
   }

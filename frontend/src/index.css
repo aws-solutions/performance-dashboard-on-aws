@@ -128,9 +128,22 @@ p {
   background-color: #fafafa;
 }
 
+.usa-table tr {
+  background-color: #fafafa;
+}
+
+.usa-table tr:hover {
+  background-color: #dfe1e2 !important;
+}
+
 .usa-table td,
 .usa-table th {
-  background-color: #fafafa;
+  background-color: inherit;
+}
+
+.usa-table td:hover,
+.usa-table th:hover {
+  background-color: inherit;
 }
 
 .__react_component_tooltip.show {

@@ -400,6 +400,7 @@
     "ConfirmURL": "Confirm URL",
     "ReviewAndPublish": "Review and publish",
     "InfoAlert": "This dashboard is now in the publish pending state and cannot be edited unless returned to draft.",
+    "FailToPublishUrlAlreadyExists": "Failed to publish dashboard. The selected URL is already being used for an existing dashboard. Please change it and try again.",
     "FailToPublishError": "Failed to publish dashboard. Please try again.",
     "FailToReturnToDraftError": "Failed to return dashboard to draft. Please try again.",
     "FailToSaveReleaseNotesError": "Failed to save release notes, please try again.",

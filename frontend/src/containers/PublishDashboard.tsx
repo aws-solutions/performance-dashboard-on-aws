@@ -150,7 +150,10 @@ function PublishDashboard() {
           id: "top-alert",
           alert: {
             type: "error",
-            message: t("PublishWorkflow.FailToPublishError"),
+            message:
+              err.response.status === 409
+                ? t("PublishWorkflow.FailToPublishUrlAlreadyExists")
+                : t("PublishWorkflow.FailToPublishError"),
           },
         });
       }

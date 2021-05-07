@@ -400,6 +400,7 @@
     "ConfirmURL": "Confirmar URL",
     "ReviewAndPublish": "Revisar e publicar",
     "InfoAlert": "Este painel agora está no estado pendente de publicação e só poderá ser editado se for retornado ao estado de rascunho.",
+    "FailToPublishUrlAlreadyExists": "Falha ao publicar o painel. O URL selecionado já está sendo usado para um painel existente. Por favor, mude e tente novamente.",
     "FailToPublishError": "Falha ao publicar o painel. Tente novamente.",
     "FailToReturnToDraftError": "Falha ao retornar o painel ao estado de rascunho. Tente novamente.",
     "FailToSaveReleaseNotesError": "Falha ao salvar as notas de release. Tente novamente.",

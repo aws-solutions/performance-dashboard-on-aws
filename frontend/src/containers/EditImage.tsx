@@ -319,8 +319,8 @@ function EditImage() {
                 </form>
               </PrimaryActionBar>
             </div>
-            <div className={fullPreview ? "gril-col-12" : "grid-col-6"}>
-              <div hidden={false}>
+            <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+              <div hidden={false} className="sticky-preview">
                 {fullPreviewButton}
                 {loadingFile ? (
                   <Spinner

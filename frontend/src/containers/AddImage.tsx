@@ -285,7 +285,7 @@ function AddImage() {
             </form>
           </PrimaryActionBar>
         </div>
-        <div className={fullPreview ? "gril-col-12" : "grid-col-6"}>
+        <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
           {fullPreviewButton}
           <ImageWidget
             title={showTitle ? title : ""}

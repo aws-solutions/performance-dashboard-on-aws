@@ -201,7 +201,9 @@ function VisualizeTable(props: Props) {
       <div className={props.fullPreview ? "grid-col-12" : "grid-col-7"}>
         <div
           hidden={!props.json.length}
-          className={`${!props.fullPreview ? "margin-left-4" : ""}`}
+          className={`${
+            !props.fullPreview ? "margin-left-4 sticky-preview" : ""
+          }`}
         >
           {props.fullPreviewButton}
           {props.datasetLoading ? (

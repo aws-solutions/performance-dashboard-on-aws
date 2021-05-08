@@ -78,9 +78,7 @@ p {
 .sticky-preview {
   position: -webkit-sticky;
   position: sticky;
-  /* left: 45rem; */
   top: 90px;
-  /* bottom: 120px; */
 }
 
 .z-index-logout {

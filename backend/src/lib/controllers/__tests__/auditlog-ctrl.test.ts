@@ -9,20 +9,20 @@ let req: Request;
 let res: Response;
 
 beforeEach(() => {
-  res = ({
+  res = {
     send: jest.fn().mockReturnThis(),
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
-  } as any) as Response;
+  } as any as Response;
 });
 
 describe("listDashboardAuditLogs", () => {
   it("calls the audit log repository with parentDashboardId and returns logs", async () => {
-    req = ({
+    req = {
       params: {
         id: "001",
       },
-    } as any) as Request;
+    } as any as Request;
 
     const auditLogs = [] as AuditLog[];
     AuditLogRepository.listAuditLogs = jest.fn().mockReturnValue(auditLogs);

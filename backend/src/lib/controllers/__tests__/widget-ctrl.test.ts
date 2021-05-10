@@ -13,11 +13,11 @@ jest.mock("../../repositories/dashboard-repo");
 const user: User = { userId: "johndoe" };
 const repository = mocked(WidgetRepository.prototype);
 const dashboardRepo = mocked(DashboardRepository.prototype);
-const res = ({
+const res = {
   send: jest.fn().mockReturnThis(),
   status: jest.fn().mockReturnThis(),
   json: jest.fn().mockReturnThis(),
-} as any) as Response;
+} as any as Response;
 
 beforeEach(() => {
   WidgetRepository.getInstance = jest.fn().mockReturnValue(repository);
@@ -27,7 +27,7 @@ beforeEach(() => {
 describe("createWidget", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "090b0410",
@@ -39,7 +39,7 @@ describe("createWidget", () => {
           text: "123",
         },
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when dashboardId is missing", async () => {
@@ -93,7 +93,7 @@ describe("updateWidget", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "090b0410",
@@ -107,7 +107,7 @@ describe("updateWidget", () => {
           text: "123",
         },
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when dashboardId is missing", async () => {
@@ -163,13 +163,13 @@ describe("updateWidget", () => {
 describe("deleteWidget", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "090b0410",
         widgetId: "14507073",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when dashboardId is missing", async () => {
@@ -195,7 +195,7 @@ describe("deleteWidget", () => {
 describe("setWidgetOrder", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: { id: "090b0410" },
       body: {
@@ -212,7 +212,7 @@ describe("setWidgetOrder", () => {
           },
         ],
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when dashboardId is missing", async () => {

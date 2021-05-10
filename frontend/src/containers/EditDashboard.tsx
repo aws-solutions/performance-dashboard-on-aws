@@ -29,14 +29,12 @@ function EditDashboard() {
   const { t } = useTranslation();
   const history = useHistory<LocationState>();
   const { dashboardId } = useParams<PathParams>();
-  const { dashboard, reloadDashboard, setDashboard, loading } = useDashboard(
-    dashboardId
-  );
+  const { dashboard, reloadDashboard, setDashboard, loading } =
+    useDashboard(dashboardId);
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-  const [widgetToDelete, setWidgetToDelete] = useState<Widget | undefined>(
-    undefined
-  );
+  const [widgetToDelete, setWidgetToDelete] =
+    useState<Widget | undefined>(undefined);
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
 
   const publishedOrArchived = versions.find(

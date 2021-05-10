@@ -9,10 +9,8 @@ type LargestTicksByColumn = {
 };
 
 export function useTableMetadata(data?: object[]): UseTableMetadata {
-  const [
-    largestTickByColumn,
-    setLargestTickByColumn,
-  ] = useState<LargestTicksByColumn>({});
+  const [largestTickByColumn, setLargestTickByColumn] =
+    useState<LargestTicksByColumn>({});
 
   React.useEffect(() => {
     if (data) {

@@ -210,9 +210,10 @@ function ChooseData(props: Props) {
               selection="single"
               initialSortByField="updatedAt"
               filterQuery={filter}
-              rows={React.useMemo(() => props.dynamicDatasets, [
-                props.dynamicDatasets,
-              ])}
+              rows={React.useMemo(
+                () => props.dynamicDatasets,
+                [props.dynamicDatasets]
+              )}
               screenReaderField="name"
               width="100%"
               onSelection={onSelect}

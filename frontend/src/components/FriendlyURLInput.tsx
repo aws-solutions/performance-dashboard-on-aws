@@ -17,18 +17,12 @@ interface FormValues {
 function FriendlyURLInput({ value, onChange, showWarning }: Props) {
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
-  const {
-    register,
-    reset,
-    errors,
-    getValues,
-    trigger,
-    setValue,
-  } = useForm<FormValues>({
-    defaultValues: {
-      friendlyURL: value,
-    },
-  });
+  const { register, reset, errors, getValues, trigger, setValue } =
+    useForm<FormValues>({
+      defaultValues: {
+        friendlyURL: value,
+      },
+    });
 
   useEffect(() => {
     if (value) {

@@ -642,13 +642,15 @@ function AddMetrics() {
                   </PrimaryActionBar>
                 </div>
                 <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
-                  {fullPreviewButton}
-                  <MetricsWidget
-                    title={showTitle ? title : ""}
-                    metrics={metrics}
-                    metricPerRow={oneMetricPerRow ? 1 : 3}
-                    significantDigitLabels={significantDigitLabels}
-                  />
+                  <div className="sticky-preview">
+                    {fullPreviewButton}
+                    <MetricsWidget
+                      title={showTitle ? title : ""}
+                      metrics={metrics}
+                      metricPerRow={oneMetricPerRow ? 1 : 3}
+                      significantDigitLabels={significantDigitLabels}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

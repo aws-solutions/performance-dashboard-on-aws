@@ -14,13 +14,8 @@ interface LayoutProps {
 }
 
 function AdminLayout(props: LayoutProps) {
-  const {
-    username,
-    isAdmin,
-    isFederatedId,
-    isEditor,
-    hasRole,
-  } = useCurrentAuthenticatedUser();
+  const { username, isAdmin, isFederatedId, isEditor, hasRole } =
+    useCurrentAuthenticatedUser();
   const { settings } = useSettings();
   const { t } = useTranslation();
 

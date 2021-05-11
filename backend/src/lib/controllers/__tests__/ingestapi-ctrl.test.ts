@@ -10,11 +10,11 @@ jest.mock("../../repositories/dataset-repo");
 jest.mock("../../factories/dataset-factory");
 
 const repository = mocked(DatasetRepository.prototype);
-const res = ({
+const res = {
   send: jest.fn().mockReturnThis(),
   status: jest.fn().mockReturnThis(),
   json: jest.fn().mockReturnThis(),
-} as any) as Response;
+} as any as Response;
 
 beforeEach(() => {
   DatasetRepository.getInstance = jest.fn().mockReturnValue(repository);
@@ -23,7 +23,7 @@ beforeEach(() => {
 describe("createDataset", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       body: {
         metadata: {
           name: "covid-dataset.csv",
@@ -31,7 +31,7 @@ describe("createDataset", () => {
         },
         data: [{ data: "data" }],
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when metadata.name is missing", async () => {
@@ -99,7 +99,7 @@ describe("createDataset", () => {
 describe("updateDataset", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       body: {
         metadata: {
           name: "covid-dataset.csv",
@@ -107,7 +107,7 @@ describe("updateDataset", () => {
         data: [{ data: "data" }],
       },
       params: { id: "abc" },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when metadata is missing", async () => {
@@ -141,11 +141,11 @@ describe("updateDataset", () => {
 describe("deleteDataset", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       params: {
         id: "abc",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("deletes the dataset", async () => {

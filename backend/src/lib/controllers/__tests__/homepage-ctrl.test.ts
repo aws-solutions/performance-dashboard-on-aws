@@ -20,12 +20,12 @@ jest.mock("../../factories/homepage-factory");
 const user: User = { userId: "johndoe" };
 const repository = mocked(HomepageRepository.prototype);
 const dashboardRepo = mocked(DashboardRepository.prototype);
-const req = ({} as any) as Request;
-const res = ({
+const req = {} as any as Request;
+const res = {
   send: jest.fn().mockReturnThis(),
   status: jest.fn().mockReturnThis(),
   json: jest.fn().mockReturnThis(),
-} as any) as Response;
+} as any as Response;
 
 beforeEach(() => {
   HomepageRepository.getInstance = jest.fn().mockReturnValue(repository);
@@ -161,14 +161,14 @@ describe("updateHomepage", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       body: {
         title: "abc",
         description: "description test",
         updatedAt: now.toISOString(),
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when title is missing", async () => {

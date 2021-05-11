@@ -285,15 +285,17 @@ function AddImage() {
             </form>
           </PrimaryActionBar>
         </div>
-        <div className={fullPreview ? "gril-col-12" : "grid-col-6"}>
-          {fullPreviewButton}
-          <ImageWidget
-            title={showTitle ? title : ""}
-            summary={summary}
-            file={imageFile}
-            summaryBelow={summaryBelow}
-            altText={altText}
-          />
+        <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+          <div className="sticky-preview">
+            {fullPreviewButton}
+            <ImageWidget
+              title={showTitle ? title : ""}
+              summary={summary}
+              file={imageFile}
+              summaryBelow={summaryBelow}
+              altText={altText}
+            />
+          </div>
         </div>
       </div>
     </>

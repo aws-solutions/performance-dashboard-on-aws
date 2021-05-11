@@ -9,9 +9,8 @@ type UseSettingsHook = {
 };
 
 export function useSettings(refetch?: boolean): UseSettingsHook {
-  const { settings, reloadSettings, loadingSettings } = useContext(
-    SettingsContext
-  );
+  const { settings, reloadSettings, loadingSettings } =
+    useContext(SettingsContext);
 
   useEffect(() => {
     if (refetch) {
@@ -33,9 +32,8 @@ type UsePublicSettingsHook = {
 };
 
 export function usePublicSettings(refetch?: boolean): UsePublicSettingsHook {
-  const { settings, reloadSettings, loadingSettings } = useContext(
-    SettingsContext
-  );
+  const { settings, reloadSettings, loadingSettings } =
+    useContext(SettingsContext);
 
   useEffect(() => {
     if (refetch) {

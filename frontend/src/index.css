@@ -75,6 +75,12 @@ p {
   box-shadow: inset -25px 0px 8px -20px rgba(224, 224, 224, 0.5);
 }
 
+.sticky-preview {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 90px;
+}
+
 .z-index-logout {
   z-index: 100000;
 }

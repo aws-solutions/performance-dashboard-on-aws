@@ -10,27 +10,27 @@ jest.mock("../../factories/user-factory");
 
 const user: User = { userId: "johndoe" };
 const repository = mocked(UserRepository.prototype);
-let req = ({} as any) as Request;
+let req = {} as any as Request;
 let res: Response;
 
 beforeEach(() => {
   UserRepository.getInstance = jest.fn().mockReturnValue(repository);
-  res = ({
+  res = {
     send: jest.fn().mockReturnThis(),
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
-  } as any) as Response;
+  } as any as Response;
 });
 
 describe("addUser", () => {
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       body: {
         role: "Admin",
         emails: "test1@test.com,test2@test.com",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when role is missing", async () => {
@@ -75,12 +75,12 @@ describe("addUser", () => {
 
 describe("resendInvite", () => {
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       body: {
         emails: "test1@test.com,test2@test.com",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when emails is missing", async () => {
@@ -105,13 +105,13 @@ describe("resendInvite", () => {
 
 describe("changeRole", () => {
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       body: {
         role: "Editor",
         usernames: ["test1", "test2"],
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when role is missing", async () => {
@@ -168,9 +168,9 @@ describe("getUsers", () => {
 
 describe("removeUsers", () => {
   beforeEach(() => {
-    req = ({
+    req = {
       body: {},
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when usernames is not specified", async () => {

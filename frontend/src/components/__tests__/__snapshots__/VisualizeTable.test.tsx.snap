@@ -229,7 +229,7 @@ exports[`renders the VisualizeTable component 1`] = `
       class="grid-col-7"
     >
       <div
-        class="margin-left-4"
+        class="margin-left-4 sticky-preview"
       >
         <button
           class="usa-button usa-button--base"

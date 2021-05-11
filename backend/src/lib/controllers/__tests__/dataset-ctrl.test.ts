@@ -13,17 +13,17 @@ let res: Response;
 
 beforeEach(() => {
   DatasetRepository.getInstance = jest.fn().mockReturnValue(repository);
-  res = ({
+  res = {
     send: jest.fn().mockReturnThis(),
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
-  } as any) as Response;
+  } as any as Response;
 });
 
 describe("createDataset", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       body: {
         fileName: "covid-dataset.csv",
@@ -32,7 +32,7 @@ describe("createDataset", () => {
           json: "123.json",
         },
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when fileName is missing", async () => {

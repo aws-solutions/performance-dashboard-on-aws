@@ -16,9 +16,8 @@ interface PathParams {
 function ViewDashboard() {
   const { friendlyURL } = useParams<PathParams>();
   const { t } = useTranslation();
-  const { dashboard, loading, dashboardNotFound } = usePublicDashboard(
-    friendlyURL
-  );
+  const { dashboard, loading, dashboardNotFound } =
+    usePublicDashboard(friendlyURL);
 
   if (dashboardNotFound) {
     return <Redirect to="/404/page-not-found" />;

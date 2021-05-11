@@ -40,21 +40,15 @@ function EditMetrics() {
   const { state } = history.location;
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
-  const {
-    register,
-    errors,
-    handleSubmit,
-    reset,
-    watch,
-  } = useForm<FormValues>();
+  const { register, errors, handleSubmit, reset, watch } =
+    useForm<FormValues>();
 
   const [fileLoading, setFileLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, currentJson } = useWidget(dashboardId, widgetId);
   const [metrics, setMetrics] = useState<Array<Metric>>([]);
-  const [submittedMetricsNum, setSubmittedMetricsNum] = useState<
-    number | undefined
-  >();
+  const [submittedMetricsNum, setSubmittedMetricsNum] =
+    useState<number | undefined>();
   const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const title = watch("title");
@@ -351,13 +345,15 @@ function EditMetrics() {
             </PrimaryActionBar>
           </div>
           <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
-            {fullPreviewButton}
-            <MetricsWidget
-              title={showTitle ? title : ""}
-              metrics={metrics}
-              metricPerRow={oneMetricPerRow ? 1 : 3}
-              significantDigitLabels={significantDigitLabels}
-            />
+            <div hidden={false} className="sticky-preview">
+              {fullPreviewButton}
+              <MetricsWidget
+                title={showTitle ? title : ""}
+                metrics={metrics}
+                metricPerRow={oneMetricPerRow ? 1 : 3}
+                significantDigitLabels={significantDigitLabels}
+              />
+            </div>
           </div>
         </div>
       )}

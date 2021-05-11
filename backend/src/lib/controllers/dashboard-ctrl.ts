@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { InvalidFriendlyURL, ItemNotFound } from "../errors";
+import { ItemNotFound } from "../errors";
 import { Dashboard, DashboardState } from "../models/dashboard";
 import FriendlyUrlService from "../services/friendlyurl-service";
 import DashboardFactory from "../factories/dashboard-factory";

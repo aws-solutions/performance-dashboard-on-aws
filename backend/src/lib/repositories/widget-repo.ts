@@ -1,10 +1,11 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import { Widget, WidgetItem, ChartWidget } from "../models/widget";
+import { Widget, WidgetItem } from "../models/widget";
 import BaseRepository from "./base";
 import WidgetFactory, {
   WIDGET_PREFIX,
   WIDGET_ITEM_TYPE,
 } from "../factories/widget-factory";
+import logger from "../services/logger";
 
 class WidgetRepository extends BaseRepository {
   private static instance: WidgetRepository;
@@ -138,11 +139,12 @@ class WidgetRepository extends BaseRepository {
       });
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.log("Someone else updated the item before us");
-        return;
-      } else {
-        throw error;
+        logger.warn(
+          "ConditionalCheckFailed on update widget=%s. Someone else updated the widget before us",
+          updateRequest.widgetId
+        );
       }
+      throw error;
     }
   }
 

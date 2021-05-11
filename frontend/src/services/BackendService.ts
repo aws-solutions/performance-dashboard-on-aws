@@ -229,6 +229,24 @@ async function editWidget(
   });
 }
 
+async function duplicateWidget(
+  dashboardId: string,
+  widgetId: string,
+  updatedAt: Date
+) {
+  const headers = await authHeaders();
+  return await API.post(
+    apiName,
+    `dashboard/${dashboardId}/widget/${widgetId}`,
+    {
+      headers,
+      body: {
+        updatedAt,
+      },
+    }
+  );
+}
+
 async function deleteWidget(dashboardId: string, widgetId: string) {
   const headers = await authHeaders();
   const url = `dashboard/${dashboardId}/widget/${widgetId}`;
@@ -443,6 +461,7 @@ const BackendService = {
   deleteTopicArea,
   createWidget,
   editWidget,
+  duplicateWidget,
   deleteWidget,
   setWidgetOrder,
   createDataset,

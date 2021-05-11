@@ -81,7 +81,7 @@ class SettingsRepository extends BaseRepository {
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
         logger.warn(
-          "ConditionalCheckFailedException on update setting=%s",
+          "ConditionalCheckFailed on update setting=%s. Someone else updated the settings before us",
           settingKey
         );
       }

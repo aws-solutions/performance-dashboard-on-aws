@@ -6,7 +6,6 @@ import Button from "./Button";
 import "./WidgetList.css";
 import Link from "./Link";
 import AlertContainer from "../containers/AlertContainer";
-import UtilsService from "../services/UtilsService";
 import SecondaryActionBar from "./SecondaryActionBar";
 import ContentItem from "./ContentItem";
 import { useTranslation } from "react-i18next";
@@ -14,6 +13,7 @@ import { useTranslation } from "react-i18next";
 interface Props {
   onClick: Function;
   onDelete?: Function;
+  onDuplicate?: Function;
   onMoveUp?: Function;
   onMoveDown?: Function;
   widgets: Array<Widget>;
@@ -27,6 +27,12 @@ function WidgetList(props: Props) {
   const onDelete = (widget: Widget) => {
     if (props.onDelete) {
       props.onDelete(widget);
+    }
+  };
+
+  const onDuplicate = (widget: Widget) => {
+    if (props.onDuplicate) {
+      props.onDuplicate(widget);
     }
   };
 
@@ -167,6 +173,14 @@ function WidgetList(props: Props) {
                     >
                       {t("Edit")}
                     </Link>
+                    <Button
+                      variant="unstyled"
+                      className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
+                      onClick={() => onDuplicate(widget)}
+                      ariaLabel={t("DuplicateContent", { name: widget.name })}
+                    >
+                      {t("Duplicate")}
+                    </Button>
                     <Button
                       variant="unstyled"
                       className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"

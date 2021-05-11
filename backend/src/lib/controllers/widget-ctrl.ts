@@ -114,6 +114,58 @@ async function updateWidget(req: Request, res: Response) {
   return res.send();
 }
 
+async function duplicateWidget(req: Request, res: Response) {
+  const user = req.user;
+  const dashboardId = req.params.id;
+  if (!dashboardId) {
+    res.status(400).send("Missing required field `id`");
+    return;
+  }
+
+  const widgetId = req.params.widgetId;
+  if (!widgetId) {
+    res.status(400).send("Missing required field `widgetId`");
+    return;
+  }
+
+  const { updatedAt } = req.body;
+
+  if (!updatedAt) {
+    res.status(400).send("Missing required field `updatedAt`");
+    return;
+  }
+
+  const repo = WidgetRepository.getInstance();
+  const widget = await repo.getWidgetById(dashboardId, widgetId);
+
+  if (widget.updatedAt > new Date(updatedAt)) {
+    res.status(409);
+    return res.send("Someone else updated the widget before us");
+  }
+
+  let newWidget;
+  try {
+    newWidget = WidgetFactory.createWidget({
+      name: widget.name,
+      dashboardId,
+      widgetType: widget.widgetType,
+      showTitle: widget.showTitle,
+      content: widget.content,
+    });
+    newWidget.updatedAt = widget.updatedAt;
+  } catch (err) {
+    console.log("Invalid request to create widget", err);
+    return res.status(400).send(err.message);
+  }
+
+  const dashboardRepo = DashboardRepository.getInstance();
+
+  await repo.saveWidget(newWidget);
+  await dashboardRepo.updateAt(dashboardId, user);
+
+  return res.json(newWidget);
+}
+
 async function deleteWidget(req: Request, res: Response) {
   const dashboardId = req.params.id;
   const widgetId = req.params.widgetId;
@@ -167,6 +219,7 @@ export default {
   getWidgetById,
   createWidget,
   updateWidget,
+  duplicateWidget,
   deleteWidget,
   setWidgetOrder,
 };

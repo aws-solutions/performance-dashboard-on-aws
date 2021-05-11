@@ -780,5 +780,8 @@
   "ClosePreview": "Close preview",
   "Admin": "Admin",
   "Editor": "Editor",
-  "GlobalUser": "user"
+  "GlobalUser": "user",
+  "DashboardWasDuplicated": "was successfully duplicated.",
+  "Duplicate": "Duplicate",
+  "DuplicateContent": "Duplicate {{name}}"
 }

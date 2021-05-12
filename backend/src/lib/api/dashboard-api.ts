@@ -112,6 +112,12 @@ router.put(
   errorHandler(WidgetCtrl.updateWidget)
 );
 
+router.post(
+  "/:id/widget/:widgetId",
+  rbac(Role.Admin, Role.Editor),
+  errorHandler(WidgetCtrl.duplicateWidget)
+);
+
 router.delete(
   "/:id/widget/:widgetId",
   rbac(Role.Admin, Role.Editor),

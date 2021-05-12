@@ -2,6 +2,7 @@ import { User } from "../models/user";
 import { Homepage, HomepageItem } from "../models/homepage";
 import HomepageFactory from "../factories/homepage-factory";
 import BaseRepository from "./base";
+import logger from "../services/logger";
 
 class HomepageRepository extends BaseRepository {
   protected static instance: HomepageRepository;
@@ -71,11 +72,12 @@ class HomepageRepository extends BaseRepository {
       });
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.log("Someone else updated the item before us");
-        return;
-      } else {
-        throw error;
+        logger.warn(
+          "ConditionalCheckFailed on update homepage=%s. Someone else updated the homepage before us",
+          title
+        );
       }
+      throw error;
     }
   }
 }

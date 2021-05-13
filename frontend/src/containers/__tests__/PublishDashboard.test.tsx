@@ -40,7 +40,7 @@ test("renders topic area", () => {
 });
 
 test("continue button advances to step 2 and saves releaseNotes", async () => {
-  fireEvent.input(screen.getByLabelText("Internal version notes"), {
+  fireEvent.input(screen.getAllByLabelText("")[0], {
     target: {
       value: "Some release notes",
     },
@@ -62,7 +62,7 @@ test("continue button advances to step 2 and saves releaseNotes", async () => {
 });
 
 test("publish button invokes BackendService", async () => {
-  fireEvent.input(screen.getByLabelText("Internal version notes"), {
+  fireEvent.input(screen.getAllByLabelText("")[0], {
     target: {
       value: "Some release notes",
     },

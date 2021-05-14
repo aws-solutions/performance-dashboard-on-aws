@@ -160,6 +160,63 @@ describe("updateWidget", () => {
   });
 });
 
+describe("duplicateWidget", () => {
+  let req: Request;
+  const now = new Date();
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(now);
+  beforeEach(() => {
+    req = {
+      user,
+      params: {
+        id: "090b0410",
+        widgetId: "14507073",
+      },
+      body: {
+        updatedAt: now,
+      },
+    } as any as Request;
+  });
+
+  it("returns a 400 error when dashboardId is missing", async () => {
+    delete req.params.id;
+    await WidgetCtrl.duplicateWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `id`");
+  });
+
+  it("returns a 400 error when widgetId is missing", async () => {
+    delete req.params.widgetId;
+    await WidgetCtrl.duplicateWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `widgetId`");
+  });
+
+  it("returns a 400 error when updatedAt is missing", async () => {
+    delete req.body.updatedAt;
+    await WidgetCtrl.duplicateWidget(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `updatedAt`");
+  });
+
+  it("creates the new widget", async () => {
+    const widget = WidgetFactory.createWidget({
+      name: "test",
+      dashboardId: "090b0410",
+      widgetType: WidgetType.Text,
+      showTitle: false,
+      content: {
+        text: "123",
+      },
+    });
+
+    WidgetFactory.createWidget = jest.fn().mockReturnValue(widget);
+    repository.getWidgetById = jest.fn().mockReturnValue(widget);
+    await WidgetCtrl.duplicateWidget(req, res);
+    expect(repository.saveWidget).toBeCalledWith(widget);
+  });
+});
+
 describe("deleteWidget", () => {
   let req: Request;
   beforeEach(() => {

@@ -15,7 +15,6 @@ import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
 import Tooltip from "../components/Tooltip";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import UtilsService from "../services/UtilsService";
 import AlertContainer from "../containers/AlertContainer";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
@@ -66,6 +65,29 @@ function EditDashboard() {
   const onDeleteWidget = (widget: Widget) => {
     setWidgetToDelete(widget);
     setIsOpenDeleteModal(true);
+  };
+
+  const onDuplicateWidget = async (widget: Widget) => {
+    if (dashboard && widget) {
+      await BackendService.duplicateWidget(
+        dashboardId,
+        widget.id,
+        widget.updatedAt
+      );
+
+      history.replace(`/admin/dashboard/edit/${dashboardId}`, {
+        alert: {
+          type: "success",
+          message: `${t(
+            widget.widgetType === WidgetType.Chart
+              ? widget.content.chartType
+              : widget.widgetType
+          )} '${widget.name}' ${t("DashboardWasDuplicated")}`,
+        },
+      });
+
+      await reloadDashboard();
+    }
   };
 
   const publishDashboard = async () => {
@@ -285,6 +307,7 @@ function EditDashboard() {
             widgets={dashboard ? dashboard.widgets : []}
             onClick={onAddContent}
             onDelete={onDeleteWidget}
+            onDuplicate={onDuplicateWidget}
             onMoveUp={onMoveWidgetUp}
             onMoveDown={onMoveWidgetDown}
           />

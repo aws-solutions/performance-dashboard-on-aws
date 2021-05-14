@@ -182,11 +182,12 @@ class DashboardRepository extends BaseRepository {
       });
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.log("Someone else updated the item before us");
-        return;
-      } else {
-        throw error;
+        logger.warn(
+          "ConditionalCheckFailed when updating dashboard. Someone else updated the dashboard before us",
+          dashboardId
+        );
       }
+      throw error;
     }
   }
 
@@ -277,7 +278,7 @@ class DashboardRepository extends BaseRepository {
       });
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.error(
+        logger.warn(
           "ConditionalCheckFailed when moving dashboard to published state",
           dashboardId
         );
@@ -328,7 +329,7 @@ class DashboardRepository extends BaseRepository {
       return DashboardFactory.fromItem(result.Attributes as DashboardItem);
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.error(
+        logger.warn(
           "ConditionalCheckFailed when moving dashboard to publish pending state",
           dashboardId
         );
@@ -415,7 +416,7 @@ class DashboardRepository extends BaseRepository {
       });
     } catch (error) {
       if (error.code === "ConditionalCheckFailedException") {
-        console.error(
+        logger.warn(
           "ConditionalCheckFailed when moving dashboard to draft state",
           dashboardId
         );

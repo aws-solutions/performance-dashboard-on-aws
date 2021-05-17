@@ -189,6 +189,7 @@ export class BackendApi extends cdk.Construct {
 
     const widget = widgets.addResource("{widgetId}");
     widget.addMethod("GET", apiIntegration, methodProps);
+    widget.addMethod("POST", apiIntegration, methodProps);
     widget.addMethod("PUT", apiIntegration, methodProps);
     widget.addMethod("DELETE", apiIntegration, methodProps);
 

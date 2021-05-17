@@ -282,7 +282,7 @@ exports[`published site settings should match snapshot 1`] = `
             Homepage content
           </h3>
           <p>
-            This components appear on the homepage of your published site and explain what your published site is about.
+            These components appear on the homepage of your published site and explain what your published site is about.
           </p>
           <div
             class="grid-row margin-top-0-important"

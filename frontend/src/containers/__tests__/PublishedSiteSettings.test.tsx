@@ -41,7 +41,7 @@ test("renders the homepage description", async () => {
   });
   expect(
     getByText(
-      "This components appear on the homepage of your published site and explain what your published site is about."
+      "These components appear on the homepage of your published site and explain what your published site is about."
     )
   ).toBeInTheDocument();
 });

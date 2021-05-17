@@ -254,7 +254,7 @@ function PublishDashboard() {
                 <TextField
                   id="releaseNotes"
                   name="releaseNotes"
-                  label={t("PublishWorkflow.InternalVersionNotes")}
+                  label=""
                   error={
                     errors.releaseNotes &&
                     t("PublishWorkflow.MissingVersionNotesError")

@@ -31,7 +31,7 @@ export function useYAxisMetadata(
         setYAxisMargin(margin);
       }
     } else {
-      setYAxisMargin(24);
+      setYAxisMargin(22);
     }
   }, [chartRef, chartRef.current, chartLoaded, significantDigitLabels]);
 

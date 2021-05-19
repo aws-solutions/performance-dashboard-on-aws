@@ -151,6 +151,33 @@ function EditDashboard() {
     }
   };
 
+  const onDrag = async (index: number, newIndex: number) => {
+    if (dashboard) {
+      const widgets = OrderingService.moveWidget(
+        dashboard.widgets,
+        index,
+        newIndex
+      );
+
+      // if no change in order ocurred, exit
+      if (widgets === dashboard.widgets) {
+        return;
+      }
+
+      setDashboard({ ...dashboard, widgets });
+    }
+  };
+
+  const onDrop = async () => {
+    if (dashboard) {
+      try {
+        await BackendService.setWidgetOrder(dashboardId, dashboard.widgets);
+      } finally {
+        await reloadDashboard(false);
+      }
+    }
+  };
+
   return (
     <>
       <Breadcrumbs
@@ -310,6 +337,8 @@ function EditDashboard() {
             onDuplicate={onDuplicateWidget}
             onMoveUp={onMoveWidgetUp}
             onMoveDown={onMoveWidgetDown}
+            onDrag={onDrag}
+            onDrop={onDrop}
           />
         </>
       )}

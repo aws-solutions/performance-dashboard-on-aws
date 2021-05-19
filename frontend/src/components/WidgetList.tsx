@@ -1,7 +1,11 @@
-import React, { createRef } from "react";
+import React, { createRef, useCallback } from "react";
 import { Widget, WidgetType } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGripLinesVertical,
+  faArrowUp,
+  faArrowDown,
+} from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import "./WidgetList.css";
 import Link from "./Link";
@@ -9,6 +13,8 @@ import AlertContainer from "../containers/AlertContainer";
 import SecondaryActionBar from "./SecondaryActionBar";
 import ContentItem from "./ContentItem";
 import { useTranslation } from "react-i18next";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 interface Props {
   onClick: Function;
@@ -16,6 +22,8 @@ interface Props {
   onDuplicate?: Function;
   onMoveUp?: Function;
   onMoveDown?: Function;
+  onDrag?: Function;
+  onDrop?: Function;
   widgets: Array<Widget>;
 }
 
@@ -50,6 +58,18 @@ function WidgetList(props: Props) {
     }
   };
 
+  const onDrag = (index: number, newIndex: number) => {
+    if (props.onDrag) {
+      props.onDrag(index, newIndex);
+    }
+  };
+
+  const onDrop = () => {
+    if (props.onDrop) {
+      props.onDrop();
+    }
+  };
+
   const setNextFocus = (index: number, direction: "Up" | "Down") => {
     let ref;
     /**
@@ -65,18 +85,27 @@ function WidgetList(props: Props) {
      * focus when moving DOM objects.
      */
     if (direction === "Up") {
-      const next = index - 1;
-      ref = next === 0 ? caretDownRefs[0] : caretUpRefs[next];
+      ref = index === 1 ? caretDownRefs[1] : caretUpRefs[index];
     } else {
-      const next = index + 1;
-      const last = props.widgets.length - 1;
-      ref = next === last ? caretUpRefs[last] : caretDownRefs[next];
+      const secondLast = props.widgets.length - 2;
+      ref =
+        index === secondLast ? caretUpRefs[secondLast] : caretDownRefs[index];
     }
 
     if (ref.current) {
       ref.current.focus();
     }
   };
+
+  const moveWidget = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      const dragItem = props.widgets[dragIndex];
+      if (dragItem) {
+        onDrag(dragIndex, hoverIndex);
+      }
+    },
+    [props.widgets]
+  );
 
   return (
     <div>
@@ -102,98 +131,112 @@ function WidgetList(props: Props) {
               </div>
             </div>
           </SecondaryActionBar>
-          {props.widgets.map((widget, index) => {
-            return (
-              <ContentItem className="grid-row margin-y-1" key={index}>
-                <div className="grid-row grid-col flex-1 padding-1">
-                  <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md">
-                    {index + 1}
+          <DndProvider backend={HTML5Backend}>
+            {props.widgets.map((widget, index) => {
+              return (
+                <ContentItem
+                  className="grid-row margin-y-1"
+                  key={widget.id}
+                  index={index}
+                  id={widget.id}
+                  moveWidget={moveWidget}
+                  onDrop={onDrop}
+                >
+                  <div className="grid-row grid-col flex-1 padding-1">
+                    <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center">
+                      <FontAwesomeIcon icon={faGripLinesVertical} />
+                    </div>
+                    <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
+                      {index + 1}
+                    </div>
+                    <div className="grid-col flex-4 grid-row flex-column text-center">
+                      <div className="grid-col flex-6">
+                        {index > 0 && (
+                          <Button
+                            variant="unstyled"
+                            className="text-base-darker hover:text-base-darkest active:text-base-darkest"
+                            ariaLabel={t("MoveContentItemUp", {
+                              name: widget.name,
+                            })}
+                            onClick={() => onMoveUp(index)}
+                            ref={caretUpRefs[index]}
+                          >
+                            <FontAwesomeIcon size="sm" icon={faArrowUp} />
+                          </Button>
+                        )}
+                      </div>
+                      <div className="grid-col flex-6">
+                        {index < props.widgets.length - 1 && (
+                          <Button
+                            variant="unstyled"
+                            className="text-base-darker hover:text-base-darkest active:text-base-darkest"
+                            ariaLabel={t("MoveContentItemDown", {
+                              name: widget.name,
+                            })}
+                            onClick={() => onMoveDown(index)}
+                            ref={caretDownRefs[index]}
+                          >
+                            <FontAwesomeIcon
+                              id={`${widget.id}-move-down`}
+                              size="sm"
+                              icon={faArrowDown}
+                            />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="grid-col flex-6 grid-row flex-column text-center">
-                    <div className="grid-col flex-6">
-                      {index > 0 && (
-                        <Button
-                          variant="unstyled"
-                          className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                          ariaLabel={t("MoveContentItemUp", {
-                            name: widget.name,
-                          })}
-                          onClick={() => onMoveUp(index)}
-                          ref={caretUpRefs[index]}
-                        >
-                          <FontAwesomeIcon size="sm" icon={faArrowUp} />
-                        </Button>
+                  <div className="border-base-lighter border-left"></div>
+                  <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
+                    <div
+                      className="grid-col flex-6 usa-tooltip text-bold"
+                      data-position="bottom"
+                      title={widget.name}
+                    >
+                      <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
+                        {widget.name}
+                      </div>
+                    </div>
+                    <div className="grid-col flex-3 text-italic">
+                      {t(
+                        widget.widgetType === WidgetType.Chart
+                          ? widget.content.chartType
+                          : widget.widgetType
                       )}
                     </div>
-                    <div className="grid-col flex-6">
-                      {index < props.widgets.length - 1 && (
-                        <Button
-                          variant="unstyled"
-                          className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                          ariaLabel={t("MoveContentItemDown", {
-                            name: widget.name,
-                          })}
-                          onClick={() => onMoveDown(index)}
-                          ref={caretDownRefs[index]}
-                        >
-                          <FontAwesomeIcon
-                            id={`${widget.id}-move-down`}
-                            size="sm"
-                            icon={faArrowDown}
-                          />
-                        </Button>
-                      )}
+                    <div className="grid-col flex-3 text-right">
+                      <Link
+                        ariaLabel={t("EditContent", { name: widget.name })}
+                        to={`/admin/dashboard/${
+                          widget.dashboardId
+                        }/edit-${widget.widgetType.toLowerCase()}/${widget.id}`}
+                      >
+                        {t("Edit")}
+                      </Link>
+                      <Button
+                        variant="unstyled"
+                        className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
+                        onClick={() => onDuplicate(widget)}
+                        ariaLabel={t("DuplicateContent", {
+                          name: widget.name,
+                        })}
+                      >
+                        {t("Duplicate")}
+                      </Button>
+                      <Button
+                        variant="unstyled"
+                        className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
+                        onClick={() => onDelete(widget)}
+                        ariaLabel={t("DeleteContent", { name: widget.name })}
+                      >
+                        {t("Delete")}
+                      </Button>
                     </div>
                   </div>
-                </div>
-                <div className="border-base-lighter border-left"></div>
-                <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
-                  <div
-                    className="grid-col flex-6 usa-tooltip text-bold"
-                    data-position="bottom"
-                    title={widget.name}
-                  >
-                    <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
-                      {widget.name}
-                    </div>
-                  </div>
-                  <div className="grid-col flex-3 text-italic">
-                    {t(
-                      widget.widgetType === WidgetType.Chart
-                        ? widget.content.chartType
-                        : widget.widgetType
-                    )}
-                  </div>
-                  <div className="grid-col flex-3 text-right">
-                    <Link
-                      ariaLabel={t("EditContent", { name: widget.name })}
-                      to={`/admin/dashboard/${
-                        widget.dashboardId
-                      }/edit-${widget.widgetType.toLowerCase()}/${widget.id}`}
-                    >
-                      {t("Edit")}
-                    </Link>
-                    <Button
-                      variant="unstyled"
-                      className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
-                      onClick={() => onDuplicate(widget)}
-                      ariaLabel={t("DuplicateContent", { name: widget.name })}
-                    >
-                      {t("Duplicate")}
-                    </Button>
-                    <Button
-                      variant="unstyled"
-                      className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
-                      onClick={() => onDelete(widget)}
-                      ariaLabel={t("DeleteContent", { name: widget.name })}
-                    >
-                      {t("Delete")}
-                    </Button>
-                  </div>
-                </div>
-              </ContentItem>
-            );
-          })}
+                </ContentItem>
+              );
+            })}
+          </DndProvider>
           <div className="text-center margin-top-2">
             <button
               className="usa-button usa-button--base margin-top-1"

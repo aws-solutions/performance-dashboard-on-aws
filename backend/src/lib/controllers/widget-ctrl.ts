@@ -146,7 +146,7 @@ async function duplicateWidget(req: Request, res: Response) {
   let newWidget;
   try {
     newWidget = WidgetFactory.createWidget({
-      name: widget.name,
+      name: `(Copy) ${widget.name}`,
       dashboardId,
       widgetType: widget.widgetType,
       showTitle: widget.showTitle,

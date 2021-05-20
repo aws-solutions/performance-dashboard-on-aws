@@ -15,6 +15,7 @@ import ContentItem from "./ContentItem";
 import { useTranslation } from "react-i18next";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
 
 interface Props {
   onClick: Function;
@@ -131,20 +132,24 @@ function WidgetList(props: Props) {
               </div>
             </div>
           </SecondaryActionBar>
-          <DndProvider backend={HTML5Backend}>
+          <DndProvider
+            backend={window.innerWidth < 1024 ? TouchBackend : HTML5Backend}
+            options={{ enableMouseEvents: true }}
+          >
             {props.widgets.map((widget, index) => {
               return (
                 <ContentItem
                   className="grid-row margin-y-1"
                   key={widget.id}
                   index={index}
-                  id={widget.id}
-                  moveWidget={moveWidget}
+                  id={index}
+                  moveItem={moveWidget}
                   onDrop={onDrop}
+                  itemType="widget"
                 >
                   <div className="grid-row grid-col flex-1 padding-1">
                     <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center">
-                      <FontAwesomeIcon icon={faGripLinesVertical} />
+                      <FontAwesomeIcon icon={faGripLinesVertical} size="1x" />
                     </div>
                     <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
                       {index + 1}
@@ -161,7 +166,11 @@ function WidgetList(props: Props) {
                             onClick={() => onMoveUp(index)}
                             ref={caretUpRefs[index]}
                           >
-                            <FontAwesomeIcon size="sm" icon={faArrowUp} />
+                            <FontAwesomeIcon
+                              id={`${widget.id}-move-up`}
+                              size="xs"
+                              icon={faArrowUp}
+                            />
                           </Button>
                         )}
                       </div>
@@ -178,7 +187,7 @@ function WidgetList(props: Props) {
                           >
                             <FontAwesomeIcon
                               id={`${widget.id}-move-down`}
-                              size="sm"
+                              size="xs"
                               icon={faArrowDown}
                             />
                           </Button>
@@ -221,7 +230,7 @@ function WidgetList(props: Props) {
                           name: widget.name,
                         })}
                       >
-                        {t("Duplicate")}
+                        {t("Copy")}
                       </Button>
                       <Button
                         variant="unstyled"

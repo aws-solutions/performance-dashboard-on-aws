@@ -158,7 +158,7 @@ exports[`topic area settings should match snapshot 1`] = `
             Ministries
           </h1>
           <p>
-            Dashboards are organized by topic areas. A dashboard must have topic area and can have only one topic area.
+            Dashboards are organized by topic areas. A dashboard must have a topic area and can have only one topic area.
           </p>
           <h3
             class="margin-top-2-important"

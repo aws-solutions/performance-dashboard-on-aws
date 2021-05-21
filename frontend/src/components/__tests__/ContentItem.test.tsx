@@ -11,8 +11,9 @@ test("renders a content item", async () => {
         className="margin-y-1"
         id="test"
         index={0}
-        moveWidget={() => {}}
+        moveItem={() => {}}
         onDrop={() => {}}
+        itemType="test"
       >
         <p>Test</p>
       </ContentItem>

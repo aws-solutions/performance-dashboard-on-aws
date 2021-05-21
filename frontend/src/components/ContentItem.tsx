@@ -7,8 +7,9 @@ interface Props {
   className?: string;
   id: any;
   index: number;
-  moveWidget: (dragIndex: number, hoverIndex: number) => void;
+  moveItem: (dragIndex: number, hoverIndex: number) => void;
   onDrop: Function;
+  itemType: string;
 }
 
 interface DragItem {
@@ -17,15 +18,11 @@ interface DragItem {
   type: string;
 }
 
-export const ItemTypes = {
-  WIDGET: "widget",
-};
-
 const ContentItem = (props: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [, drop] = useDrop({
-    accept: ItemTypes.WIDGET,
+    accept: props.itemType,
     drop() {
       if (ref.current) {
         props.onDrop();
@@ -62,7 +59,7 @@ const ContentItem = (props: Props) => {
         return;
       }
       // Time to actually perform the action
-      props.moveWidget(dragIndex, hoverIndex);
+      props.moveItem(dragIndex, hoverIndex);
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
@@ -72,7 +69,7 @@ const ContentItem = (props: Props) => {
   });
 
   const [{ isDragging }, drag] = useDrag({
-    type: ItemTypes.WIDGET,
+    type: props.itemType,
     item: { index: props.index, id: props.id },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),

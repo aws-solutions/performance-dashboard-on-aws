@@ -197,14 +197,14 @@ function EditMetrics() {
   };
 
   const setMetricOrder = async (index: number, newIndex: number) => {
-    const widgets = OrderingService.moveMetric(metrics, index, newIndex);
+    const metricsOrdered = OrderingService.moveMetric(metrics, index, newIndex);
 
     // if no change in order ocurred, exit
-    if (widgets === metrics) {
+    if (metricsOrdered === metrics) {
       return;
     }
 
-    setMetrics(widgets);
+    setMetrics(metricsOrdered);
   };
 
   const crumbs = [
@@ -326,6 +326,7 @@ function EditMetrics() {
                   defaultChecked={oneMetricPerRow}
                   register={register}
                   allowAddMetric
+                  onDrag={setMetricOrder}
                 />
                 <br />
                 <br />

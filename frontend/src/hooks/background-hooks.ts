@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
 
 export function ChangeBackgroundColor(): any {
-    //store previous color
-    const originalBackroundColor = document.body.style.background;
+  //store previous color
+  const originalBackroundColor = document.body.style.background;
 
-    useEffect(() => {
+  useEffect(() => {
     //change color
     document.body.style.background = "#fafafa";
 
     // returned function will be called on component unmount
     return () => {
-        //reset color
-        document.body.style.background = originalBackroundColor;
+      //reset color
+      document.body.style.background = originalBackroundColor;
     };
-    }, []);
+  }, []);
 }
-

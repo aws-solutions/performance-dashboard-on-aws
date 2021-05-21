@@ -218,6 +218,20 @@ function EditMetrics() {
     },
   ];
 
+  //store previous color
+  const originalBackroundColor = document.body.style.background;
+
+  useEffect(() => {
+    //change color
+    document.body.style.background = "#fafafa";
+
+    // returned function will be called on component unmount
+    return () => {
+      //reset color
+      document.body.style.background = originalBackroundColor;
+    };
+  }, []);
+
   if (!loading && widget) {
     crumbs.push({
       label: t("EditMetricsScreen.EditMetrics"),

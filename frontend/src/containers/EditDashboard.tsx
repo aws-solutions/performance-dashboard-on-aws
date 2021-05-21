@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useHistory, useParams } from "react-router-dom";
 import Link from "../components/Link";
@@ -177,6 +177,20 @@ function EditDashboard() {
       }
     }
   };
+
+  //store previous color
+  const originalBackroundColor = document.body.style.background;
+
+  useEffect(() => {
+    //change color
+    document.body.style.background = "#fafafa";
+
+    // returned function will be called on component unmount
+    return () => {
+      //reset color
+      document.body.style.background = originalBackroundColor;
+    };
+  }, []);
 
   return (
     <>

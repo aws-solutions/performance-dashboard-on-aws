@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTopicAreas, useDashboard, useSettings } from "../hooks";
@@ -62,6 +62,20 @@ function EditDetails() {
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
+
+  //store previous color
+  const originalBackroundColor = document.body.style.background;
+
+  useEffect(() => {
+    //change color
+    document.body.style.background = "#fafafa";
+
+    // returned function will be called on component unmount
+    return () => {
+      //reset color
+      document.body.style.background = originalBackroundColor;
+    };
+  }, []);
 
   if (loading || !dashboard || !topicareas || topicareas.length === 0) {
     return (

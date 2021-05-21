@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";
@@ -70,6 +70,20 @@ function AddMetric() {
       }
     );
   };
+
+  //store previous color
+  const originalBackroundColor = document.body.style.background;
+
+  useEffect(() => {
+    //change color
+    document.body.style.background = "#fafafa";
+
+    // returned function will be called on component unmount
+    return () => {
+      //reset color
+      document.body.style.background = originalBackroundColor;
+    };
+  }, []);
 
   if (!state || !state.metrics) {
     setTimeout(onCancel, 1000);

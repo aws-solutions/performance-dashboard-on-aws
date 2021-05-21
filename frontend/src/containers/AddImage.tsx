@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { WidgetType } from "../models";
@@ -131,6 +131,20 @@ function AddImage() {
       url: `/admin/dashboard/edit/${dashboardId}`,
     },
   ];
+
+  //store previous color
+  const originalBackroundColor = document.body.style.background;
+
+  useEffect(() => {
+    //change color
+    document.body.style.background = "#fafafa";
+
+    // returned function will be called on component unmount
+    return () => {
+      //reset color
+      document.body.style.background = originalBackroundColor;
+    };
+  }, []);
 
   if (!loading) {
     crumbs.push({

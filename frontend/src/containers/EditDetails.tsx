@@ -31,6 +31,10 @@ function EditDetails() {
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, watch } = useForm<FormValues>();
 
+  const sortedTopicAreas = topicareas.sort((a, b) =>
+    a.name > b.name ? 1 : -1
+  );
+
   const name = watch("name");
   const description = watch("description");
   const topicAreaId = watch("topicAreaId");
@@ -120,7 +124,7 @@ function EditDetails() {
                     )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
                     defaultValue={dashboard?.topicAreaId}
                     register={register}
-                    options={topicareas.map((topicarea) => ({
+                    options={sortedTopicAreas.map((topicarea) => ({
                       value: topicarea.id,
                       label: topicarea.name,
                     }))}

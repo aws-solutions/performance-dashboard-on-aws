@@ -6,6 +6,7 @@ import { useDashboard } from "../hooks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import { ChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   widgetType: string;
@@ -53,19 +54,7 @@ function AddContent() {
     },
   ];
 
-  //store previous color
-  const originalBackroundColor = document.body.style.background;
-
-  useEffect(() => {
-    //change color
-    document.body.style.background = "#fafafa";
-
-    // returned function will be called on component unmount
-    return () => {
-      //reset color
-      document.body.style.background = originalBackroundColor;
-    };
-  }, []);
+  ChangeBackgroundColor();
 
   if (!loading) {
     crumbs.push({

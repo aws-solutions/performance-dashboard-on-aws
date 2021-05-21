@@ -34,6 +34,7 @@ import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { ChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;
@@ -318,6 +319,8 @@ function AddMetrics() {
       url: "",
     });
   }
+
+  ChangeBackgroundColor();
 
   const configHeader = (
     <div>

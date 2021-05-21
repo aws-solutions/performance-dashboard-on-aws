@@ -21,6 +21,7 @@ import StorageService from "../services/StorageService";
 import Spinner from "../components/Spinner";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Alert from "../components/Alert";
+import { ChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;
@@ -218,19 +219,7 @@ function EditMetrics() {
     },
   ];
 
-  //store previous color
-  const originalBackroundColor = document.body.style.background;
-
-  useEffect(() => {
-    //change color
-    document.body.style.background = "#fafafa";
-
-    // returned function will be called on component unmount
-    return () => {
-      //reset color
-      document.body.style.background = originalBackroundColor;
-    };
-  }, []);
+  ChangeBackgroundColor();
 
   if (!loading && widget) {
     crumbs.push({

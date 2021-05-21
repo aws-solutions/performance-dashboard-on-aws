@@ -12,6 +12,7 @@ import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
 import { useTranslation } from "react-i18next";
+import { ChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   name: string;
@@ -67,19 +68,7 @@ function EditDetails() {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
 
-  //store previous color
-  const originalBackroundColor = document.body.style.background;
-
-  useEffect(() => {
-    //change color
-    document.body.style.background = "#fafafa";
-
-    // returned function will be called on component unmount
-    return () => {
-      //reset color
-      document.body.style.background = originalBackroundColor;
-    };
-  }, []);
+  ChangeBackgroundColor();
 
   if (loading || !dashboard || !topicareas || topicareas.length === 0) {
     return (

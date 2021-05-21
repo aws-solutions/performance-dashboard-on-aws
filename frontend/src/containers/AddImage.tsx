@@ -14,6 +14,7 @@ import Link from "../components/Link";
 import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import { ChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;
@@ -132,19 +133,7 @@ function AddImage() {
     },
   ];
 
-  //store previous color
-  const originalBackroundColor = document.body.style.background;
-
-  useEffect(() => {
-    //change color
-    document.body.style.background = "#fafafa";
-
-    // returned function will be called on component unmount
-    return () => {
-      //reset color
-      document.body.style.background = originalBackroundColor;
-    };
-  }, []);
+  ChangeBackgroundColor();
 
   if (!loading) {
     crumbs.push({

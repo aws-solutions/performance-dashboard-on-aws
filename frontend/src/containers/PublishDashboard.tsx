@@ -25,6 +25,7 @@ import FriendlyURLInput from "../components/FriendlyURLInput";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import DropdownMenu from "../components/DropdownMenu";
 import "./PublishDashboard.css";
+import { ChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface PathParams {
   dashboardId: string;
@@ -153,19 +154,7 @@ function PublishDashboard() {
     }
   };
 
-  //store previous color
-  const originalBackroundColor = document.body.style.background;
-
-  useEffect(() => {
-    //change color
-    document.body.style.background = "#fafafa";
-
-    // returned function will be called on component unmount
-    return () => {
-      //reset color
-      document.body.style.background = originalBackroundColor;
-    };
-  }, []);
+  ChangeBackgroundColor();
 
   if (!dashboard || !suggestedUrl) {
     return (

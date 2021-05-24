@@ -781,7 +781,7 @@
   "Admin": "Admin",
   "Editor": "Editor",
   "GlobalUser": "user",
-  "DashboardWasDuplicated": "was successfully duplicated.",
+  "DashboardWasCopied": "was successfully copied.",
   "Copy": "Copy",
-  "DuplicateContent": "Duplicate {{name}}"
+  "CopyContent": "Copy {{name}}"
 }

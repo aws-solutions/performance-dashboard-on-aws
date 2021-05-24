@@ -7,6 +7,7 @@ import {
   useDashboardVersions,
   useSettings,
   useFriendlyUrl,
+  useChangeBackgroundColor,
 } from "../hooks";
 import { DashboardState, LocationState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,7 +26,6 @@ import FriendlyURLInput from "../components/FriendlyURLInput";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import DropdownMenu from "../components/DropdownMenu";
 import "./PublishDashboard.css";
-import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface PathParams {
   dashboardId: string;

@@ -16,6 +16,7 @@ import {
   useSettings,
   useDatasets,
   useFullPreview,
+  useChangeBackgroundColor,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -34,7 +35,6 @@ import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;

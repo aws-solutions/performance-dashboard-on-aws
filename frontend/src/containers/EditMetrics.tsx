@@ -9,7 +9,12 @@ import {
   DatasetSchema,
   DatasetType,
 } from "../models";
-import { useDashboard, useWidget, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useWidget,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import MetricsWidget from "../components/MetricsWidget";
@@ -21,7 +26,6 @@ import StorageService from "../services/StorageService";
 import Spinner from "../components/Spinner";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Alert from "../components/Alert";
-import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;

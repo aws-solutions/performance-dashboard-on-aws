@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { UserRoles } from "../models";
 import { useTranslation } from "react-i18next";
-import { useChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks";
 
 interface FormValues {
   emails: string;

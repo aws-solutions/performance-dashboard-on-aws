@@ -7,14 +7,19 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
-import { useDashboard, useWidget, useImage, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useWidget,
+  useImage,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import Spinner from "../components/Spinner";
 import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
 import Alert from "../components/Alert";
-import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;

@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { WidgetType } from "../models";
-import { useDashboard, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
@@ -13,7 +17,6 @@ import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
-import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;

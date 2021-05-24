@@ -9,7 +9,11 @@ import {
 } from "../models";
 import { Dataset, DatasetType, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
-import { useDashboard, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -23,7 +27,6 @@ import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import UtilsService from "../services/UtilsService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
-import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;

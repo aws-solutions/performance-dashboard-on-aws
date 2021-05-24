@@ -9,7 +9,12 @@ import {
 } from "../models";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, WidgetType, DatasetType, ColumnDataType } from "../models";
-import { useDashboard, useDatasets, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useDatasets,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -23,7 +28,6 @@ import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
-import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;

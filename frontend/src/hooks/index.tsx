@@ -23,6 +23,7 @@ import {
   useWindowSize,
 } from "./chart-hooks";
 import { useTableMetadata } from "./table-hooks";
+import { useChangeBackgroundColor } from "./background-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -62,4 +63,5 @@ export {
   useXAxisMetadata,
   useTableMetadata,
   useWindowSize,
+  useChangeBackgroundColor,
 };

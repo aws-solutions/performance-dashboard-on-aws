@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useTopicAreas, useSettings } from "../hooks";
+import { useTopicAreas, useSettings, useChangeBackgroundColor } from "../hooks";
 import BackendService from "../services/BackendService";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
@@ -12,7 +12,6 @@ import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
 import { useTranslation } from "react-i18next";
-import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   name: string;

@@ -25,6 +25,9 @@ function CreateDashboard() {
   const { topicareas, loading } = useTopicAreas();
   const { register, errors, handleSubmit, watch } = useForm<FormValues>();
 
+  const sortedTopicAreas = topicareas.sort((a, b) =>
+    a.name > b.name ? 1 : -1
+  );
   const name = watch("name");
   const description = watch("description");
   const topicAreaId = watch("topicAreaId");
@@ -107,7 +110,7 @@ function CreateDashboard() {
                       "SelectExistingLeading"
                     )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
                     register={register}
-                    options={topicareas.map((topicarea) => ({
+                    options={sortedTopicAreas.map((topicarea) => ({
                       value: topicarea.id,
                       label: topicarea.name,
                     }))}

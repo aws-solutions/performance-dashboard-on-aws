@@ -21,7 +21,7 @@ import StorageService from "../services/StorageService";
 import Spinner from "../components/Spinner";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Alert from "../components/Alert";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;
@@ -219,7 +219,7 @@ function EditMetrics() {
     },
   ];
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   if (!loading && widget) {
     crumbs.push({

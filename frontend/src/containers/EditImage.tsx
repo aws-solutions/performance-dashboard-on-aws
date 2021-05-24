@@ -14,7 +14,7 @@ import Link from "../components/Link";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
 import Alert from "../components/Alert";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;
@@ -164,7 +164,7 @@ function EditImage() {
     },
   ];
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   if (!loading) {
     crumbs.push({

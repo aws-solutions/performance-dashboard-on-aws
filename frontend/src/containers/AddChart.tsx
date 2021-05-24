@@ -23,7 +23,7 @@ import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;
@@ -358,7 +358,7 @@ function AddChart() {
     </div>
   );
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   return (
     <>

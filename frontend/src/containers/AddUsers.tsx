@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { UserRoles } from "../models";
 import { useTranslation } from "react-i18next";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   emails: string;
@@ -49,7 +49,7 @@ function AddUsers() {
     setRole((event.target as HTMLInputElement).value);
   };
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   return (
     <>

@@ -12,7 +12,7 @@ import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
 import { useTranslation } from "react-i18next";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   name: string;
@@ -56,7 +56,7 @@ function CreateDashboard() {
     history.push("/admin/dashboards");
   };
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   if (loading) {
     return (

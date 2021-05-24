@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export function ChangeBackgroundColor(): any {
+export function useChangeBackgroundColor(): any {
   //store previous color
   const originalBackroundColor = document.body.style.background;
 

@@ -6,7 +6,7 @@ import { useDashboard } from "../hooks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
 import PrimaryActionBar from "../components/PrimaryActionBar";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   widgetType: string;
@@ -54,7 +54,7 @@ function AddContent() {
     },
   ];
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   if (!loading) {
     crumbs.push({

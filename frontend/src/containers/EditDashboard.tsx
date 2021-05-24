@@ -19,7 +19,7 @@ import AlertContainer from "../containers/AlertContainer";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface PathParams {
   dashboardId: string;
@@ -179,7 +179,7 @@ function EditDashboard() {
     }
   };
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   return (
     <>

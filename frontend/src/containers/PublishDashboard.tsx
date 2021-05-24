@@ -25,7 +25,7 @@ import FriendlyURLInput from "../components/FriendlyURLInput";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import DropdownMenu from "../components/DropdownMenu";
 import "./PublishDashboard.css";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface PathParams {
   dashboardId: string;
@@ -154,7 +154,7 @@ function PublishDashboard() {
     }
   };
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   if (!dashboard || !suggestedUrl) {
     return (

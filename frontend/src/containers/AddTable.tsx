@@ -23,7 +23,7 @@ import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import UtilsService from "../services/UtilsService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;
@@ -336,7 +336,7 @@ function AddTable() {
     </div>
   );
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   return (
     <>

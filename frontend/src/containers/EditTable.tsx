@@ -25,7 +25,7 @@ import CheckData from "../components/CheckData";
 import Visualize from "../components/VisualizeTable";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
-import { ChangeBackgroundColor } from "../hooks/background-hooks";
+import { useChangeBackgroundColor } from "../hooks/background-hooks";
 
 interface FormValues {
   title: string;
@@ -477,7 +477,7 @@ function EditTable() {
     </div>
   );
 
-  ChangeBackgroundColor();
+  useChangeBackgroundColor();
 
   return (
     <>

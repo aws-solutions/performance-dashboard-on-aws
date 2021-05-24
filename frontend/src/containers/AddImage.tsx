@@ -3,7 +3,11 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { WidgetType } from "../models";
 import BackendService from "../services/BackendService";
-import { useDashboard, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import StorageService from "../services/StorageService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
@@ -131,6 +135,8 @@ function AddImage() {
       url: `/admin/dashboard/edit/${dashboardId}`,
     },
   ];
+
+  useChangeBackgroundColor();
 
   if (!loading) {
     crumbs.push({

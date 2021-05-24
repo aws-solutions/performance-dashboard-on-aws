@@ -7,6 +7,7 @@ import {
   useDashboardVersions,
   useSettings,
   useFriendlyUrl,
+  useChangeBackgroundColor,
 } from "../hooks";
 import { DashboardState, LocationState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -152,6 +153,8 @@ function PublishDashboard() {
       }
     }
   };
+
+  useChangeBackgroundColor();
 
   if (!dashboard || !suggestedUrl) {
     return (

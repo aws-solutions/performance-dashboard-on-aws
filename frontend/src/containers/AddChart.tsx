@@ -9,7 +9,12 @@ import {
 } from "../models";
 import { parse, ParseResult } from "papaparse";
 import { Dataset, WidgetType, DatasetType, ColumnDataType } from "../models";
-import { useDashboard, useDatasets, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useDatasets,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -356,6 +361,8 @@ function AddChart() {
       />
     </div>
   );
+
+  useChangeBackgroundColor();
 
   return (
     <>

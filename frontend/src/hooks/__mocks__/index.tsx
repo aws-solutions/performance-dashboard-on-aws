@@ -559,3 +559,5 @@ export function useWindowSize() {
 
   return size;
 }
+
+export function useChangeBackgroundColor() {}

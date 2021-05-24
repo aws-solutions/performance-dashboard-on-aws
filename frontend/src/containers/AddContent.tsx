@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useDashboard } from "../hooks";
+import { useDashboard, useChangeBackgroundColor } from "../hooks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
 import PrimaryActionBar from "../components/PrimaryActionBar";
@@ -52,6 +52,8 @@ function AddContent() {
       url: `/admin/dashboard/edit/${dashboardId}`,
     },
   ];
+
+  useChangeBackgroundColor();
 
   if (!loading) {
     crumbs.push({

@@ -1,7 +1,12 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useTopicAreas, useDashboard, useSettings } from "../hooks";
+import {
+  useTopicAreas,
+  useDashboard,
+  useSettings,
+  useChangeBackgroundColor,
+} from "../hooks";
 import BackendService from "../services/BackendService";
 import TextField from "../components/TextField";
 import Dropdown from "../components/Dropdown";
@@ -66,6 +71,8 @@ function EditDetails() {
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
   };
+
+  useChangeBackgroundColor();
 
   if (loading || !dashboard || !topicareas || topicareas.length === 0) {
     return (

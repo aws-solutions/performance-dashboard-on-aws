@@ -11,7 +11,13 @@ import {
   LocationState,
   NumberDataType,
 } from "../models";
-import { useWidget, useDashboard, useDatasets, useFullPreview } from "../hooks";
+import {
+  useWidget,
+  useDashboard,
+  useDatasets,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
@@ -498,6 +504,8 @@ function EditChart() {
       </ul>
     </div>
   );
+
+  useChangeBackgroundColor();
 
   return (
     <>

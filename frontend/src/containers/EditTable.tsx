@@ -14,7 +14,12 @@ import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { parse, ParseResult } from "papaparse";
-import { useWidget, useDashboard, useFullPreview } from "../hooks";
+import {
+  useWidget,
+  useDashboard,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import Spinner from "../components/Spinner";
 import { useDatasets } from "../hooks";
 import UtilsService from "../services/UtilsService";
@@ -475,6 +480,8 @@ function EditTable() {
       </ul>
     </div>
   );
+
+  useChangeBackgroundColor();
 
   return (
     <>

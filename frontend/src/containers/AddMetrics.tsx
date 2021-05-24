@@ -16,6 +16,7 @@ import {
   useSettings,
   useDatasets,
   useFullPreview,
+  useChangeBackgroundColor,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -318,6 +319,8 @@ function AddMetrics() {
       url: "",
     });
   }
+
+  useChangeBackgroundColor();
 
   const configHeader = (
     <div>

@@ -6,7 +6,12 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
-import { useWidget, useDashboard, useFullPreview } from "../hooks";
+import {
+  useWidget,
+  useDashboard,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import Spinner from "../components/Spinner";
 import Link from "../components/Link";
 import PrimaryActionBar from "../components/PrimaryActionBar";
@@ -92,6 +97,8 @@ function EditText() {
       url: `/admin/dashboard/edit/${dashboardId}`,
     },
   ];
+
+  useChangeBackgroundColor();
 
   if (!loading && widget) {
     crumbs.push({

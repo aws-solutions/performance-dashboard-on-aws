@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { useHistory, useParams } from "react-router-dom";
 import Link from "../components/Link";
-import { useDashboard, useDashboardVersions } from "../hooks";
+import {
+  useDashboard,
+  useDashboardVersions,
+  useChangeBackgroundColor,
+} from "../hooks";
 import { Widget, LocationState, WidgetType, DashboardState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
@@ -178,6 +182,8 @@ function EditDashboard() {
       }
     }
   };
+
+  useChangeBackgroundColor();
 
   return (
     <>

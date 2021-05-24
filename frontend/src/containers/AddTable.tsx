@@ -9,7 +9,11 @@ import {
 } from "../models";
 import { Dataset, DatasetType, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
-import { useDashboard, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -334,6 +338,8 @@ function AddTable() {
       />
     </div>
   );
+
+  useChangeBackgroundColor();
 
   return (
     <>

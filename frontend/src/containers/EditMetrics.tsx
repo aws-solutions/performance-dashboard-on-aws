@@ -9,7 +9,12 @@ import {
   DatasetSchema,
   DatasetType,
 } from "../models";
-import { useDashboard, useWidget, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useWidget,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import MetricsWidget from "../components/MetricsWidget";
@@ -217,6 +222,8 @@ function EditMetrics() {
       url: `/admin/dashboard/edit/${dashboardId}`,
     },
   ];
+
+  useChangeBackgroundColor();
 
   if (!loading && widget) {
     crumbs.push({

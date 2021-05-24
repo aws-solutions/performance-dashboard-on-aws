@@ -7,7 +7,13 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import FileInput from "../components/FileInput";
 import Button from "../components/Button";
-import { useDashboard, useWidget, useImage, useFullPreview } from "../hooks";
+import {
+  useDashboard,
+  useWidget,
+  useImage,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import Spinner from "../components/Spinner";
 import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
@@ -162,6 +168,8 @@ function EditImage() {
       url: `/admin/dashboard/edit/${dashboardId}`,
     },
   ];
+
+  useChangeBackgroundColor();
 
   if (!loading) {
     crumbs.push({

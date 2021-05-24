@@ -226,7 +226,7 @@ function WidgetList(props: Props) {
                         variant="unstyled"
                         className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
                         onClick={() => onDuplicate(widget)}
-                        ariaLabel={t("DuplicateContent", {
+                        ariaLabel={t("CopyContent", {
                           name: widget.name,
                         })}
                       >

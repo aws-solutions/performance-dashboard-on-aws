@@ -87,7 +87,7 @@ function EditDashboard() {
             widget.widgetType === WidgetType.Chart
               ? widget.content.chartType
               : widget.widgetType
-          )} '${widget.name}' ${t("DashboardWasDuplicated")}`,
+          )} '${widget.name}' ${t("DashboardWasCopied")}`,
         },
       });
 

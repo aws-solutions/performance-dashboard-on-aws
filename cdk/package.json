@@ -9,7 +9,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest --passWithNoTests",
-    "cdk": "cdk", 
+    "cdk": "cdk",
     "deploy:pipeline": "cdk deploy --app 'npx ts-node bin/pipeline.ts'"
   },
   "devDependencies": {

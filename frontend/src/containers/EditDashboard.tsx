@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import { useHistory, useParams } from "react-router-dom";
 import Link from "../components/Link";

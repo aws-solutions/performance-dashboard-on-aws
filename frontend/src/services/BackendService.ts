@@ -232,7 +232,8 @@ async function editWidget(
 async function duplicateWidget(
   dashboardId: string,
   widgetId: string,
-  updatedAt: Date
+  updatedAt: Date,
+  copyLabel: string
 ) {
   const headers = await authHeaders();
   return await API.post(
@@ -242,6 +243,7 @@ async function duplicateWidget(
       headers,
       body: {
         updatedAt,
+        copyLabel,
       },
     }
   );

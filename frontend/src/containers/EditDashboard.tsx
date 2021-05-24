@@ -72,7 +72,8 @@ function EditDashboard() {
       await BackendService.duplicateWidget(
         dashboardId,
         widget.id,
-        widget.updatedAt
+        widget.updatedAt,
+        t("Copy")
       );
 
       history.replace(`/admin/dashboard/edit/${dashboardId}`, {

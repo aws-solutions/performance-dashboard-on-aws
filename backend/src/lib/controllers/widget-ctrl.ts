@@ -128,7 +128,7 @@ async function duplicateWidget(req: Request, res: Response) {
     return;
   }
 
-  const { updatedAt } = req.body;
+  const { updatedAt, copyLabel } = req.body;
 
   if (!updatedAt) {
     res.status(400).send("Missing required field `updatedAt`");
@@ -146,13 +146,18 @@ async function duplicateWidget(req: Request, res: Response) {
   let newWidget;
   try {
     newWidget = WidgetFactory.createWidget({
-      name: `(Copy) ${widget.name}`,
+      name: `(${copyLabel || "Copy"}) ${widget.name}`,
       dashboardId,
       widgetType: widget.widgetType,
       showTitle: widget.showTitle,
       content: widget.content,
     });
     newWidget.updatedAt = widget.updatedAt;
+    if (newWidget.content.title) {
+      newWidget.content.title = `(${copyLabel || "Copy"}) ${
+        newWidget.content.title
+      }`;
+    }
   } catch (err) {
     console.log("Invalid request to create widget", err);
     return res.status(400).send(err.message);

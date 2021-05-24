@@ -87,12 +87,11 @@ function MetricsList(props: Props) {
      * focus when moving DOM objects.
      */
     if (direction === "Up") {
-      const next = index - 1;
-      ref = next === 0 ? caretDownRefs[0] : caretUpRefs[next];
+      ref = index === 1 ? caretDownRefs[1] : caretUpRefs[index];
     } else {
-      const next = index + 1;
-      const last = props.metrics.length - 1;
-      ref = next === last ? caretUpRefs[last] : caretDownRefs[next];
+      const secondLast = props.metrics.length - 2;
+      ref =
+        index === secondLast ? caretUpRefs[secondLast] : caretDownRefs[index];
     }
 
     if (ref.current) {

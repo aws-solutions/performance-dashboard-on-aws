@@ -76,7 +76,7 @@ const ContentItem = (props: Props) => {
     }),
   });
 
-  const opacity = isDragging ? 0.4 : 1;
+  const opacity = isDragging ? 0.9 : 1;
 
   drag(drop(ref));
 
@@ -88,7 +88,7 @@ const ContentItem = (props: Props) => {
       }border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white ${
         props.className
       }`}
-      style={{ opacity }}
+      style={{ opacity, cursor: "pointer" }}
     >
       {props.children}
     </div>

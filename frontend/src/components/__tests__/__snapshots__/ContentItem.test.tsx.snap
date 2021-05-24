@@ -5,7 +5,7 @@ exports[`renders a content item 1`] = `
   <div
     class="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white margin-y-1"
     draggable="true"
-    style="opacity: 1;"
+    style="opacity: 1; cursor: pointer;"
   >
     <p>
       Test

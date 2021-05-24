@@ -242,14 +242,14 @@ function AddMetrics() {
   };
 
   const setMetricOrder = async (index: number, newIndex: number) => {
-    const widgets = OrderingService.moveMetric(metrics, index, newIndex);
+    const metricsOrdered = OrderingService.moveMetric(metrics, index, newIndex);
 
     // if no change in order ocurred, exit
-    if (widgets === metrics) {
+    if (metricsOrdered === metrics) {
       return;
     }
 
-    setMetrics(widgets);
+    setMetrics(metricsOrdered);
   };
 
   const goBack = () => {
@@ -616,6 +616,7 @@ function AddMetrics() {
                       defaultChecked={oneMetricPerRow}
                       register={register}
                       allowAddMetric={datasetType === DatasetType.CreateNew}
+                      onDrag={setMetricOrder}
                     />
                     <br />
                     <br />

@@ -126,7 +126,8 @@ const BarChartWidget = (props: Props) => {
               type="number"
               domain={[
                 (dataMin: number) => 0,
-                (dataMax: number) => dataMax + Math.floor(dataMax * 0.2),
+                (dataMax: number) =>
+                  Math.round(dataMax + Math.floor(dataMax * 0.2)),
               ]}
               tickFormatter={(tick) =>
                 TickFormatter.format(

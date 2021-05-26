@@ -199,8 +199,7 @@ const BarChartWidget = (props: Props) => {
                           TickFormatter.format(
                             tick,
                             xAxisLargestValue,
-                            props.significantDigitLabels,
-                            props.columnsMetadata[index]
+                            props.significantDigitLabels
                           )
                         }
                       />

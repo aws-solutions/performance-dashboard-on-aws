@@ -80,16 +80,23 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
                 {t("EditURLComponent.Error")}
               </span>
             )}
-            <input
-              id="friendlyURL"
-              className="usa-input"
-              name="friendlyURL"
-              type="text"
-              onChange={(e: any) => sanitizeUrl(e.target.value)}
-              ref={register({
-                required: true,
-              })}
-            />
+
+            <div className="input-group prefix">
+              <span className="input-group-addon">
+                {window.location.protocol}//{window.location.hostname}/
+              </span>
+              <input
+                id="friendlyURL"
+                className="has-prefix"
+                name="friendlyURL"
+                type="text"
+                onChange={(e: any) => sanitizeUrl(e.target.value)}
+                style={{ content: "hi" }}
+                ref={register({
+                  required: true,
+                })}
+              />
+            </div>
           </div>
         }
       />

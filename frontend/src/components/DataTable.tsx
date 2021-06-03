@@ -5,6 +5,9 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import Button from "./Button";
 import Table from "./Table";
+import DropdownMenu from "../components/DropdownMenu";
+
+const { MenuItem, MenuLink } = DropdownMenu;
 
 interface Props {
   rows: any[];
@@ -47,7 +50,20 @@ function DataTable({ rows, columns, columnsMetadata }: Props) {
 
   return (
     <>
-      <div className="text-right">
+      <DropdownMenu
+        buttonText={t("Actions")}
+        disabled={false}
+        variant="outline"
+      >
+        <MenuItem
+          onSelect={() =>
+            !showDataTable ? setShowDataTable(true) : setShowDataTable(false)
+          }
+        >
+          {!showDataTable ? "Show data table " : "Hide data table"}
+        </MenuItem>
+      </DropdownMenu>
+      {/* <div className="text-right">
         {!showDataTable && (
           <Button
             type="button"
@@ -68,7 +84,7 @@ function DataTable({ rows, columns, columnsMetadata }: Props) {
             {t("HideDataTableButton")}
           </Button>
         )}
-      </div>
+      </div> */}
       {showDataTable && (
         <Table
           selection="none"

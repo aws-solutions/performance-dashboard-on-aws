@@ -215,7 +215,7 @@ function VisualizeChart(props: Props) {
                 id="dataLabels"
                 type="checkbox"
                 name="dataLabels"
-                defaultChecked
+                defaultChecked={false}
                 ref={props.register()}
               />
               <label className="usa-checkbox__label" htmlFor="dataLabels">

@@ -256,7 +256,6 @@ exports[`renders the VisualizeChart component 1`] = `
             hidden=""
           >
             <input
-              checked=""
               class="usa-checkbox__input"
               id="dataLabels"
               name="dataLabels"
@@ -661,7 +660,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             hidden=""
           >
             <input
-              checked=""
               class="usa-checkbox__input"
               id="dataLabels"
               name="dataLabels"

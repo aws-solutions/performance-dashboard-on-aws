@@ -127,15 +127,6 @@ function getTranslationUserStatusValue(userStatus: string) {
   return translationUserStatusValue;
 }
 
-function roundUp(num: string): string {
-  const length = num.length;
-  if (length) {
-    const digit = parseInt(num[0]) + 1;
-    return `${digit}${"0".repeat(length - 1)}`;
-  }
-  return "0";
-}
-
 const UtilsService = {
   groupByTopicArea,
   validateEmails,
@@ -145,7 +136,6 @@ const UtilsService = {
   calculateYAxisMargin,
   isCellEmpty,
   getTranslationUserStatusValue,
-  roundUp,
 };
 
 export default UtilsService;

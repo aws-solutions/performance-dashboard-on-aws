@@ -129,13 +129,6 @@ const BarChartWidget = (props: Props) => {
             <CartesianGrid horizontal={false} />
             <XAxis
               type="number"
-              domain={[
-                (dataMin: number) => 0,
-                (dataMax: number) =>
-                  UtilsService.roundUp(
-                    String(Math.round(dataMax + Math.floor(dataMax * 0.2)))
-                  ),
-              ]}
               tickFormatter={(tick) =>
                 TickFormatter.format(
                   tick,

@@ -6,16 +6,17 @@ import TickFormatter from "../services/TickFormatter";
 import Button from "./Button";
 import Table from "./Table";
 import DropdownMenu from "../components/DropdownMenu";
-
+import { CSVLink } from "react-csv";
 const { MenuItem, MenuLink } = DropdownMenu;
 
 interface Props {
   rows: any[];
   columns: string[];
   columnsMetadata?: ColumnMetadata[];
+  fileName?: string;
 }
 
-function DataTable({ rows, columns, columnsMetadata }: Props) {
+function DataTable({ rows, columns, columnsMetadata, fileName }: Props) {
   const { t } = useTranslation();
   const [showDataTable, setShowDataTable] = useState(false);
 
@@ -48,43 +49,34 @@ function DataTable({ rows, columns, columnsMetadata }: Props) {
     [columns, columnsMetadata]
   );
 
+  const checkData = () => {
+    console.log("TABLE ROWS", tableRows);
+    console.log("TABLE COLUMNS", tableColumns);
+  };
+
   return (
     <>
-      <DropdownMenu
-        buttonText={t("Actions")}
-        disabled={false}
-        variant="outline"
-      >
-        <MenuItem
-          onSelect={() =>
-            !showDataTable ? setShowDataTable(true) : setShowDataTable(false)
-          }
+      <div className="text-right">
+        <DropdownMenu
+          buttonText={t("Actions")}
+          disabled={false}
+          variant="unstyled"
         >
-          {!showDataTable ? "Show data table " : "Hide data table"}
-        </MenuItem>
-      </DropdownMenu>
-      {/* <div className="text-right">
-        {!showDataTable && (
-          <Button
-            type="button"
-            variant="unstyled"
-            onClick={() => setShowDataTable(true)}
-            className="margin-top-1"
+          <MenuItem
+            onSelect={() =>
+              !showDataTable ? setShowDataTable(true) : setShowDataTable(false)
+            }
           >
-            {t("ShowDataTableButton")}
-          </Button>
-        )}
-        {showDataTable && (
-          <Button
-            type="button"
-            variant="unstyled"
-            onClick={() => setShowDataTable(false)}
-            className="margin-top-1"
-          >
-            {t("HideDataTableButton")}
-          </Button>
-        )}
-      </div> */}
+            {!showDataTable ? "Show data table " : "Hide data table"}
+          </MenuItem>
+          <MenuItem onSelect={() => checkData()}>
+            <CSVLink data={tableRows} filename={fileName}>
+              {"Download CSV"}
+            </CSVLink>
+          </MenuItem>
+        </DropdownMenu>
+      </div>
+
       {showDataTable && (
         <Table
           selection="none"

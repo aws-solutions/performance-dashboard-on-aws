@@ -229,7 +229,7 @@ const PartWholeChartWidget = (props: Props) => {
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
-      <DataTable rows={data || []} columns={parts} />
+      <DataTable rows={data || []} columns={parts} fileName={props.title} />
     </div>
   );
 };

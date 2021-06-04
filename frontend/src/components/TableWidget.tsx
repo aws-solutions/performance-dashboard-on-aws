@@ -5,6 +5,9 @@ import MarkdownRender from "./MarkdownRender";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
 import Table from "./Table";
+import Button from "./Button";
+import { CSVLink } from "react-csv";
+import { isPropertySignature } from "typescript";
 
 type Props = {
   title: string;
@@ -118,6 +121,13 @@ const TableWidget = ({
           className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow"
         />
       )}
+      <div className="text-right">
+        <Button type="button" variant="unstyled">
+          <CSVLink data={rows} filename={title}>
+            {"Download"}
+          </CSVLink>
+        </Button>
+      </div>
     </div>
   );
 };

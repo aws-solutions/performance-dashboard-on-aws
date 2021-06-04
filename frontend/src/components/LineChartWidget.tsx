@@ -220,6 +220,7 @@ const LineChartWidget = (props: Props) => {
         rows={data || []}
         columns={lines}
         columnsMetadata={props.columnsMetadata}
+        fileName={props.title}
       />
     </div>
   );

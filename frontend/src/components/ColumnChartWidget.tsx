@@ -237,6 +237,7 @@ const ColumnChartWidget = (props: Props) => {
         rows={data || []}
         columns={columns}
         columnsMetadata={props.columnsMetadata}
+        fileName={props.title}
       />
     </div>
   );

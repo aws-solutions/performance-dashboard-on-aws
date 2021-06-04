@@ -223,6 +223,7 @@ const BarChartWidget = (props: Props) => {
         rows={data || []}
         columns={bars}
         columnsMetadata={props.columnsMetadata}
+        fileName={props.title}
       />
     </div>
   );

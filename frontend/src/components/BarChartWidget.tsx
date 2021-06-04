@@ -109,7 +109,12 @@ const BarChartWidget = (props: Props) => {
       {data && data.length && (
         <ResponsiveContainer
           width="100%"
-          height={data && data.length > 15 ? 600 : 300}
+          height={
+            (data && data.length > 15) ||
+            (data && data[0] && Object.keys(data[0]).length > 4)
+              ? 800
+              : 400
+          }
         >
           <BarChart
             className="bar-chart"
@@ -126,7 +131,10 @@ const BarChartWidget = (props: Props) => {
               type="number"
               domain={[
                 (dataMin: number) => 0,
-                (dataMax: number) => Math.ceil(dataMax / 10) * 10,
+                (dataMax: number) =>
+                  UtilsService.roundUp(
+                    String(Math.round(dataMax + Math.floor(dataMax * 0.2)))
+                  ),
               ]}
               tickFormatter={(tick) =>
                 TickFormatter.format(

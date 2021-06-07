@@ -5,14 +5,21 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import Button from "./Button";
 import Table from "./Table";
+import DropdownMenu from "../components/DropdownMenu";
+import { CSVLink } from "react-csv";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+
+const { MenuItem, MenuLink } = DropdownMenu;
 
 interface Props {
   rows: any[];
   columns: string[];
   columnsMetadata?: ColumnMetadata[];
+  fileName?: string;
 }
 
-function DataTable({ rows, columns, columnsMetadata }: Props) {
+function DataTable({ rows, columns, columnsMetadata, fileName }: Props) {
   const { t } = useTranslation();
   const [showDataTable, setShowDataTable] = useState(false);
 
@@ -48,26 +55,36 @@ function DataTable({ rows, columns, columnsMetadata }: Props) {
   return (
     <>
       <div className="text-right">
-        {!showDataTable && (
-          <Button
-            type="button"
-            variant="unstyled"
-            onClick={() => setShowDataTable(true)}
-            className="margin-top-1"
+        <DropdownMenu
+          className="text-base"
+          buttonText={t("Actions")}
+          disabled={false}
+          variant="unstyled"
+        >
+          <MenuItem
+            onSelect={() =>
+              !showDataTable ? setShowDataTable(true) : setShowDataTable(false)
+            }
           >
-            {t("ShowDataTableButton")}
-          </Button>
-        )}
-        {showDataTable && (
-          <Button
-            type="button"
-            variant="unstyled"
-            onClick={() => setShowDataTable(false)}
-            className="margin-top-1"
-          >
-            {t("HideDataTableButton")}
-          </Button>
-        )}
+            {!showDataTable
+              ? t("ShowDataTableButton")
+              : t("HideDataTableButton")}
+          </MenuItem>
+          <MenuItem onSelect={() => {}}>
+            <FontAwesomeIcon
+              icon={faDownload}
+              className="margin-right-1"
+              size="sm"
+            />
+            <CSVLink
+              data={tableRows}
+              filename={fileName}
+              style={{ color: "#1b1b1b" }}
+            >
+              {t("DownloadCSV")}
+            </CSVLink>
+          </MenuItem>
+        </DropdownMenu>
       </div>
       {showDataTable && (
         <Table

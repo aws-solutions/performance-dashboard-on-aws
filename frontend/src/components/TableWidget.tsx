@@ -5,6 +5,12 @@ import MarkdownRender from "./MarkdownRender";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
 import Table from "./Table";
+import Button from "./Button";
+import { CSVLink } from "react-csv";
+import { isPropertySignature } from "typescript";
+import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   title: string;
@@ -29,6 +35,7 @@ const TableWidget = ({
 }: Props) => {
   const { largestTickByColumn } = useTableMetadata(data);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
+  const { t } = useTranslation();
 
   useMemo(() => {
     let headers =
@@ -118,6 +125,18 @@ const TableWidget = ({
           className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow"
         />
       )}
+      <div className="text-right">
+        <FontAwesomeIcon
+          icon={faDownload}
+          className="margin-right-1"
+          size="sm"
+        />
+        <Button type="button" variant="unstyled">
+          <CSVLink className="text-base" data={rows} filename={title}>
+            {t("DownloadCSV")}
+          </CSVLink>
+        </Button>
+      </div>
     </div>
   );
 };

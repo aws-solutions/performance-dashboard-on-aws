@@ -210,17 +210,18 @@ const LineChartWidget = (props: Props) => {
           </LineChart>
         </ResponsiveContainer>
       )}
+      <DataTable
+        rows={data || []}
+        columns={lines}
+        columnsMetadata={props.columnsMetadata}
+        fileName={props.title}
+      />
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
-      <DataTable
-        rows={data || []}
-        columns={lines}
-        columnsMetadata={props.columnsMetadata}
-      />
     </div>
   );
 };

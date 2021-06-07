@@ -783,5 +783,6 @@
   "GlobalUser": "user",
   "DashboardWasCopied": "was successfully copied.",
   "Copy": "Copy",
-  "CopyContent": "Copy {{name}}"
+  "CopyContent": "Copy {{name}}",
+  "DownloadCSV": "Download CSV"
 }

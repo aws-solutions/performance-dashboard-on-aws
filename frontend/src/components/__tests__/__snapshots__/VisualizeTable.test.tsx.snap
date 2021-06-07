@@ -423,7 +423,7 @@ exports[`renders the VisualizeTable component 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-download fa-w-16 margin-right-2"
+              class="svg-inline--fa fa-download fa-w-16 fa-sm margin-right-1"
               data-icon="download"
               data-prefix="fas"
               focusable="false"

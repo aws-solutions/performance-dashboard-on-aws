@@ -126,7 +126,11 @@ const TableWidget = ({
         />
       )}
       <div className="text-right">
-        <FontAwesomeIcon icon={faDownload} className="margin-right-2" />
+        <FontAwesomeIcon
+          icon={faDownload}
+          className="margin-right-1"
+          size="sm"
+        />
         <Button type="button" variant="unstyled">
           <CSVLink className="text-base" data={rows} filename={title}>
             {t("DownloadCSV")}

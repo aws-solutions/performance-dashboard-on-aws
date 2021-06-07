@@ -7,6 +7,9 @@ import Button from "./Button";
 import Table from "./Table";
 import DropdownMenu from "../components/DropdownMenu";
 import { CSVLink } from "react-csv";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+
 const { MenuItem, MenuLink } = DropdownMenu;
 
 interface Props {
@@ -68,6 +71,11 @@ function DataTable({ rows, columns, columnsMetadata, fileName }: Props) {
               : t("HideDataTableButton")}
           </MenuItem>
           <MenuItem onSelect={() => {}}>
+            <FontAwesomeIcon
+              icon={faDownload}
+              className="margin-right-1"
+              size="sm"
+            />
             <CSVLink
               data={tableRows}
               filename={fileName}

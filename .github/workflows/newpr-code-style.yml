@@ -9,7 +9,7 @@ on:
 
 jobs:
   prettier:
-    runs-on: ubuntu-latest
+    runs-on: 2.3.0
 
     strategy:
       matrix:

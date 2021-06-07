@@ -71,7 +71,7 @@ function DataTable({ rows, columns, columnsMetadata, fileName }: Props) {
             <CSVLink
               data={tableRows}
               filename={fileName}
-              style={{ color: "#1b1b1a" }}
+              style={{ color: "#1b1b1b" }}
             >
               {t("DownloadCSV")}
             </CSVLink>

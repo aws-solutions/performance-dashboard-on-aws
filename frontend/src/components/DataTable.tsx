@@ -49,15 +49,11 @@ function DataTable({ rows, columns, columnsMetadata, fileName }: Props) {
     [columns, columnsMetadata]
   );
 
-  const checkData = () => {
-    console.log("TABLE ROWS", tableRows);
-    console.log("TABLE COLUMNS", tableColumns);
-  };
-
   return (
     <>
       <div className="text-right">
         <DropdownMenu
+          className="text-base"
           buttonText={t("Actions")}
           disabled={false}
           variant="unstyled"
@@ -67,16 +63,21 @@ function DataTable({ rows, columns, columnsMetadata, fileName }: Props) {
               !showDataTable ? setShowDataTable(true) : setShowDataTable(false)
             }
           >
-            {!showDataTable ? "Show data table " : "Hide data table"}
+            {!showDataTable
+              ? t("ShowDataTableButton")
+              : t("HideDataTableButton")}
           </MenuItem>
-          <MenuItem onSelect={() => checkData()}>
-            <CSVLink data={tableRows} filename={fileName}>
-              {"Download CSV"}
+          <MenuItem onSelect={() => {}}>
+            <CSVLink
+              data={tableRows}
+              filename={fileName}
+              style={{ color: "#1b1b1b" }}
+            >
+              {t("DownloadCSV")}
             </CSVLink>
           </MenuItem>
         </DropdownMenu>
       </div>
-
       {showDataTable && (
         <Table
           selection="none"

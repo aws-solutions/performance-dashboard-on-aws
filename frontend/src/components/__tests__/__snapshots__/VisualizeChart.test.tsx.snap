@@ -392,10 +392,29 @@ exports[`renders the VisualizeChart component 1`] = `
             class="text-right"
           >
             <button
-              class="usa-button usa-button--unstyled margin-top-1"
+              aria-controls="menu--1"
+              aria-haspopup="true"
+              class="usa-button usa-button--unstyled text-base"
+              data-reach-menu-button=""
+              id="menu-button--menu--1"
               type="button"
             >
-              Show data table
+              Actions
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+                data-icon="caret-down"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 320 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                  fill="currentColor"
+                />
+              </svg>
             </button>
           </div>
         </div>
@@ -796,10 +815,29 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             class="text-right"
           >
             <button
-              class="usa-button usa-button--unstyled margin-top-1"
+              aria-controls="menu--7"
+              aria-haspopup="true"
+              class="usa-button usa-button--unstyled text-base"
+              data-reach-menu-button=""
+              id="menu-button--menu--7"
               type="button"
             >
-              Show data table
+              Actions
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+                data-icon="caret-down"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 320 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                  fill="currentColor"
+                />
+              </svg>
             </button>
           </div>
         </div>

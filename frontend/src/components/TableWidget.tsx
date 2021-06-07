@@ -8,6 +8,9 @@ import Table from "./Table";
 import Button from "./Button";
 import { CSVLink } from "react-csv";
 import { isPropertySignature } from "typescript";
+import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   title: string;
@@ -32,6 +35,7 @@ const TableWidget = ({
 }: Props) => {
   const { largestTickByColumn } = useTableMetadata(data);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
+  const { t } = useTranslation();
 
   useMemo(() => {
     let headers =
@@ -122,9 +126,10 @@ const TableWidget = ({
         />
       )}
       <div className="text-right">
+        <FontAwesomeIcon icon={faDownload} className="margin-right-2" />
         <Button type="button" variant="unstyled">
-          <CSVLink data={rows} filename={title}>
-            {"Download"}
+          <CSVLink className="text-base" data={rows} filename={title}>
+            {t("DownloadCSV")}
           </CSVLink>
         </Button>
       </div>

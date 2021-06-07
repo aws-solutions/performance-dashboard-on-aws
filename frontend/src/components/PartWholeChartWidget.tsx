@@ -223,13 +223,13 @@ const PartWholeChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
+      <DataTable rows={data || []} columns={parts} fileName={props.title} />
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
           className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
         />
       )}
-      <DataTable rows={data || []} columns={parts} fileName={props.title} />
     </div>
   );
 };

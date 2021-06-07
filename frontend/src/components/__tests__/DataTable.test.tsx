@@ -7,6 +7,7 @@ import {
 } from "../../models";
 import { render, fireEvent, screen } from "@testing-library/react";
 import DataTable from "../DataTable";
+import userEvent from "@testing-library/user-event";
 
 const columns = ["year", "sales", "revenue"];
 const rows = [
@@ -48,12 +49,15 @@ const columnsMetadata: ColumnMetadata[] = [
   },
 ];
 
+const fileName = "test-file-name";
+
 beforeEach(() => {
   render(
     <DataTable
       rows={rows}
       columns={columns}
       columnsMetadata={columnsMetadata}
+      fileName={"test-file-name"}
     />
   );
 });
@@ -63,18 +67,18 @@ test("table should be hidden by default", async () => {
 });
 
 test("shows and hides table when button is clicked", async () => {
-  const showTableBtn = screen.getByRole("button", { name: "Show data table" });
-  fireEvent.click(showTableBtn);
+  const showTableBtn = screen.getByText("Show data table");
+  userEvent.click(showTableBtn);
   expect(screen.getByRole("table")).toBeInTheDocument();
 
-  const hideTableBtn = screen.getByRole("button", { name: "Hide data table" });
-  fireEvent.click(hideTableBtn);
+  const hideTableBtn = screen.getByText("Hide data table");
+  userEvent.click(hideTableBtn);
   expect(screen.queryByRole("table")).not.toBeInTheDocument();
 });
 
 test("displays a table with values properly formatted", async () => {
-  const showTableBtn = screen.getByRole("button", { name: "Show data table" });
-  fireEvent.click(showTableBtn);
+  const showTableBtn = screen.getByText("Show data table");
+  userEvent.click(showTableBtn);
 
   // Years should be formatted as text as per ColumnMetadata, without comma separators
   expect(screen.getByText("2015")).toBeInTheDocument();

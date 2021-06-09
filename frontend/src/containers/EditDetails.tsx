@@ -106,8 +106,14 @@ function EditDetails() {
           <div className="grid-row">
             <div className="grid-col-12">
               <PrimaryActionBar>
-                <h1 className="margin-top-0">{t("EditHeaders").split(" ").map((word) => 
-                  {return word[0].toUpperCase() + word.substring(1)}).join(" ")}</h1>
+                <h1 className="margin-top-0">
+                  {t("EditHeaders")
+                    .split(" ")
+                    .map((word) => {
+                      return word[0].toUpperCase() + word.substring(1);
+                    })
+                    .join(" ")}
+                </h1>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="edit-details-form usa-form usa-form--large"

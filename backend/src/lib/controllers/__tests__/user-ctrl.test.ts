@@ -106,6 +106,15 @@ describe("resendInvite", () => {
     expect(res.send).toBeCalledWith("Invalid email: wrong email");
   });
 
+  it("returns a 400 error when emails have an invalid email and escapes HTML characters from email", async () => {
+    req.body.emails = "<script>temp</script>";
+    await UserCtrl.resendInvite(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith(
+      "Invalid email: &lt;script&gt;temp&lt;/script&gt;"
+    );
+  });
+
   it("resend invite", async () => {
     await UserCtrl.resendInvite(req, res);
     expect(repository.resendInvite).toBeCalledWith(["test1", "test2"]);

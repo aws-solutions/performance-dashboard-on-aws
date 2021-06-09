@@ -6,6 +6,10 @@ import RemoveUsersSchema from "../jsonschema/api/RemoveUsers.json";
 import { Role } from "../models/user";
 import logger from "../services/logger";
 
+function safeTags(str: string) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 async function getUsers(req: Request, res: Response) {
   const repo = UserRepository.getInstance();
   try {
@@ -35,8 +39,9 @@ async function addUsers(req: Request, res: Response) {
   }
 
   const userEmails = (emails as string).split(",");
+  const escapedEmails = userEmails.map((email) => safeTags(email));
 
-  for (const userEmail of userEmails) {
+  for (const userEmail of escapedEmails) {
     if (!emailIsValid(userEmail)) {
       res.status(400).send(`Invalid email: ${userEmail}`);
       return;
@@ -83,8 +88,9 @@ async function resendInvite(req: Request, res: Response) {
   }
 
   const userEmails = (emails as string).split(",");
+  const escapedEmails = userEmails.map((email) => safeTags(email));
 
-  for (const userEmail of userEmails) {
+  for (const userEmail of escapedEmails) {
     if (!emailIsValid(userEmail)) {
       res.status(400).send(`Invalid email: ${userEmail}`);
       return;

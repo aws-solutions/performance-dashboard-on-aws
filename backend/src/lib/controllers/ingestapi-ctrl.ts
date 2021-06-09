@@ -26,7 +26,9 @@ async function createDataset(req: Request, res: Response) {
     metadata.schema &&
     !Object.values(DatasetSchema).includes(metadata.schema)
   ) {
-    return res.status(400).send(`Unknown schema provided '${safeTags(metadata.schema)}'`);
+    return res
+      .status(400)
+      .send(`Unknown schema provided '${safeTags(metadata.schema)}'`);
   }
 
   const repo = DatasetRepository.getInstance();

@@ -39,7 +39,9 @@ async function createDataset(req: Request, res: Response) {
   }
 
   if (schema && !Object.values(DatasetSchema).includes(schema)) {
-    return res.status(400).send(`Unknown schema provided '${schema}'`);
+    return res
+      .status(400)
+      .send(`Unknown schema provided '${safeTags(schema)}'`);
   }
 
   try {
@@ -58,6 +60,10 @@ async function createDataset(req: Request, res: Response) {
     console.error(err);
     res.status(400).send("Unable to create dataset");
   }
+}
+
+function safeTags(str: string) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 export default {

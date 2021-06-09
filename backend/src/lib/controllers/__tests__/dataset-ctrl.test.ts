@@ -63,6 +63,13 @@ describe("createDataset", () => {
     expect(res.send).toBeCalledWith("Unknown schema provided 'banana'");
   });
 
+  it("returns a 400 error if the provided schema is unknown and escapes html characters from the schema", async () => {
+    req.body.schema = "<script>banana</script>";
+    await DatasetCtrl.createDataset(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Unknown schema provided '&lt;script&gt;banana&lt;/script&gt;'");
+  });
+
   it("builds a new dataset object", async () => {
     jest.spyOn(DatasetFactory, "createNew");
     await DatasetCtrl.createDataset(req, res);

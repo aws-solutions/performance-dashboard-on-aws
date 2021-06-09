@@ -332,7 +332,7 @@ function EditDashboard() {
             unpublished
             link={
               <Link to={`/admin/dashboard/edit/${dashboard?.id}/headers`}>
-                <span className="margin-left-2">{t("EditDetails")}</span>
+                <span className="margin-left-2">{t("EditHeaders")}</span>
               </Link>
             }
           />

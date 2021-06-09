@@ -61,15 +61,6 @@ describe("addUser", () => {
     expect(res.send).toBeCalledWith("Invalid email: wrong email");
   });
 
-  it("returns a 400 error when emails have an invalid email and escapes HTML characters from email", async () => {
-    req.body.emails = "<script>temp</script>";
-    await UserCtrl.addUsers(req, res);
-    expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith(
-      "Invalid email: &lt;script&gt;temp&lt;/script&gt;"
-    );
-  });
-
   it("create the users", async () => {
     const user1 = UserFactory.createNew("test1@test.com", "Admin");
     const user2 = UserFactory.createNew("test2@test.com", "Editor");

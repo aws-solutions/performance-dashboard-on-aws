@@ -35,9 +35,8 @@ async function addUsers(req: Request, res: Response) {
   }
 
   const userEmails = (emails as string).split(",");
-  const escapedEmails = userEmails.map((email) => safeTags(email));
 
-  for (const userEmail of escapedEmails) {
+  for (const userEmail of userEmails) {
     if (!emailIsValid(userEmail)) {
       res.status(400).send(`Invalid email: ${userEmail}`);
       return;
@@ -84,9 +83,8 @@ async function resendInvite(req: Request, res: Response) {
   }
 
   const userEmails = (emails as string).split(",");
-  const escapedEmails = userEmails.map((email) => safeTags(email));
 
-  for (const userEmail of escapedEmails) {
+  for (const userEmail of userEmails) {
     if (!emailIsValid(userEmail)) {
       res.status(400).send(`Invalid email: ${userEmail}`);
       return;
@@ -133,10 +131,6 @@ async function changeRole(req: Request, res: Response) {
 
 function emailIsValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function safeTags(str: string) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 export default {

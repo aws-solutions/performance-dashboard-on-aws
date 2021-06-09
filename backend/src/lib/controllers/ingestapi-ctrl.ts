@@ -26,7 +26,7 @@ async function createDataset(req: Request, res: Response) {
     metadata.schema &&
     !Object.values(DatasetSchema).includes(metadata.schema)
   ) {
-    return res.status(400).send(`Unknown schema provided '${metadata.schema}'`);
+    return res.status(400).send(`Unknown schema provided '${safeTags(metadata.schema)}'`);
   }
 
   const repo = DatasetRepository.getInstance();
@@ -108,6 +108,10 @@ async function deleteDataset(req: Request, res: Response) {
   logger.info("Dataset deleted %s", id);
 
   return res.send();
+}
+
+function safeTags(str: string) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 export default {

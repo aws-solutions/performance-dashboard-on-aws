@@ -48,10 +48,13 @@ describe("createDataset", () => {
     expect(res.send).toBeCalledWith("Missing required field `data`");
   });
 
-  it("returns a 400 error when schema is invalid", async () => {
-    req.body.metadata.schema = "banana";
+  it("returns a 400 error when schema is invalid and escapes HTML characters", async () => {
+    req.body.metadata.schema = "<script>temp</script>";
     await IngestApiCtrl.createDataset(req, res);
     expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith(
+      "Unknown schema provided '&lt;script&gt;temp&lt;/script&gt;'"
+    );
   });
 
   it("returns a 400 error if data cannot be parsed", async () => {

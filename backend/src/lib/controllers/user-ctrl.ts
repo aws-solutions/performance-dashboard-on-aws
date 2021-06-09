@@ -6,10 +6,6 @@ import RemoveUsersSchema from "../jsonschema/api/RemoveUsers.json";
 import { Role } from "../models/user";
 import logger from "../services/logger";
 
-function safeTags(str: string) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
 async function getUsers(req: Request, res: Response) {
   const repo = UserRepository.getInstance();
   try {
@@ -137,6 +133,10 @@ async function changeRole(req: Request, res: Response) {
 
 function emailIsValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function safeTags(str: string) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 export default {

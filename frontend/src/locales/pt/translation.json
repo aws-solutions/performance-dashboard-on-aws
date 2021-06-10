@@ -61,7 +61,7 @@
   "CanDelete": "Você só pode excluir",
   "WhatYouCanDoAsAdmin": "Você tem a função de administrador. Veja abaixo algumas coisas que você pode fazer como administrador para começar.",
   "WhatYouCanDoAsNotAdmin": "É aqui que você gerencia seu painel de desempenho.",
-  "WelcomeToPDoA": "Bem-vindo ao painel de desempenho",
+  "WelcomeToPDoA": "Bem-vindo ao Painel de Desempenho",
   "CreateANewDashboard": "Criar um novo painel",
   "CreateDashboard": "Criar painel",
   "ViewDashboard": "Visualizar painel",
@@ -387,10 +387,10 @@
   "PrepareDashboardForPublishing": "Preparar painel para publicação",
   "ContinueButton": "Continuar",
   "PublishPendingStateLabel": "Publicação pendente",
-  "PublishingGuidance": "Instruções de publicação",
-  "PublishingGuidanceEdit": "Editar instruções de publicação",
-  "PublishingGuidanceEditSuccess": "Instruções de publicação editadas com êxito.",
-  "PublishingGuidanceDescription": "As instruções de publicação são um texto que os usuários devem confirmar ter lido antes de publicarem um painel. Por exemplo, use esse texto para lembrá-los de verificar erros, dados confidenciais ou orientações específicas para sua organização.",
+  "PublishingGuidance": "Instruções para publicar",
+  "PublishingGuidanceEdit": "Editar instruções para publicar",
+  "PublishingGuidanceEditSuccess": "Instruções para publicar editadas com êxito.",
+  "PublishingGuidanceDescription": "As instruções para publicar são um texto que os usuários devem confirmar ter lido antes de publicarem um painel. Por exemplo, use esse texto para lembrá-los de verificar erros, dados confidenciais ou orientações específicas para sua organização.",
   "AcknowledgeStatement": "Declaração de confirmação",
   "PublishWorkflow": {
     "OverwriteWarning": "Também compreendo que isso substituirá a versão publicada existente do painel.",
@@ -451,12 +451,12 @@
   "SettingsTitleError": "Especifique um título.",
   "SettingsContactEmailTitle": "Endereço de e-mail de contato - opcional",
   "SettingsContactEmailHint": "Defina um endereço de e-mail para os usuários entrarem em contato com a sua organização em relação a painéis publicados. Esse endereço de e-mail será exibido como um link de “contato” na barra de navegação do site publicado",
-  "SettingsTopicAreaDescription": "Os painéis são organizados por tópicos. Um painel precisa ter uma área de tópico, e só pode ter uma.",
-  "SettingsTopicAreaNameDescription": "Você pode personalizar o nome do tópico e ele será substituído em toda a interface. Por exemplo, o componente “área do tópico” pode ser renomeado como “departamento”, “ministério”, “programa”, “agência” etc.",
+  "SettingsTopicAreaDescription": "Os painéis são organizados por tópicos. Cada painel precisa ter um tópico, e só pode ter um.",
+  "SettingsTopicAreaNameDescription": "Você pode personalizar o nome do tópico e ele será substituído em toda a interface. Por exemplo, o componente “tópico” pode ser renomeado como “departamento”, “ministério”, “programa”, “agência” etc.",
   "EditSettingsTopicAreaNameScreen": {
-    "Description": "Você pode personalizar o nome do tópico e ele será substituído em toda a interface. Por exemplo, o componente “área do tópico” pode ser renomeado como “departamento”, “ministério”, “programa”, “agência” etc.",
+    "Description": "Você pode personalizar o nome do tópico e ele será substituído em toda a interface. Por exemplo, o componente “tópico” pode ser renomeado como “departamento”, “ministério”, “programa”, “agência” etc.",
     "Success": "O nome do tópico foi editado com êxito.",
-    "RenameSingle": "Renomear uma única área de tópico",
+    "RenameSingle": "Renomear um tópico único",
     "RenameSingleExample": "Por exemplo, “ministério”",
     "RenamePlural": "Renomear várias tópicos",
     "RenamePluralExample": "Por exemplo, “ministérios”",
@@ -497,7 +497,7 @@
     "CardTitle": "Solicitar acesso para criar painéis",
     "Message": "Você não tem acesso. Solicite acesso aos administradores e você receberá um e-mail quando o acesso for concedido."
   },
-  "PerformanceDashboardAssistance": "Assistência do painel de desempenho",
+  "PerformanceDashboardAssistance": "Assistência do Painel de Desempenho",
   "AdminSettingsScreen": {
     "Header": "Site do administrador",
     "HeaderDescription": "Personalize configurações para o site interno.",
@@ -524,12 +524,12 @@
   },
   "AdminFooter": {
     "HelpMessage": "Está tendo problemas técnicos com o sistema?",
-    "PerformanceDashboardAssistance": "Assistência do painel de desempenho",
+    "PerformanceDashboardAssistance": "Assistência do Painel de Desempenho",
     "ContactSupport": "Entrar em contato com o suporte."
   },
   "Public": {
     "Menu": "Menu",
-    "PerformanceDashboardAssistance": "Assistência do painel de desempenho",
+    "PerformanceDashboardAssistance": "Assistência do Painel de Desempenho",
     "Contact": "Contato"
   },
   "AdminMenu": {

@@ -31,10 +31,10 @@ test("edit details link takes you to details screen", async () => {
     </Router>
   );
 
-  const editDetails = await findByRole("link", { name: "Edit details" });
-  fireEvent.click(editDetails);
+  const editHeaders = await findByRole("link", { name: "Edit headers" });
+  fireEvent.click(editHeaders);
   expect(history.push).toHaveBeenCalledWith(
-    "/admin/dashboard/edit/123/details"
+    "/admin/dashboard/edit/123/headers"
   );
 });
 

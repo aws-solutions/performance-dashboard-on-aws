@@ -15,14 +15,14 @@ jest.mock("../../hooks");
 jest.mock("../../services/BackendService");
 
 const history = createMemoryHistory();
-history.push("/admin/dashboard/edit/123/details");
+history.push("/admin/dashboard/edit/123/headers");
 jest.spyOn(history, "push");
 
 beforeEach(async () => {
   await act(async () => {
     render(
       <Router history={history}>
-        <Route path="/admin/dashboard/edit/:dashboardId/details">
+        <Route path="/admin/dashboard/edit/:dashboardId/headers">
           <EditDetails />
         </Route>
       </Router>

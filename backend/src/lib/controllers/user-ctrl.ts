@@ -5,6 +5,7 @@ import { validate } from "jsonschema";
 import RemoveUsersSchema from "../jsonschema/api/RemoveUsers.json";
 import { Role } from "../models/user";
 import logger from "../services/logger";
+var escapeHtml = require("escape-html");
 
 async function getUsers(req: Request, res: Response) {
   const repo = UserRepository.getInstance();
@@ -35,7 +36,7 @@ async function addUsers(req: Request, res: Response) {
   }
 
   const userEmails = (emails as string).split(",");
-  const escapedEmails = userEmails.map((email) => safeTags(email));
+  const escapedEmails = userEmails.map((email) => escapeHtml(email));
 
   for (const userEmail of escapedEmails) {
     if (!emailIsValid(userEmail)) {
@@ -84,7 +85,7 @@ async function resendInvite(req: Request, res: Response) {
   }
 
   const userEmails = (emails as string).split(",");
-  const escapedEmails = userEmails.map((email) => safeTags(email));
+  const escapedEmails = userEmails.map((email) => escapeHtml(email));
 
   for (const userEmail of escapedEmails) {
     if (!emailIsValid(userEmail)) {
@@ -133,10 +134,6 @@ async function changeRole(req: Request, res: Response) {
 
 function emailIsValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function safeTags(str: string) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 export default {

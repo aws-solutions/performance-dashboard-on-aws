@@ -8,6 +8,7 @@ exports[`renders a combobox 1`] = `
     <label
       class="usa-label margin-top-1"
       for="1"
+      id="1-label"
     >
       label
     </label>
@@ -89,6 +90,7 @@ exports[`renders a combobox 1`] = `
       
       </span>
       <ul
+        aria-labelledby="1-label"
         class="usa-combo-box__list"
         hidden=""
         id="1--list"
@@ -124,6 +126,7 @@ exports[`shows an error message 1`] = `
     <label
       class="usa-label margin-top-1"
       for="1"
+      id="1-label"
     >
       label
     </label>
@@ -212,6 +215,7 @@ exports[`shows an error message 1`] = `
       
       </span>
       <ul
+        aria-labelledby="1-label"
         class="usa-combo-box__list"
         hidden=""
         id="1--list"

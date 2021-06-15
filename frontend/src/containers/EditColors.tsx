@@ -158,7 +158,7 @@ function EditColors() {
                     className="radius-md"
                     style={{
                       backgroundColor: secondaryColor,
-                      margin: "16px 10px 10px 10px",
+                      margin: "30px 10px 10px 10px",
                       width: 25,
                       height: 25,
                     }}

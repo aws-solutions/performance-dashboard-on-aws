@@ -34,6 +34,15 @@ describe("createDataset", () => {
     } as any as Request;
   });
 
+  it("returns a 400 error when schema is invalid and escapes HTML characters", async () => {
+    req.body.metadata.schema = "<script>temps</script>";
+    await IngestApiCtrl.createDataset(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith(
+      "Unknown schema provided '&lt;script&gt;temps&lt;/script&gt;'"
+    );
+  });
+
   it("returns a 400 error when metadata.name is missing", async () => {
     delete req.body.metadata.name;
     await IngestApiCtrl.createDataset(req, res);
@@ -46,12 +55,6 @@ describe("createDataset", () => {
     await IngestApiCtrl.createDataset(req, res);
     expect(res.status).toBeCalledWith(400);
     expect(res.send).toBeCalledWith("Missing required field `data`");
-  });
-
-  it("returns a 400 error when schema is invalid", async () => {
-    req.body.metadata.schema = "banana";
-    await IngestApiCtrl.createDataset(req, res);
-    expect(res.status).toBeCalledWith(400);
   });
 
   it("returns a 400 error if data cannot be parsed", async () => {

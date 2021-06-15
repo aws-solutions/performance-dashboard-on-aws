@@ -4,6 +4,7 @@ import DatasetRepository from "../repositories/dataset-repo";
 import DatasetService from "../services/dataset-service";
 import DatasetFactory from "../factories/dataset-factory";
 import pino from "../services/logger";
+var escapeHtml = require("escape-html");
 
 // Add an identifier so that any log from the ingest API is easy
 // to find in CloudWatch logs.
@@ -26,7 +27,9 @@ async function createDataset(req: Request, res: Response) {
     metadata.schema &&
     !Object.values(DatasetSchema).includes(metadata.schema)
   ) {
-    return res.status(400).send(`Unknown schema provided '${metadata.schema}'`);
+    return res
+      .status(400)
+      .send(`Unknown schema provided '${escapeHtml(metadata.schema)}'`);
   }
 
   const repo = DatasetRepository.getInstance();

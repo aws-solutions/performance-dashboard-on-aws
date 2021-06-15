@@ -75,12 +75,6 @@ p {
   box-shadow: inset -25px 0px 8px -20px rgba(224, 224, 224, 0.5);
 }
 
-.sticky-preview {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 90px;
-}
-
 .z-index-logout {
   z-index: 100000;
 }
@@ -134,22 +128,9 @@ p {
   background-color: #fafafa;
 }
 
-.usa-table tr {
-  background-color: #fafafa;
-}
-
-.usa-table tr:hover {
-  background-color: #dfe1e2 !important;
-}
-
 .usa-table td,
 .usa-table th {
-  background-color: inherit;
-}
-
-.usa-table td:hover,
-.usa-table th:hover {
-  background-color: inherit;
+  background-color: #fafafa;
 }
 
 .__react_component_tooltip.show {
@@ -158,46 +139,4 @@ p {
 
 .usa-breadcrumb {
   background-color: #fff;
-}
-
-.input-group-addon {
-  padding: 6px 12px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1;
-  color: #555;
-  text-align: center;
-  background-color: #eee;
-  border: 1px solid #000000;
-  width: 1%;
-  white-space: nowrap;
-  vertical-align: middle;
-  display: table-cell;
-}
-
-input {
-  position: relative;
-  z-index: 2;
-  float: left;
-  width: 100%;
-  margin-bottom: 0;
-  display: table-cell;
-  padding: 6px 12px;
-  border: 1px solid #000000;
-  margin: 0;
-  border-left: none;
-}
-
-.prefix input {
-  border-radius: 0px 4px 4px 0px;
-}
-.prefix .input-group-addon {
-  border-right: 0;
-  border-radius: 4px 0px 0px 4px;
-}
-
-.input-group {
-  position: relative;
-  display: table;
-  border-collapse: separate;
 }

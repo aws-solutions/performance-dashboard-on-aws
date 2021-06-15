@@ -29,9 +29,11 @@ test("submits form with the entered values", async () => {
   userEvent.clear(screen.getByLabelText("Primary color"));
   userEvent.type(screen.getByLabelText("Primary color"), "#00ff00");
 
-  userEvent.clear(screen.getByLabelText("Data visualization second color"));
+  userEvent.clear(
+    screen.getAllByLabelText("Data visualization second color")[0]
+  );
   userEvent.type(
-    screen.getByLabelText("Data visualization second color"),
+    screen.getAllByLabelText("Data visualization second color")[0],
     "#0f6460"
   );
 

@@ -75,6 +75,12 @@ p {
   box-shadow: inset -25px 0px 8px -20px rgba(224, 224, 224, 0.5);
 }
 
+.sticky-preview {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 90px;
+}
+
 .z-index-logout {
   z-index: 100000;
 }
@@ -128,9 +134,22 @@ p {
   background-color: #fafafa;
 }
 
+.usa-table tr {
+  background-color: #fafafa;
+}
+
+.usa-table tr:hover {
+  background-color: #dfe1e2 !important;
+}
+
 .usa-table td,
 .usa-table th {
-  background-color: #fafafa;
+  background-color: inherit;
+}
+
+.usa-table td:hover,
+.usa-table th:hover {
+  background-color: inherit;
 }
 
 .__react_component_tooltip.show {

@@ -3,6 +3,7 @@ import DatasetRepository from "../repositories/dataset-repo";
 import DatasetFactory from "../factories/dataset-factory";
 import { SourceType, DatasetSchema } from "../models/dataset";
 import { ItemNotFound } from "../errors";
+var escapeHtml = require("escape-html");
 
 async function listDatasets(req: Request, res: Response) {
   const repo = DatasetRepository.getInstance();
@@ -39,7 +40,9 @@ async function createDataset(req: Request, res: Response) {
   }
 
   if (schema && !Object.values(DatasetSchema).includes(schema)) {
-    return res.status(400).send(`Unknown schema provided '${schema}'`);
+    return res
+      .status(400)
+      .send(`Unknown schema provided '${escapeHtml(schema)}'`);
   }
 
   try {

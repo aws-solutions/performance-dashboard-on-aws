@@ -80,16 +80,22 @@ function FriendlyURLInput({ value, onChange, showWarning }: Props) {
                 {t("EditURLComponent.Error")}
               </span>
             )}
-            <input
-              id="friendlyURL"
-              className="usa-input"
-              name="friendlyURL"
-              type="text"
-              onChange={(e: any) => sanitizeUrl(e.target.value)}
-              ref={register({
-                required: true,
-              })}
-            />
+
+            <div className="usa-input-group">
+              <div className="usa-input-prefix">
+                {window.location.protocol}//{window.location.hostname}/
+              </div>
+              <input
+                id="friendlyURL"
+                className="usa-input"
+                name="friendlyURL"
+                type="text"
+                onChange={(e: any) => sanitizeUrl(e.target.value)}
+                ref={register({
+                  required: true,
+                })}
+              />
+            </div>
           </div>
         }
       />

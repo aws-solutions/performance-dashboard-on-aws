@@ -49,7 +49,7 @@ describe("createDataset", () => {
   });
 
   it("returns a 400 error when schema is invalid and escapes HTML characters", async () => {
-    req.body.metadata.schema = "<script>temp</script>";
+    req.body.metadata.schema = "<script>temps</script>";
     await IngestApiCtrl.createDataset(req, res);
     expect(res.status).toBeCalledWith(400);
     expect(res.send).toBeCalledWith(

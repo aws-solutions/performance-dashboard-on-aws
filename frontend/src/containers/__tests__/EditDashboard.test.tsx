@@ -31,11 +31,9 @@ test("edit details link takes you to details screen", async () => {
     </Router>
   );
 
-  const editHeaders = await findByRole("link", { name: "Edit headers" });
-  fireEvent.click(editHeaders);
-  expect(history.push).toHaveBeenCalledWith(
-    "/admin/dashboard/edit/123/headers"
-  );
+  const editHeader = await findByRole("link", { name: "Edit header" });
+  fireEvent.click(editHeader);
+  expect(history.push).toHaveBeenCalledWith("/admin/dashboard/edit/123/header");
 });
 
 test("moving down a widget calls api to set widget order", async () => {

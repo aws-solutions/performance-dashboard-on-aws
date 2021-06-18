@@ -96,7 +96,7 @@ function EditDetails() {
             url: `/admin/dashboard/edit/${dashboard?.id}`,
           },
           {
-            label: t("EditHeaders"),
+            label: t("EditHeader"),
           },
         ]}
       />
@@ -107,7 +107,7 @@ function EditDetails() {
             <div className="grid-col-12">
               <PrimaryActionBar>
                 <h1 className="margin-top-0">
-                  {t("EditHeaders")
+                  {t("EditHeader")
                     .split(" ")
                     .map((word) => {
                       return word[0].toUpperCase() + word.substring(1);

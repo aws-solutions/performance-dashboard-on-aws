@@ -158,7 +158,7 @@ const routes: Array<AppRoute> = [
     component: EditDashboard,
   },
   {
-    path: "/admin/dashboard/edit/:dashboardId/headers",
+    path: "/admin/dashboard/edit/:dashboardId/header",
     component: EditDetails,
   },
   {

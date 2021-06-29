@@ -72,6 +72,7 @@ function ChartWidgetComponent(props: Props) {
           summaryBelow={content.summaryBelow}
           columns={keys}
           data={filteredJson}
+          horizontalScroll={content.horizontalScroll}
           significantDigitLabels={content.significantDigitLabels}
           columnsMetadata={content.columnsMetadata}
           hideDataLabels={!content.dataLabels}

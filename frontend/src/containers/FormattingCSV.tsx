@@ -8,17 +8,26 @@ import ColumnChartWidget from "../components/ColumnChartWidget";
 import PartWholeChartWidget from "../components/PartWholeChartWidget";
 import Button from "../components/Button";
 import { useTranslation } from "react-i18next";
+import BarChartWidget from "../components/BarChartWidget";
+import PieChartWidget from "../components/PieChartWidget";
+import DonutChartWidget from "../components/DonutChartWidget";
 
 const LINE_CHART_CSV = "Example-CSV-Line.csv";
-const TABLE_CSV = "Example-CSV-Table.csv";
+const BAR_CHART_CSV = "Example-CSV-Bar.csv";
 const COLUMN_CHART_CSV = "Example-CSV-Column.csv";
 const PART_TO_WHOLE_CSV = "Example-CSV-Part-to-whole.csv";
+const PIE_CHART_CSV = "Example-CSV-Pie.csv";
+const DONUT_CHART_CSV = "Example-CSV-Donut.csv";
+const TABLE_CSV = "Example-CSV-Table.csv";
 
 function FormattingCSV() {
   const lineChart = useSampleDataset(LINE_CHART_CSV);
   const table = useSampleDataset(TABLE_CSV);
   const column = useSampleDataset(COLUMN_CHART_CSV);
+  const bar = useSampleDataset(BAR_CHART_CSV);
   const partToWhole = useSampleDataset(PART_TO_WHOLE_CSV);
+  const pie = useSampleDataset(PIE_CHART_CSV);
+  const donut = useSampleDataset(DONUT_CHART_CSV);
   const { t } = useTranslation();
 
   const onDownload = (sampleCsv: string) => {
@@ -62,6 +71,38 @@ function FormattingCSV() {
           summary=""
           lines={lineChart.dataset.headers}
           data={lineChart.dataset.data}
+          summaryBelow={false}
+          columnsMetadata={[]}
+          significantDigitLabels={false}
+        />
+      </div>
+
+      <h2>{t("FormatCSVScreen.BarChart")}</h2>
+      <div className="usa-prose">
+        <p>{t("FormatCSVScreen.BarChartDescription")}</p>
+        <div className="grid-row">
+          <div className="grid-col text-left">
+            <b>{t("FormatCSVScreen.BarChartExample")}</b>
+          </div>
+          <div className="grid-col text-right">
+            <Button
+              onClick={() => onDownload(BAR_CHART_CSV)}
+              type="button"
+              variant="unstyled"
+            >
+              <FontAwesomeIcon icon={faDownload} className="margin-right-1" />
+              {t("FormatCSVScreen.BarChartExampleDownload")}
+            </Button>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div>
+        <BarChartWidget
+          title=""
+          summary=""
+          bars={bar.dataset.headers}
+          data={bar.dataset.data}
           summaryBelow={false}
           columnsMetadata={[]}
           significantDigitLabels={false}
@@ -126,6 +167,68 @@ function FormattingCSV() {
           summary=""
           parts={partToWhole.dataset.headers}
           data={partToWhole.dataset.data}
+          summaryBelow={false}
+          significantDigitLabels={false}
+        />
+      </div>
+
+      <h2>{t("FormatCSVScreen.PieChart")}</h2>
+      <div className="usa-prose">
+        <p>{t("FormatCSVScreen.PieChartDescription")}</p>
+        <div className="grid-row">
+          <div className="grid-col text-left">
+            <b>{t("FormatCSVScreen.PieChartExample")}</b>
+          </div>
+          <div className="grid-col text-right">
+            <Button
+              onClick={() => onDownload(PIE_CHART_CSV)}
+              type="button"
+              variant="unstyled"
+            >
+              <FontAwesomeIcon icon={faDownload} className="margin-right-1" />
+              {t("FormatCSVScreen.PieChartExampleDownload")}
+            </Button>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div>
+        <PieChartWidget
+          title=""
+          summary=""
+          parts={pie.dataset.headers}
+          data={pie.dataset.data}
+          summaryBelow={false}
+          significantDigitLabels={false}
+        />
+      </div>
+
+      <h2>{t("FormatCSVScreen.DonutChart")}</h2>
+      <div className="usa-prose">
+        <p>{t("FormatCSVScreen.DonutChartDescription")}</p>
+        <div className="grid-row">
+          <div className="grid-col text-left">
+            <b>{t("FormatCSVScreen.DonutChartExample")}</b>
+          </div>
+          <div className="grid-col text-right">
+            <Button
+              onClick={() => onDownload(DONUT_CHART_CSV)}
+              type="button"
+              variant="unstyled"
+            >
+              <FontAwesomeIcon icon={faDownload} className="margin-right-1" />
+              {t("FormatCSVScreen.DonutChartExampleDownload")}
+            </Button>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div>
+        <DonutChartWidget
+          title=""
+          summary=""
+          parts={donut.dataset.headers}
+          data={donut.dataset.data}
           summaryBelow={false}
           significantDigitLabels={false}
         />

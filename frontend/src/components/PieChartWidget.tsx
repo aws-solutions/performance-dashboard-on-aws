@@ -1,5 +1,12 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
+import {
+  ResponsiveContainer,
+  Pie,
+  PieChart,
+  Cell,
+  Legend,
+  Tooltip,
+} from "recharts";
 import { useColors } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
@@ -17,6 +24,7 @@ type Props = {
     secondary: string | undefined;
   };
   hideDataLabels?: boolean;
+  isPreview?: boolean;
 };
 
 const PieChartWidget = (props: Props) => {
@@ -39,7 +47,7 @@ const PieChartWidget = (props: Props) => {
       for (let i = 0; i < data.length; i++) {
         const key = data[i][parts[0] as keyof object];
         const value = data[i][parts[1] as keyof object];
-        const barKey = `${key} ${value}`;
+        const barKey = `${key}`;
         pie = {
           ...pie,
           [barKey]: value,
@@ -82,18 +90,18 @@ const PieChartWidget = (props: Props) => {
   };
 
   const renderLegendText = (value: string) => {
-    const index = value.lastIndexOf(" ");
-    const label = value.substring(0, index);
-    const amount = value.substring(index + 1);
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
-          {label.toLocaleString()}
+          {value.toLocaleString()}
         </span>
         <div className="margin-left-4 margin-bottom-1 text-base-darkest text-bold">
-          {amount && amount !== "null" ? (
+          {value && value !== "null" ? (
             TickFormatter.format(
-              Number(amount),
+              Number(
+                (pieData.current.filter((d: any) => d.name === value)[0] as any)
+                  .value
+              ),
               xAxisLargestValue,
               props.significantDigitLabels
             )
@@ -117,7 +125,7 @@ const PieChartWidget = (props: Props) => {
         />
       )}
       {pieData.current.length && (
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer width="100%" height={420}>
           <PieChart>
             <Legend
               verticalAlign="top"
@@ -130,28 +138,32 @@ const PieChartWidget = (props: Props) => {
               }}
               onClick={toggleParts}
               onMouseLeave={() => setPartsHover(null)}
-              onMouseEnter={(e: any) => {
-                setPartsHover(e.value);
-              }}
+              onMouseEnter={(e: any) => setPartsHover(e.value)}
             />
             <Pie
               data={pieData.current}
               dataKey="value"
               nameKey="name"
-              cx="50%"
+              cx={props.isPreview ? "35%" : "20%"}
               cy="50%"
-              outerRadius={80}
+              outerRadius={120}
               label={!props.hideDataLabels}
               isAnimationActive={false}
             >
-              {pieData.current.map((part, index) => (
+              {pieData.current.map((part: any, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={colors[index]}
                   fillOpacity={getOpacity(part)}
+                  onMouseLeave={() => setPartsHover(null)}
+                  onMouseEnter={() => setPartsHover(part.name)}
                 />
               ))}
             </Pie>
+            <Tooltip
+              itemStyle={{ color: "#1b1b1b" }}
+              isAnimationActive={false}
+            />
           </PieChart>
         </ResponsiveContainer>
       )}

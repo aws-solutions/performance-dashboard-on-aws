@@ -421,6 +421,7 @@ function VisualizeChart(props: Props) {
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
                   hideDataLabels={!props.dataLabels}
+                  isPreview={!props.fullPreview}
                 />
               )}
               {props.chartType === ChartType.DonutChart && (
@@ -436,6 +437,7 @@ function VisualizeChart(props: Props) {
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
                   hideDataLabels={!props.dataLabels}
+                  isPreview={!props.fullPreview}
                 />
               )}
             </>

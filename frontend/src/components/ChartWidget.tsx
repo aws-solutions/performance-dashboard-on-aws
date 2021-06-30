@@ -6,6 +6,8 @@ import ColumnChartWidget from "./ColumnChartWidget";
 import BarChartWidget from "./BarChartWidget";
 import PartWholeChartWidget from "./PartWholeChartWidget";
 import DatasetParsingService from "../services/DatasetParsingService";
+import PieChartWidget from "./PieChartWidget";
+import DonutChartWidget from "./DonutChartWidget";
 
 interface Props {
   widget: ChartWidget;
@@ -102,6 +104,32 @@ function ChartWidgetComponent(props: Props) {
           parts={keys}
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
+        />
+      );
+
+    case ChartType.PieChart:
+      return (
+        <PieChartWidget
+          title={props.widget.showTitle ? content.title : ""}
+          summary={content.summary}
+          summaryBelow={content.summaryBelow}
+          parts={keys}
+          data={filteredJson}
+          significantDigitLabels={content.significantDigitLabels}
+          hideDataLabels={!content.dataLabels}
+        />
+      );
+
+    case ChartType.DonutChart:
+      return (
+        <DonutChartWidget
+          title={props.widget.showTitle ? content.title : ""}
+          summary={content.summary}
+          summaryBelow={content.summaryBelow}
+          parts={keys}
+          data={filteredJson}
+          significantDigitLabels={content.significantDigitLabels}
+          hideDataLabels={!content.dataLabels}
         />
       );
 

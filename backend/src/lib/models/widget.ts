@@ -11,6 +11,8 @@ export enum ChartType {
   ColumnChart = "ColumnChart",
   BarChart = "BarChart",
   PartWholeChart = "PartWholeChart",
+  PieChart = "PieChart",
+  DonutChart = "DonutChart",
 }
 
 export enum ColumnDataType {

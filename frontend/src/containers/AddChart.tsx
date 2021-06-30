@@ -175,7 +175,9 @@ function AddChart() {
             horizontalScroll: values.horizontalScroll,
           }),
           ...((values.chartType === ChartType.BarChart ||
-            values.chartType === ChartType.ColumnChart) && {
+            values.chartType === ChartType.ColumnChart ||
+            values.chartType === ChartType.PieChart ||
+            values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
           }),
           datasetType: datasetType,

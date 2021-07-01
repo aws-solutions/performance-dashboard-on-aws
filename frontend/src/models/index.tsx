@@ -245,6 +245,8 @@ export type Metric = {
   title: string;
   value: number;
   changeOverTime?: string;
+  percentage?: string;
+  currency?: string;
   startDate?: string;
   endDate?: string;
 };

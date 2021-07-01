@@ -10,11 +10,16 @@ import Spinner from "../components/Spinner";
 import DatePicker from "../components/DatePicker";
 import { LocationState } from "../models";
 import { useTranslation } from "react-i18next";
+import Dropdown from "../components/Dropdown";
+import { CurrencyDataType, NumberDataType } from "../models";
+import MetricsWidget from "../components/MetricsWidget";
 
 interface FormValues {
   title: string;
   value: number;
   changeOverTime: string;
+  percentage: string;
+  currency: string;
 }
 
 interface PathParams {
@@ -37,6 +42,7 @@ function EditMetric() {
   const [endDate, setEndDate] = useState<Date | null>(
     state.metric && state.metric.endDate ? new Date(state.metric.endDate) : null
   );
+  const [symbolType, setsymbolType] = useState<string>("");
 
   const onSubmit = async (values: FormValues) => {
     const editedMetric =
@@ -46,6 +52,8 @@ function EditMetric() {
     if (editedMetric) {
       editedMetric.title = values.title;
       editedMetric.value = values.value;
+      editedMetric.percentage = values.percentage;
+      editedMetric.currency = values.currency;
       editedMetric.changeOverTime = values.changeOverTime;
       editedMetric.startDate = startDate ? startDate.toISOString() : "";
       editedMetric.endDate = endDate ? endDate.toISOString() : "";
@@ -65,6 +73,16 @@ function EditMetric() {
         datasetType: state.datasetType || undefined,
       }
     );
+  };
+
+  const handleSymbol = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "Percentage") {
+      setsymbolType("Percentage");
+    } else if (e.target.value === "Currency") {
+      setsymbolType("Currency");
+    } else if (e.target.value === "") {
+      setsymbolType("SelectAnOption");
+    }
   };
 
   const onCancel = () => {
@@ -146,6 +164,84 @@ function EditMetric() {
                   step={0.01}
                   required
                 />
+
+                <Dropdown
+                  id="percentage"
+                  name="percentage"
+                  label={t("NumberFormat")}
+                  hint={t("AddMetricScreen.MetricFormatHint")}
+                  options={[
+                    { value: "", label: t("SelectAnOption") },
+                    {
+                      value: NumberDataType.Percentage,
+                      label: t("Percentage"),
+                    },
+                    {
+                      value: NumberDataType.Currency,
+                      label: t("Currency"),
+                    },
+                  ]}
+                  defaultValue={state.metric.percentage}
+                  onChange={handleSymbol}
+                  register={register}
+                />
+
+                {symbolType == "Currency" &&
+                  (state.metric.percentage == "Percentage" ||
+                    state.metric.percentage == "SelectAnOption") && (
+                    <Dropdown
+                      id="currency"
+                      name="currency"
+                      label={t("Currency")}
+                      hint={t("AddMetricScreen.MetricCurrencyHint")}
+                      options={[
+                        { value: "", label: t("SelectAnOption") },
+                        {
+                          value: CurrencyDataType["Dollar $"],
+                          label: t("Dollar"),
+                        },
+                        {
+                          value: CurrencyDataType["Euro €"],
+                          label: t("Euro"),
+                        },
+                        {
+                          value: CurrencyDataType["Pound £"],
+                          label: t("Pound"),
+                        },
+                      ]}
+                      defaultValue={state.metric.currency}
+                      register={register}
+                      required
+                    />
+                  )}
+                {state.metric.percentage == "Currency" &&
+                  symbolType != "Percentage" &&
+                  symbolType != "SelectAnOption" && (
+                    <Dropdown
+                      id="currency"
+                      name="currency"
+                      label={t("Currency")}
+                      hint={t("AddMetricScreen.MetricCurrencyHint")}
+                      options={[
+                        { value: "", label: t("SelectAnOption") },
+                        {
+                          value: CurrencyDataType["Dollar $"],
+                          label: t("Dollar"),
+                        },
+                        {
+                          value: CurrencyDataType["Euro €"],
+                          label: t("Euro"),
+                        },
+                        {
+                          value: CurrencyDataType["Pound £"],
+                          label: t("Pound"),
+                        },
+                      ]}
+                      defaultValue={state.metric.currency}
+                      register={register}
+                      required
+                    />
+                  )}
 
                 <TextField
                   id="changeOverTime"

@@ -11,6 +11,8 @@ import DatePicker from "../components/DatePicker";
 import { LocationState } from "../models";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import Dropdown from "../components/Dropdown";
+import { CurrencyDataType, NumberDataType } from "../models";
 
 interface FormValues {
   title: string;
@@ -32,6 +34,9 @@ function AddMetric() {
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [percentage, setPercentage] = useState<string>("");
+  const [currency, setCurrency] = useState<string>("");
+  const [symbolType, setsymbolType] = useState<string>("Percentage");
 
   const onSubmit = async (values: FormValues) => {
     const newMetrics = state && state.metrics ? [...state.metrics] : [];
@@ -39,9 +44,12 @@ function AddMetric() {
       title: values.title,
       value: values.value,
       changeOverTime: values.changeOverTime,
+      percentage: percentage,
+      currency: currency,
       startDate: startDate ? startDate.toISOString() : "",
       endDate: endDate ? endDate.toISOString() : "",
     });
+
     history.push(
       (state && state.origin) || `/admin/dashboard/${dashboardId}/add-metrics`,
       {
@@ -56,6 +64,26 @@ function AddMetric() {
         datasetType: state.datasetType || undefined,
       }
     );
+  };
+
+  const handlePercentage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "Percentage") {
+      setsymbolType("Percentage");
+      setPercentage(e.target.value);
+    } else if (e.target.value === "Currency") {
+      setsymbolType("Currency");
+      setPercentage(e.target.value);
+    }
+  };
+
+  const handleCurrency = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "Dollar $") {
+      setCurrency("$");
+    } else if (e.target.value === "Euro €") {
+      setCurrency("€");
+    } else if (e.target.value === "Pound £") {
+      setCurrency("£");
+    }
   };
 
   const onCancel = () => {
@@ -128,7 +156,6 @@ function AddMetric() {
                     }
                     required
                   />
-
                   <NumberField
                     id="value"
                     name="value"
@@ -143,6 +170,52 @@ function AddMetric() {
                     required
                   />
 
+                  <Dropdown
+                    id="percentage"
+                    name="percentage"
+                    label={t("NumberFormat")}
+                    hint={t("AddMetricScreen.MetricFormatHint")}
+                    options={[
+                      { value: "", label: t("SelectAnOption") },
+                      {
+                        value: NumberDataType.Percentage,
+                        label: t("Percentage"),
+                      },
+                      {
+                        value: NumberDataType.Currency,
+                        label: t("Currency"),
+                      },
+                    ]}
+                    onChange={handlePercentage}
+                    register={register}
+                  />
+
+                  {symbolType != "Percentage" && (
+                    <Dropdown
+                      id="currency"
+                      name="currency"
+                      label={t("Currency")}
+                      hint={t("AddMetricScreen.MetricCurrencyHint")}
+                      options={[
+                        { value: "", label: t("SelectAnOption") },
+                        {
+                          value: CurrencyDataType["Dollar $"],
+                          label: t("Dollar"),
+                        },
+                        {
+                          value: CurrencyDataType["Euro €"],
+                          label: t("Euro"),
+                        },
+                        {
+                          value: CurrencyDataType["Pound £"],
+                          label: t("Pound"),
+                        },
+                      ]}
+                      onChange={handleCurrency}
+                      register={register}
+                      required
+                    />
+                  )}
                   <TextField
                     id="changeOverTime"
                     name="changeOverTime"
@@ -160,7 +233,6 @@ function AddMetric() {
                       return !input || input[0] === "+" || input[0] === "-";
                     }}
                   />
-
                   <DatePicker
                     id="startDate"
                     name="startDate"
@@ -172,7 +244,6 @@ function AddMetric() {
                       .replace(/m/g, "M")}
                     setDate={setStartDate}
                   />
-
                   <DatePicker
                     id="endDate"
                     name="endDate"
@@ -184,7 +255,6 @@ function AddMetric() {
                       .replace(/m/g, "M")}
                     setDate={setEndDate}
                   />
-
                   <br />
                   <Button type="submit">
                     {t("AddMetricScreen.AddMetric")}

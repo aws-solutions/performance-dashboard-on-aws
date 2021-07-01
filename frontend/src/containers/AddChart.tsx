@@ -28,6 +28,7 @@ import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -255,6 +256,31 @@ function AddChart() {
         encoding: "ISO-8859-1",
         complete: async function (results: ParseResult<object>) {
           initializeColumnsMetadata();
+
+          let wrongCSV = false;
+          const firstRow = results.data[0];
+          for (let columnName in firstRow) {
+            if (columnName === "") {
+              wrongCSV = true;
+              break;
+            }
+          }
+
+          const continueButton = document.querySelectorAll(
+            "button.usa-button--base"
+          )[1];
+          const warning = document.querySelectorAll("div.wrong-csv-warning")[0];
+
+          if (wrongCSV) {
+            continueButton.disabled = true;
+            warning.hidden = false;
+            setCsvFile(undefined);
+            return;
+          } else {
+            continueButton.disabled = false;
+            warning.hidden = true;
+          }
+
           if (results.errors.length) {
             setCsvErrors(results.errors);
             setCsvJson([]);
@@ -374,6 +400,10 @@ function AddChart() {
             <div hidden={step !== 0}>
               <PrimaryActionBar>
                 {configHeader}
+                <div className="wrong-csv-warning" hidden={true}>
+                  <Alert type="error" message={t("BadFormatCSV")} slim></Alert>
+                  <br></br>
+                </div>
                 <ChooseData
                   selectDynamicDataset={selectDynamicDataset}
                   dynamicDatasets={dynamicDatasets}

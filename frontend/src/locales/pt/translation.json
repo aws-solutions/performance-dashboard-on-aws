@@ -779,5 +779,6 @@
   "ClosePreview": "Fechar visualização",
   "Admin": "Administrador",
   "Editor": "Editor",
-  "GlobalUser": "usuário"
+  "GlobalUser": "usuário",
+  "BadFormatCSV": "Failed to upload file. Please make sure there are values for all column headers."
 }

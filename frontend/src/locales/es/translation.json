@@ -265,8 +265,7 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "AddChartSuccess": "El gráfico '{{title}}' se ha agregado correctamente.",
-    "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
+    "AddChartSuccess": "El gráfico '{{title}}' se ha agregado correctamente."
   },
   "EditChartScreen": {
     "EditChart": "Editar gráfico",
@@ -780,6 +779,5 @@
   "ClosePreview": "Cerrar vista previa",
   "Admin": "Administrador",
   "Editor": "Editor",
-  "GlobalUser": "usuario",
-  "BadFormatCSV": "Failed to upload file. Please make sure there are values for all column headers."
+  "GlobalUser": "usuario"
 }

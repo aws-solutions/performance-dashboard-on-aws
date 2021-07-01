@@ -784,6 +784,5 @@
   "DashboardWasCopied": "was successfully copied.",
   "Copy": "Copy",
   "CopyContent": "Copy {{name}}",
-  "DownloadCSV": "Download CSV",
-  "BadFormatCSV": "Failed to upload file. Please make sure there are values for all column headers."
+  "DownloadCSV": "Download CSV"
 }

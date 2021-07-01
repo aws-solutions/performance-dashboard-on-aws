@@ -265,8 +265,7 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "AddChartSuccess": "O gráfico '{{title}}' foi adicionado com êxito.",
-    "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
+    "AddChartSuccess": "O gráfico '{{title}}' foi adicionado com êxito."
   },
   "EditChartScreen": {
     "EditChart": "Editar gráfico",

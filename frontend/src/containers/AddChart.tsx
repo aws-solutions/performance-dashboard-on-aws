@@ -401,7 +401,11 @@ function AddChart() {
               <PrimaryActionBar>
                 {configHeader}
                 <div className="wrong-csv-warning" hidden={true}>
-                  <Alert type="error" message={t("BadFormatCSV")} slim></Alert>
+                  <Alert
+                    type="error"
+                    message={t("AddChartScreen.ResolveError")}
+                    slim
+                  ></Alert>
                   <br></br>
                 </div>
                 <ChooseData

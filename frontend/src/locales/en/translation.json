@@ -265,7 +265,8 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddChartSuccess": "'{{title}}' chart has been successfully added."
+    "AddChartSuccess": "'{{title}}' chart has been successfully added.",
+    "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "EditChartScreen": {
     "EditChart": "Edit chart",

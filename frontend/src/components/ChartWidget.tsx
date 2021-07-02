@@ -117,6 +117,7 @@ function ChartWidgetComponent(props: Props) {
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
           hideDataLabels={!content.dataLabels}
+          columnsMetadata={content.columnsMetadata}
         />
       );
 
@@ -130,6 +131,7 @@ function ChartWidgetComponent(props: Props) {
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
           hideDataLabels={!content.dataLabels}
+          columnsMetadata={content.columnsMetadata}
         />
       );
 

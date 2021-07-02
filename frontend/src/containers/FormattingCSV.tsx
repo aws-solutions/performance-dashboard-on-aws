@@ -200,6 +200,7 @@ function FormattingCSV() {
           data={pie.dataset.data}
           summaryBelow={false}
           significantDigitLabels={false}
+          columnsMetadata={[]}
         />
       </div>
 
@@ -231,6 +232,7 @@ function FormattingCSV() {
           data={donut.dataset.data}
           summaryBelow={false}
           significantDigitLabels={false}
+          columnsMetadata={[]}
         />
       </div>
 

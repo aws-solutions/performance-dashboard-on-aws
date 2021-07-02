@@ -6,6 +6,7 @@ import {
   Cell,
   Legend,
   Tooltip,
+  Label,
 } from "recharts";
 import { useColors } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
@@ -23,12 +24,13 @@ type Props = {
     primary: string | undefined;
     secondary: string | undefined;
   };
+  columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
   isPreview?: boolean;
 };
 
 const DonutChartWidget = (props: Props) => {
-  const [partsHover, setPartsHover] = useState(null);
+  const [partsHover, setPartsHover] = useState<string | null>(null);
   const [hiddenParts, setHiddenParts] = useState<Array<string>>([]);
   const [xAxisLargestValue, setXAxisLargestValue] = useState(0);
 
@@ -75,21 +77,122 @@ const DonutChartWidget = (props: Props) => {
       if (!partsHover) {
         return 1;
       }
-      return partsHover === dataKey.name ? 1 : 0.2;
+      return partsHover === dataKey ? 1 : 0.2;
     },
     [partsHover]
   );
 
   const toggleParts = (e: any) => {
-    if (hiddenParts.includes(e.dataKey)) {
-      const hidden = hiddenParts.filter((column) => column !== e.dataKey);
+    if (hiddenParts.includes(e.value)) {
+      const hidden = hiddenParts.filter((column) => column !== e.value);
       setHiddenParts(hidden);
     } else {
-      setHiddenParts([...hiddenParts, e.dataKey]);
+      setHiddenParts([...hiddenParts, e.value]);
     }
   };
 
+  const getTotal = useCallback(() => {
+    let columnMetadata;
+    if (parts && parts.length > 1 && props.columnsMetadata) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === parts[1]
+      );
+    }
+
+    return TickFormatter.format(
+      Number(total.current),
+      xAxisLargestValue,
+      props.significantDigitLabels,
+      columnMetadata
+    );
+  }, [
+    props.columnsMetadata,
+    parts,
+    props.significantDigitLabels,
+    xAxisLargestValue,
+    total.current,
+  ]);
+
+  const renderCustomizedLabel = (properties: any): any => {
+    const RADIAN = Math.PI / 180;
+    const { cx, cy, payload, fill, midAngle, outerRadius } = properties;
+    const sin = Math.sin(-RADIAN * midAngle);
+    const cos = Math.cos(-RADIAN * midAngle);
+    const sx = cx + (outerRadius + 10) * cos;
+    const sy = cy + (outerRadius + 10) * sin;
+    const mx = cx + (outerRadius + 30) * cos;
+    const my = cy + (outerRadius + 30) * sin;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 12;
+    const ey = my;
+    const textAnchor = cos >= 0 ? "start" : "end";
+
+    let columnMetadata;
+    if (parts && parts.length > 1 && props.columnsMetadata) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === parts[1]
+      );
+    }
+
+    return !props.hideDataLabels && !hiddenParts.includes(payload.name) ? (
+      <g>
+        <path
+          d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+          stroke={fill}
+          fill="none"
+        />
+        <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+        <text
+          x={ex + (cos >= 0 ? 1 : -1) * 12}
+          y={ey}
+          textAnchor={textAnchor}
+          fill={fill}
+        >
+          {TickFormatter.format(
+            Number(payload.value),
+            xAxisLargestValue,
+            props.significantDigitLabels,
+            columnMetadata
+          )}
+        </text>
+      </g>
+    ) : (
+      ""
+    );
+  };
+
+  const renderCustomizedLine = (properties: any): any => {
+    const RADIAN = Math.PI / 180;
+    const { cx, cy, payload, fill, midAngle, outerRadius } = properties;
+    const sin = Math.sin(-RADIAN * midAngle);
+    const cos = Math.cos(-RADIAN * midAngle);
+    const sx = cx + (outerRadius + 10) * cos;
+    const sy = cy + (outerRadius + 10) * sin;
+    const mx = cx + (outerRadius + 30) * cos;
+    const my = cy + (outerRadius + 30) * sin;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 12;
+    const ey = my;
+
+    return !props.hideDataLabels && !hiddenParts.includes(payload.name) ? (
+      <g>
+        <path
+          d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+          stroke={fill}
+          fill="none"
+        />
+      </g>
+    ) : (
+      ""
+    );
+  };
+
   const renderLegendText = (value: string) => {
+    let columnMetadata;
+    if (parts && parts.length > 1 && props.columnsMetadata) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === parts[1]
+      );
+    }
+
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
@@ -99,14 +202,12 @@ const DonutChartWidget = (props: Props) => {
           {value && value !== "null" ? (
             TickFormatter.format(
               Number(
-                (
-                  donutData.current.filter(
-                    (d: any) => d.name === value
-                  )[0] as any
-                ).value
+                (donutData.current.find((d: any) => d.name === value) as any)
+                  .value
               ),
               xAxisLargestValue,
-              props.significantDigitLabels
+              props.significantDigitLabels,
+              columnMetadata
             )
           ) : (
             <br />
@@ -144,34 +245,66 @@ const DonutChartWidget = (props: Props) => {
               onMouseEnter={(e: any) => setPartsHover(e.value)}
             />
             <Pie
-              data={donutData.current}
+              data={donutData.current.map((d: any) => {
+                return !hiddenParts.includes(d.name)
+                  ? d
+                  : { name: d.name, value: 0 };
+              })}
               dataKey="value"
               nameKey="name"
-              cx={props.isPreview ? "35%" : "20%"}
+              cx={props.isPreview ? "50%" : "28%"}
               cy="50%"
               outerRadius={120}
               innerRadius={80}
-              label={!props.hideDataLabels}
+              label={renderCustomizedLabel}
+              labelLine={renderCustomizedLine}
               isAnimationActive={false}
             >
-              {donutData.current.map((part: any, index) => (
+              {donutParts.current.map((part: string, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={colors[index]}
+                  fill={!hiddenParts.includes(part) ? colors[index] : "#ccc"}
                   fillOpacity={getOpacity(part)}
                   onMouseLeave={() => setPartsHover(null)}
-                  onMouseEnter={() => setPartsHover(part.name)}
+                  onMouseEnter={() => setPartsHover(part)}
                 />
               ))}
+              <Label
+                className="text-base-darkest text-bold"
+                value={getTotal()}
+                offset={0}
+                position="center"
+              />
             </Pie>
             <Tooltip
               itemStyle={{ color: "#1b1b1b" }}
               isAnimationActive={false}
+              formatter={(value: Number | String) => {
+                // Check if there is metadata for this column
+                let columnMetadata;
+                if (parts && parts.length > 1 && props.columnsMetadata) {
+                  columnMetadata = props.columnsMetadata.find(
+                    (cm) => cm.columnName === parts[1]
+                  );
+                }
+
+                return TickFormatter.format(
+                  value,
+                  xAxisLargestValue,
+                  props.significantDigitLabels,
+                  columnMetadata
+                );
+              }}
             />
           </PieChart>
         </ResponsiveContainer>
       )}
-      <DataTable rows={data || []} columns={parts} fileName={props.title} />
+      <DataTable
+        rows={data || []}
+        columns={parts}
+        fileName={props.title}
+        columnsMetadata={props.columnsMetadata}
+      />
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

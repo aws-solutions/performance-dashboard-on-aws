@@ -12,7 +12,6 @@ import { LocationState } from "../models";
 import { useTranslation } from "react-i18next";
 import Dropdown from "../components/Dropdown";
 import { CurrencyDataType, NumberDataType } from "../models";
-import MetricsWidget from "../components/MetricsWidget";
 
 interface FormValues {
   title: string;
@@ -58,6 +57,7 @@ function EditMetric() {
       editedMetric.startDate = startDate ? startDate.toISOString() : "";
       editedMetric.endDate = endDate ? endDate.toISOString() : "";
     }
+
     const newMetrics = state && state.metrics ? [...state.metrics] : [];
     history.push(
       (state && state.origin) || `/admin/dashboard/${dashboardId}/add-metrics`,
@@ -188,7 +188,8 @@ function EditMetric() {
 
                 {symbolType == "Currency" &&
                   (state.metric.percentage == "Percentage" ||
-                    state.metric.percentage == "SelectAnOption") && (
+                    state.metric.percentage == "SelectAnOption" ||
+                    state.metric.percentage == "") && (
                     <Dropdown
                       id="currency"
                       name="currency"

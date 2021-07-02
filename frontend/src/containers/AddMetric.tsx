@@ -18,6 +18,8 @@ interface FormValues {
   title: string;
   value: number;
   changeOverTime: string;
+  percentage: string;
+  currency: string;
 }
 
 interface PathParams {
@@ -44,8 +46,8 @@ function AddMetric() {
       title: values.title,
       value: values.value,
       changeOverTime: values.changeOverTime,
-      percentage: percentage,
-      currency: currency,
+      percentage: values.percentage,
+      currency: values.currency,
       startDate: startDate ? startDate.toISOString() : "",
       endDate: endDate ? endDate.toISOString() : "",
     });
@@ -73,16 +75,9 @@ function AddMetric() {
     } else if (e.target.value === "Currency") {
       setsymbolType("Currency");
       setPercentage(e.target.value);
-    }
-  };
-
-  const handleCurrency = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === "Dollar $") {
-      setCurrency("$");
-    } else if (e.target.value === "Euro €") {
-      setCurrency("€");
-    } else if (e.target.value === "Pound £") {
-      setCurrency("£");
+    } else if (e.target.value === "") {
+      setsymbolType("SelectAnOption");
+      setPercentage(e.target.value);
     }
   };
 
@@ -190,32 +185,32 @@ function AddMetric() {
                     register={register}
                   />
 
-                  {symbolType != "Percentage" && (
-                    <Dropdown
-                      id="currency"
-                      name="currency"
-                      label={t("Currency")}
-                      hint={t("AddMetricScreen.MetricCurrencyHint")}
-                      options={[
-                        { value: "", label: t("SelectAnOption") },
-                        {
-                          value: CurrencyDataType["Dollar $"],
-                          label: t("Dollar"),
-                        },
-                        {
-                          value: CurrencyDataType["Euro €"],
-                          label: t("Euro"),
-                        },
-                        {
-                          value: CurrencyDataType["Pound £"],
-                          label: t("Pound"),
-                        },
-                      ]}
-                      onChange={handleCurrency}
-                      register={register}
-                      required
-                    />
-                  )}
+                  {symbolType != "Percentage" &&
+                    symbolType != "SelectAnOption" && (
+                      <Dropdown
+                        id="currency"
+                        name="currency"
+                        label={t("Currency")}
+                        hint={t("AddMetricScreen.MetricCurrencyHint")}
+                        options={[
+                          { value: "", label: t("SelectAnOption") },
+                          {
+                            value: CurrencyDataType["Dollar $"],
+                            label: t("Dollar"),
+                          },
+                          {
+                            value: CurrencyDataType["Euro €"],
+                            label: t("Euro"),
+                          },
+                          {
+                            value: CurrencyDataType["Pound £"],
+                            label: t("Pound"),
+                          },
+                        ]}
+                        register={register}
+                        required
+                      />
+                    )}
                   <TextField
                     id="changeOverTime"
                     name="changeOverTime"

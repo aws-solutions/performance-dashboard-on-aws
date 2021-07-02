@@ -105,11 +105,11 @@ function formatNumber(
   }
 
   if (currency) {
-    if (currency === "Dollar $") {
+    if (currency === "Dollar $" || currency === "$") {
       return `$` + formattedNum;
-    } else if (currency === "Euro €") {
+    } else if (currency === "Euro €" || currency === "€") {
       return `€` + formattedNum;
-    } else if (currency === "Pound £") {
+    } else if (currency === "Pound £" || currency === "£") {
       return `£` + formattedNum;
     }
   }

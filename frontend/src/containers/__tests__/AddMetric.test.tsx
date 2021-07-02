@@ -61,7 +61,7 @@ describe("AddMetricForm", () => {
             title: "Test metric",
             value: "1.0",
             percentage: "",
-            currency: "",
+            currency: undefined,
           },
         ],
         oneMetricPerRow: false,

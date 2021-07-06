@@ -78,6 +78,24 @@ exports[`renders the VisualizeChart component 1`] = `
                 class="usa-radio"
               >
                 <input
+                  checked=""
+                  class="usa-radio__input"
+                  id="LineChart"
+                  name="chartType"
+                  type="radio"
+                  value="LineChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="LineChart"
+                >
+                  Line
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
                   class="usa-radio__input"
                   id="BarChart"
                   name="chartType"
@@ -112,24 +130,6 @@ exports[`renders the VisualizeChart component 1`] = `
                 class="usa-radio"
               >
                 <input
-                  checked=""
-                  class="usa-radio__input"
-                  id="LineChart"
-                  name="chartType"
-                  type="radio"
-                  value="LineChart"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="LineChart"
-                >
-                  Line
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-              >
-                <input
                   class="usa-radio__input"
                   id="PartWholeChart"
                   name="chartType"
@@ -141,6 +141,40 @@ exports[`renders the VisualizeChart component 1`] = `
                   for="PartWholeChart"
                 >
                   Part-to-whole
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="PieChart"
+                  name="chartType"
+                  type="radio"
+                  value="PieChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="PieChart"
+                >
+                  Pie
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="DonutChart"
+                  name="chartType"
+                  type="radio"
+                  value="DonutChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="DonutChart"
+                >
+                  Donut
                 </label>
               </div>
             </div>
@@ -502,6 +536,24 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
                 class="usa-radio"
               >
                 <input
+                  checked=""
+                  class="usa-radio__input"
+                  id="LineChart"
+                  name="chartType"
+                  type="radio"
+                  value="LineChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="LineChart"
+                >
+                  Line
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
                   class="usa-radio__input"
                   id="BarChart"
                   name="chartType"
@@ -536,24 +588,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
                 class="usa-radio"
               >
                 <input
-                  checked=""
-                  class="usa-radio__input"
-                  id="LineChart"
-                  name="chartType"
-                  type="radio"
-                  value="LineChart"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="LineChart"
-                >
-                  Line
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-              >
-                <input
                   class="usa-radio__input"
                   id="PartWholeChart"
                   name="chartType"
@@ -565,6 +599,40 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
                   for="PartWholeChart"
                 >
                   Part-to-whole
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="PieChart"
+                  name="chartType"
+                  type="radio"
+                  value="PieChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="PieChart"
+                >
+                  Pie
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="DonutChart"
+                  name="chartType"
+                  type="radio"
+                  value="DonutChart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="DonutChart"
+                >
+                  Donut
                 </label>
               </div>
             </div>

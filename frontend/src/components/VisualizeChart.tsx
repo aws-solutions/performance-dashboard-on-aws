@@ -16,6 +16,8 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "./Dropdown";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "./PrimaryActionBar";
+import PieChartWidget from "./PieChartWidget";
+import DonutChartWidget from "./DonutChartWidget";
 
 interface Props {
   errors: any;
@@ -121,6 +123,10 @@ function VisualizeChart(props: Props) {
             required
             options={[
               {
+                value: ChartType.LineChart,
+                label: t("Line"),
+              },
+              {
                 value: ChartType.BarChart,
                 label: t("Bar"),
               },
@@ -129,12 +135,16 @@ function VisualizeChart(props: Props) {
                 label: t("Column"),
               },
               {
-                value: ChartType.LineChart,
-                label: t("Line"),
-              },
-              {
                 value: ChartType.PartWholeChart,
                 label: t("PartToWhole"),
+              },
+              {
+                value: ChartType.PieChart,
+                label: t("Pie"),
+              },
+              {
+                value: ChartType.DonutChart,
+                label: t("Donut"),
               },
             ]}
           />
@@ -207,7 +217,9 @@ function VisualizeChart(props: Props) {
               className="usa-checkbox"
               hidden={
                 props.chartType !== ChartType.BarChart &&
-                props.chartType !== ChartType.ColumnChart
+                props.chartType !== ChartType.ColumnChart &&
+                props.chartType !== ChartType.PieChart &&
+                props.chartType !== ChartType.DonutChart
               }
             >
               <input
@@ -394,6 +406,40 @@ function VisualizeChart(props: Props) {
                   data={props.json}
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
+                />
+              )}
+              {props.chartType === ChartType.PieChart && (
+                <PieChartWidget
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
+                  parts={
+                    props.json.length
+                      ? (Object.keys(props.json[0]) as Array<string>)
+                      : []
+                  }
+                  data={props.json}
+                  summaryBelow={props.summaryBelow}
+                  significantDigitLabels={props.significantDigitLabels}
+                  hideDataLabels={!props.dataLabels}
+                  isPreview={!props.fullPreview}
+                  columnsMetadata={props.columnsMetadata}
+                />
+              )}
+              {props.chartType === ChartType.DonutChart && (
+                <DonutChartWidget
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
+                  parts={
+                    props.json.length
+                      ? (Object.keys(props.json[0]) as Array<string>)
+                      : []
+                  }
+                  data={props.json}
+                  summaryBelow={props.summaryBelow}
+                  significantDigitLabels={props.significantDigitLabels}
+                  hideDataLabels={!props.dataLabels}
+                  isPreview={!props.fullPreview}
+                  columnsMetadata={props.columnsMetadata}
                 />
               )}
             </>

@@ -48,7 +48,7 @@ describe("Admin user", () => {
 
     // Verify new content item shows up
     editDashboardPage.waitUntilDashboardLoads(dashboardName);
-    cy.contains(`"${textTitle}" text has been successfully added`);
+    cy.contains(`'${textTitle}' text has been successfully added.`);
     cy.contains(textTitle);
 
     // Delete the dashboard
@@ -83,7 +83,7 @@ describe("Admin user", () => {
 
     // Verify new content item shows up
     editDashboardPage.waitUntilDashboardLoads(dashboardName);
-    cy.contains(`"${metricsTitle}" metrics have been successfully added`);
+    cy.contains(`Metrics '${metricsTitle}' have been successfully added`);
     cy.contains(metricsTitle);
 
     // Delete the dashboard
@@ -102,7 +102,10 @@ describe("Admin user", () => {
     addChartPage.selectStaticDataset();
     addChartPage.uploadDataset("linechart.csv");
 
-    // Step 2. Enter chart details
+    // Step 2. Select columns to display/hide
+    addChartPage.selectColumns();
+
+    // Step 3. Enter chart details
     const chartTitle = random.word();
     addChartPage.fillTitle(chartTitle);
 
@@ -125,7 +128,7 @@ describe("Admin user", () => {
 
     // Verify new content item shows up
     editDashboardPage.waitUntilDashboardLoads(dashboardName);
-    cy.contains(`"${chartTitle}" line chart has been successfully added`);
+    cy.contains(`'${chartTitle}' chart has been successfully added.`);
     cy.contains(chartTitle);
 
     // Delete the dashboard

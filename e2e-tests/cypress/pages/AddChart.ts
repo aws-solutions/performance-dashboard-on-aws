@@ -12,7 +12,12 @@ class AddChartPage {
   uploadDataset(fixture: string) {
     cy.contains("Drag file here or choose from folder");
     cy.findByLabelText("Static datasets").attachFile(fixture);
+    cy.wait(200);
     cy.get("button").contains("Continue").click();
+  }
+
+  selectColumns() {
+    cy.get("button").contains("Continue").click({ force: true });
   }
 
   fillTitle(title: string) {
@@ -31,7 +36,7 @@ class AddChartPage {
     }).as("createWidgetRequest");
 
     // Click the create button and wait for request to finish
-    cy.get("button").contains("Add Chart").click();
+    cy.get("button").contains("Add chart").click();
     cy.wait(["@createWidgetRequest"]);
 
     return new EditDashboardPage();

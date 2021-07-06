@@ -4,7 +4,7 @@ import DashboardListingPage from "./DashboardListing";
 class EditDashboardPage {
   waitUntilDashboardLoads(dashboardName: string) {
     cy.findByRole("heading", { name: dashboardName });
-    cy.get("a").contains("Edit details");
+    cy.get("a").contains("Edit header");
   }
 
   goToAddContentItem(): AddContentItemPage {

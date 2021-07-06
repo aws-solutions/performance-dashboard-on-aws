@@ -9,7 +9,7 @@ class LoginPage {
   };
 
   private selectors = {
-    signInSlot: 'slot[name="sign-in"]',
+    signInSlot: 'amplify-sign-in[slot="sign-in"]',
     signInUsernameInput: '[data-test="sign-in-username-input"]',
     signInPasswordInput: '[data-test="sign-in-password-input"]',
     signInSignInButton: '[data-test="sign-in-sign-in-button"]',

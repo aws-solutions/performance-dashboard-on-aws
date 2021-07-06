@@ -29,7 +29,7 @@ class AddMetricsPage {
     }).as("createWidgetRequest");
 
     // Click the create button and wait for request to finish
-    cy.get("button").contains("Add Metrics").click();
+    cy.get("button").contains("Add metrics").click();
     cy.wait(["@createWidgetRequest"]);
 
     return new EditDashboardPage();

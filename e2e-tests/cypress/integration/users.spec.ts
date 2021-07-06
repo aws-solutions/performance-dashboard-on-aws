@@ -31,6 +31,6 @@ describe("Admin user", () => {
 
     // Delete the user
     userListingPage.removeUser(username);
-    cy.contains("Successfully removed 1 users");
+    cy.contains("Successfully removed 1 user.");
   });
 });

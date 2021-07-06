@@ -238,7 +238,7 @@ exports[`renders the VisualizeTable component 1`] = `
         </button>
         
         <div
-          class="overflow-x-hidden"
+          class="overflow-x-hidden overflow-y-hidden"
         >
           <h2
             class="margin-bottom-1"

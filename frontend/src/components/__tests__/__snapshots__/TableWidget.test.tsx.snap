@@ -3,7 +3,7 @@
 exports[`table preview should match snapshot 1`] = `
 <div>
   <div
-    class="overflow-x-hidden"
+    class="overflow-x-hidden overflow-y-hidden"
   >
     <h2
       class="margin-bottom-1"

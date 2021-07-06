@@ -159,3 +159,15 @@ p {
 .usa-breadcrumb {
   background-color: #fff;
 }
+
+.grid-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (min-width: 64em) {
+  .grid-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

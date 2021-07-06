@@ -57,7 +57,9 @@ function formatNumber(
   num: number,
   largestTick: number,
   significantDigitLabels: boolean,
-  columnMetadata?: ColumnMetadata
+  columnMetadata?: ColumnMetadata,
+  percentage?: string,
+  currency?: string
 ): string {
   if (isNaN(num)) {
     return "";
@@ -75,23 +77,41 @@ function formatNumber(
     );
   }
 
+  let formattedNum = num.toLocaleString();
+
   if (!significantDigitLabels || num === 0) {
-    return num.toLocaleString();
-  }
-
-  if (Math.abs(largestTick) >= ONE_BILLION) {
+    formattedNum = num.toLocaleString();
+  } else if (Math.abs(largestTick) >= ONE_BILLION) {
     const value = num / ONE_BILLION;
-    return value.toLocaleString() + BILLIONS_LABEL;
-  }
-
-  if (Math.abs(largestTick) >= ONE_MILLION) {
+    formattedNum = value.toLocaleString() + BILLIONS_LABEL;
+  } else if (Math.abs(largestTick) >= ONE_MILLION) {
     const value = num / ONE_MILLION;
-    return value.toLocaleString() + MILLIONS_LABEL;
+    formattedNum = value.toLocaleString() + MILLIONS_LABEL;
+  } else if (Math.abs(largestTick) >= ONE_THOUSAND) {
+    const value = num / ONE_THOUSAND;
+    formattedNum = value.toLocaleString() + THOUSANDS_LABEL;
   }
 
-  if (Math.abs(largestTick) >= ONE_THOUSAND) {
-    const value = num / ONE_THOUSAND;
-    return value.toLocaleString() + THOUSANDS_LABEL;
+  if (!percentage && !currency) {
+    if (formattedNum !== num.toLocaleString()) {
+      return formattedNum;
+    } else {
+      return num.toLocaleString();
+    }
+  }
+
+  if (percentage === "Percentage") {
+    return formattedNum + `%`;
+  }
+
+  if (currency) {
+    if (currency === "Dollar $" || currency === "$") {
+      return `$` + formattedNum;
+    } else if (currency === "Euro €" || currency === "€") {
+      return `€` + formattedNum;
+    } else if (currency === "Pound £" || currency === "£") {
+      return `£` + formattedNum;
+    }
   }
 
   return num.toLocaleString();
@@ -99,6 +119,7 @@ function formatNumber(
 
 const TickFormatter = {
   format,
+  formatNumber,
 };
 
 export default TickFormatter;

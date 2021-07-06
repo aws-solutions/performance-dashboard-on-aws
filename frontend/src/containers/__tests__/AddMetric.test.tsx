@@ -60,6 +60,8 @@ describe("AddMetricForm", () => {
             startDate: "",
             title: "Test metric",
             value: "1.0",
+            percentage: "",
+            currency: undefined,
           },
         ],
         oneMetricPerRow: false,

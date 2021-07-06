@@ -56,10 +56,13 @@ function MetricsCardGroup(props: Props) {
                         title={metric.value ? metric.value.toString() : ""}
                       >
                         <h1 className="margin-0 text-no-wrap">
-                          {TickFormatter.format(
+                          {TickFormatter.formatNumber(
                             Number(metric.value),
                             Number(metric.value),
-                            props.significantDigitLabels
+                            props.significantDigitLabels,
+                            undefined,
+                            metric.percentage,
+                            metric.currency
                           )}
                         </h1>
                       </div>

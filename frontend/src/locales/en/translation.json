@@ -195,6 +195,8 @@
     "MetricValue": "Metric value",
     "MetricValueHint": "Enter a number here.",
     "MetricValueError": "Please specify a value",
+    "MetricFormatHint": "Select a Format",
+    "MetricCurrencyHint": "Select a Currency",
     "ChangeOverTime": "Change over time - optional",
     "ChangeOverTimeHint": "Indicate the increase or decrease since the previous time period. For example, +10.1% or -56%. Most includes '+' or '-'.",
     "ChangeOverTimeError": "Must start with '+' or '-'.",

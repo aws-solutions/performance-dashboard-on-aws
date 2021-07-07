@@ -525,6 +525,7 @@ describe("toItem", () => {
         sortByDesc: true,
         significantDigitLabels: true,
         dataLabels: true,
+        showTotal: true,
         columnsMetadata: [
           {
             hidden: false,
@@ -565,6 +566,7 @@ describe("toItem", () => {
       sortByDesc: true,
       significantDigitLabels: true,
       dataLabels: true,
+      showTotal: true,
       columnsMetadata: [
         {
           hidden: false,

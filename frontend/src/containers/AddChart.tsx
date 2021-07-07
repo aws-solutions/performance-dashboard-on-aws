@@ -40,6 +40,7 @@ interface FormValues {
   horizontalScroll: boolean;
   significantDigitLabels: boolean;
   dataLabels: boolean;
+  showTotal: boolean;
   sortData: string;
 }
 
@@ -107,6 +108,7 @@ function AddChart() {
   const showTitle = watch("showTitle");
   const horizontalScroll = watch("horizontalScroll");
   const dataLabels = watch("dataLabels");
+  const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 
   const initializeColumnsMetadata = () => {
@@ -180,6 +182,9 @@ function AddChart() {
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
+          }),
+          ...(values.chartType === ChartType.DonutChart && {
+            showTotal: values.showTotal,
           }),
           datasetType: datasetType,
           datasetId: newDataset
@@ -494,6 +499,7 @@ function AddChart() {
                 significantDigitLabels={significantDigitLabels}
                 horizontalScroll={horizontalScroll}
                 dataLabels={dataLabels}
+                showTotal={showTotal}
                 columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                   hiddenColumns,
                   dataTypes,

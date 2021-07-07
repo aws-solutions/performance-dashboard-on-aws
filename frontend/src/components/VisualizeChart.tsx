@@ -48,6 +48,7 @@ interface Props {
   significantDigitLabels: boolean;
   horizontalScroll: boolean;
   dataLabels: boolean;
+  showTotal: boolean;
   columnsMetadata: Array<any>;
   configHeader: JSX.Element;
 }
@@ -156,7 +157,8 @@ function VisualizeChart(props: Props) {
               options={DatasetParsingService.getDatasetSortOptions(
                 props.originalJson,
                 props.headers,
-                t
+                t,
+                props.chartType
               )}
               onChange={handleSortDataChange}
               defaultValue={
@@ -232,6 +234,23 @@ function VisualizeChart(props: Props) {
               />
               <label className="usa-checkbox__label" htmlFor="dataLabels">
                 {t("VisualizeChartComponent.ShowDataLabels")}
+              </label>
+            </div>
+
+            <div
+              className="usa-checkbox"
+              hidden={props.chartType !== ChartType.DonutChart}
+            >
+              <input
+                className="usa-checkbox__input"
+                id="showTotal"
+                type="checkbox"
+                name="showTotal"
+                defaultChecked={true}
+                ref={props.register()}
+              />
+              <label className="usa-checkbox__label" htmlFor="showTotal">
+                {t("VisualizeChartComponent.ShowTotal")}
               </label>
             </div>
           </div>
@@ -438,6 +457,7 @@ function VisualizeChart(props: Props) {
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
                   hideDataLabels={!props.dataLabels}
+                  showTotal={props.showTotal}
                   isPreview={!props.fullPreview}
                   columnsMetadata={props.columnsMetadata}
                 />

@@ -272,11 +272,13 @@
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "EditChartScreen": {
+    "ChooseDataset": "Choose a dataset to continue",
     "EditChart": "Edit chart",
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditChartSuccess": "'{{title}}' chart has been successfully edited."
+    "EditChartSuccess": "'{{title}}' chart has been successfully edited.",
+    "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "AddTableScreen": {
     "AddTable": "Add table",

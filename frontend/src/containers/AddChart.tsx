@@ -77,6 +77,8 @@ function AddChart() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [enableContinueButton, setEnableContinueButton] = useState(true);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.json ? DatasetType.StaticDataset : undefined
   );
@@ -273,19 +275,14 @@ function AddChart() {
             }
           }
 
-          const continueButton = document.querySelectorAll(
-            "button.usa-button--base"
-          )[1];
-          const warning = document.querySelectorAll("div.wrong-csv-warning")[0];
-
           if (wrongCSV) {
-            continueButton.disabled = true;
-            warning.hidden = false;
+            setEnableContinueButton(false);
+            setShowWarning(true);
             setCsvFile(undefined);
             return;
           } else {
-            continueButton.disabled = false;
-            warning.hidden = true;
+            setEnableContinueButton(true);
+            setShowWarning(false);
           }
 
           if (results.errors.length) {
@@ -407,13 +404,12 @@ function AddChart() {
             <div hidden={step !== 0}>
               <PrimaryActionBar>
                 {configHeader}
-                <div className="wrong-csv-warning" hidden={true}>
+                <div className="margin-y-3" hidden={!showWarning}>
                   <Alert
                     type="error"
                     message={t("AddChartScreen.ResolveError")}
                     slim
                   ></Alert>
-                  <br></br>
                 </div>
                 <ChooseData
                   selectDynamicDataset={selectDynamicDataset}
@@ -424,7 +420,9 @@ function AddChart() {
                   advanceStep={advanceStep}
                   fileLoading={fileLoading}
                   browseDatasets={browseDatasets}
-                  continueButtonDisabled={!currentJson.length}
+                  continueButtonDisabled={
+                    !enableContinueButton || !currentJson.length
+                  }
                   continueButtonDisabledTooltip={t(
                     "AddChartScreen.ChooseDataset"
                   )}

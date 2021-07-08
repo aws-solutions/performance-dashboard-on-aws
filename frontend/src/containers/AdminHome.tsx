@@ -89,7 +89,7 @@ function AdminHome() {
                   variant="outline"
                   onClick={onViewDashboards}
                 >
-                  {t("CreateDashboard")}
+                  {t("ViewDashboard")}
                 </Button>
               </CardFooter>
             </Card>

@@ -41,10 +41,13 @@ class LoginPage {
       .find(this.selectors.signInPasswordInput, { includeShadowDom: true })
       .type(this.adminPassowrd, { log: false, force: true });
 
+    cy.intercept("GET", "/prod/settings").as("settingsRequest");
     cy.get(this.selectors.signInSlot, { includeShadowDom: true })
       .find(this.selectors.signInSignInButton, { includeShadowDom: true })
       .contains(this.labels.signInLabel)
       .click();
+    cy.wait(["@settingsRequest"]);
+
     return new AdminHomepage();
   }
 }

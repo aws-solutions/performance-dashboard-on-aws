@@ -36,8 +36,15 @@ class DashboardListingPage {
     cy.findByRole("button", { name: "Actions" }).click();
     cy.get("div").contains("Delete").click();
 
+    // Wait for the request to finish
+    cy.intercept({
+      method: "DELETE",
+      url: "/prod/dashboard",
+    }).as("deleteDashboardsRequest");
+
     // Accept modal confirmation prompt
     cy.findByRole("button", { name: "Delete" }).click();
+    cy.wait(["@deleteDashboardsRequest"]);
 
     // Verify success alert shows up
     cy.contains(`${dashboardName} draft dashboard was successfully deleted.`);

@@ -13,8 +13,8 @@ let editDashboardPage: EditDashboardPage;
 describe("Admin user", () => {
   beforeEach(() => {
     const loginPage = new LoginPage();
-    loginPage.visit();
     loginPage.loginAsAdmin();
+    loginPage.visit();
 
     const createDashboardPage = new CreateDashboardPage();
     createDashboardPage.visit();

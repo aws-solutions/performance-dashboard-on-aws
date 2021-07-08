@@ -26,6 +26,7 @@ const chart: ChartWidget = {
     columnsMetadata: [],
     significantDigitLabels: false,
     dataLabels: false,
+    showTotal: true,
   },
 };
 

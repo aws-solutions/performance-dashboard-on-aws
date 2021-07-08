@@ -126,6 +126,7 @@ export interface ChartWidget extends Widget {
     horizontalScroll?: boolean;
     significantDigitLabels: boolean;
     dataLabels: boolean;
+    showTotal: boolean;
   };
 }
 

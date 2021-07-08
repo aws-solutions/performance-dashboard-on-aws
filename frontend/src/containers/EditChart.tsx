@@ -45,6 +45,7 @@ interface FormValues {
   sortData: string;
   horizontalScroll: boolean;
   dataLabels: boolean;
+  showTotal: boolean;
   significantDigitLabels: boolean;
 }
 
@@ -111,6 +112,7 @@ function EditChart() {
   const chartType = watch("chartType");
   const horizontalScroll = watch("horizontalScroll");
   const dataLabels = watch("dataLabels");
+  const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 
   const [displayedJson, setDisplayedJson] = useState<any[]>([]);
@@ -156,6 +158,7 @@ function EditChart() {
       const chartType = widget.content.chartType;
       const horizontalScroll = widget.content.horizontalScroll;
       const dataLabels = widget.content.dataLabels;
+      const showTotal = widget.content.showTotal;
 
       reset({
         title,
@@ -170,6 +173,7 @@ function EditChart() {
         chartType,
         horizontalScroll,
         dataLabels,
+        showTotal,
         significantDigitLabels: widget.content.significantDigitLabels,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
@@ -334,6 +338,9 @@ function EditChart() {
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
+          }),
+          ...(values.chartType === ChartType.DonutChart && {
+            showTotal: values.showTotal,
           }),
           datasetType: displayedDatasetType,
           datasetId: newDataset
@@ -608,6 +615,7 @@ function EditChart() {
                   setSortByDesc={setSortByDesc}
                   horizontalScroll={horizontalScroll}
                   dataLabels={dataLabels}
+                  showTotal={showTotal}
                   significantDigitLabels={significantDigitLabels}
                   columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                     hiddenColumns,

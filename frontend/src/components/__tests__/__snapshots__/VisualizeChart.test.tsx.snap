@@ -302,6 +302,24 @@ exports[`renders the VisualizeChart component 1`] = `
               Show data labels
             </label>
           </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
+              checked=""
+              class="usa-checkbox__input"
+              id="showTotal"
+              name="showTotal"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="showTotal"
+            >
+              Show total in chart's center
+            </label>
+          </div>
         </div>
         <div
           class="usa-form-group"
@@ -757,6 +775,24 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               for="dataLabels"
             >
               Show data labels
+            </label>
+          </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
+              checked=""
+              class="usa-checkbox__input"
+              id="showTotal"
+              name="showTotal"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="showTotal"
+            >
+              Show total in chart's center
             </label>
           </div>
         </div>

@@ -7,7 +7,6 @@ import UtilsService from "../services/UtilsService";
 import Table from "./Table";
 import Button from "./Button";
 import { CSVLink } from "react-csv";
-import { isPropertySignature } from "typescript";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";

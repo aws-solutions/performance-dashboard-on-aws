@@ -123,6 +123,10 @@ function fromChartItem(widget: Widget): ChartWidget {
         chartWidget.content.dataLabels !== undefined
           ? chartWidget.content.dataLabels
           : false,
+      showTotal:
+        chartWidget.content.showTotal !== undefined
+          ? chartWidget.content.showTotal
+          : true,
     },
   };
 }
@@ -245,6 +249,10 @@ function createChartWidget(widget: Widget): ChartWidget {
         widget.content.dataLabels !== undefined
           ? widget.content.dataLabels
           : false,
+      showTotal:
+        widget.content.showTotal !== undefined
+          ? widget.content.showTotal
+          : true,
       ...(widget.content.horizontalScroll && {
         horizontalScroll: widget.content.horizontalScroll,
       }),

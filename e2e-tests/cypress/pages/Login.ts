@@ -28,32 +28,29 @@ class LoginPage {
   }
 
   visit() {
+    // Capture the http request
     cy.intercept({
       method: "GET",
       url: "/prod/public/settings",
     }).as("publicSettingsRequest");
 
+    // Direct user to login page
     cy.visit("/admin");
     cy.wait(["@publicSettingsRequest"]);
   }
 
   loginAsAdmin(): AdminHomepage {
+    // Capture the http request
     cy.intercept({
       method: "GET",
       url: "/prod/public/settings",
     }).as("publicSettingsRequest");
 
+    // Direct user to login page
     cy.visit("/admin");
     cy.wait(["@publicSettingsRequest"]);
 
-    cy.get(this.selectors.signInSlot, { includeShadowDom: true })
-      .find(this.selectors.signInUsernameInput, { includeShadowDom: true })
-      .type(this.adminUsername, { log: false, force: true });
-
-    cy.get(this.selectors.signInSlot, { includeShadowDom: true })
-      .find(this.selectors.signInPasswordInput, { includeShadowDom: true })
-      .type(this.adminPassowrd, { log: false, force: true });
-
+    // Capture http requests
     cy.intercept({
       method: "GET",
       url: "/prod/settings",
@@ -63,6 +60,15 @@ class LoginPage {
       method: "GET",
       url: "/public/logo",
     }).as("logoRequest");
+
+    // Type in credentials, click Sign In button, and directed to admin homepage
+    cy.get(this.selectors.signInSlot, { includeShadowDom: true })
+      .find(this.selectors.signInUsernameInput, { includeShadowDom: true })
+      .type(this.adminUsername, { log: false, force: true });
+
+    cy.get(this.selectors.signInSlot, { includeShadowDom: true })
+      .find(this.selectors.signInPasswordInput, { includeShadowDom: true })
+      .type(this.adminPassowrd, { log: false, force: true });
 
     cy.get(this.selectors.signInSlot, { includeShadowDom: true })
       .find(this.selectors.signInSignInButton, { includeShadowDom: true })

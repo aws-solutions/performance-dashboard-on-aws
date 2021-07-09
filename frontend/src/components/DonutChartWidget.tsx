@@ -111,7 +111,6 @@ const DonutChartWidget = (props: Props) => {
     parts,
     props.significantDigitLabels,
     xAxisLargestValue,
-    total.current,
   ]);
 
   const renderCustomizedLabel = (properties: any): any => {

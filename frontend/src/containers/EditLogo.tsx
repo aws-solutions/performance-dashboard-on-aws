@@ -115,7 +115,7 @@ function EditLogo() {
                 fileName={
                   currentLogo
                     ? currentLogo.name
-                    : defaultLogo.replace(/^.*[\\\/]/, "")
+                    : defaultLogo.replace(/^.*[\\/]/, "")
                 }
                 onFileProcessed={onFileProcessed}
               />
@@ -142,7 +142,10 @@ function EditLogo() {
                   <em className="usa-logo__text display-flex flex-align-center">
                     <div className="logo">
                       {currentLogo && (
-                        <img src={URL.createObjectURL(currentLogo)}></img>
+                        <img
+                          src={URL.createObjectURL(currentLogo)}
+                          alt="logo"
+                        ></img>
                       )}
                       {!currentLogo && (
                         <img

@@ -91,7 +91,7 @@ function PublishQueueTab(props: Props) {
               accessor: "submittedBy",
             },
           ],
-          [dateFormatter, settings]
+          [dateFormatter, settings, t]
         )}
       />
       <div className="text-right">

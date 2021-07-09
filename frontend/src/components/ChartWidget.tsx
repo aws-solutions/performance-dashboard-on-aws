@@ -44,7 +44,7 @@ function ChartWidgetComponent(props: Props) {
       props.widget.content.sortByDesc
     );
     setFilteredJson(newFilteredJson);
-  }, [json, props.widget]);
+  }, [json, props.widget, content.columnsMetadata]);
 
   if (!filteredJson || filteredJson.length === 0) {
     return null;

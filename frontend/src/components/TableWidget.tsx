@@ -58,42 +58,46 @@ const TableWidget = ({
     setFilteredJson(newFilteredJson);
   }, [data, columnsMetadata]);
 
-  const keys = filteredJson.length
-    ? Object.keys(filteredJson[0] as Array<string>)
-    : [];
   const rows = useMemo(() => filteredJson || [], [filteredJson]);
-  const columns = useMemo(
-    () =>
-      keys.map((header) => {
-        return {
-          Header: header,
-          id: header,
-          accessor: header,
-          minWidth: 150,
-          Cell: (props: any) => {
-            const row = props.row.original;
+  const columns = useMemo(() => {
+    const keys = filteredJson.length
+      ? Object.keys(filteredJson[0] as Array<string>)
+      : [];
 
-            // Check if there is metadata for this column
-            let columnMetadata;
-            if (columnsMetadata) {
-              columnMetadata = columnsMetadata.find(
-                (cm) => cm.columnName === header
-              );
-            }
+    return keys.map((header) => {
+      return {
+        Header: header,
+        id: header,
+        accessor: header,
+        minWidth: 150,
+        Cell: (props: any) => {
+          const row = props.row.original;
 
-            return !UtilsService.isCellEmpty(row[header])
-              ? TickFormatter.format(
-                  row[header],
-                  largestTickByColumn[header],
-                  significantDigitLabels,
-                  columnMetadata
-                )
-              : "-";
-          },
-        };
-      }),
-    [keys]
-  );
+          // Check if there is metadata for this column
+          let columnMetadata;
+          if (columnsMetadata) {
+            columnMetadata = columnsMetadata.find(
+              (cm) => cm.columnName === header
+            );
+          }
+
+          return !UtilsService.isCellEmpty(row[header])
+            ? TickFormatter.format(
+                row[header],
+                largestTickByColumn[header],
+                significantDigitLabels,
+                columnMetadata
+              )
+            : "-";
+        },
+      };
+    });
+  }, [
+    largestTickByColumn,
+    significantDigitLabels,
+    columnsMetadata,
+    filteredJson,
+  ]);
 
   if (!filteredJson || filteredJson.length === 0) {
     return null;

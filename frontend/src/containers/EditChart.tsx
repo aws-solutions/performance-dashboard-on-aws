@@ -258,6 +258,9 @@ function EditChart() {
     currentJson,
     displayedJson,
     datasetType,
+    displayedDatasetType,
+    dynamicDataset,
+    staticDataset,
   ]);
 
   const onFileProcessed = useCallback(

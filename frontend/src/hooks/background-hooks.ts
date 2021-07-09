@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 export function useChangeBackgroundColor(): any {
   //store previous color
@@ -13,5 +13,5 @@ export function useChangeBackgroundColor(): any {
       //reset color
       document.body.style.background = originalBackroundColor;
     };
-  }, []);
+  }, [originalBackroundColor]);
 }

@@ -82,7 +82,7 @@ const LineChartWidget = (props: Props) => {
         ? "number"
         : "category";
     }
-  }, [data, lines]);
+  }, [data, lines, props.columnsMetadata]);
 
   const toggleLines = (e: any) => {
     if (hiddenLines.includes(e.dataKey)) {
@@ -111,7 +111,7 @@ const LineChartWidget = (props: Props) => {
     if (props.setWidthPercent) {
       props.setWidthPercent(widthPercent);
     }
-  }, [widthPercent]);
+  }, [props, widthPercent]);
 
   return (
     <div

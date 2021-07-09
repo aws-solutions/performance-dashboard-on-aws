@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
@@ -36,46 +36,48 @@ function CheckData(props: Props) {
   const [numberType, setNumberType] = useState<string>("");
   const [currencyType, setCurrencyType] = useState<string>("");
 
-  const handleSelectedHeadersChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    const target = event.target as HTMLInputElement;
-    const newSelectedHeaders = new Set(props.selectedHeaders);
-    if (target.checked) {
-      newSelectedHeaders.add(target.name);
-    } else {
-      newSelectedHeaders.delete(target.name);
-    }
-    if (newSelectedHeaders.size === 1) {
-      const selectedHeader = Array.from(newSelectedHeaders)[0];
-      if (props.dataTypes.has(selectedHeader)) {
-        setDataType(props.dataTypes.get(selectedHeader) || "");
-        if (
-          props.dataTypes.get(selectedHeader) === ColumnDataType.Number &&
-          props.numberTypes.has(selectedHeader)
-        ) {
-          setNumberType(props.numberTypes.get(selectedHeader) || "");
+  const handleSelectedHeadersChange = useCallback(
+    (event: React.FormEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const newSelectedHeaders = new Set(props.selectedHeaders);
+      if (target.checked) {
+        newSelectedHeaders.add(target.name);
+      } else {
+        newSelectedHeaders.delete(target.name);
+      }
+      if (newSelectedHeaders.size === 1) {
+        const selectedHeader = Array.from(newSelectedHeaders)[0];
+        if (props.dataTypes.has(selectedHeader)) {
+          setDataType(props.dataTypes.get(selectedHeader) || "");
           if (
-            props.numberTypes.get(selectedHeader) === NumberDataType.Currency &&
-            props.currencyTypes.has(selectedHeader)
+            props.dataTypes.get(selectedHeader) === ColumnDataType.Number &&
+            props.numberTypes.has(selectedHeader)
           ) {
-            setCurrencyType(props.currencyTypes.get(selectedHeader) || "");
+            setNumberType(props.numberTypes.get(selectedHeader) || "");
+            if (
+              props.numberTypes.get(selectedHeader) ===
+                NumberDataType.Currency &&
+              props.currencyTypes.has(selectedHeader)
+            ) {
+              setCurrencyType(props.currencyTypes.get(selectedHeader) || "");
+            } else {
+              setCurrencyType("");
+            }
           } else {
-            setCurrencyType("");
+            setNumberType("");
           }
         } else {
-          setNumberType("");
+          setDataType("");
         }
       } else {
         setDataType("");
+        setNumberType("");
+        setCurrencyType("");
       }
-    } else {
-      setDataType("");
-      setNumberType("");
-      setCurrencyType("");
-    }
-    props.setSelectedHeaders(newSelectedHeaders);
-  };
+      props.setSelectedHeaders(newSelectedHeaders);
+    },
+    [props]
+  );
 
   const handleHideFromVisualizationChange = (
     event: React.FormEvent<HTMLInputElement>
@@ -263,6 +265,8 @@ function CheckData(props: Props) {
       props.dataTypes,
       props.numberTypes,
       props.currencyTypes,
+      props.hiddenColumns,
+      handleSelectedHeadersChange,
     ]
   );
 

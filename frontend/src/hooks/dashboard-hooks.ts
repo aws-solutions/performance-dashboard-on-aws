@@ -264,7 +264,7 @@ export function useFriendlyUrl(
         );
       }
     }
-  }, [dashboard]);
+  }, [dashboard, versions]);
 
   return {
     friendlyURL,

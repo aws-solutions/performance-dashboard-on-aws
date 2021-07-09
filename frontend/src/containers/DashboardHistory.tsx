@@ -47,7 +47,7 @@ function DashboardHistory() {
         accessor: "userId",
       },
     ],
-    []
+    [dateFormatter, t]
   );
 
   const onSearch = (query: string) => {

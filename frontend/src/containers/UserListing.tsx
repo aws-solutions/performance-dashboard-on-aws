@@ -235,7 +235,7 @@ function UserListing() {
                 ),
             },
           ],
-          []
+          [t]
         )}
         rows={users}
       />

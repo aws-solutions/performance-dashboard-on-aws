@@ -3,14 +3,13 @@ import { ColumnMetadata } from "../models";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
-import Button from "./Button";
 import Table from "./Table";
 import DropdownMenu from "../components/DropdownMenu";
 import { CSVLink } from "react-csv";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
-const { MenuItem, MenuLink } = DropdownMenu;
+const { MenuItem } = DropdownMenu;
 
 interface Props {
   rows: any[];

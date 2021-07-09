@@ -11,7 +11,7 @@ import Spinner from "../components/Spinner";
 
 function BrandingAndStylingSettings() {
   const history = useHistory();
-  const { settings } = useSettings(true);
+  const { settings } = useSettings();
   const { t } = useTranslation();
 
   const onEditLogo = () => {

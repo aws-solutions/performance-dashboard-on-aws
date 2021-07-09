@@ -147,7 +147,7 @@ export function useWidgetDataset(widget: Widget): UseJsonDatasetHook {
         fetchData(jsonS3Key);
       }
     }
-  }, [widget]);
+  }, [widget, fetchData]);
 
   return {
     loading,

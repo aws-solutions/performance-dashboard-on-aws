@@ -19,7 +19,7 @@ export function useImage(s3Key: string): UseImageHook {
       setFile(data);
       setLoading(false);
     }
-  }, [s3Key]);
+  }, [s3Key, t]);
 
   useEffect(() => {
     fetchData();

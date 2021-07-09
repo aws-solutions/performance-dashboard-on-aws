@@ -46,11 +46,14 @@ function MetricsList(props: Props) {
     }
   };
 
-  const onDrag = (index: number, newIndex: number) => {
-    if (props.onDrag) {
-      props.onDrag(index, newIndex);
-    }
-  };
+  const onDrag = useCallback(
+    (index: number, newIndex: number) => {
+      if (props.onDrag) {
+        props.onDrag(index, newIndex);
+      }
+    },
+    [props]
+  );
 
   const onDrop = () => {
     if (props.onDrop) {
@@ -106,7 +109,7 @@ function MetricsList(props: Props) {
         onDrag(dragIndex, hoverIndex);
       }
     },
-    [props.metrics]
+    [props.metrics, onDrag]
   );
 
   return (

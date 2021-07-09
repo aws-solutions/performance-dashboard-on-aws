@@ -2,12 +2,7 @@ import React, { useState, useCallback } from "react";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useHistory, useParams } from "react-router-dom";
 import { LocationState } from "../models";
-import {
-  useDashboard,
-  useDateTimeFormatter,
-  useSettings,
-  useDatasets,
-} from "../hooks";
+import { useDashboard, useDateTimeFormatter, useDatasets } from "../hooks";
 import Table from "../components/Table";
 import Button from "../components/Button";
 import Search from "../components/Search";
@@ -30,7 +25,6 @@ function ChooseStaticDataset() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard } = useDashboard(dashboardId);
   const { staticDatasets } = useDatasets();
-  const { settings } = useSettings();
 
   const [filter, setFilter] = useState("");
   const [json, setJson] = useState<Array<any>>([]);
@@ -136,7 +130,7 @@ function ChooseStaticDataset() {
               Cell: (props: any) => dateFormatter(props.value),
             },
           ],
-          [dateFormatter, settings]
+          [dateFormatter, t]
         )}
       />
       <div className="text-right">
@@ -149,7 +143,7 @@ function ChooseStaticDataset() {
       <Button
         onClick={onSubmit}
         type="submit"
-        disabled={json === undefined || json.length == 0}
+        disabled={json === undefined || json.length === 0}
       >
         {t("SelectAndContinue")}
       </Button>

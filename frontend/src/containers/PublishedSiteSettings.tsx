@@ -15,7 +15,7 @@ import "./PublishedSiteSettings.css";
 function PublishedSiteSettings() {
   const history = useHistory();
   const { homepage, loading } = useHomepage();
-  const { settings, loadingSettings } = useSettings(true);
+  const { settings, loadingSettings } = useSettings();
   const { t } = useTranslation();
 
   const onContentEdit = () => {

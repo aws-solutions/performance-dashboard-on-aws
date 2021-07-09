@@ -59,11 +59,14 @@ function WidgetList(props: Props) {
     }
   };
 
-  const onDrag = (index: number, newIndex: number) => {
-    if (props.onDrag) {
-      props.onDrag(index, newIndex);
-    }
-  };
+  const onDrag = useCallback(
+    (index: number, newIndex: number) => {
+      if (props.onDrag) {
+        props.onDrag(index, newIndex);
+      }
+    },
+    [props]
+  );
 
   const onDrop = () => {
     if (props.onDrop) {
@@ -105,7 +108,7 @@ function WidgetList(props: Props) {
         onDrag(dragIndex, hoverIndex);
       }
     },
-    [props.widgets]
+    [props.widgets, onDrag]
   );
 
   return (

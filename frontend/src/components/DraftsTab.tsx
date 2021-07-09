@@ -111,7 +111,7 @@ function DraftsTab(props: Props) {
               accessor: "createdBy",
             },
           ],
-          [dateFormatter, settings]
+          [dateFormatter, settings, t]
         )}
       />
       <div className="text-right">

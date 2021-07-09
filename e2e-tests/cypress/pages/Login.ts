@@ -28,11 +28,24 @@ class LoginPage {
   }
 
   visit() {
+    cy.intercept({
+      method: "GET",
+      url: "/prod/public/settings",
+    }).as("publicSettingsRequest");
+
     cy.visit("/admin");
+    cy.wait(["@publicSettingsRequest"]);
   }
 
   loginAsAdmin(): AdminHomepage {
+    cy.intercept({
+      method: "GET",
+      url: "/prod/public/settings",
+    }).as("publicSettingsRequest");
+
     cy.visit("/admin");
+    cy.wait(["@publicSettingsRequest"]);
+
     cy.get(this.selectors.signInSlot, { includeShadowDom: true })
       .find(this.selectors.signInUsernameInput, { includeShadowDom: true })
       .type(this.adminUsername, { log: false, force: true });
@@ -41,12 +54,21 @@ class LoginPage {
       .find(this.selectors.signInPasswordInput, { includeShadowDom: true })
       .type(this.adminPassowrd, { log: false, force: true });
 
-    cy.intercept("GET", "/prod/settings").as("settingsRequest");
+    cy.intercept({
+      method: "GET",
+      url: "/prod/settings",
+    }).as("settingsRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: "/public/logo",
+    }).as("logoRequest");
+
     cy.get(this.selectors.signInSlot, { includeShadowDom: true })
       .find(this.selectors.signInSignInButton, { includeShadowDom: true })
       .contains(this.labels.signInLabel)
       .click();
-    cy.wait(["@settingsRequest"]);
+    cy.wait(["@settingsRequest", "@logoRequest"]);
 
     return new AdminHomepage();
   }

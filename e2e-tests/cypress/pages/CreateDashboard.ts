@@ -30,15 +30,21 @@ class CreateDashboardPage {
 
     cy.intercept({
       method: "GET",
-      url: "/prod/dashboard",
-    }).as("listDashboardRequest");
+      url: new RegExp(/\/prod\/dashboard\/.+/),
+    }).as("viewDashboardRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: new RegExp(/\/prod\/dashboard\/.+\/versions/),
+    }).as("viewDashboardVersionsRequest");
 
     // Click the create button and wait for request to finish
     cy.get("form").submit();
     cy.wait([
       "@createDashboardRequest",
-      "@listDashboardRequest",
       "@logoRequest",
+      "@viewDashboardRequest",
+      "@viewDashboardVersionsRequest",
     ]);
 
     // User is taken to the EditDashboardPage

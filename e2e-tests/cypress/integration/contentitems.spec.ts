@@ -13,8 +13,8 @@ let editDashboardPage: EditDashboardPage;
 describe("Admin user", () => {
   beforeEach(() => {
     const loginPage = new LoginPage();
-    loginPage.loginAsAdmin();
     loginPage.visit();
+    loginPage.loginAsAdmin();
 
     const createDashboardPage = new CreateDashboardPage();
     createDashboardPage.visit();
@@ -23,11 +23,11 @@ describe("Admin user", () => {
     createDashboardPage.fillName(dashboardName);
     createDashboardPage.fillDescription(random.sentence());
     editDashboardPage = createDashboardPage.submit();
+
+    cy.contains(`"${dashboardName}" draft dashboard successfully created.`);
   });
 
   it("can add a Text content item to a dashboard", () => {
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
-
     const addContentItemPage = editDashboardPage.goToAddContentItem();
     addContentItemPage.selectTextContentItem();
     const addTextPage = addContentItemPage.clickContinue() as AddTextPage;
@@ -47,7 +47,6 @@ describe("Admin user", () => {
     editDashboardPage = addTextPage.submit();
 
     // Verify new content item shows up
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
     cy.contains(`'${textTitle}' text has been successfully added.`);
     cy.contains(textTitle);
 
@@ -56,83 +55,77 @@ describe("Admin user", () => {
     dashboardListingPage.deleteDashboard(dashboardName);
   });
 
-  it("can add a Metrics content item to a dashboard", () => {
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
+  // it("can add a Metrics content item to a dashboard", () => {
+  //   const addContentItemPage = editDashboardPage.goToAddContentItem();
+  //   addContentItemPage.selectMetricsContentItem();
+  //   const addMetricsPage = addContentItemPage.clickContinue() as AddMetricsPage;
 
-    const addContentItemPage = editDashboardPage.goToAddContentItem();
-    addContentItemPage.selectMetricsContentItem();
-    const addMetricsPage = addContentItemPage.clickContinue() as AddMetricsPage;
+  //   // Step 1. Select create from scratch
+  //   addMetricsPage.selectCreateFromScratch();
+  //   const metricsTitle = random.word();
+  //   addMetricsPage.fillTitle(metricsTitle);
 
-    // Step 1. Select create from scratch
-    addMetricsPage.selectCreateFromScratch();
-    const metricsTitle = random.word();
-    addMetricsPage.fillTitle(metricsTitle);
+  //   // Add new metric to the list
+  //   const metricTitle = random.word();
+  //   const metricValue = random.integer({ min: 100, max: 500 });
+  //   addMetricsPage.addNewMetric(metricTitle, metricValue);
 
-    // Add new metric to the list
-    const metricTitle = random.word();
-    const metricValue = random.integer({ min: 100, max: 500 });
-    addMetricsPage.addNewMetric(metricTitle, metricValue);
+  //   // Verify new metric is added to the list
+  //   cy.contains("Metric successfully added");
+  //   cy.contains(metricTitle);
+  //   cy.contains(metricValue);
 
-    // Verify new metric is added to the list
-    cy.contains("Metric successfully added");
-    cy.contains(metricTitle);
-    cy.contains(metricValue);
+  //   // Submit form
+  //   editDashboardPage = addMetricsPage.submit();
 
-    // Submit form
-    editDashboardPage = addMetricsPage.submit();
+  //   // Verify new content item shows up
+  //   cy.contains(`Metrics '${metricsTitle}' have been successfully added`);
+  //   cy.contains(metricsTitle);
 
-    // Verify new content item shows up
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
-    cy.contains(`Metrics '${metricsTitle}' have been successfully added`);
-    cy.contains(metricsTitle);
+  //   // Delete the dashboard
+  //   const dashboardListingPage = editDashboardPage.goToDashboardListing();
+  //   dashboardListingPage.deleteDashboard(dashboardName);
+  // });
 
-    // Delete the dashboard
-    const dashboardListingPage = editDashboardPage.goToDashboardListing();
-    dashboardListingPage.deleteDashboard(dashboardName);
-  });
+  // it("can add a Line Chart content item to a dashboard", () => {
+  //   const addContentItemPage = editDashboardPage.goToAddContentItem();
+  //   addContentItemPage.selectChartContentItem();
+  //   const addChartPage = addContentItemPage.clickContinue() as AddChartPage;
 
-  it("can add a Line Chart content item to a dashboard", () => {
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
+  //   // Step 1. Choose static dataset
+  //   addChartPage.selectStaticDataset();
+  //   addChartPage.uploadDataset("linechart.csv");
 
-    const addContentItemPage = editDashboardPage.goToAddContentItem();
-    addContentItemPage.selectChartContentItem();
-    const addChartPage = addContentItemPage.clickContinue() as AddChartPage;
+  //   // Step 2. Select columns to display/hide
+  //   addChartPage.selectColumns();
 
-    // Step 1. Choose static dataset
-    addChartPage.selectStaticDataset();
-    addChartPage.uploadDataset("linechart.csv");
+  //   // Step 3. Enter chart details
+  //   const chartTitle = random.word();
+  //   addChartPage.fillTitle(chartTitle);
 
-    // Step 2. Select columns to display/hide
-    addChartPage.selectColumns();
+  //   const chartSummary = random.sentence();
+  //   addChartPage.fillSummary(chartSummary);
 
-    // Step 3. Enter chart details
-    const chartTitle = random.word();
-    addChartPage.fillTitle(chartTitle);
+  //   // Verify Chart renders data from fixture linechart.csv
+  //   cy.contains("Series 1");
+  //   cy.contains("Series 2");
+  //   cy.contains("Series 3");
+  //   cy.contains("Series 4");
+  //   cy.contains("Series 5");
 
-    const chartSummary = random.sentence();
-    addChartPage.fillSummary(chartSummary);
+  //   // Verify chart title and summary are also rendered in preview
+  //   cy.contains(chartSummary).should("exist");
+  //   cy.findByRole("heading", { name: chartTitle }).should("exist");
 
-    // Verify Chart renders data from fixture linechart.csv
-    cy.contains("Series 1");
-    cy.contains("Series 2");
-    cy.contains("Series 3");
-    cy.contains("Series 4");
-    cy.contains("Series 5");
+  //   // Submit form
+  //   editDashboardPage = addChartPage.submit();
 
-    // Verify chart title and summary are also rendered in preview
-    cy.contains(chartSummary).should("exist");
-    cy.findByRole("heading", { name: chartTitle }).should("exist");
+  //   // Verify new content item shows up
+  //   cy.contains(`'${chartTitle}' chart has been successfully added.`);
+  //   cy.contains(chartTitle);
 
-    // Submit form
-    editDashboardPage = addChartPage.submit();
-
-    // Verify new content item shows up
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
-    cy.contains(`'${chartTitle}' chart has been successfully added.`);
-    cy.contains(chartTitle);
-
-    // Delete the dashboard
-    const dashboardListingPage = editDashboardPage.goToDashboardListing();
-    dashboardListingPage.deleteDashboard(dashboardName);
-  });
+  //   // Delete the dashboard
+  //   const dashboardListingPage = editDashboardPage.goToDashboardListing();
+  //   dashboardListingPage.deleteDashboard(dashboardName);
+  // });
 });

@@ -33,7 +33,21 @@ class AddContentItemPage {
   }
 
   clickContinue(): AddMetricsPage | AddTextPage | AddChartPage {
+    // Capture the http requests
+    cy.intercept({
+      method: "GET",
+      url: "/public/logo",
+    }).as("logoRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: "/prod/dashboard",
+    }).as("addSpecificContentToDashboardRequest");
+
+    // Direct to specific content page
     cy.get("button").contains("Continue").click();
+    cy.wait(["@logoRequest", "@addSpecificContentToDashboardRequest"]);
+
     switch (this.selectedContentItem) {
       case "Text":
         return new AddTextPage();

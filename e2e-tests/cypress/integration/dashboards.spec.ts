@@ -35,5 +35,8 @@ describe("Admin user", () => {
     // Go back to the dashboard listing page and delete the dashboard
     dashboardListingPage.visit();
     dashboardListingPage.deleteDashboard(dashboardName);
+
+    // Verify success alert shows up
+    cy.contains(`${dashboardName} draft dashboard was successfully deleted.`);
   });
 });

@@ -70,9 +70,6 @@ class DashboardListingPage {
     // Accept modal confirmation prompt
     cy.findByRole("button", { name: "Delete" }).click();
     cy.wait(["@deleteDashboardsRequest", "@listDashboardRequest"]);
-
-    // Verify success alert shows up
-    cy.contains(`${dashboardName} draft dashboard was successfully deleted.`);
   }
 }
 

@@ -219,7 +219,7 @@ function VisualizeTable(props: Props) {
                 <Alert
                   type="info"
                   message={
-                    <div className="grid-row margin-left-4">
+                    <div className="grid-row margin-left-6">
                       <div className="grid-col-11">
                         {t("VisualizeTableComponent.TableCorrectDisplay")}{" "}
                         <Link

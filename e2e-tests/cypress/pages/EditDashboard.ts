@@ -31,10 +31,10 @@ class EditDashboardPage {
     cy.intercept({
       method: "GET",
       url: "/prod/dashboard",
-    }).as("listDashboardRequest");
+    }).as("listDashboardsRequest");
 
     cy.get("a").contains("Dashboards").click();
-    cy.wait(["@logoRequest", "@listDashboardRequest"]);
+    cy.wait(["@logoRequest", "@listDashboardsRequest"]);
     return new DashboardListingPage();
   }
 }

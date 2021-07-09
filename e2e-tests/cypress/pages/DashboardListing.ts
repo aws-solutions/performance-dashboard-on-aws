@@ -65,11 +65,11 @@ class DashboardListingPage {
     cy.intercept({
       method: "GET",
       url: "/prod/dashboard",
-    }).as("listDashboardRequest");
+    }).as("listDashboardsRequest");
 
     // Accept modal confirmation prompt
     cy.findByRole("button", { name: "Delete" }).click();
-    cy.wait(["@deleteDashboardsRequest", "@listDashboardRequest"]);
+    cy.wait(["@deleteDashboardsRequest", "@listDashboardsRequest"]);
   }
 }
 

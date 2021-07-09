@@ -45,6 +45,7 @@ function getConfigContent(): string {
     userPoolId: process.env.USER_POOL_ID,
     appClientId: process.env.APP_CLIENT_ID,
     datasetsBucket: process.env.DATASETS_BUCKET,
+    contentBucket: process.env.CONTENT_BUCKET,
     identityPoolId: process.env.IDENTITY_POOL_ID,
     contactEmail: process.env.CONTACT_EMAIL,
     brandName: process.env.BRAND_NAME,

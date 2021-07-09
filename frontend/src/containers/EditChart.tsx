@@ -32,6 +32,7 @@ import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -45,6 +46,7 @@ interface FormValues {
   sortData: string;
   horizontalScroll: boolean;
   dataLabels: boolean;
+  showTotal: boolean;
   significantDigitLabels: boolean;
   staticFileName: string | undefined;
   dynamicFileName: string | undefined;
@@ -74,6 +76,8 @@ function EditChart() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [enableContinueButton, setEnableContinueButton] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const [staticFileName, setStaticFileName] = useState<string | undefined>("");
   const [dynamicFileName, setDynamicFileName] =
@@ -116,6 +120,7 @@ function EditChart() {
   const chartType = watch("chartType");
   const horizontalScroll = watch("horizontalScroll");
   const dataLabels = watch("dataLabels");
+  const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 
   const [displayedJson, setDisplayedJson] = useState<any[]>([]);
@@ -161,6 +166,7 @@ function EditChart() {
       const chartType = widget.content.chartType;
       const horizontalScroll = widget.content.horizontalScroll;
       const dataLabels = widget.content.dataLabels;
+      const showTotal = widget.content.showTotal;
 
       if (dynamicDataset) {
         setDynamicFileName(dynamicDataset?.fileName);
@@ -182,6 +188,7 @@ function EditChart() {
         chartType,
         horizontalScroll,
         dataLabels,
+        showTotal,
         significantDigitLabels: widget.content.significantDigitLabels,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
@@ -267,6 +274,26 @@ function EditChart() {
         encoding: "ISO-8859-1",
         complete: function (results: ParseResult<object>) {
           initializeColumnsMetadata();
+
+          let wrongCSV = false;
+          const firstRow = results.data[0];
+          for (let columnName in firstRow) {
+            if (columnName === "") {
+              wrongCSV = true;
+              break;
+            }
+          }
+
+          if (wrongCSV) {
+            setEnableContinueButton(false);
+            setShowWarning(true);
+            setCsvFile(undefined);
+            return;
+          } else {
+            setEnableContinueButton(true);
+            setShowWarning(false);
+          }
+
           if (results.errors.length) {
             setCsvErrors(results.errors);
             setCsvJson([]);
@@ -346,6 +373,9 @@ function EditChart() {
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
+          }),
+          ...(values.chartType === ChartType.DonutChart && {
+            showTotal: values.showTotal,
           }),
           datasetType: displayedDatasetType,
           datasetId: newDataset
@@ -542,6 +572,13 @@ function EditChart() {
               <div hidden={step !== 0}>
                 <PrimaryActionBar>
                   {configHeader}
+                  <div className="margin-y-3" hidden={!showWarning}>
+                    <Alert
+                      type="error"
+                      message={t("EditChartScreen.ResolveError")}
+                      slim
+                    ></Alert>
+                  </div>
                   <ChooseData
                     selectDynamicDataset={selectDynamicDataset}
                     dynamicDatasets={dynamicDatasets}
@@ -551,7 +588,12 @@ function EditChart() {
                     advanceStep={advanceStep}
                     fileLoading={fileLoading}
                     browseDatasets={browseDatasets}
-                    continueButtonDisabled={!displayedJson.length}
+                    continueButtonDisabled={
+                      !enableContinueButton || !displayedJson.length
+                    }
+                    continueButtonDisabledTooltip={t(
+                      "EditChartScreen.ChooseDataset"
+                    )}
                     csvErrors={csvErrors}
                     csvFile={csvFile}
                     staticFileName={staticFileName}
@@ -622,6 +664,7 @@ function EditChart() {
                   setSortByDesc={setSortByDesc}
                   horizontalScroll={horizontalScroll}
                   dataLabels={dataLabels}
+                  showTotal={showTotal}
                   significantDigitLabels={significantDigitLabels}
                   columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                     hiddenColumns,

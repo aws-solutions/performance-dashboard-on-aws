@@ -40,6 +40,7 @@ interface FormValues {
   horizontalScroll: boolean;
   significantDigitLabels: boolean;
   dataLabels: boolean;
+  showTotal: boolean;
   sortData: string;
 }
 
@@ -76,6 +77,8 @@ function AddChart() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [enableContinueButton, setEnableContinueButton] = useState(true);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.json ? DatasetType.StaticDataset : undefined
   );
@@ -107,6 +110,7 @@ function AddChart() {
   const showTitle = watch("showTitle");
   const horizontalScroll = watch("horizontalScroll");
   const dataLabels = watch("dataLabels");
+  const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 
   const initializeColumnsMetadata = () => {
@@ -180,6 +184,9 @@ function AddChart() {
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
+          }),
+          ...(values.chartType === ChartType.DonutChart && {
+            showTotal: values.showTotal,
           }),
           datasetType: datasetType,
           datasetId: newDataset
@@ -268,19 +275,14 @@ function AddChart() {
             }
           }
 
-          const continueButton = document.querySelectorAll(
-            "button.usa-button--base"
-          )[1];
-          const warning = document.querySelectorAll("div.wrong-csv-warning")[0];
-
           if (wrongCSV) {
-            continueButton.disabled = true;
-            warning.hidden = false;
+            setEnableContinueButton(false);
+            setShowWarning(true);
             setCsvFile(undefined);
             return;
           } else {
-            continueButton.disabled = false;
-            warning.hidden = true;
+            setEnableContinueButton(true);
+            setShowWarning(false);
           }
 
           if (results.errors.length) {
@@ -402,13 +404,12 @@ function AddChart() {
             <div hidden={step !== 0}>
               <PrimaryActionBar>
                 {configHeader}
-                <div className="wrong-csv-warning" hidden={true}>
+                <div className="margin-y-3" hidden={!showWarning}>
                   <Alert
                     type="error"
                     message={t("AddChartScreen.ResolveError")}
                     slim
                   ></Alert>
-                  <br></br>
                 </div>
                 <ChooseData
                   selectDynamicDataset={selectDynamicDataset}
@@ -419,7 +420,9 @@ function AddChart() {
                   advanceStep={advanceStep}
                   fileLoading={fileLoading}
                   browseDatasets={browseDatasets}
-                  continueButtonDisabled={!currentJson.length}
+                  continueButtonDisabled={
+                    !enableContinueButton || !currentJson.length
+                  }
                   continueButtonDisabledTooltip={t(
                     "AddChartScreen.ChooseDataset"
                   )}
@@ -496,6 +499,7 @@ function AddChart() {
                 significantDigitLabels={significantDigitLabels}
                 horizontalScroll={horizontalScroll}
                 dataLabels={dataLabels}
+                showTotal={showTotal}
                 columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                   hiddenColumns,
                   dataTypes,

@@ -132,6 +132,7 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           hideDataLabels={!content.dataLabels}
           columnsMetadata={content.columnsMetadata}
+          showTotal={content.showTotal}
         />
       );
 

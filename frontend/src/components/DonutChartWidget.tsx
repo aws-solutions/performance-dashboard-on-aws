@@ -26,6 +26,7 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
+  showTotal?: boolean;
   isPreview?: boolean;
 };
 
@@ -269,12 +270,14 @@ const DonutChartWidget = (props: Props) => {
                   onMouseEnter={() => setPartsHover(part)}
                 />
               ))}
-              <Label
-                className="text-base-darkest text-bold"
-                value={getTotal()}
-                offset={0}
-                position="center"
-              />
+              {props.showTotal && (
+                <Label
+                  className="text-base-darkest text-bold"
+                  value={getTotal()}
+                  offset={0}
+                  position="center"
+                />
+              )}
             </Pie>
             <Tooltip
               itemStyle={{ color: "#1b1b1b" }}

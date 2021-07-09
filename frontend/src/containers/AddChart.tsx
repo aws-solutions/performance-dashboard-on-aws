@@ -428,6 +428,8 @@ function AddChart() {
                   onCancel={onCancel}
                   register={register}
                   widgetType={t("ChooseDataDescriptionChart")}
+                  staticFileName={undefined}
+                  dynamicFileName={undefined}
                 />
               </PrimaryActionBar>
             </div>

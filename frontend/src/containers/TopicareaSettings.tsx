@@ -1,15 +1,17 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useSettings } from "../hooks";
+import { useSettings, useTopicAreas } from "../hooks";
 import Button from "../components/Button";
 import TopicareaListing from "./TopicareaListing";
 import SettingsLayout from "../layouts/Settings";
 import AlertContainer from "./AlertContainer";
 import MarkdownRender from "../components/MarkdownRender";
 import { useTranslation } from "react-i18next";
+import Spinner from "../components/Spinner";
 
 function TopicareaSettings() {
-  const { settings, loadingSettings } = useSettings(true);
+  const { topicareas, loading, reloadTopicAreas } = useTopicAreas();
+  const { settings, loadingSettings } = useSettings();
   const history = useHistory();
   const { t } = useTranslation();
 
@@ -19,8 +21,11 @@ function TopicareaSettings() {
 
   return (
     <SettingsLayout>
-      {loadingSettings ? (
-        ""
+      {loadingSettings || loading ? (
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
       ) : (
         <>
           <h1>{settings.topicAreaLabels.plural}</h1>
@@ -73,10 +78,12 @@ function TopicareaSettings() {
               margin: "2rem 0",
             }}
           />
+          <TopicareaListing
+            topicareas={topicareas}
+            reloadTopicAreas={reloadTopicAreas}
+          />
         </>
       )}
-
-      <TopicareaListing />
     </SettingsLayout>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { useDateTimeFormatter, useSettings } from "../hooks";
+import { useDateTimeFormatter } from "../hooks";
 import { Dataset, DatasetType } from "../models";
 import Button from "./Button";
 import FileInput from "./FileInput";
@@ -30,7 +30,6 @@ interface Props {
 function ChooseData(props: Props) {
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
-  const { settings } = useSettings();
   const [filter, setFilter] = useState("");
   const [query, setQuery] = useState("");
 
@@ -40,7 +39,7 @@ function ChooseData(props: Props) {
         props.selectDynamicDataset(selectedDataset[0]);
       }
     },
-    [props.datasetType]
+    [props]
   );
 
   const onSearch = (query: string) => {
@@ -237,7 +236,7 @@ function ChooseData(props: Props) {
                     accessor: "tags",
                   },
                 ],
-                [dateFormatter, settings]
+                [dateFormatter, t]
               )}
             />
           </div>

@@ -10,7 +10,11 @@ function UserStatus() {
       <div className="font-sans-lg usa-prose">
         <p>
           {t("UserStatuses.UserStatusesDesc")}{" "}
-          <a href="https://aws.amazon.com/cognito/" target="_blank">
+          <a
+            href="https://aws.amazon.com/cognito/"
+            target="_blank"
+            rel="noreferrer"
+          >
             {t("UserStatuses.LearnCognitoDesc")}
           </a>
         </p>

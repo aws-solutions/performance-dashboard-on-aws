@@ -33,7 +33,7 @@ export function useYAxisMetadata(
     } else {
       setYAxisMargin(22);
     }
-  }, [chartRef, chartRef.current, chartLoaded, significantDigitLabels]);
+  }, [chartRef, chartLoaded, significantDigitLabels]);
 
   return {
     yAxisLargestValue,
@@ -61,7 +61,7 @@ export function useXAxisMetadata(
         setXAxisLargestValue(largestTick);
       }
     }
-  }, [chartRef, chartRef.current, chartLoaded, significantDigitLabels]);
+  }, [chartRef, chartLoaded, significantDigitLabels]);
 
   return {
     xAxisLargestValue,

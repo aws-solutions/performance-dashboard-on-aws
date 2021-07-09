@@ -80,7 +80,7 @@ function ArchivedTab(props: Props) {
               accessor: "archivedBy",
             },
           ],
-          [dateFormatter, settings]
+          [dateFormatter, settings, t]
         )}
       />
       <div className="text-right">

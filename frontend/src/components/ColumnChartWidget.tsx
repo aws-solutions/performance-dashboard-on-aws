@@ -85,7 +85,7 @@ const ColumnChartWidget = (props: Props) => {
         ? "number"
         : "category";
     }
-  }, [data, columns]);
+  }, [data, columns, props.columnsMetadata]);
 
   const toggleColumns = (e: any) => {
     if (hiddenColumns.includes(e.dataKey)) {
@@ -114,7 +114,7 @@ const ColumnChartWidget = (props: Props) => {
     if (props.setWidthPercent) {
       props.setWidthPercent(widthPercent);
     }
-  }, [widthPercent]);
+  }, [props, widthPercent]);
 
   return (
     <div

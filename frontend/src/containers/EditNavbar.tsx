@@ -22,7 +22,7 @@ function EditNavBar() {
   const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {
-    if (!settings.navbarTitle || settings.navbarTitle != values.title) {
+    if (!settings.navbarTitle || settings.navbarTitle !== values.title) {
       await BackendService.updateSetting(
         "navbarTitle",
         values.title,
@@ -32,7 +32,7 @@ function EditNavBar() {
 
     if (
       !settings.contactEmailAddress ||
-      settings.contactEmailAddress != values.contactEmail
+      settings.contactEmailAddress !== values.contactEmail
     ) {
       await BackendService.updateSetting(
         "contactEmailAddress",

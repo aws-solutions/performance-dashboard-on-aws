@@ -111,7 +111,7 @@ function PublishedTab(props: Props) {
               accessor: "publishedBy",
             },
           ],
-          [dateFormatter, settings]
+          [dateFormatter, settings, t]
         )}
       />
       <div className="text-right">

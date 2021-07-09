@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useSettings } from "../hooks";
-import dayjs from "dayjs";
 import SettingsLayout from "../layouts/Settings";
 import Button from "../components/Button";
 import AlertContainer from "./AlertContainer";

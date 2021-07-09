@@ -36,8 +36,6 @@ function AddMetric() {
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [percentage, setPercentage] = useState<string>("");
-  const [currency, setCurrency] = useState<string>("");
   const [symbolType, setsymbolType] = useState<string>("Percentage");
 
   const onSubmit = async (values: FormValues) => {
@@ -71,13 +69,10 @@ function AddMetric() {
   const handlePercentage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === "Percentage") {
       setsymbolType("Percentage");
-      setPercentage(e.target.value);
     } else if (e.target.value === "Currency") {
       setsymbolType("Currency");
-      setPercentage(e.target.value);
     } else if (e.target.value === "") {
       setsymbolType("SelectAnOption");
-      setPercentage(e.target.value);
     }
   };
 
@@ -185,8 +180,8 @@ function AddMetric() {
                     register={register}
                   />
 
-                  {symbolType != "Percentage" &&
-                    symbolType != "SelectAnOption" && (
+                  {symbolType !== "Percentage" &&
+                    symbolType !== "SelectAnOption" && (
                       <Dropdown
                         id="currency"
                         name="currency"

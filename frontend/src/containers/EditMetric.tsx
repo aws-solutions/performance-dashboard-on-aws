@@ -186,10 +186,10 @@ function EditMetric() {
                   register={register}
                 />
 
-                {symbolType == "Currency" &&
-                  (state.metric.percentage == "Percentage" ||
-                    state.metric.percentage == "SelectAnOption" ||
-                    state.metric.percentage == "") && (
+                {symbolType === "Currency" &&
+                  (state.metric.percentage === "Percentage" ||
+                    state.metric.percentage === "SelectAnOption" ||
+                    state.metric.percentage === "") && (
                     <Dropdown
                       id="currency"
                       name="currency"
@@ -215,9 +215,9 @@ function EditMetric() {
                       required
                     />
                   )}
-                {state.metric.percentage == "Currency" &&
-                  symbolType != "Percentage" &&
-                  symbolType != "SelectAnOption" && (
+                {state.metric.percentage === "Currency" &&
+                  symbolType !== "Percentage" &&
+                  symbolType !== "SelectAnOption" && (
                     <Dropdown
                       id="currency"
                       name="currency"

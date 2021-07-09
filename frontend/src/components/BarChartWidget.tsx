@@ -81,7 +81,7 @@ const BarChartWidget = (props: Props) => {
         ? "number"
         : "category";
     }
-  }, [data, bars]);
+  }, [data, bars, props.columnsMetadata]);
 
   const toggleBars = (e: any) => {
     if (hiddenBars.includes(e.dataKey)) {

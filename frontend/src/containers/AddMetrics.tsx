@@ -13,7 +13,6 @@ import {
 import {
   useDashboard,
   useDateTimeFormatter,
-  useSettings,
   useDatasets,
   useFullPreview,
   useChangeBackgroundColor,
@@ -56,7 +55,6 @@ function AddMetrics() {
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicMetricDatasets } = useDatasets();
-  const { settings } = useSettings();
   const { register, errors, handleSubmit, reset, watch } = useForm<FormValues>({
     defaultValues: {
       title: state && state.metricTitle !== undefined ? state.metricTitle : "",
@@ -125,7 +123,7 @@ function AddMetrics() {
         accessor: "tags",
       },
     ],
-    [dateFormatter, settings]
+    [dateFormatter, t]
   );
 
   const uploadDataset = async (): Promise<Dataset> => {
@@ -286,9 +284,12 @@ function AddMetrics() {
     }
   }, []);
 
-  const onSelect = useCallback((selectedDataset: Array<Dataset>) => {
-    selectDynamicDataset(selectedDataset[0]);
-  }, []);
+  const onSelect = useCallback(
+    (selectedDataset: Array<Dataset>) => {
+      selectDynamicDataset(selectedDataset[0]);
+    },
+    [selectDynamicDataset]
+  );
 
   const advanceStep = () => {
     setStep(1);

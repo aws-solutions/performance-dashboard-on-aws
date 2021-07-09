@@ -48,6 +48,8 @@ interface FormValues {
   dataLabels: boolean;
   showTotal: boolean;
   significantDigitLabels: boolean;
+  staticFileName: string | undefined;
+  dynamicFileName: string | undefined;
 }
 
 interface PathParams {
@@ -77,6 +79,9 @@ function EditChart() {
   const [showWarning, setShowWarning] = useState(false);
   const [enableContinueButton, setEnableContinueButton] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
+  const [staticFileName, setStaticFileName] = useState<string | undefined>("");
+  const [dynamicFileName, setDynamicFileName] =
+    useState<string | undefined>("");
   const {
     widget,
     datasetType,
@@ -162,6 +167,13 @@ function EditChart() {
       const horizontalScroll = widget.content.horizontalScroll;
       const dataLabels = widget.content.dataLabels;
       const showTotal = widget.content.showTotal;
+
+      if (dynamicDataset) {
+        setDynamicFileName(dynamicDataset?.fileName);
+      }
+      if (staticDataset) {
+        setStaticFileName(staticDataset?.fileName);
+      }
 
       reset({
         title,
@@ -587,6 +599,8 @@ function EditChart() {
                     )}
                     csvErrors={csvErrors}
                     csvFile={csvFile}
+                    staticFileName={staticFileName}
+                    dynamicFileName={dynamicFileName}
                     onCancel={onCancel}
                     register={register}
                     widgetType={t("ChooseDataDescriptionChart")}

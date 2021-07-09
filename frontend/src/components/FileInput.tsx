@@ -12,6 +12,7 @@ interface Props {
   register?: Function;
   disabled?: boolean;
   fileName?: string;
+  staticFileName?: string | undefined;
   hint?: string | React.ReactNode;
   accept?: string;
   errors?: Array<object>;
@@ -37,7 +38,7 @@ function FileInput(props: Props) {
         label={t("UploadingFile")}
       />
     );
-  } else if (props.fileName) {
+  } else if (props.fileName || props.staticFileName) {
     content = (
       <div>
         <div className="usa-file-input__preview-heading">
@@ -52,7 +53,7 @@ function FileInput(props: Props) {
           </div>
           <div></div>
           <label className="usa-label margin-top-0" htmlFor="fileIconDiv">
-            {props.fileName}
+            {props.fileName || props.staticFileName}
           </label>
         </div>
         <div className="usa-file-input__box"></div>

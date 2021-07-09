@@ -32,7 +32,7 @@ export function withSAMLAuthenticator(
 
       // checkUser returns an "unsubscribe" function to stop side-effects
       return checkUser();
-    });
+    }, []);
 
     function checkUser() {
       setUser();

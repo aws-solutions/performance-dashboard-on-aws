@@ -1,11 +1,12 @@
 import selectors from "../utils/selectors";
 import EditTopicAreaLabelPage from "./EditTopicAreaLabel";
+import CreateTopicAreaPage from "./CreateTopicArea";
+import EditTopicAreaPage from "./EditTopicArea";
 
 class TopicAreaListingPage {
   constructor() {}
 
   visit() {
-    // Capture the http requests
     cy.intercept({
       method: "GET",
       url: "/prod/topicarea",
@@ -26,8 +27,13 @@ class TopicAreaListingPage {
     return new EditTopicAreaLabelPage();
   }
 
+  goToCreateTopicArea(): CreateTopicAreaPage {
+    cy.get("button").contains("Create new topic area").click();
+    cy.contains("Create new topic area");
+    return new CreateTopicAreaPage();
+  }
+
   waitUntilTopicAreasLoads() {
-    // Capture the http request
     cy.intercept({
       method: "GET",
       url: "/prod/topicarea",
@@ -46,6 +52,46 @@ class TopicAreaListingPage {
     cy.get("h3").last().contains(newNames);
     cy.get("table").contains(newName);
     cy.get("button").contains(newName.toLowerCase());
+  }
+
+  verifyTopicArea(topicArea: string) {
+    cy.get("input#search").type(topicArea);
+    cy.get("form[role='search']").submit();
+    cy.get("table").contains(topicArea);
+    cy.get("input#search").clear();
+    cy.get("form[role='search']").submit();
+  }
+
+  goToEditTopicArea(topicArea: string): EditTopicAreaPage {
+    // search for the topic area by its name
+    cy.get("input#search").type(topicArea);
+    cy.get("form[role='search']").submit();
+
+    // select it by clicking the radio
+    cy.findByLabelText(topicArea).click();
+    cy.get("div.margin-y-3").contains("Edit").click();
+
+    return new EditTopicAreaPage();
+  }
+
+  deleteTopicArea(topicArea: string) {
+    // search for the topic area by its name
+    cy.get("input#search").type(topicArea);
+    cy.get("form[role='search']").submit();
+
+    // select it by clicking the radio
+    cy.findByLabelText(topicArea).click();
+    cy.get("div.margin-y-3").contains("Delete").click();
+
+    // wait for the request to finish
+    cy.intercept({
+      method: "DELETE",
+      url: "/prod/topicarea",
+    }).as("deleteTopicAreaRequest");
+
+    // accept modal confirmation prompt
+    cy.findByRole("button", { name: "Delete" }).click();
+    cy.wait("@deleteTopicAreaRequest");
   }
 }
 

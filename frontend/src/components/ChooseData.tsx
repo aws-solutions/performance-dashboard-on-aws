@@ -18,6 +18,8 @@ interface Props {
   fileLoading: boolean;
   csvErrors: Array<object> | undefined;
   csvFile: File | undefined;
+  staticFileName: string | undefined;
+  dynamicFileName: string | undefined;
   onFileProcessed: Function;
   browseDatasets: Function;
   selectDynamicDataset: Function;
@@ -33,7 +35,6 @@ function ChooseData(props: Props) {
   const { settings } = useSettings();
   const [filter, setFilter] = useState("");
   const [query, setQuery] = useState("");
-
   const onSelect = useCallback(
     (selectedDataset: Array<Dataset>) => {
       if (props.datasetType === DatasetType.DynamicDataset) {
@@ -151,6 +152,7 @@ function ChooseData(props: Props) {
                   </span>
                 }
                 fileName={props.csvFile && props.csvFile.name}
+                staticFileName={props.staticFileName}
                 onFileProcessed={props.onFileProcessed}
               />
             </div>
@@ -181,6 +183,7 @@ function ChooseData(props: Props) {
                   name="query"
                   style={{ height: "37px" }}
                   value={query}
+                  placeholder={props.dynamicFileName}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                     setQuery(event.target.value)
                   }

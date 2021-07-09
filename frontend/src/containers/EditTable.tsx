@@ -41,6 +41,8 @@ interface FormValues {
   datasetType: string;
   sortData: string;
   significantDigitLabels: boolean;
+  staticFileName: string | undefined;
+  dynamicFileName: string | undefined;
 }
 
 interface PathParams {
@@ -68,6 +70,9 @@ function EditTable() {
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
+  const [staticFileName, setStaticFileName] = useState<string | undefined>("");
+  const [dynamicFileName, setDynamicFileName] =
+    useState<string | undefined>("");
   const {
     widget,
     datasetType,
@@ -141,6 +146,13 @@ function EditTable() {
       const summary = widget.content.summary;
       const summaryBelow = widget.content.summaryBelow;
       const significantDigitLabels = widget.content.significantDigitLabels;
+
+      if (dynamicDataset) {
+        setDynamicFileName(dynamicDataset?.fileName);
+      }
+      if (staticDataset) {
+        setStaticFileName(staticDataset?.fileName);
+      }
 
       reset({
         title,
@@ -520,6 +532,8 @@ function EditTable() {
                     onCancel={onCancel}
                     register={register}
                     widgetType={t("ChooseDataDescriptionTable")}
+                    staticFileName={staticFileName}
+                    dynamicFileName={dynamicFileName}
                   />
                 </PrimaryActionBar>
               </div>

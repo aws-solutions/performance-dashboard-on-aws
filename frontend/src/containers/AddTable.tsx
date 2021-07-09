@@ -370,6 +370,8 @@ function AddTable() {
                 onCancel={onCancel}
                 register={register}
                 widgetType={t("ChooseDataDescriptionTable")}
+                staticFileName={undefined}
+                dynamicFileName={undefined}
               />
             </PrimaryActionBar>
           </div>

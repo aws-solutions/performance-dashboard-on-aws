@@ -61,7 +61,7 @@ class LoginPage {
       url: "/public/logo",
     }).as("logoRequest");
 
-    // Type in credentials, click Sign In button, and directed to admin homepage
+    // Type in credentials, click Sign In button, and direct to admin homepage
     cy.get(this.selectors.signInSlot, { includeShadowDom: true })
       .find(this.selectors.signInUsernameInput, { includeShadowDom: true })
       .type(this.adminUsername, { log: false, force: true });

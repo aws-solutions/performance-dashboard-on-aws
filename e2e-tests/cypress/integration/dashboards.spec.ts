@@ -7,8 +7,8 @@ const random = new Chance();
 describe("Admin user", () => {
   beforeEach(() => {
     const loginPage = new LoginPage();
-    loginPage.loginAsAdmin();
     loginPage.visit();
+    loginPage.loginAsAdmin();
   });
 
   it("can create a new dashboard and delete it", () => {
@@ -28,7 +28,6 @@ describe("Admin user", () => {
 
     // Submit form and user is taken to the Edit Dashboard page
     let editDashboardPage = createDashboardPage.submit();
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
 
     // Verify success alert shows up
     cy.contains(`"${dashboardName}" draft dashboard successfully created.`);
@@ -36,8 +35,5 @@ describe("Admin user", () => {
     // Go back to the dashboard listing page and delete the dashboard
     dashboardListingPage.visit();
     dashboardListingPage.deleteDashboard(dashboardName);
-
-    // Verify success alert shows up
-    cy.contains(`${dashboardName} draft dashboard was successfully deleted.`);
   });
 });

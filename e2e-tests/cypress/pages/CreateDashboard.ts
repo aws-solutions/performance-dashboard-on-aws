@@ -17,15 +17,29 @@ class CreateDashboardPage {
   }
 
   submit(): EditDashboardPage {
-    // Capture the http request
+    // Capture the http requests
     cy.intercept({
       method: "POST",
       url: "/prod/dashboard",
     }).as("createDashboardRequest");
 
+    cy.intercept({
+      method: "GET",
+      url: "/public/logo",
+    }).as("logoRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: "/prod/dashboard",
+    }).as("listDashboardRequest");
+
     // Click the create button and wait for request to finish
     cy.get("form").submit();
-    cy.wait(["@createDashboardRequest"]);
+    cy.wait([
+      "@createDashboardRequest",
+      "@listDashboardRequest",
+      "@logoRequest",
+    ]);
 
     // User is taken to the EditDashboardPage
     return new EditDashboardPage();

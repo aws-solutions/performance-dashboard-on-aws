@@ -18,8 +18,13 @@ class AddUsersPage {
       url: "/prod/user",
     }).as("createUserRequest");
 
+    cy.intercept({
+      method: "GET",
+      url: "/prod/user",
+    }).as("listUsersRequest");
+
     cy.get("form").submit();
-    cy.wait(["@createUserRequest"]);
+    cy.wait(["@createUserRequest", "@listUsersRequest"]);
   }
 }
 

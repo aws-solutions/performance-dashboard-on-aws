@@ -9,8 +9,13 @@ class UserListing {
       url: "/prod/user",
     }).as("listUsersRequest");
 
+    cy.intercept({
+      method: "GET",
+      url: "/public/logo",
+    }).as("logoRequest");
+
     cy.get(selectors.navBar).get("a").contains("Manage users").click();
-    cy.wait(["@listUsersRequest"]);
+    cy.wait(["@listUsersRequest", "@logoRequest"]);
   }
 
   goToAddUser(): AddUsersPage {
@@ -39,9 +44,14 @@ class UserListing {
       url: "/prod/user",
     }).as("deleteUsersRequest");
 
+    cy.intercept({
+      method: "GET",
+      url: "/prod/user",
+    }).as("listUsersRequest");
+
     // Accept in confirmation modal
     cy.get("button").contains("Delete").click();
-    cy.wait(["@deleteUsersRequest"]);
+    cy.wait(["@deleteUsersRequest", "@listUsersRequest"]);
   }
 }
 

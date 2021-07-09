@@ -7,8 +7,8 @@ const random = new Chance();
 describe("Admin user", () => {
   beforeEach(() => {
     const loginPage = new LoginPage();
-    loginPage.loginAsAdmin();
     loginPage.visit();
+    loginPage.loginAsAdmin();
   });
 
   it("can create a new user and remove it", () => {

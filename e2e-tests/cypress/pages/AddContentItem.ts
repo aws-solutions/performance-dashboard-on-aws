@@ -41,19 +41,30 @@ class AddContentItemPage {
 
     cy.intercept({
       method: "GET",
-      url: "/prod/dashboard",
+      url: new RegExp(/\/prod\/dashboard\/.+/),
     }).as("addSpecificContentToDashboardRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: "/prod/dataset",
+    }).as("datasetRequest");
 
     // Direct to specific content page
     cy.get("button").contains("Continue").click();
-    cy.wait(["@logoRequest", "@addSpecificContentToDashboardRequest"]);
 
     switch (this.selectedContentItem) {
       case "Text":
+        cy.wait(["@logoRequest", "@addSpecificContentToDashboardRequest"]);
         return new AddTextPage();
       case "Metrics":
+        cy.wait([
+          "@logoRequest",
+          "@addSpecificContentToDashboardRequest",
+          "@datasetRequest",
+        ]);
         return new AddMetricsPage();
       case "Chart":
+        cy.wait(["@logoRequest", "@addSpecificContentToDashboardRequest"]);
         return new AddChartPage();
     }
   }

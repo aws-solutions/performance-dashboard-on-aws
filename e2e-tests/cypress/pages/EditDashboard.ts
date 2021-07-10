@@ -11,7 +11,7 @@ class EditDashboardPage {
 
     cy.intercept({
       method: "GET",
-      url: "/prod/dashboard",
+      url: new RegExp(/\/prod\/dashboard\/.+/),
     }).as("addContentToDashboardRequest");
 
     // Direct to Add content item page

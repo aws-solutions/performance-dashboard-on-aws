@@ -18,11 +18,6 @@ class AddMetricsPage {
     // Capture the http requests
     cy.intercept({
       method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
-    cy.intercept({
-      method: "GET",
       url: new RegExp(/\/prod\/dashboard\/.+/),
     }).as("viewDashboardRequest");
 
@@ -33,14 +28,14 @@ class AddMetricsPage {
 
     // Direct to Add Metric page
     cy.get("button").contains("Add metric").click();
-    cy.wait(["@logoRequest", "@viewDashboardRequest"]);
+    cy.wait(["@viewDashboardRequest"]);
 
     cy.findByLabelText("Metric title").type(title);
     cy.findByLabelText("Metric value").type(value.toString());
 
     // Direct to Add metrics page
     cy.get("button").contains("Add metric").click();
-    cy.wait(["@logoRequest", "@viewDashboardRequest", "@datasetRequest"]);
+    cy.wait(["@viewDashboardRequest", "@datasetRequest"]);
   }
 
   submit(): EditDashboardPage {
@@ -57,11 +52,6 @@ class AddMetricsPage {
 
     cy.intercept({
       method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
-    cy.intercept({
-      method: "GET",
       url: new RegExp(/\/prod\/dashboard\/.+/),
     }).as("viewDashboardRequest");
 
@@ -75,7 +65,6 @@ class AddMetricsPage {
     cy.wait([
       "@addMetricRequest",
       "@createWidgetRequest",
-      "@logoRequest",
       "@viewDashboardRequest",
       "@viewDashboardVersionsRequest",
     ]);

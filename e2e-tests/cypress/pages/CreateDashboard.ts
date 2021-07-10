@@ -25,11 +25,6 @@ class CreateDashboardPage {
 
     cy.intercept({
       method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
-    cy.intercept({
-      method: "GET",
       url: new RegExp(/\/prod\/dashboard\/.+/),
     }).as("viewDashboardRequest");
 
@@ -42,7 +37,6 @@ class CreateDashboardPage {
     cy.get("form").submit();
     cy.wait([
       "@createDashboardRequest",
-      "@logoRequest",
       "@viewDashboardRequest",
       "@viewDashboardVersionsRequest",
     ]);

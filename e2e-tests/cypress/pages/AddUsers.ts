@@ -23,14 +23,9 @@ class AddUsersPage {
       url: "/prod/user",
     }).as("listUsersRequest");
 
-    cy.intercept({
-      method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
     // Direct to Manage users page
     cy.get("form").submit();
-    cy.wait(["@createUserRequest", "@listUsersRequest", "@logoRequest"]);
+    cy.wait(["@createUserRequest", "@listUsersRequest"]);
   }
 }
 

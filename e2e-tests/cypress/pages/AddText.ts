@@ -22,11 +22,6 @@ class AddTextPage {
 
     cy.intercept({
       method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
-    cy.intercept({
-      method: "GET",
       url: new RegExp(/\/prod\/dashboard\/.+/),
     }).as("viewDashboardRequest");
 
@@ -39,7 +34,6 @@ class AddTextPage {
     cy.get("button").contains("Add text").click();
     cy.wait([
       "@createWidgetRequest",
-      "@logoRequest",
       "@viewDashboardRequest",
       "@viewDashboardVersionsRequest",
     ]);

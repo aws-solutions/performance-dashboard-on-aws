@@ -42,11 +42,6 @@ class AddChartPage {
 
     cy.intercept({
       method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
-    cy.intercept({
-      method: "GET",
       url: new RegExp(/\/prod\/dashboard\/.+/),
     }).as("viewDashboardRequest");
 
@@ -60,7 +55,6 @@ class AddChartPage {
     cy.wait([
       "@addChartRequest",
       "@createWidgetRequest",
-      "@logoRequest",
       "@viewDashboardRequest",
       "@viewDashboardVersionsRequest",
     ]);

@@ -5,37 +5,27 @@ class DashboardListingPage {
   constructor() {}
 
   visit() {
-    // Capture the http requests
+    // Capture the http request
     cy.intercept({
       method: "GET",
       url: "/prod/dashboard",
     }).as("listDashboardsRequest");
 
-    cy.intercept({
-      method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
     // Direct to Dashboards page
     cy.get(selectors.navBar).get("a").contains("Dashboards").click();
-    cy.wait(["@listDashboardsRequest", "@logoRequest"]);
+    cy.wait(["@listDashboardsRequest"]);
   }
 
   goToCreateDashboard(): CreateDashboardPage {
-    // Capture the http requests
+    // Capture the http request
     cy.intercept({
       method: "GET",
       url: "/prod/topicarea",
     }).as("topicAreasRequest");
 
-    cy.intercept({
-      method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
     // Direct to Create dashboard page
     cy.findByRole("button", { name: "Create dashboard" }).click();
-    cy.wait(["@topicAreasRequest", "@logoRequest"]);
+    cy.wait(["@topicAreasRequest"]);
 
     cy.contains("Create dashboard");
     return new CreateDashboardPage();

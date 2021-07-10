@@ -56,11 +56,6 @@ class LoginPage {
       url: "/prod/settings",
     }).as("settingsRequest");
 
-    cy.intercept({
-      method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
     // Type in credentials, click Sign In button, and direct to admin homepage
     cy.get(this.selectors.signInSlot, { includeShadowDom: true })
       .find(this.selectors.signInUsernameInput, { includeShadowDom: true })
@@ -74,7 +69,7 @@ class LoginPage {
       .find(this.selectors.signInSignInButton, { includeShadowDom: true })
       .contains(this.labels.signInLabel)
       .click();
-    cy.wait(["@settingsRequest", "@logoRequest"]);
+    cy.wait(["@settingsRequest"]);
 
     return new AdminHomepage();
   }

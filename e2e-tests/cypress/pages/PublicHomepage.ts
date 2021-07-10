@@ -8,20 +8,15 @@ class PublicHomepage {
       // Stub response
       cy.intercept("GET", "/prod/public/homepage", homepage);
 
-      // Capture the http requests
+      // Capture the http request
       cy.intercept({
         method: "GET",
         url: "/prod/public/settings",
       }).as("publicSettingsRequest");
 
-      cy.intercept({
-        method: "GET",
-        url: "/public/logo",
-      }).as("logoRequest");
-
       // Direct to public homepage
       cy.visit("/");
-      cy.wait(["@publicSettingsRequest", "@logoRequest"]);
+      cy.wait(["@publicSettingsRequest"]);
     });
   }
 }

@@ -3,33 +3,20 @@ import AddUsersPage from "./AddUsers";
 
 class UserListing {
   visit() {
-    // Capture the http requests
+    // Capture the http request
     cy.intercept({
       method: "GET",
       url: "/prod/user",
     }).as("listUsersRequest");
 
-    cy.intercept({
-      method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
     // Direct to Manage users page
     cy.get(selectors.navBar).get("a").contains("Manage users").click();
-    cy.wait(["@listUsersRequest", "@logoRequest"]);
+    cy.wait(["@listUsersRequest"]);
   }
 
   goToAddUser(): AddUsersPage {
-    // Capture the http request
-    cy.intercept({
-      method: "GET",
-      url: "/public/logo",
-    }).as("logoRequest");
-
     // Direct to Add users page
     cy.get("button").contains("Add user(s)").click();
-    cy.wait(["@logoRequest"]);
-
     return new AddUsersPage();
   }
 

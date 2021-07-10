@@ -62,14 +62,9 @@ class DashboardListingPage {
       url: "/prod/dashboard",
     }).as("deleteDashboardsRequest");
 
-    cy.intercept({
-      method: "GET",
-      url: "/prod/dashboard",
-    }).as("listDashboardsRequest");
-
     // Accept modal confirmation prompt
     cy.findByRole("button", { name: "Delete" }).click();
-    cy.wait(["@deleteDashboardsRequest", "@listDashboardsRequest"]);
+    cy.wait(["@deleteDashboardsRequest"]);
   }
 }
 

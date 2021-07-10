@@ -64,7 +64,11 @@ class AddContentItemPage {
         ]);
         return new AddMetricsPage();
       case "Chart":
-        cy.wait(["@logoRequest", "@addSpecificContentToDashboardRequest"]);
+        cy.wait([
+          "@logoRequest",
+          "@addSpecificContentToDashboardRequest",
+          "@datasetRequest",
+        ]);
         return new AddChartPage();
     }
   }

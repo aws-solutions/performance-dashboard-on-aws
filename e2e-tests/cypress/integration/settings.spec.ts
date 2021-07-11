@@ -20,6 +20,20 @@ describe("Admin settings", () => {
     let topicAreaListingPage = settingsPage.goToTopicAreas();
     topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
+    cy.get("div.Markdown.undefined")
+      .first()
+      .invoke("text")
+      .then((name) => {
+        cy.wrap(name).as("oldName");
+      });
+
+    cy.get("div.Markdown.undefined")
+      .last()
+      .invoke("text")
+      .then((name) => {
+        cy.wrap(name).as("oldNames");
+      });
+
     // Change topic area label to Category and Categories
     let editTopicAreaLabelPage = topicAreaListingPage.goToEditTopicAreaLabel();
 
@@ -34,17 +48,24 @@ describe("Admin settings", () => {
     topicAreaListingPage.verifyTopicAreaLabel(newName, newNames);
 
     // Customize topic area label to old name
-    editTopicAreaLabelPage = topicAreaListingPage.goToEditTopicAreaLabel();
+    cy.get("@oldName").then((oldName) => {
+      cy.get("@oldNames").then((oldNames) => {
+        const oldNameString = <string>(<unknown>oldName);
+        const oldNamesString = <string>(<unknown>oldNames);
+        editTopicAreaLabelPage = topicAreaListingPage.goToEditTopicAreaLabel();
 
-    const oldName = "Topic Area";
-    const oldNames = "Topic Areas";
-    editTopicAreaLabelPage.renameTopicAreaLabel(oldName);
-    editTopicAreaLabelPage.renameTopicAreasLabel(oldNames);
+        editTopicAreaLabelPage.renameTopicAreaLabel(oldNameString);
+        editTopicAreaLabelPage.renameTopicAreasLabel(oldNamesString);
 
-    topicAreaListingPage = editTopicAreaLabelPage.submit();
-    topicAreaListingPage.waitUntilTopicAreasTableLoads();
+        topicAreaListingPage = editTopicAreaLabelPage.submit();
+        topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
-    topicAreaListingPage.verifyTopicAreaLabel(oldName, oldNames);
+        topicAreaListingPage.verifyTopicAreaLabel(
+          oldNameString,
+          oldNamesString
+        );
+      });
+    });
   });
 
   it("can create, edit, and delete topic area", () => {
@@ -82,12 +103,14 @@ describe("Admin settings", () => {
     cy.contains(`"${newTopicAreaName}" topic area successfully deleted`);
   });
 
-  it("can edit publishing guidance", () => {
+  it("can customize publishing guidance and change it back", () => {
     let publishingGuidancePage = settingsPage.goToPublishingGuidance();
 
-    const oldAcknowledgment =
-      "I acknowledge that I have reviewed " +
-      "the dashboard and it is ready to publish.";
+    cy.get("div.Markdown.undefined")
+      .invoke("text")
+      .then((acknowledgment) => {
+        cy.wrap(acknowledgment).as("oldAcknowledgment");
+      });
 
     // Change to the new acknowledgment
     const newAcknowledgment = random.sentence();
@@ -99,13 +122,17 @@ describe("Admin settings", () => {
     cy.contains("Publishing guidance successfully edited.");
     cy.contains(newAcknowledgment);
 
-    // Change the acknowledgment back
-    publishingGuidancePage.start();
-    publishingGuidancePage.updateAcknowledgment(oldAcknowledgment);
-    publishingGuidancePage.submit();
+    cy.get("@oldAcknowledgment").then((oldAcknowledgment) => {
+      // Change the acknowledgment back
+      publishingGuidancePage.start();
+      publishingGuidancePage.updateAcknowledgment(
+        <string>(<unknown>oldAcknowledgment)
+      );
+      publishingGuidancePage.submit();
 
-    // Verify the old acknowledgment is present
-    cy.contains("Publishing guidance successfully edited.");
-    cy.contains(oldAcknowledgment);
+      // Verify the old acknowledgment is present
+      cy.contains("Publishing guidance successfully edited.");
+      cy.contains(<string>(<unknown>oldAcknowledgment));
+    });
   });
 });

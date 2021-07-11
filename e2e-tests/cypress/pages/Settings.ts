@@ -1,6 +1,7 @@
 import selectors from "../utils/selectors";
 import TopicAreaListingPage from "./TopicAreaListing";
 import PublishingGuidancePage from "./PublishingGuidance";
+import PublishedSitePage from "./PublishedSite";
 
 class SettingsPage {
   visit() {
@@ -61,6 +62,29 @@ class SettingsPage {
     cy.wait(["@settingsRequest"]);
 
     return new PublishingGuidancePage();
+  }
+
+  goToPublishedSite(): PublishedSitePage {
+    // Capture the http requests
+    cy.intercept({
+      method: "GET",
+      url: "/prod/settings",
+    }).as("settingsRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: "/prod/settings/homepage",
+    }).as("homepageSettingsRequest");
+
+    // Direct user to Published site settings page
+    cy.get("a").contains("Published site").click();
+    cy.wait([
+      "@homepageSettingsRequest",
+      "@settingsRequest",
+      "@settingsRequest",
+    ]);
+
+    return new PublishedSitePage();
   }
 }
 

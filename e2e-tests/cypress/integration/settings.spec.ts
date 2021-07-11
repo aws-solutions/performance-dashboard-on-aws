@@ -5,7 +5,7 @@ import * as Chance from "chance";
 const random = new Chance();
 let settingsPage: SettingsPage;
 
-describe("Admin settings", () => {
+describe("Admin user", () => {
   beforeEach(() => {
     const loginPage = new LoginPage();
     loginPage.visit();
@@ -105,6 +105,7 @@ describe("Admin settings", () => {
 
   it("can customize publishing guidance and change it back", () => {
     let publishingGuidancePage = settingsPage.goToPublishingGuidance();
+    cy.get("h1").contains("Publishing guidance");
 
     cy.get("div.Markdown.undefined")
       .invoke("text")
@@ -133,6 +134,94 @@ describe("Admin settings", () => {
       // Verify the old acknowledgment is present
       cy.contains("Publishing guidance successfully edited.");
       cy.contains(<string>(<unknown>oldAcknowledgment));
+    });
+  });
+
+  it("can customize published site navigation bar and change it back", () => {
+    let publishedSitePage = settingsPage.goToPublishedSite();
+    cy.get("h1").contains("Published site");
+
+    cy.get("div.Markdown.undefined")
+      .eq(0)
+      .invoke("text")
+      .then((title) => {
+        cy.wrap(title).as("oldTitle");
+      });
+
+    // Change to new title in navigation bar
+    const newTitle = random.word();
+    publishedSitePage.startEditNavBar();
+    cy.get("h1").contains("Edit navigation bar");
+    publishedSitePage.updateNavBarTitle(newTitle);
+    publishedSitePage.submitNavBar();
+
+    // Verify the new title is present
+    publishedSitePage.verifyTitle(newTitle);
+    cy.contains("Navigation bar successfully edited.");
+
+    // Change to old title in navigation bar and verify
+    cy.get("@oldTitle").then((oldTitle) => {
+      const oldTitleString = <string>(<unknown>oldTitle);
+
+      publishedSitePage.startEditNavBar();
+      cy.get("h1").contains("Edit navigation bar");
+      publishedSitePage.updateNavBarTitle(oldTitleString);
+      publishedSitePage.submitNavBar();
+
+      publishedSitePage.verifyTitle(oldTitleString);
+      cy.contains("Navigation bar successfully edited.");
+    });
+  });
+
+  it("can customize published site homepage content and change it back", () => {
+    let publishedSitePage = settingsPage.goToPublishedSite();
+    cy.get("h1").contains("Published site");
+
+    cy.get("div.Markdown.undefined")
+      .eq(2)
+      .invoke("text")
+      .then((headline) => {
+        cy.wrap(headline).as("oldHeadline");
+      });
+
+    cy.get("div.Markdown.undefined")
+      .eq(3)
+      .invoke("text")
+      .then((description) => {
+        cy.wrap(description).as("oldDescription");
+      });
+
+    // Change to new headline and description in homepage content
+    const newHeadline = random.word();
+    const newDescription = random.sentence();
+    publishedSitePage.startEditHomepage();
+    cy.get("h1").contains("Edit homepage content");
+    publishedSitePage.updateHomepageHeadline(newHeadline);
+    publishedSitePage.updateHomepageDescription(newDescription);
+    publishedSitePage.submitHomepage();
+
+    // Verify the new headline and description are present
+    cy.contains("Homepage content successfully edited.");
+    publishedSitePage.verifyHeadlineAndDescription(newHeadline, newDescription);
+
+    // Change to the old homepage content and verify
+    cy.get("@oldHeadline").then((oldHeadline) => {
+      cy.get("@oldDescription").then((oldDescription) => {
+        const oldHeadlineString = <string>(<unknown>oldHeadline);
+        const oldDescriptionString = <string>(<unknown>oldDescription);
+
+        publishedSitePage.startEditHomepage();
+        cy.get("h1").contains("Edit homepage content");
+        publishedSitePage.updateHomepageHeadline(oldHeadlineString);
+        publishedSitePage.updateHomepageDescription(oldDescriptionString);
+        publishedSitePage.submitHomepage();
+
+        cy.contains("Homepage content successfully edited.");
+        publishedSitePage.verifyHeadlineAndDescription(
+          oldHeadlineString,
+          oldDescriptionString
+        );
+      });
     });
   });
 });

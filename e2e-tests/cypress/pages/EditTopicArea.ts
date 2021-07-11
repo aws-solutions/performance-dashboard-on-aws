@@ -5,14 +5,32 @@ class EditTopicAreaPage {
     cy.findByLabelText("Topic Area name").clear().type(newName);
   }
 
-  save(): TopicAreaListingPage {
+  submit(): TopicAreaListingPage {
+    // Capture the http requests
     cy.intercept({
       method: "PUT",
-      url: "/prod/topicarea",
+      url: new RegExp(/\/prod\/topicarea\/.+/),
     }).as("editTopicAreaRequest");
 
+    cy.intercept({
+      method: "GET",
+      url: "/prod/topicarea",
+    }).as("listTopicAreasRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: "/prod/settings",
+    }).as("settingsRequest");
+
+    // Direct user to topic areas page
     cy.get("form").submit();
-    cy.wait(["@editTopicAreaRequest"]);
+    cy.wait([
+      "@editTopicAreaRequest",
+      "@listTopicAreasRequest",
+      "@listTopicAreasRequest",
+      "@settingsRequest",
+      "@settingsRequest",
+    ]);
 
     return new TopicAreaListingPage();
   }

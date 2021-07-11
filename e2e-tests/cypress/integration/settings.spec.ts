@@ -7,24 +7,24 @@ const random = new Chance();
 describe("Admin settings", () => {
   beforeEach(() => {
     const loginPage = new LoginPage();
-    loginPage.loginAsAdmin();
     loginPage.visit();
+    loginPage.loginAsAdmin();
   });
 
   it("can customize topic area label and change it back", () => {
     let topicAreaListingPage = new TopicAreaListingPage();
     topicAreaListingPage.visit();
-
-    // Customize topic area label to new name
+    topicAreaListingPage.waitUntilTopicAreasTableLoads();
     let editTopicAreaLabelPage = topicAreaListingPage.goToEditTopicAreaLabel();
 
+    // Change topic area label to Category and Categories
     const newName = "Category";
     const newNames = "Categories";
     editTopicAreaLabelPage.renameTopicAreaLabel(newName);
     editTopicAreaLabelPage.renameTopicAreasLabel(newNames);
 
-    topicAreaListingPage = editTopicAreaLabelPage.save();
-    topicAreaListingPage.waitUntilTopicAreasLoads();
+    topicAreaListingPage = editTopicAreaLabelPage.submit();
+    topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
     topicAreaListingPage.verifyTopicAreaLabel(newName, newNames);
 
@@ -36,8 +36,8 @@ describe("Admin settings", () => {
     editTopicAreaLabelPage.renameTopicAreaLabel(oldName);
     editTopicAreaLabelPage.renameTopicAreasLabel(oldNames);
 
-    topicAreaListingPage = editTopicAreaLabelPage.save();
-    topicAreaListingPage.waitUntilTopicAreasLoads();
+    topicAreaListingPage = editTopicAreaLabelPage.submit();
+    topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
     topicAreaListingPage.verifyTopicAreaLabel(oldName, oldNames);
   });
@@ -45,6 +45,7 @@ describe("Admin settings", () => {
   it("can create, edit, and delete topic area", () => {
     let topicAreaListingPage = new TopicAreaListingPage();
     topicAreaListingPage.visit();
+    topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
     // Create a new topic area
     let createTopicAreaPage = topicAreaListingPage.goToCreateTopicArea();
@@ -52,7 +53,7 @@ describe("Admin settings", () => {
     const topicAreaName = random.word();
     createTopicAreaPage.createTopicArea(topicAreaName);
     topicAreaListingPage = createTopicAreaPage.submit();
-    topicAreaListingPage.waitUntilTopicAreasLoads();
+    topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
     cy.contains(`"${topicAreaName}" topic area successfully created`);
     topicAreaListingPage.verifyTopicArea(topicAreaName);
@@ -65,15 +66,15 @@ describe("Admin settings", () => {
     const newTopicAreaName = random.word();
     editTopicAreaPage.editTopicArea(newTopicAreaName);
 
-    topicAreaListingPage = editTopicAreaPage.save();
-    topicAreaListingPage.waitUntilTopicAreasLoads();
+    topicAreaListingPage = editTopicAreaPage.submit();
+    topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
     cy.contains(`${newTopicAreaName} was successfully edited.`);
     topicAreaListingPage.verifyTopicArea(newTopicAreaName);
 
     // Delete the edited topic area
     topicAreaListingPage.deleteTopicArea(newTopicAreaName);
-    topicAreaListingPage.waitUntilTopicAreasLoads();
+    topicAreaListingPage.waitUntilTopicAreasTableLoads();
     cy.contains(`"${newTopicAreaName}" topic area successfully deleted`);
   });
 });

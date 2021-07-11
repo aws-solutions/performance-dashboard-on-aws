@@ -4,9 +4,8 @@ import CreateTopicAreaPage from "./CreateTopicArea";
 import EditTopicAreaPage from "./EditTopicArea";
 
 class TopicAreaListingPage {
-  constructor() {}
-
   visit() {
+    // Capture the http requests
     cy.intercept({
       method: "GET",
       url: "/prod/topicarea",
@@ -17,8 +16,14 @@ class TopicAreaListingPage {
       url: "/prod/settings",
     }).as("settingsRequest");
 
+    // Direct user to Settings/Topic areas page
     cy.get(selectors.navBar).get("a").contains("Settings").click();
-    cy.wait(["@listTopicAreasRequest", "@settingsRequest"]);
+    cy.wait([
+      "@settingsRequest",
+      "@settingsRequest",
+      "@listTopicAreasRequest",
+      "@listTopicAreasRequest",
+    ]);
   }
 
   goToEditTopicAreaLabel(): EditTopicAreaLabelPage {
@@ -33,13 +38,8 @@ class TopicAreaListingPage {
     return new CreateTopicAreaPage();
   }
 
-  waitUntilTopicAreasLoads() {
-    cy.intercept({
-      method: "GET",
-      url: "/prod/topicarea",
-    }).as("listTopicAreasRequest");
-
-    cy.wait(["@listTopicAreasRequest"]);
+  waitUntilTopicAreasTableLoads() {
+    // Wait for the table to render
     cy.get("table").should("have.length", 1);
   }
 
@@ -54,44 +54,58 @@ class TopicAreaListingPage {
     cy.get("button").contains(newName.toLowerCase());
   }
 
-  verifyTopicArea(topicArea: string) {
-    cy.get("input#search").type(topicArea);
+  verifyTopicArea(topicAreaName: string) {
+    cy.get("input#search").type(topicAreaName);
     cy.get("form[role='search']").submit();
-    cy.get("table").contains(topicArea);
+    cy.get("table").contains(topicAreaName);
     cy.get("input#search").clear();
     cy.get("form[role='search']").submit();
   }
 
-  goToEditTopicArea(topicArea: string): EditTopicAreaPage {
-    // search for the topic area by its name
-    cy.get("input#search").type(topicArea);
+  goToEditTopicArea(topicAreaName: string): EditTopicAreaPage {
+    // Search for the topic area by its name
+    cy.get("input#search").type(topicAreaName);
     cy.get("form[role='search']").submit();
 
-    // select it by clicking the radio
-    cy.findByLabelText(topicArea).click();
+    // Select it by clicking the radio
+    cy.findByLabelText(topicAreaName).click();
+
+    // Capture the http request
+    cy.intercept({
+      method: "GET",
+      url: new RegExp(/\/prod\/topicarea\/.+/),
+    }).as("editTopicAreaNameRequest");
+
+    // Edit user to edit topic area page
     cy.get("div.margin-y-3").contains("Edit").click();
+    cy.wait(["@editTopicAreaNameRequest"]);
 
     return new EditTopicAreaPage();
   }
 
   deleteTopicArea(topicArea: string) {
-    // search for the topic area by its name
+    // Search for the topic area by its name
     cy.get("input#search").type(topicArea);
     cy.get("form[role='search']").submit();
 
-    // select it by clicking the radio
+    // Select it by clicking the radio
     cy.findByLabelText(topicArea).click();
     cy.get("div.margin-y-3").contains("Delete").click();
 
-    // wait for the request to finish
+    // Capture the http requests
     cy.intercept({
       method: "DELETE",
       url: "/prod/topicarea",
     }).as("deleteTopicAreaRequest");
 
-    // accept modal confirmation prompt
+    cy.intercept({
+      method: "GET",
+      url: "/prod/topicarea",
+    }).as("listTopicAreasRequest");
+
+    // Accept modal confirmation prompt
     cy.findByRole("button", { name: "Delete" }).click();
-    cy.wait("@deleteTopicAreaRequest");
+    cy.wait(["@deleteTopicAreaRequest", "@listTopicAreasRequest"]);
   }
 }
 

@@ -2,29 +2,11 @@ import selectors from "../utils/selectors";
 import EditTopicAreaLabelPage from "./EditTopicAreaLabel";
 import CreateTopicAreaPage from "./CreateTopicArea";
 import EditTopicAreaPage from "./EditTopicArea";
-import PublishingGuidancePage from "./PublishingGuidance";
 
 class TopicAreaListingPage {
-  visit() {
-    // Capture the http requests
-    cy.intercept({
-      method: "GET",
-      url: "/prod/topicarea",
-    }).as("listTopicAreasRequest");
-
-    cy.intercept({
-      method: "GET",
-      url: "/prod/settings",
-    }).as("settingsRequest");
-
-    // Direct user to Settings/Topic areas page
-    cy.get(selectors.navBar).get("a").contains("Settings").click();
-    cy.wait([
-      "@settingsRequest",
-      "@settingsRequest",
-      "@listTopicAreasRequest",
-      "@listTopicAreasRequest",
-    ]);
+  waitUntilTopicAreasTableLoads() {
+    // Wait for the table to render
+    cy.get("table").should("have.length", 1);
   }
 
   goToEditTopicAreaLabel(): EditTopicAreaLabelPage {
@@ -37,30 +19,6 @@ class TopicAreaListingPage {
     cy.get("button").contains("Create new topic area").click();
     cy.contains("Create new topic area");
     return new CreateTopicAreaPage();
-  }
-
-  waitUntilTopicAreasTableLoads() {
-    // Wait for the table to render
-    cy.get("table").should("have.length", 1);
-  }
-
-  verifyTopicAreaLabel(newName: string, newNames: string) {
-    cy.contains("Topic area name was successfully edited.");
-    cy.get("h1").contains(newNames);
-    cy.get("ul.usa-sidenav__sublist").first().contains(newNames);
-    cy.get("div.Markdown.undefined").first().contains(newName);
-    cy.get("div.Markdown.undefined").last().contains(newNames);
-    cy.get("h3").last().contains(newNames);
-    cy.get("table").contains(newName);
-    cy.get("button").contains(newName.toLowerCase());
-  }
-
-  verifyTopicArea(topicAreaName: string) {
-    cy.get("input#search").type(topicAreaName);
-    cy.get("form[role='search']").submit();
-    cy.get("table").contains(topicAreaName);
-    cy.get("input#search").clear();
-    cy.get("form[role='search']").submit();
   }
 
   goToEditTopicArea(topicAreaName: string): EditTopicAreaPage {
@@ -109,18 +67,23 @@ class TopicAreaListingPage {
     cy.wait(["@deleteTopicAreaRequest", "@listTopicAreasRequest"]);
   }
 
-  goToPublishingGuidance(): PublishingGuidancePage {
-    // Capture the http request
-    cy.intercept({
-      method: "GET",
-      url: "/prod/settings",
-    }).as("settingsRequest");
+  verifyTopicAreaLabel(newName: string, newNames: string) {
+    cy.contains("Topic area name was successfully edited.");
+    cy.get("h1").contains(newNames);
+    cy.get("ul.usa-sidenav__sublist").first().contains(newNames);
+    cy.get("div.Markdown.undefined").first().contains(newName);
+    cy.get("div.Markdown.undefined").last().contains(newNames);
+    cy.get("h3").last().contains(newNames);
+    cy.get("table").contains(newName);
+    cy.get("button").contains(newName.toLowerCase());
+  }
 
-    // Direct user to Publishing guidance settings page
-    cy.get("a").contains("Publishing guidance").click();
-    cy.wait(["@settingsRequest"]);
-
-    return new PublishingGuidancePage();
+  verifyTopicArea(topicAreaName: string) {
+    cy.get("input#search").type(topicAreaName);
+    cy.get("form[role='search']").submit();
+    cy.get("table").contains(topicAreaName);
+    cy.get("input#search").clear();
+    cy.get("form[role='search']").submit();
   }
 }
 

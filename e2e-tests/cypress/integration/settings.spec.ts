@@ -1,24 +1,28 @@
 import LoginPage from "../pages/Login";
-import TopicAreaListingPage from "../pages/TopicAreaListing";
+import SettingsPage from "../pages/Settings";
 import * as Chance from "chance";
 
 const random = new Chance();
-let topicAreaListingPage: TopicAreaListingPage;
+let settingsPage: SettingsPage;
 
 describe("Admin settings", () => {
   beforeEach(() => {
     const loginPage = new LoginPage();
     loginPage.visit();
     loginPage.loginAsAdmin();
+
+    // Visit Settings landing page
+    settingsPage = new SettingsPage();
+    settingsPage.visit();
   });
 
   it("can customize topic area label and change it back", () => {
-    let topicAreaListingPage = new TopicAreaListingPage();
-    topicAreaListingPage.visit();
+    let topicAreaListingPage = settingsPage.goToTopicAreas();
     topicAreaListingPage.waitUntilTopicAreasTableLoads();
-    let editTopicAreaLabelPage = topicAreaListingPage.goToEditTopicAreaLabel();
 
     // Change topic area label to Category and Categories
+    let editTopicAreaLabelPage = topicAreaListingPage.goToEditTopicAreaLabel();
+
     const newName = "Category";
     const newNames = "Categories";
     editTopicAreaLabelPage.renameTopicAreaLabel(newName);
@@ -44,8 +48,7 @@ describe("Admin settings", () => {
   });
 
   it("can create, edit, and delete topic area", () => {
-    let topicAreaListingPage = new TopicAreaListingPage();
-    topicAreaListingPage.visit();
+    let topicAreaListingPage = settingsPage.goToTopicAreas();
     topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
     // Create a new topic area
@@ -80,9 +83,7 @@ describe("Admin settings", () => {
   });
 
   it("can edit publishing guidance", () => {
-    let topicAreaListingPage = new TopicAreaListingPage();
-    topicAreaListingPage.visit();
-    let publishingGuidancePage = topicAreaListingPage.goToPublishingGuidance();
+    let publishingGuidancePage = settingsPage.goToPublishingGuidance();
 
     const oldAcknowledgment =
       "I acknowledge that I have reviewed " +
@@ -90,18 +91,18 @@ describe("Admin settings", () => {
 
     // Change to the new acknowledgment
     const newAcknowledgment = random.sentence();
-    let editPublishingGuidancePage = publishingGuidancePage.goToEditPublishingGuidance();
-    editPublishingGuidancePage.updateAcknowledgment(newAcknowledgment);
-    publishingGuidancePage = editPublishingGuidancePage.submit();
+    publishingGuidancePage.start();
+    publishingGuidancePage.updateAcknowledgment(newAcknowledgment);
+    publishingGuidancePage.submit();
 
     // Verify the new acknowledgment is present
     cy.contains("Publishing guidance successfully edited.");
     cy.contains(newAcknowledgment);
 
     // Change the acknowledgment back
-    editPublishingGuidancePage = publishingGuidancePage.goToEditPublishingGuidance();
-    editPublishingGuidancePage.updateAcknowledgment(oldAcknowledgment);
-    publishingGuidancePage = editPublishingGuidancePage.submit();
+    publishingGuidancePage.start();
+    publishingGuidancePage.updateAcknowledgment(oldAcknowledgment);
+    publishingGuidancePage.submit();
 
     // Verify the old acknowledgment is present
     cy.contains("Publishing guidance successfully edited.");

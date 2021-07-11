@@ -2,6 +2,7 @@ import selectors from "../utils/selectors";
 import EditTopicAreaLabelPage from "./EditTopicAreaLabel";
 import CreateTopicAreaPage from "./CreateTopicArea";
 import EditTopicAreaPage from "./EditTopicArea";
+import PublishingGuidancePage from "./PublishingGuidance";
 
 class TopicAreaListingPage {
   visit() {
@@ -106,6 +107,20 @@ class TopicAreaListingPage {
     // Accept modal confirmation prompt
     cy.findByRole("button", { name: "Delete" }).click();
     cy.wait(["@deleteTopicAreaRequest", "@listTopicAreasRequest"]);
+  }
+
+  goToPublishingGuidance(): PublishingGuidancePage {
+    // Capture the http request
+    cy.intercept({
+      method: "GET",
+      url: "/prod/settings",
+    }).as("settingsRequest");
+
+    // Direct user to Publishing guidance settings page
+    cy.get("a").contains("Publishing guidance").click();
+    cy.wait(["@settingsRequest"]);
+
+    return new PublishingGuidancePage();
   }
 }
 

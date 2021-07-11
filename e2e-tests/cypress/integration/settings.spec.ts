@@ -3,6 +3,7 @@ import TopicAreaListingPage from "../pages/TopicAreaListing";
 import * as Chance from "chance";
 
 const random = new Chance();
+let topicAreaListingPage: TopicAreaListingPage;
 
 describe("Admin settings", () => {
   beforeEach(() => {
@@ -76,5 +77,34 @@ describe("Admin settings", () => {
     topicAreaListingPage.deleteTopicArea(newTopicAreaName);
     topicAreaListingPage.waitUntilTopicAreasTableLoads();
     cy.contains(`"${newTopicAreaName}" topic area successfully deleted`);
+  });
+
+  it("can edit publishing guidance", () => {
+    let topicAreaListingPage = new TopicAreaListingPage();
+    topicAreaListingPage.visit();
+    let publishingGuidancePage = topicAreaListingPage.goToPublishingGuidance();
+
+    const oldAcknowledgment =
+      "I acknowledge that I have reviewed " +
+      "the dashboard and it is ready to publish.";
+
+    // Change to the new acknowledgment
+    const newAcknowledgment = random.sentence();
+    let editPublishingGuidancePage = publishingGuidancePage.goToEditPublishingGuidance();
+    editPublishingGuidancePage.updateAcknowledgment(newAcknowledgment);
+    publishingGuidancePage = editPublishingGuidancePage.submit();
+
+    // Verify the new acknowledgment is present
+    cy.contains("Publishing guidance successfully edited.");
+    cy.contains(newAcknowledgment);
+
+    // Change the acknowledgment back
+    editPublishingGuidancePage = publishingGuidancePage.goToEditPublishingGuidance();
+    editPublishingGuidancePage.updateAcknowledgment(oldAcknowledgment);
+    publishingGuidancePage = editPublishingGuidancePage.submit();
+
+    // Verify the old acknowledgment is present
+    cy.contains("Publishing guidance successfully edited.");
+    cy.contains(oldAcknowledgment);
   });
 });

@@ -224,4 +224,65 @@ describe("Admin user", () => {
       });
     });
   });
+
+  it("can customize date and time format and change them back", () => {
+    let dateTimeFormatPage = settingsPage.goToDateTimeFormat();
+    cy.get("h1").contains("Date and time format");
+
+    cy.get("div.font-sans-lg")
+      .first()
+      .invoke("text")
+      .then((date) => {
+        const dateFormat = date.substring(
+          date.indexOf("(") + 1,
+          date.indexOf(")")
+        );
+        cy.wrap(dateFormat).as("oldDateFormat");
+      });
+
+    cy.get("div.font-sans-lg")
+      .last()
+      .invoke("text")
+      .then((time) => {
+        const timeFormat = time.substring(
+          time.indexOf("(") + 1,
+          time.indexOf(")")
+        );
+        cy.wrap(timeFormat).as("oldTimeFormat");
+      });
+
+    // Change to new date and time format
+    const newDateFormat = "DD/MM/YYYY";
+    const newTimeFormat = "h:mm A";
+    dateTimeFormatPage.startEditDateTime();
+    cy.get("h1").contains("Edit date and time format");
+    dateTimeFormatPage.updateFormat(newDateFormat, newTimeFormat);
+    dateTimeFormatPage.submit();
+
+    // Verify date and time are in UK format
+    cy.contains("Date and time format successfully edited.");
+    dateTimeFormatPage.verifyFormat(newDateFormat, newTimeFormat);
+
+    // Change to US date and time format and verify
+    cy.get("@oldDateFormat").then((oldDateFormat) => {
+      cy.get("@oldTimeFormat").then((oldTimeFormat) => {
+        const oldDateFormatString = <string>(<unknown>oldDateFormat);
+        const oldTimeFormatString = <string>(<unknown>oldTimeFormat);
+
+        dateTimeFormatPage.startEditDateTime();
+        cy.get("h1").contains("Edit date and time format");
+        dateTimeFormatPage.updateFormat(
+          oldDateFormatString,
+          oldTimeFormatString
+        );
+        dateTimeFormatPage.submit();
+
+        cy.contains("Date and time format successfully edited.");
+        dateTimeFormatPage.verifyFormat(
+          oldDateFormatString,
+          oldTimeFormatString
+        );
+      });
+    });
+  });
 });

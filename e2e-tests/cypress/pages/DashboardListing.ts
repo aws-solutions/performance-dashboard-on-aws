@@ -24,6 +24,7 @@ class DashboardListingPage {
     }).as("topicAreasRequest");
 
     // Direct to Create dashboard page
+    cy.contains("Create dashboard");
     cy.findByRole("button", { name: "Create dashboard" }).click();
     cy.wait(["@topicAreasRequest"]);
 

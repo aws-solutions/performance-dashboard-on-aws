@@ -2,6 +2,7 @@ import selectors from "../utils/selectors";
 import TopicAreaListingPage from "./TopicAreaListing";
 import PublishingGuidancePage from "./PublishingGuidance";
 import PublishedSitePage from "./PublishedSite";
+import DateTimeFormatPage from "./DateTimeFormat";
 
 class SettingsPage {
   visit() {
@@ -85,6 +86,20 @@ class SettingsPage {
     ]);
 
     return new PublishedSitePage();
+  }
+
+  goToDateTimeFormat(): DateTimeFormatPage {
+    // Capture the http request
+    cy.intercept({
+      method: "GET",
+      url: "/prod/settings",
+    }).as("settingsRequest");
+
+    // Direct user to Publishing guidance settings page
+    cy.get("a").contains("Date and time format").click();
+    cy.wait(["@settingsRequest"]);
+
+    return new DateTimeFormatPage();
   }
 }
 

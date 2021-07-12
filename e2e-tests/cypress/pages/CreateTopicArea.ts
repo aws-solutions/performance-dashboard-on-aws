@@ -27,8 +27,6 @@ class CreateTopicAreaPage {
     cy.wait([
       "@createTopicAreaRequest",
       "@listTopicAreasRequest",
-      "@listTopicAreasRequest",
-      "@settingsRequest",
       "@settingsRequest",
     ]);
 

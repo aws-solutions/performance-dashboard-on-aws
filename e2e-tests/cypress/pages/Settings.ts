@@ -19,12 +19,7 @@ class SettingsPage {
 
     // Direct user to Settings/Topic areas page
     cy.get(selectors.navBar).get("a").contains("Settings").click();
-    cy.wait([
-      "@settingsRequest",
-      "@settingsRequest",
-      "@listTopicAreasRequest",
-      "@listTopicAreasRequest",
-    ]);
+    cy.wait(["@settingsRequest", "@listTopicAreasRequest"]);
   }
 
   goToTopicAreas(): TopicAreaListingPage {
@@ -41,12 +36,7 @@ class SettingsPage {
 
     // Direct user to Publishing guidance settings page
     cy.get("a").contains("Topic Areas").click();
-    cy.wait([
-      "@settingsRequest",
-      "@settingsRequest",
-      "@listTopicAreasRequest",
-      "@listTopicAreasRequest",
-    ]);
+    cy.wait(["@settingsRequest", "@listTopicAreasRequest"]);
 
     return new TopicAreaListingPage();
   }
@@ -79,11 +69,7 @@ class SettingsPage {
 
     // Direct user to Published site settings page
     cy.get("a").contains("Published site").click();
-    cy.wait([
-      "@homepageSettingsRequest",
-      "@settingsRequest",
-      "@settingsRequest",
-    ]);
+    cy.wait(["@homepageSettingsRequest", "@settingsRequest"]);
 
     return new PublishedSitePage();
   }

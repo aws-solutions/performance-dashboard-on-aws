@@ -27,8 +27,6 @@ class EditTopicAreaPage {
     cy.wait([
       "@editTopicAreaRequest",
       "@listTopicAreasRequest",
-      "@listTopicAreasRequest",
-      "@settingsRequest",
       "@settingsRequest",
     ]);
 

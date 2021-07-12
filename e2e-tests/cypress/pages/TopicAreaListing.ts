@@ -17,7 +17,7 @@ class TopicAreaListingPage {
 
   goToCreateTopicArea(): CreateTopicAreaPage {
     cy.get("button").contains("Create new topic area").click();
-    cy.contains("Create new topic area");
+    cy.get("h1").contains("Create new topic area");
     return new CreateTopicAreaPage();
   }
 

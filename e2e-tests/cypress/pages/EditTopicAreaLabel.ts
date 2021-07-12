@@ -31,8 +31,6 @@ class EditTopicAreaLabelPage {
     cy.wait([
       "@editTopicAreaLabelRequest",
       "@listTopicAreasRequest",
-      "@listTopicAreasRequest",
-      "@settingsRequest",
       "@settingsRequest",
     ]);
 

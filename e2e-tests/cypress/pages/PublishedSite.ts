@@ -29,7 +29,6 @@ class PublishedSitePage {
     cy.wait([
       "@updateNavBarRequest",
       "@settingsRequest",
-      "@settingsRequest",
       "@homepageSettingsRequest",
     ]);
   }
@@ -82,7 +81,6 @@ class PublishedSitePage {
       "@updateHomepageSettingsRequest",
       "@homepageSettingsRequest",
       "@settingsRequest",
-      "@settingsRequest",
     ]);
   }
 
@@ -115,7 +113,6 @@ class PublishedSitePage {
     // Direct user to Published site page
     cy.visit("/admin/settings/publishedsite");
     cy.wait([
-      "@settingsRequest",
       "@settingsRequest",
       "@settingsRequest",
       "@homepageSettingsRequest",

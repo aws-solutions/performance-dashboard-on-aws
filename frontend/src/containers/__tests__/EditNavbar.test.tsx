@@ -29,9 +29,9 @@ test("submits form with the entered values", async () => {
   userEvent.clear(screen.getByLabelText("Title"));
   userEvent.type(screen.getByLabelText("Title"), "A title for your navbar");
 
-  userEvent.clear(screen.getByLabelText("Contact email address - optional"));
+  userEvent.clear(screen.getByLabelText("Contact email address"));
   userEvent.type(
-    screen.getByLabelText("Contact email address - optional"),
+    screen.getByLabelText("Contact email address"),
     "test1234@hotmail.com"
   );
 

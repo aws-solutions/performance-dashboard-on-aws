@@ -3,8 +3,9 @@ class PublishedSitePage {
     cy.get("button").contains("Edit").click();
   }
 
-  updateNavBarTitle(title: string) {
+  updateNavBarTitle(title: string, email: string) {
     cy.findByLabelText("Title").clear().type(title);
+    cy.findByLabelText("Contact email address - optional").clear().type(email);
   }
 
   submitNavBar() {
@@ -26,14 +27,15 @@ class PublishedSitePage {
 
     // Direct user to published site page
     cy.get("form").submit();
-    cy.wait([
-      "@updateNavBarRequest",
-      "@settingsRequest",
-      "@homepageSettingsRequest",
-    ]);
+    // cy.wait([
+    //   "@updateNavBarRequest",
+    //   "@settingsRequest",
+    //   "@homepageSettingsRequest",
+    // ]);
   }
 
   verifyTitle(title: string) {
+    cy.wait(5000);
     cy.get("div.Markdown.undefined").eq(0).contains(title);
     cy.get("div.usa-nav-container").contains(title);
   }

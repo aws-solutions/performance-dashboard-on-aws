@@ -36,7 +36,7 @@ class LoginPage {
 
     // Direct user to login page
     cy.visit("/admin");
-    cy.wait(["@publicSettingsRequest"]);
+    // cy.wait(["@publicSettingsRequest"]);
   }
 
   loginAsAdmin(): AdminHomepage {
@@ -48,7 +48,7 @@ class LoginPage {
 
     // Direct user to login page
     cy.visit("/admin");
-    cy.wait(["@publicSettingsRequest"]);
+    // cy.wait(["@publicSettingsRequest"]);
 
     // Capture http requests
     cy.intercept({
@@ -69,7 +69,7 @@ class LoginPage {
       .find(this.selectors.signInSignInButton, { includeShadowDom: true })
       .contains(this.labels.signInLabel)
       .click();
-    cy.wait(["@settingsRequest"]);
+    // cy.wait(["@settingsRequest"]);
 
     return new AdminHomepage();
   }

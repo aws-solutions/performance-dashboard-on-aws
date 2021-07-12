@@ -247,7 +247,7 @@ exports[`published site settings should match snapshot 1`] = `
               <p
                 class="text-bold"
               >
-                Contact email address - optional
+                Contact email address
               </p>
             </div>
           </div>

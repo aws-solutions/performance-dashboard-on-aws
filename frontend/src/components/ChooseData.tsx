@@ -40,7 +40,7 @@ function ChooseData(props: Props) {
         props.selectDynamicDataset(selectedDataset[0]);
       }
     },
-    [props]
+    [props.datasetType]
   );
 
   const onSearch = (query: string) => {

@@ -23,11 +23,11 @@ describe("Admin user", () => {
     createDashboardPage.fillName(dashboardName);
     createDashboardPage.fillDescription(random.sentence());
     editDashboardPage = createDashboardPage.submit();
+
+    cy.contains(`"${dashboardName}" draft dashboard successfully created.`);
   });
 
   it("can add a Text content item to a dashboard", () => {
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
-
     const addContentItemPage = editDashboardPage.goToAddContentItem();
     addContentItemPage.selectTextContentItem();
     const addTextPage = addContentItemPage.clickContinue() as AddTextPage;
@@ -47,7 +47,6 @@ describe("Admin user", () => {
     editDashboardPage = addTextPage.submit();
 
     // Verify new content item shows up
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
     cy.contains(`'${textTitle}' text has been successfully added.`);
     cy.contains(textTitle);
 
@@ -57,8 +56,6 @@ describe("Admin user", () => {
   });
 
   it("can add a Metrics content item to a dashboard", () => {
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
-
     const addContentItemPage = editDashboardPage.goToAddContentItem();
     addContentItemPage.selectMetricsContentItem();
     const addMetricsPage = addContentItemPage.clickContinue() as AddMetricsPage;
@@ -82,7 +79,6 @@ describe("Admin user", () => {
     editDashboardPage = addMetricsPage.submit();
 
     // Verify new content item shows up
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
     cy.contains(`Metrics '${metricsTitle}' have been successfully added`);
     cy.contains(metricsTitle);
 
@@ -92,8 +88,6 @@ describe("Admin user", () => {
   });
 
   it("can add a Line Chart content item to a dashboard", () => {
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
-
     const addContentItemPage = editDashboardPage.goToAddContentItem();
     addContentItemPage.selectChartContentItem();
     const addChartPage = addContentItemPage.clickContinue() as AddChartPage;
@@ -127,7 +121,6 @@ describe("Admin user", () => {
     editDashboardPage = addChartPage.submit();
 
     // Verify new content item shows up
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
     cy.contains(`'${chartTitle}' chart has been successfully added.`);
     cy.contains(chartTitle);
 

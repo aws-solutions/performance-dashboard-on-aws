@@ -28,14 +28,19 @@ describe("Admin user", () => {
 
     // Submit form and user is taken to the Edit Dashboard page
     let editDashboardPage = createDashboardPage.submit();
-    editDashboardPage.waitUntilDashboardLoads(dashboardName);
 
     // Verify success alert shows up
     cy.contains(`"${dashboardName}" draft dashboard successfully created.`);
 
     // Go back to the dashboard listing page and delete the dashboard
     dashboardListingPage.visit();
+    cy.intercept({
+      method: "GET",
+      url: "/prod/dashboard",
+    }).as("listDashboardsRequest");
+
     dashboardListingPage.deleteDashboard(dashboardName);
+    cy.wait(["@listDashboardsRequest"]);
 
     // Verify success alert shows up
     cy.contains(`${dashboardName} draft dashboard was successfully deleted.`);

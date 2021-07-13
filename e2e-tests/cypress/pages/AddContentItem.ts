@@ -33,13 +33,29 @@ class AddContentItemPage {
   }
 
   clickContinue(): AddMetricsPage | AddTextPage | AddChartPage {
+    // Capture the http requests
+    cy.intercept({
+      method: "GET",
+      url: new RegExp(/\/prod\/dashboard\/.+/),
+    }).as("addSpecificContentToDashboardRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: "/prod/dataset",
+    }).as("datasetRequest");
+
+    // Direct to specific content page
     cy.get("button").contains("Continue").click();
+
     switch (this.selectedContentItem) {
       case "Text":
+        cy.wait(["@addSpecificContentToDashboardRequest"]);
         return new AddTextPage();
       case "Metrics":
+        cy.wait(["@addSpecificContentToDashboardRequest", "@datasetRequest"]);
         return new AddMetricsPage();
       case "Chart":
+        cy.wait(["@addSpecificContentToDashboardRequest", "@datasetRequest"]);
         return new AddChartPage();
     }
   }

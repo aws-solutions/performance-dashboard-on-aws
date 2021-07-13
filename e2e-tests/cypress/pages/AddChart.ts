@@ -29,16 +29,35 @@ class AddChartPage {
   }
 
   submit(): EditDashboardPage {
-    // Capture the http request
+    // Capture the http requests
+    cy.intercept({
+      method: "PUT",
+      url: new RegExp(/\/public\/.+/),
+    }).as("addChartRequest");
+
     cy.intercept({
       method: "POST",
       url: new RegExp(/\/prod\/dashboard\/.+\/widget/),
     }).as("createWidgetRequest");
 
+    cy.intercept({
+      method: "GET",
+      url: new RegExp(/\/prod\/dashboard\/.+/),
+    }).as("viewDashboardRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: new RegExp(/\/prod\/dashboard\/.+\/versions/),
+    }).as("viewDashboardVersionsRequest");
+
     // Click the create button and wait for request to finish
     cy.get("button").contains("Add chart").click();
-    cy.wait(["@createWidgetRequest"]);
-
+    cy.wait([
+      "@addChartRequest",
+      "@createWidgetRequest",
+      "@viewDashboardRequest",
+      "@viewDashboardVersionsRequest",
+    ]);
     return new EditDashboardPage();
   }
 }

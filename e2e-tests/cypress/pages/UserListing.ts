@@ -9,11 +9,13 @@ class UserListing {
       url: "/prod/user",
     }).as("listUsersRequest");
 
+    // Direct to Manage users page
     cy.get(selectors.navBar).get("a").contains("Manage users").click();
     cy.wait(["@listUsersRequest"]);
   }
 
   goToAddUser(): AddUsersPage {
+    // Direct to Add users page
     cy.get("button").contains("Add user(s)").click();
     return new AddUsersPage();
   }
@@ -39,9 +41,14 @@ class UserListing {
       url: "/prod/user",
     }).as("deleteUsersRequest");
 
+    cy.intercept({
+      method: "GET",
+      url: "/prod/user",
+    }).as("listUsersRequest");
+
     // Accept in confirmation modal
     cy.get("button").contains("Delete").click();
-    cy.wait(["@deleteUsersRequest"]);
+    cy.wait(["@deleteUsersRequest", "@listUsersRequest"]);
   }
 }
 

@@ -5,8 +5,18 @@ class PublicHomepage {
 
   visitWithDummyData(fixture: string) {
     return cy.fixture(fixture).then((homepage: any) => {
-      cy.intercept("GET", "prod/public/homepage", homepage);
+      // Stub response
+      cy.intercept("GET", "/prod/public/homepage", homepage);
+
+      // Capture the http request
+      cy.intercept({
+        method: "GET",
+        url: "/prod/public/settings",
+      }).as("publicSettingsRequest");
+
+      // Direct to public homepage
       cy.visit("/");
+      cy.wait(["@publicSettingsRequest"]);
     });
   }
 }

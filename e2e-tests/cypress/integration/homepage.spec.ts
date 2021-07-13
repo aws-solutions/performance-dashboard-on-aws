@@ -1,7 +1,7 @@
 import LoginPage from "../pages/Login";
 import PublicHomepage from "../pages/PublicHomepage";
 
-describe("Admin users", () => {
+describe("Admin user", () => {
   it("are taken to the admin homepage after login", () => {
     const loginPage = new LoginPage();
     loginPage.visit();

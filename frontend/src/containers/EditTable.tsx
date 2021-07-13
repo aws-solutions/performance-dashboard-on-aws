@@ -19,6 +19,7 @@ import {
   useDashboard,
   useFullPreview,
   useChangeBackgroundColor,
+  useScrollUp,
 } from "../hooks";
 import Spinner from "../components/Spinner";
 import { useDatasets } from "../hooks";
@@ -497,6 +498,7 @@ function EditTable() {
   );
 
   useChangeBackgroundColor();
+  useScrollUp();
 
   return (
     <>

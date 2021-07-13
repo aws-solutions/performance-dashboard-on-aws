@@ -14,15 +14,29 @@ class AddTextPage {
   }
 
   submit(): EditDashboardPage {
-    // Capture the http request
+    // Capture the http requests
     cy.intercept({
       method: "POST",
       url: new RegExp(/\/prod\/dashboard\/.+\/widget/),
     }).as("createWidgetRequest");
 
+    cy.intercept({
+      method: "GET",
+      url: new RegExp(/\/prod\/dashboard\/.+/),
+    }).as("viewDashboardRequest");
+
+    cy.intercept({
+      method: "GET",
+      url: new RegExp(/\/prod\/dashboard\/.+\/versions/),
+    }).as("viewDashboardVersionsRequest");
+
     // Click the create button and wait for request to finish
     cy.get("button").contains("Add text").click();
-    cy.wait(["@createWidgetRequest"]);
+    cy.wait([
+      "@createWidgetRequest",
+      "@viewDashboardRequest",
+      "@viewDashboardVersionsRequest",
+    ]);
 
     return new EditDashboardPage();
   }

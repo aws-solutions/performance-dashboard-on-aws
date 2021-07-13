@@ -12,14 +12,20 @@ class AddUsersPage {
   }
 
   submit() {
-    // Capture the http request
+    // Capture the http requests
     cy.intercept({
       method: "POST",
       url: "/prod/user",
     }).as("createUserRequest");
 
+    cy.intercept({
+      method: "GET",
+      url: "/prod/user",
+    }).as("listUsersRequest");
+
+    // Direct to Manage users page
     cy.get("form").submit();
-    cy.wait(["@createUserRequest"]);
+    cy.wait(["@createUserRequest", "@listUsersRequest"]);
   }
 }
 

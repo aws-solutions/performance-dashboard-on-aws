@@ -49,6 +49,7 @@ export class ContentStorage extends cdk.Construct {
             s3.HttpMethods.HEAD,
             s3.HttpMethods.PUT,
             s3.HttpMethods.POST,
+            s3.HttpMethods.DELETE,
           ],
           exposedHeaders: [
             "x-amz-server-side-encryption",

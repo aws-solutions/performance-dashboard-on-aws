@@ -13,6 +13,7 @@ import {
   useDashboard,
   useFullPreview,
   useChangeBackgroundColor,
+  useScrollUp,
 } from "../hooks";
 import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
@@ -340,6 +341,7 @@ function AddTable() {
   );
 
   useChangeBackgroundColor();
+  useScrollUp();
 
   return (
     <>

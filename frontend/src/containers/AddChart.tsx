@@ -14,6 +14,7 @@ import {
   useDatasets,
   useFullPreview,
   useChangeBackgroundColor,
+  useScrollUp,
 } from "../hooks";
 import StorageService from "../services/StorageService";
 import BackendService from "../services/BackendService";
@@ -393,6 +394,7 @@ function AddChart() {
   );
 
   useChangeBackgroundColor();
+  useScrollUp();
 
   return (
     <>

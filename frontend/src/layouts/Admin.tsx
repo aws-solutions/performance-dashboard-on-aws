@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import Logo from "../components/Logo";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
+import { Helmet } from "react-helmet";
 
 interface LayoutProps {
   children: ReactNode;
@@ -33,6 +34,10 @@ function AdminLayout(props: LayoutProps) {
 
   return (
     <>
+      <Helmet>
+        <title>{settings.navbarTitle}</title>
+      </Helmet>
+
       <div className="usa-overlay"></div>
       <Header className="usa-header usa-header--basic">
         <div className="usa-nav-container">

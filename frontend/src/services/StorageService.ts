@@ -166,8 +166,8 @@ async function uploadImage(
     throw new Error("File type is not supported");
   }
 
+  // Give logo file the same name in order to overwrite the previous one
   const fileS3Key = "uploadedLogo".concat(extension);
-  // const fileS3Key = uuidv4().concat(extension);
   const dir = directory ? directory + "/" : "";
 
   await uploadFile(rawFile, dir.concat(fileS3Key), alternativeBucket);
@@ -175,15 +175,7 @@ async function uploadImage(
   return fileS3Key;
 }
 
-async function uploadLogo(
-  rawFile: File,
-  oldLogoName?: string
-): Promise<string> {
-  // await Storage.remove("logo/" + oldLogoName, {
-  //   level: accessLevel,
-  //   bucket: EnvConfig.contentBucket,
-  //   serverSideEncryption,
-  // });
+async function uploadLogo(rawFile: File): Promise<string> {
   return await uploadImage(rawFile, "logo", EnvConfig.contentBucket);
 }
 

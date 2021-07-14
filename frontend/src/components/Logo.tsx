@@ -9,6 +9,7 @@ function Logo() {
   const { logo, loadingFile } = useLogo(settings.customLogoS3Key);
   const [toHide, setToHide] = useState<boolean>(true);
 
+  // firstUpdate stops useEffect from executing after the first render.
   const firstUpdate = useRef(true);
   const secondUpdate = useRef(true);
   useEffect(() => {

@@ -174,7 +174,15 @@ async function uploadImage(
   return fileS3Key;
 }
 
-async function uploadLogo(rawFile: File): Promise<string> {
+async function uploadLogo(
+  rawFile: File,
+  oldLogoName?: string
+): Promise<string> {
+  // await Storage.remove("logo/" + oldLogoName, {
+  //   level: accessLevel,
+  //   bucket: EnvConfig.contentBucket,
+  //   serverSideEncryption,
+  // });
   return await uploadImage(rawFile, "logo", EnvConfig.contentBucket);
 }
 

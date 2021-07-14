@@ -60,6 +60,36 @@ function BrandingAndStylingSettings() {
       />
 
       <h3 className="margin-top-2-important">
+        {t("BrandingAndStylingFavicon")}
+      </h3>
+      <p>{t("BrandingAndStylingFaviconDescription")}</p>
+      <br />
+
+      <div className="grid-row margin-top-0-important">
+        <div className="grid-col flex-1 text-left">
+          <Logo />
+        </div>
+        <div className="grid-col flex-9 padding-left-3">
+          <Button
+            className="margin-top-2"
+            variant="outline"
+            onClick={onEditLogo}
+          >
+            {t("Edit")}
+          </Button>
+        </div>
+      </div>
+
+      <hr
+        style={{
+          border: "none",
+          height: "1px",
+          backgroundColor: "#dfe1e2",
+          margin: "2rem 0",
+        }}
+      />
+
+      <h3 className="margin-top-2-important">
         {t("BrandingAndStylingColors")}
       </h3>
       <p>{t("BrandingAndStylingColorsDescription")}</p>

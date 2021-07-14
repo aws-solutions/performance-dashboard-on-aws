@@ -166,7 +166,8 @@ async function uploadImage(
     throw new Error("File type is not supported");
   }
 
-  const fileS3Key = uuidv4().concat(extension);
+  const fileS3Key = "uploadedLogo".concat(extension);
+  // const fileS3Key = uuidv4().concat(extension);
   const dir = directory ? directory + "/" : "";
 
   await uploadFile(rawFile, dir.concat(fileS3Key), alternativeBucket);

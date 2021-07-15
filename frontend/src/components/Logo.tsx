@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useSettings, useLogo, useFileLoaded } from "../hooks";
 import defaultLogo from "../logo.svg";
 import { useTranslation } from "react-i18next";

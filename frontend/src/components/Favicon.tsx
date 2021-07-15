@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSettings, useFavicon } from "../hooks";
 import defaultFavicon from "../favicon.svg";
 import { useTranslation } from "react-i18next";

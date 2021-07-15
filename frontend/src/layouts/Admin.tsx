@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState, useRef, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import Auth from "@aws-amplify/auth";
 import { useSettings, useCurrentAuthenticatedUser, useFavicon } from "../hooks";
@@ -26,6 +26,7 @@ function AdminLayout(props: LayoutProps) {
   const { settings, loadingSettings } = useSettings();
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
   const { t } = useTranslation();
+  const [toHide, setToHide] = useState<boolean>(true);
 
   const signOut = async (event: React.MouseEvent) => {
     try {
@@ -39,17 +40,41 @@ function AdminLayout(props: LayoutProps) {
     }
   };
 
+  const firstUpdate = useRef(true);
+  const secondUpdate = useRef(true);
+  useEffect(() => {
+    if (secondUpdate.current) {
+      if (firstUpdate.current) {
+        firstUpdate.current = false;
+        return;
+      }
+      secondUpdate.current = false;
+      return;
+    }
+    setToHide(false);
+  }, [loadingFile]);
+
+  // Set default values inside Helmet
   return (
     <>
-      <Helmet>
-        <title>{settings.navbarTitle}</title>
-        <link
-          id="favicon"
-          rel="icon"
-          type="image/png"
-          href={favicon ? URL.createObjectURL(favicon) : defaultFavicon}
-        />
-      </Helmet>
+      {loadingFile || loadingSettings || toHide ? (
+        <Helmet>
+          <title></title>
+          <link />
+        </Helmet>
+      ) : (
+        <Helmet>
+          <title>
+            {settings ? settings.navbarTitle : "Performance Dashboard on AWS"}
+          </title>
+          <link
+            id="favicon"
+            rel="icon"
+            type="image/png"
+            href={favicon ? URL.createObjectURL(favicon) : defaultFavicon}
+          />
+        </Helmet>
+      )}
 
       <div className="usa-overlay"></div>
       <Header className="usa-header usa-header--basic">

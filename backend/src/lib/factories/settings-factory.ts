@@ -1,3 +1,4 @@
+import { ItemNotFound } from "../errors";
 import { Settings, PublicSettings, SettingsItem } from "../models/settings";
 
 function getDefaultSettings(): Settings {
@@ -16,6 +17,7 @@ function getDefaultSettings(): Settings {
       plural: "Topic Areas",
     },
     customLogoS3Key: undefined,
+    customFaviconS3Key: undefined,
     colors: {
       primary: "#2491ff",
       secondary: "#54278f",
@@ -40,6 +42,9 @@ function fromItem(item: SettingsItem): Settings {
     customLogoS3Key: item.customLogoS3Key
       ? item.customLogoS3Key
       : defaults.customLogoS3Key,
+    customFaviconS3Key: item.customFaviconS3Key
+      ? item.customFaviconS3Key
+      : defaults.customFaviconS3Key,
     colors: item.colors ? item.colors : defaults.colors,
     contactEmailAddress: item.contactEmailAddress && item.contactEmailAddress,
     adminContactEmailAddress:
@@ -62,6 +67,9 @@ function toPublicSettings(settings: Settings): PublicSettings {
     customLogoS3Key: settings.customLogoS3Key
       ? settings.customLogoS3Key
       : defaults.customLogoS3Key,
+    customFaviconS3Key: settings.customFaviconS3Key
+      ? settings.customFaviconS3Key
+      : defaults.customFaviconS3Key,
     colors: settings.colors ? settings.colors : defaults.colors,
     contactEmailAddress:
       settings.contactEmailAddress && settings.contactEmailAddress,

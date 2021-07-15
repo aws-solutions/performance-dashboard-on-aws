@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Link, Redirect } from "react-router-dom";
 import Auth from "@aws-amplify/auth";
-import { useSettings, useCurrentAuthenticatedUser } from "../hooks";
+import { useSettings, useCurrentAuthenticatedUser, useFavicon } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
@@ -9,15 +9,22 @@ import Logo from "../components/Logo";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet";
+import defaultFavicon from "../favicon.svg";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 function AdminLayout(props: LayoutProps) {
-  const { username, isAdmin, isFederatedId, isEditor, hasRole } =
-    useCurrentAuthenticatedUser();
-  const { settings } = useSettings();
+  const {
+    username,
+    isAdmin,
+    isFederatedId,
+    isEditor,
+    hasRole,
+  } = useCurrentAuthenticatedUser();
+  const { settings, loadingSettings } = useSettings();
+  const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
   const { t } = useTranslation();
 
   const signOut = async (event: React.MouseEvent) => {
@@ -36,6 +43,11 @@ function AdminLayout(props: LayoutProps) {
     <>
       <Helmet>
         <title>{settings.navbarTitle}</title>
+        <link
+          rel="icon"
+          type="image/png"
+          href={favicon ? URL.createObjectURL(favicon) : defaultFavicon}
+        />
       </Helmet>
 
       <div className="usa-overlay"></div>

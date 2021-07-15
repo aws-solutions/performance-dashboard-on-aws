@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import AlertContainer from "./AlertContainer";
 import "./PublishingGuidanceSettings.css";
 import Logo from "../components/Logo";
+import Favicon from "../components/Favicon";
 import { useSettings } from "../hooks";
 import Spinner from "../components/Spinner";
 
@@ -16,6 +17,10 @@ function BrandingAndStylingSettings() {
 
   const onEditLogo = () => {
     history.push("/admin/settings/brandingandstyling/editlogo");
+  };
+
+  const onEditFavicon = () => {
+    history.push("/admin/settings/brandingandstyling/editfavicon");
   };
 
   const onEditColors = () => {
@@ -67,13 +72,13 @@ function BrandingAndStylingSettings() {
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-1 text-left">
-          <Logo />
+          <Favicon />
         </div>
         <div className="grid-col flex-9 padding-left-3">
           <Button
             className="margin-top-2"
             variant="outline"
-            onClick={onEditLogo}
+            onClick={onEditFavicon}
           >
             {t("Edit")}
           </Button>

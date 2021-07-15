@@ -61,6 +61,11 @@ async function downloadLogo(s3Key: string, t: Function) {
   return await downloadFile(path, t, EnvConfig.contentBucket);
 }
 
+async function downloadFavicon(s3Key: string, t: Function) {
+  const path = "favicon/".concat(s3Key);
+  return await downloadFile(path, t, EnvConfig.contentBucket);
+}
+
 async function downloadJson(s3Key: string): Promise<Array<any>> {
   const data: any = await Storage.get(s3Key, {
     download: true,
@@ -178,6 +183,22 @@ async function uploadLogo(rawFile: File): Promise<string> {
   return await uploadImage(rawFile, "logo", EnvConfig.contentBucket);
 }
 
+async function uploadFavicon(rawFile: File): Promise<string> {
+  const mimeType = rawFile.type;
+  const extension = imageFileTypes[mimeType as keyof ValidFileTypes];
+
+  if (!extension) {
+    throw new Error("File type is not supported");
+  }
+
+  const fileS3Key = "uploadedFavicon".concat(extension);
+  const dir = "favicon/";
+
+  await uploadFile(rawFile, dir.concat(fileS3Key), EnvConfig.contentBucket);
+
+  return fileS3Key;
+}
+
 const StorageService = {
   downloadFile,
   downloadJson,
@@ -185,7 +206,9 @@ const StorageService = {
   uploadMetric,
   uploadImage,
   uploadLogo,
+  uploadFavicon,
   downloadLogo,
+  downloadFavicon,
   imageFileTypes,
 };
 

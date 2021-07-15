@@ -23,6 +23,43 @@ async function createDataset(req: Request, res: Response) {
     return res.status(400).send("Missing required field `data`");
   }
 
+  if (metadata.schema === "Metrics") {
+    for (let i = 0; i < data.length; i++) {
+      //symbol should be valid input or empty
+      if (!["", "Currency", "Percentage"].includes(data[i].percentage)) {
+        return res
+          .status(400)
+          .send(
+            "Invalid symbol type. Choose either `Currency`, `Percentage` or ``"
+          );
+      }
+      //currency should be valid input or empty
+      if (!["", "Dollar $", "Euro €", "Pound £"].includes(data[i].currency)) {
+        return res
+          .status(400)
+          .send(
+            "Invalid symbol type. Choose either ``, `Dollar $`, `Euro €` or `Pound £`"
+          );
+      }
+
+      //if symbol is currency, then a currency should be indicated
+      if (data[i].percentage === "Currency" && data[i].currency === "") {
+        return res.status(400).send("Missing optional field `currency`");
+      }
+      //if currencies are indicated, then symbol should be currency
+      if (
+        data[i].percentage !== "Currency" &&
+        (data[i].currency === "Dollar $" ||
+          data[i].currency === "Euro €" ||
+          data[i].currency === "Pound £")
+      ) {
+        return res
+          .status(400)
+          .send("Can only input currency type along with `Currency`");
+      }
+    }
+  }
+
   if (
     metadata.schema &&
     !Object.values(DatasetSchema).includes(metadata.schema)
@@ -66,7 +103,6 @@ async function createDataset(req: Request, res: Response) {
 async function updateDataset(req: Request, res: Response) {
   const { id } = req.params;
   const { metadata, data } = req.body;
-
   if (!metadata) {
     return res.status(400).send("Missing required field `metadata`");
   }

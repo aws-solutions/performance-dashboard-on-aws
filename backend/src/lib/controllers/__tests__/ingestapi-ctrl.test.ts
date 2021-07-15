@@ -20,6 +20,66 @@ beforeEach(() => {
   DatasetRepository.getInstance = jest.fn().mockReturnValue(repository);
 });
 
+//Unit Test for metric api create dataset
+describe("createDataset", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = {
+      body: {
+        metadata: {
+          name: "covid-dataset.csv",
+          schema: "Metrics",
+        },
+        data: [
+          {
+            title: "test1",
+            value: 1,
+            percentage: "",
+            currency: "",
+            changeOverTime: "",
+            startDate: "",
+            endDate: "",
+          },
+        ],
+      },
+    } as any as Request;
+  });
+
+  it("returns a 400 error when currency is not in the dropdown", async () => {
+    req.body.data[0].currency = "Dollar ";
+    req.body.data[0].percentage = "Currency";
+    await IngestApiCtrl.createDataset(req, res);
+    expect(res.send).toBeCalledWith(
+      "Invalid symbol type. Choose either ``, `Dollar $`, `Euro €` or `Pound £`"
+    );
+  });
+
+  it("returns a 400 error when percentage is not in the dropdown", async () => {
+    req.body.data[0].currency = "";
+    req.body.data[0].percentage = "PI";
+    await IngestApiCtrl.createDataset(req, res);
+    expect(res.send).toBeCalledWith(
+      "Invalid symbol type. Choose either `Currency`, `Percentage` or ``"
+    );
+  });
+
+  it("returns a 400 error when symbol is currency, but currency type is not selected", async () => {
+    req.body.data[0].currency = "";
+    req.body.data[0].percentage = "Currency";
+    await IngestApiCtrl.createDataset(req, res);
+    expect(res.send).toBeCalledWith("Missing optional field `currency`");
+  });
+
+  it("returns a 400 error when currency type is selected, but symbol type is not currency", async () => {
+    req.body.data[0].currency = "Dollar $";
+    req.body.data[0].percentage = "Percentage";
+    await IngestApiCtrl.createDataset(req, res);
+    expect(res.send).toBeCalledWith(
+      "Can only input currency type along with `Currency`"
+    );
+  });
+});
+
 describe("createDataset", () => {
   let req: Request;
   beforeEach(() => {

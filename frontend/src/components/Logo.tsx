@@ -26,14 +26,13 @@ function Logo() {
 
   return (
     <>
-      {loadingFile || loadingSettings ? (
+      {loadingFile || loadingSettings || toHide ? (
         <div />
       ) : (
         <>
           <img
             src={logo ? URL.createObjectURL(logo) : defaultLogo}
             alt={t("OrganizationLogo")}
-            hidden={toHide}
           ></img>
         </>
       )}

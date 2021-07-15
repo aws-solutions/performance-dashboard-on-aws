@@ -44,6 +44,7 @@ function AdminLayout(props: LayoutProps) {
       <Helmet>
         <title>{settings.navbarTitle}</title>
         <link
+          id="favicon"
           rel="icon"
           type="image/png"
           href={favicon ? URL.createObjectURL(favicon) : defaultFavicon}

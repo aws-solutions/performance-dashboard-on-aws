@@ -24,6 +24,7 @@ import {
 } from "./chart-hooks";
 import { useTableMetadata } from "./table-hooks";
 import { useChangeBackgroundColor } from "./background-hooks";
+import { useScrollUp } from "./scrollup-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -64,4 +65,5 @@ export {
   useTableMetadata,
   useWindowSize,
   useChangeBackgroundColor,
+  useScrollUp,
 };

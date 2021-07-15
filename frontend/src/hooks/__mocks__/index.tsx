@@ -561,3 +561,4 @@ export function useWindowSize() {
 }
 
 export function useChangeBackgroundColor() {}
+export function useScrollUp() {}

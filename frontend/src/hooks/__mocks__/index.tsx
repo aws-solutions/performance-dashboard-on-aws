@@ -215,6 +215,13 @@ export function useLogo(s3Key: string | undefined) {
   };
 }
 
+export function useFavicon(s3Key: string | undefined) {
+  return {
+    loadingFile: false,
+    logo: undefined,
+  };
+}
+
 export function usePublicHomepage() {
   return {
     loading: false,

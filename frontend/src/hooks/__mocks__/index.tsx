@@ -5,7 +5,7 @@
  */
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import {
   DashboardState,
   DatasetType,
@@ -562,3 +562,22 @@ export function useWindowSize() {
 
 export function useChangeBackgroundColor() {}
 export function useScrollUp() {}
+
+export function useFileLoaded(
+  setToHide: React.Dispatch<React.SetStateAction<boolean>>,
+  loadingFile: boolean
+) {
+  const firstUpdate = useRef(true);
+  const secondUpdate = useRef(true);
+  useEffect(() => {
+    if (secondUpdate.current) {
+      if (firstUpdate.current) {
+        firstUpdate.current = false;
+        return;
+      }
+      secondUpdate.current = false;
+      return;
+    }
+    setToHide(false);
+  }, [loadingFile]);
+}

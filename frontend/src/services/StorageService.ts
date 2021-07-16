@@ -184,6 +184,10 @@ async function uploadLogo(rawFile: File): Promise<string> {
     EnvConfig.contentBucket,
     "uploadedLogo"
   );
+  // return await Storage.remove("uploadedLogo", {
+  //   bucket: EnvConfig.contentBucket,
+  //   serverSideEncryption,
+  // });
 }
 
 const StorageService = {

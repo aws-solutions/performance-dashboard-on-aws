@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import StorageService from "../services/StorageService";
+import { useTranslation } from "react-i18next";
 
 type UseFaviconHook = {
   loadingFile: boolean;
@@ -7,6 +8,7 @@ type UseFaviconHook = {
 };
 
 export function useFavicon(s3Key?: string): UseFaviconHook {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
   const [favicon, setFile] = useState<File>();
 
@@ -16,7 +18,7 @@ export function useFavicon(s3Key?: string): UseFaviconHook {
     if (s3Key) {
       try {
         setLoading(true);
-        const data = await StorageService.downloadFavicon(s3Key, () => {});
+        const data = await StorageService.downloadFavicon(s3Key, t);
         setFile(data);
         setLoading(false);
       } catch (err) {

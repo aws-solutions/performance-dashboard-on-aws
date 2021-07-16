@@ -40,6 +40,8 @@ function AdminLayout(props: LayoutProps) {
     }
   };
 
+  // firstUpdate stops useEffect from executing after the first render
+  // secondUpdate stops useEffect from executing when file starts loading
   const firstUpdate = useRef(true);
   const secondUpdate = useRef(true);
   useEffect(() => {
@@ -54,7 +56,6 @@ function AdminLayout(props: LayoutProps) {
     setToHide(false);
   }, [loadingFile]);
 
-  // Set default values inside Helmet
   return (
     <>
       {loadingFile || loadingSettings || toHide ? (

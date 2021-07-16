@@ -447,7 +447,7 @@
   "SettingsFaviconEditFailed": "Failed to update favicon.",
   "SettingsFaviconEdit": "Edit favicon",
   "SettingsFaviconDescription": "This favicon will appear in the browser tab.",
-  "SettingsFaviconFielUpload": "File upload",
+  "SettingsFaviconFileUpload": "File upload",
   "SettingsFaviconFileUploadHint": "Must be a PNG, JPEG, or SVG file",
   "SettingsFaviconPreview": "Preview",
   "SettingsFaviconOrganization": "Organization favicon",

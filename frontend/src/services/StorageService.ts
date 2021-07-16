@@ -162,16 +162,18 @@ async function uploadMetric(jsonFile: string): Promise<UploadDatasetResult> {
 async function uploadImage(
   rawFile: File,
   directory?: string,
-  alternativeBucket?: string
+  alternativeBucket?: string,
+  fileS3KeyOverride?: string
 ): Promise<string> {
   const mimeType = rawFile.type;
   const extension = imageFileTypes[mimeType as keyof ValidFileTypes];
-
   if (!extension) {
     throw new Error("File type is not supported");
   }
 
-  const fileS3Key = uuidv4().concat(extension);
+  const fileS3Key = fileS3KeyOverride
+    ? fileS3KeyOverride
+    : uuidv4().concat(extension);
   const dir = directory ? directory + "/" : "";
 
   await uploadFile(rawFile, dir.concat(fileS3Key), alternativeBucket);
@@ -180,23 +182,21 @@ async function uploadImage(
 }
 
 async function uploadLogo(rawFile: File): Promise<string> {
-  return await uploadImage(rawFile, "logo", EnvConfig.contentBucket);
+  return await uploadImage(
+    rawFile,
+    "logo",
+    EnvConfig.contentBucket,
+    "uploadedLogo"
+  );
 }
 
 async function uploadFavicon(rawFile: File): Promise<string> {
-  const mimeType = rawFile.type;
-  const extension = imageFileTypes[mimeType as keyof ValidFileTypes];
-
-  if (!extension) {
-    throw new Error("File type is not supported");
-  }
-
-  const fileS3Key = "uploadedFavicon".concat(extension);
-  const dir = "favicon/";
-
-  await uploadFile(rawFile, dir.concat(fileS3Key), EnvConfig.contentBucket);
-
-  return fileS3Key;
+  return await uploadImage(
+    rawFile,
+    "favicon",
+    EnvConfig.contentBucket,
+    "uploadedFavicon"
+  );
 }
 
 const StorageService = {

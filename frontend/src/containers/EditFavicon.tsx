@@ -137,31 +137,23 @@ function EditFavicon() {
           <div className="grid-col-5">
             <h4 className="margin-top-4">{t("SettingsFaviconPreview")}</h4>
             <div className="grid-row">
-              <Header className="usa-header usa-header--basic padding-left-2 padding-right-2">
-                <div className="usa-logo margin-top-2" id="basic-logo">
-                  <em className="usa-logo__text display-flex flex-align-center">
-                    <div className="logo">
-                      {currentFavicon && (
-                        <img
-                          src={URL.createObjectURL(currentFavicon)}
-                          alt="favicon"
-                        ></img>
-                      )}
-                      {!currentFavicon && (
-                        <img
-                          src={
-                            favicon
-                              ? URL.createObjectURL(favicon)
-                              : defaultFavicon
-                          }
-                          alt={t("SettingsFaviconOrganization")}
-                        ></img>
-                      )}
-                    </div>
-                    {settings.navbarTitle}
-                  </em>
-                </div>
-              </Header>
+              <div className="logo">
+                {currentFavicon && (
+                  <img
+                    src={URL.createObjectURL(currentFavicon)}
+                    alt="favicon"
+                  ></img>
+                )}
+                {!currentFavicon && (
+                  <img
+                    src={
+                      favicon ? URL.createObjectURL(favicon) : defaultFavicon
+                    }
+                    alt={t("SettingsFaviconOrganization")}
+                  ></img>
+                )}
+              </div>
+              <div>{settings.navbarTitle}</div>
             </div>
           </div>
         </>

@@ -5,6 +5,7 @@ import DatasetService from "../services/dataset-service";
 import DatasetFactory from "../factories/dataset-factory";
 import pino from "../services/logger";
 var escapeHtml = require("escape-html");
+import { CurrencyDataType, NumberDataType } from "../models/widget";
 
 // Add an identifier so that any log from the ingest API is easy
 // to find in CloudWatch logs.
@@ -24,9 +25,13 @@ async function createDataset(req: Request, res: Response) {
   }
 
   if (metadata.schema === "Metrics") {
-    for (let i = 0; i < data.length; i++) {
+    for (let datum in data) {
       //symbol should be valid input or empty
-      if (!["", "Currency", "Percentage"].includes(data[i].percentage)) {
+      if (
+        !["", NumberDataType.Percentage, NumberDataType.Currency].includes(
+          data[datum].percentage
+        )
+      ) {
         return res
           .status(400)
           .send(
@@ -34,7 +39,14 @@ async function createDataset(req: Request, res: Response) {
           );
       }
       //currency should be valid input or empty
-      if (!["", "Dollar $", "Euro €", "Pound £"].includes(data[i].currency)) {
+      if (
+        ![
+          "",
+          CurrencyDataType["Dollar $"],
+          CurrencyDataType["Euro €"],
+          CurrencyDataType["Pound £"],
+        ].includes(data[datum].currency)
+      ) {
         return res
           .status(400)
           .send(
@@ -43,15 +55,18 @@ async function createDataset(req: Request, res: Response) {
       }
 
       //if symbol is currency, then a currency should be indicated
-      if (data[i].percentage === "Currency" && data[i].currency === "") {
+      if (
+        data[datum].percentage === NumberDataType.Currency &&
+        data[datum].currency === ""
+      ) {
         return res.status(400).send("Missing optional field `currency`");
       }
       //if currencies are indicated, then symbol should be currency
       if (
-        data[i].percentage !== "Currency" &&
-        (data[i].currency === "Dollar $" ||
-          data[i].currency === "Euro €" ||
-          data[i].currency === "Pound £")
+        data[datum].percentage !== NumberDataType.Currency &&
+        (data[datum].currency === CurrencyDataType["Dollar $"] ||
+          data[datum].currency === CurrencyDataType["Euro €"] ||
+          data[datum].currency === CurrencyDataType["Pound £"])
       ) {
         return res
           .status(400)

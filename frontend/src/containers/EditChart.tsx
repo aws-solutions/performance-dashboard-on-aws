@@ -17,6 +17,7 @@ import {
   useDatasets,
   useFullPreview,
   useChangeBackgroundColor,
+  useScrollUp,
 } from "../hooks";
 
 import StorageService from "../services/StorageService";
@@ -553,6 +554,7 @@ function EditChart() {
   );
 
   useChangeBackgroundColor();
+  useScrollUp();
 
   return (
     <>

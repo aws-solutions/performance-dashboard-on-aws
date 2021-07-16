@@ -14,6 +14,7 @@ import {
   useWidget,
   useFullPreview,
   useChangeBackgroundColor,
+  useScrollUp,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -224,6 +225,7 @@ function EditMetrics() {
   ];
 
   useChangeBackgroundColor();
+  useScrollUp();
 
   if (!loading && widget) {
     crumbs.push({

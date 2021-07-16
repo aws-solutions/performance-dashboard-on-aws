@@ -25,8 +25,8 @@ function AdminLayout(props: LayoutProps) {
   } = useCurrentAuthenticatedUser();
   const { settings, loadingSettings } = useSettings();
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
-  const { t } = useTranslation();
   const [toHide, setToHide] = useState<boolean>(true);
+  const { t } = useTranslation();
 
   const signOut = async (event: React.MouseEvent) => {
     try {

@@ -1,10 +1,12 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState, useRef, useEffect } from "react";
 import "./Settings.css";
 import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { Link } from "react-router-dom";
-import { useSettings } from "../hooks";
+import { useSettings, useFavicon } from "../hooks";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet";
+import defaultFavicon from "../favicon.svg";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -13,6 +15,8 @@ interface LayoutProps {
 function SettingsLayout(props: LayoutProps) {
   const { pathname } = useLocation();
   const { settings, loadingSettings } = useSettings(true);
+  const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
+  const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
   let currentSetting = "topicarea";
 
@@ -33,8 +37,43 @@ function SettingsLayout(props: LayoutProps) {
     currentSetting = queryString[3];
   }
 
+  // firstUpdate stops useEffect from executing after the first render
+  // secondUpdate stops useEffect from executing when file starts loading
+  const firstUpdate = useRef(true);
+  const secondUpdate = useRef(true);
+  useEffect(() => {
+    if (secondUpdate.current) {
+      if (firstUpdate.current) {
+        firstUpdate.current = false;
+        return;
+      }
+      secondUpdate.current = false;
+      return;
+    }
+    setToHide(false);
+  }, [loadingFile]);
+
   return (
     <>
+      {loadingFile || loadingSettings || toHide ? (
+        <Helmet>
+          <title></title>
+          <link />
+        </Helmet>
+      ) : (
+        <Helmet>
+          <title>
+            {settings ? settings.navbarTitle : "Performance Dashboard on AWS"}
+          </title>
+          <link
+            id="favicon"
+            rel="icon"
+            type="image/png"
+            href={favicon ? URL.createObjectURL(favicon) : defaultFavicon}
+          />
+        </Helmet>
+      )}
+
       <Breadcrumbs
         crumbs={[
           {

@@ -1,26 +1,60 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../components/Logo";
-import { usePublicSettings } from "../hooks";
+import { usePublicSettings, useFavicon } from "../hooks";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet";
+import defaultFavicon from "../favicon.svg";
 
 interface LayoutProps {
   children?: ReactNode;
 }
 
 function PublicLayout(props: LayoutProps) {
-  const { settings } = usePublicSettings();
+  const { settings, loadingSettings } = usePublicSettings();
+  const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
+  const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
+
+  // firstUpdate stops useEffect from executing after the first render
+  // secondUpdate stops useEffect from executing when file starts loading
+  const firstUpdate = useRef(true);
+  const secondUpdate = useRef(true);
+  useEffect(() => {
+    if (secondUpdate.current) {
+      if (firstUpdate.current) {
+        firstUpdate.current = false;
+        return;
+      }
+      secondUpdate.current = false;
+      return;
+    }
+    setToHide(false);
+  }, [loadingFile]);
 
   return (
     <>
-      <Helmet>
-        <title>{settings.navbarTitle}</title>
-      </Helmet>
+      {loadingFile || loadingSettings || toHide ? (
+        <Helmet>
+          <title></title>
+          <link />
+        </Helmet>
+      ) : (
+        <Helmet>
+          <title>
+            {settings ? settings.navbarTitle : "Performance Dashboard on AWS"}
+          </title>
+          <link
+            id="favicon"
+            rel="icon"
+            type="image/png"
+            href={favicon ? URL.createObjectURL(favicon) : defaultFavicon}
+          />
+        </Helmet>
+      )}
 
       <div className="usa-overlay"></div>
       <Header className="usa-header usa-header--basic">

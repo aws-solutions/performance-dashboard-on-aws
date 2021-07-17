@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useSettings, useFavicon } from "../hooks";
+import React, { useState } from "react";
+import { useSettings, useFavicon, useFileLoaded } from "../hooks";
 import defaultFavicon from "../favicon.svg";
 import { useTranslation } from "react-i18next";
 
@@ -9,21 +9,7 @@ function Favicon() {
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
   const [toHide, setToHide] = useState<boolean>(true);
 
-  // firstUpdate stops useEffect from executing after the first render
-  // secondUpdate stops useEffect from executing when file starts loading
-  const firstUpdate = useRef(true);
-  const secondUpdate = useRef(true);
-  useEffect(() => {
-    if (secondUpdate.current) {
-      if (firstUpdate.current) {
-        firstUpdate.current = false;
-        return;
-      }
-      secondUpdate.current = false;
-      return;
-    }
-    setToHide(false);
-  }, [loadingFile]);
+  useFileLoaded(setToHide, loadingFile);
 
   return (
     <>

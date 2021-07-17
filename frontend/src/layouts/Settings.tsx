@@ -1,9 +1,9 @@
-import React, { ReactNode, useState, useRef, useEffect } from "react";
+import React, { ReactNode, useState } from "react";
 import "./Settings.css";
 import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { Link } from "react-router-dom";
-import { useSettings, useFavicon } from "../hooks";
+import { useSettings, useFavicon, useFileLoaded } from "../hooks";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import defaultFavicon from "../favicon.svg";
@@ -37,21 +37,7 @@ function SettingsLayout(props: LayoutProps) {
     currentSetting = queryString[3];
   }
 
-  // firstUpdate stops useEffect from executing after the first render
-  // secondUpdate stops useEffect from executing when file starts loading
-  const firstUpdate = useRef(true);
-  const secondUpdate = useRef(true);
-  useEffect(() => {
-    if (secondUpdate.current) {
-      if (firstUpdate.current) {
-        firstUpdate.current = false;
-        return;
-      }
-      secondUpdate.current = false;
-      return;
-    }
-    setToHide(false);
-  }, [loadingFile]);
+  useFileLoaded(setToHide, loadingFile);
 
   return (
     <>

@@ -1,7 +1,12 @@
-import React, { ReactNode, useState, useRef, useEffect } from "react";
+import React, { ReactNode, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import Auth from "@aws-amplify/auth";
-import { useSettings, useCurrentAuthenticatedUser, useFavicon } from "../hooks";
+import {
+  useSettings,
+  useCurrentAuthenticatedUser,
+  useFavicon,
+  useFileLoaded,
+} from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Footer from "./Footer";
@@ -40,21 +45,7 @@ function AdminLayout(props: LayoutProps) {
     }
   };
 
-  // firstUpdate stops useEffect from executing after the first render
-  // secondUpdate stops useEffect from executing when file starts loading
-  const firstUpdate = useRef(true);
-  const secondUpdate = useRef(true);
-  useEffect(() => {
-    if (secondUpdate.current) {
-      if (firstUpdate.current) {
-        firstUpdate.current = false;
-        return;
-      }
-      secondUpdate.current = false;
-      return;
-    }
-    setToHide(false);
-  }, [loadingFile]);
+  useFileLoaded(setToHide, loadingFile);
 
   return (
     <>

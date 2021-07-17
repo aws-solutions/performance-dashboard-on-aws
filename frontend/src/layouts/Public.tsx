@@ -1,9 +1,9 @@
-import React, { ReactNode, useState, useRef, useEffect } from "react";
+import React, { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../components/Logo";
-import { usePublicSettings, useFavicon } from "../hooks";
+import { usePublicSettings, useFavicon, useFileLoaded } from "../hooks";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet";
@@ -19,21 +19,7 @@ function PublicLayout(props: LayoutProps) {
   const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
 
-  // firstUpdate stops useEffect from executing after the first render
-  // secondUpdate stops useEffect from executing when file starts loading
-  const firstUpdate = useRef(true);
-  const secondUpdate = useRef(true);
-  useEffect(() => {
-    if (secondUpdate.current) {
-      if (firstUpdate.current) {
-        firstUpdate.current = false;
-        return;
-      }
-      secondUpdate.current = false;
-      return;
-    }
-    setToHide(false);
-  }, [loadingFile]);
+  useFileLoaded(setToHide, loadingFile);
 
   return (
     <>

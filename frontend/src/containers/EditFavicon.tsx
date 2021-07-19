@@ -88,7 +88,7 @@ function EditFavicon() {
 
   const promptAlert: React.CSSProperties = {
     fontSize: "20px",
-    paddingTop: "4px",
+    paddingTop: "2px",
   };
 
   return (

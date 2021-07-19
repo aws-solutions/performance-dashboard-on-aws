@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - mainline
+      - mainline-dev
   pull_request:
     branches:
       - mainline
+      - mainline-dev
 
 jobs:
   CodeQL-Build:

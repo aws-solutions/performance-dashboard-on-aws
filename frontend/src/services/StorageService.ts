@@ -157,8 +157,7 @@ async function uploadMetric(jsonFile: string): Promise<UploadDatasetResult> {
 async function uploadImage(
   rawFile: File,
   directory?: string,
-  alternativeBucket?: string,
-  fileS3KeyOverride?: string
+  alternativeBucket?: string
 ): Promise<string> {
   const mimeType = rawFile.type;
   const extension = imageFileTypes[mimeType as keyof ValidFileTypes];
@@ -167,9 +166,7 @@ async function uploadImage(
     throw new Error("File type is not supported");
   }
 
-  const fileS3Key = fileS3KeyOverride
-    ? fileS3KeyOverride
-    : uuidv4().concat(extension);
+  const fileS3Key = uuidv4().concat(extension);
   const dir = directory ? directory + "/" : "";
 
   await uploadFile(rawFile, dir.concat(fileS3Key), alternativeBucket);
@@ -177,17 +174,19 @@ async function uploadImage(
   return fileS3Key;
 }
 
-async function uploadLogo(rawFile: File): Promise<string> {
-  return await uploadImage(
-    rawFile,
-    "logo",
-    EnvConfig.contentBucket,
-    "uploadedLogo"
-  );
-  // return await Storage.remove("uploadedLogo", {
-  //   bucket: EnvConfig.contentBucket,
-  //   serverSideEncryption,
-  // });
+async function uploadLogo(
+  rawFile: File,
+  oldCustomLogoS3Key?: string
+): Promise<string> {
+  if (oldCustomLogoS3Key) {
+    await Storage.remove("logo/".concat(oldCustomLogoS3Key), {
+      bucket: EnvConfig.contentBucket,
+      serverSideEncryption,
+      level: accessLevel,
+    });
+  }
+
+  return await uploadImage(rawFile, "logo", EnvConfig.contentBucket);
 }
 
 const StorageService = {

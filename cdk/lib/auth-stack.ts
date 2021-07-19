@@ -206,7 +206,10 @@ export class AuthStack extends cdk.Stack {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:DeleteObject"],
-        resources: [contentBucketArn.concat("/public/*")],
+        resources: [
+          contentBucketArn.concat("/public/logo/*"),
+          contentBucketArn.concat("/public/favicon/*"),
+        ],
       })
     );
 

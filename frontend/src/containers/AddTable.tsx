@@ -95,6 +95,7 @@ function AddTable() {
   const [currencyTypes, setCurrencyTypes] = useState<
     Map<string, CurrencyDataType>
   >(new Map<string, CurrencyDataType>());
+  const [oldStep, setoldStep] = useState<number>(-1);
 
   const title = watch("title");
   const showTitle = watch("showTitle");
@@ -341,7 +342,7 @@ function AddTable() {
   );
 
   useChangeBackgroundColor();
-  useScrollUp();
+  useScrollUp(oldStep, step);
 
   return (
     <>

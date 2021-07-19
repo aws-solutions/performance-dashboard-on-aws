@@ -80,6 +80,7 @@ function EditChart() {
   const [showWarning, setShowWarning] = useState(false);
   const [enableContinueButton, setEnableContinueButton] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
+  const [oldStep, setoldStep] = useState<number>(-1);
   const [staticFileName, setStaticFileName] = useState<string | undefined>("");
   const [dynamicFileName, setDynamicFileName] =
     useState<string | undefined>("");
@@ -554,7 +555,7 @@ function EditChart() {
   );
 
   useChangeBackgroundColor();
-  useScrollUp();
+  useScrollUp(oldStep, step);
 
   return (
     <>

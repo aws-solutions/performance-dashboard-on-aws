@@ -561,4 +561,4 @@ export function useWindowSize() {
 }
 
 export function useChangeBackgroundColor() {}
-export function useScrollUp() {}
+export function useScrollUp(oldstep: number, step: number) {}

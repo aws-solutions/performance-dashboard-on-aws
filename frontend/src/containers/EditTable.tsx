@@ -72,6 +72,7 @@ function EditTable() {
   const [editingWidget, setEditingWidget] = useState(false);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const [staticFileName, setStaticFileName] = useState<string | undefined>("");
+  const [oldStep, setoldStep] = useState<number>(-1);
   const [dynamicFileName, setDynamicFileName] =
     useState<string | undefined>("");
   const {
@@ -498,7 +499,7 @@ function EditTable() {
   );
 
   useChangeBackgroundColor();
-  useScrollUp();
+  useScrollUp(oldStep, step);
 
   return (
     <>

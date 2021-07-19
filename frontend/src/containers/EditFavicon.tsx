@@ -86,6 +86,11 @@ function EditFavicon() {
     }
   };
 
+  const promptAlert: React.CSSProperties = {
+    fontSize: "20px",
+    paddingTop: "4px",
+  };
+
   return (
     <div className="grid-row">
       <div className="grid-col-8">
@@ -156,7 +161,7 @@ function EditFavicon() {
                   ></img>
                 )}
               </div>
-              <div>{settings.navbarTitle}</div>
+              <div style={promptAlert}>{settings.navbarTitle}</div>
             </div>
           </div>
         </>

@@ -27,7 +27,10 @@ function EditFavicon() {
       try {
         setImageUploading(true);
 
-        const s3Key = await StorageService.uploadFavicon(currentFavicon);
+        const s3Key = await StorageService.uploadFavicon(
+          currentFavicon,
+          settings.customFaviconS3Key
+        );
 
         await BackendService.updateSetting(
           "customFaviconS3Key",

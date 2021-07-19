@@ -12,6 +12,12 @@
       "value": {
         "type": "number"
       },
+      "percentage": {
+        "type": "string"
+      },
+      "currency": {
+        "type": "string"
+      },
       "changeOverTime": {
         "type": "string",
         "$comment": "For example, +10.1% or -56%"

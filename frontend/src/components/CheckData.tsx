@@ -265,8 +265,6 @@ function CheckData(props: Props) {
       props.dataTypes,
       props.numberTypes,
       props.currencyTypes,
-      props.hiddenColumns,
-      handleSelectedHeadersChange,
     ]
   );
 

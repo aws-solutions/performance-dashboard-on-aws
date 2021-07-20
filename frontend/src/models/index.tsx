@@ -220,6 +220,7 @@ export type PublicSettings = {
     plural: string;
   };
   customLogoS3Key?: string;
+  customFaviconS3Key?: string;
   contactEmailAddress?: string;
 };
 
@@ -240,6 +241,7 @@ export type Settings = {
     plural: string;
   };
   customLogoS3Key?: string;
+  customFaviconS3Key?: string;
   contactEmailAddress?: string;
   adminContactEmailAddress?: string;
 };

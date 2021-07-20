@@ -15,6 +15,7 @@ import { useUsers, useCurrentAuthenticatedUser } from "./user-hooks";
 import { useDateTimeFormatter } from "./datetime-hooks";
 import { useImage } from "./image-hooks";
 import { useLogo } from "./logo-hooks";
+import { useFavicon } from "./favicon-hooks";
 import { useDatasets } from "./dataset-hooks";
 import { useFullPreview } from "./dashboard-preview-hooks";
 import {
@@ -58,6 +59,7 @@ export {
   useCurrentAuthenticatedUser,
   useImage,
   useLogo,
+  useFavicon,
   useFriendlyUrl,
   useDatasets,
   useFullPreview,

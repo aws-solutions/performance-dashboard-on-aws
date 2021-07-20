@@ -43,6 +43,7 @@ describe("fromItem", () => {
         plural: "Topic Areas",
       },
       customLogoS3Key: "12345",
+      customFaviconS3Key: "12345",
       contactEmailAddress: "test@aol.com",
       adminContactEmailAddress: "admin@aol.com",
     };
@@ -61,6 +62,7 @@ describe("fromItem", () => {
         plural: "Topic Areas",
       },
       customLogoS3Key: "12345",
+      customFaviconS3Key: "12345",
       colors: {
         primary: "#2491ff",
         secondary: "#54278f",
@@ -86,6 +88,7 @@ describe("toPublicSettings", () => {
         plural: "Topic Areas",
       },
       customLogoS3Key: "12345",
+      customFaviconS3Key: "12345",
       colors: {
         primary: "#ffffff",
         secondary: "#ffffff",
@@ -105,6 +108,7 @@ describe("toPublicSettings", () => {
         plural: "Topic Areas",
       },
       customLogoS3Key: "12345",
+      customFaviconS3Key: "12345",
       colors: {
         primary: "#ffffff",
         secondary: "#ffffff",

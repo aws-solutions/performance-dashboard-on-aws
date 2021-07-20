@@ -25,6 +25,7 @@ import {
 import { useTableMetadata } from "./table-hooks";
 import { useChangeBackgroundColor } from "./background-hooks";
 import { useScrollUp } from "./scrollup-hooks";
+import { useFileLoaded } from "./file-loaded-hooks";
 
 /**
  * No unit tests for custom hooks?
@@ -66,4 +67,5 @@ export {
   useWindowSize,
   useChangeBackgroundColor,
   useScrollUp,
+  useFileLoaded,
 };

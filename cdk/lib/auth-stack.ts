@@ -205,6 +205,17 @@ export class AuthStack extends cdk.Stack {
     authRole.addToPolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
+        actions: ["s3:DeleteObject"],
+        resources: [
+          contentBucketArn.concat("/public/logo/*"),
+          contentBucketArn.concat("/public/favicon/*"),
+        ],
+      })
+    );
+
+    authRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
         actions: ["s3:PutObject"],
         resources: [
           datasetsBucketArn.concat("/uploads/*"),

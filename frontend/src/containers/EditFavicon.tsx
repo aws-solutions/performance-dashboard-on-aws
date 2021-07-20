@@ -10,7 +10,6 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import Spinner from "../components/Spinner";
 import defaultFavicon from "../favicon.svg";
 import { useTranslation } from "react-i18next";
-import Header from "../components/Header";
 
 function EditFavicon() {
   const { t } = useTranslation();
@@ -86,11 +85,6 @@ function EditFavicon() {
     }
   };
 
-  const promptAlert: React.CSSProperties = {
-    fontSize: "20px",
-    paddingTop: "2px",
-  };
-
   return (
     <div className="grid-row">
       <div className="grid-col-8">
@@ -161,7 +155,14 @@ function EditFavicon() {
                   ></img>
                 )}
               </div>
-              <div style={promptAlert}>{settings.navbarTitle}</div>
+              <div
+                style={{
+                  fontSize: "20px",
+                  paddingTop: "2px",
+                }}
+              >
+                {settings.navbarTitle}
+              </div>
             </div>
           </div>
         </>

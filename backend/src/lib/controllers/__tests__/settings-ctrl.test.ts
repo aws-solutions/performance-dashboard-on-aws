@@ -10,16 +10,16 @@ jest.mock("../../factories/settings-factory");
 
 const user: User = { userId: "johndoe" };
 const repository = mocked(SettingsRepository.prototype);
-const req = {} as any as Request;
+const req = ({} as any) as Request;
 let res: Response;
 
 beforeEach(() => {
   SettingsRepository.getInstance = jest.fn().mockReturnValue(repository);
-  res = {
+  res = ({
     send: jest.fn().mockReturnThis(),
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
-  } as any as Response;
+  } as any) as Response;
 });
 
 describe("getSettings", () => {
@@ -47,12 +47,12 @@ describe("updateSettings", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       body: {
         updatedAt: now.toISOString(),
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns a 400 error when updatedAt is not specified", async () => {
@@ -123,6 +123,17 @@ describe("updateSettings", () => {
     await SettingsCtrl.updateSettings(req, res);
     expect(repository.updateSetting).toHaveBeenCalledWith(
       "customLogoS3Key",
+      "abc",
+      now.toISOString(),
+      user
+    );
+  });
+
+  it("updates customFaviconS3Key setting", async () => {
+    req.body.customFaviconS3Key = "abc";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "customFaviconS3Key",
       "abc",
       now.toISOString(),
       user

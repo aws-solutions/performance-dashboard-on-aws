@@ -1,22 +1,47 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../components/Logo";
-import { usePublicSettings } from "../hooks";
+import { usePublicSettings, useFavicon, useFileLoaded } from "../hooks";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
+import { Helmet } from "react-helmet";
+import defaultFavicon from "../favicon.svg";
 
 interface LayoutProps {
   children?: ReactNode;
 }
 
 function PublicLayout(props: LayoutProps) {
-  const { settings } = usePublicSettings();
+  const { settings, loadingSettings } = usePublicSettings();
+  const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
+  const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
+
+  useFileLoaded(setToHide, loadingFile);
 
   return (
     <>
+      {loadingFile || loadingSettings || toHide ? (
+        <Helmet>
+          <title></title>
+          <link />
+        </Helmet>
+      ) : (
+        <Helmet>
+          <title>
+            {settings ? settings.navbarTitle : "Performance Dashboard on AWS"}
+          </title>
+          <link
+            id="favicon"
+            rel="icon"
+            type="image/png"
+            href={favicon ? URL.createObjectURL(favicon) : defaultFavicon}
+          />
+        </Helmet>
+      )}
+
       <div className="usa-overlay"></div>
       <Header className="usa-header usa-header--basic">
         <div className="usa-nav-container">

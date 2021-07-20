@@ -27,7 +27,10 @@ function EditLogo() {
       try {
         setImageUploading(true);
 
-        const s3Key = await StorageService.uploadLogo(currentLogo);
+        const s3Key = await StorageService.uploadLogo(
+          currentLogo,
+          settings.customLogoS3Key
+        );
 
         await BackendService.updateSetting(
           "customLogoS3Key",

@@ -1,4 +1,9 @@
-import { ColumnMetadata, ColumnDataType, NumberDataType } from "../models";
+import {
+  ColumnMetadata,
+  ColumnDataType,
+  NumberDataType,
+  CurrencyDataType,
+} from "../models";
 import ColumnsMetadataService from "./ColumnsMetadataService";
 
 const ONE_THOUSAND = 1000;
@@ -100,16 +105,16 @@ function formatNumber(
     }
   }
 
-  if (percentage === "Percentage") {
+  if (percentage === NumberDataType.Percentage) {
     return formattedNum + `%`;
   }
 
   if (currency) {
-    if (currency === "Dollar $" || currency === "$") {
+    if (currency === CurrencyDataType["Dollar $"] || currency === "$") {
       return `$` + formattedNum;
-    } else if (currency === "Euro €" || currency === "€") {
+    } else if (currency === CurrencyDataType["Euro €"] || currency === "€") {
       return `€` + formattedNum;
-    } else if (currency === "Pound £" || currency === "£") {
+    } else if (currency === CurrencyDataType["Pound £"] || currency === "£") {
       return `£` + formattedNum;
     }
   }

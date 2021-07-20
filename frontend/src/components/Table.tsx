@@ -194,21 +194,13 @@ function Table(props: Props) {
         }
       }
     }
-  }, [
-    rows,
-    headerGroups,
-    reset,
-    setSortByColumn,
-    setSortByDesc,
-    sortByColumn,
-    sortByDesc,
-  ]);
+  }, [rows]);
 
   useEffect(() => {
     if (sortByColumn) {
       toggleSortBy(sortByColumn, sortByDesc);
     }
-  }, [sortByColumn, sortByDesc, toggleSortBy]);
+  }, [sortByColumn, sortByDesc]);
 
   const { onSelection, filterQuery } = props;
   useEffect(() => {

@@ -103,7 +103,7 @@ function AddChart() {
   const [currencyTypes, setCurrencyTypes] = useState<
     Map<string, CurrencyDataType>
   >(new Map<string, CurrencyDataType>());
-  const [oldStep, setoldStep] = useState<number>(-1);
+  const [oldStep, setOldStep] = useState<number>(-1);
 
   const title = watch("title");
   const summary = watch("summary");
@@ -395,7 +395,7 @@ function AddChart() {
   );
 
   useChangeBackgroundColor();
-  useScrollUp(oldStep, step);
+  useScrollUp(oldStep, step, setOldStep);
 
   return (
     <>

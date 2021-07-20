@@ -561,4 +561,8 @@ export function useWindowSize() {
 }
 
 export function useChangeBackgroundColor() {}
-export function useScrollUp(oldstep: number, step: number) {}
+export function useScrollUp(
+  oldstep: number,
+  step: number,
+  setOldStep: React.Dispatch<React.SetStateAction<number>>
+) {}

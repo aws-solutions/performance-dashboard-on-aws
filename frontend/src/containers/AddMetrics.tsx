@@ -86,7 +86,7 @@ function AddMetrics() {
     state && state.datasetType ? state.datasetType : undefined
   );
   const { fullPreview, fullPreviewButton } = useFullPreview();
-  const [oldStep, setoldStep] = useState<number>(-1);
+  const [oldStep, setOldStep] = useState<number>(-1);
   const title = watch("title");
   const showTitle = watch("showTitle");
   const oneMetricPerRow = watch("oneMetricPerRow");
@@ -323,7 +323,7 @@ function AddMetrics() {
   }
 
   useChangeBackgroundColor();
-  useScrollUp(oldStep, step);
+  useScrollUp(oldStep, step, setOldStep);
 
   const configHeader = (
     <div>

@@ -25,8 +25,17 @@ describe("Admin user", () => {
     addUsersPage.selectAdminRole();
     addUsersPage.submit();
 
-    // Verify user is in the table
-    userListingPage.verifyUser(username, userEmail);
+    // Verify admin user is in the table
+    userListingPage.verifyUser(username, userEmail, "Admin");
+
+    // Change user's role from admin to editor
+    const changeUsersRolePage = userListingPage.goToChangeRole(username);
+    changeUsersRolePage.verifyEmailAddress(userEmail);
+    changeUsersRolePage.selectEditorRole();
+    changeUsersRolePage.submit();
+
+    // Verify editor user is in the table
+    userListingPage.verifyUser(username, userEmail, "Editor");
 
     // Delete the user
     userListingPage.removeUser(username);

@@ -1,5 +1,6 @@
 import selectors from "../utils/selectors";
 import AddUsersPage from "./AddUsers";
+import ChangeUsersRolePage from "./ChangeUsersRole";
 
 class UserListing {
   visit() {
@@ -20,17 +21,34 @@ class UserListing {
     return new AddUsersPage();
   }
 
-  verifyUser(username: string, userEmail: string) {
+  verifyUser(username: string, userEmail: string, role: string) {
     // Search for user in case is not visible due to pagination
     cy.findByRole("searchbox").type(username);
     cy.get("form[role='search']").submit();
 
-    cy.contains(username);
-    cy.contains(userEmail);
+    cy.contains("tr", userEmail).contains("tr", username).contains(role);
 
     // Clear textbox
     cy.findByRole("searchbox").clear();
     cy.get("form[role='search']").submit();
+  }
+
+  goToChangeRole(username: string): ChangeUsersRolePage {
+    // Search for user in case is not visible due to pagination
+    cy.findByRole("searchbox").type(username);
+    cy.get("form[role='search']").submit();
+
+    // Select it
+    cy.get(`input[title="${username}"]`).click({
+      force: true,
+      multiple: true,
+    });
+
+    // Click dropdown menu and then remove users
+    cy.get("button").contains("Actions").click();
+    cy.findByRole("menuitem", { name: "Change role" }).click();
+
+    return new ChangeUsersRolePage();
   }
 
   removeUser(username: string) {

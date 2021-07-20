@@ -20,6 +20,19 @@ class UserListing {
     return new AddUsersPage();
   }
 
+  verifyUser(username: string, userEmail: string) {
+    // Search for user in case is not visible due to pagination
+    cy.findByRole("searchbox").type(username);
+    cy.get("form[role='search']").submit();
+
+    cy.contains(username);
+    cy.contains(userEmail);
+
+    // Clear textbox
+    cy.findByRole("searchbox").clear();
+    cy.get("form[role='search']").submit();
+  }
+
   removeUser(username: string) {
     // Search for user in case is not visible due to pagination
     cy.findByRole("searchbox").type(username);

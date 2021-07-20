@@ -26,8 +26,7 @@ describe("Admin user", () => {
     addUsersPage.submit();
 
     // Verify user is in the table
-    cy.contains(username);
-    cy.contains(userEmail);
+    userListingPage.verifyUser(username, userEmail);
 
     // Delete the user
     userListingPage.removeUser(username);

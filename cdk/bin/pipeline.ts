@@ -9,7 +9,7 @@ new PipelineStack(app, "Pipeline", {
   stackName: "PerformanceDash-Pipeline",
   repoName: "performance-dashboard-on-aws",
   sourceProvider: "GitHub",
-  branch: "mainline",
+  branch: "mainline-dev",
   githubOwner: "awslabs",
   githubOAuthToken: "github-oauth-token-secret",
 });

@@ -26,10 +26,7 @@ class UserListing {
     cy.findByRole("searchbox").type(username);
     cy.get("form[role='search']").submit();
 
-    cy.contains("tr", userEmail)
-      .contains("tr", username)
-      .contains("tr", role)
-      .contains("FORCE_CHANGE_PASSWORD");
+    cy.contains("tr", userEmail).contains("tr", username).contains(role);
 
     // Clear textbox
     cy.findByRole("searchbox").clear();

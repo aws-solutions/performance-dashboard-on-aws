@@ -1274,7 +1274,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"emails\": \"miguelpdiaz8@gmail.com\"\n}",
+              "raw": "{\n    \"emails\": \"{{$randomEmail}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1306,7 +1306,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"role\": \"Admin\",\n    \"emails\": \"caromull@amazon.co.uk\"\n}",
+              "raw": "{\n    \"role\": \"Admin\",\n    \"emails\": \"{{$randomEmail}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

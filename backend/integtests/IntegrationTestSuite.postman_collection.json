@@ -857,7 +857,7 @@
       "response": []
     },
     {
-      "name": "Update metrics dataset (Ingest API)",
+      "name": "Update Metrics dataset (Ingest API)",
       "event": [
         {
           "listen": "test",
@@ -865,6 +865,17 @@
             "exec": [
               "pm.test(\"returns 200 OK\", () => {",
               "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns the dataset id\", () => {",
+              "    const dataset = pm.response.json();",
+              "    pm.expect(dataset.id).to.exist;",
+              "    pm.collectionVariables.set(\"metricsdataset.id\", dataset.id);",
+              "});",
+              "",
+              "pm.test(\"returns the dataset s3Key\", () => {",
+              "    const dataset = pm.response.json();",
+              "    pm.expect(dataset.s3Key.json).to.exist;",
               "});"
             ],
             "type": "text/javascript"

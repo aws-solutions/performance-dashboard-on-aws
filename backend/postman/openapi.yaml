@@ -1275,6 +1275,34 @@ components:
       required:
         - name
 
+    DatasetDataItems:
+      type: object
+      properties:
+        title:
+          type: string
+        value:
+          type: number
+        percentage:
+          type: string
+          enum:
+            - Percentage
+            - Currency
+        currency:
+          type: string
+          enum:
+            - Dollar $
+            - Euro €
+            - Pound £
+        changeOverTime:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+      required:
+        - title
+        - value
+
     IngestApiDataset:
       type: object
       properties:
@@ -1283,7 +1311,7 @@ components:
         data:
           type: array
           items:
-            type: object
+            $ref: "#/components/schemas/DatasetDataItems"
       required:
         - metadata
         - data

@@ -1284,8 +1284,15 @@ components:
           type: number
         percentage:
           type: string
+          enum:
+            - Percentage
+            - Currency
         currency:
           type: string
+          enum:
+            - Dollar $
+            - Euro €
+            - Pound £
         changeOverTime:
           type: string
         startDate:

@@ -1,2552 +1,2362 @@
 {
-	"info": {
-		"_postman_id": "dfd10275-0bc3-47b8-b6c7-6eda5f99b5e3",
-		"name": "Integration Tests",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Get settings",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"has a setting for publishingGuidance\", () => {",
-							"    const settings = pm.response.json();",
-							"    pm.expect(settings.publishingGuidance).to.not.be.undefined;",
-							"    pm.collectionVariables.set(\"settings.publishingGuidance\", settings.publishingGuidance);",
-							"});",
-							"",
-							"pm.test(\"has a setting for dateTimeFormat\", () => {",
-							"    const settings = pm.response.json();",
-							"    pm.expect(settings.dateTimeFormat).to.not.be.undefined;",
-							"    pm.expect(settings.dateTimeFormat.date).to.be.a(\"string\");",
-							"    pm.expect(settings.dateTimeFormat.time).to.be.a(\"string\");",
-							"});",
-							"",
-							"pm.test(\"returns updatedAt field\", () => {",
-							"    const settings = pm.response.json();",
-							"    pm.expect(settings.updatedAt).to.not.be.undefined;",
-							"    pm.collectionVariables.set(\"settings.updatedAt\", settings.updatedAt);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/settings",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"settings"
-					]
-				},
-				"description": "List topic areas to verify the newly created topic area shows up correctly. "
-			},
-			"response": []
-		},
-		{
-			"name": "Get public settings",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/public/settings",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"public",
-						"settings"
-					]
-				},
-				"description": "List topic areas to verify the newly created topic area shows up correctly. "
-			},
-			"response": []
-		},
-		{
-			"name": "Get Homepage settings",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"has a title and description\", () => {",
-							"    const homepage = pm.response.json();",
-							"    pm.expect(homepage.title).to.be.a(\"string\");",
-							"    pm.expect(homepage.description).to.be.a(\"string\");",
-							"    pm.collectionVariables.set(\"homepage.title\", homepage.title);",
-							"    pm.collectionVariables.set(\"homepage.description\", homepage.description);",
-							"});",
-							"",
-							"pm.test(\"has updatedAt field\", () => {",
-							"    const homepage = pm.response.json();",
-							"    pm.expect(homepage.updatedAt).to.be.a(\"string\");",
-							"    pm.collectionVariables.set(\"homepage.updatedAt\", homepage.updatedAt);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/settings/homepage",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"settings",
-						"homepage"
-					]
-				},
-				"description": "List topic areas to verify the newly created topic area shows up correctly. "
-			},
-			"response": []
-		},
-		{
-			"name": "Update settings",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"dateTimeFormat\": {\n        \"date\": \"YYYY-MM-DD\",\n        \"time\": \"HH:mm\"\n    },\n    \"publishingGuidance\": \"{{settings.publishingGuidance}}\",\n    \"updatedAt\": \"{{settings.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/settings",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"settings"
-					]
-				},
-				"description": "Create new topic area for testing purposes"
-			},
-			"response": []
-		},
-		{
-			"name": "Update homepage settings",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"title\": \"{{homepage.title}}\",\n    \"description\": \"{{homepage.description}}\",\n    \"updatedAt\": \"{{homepage.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/settings/homepage",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"settings",
-						"homepage"
-					]
-				},
-				"description": "Create new topic area for testing purposes"
-			},
-			"response": []
-		},
-		{
-			"name": "Create topic area",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"const testId = new Date().getTime();",
-							"pm.collectionVariables.set(\"testId\", testId);",
-							"pm.collectionVariables.set(\"topicarea.name\", testId);"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns the topic area id\", () => {",
-							"    const topicarea = pm.response.json();",
-							"    pm.expect(topicarea.id).to.exist;",
-							"    pm.collectionVariables.set(\"topicarea.id\", topicarea.id);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{topicarea.name}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/topicarea",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"topicarea"
-					]
-				},
-				"description": "Create new topic area for testing purposes"
-			},
-			"response": []
-		},
-		{
-			"name": "List topic areas",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"created topic area is listed\", () => {",
-							"    const expectedId = pm.collectionVariables.get(\"topicarea.id\");",
-							"    const topicareas = pm.response.json();",
-							"    const filtered = topicareas.filter(topicarea => topicarea.id === expectedId);",
-							"    const expectedTopicarea = filtered[0];",
-							"    pm.expect(expectedTopicarea).to.not.be.undefined;",
-							"    pm.expect(expectedTopicarea.id).to.equal(expectedId);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/topicarea",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"topicarea"
-					]
-				},
-				"description": "List topic areas to verify the newly created topic area shows up correctly. "
-			},
-			"response": []
-		},
-		{
-			"name": "Rename topic area",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{$randomCompanyName}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/topicarea/:id",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"topicarea",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "{{topicarea.id}}",
-							"type": "string"
-						}
-					]
-				},
-				"description": "Create new topic area for testing purposes"
-			},
-			"response": []
-		},
-		{
-			"name": "Create dashboard",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"const testId = pm.variables.get(\"testId\");",
-							"pm.collectionVariables.set(\"dashboard.name\", testId);"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns the dashboard\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.id).to.exist;",
-							"    pm.collectionVariables.set(\"dashboard.id\", dashboard.id);",
-							"",
-							"    pm.expect(dashboard.updatedAt).to.exist;",
-							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{dashboard.name}}\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"description\": \"Some markdown for [testing](https://www.google.com)\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard"
-					]
-				},
-				"description": "Creates a dashboard in the newly created topic area"
-			},
-			"response": []
-		},
-		{
-			"name": "Edit dashboard",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{dashboard.name}} modified\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"description\": \"Updated markdown **here**\",\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				},
-				"description": "Changes the name of the test dashboard"
-			},
-			"response": []
-		},
-		{
-			"name": "Get dashboard",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"dashboard name matches\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    const name = pm.collectionVariables.get(\"dashboard.name\");",
-							"    const newName = name + \" modified\";",
-							"    pm.expect(dashboard.name).to.equal(newName);",
-							"    pm.collectionVariables.set(\"dashboard.name\", newName);",
-							"});",
-							"",
-							"pm.test(\"dashboard description matches\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.description).to.equal(\"Updated markdown **here**\");",
-							"});",
-							"",
-							"pm.test(\"dashboard topicarea matches\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    const topicAreaId = pm.collectionVariables.get(\"topicarea.id\");",
-							"    pm.expect(dashboard.topicAreaId).to.equal(topicAreaId);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				},
-				"description": "Get dashboard by id to verify if new name has been set and dashboard can be retrieved properly."
-			},
-			"response": []
-		},
-		{
-			"name": "Create text widget",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns the widget id\", () => {",
-							"    const textwidget = pm.response.json();",
-							"    pm.expect(textwidget.id).to.exist;",
-							"    pm.collectionVariables.set(\"textwidget.id\", textwidget.id);",
-							"",
-							"    pm.expect(textwidget.updatedAt).to.exist;",
-							"    pm.collectionVariables.set(\"textwidget.updatedAt\", textwidget.updatedAt);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"Text widget\",\n    \"widgetType\": \"Text\",\n    \"showTitle\": false,\n    \"content\": {\n        \"text\": \"Lorem _ipsum_ **with markdown**\"\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}",
-						"widget"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create image widget",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns the widget id\", () => {",
-							"    const widget = pm.response.json();",
-							"    pm.expect(widget.id).to.exist;",
-							"    pm.collectionVariables.set(\"imagewidget.id\", widget.id);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Image\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"summaryBelow\": false,\n        \"imageAltText\": \"{{$randomWord}}\",\n        \"fileName\": \"123.png\",\n        \"s3Key\": {\n            \"raw\": \"123.png\"\n        }\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}",
-						"widget"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create dataset (Ingest API)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns the dataset id\", () => {",
-							"    const dataset = pm.response.json();",
-							"    pm.expect(dataset.id).to.exist;",
-							"    pm.collectionVariables.set(\"dataset.id\", dataset.id);",
-							"});",
-							"",
-							"pm.test(\"returns the dataset s3Key\", () => {",
-							"    const dataset = pm.response.json();",
-							"    pm.expect(dataset.s3Key.json).to.exist;",
-							"    pm.collectionVariables.set(\"dataset.s3Key.json\", dataset.s3Key.json);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "in",
-							"value": "header",
-							"type": "string"
-						},
-						{
-							"key": "value",
-							"value": "{{apiKey}}",
-							"type": "string"
-						},
-						{
-							"key": "key",
-							"value": "x-api-key",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\"\n    },\n    \"data\": [{\"Year\":2016,\"Live Stream Attendees\":17000},{\"Year\":2017,\"Live Stream Attendees\":23000},{\"Year\":2018,\"Live Stream Attendees\":13500},{\"Year\":2019,\"Live Stream Attendees\":21100},{\"Year\":2020,\"Live Stream Attendees\":8450}]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/ingestapi/dataset",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"ingestapi",
-						"dataset"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create metrics dataset (Ingest API)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns the dataset id\", () => {",
-							"    const dataset = pm.response.json();",
-							"    pm.expect(dataset.id).to.exist;",
-							"    pm.collectionVariables.set(\"metricsdataset.id\", dataset.id);",
-							"});",
-							"",
-							"pm.test(\"returns the dataset s3Key\", () => {",
-							"    const dataset = pm.response.json();",
-							"    pm.expect(dataset.s3Key.json).to.exist;",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "in",
-							"value": "header",
-							"type": "string"
-						},
-						{
-							"key": "value",
-							"value": "{{apiKey}}",
-							"type": "string"
-						},
-						{
-							"key": "key",
-							"value": "x-api-key",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"schema\": \"Metrics\"\n    },\n    \"data\": [\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"changeOverTime\": \"+6%\",\n            \"startDate\": \"{{$randomDatePast}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        },\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"changeOverTime\": \"+1000\",\n            \"startDate\": \"{{$randomDateRecent}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        }\n    ]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/ingestapi/dataset",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"ingestapi",
-						"dataset"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update dataset (Ingest API)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "in",
-							"value": "header",
-							"type": "string"
-						},
-						{
-							"key": "value",
-							"value": "{{apiKey}}",
-							"type": "string"
-						},
-						{
-							"key": "key",
-							"value": "x-api-key",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\"\n    },\n    \"data\": [{\"Year\":2016,\"Live Stream Attendees\":15000},{\"Year\":2017,\"Live Stream Attendees\":23000},{\"Year\":2018,\"Live Stream Attendees\":13500},{\"Year\":2019,\"Live Stream Attendees\":21100},{\"Year\":2020,\"Live Stream Attendees\":9050}]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"ingestapi",
-						"dataset",
-						":datasetId"
-					],
-					"variable": [
-						{
-							"key": "datasetId",
-							"value": "{{dataset.id}}",
-							"type": "string"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "List datasets",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns a list of datasets\", () => {",
-							"    const datasets = pm.response.json();",
-							"    pm.expect(datasets).to.be.an(\"array\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dataset/",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dataset",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create chart widget",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns the widget id\", () => {",
-							"    const chartwidget = pm.response.json();",
-							"    pm.expect(chartwidget.id).to.exist;",
-							"    pm.collectionVariables.set(\"chartwidget.id\", chartwidget.id);",
-							"",
-							"    pm.expect(chartwidget.updatedAt).to.exist;",
-							"    pm.collectionVariables.set(\"chartwidget.updatedAt\", chartwidget.updatedAt);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"Chart widget\",\n    \"widgetType\": \"Chart\",\n    \"showTitle\": true,\n    \"content\": {\n        \"title\": \"{{$randomWords}}\",\n        \"chartType\": \"LineChart\",\n        \"datasetId\": \"{{dataset.id}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"s3Key\": {\n            \"raw\": \"\",\n            \"json\": \"{{dataset.s3Key.json}}\"\n        },\n        \"fileName\": \"{{$randomFileName}}\"\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}",
-						"widget"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify widgets are in dashboard",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"text widget is included in dashboard\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    const textwidgetId = pm.collectionVariables.get(\"textwidget.id\");",
-							"    pm.expect(dashboard.widgets).to.exist;",
-							"",
-							"    const widgets = dashboard.widgets.filter(widget => widget.id === textwidgetId);",
-							"    pm.expect(widgets.length).to.equal(1);",
-							"",
-							"    const textwidget = widgets[0];",
-							"    pm.expect(textwidget.id).to.equal(textwidgetId);",
-							"    pm.expect(textwidget.widgetType).to.equal(\"Text\");",
-							"});",
-							"",
-							"pm.test(\"chart widget is included in dashboard\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    const chartWidgetId = pm.collectionVariables.get(\"chartwidget.id\");",
-							"    pm.expect(dashboard.widgets).to.exist;",
-							"",
-							"    const widgets = dashboard.widgets.filter(widget => widget.id === chartWidgetId);",
-							"    pm.expect(widgets.length).to.equal(1);",
-							"",
-							"    const chartWidget = widgets[0];",
-							"    pm.expect(chartWidget.id).to.equal(chartWidgetId);",
-							"    pm.expect(chartWidget.widgetType).to.equal(\"Chart\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Re-order widgets",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"widgets\": [\n        {\n            \"id\": \"{{textwidget.id}}\",\n            \"order\": 2,\n            \"updatedAt\": \"{{textwidget.updatedAt}}\"\n        },\n        {\n            \"id\": \"{{chartwidget.id}}\",\n            \"order\": 1,\n            \"updatedAt\": \"{{chartwidget.updatedAt}}\"\n        }\n    ]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widgetorder",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}",
-						"widgetorder"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Fetch latest dashboard updatedAt",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify draft dashboard is not yet public",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 404 not found\", () => {",
-							"    pm.response.to.have.status(404);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/public/dashboard/:id",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"public",
-						"dashboard",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "{{dashboard.id}}",
-							"type": "string"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Set dashboard to publish pending",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publishpending",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}",
-						"publishpending"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Fetch latest dashboard updatedAt",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Publish dashboard",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publish",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}",
-						"publish"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify dashboard shows in homepage",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"homepage contains title and description\", () => {",
-							"    const homepage = pm.response.json();",
-							"    pm.expect(homepage.title).to.not.be.undefined;",
-							"    pm.expect(homepage.description).to.not.be.undefined;",
-							"});",
-							"",
-							"pm.test(\"homepage contains dashboard\", () => {",
-							"    const homepage = pm.response.json();",
-							"    pm.expect(homepage.dashboards).to.not.be.undefined;",
-							"    ",
-							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
-							"    const dashboards = homepage.dashboards;",
-							"    const dashboard = dashboards.find(dash => dash.id === id);",
-							"    pm.expect(dashboard).to.not.be.undefined;",
-							"});",
-							"",
-							"pm.test(\"dashboard has a friendly URL\", () => {",
-							"    const homepage = pm.response.json();",
-							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
-							"    const dashboard = homepage.dashboards.find(dash => dash.id === id);",
-							"    pm.expect(dashboard.friendlyURL).to.be.a(\"string\");",
-							"    pm.collectionVariables.set(\"dashboard.friendlyURL\", dashboard.friendlyURL);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/public/homepage",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"public",
-						"homepage"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get dashboard by Id using public api",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"response contains dashboard\", () => {",
-							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.id).to.equal(id);",
-							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/public/dashboard/:id",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"public",
-						"dashboard",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "{{dashboard.id}}",
-							"type": "string"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get dashboard by friendlyURL",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"response contains dashboard\", () => {",
-							"    const id = pm.collectionVariables.get(\"dashboard.id\");",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.id).to.equal(id);",
-							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/public/dashboard/friendly-url/:friendlyURL",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"public",
-						"dashboard",
-						"friendly-url",
-						":friendlyURL"
-					],
-					"variable": [
-						{
-							"key": "friendlyURL",
-							"value": "{{dashboard.friendlyURL}}",
-							"type": "string"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create draft from Published dashboard",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns new draft dashboard\", () => {",
-							"    const draft = pm.response.json();",
-							"    pm.expect(draft.id).to.exist;",
-							"    pm.expect(draft.state).to.equal(\"Draft\");",
-							"    pm.collectionVariables.set(\"dashboard2.id\", draft.id);",
-							"});",
-							"",
-							"pm.test(\"new draft dashboard has a new id\", () => {",
-							"    const dashboardId = pm.collectionVariables.get(\"dashboard.id\");",
-							"    const draft = pm.response.json();",
-							"    pm.expect(draft.id).not.to.equal(dashboardId);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Archive dashboard",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/archive",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}",
-						"archive"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify audit logs",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"const testId = pm.variables.get(\"testId\");",
-							"pm.collectionVariables.set(\"dashboard.name\", testId);"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns a list of logs\", () => {",
-							"    const auditlogs = pm.response.json();",
-							"    pm.expect(auditlogs).to.be.an(\"array\");",
-							"    pm.expect(auditlogs.length).to.be.greaterThan(5);",
-							"});",
-							"",
-							"pm.test(\"each log has appropriate attributes\", () => {",
-							"    const auditlogs = pm.response.json();",
-							"    auditlogs.forEach(auditlog => {",
-							"        pm.expect(auditlog.timestamp).to.be.a(\"string\");",
-							"        pm.expect(auditlog.version).to.be.a(\"number\");",
-							"        pm.expect(auditlog.event).to.be.oneOf([\"Create\", \"Update\", \"Delete\"]);",
-							"    });",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/:id/auditlogs",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						":id",
-						"auditlogs"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "{{dashboard.id}}",
-							"type": "string"
-						}
-					]
-				},
-				"description": "Creates a dashboard in the newly created topic area"
-			},
-			"response": []
-		},
-		{
-			"name": "List users",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"response contains a list of users\", () => {",
-							"    const users = pm.response.json();",
-							"    pm.expect(users).to.be.an(\"array\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/user",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create User",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"role\": \"Editor\",\n    \"emails\": \"john@doe.com\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/user",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Change user role",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"role\": \"Admin\",\n    \"usernames\": [\"john\"]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/user/role",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"user",
-						"role"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete User",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"usernames\": [\"john\"]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/user",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete text widget",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/:dashboardId/widget/:widgetId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						":dashboardId",
-						"widget",
-						":widgetId"
-					],
-					"variable": [
-						{
-							"key": "dashboardId",
-							"value": "{{dashboard.id}}",
-							"type": "string"
-						},
-						{
-							"key": "widgetId",
-							"value": "{{textwidget.id}}",
-							"type": "string"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete image widget",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/:dashboardId/widget/:widgetId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						":dashboardId",
-						"widget",
-						":widgetId"
-					],
-					"variable": [
-						{
-							"key": "dashboardId",
-							"value": "{{dashboard.id}}",
-							"type": "string"
-						},
-						{
-							"key": "widgetId",
-							"value": "{{imagewidget.id}}",
-							"type": "string"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete chart widget",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/:dashboardId/widget/:widgetId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						":dashboardId",
-						"widget",
-						":widgetId"
-					],
-					"variable": [
-						{
-							"key": "dashboardId",
-							"value": "{{dashboard.id}}",
-							"type": "string"
-						},
-						{
-							"key": "widgetId",
-							"value": "{{chartwidget.id}}",
-							"type": "string"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete dataset (Ingest API)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 409 conflict when dataset is being used by a widget\", () => {",
-							"    // dashboard2 was created as a draft from dashboard1 ",
-							"    // and therefore contains the same widgets. Since we ",
-							"    // don't know the IDs for those widgets, we can't delete them",
-							"    // and because of that, this dataset deletion fails.",
-							"    pm.response.to.have.status(409);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "in",
-							"value": "header",
-							"type": "string"
-						},
-						{
-							"key": "value",
-							"value": "{{apiKey}}",
-							"type": "string"
-						},
-						{
-							"key": "key",
-							"value": "x-api-key",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"ingestapi",
-						"dataset",
-						":datasetId"
-					],
-					"variable": [
-						{
-							"key": "datasetId",
-							"value": "{{dataset.id}}",
-							"type": "string"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete metrics dataset (Ingest API)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 ok\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "in",
-							"value": "header",
-							"type": "string"
-						},
-						{
-							"key": "value",
-							"value": "{{apiKey}}",
-							"type": "string"
-						},
-						{
-							"key": "key",
-							"value": "x-api-key",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"ingestapi",
-						"dataset",
-						":datasetId"
-					],
-					"variable": [
-						{
-							"key": "datasetId",
-							"value": "{{metricsdataset.id}}",
-							"type": "string"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete dashboard",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				},
-				"description": "Deletes the test dashboard"
-			},
-			"response": []
-		},
-		{
-			"name": "Delete draft dashboard",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard2.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard2.id}}"
-					]
-				},
-				"description": "Deletes the test dashboard"
-			},
-			"response": []
-		},
-		{
-			"name": "Delete topic area",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/topicarea/{{topicarea.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"topicarea",
-						"{{topicarea.id}}"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "baseUrl",
-			"value": "http://localhost:8080"
-		},
-		{
-			"key": "token",
-			"value": ""
-		},
-		{
-			"key": "apiKey",
-			"value": ""
-		},
-		{
-			"key": "testId",
-			"value": ""
-		},
-		{
-			"key": "topicarea.id",
-			"value": ""
-		},
-		{
-			"key": "topicarea.name",
-			"value": ""
-		},
-		{
-			"key": "dashboard.id",
-			"value": ""
-		},
-		{
-			"key": "dashboard.name",
-			"value": ""
-		},
-		{
-			"key": "dashboard.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "dashboard.friendlyURL",
-			"value": ""
-		},
-		{
-			"key": "dashboard2.id",
-			"value": ""
-		},
-		{
-			"key": "textwidget.id",
-			"value": ""
-		},
-		{
-			"key": "textwidget.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "chartwidget.id",
-			"value": ""
-		},
-		{
-			"key": "chartwidget.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "settings.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "settings.publishingGuidance",
-			"value": ""
-		},
-		{
-			"key": "homepage.title",
-			"value": ""
-		},
-		{
-			"key": "homepage.description",
-			"value": ""
-		},
-		{
-			"key": "homepage.updatedAt",
-			"value": ""
-		},
-		{
-			"key": "dataset.id",
-			"value": ""
-		},
-		{
-			"key": "dataset.s3Key",
-			"value": ""
-		},
-		{
-			"key": "dataset.s3Key.json",
-			"value": ""
-		},
-		{
-			"key": "metricsdataset.id",
-			"value": ""
-		},
-		{
-			"key": "imagewidget.id",
-			"value": ""
-		}
-	]
+  "info": {
+    "_postman_id": "c788c039-72fb-4842-b2d2-143715163500",
+    "name": "Integration Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get settings",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"has a setting for publishingGuidance\", () => {",
+              "    const settings = pm.response.json();",
+              "    pm.expect(settings.publishingGuidance).to.not.be.undefined;",
+              "    pm.collectionVariables.set(\"settings.publishingGuidance\", settings.publishingGuidance);",
+              "});",
+              "",
+              "pm.test(\"has a setting for dateTimeFormat\", () => {",
+              "    const settings = pm.response.json();",
+              "    pm.expect(settings.dateTimeFormat).to.not.be.undefined;",
+              "    pm.expect(settings.dateTimeFormat.date).to.be.a(\"string\");",
+              "    pm.expect(settings.dateTimeFormat.time).to.be.a(\"string\");",
+              "});",
+              "",
+              "pm.test(\"returns updatedAt field\", () => {",
+              "    const settings = pm.response.json();",
+              "    pm.expect(settings.updatedAt).to.not.be.undefined;",
+              "    pm.collectionVariables.set(\"settings.updatedAt\", settings.updatedAt);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/settings",
+          "host": ["{{baseUrl}}"],
+          "path": ["settings"]
+        },
+        "description": "List topic areas to verify the newly created topic area shows up correctly. "
+      },
+      "response": []
+    },
+    {
+      "name": "Get public settings",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/public/settings",
+          "host": ["{{baseUrl}}"],
+          "path": ["public", "settings"]
+        },
+        "description": "List topic areas to verify the newly created topic area shows up correctly. "
+      },
+      "response": []
+    },
+    {
+      "name": "Get Homepage settings",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"has a title and description\", () => {",
+              "    const homepage = pm.response.json();",
+              "    pm.expect(homepage.title).to.be.a(\"string\");",
+              "    pm.expect(homepage.description).to.be.a(\"string\");",
+              "    pm.collectionVariables.set(\"homepage.title\", homepage.title);",
+              "    pm.collectionVariables.set(\"homepage.description\", homepage.description);",
+              "});",
+              "",
+              "pm.test(\"has updatedAt field\", () => {",
+              "    const homepage = pm.response.json();",
+              "    pm.expect(homepage.updatedAt).to.be.a(\"string\");",
+              "    pm.collectionVariables.set(\"homepage.updatedAt\", homepage.updatedAt);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/settings/homepage",
+          "host": ["{{baseUrl}}"],
+          "path": ["settings", "homepage"]
+        },
+        "description": "List topic areas to verify the newly created topic area shows up correctly. "
+      },
+      "response": []
+    },
+    {
+      "name": "Update settings",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"dateTimeFormat\": {\n        \"date\": \"YYYY-MM-DD\",\n        \"time\": \"HH:mm\"\n    },\n    \"publishingGuidance\": \"{{settings.publishingGuidance}}\",\n    \"updatedAt\": \"{{settings.updatedAt}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/settings",
+          "host": ["{{baseUrl}}"],
+          "path": ["settings"]
+        },
+        "description": "Create new topic area for testing purposes"
+      },
+      "response": []
+    },
+    {
+      "name": "Update homepage settings",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"{{homepage.title}}\",\n    \"description\": \"{{homepage.description}}\",\n    \"updatedAt\": \"{{homepage.updatedAt}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/settings/homepage",
+          "host": ["{{baseUrl}}"],
+          "path": ["settings", "homepage"]
+        },
+        "description": "Create new topic area for testing purposes"
+      },
+      "response": []
+    },
+    {
+      "name": "Create topic area",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const testId = new Date().getTime();",
+              "pm.collectionVariables.set(\"testId\", testId);",
+              "pm.collectionVariables.set(\"topicarea.name\", testId);"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns the topic area id\", () => {",
+              "    const topicarea = pm.response.json();",
+              "    pm.expect(topicarea.id).to.exist;",
+              "    pm.collectionVariables.set(\"topicarea.id\", topicarea.id);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"{{topicarea.name}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/topicarea",
+          "host": ["{{baseUrl}}"],
+          "path": ["topicarea"]
+        },
+        "description": "Create new topic area for testing purposes"
+      },
+      "response": []
+    },
+    {
+      "name": "List topic areas",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"created topic area is listed\", () => {",
+              "    const expectedId = pm.collectionVariables.get(\"topicarea.id\");",
+              "    const topicareas = pm.response.json();",
+              "    const filtered = topicareas.filter(topicarea => topicarea.id === expectedId);",
+              "    const expectedTopicarea = filtered[0];",
+              "    pm.expect(expectedTopicarea).to.not.be.undefined;",
+              "    pm.expect(expectedTopicarea.id).to.equal(expectedId);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/topicarea",
+          "host": ["{{baseUrl}}"],
+          "path": ["topicarea"]
+        },
+        "description": "List topic areas to verify the newly created topic area shows up correctly. "
+      },
+      "response": []
+    },
+    {
+      "name": "Rename topic area",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"{{$randomCompanyName}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/topicarea/:id",
+          "host": ["{{baseUrl}}"],
+          "path": ["topicarea", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "{{topicarea.id}}"
+            }
+          ]
+        },
+        "description": "Create new topic area for testing purposes"
+      },
+      "response": []
+    },
+    {
+      "name": "Create dashboard",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const testId = pm.variables.get(\"testId\");",
+              "pm.collectionVariables.set(\"dashboard.name\", testId);"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns the dashboard\", () => {",
+              "    const dashboard = pm.response.json();",
+              "    pm.expect(dashboard.id).to.exist;",
+              "    pm.collectionVariables.set(\"dashboard.id\", dashboard.id);",
+              "",
+              "    pm.expect(dashboard.updatedAt).to.exist;",
+              "    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"{{dashboard.name}}\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"description\": \"Some markdown for [testing](https://www.google.com)\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard"]
+        },
+        "description": "Creates a dashboard in the newly created topic area"
+      },
+      "response": []
+    },
+    {
+      "name": "Edit dashboard",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"{{dashboard.name}} modified\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"description\": \"Updated markdown **here**\",\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}"]
+        },
+        "description": "Changes the name of the test dashboard"
+      },
+      "response": []
+    },
+    {
+      "name": "Get dashboard",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"dashboard name matches\", () => {",
+              "    const dashboard = pm.response.json();",
+              "    const name = pm.collectionVariables.get(\"dashboard.name\");",
+              "    const newName = name + \" modified\";",
+              "    pm.expect(dashboard.name).to.equal(newName);",
+              "    pm.collectionVariables.set(\"dashboard.name\", newName);",
+              "});",
+              "",
+              "pm.test(\"dashboard description matches\", () => {",
+              "    const dashboard = pm.response.json();",
+              "    pm.expect(dashboard.description).to.equal(\"Updated markdown **here**\");",
+              "});",
+              "",
+              "pm.test(\"dashboard topicarea matches\", () => {",
+              "    const dashboard = pm.response.json();",
+              "    const topicAreaId = pm.collectionVariables.get(\"topicarea.id\");",
+              "    pm.expect(dashboard.topicAreaId).to.equal(topicAreaId);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}"]
+        },
+        "description": "Get dashboard by id to verify if new name has been set and dashboard can be retrieved properly."
+      },
+      "response": []
+    },
+    {
+      "name": "Create text widget",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns the widget id\", () => {",
+              "    const textwidget = pm.response.json();",
+              "    pm.expect(textwidget.id).to.exist;",
+              "    pm.collectionVariables.set(\"textwidget.id\", textwidget.id);",
+              "",
+              "    pm.expect(textwidget.updatedAt).to.exist;",
+              "    pm.collectionVariables.set(\"textwidget.updatedAt\", textwidget.updatedAt);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Text widget\",\n    \"widgetType\": \"Text\",\n    \"showTitle\": false,\n    \"content\": {\n        \"text\": \"Lorem _ipsum_ **with markdown**\"\n    }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}", "widget"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create image widget",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns the widget id\", () => {",
+              "    const widget = pm.response.json();",
+              "    pm.expect(widget.id).to.exist;",
+              "    pm.collectionVariables.set(\"imagewidget.id\", widget.id);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Image\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"summaryBelow\": false,\n        \"imageAltText\": \"{{$randomWord}}\",\n        \"fileName\": \"123.png\",\n        \"s3Key\": {\n            \"raw\": \"123.png\"\n        }\n    }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}", "widget"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create dataset (Ingest API)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns the dataset id\", () => {",
+              "    const dataset = pm.response.json();",
+              "    pm.expect(dataset.id).to.exist;",
+              "    pm.collectionVariables.set(\"dataset.id\", dataset.id);",
+              "});",
+              "",
+              "pm.test(\"returns the dataset s3Key\", () => {",
+              "    const dataset = pm.response.json();",
+              "    pm.expect(dataset.s3Key.json).to.exist;",
+              "    pm.collectionVariables.set(\"dataset.s3Key.json\", dataset.s3Key.json);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "value",
+              "value": "{{apiKey}}",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "x-api-key",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\"\n    },\n    \"data\": [{\"Year\":2016,\"Live Stream Attendees\":17000},{\"Year\":2017,\"Live Stream Attendees\":23000},{\"Year\":2018,\"Live Stream Attendees\":13500},{\"Year\":2019,\"Live Stream Attendees\":21100},{\"Year\":2020,\"Live Stream Attendees\":8450}]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/ingestapi/dataset",
+          "host": ["{{baseUrl}}"],
+          "path": ["ingestapi", "dataset"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create metrics dataset (Ingest API)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns the dataset id\", () => {",
+              "    const dataset = pm.response.json();",
+              "    pm.expect(dataset.id).to.exist;",
+              "    pm.collectionVariables.set(\"metricsdataset.id\", dataset.id);",
+              "});",
+              "",
+              "pm.test(\"returns the dataset s3Key\", () => {",
+              "    const dataset = pm.response.json();",
+              "    pm.expect(dataset.s3Key.json).to.exist;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "value",
+              "value": "{{apiKey}}",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "x-api-key",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"schema\": \"Metrics\"\n    },\n    \"data\": [\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Percentage\",\n            \"currency\": \"\",\n            \"changeOverTime\": \"+6%\",\n            \"startDate\": \"{{$randomDatePast}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        },\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Currency\",\n            \"currency\": \"Dollar $\",\n            \"changeOverTime\": \"+1000\",\n            \"startDate\": \"{{$randomDateRecent}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        }\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/ingestapi/dataset",
+          "host": ["{{baseUrl}}"],
+          "path": ["ingestapi", "dataset"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Metrics dataset (Ingest API)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns the dataset id\", () => {",
+              "    const dataset = pm.response.json();",
+              "    pm.expect(dataset.id).to.exist;",
+              "    pm.collectionVariables.set(\"metricsdataset.id\", dataset.id);",
+              "});",
+              "",
+              "pm.test(\"returns the dataset s3Key\", () => {",
+              "    const dataset = pm.response.json();",
+              "    pm.expect(dataset.s3Key.json).to.exist;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "value",
+              "value": "{{apiKey}}",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "x-api-key",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"schema\": \"Metrics\"\n    },\n    \"data\": [\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Percentage\",\n            \"currency\": \"\",\n            \"changeOverTime\": \"+6%\",\n            \"startDate\": \"{{$randomDatePast}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        },\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Currency\",\n            \"currency\": \"Dollar $\",\n            \"changeOverTime\": \"+1000\",\n            \"startDate\": \"{{$randomDateRecent}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        }\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+          "host": ["{{baseUrl}}"],
+          "path": ["ingestapi", "dataset", ":datasetId"],
+          "variable": [
+            {
+              "key": "datasetId",
+              "value": "{{dataset.id}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update dataset (Ingest API)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "value",
+              "value": "{{apiKey}}",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "x-api-key",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomWord}}\"\n    },\n    \"data\": [{\"Year\":2016,\"Live Stream Attendees\":15000},{\"Year\":2017,\"Live Stream Attendees\":23000},{\"Year\":2018,\"Live Stream Attendees\":13500},{\"Year\":2019,\"Live Stream Attendees\":21100},{\"Year\":2020,\"Live Stream Attendees\":9050}]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+          "host": ["{{baseUrl}}"],
+          "path": ["ingestapi", "dataset", ":datasetId"],
+          "variable": [
+            {
+              "key": "datasetId",
+              "value": "{{dataset.id}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List datasets",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns a list of datasets\", () => {",
+              "    const datasets = pm.response.json();",
+              "    pm.expect(datasets).to.be.an(\"array\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dataset/",
+          "host": ["{{baseUrl}}"],
+          "path": ["dataset", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create chart widget",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns the widget id\", () => {",
+              "    const chartwidget = pm.response.json();",
+              "    pm.expect(chartwidget.id).to.exist;",
+              "    pm.collectionVariables.set(\"chartwidget.id\", chartwidget.id);",
+              "",
+              "    pm.expect(chartwidget.updatedAt).to.exist;",
+              "    pm.collectionVariables.set(\"chartwidget.updatedAt\", chartwidget.updatedAt);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Chart widget\",\n    \"widgetType\": \"Chart\",\n    \"showTitle\": true,\n    \"content\": {\n        \"title\": \"{{$randomWords}}\",\n        \"chartType\": \"LineChart\",\n        \"datasetId\": \"{{dataset.id}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"s3Key\": {\n            \"raw\": \"\",\n            \"json\": \"{{dataset.s3Key.json}}\"\n        },\n        \"fileName\": \"{{$randomFileName}}\"\n    }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widget",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}", "widget"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify widgets are in dashboard",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"text widget is included in dashboard\", () => {",
+              "    const dashboard = pm.response.json();",
+              "    const textwidgetId = pm.collectionVariables.get(\"textwidget.id\");",
+              "    pm.expect(dashboard.widgets).to.exist;",
+              "",
+              "    const widgets = dashboard.widgets.filter(widget => widget.id === textwidgetId);",
+              "    pm.expect(widgets.length).to.equal(1);",
+              "",
+              "    const textwidget = widgets[0];",
+              "    pm.expect(textwidget.id).to.equal(textwidgetId);",
+              "    pm.expect(textwidget.widgetType).to.equal(\"Text\");",
+              "});",
+              "",
+              "pm.test(\"chart widget is included in dashboard\", () => {",
+              "    const dashboard = pm.response.json();",
+              "    const chartWidgetId = pm.collectionVariables.get(\"chartwidget.id\");",
+              "    pm.expect(dashboard.widgets).to.exist;",
+              "",
+              "    const widgets = dashboard.widgets.filter(widget => widget.id === chartWidgetId);",
+              "    pm.expect(widgets.length).to.equal(1);",
+              "",
+              "    const chartWidget = widgets[0];",
+              "    pm.expect(chartWidget.id).to.equal(chartWidgetId);",
+              "    pm.expect(chartWidget.widgetType).to.equal(\"Chart\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Re-order widgets",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"widgets\": [\n        {\n            \"id\": \"{{textwidget.id}}\",\n            \"order\": 2,\n            \"updatedAt\": \"{{textwidget.updatedAt}}\"\n        },\n        {\n            \"id\": \"{{chartwidget.id}}\",\n            \"order\": 1,\n            \"updatedAt\": \"{{chartwidget.updatedAt}}\"\n        }\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/widgetorder",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}", "widgetorder"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Fetch latest dashboard updatedAt",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "    const dashboard = pm.response.json();",
+              "    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify draft dashboard is not yet public",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 404 not found\", () => {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/public/dashboard/:id",
+          "host": ["{{baseUrl}}"],
+          "path": ["public", "dashboard", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "{{dashboard.id}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Set dashboard to publish pending",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publishpending",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}", "publishpending"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Fetch latest dashboard updatedAt",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "    const dashboard = pm.response.json();",
+              "    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Publish dashboard",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publish",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}", "publish"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify dashboard shows in homepage",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"homepage contains title and description\", () => {",
+              "    const homepage = pm.response.json();",
+              "    pm.expect(homepage.title).to.not.be.undefined;",
+              "    pm.expect(homepage.description).to.not.be.undefined;",
+              "});",
+              "",
+              "pm.test(\"homepage contains dashboard\", () => {",
+              "    const homepage = pm.response.json();",
+              "    pm.expect(homepage.dashboards).to.not.be.undefined;",
+              "    ",
+              "    const id = pm.collectionVariables.get(\"dashboard.id\");",
+              "    const dashboards = homepage.dashboards;",
+              "    const dashboard = dashboards.find(dash => dash.id === id);",
+              "    pm.expect(dashboard).to.not.be.undefined;",
+              "});",
+              "",
+              "pm.test(\"dashboard has a friendly URL\", () => {",
+              "    const homepage = pm.response.json();",
+              "    const id = pm.collectionVariables.get(\"dashboard.id\");",
+              "    const dashboard = homepage.dashboards.find(dash => dash.id === id);",
+              "    pm.expect(dashboard.friendlyURL).to.be.a(\"string\");",
+              "    pm.collectionVariables.set(\"dashboard.friendlyURL\", dashboard.friendlyURL);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/public/homepage",
+          "host": ["{{baseUrl}}"],
+          "path": ["public", "homepage"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get dashboard by Id using public api",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"response contains dashboard\", () => {",
+              "    const id = pm.collectionVariables.get(\"dashboard.id\");",
+              "    const dashboard = pm.response.json();",
+              "    pm.expect(dashboard.id).to.equal(id);",
+              "    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/public/dashboard/:id",
+          "host": ["{{baseUrl}}"],
+          "path": ["public", "dashboard", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "{{dashboard.id}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get dashboard by friendlyURL",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"response contains dashboard\", () => {",
+              "    const id = pm.collectionVariables.get(\"dashboard.id\");",
+              "    const dashboard = pm.response.json();",
+              "    pm.expect(dashboard.id).to.equal(id);",
+              "    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/public/dashboard/friendly-url/:friendlyURL",
+          "host": ["{{baseUrl}}"],
+          "path": ["public", "dashboard", "friendly-url", ":friendlyURL"],
+          "variable": [
+            {
+              "key": "friendlyURL",
+              "value": "{{dashboard.friendlyURL}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create draft from Published dashboard",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns new draft dashboard\", () => {",
+              "    const draft = pm.response.json();",
+              "    pm.expect(draft.id).to.exist;",
+              "    pm.expect(draft.state).to.equal(\"Draft\");",
+              "    pm.collectionVariables.set(\"dashboard2.id\", draft.id);",
+              "});",
+              "",
+              "pm.test(\"new draft dashboard has a new id\", () => {",
+              "    const dashboardId = pm.collectionVariables.get(\"dashboard.id\");",
+              "    const draft = pm.response.json();",
+              "    pm.expect(draft.id).not.to.equal(dashboardId);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Archive dashboard",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/archive",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}", "archive"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify audit logs",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const testId = pm.variables.get(\"testId\");",
+              "pm.collectionVariables.set(\"dashboard.name\", testId);"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"returns a list of logs\", () => {",
+              "    const auditlogs = pm.response.json();",
+              "    pm.expect(auditlogs).to.be.an(\"array\");",
+              "    pm.expect(auditlogs.length).to.be.greaterThan(5);",
+              "});",
+              "",
+              "pm.test(\"each log has appropriate attributes\", () => {",
+              "    const auditlogs = pm.response.json();",
+              "    auditlogs.forEach(auditlog => {",
+              "        pm.expect(auditlog.timestamp).to.be.a(\"string\");",
+              "        pm.expect(auditlog.version).to.be.a(\"number\");",
+              "        pm.expect(auditlog.event).to.be.oneOf([\"Create\", \"Update\", \"Delete\"]);",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/:id/auditlogs",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", ":id", "auditlogs"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "{{dashboard.id}}"
+            }
+          ]
+        },
+        "description": "Creates a dashboard in the newly created topic area"
+      },
+      "response": []
+    },
+    {
+      "name": "List users",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"response contains a list of users\", () => {",
+              "    const users = pm.response.json();",
+              "    pm.expect(users).to.be.an(\"array\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/user",
+          "host": ["{{baseUrl}}"],
+          "path": ["user"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"role\": \"Editor\",\n    \"emails\": \"john@doe.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/user",
+          "host": ["{{baseUrl}}"],
+          "path": ["user"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Change user role",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"role\": \"Admin\",\n    \"usernames\": [\"john\"]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/user/role",
+          "host": ["{{baseUrl}}"],
+          "path": ["user", "role"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"usernames\": [\"john\"]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/user",
+          "host": ["{{baseUrl}}"],
+          "path": ["user"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete text widget",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/:dashboardId/widget/:widgetId",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", ":dashboardId", "widget", ":widgetId"],
+          "variable": [
+            {
+              "key": "dashboardId",
+              "value": "{{dashboard.id}}"
+            },
+            {
+              "key": "widgetId",
+              "value": "{{textwidget.id}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete image widget",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/:dashboardId/widget/:widgetId",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", ":dashboardId", "widget", ":widgetId"],
+          "variable": [
+            {
+              "key": "dashboardId",
+              "value": "{{dashboard.id}}"
+            },
+            {
+              "key": "widgetId",
+              "value": "{{imagewidget.id}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete chart widget",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/:dashboardId/widget/:widgetId",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", ":dashboardId", "widget", ":widgetId"],
+          "variable": [
+            {
+              "key": "dashboardId",
+              "value": "{{dashboard.id}}"
+            },
+            {
+              "key": "widgetId",
+              "value": "{{chartwidget.id}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete dataset (Ingest API)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 409 conflict when dataset is being used by a widget\", () => {",
+              "    // dashboard2 was created as a draft from dashboard1 ",
+              "    // and therefore contains the same widgets. Since we ",
+              "    // don't know the IDs for those widgets, we can't delete them",
+              "    // and because of that, this dataset deletion fails.",
+              "    pm.response.to.have.status(409);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "value",
+              "value": "{{apiKey}}",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "x-api-key",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+          "host": ["{{baseUrl}}"],
+          "path": ["ingestapi", "dataset", ":datasetId"],
+          "variable": [
+            {
+              "key": "datasetId",
+              "value": "{{dataset.id}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete metrics dataset (Ingest API)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 ok\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "value",
+              "value": "{{apiKey}}",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "x-api-key",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+          "host": ["{{baseUrl}}"],
+          "path": ["ingestapi", "dataset", ":datasetId"],
+          "variable": [
+            {
+              "key": "datasetId",
+              "value": "{{metricsdataset.id}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete dashboard",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard.id}}"]
+        },
+        "description": "Deletes the test dashboard"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete draft dashboard",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/{{dashboard2.id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["dashboard", "{{dashboard2.id}}"]
+        },
+        "description": "Deletes the test dashboard"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete topic area",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"returns 200 OK\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/topicarea/{{topicarea.id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["topicarea", "{{topicarea.id}}"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "apiKey",
+      "value": ""
+    },
+    {
+      "key": "testId",
+      "value": ""
+    },
+    {
+      "key": "topicarea.id",
+      "value": ""
+    },
+    {
+      "key": "topicarea.name",
+      "value": ""
+    },
+    {
+      "key": "dashboard.id",
+      "value": ""
+    },
+    {
+      "key": "dashboard.name",
+      "value": ""
+    },
+    {
+      "key": "dashboard.updatedAt",
+      "value": ""
+    },
+    {
+      "key": "dashboard.friendlyURL",
+      "value": ""
+    },
+    {
+      "key": "dashboard2.id",
+      "value": ""
+    },
+    {
+      "key": "textwidget.id",
+      "value": ""
+    },
+    {
+      "key": "textwidget.updatedAt",
+      "value": ""
+    },
+    {
+      "key": "chartwidget.id",
+      "value": ""
+    },
+    {
+      "key": "chartwidget.updatedAt",
+      "value": ""
+    },
+    {
+      "key": "settings.updatedAt",
+      "value": ""
+    },
+    {
+      "key": "settings.publishingGuidance",
+      "value": ""
+    },
+    {
+      "key": "homepage.title",
+      "value": ""
+    },
+    {
+      "key": "homepage.description",
+      "value": ""
+    },
+    {
+      "key": "homepage.updatedAt",
+      "value": ""
+    },
+    {
+      "key": "dataset.id",
+      "value": ""
+    },
+    {
+      "key": "dataset.s3Key",
+      "value": ""
+    },
+    {
+      "key": "dataset.s3Key.json",
+      "value": ""
+    },
+    {
+      "key": "metricsdataset.id",
+      "value": ""
+    },
+    {
+      "key": "imagewidget.id",
+      "value": ""
+    }
+  ]
 }

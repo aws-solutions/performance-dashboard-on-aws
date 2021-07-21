@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "79c446a7-7929-4ff4-9988-0b535154b55c",
+    "_postman_id": "90c6ee47-1198-4dbc-9e8c-50d6bbf119c8",
     "name": "Performance Dashboard API",
     "description": "This API defines the endpoints available in the Performance Dashboard on AWS Rest API. It includes public endpoints and private endpoints that require authentication",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -1004,7 +1004,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"schema\": \"Metrics\"\n    },\n    \"data\": [\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Percentage or Currency or Blank\",\n            \"currency\": \"Dollar $ or Euro € or Pound £ or Blank\",\n            \"changeOverTime\": \"+6%\",\n            \"startDate\": \"{{$randomDatePast}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        },\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Percentage or Currency or Blank\",\n            \"currency\": \"Dollar $ or Euro € or Pound £ or Blank\",\n            \"changeOverTime\": \"+1000\",\n            \"startDate\": \"{{$randomDateRecent}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        }\n    ]\n}",
+              "raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"schema\": \"Metrics\"\n    },\n    \"data\": [\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Percentage\",\n            \"currency\": \"\",\n            \"changeOverTime\": \"+6%\",\n            \"startDate\": \"{{$randomDatePast}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        },\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Currency\",\n            \"currency\": \"Dollar $\",\n            \"changeOverTime\": \"+1000\",\n            \"startDate\": \"{{$randomDateRecent}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        }\n    ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1058,6 +1058,54 @@
               "raw": "{{baseUrl}}/ingestapi/dataset",
               "host": ["{{baseUrl}}"],
               "path": ["ingestapi", "dataset"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update metrics dataset",
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"name\": \"{{$randomProductName}}\",\n        \"schema\": \"Metrics\"\n    },\n    \"data\": [\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Percentage\",\n            \"currency\": \"\",\n            \"changeOverTime\": \"+6%\",\n            \"startDate\": \"{{$randomDatePast}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        },\n        {\n            \"title\": \"{{$randomProductName}}\",\n            \"value\": {{$randomInt}},\n            \"percentage\": \"Currency\",\n            \"currency\": \"Dollar $\",\n            \"changeOverTime\": \"+1000\",\n            \"startDate\": \"{{$randomDateRecent}}\",\n            \"endDate\": \"{{$randomDateRecent}}\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset", ":datasetId"],
+              "variable": [
+                {
+                  "key": "datasetId",
+                  "value": "{{dataset.Id}}"
+                }
+              ]
             }
           },
           "response": []

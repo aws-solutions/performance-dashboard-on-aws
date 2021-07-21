@@ -130,6 +130,57 @@ async function updateDataset(req: Request, res: Response) {
     return res.status(400).send("Missing required field `data`");
   }
 
+  if (metadata.schema === "Metrics") {
+    for (let datum in data) {
+      //symbol should be valid input or empty
+      if (
+        !["", NumberDataType.Percentage, NumberDataType.Currency].includes(
+          data[datum].percentage
+        )
+      ) {
+        return res
+          .status(400)
+          .send(
+            "Invalid symbol type. Choose either `Currency`, `Percentage` or ``"
+          );
+      }
+      //currency should be valid input or empty
+      if (
+        ![
+          "",
+          CurrencyDataType["Dollar $"],
+          CurrencyDataType["Euro €"],
+          CurrencyDataType["Pound £"],
+        ].includes(data[datum].currency)
+      ) {
+        return res
+          .status(400)
+          .send(
+            "Invalid symbol type. Choose either ``, `Dollar $`, `Euro €` or `Pound £`"
+          );
+      }
+
+      //if symbol is currency, then a currency should be indicated
+      if (
+        data[datum].percentage === NumberDataType.Currency &&
+        data[datum].currency === ""
+      ) {
+        return res.status(400).send("Missing optional field `currency`");
+      }
+      //if currencies are indicated, then symbol should be currency
+      if (
+        data[datum].percentage !== NumberDataType.Currency &&
+        (data[datum].currency === CurrencyDataType["Dollar $"] ||
+          data[datum].currency === CurrencyDataType["Euro €"] ||
+          data[datum].currency === CurrencyDataType["Pound £"])
+      ) {
+        return res
+          .status(400)
+          .send("Can only input currency type along with `Currency`");
+      }
+    }
+  }
+
   let parsedData: DatasetContent;
 
   try {

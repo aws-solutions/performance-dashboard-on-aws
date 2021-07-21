@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "6ebe8eaa-0ad9-43f6-9516-6cc5c0df1f2f",
+    "_postman_id": "90c6ee47-1198-4dbc-9e8c-50d6bbf119c8",
     "name": "Performance Dashboard API",
     "description": "This API defines the endpoints available in the Performance Dashboard on AWS Rest API. It includes public endpoints and private endpoints that require authentication",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -26,12 +26,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/dashboard",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard"]
             }
           },
           "response": []
@@ -53,14 +49,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/auditlogs",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "auditlogs"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "auditlogs"],
               "variable": [
                 {
                   "key": "id",
@@ -87,12 +77,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard"]
             }
           },
           "response": []
@@ -113,13 +99,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -147,13 +128,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -182,7 +158,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"COVID-19\",\n    \"topicAreaId\": \"df402dce-b434-4a12-8802-7d67d5f4b2de\",\n    \"displayTableOfContents\": false,\n    \"description\": \"You can add **markdown** here\",\n    \"updatedAt\": \"\"\n}",
+              "raw": "{\n    \"name\": \"COVID-19\",\n    \"topicAreaId\": \"df402dce-b434-4a12-8802-7d67d5f4b2de\",\n    \"description\": \"You can add **markdown** here\",\n    \"updatedAt\": \"\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -191,13 +167,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -235,14 +206,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/publish",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "publish"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "publish"],
               "variable": [
                 {
                   "key": "id",
@@ -279,14 +244,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/draft",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "draft"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "draft"],
               "variable": [
                 {
                   "key": "id",
@@ -323,14 +282,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/archive",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "archive"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "archive"],
               "variable": [
                 {
                   "key": "id",
@@ -367,14 +320,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/publishpending",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "publishpending"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "publishpending"],
               "variable": [
                 {
                   "key": "id",
@@ -402,13 +349,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -450,12 +392,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/topicarea",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "topicarea"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea"]
             }
           },
           "response": []
@@ -477,12 +415,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/topicarea",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "topicarea"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea"]
             }
           },
           "response": []
@@ -503,13 +437,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/topicarea/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "topicarea",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -528,13 +457,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/topicarea/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "topicarea",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -553,13 +477,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/topicarea/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "topicarea",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["topicarea", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -601,14 +520,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/widget",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "widget"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widget"],
               "variable": [
                 {
                   "key": "id",
@@ -646,9 +559,7 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/090b0410-001e-4880-87fd-bab3de102574/widget",
-              "host": [
-                "{{baseUrl}}"
-              ],
+              "host": ["{{baseUrl}}"],
               "path": [
                 "dashboard",
                 "090b0410-001e-4880-87fd-bab3de102574",
@@ -684,9 +595,7 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/090b0410-001e-4880-87fd-bab3de102574/widget",
-              "host": [
-                "{{baseUrl}}"
-              ],
+              "host": ["{{baseUrl}}"],
               "path": [
                 "dashboard",
                 "090b0410-001e-4880-87fd-bab3de102574",
@@ -722,14 +631,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/widget",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "widget"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widget"],
               "variable": [
                 {
                   "key": "id",
@@ -766,14 +669,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/widget",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "widget"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widget"],
               "variable": [
                 {
                   "key": "id",
@@ -791,15 +688,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/widget/:widgetId",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "widget",
-                ":widgetId"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widget", ":widgetId"],
               "variable": [
                 {
                   "key": "id",
@@ -832,14 +722,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dashboard/:id/widgetorder",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dashboard",
-                ":id",
-                "widgetorder"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", ":id", "widgetorder"],
               "variable": [
                 {
                   "key": "id",
@@ -882,12 +766,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/dataset",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dataset"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["dataset"]
             }
           },
           "response": []
@@ -899,12 +779,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/dataset",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dataset"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["dataset"]
             }
           },
           "response": []
@@ -916,13 +792,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/dataset/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "dataset",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["dataset", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -948,14 +819,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/public/dashboard/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "public",
-                "dashboard",
-                ":id"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["public", "dashboard", ":id"],
               "variable": [
                 {
                   "key": "id",
@@ -974,13 +839,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/public/homepage",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "public",
-                "homepage"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["public", "homepage"]
             },
             "description": "Returns homepage title, description and a list of dashboards"
           },
@@ -993,15 +853,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/public/dashboard/friendly-url/:friendlyURL",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "public",
-                "dashboard",
-                "friendly-url",
-                ":friendlyURL"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["public", "dashboard", "friendly-url", ":friendlyURL"],
               "variable": [
                 {
                   "key": "friendlyURL",
@@ -1019,43 +872,9 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/public/settings",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "public",
-                "settings"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["public", "settings"]
             }
-          },
-          "response": []
-        },
-        {
-          "name": "Get Public Homepage with Search Query",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/public/search/:query",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "public",
-                "search",
-                ":query"
-              ],
-              "variable": [
-                {
-                  "key": "query",
-                  "value": ""
-                }
-              ]
-            },
-            "description": "Returns homepage title, description and a list of dashboards with content that matches the query"
           },
           "response": []
         }
@@ -1068,18 +887,14 @@
           "listen": "prerequest",
           "script": {
             "type": "text/javascript",
-            "exec": [
-              ""
-            ]
+            "exec": [""]
           }
         },
         {
           "listen": "test",
           "script": {
             "type": "text/javascript",
-            "exec": [
-              ""
-            ]
+            "exec": [""]
           }
         }
       ]
@@ -1094,12 +909,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/settings",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "settings"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["settings"]
             }
           },
           "response": []
@@ -1120,12 +931,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/settings",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "settings"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["settings"]
             }
           },
           "response": []
@@ -1146,13 +953,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/settings/homepage",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "settings",
-                "homepage"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["settings", "homepage"]
             }
           },
           "response": []
@@ -1164,13 +966,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/settings/homepage",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "settings",
-                "homepage"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["settings", "homepage"]
             }
           },
           "response": []
@@ -1216,13 +1013,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/ingestapi/dataset",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ingestapi",
-                "dataset"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset"]
             },
             "description": "Unlike regular Datasets, a Metrics dataset has a defined schema to populate Content Items of type \"Metrics\". "
           },
@@ -1264,13 +1056,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/ingestapi/dataset",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ingestapi",
-                "dataset"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset"]
             }
           },
           "response": []
@@ -1311,14 +1098,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ingestapi",
-                "dataset",
-                ":datasetId"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset", ":datasetId"],
               "variable": [
                 {
                   "key": "datasetId",
@@ -1365,14 +1146,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ingestapi",
-                "dataset",
-                ":datasetId"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset", ":datasetId"],
               "variable": [
                 {
                   "key": "datasetId",
@@ -1410,14 +1185,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/ingestapi/dataset/:datasetId",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "ingestapi",
-                "dataset",
-                ":datasetId"
-              ],
+              "host": ["{{baseUrl}}"],
+              "path": ["ingestapi", "dataset", ":datasetId"],
               "variable": [
                 {
                   "key": "datasetId",
@@ -1450,12 +1219,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/user",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "user"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["user"]
             }
           },
           "response": []
@@ -1486,12 +1251,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/user",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "user"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["user"]
             }
           },
           "response": []
@@ -1513,7 +1274,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"emails\": \"{{$randomEmail}}\"\n}",
+              "raw": "{\n    \"emails\": \"miguelpdiaz8@gmail.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1522,13 +1283,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/user/invite",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "user",
-                "invite"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["user", "invite"]
             }
           },
           "response": []
@@ -1550,7 +1306,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"role\": \"Admin\",\n    \"emails\": \"{{$randomEmail}}\"\n}",
+              "raw": "{\n    \"role\": \"Admin\",\n    \"emails\": \"caromull@amazon.co.uk\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1559,13 +1315,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/user/role",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "user",
-                "role"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["user", "role"]
             }
           },
           "response": []
@@ -1588,18 +1339,14 @@
       "listen": "prerequest",
       "script": {
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     },
     {
       "listen": "test",
       "script": {
         "type": "text/javascript",
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ],

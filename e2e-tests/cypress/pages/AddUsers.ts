@@ -1,6 +1,6 @@
 class AddUsersPage {
   constructor() {
-    cy.contains("Add users");
+    cy.get("h1").contains("Add users");
   }
 
   fillEmailAddress(userEmail: string) {

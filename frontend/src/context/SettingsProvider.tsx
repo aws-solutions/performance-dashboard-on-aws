@@ -22,6 +22,7 @@ const defaultSettings: Settings = {
     plural: "Topic Areas",
   },
   customLogoS3Key: undefined,
+  customFaviconS3Key: undefined,
   colors: {
     primary: "#2491ff",
     secondary: "#54278f",

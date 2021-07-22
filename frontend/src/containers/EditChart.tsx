@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { parse, ParseResult } from "papaparse";
 import {
   ChartType,
   ColumnDataType,
@@ -34,6 +33,7 @@ import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
 import Alert from "../components/Alert";
+import ParsingFileService from "../services/ParsingFileService";
 
 interface FormValues {
   title: string;
@@ -271,45 +271,43 @@ function EditChart() {
         return;
       }
       setDatasetLoading(true);
-      parse(data, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true,
-        comments: "#",
-        encoding: "ISO-8859-1",
-        complete: function (results: ParseResult<object>) {
-          initializeColumnsMetadata();
+      ParsingFileService.parseFile(data, true, (errors: any, results: any) => {
+        initializeColumnsMetadata();
 
-          let wrongCSV = false;
-          const firstRow = results.data[0];
-          for (let columnName in firstRow) {
-            if (columnName === "") {
-              wrongCSV = true;
-              break;
-            }
+        let wrongCSV = false;
+        const firstRow = results[0];
+        for (let columnName in firstRow) {
+          if (columnName === "") {
+            wrongCSV = true;
+            break;
           }
+        }
 
-          if (wrongCSV) {
-            setEnableContinueButton(false);
-            setShowWarning(true);
-            setCsvFile(undefined);
-            return;
-          } else {
-            setEnableContinueButton(true);
-            setShowWarning(false);
-          }
+        if (wrongCSV) {
+          setEnableContinueButton(false);
+          setShowWarning(true);
+          setCsvFile(undefined);
+          return;
+        } else {
+          setEnableContinueButton(true);
+          setShowWarning(false);
+        }
 
-          if (results.errors.length) {
-            setCsvErrors(results.errors);
-            setCsvJson([]);
-            setDisplayedJson([]);
-          } else {
-            setCsvErrors(undefined);
-            setCsvJson(results.data);
-            setDisplayedJson(results.data);
-          }
-          setDatasetLoading(false);
-        },
+        if (errors !== null && errors.length) {
+          setCsvErrors(errors);
+          setCsvJson([]);
+          setDisplayedJson([]);
+        } else {
+          setCsvErrors(undefined);
+          const csvJson =
+            data.type ===
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              ? DatasetParsingService.createHeaderRowJson(results)
+              : results;
+          setCsvJson(csvJson);
+          setDisplayedJson(csvJson);
+        }
+        setDatasetLoading(false);
       });
       setCsvFile(data);
     },

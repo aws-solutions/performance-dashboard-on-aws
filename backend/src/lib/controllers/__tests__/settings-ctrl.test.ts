@@ -129,6 +129,17 @@ describe("updateSettings", () => {
     );
   });
 
+  it("updates customFaviconS3Key setting", async () => {
+    req.body.customFaviconS3Key = "abc";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "customFaviconS3Key",
+      "abc",
+      now.toISOString(),
+      user
+    );
+  });
+
   it("updates colors setting", async () => {
     req.body.colors = { primary: "#ffffff", secondary: "#fff" };
     await SettingsCtrl.updateSettings(req, res);

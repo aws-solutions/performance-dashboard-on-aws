@@ -1003,6 +1003,8 @@ components:
               type: string
         customLogoS3Key:
           type: string
+        customFaviconS3Key:
+          type: string
         colors:
           type: object
           properties:
@@ -1037,6 +1039,8 @@ components:
             plural:
               type: string
         customLogoS3Key:
+          type: string
+        customFaviconS3Key:
           type: string
         colors:
           type: object
@@ -1074,6 +1078,8 @@ components:
             plural:
               type: string
         customLogoS3Key:
+          type: string
+        customFaviconS3Key:
           type: string
         colors:
           type: object

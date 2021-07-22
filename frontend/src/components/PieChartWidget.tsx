@@ -7,15 +7,13 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
-import { useColors, useWindowSize } from "../hooks";
+import { useColors } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import { ColumnMetadata, NumberDataType } from "../models";
 
 type Props = {
   title: string;
-  downloadTitle: string;
   summary: string;
   parts: Array<string>;
   data?: Array<object>;
@@ -28,8 +26,6 @@ type Props = {
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
   isPreview?: boolean;
-  showMobilePreview?: boolean;
-  computePercentages?: boolean;
 };
 
 const PieChartWidget = (props: Props) => {
@@ -41,7 +37,7 @@ const PieChartWidget = (props: Props) => {
   const pieParts = useRef<Array<string>>([]);
   let total = useRef<number>(0);
 
-  const { data, parts, showMobilePreview } = props;
+  const { data, parts } = props;
   useMemo(() => {
     if (data && data.length) {
       let pie = {};
@@ -57,12 +53,12 @@ const PieChartWidget = (props: Props) => {
           ...pie,
           [barKey]: value,
         };
-        pieData.current.push({ name: barKey, value: Number(value) });
+        pieData.current.push({ name: barKey, value });
         pieParts.current.push(barKey);
         if (hiddenParts.includes(barKey)) {
           continue;
         }
-        total.current += isNaN(value) ? 0 : Number(value);
+        total.current += isNaN(value) ? 0 : value;
         maxTick = Math.max(maxTick, value);
       }
       setXAxisLargestValue(maxTick);
@@ -92,32 +88,6 @@ const PieChartWidget = (props: Props) => {
     } else {
       setHiddenParts([...hiddenParts, e.value]);
     }
-  };
-
-  const displayedAmount = (
-    value: Number | String,
-    columnMetadata: ColumnMetadata
-  ): string => {
-    const displayedAmount = TickFormatter.format(
-      Number(value),
-      xAxisLargestValue,
-      props.significantDigitLabels,
-      "",
-      "",
-      columnMetadata
-    );
-    const computedPercentage =
-      Math.round((Number(value) / total.current) * 100 * 100) / 100;
-    const displayedPercentage = TickFormatter.format(
-      computedPercentage,
-      xAxisLargestValue,
-      false,
-      NumberDataType.Percentage,
-      ""
-    );
-    return props.computePercentages
-      ? `${displayedAmount} (${displayedPercentage})`
-      : displayedAmount;
   };
 
   const renderCustomizedLabel = (properties: any): any => {
@@ -154,7 +124,12 @@ const PieChartWidget = (props: Props) => {
           textAnchor={textAnchor}
           fill={fill}
         >
-          {displayedAmount(payload.value, columnMetadata)}
+          {TickFormatter.format(
+            Number(payload.value),
+            xAxisLargestValue,
+            props.significantDigitLabels,
+            columnMetadata
+          )}
         </text>
       </g>
     ) : (
@@ -209,8 +184,6 @@ const PieChartWidget = (props: Props) => {
               ),
               xAxisLargestValue,
               props.significantDigitLabels,
-              "",
-              "",
               columnMetadata
             )
           ) : (
@@ -221,46 +194,19 @@ const PieChartWidget = (props: Props) => {
     );
   };
 
-  const windowSize = useWindowSize();
-  const smallScreenPixels = 800;
-
-  const calculateChartHeight = (): number => {
-    const baseHeight = 300;
-    const pixelsByPart = 60;
-    const pixelsByPartInPreview = 50;
-    const labelsPerRow = 4;
-    const labelsPerRowInPreview = 2;
-
-    if (!data || !data.length) {
-      return baseHeight;
-    }
-
-    let additional;
-    if (windowSize.width <= smallScreenPixels || showMobilePreview) {
-      additional = data.length * pixelsByPart;
-    } else if (props.isPreview) {
-      additional =
-        (Math.floor(data.length / labelsPerRowInPreview) + 1) *
-        pixelsByPartInPreview;
-    } else {
-      additional = (Math.floor(data.length / labelsPerRow) + 1) * pixelsByPart;
-    }
-    return baseHeight + additional;
-  };
-
   return (
     <div>
-      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h3>
+      </h2>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
+          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove"
         />
       )}
       {pieData.current.length && (
-        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
+        <ResponsiveContainer width="100%" height={420}>
           <PieChart>
             <Legend
               verticalAlign="top"
@@ -274,11 +220,6 @@ const PieChartWidget = (props: Props) => {
               onClick={toggleParts}
               onMouseLeave={() => setPartsHover(null)}
               onMouseEnter={(e: any) => setPartsHover(e.value)}
-              layout={
-                windowSize.width <= smallScreenPixels || showMobilePreview
-                  ? "vertical"
-                  : undefined
-              }
             />
             <Pie
               data={pieData.current.map((d: any) => {
@@ -288,13 +229,7 @@ const PieChartWidget = (props: Props) => {
               })}
               dataKey="value"
               nameKey="name"
-              cx={
-                props.isPreview ||
-                windowSize.width <= smallScreenPixels ||
-                showMobilePreview
-                  ? "50%"
-                  : "28%"
-              }
+              cx={props.isPreview ? "50%" : "28%"}
               cy="50%"
               outerRadius={120}
               label={renderCustomizedLabel}
@@ -322,28 +257,29 @@ const PieChartWidget = (props: Props) => {
                     (cm) => cm.columnName === parts[1]
                   );
                 }
-                return displayedAmount(value, columnMetadata);
+
+                return TickFormatter.format(
+                  Number(value),
+                  xAxisLargestValue,
+                  props.significantDigitLabels,
+                  columnMetadata
+                );
               }}
             />
           </PieChart>
         </ResponsiveContainer>
       )}
-      <div>
-        <DataTable
-          rows={data || []}
-          columns={parts}
-          fileName={props.downloadTitle}
-          columnsMetadata={props.columnsMetadata}
-          showMobilePreview={showMobilePreview}
-        />
-      </div>
+      <DataTable
+        rows={data || []}
+        columns={parts}
+        fileName={props.title}
+        columnsMetadata={props.columnsMetadata}
+      />
       {props.summaryBelow && (
-        <div>
-          <MarkdownRender
-            source={props.summary}
-            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
-          />
-        </div>
+        <MarkdownRender
+          source={props.summary}
+          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
+        />
       )}
     </div>
   );

@@ -131,7 +131,7 @@ const BarChartWidget = (props: Props) => {
               type="number"
               tickFormatter={(tick) =>
                 TickFormatter.format(
-                  tick,
+                  Number(tick),
                   xAxisLargestValue,
                   props.significantDigitLabels
                 )
@@ -165,7 +165,7 @@ const BarChartWidget = (props: Props) => {
                 }
 
                 return TickFormatter.format(
-                  value,
+                  Number(value),
                   xAxisLargestValue,
                   props.significantDigitLabels,
                   columnMetadata
@@ -197,7 +197,7 @@ const BarChartWidget = (props: Props) => {
                         position="right"
                         formatter={(tick: any) =>
                           TickFormatter.format(
-                            tick,
+                            Number(tick),
                             xAxisLargestValue,
                             props.significantDigitLabels,
                             props.columnsMetadata[index]

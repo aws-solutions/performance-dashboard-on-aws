@@ -169,7 +169,7 @@ const PartWholeChartWidget = (props: Props) => {
               padding={{ left: 2, right: 2 }}
               tickFormatter={(tick) =>
                 TickFormatter.format(
-                  tick,
+                  Number(tick),
                   xAxisLargestValue,
                   props.significantDigitLabels
                 )

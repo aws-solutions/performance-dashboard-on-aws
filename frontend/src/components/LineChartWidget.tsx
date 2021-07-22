@@ -179,7 +179,7 @@ const LineChartWidget = (props: Props) => {
                 }
 
                 return TickFormatter.format(
-                  value,
+                  Number(value),
                   yAxisLargestValue,
                   props.significantDigitLabels,
                   columnMetadata

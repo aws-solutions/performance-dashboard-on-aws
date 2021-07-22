@@ -1,5 +1,4 @@
 import React from "react";
-import "./Tab.css";
 
 interface Props {
   id: string;

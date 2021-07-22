@@ -11,6 +11,7 @@ export interface Settings {
     plural: string;
   };
   customLogoS3Key: string | undefined;
+  customFaviconS3Key: string | undefined;
   colors?: {
     primary: string;
     secondary: string;
@@ -30,6 +31,7 @@ export interface PublicSettings {
     plural: string;
   };
   customLogoS3Key: string | undefined;
+  customFaviconS3Key: string | undefined;
   colors?: {
     primary: string;
     secondary: string;
@@ -53,6 +55,7 @@ export interface SettingsItem {
     plural: string;
   };
   customLogoS3Key: string | undefined;
+  customFaviconS3Key: string | undefined;
   colors?: {
     primary: string;
     secondary: string;

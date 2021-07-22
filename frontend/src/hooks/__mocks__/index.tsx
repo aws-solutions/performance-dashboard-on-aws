@@ -5,7 +5,7 @@
  */
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import {
   DashboardState,
   DatasetType,
@@ -209,6 +209,13 @@ export function useWidgets(dashboardId: string) {
 }
 
 export function useLogo(s3Key: string | undefined) {
+  return {
+    loadingFile: false,
+    logo: undefined,
+  };
+}
+
+export function useFavicon(s3Key: string | undefined) {
   return {
     loadingFile: false,
     logo: undefined,
@@ -572,6 +579,8 @@ export function useFileLoaded(
   setToHide: React.Dispatch<React.SetStateAction<boolean>>,
   loadingFile: boolean
 ) {
+  // firstUpdate stops useEffect from executing after the first render
+  // secondUpdate stops useEffect from executing when resource starts loading
   const firstUpdate = useRef(true);
   const secondUpdate = useRef(true);
   useEffect(() => {

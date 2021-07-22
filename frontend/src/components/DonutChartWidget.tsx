@@ -60,7 +60,7 @@ const DonutChartWidget = (props: Props) => {
         if (hiddenParts.includes(barKey)) {
           continue;
         }
-        total.current += isNaN(value) ? 0 : value;
+        total.current += isNaN(value) ? 0 : Number(value);
         maxTick = Math.max(maxTick, value);
       }
       setXAxisLargestValue(maxTick);
@@ -291,7 +291,7 @@ const DonutChartWidget = (props: Props) => {
                 }
 
                 return TickFormatter.format(
-                  value,
+                  Number(value),
                   xAxisLargestValue,
                   props.significantDigitLabels,
                   columnMetadata

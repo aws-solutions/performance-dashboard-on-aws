@@ -15,9 +15,7 @@ function EditFavicon() {
   const { t } = useTranslation();
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
-  const { loadingFile, favicon, faviconFileName } = useFavicon(
-    settings.customFaviconS3Key
-  );
+  const { loadingFile, favicon } = useFavicon(settings.customFaviconS3Key);
   const { register, handleSubmit } = useForm();
 
   const [currentFavicon, setCurrentFavicon] = useState(favicon);
@@ -119,8 +117,6 @@ function EditFavicon() {
                 fileName={
                   currentFavicon
                     ? currentFavicon.name
-                    : faviconFileName
-                    ? faviconFileName
                     : defaultFavicon.replace(/^.*[\\/]/, "")
                 }
                 onFileProcessed={onFileProcessed}

@@ -9,12 +9,7 @@ function Favicon() {
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
   const [toHide, setToHide] = useState<boolean>(true);
 
-  let showFavicon = false;
-  if (settings.customFaviconS3Key === undefined) {
-    showFavicon = true;
-  }
-
-  useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
+  useFileLoaded(setToHide, loadingFile);
 
   return (
     <>
@@ -25,7 +20,7 @@ function Favicon() {
           <img
             src={favicon ? URL.createObjectURL(favicon) : defaultFavicon}
             alt={t("OrganizationFavicon")}
-            hidden={toHide && !showFavicon}
+            hidden={toHide}
           ></img>
         </>
       )}

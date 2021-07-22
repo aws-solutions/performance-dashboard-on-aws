@@ -16,7 +16,6 @@ function getDefaultSettings(): Settings {
       plural: "Topic Areas",
     },
     customLogoS3Key: undefined,
-    customLogoAltText: undefined,
     customFaviconS3Key: undefined,
     colors: {
       primary: "#2491ff",
@@ -42,9 +41,6 @@ function fromItem(item: SettingsItem): Settings {
     customLogoS3Key: item.customLogoS3Key
       ? item.customLogoS3Key
       : defaults.customLogoS3Key,
-    customLogoAltText: item.customLogoAltText
-      ? item.customLogoAltText
-      : defaults.customLogoAltText,
     customFaviconS3Key: item.customFaviconS3Key
       ? item.customFaviconS3Key
       : defaults.customFaviconS3Key,

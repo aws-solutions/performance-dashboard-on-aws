@@ -19,7 +19,7 @@ function PublicLayout(props: LayoutProps) {
   const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
 
-  useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
+  useFileLoaded(setToHide, loadingFile);
 
   return (
     <>
@@ -46,7 +46,7 @@ function PublicLayout(props: LayoutProps) {
       <Header className="usa-header usa-header--basic">
         <div className="usa-nav-container">
           <div className="usa-navbar navbar-long">
-            <div className="usa-logo" id="basic-logo">
+            <div className="usa-logo margin-top-2" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
                 <div className="logo">
                   <Logo />

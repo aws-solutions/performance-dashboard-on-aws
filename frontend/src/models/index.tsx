@@ -16,7 +16,6 @@ export enum DashboardState {
   Published = "Published",
   Archived = "Archived",
   PublishPending = "PublishPending",
-  Inactive = "Inactive",
 }
 
 export enum SourceType {
@@ -38,8 +37,6 @@ export type Dashboard = {
   parentDashboardId: string;
   topicAreaId: string;
   topicAreaName: string;
-  displayTableOfContents: boolean;
-  tableOfContents?: any;
   description?: string;
   releaseNotes?: string;
   widgets: Array<Widget>;
@@ -57,8 +54,6 @@ export type PublicDashboard = {
   name: string;
   topicAreaId: string;
   topicAreaName: string;
-  displayTableOfContents: boolean;
-  tableOfContents?: any;
   description?: string;
   widgets: Array<Widget>;
   updatedAt: Date;
@@ -91,7 +86,6 @@ export enum WidgetType {
   Table = "Table",
   Image = "Image",
   Metrics = "Metrics",
-  Section = "Section",
 }
 
 export enum ChartType {
@@ -112,7 +106,6 @@ export interface Widget {
   dashboardId: string;
   content: any;
   showTitle: boolean;
-  section?: string;
 }
 
 export interface ChartWidget extends Widget {
@@ -131,10 +124,8 @@ export interface ChartWidget extends Widget {
     sortByColumn?: string;
     sortByDesc?: boolean;
     horizontalScroll?: boolean;
-    stackedChart?: boolean;
     significantDigitLabels: boolean;
     dataLabels: boolean;
-    computePercentages: boolean;
     showTotal: boolean;
   };
 }
@@ -154,7 +145,6 @@ export interface TableWidget extends Widget {
     sortByColumn?: string;
     sortByDesc?: boolean;
     significantDigitLabels: boolean;
-    displayWithPages: boolean;
   };
 }
 
@@ -178,21 +168,10 @@ export interface MetricsWidget extends Widget {
     oneMetricPerRow: boolean;
     datasetType?: DatasetType;
     significantDigitLabels: boolean;
-    metricsCenterAlign: boolean;
     s3Key: {
       raw: string;
       json: string;
     };
-  };
-}
-
-export interface SectionWidget extends Widget {
-  content: {
-    title: string;
-    summary: string;
-    widgetIds?: Array<string>;
-    showWithTabs: boolean;
-    horizontally?: boolean;
   };
 }
 
@@ -262,7 +241,6 @@ export type Settings = {
     plural: string;
   };
   customLogoS3Key?: string;
-  customLogoAltText?: string;
   customFaviconS3Key?: string;
   contactEmailAddress?: string;
   adminContactEmailAddress?: string;
@@ -297,7 +275,6 @@ export type LocationState = {
   showTitle?: boolean;
   oneMetricPerRow?: boolean;
   significantDigitLabels?: boolean;
-  metricsCenterAlign?: boolean;
   metricTitle?: string;
   origin?: string;
   json?: Array<any>;

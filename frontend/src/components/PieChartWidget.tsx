@@ -259,7 +259,7 @@ const PieChartWidget = (props: Props) => {
                 }
 
                 return TickFormatter.format(
-                  value,
+                  Number(value),
                   xAxisLargestValue,
                   props.significantDigitLabels,
                   columnMetadata

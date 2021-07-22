@@ -13,6 +13,8 @@ export function useFavicon(s3Key?: string): UseFaviconHook {
   const [favicon, setFile] = useState<File>();
 
   const fetchData = useCallback(async () => {
+    console.log("hello");
+    console.log(s3Key);
     if (s3Key) {
       try {
         setLoading(true);

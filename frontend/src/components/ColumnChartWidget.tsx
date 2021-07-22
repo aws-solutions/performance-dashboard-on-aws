@@ -179,7 +179,7 @@ const ColumnChartWidget = (props: Props) => {
                 }
 
                 return TickFormatter.format(
-                  value,
+                  Number(value),
                   yAxisLargestValue,
                   props.significantDigitLabels,
                   columnMetadata
@@ -211,7 +211,7 @@ const ColumnChartWidget = (props: Props) => {
                         position="top"
                         formatter={(tick: any) =>
                           TickFormatter.format(
-                            tick,
+                            Number(tick),
                             yAxisLargestValue,
                             props.significantDigitLabels,
                             props.columnsMetadata[index]

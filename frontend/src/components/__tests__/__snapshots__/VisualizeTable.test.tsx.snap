@@ -419,7 +419,7 @@ exports[`renders the VisualizeTable component 1`] = `
           </table>
           
           <div
-            class="text-right"
+            class="text-right margin-bottom-1"
           >
             <svg
               aria-hidden="true"
@@ -437,7 +437,7 @@ exports[`renders the VisualizeTable component 1`] = `
               />
             </svg>
             <button
-              class="usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled margin-right-05"
               type="button"
             >
               <a
@@ -449,7 +449,7 @@ exports[`renders the VisualizeTable component 1`] = `
 \\"3\\",\\"Vanilla\\",\\"2019-11-11\\""
                 target="_self"
               >
-                Download CSV
+                Download
               </a>
             </button>
           </div>

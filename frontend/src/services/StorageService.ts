@@ -25,6 +25,7 @@ const serverSideEncryption = "aws:kms";
 const rawFileTypes: ValidFileTypes = {
   "text/csv": ".csv",
   "application/vnd.ms-excel": ".csv",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": ".xlsx",
 };
 const imageFileTypes: ValidFileTypes = {
   "image/png": ".png",

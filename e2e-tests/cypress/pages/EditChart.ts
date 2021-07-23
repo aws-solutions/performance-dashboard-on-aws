@@ -39,7 +39,7 @@ class EditChartPage {
     cy.contains(summary).should("exist");
   }
 
-  submit(onlyChartTypeChange: boolean): EditDashboardPage {
+  submit(): EditDashboardPage {
     // Capture the http requests
     cy.intercept({
       method: "PUT",
@@ -63,22 +63,13 @@ class EditChartPage {
 
     // Click the save button and wait for request to finish
     cy.get("button").contains("Save").click();
-
-    if (onlyChartTypeChange) {
-      cy.wait([
-        "@updateWidgetRequest",
-        "@viewDashboardRequest",
-        "@viewDashboardVersionsRequest",
-      ]);
-    } else {
-      cy.wait([
-        "@updateChartRequest",
-        "@updateChartRequest",
-        "@updateWidgetRequest",
-        "@viewDashboardRequest",
-        "@viewDashboardVersionsRequest",
-      ]);
-    }
+    cy.wait([
+      "@updateChartRequest",
+      "@updateChartRequest",
+      "@updateWidgetRequest",
+      "@viewDashboardRequest",
+      "@viewDashboardVersionsRequest",
+    ]);
     return new EditDashboardPage();
   }
 }

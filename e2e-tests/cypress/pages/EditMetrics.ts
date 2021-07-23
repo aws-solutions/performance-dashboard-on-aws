@@ -32,9 +32,6 @@ class EditMetricsPage {
 
     cy.findByLabelText("Metric title").type(title);
     cy.findByLabelText("Metric value").type(value.toString());
-    cy.get("select#percentage").select("Currency");
-    cy.get("select#currency").select("Dollar $");
-    cy.findByLabelText("Change over time - optional").type("+10%");
 
     // Direct to Add metrics page
     cy.get("button").contains("Add metric").click();
@@ -84,8 +81,7 @@ class EditMetricsPage {
   verifyPreview(title: string, value: number) {
     cy.contains("Metric successfully added");
     cy.get("div.height-card").contains(title);
-    cy.get("div.height-card").contains("$".concat(value.toString()));
-    cy.get("div.height-card").contains("10%");
+    cy.get("div.height-card").contains(value.toString());
   }
 
   submit(): EditDashboardPage {

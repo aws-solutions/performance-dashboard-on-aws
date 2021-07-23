@@ -38,6 +38,12 @@ class AddMetricsPage {
     cy.wait(["@viewDashboardRequest", "@datasetRequest"]);
   }
 
+  verifyPreview(title: string, value: number) {
+    cy.contains("Metric successfully added");
+    cy.get("div.height-card").contains(title);
+    cy.get("div.height-card").contains(value.toString());
+  }
+
   submit(): EditDashboardPage {
     // Capture the http requests
     cy.intercept({

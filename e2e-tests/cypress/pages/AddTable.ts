@@ -1,8 +1,8 @@
 import EditDashboardPage from "./EditDashboard";
 
-class AddChartPage {
+class AddTablePage {
   constructor() {
-    cy.contains("Add chart");
+    cy.contains("Add table");
   }
 
   selectStaticDataset() {
@@ -21,11 +21,11 @@ class AddChartPage {
   }
 
   fillTitle(title: string) {
-    cy.findByLabelText("Chart title").type(title);
+    cy.findByLabelText("Table title").type(title);
   }
 
   fillSummary(summary: string) {
-    cy.findByLabelText("Chart summary - optional").type(summary);
+    cy.findByLabelText("Table summary - optional").type(summary);
   }
 
   submit(): EditDashboardPage {
@@ -33,7 +33,7 @@ class AddChartPage {
     cy.intercept({
       method: "PUT",
       url: new RegExp(/\/public\/.+/),
-    }).as("addChartRequest");
+    }).as("addTableRequest");
 
     cy.intercept({
       method: "POST",
@@ -51,10 +51,10 @@ class AddChartPage {
     }).as("viewDashboardVersionsRequest");
 
     // Click the create button and wait for request to finish
-    cy.get("button").contains("Add chart").click();
+    cy.get("button").contains("Add table").click();
     cy.wait([
-      "@addChartRequest",
-      "@addChartRequest",
+      "@addTableRequest",
+      "@addTableRequest",
       "@createWidgetRequest",
       "@viewDashboardRequest",
       "@viewDashboardVersionsRequest",
@@ -63,4 +63,4 @@ class AddChartPage {
   }
 }
 
-export default AddChartPage;
+export default AddTablePage;

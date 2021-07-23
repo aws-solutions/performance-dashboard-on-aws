@@ -1,31 +1,31 @@
 import EditDashboardPage from "./EditDashboard";
 
-class AddChartPage {
+class EditTablePage {
   constructor() {
-    cy.contains("Add chart");
+    cy.contains("Edit table");
   }
 
-  selectStaticDataset() {
-    cy.findByLabelText("Static dataset").check({ force: true });
-  }
-
-  uploadDataset(fixture: string) {
-    cy.contains("Drag file here or choose from folder");
-    cy.findByLabelText("Static datasets").attachFile(fixture);
+  uploadDataset(oldFixture: string, newFixture: string) {
+    cy.get("li.usa-button-group__item>button").eq(6).click();
+    cy.contains(oldFixture);
+    cy.findByLabelText("Static datasets").attachFile(newFixture);
     cy.wait(200);
     cy.get("button").contains("Continue").click();
   }
 
   selectColumns() {
+    cy.get('input[name="Time"]').check({ force: true });
+    cy.contains('Edit column "Time"');
+    cy.findByLabelText("Hide from visualization").check({ force: true });
     cy.get("button").contains("Continue").click({ force: true });
   }
 
   fillTitle(title: string) {
-    cy.findByLabelText("Chart title").type(title);
+    cy.findByLabelText("Table title").clear().type(title);
   }
 
   fillSummary(summary: string) {
-    cy.findByLabelText("Chart summary - optional").type(summary);
+    cy.findByLabelText("Table summary - optional").clear().type(summary);
   }
 
   submit(): EditDashboardPage {
@@ -33,12 +33,12 @@ class AddChartPage {
     cy.intercept({
       method: "PUT",
       url: new RegExp(/\/public\/.+/),
-    }).as("addChartRequest");
+    }).as("updateTableRequest");
 
     cy.intercept({
-      method: "POST",
+      method: "PUT",
       url: new RegExp(/\/prod\/dashboard\/.+\/widget/),
-    }).as("createWidgetRequest");
+    }).as("updateWidgetRequest");
 
     cy.intercept({
       method: "GET",
@@ -50,12 +50,12 @@ class AddChartPage {
       url: new RegExp(/\/prod\/dashboard\/.+\/versions/),
     }).as("viewDashboardVersionsRequest");
 
-    // Click the create button and wait for request to finish
-    cy.get("button").contains("Add chart").click();
+    // Click the save button and wait for request to finish
+    cy.get("button").contains("Save").click();
     cy.wait([
-      "@addChartRequest",
-      "@addChartRequest",
-      "@createWidgetRequest",
+      "@updateTableRequest",
+      "@updateTableRequest",
+      "@updateWidgetRequest",
       "@viewDashboardRequest",
       "@viewDashboardVersionsRequest",
     ]);
@@ -63,4 +63,4 @@ class AddChartPage {
   }
 }
 
-export default AddChartPage;
+export default EditTablePage;

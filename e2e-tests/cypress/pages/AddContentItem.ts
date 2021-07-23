@@ -1,9 +1,10 @@
 import AddChartPage from "./AddChart";
 import AddMetricsPage from "./AddMetrics";
 import AddTextPage from "./AddText";
+import AddTablePage from "./AddTable";
 
 class AddContentItemPage {
-  private selectedContentItem: "Text" | "Metrics" | "Chart";
+  private selectedContentItem: "Text" | "Metrics" | "Chart" | "Table" | "Image";
 
   constructor() {
     cy.contains("Select the type of content you want to add");
@@ -26,13 +27,15 @@ class AddContentItemPage {
 
   selectTableContentItem() {
     cy.findByLabelText("Table").check({ force: true });
+    this.selectedContentItem = "Table";
   }
 
   selectImageContentItem() {
     cy.findByLabelText("Image").check({ force: true });
+    this.selectedContentItem = "Image";
   }
 
-  clickContinue(): AddMetricsPage | AddTextPage | AddChartPage {
+  clickContinue(): AddMetricsPage | AddTextPage | AddChartPage | AddTablePage {
     // Capture the http requests
     cy.intercept({
       method: "GET",
@@ -57,6 +60,9 @@ class AddContentItemPage {
       case "Chart":
         cy.wait(["@addSpecificContentToDashboardRequest", "@datasetRequest"]);
         return new AddChartPage();
+      case "Table":
+        cy.wait(["@addSpecificContentToDashboardRequest", "@datasetRequest"]);
+        return new AddTablePage();
     }
   }
 }

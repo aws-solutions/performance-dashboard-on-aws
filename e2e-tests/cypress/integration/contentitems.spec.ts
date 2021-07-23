@@ -1,10 +1,15 @@
 import * as Chance from "chance";
-import EditDashboardPage from "pages/EditDashboard";
+import EditDashboardPage from "../pages/EditDashboard";
 import CreateDashboardPage from "../pages/CreateDashboard";
 import AddMetricsPage from "../pages/AddMetrics";
 import AddTextPage from "../pages/AddText";
 import AddChartPage from "../pages/AddChart";
+import AddTablePage from "../pages/AddTable";
 import LoginPage from "../pages/Login";
+import EditTextPage from "../pages/EditText";
+import EditMetricsPage from "../pages/EditMetrics";
+import EditChartPage from "../pages/EditChart";
+import EditTablePage from "../pages/EditTable";
 
 const random = new Chance();
 let dashboardName: string;
@@ -32,6 +37,12 @@ describe("Admin user", () => {
     addContentItemPage.selectTextContentItem();
     const addTextPage = addContentItemPage.clickContinue() as AddTextPage;
 
+    // Attempt to submit with empty title and content
+    cy.get("button").contains("Add text").click();
+    cy.contains("Resolve error(s) to add the text");
+    cy.contains("Please specify a text title");
+    cy.contains("Please specify text content");
+
     // Fill in content item details
     const textTitle = random.word();
     addTextPage.fillTitle(textTitle);
@@ -40,15 +51,38 @@ describe("Admin user", () => {
     addTextPage.fillTextContent(textContent);
 
     // Verify preview renders
-    cy.findByRole("heading", { name: textTitle }).should("exist");
-    cy.findByText(textContent).should("exist");
+    addTextPage.verifyPreview(textTitle, textContent);
 
     // Submit form
     editDashboardPage = addTextPage.submit();
 
     // Verify new content item shows up
     cy.contains(`'${textTitle}' text has been successfully added.`);
-    cy.contains(textTitle);
+    cy.get("div.grid-row").contains(textTitle);
+
+    // Edit text content item
+    const editTextPage = editDashboardPage.goToEditContentItem(
+      "Text"
+    ) as EditTextPage;
+    const newTextTitle = random.word();
+    editTextPage.fillTitle(newTextTitle);
+    const newTextContent = random.paragraph();
+    editTextPage.fillTextContent(newTextContent);
+    editTextPage.verifyPreview(newTextTitle, newTextContent);
+    editDashboardPage = editTextPage.submit();
+    cy.contains(`'${newTextTitle}' text has been successfully edited.`);
+    cy.get("div.grid-row").contains(newTextTitle);
+
+    // Copy text content item
+    editDashboardPage.copyContentItem();
+    cy.contains(`Text '${newTextTitle}' was successfully copied.`);
+    cy.get("div.grid-row").contains("(Copy) ".concat(newTextTitle));
+
+    // Delete text content item
+    editDashboardPage.deleteContentItem();
+    cy.contains(`Text '${newTextTitle}' was successfully deleted.`);
+    editDashboardPage.deleteContentItem();
+    cy.get("div.grid-row").should("not.exist");
 
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();
@@ -60,10 +94,15 @@ describe("Admin user", () => {
     addContentItemPage.selectMetricsContentItem();
     const addMetricsPage = addContentItemPage.clickContinue() as AddMetricsPage;
 
-    // Step 1. Select create from scratch
+    // Select create from scratch
     addMetricsPage.selectCreateFromScratch();
+    cy.get("button").contains("Add metrics").click();
+    cy.contains("Resolve error(s) to add the metrics");
+    cy.contains("Please specify a content title");
     const metricsTitle = random.word();
     addMetricsPage.fillTitle(metricsTitle);
+    cy.get("button").contains("Add metrics").click();
+    cy.contains("Enter at least one metric to continue");
 
     // Add new metric to the list
     const metricTitle = random.word();
@@ -71,16 +110,40 @@ describe("Admin user", () => {
     addMetricsPage.addNewMetric(metricTitle, metricValue);
 
     // Verify new metric is added to the list
-    cy.contains("Metric successfully added");
-    cy.contains(metricTitle);
-    cy.contains(metricValue);
+    addMetricsPage.verifyNewMetric(metricTitle, metricValue);
 
     // Submit form
     editDashboardPage = addMetricsPage.submit();
 
     // Verify new content item shows up
     cy.contains(`Metrics '${metricsTitle}' have been successfully added`);
-    cy.contains(metricsTitle);
+    cy.get("div.grid-row").contains(metricsTitle);
+
+    // Edit metrics content item
+    const editMetricsPage = editDashboardPage.goToEditContentItem(
+      "Metrics"
+    ) as EditMetricsPage;
+    const newMetricsTitle = random.word();
+    editMetricsPage.fillTitle(newMetricsTitle);
+
+    // Edit existing metric
+    const updatedMetricValue = random.integer({ min: 100, max: 500 });
+    editMetricsPage.editMetric(metricTitle, updatedMetricValue);
+    cy.contains("Metric successfully edited.");
+
+    // Delete existing metric from the list
+    editMetricsPage.deleteMetric();
+
+    // Add new metric to the list
+    const newMetricTitle = random.word();
+    const newMetricValue = random.integer({ min: 100, max: 500 });
+    editMetricsPage.addNewMetric(newMetricTitle, newMetricValue);
+    editMetricsPage.verifyNewMetric(newMetricTitle, newMetricValue);
+
+    // Submit form
+    editDashboardPage = editMetricsPage.submit();
+    cy.contains(`Metrics '${newMetricsTitle}' have been successfully edited`);
+    cy.get("div.grid-row").contains(newMetricsTitle);
 
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();
@@ -92,14 +155,20 @@ describe("Admin user", () => {
     addContentItemPage.selectChartContentItem();
     const addChartPage = addContentItemPage.clickContinue() as AddChartPage;
 
-    // Step 1. Choose static dataset
+    // Choose static dataset
     addChartPage.selectStaticDataset();
+    cy.findByLabelText("Static datasets").attachFile(
+      "linechart_missing_header.csv"
+    );
+    cy.contains(
+      "Failed to upload file. Please make sure there are values for all column headers."
+    );
     addChartPage.uploadDataset("linechart.csv");
 
-    // Step 2. Select columns to display/hide
+    // Select columns to display/hide
     addChartPage.selectColumns();
 
-    // Step 3. Enter chart details
+    // Enter chart details
     const chartTitle = random.word();
     addChartPage.fillTitle(chartTitle);
 
@@ -107,22 +176,115 @@ describe("Admin user", () => {
     addChartPage.fillSummary(chartSummary);
 
     // Verify Chart renders data from fixture linechart.csv
-    cy.contains("Series 1");
-    cy.contains("Series 2");
-    cy.contains("Series 3");
-    cy.contains("Series 4");
-    cy.contains("Series 5");
+    cy.get("span.recharts-legend-item-text").contains("Series 1");
+    cy.get("span.recharts-legend-item-text").contains("Series 2");
+    cy.get("span.recharts-legend-item-text").contains("Series 3");
+    cy.get("span.recharts-legend-item-text").contains("Series 4");
+    cy.get("span.recharts-legend-item-text").contains("Series 5");
 
     // Verify chart title and summary are also rendered in preview
-    cy.contains(chartSummary).should("exist");
     cy.findByRole("heading", { name: chartTitle }).should("exist");
+    cy.contains(chartSummary).should("exist");
 
     // Submit form
     editDashboardPage = addChartPage.submit();
 
     // Verify new content item shows up
     cy.contains(`'${chartTitle}' chart has been successfully added.`);
-    cy.contains(chartTitle);
+    cy.get("div.grid-row").contains(chartTitle);
+
+    // Edit chart content item
+    const editChartPage = editDashboardPage.goToEditContentItem(
+      "Chart"
+    ) as EditChartPage;
+    editChartPage.uploadDataset("linechart.csv", "table.csv");
+    editChartPage.selectColumns();
+    const newChartTitle = random.word();
+    const newChartSummary = random.sentence();
+    editChartPage.fillTitle(newChartTitle);
+    editChartPage.fillSummary(newChartSummary);
+
+    // Verify chart renders in preview
+    cy.get("span.recharts-legend-item-text")
+      .contains("Column 2")
+      .should("not.exist");
+    cy.get("span.recharts-legend-item-text").contains("Column 3");
+    cy.get("span.recharts-legend-item-text").contains("Column 4");
+    cy.get("span.recharts-legend-item-text").contains("Column 5");
+    cy.findByRole("heading", { name: newChartTitle }).should("exist");
+    cy.contains(newChartSummary).should("exist");
+    editDashboardPage = editChartPage.submit();
+
+    // Verify edited content item shows up
+    cy.contains(`'${newChartTitle}' chart has been successfully edited.`);
+    cy.get("div.grid-row").contains(newChartTitle);
+
+    // Delete the dashboard
+    const dashboardListingPage = editDashboardPage.goToDashboardListing();
+    dashboardListingPage.deleteDashboard(dashboardName);
+  });
+
+  it("can add a Table content item to a dashboard", () => {
+    const addContentItemPage = editDashboardPage.goToAddContentItem();
+    addContentItemPage.selectTableContentItem();
+    const addTablePage = addContentItemPage.clickContinue() as AddTablePage;
+
+    // Choose static dataset
+    addTablePage.selectStaticDataset();
+    addTablePage.uploadDataset("table.csv");
+
+    // Select columns to display/hide
+    addTablePage.selectColumns();
+
+    // Enter table details
+    const tableTitle = random.word();
+    addTablePage.fillTitle(tableTitle);
+
+    const tableSummary = random.sentence();
+    addTablePage.fillSummary(tableSummary);
+
+    // Verify Table renders data from fixture table.csv
+    cy.get("table.usa-table--borderless").last().contains("Column 1");
+    cy.get("table.usa-table--borderless").last().contains("Column 2");
+    cy.get("table.usa-table--borderless").last().contains("Column 3");
+    cy.get("table.usa-table--borderless").last().contains("Column 4");
+    cy.get("table.usa-table--borderless").last().contains("Column 5");
+
+    // Submit form
+    editDashboardPage = addTablePage.submit();
+
+    // Verify new content item shows up
+    cy.contains(`'${tableTitle}' table has been successfully added.`);
+    cy.contains(tableTitle);
+
+    // Edit table content item
+    const editTablePage = editDashboardPage.goToEditContentItem(
+      "Table"
+    ) as EditTablePage;
+    editTablePage.uploadDataset("table.csv", "linechart.csv");
+    editTablePage.selectColumns();
+    const newTableTitle = random.word();
+    const newTableSummary = random.sentence();
+    editTablePage.fillTitle(newTableTitle);
+    editTablePage.fillSummary(newTableSummary);
+
+    // Verify table renders in preview
+    cy.get("table.usa-table--borderless")
+      .last()
+      .contains("Time")
+      .should("not.exist");
+    cy.get("table.usa-table--borderless").last().contains("Series 1");
+    cy.get("table.usa-table--borderless").last().contains("Series 2");
+    cy.get("table.usa-table--borderless").last().contains("Series 3");
+    cy.get("table.usa-table--borderless").last().contains("Series 4");
+    cy.get("table.usa-table--borderless").last().contains("Series 5");
+    cy.findByRole("heading", { name: newTableTitle }).should("exist");
+    cy.contains(newTableSummary).should("exist");
+    editDashboardPage = editTablePage.submit();
+
+    // Verify edited content item shows up
+    cy.contains(`'${newTableTitle}' table has been successfully edited.`);
+    cy.get("div.grid-row").contains(newTableTitle);
 
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();

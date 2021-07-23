@@ -32,6 +32,7 @@ function ViewDashboardAdmin() {
   const [isOpenRepublishModal, setIsOpenRepublishModal] = useState(false);
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [showVersionNotes, setShowVersionNotes] = useState(false);
+  const [showMobilePreview, setShowMobilePreview] = useState(false);
 
   const { t } = useTranslation();
 
@@ -316,6 +317,24 @@ function ViewDashboardAdmin() {
             {(dashboard.state === DashboardState.Draft ||
               dashboard.state === DashboardState.PublishPending) && (
               <>
+                <span className="usa-checkbox" style={{ marginRight: "8px" }}>
+                  <input
+                    className="usa-checkbox__input"
+                    id="display-mobile-view"
+                    type="checkbox"
+                    name="showMobileView"
+                    defaultChecked={false}
+                    onChange={() => {
+                      setShowMobilePreview(!showMobilePreview);
+                    }}
+                  />
+                  <label
+                    className="usa-checkbox__label"
+                    htmlFor="display-mobile-view"
+                  >
+                    {t("MobilePreview")}
+                  </label>
+                </span>
                 <Button
                   variant="outline"
                   type="button"
@@ -349,29 +368,40 @@ function ViewDashboardAdmin() {
         )}
       </PrimaryActionBar>
 
-      {loading ? (
-        <Spinner
-          className="text-center margin-top-9"
-          label={t("LoadingSpinnerLabel")}
-        />
-      ) : (
-        <>
-          <DashboardHeader
-            name={dashboard?.name}
-            topicAreaName={dashboard?.topicAreaName}
-            description={dashboard?.description}
-            lastUpdated={dashboard?.updatedAt}
+      <div
+        style={
+          showMobilePreview
+            ? {
+                width: `${Math.min(window.screen.width, 400)}px`,
+                margin: "auto",
+              }
+            : {}
+        }
+      >
+        {loading ? (
+          <Spinner
+            className="text-center margin-top-9"
+            label={t("LoadingSpinnerLabel")}
           />
-          <hr />
-          {dashboard?.widgets.map((widget, index) => {
-            return (
-              <div className="margin-top-6 usa-prose" key={index}>
-                <WidgetRender widget={widget} />
-              </div>
-            );
-          })}
-        </>
-      )}
+        ) : (
+          <>
+            <DashboardHeader
+              name={dashboard?.name}
+              topicAreaName={dashboard?.topicAreaName}
+              description={dashboard?.description}
+              lastUpdated={dashboard?.updatedAt}
+            />
+            <hr />
+            {dashboard?.widgets.map((widget, index) => {
+              return (
+                <div className="margin-top-6 usa-prose" key={index}>
+                  <WidgetRender widget={widget} />
+                </div>
+              );
+            })}
+          </>
+        )}
+      </div>
     </>
   );
 }

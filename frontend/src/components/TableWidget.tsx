@@ -128,13 +128,13 @@ const TableWidget = ({
           className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow"
         />
       )}
-      <div className="text-right">
+      <div className="text-right margin-bottom-1">
         <FontAwesomeIcon
           icon={faDownload}
           className="margin-right-1"
           size="sm"
         />
-        <Button type="button" variant="unstyled">
+        <Button type="button" variant="unstyled" className="margin-right-05">
           <CSVLink className="text-base" data={rows} filename={title}>
             {t("DownloadCSV")}
           </CSVLink>

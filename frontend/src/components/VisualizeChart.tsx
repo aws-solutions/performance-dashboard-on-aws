@@ -332,16 +332,12 @@ function VisualizeChart(props: Props) {
                     <div className="grid-row margin-left-6">
                       <div className="grid-col-11">
                         {t("VisualizeChartComponent.ChartCorrectDisplay")}{" "}
-                        <Link
-                          to="/admin/formattingcsv"
-                          target="_blank"
-                          external
-                        >
+                        <Link to="/admin/formatting" target="_blank" external>
                           {t("LearnHowToFormatCSV")}
                         </Link>
                       </div>
                       <div className="grid-col-1">
-                        <div className="margin-left-4">
+                        <div className="margin-left-3">
                           <Button
                             variant="unstyled"
                             className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"

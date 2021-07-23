@@ -195,10 +195,10 @@ function ViewDashboardAdmin() {
           <Alert
             type="info"
             message={
-              <div>
+              <div className="margin-left-2">
                 <FontAwesomeIcon icon={faCopy} className="margin-right-2" />
                 {t("OnlyOneDraftDashboardAtATime")}
-                <div className="float-right">
+                <div className="float-right margin-right-1">
                   <Link
                     to={`/admin/dashboard/${
                       draftOrPublishPending.state === DashboardState.Draft

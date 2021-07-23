@@ -32,6 +32,9 @@ test("renders the ChooseData component", async () => {
       onCancel={() => {}}
       register={() => {}}
       widgetType="chart"
+      dynamicFileName=""
+      staticFileName=""
+      continueButtonDisabledTooltip=""
     />,
     { wrapper: MemoryRouter }
   );

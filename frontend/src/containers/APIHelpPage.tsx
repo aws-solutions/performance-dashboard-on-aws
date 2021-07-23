@@ -42,7 +42,7 @@ const APIHelpPage = () => {
       <div className="usa-prose">
         <p>
           {t("APIHelpSelectFileDatasetBody")}{" "}
-          <Link to="/admin/formattingcsv" target="_blank" external>
+          <Link to="/admin/formatting" target="_blank" external>
             {t("APIHelpSelectFileDatasetDoc")}
           </Link>
         </p>

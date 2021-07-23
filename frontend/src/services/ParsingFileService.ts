@@ -2,10 +2,7 @@ import { parse, ParseResult } from "papaparse";
 import { ExcelRenderer } from "react-excel-renderer";
 
 function parseFile(data: File, header: boolean, onParse: Function): void {
-  if (
-    data.type ===
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  ) {
+  if (isExcelFile(data.type)) {
     ExcelRenderer(data, (errors: any, results: any) => {
       onParse(errors, results.rows);
     });
@@ -23,8 +20,15 @@ function parseFile(data: File, header: boolean, onParse: Function): void {
   }
 }
 
+function isExcelFile(type: string): boolean {
+  return (
+    type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  );
+}
+
 const ParsingFileService = {
   parseFile,
+  isExcelFile,
 };
 
 export default ParsingFileService;

@@ -287,11 +287,9 @@ function AddChart() {
           setCurrentJson([]);
         } else {
           setCsvErrors(undefined);
-          const csvJson =
-            data.type ===
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              ? DatasetParsingService.createHeaderRowJson(results)
-              : results;
+          const csvJson = ParsingFileService.isExcelFile(data.type)
+            ? DatasetParsingService.createHeaderRowJson(results)
+            : results;
           setCsvJson(csvJson);
           setCurrentJson(csvJson);
         }

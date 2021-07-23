@@ -1,16 +1,16 @@
 import EditDashboardPage from "./EditDashboard";
 
-class AddTextPage {
+class EditTextPage {
   constructor() {
-    cy.contains("Configure text content");
+    cy.contains("Edit text");
   }
 
   fillTitle(title: string) {
-    cy.findByLabelText("Text title").type(title);
+    cy.findByLabelText("Text title").clear().type(title);
   }
 
   fillTextContent(content: string) {
-    cy.findByLabelText("Text").type(content);
+    cy.findByLabelText("Text").clear().type(content);
   }
 
   verifyPreview(title: string, content: string) {
@@ -21,9 +21,9 @@ class AddTextPage {
   submit(): EditDashboardPage {
     // Capture the http requests
     cy.intercept({
-      method: "POST",
-      url: new RegExp(/\/prod\/dashboard\/.+\/widget/),
-    }).as("createWidgetRequest");
+      method: "PUT",
+      url: new RegExp(/\/prod\/dashboard\/.+\/widget\/.+/),
+    }).as("updateWidgetRequest");
 
     cy.intercept({
       method: "GET",
@@ -35,10 +35,10 @@ class AddTextPage {
       url: new RegExp(/\/prod\/dashboard\/.+\/versions/),
     }).as("viewDashboardVersionsRequest");
 
-    // Click the create button and wait for request to finish
-    cy.get("button").contains("Add text").click();
+    // Click the Save button and wait for request to finish
+    cy.get("button").contains("Save").click();
     cy.wait([
-      "@createWidgetRequest",
+      "@updateWidgetRequest",
       "@viewDashboardRequest",
       "@viewDashboardVersionsRequest",
     ]);
@@ -47,4 +47,4 @@ class AddTextPage {
   }
 }
 
-export default AddTextPage;
+export default EditTextPage;

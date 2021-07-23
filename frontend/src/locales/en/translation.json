@@ -587,7 +587,7 @@
     "DonutChartDescription": "A donut chart is a circular graph that shows numerical proportion using slices that are proportional to the quantity they represent. Like pie charts, donut charts are used to show relative comparisons between slices as part of a total value; however, the center is removed.",
     "DonutChartExample": "Donut Chart Example",
     "DonutChartExampleDownload": "Download donut chart example file",
-    "TableDescription": "A table arranges data in rows and columns. Tables are used to show clear comparisons of data types across categories.",
+    "TableDescription": "A table is a means of arranging data in rows and columns. Tables are used to show comparison when the granularity of data is desired.",
     "TableExample": "Table Example",
     "TableExampleDownload": "Download table example file"
   },
@@ -633,7 +633,7 @@
   "UserListingResentInvitesPlural": "invitation emails were resent",
   "OrganizationLogo": "Organization logo",
   "OrganizationFavicon": "Organization favicon",
-  "CSVFileNotSpecified": "CSV file not specified",
+  "CSVFileNotSpecified": "File not specified",
   "CheckDataDescription": "Please make sure that the system formats your data correctly. Select columns to format as numbers, dates, or text. Also select columns to hide or show from {{widgetType}}.",
   "CheckDataDescriptionTable": "the table",
   "CheckDataDescriptionChart": "the chart",
@@ -817,6 +817,5 @@
   "DashboardWasCopied": "was successfully copied.",
   "Copy": "Copy",
   "CopyContent": "Copy {{name}}",
-  "DownloadCSV": "Download",
-  "MobilePreview": "Mobile preview"
+  "DownloadCSV": "Download"
 }

@@ -138,14 +138,14 @@ function ChooseData(props: Props) {
                 id="dataset"
                 name="dataset"
                 label={t("StaticDatasets")}
-                accept=".csv"
+                accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 loading={props.fileLoading}
                 errors={props.csvErrors}
                 register={props.register}
                 hint={
                   <span>
                     {t("StaticDatasetsHint")}{" "}
-                    <Link to="/admin/formattingcsv" target="_blank" external>
+                    <Link to="/admin/formatting" target="_blank" external>
                       {t("HowDoIFormatMyCSVFile")}
                     </Link>
                   </span>

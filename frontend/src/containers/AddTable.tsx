@@ -16,9 +16,9 @@ import {
   useScrollUp,
 } from "../hooks";
 import StorageService from "../services/StorageService";
+import ParsingFileService from "../services/ParsingFileService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { parse, ParseResult } from "papaparse";
 import { useDatasets } from "../hooks";
 import StepIndicator from "../components/StepIndicator";
 import ChooseData from "../components/ChooseData";
@@ -247,28 +247,19 @@ function AddTable() {
       return;
     }
     setDatasetLoading(true);
-    parse(data, {
-      header: false,
-      dynamicTyping: true,
-      skipEmptyLines: true,
-      comments: "#",
-      encoding: "ISO-8859-1",
-      complete: function (results: ParseResult<object>) {
-        initializeColumnsMetadata();
-        if (results.errors.length) {
-          setCsvErrors(results.errors);
-          setCsvJson([]);
-          setCurrentJson([]);
-        } else {
-          setCsvErrors(undefined);
-          const csvJson = DatasetParsingService.createHeaderRowJson(
-            results.data
-          );
-          setCsvJson(csvJson);
-          setCurrentJson(csvJson);
-        }
-        setDatasetLoading(false);
-      },
+    ParsingFileService.parseFile(data, false, (errors: any, results: any) => {
+      initializeColumnsMetadata();
+      if (errors !== null && errors.length) {
+        setCsvErrors(errors);
+        setCsvJson([]);
+        setCurrentJson([]);
+      } else {
+        setCsvErrors(undefined);
+        const csvJson = DatasetParsingService.createHeaderRowJson(results);
+        setCsvJson(csvJson);
+        setCurrentJson(csvJson);
+      }
+      setDatasetLoading(false);
     });
     setCsvFile(data);
   };

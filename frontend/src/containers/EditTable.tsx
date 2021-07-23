@@ -13,7 +13,6 @@ import BackendService from "../services/BackendService";
 import StorageService from "../services/StorageService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { parse, ParseResult } from "papaparse";
 import {
   useWidget,
   useDashboard,
@@ -24,6 +23,7 @@ import {
 import Spinner from "../components/Spinner";
 import { useDatasets } from "../hooks";
 import UtilsService from "../services/UtilsService";
+import ParsingFileService from "../services/ParsingFileService";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import "./EditTable.css";
 import ChooseData from "../components/ChooseData";
@@ -246,28 +246,19 @@ function EditTable() {
         return;
       }
       setDatasetLoading(true);
-      parse(data, {
-        header: false,
-        dynamicTyping: true,
-        skipEmptyLines: true,
-        comments: "#",
-        encoding: "ISO-8859-1",
-        complete: function (results: ParseResult<object>) {
-          initializeColumnsMetadata();
-          if (results.errors.length) {
-            setCsvErrors(results.errors);
-            setCsvJson([]);
-            setDisplayedJson([]);
-          } else {
-            setCsvErrors(undefined);
-            const csvJson = DatasetParsingService.createHeaderRowJson(
-              results.data
-            );
-            setCsvJson(csvJson);
-            setDisplayedJson(csvJson);
-          }
-          setDatasetLoading(false);
-        },
+      ParsingFileService.parseFile(data, false, (errors: any, results: any) => {
+        initializeColumnsMetadata();
+        if (errors !== null && errors.length) {
+          setCsvErrors(errors);
+          setCsvJson([]);
+          setDisplayedJson([]);
+        } else {
+          setCsvErrors(undefined);
+          const csvJson = DatasetParsingService.createHeaderRowJson(results);
+          setCsvJson(csvJson);
+          setDisplayedJson(csvJson);
+        }
+        setDatasetLoading(false);
       });
       setCsvFile(data);
     },

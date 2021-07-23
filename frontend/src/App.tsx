@@ -239,7 +239,7 @@ const routes: Array<AppRoute> = [
     component: UserStatus,
   },
   {
-    path: "/admin/formattingcsv",
+    path: "/admin/formatting",
     component: FormattingCSV,
   },
   {

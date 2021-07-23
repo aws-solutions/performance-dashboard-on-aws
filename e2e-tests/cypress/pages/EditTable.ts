@@ -28,6 +28,20 @@ class EditTablePage {
     cy.findByLabelText("Table summary - optional").clear().type(summary);
   }
 
+  verifyPreview(title: string, summary: string) {
+    cy.get("table.usa-table--borderless")
+      .last()
+      .contains("Time")
+      .should("not.exist");
+    cy.get("table.usa-table--borderless").last().contains("Series 1");
+    cy.get("table.usa-table--borderless").last().contains("Series 2");
+    cy.get("table.usa-table--borderless").last().contains("Series 3");
+    cy.get("table.usa-table--borderless").last().contains("Series 4");
+    cy.get("table.usa-table--borderless").last().contains("Series 5");
+    cy.findByRole("heading", { name: title }).should("exist");
+    cy.contains(summary).should("exist");
+  }
+
   submit(): EditDashboardPage {
     // Capture the http requests
     cy.intercept({

@@ -110,7 +110,7 @@ describe("Admin user", () => {
     addMetricsPage.addNewMetric(metricTitle, metricValue);
 
     // Verify new metric is added to the list
-    addMetricsPage.verifyNewMetric(metricTitle, metricValue);
+    addMetricsPage.verifyPreview(metricTitle, metricValue);
 
     // Submit form
     editDashboardPage = addMetricsPage.submit();
@@ -138,7 +138,7 @@ describe("Admin user", () => {
     const newMetricTitle = random.word();
     const newMetricValue = random.integer({ min: 100, max: 500 });
     editMetricsPage.addNewMetric(newMetricTitle, newMetricValue);
-    editMetricsPage.verifyNewMetric(newMetricTitle, newMetricValue);
+    editMetricsPage.verifyPreview(newMetricTitle, newMetricValue);
 
     // Submit form
     editDashboardPage = editMetricsPage.submit();
@@ -176,15 +176,7 @@ describe("Admin user", () => {
     addChartPage.fillSummary(chartSummary);
 
     // Verify Chart renders data from fixture linechart.csv
-    cy.get("span.recharts-legend-item-text").contains("Series 1");
-    cy.get("span.recharts-legend-item-text").contains("Series 2");
-    cy.get("span.recharts-legend-item-text").contains("Series 3");
-    cy.get("span.recharts-legend-item-text").contains("Series 4");
-    cy.get("span.recharts-legend-item-text").contains("Series 5");
-
-    // Verify chart title and summary are also rendered in preview
-    cy.findByRole("heading", { name: chartTitle }).should("exist");
-    cy.contains(chartSummary).should("exist");
+    addChartPage.verifyPreview(chartTitle, chartSummary);
 
     // Submit form
     editDashboardPage = addChartPage.submit();
@@ -205,14 +197,9 @@ describe("Admin user", () => {
     editChartPage.fillSummary(newChartSummary);
 
     // Verify chart renders in preview
-    cy.get("span.recharts-legend-item-text")
-      .contains("Column 2")
-      .should("not.exist");
-    cy.get("span.recharts-legend-item-text").contains("Column 3");
-    cy.get("span.recharts-legend-item-text").contains("Column 4");
-    cy.get("span.recharts-legend-item-text").contains("Column 5");
-    cy.findByRole("heading", { name: newChartTitle }).should("exist");
-    cy.contains(newChartSummary).should("exist");
+    editChartPage.verifyPreview(newChartTitle, newChartSummary);
+
+    // Submit form
     editDashboardPage = editChartPage.submit();
 
     // Verify edited content item shows up
@@ -244,11 +231,7 @@ describe("Admin user", () => {
     addTablePage.fillSummary(tableSummary);
 
     // Verify Table renders data from fixture table.csv
-    cy.get("table.usa-table--borderless").last().contains("Column 1");
-    cy.get("table.usa-table--borderless").last().contains("Column 2");
-    cy.get("table.usa-table--borderless").last().contains("Column 3");
-    cy.get("table.usa-table--borderless").last().contains("Column 4");
-    cy.get("table.usa-table--borderless").last().contains("Column 5");
+    addTablePage.verifyPreview(tableTitle, tableSummary);
 
     // Submit form
     editDashboardPage = addTablePage.submit();
@@ -269,17 +252,9 @@ describe("Admin user", () => {
     editTablePage.fillSummary(newTableSummary);
 
     // Verify table renders in preview
-    cy.get("table.usa-table--borderless")
-      .last()
-      .contains("Time")
-      .should("not.exist");
-    cy.get("table.usa-table--borderless").last().contains("Series 1");
-    cy.get("table.usa-table--borderless").last().contains("Series 2");
-    cy.get("table.usa-table--borderless").last().contains("Series 3");
-    cy.get("table.usa-table--borderless").last().contains("Series 4");
-    cy.get("table.usa-table--borderless").last().contains("Series 5");
-    cy.findByRole("heading", { name: newTableTitle }).should("exist");
-    cy.contains(newTableSummary).should("exist");
+    editTablePage.verifyPreview(newTableTitle, newTableSummary);
+
+    // Submit form
     editDashboardPage = editTablePage.submit();
 
     // Verify edited content item shows up

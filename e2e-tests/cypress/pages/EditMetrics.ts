@@ -78,7 +78,7 @@ class EditMetricsPage {
     cy.get("button").contains("Delete").click();
   }
 
-  verifyNewMetric(title: string, value: number) {
+  verifyPreview(title: string, value: number) {
     cy.contains("Metric successfully added");
     cy.get("div.height-card").contains(title);
     cy.get("div.height-card").contains(value.toString());

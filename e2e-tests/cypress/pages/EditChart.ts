@@ -28,6 +28,17 @@ class EditChartPage {
     cy.findByLabelText("Chart summary - optional").clear().type(summary);
   }
 
+  verifyPreview(title: string, summary: string) {
+    cy.get("span.recharts-legend-item-text")
+      .contains("Column 2")
+      .should("not.exist");
+    cy.get("span.recharts-legend-item-text").contains("Column 3");
+    cy.get("span.recharts-legend-item-text").contains("Column 4");
+    cy.get("span.recharts-legend-item-text").contains("Column 5");
+    cy.findByRole("heading", { name: title }).should("exist");
+    cy.contains(summary).should("exist");
+  }
+
   submit(): EditDashboardPage {
     // Capture the http requests
     cy.intercept({

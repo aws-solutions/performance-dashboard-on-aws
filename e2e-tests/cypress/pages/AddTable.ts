@@ -28,6 +28,16 @@ class AddTablePage {
     cy.findByLabelText("Table summary - optional").type(summary);
   }
 
+  verifyPreview(title: string, summary: string) {
+    cy.get("table.usa-table--borderless").last().contains("Column 1");
+    cy.get("table.usa-table--borderless").last().contains("Column 2");
+    cy.get("table.usa-table--borderless").last().contains("Column 3");
+    cy.get("table.usa-table--borderless").last().contains("Column 4");
+    cy.get("table.usa-table--borderless").last().contains("Column 5");
+    cy.findByRole("heading", { name: title }).should("exist");
+    cy.contains(summary).should("exist");
+  }
+
   submit(): EditDashboardPage {
     // Capture the http requests
     cy.intercept({

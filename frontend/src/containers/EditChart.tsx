@@ -46,9 +46,7 @@ interface FormValues {
   datasetType: string;
   sortData: string;
   horizontalScroll: boolean;
-  stackedChart: boolean;
   dataLabels: boolean;
-  computePercentages: boolean;
   showTotal: boolean;
   significantDigitLabels: boolean;
   staticFileName: string | undefined;
@@ -69,28 +67,23 @@ function EditChart() {
   const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
   const { register, errors, handleSubmit, reset, watch } =
     useForm<FormValues>();
-  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
-    undefined
-  );
-  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
-    undefined
-  );
-  const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
-    undefined
-  );
+  const [dynamicDataset, setDynamicDataset] =
+    useState<Dataset | undefined>(undefined);
+  const [staticDataset, setStaticDataset] =
+    useState<Dataset | undefined>(undefined);
+  const [csvErrors, setCsvErrors] =
+    useState<Array<object> | undefined>(undefined);
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
-  const [showColumnHeaderAlert, setShowColumnHeaderAlert] = useState(false);
-  const [showNoDatasetTypeAlert, setShowNoDatasetTypeAlert] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const [enableContinueButton, setEnableContinueButton] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const [oldStep, setOldStep] = useState<number>(-1);
   const [staticFileName, setStaticFileName] = useState<string | undefined>("");
-  const [dynamicFileName, setDynamicFileName] = useState<string | undefined>(
-    ""
-  );
+  const [dynamicFileName, setDynamicFileName] =
+    useState<string | undefined>("");
   const {
     widget,
     datasetType,
@@ -109,9 +102,8 @@ function EditChart() {
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
-  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
-    undefined
-  );
+  const [sortByColumn, setSortByColumn] =
+    useState<string | undefined>(undefined);
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
@@ -129,17 +121,14 @@ function EditChart() {
   const summaryBelow = watch("summaryBelow");
   const chartType = watch("chartType");
   const horizontalScroll = watch("horizontalScroll");
-  const stackedChart = watch("stackedChart");
   const dataLabels = watch("dataLabels");
-  const computePercentages = watch("computePercentages");
   const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 
   const [displayedJson, setDisplayedJson] = useState<any[]>([]);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
-  const [displayedDatasetType, setDisplayedDatasetType] = useState<
-    DatasetType | undefined
-  >(undefined);
+  const [displayedDatasetType, setDisplayedDatasetType] =
+    useState<DatasetType | undefined>(undefined);
 
   const initializeColumnsMetadata = () => {
     setSelectedHeaders(new Set<string>());
@@ -178,9 +167,7 @@ function EditChart() {
       const summaryBelow = widget.content.summaryBelow;
       const chartType = widget.content.chartType;
       const horizontalScroll = widget.content.horizontalScroll;
-      const stackedChart = widget.content.stackedChart;
       const dataLabels = widget.content.dataLabels;
-      const computePercentages = widget.content.computePercentages;
       const showTotal = widget.content.showTotal;
 
       if (dynamicDataset) {
@@ -202,9 +189,7 @@ function EditChart() {
         summaryBelow,
         chartType,
         horizontalScroll,
-        stackedChart,
         dataLabels,
-        computePercentages,
         showTotal,
         significantDigitLabels: widget.content.significantDigitLabels,
         dynamicDatasets:
@@ -300,12 +285,12 @@ function EditChart() {
 
         if (wrongCSV) {
           setEnableContinueButton(false);
-          setShowColumnHeaderAlert(true);
+          setShowWarning(true);
           setCsvFile(undefined);
           return;
         } else {
           setEnableContinueButton(true);
-          setShowColumnHeaderAlert(false);
+          setShowWarning(false);
         }
 
         if (errors !== null && errors.length) {
@@ -313,7 +298,6 @@ function EditChart() {
           setCsvJson([]);
           setDisplayedJson([]);
         } else {
-          setShowNoDatasetTypeAlert(false);
           setCsvErrors(undefined);
           const csvJson = ParsingFileService.isExcelFile(data.type)
             ? DatasetParsingService.createHeaderRowJson(results)
@@ -386,18 +370,10 @@ function EditChart() {
             horizontalScroll: values.horizontalScroll,
           }),
           ...((values.chartType === ChartType.BarChart ||
-            values.chartType === ChartType.ColumnChart) && {
-            stackedChart: values.stackedChart,
-          }),
-          ...((values.chartType === ChartType.BarChart ||
             values.chartType === ChartType.ColumnChart ||
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
-          }),
-          ...((values.chartType === ChartType.PieChart ||
-            values.chartType === ChartType.DonutChart) && {
-            computePercentages: values.computePercentages,
           }),
           ...(values.chartType === ChartType.DonutChart && {
             showTotal: values.showTotal,
@@ -435,9 +411,9 @@ function EditChart() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("EditChartScreen.EditChartSuccess.part1")}${
-            values.title
-          }${t("EditChartScreen.EditChartSuccess.part2")}`,
+          message: t("EditChartScreen.EditChartSuccess", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {
@@ -462,7 +438,7 @@ function EditChart() {
         setDisplayedJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        if (csvJson && csvJson.length) {
+        if (csvJson) {
           setDisplayedJson(csvJson);
         } else {
           setDisplayedJson(staticJson);
@@ -478,10 +454,6 @@ function EditChart() {
 
   const backStep = () => {
     setStep(step - 1);
-  };
-
-  const goBack = () => {
-    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const browseDatasets = () => {
@@ -602,19 +574,12 @@ function EditChart() {
               <div hidden={step !== 0}>
                 <PrimaryActionBar>
                   {configHeader}
-                  <div className="margin-y-3" hidden={!showColumnHeaderAlert}>
+                  <div className="margin-y-3" hidden={!showWarning}>
                     <Alert
                       type="error"
                       message={t("EditChartScreen.ResolveError")}
                       slim
                     ></Alert>
-                  </div>
-                  <div className="margin-y-3" hidden={!showNoDatasetTypeAlert}>
-                    <Alert
-                      type="error"
-                      message={t("EditChartScreen.ChooseDataset")}
-                      slim
-                    />
                   </div>
                   <ChooseData
                     selectDynamicDataset={selectDynamicDataset}
@@ -622,11 +587,15 @@ function EditChart() {
                     datasetType={displayedDatasetType}
                     onFileProcessed={onFileProcessed}
                     handleChange={handleChange}
-                    backStep={goBack}
                     advanceStep={advanceStep}
                     fileLoading={fileLoading}
                     browseDatasets={browseDatasets}
-                    hasErrors={!enableContinueButton || !displayedJson.length}
+                    continueButtonDisabled={
+                      !enableContinueButton || !displayedJson.length
+                    }
+                    continueButtonDisabledTooltip={t(
+                      "EditChartScreen.ChooseDataset"
+                    )}
                     csvErrors={csvErrors}
                     csvFile={csvFile}
                     staticFileName={staticFileName}
@@ -634,7 +603,6 @@ function EditChart() {
                     onCancel={onCancel}
                     register={register}
                     widgetType={t("ChooseDataDescriptionChart")}
-                    setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
                   />
                 </PrimaryActionBar>
               </div>
@@ -697,9 +665,7 @@ function EditChart() {
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
                   horizontalScroll={horizontalScroll}
-                  stackedChart={stackedChart}
                   dataLabels={dataLabels}
-                  computePercentages={computePercentages}
                   showTotal={showTotal}
                   significantDigitLabels={significantDigitLabels}
                   columnsMetadata={ColumnsMetadataService.getColumnsMetadata(

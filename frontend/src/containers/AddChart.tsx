@@ -39,10 +39,8 @@ interface FormValues {
   summaryBelow: boolean;
   datasetType: string;
   horizontalScroll: boolean;
-  stackedChart: boolean;
   significantDigitLabels: boolean;
   dataLabels: boolean;
-  computePercentages: boolean;
   showTotal: boolean;
   sortData: string;
 }
@@ -69,21 +67,18 @@ function AddChart() {
   );
   const [csvJson, setCsvJson] = useState<Array<any>>([]);
   const [filteredJson, setFilteredJson] = useState<Array<any>>(currentJson);
-  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
-    undefined
-  );
+  const [dynamicDataset, setDynamicDataset] =
+    useState<Dataset | undefined>(undefined);
   const [staticDataset] = useState<Dataset | undefined>(
     state && state.staticDataset ? state.staticDataset : undefined
   );
-  const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
-    undefined
-  );
+  const [csvErrors, setCsvErrors] =
+    useState<Array<object> | undefined>(undefined);
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
-  const [showColumnHeaderAlert, setShowColumnHeaderAlert] = useState(false);
-  const [showNoDatasetTypeAlert, setShowNoDatasetTypeAlert] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const [enableContinueButton, setEnableContinueButton] = useState(true);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.json ? DatasetType.StaticDataset : undefined
@@ -95,9 +90,8 @@ function AddChart() {
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
-  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
-    undefined
-  );
+  const [sortByColumn, setSortByColumn] =
+    useState<string | undefined>(undefined);
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
   const { fullPreviewButton, fullPreview } = useFullPreview();
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
@@ -117,9 +111,7 @@ function AddChart() {
   const chartType = watch("chartType");
   const showTitle = watch("showTitle");
   const horizontalScroll = watch("horizontalScroll");
-  const stackedChart = watch("stackedChart");
   const dataLabels = watch("dataLabels");
-  const computePercentages = watch("computePercentages");
   const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 
@@ -190,18 +182,10 @@ function AddChart() {
             horizontalScroll: values.horizontalScroll,
           }),
           ...((values.chartType === ChartType.BarChart ||
-            values.chartType === ChartType.ColumnChart) && {
-            stackedChart: values.stackedChart,
-          }),
-          ...((values.chartType === ChartType.BarChart ||
             values.chartType === ChartType.ColumnChart ||
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
-          }),
-          ...((values.chartType === ChartType.PieChart ||
-            values.chartType === ChartType.DonutChart) && {
-            computePercentages: values.computePercentages,
           }),
           ...(values.chartType === ChartType.DonutChart && {
             showTotal: values.showTotal,
@@ -238,9 +222,7 @@ function AddChart() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("AddChartScreen.AddChartSuccess.part1")}${
-            values.title
-          }${t("AddChartScreen.AddChartSuccess.part2")}`,
+          message: t("AddChartScreen.AddChartSuccess", { title: values.title }),
         },
       });
     } catch (err) {
@@ -259,10 +241,6 @@ function AddChart() {
 
   const backStep = () => {
     setStep(step - 1);
-  };
-
-  const goBack = () => {
-    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const browseDatasets = () => {
@@ -295,12 +273,12 @@ function AddChart() {
 
         if (wrongCSV) {
           setEnableContinueButton(false);
-          setShowColumnHeaderAlert(true);
+          setShowWarning(true);
           setCsvFile(undefined);
           return;
         } else {
           setEnableContinueButton(true);
-          setShowColumnHeaderAlert(false);
+          setShowWarning(false);
         }
 
         if (errors !== null && errors.length) {
@@ -308,7 +286,6 @@ function AddChart() {
           setCsvJson([]);
           setCurrentJson([]);
         } else {
-          setShowNoDatasetTypeAlert(false);
           setCsvErrors(undefined);
           const csvJson = ParsingFileService.isExcelFile(data.type)
             ? DatasetParsingService.createHeaderRowJson(results)
@@ -335,7 +312,7 @@ function AddChart() {
         setCurrentJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        if (csvJson && csvJson.length) {
+        if (csvJson) {
           setCurrentJson(csvJson);
         } else {
           setCurrentJson(staticJson);
@@ -426,19 +403,12 @@ function AddChart() {
             <div hidden={step !== 0}>
               <PrimaryActionBar>
                 {configHeader}
-                <div className="margin-y-3" hidden={!showColumnHeaderAlert}>
+                <div className="margin-y-3" hidden={!showWarning}>
                   <Alert
                     type="error"
                     message={t("AddChartScreen.ResolveError")}
                     slim
-                  />
-                </div>
-                <div className="margin-y-3" hidden={!showNoDatasetTypeAlert}>
-                  <Alert
-                    type="error"
-                    message={t("AddChartScreen.ChooseDataset")}
-                    slim
-                  />
+                  ></Alert>
                 </div>
                 <ChooseData
                   selectDynamicDataset={selectDynamicDataset}
@@ -446,11 +416,15 @@ function AddChart() {
                   datasetType={datasetType}
                   onFileProcessed={onFileProcessed}
                   handleChange={handleChange}
-                  backStep={goBack}
                   advanceStep={advanceStep}
                   fileLoading={fileLoading}
                   browseDatasets={browseDatasets}
-                  hasErrors={!enableContinueButton || !currentJson.length}
+                  continueButtonDisabled={
+                    !enableContinueButton || !currentJson.length
+                  }
+                  continueButtonDisabledTooltip={t(
+                    "AddChartScreen.ChooseDataset"
+                  )}
                   csvErrors={csvErrors}
                   csvFile={csvFile}
                   onCancel={onCancel}
@@ -458,7 +432,6 @@ function AddChart() {
                   widgetType={t("ChooseDataDescriptionChart")}
                   staticFileName={undefined}
                   dynamicFileName={undefined}
-                  setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
                 />
               </PrimaryActionBar>
             </div>
@@ -524,9 +497,7 @@ function AddChart() {
                 chartType={chartType as ChartType}
                 significantDigitLabels={significantDigitLabels}
                 horizontalScroll={horizontalScroll}
-                stackedChart={stackedChart}
                 dataLabels={dataLabels}
-                computePercentages={computePercentages}
                 showTotal={showTotal}
                 columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                   hiddenColumns,

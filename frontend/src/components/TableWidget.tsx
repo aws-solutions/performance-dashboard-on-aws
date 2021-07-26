@@ -129,16 +129,20 @@ const TableWidget = ({
         />
       )}
       <div className="text-right margin-bottom-1">
-        <FontAwesomeIcon
-          icon={faDownload}
-          className="margin-right-1"
-          size="sm"
-        />
-        <Button type="button" variant="unstyled" className="margin-right-05">
-          <CSVLink className="text-base" data={rows} filename={title}>
-            {t("DownloadCSV")}
-          </CSVLink>
-        </Button>
+        <div style={{ display: "inline-flex" }}>
+          <FontAwesomeIcon
+            icon={faDownload}
+            className="margin-right-1"
+            size="sm"
+          />
+        </div>
+        <div style={{ display: "inline-flex" }}>
+          <Button type="button" variant="unstyled" className="margin-right-05">
+            <CSVLink className="text-base" data={rows} filename={title}>
+              {t("DownloadCSV")}
+            </CSVLink>
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -24,6 +24,7 @@ type Props = {
     primary: string | undefined;
     secondary: string | undefined;
   };
+  showMobilePreview?: boolean;
 };
 
 const PartWholeChartWidget = (props: Props) => {
@@ -36,7 +37,7 @@ const PartWholeChartWidget = (props: Props) => {
   const partWholeParts = useRef<Array<string>>([]);
   let total = useRef<number>(0);
 
-  const { data, parts } = props;
+  const { data, parts, showMobilePreview } = props;
   useMemo(() => {
     if (data && data.length) {
       let bar = {};
@@ -125,7 +126,7 @@ const PartWholeChartWidget = (props: Props) => {
     }
 
     // Handle very small screens where width is less than 300 pixels
-    if (windowSize.width <= smallScreenPixels) {
+    if (windowSize.width <= smallScreenPixels || showMobilePreview) {
       if (data.length < 5) {
         return minHeightMobile;
       } else {

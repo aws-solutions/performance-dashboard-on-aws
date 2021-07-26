@@ -16,14 +16,20 @@ import MetricsWidgetComponent from "../components/MetricsWidget";
 
 interface Props {
   widget: Widget;
+  showMobilePreview?: boolean;
 }
 
-function WidgetRender({ widget }: Props) {
+function WidgetRender({ widget, showMobilePreview }: Props) {
   switch (widget.widgetType) {
     case WidgetType.Text:
       return <TextWidget widget={widget} />;
     case WidgetType.Chart:
-      return <ChartWidgetComponent widget={widget as ChartWidget} />;
+      return (
+        <ChartWidgetComponent
+          widget={widget as ChartWidget}
+          showMobilePreview={showMobilePreview}
+        />
+      );
     case WidgetType.Table:
     case WidgetType.Metrics:
       return <WidgetWithDataset widget={widget} />;

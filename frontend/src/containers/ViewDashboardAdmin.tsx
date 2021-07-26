@@ -395,7 +395,10 @@ function ViewDashboardAdmin() {
             {dashboard?.widgets.map((widget, index) => {
               return (
                 <div className="margin-top-6 usa-prose" key={index}>
-                  <WidgetRender widget={widget} />
+                  <WidgetRender
+                    widget={widget}
+                    showMobilePreview={showMobilePreview}
+                  />
                 </div>
               );
             })}

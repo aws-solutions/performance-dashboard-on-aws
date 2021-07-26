@@ -11,10 +11,12 @@ import DonutChartWidget from "./DonutChartWidget";
 
 interface Props {
   widget: ChartWidget;
+  showMobilePreview?: boolean;
 }
 
 function ChartWidgetComponent(props: Props) {
   const { content } = props.widget;
+  const showMobilePreview = props.showMobilePreview;
   const { json } = useJsonDataset(content.s3Key.json);
   const [filteredJson, setFilteredJson] = useState<Array<any>>([]);
 
@@ -104,6 +106,7 @@ function ChartWidgetComponent(props: Props) {
           parts={keys}
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
+          showMobilePreview={showMobilePreview}
         />
       );
 

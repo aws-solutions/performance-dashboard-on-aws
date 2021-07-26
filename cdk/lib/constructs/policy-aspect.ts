@@ -15,7 +15,6 @@ export class PolicyInvalidWarningSuppressor implements cdk.IAspect {
 
   public visit(node: cdk.IConstruct): void {
     if (node instanceof iam.CfnPolicy) {
-      //console.log(node.logicalId);
       for (let policy of this.policy_to_suppress) {
         if (node.logicalId.includes(policy)) {
           node.cfnOptions.metadata = {

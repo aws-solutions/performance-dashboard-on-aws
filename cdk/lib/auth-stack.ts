@@ -3,7 +3,6 @@ import * as cognito from "@aws-cdk/aws-cognito";
 import * as iam from "@aws-cdk/aws-iam";
 import * as fs from "fs";
 import { StringAttribute } from "@aws-cdk/aws-cognito";
-//import { CfnCondition, CfnParameter, Fn } from "@aws-cdk/core";
 
 interface Props extends cdk.StackProps {
   datasetsBucketName: string;

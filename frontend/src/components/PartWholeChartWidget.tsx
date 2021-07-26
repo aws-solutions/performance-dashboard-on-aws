@@ -56,7 +56,7 @@ const PartWholeChartWidget = (props: Props) => {
         if (hiddenParts.includes(barKey)) {
           continue;
         }
-        total.current += isNaN(value) ? 0 : value;
+        total.current += isNaN(value) ? 0 : Number(value);
         maxTick = Math.max(maxTick, value);
       }
       partWholeData.current.push(bar);

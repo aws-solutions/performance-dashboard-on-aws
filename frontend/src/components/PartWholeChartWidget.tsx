@@ -224,7 +224,9 @@ const PartWholeChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <DataTable rows={data || []} columns={parts} fileName={props.title} />
+      <div style={showMobilePreview ? { float: "left" } : {}}>
+        <DataTable rows={data || []} columns={parts} fileName={props.title} />
+      </div>
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

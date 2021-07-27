@@ -38,6 +38,7 @@ function ViewDashboardAdmin() {
   const { t } = useTranslation();
 
   const mobilePreviewWidth = 400;
+  const maxMobileViewportWidth = 450;
 
   const draftOrPublishPending = versions.find(
     (v) =>
@@ -320,7 +321,11 @@ function ViewDashboardAdmin() {
             {(dashboard.state === DashboardState.Draft ||
               dashboard.state === DashboardState.PublishPending) && (
               <>
-                <span className="usa-checkbox" style={{ marginRight: "8px" }}>
+                <span
+                  className="usa-checkbox"
+                  style={{ marginRight: "8px" }}
+                  hidden={windowSize.width < maxMobileViewportWidth}
+                >
                   <input
                     className="usa-checkbox__input"
                     id="display-mobile-view"

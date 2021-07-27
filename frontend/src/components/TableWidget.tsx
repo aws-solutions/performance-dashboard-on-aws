@@ -102,6 +102,8 @@ const TableWidget = ({
     filteredJson,
   ]);
 
+  const maxMobileViewportWidth = 450;
+
   if (!filteredJson || filteredJson.length === 0) {
     return null;
   }
@@ -133,7 +135,7 @@ const TableWidget = ({
       )}
       <div
         className={
-          showMobilePreview || window.width < 450
+          showMobilePreview || window.width < maxMobileViewportWidth
             ? "text-left margin-bottom-1"
             : "text-right margin-bottom-1"
         }

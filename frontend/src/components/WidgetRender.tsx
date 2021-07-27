@@ -32,7 +32,12 @@ function WidgetRender({ widget, showMobilePreview }: Props) {
       );
     case WidgetType.Table:
     case WidgetType.Metrics:
-      return <WidgetWithDataset widget={widget} />;
+      return (
+        <WidgetWithDataset
+          widget={widget}
+          showMobilePreview={showMobilePreview}
+        />
+      );
     case WidgetType.Image:
       return <WidgetWithImage widget={widget as ImageWidget} />;
     default:
@@ -56,7 +61,7 @@ function WidgetWithImage({ widget }: Props) {
   );
 }
 
-function WidgetWithDataset({ widget }: Props) {
+function WidgetWithDataset({ widget, showMobilePreview }: Props) {
   const { json } = useWidgetDataset(widget);
   switch (widget.widgetType) {
     case WidgetType.Table:
@@ -71,6 +76,7 @@ function WidgetWithDataset({ widget }: Props) {
           sortByColumn={tableWidget.content.sortByColumn}
           sortByDesc={tableWidget.content.sortByDesc}
           significantDigitLabels={tableWidget.content.significantDigitLabels}
+          showMobilePreview={showMobilePreview}
         />
       );
     case WidgetType.Metrics:

@@ -20,6 +20,7 @@ type Props = {
   sortByColumn?: string;
   sortByDesc?: boolean;
   significantDigitLabels: boolean;
+  showMobilePreview?: boolean;
 };
 
 const TableWidget = ({
@@ -31,6 +32,7 @@ const TableWidget = ({
   sortByDesc,
   sortByColumn,
   significantDigitLabels,
+  showMobilePreview,
 }: Props) => {
   const { largestTickByColumn } = useTableMetadata(data);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
@@ -128,7 +130,13 @@ const TableWidget = ({
           className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow"
         />
       )}
-      <div className="text-right margin-bottom-1">
+      <div
+        className={
+          showMobilePreview
+            ? "text-left margin-bottom-1"
+            : "text-right margin-bottom-1"
+        }
+      >
         <div style={{ display: "inline-flex" }}>
           <FontAwesomeIcon
             icon={faDownload}

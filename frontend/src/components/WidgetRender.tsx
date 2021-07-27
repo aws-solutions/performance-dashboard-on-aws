@@ -86,7 +86,9 @@ function WidgetWithDataset({ widget, showMobilePreview }: Props) {
           title={metricsWidget.showTitle ? metricsWidget.content.title : ""}
           metrics={json}
           metricPerRow={
-            metricsWidget.content.oneMetricPerRow || window.innerWidth < 640
+            metricsWidget.content.oneMetricPerRow ||
+            window.innerWidth < 640 ||
+            showMobilePreview
               ? 1
               : 3
           }

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { ColumnMetadata } from "../models";
-import { useTableMetadata } from "../hooks";
+import { useTableMetadata, useWindowSize } from "../hooks";
 import MarkdownRender from "./MarkdownRender";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
@@ -37,6 +37,7 @@ const TableWidget = ({
   const { largestTickByColumn } = useTableMetadata(data);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const { t } = useTranslation();
+  const window = useWindowSize();
 
   useMemo(() => {
     let headers =
@@ -132,7 +133,7 @@ const TableWidget = ({
       )}
       <div
         className={
-          showMobilePreview
+          showMobilePreview || window.width < 450
             ? "text-left margin-bottom-1"
             : "text-right margin-bottom-1"
         }

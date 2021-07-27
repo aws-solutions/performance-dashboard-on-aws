@@ -4,7 +4,7 @@ import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import { useDashboard, useDashboardVersions } from "../hooks";
+import { useDashboard, useDashboardVersions, useWindowSize } from "../hooks";
 import { Dashboard, DashboardState, LocationState } from "../models";
 import BackendService from "../services/BackendService";
 import WidgetRender from "../components/WidgetRender";
@@ -33,8 +33,11 @@ function ViewDashboardAdmin() {
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [showVersionNotes, setShowVersionNotes] = useState(false);
   const [showMobilePreview, setShowMobilePreview] = useState(false);
+  const windowSize = useWindowSize();
 
   const { t } = useTranslation();
+
+  const mobilePreviewWidth = 400;
 
   const draftOrPublishPending = versions.find(
     (v) =>
@@ -372,7 +375,7 @@ function ViewDashboardAdmin() {
         style={
           showMobilePreview
             ? {
-                width: `${Math.min(window.screen.width, 400)}px`,
+                width: `${Math.min(windowSize.width, mobilePreviewWidth)}px`,
                 margin: "auto",
               }
             : {}

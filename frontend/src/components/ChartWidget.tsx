@@ -65,6 +65,7 @@ function ChartWidgetComponent(props: Props) {
           horizontalScroll={content.horizontalScroll}
           significantDigitLabels={content.significantDigitLabels}
           columnsMetadata={content.columnsMetadata}
+          showMobilePreview={showMobilePreview}
         />
       );
 
@@ -80,6 +81,7 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           columnsMetadata={content.columnsMetadata}
           hideDataLabels={!content.dataLabels}
+          showMobilePreview={showMobilePreview}
         />
       );
 
@@ -94,6 +96,7 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           columnsMetadata={content.columnsMetadata}
           hideDataLabels={!content.dataLabels}
+          showMobilePreview={showMobilePreview}
         />
       );
 
@@ -121,6 +124,7 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           hideDataLabels={!content.dataLabels}
           columnsMetadata={content.columnsMetadata}
+          showMobilePreview={showMobilePreview}
         />
       );
 
@@ -136,6 +140,7 @@ function ChartWidgetComponent(props: Props) {
           hideDataLabels={!content.dataLabels}
           columnsMetadata={content.columnsMetadata}
           showTotal={content.showTotal}
+          showMobilePreview={showMobilePreview}
         />
       );
 

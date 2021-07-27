@@ -12,7 +12,7 @@ class CognitoService {
   private cognitoIdentityServiceProvider: CognitoIdentityServiceProvider;
   private static instance: CognitoService;
   private options = {
-    customUserAgent: "AwsSolution/SO0052/" + packagejson.version,
+    customUserAgent: "AwsSolution/SO0157/v" + packagejson.version,
   };
 
   /**

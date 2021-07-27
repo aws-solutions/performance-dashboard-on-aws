@@ -14,7 +14,7 @@ class DynamoDBService {
   private client: DocumentClient;
   private static instance: DynamoDBService;
   private options = {
-    customUserAgent: "AwsSolution/SO0052/" + packagejson.version,
+    customUserAgent: "AwsSolution/SO0157/v" + packagejson.version,
   };
 
   /**

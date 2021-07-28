@@ -380,7 +380,7 @@ function ViewDashboardAdmin() {
         style={
           showMobilePreview
             ? {
-                width: `${Math.min(windowSize.width, mobilePreviewWidth)}px`,
+                width: `${mobilePreviewWidth}px`,
                 margin: "auto",
               }
             : {}

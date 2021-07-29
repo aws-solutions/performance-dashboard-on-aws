@@ -1,14 +1,18 @@
 import AWSXRay from "aws-xray-sdk";
 import S3 from "aws-sdk/clients/s3";
+import packagejson from "../../../package.json";
 
 class S3Service {
   private client: S3;
   private static instance: S3Service;
 
   private serverSideEncryption = "aws:kms";
+  private options = {
+    customUserAgent: "AwsSolution/SO0157/v" + packagejson.version,
+  };
 
   private constructor() {
-    this.client = new S3();
+    this.client = new S3(this.options);
     AWSXRay.setContextMissingStrategy(() => {});
     AWSXRay.captureAWSClient(this.client);
   }

@@ -201,9 +201,11 @@ const PieChartWidget = (props: Props) => {
   const smallScreenPixels = 800;
 
   const calculateChartHeight = (): number => {
-    const baseHeight = 240;
+    const baseHeight = 300;
     const pixelsByPart = 60;
-    const labelsPerRow = 3;
+    const pixelsByPartInPreview = 50;
+    const labelsPerRow = 4;
+    const labelsPerRowInPreview = 2;
 
     if (!data || !data.length) {
       return baseHeight;
@@ -212,6 +214,10 @@ const PieChartWidget = (props: Props) => {
     let additional;
     if (windowSize.width <= smallScreenPixels || showMobilePreview) {
       additional = data.length * pixelsByPart;
+    } else if (props.isPreview) {
+      additional =
+        (Math.floor(data.length / labelsPerRowInPreview) + 1) *
+        pixelsByPartInPreview;
     } else {
       additional = (Math.floor(data.length / labelsPerRow) + 1) * pixelsByPart;
     }

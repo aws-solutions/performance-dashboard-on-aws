@@ -176,6 +176,8 @@ const PieChartWidget = (props: Props) => {
         <span className="margin-left-05 font-sans-md text-bottom">
           {value.toLocaleString()}
         </span>
+        <div>{"\n"}</div>
+
         <div className="margin-left-4 margin-bottom-1 text-base-darkest text-bold">
           {value && value !== "null" ? (
             TickFormatter.format(
@@ -242,6 +244,11 @@ const PieChartWidget = (props: Props) => {
               onClick={toggleParts}
               onMouseLeave={() => setPartsHover(null)}
               onMouseEnter={(e: any) => setPartsHover(e.value)}
+              layout={
+                windowSize.width <= smallScreenPixels || showMobilePreview
+                  ? "vertical"
+                  : undefined
+              }
             />
             <Pie
               data={pieData.current.map((d: any) => {
@@ -253,8 +260,8 @@ const PieChartWidget = (props: Props) => {
               nameKey="name"
               cx={
                 props.isPreview ||
-                showMobilePreview ||
-                windowSize.width <= smallScreenPixels
+                windowSize.width <= smallScreenPixels ||
+                showMobilePreview
                   ? "50%"
                   : "28%"
               }

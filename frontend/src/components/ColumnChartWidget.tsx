@@ -12,16 +12,15 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useColors, useYAxisMetadata, useWindowSize } from "../hooks";
+import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
+import { ColumnDataType } from "../models";
 
 type Props = {
   title: string;
-  downloadTitle: string;
   summary: string;
   columns: Array<string>;
   data?: Array<any>;
@@ -29,7 +28,6 @@ type Props = {
   isPreview?: boolean;
   hideLegend?: boolean;
   horizontalScroll?: boolean;
-  stackedChart?: boolean;
   hideDataLabels?: boolean;
   setWidthPercent?: (widthPercent: number) => void;
   significantDigitLabels: boolean;
@@ -61,6 +59,7 @@ const ColumnChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
+  const padding = props.isPreview ? 60 : 120;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -72,25 +71,7 @@ const ColumnChartWidget = (props: Props) => {
     [columnsHover]
   );
 
-  const windowSize = useWindowSize();
-  const smallScreenPixels = 800;
-
   const { data, columns, showMobilePreview } = props;
-
-  const columnsMetadataDict = new Map();
-  props.columnsMetadata.forEach((el) =>
-    columnsMetadataDict.set(el.columnName, el)
-  );
-
-  let padding;
-  if (showMobilePreview || windowSize.width < smallScreenPixels) {
-    padding = 20;
-  } else if (props.isPreview) {
-    padding = 60;
-  } else {
-    padding = 120;
-  }
-
   const xAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && columns.length) {
@@ -130,12 +111,6 @@ const ColumnChartWidget = (props: Props) => {
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
-  const valueAccessor =
-    (attribute: string) =>
-    ({ payload }: any) => {
-      return payload;
-    };
-
   useEffect(() => {
     if (props.setWidthPercent) {
       props.setWidthPercent(widthPercent);
@@ -148,13 +123,13 @@ const ColumnChartWidget = (props: Props) => {
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >
-      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h3>
+      </h2>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
         />
       )}
       {data && data.length && (
@@ -188,9 +163,7 @@ const ColumnChartWidget = (props: Props) => {
                 return TickFormatter.format(
                   Number(tick),
                   yAxisLargestValue,
-                  props.significantDigitLabels,
-                  "",
-                  ""
+                  props.significantDigitLabels
                 );
               }}
             />
@@ -210,8 +183,6 @@ const ColumnChartWidget = (props: Props) => {
                   Number(value),
                   yAxisLargestValue,
                   props.significantDigitLabels,
-                  "",
-                  "",
                   columnMetadata
                 );
               }}
@@ -234,26 +205,8 @@ const ColumnChartWidget = (props: Props) => {
                     fillOpacity={getOpacity(column)}
                     hide={hiddenColumns.includes(column)}
                     isAnimationActive={false}
-                    stackId={props.stackedChart ? "a" : `${index}`}
                   >
-                    {!props.hideDataLabels &&
-                      props.stackedChart &&
-                      index === props.columns.length - 2 && (
-                        <LabelList
-                          position="top"
-                          valueAccessor={valueAccessor(column)}
-                          formatter={(tick: any) => {
-                            return TickFormatter.stackedFormat(
-                              tick,
-                              yAxisLargestValue,
-                              props.significantDigitLabels,
-                              props.columns.slice(1),
-                              props.columnsMetadata
-                            );
-                          }}
-                        />
-                      )}
-                    {!props.hideDataLabels && !props.stackedChart && (
+                    {!props.hideDataLabels ? (
                       <LabelList
                         dataKey={column}
                         position="top"
@@ -262,12 +215,12 @@ const ColumnChartWidget = (props: Props) => {
                             Number(tick),
                             yAxisLargestValue,
                             props.significantDigitLabels,
-                            "",
-                            "",
-                            columnsMetadataDict.get(column)
+                            props.columnsMetadata[index]
                           )
                         }
                       />
+                    ) : (
+                      ""
                     )}
                   </Bar>
                 );
@@ -275,22 +228,19 @@ const ColumnChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <div>
+      <div style={showMobilePreview ? { float: "left" } : {}}>
         <DataTable
           rows={data || []}
           columns={columns}
           columnsMetadata={props.columnsMetadata}
-          fileName={props.downloadTitle}
-          showMobilePreview={showMobilePreview}
+          fileName={props.title}
         />
       </div>
       {props.summaryBelow && (
-        <div>
-          <MarkdownRender
-            source={props.summary}
-            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
-          />
-        </div>
+        <MarkdownRender
+          source={props.summary}
+          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
+        />
       )}
     </div>
   );

@@ -272,16 +272,17 @@ exports[`renders the VisualizeChart component 1`] = `
             hidden=""
           >
             <input
+              checked=""
               class="usa-checkbox__input"
-              id="stackedChart"
-              name="stackedChart"
+              id="horizontalScroll"
+              name="horizontalScroll"
               type="checkbox"
             />
             <label
               class="usa-checkbox__label"
-              for="stackedChart"
+              for="horizontalScroll"
             >
-              Display as stacked chart
+              Display with horizontal scroll
             </label>
           </div>
           <div
@@ -306,23 +307,6 @@ exports[`renders the VisualizeChart component 1`] = `
             hidden=""
           >
             <input
-              class="usa-checkbox__input"
-              id="computePercentages"
-              name="computePercentages"
-              type="checkbox"
-            />
-            <label
-              class="usa-checkbox__label"
-              for="computePercentages"
-            >
-              Display computed percentages
-            </label>
-          </div>
-          <div
-            class="usa-checkbox"
-            hidden=""
-          >
-            <input
               checked=""
               class="usa-checkbox__input"
               id="showTotal"
@@ -334,24 +318,6 @@ exports[`renders the VisualizeChart component 1`] = `
               for="showTotal"
             >
               Show total in chart's center
-            </label>
-          </div>
-          <div
-            class="usa-checkbox"
-            hidden=""
-          >
-            <input
-              checked=""
-              class="usa-checkbox__input"
-              id="horizontalScroll"
-              name="horizontalScroll"
-              type="checkbox"
-            />
-            <label
-              class="usa-checkbox__label"
-              for="horizontalScroll"
-            >
-              Display with horizontal scroll
             </label>
           </div>
         </div>
@@ -457,13 +423,13 @@ exports[`renders the VisualizeChart component 1`] = `
         <div
           class="overflow-x-hidden overflow-y-hidden"
         >
-          <h3
+          <h2
             class="margin-bottom-1"
           >
             title
-          </h3>
+          </h2>
           <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
           >
             <p>
               summary
@@ -476,7 +442,7 @@ exports[`renders the VisualizeChart component 1`] = `
           />
           <div>
             <div
-              class="text-right margin-right-05"
+              class="text-right"
             >
               <button
                 aria-controls="menu--1"
@@ -785,15 +751,15 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           >
             <input
               class="usa-checkbox__input"
-              id="stackedChart"
-              name="stackedChart"
+              id="horizontalScroll"
+              name="horizontalScroll"
               type="checkbox"
             />
             <label
               class="usa-checkbox__label"
-              for="stackedChart"
+              for="horizontalScroll"
             >
-              Display as stacked chart
+              Display with horizontal scroll
             </label>
           </div>
           <div
@@ -818,23 +784,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             hidden=""
           >
             <input
-              class="usa-checkbox__input"
-              id="computePercentages"
-              name="computePercentages"
-              type="checkbox"
-            />
-            <label
-              class="usa-checkbox__label"
-              for="computePercentages"
-            >
-              Display computed percentages
-            </label>
-          </div>
-          <div
-            class="usa-checkbox"
-            hidden=""
-          >
-            <input
               checked=""
               class="usa-checkbox__input"
               id="showTotal"
@@ -846,23 +795,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               for="showTotal"
             >
               Show total in chart's center
-            </label>
-          </div>
-          <div
-            class="usa-checkbox"
-            hidden=""
-          >
-            <input
-              class="usa-checkbox__input"
-              id="horizontalScroll"
-              name="horizontalScroll"
-              type="checkbox"
-            />
-            <label
-              class="usa-checkbox__label"
-              for="horizontalScroll"
-            >
-              Display with horizontal scroll
             </label>
           </div>
         </div>
@@ -968,13 +900,13 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         <div
           class="overflow-x-hidden overflow-y-hidden"
         >
-          <h3
+          <h2
             class="margin-bottom-1"
           >
             title
-          </h3>
+          </h2>
           <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
           >
             <p>
               summary
@@ -987,7 +919,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           />
           <div>
             <div
-              class="text-right margin-right-05"
+              class="text-right"
             >
               <button
                 aria-controls="menu--7"

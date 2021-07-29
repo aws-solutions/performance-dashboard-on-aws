@@ -15,13 +15,11 @@ import DataTable from "./DataTable";
 
 type Props = {
   title: string;
-  downloadTitle: string;
   summary: string;
   parts: Array<string>;
   data?: Array<object>;
   summaryBelow: boolean;
   significantDigitLabels: boolean;
-  columnsMetadata: Array<any>;
   colors?: {
     primary: string | undefined;
     secondary: string | undefined;
@@ -59,7 +57,7 @@ const PartWholeChartWidget = (props: Props) => {
         if (hiddenParts.includes(barKey)) {
           continue;
         }
-        total.current += isNaN(value) ? 0 : Number(value);
+        total.current += isNaN(value) ? 0 : value;
         maxTick = Math.max(maxTick, value);
       }
       partWholeData.current.push(bar);
@@ -96,14 +94,6 @@ const PartWholeChartWidget = (props: Props) => {
     const index = value.lastIndexOf(" ");
     const label = value.substring(0, index);
     const amount = value.substring(index + 1);
-
-    let columnMetadata;
-    if (parts && parts.length > 1 && props.columnsMetadata) {
-      columnMetadata = props.columnsMetadata.find(
-        (cm) => cm.columnName === parts[1]
-      );
-    }
-
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
@@ -114,10 +104,7 @@ const PartWholeChartWidget = (props: Props) => {
             TickFormatter.format(
               Number(amount),
               xAxisLargestValue,
-              props.significantDigitLabels,
-              "",
-              "",
-              columnMetadata
+              props.significantDigitLabels
             )
           ) : (
             <br />
@@ -154,13 +141,13 @@ const PartWholeChartWidget = (props: Props) => {
 
   return (
     <div>
-      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h3>
+      </h2>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
+          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove"
         />
       )}
       {partWholeData.current.length && (
@@ -185,9 +172,7 @@ const PartWholeChartWidget = (props: Props) => {
                 TickFormatter.format(
                   Number(tick),
                   xAxisLargestValue,
-                  props.significantDigitLabels,
-                  "",
-                  ""
+                  props.significantDigitLabels
                 )
               }
             />
@@ -239,22 +224,14 @@ const PartWholeChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <div>
-        <DataTable
-          rows={data || []}
-          columns={parts}
-          fileName={props.downloadTitle}
-          columnsMetadata={props.columnsMetadata}
-          showMobilePreview={showMobilePreview}
-        />
+      <div style={showMobilePreview ? { float: "left" } : {}}>
+        <DataTable rows={data || []} columns={parts} fileName={props.title} />
       </div>
       {props.summaryBelow && (
-        <div>
-          <MarkdownRender
-            source={props.summary}
-            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
-          />
-        </div>
+        <MarkdownRender
+          source={props.summary}
+          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
+        />
       )}
     </div>
   );

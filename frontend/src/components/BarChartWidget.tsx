@@ -33,6 +33,7 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
+  showMobilePreview?: boolean;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -66,7 +67,7 @@ const BarChartWidget = (props: Props) => {
     [barsHover]
   );
 
-  const { data, bars } = props;
+  const { data, bars, showMobilePreview } = props;
   const yAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && bars.length) {
@@ -213,12 +214,14 @@ const BarChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <DataTable
-        rows={data || []}
-        columns={bars}
-        columnsMetadata={props.columnsMetadata}
-        fileName={props.title}
-      />
+      <div style={showMobilePreview ? { float: "left" } : {}}>
+        <DataTable
+          rows={data || []}
+          columns={bars}
+          columnsMetadata={props.columnsMetadata}
+          fileName={props.title}
+        />
+      </div>
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

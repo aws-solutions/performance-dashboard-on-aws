@@ -176,8 +176,6 @@ const PieChartWidget = (props: Props) => {
         <span className="margin-left-05 font-sans-md text-bottom">
           {value.toLocaleString()}
         </span>
-        <div>{"\n"}</div>
-
         <div className="margin-left-4 margin-bottom-1 text-base-darkest text-bold">
           {value && value !== "null" ? (
             TickFormatter.format(

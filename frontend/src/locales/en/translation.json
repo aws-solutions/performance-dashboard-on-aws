@@ -587,7 +587,7 @@
     "DonutChartDescription": "A donut chart is a circular graph that shows numerical proportion using slices that are proportional to the quantity they represent. Like pie charts, donut charts are used to show relative comparisons between slices as part of a total value; however, the center is removed.",
     "DonutChartExample": "Donut Chart Example",
     "DonutChartExampleDownload": "Download donut chart example file",
-    "TableDescription": "A table is a means of arranging data in rows and columns. Tables are used to show comparison when the granularity of data is desired.",
+    "TableDescription": "A table arranges data in rows and columns. Tables are used to show clear comparisons of data types across categories.",
     "TableExample": "Table Example",
     "TableExampleDownload": "Download table example file"
   },

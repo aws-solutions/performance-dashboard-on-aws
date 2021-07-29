@@ -2,7 +2,6 @@ import AWSXRay from "aws-xray-sdk";
 import { DynamoDB } from "aws-sdk";
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import logger from "./logger";
-import packagejson from "../../../package.json";
 
 /**
  * This class serves as a wrapper to the DynamoDB DocumentClient.
@@ -13,16 +12,13 @@ import packagejson from "../../../package.json";
 class DynamoDBService {
   private client: DocumentClient;
   private static instance: DynamoDBService;
-  private options = {
-    customUserAgent: "AwsSolution/SO0157/v" + packagejson.version,
-  };
 
   /**
    * DynamoDBService is a Singleton, hence private constructor
    * to prevent direct constructions calls with new operator.
    */
   private constructor() {
-    this.client = new DocumentClient(this.options);
+    this.client = new DocumentClient();
     AWSXRay.setContextMissingStrategy(() => {});
     AWSXRay.captureAWSClient((this.client as any).service);
   }

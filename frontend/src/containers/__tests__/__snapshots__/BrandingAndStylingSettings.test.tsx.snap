@@ -183,7 +183,7 @@ exports[`branding and styling settings should match snapshot 1`] = `
               />
             </div>
             <div
-              class="grid-col flex-9 padding-left-3"
+              class="grid-col flex-9 padding-left-3 text-right"
             >
               <button
                 class="usa-button usa-button--outline margin-top-2"
@@ -217,7 +217,7 @@ exports[`branding and styling settings should match snapshot 1`] = `
               />
             </div>
             <div
-              class="grid-col flex-9 padding-left-3"
+              class="grid-col flex-9 padding-left-3 text-right"
             >
               <button
                 class="usa-button usa-button--outline margin-top-2"

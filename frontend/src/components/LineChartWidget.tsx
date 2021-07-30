@@ -33,6 +33,7 @@ type Props = {
     secondary: string | undefined;
   };
   columnsMetadata: Array<any>;
+  showMobilePreview?: boolean;
 };
 
 const LineChartWidget = (props: Props) => {
@@ -67,7 +68,7 @@ const LineChartWidget = (props: Props) => {
     [linesHover]
   );
 
-  const { data, lines } = props;
+  const { data, lines, showMobilePreview } = props;
   const xAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && lines.length) {
@@ -210,12 +211,14 @@ const LineChartWidget = (props: Props) => {
           </LineChart>
         </ResponsiveContainer>
       )}
-      <DataTable
-        rows={data || []}
-        columns={lines}
-        columnsMetadata={props.columnsMetadata}
-        fileName={props.title}
-      />
+      <div style={showMobilePreview ? { float: "left" } : {}}>
+        <DataTable
+          rows={data || []}
+          columns={lines}
+          columnsMetadata={props.columnsMetadata}
+          fileName={props.title}
+        />
+      </div>
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

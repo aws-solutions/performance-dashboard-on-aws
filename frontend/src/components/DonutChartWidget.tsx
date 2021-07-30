@@ -56,7 +56,7 @@ const DonutChartWidget = (props: Props) => {
           ...donut,
           [barKey]: value,
         };
-        donutData.current.push({ name: barKey, value });
+        donutData.current.push({ name: barKey, value: Number(value) });
         donutParts.current.push(barKey);
         if (hiddenParts.includes(barKey)) {
           continue;

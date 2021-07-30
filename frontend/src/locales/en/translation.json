@@ -572,7 +572,7 @@
     "BarChartExample": "Bar Chart Example",
     "BarChartExampleDownload": "Download bar chart example file",
     "ColumnChart": "Column chart",
-    "ColumnChartDescription": "A column chart provides a visual presentation of categorical data. Categorical data is a grouping of data into discrete groups, such as months of the year, age group, shoe sizes, and animals. These categories are usually qualitative. Bars on the chart may be arranged in any order. Column charts can also be used to show trends over time.",
+    "ColumnChartDescription": "A column chart displays categorical data with vertical columns that are proportional to the value they represent. Column charts are used to display comparisons across qualitative groups or trends over time.",
     "ColumnChartExample": "Column Chart Example",
     "ColumnChartExampleDownload": "Download column chart example file",
     "PartToWholeChart": "Part-to-whole chart",
@@ -587,7 +587,7 @@
     "DonutChartDescription": "A donut chart is a circular graph that shows numerical proportion using slices that are proportional to the quantity they represent. Like pie charts, donut charts are used to show relative comparisons between slices as part of a total value; however, the center is removed.",
     "DonutChartExample": "Donut Chart Example",
     "DonutChartExampleDownload": "Download donut chart example file",
-    "TableDescription": "A table is a means of arranging data in rows and columns. Tables are used to show comparison when the granularity of data is desired.",
+    "TableDescription": "A table arranges data in rows and columns. Tables are used to show clear comparisons of data types across categories.",
     "TableExample": "Table Example",
     "TableExampleDownload": "Download table example file"
   },

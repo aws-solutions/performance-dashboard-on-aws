@@ -74,7 +74,7 @@ function BrandingAndStylingSettings() {
         <div className="grid-col flex-1 text-left">
           <Favicon />
         </div>
-        <div className="grid-col flex-9 padding-left-3">
+        <div className="grid-col flex-9 padding-left-3 text-right">
           <Button
             className="margin-top-2"
             variant="outline"

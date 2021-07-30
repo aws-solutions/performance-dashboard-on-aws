@@ -16,17 +16,28 @@ import MetricsWidgetComponent from "../components/MetricsWidget";
 
 interface Props {
   widget: Widget;
+  showMobilePreview?: boolean;
 }
 
-function WidgetRender({ widget }: Props) {
+function WidgetRender({ widget, showMobilePreview }: Props) {
   switch (widget.widgetType) {
     case WidgetType.Text:
       return <TextWidget widget={widget} />;
     case WidgetType.Chart:
-      return <ChartWidgetComponent widget={widget as ChartWidget} />;
+      return (
+        <ChartWidgetComponent
+          widget={widget as ChartWidget}
+          showMobilePreview={showMobilePreview}
+        />
+      );
     case WidgetType.Table:
     case WidgetType.Metrics:
-      return <WidgetWithDataset widget={widget} />;
+      return (
+        <WidgetWithDataset
+          widget={widget}
+          showMobilePreview={showMobilePreview}
+        />
+      );
     case WidgetType.Image:
       return <WidgetWithImage widget={widget as ImageWidget} />;
     default:
@@ -50,7 +61,7 @@ function WidgetWithImage({ widget }: Props) {
   );
 }
 
-function WidgetWithDataset({ widget }: Props) {
+function WidgetWithDataset({ widget, showMobilePreview }: Props) {
   const { json } = useWidgetDataset(widget);
   switch (widget.widgetType) {
     case WidgetType.Table:
@@ -65,6 +76,7 @@ function WidgetWithDataset({ widget }: Props) {
           sortByColumn={tableWidget.content.sortByColumn}
           sortByDesc={tableWidget.content.sortByDesc}
           significantDigitLabels={tableWidget.content.significantDigitLabels}
+          showMobilePreview={showMobilePreview}
         />
       );
     case WidgetType.Metrics:
@@ -74,7 +86,9 @@ function WidgetWithDataset({ widget }: Props) {
           title={metricsWidget.showTitle ? metricsWidget.content.title : ""}
           metrics={json}
           metricPerRow={
-            metricsWidget.content.oneMetricPerRow || window.innerWidth < 640
+            metricsWidget.content.oneMetricPerRow ||
+            window.innerWidth < 640 ||
+            showMobilePreview
               ? 1
               : 3
           }

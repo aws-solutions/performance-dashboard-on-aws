@@ -37,6 +37,7 @@ export type Dashboard = {
   parentDashboardId: string;
   topicAreaId: string;
   topicAreaName: string;
+  displayTableOfContents: boolean;
   description?: string;
   releaseNotes?: string;
   widgets: Array<Widget>;
@@ -54,6 +55,7 @@ export type PublicDashboard = {
   name: string;
   topicAreaId: string;
   topicAreaName: string;
+  displayTableOfContents: boolean;
   description?: string;
   widgets: Array<Widget>;
   updatedAt: Date;

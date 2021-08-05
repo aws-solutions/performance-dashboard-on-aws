@@ -818,5 +818,6 @@
   "Copy": "Copy",
   "CopyContent": "Copy {{name}}",
   "DownloadCSV": "Download",
-  "MobilePreview": "Mobile preview"
+  "MobilePreview": "Mobile preview",
+  "DisplayTableOfContents": "Display table of contents"
 }

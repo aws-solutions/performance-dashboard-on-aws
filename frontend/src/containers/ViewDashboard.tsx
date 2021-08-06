@@ -51,7 +51,7 @@ function ViewDashboard() {
       />
       <hr />
       <Navigation
-        stickyPosition={160}
+        stickyPosition={80}
         offset={80}
         widgetNameIds={dashboard?.widgets.map((widget) => {
           return {

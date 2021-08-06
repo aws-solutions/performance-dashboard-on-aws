@@ -60,6 +60,7 @@ function ViewDashboard() {
           };
         })}
         activeWidgetId={activeWidgetId}
+        setActivewidgetId={setActiveWidgetId}
         isTop={windowSize.width <= moveNavBarWidth}
         displayTableOfContents={dashboard?.displayTableOfContents}
       ></Navigation>
@@ -81,13 +82,6 @@ function ViewDashboard() {
           </div>
         );
       })}
-      <div
-        style={
-          windowSize.width > moveNavBarWidth
-            ? { paddingBottom: `${windowSize.height - 180}px` }
-            : {}
-        }
-      ></div>
     </>
   );
 }

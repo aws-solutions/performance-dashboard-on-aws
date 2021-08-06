@@ -387,8 +387,6 @@ function ViewDashboardAdmin() {
                 width: `${mobilePreviewWidth}px`,
                 margin: "auto",
               }
-            : windowSize.width > moveNavBarWidth
-            ? { paddingBottom: `${windowSize.height - 510}px` }
             : {}
         }
       >
@@ -416,6 +414,7 @@ function ViewDashboardAdmin() {
                 };
               })}
               activeWidgetId={activeWidgetId}
+              setActivewidgetId={setActiveWidgetId}
               isTop={showMobilePreview || windowSize.width <= moveNavBarWidth}
               displayTableOfContents={dashboard?.displayTableOfContents}
             ></Navigation>

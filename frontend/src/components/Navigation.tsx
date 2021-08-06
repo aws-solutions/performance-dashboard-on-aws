@@ -11,6 +11,7 @@ interface Props {
   offset: number;
   widgetNameIds: Array<WidgetNameId>;
   activeWidgetId: string;
+  setActivewidgetId: React.Dispatch<React.SetStateAction<string>>;
   isTop: boolean;
   displayTableOfContents: boolean;
 }
@@ -20,6 +21,7 @@ function Navigation({
   offset,
   widgetNameIds,
   activeWidgetId,
+  setActivewidgetId,
   isTop,
   displayTableOfContents,
 }: Props) {
@@ -28,6 +30,30 @@ function Navigation({
     const yOffset = -offset;
     window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
   };
+
+  // forcefully highlight the last tab in table of contents when user reaches
+  // the bottom of the page
+  const handleScroll = () => {
+    const isBottom =
+      Math.ceil(window.innerHeight + window.scrollY) >=
+      document.documentElement.scrollHeight;
+
+    if (isBottom) {
+      console.log("we're at the bottom");
+      setActivewidgetId(widgetNameIds[widgetNameIds.length - 1].id);
+      console.log("done");
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   if (!isTop) {
     return (

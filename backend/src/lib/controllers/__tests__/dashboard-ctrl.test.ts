@@ -27,24 +27,24 @@ beforeEach(() => {
   DashboardRepository.getInstance = jest.fn().mockReturnValue(repository);
   TopicAreaRepository.getInstance = jest.fn().mockReturnValue(topicareaRepo);
 
-  res = {
+  res = ({
     send: jest.fn().mockReturnThis(),
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
-  } as any as Response;
+  } as any) as Response;
 });
 
 describe("createDashboard", () => {
   let req: Request;
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       body: {
         topicAreaId: "abc",
         name: "test",
         description: "description test",
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns a 400 error when topicAreaId is missing", async () => {
@@ -82,7 +82,7 @@ describe("updateDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       params: {
         id: "123",
@@ -92,8 +92,9 @@ describe("updateDashboard", () => {
         name: "123 name",
         description: "description test",
         updatedAt: now.toISOString(),
+        displayTableOfContents: false,
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns a 400 error when topicAreaId is invalid", async () => {
@@ -136,6 +137,7 @@ describe("updateDashboard", () => {
       "123 name",
       "abc",
       "abc name",
+      false,
       "description test",
       now.toISOString(),
       user
@@ -149,7 +151,7 @@ describe("publishDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       params: {
         id: "123",
@@ -158,7 +160,7 @@ describe("publishDashboard", () => {
         updatedAt: now.toISOString(),
         releaseNotes: "release note test",
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -207,6 +209,7 @@ describe("publishDashboard", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.Published,
@@ -268,6 +271,7 @@ describe("publishDashboard", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.PublishPending,
@@ -300,7 +304,7 @@ describe("publishPendingDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       params: {
         id: "123",
@@ -308,7 +312,7 @@ describe("publishPendingDashboard", () => {
       body: {
         updatedAt: now.toISOString(),
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -326,6 +330,7 @@ describe("publishPendingDashboard", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.Published,
@@ -349,6 +354,7 @@ describe("publishPendingDashboard", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.PublishPending, // dashboard can already be in publish pending
@@ -378,6 +384,7 @@ describe("publishPendingDashboard", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.Draft,
@@ -404,7 +411,7 @@ describe("archiveDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       params: {
         id: "123",
@@ -412,7 +419,7 @@ describe("archiveDashboard", () => {
       body: {
         updatedAt: now.toISOString(),
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -430,6 +437,7 @@ describe("archiveDashboard", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.Inactive,
@@ -451,6 +459,7 @@ describe("archiveDashboard", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.Published,
@@ -474,7 +483,7 @@ describe("moveToDraftDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       params: {
         id: "123",
@@ -482,7 +491,7 @@ describe("moveToDraftDashboard", () => {
       body: {
         updatedAt: now.toISOString(),
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -500,6 +509,7 @@ describe("moveToDraftDashboard", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.Published,
@@ -523,6 +533,7 @@ describe("moveToDraftDashboard", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.PublishPending,
@@ -543,12 +554,12 @@ describe("moveToDraftDashboard", () => {
 describe("deleteDashboard", () => {
   let req: Request;
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       params: {
         id: "090b0410",
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("deletes the dashboard", async () => {
@@ -560,12 +571,12 @@ describe("deleteDashboard", () => {
 describe("deleteDashboards", () => {
   let req: Request;
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       query: {
         ids: "090b0410,76546546",
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns a 400 error when ids is missing", async () => {
@@ -587,12 +598,12 @@ describe("deleteDashboards", () => {
 describe("getPublicDashboardById", () => {
   let req: Request;
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       params: {
         id: "090b0410",
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns the public representation of a dashboard", async () => {
@@ -603,6 +614,7 @@ describe("getPublicDashboardById", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.Published,
@@ -659,12 +671,12 @@ describe("createNewDraft", () => {
   let req: Request;
   let dashboard: Dashboard;
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       params: {
         id: "090b0410",
       },
-    } as any as Request;
+    } as any) as Request;
 
     dashboard = {
       id: "090b0410",
@@ -673,6 +685,7 @@ describe("createNewDraft", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.Published,
@@ -723,17 +736,17 @@ describe("getVersions", () => {
   let res: Response;
   let dashboard: Dashboard;
   beforeEach(() => {
-    req = {
+    req = ({
       user,
       params: {
         id: "090b0410",
       },
-    } as any as Request;
-    res = {
+    } as any) as Request;
+    res = ({
       send: jest.fn().mockReturnThis(),
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
-    } as any as Response;
+    } as any) as Response;
     const now = new Date();
     dashboard = {
       id: "123",
@@ -746,6 +759,7 @@ describe("getVersions", () => {
       state: DashboardState.Published,
       topicAreaId: "xyz",
       topicAreaName: "Health and Human Services",
+      displayTableOfContents: false,
     };
   });
 
@@ -770,11 +784,11 @@ describe("getVersions", () => {
 describe("getPublicDashboardByFriendlyURL", () => {
   let req: Request;
   beforeEach(() => {
-    req = {
+    req = ({
       params: {
         friendlyURL: "covid-19",
       },
-    } as any as Request;
+    } as any) as Request;
   });
 
   it("returns the public representation of a dashboard", async () => {
@@ -785,6 +799,7 @@ describe("getPublicDashboardByFriendlyURL", () => {
       name: "My Dashboard",
       topicAreaId: "abc",
       topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       createdBy: "johndoe",
       state: DashboardState.Published,

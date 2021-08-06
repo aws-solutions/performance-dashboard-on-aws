@@ -25,23 +25,14 @@ function Navigation({
   isTop,
   displayTableOfContents,
 }: Props) {
-  const scrollWithOffset = (el: HTMLElement) => {
-    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
-    const yOffset = -offset;
-    window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
-  };
-
   // forcefully highlight the last tab in table of contents when user reaches
   // the bottom of the page
   const handleScroll = () => {
     const isBottom =
       Math.ceil(window.innerHeight + window.scrollY) >=
       document.documentElement.scrollHeight;
-
     if (isBottom) {
-      console.log("we're at the bottom");
       setActivewidgetId(widgetNameIds[widgetNameIds.length - 1].id);
-      console.log("done");
     }
   };
 
@@ -54,6 +45,12 @@ function Navigation({
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const scrollWithOffset = (el: HTMLElement) => {
+    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+    const yOffset = -offset;
+    window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
+  };
 
   if (!isTop) {
     return (
@@ -124,7 +121,7 @@ function Navigation({
                 <NavHashLink
                   to={"#" + widget.id}
                   scroll={(el) => scrollWithOffset(el)}
-                  style={{ marginLeft: "0px", paddingLeft: "0px" }}
+                  style={{ paddingLeft: "0px" }}
                 >
                   {widget.name}
                 </NavHashLink>

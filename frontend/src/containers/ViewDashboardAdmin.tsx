@@ -407,7 +407,7 @@ function ViewDashboardAdmin() {
             />
             <hr />
             <Navigation
-              stickyPosition={240}
+              stickyPosition={80}
               offset={240}
               widgetNameIds={dashboard?.widgets.map((widget) => {
                 return {

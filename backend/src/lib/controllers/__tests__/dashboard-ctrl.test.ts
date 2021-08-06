@@ -27,24 +27,24 @@ beforeEach(() => {
   DashboardRepository.getInstance = jest.fn().mockReturnValue(repository);
   TopicAreaRepository.getInstance = jest.fn().mockReturnValue(topicareaRepo);
 
-  res = ({
+  res = {
     send: jest.fn().mockReturnThis(),
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
-  } as any) as Response;
+  } as any as Response;
 });
 
 describe("createDashboard", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       body: {
         topicAreaId: "abc",
         name: "test",
         description: "description test",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when topicAreaId is missing", async () => {
@@ -82,7 +82,7 @@ describe("updateDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "123",
@@ -94,7 +94,7 @@ describe("updateDashboard", () => {
         updatedAt: now.toISOString(),
         displayTableOfContents: false,
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when topicAreaId is invalid", async () => {
@@ -151,7 +151,7 @@ describe("publishDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "123",
@@ -160,7 +160,7 @@ describe("publishDashboard", () => {
         updatedAt: now.toISOString(),
         releaseNotes: "release note test",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -304,7 +304,7 @@ describe("publishPendingDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "123",
@@ -312,7 +312,7 @@ describe("publishPendingDashboard", () => {
       body: {
         updatedAt: now.toISOString(),
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -411,7 +411,7 @@ describe("archiveDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "123",
@@ -419,7 +419,7 @@ describe("archiveDashboard", () => {
       body: {
         updatedAt: now.toISOString(),
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -483,7 +483,7 @@ describe("moveToDraftDashboard", () => {
   jest.useFakeTimers("modern");
   jest.setSystemTime(now);
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "123",
@@ -491,7 +491,7 @@ describe("moveToDraftDashboard", () => {
       body: {
         updatedAt: now.toISOString(),
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when updatedAt is missing", async () => {
@@ -554,12 +554,12 @@ describe("moveToDraftDashboard", () => {
 describe("deleteDashboard", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "090b0410",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("deletes the dashboard", async () => {
@@ -571,12 +571,12 @@ describe("deleteDashboard", () => {
 describe("deleteDashboards", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       query: {
         ids: "090b0410,76546546",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns a 400 error when ids is missing", async () => {
@@ -598,12 +598,12 @@ describe("deleteDashboards", () => {
 describe("getPublicDashboardById", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "090b0410",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns the public representation of a dashboard", async () => {
@@ -671,12 +671,12 @@ describe("createNewDraft", () => {
   let req: Request;
   let dashboard: Dashboard;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "090b0410",
       },
-    } as any) as Request;
+    } as any as Request;
 
     dashboard = {
       id: "090b0410",
@@ -736,17 +736,17 @@ describe("getVersions", () => {
   let res: Response;
   let dashboard: Dashboard;
   beforeEach(() => {
-    req = ({
+    req = {
       user,
       params: {
         id: "090b0410",
       },
-    } as any) as Request;
-    res = ({
+    } as any as Request;
+    res = {
       send: jest.fn().mockReturnThis(),
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
-    } as any) as Response;
+    } as any as Response;
     const now = new Date();
     dashboard = {
       id: "123",
@@ -784,11 +784,11 @@ describe("getVersions", () => {
 describe("getPublicDashboardByFriendlyURL", () => {
   let req: Request;
   beforeEach(() => {
-    req = ({
+    req = {
       params: {
         friendlyURL: "covid-19",
       },
-    } as any) as Request;
+    } as any as Request;
   });
 
   it("returns the public representation of a dashboard", async () => {

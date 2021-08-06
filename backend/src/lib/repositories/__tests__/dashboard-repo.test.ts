@@ -1051,7 +1051,7 @@ describe("getNextVersionNumber", () => {
     const dashboards: Array<Dashboard> = [
       {
         id: "xyz",
-        version: (undefined as unknown) as number, // incorrect version
+        version: undefined as unknown as number, // incorrect version
         name: "Dashboard v1",
         topicAreaId: "456",
         topicAreaName: "Topic1",
@@ -1073,7 +1073,7 @@ describe("getNextVersionNumber", () => {
     const dashboards: Array<Dashboard> = [
       {
         id: "xyz",
-        version: (undefined as unknown) as number, // incorrect version
+        version: undefined as unknown as number, // incorrect version
         name: "Dashboard v1",
         topicAreaId: "456",
         topicAreaName: "Topic1",

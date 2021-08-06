@@ -131,13 +131,8 @@ async function getVersions(req: Request, res: Response) {
 async function updateDashboard(req: Request, res: Response) {
   const user = req.user;
   const { id } = req.params;
-  const {
-    name,
-    topicAreaId,
-    displayTableOfContents,
-    description,
-    updatedAt,
-  } = req.body;
+  const { name, topicAreaId, displayTableOfContents, description, updatedAt } =
+    req.body;
 
   if (!name) {
     res.status(400).send("Missing required body `name`");

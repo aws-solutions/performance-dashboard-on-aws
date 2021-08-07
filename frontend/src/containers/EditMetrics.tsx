@@ -53,8 +53,9 @@ function EditMetrics() {
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, currentJson } = useWidget(dashboardId, widgetId);
   const [metrics, setMetrics] = useState<Array<Metric>>([]);
-  const [submittedMetricsNum, setSubmittedMetricsNum] =
-    useState<number | undefined>();
+  const [submittedMetricsNum, setSubmittedMetricsNum] = useState<
+    number | undefined
+  >();
   const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const title = watch("title");

@@ -119,8 +119,9 @@ export function usePublicDashboard(
 ): UsePublicDashboardHook {
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [dashboard, setDashboard] =
-    useState<PublicDashboard | undefined>(undefined);
+  const [dashboard, setDashboard] = useState<PublicDashboard | undefined>(
+    undefined
+  );
 
   const setDashboardAndSortWidgets = (dashboard: PublicDashboard) => {
     if (dashboard) {

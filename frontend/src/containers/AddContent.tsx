@@ -35,6 +35,8 @@ function AddContent() {
       history.push(`/admin/dashboard/${dashboardId}/add-image`);
     } else if (values.widgetType === "metrics") {
       history.push(`/admin/dashboard/${dashboardId}/add-metrics`);
+    } else if (values.widgetType === "section") {
+      history.push(`/admin/dashboard/${dashboardId}/add-section`);
     }
   };
 
@@ -214,6 +216,32 @@ function AddContent() {
                   </div>
                 </div>
               </div>
+              <div className="usa-radio">
+                <div
+                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
+                    widgetType === "section" ? " bg-base-lightest" : "-lighter"
+                  } border-2px padding-2 margin-y-1`}
+                >
+                  <div className="grid-col flex-5">
+                    <input
+                      className="usa-radio__input"
+                      id="section"
+                      value="section"
+                      type="radio"
+                      name="widgetType"
+                      ref={register()}
+                    />
+                    <label className="usa-radio__label" htmlFor="section">
+                      {t("Section")}
+                    </label>
+                  </div>
+                  <div className="grid-col flex-7">
+                    <div className="usa-prose text-base margin-left-4">
+                      {t("AddContentScreen.SectionDescription")}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </fieldset>
             <br />
             <hr />
@@ -270,6 +298,13 @@ function AddContent() {
             <img
               src={`${process.env.PUBLIC_URL}/images/image-content-item.svg`}
               alt={t("AddContentScreen.ImageAlt")}
+            />
+          )}
+
+          {widgetType === "section" && (
+            <img
+              src={`${process.env.PUBLIC_URL}/images/section-content-item.svg`}
+              alt={t("AddContentScreen.SectionAlt")}
             />
           )}
         </div>

@@ -9,6 +9,7 @@ import {
   ChartType,
   MetricsWidget,
   ImageWidget,
+  SectionWidget,
 } from "../models/widget";
 
 export const WIDGET_ITEM_TYPE = "Widget";
@@ -46,6 +47,8 @@ function createWidget(widgetInfo: CreateWidgetInfo): Widget {
       return createMetricsWidget(widget);
     case WidgetType.Image:
       return createImageWidget(widget);
+    case WidgetType.Section:
+      return createSectionWidget(widget);
     default:
       throw new Error("Invalid widget type");
   }
@@ -63,6 +66,7 @@ function createFromWidget(dashboardId: string, widget: Widget): Widget {
     order: widget.order,
     updatedAt: new Date(),
     showTitle: widget.showTitle,
+    section: widget.section,
     content: widget.content,
   };
 }
@@ -80,6 +84,7 @@ function fromItem(item: WidgetItem): Widget {
     order: item.order,
     updatedAt,
     showTitle,
+    section: item.section,
     content: item.content,
   };
 
@@ -95,6 +100,9 @@ function fromItem(item: WidgetItem): Widget {
 
     case WidgetType.Metrics:
       return fromMetricsItem(widget);
+
+    case WidgetType.Section:
+      return fromSectionItem(widget);
 
     default:
       return widget;
@@ -171,6 +179,20 @@ function fromMetricsItem(widget: Widget): MetricsWidget {
   };
 }
 
+function fromSectionItem(widget: Widget): SectionWidget {
+  const sectionWidget = widget as SectionWidget;
+  return {
+    ...widget,
+    content: {
+      ...widget.content,
+      widgetIds:
+        sectionWidget.content.widgetIds !== undefined
+          ? sectionWidget.content.widgetIds
+          : [],
+    },
+  };
+}
+
 function fromItems(items: Array<WidgetItem>): Array<Widget> {
   return items.map((item) => fromItem(item));
 }
@@ -185,6 +207,7 @@ function toItem(widget: Widget): WidgetItem {
     order: widget.order,
     updatedAt: widget.updatedAt?.toISOString(),
     showTitle: widget.showTitle,
+    section: widget.section,
     content: widget.content,
   };
 }
@@ -349,6 +372,23 @@ function createMetricsWidget(widget: Widget): MetricsWidget {
         widget.content.significantDigitLabels !== undefined
           ? widget.content.significantDigitLabels
           : false,
+    },
+  };
+}
+
+function createSectionWidget(widget: Widget): SectionWidget {
+  if (!widget.content.title) {
+    throw new Error("Section widget must have `content.title` field");
+  }
+
+  return {
+    ...widget,
+    content: {
+      title: widget.content.title,
+      widgetIds: widget.content.widgetIds,
+      summary: widget.content.summary,
+      summaryBelow: widget.content.summaryBelow,
+      showWithTabs: widget.content.showWithTabs,
     },
   };
 }

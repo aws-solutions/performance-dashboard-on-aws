@@ -266,6 +266,8 @@ async function setWidgetOrder(
     id: widget.id,
     updatedAt: widget.updatedAt,
     order: widget.order,
+    section: widget.section,
+    content: widget.content,
   }));
   return await API.put(apiName, `dashboard/${dashboardId}/widgetorder`, {
     headers,

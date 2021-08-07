@@ -36,8 +36,9 @@ function EditDashboard() {
     useDashboard(dashboardId);
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-  const [widgetToDelete, setWidgetToDelete] =
-    useState<Widget | undefined>(undefined);
+  const [widgetToDelete, setWidgetToDelete] = useState<Widget | undefined>(
+    undefined
+  );
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
 
   const publishedOrArchived = versions.find(
@@ -222,7 +223,11 @@ function EditDashboard() {
               )}: "${widgetToDelete.name}"`
             : ""
         }
-        message={t("DeletingContentItem")}
+        message={
+          widgetToDelete?.widgetType === WidgetType.Section
+            ? t("DeletingSectionContentItem")
+            : t("DeletingContentItem")
+        }
         buttonType={t("Delete")}
         buttonAction={deleteWidget}
       />

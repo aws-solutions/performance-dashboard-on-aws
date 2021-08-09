@@ -89,7 +89,10 @@ function MetricsCardGroup(props: Props) {
   };
 
   return (
-    <div className="grid-col">
+    <div
+      className="grid-col"
+      style={props.metricsCenterAlign ? { textAlign: "center" } : {}}
+    >
       {rows.map((row, i) => {
         return (
           <div key={i} className="grid-row flex-column">
@@ -101,14 +104,7 @@ function MetricsCardGroup(props: Props) {
                     key={j}
                   >
                     <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-hidden overflow-y-hidden">
-                      <div
-                        className="flex-5"
-                        style={
-                          props.metricsCenterAlign
-                            ? { textAlign: "center" }
-                            : {}
-                        }
-                      >
+                      <div className="flex-5">
                         <p className="text-base-darkest text-bold margin-0 text-no-wrap">
                           {metric.title}
                         </p>
@@ -117,22 +113,10 @@ function MetricsCardGroup(props: Props) {
                         className="flex-3 usa-tooltip"
                         data-position="bottom"
                         title={metric.value ? metric.value.toString() : ""}
-                        style={
-                          props.metricsCenterAlign
-                            ? { textAlign: "center" }
-                            : {}
-                        }
                       >
                         {renderNumber(metric)}
                       </div>
-                      <div
-                        className="flex-2"
-                        style={
-                          props.metricsCenterAlign
-                            ? { textAlign: "center" }
-                            : {}
-                        }
-                      >
+                      <div className="flex-2">
                         {metric.changeOverTime && (
                           <div className="margin-top-05">
                             <FontAwesomeIcon
@@ -148,14 +132,7 @@ function MetricsCardGroup(props: Props) {
                           </div>
                         )}
                       </div>
-                      <div
-                        className="flex-2"
-                        style={
-                          props.metricsCenterAlign
-                            ? { textAlign: "center" }
-                            : {}
-                        }
-                      >
+                      <div className="flex-2">
                         {metric.startDate && metric.endDate && (
                           <div className="margin-top-1px">
                             <span>

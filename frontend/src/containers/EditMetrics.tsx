@@ -236,7 +236,6 @@ function EditMetrics() {
   ];
 
   useChangeBackgroundColor();
-  useScrollUp();
 
   if (!loading && widget) {
     crumbs.push({

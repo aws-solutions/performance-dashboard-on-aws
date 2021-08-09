@@ -36,10 +36,12 @@ exports[`metrics preview should match snapshot 1`] = `
                 <div
                   class="flex-3 usa-tooltip"
                   data-position="bottom"
+                  style="margin: auto;"
                   title="1"
                 >
                   <h1
                     class="margin-0 text-no-wrap"
+                    style="color: rgb(41, 180, 187);"
                   >
                     1
                   </h1>

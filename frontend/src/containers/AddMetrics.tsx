@@ -42,6 +42,7 @@ interface FormValues {
   oneMetricPerRow: boolean;
   datasetType: string;
   significantDigitLabels: boolean;
+  metricsCenterAlign: boolean;
 }
 
 interface PathParams {
@@ -71,16 +72,18 @@ function AddMetrics() {
   const [query, setQuery] = useState("");
 
   const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
-  const [dynamicDataset, setDynamicDataset] =
-    useState<Dataset | undefined>(undefined);
+  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
+    undefined
+  );
   const [fileLoading, setFileLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
 
   const [metrics, setMetrics] = useState<Array<Metric>>(
     state && state.metrics ? [...state.metrics] : []
   );
-  const [submittedMetricsNum, setSubmittedMetricsNum] =
-    useState<number | undefined>();
+  const [submittedMetricsNum, setSubmittedMetricsNum] = useState<
+    number | undefined
+  >();
   const [step, setStep] = useState<number>(state && state.metrics ? 1 : 0);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.datasetType ? state.datasetType : undefined
@@ -91,6 +94,7 @@ function AddMetrics() {
   const showTitle = watch("showTitle");
   const oneMetricPerRow = watch("oneMetricPerRow");
   const significantDigitLabels = watch("significantDigitLabels");
+  const metricsCenterAlign = watch("metricsCenterAlign");
 
   useEffect(() => {
     if (datasetType) {
@@ -181,6 +185,7 @@ function AddMetrics() {
                 ? DatasetType.DynamicDataset
                 : DatasetType.CreateNew,
             significantDigitLabels: values.significantDigitLabels,
+            metricsCenterAlign: values.metricsCenterAlign,
           }
         );
         setCreatingWidget(false);
@@ -611,6 +616,22 @@ function AddMetrics() {
                           {t("SignificantDigitLabels")}
                         </label>
                       </div>
+                      <div className="usa-checkbox">
+                        <input
+                          className="usa-checkbox__input"
+                          id="metricsCenterAlign"
+                          type="checkbox"
+                          name="metricsCenterAlign"
+                          defaultChecked={false}
+                          ref={register()}
+                        />
+                        <label
+                          className="usa-checkbox__label"
+                          htmlFor="metricsCenterAlign"
+                        >
+                          {t("MetricsCenterAlign")}
+                        </label>
+                      </div>
                     </fieldset>
                     <MetricsList
                       metrics={metrics}
@@ -654,6 +675,7 @@ function AddMetrics() {
                       metrics={metrics}
                       metricPerRow={oneMetricPerRow ? 1 : 3}
                       significantDigitLabels={significantDigitLabels}
+                      metricsCenterAlign={metricsCenterAlign}
                     />
                   </div>
                 </div>

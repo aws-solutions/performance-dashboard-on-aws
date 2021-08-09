@@ -11,6 +11,7 @@ interface Props {
   metrics: Array<Metric>;
   metricPerRow: number;
   significantDigitLabels: boolean;
+  metricsCenterAlign: boolean;
 }
 
 function MetricsCardGroup(props: Props) {
@@ -81,14 +82,7 @@ function MetricsCardGroup(props: Props) {
     } else {
       return (
         <h1 className="margin-0 text-no-wrap" style={{ color: primaryColor }}>
-          {TickFormatter.formatNumber(
-            Number(metric.value),
-            Number(metric.value),
-            props.significantDigitLabels,
-            undefined,
-            metric.percentage,
-            metric.currency
-          )}
+          {number}
         </h1>
       );
     }
@@ -116,6 +110,9 @@ function MetricsCardGroup(props: Props) {
                         className="flex-3 usa-tooltip"
                         data-position="bottom"
                         title={metric.value ? metric.value.toString() : ""}
+                        style={
+                          props.metricsCenterAlign ? { margin: "auto" } : {}
+                        }
                       >
                         {renderNumber(metric)}
                       </div>

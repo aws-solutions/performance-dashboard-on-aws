@@ -1,10 +1,11 @@
 import React from "react";
-import { Metric } from "../models";
+import { Metric, NumberDataType } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import TickFormatter from "../services/TickFormatter";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
+import { useColors } from "../hooks";
 
 interface Props {
   metrics: Array<Metric>;
@@ -14,6 +15,8 @@ interface Props {
 
 function MetricsCardGroup(props: Props) {
   const { t } = useTranslation();
+  const primaryColor = useColors(1)[0];
+
   let rows = [];
   for (let i = 0; i < props.metrics.length; i += props.metricPerRow) {
     let row = [];
@@ -31,6 +34,59 @@ function MetricsCardGroup(props: Props) {
   if (!props.metrics.length) {
     return null;
   }
+
+  const renderNumber = (metric: Metric) => {
+    const number = TickFormatter.formatNumber(
+      Number(metric.value),
+      Number(metric.value),
+      props.significantDigitLabels,
+      undefined,
+      metric.percentage,
+      metric.currency
+    );
+    if (metric.percentage === NumberDataType.Percentage) {
+      return (
+        <div>
+          <h1 className="margin-0 text-no-wrap" style={{ display: "inline" }}>
+            {number.slice(0, -1)}
+          </h1>
+          <h4
+            className="margin-0 text-no-wrap"
+            style={{ display: "inline", fontWeight: "normal" }}
+          >
+            {number[number.length - 1]}
+          </h4>
+        </div>
+      );
+    } else if (metric.percentage === NumberDataType.Currency) {
+      return (
+        <div>
+          <h4
+            className="margin-0 text-no-wrap"
+            style={{ display: "inline", fontWeight: "normal" }}
+          >
+            {number[0]}
+          </h4>
+          <h1 className="margin-0 text-no-wrap" style={{ display: "inline" }}>
+            {number.slice(1)}
+          </h1>
+        </div>
+      );
+    } else {
+      return (
+        <h1 className="margin-0 text-no-wrap">
+          {TickFormatter.formatNumber(
+            Number(metric.value),
+            Number(metric.value),
+            props.significantDigitLabels,
+            undefined,
+            metric.percentage,
+            metric.currency
+          )}
+        </h1>
+      );
+    }
+  };
 
   return (
     <div className="grid-col">
@@ -54,17 +110,9 @@ function MetricsCardGroup(props: Props) {
                         className="flex-3 usa-tooltip"
                         data-position="bottom"
                         title={metric.value ? metric.value.toString() : ""}
+                        style={{ color: primaryColor }}
                       >
-                        <h1 className="margin-0 text-no-wrap">
-                          {TickFormatter.formatNumber(
-                            Number(metric.value),
-                            Number(metric.value),
-                            props.significantDigitLabels,
-                            undefined,
-                            metric.percentage,
-                            metric.currency
-                          )}
-                        </h1>
+                        {renderNumber(metric)}
                       </div>
                       <div className="flex-2">
                         {metric.changeOverTime && (

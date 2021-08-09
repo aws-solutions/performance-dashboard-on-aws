@@ -47,7 +47,10 @@ function MetricsCardGroup(props: Props) {
     if (metric.percentage === NumberDataType.Percentage) {
       return (
         <div>
-          <h1 className="margin-0 text-no-wrap" style={{ display: "inline" }}>
+          <h1
+            className="margin-0 text-no-wrap"
+            style={{ display: "inline", color: primaryColor }}
+          >
             {number.slice(0, -1)}
           </h1>
           <h4
@@ -67,14 +70,17 @@ function MetricsCardGroup(props: Props) {
           >
             {number[0]}
           </h4>
-          <h1 className="margin-0 text-no-wrap" style={{ display: "inline" }}>
+          <h1
+            className="margin-0 text-no-wrap"
+            style={{ display: "inline", color: primaryColor }}
+          >
             {number.slice(1)}
           </h1>
         </div>
       );
     } else {
       return (
-        <h1 className="margin-0 text-no-wrap">
+        <h1 className="margin-0 text-no-wrap" style={{ color: primaryColor }}>
           {TickFormatter.formatNumber(
             Number(metric.value),
             Number(metric.value),
@@ -110,7 +116,6 @@ function MetricsCardGroup(props: Props) {
                         className="flex-3 usa-tooltip"
                         data-position="bottom"
                         title={metric.value ? metric.value.toString() : ""}
-                        style={{ color: primaryColor }}
                       >
                         {renderNumber(metric)}
                       </div>

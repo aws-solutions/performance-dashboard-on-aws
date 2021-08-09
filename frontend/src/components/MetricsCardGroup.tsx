@@ -101,7 +101,14 @@ function MetricsCardGroup(props: Props) {
                     key={j}
                   >
                     <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-hidden overflow-y-hidden">
-                      <div className="flex-5">
+                      <div
+                        className="flex-5"
+                        style={
+                          props.metricsCenterAlign
+                            ? { textAlign: "center" }
+                            : {}
+                        }
+                      >
                         <p className="text-base-darkest text-bold margin-0 text-no-wrap">
                           {metric.title}
                         </p>
@@ -111,12 +118,21 @@ function MetricsCardGroup(props: Props) {
                         data-position="bottom"
                         title={metric.value ? metric.value.toString() : ""}
                         style={
-                          props.metricsCenterAlign ? { margin: "auto" } : {}
+                          props.metricsCenterAlign
+                            ? { textAlign: "center" }
+                            : {}
                         }
                       >
                         {renderNumber(metric)}
                       </div>
-                      <div className="flex-2">
+                      <div
+                        className="flex-2"
+                        style={
+                          props.metricsCenterAlign
+                            ? { textAlign: "center" }
+                            : {}
+                        }
+                      >
                         {metric.changeOverTime && (
                           <div className="margin-top-05">
                             <FontAwesomeIcon
@@ -132,7 +148,14 @@ function MetricsCardGroup(props: Props) {
                           </div>
                         )}
                       </div>
-                      <div className="flex-2">
+                      <div
+                        className="flex-2"
+                        style={
+                          props.metricsCenterAlign
+                            ? { textAlign: "center" }
+                            : {}
+                        }
+                      >
                         {metric.startDate && metric.endDate && (
                           <div className="margin-top-1px">
                             <span>

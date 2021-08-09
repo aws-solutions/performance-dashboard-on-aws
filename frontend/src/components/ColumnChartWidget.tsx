@@ -70,7 +70,19 @@ const ColumnChartWidget = (props: Props) => {
     [columnsHover]
   );
 
+  const windowSize = useWindowSize();
+  const smallScreenPixels = 800;
+
   const { data, columns, showMobilePreview } = props;
+  let padding;
+  if (showMobilePreview || windowSize.width < smallScreenPixels) {
+    padding = 20;
+  } else if (props.isPreview) {
+    padding = 60;
+  } else {
+    padding = 120;
+  }
+
   const xAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && columns.length) {

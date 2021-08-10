@@ -111,10 +111,9 @@ const BarChartWidget = (props: Props) => {
         <ResponsiveContainer
           width="100%"
           height={
-            (data && data.length > 15) ||
-            (data && data[0] && Object.keys(data[0]).length > 4)
+            data[0] && Object.keys(data[0]).length > 4
               ? 800
-              : 400
+              : 400 + 400 * Math.floor((data.length - 1) / 15)
           }
         >
           <BarChart

@@ -100,31 +100,22 @@ const BarChartWidget = (props: Props) => {
     // When there are 15 rows of data and each row has 3 columns (excluding row
     // name), having a chart height of 400px is still visually appealing to users.
     // Adding more rows or columns would require additional height increments.
-    const defaultNumCols = 3;
     const defaultNumRows = 15;
-    const baseHeight = 400;
-    const increment = 400;
-    let additional;
+    const defaultNumCols = 3;
+    const unitHeight = 400;
+    let multiplicity;
 
     if (data && data.length) {
       const numRows = data.length;
       const numCols = Object.keys(data[0]).length - 1;
-      const rowMultiplicity = Math.floor(numRows / defaultNumRows);
-      const colMultiplicity = Math.floor(numCols / defaultNumCols);
-      if (numRows > defaultNumRows && numCols > defaultNumCols) {
-        additional = baseHeight + increment * rowMultiplicity * colMultiplicity;
-      } else if (numRows > defaultNumRows && numCols <= defaultNumCols) {
-        additional = baseHeight + increment * rowMultiplicity;
-      } else if (numRows <= defaultNumRows && numCols > defaultNumCols) {
-        additional = baseHeight + increment * colMultiplicity;
-      } else {
-        additional = 0;
-      }
+      const rowMultiplicity = Math.floor((numRows - 1) / defaultNumRows) + 1;
+      const colMultiplicity = Math.floor((numCols - 1) / defaultNumCols) + 1;
+      multiplicity = rowMultiplicity * colMultiplicity;
     } else {
-      additional = 0;
+      multiplicity = 1;
     }
 
-    return baseHeight + additional;
+    return unitHeight * multiplicity;
   };
 
   return (

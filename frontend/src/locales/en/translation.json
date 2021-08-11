@@ -178,7 +178,7 @@
   "EditTextScreen": {
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
-    "EditTextSuccess": "'{{title}}' text has been successfully edited.",
+    "EditTextSuccess": " text has been successfully edited.",
     "EditingText": "Editing text",
     "TextTitle": "Text title",
     "TextTitleError": "Please specify a text title",

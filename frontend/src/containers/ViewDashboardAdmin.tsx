@@ -67,9 +67,9 @@ function ViewDashboardAdmin() {
       history.push(`/admin/dashboard/edit/${draft.id}`, {
         alert: {
           type: "success",
-          message: `${t("NewDraftDashboardCreated", {
-            name: `${draft.name}`,
-          })}`,
+          message: `${t("NewDraftDashboardCreatedPrefix")} ${draft.name} ${t(
+            "NewDraftDashboardCreatedSuffix"
+          )}`,
         },
         id: "top-alert",
       });
@@ -163,7 +163,13 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenUpdateModal}
         closeModal={() => setIsOpenUpdateModal(false)}
-        title={t("CreateDraftDasboardModalTitle", { name: dashboard?.name })}
+        title={
+          t("CreateDraftDasboardModalTitlePrefix") +
+          " " +
+          dashboard?.name +
+          " " +
+          t("CreateDraftDasboardModalTitlePrefix")
+        }
         message={t("CreateDraftDasboardModalMessage")}
         buttonType={t("CreateDraftDasboardModalButton")}
         buttonAction={onUpdateDashboard}

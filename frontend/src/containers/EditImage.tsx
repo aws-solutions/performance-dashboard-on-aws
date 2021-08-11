@@ -88,7 +88,7 @@ function EditImage() {
         alert: {
           type: "success",
           message: `'${values.title}' ${t(
-            "EditImageScreen.ImageEditedSuccessffully"
+            "EditImageScreen.ImageEditedSuccessfully"
           )}`,
         },
       });

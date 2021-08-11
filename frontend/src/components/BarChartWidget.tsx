@@ -104,7 +104,7 @@ const BarChartWidget = (props: Props) => {
     const defaultNumRows = 15;
     const baseHeight = 400;
     const increment = 400;
-    let additional = 0;
+    let additional;
 
     if (data && data.length) {
       const numRows = data.length;

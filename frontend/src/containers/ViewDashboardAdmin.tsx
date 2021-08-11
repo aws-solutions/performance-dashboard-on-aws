@@ -163,13 +163,9 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenUpdateModal}
         closeModal={() => setIsOpenUpdateModal(false)}
-        title={
-          t("CreateDraftDasboardModalTitlePrefix") +
-          " " +
-          dashboard?.name +
-          " " +
-          t("CreateDraftDasboardModalTitlePrefix")
-        }
+        title={`${t("CreateDraftDasboardModalTitlePrefix")} ${
+          dashboard?.name
+        } ${t("CreateDraftDasboardModalTitleSuffix")}`}
         message={t("CreateDraftDasboardModalMessage")}
         buttonType={t("CreateDraftDasboardModalButton")}
         buttonAction={onUpdateDashboard}
@@ -178,8 +174,12 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenArchiveModal}
         closeModal={() => setIsOpenArchiveModal(false)}
-        title={t("ArchiveDashboardModalTitle", { name: dashboard?.name })}
-        message={t("ArchiveDashboardModalMessage", { name: dashboard?.name })}
+        title={`${t("ArchiveDashboardModalTitlePrefix")} ${dashboard?.name} ${t(
+          "ArchiveDashboardModalTitleSuffix"
+        )}`}
+        message={`${t("ArchiveDashboardModalMessagePrefix")} ${
+          dashboard?.name
+        } ${t("ArchiveDashboardModalMessageSuffix")}`}
         buttonType={t("ArchiveDashboardModalButton")}
         buttonAction={onArchiveDashboard}
       />
@@ -187,7 +187,9 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenRepublishModal}
         closeModal={() => setIsOpenRepublishModal(false)}
-        title={t("RepublishDashboardModalTitle", { name: dashboard?.name })}
+        title={`${t("RepublishDashboardModalTitlePrefix")} ${
+          dashboard?.name
+        } ${t("RepublishDashboardModalTitleSuffix")}`}
         message={t("RepublishDashboardModalMessage")}
         buttonType={t("RepublishDashboardModalButton")}
         buttonAction={onRepublishDashboard}
@@ -196,7 +198,9 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenPublishModal}
         closeModal={() => setIsOpenPublishModal(false)}
-        title={t("PreparePublishingModalTitle", { name: dashboard?.name })}
+        title={`${t("PreparePublishingModalTitlePrefix")} ${
+          dashboard?.name
+        } ${t("PreparePublishingModalTitleSuffix")}`}
         message={`${
           dashboard?.widgets.length === 0
             ? `${t("PreparePublishingModalMessage.part1")}`

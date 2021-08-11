@@ -96,6 +96,37 @@ const BarChartWidget = (props: Props) => {
   const formatYAxisLabel = (label: string) =>
     label.length > 27 ? label.substr(0, 27).concat("...") : label;
 
+  const calculateChartHeight = (): number => {
+    // When there are 15 rows of data and each row has 3 columns (excluding row
+    // name), having a chart height of 400px is still visually appealing to users.
+    // Adding more rows or columns would require additional height increments.
+    const defaultNumCols = 3;
+    const defaultNumRows = 15;
+    const baseHeight = 400;
+    const increment = 400;
+    let additional = 0;
+
+    if (data && data.length) {
+      const numRows = data.length;
+      const numCols = Object.keys(data[0]).length - 1;
+      const rowMultiplicity = Math.floor(numRows / defaultNumRows);
+      const colMultiplicity = Math.floor(numCols / defaultNumCols);
+      if (numRows > defaultNumRows && numCols > defaultNumCols) {
+        additional = baseHeight + increment * rowMultiplicity * colMultiplicity;
+      } else if (numRows > defaultNumRows && numCols <= defaultNumCols) {
+        additional = baseHeight + increment * rowMultiplicity;
+      } else if (numRows <= defaultNumRows && numCols > defaultNumCols) {
+        additional = baseHeight + increment * colMultiplicity;
+      } else {
+        additional = 0;
+      }
+    } else {
+      additional = 0;
+    }
+
+    return baseHeight + additional;
+  };
+
   return (
     <div>
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
@@ -108,14 +139,7 @@ const BarChartWidget = (props: Props) => {
         />
       )}
       {data && data.length && (
-        <ResponsiveContainer
-          width="100%"
-          height={
-            data[0] && Object.keys(data[0]).length > 4
-              ? 800
-              : 400 + 400 * Math.floor((data.length - 1) / 15)
-          }
-        >
+        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
           <BarChart
             className="bar-chart"
             data={props.data}

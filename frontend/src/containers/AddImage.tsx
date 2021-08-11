@@ -79,7 +79,7 @@ function AddImage() {
         alert: {
           type: "success",
           message: `'${values.title}' ${t(
-            "AddImageScreen.ImageAddedSuccessffully"
+            "AddImageScreen.ImageAddedSuccessfully"
           )}`,
         },
       });

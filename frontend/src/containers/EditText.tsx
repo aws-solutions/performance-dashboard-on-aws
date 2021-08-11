@@ -61,7 +61,7 @@ function EditText() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("EditTextScreen.EditTextSuccess", { title: values.title }),
+          message: `'${values.title}' ${t("EditTextScreen.EditTextSuccess")}`,
         },
       });
     } catch (err) {

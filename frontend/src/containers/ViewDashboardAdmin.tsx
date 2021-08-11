@@ -163,11 +163,11 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenUpdateModal}
         closeModal={() => setIsOpenUpdateModal(false)}
-        title={`${t("CreateDraftDasboardModalTitlePrefix")} ${
+        title={`${t("CreateDraftDashboardModalTitlePrefix")} ${
           dashboard?.name
-        } ${t("CreateDraftDasboardModalTitleSuffix")}`}
-        message={t("CreateDraftDasboardModalMessage")}
-        buttonType={t("CreateDraftDasboardModalButton")}
+        } ${t("CreateDraftDashboardModalTitleSuffix")}`}
+        message={t("CreateDraftDashboardModalMessage")}
+        buttonType={t("CreateDraftDashboardModalButton")}
         buttonAction={onUpdateDashboard}
       />
 

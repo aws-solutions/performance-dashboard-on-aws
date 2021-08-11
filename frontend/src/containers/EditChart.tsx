@@ -65,18 +65,14 @@ function EditChart() {
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset, watch } = useForm<
-    FormValues
-  >();
-  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
-    undefined
-  );
-  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
-    undefined
-  );
-  const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
-    undefined
-  );
+  const { register, errors, handleSubmit, reset, watch } =
+    useForm<FormValues>();
+  const [dynamicDataset, setDynamicDataset] =
+    useState<Dataset | undefined>(undefined);
+  const [staticDataset, setStaticDataset] =
+    useState<Dataset | undefined>(undefined);
+  const [csvErrors, setCsvErrors] =
+    useState<Array<object> | undefined>(undefined);
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
@@ -86,9 +82,8 @@ function EditChart() {
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const [oldStep, setOldStep] = useState<number>(-1);
   const [staticFileName, setStaticFileName] = useState<string | undefined>("");
-  const [dynamicFileName, setDynamicFileName] = useState<string | undefined>(
-    ""
-  );
+  const [dynamicFileName, setDynamicFileName] =
+    useState<string | undefined>("");
   const {
     widget,
     datasetType,
@@ -107,9 +102,8 @@ function EditChart() {
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
-  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
-    undefined
-  );
+  const [sortByColumn, setSortByColumn] =
+    useState<string | undefined>(undefined);
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
@@ -133,9 +127,8 @@ function EditChart() {
 
   const [displayedJson, setDisplayedJson] = useState<any[]>([]);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
-  const [displayedDatasetType, setDisplayedDatasetType] = useState<
-    DatasetType | undefined
-  >(undefined);
+  const [displayedDatasetType, setDisplayedDatasetType] =
+    useState<DatasetType | undefined>(undefined);
 
   const initializeColumnsMetadata = () => {
     setSelectedHeaders(new Set<string>());
@@ -229,12 +222,8 @@ function EditChart() {
         if (widget.content.columnsMetadata && (!state || !state.json)) {
           const columnsMetadata = widget.content.columnsMetadata;
 
-          const {
-            hiddenColumns,
-            dataTypes,
-            numberTypes,
-            currencyTypes,
-          } = ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
+          const { hiddenColumns, dataTypes, numberTypes, currencyTypes } =
+            ColumnsMetadataService.parseColumnsMetadata(columnsMetadata);
 
           setHiddenColumns(hiddenColumns);
           setDataTypes(dataTypes);

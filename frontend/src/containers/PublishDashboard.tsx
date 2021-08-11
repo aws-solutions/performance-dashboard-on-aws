@@ -42,17 +42,15 @@ function PublishDashboard() {
   const history = useHistory<LocationState>();
   const [step, setStep] = useState(0);
   const { settings } = useSettings();
-  const { dashboard, reloadDashboard, setDashboard } = useDashboard(
-    dashboardId
-  );
+  const { dashboard, reloadDashboard, setDashboard } =
+    useDashboard(dashboardId);
 
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
   const [desiredUrl, setDesiredUrl] = useState("");
   const suggestedUrl = useFriendlyUrl(dashboard, versions);
 
-  const { register, errors, handleSubmit, trigger, getValues, watch } = useForm<
-    FormValues
-  >();
+  const { register, errors, handleSubmit, trigger, getValues, watch } =
+    useForm<FormValues>();
 
   const releaseNotes = watch("releaseNotes");
   const acknowledge = watch("acknowledge");
@@ -102,9 +100,9 @@ function PublishDashboard() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("PublishWorkflow.ReturnToDraftSuccessAlert", {
-            dashboardName: dashboard.name,
-          }),
+          message: `${dashboard.name} ${t(
+            "PublishWorkflow.ReturnToDraftSuccessAlert"
+          )}`,
         },
         id: "top-alert",
       });

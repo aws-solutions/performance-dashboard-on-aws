@@ -164,7 +164,7 @@
   "AddTextScreen": {
     "AddText": "Add text",
     "AddTextError": "Resolve error(s) to add the text",
-    "AddTextSuccess": "'{{title}}' text has been successfully added.",
+    "AddTextSuccess": "text has been successfully added.",
     "CreatingText": "Creating text",
     "Configure": "Configure text content",
     "TextTitle": "Text title",
@@ -178,7 +178,7 @@
   "EditTextScreen": {
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
-    "EditTextSuccess": " text has been successfully edited.",
+    "EditTextSuccess": "text has been successfully edited.",
     "EditingText": "Editing text",
     "TextTitle": "Text title",
     "TextTitleError": "Please specify a text title",
@@ -221,7 +221,7 @@
     "MetricSuccessfullyEdited": "Metric successfully edited."
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessffully": "Metrics '{{title}}' have been successfully added.",
+    "MetricsAddedSuccessffully": "metrics have been successfully added.",
     "Name": "Name",
     "LastUpdated": "Last updated",
     "Description": "Description",
@@ -251,7 +251,7 @@
     "ShowTitle": "Show title on dashboard"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessffully": "Metrics '{{title}}' have been successfully edited.",
+    "MetricsEditedSuccessffully": "metrics have been successfully edited.",
     "EditMetrics": "Edit metrics",
     "UploadingFile": "Uploading file",
     "EditingMetrics": "Editing metrics",
@@ -268,7 +268,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddChartSuccess": "'{{title}}' chart has been successfully added.",
+    "AddChartSuccess": "chart has been successfully added.",
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "EditChartScreen": {
@@ -277,7 +277,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditChartSuccess": "'{{title}}' chart has been successfully edited.",
+    "EditChartSuccess": "chart has been successfully edited.",
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "AddTableScreen": {
@@ -285,7 +285,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddTableSuccess": "'{{title}}' table has been successfully added.",
+    "AddTableSuccess": "table has been successfully added.",
     "ChooseDataset": "Choose a dataset to continue"
   },
   "EditTableScreen": {
@@ -293,7 +293,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditTableSuccess": "'{{title}}' table has been successfully edited."
+    "EditTableSuccess": "table has been successfully edited."
   },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",
@@ -760,7 +760,7 @@
   "LastSaved": "Last saved",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Image file not specified",
-    "ImageAddedSuccessffully": "Image '{{image}}' has been successfully added.",
+    "ImageAddedSuccessffully": "image has been successfully added.",
     "AddImage": "Add Image",
     "ConfigureImage": "Configure image",
     "StepTwo": "Step 2 of 2",
@@ -783,7 +783,7 @@
     "Cancel": "Cancel"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessffully": "Image '{{image}}' has been successfully edited.",
+    "ImageEditedSuccessffully": "image has been successfully edited.",
     "EditImage": "Edit Image",
     "ResolveError": "Resolve error(s) to edit the image",
     "Title": "Image title",

@@ -78,9 +78,9 @@ function AddImage() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("AddImageScreen.ImageAddedSuccessffully", {
-            image: values.title,
-          }),
+          message: `'${values.title}' ${t(
+            "AddImageScreen.ImageAddedSuccessffully"
+          )}`,
         },
       });
     } catch (err) {

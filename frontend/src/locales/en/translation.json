@@ -77,8 +77,10 @@
   "PDoASite": "This site is where you manage the performance dashboard.",
   "WantToViewPublishedSite": "Do you want to see what your audience sees?",
   "ViewPublishedSite": "View the published site",
-  "NewDraftDashboardCreatedPrefix": "A new draft version of",
-  "NewDraftDashboardCreatedSuffix": "dashboard has been created.",
+  "NewDraftDashboardCreated": {
+    "part1": "A new draft version of",
+    "part2": "dashboard has been created."
+  },
   "DashboardWasArchived": "was successfully archived.",
   "DashboardWasDeleted": "was successfully deleted.",
   "DashboardWasRepublished": "dashboard was successfully re-published.",
@@ -98,21 +100,31 @@
   "LearnHowToFormatCSV": "Learn how to format your data.",
   "CreatedBy": "Created by",
   "Dashboards": "Dashboards",
-  "CreateDraftDashboardModalTitlePrefix": "Update",
-  "CreateDraftDashboardModalTitleSuffix": "dashboard",
+  "CreateDraftDashboardModalTitle": {
+    "part1": "Update",
+    "part2": "dashboard"
+  },
   "CreateDraftDashboardModalMessage": "This will create a new draft of the dashboard that will allow you to edit the content, then publish the new version to the published site.",
   "CreateDraftDashboardModalButton": "Create draft",
-  "ArchiveDashboardModalTitlePrefix": "Archive",
-  "ArchiveDashboardModalTitleSuffix": "dashboard",
-  "ArchiveDashboardModalMessagePrefix": "This will remove",
-  "ArchiveDashboardModalMessageSuffix": "dashboard from the published site. You can re-publish archived dashboards at any time.",
+  "ArchiveDashboardModalTitle": {
+    "part1": "Archive",
+    "part2": "dashboard"
+  },
+  "ArchiveDashboardModalMessage": {
+    "part1": "This will remove",
+    "part2": "dashboard from the published site. You can re-publish archived dashboards at any time."
+  },
   "ArchiveDashboardModalButton": "Archive",
-  "RepublishDashboardModalTitlePrefix": "Re-publish",
-  "RepublishDashboardModalTitleSuffix": "dashboard",
+  "RepublishDashboardModalTitle": {
+    "part1": "Re-publish",
+    "part2": "dashboard"
+  },
   "RepublishDashboardModalMessage": "Are you sure you want to re-publish this dashboard?",
   "RepublishDashboardModalButton": "Re-publish",
-  "PreparePublishingModalTitlePrefix": "Prepare",
-  "PreparePublishingModalTitleSuffix": "dashboard for publishing",
+  "PreparePublishingModalTitle": {
+    "part1": "Prepare",
+    "part2": "dashboard for publishing"
+  },
   "PreparePublishingModalMessage": {
     "part1": "This dashboard has no content items. ",
     "part2": "Are you sure you want to prepare this dashboard for publishing?"

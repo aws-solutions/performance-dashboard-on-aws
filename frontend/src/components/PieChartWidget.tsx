@@ -230,7 +230,7 @@ const PieChartWidget = (props: Props) => {
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
       {pieData.current.length && (
@@ -319,7 +319,7 @@ const PieChartWidget = (props: Props) => {
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
+          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
         />
       )}
     </div>

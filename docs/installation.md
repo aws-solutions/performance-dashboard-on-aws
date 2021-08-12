@@ -65,7 +65,7 @@ The following instructions assume that you have local AWS credentials in `~/.aws
 Clone this repository to obtain the latest stable copy of the code:
 
 ```bash
-git clone -b https://github.com/awslabs/performance-dashboard-on-aws.git
+git clone https://github.com/awslabs/performance-dashboard-on-aws.git
 cd performance-dashboard-on-aws
 ```
 

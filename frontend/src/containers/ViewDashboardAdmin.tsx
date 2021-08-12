@@ -175,7 +175,7 @@ function ViewDashboardAdmin() {
         isOpen={isOpenArchiveModal}
         closeModal={() => setIsOpenArchiveModal(false)}
         title={`${t("ArchiveDashboardModalTitle.part1")} ${dashboard?.name} ${t(
-          "ArchiveDashboardModalTitleS.part2"
+          "ArchiveDashboardModalTitle.part2"
         )}`}
         message={`${t("ArchiveDashboardModalMessage.part1")} ${
           dashboard?.name

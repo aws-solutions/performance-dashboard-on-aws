@@ -72,18 +72,16 @@ function AddMetrics() {
   const [query, setQuery] = useState("");
 
   const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
-  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
-    undefined
-  );
+  const [dynamicDataset, setDynamicDataset] =
+    useState<Dataset | undefined>(undefined);
   const [fileLoading, setFileLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
 
   const [metrics, setMetrics] = useState<Array<Metric>>(
     state && state.metrics ? [...state.metrics] : []
   );
-  const [submittedMetricsNum, setSubmittedMetricsNum] = useState<
-    number | undefined
-  >();
+  const [submittedMetricsNum, setSubmittedMetricsNum] =
+    useState<number | undefined>();
   const [step, setStep] = useState<number>(state && state.metrics ? 1 : 0);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.datasetType ? state.datasetType : undefined

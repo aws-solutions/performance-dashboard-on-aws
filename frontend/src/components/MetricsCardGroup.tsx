@@ -64,7 +64,7 @@ function MetricsCardGroup(props: Props) {
                       >
                         <h1
                           className="margin-0 text-no-wrap"
-                          style={{ display: "inline", color: primaryColor }}
+                          style={{ color: primaryColor }}
                         >
                           {TickFormatter.formatNumber(
                             Number(metric.value),

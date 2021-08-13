@@ -41,7 +41,7 @@ exports[`metrics preview should match snapshot 1`] = `
                 >
                   <h1
                     class="margin-0 text-no-wrap"
-                    style="display: inline; color: rgb(41, 180, 187);"
+                    style="color: rgb(41, 180, 187);"
                   >
                     1
                   </h1>

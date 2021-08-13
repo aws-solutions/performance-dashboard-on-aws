@@ -78,8 +78,8 @@
   "WantToViewPublishedSite": "Do you want to see what your audience sees?",
   "ViewPublishedSite": "View the published site",
   "NewDraftDashboardCreated": {
-    "part1": "A new draft version of",
-    "part2": "dashboard has been created."
+    "part1": "A new draft version of ",
+    "part2": " dashboard has been created."
   },
   "DashboardWasArchived": "was successfully archived.",
   "DashboardWasDeleted": "was successfully deleted.",
@@ -101,29 +101,29 @@
   "CreatedBy": "Created by",
   "Dashboards": "Dashboards",
   "CreateDraftDashboardModalTitle": {
-    "part1": "Update",
-    "part2": "dashboard"
+    "part1": "Update ",
+    "part2": " dashboard"
   },
   "CreateDraftDashboardModalMessage": "This will create a new draft of the dashboard that will allow you to edit the content, then publish the new version to the published site.",
   "CreateDraftDashboardModalButton": "Create draft",
   "ArchiveDashboardModalTitle": {
-    "part1": "Archive",
-    "part2": "dashboard"
+    "part1": "Archive ",
+    "part2": " dashboard"
   },
   "ArchiveDashboardModalMessage": {
-    "part1": "This will remove",
-    "part2": "dashboard from the published site. You can re-publish archived dashboards at any time."
+    "part1": "This will remove ",
+    "part2": " dashboard from the published site. You can re-publish archived dashboards at any time."
   },
   "ArchiveDashboardModalButton": "Archive",
   "RepublishDashboardModalTitle": {
-    "part1": "Re-publish",
-    "part2": "dashboard"
+    "part1": "Re-publish ",
+    "part2": " dashboard"
   },
   "RepublishDashboardModalMessage": "Are you sure you want to re-publish this dashboard?",
   "RepublishDashboardModalButton": "Re-publish",
   "PreparePublishingModalTitle": {
-    "part1": "Prepare",
-    "part2": "dashboard for publishing"
+    "part1": "Prepare ",
+    "part2": " dashboard for publishing"
   },
   "PreparePublishingModalMessage": {
     "part1": "This dashboard has no content items. ",

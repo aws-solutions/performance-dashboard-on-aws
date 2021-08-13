@@ -50,8 +50,9 @@ function AddTable() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset, watch } =
-    useForm<FormValues>();
+  const { register, errors, handleSubmit, reset, watch } = useForm<
+    FormValues
+  >();
   const [currentJson, setCurrentJson] = useState<Array<any>>(
     state && state.json ? state.json : []
   );
@@ -61,13 +62,15 @@ function AddTable() {
   );
   const [csvJson, setCsvJson] = useState<Array<any>>([]);
   const [filteredJson, setFilteredJson] = useState<Array<any>>(currentJson);
-  const [dynamicDataset, setDynamicDataset] =
-    useState<Dataset | undefined>(undefined);
+  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
+    undefined
+  );
   const [staticDataset] = useState<Dataset | undefined>(
     state && state.staticDataset ? state.staticDataset : undefined
   );
-  const [csvErrors, setCsvErrors] =
-    useState<Array<object> | undefined>(undefined);
+  const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
+    undefined
+  );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
@@ -82,8 +85,9 @@ function AddTable() {
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
-  const [sortByColumn, setSortByColumn] =
-    useState<string | undefined>(undefined);
+  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
+    undefined
+  );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
   const { fullPreview, fullPreviewButton } = useFullPreview();
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
@@ -191,7 +195,9 @@ function AddTable() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `'${values.title}' ${t("AddTableScreen.AddTableSuccess")}`,
+          message: `${t("AddTableScreen.AddTableSuccess.part1")}${
+            values.title
+          }${t("AddTableScreen.AddTableSuccess.part2")}`,
         },
       });
     } catch (err) {

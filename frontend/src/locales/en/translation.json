@@ -182,7 +182,10 @@
   "AddTextScreen": {
     "AddText": "Add text",
     "AddTextError": "Resolve error(s) to add the text",
-    "AddTextSuccess": "text has been successfully added.",
+    "AddTextSuccess": {
+      "part1": "'",
+      "part2": "' text has been successfully added."
+    },
     "CreatingText": "Creating text",
     "Configure": "Configure text content",
     "TextTitle": "Text title",
@@ -196,7 +199,10 @@
   "EditTextScreen": {
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
-    "EditTextSuccess": "text has been successfully edited.",
+    "EditTextSuccess": {
+      "part1": "'",
+      "part2": "' text has been successfully edited."
+    },
     "EditingText": "Editing text",
     "TextTitle": "Text title",
     "TextTitleError": "Please specify a text title",
@@ -239,7 +245,10 @@
     "MetricSuccessfullyEdited": "Metric successfully edited."
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessfully": "metrics have been successfully added.",
+    "MetricsAddedSuccessfully": {
+      "part1": "Metrics '",
+      "part2": "' have been successfully added."
+    },
     "Name": "Name",
     "LastUpdated": "Last updated",
     "Description": "Description",
@@ -269,7 +278,10 @@
     "ShowTitle": "Show title on dashboard"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessfully": "metrics have been successfully edited.",
+    "MetricsEditedSuccessfully": {
+      "part1": "Metrics '",
+      "part2": "' have been successfully edited."
+    },
     "EditMetrics": "Edit metrics",
     "UploadingFile": "Uploading file",
     "EditingMetrics": "Editing metrics",
@@ -286,7 +298,10 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddChartSuccess": "chart has been successfully added.",
+    "AddChartSuccess": {
+      "part1": "'",
+      "part2": "' chart has been successfully added."
+    },
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "EditChartScreen": {
@@ -295,7 +310,10 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditChartSuccess": "chart has been successfully edited.",
+    "EditChartSuccess": {
+      "part1": "'",
+      "part2": "' chart has been successfully edited."
+    },
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "AddTableScreen": {
@@ -303,7 +321,10 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddTableSuccess": "table has been successfully added.",
+    "AddTableSuccess": {
+      "part1": "'",
+      "part2": "' table has been successfully added."
+    },
     "ChooseDataset": "Choose a dataset to continue"
   },
   "EditTableScreen": {
@@ -311,7 +332,10 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditTableSuccess": "table has been successfully edited."
+    "EditTableSuccess": {
+      "part1": "'",
+      "part2": "' table has been successfully edited."
+    }
   },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",
@@ -431,8 +455,14 @@
     "FailToReturnToDraftError": "Failed to return dashboard to draft. Please try again.",
     "FailToSaveReleaseNotesError": "Failed to save release notes, please try again.",
     "MissingVersionNotesError": "Please enter version notes",
-    "ReturnToDraftSuccessAlert": "dashboard successfully returned to draft.",
-    "PublishedSuccessAlert": "dashboard was successfully published."
+    "ReturnToDraftSuccessAlert": {
+      "part1": "",
+      "part2": " dashboard successfully returned to draft."
+    },
+    "PublishedSuccessAlert": {
+      "part1": "",
+      "part2": " dashboard was successfully published."
+    }
   },
   "SettingsDateTimeFormat": "Date and time format",
   "SettingsDateTimeFormatEdit": "Edit date and time format",
@@ -778,7 +808,10 @@
   "LastSaved": "Last saved",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Image file not specified",
-    "ImageAddedSuccessfully": "image has been successfully added.",
+    "ImageAddedSuccessfully": {
+      "part1": "Image '",
+      "part2": "' has been successfully added."
+    },
     "AddImage": "Add Image",
     "ConfigureImage": "Configure image",
     "StepTwo": "Step 2 of 2",
@@ -801,7 +834,10 @@
     "Cancel": "Cancel"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessfully": "image has been successfully edited.",
+    "ImageEditedSuccessfully": {
+      "part1": "Image '",
+      "part2": "' has been successfully edited."
+    },
     "EditImage": "Edit Image",
     "ResolveError": "Resolve error(s) to edit the image",
     "Title": "Image title",

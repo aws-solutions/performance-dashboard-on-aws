@@ -188,9 +188,9 @@ function AddMetrics() {
         history.push(`/admin/dashboard/edit/${dashboardId}`, {
           alert: {
             type: "success",
-            message: t("AddMetricsScreen.MetricsAddedSuccessffully", {
-              title: values.title,
-            }),
+            message: `${t("AddMetricsScreen.MetricsAddedSuccessfully.part1")}${
+              values.title
+            }${t("AddMetricsScreen.MetricsAddedSuccessfully.part2")}`,
           },
         });
       }

@@ -123,7 +123,7 @@
   "RepublishDashboardModalButton": "Volver a publicar",
   "PreparePublishingModalTitle": {
     "part1": "Preparar el panel ",
-    "part2": "para su publicación"
+    "part2": " para su publicación"
   },
   "PreparePublishingModalMessage": {
     "part1": "Este panel no tiene elementos de contenido. ",
@@ -834,7 +834,10 @@
     "Cancel": "Cancelar"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessfully": "La imagen “{{image}}” se ha editado correctamente.",
+    "ImageEditedSuccessfully": {
+      "part1": "La imagen “",
+      "part2": "” se ha editado correctamente."
+    },
     "EditImage": "Editar imagen",
     "ResolveError": "Resolver errores al editar la imagen",
     "Title": "Título de la imagen",

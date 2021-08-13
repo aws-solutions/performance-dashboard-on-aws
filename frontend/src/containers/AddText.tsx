@@ -57,7 +57,9 @@ function AddText() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `'${values.title}' ${t("AddTextScreen.AddTextSuccess")}`,
+          message: `${t("AddTextScreen.AddTextSuccess.part1")}${
+            values.title
+          }${t("AddTextScreen.AddTextSuccess.part2")}`,
         },
       });
     } catch (err) {

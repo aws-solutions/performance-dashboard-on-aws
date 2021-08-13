@@ -36,58 +36,6 @@ function MetricsCardGroup(props: Props) {
     return null;
   }
 
-  const renderNumber = (metric: Metric) => {
-    const number = TickFormatter.formatNumber(
-      Number(metric.value),
-      Number(metric.value),
-      props.significantDigitLabels,
-      undefined,
-      metric.percentage,
-      metric.currency
-    );
-    if (metric.percentage === NumberDataType.Percentage) {
-      return (
-        <div>
-          <h1
-            className="margin-0 text-no-wrap"
-            style={{ display: "inline", color: primaryColor }}
-          >
-            {number.slice(0, -1)}
-          </h1>
-          <h4
-            className="margin-0 text-no-wrap"
-            style={{ display: "inline", fontWeight: "normal" }}
-          >
-            {number[number.length - 1]}
-          </h4>
-        </div>
-      );
-    } else if (metric.percentage === NumberDataType.Currency) {
-      return (
-        <div>
-          <h4
-            className="margin-0 text-no-wrap"
-            style={{ display: "inline", fontWeight: "normal" }}
-          >
-            {number[0]}
-          </h4>
-          <h1
-            className="margin-0 text-no-wrap"
-            style={{ display: "inline", color: primaryColor }}
-          >
-            {number.slice(1)}
-          </h1>
-        </div>
-      );
-    } else {
-      return (
-        <h1 className="margin-0 text-no-wrap" style={{ color: primaryColor }}>
-          {number}
-        </h1>
-      );
-    }
-  };
-
   return (
     <div
       className="grid-col"
@@ -114,7 +62,19 @@ function MetricsCardGroup(props: Props) {
                         data-position="bottom"
                         title={metric.value ? metric.value.toString() : ""}
                       >
-                        {renderNumber(metric)}
+                        <h1
+                          className="margin-0 text-no-wrap"
+                          style={{ display: "inline", color: primaryColor }}
+                        >
+                          {TickFormatter.formatNumber(
+                            Number(metric.value),
+                            Number(metric.value),
+                            props.significantDigitLabels,
+                            undefined,
+                            metric.percentage,
+                            metric.currency
+                          )}
+                        </h1>
                       </div>
                       <div className="flex-2">
                         {metric.changeOverTime && (

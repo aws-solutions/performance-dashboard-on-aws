@@ -59,6 +59,12 @@ const settingsReducer = (backendSettings: Settings): Settings => {
     publishingGuidance: backendSettings.publishingGuidance
       ? backendSettings.publishingGuidance
       : defaultSettings.publishingGuidance,
+    customLogoS3Key: backendSettings.customLogoS3Key
+      ? backendSettings.customLogoS3Key
+      : "dummyCustomLogoS3Key",
+    customFaviconS3Key: backendSettings.customFaviconS3Key
+      ? backendSettings.customFaviconS3Key
+      : "dummyCustomFaviconS3Key",
   };
 };
 
@@ -71,6 +77,12 @@ const publicSettingsReducer = (
     dateTimeFormat: backendSettings.dateTimeFormat
       ? backendSettings.dateTimeFormat
       : defaultSettings.dateTimeFormat,
+    customLogoS3Key: backendSettings.customLogoS3Key
+      ? backendSettings.customLogoS3Key
+      : "dummyCustomLogoS3Key",
+    customFaviconS3Key: backendSettings.customFaviconS3Key
+      ? backendSettings.customFaviconS3Key
+      : "dummyCustomFaviconS3Key",
   };
 };
 

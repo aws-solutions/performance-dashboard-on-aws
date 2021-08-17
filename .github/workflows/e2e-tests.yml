@@ -31,7 +31,7 @@ jobs:
 
       # Run tests
       - name: Cypress run
-        uses: cypress-io/github-action@v6.7.1
+        uses: cypress-io/github-action@v2.2.7
         with:
           config: baseUrl=https://gamma.badger.wwps.aws.dev/,defaultCommandTimeout=20000,pageLoadTimeout=100000,
           env: username=${{secrets.E2E_TEST_USERNAME}},password=${{secrets.E2E_TEST_PASSWORD}}

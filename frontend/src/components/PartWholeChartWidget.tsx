@@ -24,6 +24,7 @@ type Props = {
     primary: string | undefined;
     secondary: string | undefined;
   };
+  showMobilePreview?: boolean;
 };
 
 const PartWholeChartWidget = (props: Props) => {
@@ -36,7 +37,7 @@ const PartWholeChartWidget = (props: Props) => {
   const partWholeParts = useRef<Array<string>>([]);
   let total = useRef<number>(0);
 
-  const { data, parts } = props;
+  const { data, parts, showMobilePreview } = props;
   useMemo(() => {
     if (data && data.length) {
       let bar = {};
@@ -56,7 +57,7 @@ const PartWholeChartWidget = (props: Props) => {
         if (hiddenParts.includes(barKey)) {
           continue;
         }
-        total.current += isNaN(value) ? 0 : value;
+        total.current += isNaN(value) ? 0 : Number(value);
         maxTick = Math.max(maxTick, value);
       }
       partWholeData.current.push(bar);
@@ -125,7 +126,7 @@ const PartWholeChartWidget = (props: Props) => {
     }
 
     // Handle very small screens where width is less than 300 pixels
-    if (windowSize.width <= smallScreenPixels) {
+    if (windowSize.width <= smallScreenPixels || showMobilePreview) {
       if (data.length < 5) {
         return minHeightMobile;
       } else {
@@ -169,7 +170,7 @@ const PartWholeChartWidget = (props: Props) => {
               padding={{ left: 2, right: 2 }}
               tickFormatter={(tick) =>
                 TickFormatter.format(
-                  tick,
+                  Number(tick),
                   xAxisLargestValue,
                   props.significantDigitLabels
                 )
@@ -223,7 +224,9 @@ const PartWholeChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <DataTable rows={data || []} columns={parts} fileName={props.title} />
+      <div style={showMobilePreview ? { float: "left" } : {}}>
+        <DataTable rows={data || []} columns={parts} fileName={props.title} />
+      </div>
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

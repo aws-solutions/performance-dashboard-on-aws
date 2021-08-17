@@ -33,6 +33,7 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
+  showMobilePreview?: boolean;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -66,7 +67,7 @@ const BarChartWidget = (props: Props) => {
     [barsHover]
   );
 
-  const { data, bars } = props;
+  const { data, bars, showMobilePreview } = props;
   const yAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && bars.length) {
@@ -95,6 +96,28 @@ const BarChartWidget = (props: Props) => {
   const formatYAxisLabel = (label: string) =>
     label.length > 27 ? label.substr(0, 27).concat("...") : label;
 
+  const calculateChartHeight = (): number => {
+    // When there are 15 rows of data and each row has 3 columns (excluding row
+    // name), having a chart height of 400px is still visually appealing to users.
+    // Adding more rows or columns would require additional height increments.
+    const defaultNumRows = 15;
+    const defaultNumCols = 3;
+    const unitHeight = 400;
+    let multiplicity;
+
+    if (data && data.length) {
+      const numRows = data.length;
+      const numCols = Object.keys(data[0]).length - 1;
+      const rowMultiplicity = Math.floor((numRows - 1) / defaultNumRows) + 1;
+      const colMultiplicity = Math.floor((numCols - 1) / defaultNumCols) + 1;
+      multiplicity = rowMultiplicity * colMultiplicity;
+    } else {
+      multiplicity = 1;
+    }
+
+    return unitHeight * multiplicity;
+  };
+
   return (
     <div>
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
@@ -107,15 +130,7 @@ const BarChartWidget = (props: Props) => {
         />
       )}
       {data && data.length && (
-        <ResponsiveContainer
-          width="100%"
-          height={
-            (data && data.length > 15) ||
-            (data && data[0] && Object.keys(data[0]).length > 4)
-              ? 800
-              : 400
-          }
-        >
+        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
           <BarChart
             className="bar-chart"
             data={props.data}
@@ -131,7 +146,7 @@ const BarChartWidget = (props: Props) => {
               type="number"
               tickFormatter={(tick) =>
                 TickFormatter.format(
-                  tick,
+                  Number(tick),
                   xAxisLargestValue,
                   props.significantDigitLabels
                 )
@@ -165,7 +180,7 @@ const BarChartWidget = (props: Props) => {
                 }
 
                 return TickFormatter.format(
-                  value,
+                  Number(value),
                   xAxisLargestValue,
                   props.significantDigitLabels,
                   columnMetadata
@@ -197,7 +212,7 @@ const BarChartWidget = (props: Props) => {
                         position="right"
                         formatter={(tick: any) =>
                           TickFormatter.format(
-                            tick,
+                            Number(tick),
                             xAxisLargestValue,
                             props.significantDigitLabels,
                             props.columnsMetadata[index]
@@ -213,12 +228,14 @@ const BarChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <DataTable
-        rows={data || []}
-        columns={bars}
-        columnsMetadata={props.columnsMetadata}
-        fileName={props.title}
-      />
+      <div style={showMobilePreview ? { float: "left" } : {}}>
+        <DataTable
+          rows={data || []}
+          columns={bars}
+          columnsMetadata={props.columnsMetadata}
+          fileName={props.title}
+        />
+      </div>
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

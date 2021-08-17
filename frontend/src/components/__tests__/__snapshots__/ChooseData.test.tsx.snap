@@ -154,16 +154,16 @@ exports[`renders the ChooseData component 1`] = `
               class="usa-hint"
             >
               <span>
-                Upload a dataset from a CSV file, or choose an existing static dataset.
+                Upload a dataset from a CSV or Excel file, or choose an existing static dataset.
                  
                 <a
                   aria-label=""
                   class="link"
-                  href="/admin/formattingcsv"
+                  href="/admin/formatting"
                   target="_blank"
                 >
                   <span>
-                    How do I format my CSV file?
+                    How do I format my file?
                   </span>
                   <svg
                     aria-hidden="true"
@@ -209,7 +209,7 @@ exports[`renders the ChooseData component 1`] = `
                   class="usa-file-input__box"
                 />
                 <input
-                  accept=".csv"
+                  accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                   class="usa-file-input__input"
                   id="dataset"
                   name="dataset"
@@ -252,6 +252,7 @@ exports[`renders the ChooseData component 1`] = `
               class="usa-input"
               id="search"
               name="query"
+              placeholder=""
               style="height: 37px;"
               type="search"
               value=""

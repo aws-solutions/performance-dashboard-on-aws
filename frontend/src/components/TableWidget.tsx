@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { ColumnMetadata } from "../models";
-import { useTableMetadata } from "../hooks";
+import { useTableMetadata, useWindowSize } from "../hooks";
 import MarkdownRender from "./MarkdownRender";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
@@ -20,6 +20,7 @@ type Props = {
   sortByColumn?: string;
   sortByDesc?: boolean;
   significantDigitLabels: boolean;
+  showMobilePreview?: boolean;
 };
 
 const TableWidget = ({
@@ -31,10 +32,12 @@ const TableWidget = ({
   sortByDesc,
   sortByColumn,
   significantDigitLabels,
+  showMobilePreview,
 }: Props) => {
   const { largestTickByColumn } = useTableMetadata(data);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const { t } = useTranslation();
+  const window = useWindowSize();
 
   useMemo(() => {
     let headers =
@@ -99,6 +102,8 @@ const TableWidget = ({
     filteredJson,
   ]);
 
+  const maxMobileViewportWidth = 450;
+
   if (!filteredJson || filteredJson.length === 0) {
     return null;
   }
@@ -128,17 +133,27 @@ const TableWidget = ({
           className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow"
         />
       )}
-      <div className="text-right">
-        <FontAwesomeIcon
-          icon={faDownload}
-          className="margin-right-1"
-          size="sm"
-        />
-        <Button type="button" variant="unstyled">
-          <CSVLink className="text-base" data={rows} filename={title}>
-            {t("DownloadCSV")}
-          </CSVLink>
-        </Button>
+      <div
+        className={
+          showMobilePreview || window.width < maxMobileViewportWidth
+            ? "text-left margin-bottom-1"
+            : "text-right margin-bottom-1"
+        }
+      >
+        <div style={{ display: "inline-flex" }}>
+          <FontAwesomeIcon
+            icon={faDownload}
+            className="margin-right-1"
+            size="sm"
+          />
+        </div>
+        <div style={{ display: "inline-flex" }}>
+          <Button type="button" variant="unstyled" className="margin-right-05">
+            <CSVLink className="text-base" data={rows} filename={title}>
+              {t("DownloadCSV")}
+            </CSVLink>
+          </Button>
+        </div>
       </div>
     </div>
   );

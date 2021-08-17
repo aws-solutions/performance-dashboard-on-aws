@@ -10,14 +10,16 @@ beforeEach(() => {
 });
 
 test("renders the page title", async () => {
-  const title = screen.getByRole("heading", { name: "Formatting CSV files" });
+  const title = screen.getByRole("heading", {
+    name: "Formatting CSV or Excel files",
+  });
   expect(title).toBeInTheDocument();
 });
 
 test("renders a download link for line chart", async () => {
   expect(
     screen.getByRole("button", {
-      name: "Download line chart example CSV",
+      name: "Download line chart example file",
     })
   ).toBeInTheDocument();
 });
@@ -25,7 +27,7 @@ test("renders a download link for line chart", async () => {
 test("renders a download link for column chart", async () => {
   expect(
     screen.getByRole("button", {
-      name: "Download column chart example CSV",
+      name: "Download column chart example file",
     })
   ).toBeInTheDocument();
 });
@@ -33,7 +35,7 @@ test("renders a download link for column chart", async () => {
 test("renders a download link for part-to-whole", async () => {
   expect(
     screen.getByRole("button", {
-      name: "Download part-to-whole chart example CSV",
+      name: "Download part-to-whole chart example file",
     })
   ).toBeInTheDocument();
 });
@@ -41,7 +43,23 @@ test("renders a download link for part-to-whole", async () => {
 test("renders a download link for table", async () => {
   expect(
     screen.getByRole("button", {
-      name: "Download table example CSV",
+      name: "Download table example file",
+    })
+  ).toBeInTheDocument();
+});
+
+test("renders a download link for pie chart", async () => {
+  expect(
+    screen.getByRole("button", {
+      name: "Download pie chart example file",
+    })
+  ).toBeInTheDocument();
+});
+
+test("renders a download link for donut chart", async () => {
+  expect(
+    screen.getByRole("button", {
+      name: "Download donut chart example file",
     })
   ).toBeInTheDocument();
 });

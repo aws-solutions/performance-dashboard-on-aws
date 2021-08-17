@@ -12,7 +12,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useColors, useYAxisMetadata } from "../hooks";
+import { useColors, useYAxisMetadata, useWindowSize } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
@@ -36,6 +36,7 @@ type Props = {
     secondary: string | undefined;
   };
   columnsMetadata: Array<any>;
+  showMobilePreview?: boolean;
 };
 
 const ColumnChartWidget = (props: Props) => {
@@ -58,7 +59,6 @@ const ColumnChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
-  const padding = props.isPreview ? 60 : 120;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -70,7 +70,19 @@ const ColumnChartWidget = (props: Props) => {
     [columnsHover]
   );
 
-  const { data, columns } = props;
+  const windowSize = useWindowSize();
+  const smallScreenPixels = 800;
+
+  const { data, columns, showMobilePreview } = props;
+  let padding;
+  if (showMobilePreview || windowSize.width < smallScreenPixels) {
+    padding = 20;
+  } else if (props.isPreview) {
+    padding = 60;
+  } else {
+    padding = 120;
+  }
+
   const xAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && columns.length) {
@@ -179,7 +191,7 @@ const ColumnChartWidget = (props: Props) => {
                 }
 
                 return TickFormatter.format(
-                  value,
+                  Number(value),
                   yAxisLargestValue,
                   props.significantDigitLabels,
                   columnMetadata
@@ -211,7 +223,7 @@ const ColumnChartWidget = (props: Props) => {
                         position="top"
                         formatter={(tick: any) =>
                           TickFormatter.format(
-                            tick,
+                            Number(tick),
                             yAxisLargestValue,
                             props.significantDigitLabels,
                             props.columnsMetadata[index]
@@ -227,12 +239,14 @@ const ColumnChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <DataTable
-        rows={data || []}
-        columns={columns}
-        columnsMetadata={props.columnsMetadata}
-        fileName={props.title}
-      />
+      <div style={showMobilePreview ? { float: "left" } : {}}>
+        <DataTable
+          rows={data || []}
+          columns={columns}
+          columnsMetadata={props.columnsMetadata}
+          fileName={props.title}
+        />
+      </div>
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

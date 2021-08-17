@@ -13,6 +13,11 @@ class AddTextPage {
     cy.findByLabelText("Text").type(content);
   }
 
+  verifyPreview(title: string, content: string) {
+    cy.findByRole("heading", { name: title }).should("exist");
+    cy.get("p").findByText(content).should("exist");
+  }
+
   submit(): EditDashboardPage {
     // Capture the http requests
     cy.intercept({

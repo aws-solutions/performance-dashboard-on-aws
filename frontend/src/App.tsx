@@ -58,6 +58,7 @@ import AddUsers from "./containers/AddUsers";
 import ChangeRole from "./containers/ChangeRole";
 import BrandingAndStylingSettings from "./containers/BrandingAndStylingSettings";
 import EditLogo from "./containers/EditLogo";
+import EditFavicon from "./containers/EditFavicon";
 import UserStatus from "./containers/UserStatus";
 import ChooseStaticDataset from "./containers/ChooseStaticDataset";
 import AccessDenied from "./containers/AccessDenied";
@@ -88,6 +89,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/settings/brandingandstyling/editlogo",
     component: EditLogo,
+  },
+  {
+    path: "/admin/settings/brandingandstyling/editfavicon",
+    component: EditFavicon,
   },
   {
     path: "/admin/settings/publishingguidance",
@@ -234,7 +239,7 @@ const routes: Array<AppRoute> = [
     component: UserStatus,
   },
   {
-    path: "/admin/formattingcsv",
+    path: "/admin/formatting",
     component: FormattingCSV,
   },
   {

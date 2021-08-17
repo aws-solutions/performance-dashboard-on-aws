@@ -25,6 +25,7 @@ const serverSideEncryption = "aws:kms";
 const rawFileTypes: ValidFileTypes = {
   "text/csv": ".csv",
   "application/vnd.ms-excel": ".csv",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": ".xlsx",
 };
 const imageFileTypes: ValidFileTypes = {
   "image/png": ".png",
@@ -58,6 +59,11 @@ async function downloadFile(
 
 async function downloadLogo(s3Key: string, t: Function) {
   const path = "logo/".concat(s3Key);
+  return await downloadFile(path, t, EnvConfig.contentBucket);
+}
+
+async function downloadFavicon(s3Key: string, t: Function) {
+  const path = "favicon/".concat(s3Key);
   return await downloadFile(path, t, EnvConfig.contentBucket);
 }
 
@@ -189,6 +195,21 @@ async function uploadLogo(
   return await uploadImage(rawFile, "logo", EnvConfig.contentBucket);
 }
 
+async function uploadFavicon(
+  rawFile: File,
+  oldCustomFaviconS3Key?: string
+): Promise<string> {
+  if (oldCustomFaviconS3Key) {
+    await Storage.remove("favicon/".concat(oldCustomFaviconS3Key), {
+      bucket: EnvConfig.contentBucket,
+      serverSideEncryption,
+      level: accessLevel,
+    });
+  }
+
+  return await uploadImage(rawFile, "favicon", EnvConfig.contentBucket);
+}
+
 const StorageService = {
   downloadFile,
   downloadJson,
@@ -196,7 +217,9 @@ const StorageService = {
   uploadMetric,
   uploadImage,
   uploadLogo,
+  uploadFavicon,
   downloadLogo,
+  downloadFavicon,
   imageFileTypes,
 };
 

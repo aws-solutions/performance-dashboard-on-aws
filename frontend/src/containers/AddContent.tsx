@@ -300,13 +300,6 @@ function AddContent() {
               alt={t("AddContentScreen.ImageAlt")}
             />
           )}
-
-          {widgetType === "section" && (
-            <img
-              src={`${process.env.PUBLIC_URL}/images/section-content-item.svg`}
-              alt={t("AddContentScreen.SectionAlt")}
-            />
-          )}
         </div>
       </div>
     </>

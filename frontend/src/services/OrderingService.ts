@@ -7,6 +7,20 @@ function moveWidget(
 ): Array<Widget> {
   // If new position is out of bounds, don't move anything.
   if (newIndex < 0 || newIndex >= widgets.length) {
+    if (newIndex == widgets.length && widgets[index].section) {
+      const widgetsCopy = widgets.map((widget) => ({
+        ...widget,
+      }));
+      let widget = widgetsCopy[index];
+      let parent = widgetsCopy.find((w) => w.id === widget.section);
+      if (parent) {
+        widget.section = undefined;
+        parent.content.widgetIds = parent.content.widgetIds.filter(
+          (id: string) => id !== widget.id
+        );
+      }
+      return widgetsCopy;
+    }
     return widgets;
   }
 
@@ -245,8 +259,14 @@ function moveWidget(
       }
     } else {
       let first = index;
-      while (first === index || reordered[first].section) {
+      while (
+        first < reordered.length &&
+        (first === index || reordered[first].section)
+      ) {
         first++;
+      }
+      if (first >= reordered.length) {
+        return widgets;
       }
       const belowWidgets = [reordered[first]];
       if (reordered[first].widgetType === WidgetType.Section) {

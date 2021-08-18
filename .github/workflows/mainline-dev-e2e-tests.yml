@@ -3,9 +3,11 @@
 name: E2E Tests
 
 on:
-  # Run e2e tests at midnight UTC time every day
+  # Run E2E check daily (16:42 UTC) or manually since scheduled checks
+  # are not guaranteed to run on time or run at all
   schedule:
-    - cron: " 0 0 * * * "
+    - cron: "42 16 * * *"
+  workflow_dispatch:
 
 jobs:
   tests:
@@ -33,4 +35,4 @@ jobs:
           export CYPRESS_defaultCommandTimeout=20000
           export CYPRESS_username=${{secrets.E2E_TEST_USERNAME}}
           export CYPRESS_password=${{secrets.E2E_TEST_PASSWORD}}
-          ./node_modules/.bin/cypress run  --config-file false
+          ./node_modules/.bin/cypress run  --config-file false --config video=false

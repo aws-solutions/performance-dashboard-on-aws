@@ -19,7 +19,7 @@ Create a file `cypress.json` in the root of this directory with the following st
     "username": "foo",
     "password": "bar"
   },
-  "defaultCommandTimeout": 8000
+  "defaultCommandTimeout": 20000
 }
 ```
 

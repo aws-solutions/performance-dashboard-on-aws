@@ -75,7 +75,7 @@ function AdminLayout(props: LayoutProps) {
             <div className="usa-logo margin-top-2" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
                 <div className="logo">
-                  <Logo forceShow={false} refetch={true} />
+                  <Logo refetch={true} />
                 </div>
 
                 <Link to="/admin" title="Home" aria-label="Home" className="">

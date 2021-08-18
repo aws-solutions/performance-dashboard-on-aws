@@ -4,7 +4,6 @@ import defaultLogo from "../logo.svg";
 import { useTranslation } from "react-i18next";
 
 type Props = {
-  forceShow: boolean;
   refetch: boolean;
 };
 
@@ -13,6 +12,11 @@ function Logo(props: Props) {
   const { settings, loadingSettings } = useSettings(props.refetch);
   const { logo, loadingFile } = useLogo(settings.customLogoS3Key);
   const [toHide, setToHide] = useState<boolean>(true);
+
+  let showLogo = false;
+  if (settings.customLogoS3Key === undefined) {
+    showLogo = true;
+  }
 
   useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "logo");
 
@@ -25,7 +29,7 @@ function Logo(props: Props) {
           <img
             src={logo ? URL.createObjectURL(logo) : defaultLogo}
             alt={t("OrganizationLogo")}
-            hidden={toHide && !props.forceShow}
+            hidden={toHide && !showLogo}
           ></img>
         </>
       )}

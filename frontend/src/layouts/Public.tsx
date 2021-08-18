@@ -19,7 +19,7 @@ function PublicLayout(props: LayoutProps) {
   const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
 
-  useFileLoaded(setToHide, loadingFile);
+  useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
 
   return (
     <>
@@ -49,7 +49,7 @@ function PublicLayout(props: LayoutProps) {
             <div className="usa-logo margin-top-2" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
                 <div className="logo">
-                  <Logo />
+                  <Logo refetch={true} forceShow={false} />
                 </div>
 
                 <Link to="/" title="Home" aria-label="Home">

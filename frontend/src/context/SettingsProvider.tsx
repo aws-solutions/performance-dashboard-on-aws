@@ -59,15 +59,6 @@ const settingsReducer = (backendSettings: Settings): Settings => {
     publishingGuidance: backendSettings.publishingGuidance
       ? backendSettings.publishingGuidance
       : defaultSettings.publishingGuidance,
-    // Set custom logo S3 key and custom favicon S3 key to dummy
-    // strings in order to trigger useFileLoaded hooks correctly
-    // in the event when no logo/favicon has been uploaded yet
-    customLogoS3Key: backendSettings.customLogoS3Key
-      ? backendSettings.customLogoS3Key
-      : "dummyCustomLogoS3Key",
-    customFaviconS3Key: backendSettings.customFaviconS3Key
-      ? backendSettings.customFaviconS3Key
-      : "dummyCustomFaviconS3Key",
   };
 };
 
@@ -80,15 +71,6 @@ const publicSettingsReducer = (
     dateTimeFormat: backendSettings.dateTimeFormat
       ? backendSettings.dateTimeFormat
       : defaultSettings.dateTimeFormat,
-    // Set custom logo S3 key and custom favicon S3 key to dummy
-    // strings in order to trigger useFileLoaded hooks correctly
-    // in the event when no logo/favicon has been uploaded yet
-    customLogoS3Key: backendSettings.customLogoS3Key
-      ? backendSettings.customLogoS3Key
-      : "dummyCustomLogoS3Key",
-    customFaviconS3Key: backendSettings.customFaviconS3Key
-      ? backendSettings.customFaviconS3Key
-      : "dummyCustomFaviconS3Key",
   };
 };
 

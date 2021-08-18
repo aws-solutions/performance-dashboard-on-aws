@@ -181,23 +181,26 @@ function WidgetList(props: Props) {
                           )}
                         </div>
                         <div className="grid-col flex-6">
-                          {index < props.widgets.length - 1 && (
-                            <Button
-                              variant="unstyled"
-                              className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                              ariaLabel={t("MoveContentItemDown", {
-                                name: widget.name,
-                              })}
-                              onClick={() => onMoveDown(index)}
-                              ref={caretDownRefs[index]}
-                            >
-                              <FontAwesomeIcon
-                                id={`${widget.id}-move-down`}
-                                size="xs"
-                                icon={faArrowDown}
-                              />
-                            </Button>
-                          )}
+                          {index < props.widgets.length - 1 &&
+                            props.widgets.some(
+                              (w, i) => !w.section && i > index
+                            ) && (
+                              <Button
+                                variant="unstyled"
+                                className="text-base-darker hover:text-base-darkest active:text-base-darkest"
+                                ariaLabel={t("MoveContentItemDown", {
+                                  name: widget.name,
+                                })}
+                                onClick={() => onMoveDown(index)}
+                                ref={caretDownRefs[index]}
+                              >
+                                <FontAwesomeIcon
+                                  id={`${widget.id}-move-down`}
+                                  size="xs"
+                                  icon={faArrowDown}
+                                />
+                              </Button>
+                            )}
                         </div>
                       </div>
                     </div>
@@ -256,7 +259,7 @@ function WidgetList(props: Props) {
                   {widget.widgetType === WidgetType.Section ? (
                     widget.content.widgetIds &&
                     widget.content.widgetIds.length ? (
-                      <div className="bg-base-lightest padding-1">
+                      <div className="bg-base-lightest padding-1 padding-bottom-9">
                         {props.widgets
                           .filter((wc) =>
                             widget.content.widgetIds.includes(wc.id)
@@ -333,7 +336,7 @@ function WidgetList(props: Props) {
                                   <div className="border-base-lighter border-left"></div>
                                   <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
                                     <div
-                                      className="grid-col flex-6 usa-tooltip text-bold"
+                                      className="grid-col flex-6 usa-tooltip"
                                       data-position="bottom"
                                       title={widget.name}
                                     >
@@ -390,7 +393,7 @@ function WidgetList(props: Props) {
                       </div>
                     ) : (
                       <div className="grid-row flex-1 bg-base-lightest flex-align-center flex-justify-center">
-                        <div className="margin-105 flex-align-center">
+                        <div className="margin-4 flex-align-center">
                           {t("MoveInOut")}
                         </div>
                       </div>

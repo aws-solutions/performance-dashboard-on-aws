@@ -22,7 +22,6 @@ interface FormValues {
   title: string;
   showTitle: boolean;
   summary: string;
-  summaryBelow: boolean;
 }
 
 interface PathParams {
@@ -55,7 +54,6 @@ function EditSection() {
         {
           title: values.title,
           summary: values.summary,
-          summaryBelow: values.summaryBelow,
         },
         widget.updatedAt
       );
@@ -80,7 +78,7 @@ function EditSection() {
   };
 
   const onFormChange = () => {
-    const { title, showTitle, summary, summaryBelow } = getValues();
+    const { title, showTitle, summary } = getValues();
     setWidget({
       ...widget,
       name: title,
@@ -89,7 +87,6 @@ function EditSection() {
         ...widget?.content,
         title,
         summary,
-        summaryBelow,
       },
     });
   };
@@ -197,22 +194,6 @@ function EditSection() {
                       multiline
                       rows={5}
                     />
-                    <div className="usa-checkbox">
-                      <input
-                        className="usa-checkbox__input"
-                        id="summary-below"
-                        type="checkbox"
-                        name="summaryBelow"
-                        defaultChecked={widget.content.summaryBelow}
-                        ref={register()}
-                      />
-                      <label
-                        className="usa-checkbox__label"
-                        htmlFor="summary-below"
-                      >
-                        {t("EditSectionScreen.SectionShowSummary")}
-                      </label>
-                    </div>
                   </fieldset>
                   <br />
                   <br />

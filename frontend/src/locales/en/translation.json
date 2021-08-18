@@ -30,7 +30,7 @@
   "MoveContentItemDown": "Move {{name}} down",
   "PlusAddContentItem": "+ Add content item",
   "NoContentItems": "This dashboard has no content items. Build the dashboard by adding",
-  "MoveInOut": "Move content in/out",
+  "MoveInOut": "Move content items in and out of this section",
   "ChartsTablesMore": "charts, tables, text, and more as content.",
   "ContentType": "Content type",
   "DeleteContent": "Delete {{name}}",
@@ -188,7 +188,6 @@
     "SectionTitleHint": "Give your content a descriptive title.",
     "ShowTitle": "Show title on dashboard",
     "ViewMarkdownSyntax": "View Markdown Syntax",
-    "SectionShowSummary": "Show summary below section",
     "SectionSummary": "Section summary - optional",
     "SectionSummaryHint": "Give your section a summary to explain it in more depth. It can also be read by screen readers to describe the section for those with visual impairments. This field supports markdown."
   },
@@ -215,7 +214,6 @@
     "SectionTitleHint": "Give your content a descriptive title.",
     "ShowTitle": "Show title on dashboard",
     "ViewMarkdownSyntax": "View Markdown Syntax",
-    "SectionShowSummary": "Show summary below section",
     "SectionSummary": "Section summary - optional",
     "SectionSummaryHint": "Give your section a summary to explain it in more depth. It can also be read by screen readers to describe the section for those with visual impairments. This field supports markdown."
   },
@@ -540,7 +538,7 @@
     "ChartDescription": "Display data as a visualization, including line, bar, column and part-to-whole charts.",
     "TableDescription": "Display data formatted in rows and columns.",
     "ImageDescription": "Upload an image to display.",
-    "SectionDescription": "Create sections to group similar content items in a list or tabbed display."
+    "SectionDescription": "Add a section to group similar content items in a list."
   },
   "AccessDeniedScreen": {
     "RequestAccessButton": "Request access",

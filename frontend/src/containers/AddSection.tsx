@@ -22,7 +22,6 @@ interface FormValues {
   title: string;
   showTitle: boolean;
   summary: string;
-  summaryBelow: boolean;
 }
 
 interface PathParams {
@@ -39,7 +38,6 @@ function AddSection() {
   const [title, setTitle] = useState("");
   const [showTitle, setShowTitle] = useState(true);
   const [summary, setSummary] = useState("");
-  const [summaryBelow, setSummaryBelow] = useState(false);
   const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
@@ -53,7 +51,6 @@ function AddSection() {
         {
           title: values.title,
           summary: values.summary,
-          summaryBelow: values.summaryBelow,
         }
       );
       setCreatingWidget(false);
@@ -77,11 +74,10 @@ function AddSection() {
   };
 
   const onFormChange = () => {
-    const { title, showTitle, summary, summaryBelow } = getValues();
+    const { title, showTitle, summary } = getValues();
     setTitle(title);
     setShowTitle(showTitle);
     setSummary(summary);
-    setSummaryBelow(summaryBelow);
   };
 
   const goBack = () => {
@@ -192,22 +188,6 @@ function AddSection() {
                       multiline
                       rows={5}
                     />
-                    <div className="usa-checkbox">
-                      <input
-                        className="usa-checkbox__input"
-                        id="summary-below"
-                        type="checkbox"
-                        name="summaryBelow"
-                        defaultChecked={false}
-                        ref={register()}
-                      />
-                      <label
-                        className="usa-checkbox__label"
-                        htmlFor="summary-below"
-                      >
-                        {t("AddSectionScreen.SectionShowSummary")}
-                      </label>
-                    </div>
                   </fieldset>
                   <br />
                   <br />

@@ -387,7 +387,6 @@ function createSectionWidget(widget: Widget): SectionWidget {
       title: widget.content.title,
       widgetIds: widget.content.widgetIds,
       summary: widget.content.summary,
-      summaryBelow: widget.content.summaryBelow,
       showWithTabs: widget.content.showWithTabs,
     },
   };

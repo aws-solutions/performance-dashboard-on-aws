@@ -21,13 +21,8 @@ interface LayoutProps {
 }
 
 function AdminLayout(props: LayoutProps) {
-  const {
-    username,
-    isAdmin,
-    isFederatedId,
-    isEditor,
-    hasRole,
-  } = useCurrentAuthenticatedUser();
+  const { username, isAdmin, isFederatedId, isEditor, hasRole } =
+    useCurrentAuthenticatedUser();
   const { settings, loadingSettings } = useSettings();
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
   const [toHide, setToHide] = useState<boolean>(true);

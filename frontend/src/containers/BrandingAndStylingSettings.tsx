@@ -42,7 +42,7 @@ function BrandingAndStylingSettings() {
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-1 text-left">
-          <Logo refetch={false} />
+          <Logo />
         </div>
         <div className="grid-col flex-9 padding-left-3 text-right">
           <Button
@@ -72,7 +72,7 @@ function BrandingAndStylingSettings() {
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-1 text-left">
-          <Favicon refetch={false} />
+          <Favicon />
         </div>
         <div className="grid-col flex-9 padding-left-3 text-right">
           <Button

@@ -3,13 +3,9 @@ import { useSettings, useFavicon, useFileLoaded } from "../hooks";
 import defaultFavicon from "../favicon.svg";
 import { useTranslation } from "react-i18next";
 
-type Props = {
-  refetch: boolean;
-};
-
-function Favicon(props: Props) {
+function Favicon() {
   const { t } = useTranslation();
-  const { settings, loadingSettings } = useSettings(props.refetch);
+  const { settings, loadingSettings } = useSettings();
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
   const [toHide, setToHide] = useState<boolean>(true);
 

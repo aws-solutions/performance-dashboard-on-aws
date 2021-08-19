@@ -5,6 +5,6 @@ import Logo from "../Logo";
 jest.mock("../../hooks");
 
 test("renders a logo", async () => {
-  const wrapper = render(<Logo refetch={true} />);
+  const wrapper = render(<Logo />);
   expect(wrapper.container).toMatchSnapshot();
 });

@@ -3,13 +3,9 @@ import { useSettings, useLogo, useFileLoaded } from "../hooks";
 import defaultLogo from "../logo.svg";
 import { useTranslation } from "react-i18next";
 
-type Props = {
-  refetch: boolean;
-};
-
-function Logo(props: Props) {
+function Logo() {
   const { t } = useTranslation();
-  const { settings, loadingSettings } = useSettings(props.refetch);
+  const { settings, loadingSettings } = useSettings();
   const { logo, loadingFile } = useLogo(settings.customLogoS3Key);
   const [toHide, setToHide] = useState<boolean>(true);
 

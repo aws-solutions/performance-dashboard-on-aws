@@ -21,8 +21,13 @@ interface LayoutProps {
 }
 
 function AdminLayout(props: LayoutProps) {
-  const { username, isAdmin, isFederatedId, isEditor, hasRole } =
-    useCurrentAuthenticatedUser();
+  const {
+    username,
+    isAdmin,
+    isFederatedId,
+    isEditor,
+    hasRole,
+  } = useCurrentAuthenticatedUser();
   const { settings, loadingSettings } = useSettings();
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
   const [toHide, setToHide] = useState<boolean>(true);
@@ -70,7 +75,7 @@ function AdminLayout(props: LayoutProps) {
             <div className="usa-logo margin-top-2" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
                 <div className="logo">
-                  <Logo refetch={true} />
+                  <Logo />
                 </div>
 
                 <Link to="/admin" title="Home" aria-label="Home" className="">

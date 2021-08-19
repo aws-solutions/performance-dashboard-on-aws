@@ -11,7 +11,7 @@ describe("Admin user", () => {
     loginPage.loginAsAdmin();
   });
 
-  it("can create a new user and remove it", () => {
+  it("can create a new user, change its role, and remove it", () => {
     const userListingPage = new UserListingPage();
     userListingPage.visit();
 

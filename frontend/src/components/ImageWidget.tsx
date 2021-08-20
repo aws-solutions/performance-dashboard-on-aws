@@ -18,7 +18,7 @@ const ImageWidget = (props: Props) => {
       {!summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="usa-prose margin-top-0 margin-bottom-3 imageSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-3 imageSummaryAbove textOrSummary"
         />
       )}
       <div>
@@ -27,7 +27,7 @@ const ImageWidget = (props: Props) => {
       {summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="usa-prose margin-top-3 margin-bottom-0 imageSummaryBelow"
+          className="usa-prose margin-top-3 margin-bottom-0 imageSummaryBelow textOrSummary"
         />
       )}
     </div>

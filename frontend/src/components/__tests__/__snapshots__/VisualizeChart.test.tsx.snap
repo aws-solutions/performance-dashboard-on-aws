@@ -429,7 +429,7 @@ exports[`renders the VisualizeChart component 1`] = `
             title
           </h2>
           <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
+            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
           >
             <p>
               summary
@@ -906,7 +906,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             title
           </h2>
           <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
+            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
           >
             <p>
               summary

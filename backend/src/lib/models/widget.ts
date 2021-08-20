@@ -132,6 +132,7 @@ export interface MetricsWidget extends Widget {
     oneMetricPerRow: boolean;
     datasetType?: string;
     significantDigitLabels: boolean;
+    metricsCenterAlign: boolean;
     s3Key: {
       raw: string;
       json: string;

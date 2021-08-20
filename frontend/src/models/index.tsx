@@ -168,6 +168,7 @@ export interface MetricsWidget extends Widget {
     oneMetricPerRow: boolean;
     datasetType?: DatasetType;
     significantDigitLabels: boolean;
+    metricsCenterAlign: boolean;
     s3Key: {
       raw: string;
       json: string;
@@ -275,6 +276,7 @@ export type LocationState = {
   showTitle?: boolean;
   oneMetricPerRow?: boolean;
   significantDigitLabels?: boolean;
+  metricsCenterAlign?: boolean;
   metricTitle?: string;
   origin?: string;
   json?: Array<any>;

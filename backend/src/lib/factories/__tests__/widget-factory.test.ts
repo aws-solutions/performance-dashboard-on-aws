@@ -721,6 +721,7 @@ describe("createMetricsWidget", () => {
     },
     oneMetricPerRow: false,
     significantDigitLabels: true,
+    metricsCenterAlign: true,
   };
 
   it("builds a metrics widget", () => {
@@ -744,6 +745,7 @@ describe("createMetricsWidget", () => {
     });
     expect(widget.content.oneMetricPerRow).toEqual(false);
     expect(widget.content.significantDigitLabels).toEqual(true);
+    expect(widget.content.metricsCenterAlign).toEqual(true);
   });
 
   it("throws an error if datasetId is undefined", () => {

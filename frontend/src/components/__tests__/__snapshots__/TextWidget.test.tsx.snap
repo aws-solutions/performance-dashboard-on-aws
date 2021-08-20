@@ -7,7 +7,7 @@ exports[`renders markdown text 1`] = `
       Benefits of Bananas
     </h2>
     <div
-      class="Markdown usa-prose"
+      class="Markdown usa-prose textOrSummary"
     >
       <p>
         This 

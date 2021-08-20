@@ -161,9 +161,9 @@ function EditMetrics() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("EditMetricsScreen.MetricsEditedSuccessffully", {
-            title: values.title,
-          }),
+          message: `${t("EditMetricsScreen.MetricsEditedSuccessfully.part1")}${
+            values.title
+          }${t("EditMetricsScreen.MetricsEditedSuccessfully.part2")}`,
         },
       });
     } catch (err) {

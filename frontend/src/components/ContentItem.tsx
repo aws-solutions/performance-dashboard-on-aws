@@ -8,7 +8,6 @@ interface Props {
   id: any;
   index: number;
   moveItem: (dragIndex: number, hoverIndex: number) => void;
-  onDrop: Function;
   itemType: string;
 }
 
@@ -23,11 +22,6 @@ const ContentItem = (props: Props) => {
 
   const [, drop] = useDrop({
     accept: props.itemType,
-    drop() {
-      if (ref.current) {
-        props.onDrop();
-      }
-    },
     hover(item: DragItem, monitor: DropTargetMonitor) {
       if (!ref.current) {
         return;
@@ -74,6 +68,9 @@ const ContentItem = (props: Props) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
+    options: {
+      dropEffect: "copy",
+    },
   });
 
   const opacity = isDragging ? 0.9 : 1;

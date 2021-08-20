@@ -54,6 +54,7 @@ function EditSection() {
         {
           title: values.title,
           summary: values.summary,
+          widgetIds: widget.content.widgetIds,
         },
         widget.updatedAt
       );

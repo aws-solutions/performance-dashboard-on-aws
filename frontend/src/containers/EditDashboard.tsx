@@ -36,6 +36,7 @@ function EditDashboard() {
     useDashboard(dashboardId);
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const [reordering, setReordering] = useState(false);
   const [widgetToDelete, setWidgetToDelete] = useState<Widget | undefined>(
     undefined
   );
@@ -158,7 +159,8 @@ function EditDashboard() {
   };
 
   const onDrag = async (index: number, newIndex: number) => {
-    if (dashboard) {
+    if (dashboard && !reordering) {
+      setReordering(true);
       const widgets = OrderingService.moveWidget(
         dashboard.widgets,
         index,
@@ -167,19 +169,16 @@ function EditDashboard() {
 
       // if no change in order ocurred, exit
       if (widgets === dashboard.widgets) {
+        setReordering(false);
         return;
       }
 
-      setDashboard({ ...dashboard, widgets });
-    }
-  };
-
-  const onDrop = async () => {
-    if (dashboard) {
       try {
-        await BackendService.setWidgetOrder(dashboardId, dashboard.widgets);
+        setDashboard({ ...dashboard, widgets });
+        await BackendService.setWidgetOrder(dashboardId, widgets);
       } finally {
         await reloadDashboard(false);
+        setReordering(false);
       }
     }
   };
@@ -350,7 +349,6 @@ function EditDashboard() {
             onMoveUp={onMoveWidgetUp}
             onMoveDown={onMoveWidgetDown}
             onDrag={onDrag}
-            onDrop={onDrop}
           />
         </>
       )}

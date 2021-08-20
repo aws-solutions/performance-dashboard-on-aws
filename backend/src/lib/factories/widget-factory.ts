@@ -22,6 +22,7 @@ type CreateWidgetInfo = {
   widgetType: WidgetType;
   showTitle?: boolean;
   content: any;
+  section?: string;
 };
 
 function createWidget(widgetInfo: CreateWidgetInfo): Widget {
@@ -34,6 +35,7 @@ function createWidget(widgetInfo: CreateWidgetInfo): Widget {
     widgetType: widgetInfo.widgetType,
     showTitle: widgetInfo.showTitle,
     content: widgetInfo.content,
+    section: widgetInfo.section,
   };
 
   switch (widgetInfo.widgetType) {

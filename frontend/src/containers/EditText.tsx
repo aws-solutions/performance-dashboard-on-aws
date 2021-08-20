@@ -218,7 +218,7 @@ function EditText() {
               {widget.content.text ? (
                 <div className="padding-left-05">
                   <MarkdownRender
-                    className="usa-prose"
+                    className="usa-prose textOrSummary"
                     source={widget.content.text}
                   />
                 </div>

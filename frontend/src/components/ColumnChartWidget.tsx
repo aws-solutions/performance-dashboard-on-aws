@@ -248,10 +248,12 @@ const ColumnChartWidget = (props: Props) => {
         />
       </div>
       {props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
-        />
+        <div style={showMobilePreview ? { clear: "left" } : {}}>
+          <MarkdownRender
+            source={props.summary}
+            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
+          />
+        </div>
       )}
     </div>
   );

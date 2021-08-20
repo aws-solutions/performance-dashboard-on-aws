@@ -222,7 +222,9 @@ function AddChart() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("AddChartScreen.AddChartSuccess", { title: values.title }),
+          message: `${t("AddChartScreen.AddChartSuccess.part1")}${
+            values.title
+          }${t("AddChartScreen.AddChartSuccess.part2")}`,
         },
       });
     } catch (err) {

@@ -21,7 +21,7 @@ function Tab(props: Props) {
   }
 
   return (
-    <li className={className} onClick={onClick}>
+    <li className={className} onClick={onClick} style={{ cursor: "pointer" }}>
       {props.label}
     </li>
   );

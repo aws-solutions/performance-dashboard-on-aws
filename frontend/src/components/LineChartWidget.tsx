@@ -220,10 +220,12 @@ const LineChartWidget = (props: Props) => {
         />
       </div>
       {props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
-        />
+        <div style={showMobilePreview ? { clear: "left" } : {}}>
+          <MarkdownRender
+            source={props.summary}
+            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+          />
+        </div>
       )}
     </div>
   );

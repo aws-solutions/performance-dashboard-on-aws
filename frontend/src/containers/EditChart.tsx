@@ -411,9 +411,9 @@ function EditChart() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("EditChartScreen.EditChartSuccess", {
-            title: values.title,
-          }),
+          message: `${t("EditChartScreen.EditChartSuccess.part1")}${
+            values.title
+          }${t("EditChartScreen.EditChartSuccess.part2")}`,
         },
       });
     } catch (err) {

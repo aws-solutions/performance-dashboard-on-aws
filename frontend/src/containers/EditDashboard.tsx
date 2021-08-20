@@ -202,7 +202,9 @@ function EditDashboard() {
       <Modal
         isOpen={isOpenPublishModal}
         closeModal={closePublishModal}
-        title={t("PreparePublishingModalTitle", { name: dashboard?.name })}
+        title={`${t("PreparePublishingModalTitle.part1")}${dashboard?.name}${t(
+          "PreparePublishingModalTitle.part2"
+        )}`}
         message={`${
           dashboard?.widgets.length === 0
             ? `${t("PreparePublishingModalMessage.part1")}`

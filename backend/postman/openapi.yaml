@@ -738,6 +738,8 @@ components:
           type: string
         topicAreaName:
           type: string
+        displayTableOfcontents:
+          type: boolean
         description:
           type: string
         updatedAt:
@@ -764,6 +766,8 @@ components:
           type: string
         topicAreaName:
           type: string
+        displayTableOfContents:
+          type: boolean
         description:
           type: string
         createdBy:
@@ -1119,6 +1123,8 @@ components:
           type: string
         updatedAt:
           type: string
+        displayTableOfContents:
+          type: boolean
       required:
         - topicAreaId
         - name

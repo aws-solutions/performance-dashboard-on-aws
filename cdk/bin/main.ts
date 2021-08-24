@@ -57,6 +57,7 @@ const operations = new OpsStack(app, "Ops", {
   restApi: backend.restApi,
   mainTable: backend.mainTable,
   auditTrailTable: backend.auditTrailTable,
+  environment: envName
 });
 
 Aspects.of(app).add(new PolicyInvalidWarningSuppressor());

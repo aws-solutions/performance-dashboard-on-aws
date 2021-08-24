@@ -54,6 +54,7 @@ test("editDashboard should make a PUT request with payload", async () => {
   const name = "One Pretty Dashboard";
   const description = "Alexa, how is the weather?";
   const topicAreaId = "xyz";
+  const displayTableOfContents = false;
 
   const updatedAt = new Date("2020-09-17T21:01:00.780Z");
 
@@ -61,6 +62,7 @@ test("editDashboard should make a PUT request with payload", async () => {
     dashboardId,
     name,
     topicAreaId,
+    displayTableOfContents,
     description,
     updatedAt
   );
@@ -72,6 +74,7 @@ test("editDashboard should make a PUT request with payload", async () => {
       body: {
         name,
         topicAreaId,
+        displayTableOfContents,
         description,
         updatedAt,
       },

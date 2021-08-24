@@ -487,6 +487,7 @@ exports[`topic area settings should match snapshot 1`] = `
           >
             <button
               class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-2"
+              type="button"
             >
               Return to top
             </button>

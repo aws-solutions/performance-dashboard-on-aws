@@ -5,7 +5,7 @@
   "ClearSearchText": "Borrar términos de búsqueda",
   "AllDashboardsLink": "Todos los paneles",
   "ArchivedTabDescription": "Estos son los paneles archivados de su organización. Los paneles archivados no se pueden ver en el sitio publicado. Haga clic en cualquier nombre de panel para ver el panel. También puede volver a publicar los paneles archivados en el sitio publicado.",
-  "PublishedTabDescription": "Estos son todos los paneles publicados. Puede ver todos los paneles, pero necesita acceso al editor para actualizar un panel publicado.",
+  "PublishedTabDescription": "Estos son todos los paneles publicados. Puede ver todos los paneles, pero necesita acceso de Editor para actualizar un panel publicado.",
   "PublishedTabDescriptionLink": "Ver el sitio publicado",
   "DraftTabDescription": "Tiene acceso para ver, editar o publicar los borradores de paneles de esta tabla.",
   "PublishQueueTabDescription": "Estos son todos los paneles que se han enviado para su publicación.",
@@ -17,9 +17,9 @@
   "APIHelpSelectDynamicDatasetLearn": "Si desea obtener más información sobre cómo configurar conjuntos de datos dinámicos,",
   "APIHelpSelectDynamicDatasetDoc": "consulte la documentación.",
   "APIHelpSelectStaticDatasetTitle": "Seleccionar un conjunto de datos estático ",
-  "APIHelpSelectStaticDatasetBody": "Este tipo de conjunto de datos es fijo y debe actualizarse manualmente para actualizar la visualización de datos. Por tanto, en caso de que desee actualizar los datos, debe realizar cambios en los datos del dispositivo local y, a continuación, cargar el nuevo conjunto de datos como un archivo CSV.",
+  "APIHelpSelectStaticDatasetBody": "Este tipo de conjunto de datos es fijo y debe actualizarse manualmente para actualizar la visualización de datos. Para actualizar los datos, debe realizar cambios en los datos en el dispositivo local y, a continuación, cargar el nuevo conjunto de datos como un archivo CSV o Excel.",
   "APIHelpSelectFileDatasetTitle": "Creación de un nuevo conjunto de datos a partir de un archivo",
-  "APIHelpSelectFileDatasetBody": "Cargue un archivo CSV para crear un nuevo conjunto de datos. Si desea utilizar un conjunto de datos que ya se haya cargado, puede elegir “seleccionar un conjunto de datos estático” y examinar los conjuntos de datos existentes. Si necesita ayuda para formatear su CSV,",
+  "APIHelpSelectFileDatasetBody": "Cargue un archivo CSV o Excel para crear un nuevo conjunto de datos. Si desea utilizar un conjunto de datos que ya se haya cargado, puede elegir “seleccionar un conjunto de datos estático” y examinar los conjuntos de datos existentes. Si necesita ayuda para formatear el archivo,",
   "APIHelpSelectFileDatasetDoc": "consulte la documentación.",
   "Settings": "Configuración",
   "CreateNew": "Crear nuevo",
@@ -42,7 +42,7 @@
   "Delete": "Eliminar",
   "Save": "Guardar",
   "Edit": "Editar",
-  "EditHeader": "Editar detalles",
+  "EditHeader": "Editar encabezado",
   "To": "a",
   "Step": "Paso",
   "Of": "de",
@@ -59,7 +59,7 @@
   "SureDelete": "¿Seguro que desea eliminar este archivo?",
   "ZeroDashboards": "que no tienen paneles",
   "CanDelete": "Solo puede eliminar",
-  "WhatYouCanDoAsAdmin": "Su rol es administrador. A continuación se muestran algunas cosas que puede hacer como administrador para dar sus primeros pasos.",
+  "WhatYouCanDoAsAdmin": "Su rol es Administrador. A continuación, se muestran algunas cosas que puede hacer como administrador para dar sus primeros pasos.",
   "WhatYouCanDoAsNotAdmin": "Aquí es donde administrará el panel de rendimiento.",
   "WelcomeToPDoA": "Le damos la bienvenida al panel de rendimiento",
   "CreateANewDashboard": "Crear un nuevo panel",
@@ -68,8 +68,8 @@
   "BuildDraftDashboards": "Cree borradores de paneles y agregue gráficos, tablas, texto y mucho más como contenido. Publique paneles para compartir resultados, realizar un seguimiento del progreso o proporcionar información sobre un proyecto, programa, servicio, etc.",
   "ViewExistingDashboards": "Ver los paneles existentes",
   "ViewDashboardsCreatedByOthers": "Consulte los paneles que otros editores de su organización han creado.",
-  "AddOtherUsers": "Agregar otros usuarios",
-  "AllowOtherUsers": "Permita que otros usuarios de su organización creen, editen y publiquen paneles. Administre su acceso a los paneles y defina sus roles. También puede agregar otros administradores.",
+  "AddOtherUsers": "Agregar usuarios",
+  "AllowOtherUsers": "Permita que otros usuarios de su organización creen, editen y publiquen paneles. Administre el acceso de estos a los paneles y defina sus roles. También puede agregar otros administradores.",
   "ManageUsers": "Administrar usuarios",
   "CustomizeSettings": "Personalizar configuración",
   "PersonalizeDashboard": "Personalice la página de inicio del panel, configure cómo los usuarios obtienen aprobación para publicar paneles y obtienen acceso a otros ajustes.",
@@ -77,7 +77,10 @@
   "PDoASite": "Este sitio es donde administra el panel de rendimiento.",
   "WantToViewPublishedSite": "¿Quiere ver lo que ve su público?",
   "ViewPublishedSite": "Ver el sitio publicado",
-  "NewDraftDashboardCreated": "Se ha creado una nueva versión provisional del panel {{name}}.",
+  "NewDraftDashboardCreated": {
+    "part1": "Se ha creado una nueva versión provisional del panel ",
+    "part2": "."
+  },
   "DashboardWasArchived": "se archivó correctamente.",
   "DashboardWasDeleted": "se eliminó correctamente.",
   "DashboardWasRepublished": "el panel se ha vuelto a publicar correctamente.",
@@ -94,19 +97,34 @@
   "MarkdownSupport": "Esta área de texto admite marcado limitado.",
   "EnterTextHere": "Escriba el texto aquí",
   "PreviewLiveText": "Vista previa del texto en vivo",
-  "LearnHowToFormatCSV": "Aprenda a formatear los datos CSV.",
+  "LearnHowToFormatCSV": "Aprenda a formatear los datos.",
   "CreatedBy": "Creado por",
   "Dashboards": "Paneles",
-  "CreateDraftDasboardModalTitle": "Actualizar panel {{name}}",
-  "CreateDraftDasboardModalMessage": "Esto creará un nuevo borrador del panel que le permitirá editar el contenido y, a continuación, publicar la nueva versión en el sitio publicado.",
-  "CreateDraftDasboardModalButton": "Crear borrador",
-  "ArchiveDashboardModalTitle": "Archivar el panel {{name}}",
-  "ArchiveDashboardModalMessage": "Esta acción eliminará el panel {{name}} del sitio publicado. Puede volver a publicar los paneles archivados en cualquier momento.",
+  "CreateDraftDashboardModalTitle": {
+    "part1": "Actualizar panel ",
+    "part2": ""
+  },
+  "CreateDraftDashboardModalMessage": "Esto creará un nuevo borrador del panel que le permitirá editar el contenido y, a continuación, publicar la nueva versión en el sitio publicado.",
+  "CreateDraftDashboardModalButton": "Crear borrador",
+  "ArchiveDashboardModalTitle": {
+    "part1": "Archivar el panel ",
+    "part2": ""
+  },
+  "ArchiveDashboardModalMessage": {
+    "part1": "Esta acción eliminará el panel ",
+    "part2": " del sitio publicado. Puede volver a publicar los paneles archivados en cualquier momento."
+  },
   "ArchiveDashboardModalButton": "Archivar",
-  "RepublishDashboardModalTitle": "Volver a publicar el panel {{name}}",
+  "RepublishDashboardModalTitle": {
+    "part1": "Volver a publicar el panel ",
+    "part2": ""
+  },
   "RepublishDashboardModalMessage": "¿Seguro que desea volver a publicar este panel?",
   "RepublishDashboardModalButton": "Volver a publicar",
-  "PreparePublishingModalTitle": "Preparar el panel {{name}} para su publicación",
+  "PreparePublishingModalTitle": {
+    "part1": "Preparar el panel ",
+    "part2": " para su publicación"
+  },
   "PreparePublishingModalMessage": {
     "part1": "Este panel no tiene elementos de contenido. ",
     "part2": "¿Seguro que desea preparar este panel para su publicación?"
@@ -126,7 +144,7 @@
     "VersionNotes": "notas de la versión"
   },
   "VisualizeTableComponent": {
-    "ResolveErrors": "Resolver errores para agregar la tabla",
+    "ResolveErrors": "Resolver errores al agregar la tabla",
     "TableShowSummary": "Mostrar resumen a continuación de la tabla",
     "TableSummary": "Resumen de la tabla: opcional",
     "TableSummaryHint": "Incorpore a la tabla un resumen para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la tabla a personas con discapacidades visuales. Este campo admite el marcado.",
@@ -136,7 +154,7 @@
     "TableCorrectDisplay": "¿La tabla parece correcta?"
   },
   "VisualizeChartComponent": {
-    "ResolveErrors": "Resolver errores para agregar el gráfico",
+    "ResolveErrors": "Resolver errores al agregar el gráfico",
     "ChartShowSummary": "Mostrar resumen debajo del gráfico",
     "ChartSummary": "Resumen del gráfico: opcional",
     "ChartSummaryHint": "Incorpore al gráfico un resumen para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir el gráfico a personas con discapacidades visuales. Este campo admite el marcado.",
@@ -148,6 +166,7 @@
     "ChartTypeError": "Seleccione un tipo de gráfico",
     "DisplayHorizontalScroll": "Mostrar con desplazamiento horizontal",
     "ShowDataLabels": "Mostrar etiquetas de datos",
+    "ShowTotal": "Mostrar total en el centro del gráfico",
     "ChartCorrectDisplay": "¿El gráfico parece correcto?"
   },
   "ViewDashboardAlertVersionNotesFrom": "Notas de la versión {{version}} de",
@@ -163,7 +182,10 @@
   "AddTextScreen": {
     "AddText": "Agregar texto",
     "AddTextError": "Resolver errores al agregar el texto",
-    "AddTextSuccess": "El texto '{{title}}' se ha agregado correctamente.",
+    "AddTextSuccess": {
+      "part1": "El texto “",
+      "part2": "” se ha agregado correctamente."
+    },
     "CreatingText": "Creación de texto",
     "Configure": "Configurar contenido del texto",
     "TextTitle": "Título del texto",
@@ -177,7 +199,10 @@
   "EditTextScreen": {
     "EditText": "Editar texto",
     "EditTextError": "Resolver errores al editar el texto",
-    "EditTextSuccess": "El texto '{{title}}' se ha editado correctamente.",
+    "EditTextSuccess": {
+      "part1": "El texto “",
+      "part2": "” se ha editado correctamente."
+    },
     "EditingText": "Editando texto",
     "TextTitle": "Título del texto",
     "TextTitleError": "Especifique un título de texto",
@@ -195,6 +220,8 @@
     "MetricValue": "Valor de la métrica",
     "MetricValueHint": "Escriba un número aquí.",
     "MetricValueError": "Especifique un valor",
+    "MetricFormatHint": "Seleccione un formato",
+    "MetricCurrencyHint": "Seleccione una divisa",
     "ChangeOverTime": "Cambio a lo largo del tiempo: opcional",
     "ChangeOverTimeHint": "Indique el aumento o la disminución desde el periodo de tiempo anterior. Por ejemplo, +10,1 % o -56 %. La mayoría incluye “+” o “-”.",
     "ChangeOverTimeError": "Debe comenzar por “+” o “-”.",
@@ -218,7 +245,10 @@
     "MetricSuccessfullyEdited": "La métrica se ha editado correctamente"
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessffully": "Las métricas '{{title}}' se han agregado correctamente.",
+    "MetricsAddedSuccessfully": {
+      "part1": "Las métricas “",
+      "part2": "” se han agregado correctamente."
+    },
     "Name": "Nombre",
     "LastUpdated": "Última actualización",
     "Description": "Descripción",
@@ -241,14 +271,17 @@
     "ChooseDataset": "Elija un conjunto de datos para continuar",
     "Continue": "Continuar",
     "EnterMetric": "Escriba al menos una métrica para continuar",
-    "ResolveErrors": "Resolver errores para agregar las métricas",
+    "ResolveErrors": "Resolver errores al agregar las métricas",
     "MetricsTitle": "Título de métricas",
     "MetricsTitleHint": "Asigne un título descriptivo al grupo de métricas.",
     "MetricsTitleError": "Especifique un título de contenido",
     "ShowTitle": "Mostrar título en el panel"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessffully": "Las métricas '{{title}}' se han editado correctamente.",
+    "MetricsEditedSuccessfully": {
+      "part1": "Las métricas “",
+      "part2": "” se han editado correctamente."
+    },
     "EditMetrics": "Editar métricas",
     "UploadingFile": "Cargando archivo",
     "EditingMetrics": "Editando métricas",
@@ -265,21 +298,33 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "AddChartSuccess": "El gráfico '{{title}}' se ha agregado correctamente."
+    "AddChartSuccess": {
+      "part1": "El gráfico “",
+      "part2": "” se ha agregado correctamente."
+    },
+    "ResolveError": "No se pudo cargar el archivo. Asegúrese de que todos los encabezados de columna tengan valores."
   },
   "EditChartScreen": {
+    "ChooseDataset": "Elija un conjunto de datos para continuar",
     "EditChart": "Editar gráfico",
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "EditChartSuccess": "El gráfico '{{title}}' se ha editado correctamente."
+    "EditChartSuccess": {
+      "part1": "El gráfico “",
+      "part2": "” se ha editado correctamente."
+    },
+    "ResolveError": "No se pudo cargar el archivo. Asegúrese de que todos los encabezados de columna tengan valores."
   },
   "AddTableScreen": {
     "AddTable": "Agregar tabla",
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "AddTableSuccess": "La tabla '{{title}}' se ha agregado correctamente.",
+    "AddTableSuccess": {
+      "part1": "La tabla “",
+      "part2": "” se ha agregado correctamente."
+    },
     "ChooseDataset": "Elija un conjunto de datos para continuar"
   },
   "EditTableScreen": {
@@ -287,13 +332,19 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "EditTableSuccess": "La tabla '{{title}}' se ha editado correctamente."
+    "EditTableSuccess": {
+      "part1": "La tabla “",
+      "part2": "” se ha editado correctamente."
+    }
   },
   "BrandingAndStyling": "Marca y estilo",
   "BrandingAndStylingDescription": "Personalice el panel de rendimiento.",
   "BrandingAndStylingLogo": "Logotipo",
   "BrandingandStylingOrgLogo": "Logotipo de organización",
   "BrandingAndStylingLogoDescription": "Este logotipo aparecerá en el encabezado junto al nombre del panel de rendimiento y en el encabezado del sitio publicado.",
+  "BrandingAndStylingFavicon": "Icono de favoritos",
+  "BrandingAndStylingOrgFavicon": "Icono de favoritos de la organización",
+  "BrandingAndStylingFaviconDescription": "Este icono de favoritos aparecerá en la pestaña del navegador.",
   "BrandingAndStylingColors": "Colores",
   "BrandingAndStylingColorsDescription": "Personalice los colores para que los paneles tengan un estilo similar al de la marca y la paleta de colores de su organización.",
   "BrandingAndStylingPrimaryColor": "Color principal",
@@ -327,8 +378,8 @@
     "PleaseAdd": "Agregue una dirección de correo electrónico de usuario."
   },
   "AddUserNewInvite": {
-    "Singular": "nuevo usuario se ha agregado como",
-    "Plural": "nuevos usuarios se han agregado como",
+    "Singular": "se ha agregado un nuevo usuario como",
+    "Plural": "se han agregado nuevos usuarios como",
     "Final": "y recibirá un correo electrónico de invitación."
   },
   "ChangeRole": {
@@ -369,7 +420,7 @@
   "TopicAreaName": "Nombre de área de tema",
   "TopicAreaNameSingle": "Nombre de área de tema único",
   "TopicAreaNamePlural": "Nombre de varias áreas de temas",
-  "SelectExistingLeading": "Seleccionar un",
+  "SelectExistingLeading": "Seleccionar uno existente",
   "Description": "Descripción",
   "DescriptionOptional": "Descripción: opcional",
   "ErrorNameSpecify": "Especifique un nombre",
@@ -399,13 +450,19 @@
     "ConfirmURL": "Confirmar URL",
     "ReviewAndPublish": "Revisar y publicar",
     "InfoAlert": "Este panel se encuentra ahora en estado de publicación pendiente y no se puede editar a menos que vuelva a estar en el estado de borrador.",
-    "FailToPublishUrlAlreadyExists": "No se pudo publicar el panel. La URL seleccionada ya se está utilizando para un panel existente. Cámbiela e inténtelo de nuevo.",
+    "FailToPublishUrlAlreadyExists": "No se pudo publicar el panel. La URL seleccionada ya se está utilizando con un panel existente. Cámbiela y vuelva a intentarlo.",
     "FailToPublishError": "No se pudo publicar el panel. Inténtelo de nuevo.",
     "FailToReturnToDraftError": "No se pudo devolver el panel al estado de borrador. Inténtelo de nuevo.",
     "FailToSaveReleaseNotesError": "No se pudieron guardar las notas de la versión; inténtelo de nuevo.",
     "MissingVersionNotesError": "Escriba las notas de la versión",
-    "ReturnToDraftSuccessAlert": "El panel {{dashboardName}} se ha devuelto el estado de borrador.",
-    "PublishedSuccessAlert": "El panel {{dashboardName}} se ha publicado correctamente."
+    "ReturnToDraftSuccessAlert": {
+      "part1": "El panel ",
+      "part2": " se ha devuelto el estado de borrador."
+    },
+    "PublishedSuccessAlert": {
+      "part1": "El panel ",
+      "part2": " se ha publicado correctamente."
+    }
   },
   "SettingsDateTimeFormat": "Formato de fecha y hora",
   "SettingsDateTimeFormatEdit": "Editar formato de fecha y hora",
@@ -434,6 +491,14 @@
   "SettingsLogoFileUploadHint": "Debe ser un archivo PNG, JPEG o SVG",
   "SettingsLogoPreview": "Vista previa",
   "SettingsLogoOrganization": "Logotipo de organización",
+  "SettingsFaviconEditSuccess": "Icono de favoritos modificado correctamente.",
+  "SettingsFaviconEditFailed": "No se pudo actualizar el icono de favoritos.",
+  "SettingsFaviconEdit": "Editar icono de favoritos",
+  "SettingsFaviconDescription": "Este icono de favoritos aparecerá en la pestaña del navegador.",
+  "SettingsFaviconFileUpload": "Carga de archivo",
+  "SettingsFaviconFileUploadHint": "Debe ser un archivo PNG, JPEG o SVG",
+  "SettingsFaviconPreview": "Vista previa",
+  "SettingsFaviconOrganization": "Icono de favoritos de la organización",
   "SettingsHomePageContentEdit": "Editar contenido de la página de inicio",
   "SettingsHomePageContentEditDescription": "Estos componentes aparecen en la página de inicio del sitio publicado y explican de qué se trata el sitio publicado.",
   "SettingsHomePageContentEditSuccess": "El contenido de la página de inicio se ha editado correctamente.",
@@ -445,11 +510,11 @@
   "SettingsPublishedSite": "Sitio publicado",
   "SettingsNavBarEdit": "Editar barra de navegación",
   "SettingsNavBarEditSuccess": "Barra de navegación editada correctamente.",
-  "SettingsNavBarEditDescription": "Personalizar el título del panel",
+  "SettingsNavBarEditDescription": "Personalice la barra de navegación que está disponible en todo el sitio publicado.",
   "SettingsTitle": "Título",
-  "SettingsTitleHint": "Este es el título del sitio web",
+  "SettingsTitleHint": "Este es el título del sitio publicado. El título aparece en la barra de navegación superior y representa todas las áreas de temas y los paneles del sitio publicado.",
   "SettingsTitleError": "Especifique un título.",
-  "SettingsContactEmailTitle": "Dirección de correo electrónico de contacto: opcional",
+  "SettingsContactEmailTitle": "Dirección de correo electrónico de contacto",
   "SettingsContactEmailHint": "Establezca una dirección de correo electrónico para que los usuarios se pongan en contacto con su organización en relación con los paneles publicados. Esta dirección de correo electrónico aparecerá como un enlace de “contacto” en la barra de navegación del sitio publicado.",
   "SettingsTopicAreaDescription": "Los paneles están organizados por áreas de temas. Un panel debe tener un área de tema y solo puede tener un área de tema.",
   "SettingsTopicAreaNameDescription": "Puede personalizar el nombre “área de tema” y se sustituirá en toda la interfaz. Por ejemplo, el nombre de “área de tema” se puede cambiar a “departamento”, “Ministerio”, “programa”, “agencia”, etc.",
@@ -495,7 +560,7 @@
   "AccessDeniedScreen": {
     "RequestAccessButton": "Solicitar acceso",
     "CardTitle": "Solicitar acceso para crear paneles",
-    "Message": "No tiene acceso. Solicite el acceso a los administradores; recibirá un correo electrónico cuando se le conceda."
+    "Message": "No tiene acceso. Solicite el acceso a los administradores y recibirá un correo electrónico cuando estos lo concedan."
   },
   "PerformanceDashboardAssistance": "Asistencia del panel de rendimiento",
   "AdminSettingsScreen": {
@@ -516,7 +581,7 @@
     "NavigationBar": "Barra de navegación",
     "NavagationBarDescription": "Puede personalizar el encabezado y la navegación del sitio publicado.",
     "Title": "Título",
-    "ContactEmailAddressLabel": "Dirección de correo electrónico de contacto: opcional",
+    "ContactEmailAddressLabel": "Dirección de correo electrónico de contacto",
     "HomepageContentHeader": "Contenido de la página de inicio",
     "HomepageContentDescription": "Estos componentes aparecen en la página de inicio del sitio publicado y explican de qué se trata el sitio publicado.",
     "Headline": "Encabezado",
@@ -525,7 +590,7 @@
   "AdminFooter": {
     "HelpMessage": "¿Tiene problemas técnicos con el sistema?",
     "PerformanceDashboardAssistance": "Asistencia del panel de rendimiento",
-    "ContactSupport": "Póngase en contacto con el servicio de soporte."
+    "ContactSupport": "Contacte con el servicio de soporte."
   },
   "Public": {
     "Menu": "Menú",
@@ -542,25 +607,37 @@
   "PageNotFound": "404/Página no encontrada",
   "PageNotFoundDescription": "Es posible que desee comprobar el enlace e intentarlo de nuevo, o volver a la",
   "FormatCSVScreen": {
-    "FormattingCSVFiles": "Formato de archivos CSV",
-    "FormattingCSVDescription": "Actualmente, solo se admiten archivos CSV para elementos de contenido de gráficos y tablas. A continuación se muestran ejemplos de tipos de contenido con archivos CSV con formato como referencia.",
+    "FormattingCSVFiles": "Formateo de archivos CSV o Excel",
+    "FormattingCSVDescription": "Actualmente, solo se admiten archivos .csv y .xlsx para elementos con contenido de gráficos y tablas. A continuación, se muestran ejemplos de tipos de contenido con archivos con formato como referencia.",
     "MacOS": "Sistemas operativos Mac",
-    "MacOSDescription": "Los archivos CSV creados en Excel tendrán problemas al mostrar caracteres especiales en el sitio web. La solución es guardar el archivo en Excel como un archivo CSV UTF-8.",
+    "MacOSDescription": "Los archivos CSV creados en Excel tendrán problemas al mostrar caracteres especiales en el sitio web. La solución es guardar el archivo en Excel como CSV UTF-8 o utilizar un archivo Excel.",
     "LineChart": "Gráfico de líneas",
-    "LineChartDescription": "Un gráfico de líneas o diagrama de líneas es un tipo de gráfico que muestra la información como una serie de puntos de datos denominados “marcadores” conectados por segmentos de línea recta. Los gráficos de líneas pueden incluir varias líneas y se utilizan con mayor frecuencia para mostrar tendencias a lo largo del tiempo o la distribución.",
+    "LineChartDescription": "Un gráfico de líneas muestra puntos de datos ordenados que están conectados por líneas. Los gráficos de líneas se utilizan para mostrar tendencias a lo largo del tiempo y pueden contener numerosas líneas.",
     "LineChartExample": "Ejemplo de gráfico de líneas",
-    "LineChartExampleDownload": "Descargar CSV con ejemplo de gráfico de líneas",
+    "LineChartExampleDownload": "Descargar archivo con ejemplo de gráfico de líneas",
+    "BarChart": "Gráfico de barras",
+    "BarChartDescription": "Un gráfico de barras muestra datos categóricos con barras horizontales que son proporcionales al valor que representan. Al igual que los gráficos de columnas, los gráficos de barras se utilizan para mostrar comparaciones entre grupos cualitativos o tendencias a lo largo del tiempo; sin embargo, los gráficos de barras proporcionan más espacio para etiquetas de datos y pueden ser más fáciles de ver en dispositivos móviles.",
+    "BarChartExample": "Ejemplo de gráfico de barras",
+    "BarChartExampleDownload": "Descargar archivo con ejemplo de gráfico de barras",
     "ColumnChart": "Gráfico de columnas",
-    "ColumnChartDescription": "Un gráfico de columnas proporciona una presentación visual de datos categóricos. Los datos categóricos son una agrupación de datos en grupos discretos, como meses del año, grupo de edad, tallas de zapatos o animales. Estas categorías suelen ser cualitativas. Las barras del gráfico se pueden organizar en cualquier orden. Los gráficos de columnas también se pueden utilizar para mostrar tendencias a lo largo del tiempo.",
+    "ColumnChartDescription": "Un gráfico de columnas muestra datos categóricos con columnas verticales que son proporcionales al valor que representan. Los gráficos de columnas se utilizan para mostrar comparaciones entre grupos cualitativos o tendencias a lo largo del tiempo.",
     "ColumnChartExample": "Ejemplo de gráfico de columnas",
-    "ColumnChartExampleDownload": "Descargar archivo CSV de ejemplo de gráfico de columnas",
+    "ColumnChartExampleDownload": "Descargar archivo con ejemplo de gráfico de columnas",
     "PartToWholeChart": "Gráfico de parte a todo",
-    "PartToWholeChartDescription": "Un gráfico de parte a todo se divide en bloques, lo que ilustra la proporción numérica. En un gráfico de parte a todo, la longitud de cada bloque (y, por lo tanto, su área) es proporcional a la cantidad que representa. Los gráficos parte a todo se utilizan para mostrar la comparación relativa entre bloques como parte de un valor total.",
+    "PartToWholeChartDescription": "Un gráfico de parte a todo es un gráfico rectangular que muestra una proporción numérica con bloques que tienen un área proporcional a la cantidad que representan. Los gráficos de parte a todo se utilizan para mostrar comparaciones relativas entre bloques como parte de un valor total.",
     "PartToWholeChartExample": "Ejemplo de gráfico de parte a todo",
-    "PartToWholeChartExampleDownload": "Descargar CSV con ejemplo de gráfico de parte a todo",
-    "TableDescription": "Una tabla es una forma de organizar los datos en filas y columnas. Las tablas se utilizan para mostrar una comparación cuando se desea información detallada de los datos.",
+    "PartToWholeChartExampleDownload": "Descargar archivo con ejemplo de gráfico de parte a todo",
+    "PieChart": "Gráfico circular",
+    "PieChartDescription": "Un gráfico circular muestra la proporción numérica con sectores que son proporcionales a la cantidad que representan. Los gráficos circulares se utilizan para mostrar comparaciones relativas entre sectores como parte de un valor total.",
+    "PieChartExample": "Ejemplo de gráfico circular",
+    "PieChartExampleDownload": "Descargar archivo con ejemplo de gráfico circular",
+    "DonutChart": "Gráfico de anillos",
+    "DonutChartDescription": "Un gráfico de anillos muestra la proporción numérica con sectores que son proporcionales a la cantidad que representan. Al igual que los gráficos circulares, los gráficos de anillos se utilizan para mostrar comparaciones relativas entre sectores como parte de un valor total; sin embargo, no tienen centro.",
+    "DonutChartExample": "Ejemplo de gráfico de anillos",
+    "DonutChartExampleDownload": "Descargar archivo con ejemplo de gráfico de anillos",
+    "TableDescription": "Una tabla organiza los datos en filas y columnas. Las tablas se utilizan para mostrar comparaciones claras de tipos de datos en diferentes categorías.",
     "TableExample": "Ejemplo de tabla",
-    "TableExampleDownload": "Descargar archivo CSV con ejemplo de tabla"
+    "TableExampleDownload": "Descargar archivo con ejemplo de tabla"
   },
   "History": "Historial",
   "HistoryScreen": {
@@ -598,13 +675,14 @@
   "HideDataTableButton": "Ocultar tabla de datos",
   "UserListingDropdownChangeRole": "Cambiar rol",
   "GlobalResend": "Volver a enviar",
-  "SuccessfullyRemoved": "Se ha(n) eliminado correctamente ",
+  "SuccessfullyRemoved": "Se ha(n) eliminado correctamente. ",
   "GlobalUsers": "usuarios",
   "UserListingResentInvites": "se ha reenviado el correo electrónico de invitación",
   "UserListingResentInvitesPlural": "se han reenviado los correos electrónicos de invitación",
   "OrganizationLogo": "Logotipo de organización",
-  "CSVFileNotSpecified": "Archivo CSV no especificado",
-  "CheckDataDescription": "Asegúrese de que el sistema da formato a los datos correctamente. Seleccione columnas para dar formato a números, fechas o texto. Seleccione también columnas para ocultarlas o mostrarlas en {{widgetType}}.",
+  "OrganizationFavicon": "Icono de favoritos de la organización",
+  "CSVFileNotSpecified": "Archivo no especificado",
+  "CheckDataDescription": "Asegúrese de que el sistema establezca correctamente el formato de los datos. Seleccione columnas para dar formato a números, fechas o texto. Seleccione también columnas para ocultarlas o mostrarlas de {{widgetType}}.",
   "CheckDataDescriptionTable": "la tabla",
   "CheckDataDescriptionChart": "el gráfico",
   "EditColumn": "Editar columna",
@@ -621,17 +699,17 @@
   "Euro": "Euro €",
   "Pound": "Libra esterlina £",
   "Data": "Datos",
-  "ChooseDataDescription": "Elija un conjunto de datos existente o cree uno nuevo para rellenar {{widgetType}}.",
-  "ChooseDataDescriptionTable": "esta tabla",
-  "ChooseDataDescriptionChart": "este gráfico",
+  "ChooseDataDescription": "Elija un conjunto de datos existente o cree uno nuevo para rellenar este {{widgetType}}.",
+  "ChooseDataDescriptionTable": "tabla",
+  "ChooseDataDescriptionChart": "gráfico",
   "HowDoIAddDatasets": "¿Cómo puedo agregar conjuntos de datos?",
   "StaticDataset": "Conjunto de datos estático",
   "StaticDatasetDescription": "Cargue un nuevo conjunto de datos desde un archivo o elija un conjunto de datos existente.",
   "DynamicDataset": "Conjunto de datos dinámico",
   "DynamicDatasetDescription": "Elija a partir una lista de conjuntos de datos actualizados continuamente.",
   "StaticDatasets": "Conjuntos de datos estáticos",
-  "StaticDatasetsHint": "Cargue un conjunto de datos desde un archivo CSV o elija un conjunto de datos estáticos existente.",
-  "HowDoIFormatMyCSVFile": "¿Cómo le doy formato a mi archivo CSV?",
+  "StaticDatasetsHint": "Cargue un conjunto de datos desde un archivo CSV o Excel, o elija un conjunto de datos estáticos existente.",
+  "HowDoIFormatMyCSVFile": "¿Cómo le doy formato a mi archivo?",
   "BrowseDatasets": "Examinar conjuntos de datos",
   "DynamicDatasetContinue": "Debe seleccionar un conjunto de datos para continuar",
   "StaticDatasetContinue": "Debe cargar un archivo o elegir un conjunto de datos para continuar",
@@ -643,7 +721,7 @@
     "Archived": "ARCHIVADO",
     "Compromised": "COMPROMETIDO",
     "Unknown": "DESCONOCIDO",
-    "Reset_Required": "REINICIO_REQUERIDO",
+    "Reset_Required": "RESET_REQUIRED",
     "Force_Change_Password": "FORZAR_CAMBIO_DE_CONTRASEÑA",
     "UserStatusesDesc": "Los usuarios del sistema tienen diferentes estados. Estos estados se extraen directamente de AWS Cognito, pero explicamos qué significan a continuación.",
     "LearnCognitoDesc": "Obtenga más información sobre AWS Cognito.",
@@ -660,6 +738,8 @@
   "Column": "Columna",
   "Line": "Línea",
   "PartToWhole": "Parte a todo",
+  "Pie": "Circular",
+  "Donut": "Anillos",
   "ToggleSortBy": "Alternar SortBy",
   "Showing": "Mostrando",
   "Page": "Página",
@@ -718,6 +798,8 @@
   "ColumnChart": "Gráfico de columnas",
   "BarChart": "Gráfico de barras",
   "LineChart": "Gráfico de líneas",
+  "PieChart": "Gráfico circular",
+  "DonutChart": "Gráfico de anillos",
   "ContentItem": "elemento de contenido",
   "DeletingContentItem": "La eliminación de este elemento de contenido no se puede deshacer. ¿Está seguro de que desea continuar?",
   "Version": "Versión",
@@ -726,7 +808,10 @@
   "LastSaved": "Guardado por último vez",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Archivo de imagen no especificado",
-    "ImageAddedSuccessffully": "La imagen '{{image}}' se ha agregado correctamente.",
+    "ImageAddedSuccessfully": {
+      "part1": "La imagen “",
+      "part2": "” se ha agregado correctamente."
+    },
     "AddImage": "Agregar imagen",
     "ConfigureImage": "Configurar imagen",
     "StepTwo": "Paso 2 de 2",
@@ -741,7 +826,7 @@
     "TextHint": "Proporcione una breve descripción de la imagen para los usuarios con discapacidades visuales que utilicen un lector de pantalla. Esta descripción no se mostrará en el panel.",
     "TextError": "Especifique el texto alternativo de la imagen",
     "SummaryLabel": "Descripción de imagen: opcional",
-    "SummaryHint": "Incorpore a su imagen una descripción para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la imagen a personas con discapacidades visuales. Este campo admite el marcado.",
+    "SummaryHint": "Incorpore a la imagen una descripción para explicarla con más detalle. También pueden leerla los lectores de pantalla para describir la imagen a personas con discapacidades visuales. Este campo admite el marcado.",
     "MarkdownLink": "Ver sintaxis de marcado",
     "ToggleSummary": "Mostrar la descripción a continuación de la imagen",
     "Back": "Volver",
@@ -749,7 +834,10 @@
     "Cancel": "Cancelar"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessffully": "La imagen '{{image}}' se ha editado correctamente.",
+    "ImageEditedSuccessfully": {
+      "part1": "La imagen “",
+      "part2": "” se ha editado correctamente."
+    },
     "EditImage": "Editar imagen",
     "ResolveError": "Resolver errores al editar la imagen",
     "Title": "Título de la imagen",
@@ -762,22 +850,27 @@
     "TextHint": "Proporcione una breve descripción de la imagen para los usuarios con discapacidades visuales que utilicen un lector de pantalla. Esta descripción no se mostrará en el panel.",
     "TextError": "Especifique el texto alternativo de la imagen",
     "SummaryLabel": "Descripción de imagen: opcional",
-    "SummaryHint": "Incorpore a su imagen una descripción para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la imagen a personas con discapacidades visuales. Este campo admite el marcado.",
+    "SummaryHint": "Incorpore a la imagen una descripción para explicarla con más detalle. También pueden leerla los lectores de pantalla para describir la imagen a personas con discapacidades visuales. Este campo admite el marcado.",
     "MarkdownLink": "Ver sintaxis de marcado",
     "ToggleSummary": "Mostrar la descripción a continuación de la imagen"
   },
   "EnterpriseSignIn": "Inicio de sesión empresarial",
   "Actions": "Acciones",
-  "SubmittedBy": "Presentado por",
+  "SubmittedBy": "Enviado por",
   "PublishedBy": "Publicado por",
   "ArchivedBy": "Archivado por",
   "AdminSite": "Sitio de administración",
-  "SupportContactEmailEditSuccess": "Dirección de correo electrónico para contactar con soporte editado correctamente.",
+  "SupportContactEmailEditSuccess": "Se ha editado correctamente el correo electrónico de contacto con el servicio de soporte.",
   "Draft": "Borrador",
   "DashboardContent": "Contenido del panel",
-  "ExpandPreview": "Expandir vista previa",
+  "ExpandPreview": "Ampliar vista previa",
   "ClosePreview": "Cerrar vista previa",
   "Admin": "Administrador",
   "Editor": "Editor",
-  "GlobalUser": "usuario"
+  "GlobalUser": "Usuario",
+  "DashboardWasCopied": "se ha copiado correctamente.",
+  "Copy": "Copiar",
+  "CopyContent": "Copiar {{name}}",
+  "DownloadCSV": "Descargar",
+  "MobilePreview": "Vista previa móvil"
 }

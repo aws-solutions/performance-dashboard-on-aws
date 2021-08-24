@@ -12,7 +12,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { useColors, useYAxisMetadata } from "../hooks";
+import { useColors, useYAxisMetadata, useWindowSize } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
@@ -59,7 +59,6 @@ const ColumnChartWidget = (props: Props) => {
   const pixelsByCharacter = 8;
   const previewWidth = 480;
   const fullWidth = 960;
-  const padding = props.isPreview ? 60 : 120;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -71,7 +70,19 @@ const ColumnChartWidget = (props: Props) => {
     [columnsHover]
   );
 
+  const windowSize = useWindowSize();
+  const smallScreenPixels = 800;
+
   const { data, columns, showMobilePreview } = props;
+  let padding;
+  if (showMobilePreview || windowSize.width < smallScreenPixels) {
+    padding = 20;
+  } else if (props.isPreview) {
+    padding = 60;
+  } else {
+    padding = 120;
+  }
+
   const xAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && columns.length) {
@@ -129,7 +140,7 @@ const ColumnChartWidget = (props: Props) => {
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
       {data && data.length && (
@@ -237,10 +248,12 @@ const ColumnChartWidget = (props: Props) => {
         />
       </div>
       {props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
-        />
+        <div style={showMobilePreview ? { clear: "left" } : {}}>
+          <MarkdownRender
+            source={props.summary}
+            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+          />
+        </div>
       )}
     </div>
   );

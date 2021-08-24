@@ -77,7 +77,10 @@
   "PDoASite": "This site is where you manage the performance dashboard.",
   "WantToViewPublishedSite": "Do you want to see what your audience sees?",
   "ViewPublishedSite": "View the published site",
-  "NewDraftDashboardCreated": "A new draft version of {{name}} dashboard has been created.",
+  "NewDraftDashboardCreated": {
+    "part1": "A new draft version of ",
+    "part2": " dashboard has been created."
+  },
   "DashboardWasArchived": "was successfully archived.",
   "DashboardWasDeleted": "was successfully deleted.",
   "DashboardWasRepublished": "dashboard was successfully re-published.",
@@ -97,16 +100,31 @@
   "LearnHowToFormatCSV": "Learn how to format your data.",
   "CreatedBy": "Created by",
   "Dashboards": "Dashboards",
-  "CreateDraftDasboardModalTitle": "Update {{name}} dashboard",
-  "CreateDraftDasboardModalMessage": "This will create a new draft of the dashboard that will allow you to edit the content, then publish the new version to the published site.",
-  "CreateDraftDasboardModalButton": "Create draft",
-  "ArchiveDashboardModalTitle": "Archive {{name}} dashboard",
-  "ArchiveDashboardModalMessage": "This will remove {{name}} dashboard from the published site. You can re-publish archived dashboards at any time.",
+  "CreateDraftDashboardModalTitle": {
+    "part1": "Update ",
+    "part2": " dashboard"
+  },
+  "CreateDraftDashboardModalMessage": "This will create a new draft of the dashboard that will allow you to edit the content, then publish the new version to the published site.",
+  "CreateDraftDashboardModalButton": "Create draft",
+  "ArchiveDashboardModalTitle": {
+    "part1": "Archive ",
+    "part2": " dashboard"
+  },
+  "ArchiveDashboardModalMessage": {
+    "part1": "This will remove ",
+    "part2": " dashboard from the published site. You can re-publish archived dashboards at any time."
+  },
   "ArchiveDashboardModalButton": "Archive",
-  "RepublishDashboardModalTitle": "Re-publish {{name}} dashboard",
+  "RepublishDashboardModalTitle": {
+    "part1": "Re-publish ",
+    "part2": " dashboard"
+  },
   "RepublishDashboardModalMessage": "Are you sure you want to re-publish this dashboard?",
   "RepublishDashboardModalButton": "Re-publish",
-  "PreparePublishingModalTitle": "Prepare {{name}} dashboard for publishing",
+  "PreparePublishingModalTitle": {
+    "part1": "Prepare ",
+    "part2": " dashboard for publishing"
+  },
   "PreparePublishingModalMessage": {
     "part1": "This dashboard has no content items. ",
     "part2": "Are you sure you want to prepare this dashboard for publishing?"
@@ -164,7 +182,10 @@
   "AddTextScreen": {
     "AddText": "Add text",
     "AddTextError": "Resolve error(s) to add the text",
-    "AddTextSuccess": "'{{title}}' text has been successfully added.",
+    "AddTextSuccess": {
+      "part1": "'",
+      "part2": "' text has been successfully added."
+    },
     "CreatingText": "Creating text",
     "Configure": "Configure text content",
     "TextTitle": "Text title",
@@ -178,7 +199,10 @@
   "EditTextScreen": {
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
-    "EditTextSuccess": "'{{title}}' text has been successfully edited.",
+    "EditTextSuccess": {
+      "part1": "'",
+      "part2": "' text has been successfully edited."
+    },
     "EditingText": "Editing text",
     "TextTitle": "Text title",
     "TextTitleError": "Please specify a text title",
@@ -221,7 +245,10 @@
     "MetricSuccessfullyEdited": "Metric successfully edited."
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessffully": "Metrics '{{title}}' have been successfully added.",
+    "MetricsAddedSuccessfully": {
+      "part1": "Metrics '",
+      "part2": "' have been successfully added."
+    },
     "Name": "Name",
     "LastUpdated": "Last updated",
     "Description": "Description",
@@ -251,7 +278,10 @@
     "ShowTitle": "Show title on dashboard"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessffully": "Metrics '{{title}}' have been successfully edited.",
+    "MetricsEditedSuccessfully": {
+      "part1": "Metrics '",
+      "part2": "' have been successfully edited."
+    },
     "EditMetrics": "Edit metrics",
     "UploadingFile": "Uploading file",
     "EditingMetrics": "Editing metrics",
@@ -268,7 +298,10 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddChartSuccess": "'{{title}}' chart has been successfully added.",
+    "AddChartSuccess": {
+      "part1": "'",
+      "part2": "' chart has been successfully added."
+    },
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "EditChartScreen": {
@@ -277,7 +310,10 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditChartSuccess": "'{{title}}' chart has been successfully edited.",
+    "EditChartSuccess": {
+      "part1": "'",
+      "part2": "' chart has been successfully edited."
+    },
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "AddTableScreen": {
@@ -285,7 +321,10 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddTableSuccess": "'{{title}}' table has been successfully added.",
+    "AddTableSuccess": {
+      "part1": "'",
+      "part2": "' table has been successfully added."
+    },
     "ChooseDataset": "Choose a dataset to continue"
   },
   "EditTableScreen": {
@@ -293,7 +332,10 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditTableSuccess": "'{{title}}' table has been successfully edited."
+    "EditTableSuccess": {
+      "part1": "'",
+      "part2": "' table has been successfully edited."
+    }
   },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",
@@ -388,6 +430,7 @@
   "MetricsGuidance": "Add metrics here and reorder them. Multiple metrics will automatically scale to fit and wrap according to the order.",
   "MetricsOnePerRow": "One metric per row",
   "MetricsZero": "No metrics added yet.",
+  "MetricsCenterAlign": "Display with center alignment",
   "ViewHistoryLink": "View history",
   "PreviewButton": "Preview",
   "ReturnToDraftButton": "Return to draft",
@@ -413,8 +456,14 @@
     "FailToReturnToDraftError": "Failed to return dashboard to draft. Please try again.",
     "FailToSaveReleaseNotesError": "Failed to save release notes, please try again.",
     "MissingVersionNotesError": "Please enter version notes",
-    "ReturnToDraftSuccessAlert": "{{dashboardName}} dashboard successfully returned to draft.",
-    "PublishedSuccessAlert": "{{dashboardName}} dashboard was successfully published."
+    "ReturnToDraftSuccessAlert": {
+      "part1": "",
+      "part2": " dashboard successfully returned to draft."
+    },
+    "PublishedSuccessAlert": {
+      "part1": "",
+      "part2": " dashboard was successfully published."
+    }
   },
   "SettingsDateTimeFormat": "Date and time format",
   "SettingsDateTimeFormatEdit": "Edit date and time format",
@@ -760,7 +809,10 @@
   "LastSaved": "Last saved",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Image file not specified",
-    "ImageAddedSuccessffully": "Image '{{image}}' has been successfully added.",
+    "ImageAddedSuccessfully": {
+      "part1": "Image '",
+      "part2": "' has been successfully added."
+    },
     "AddImage": "Add Image",
     "ConfigureImage": "Configure image",
     "StepTwo": "Step 2 of 2",
@@ -783,7 +835,10 @@
     "Cancel": "Cancel"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessffully": "Image '{{image}}' has been successfully edited.",
+    "ImageEditedSuccessfully": {
+      "part1": "Image '",
+      "part2": "' has been successfully edited."
+    },
     "EditImage": "Edit Image",
     "ResolveError": "Resolve error(s) to edit the image",
     "Title": "Image title",

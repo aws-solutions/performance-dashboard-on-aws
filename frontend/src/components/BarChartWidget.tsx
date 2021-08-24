@@ -96,6 +96,28 @@ const BarChartWidget = (props: Props) => {
   const formatYAxisLabel = (label: string) =>
     label.length > 27 ? label.substr(0, 27).concat("...") : label;
 
+  const calculateChartHeight = (): number => {
+    // When there are 15 rows of data and each row has 3 columns (excluding row
+    // name), having a chart height of 400px is still visually appealing to users.
+    // Adding more rows or columns would require additional height increments.
+    const defaultNumRows = 15;
+    const defaultNumCols = 3;
+    const unitHeight = 400;
+    let multiplicity;
+
+    if (data && data.length) {
+      const numRows = data.length;
+      const numCols = Object.keys(data[0]).length - 1;
+      const rowMultiplicity = Math.floor((numRows - 1) / defaultNumRows) + 1;
+      const colMultiplicity = Math.floor((numCols - 1) / defaultNumCols) + 1;
+      multiplicity = rowMultiplicity * colMultiplicity;
+    } else {
+      multiplicity = 1;
+    }
+
+    return unitHeight * multiplicity;
+  };
+
   return (
     <div>
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
@@ -104,19 +126,11 @@ const BarChartWidget = (props: Props) => {
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
       {data && data.length && (
-        <ResponsiveContainer
-          width="100%"
-          height={
-            (data && data.length > 15) ||
-            (data && data[0] && Object.keys(data[0]).length > 4)
-              ? 800
-              : 400
-          }
-        >
+        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
           <BarChart
             className="bar-chart"
             data={props.data}
@@ -223,10 +237,12 @@ const BarChartWidget = (props: Props) => {
         />
       </div>
       {props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
-        />
+        <div style={showMobilePreview ? { clear: "left" } : {}}>
+          <MarkdownRender
+            source={props.summary}
+            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+          />
+        </div>
       )}
     </div>
   );

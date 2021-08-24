@@ -17,6 +17,8 @@ import DashboardHeader from "../components/DashboardHeader";
 import UtilsService from "../services/UtilsService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import "./ViewDashboardAdmin.css";
+import Navigation from "../components/Navigation";
+import { Waypoint } from "react-waypoint";
 
 interface PathParams {
   dashboardId: string;
@@ -33,12 +35,14 @@ function ViewDashboardAdmin() {
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [showVersionNotes, setShowVersionNotes] = useState(false);
   const [showMobilePreview, setShowMobilePreview] = useState(false);
+  const [activeWidgetId, setActiveWidgetId] = useState("");
   const windowSize = useWindowSize();
 
   const { t } = useTranslation();
 
   const mobilePreviewWidth = 400;
   const maxMobileViewportWidth = 450;
+  const moveNavBarWidth = 1024;
 
   const draftOrPublishPending = versions.find(
     (v) =>
@@ -422,13 +426,38 @@ function ViewDashboardAdmin() {
               lastUpdated={dashboard?.updatedAt}
             />
             <hr />
+            <Navigation
+              stickyPosition={80}
+              offset={240}
+              widgetNameIds={dashboard?.widgets.map((widget) => {
+                return {
+                  name: widget.name,
+                  id: widget.id,
+                };
+              })}
+              activeWidgetId={activeWidgetId}
+              setActivewidgetId={setActiveWidgetId}
+              isTop={showMobilePreview || windowSize.width <= moveNavBarWidth}
+              displayTableOfContents={dashboard?.displayTableOfContents}
+            ></Navigation>
             {dashboard?.widgets.map((widget, index) => {
               return (
-                <div className="margin-top-6 usa-prose" key={index}>
-                  <WidgetRender
-                    widget={widget}
-                    showMobilePreview={showMobilePreview}
-                  />
+                <div key={index}>
+                  <Waypoint
+                    onEnter={() => {
+                      setActiveWidgetId(widget.id);
+                    }}
+                    topOffset="240px"
+                    bottomOffset={`${windowSize.height - 250}px`}
+                    fireOnRapidScroll={false}
+                  >
+                    <div className="margin-top-6 usa-prose" id={widget.id}>
+                      <WidgetRender
+                        widget={widget}
+                        showMobilePreview={showMobilePreview}
+                      />
+                    </div>
+                  </Waypoint>
                 </div>
               );
             })}

@@ -7,6 +7,7 @@ type Props = {
   metrics: Array<Metric>;
   metricPerRow: number;
   significantDigitLabels: boolean;
+  metricsCenterAlign: boolean;
 };
 
 const MetricsWidget = ({
@@ -14,6 +15,7 @@ const MetricsWidget = ({
   metrics,
   metricPerRow,
   significantDigitLabels,
+  metricsCenterAlign,
 }: Props) => {
   return (
     <div>
@@ -24,6 +26,7 @@ const MetricsWidget = ({
             metrics={metrics}
             metricPerRow={metricPerRow}
             significantDigitLabels={significantDigitLabels}
+            metricsCenterAlign={metricsCenterAlign}
           />
         </div>
       ) : (

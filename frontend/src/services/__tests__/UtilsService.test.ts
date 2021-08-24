@@ -12,6 +12,7 @@ describe("groupByTopicArea", () => {
       name: "Banana",
       topicAreaId: "xyz",
       topicAreaName: "Fruits",
+      displayTableOfContents: false,
       updatedAt: new Date(),
       widgets: [],
     };
@@ -20,6 +21,7 @@ describe("groupByTopicArea", () => {
       id: "456",
       name: "Cilantro",
       topicAreaId: "abc",
+      displayTableOfContents: false,
       topicAreaName: "Vegetables",
       updatedAt: new Date(),
       widgets: [],

@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "90c6ee47-1198-4dbc-9e8c-50d6bbf119c8",
+    "_postman_id": "6ebe8eaa-0ad9-43f6-9516-6cc5c0df1f2f",
     "name": "Performance Dashboard API",
     "description": "This API defines the endpoints available in the Performance Dashboard on AWS Rest API. It includes public endpoints and private endpoints that require authentication",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -158,7 +158,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"COVID-19\",\n    \"topicAreaId\": \"df402dce-b434-4a12-8802-7d67d5f4b2de\",\n    \"description\": \"You can add **markdown** here\",\n    \"updatedAt\": \"\"\n}",
+              "raw": "{\n    \"name\": \"COVID-19\",\n    \"topicAreaId\": \"df402dce-b434-4a12-8802-7d67d5f4b2de\",\n    \"displayTableOfContents\": false,\n    \"description\": \"You can add **markdown** here\",\n    \"updatedAt\": \"\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

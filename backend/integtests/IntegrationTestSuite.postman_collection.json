@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "c788c039-72fb-4842-b2d2-143715163500",
+    "_postman_id": "28b5118f-db4e-4217-9d80-1ec714ea3985",
     "name": "Integration Tests",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -546,7 +546,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"name\": \"{{dashboard.name}} modified\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"description\": \"Updated markdown **here**\",\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+          "raw": "{\n    \"name\": \"{{dashboard.name}} modified\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"displayTableOfContents\": false,\n    \"description\": \"Updated markdown **here**\",\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
           "options": {
             "raw": {
               "language": "json"

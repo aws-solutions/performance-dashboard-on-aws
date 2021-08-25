@@ -49,6 +49,22 @@ function createDraftFromDashboard(
     widgets = dashboard.widgets.map((widget) =>
       WidgetFactory.createFromWidget(id, widget)
     );
+    for (const widget of widgets) {
+      if (widget.section) {
+        const sectionIndex = dashboard.widgets.findIndex(
+          (w) => w.id === widget.section
+        );
+        widget.section = widgets[sectionIndex].id;
+      }
+      if (widget.content && widget.content.widgetIds) {
+        const widgetIds: string[] = [];
+        for (const id of widget.content.widgetIds) {
+          const widgetIndex = dashboard.widgets.findIndex((w) => w.id === id);
+          widgetIds.push(widgets[widgetIndex].id);
+        }
+        widget.content.widgetIds = widgetIds;
+      }
+    }
   }
 
   return {

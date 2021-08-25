@@ -1,0 +1,38 @@
+# Workflow that runs end-to-end (E2E) tests every day against Gamma
+
+name: E2E Tests
+
+on:
+  # Run E2E check daily (16:42 UTC) or manually since scheduled checks
+  # are not guaranteed to run on time or run at all
+  schedule:
+    - cron: "42 16 * * *"
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: mainline-dev
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: |
+          cd e2e-tests
+          npm install
+          export CYPRESS_baseUrl=https://gamma.badger.wwps.aws.dev/
+          export CYPRESS_defaultCommandTimeout=20000
+          export CYPRESS_username=${{secrets.E2E_TEST_USERNAME}}
+          export CYPRESS_password=${{secrets.E2E_TEST_PASSWORD}}
+          ./node_modules/.bin/cypress run  --config-file false --config video=false

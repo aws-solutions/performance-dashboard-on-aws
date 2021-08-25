@@ -57,7 +57,9 @@ function AddText() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("AddTextScreen.AddTextSuccess", { title: values.title }),
+          message: `${t("AddTextScreen.AddTextSuccess.part1")}${
+            values.title
+          }${t("AddTextScreen.AddTextSuccess.part2")}`,
         },
       });
     } catch (err) {
@@ -214,7 +216,10 @@ function AddText() {
                 )}
                 {text ? (
                   <div className="padding-left-05">
-                    <MarkdownRender className="usa-prose" source={text} />
+                    <MarkdownRender
+                      className="usa-prose textOrSummary"
+                      source={text}
+                    />
                   </div>
                 ) : (
                   ""

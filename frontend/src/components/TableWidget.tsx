@@ -114,7 +114,7 @@ const TableWidget = ({
       {!summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="usa-prose margin-top-0 margin-bottom-3 tableSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-3 tableSummaryAbove textOrSummary"
         />
       )}
       <Table
@@ -130,7 +130,7 @@ const TableWidget = ({
       {summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow"
+          className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow textOrSummary"
         />
       )}
       <div

@@ -37,6 +37,7 @@ export type Dashboard = {
   parentDashboardId: string;
   topicAreaId: string;
   topicAreaName: string;
+  displayTableOfContents: boolean;
   description?: string;
   releaseNotes?: string;
   widgets: Array<Widget>;
@@ -54,6 +55,7 @@ export type PublicDashboard = {
   name: string;
   topicAreaId: string;
   topicAreaName: string;
+  displayTableOfContents: boolean;
   description?: string;
   widgets: Array<Widget>;
   updatedAt: Date;
@@ -168,6 +170,7 @@ export interface MetricsWidget extends Widget {
     oneMetricPerRow: boolean;
     datasetType?: DatasetType;
     significantDigitLabels: boolean;
+    metricsCenterAlign: boolean;
     s3Key: {
       raw: string;
       json: string;
@@ -275,6 +278,7 @@ export type LocationState = {
   showTitle?: boolean;
   oneMetricPerRow?: boolean;
   significantDigitLabels?: boolean;
+  metricsCenterAlign?: boolean;
   metricTitle?: string;
   origin?: string;
   json?: Array<any>;

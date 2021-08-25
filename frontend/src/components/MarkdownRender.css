@@ -13,3 +13,7 @@
 .Markdown a:visited {
   color: #1b1b1b !important;
 }
+
+.textOrSummary p {
+  max-width: 100ex !important;
+}

@@ -4,6 +4,7 @@ exports[`renders the Tab component 1`] = `
 <div>
   <li
     class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md bg-white border-base-dark border-x-0 border-top-0 border-bottom-05"
+    style="cursor: pointer;"
   >
     Tab 1
   </li>
@@ -14,6 +15,7 @@ exports[`renders the Tab component with default tab 2 selected 1`] = `
 <div>
   <li
     class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+    style="cursor: pointer;"
   >
     Tab 1
   </li>

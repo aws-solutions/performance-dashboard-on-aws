@@ -77,7 +77,10 @@
   "PDoASite": "É aqui que você gerencia o painel de performance.",
   "WantToViewPublishedSite": "Deseja ver o que seu público vê?",
   "ViewPublishedSite": "Visualizar o site publicado",
-  "NewDraftDashboardCreated": "Uma nova versão de rascunho do painel {{name}} foi criada.",
+  "NewDraftDashboardCreated": {
+    "part1": "Uma nova versão de rascunho do painel ",
+    "part2": " foi criada."
+  },
   "DashboardWasArchived": "foi arquivado com êxito.",
   "DashboardWasDeleted": "foi excluído com êxito.",
   "DashboardWasRepublished": "O painel foi republicado com êxito.",
@@ -97,16 +100,31 @@
   "LearnHowToFormatCSV": "Saiba como formatar seus dados.",
   "CreatedBy": "Criado por",
   "Dashboards": "Painéis",
-  "CreateDraftDasboardModalTitle": "Atualizar o painel {{name}}",
-  "CreateDraftDasboardModalMessage": "Isso criará um novo rascunho do painel cujo conteúdo você poderá editar e, em seguida, publicar no site publicado.",
-  "CreateDraftDasboardModalButton": "Criar rascunho",
-  "ArchiveDashboardModalTitle": "Arquivar o painel {{name}}",
-  "ArchiveDashboardModalMessage": "Isso removerá o painel {{name}} do site publicado. Você pode republicar painéis arquivados a qualquer momento.",
+  "CreateDraftDashboardModalTitle": {
+    "part1": "Atualizar o painel ",
+    "part2": ""
+  },
+  "CreateDraftDashboardModalMessage": "Isso criará um novo rascunho do painel cujo conteúdo você poderá editar e, em seguida, publicar no site publicado.",
+  "CreateDraftDashboardModalButton": "Criar rascunho",
+  "ArchiveDashboardModalTitle": {
+    "part1": "Arquivar o painel ",
+    "part2": ""
+  },
+  "ArchiveDashboardModalMessage": {
+    "part1": "Isso removerá o painel ",
+    "part2": " do site publicado. Você pode republicar painéis arquivados a qualquer momento."
+  },
   "ArchiveDashboardModalButton": "Arquivar",
-  "RepublishDashboardModalTitle": "Republicar o painel {{name}}",
+  "RepublishDashboardModalTitle": {
+    "part1": "Republicar o painel ",
+    "part2": ""
+  },
   "RepublishDashboardModalMessage": "Tem certeza de que deseja republicar este painel?",
   "RepublishDashboardModalButton": "Republicar",
-  "PreparePublishingModalTitle": "Preparar o painel {{name}} para publicação",
+  "PreparePublishingModalTitle": {
+    "part1": "Preparar o painel ",
+    "part2": " para publicação"
+  },
   "PreparePublishingModalMessage": {
     "part1": "Este painel não tem itens de conteúdo. ",
     "part2": "Tem certeza de que deseja preparar este painel para publicação?"
@@ -164,7 +182,10 @@
   "AddTextScreen": {
     "AddText": "Adicionar texto",
     "AddTextError": "Resolver erros para adicionar o texto",
-    "AddTextSuccess": "O texto “{{title}}” foi adicionado com êxito.",
+    "AddTextSuccess": {
+      "part1": "O texto “",
+      "part2": "” foi adicionado com êxito."
+    },
     "CreatingText": "Criação de texto",
     "Configure": "Configurar conteúdo do texto",
     "TextTitle": "Título do texto",
@@ -178,7 +199,10 @@
   "EditTextScreen": {
     "EditText": "Editar texto",
     "EditTextError": "Resolva o(s) erro(s) para editar o texto",
-    "EditTextSuccess": "O texto “{{title}}” foi editado com êxito.",
+    "EditTextSuccess": {
+      "part1": "O texto “",
+      "part2": "” foi editado com êxito."
+    },
     "EditingText": "Editando texto",
     "TextTitle": "Título do texto",
     "TextTitleError": "Especifique um título para o texto",
@@ -221,7 +245,10 @@
     "MetricSuccessfullyEdited": "Métrica editada com êxito."
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessffully": "As métricas “{{title}}” foram adicionadas com êxito.",
+    "MetricsAddedSuccessfully": {
+      "part1": "As métricas “",
+      "part2": "” foram adicionadas com êxito."
+    },
     "Name": "Nome",
     "LastUpdated": "Última atualização",
     "Description": "Descrição",
@@ -251,7 +278,10 @@
     "ShowTitle": "Mostrar título no painel"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessffully": "As métricas “{{title}}” foram editadas com êxito.",
+    "MetricsEditedSuccessfully": {
+      "part1": "As métricas “",
+      "part2": "” foram editadas com êxito."
+    },
     "EditMetrics": "Editar métricas",
     "UploadingFile": "Fazendo upload do arquivo",
     "EditingMetrics": "Editando métricas",
@@ -268,7 +298,10 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "AddChartSuccess": "O gráfico “{{title}}” foi adicionado com êxito.",
+    "AddChartSuccess": {
+      "part1": "O gráfico “",
+      "part2": "” foi adicionado com êxito."
+    },
     "ResolveError": "Falha ao fazer o upload do arquivo. Certifique-se de que haja valores para todos os cabeçalhos de coluna."
   },
   "EditChartScreen": {
@@ -277,7 +310,10 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "EditChartSuccess": "O gráfico “{{title}}” foi editado com êxito.",
+    "EditChartSuccess": {
+      "part1": "O gráfico “",
+      "part2": "” foi editado com êxito."
+    },
     "ResolveError": "Falha ao fazer o upload do arquivo. Certifique-se de que haja valores para todos os cabeçalhos de coluna."
   },
   "AddTableScreen": {
@@ -285,7 +321,10 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "AddTableSuccess": "A tabela “{{title}}” foi adicionada com êxito.",
+    "AddTableSuccess": {
+      "part1": "A tabela “",
+      "part2": "” foi adicionada com êxito."
+    },
     "ChooseDataset": "Escolha um conjunto de dados para continuar"
   },
   "EditTableScreen": {
@@ -293,7 +332,10 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "EditTableSuccess": "A tabela “{{title}}” foi editada com êxito."
+    "EditTableSuccess": {
+      "part1": "A tabela “",
+      "part2": "” foi editada com êxito."
+    }
   },
   "BrandingAndStyling": "Marca e estilo",
   "BrandingAndStylingDescription": "Personalize seu painel de performance.",
@@ -413,8 +455,14 @@
     "FailToReturnToDraftError": "Falha ao retornar o painel ao estado de rascunho. Tente novamente.",
     "FailToSaveReleaseNotesError": "Falha ao salvar as notas de release. Tente novamente.",
     "MissingVersionNotesError": "Insira as notas da versão",
-    "ReturnToDraftSuccessAlert": "Painel {{dashboardName}} retornado com êxito ao estado de rascunho.",
-    "PublishedSuccessAlert": "O painel {{dashboardName}} foi publicado com êxito."
+    "ReturnToDraftSuccessAlert": {
+      "part1": "Painel ",
+      "part2": " retornado com êxito ao estado de rascunho."
+    },
+    "PublishedSuccessAlert": {
+      "part1": "O painel ",
+      "part2": " foi publicado com êxito."
+    }
   },
   "SettingsDateTimeFormat": "Formato de data e hora",
   "SettingsDateTimeFormatEdit": "Editar formato de data e hora",
@@ -760,7 +808,10 @@
   "LastSaved": "Salvo pela última vez",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Arquivo de imagem não especificado",
-    "ImageAddedSuccessffully": "A imagem “{{image}}” foi adicionada com êxito.",
+    "ImageAddedSuccessfully": {
+      "part1": "A imagem “",
+      "part2": "” foi adicionada com êxito."
+    },
     "AddImage": "Adicionar imagem",
     "ConfigureImage": "Configurar imagem",
     "StepTwo": "Etapa 2 de 2",
@@ -783,7 +834,10 @@
     "Cancel": "Cancelar"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessffully": "A imagem “{{image}}” foi editada com êxito.",
+    "ImageEditedSuccessfully": {
+      "part1": "A imagem “",
+      "part2": "” foi editada com êxito."
+    },
     "EditImage": "Editar imagem",
     "ResolveError": "Resolva o(s) erro(s) para editar a imagem",
     "Title": "Título da imagem",

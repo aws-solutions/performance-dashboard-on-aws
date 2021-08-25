@@ -356,9 +356,9 @@ function EditTable() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("EditTableScreen.EditTableSuccess", {
-            title: values.title,
-          }),
+          message: `${t("EditTableScreen.EditTableSuccess.part1")}${
+            values.title
+          }${t("EditTableScreen.EditTableSuccess.part2")}`,
         },
       });
     } catch (err) {

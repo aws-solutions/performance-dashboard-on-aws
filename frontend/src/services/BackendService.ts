@@ -111,6 +111,7 @@ async function editDashboard(
   dashboardId: string,
   name: string,
   topicAreaId: string,
+  displayTableOfContents: boolean,
   description: string,
   updatedAt: Date
 ) {
@@ -120,6 +121,7 @@ async function editDashboard(
     body: {
       name,
       topicAreaId,
+      displayTableOfContents,
       description,
       updatedAt,
     },

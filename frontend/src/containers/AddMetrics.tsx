@@ -42,6 +42,7 @@ interface FormValues {
   oneMetricPerRow: boolean;
   datasetType: string;
   significantDigitLabels: boolean;
+  metricsCenterAlign: boolean;
 }
 
 interface PathParams {
@@ -93,6 +94,7 @@ function AddMetrics() {
   const showTitle = watch("showTitle");
   const oneMetricPerRow = watch("oneMetricPerRow");
   const significantDigitLabels = watch("significantDigitLabels");
+  const metricsCenterAlign = watch("metricsCenterAlign");
 
   useEffect(() => {
     if (datasetType) {
@@ -183,6 +185,7 @@ function AddMetrics() {
                 ? DatasetType.DynamicDataset
                 : DatasetType.CreateNew,
             significantDigitLabels: values.significantDigitLabels,
+            metricsCenterAlign: values.metricsCenterAlign,
           }
         );
         setCreatingWidget(false);
@@ -190,9 +193,9 @@ function AddMetrics() {
         history.push(`/admin/dashboard/edit/${dashboardId}`, {
           alert: {
             type: "success",
-            message: t("AddMetricsScreen.MetricsAddedSuccessffully", {
-              title: values.title,
-            }),
+            message: `${t("AddMetricsScreen.MetricsAddedSuccessfully.part1")}${
+              values.title
+            }${t("AddMetricsScreen.MetricsAddedSuccessfully.part2")}`,
           },
         });
       }
@@ -613,6 +616,22 @@ function AddMetrics() {
                           {t("SignificantDigitLabels")}
                         </label>
                       </div>
+                      <div className="usa-checkbox">
+                        <input
+                          className="usa-checkbox__input"
+                          id="metricsCenterAlign"
+                          type="checkbox"
+                          name="metricsCenterAlign"
+                          defaultChecked={false}
+                          ref={register()}
+                        />
+                        <label
+                          className="usa-checkbox__label"
+                          htmlFor="metricsCenterAlign"
+                        >
+                          {t("MetricsCenterAlign")}
+                        </label>
+                      </div>
                     </fieldset>
                     <MetricsList
                       metrics={metrics}
@@ -656,6 +675,7 @@ function AddMetrics() {
                       metrics={metrics}
                       metricPerRow={oneMetricPerRow ? 1 : 3}
                       significantDigitLabels={significantDigitLabels}
+                      metricsCenterAlign={metricsCenterAlign}
                     />
                   </div>
                 </div>

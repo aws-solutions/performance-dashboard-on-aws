@@ -147,7 +147,7 @@ const PartWholeChartWidget = (props: Props) => {
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
       {partWholeData.current.length && (
@@ -228,10 +228,12 @@ const PartWholeChartWidget = (props: Props) => {
         <DataTable rows={data || []} columns={parts} fileName={props.title} />
       </div>
       {props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
-        />
+        <div style={showMobilePreview ? { clear: "left" } : {}}>
+          <MarkdownRender
+            source={props.summary}
+            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+          />
+        </div>
       )}
     </div>
   );

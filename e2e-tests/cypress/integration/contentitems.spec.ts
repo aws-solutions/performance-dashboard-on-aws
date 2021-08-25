@@ -145,6 +145,17 @@ describe("Admin user", () => {
     cy.contains(`Metrics '${newMetricsTitle}' have been successfully edited`);
     cy.get("div.grid-row").contains(newMetricsTitle);
 
+    // Copy metrics content item
+    editDashboardPage.copyContentItem();
+    cy.contains(`Metrics '${newMetricsTitle}' was successfully copied.`);
+    cy.get("div.grid-row").contains("(Copy) ".concat(newMetricsTitle));
+
+    // Delete metrics content item
+    editDashboardPage.deleteContentItem();
+    cy.contains(`Metrics '${newMetricsTitle}' was successfully deleted.`);
+    editDashboardPage.deleteContentItem();
+    cy.get("div.grid-row").should("not.exist");
+
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();
     dashboardListingPage.deleteDashboard(dashboardName);
@@ -158,12 +169,12 @@ describe("Admin user", () => {
     // Choose static dataset
     addChartPage.selectStaticDataset();
     cy.findByLabelText("Static datasets").attachFile(
-      "linechart_missing_header.csv"
+      "chart_missing_header.csv"
     );
     cy.contains(
       "Failed to upload file. Please make sure there are values for all column headers."
     );
-    addChartPage.uploadDataset("linechart.csv");
+    addChartPage.uploadDataset("chart.csv");
 
     // Select columns to display/hide
     addChartPage.selectColumns();
@@ -175,7 +186,7 @@ describe("Admin user", () => {
     const chartSummary = random.sentence();
     addChartPage.fillSummary(chartSummary);
 
-    // Verify Chart renders data from fixture linechart.csv
+    // Verify Chart renders data from fixture chart.csv
     addChartPage.verifyPreview(chartTitle, chartSummary);
 
     // Submit form
@@ -189,7 +200,7 @@ describe("Admin user", () => {
     const editChartPage = editDashboardPage.goToEditContentItem(
       "Chart"
     ) as EditChartPage;
-    editChartPage.uploadDataset("linechart.csv", "table.csv");
+    editChartPage.uploadDataset("chart.csv", "table.csv");
     editChartPage.selectColumns();
     const newChartTitle = random.word();
     const newChartSummary = random.sentence();
@@ -200,11 +211,22 @@ describe("Admin user", () => {
     editChartPage.verifyPreview(newChartTitle, newChartSummary);
 
     // Submit form
-    editDashboardPage = editChartPage.submit();
+    editDashboardPage = editChartPage.submit(false);
 
     // Verify edited content item shows up
     cy.contains(`'${newChartTitle}' chart has been successfully edited.`);
     cy.get("div.grid-row").contains(newChartTitle);
+
+    // Copy chart content item
+    editDashboardPage.copyContentItem();
+    cy.contains(`Line chart '${newChartTitle}' was successfully copied.`);
+    cy.get("div.grid-row").contains("(Copy) ".concat(newChartTitle));
+
+    // Delete chart content item
+    editDashboardPage.deleteContentItem();
+    cy.contains(`Line chart '${newChartTitle}' was successfully deleted.`);
+    editDashboardPage.deleteContentItem();
+    cy.get("div.grid-row").should("not.exist");
 
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();
@@ -244,7 +266,7 @@ describe("Admin user", () => {
     const editTablePage = editDashboardPage.goToEditContentItem(
       "Table"
     ) as EditTablePage;
-    editTablePage.uploadDataset("table.csv", "linechart.csv");
+    editTablePage.uploadDataset("table.csv", "chart.csv");
     editTablePage.selectColumns();
     const newTableTitle = random.word();
     const newTableSummary = random.sentence();
@@ -260,6 +282,17 @@ describe("Admin user", () => {
     // Verify edited content item shows up
     cy.contains(`'${newTableTitle}' table has been successfully edited.`);
     cy.get("div.grid-row").contains(newTableTitle);
+
+    // Copy table content item
+    editDashboardPage.copyContentItem();
+    cy.contains(`Table '${newTableTitle}' was successfully copied.`);
+    cy.get("div.grid-row").contains("(Copy) ".concat(newTableTitle));
+
+    // Delete table content item
+    editDashboardPage.deleteContentItem();
+    cy.contains(`Table '${newTableTitle}' was successfully deleted.`);
+    editDashboardPage.deleteContentItem();
+    cy.get("div.grid-row").should("not.exist");
 
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();

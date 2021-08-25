@@ -85,6 +85,7 @@ describe("getPublicHomepage", () => {
         state: DashboardState.Published,
         topicAreaId: "xyz",
         topicAreaName: "Health and Human Services",
+        displayTableOfContents: false,
       },
     ];
 
@@ -103,6 +104,7 @@ describe("getPublicHomepage", () => {
       updatedAt: now,
       topicAreaId: "xyz",
       topicAreaName: "Health and Human Services",
+      displayTableOfContents: false,
     };
 
     DashboardFactory.toPublic = jest.fn().mockReturnValue(publicDashboard);

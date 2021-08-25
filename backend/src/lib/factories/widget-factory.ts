@@ -177,6 +177,10 @@ function fromMetricsItem(widget: Widget): MetricsWidget {
         metricsWidget.content.significantDigitLabels !== undefined
           ? metricsWidget.content.significantDigitLabels
           : false,
+      metricsCenterAlign:
+        metricsWidget.content.metricsCenterAlign !== undefined
+          ? metricsWidget.content.metricsCenterAlign
+          : false,
     },
   };
 }
@@ -373,6 +377,10 @@ function createMetricsWidget(widget: Widget): MetricsWidget {
       significantDigitLabels:
         widget.content.significantDigitLabels !== undefined
           ? widget.content.significantDigitLabels
+          : false,
+      metricsCenterAlign:
+        widget.content.metricsCenterAlign !== undefined
+          ? widget.content.metricsCenterAlign
           : false,
     },
   };

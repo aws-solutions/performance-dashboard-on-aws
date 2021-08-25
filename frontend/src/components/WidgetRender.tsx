@@ -96,6 +96,7 @@ function WidgetWithDataset({ widget, showMobilePreview }: Props) {
               : 3
           }
           significantDigitLabels={metricsWidget.content.significantDigitLabels}
+          metricsCenterAlign={metricsWidget.content.metricsCenterAlign}
         />
       );
     default:

@@ -9,6 +9,7 @@ function ScrollTop() {
       onClick={() => window.scrollTo(0, 0)}
       variant="unstyled"
       className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-2"
+      type="button"
     >
       {t("ReturnToTop")}
     </Button>

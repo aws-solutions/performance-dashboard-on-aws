@@ -61,7 +61,9 @@ function EditText() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("EditTextScreen.EditTextSuccess", { title: values.title }),
+          message: `${t("EditTextScreen.EditTextSuccess.part1")}${
+            values.title
+          }${t("EditTextScreen.EditTextSuccess.part2")}`,
         },
       });
     } catch (err) {
@@ -216,7 +218,7 @@ function EditText() {
               {widget.content.text ? (
                 <div className="padding-left-05">
                   <MarkdownRender
-                    className="usa-prose"
+                    className="usa-prose textOrSummary"
                     source={widget.content.text}
                   />
                 </div>

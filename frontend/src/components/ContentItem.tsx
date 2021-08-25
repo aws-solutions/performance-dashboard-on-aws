@@ -68,9 +68,6 @@ const ContentItem = (props: Props) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    options: {
-      dropEffect: "copy",
-    },
   });
 
   const opacity = isDragging ? 0.9 : 1;

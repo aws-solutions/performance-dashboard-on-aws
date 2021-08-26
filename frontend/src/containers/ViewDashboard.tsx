@@ -10,6 +10,7 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
+import { WidgetType } from "../models";
 
 interface PathParams {
   friendlyURL: string;
@@ -53,13 +54,15 @@ function ViewDashboard() {
       <Navigation
         stickyPosition={80}
         offset={80}
-        widgetNameIds={dashboard?.widgets.map((widget) => {
-          return {
-            name: widget.name,
-            id: widget.id,
-            isInsideSection: !!widget.section,
-          };
-        })}
+        widgetNameIds={dashboard?.widgets
+          .filter((w) => w.widgetType === WidgetType.Section)
+          .map((widget) => {
+            return {
+              name: widget.name,
+              id: widget.id,
+              isInsideSection: !!widget.section,
+            };
+          })}
         activeWidgetId={activeWidgetId}
         setActivewidgetId={setActiveWidgetId}
         isTop={windowSize.width <= moveNavBarWidth}

@@ -108,13 +108,32 @@ describe("Widget Repository", () => {
     WidgetFactory.itemPk = jest.fn().mockReturnValue("Dashboard#123");
     WidgetFactory.itemSk = jest.fn().mockReturnValue("Widget#abc");
 
+    const getWidgetById = jest.spyOn(repo, "getWidgetById");
+    const widget: Widget = {
+      id: "123",
+      dashboardId: "abc",
+      widgetType: WidgetType.Text,
+      order: 1,
+      updatedAt: new Date(),
+      name: "AWS",
+      content: {},
+    };
+    getWidgetById.mockResolvedValue(widget);
+
     await repo.deleteWidget("123", "abc");
-    expect(dynamodb.delete).toHaveBeenCalledWith({
-      TableName: tableName,
-      Key: {
-        pk: "Dashboard#123",
-        sk: "Widget#abc",
-      },
+
+    expect(dynamodb.transactWrite).toBeCalledWith({
+      TransactItems: expect.arrayContaining([
+        {
+          Delete: {
+            TableName: tableName,
+            Key: {
+              pk: "Dashboard#123",
+              sk: "Widget#abc",
+            },
+          },
+        },
+      ]),
     });
   });
 
@@ -162,6 +181,8 @@ describe("Widget Repository", () => {
         id: "abc",
         order: 10,
         updatedAt: "2020-09-10T19:27:48",
+        content: {},
+        section: "",
       },
     ];
 
@@ -179,16 +200,21 @@ describe("Widget Repository", () => {
               pk: WidgetFactory.itemPk("Dashboard#123"),
               sk: WidgetFactory.itemSk("Widget#abc"),
             },
-            UpdateExpression: "set #order = :order, #updatedAt = :now",
+            UpdateExpression:
+              "set #order = :order, #content = :content, #section = :section, #updatedAt = :now",
             ConditionExpression: "#updatedAt <= :lastUpdated",
             ExpressionAttributeNames: {
               "#order": "order",
               "#updatedAt": "updatedAt",
+              "#content": "content",
+              "#section": "section",
             },
             ExpressionAttributeValues: {
               ":order": 10,
               ":now": now.toISOString(),
               ":lastUpdated": "2020-09-10T19:27:48",
+              ":content": {},
+              ":section": "",
             },
           },
         },

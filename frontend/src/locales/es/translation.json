@@ -30,6 +30,7 @@
   "MoveContentItemDown": "Mover {{name}} hacia abajo",
   "PlusAddContentItem": "+ Agregar elemento de contenido",
   "NoContentItems": "Este panel no tiene elementos de contenido. Cree el panel agregando",
+  "MoveInOut": "Mover los elementos de contenido dentro y fuera de esta sección",
   "ChartsTablesMore": "gráficos, tablas, texto y mucho más como contenido.",
   "ContentType": "Tipo de contenido",
   "DeleteContent": "Eliminar {{name}}",
@@ -56,6 +57,7 @@
   "Chart": "Gráfico",
   "Table": "Tabla",
   "Image": "Imagen",
+  "Section": "Sección",
   "SureDelete": "¿Seguro que desea eliminar este archivo?",
   "ZeroDashboards": "que no tienen paneles",
   "CanDelete": "Solo puede eliminar",
@@ -196,6 +198,20 @@
     "TextError": "Especifique el contenido del texto",
     "ViewMarkdownSyntax": "Ver sintaxis de marcado"
   },
+  "AddSectionScreen": {
+    "AddSection": "Agregar sección",
+    "AddSectionSuccess": "La sección “{{title}}” se ha agregado correctamente.",
+    "CreatingSection": "Creando la sección",
+    "AddSectionError": "Resolver los errores para agregar la sección",
+    "Configure": "Configurar el contenido de la sección",
+    "SectionTitle": "Título de la sección",
+    "SectionTitleError": "Especifique un título de sección",
+    "SectionTitleHint": "Asigne un título descriptivo al contenido.",
+    "ShowTitle": "Mostrar el título en el panel",
+    "ViewMarkdownSyntax": "Ver la sintaxis de marcado",
+    "SectionSummary": "Resumen de sección: opcional",
+    "SectionSummaryHint": "Incorpore un resumen a la sección para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la sección a personas con discapacidades visuales. Este campo admite el marcado."
+  },
   "EditTextScreen": {
     "EditText": "Editar texto",
     "EditTextError": "Resolver errores al editar el texto",
@@ -211,6 +227,19 @@
     "TextHint": "Escriba el texto aquí. Este campo admite el marcado.",
     "TextError": "Especifique el contenido del texto",
     "ViewMarkdownSyntax": "Ver sintaxis de marcado"
+  },
+  "EditSectionScreen": {
+    "EditSection": "Editar la sección",
+    "EditSectionError": "Resolver los errores para editar la sección",
+    "EditSectionSuccess": "La sección “{{title}}” se ha editado correctamente.",
+    "EditingSection": "Editando la sección",
+    "SectionTitle": "Título de la sección",
+    "SectionTitleError": "Especifique un título de sección",
+    "SectionTitleHint": "Asigne un título descriptivo al contenido.",
+    "ShowTitle": "Mostrar el título en el panel",
+    "ViewMarkdownSyntax": "Ver la sintaxis de marcado",
+    "SectionSummary": "Resumen de sección: opcional",
+    "SectionSummaryHint": "Incorpore un resumen a la sección para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la sección a personas con discapacidades visuales. Este campo admite el marcado."
   },
   "AddMetricScreen": {
     "AddMetric": "Agregar métrica",
@@ -551,11 +580,13 @@
     "TableImageAlt": "Vista previa de elementos de contenido de tabla",
     "DisabledToolTip": "Elija un elemento de contenido para continuar",
     "ImageAlt": "Vista previa del elemento de contenido de imagen",
+    "SectionAlt": "Vista previa del elemento de contenido de sección",
     "TextDescription": "Agregue un bloque de texto con formato. La entrada admite marcado, incluidos enlaces, viñetas, negrita y encabezados.",
     "MetricsDescription": "Agregue una o varias métricas para mostrar tendencias y datos numéricos de un momento dado.",
     "ChartDescription": "Mostrar datos como una visualización, incluidos gráficos de línea, barra, columna y de parte a todo.",
     "TableDescription": "Mostrar datos formateados en filas y columnas.",
-    "ImageDescription": "Cargue una imagen para mostrar."
+    "ImageDescription": "Cargue una imagen para mostrar.",
+    "SectionDescription": "Agregue una sección para agrupar elementos de contenido similares en una lista."
   },
   "AccessDeniedScreen": {
     "RequestAccessButton": "Solicitar acceso",
@@ -802,6 +833,7 @@
   "DonutChart": "Gráfico de anillos",
   "ContentItem": "elemento de contenido",
   "DeletingContentItem": "La eliminación de este elemento de contenido no se puede deshacer. ¿Está seguro de que desea continuar?",
+  "DeletingSectionContentItem": "La eliminación de este elemento de contenido no se puede deshacer. Esto también eliminará todos los elementos de contenido de la sección. ¿Está seguro de que desea continuar?",
   "Version": "Versión",
   "VersionDashboard": "Una versión de este panel es",
   "ViewVersion": "Ver versión {{state}}",

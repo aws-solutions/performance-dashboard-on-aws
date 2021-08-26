@@ -57,6 +57,7 @@ function ViewDashboard() {
           return {
             name: widget.name,
             id: widget.id,
+            isInsideSection: !!widget.section,
           };
         })}
         activeWidgetId={activeWidgetId}

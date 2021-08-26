@@ -28,8 +28,9 @@ function ChooseStaticDataset() {
 
   const [filter, setFilter] = useState("");
   const [json, setJson] = useState<Array<any>>([]);
-  const [staticDataset, setStaticDataset] =
-    useState<Dataset | undefined>(undefined);
+  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
+    undefined
+  );
 
   const crumbs = [
     {

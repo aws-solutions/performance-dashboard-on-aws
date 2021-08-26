@@ -197,6 +197,8 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
             id: "123",
             updatedAt,
             order: 1,
+            content: {},
+            section: undefined,
           },
         ],
       },

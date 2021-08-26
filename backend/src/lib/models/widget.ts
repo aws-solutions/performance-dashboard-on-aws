@@ -4,6 +4,7 @@ export enum WidgetType {
   Table = "Table",
   Metrics = "Metrics",
   Image = "Image",
+  Section = "Section",
 }
 
 export enum ChartType {
@@ -49,6 +50,7 @@ export interface Widget {
   order: number;
   updatedAt: Date;
   showTitle?: boolean;
+  section?: string;
   content: any;
 }
 
@@ -61,6 +63,7 @@ export interface WidgetItem {
   order: number;
   updatedAt: string;
   showTitle?: boolean;
+  section?: string;
   content: any;
 }
 
@@ -137,5 +140,14 @@ export interface MetricsWidget extends Widget {
       raw: string;
       json: string;
     };
+  };
+}
+
+export interface SectionWidget extends Widget {
+  content: {
+    title: string;
+    summary?: string;
+    widgetIds?: Array<string>;
+    showWithTabs: string;
   };
 }

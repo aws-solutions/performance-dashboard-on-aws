@@ -26,7 +26,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       # Install prettier
-      - run: npm install -g prettier@2.3.0
+      - run: npm install -g prettier
 
       # Check for frontend code style
       - run: prettier --check "frontend/src/**/*.tsx" "frontend/src/**/*.ts"

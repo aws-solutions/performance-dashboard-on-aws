@@ -5,7 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { useDashboard, useDashboardVersions, useWindowSize } from "../hooks";
-import { Dashboard, DashboardState, LocationState } from "../models";
+import {
+  Dashboard,
+  DashboardState,
+  LocationState,
+  WidgetType,
+} from "../models";
 import BackendService from "../services/BackendService";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
@@ -429,13 +434,15 @@ function ViewDashboardAdmin() {
             <Navigation
               stickyPosition={80}
               offset={240}
-              widgetNameIds={dashboard?.widgets.map((widget) => {
-                return {
-                  name: widget.name,
-                  id: widget.id,
-                  isInsideSection: !!widget.section,
-                };
-              })}
+              widgetNameIds={dashboard?.widgets
+                .filter((w) => w.widgetType === WidgetType.Section)
+                .map((widget) => {
+                  return {
+                    name: widget.name,
+                    id: widget.id,
+                    isInsideSection: !!widget.section,
+                  };
+                })}
               activeWidgetId={activeWidgetId}
               setActivewidgetId={setActiveWidgetId}
               isTop={showMobilePreview || windowSize.width <= moveNavBarWidth}

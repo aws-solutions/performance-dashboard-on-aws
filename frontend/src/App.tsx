@@ -28,11 +28,13 @@ import EditChart from "./containers/EditChart";
 import AddTable from "./containers/AddTable";
 import EditTable from "./containers/EditTable";
 import AddText from "./containers/AddText";
+import AddSection from "./containers/AddSection";
 import EditMetrics from "./containers/EditMetrics";
 import AddMetrics from "./containers/AddMetrics";
 import AddMetric from "./containers/AddMetric";
 import EditMetric from "./containers/EditMetric";
 import EditText from "./containers/EditText";
+import EditSection from "./containers/EditSection";
 import AdminHome from "./containers/AdminHome";
 import TopicareaSettings from "./containers/TopicareaSettings";
 import PublishingGuidanceSettings from "./containers/PublishingGuidanceSettings";
@@ -199,8 +201,16 @@ const routes: Array<AppRoute> = [
     component: EditText,
   },
   {
+    path: "/admin/dashboard/:dashboardId/edit-section/:widgetId",
+    component: EditSection,
+  },
+  {
     path: "/admin/dashboard/:dashboardId/add-text",
     component: AddText,
+  },
+  {
+    path: "/admin/dashboard/:dashboardId/add-section",
+    component: AddSection,
   },
   {
     path: "/admin/dashboard/:dashboardId/edit-metrics/:widgetId",

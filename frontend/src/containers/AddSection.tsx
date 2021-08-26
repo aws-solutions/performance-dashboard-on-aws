@@ -1,74 +1,71 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
+import { WidgetType } from "../models";
+import {
+  useDashboard,
+  useFullPreview,
+  useChangeBackgroundColor,
+} from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
-import {
-  useWidget,
-  useDashboard,
-  useFullPreview,
-  useChangeBackgroundColor,
-} from "../hooks";
-import Spinner from "../components/Spinner";
 import Link from "../components/Link";
+import Spinner from "../components/Spinner";
+import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
-import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
-  text: string;
   showTitle: boolean;
+  summary: string;
 }
 
 interface PathParams {
   dashboardId: string;
-  widgetId: string;
 }
 
-function EditText() {
+function AddSection() {
   const history = useHistory();
-  const { dashboardId, widgetId } = useParams<PathParams>();
+  const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, errors, handleSubmit, getValues } = useForm<FormValues>();
   const { t } = useTranslation();
-  const [editingWidget, setEditingWidget] = useState(false);
-  const { widget, setWidget } = useWidget(dashboardId, widgetId);
+  const [creatingWidget, setCreatingWidget] = useState(false);
+  const [title, setTitle] = useState("");
+  const [showTitle, setShowTitle] = useState(true);
+  const [summary, setSummary] = useState("");
   const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
-    if (!widget) {
-      return;
-    }
-
     try {
-      setEditingWidget(true);
-      await BackendService.editWidget(
+      setCreatingWidget(true);
+      await BackendService.createWidget(
         dashboardId,
-        widgetId,
         values.title,
+        WidgetType.Section,
         values.showTitle,
         {
-          text: values.text,
-        },
-        widget.updatedAt
+          title: values.title,
+          summary: values.summary,
+        }
       );
-      setEditingWidget(false);
+      setCreatingWidget(false);
 
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("EditTextScreen.EditTextSuccess.part1")}${
-            values.title
-          }${t("EditTextScreen.EditTextSuccess.part2")}`,
+          message: t("AddSectionScreen.AddSectionSuccess", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {
       console.log(t("AddContentFailure"), err);
-      setEditingWidget(false);
+      setCreatingWidget(false);
     }
   };
 
@@ -77,16 +74,14 @@ function EditText() {
   };
 
   const onFormChange = () => {
-    const { title, text, showTitle } = getValues();
-    setWidget({
-      ...widget,
-      name: title,
-      showTitle: showTitle,
-      content: {
-        ...widget?.content,
-        text,
-      },
-    });
+    const { title, showTitle, summary } = getValues();
+    setTitle(title);
+    setShowTitle(showTitle);
+    setSummary(summary);
+  };
+
+  const goBack = () => {
+    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const crumbs = [
@@ -102,9 +97,9 @@ function EditText() {
 
   useChangeBackgroundColor();
 
-  if (!loading && widget) {
+  if (!loading) {
     crumbs.push({
-      label: t("EditTextScreen.EditText"),
+      label: t("AddSectionScreen.AddSection"),
       url: "",
     });
   }
@@ -113,31 +108,36 @@ function EditText() {
     <>
       <Breadcrumbs crumbs={crumbs} />
 
-      {loading || !widget || editingWidget ? (
+      {creatingWidget ? (
         <Spinner
-          className="text-center margin-top-9"
-          label={`${
-            editingWidget
-              ? t("EditTextScreen.EditingText")
-              : t("LoadingSpinnerLabel")
-          }`}
+          className="text-center margin-top-6"
+          label={t("AddSectionScreen.CreatingSection")}
         />
       ) : (
         <>
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">{t("EditTextScreen.EditText")}</h1>
+                <h1 className="margin-top-0">
+                  {t("AddSectionScreen.AddSection")}
+                </h1>
+
+                <div className="text-base text-italic">
+                  {t("StepOfTotal", { step: "2", total: "2" })}
+                </div>
+                <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
+                  {t("AddSectionScreen.Configure")}
+                </div>
                 <form
                   className="usa-form usa-form--large"
                   onChange={onFormChange}
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <fieldset className="usa-fieldset">
-                    {errors.title || errors.text ? (
+                    {errors.title ? (
                       <Alert
                         type="error"
-                        message={t("EditTextScreen.EditTextError")}
+                        message={t("AddSectionScreen.AddSectionError")}
                         slim
                       ></Alert>
                     ) : (
@@ -146,10 +146,11 @@ function EditText() {
                     <TextField
                       id="title"
                       name="title"
-                      label={t("EditTextScreen.TextTitle")}
-                      hint={t("EditTextScreen.TextTitleHint")}
-                      error={errors.title && t("EditTextScreen.TextTitleError")}
-                      defaultValue={widget.name}
+                      label={t("AddSectionScreen.SectionTitle")}
+                      hint={t("AddSectionScreen.SectionTitleHint")}
+                      error={
+                        errors.title && t("AddSectionScreen.SectionTitleError")
+                      }
                       required
                       register={register}
                     />
@@ -160,42 +161,42 @@ function EditText() {
                         id="display-title"
                         type="checkbox"
                         name="showTitle"
-                        defaultChecked={widget.showTitle}
+                        defaultChecked={true}
                         ref={register()}
                       />
                       <label
                         className="usa-checkbox__label"
                         htmlFor="display-title"
                       >
-                        {t("EditTextScreen.ShowTitle")}
+                        {t("AddSectionScreen.ShowTitle")}
                       </label>
                     </div>
 
                     <TextField
-                      id="text"
-                      name="text"
-                      label={t("Text")}
+                      id="summary"
+                      name="summary"
+                      label={t("AddSectionScreen.SectionSummary")}
                       hint={
                         <>
-                          {t("EditTextScreen.TextHint")}{" "}
+                          {t("AddSectionScreen.SectionSummaryHint")}{" "}
                           <Link target="_blank" to={"/admin/markdown"} external>
-                            {t("EditTextScreen.ViewMarkdownSyntax")}
+                            {t("AddSectionScreen.ViewMarkdownSyntax")}
                           </Link>
                         </>
                       }
-                      error={errors.text && t("EditTextScreen.TextError")}
-                      required
                       register={register}
-                      defaultValue={widget.content.text}
                       multiline
-                      rows={10}
+                      rows={5}
                     />
                   </fieldset>
                   <br />
                   <br />
                   <hr />
-                  <Button disabled={editingWidget} type="submit">
-                    {t("Save")}
+                  <Button variant="outline" type="button" onClick={goBack}>
+                    {t("BackButton")}
+                  </Button>
+                  <Button disabled={creatingWidget} type="submit">
+                    {t("AddSectionScreen.AddSection")}
                   </Button>
                   <Button
                     variant="unstyled"
@@ -209,22 +210,21 @@ function EditText() {
               </PrimaryActionBar>
             </div>
             <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
-              {fullPreviewButton}
-              {widget.showTitle ? (
-                <h2 className="margin-top-3 margin-left-2px">{widget.name}</h2>
-              ) : (
-                ""
-              )}
-              {widget.content.text ? (
-                <div className="padding-left-05">
-                  <MarkdownRender
-                    className="usa-prose textOrSummary"
-                    source={widget.content.text}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
+              <div>
+                {fullPreviewButton}
+                {showTitle ? (
+                  <h2 className="margin-top-3 margin-left-2px">{title}</h2>
+                ) : (
+                  ""
+                )}
+                {summary ? (
+                  <div className="padding-left-05">
+                    <MarkdownRender className="usa-prose" source={summary} />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </div>
         </>
@@ -233,4 +233,4 @@ function EditText() {
   );
 }
 
-export default EditText;
+export default AddSection;

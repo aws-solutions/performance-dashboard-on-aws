@@ -31,8 +31,9 @@ export function useWidget(
   const [dynamicJson, setDynamicJson] = useState<Array<any>>([]);
   const [staticJson, setStaticJson] = useState<Array<any>>([]);
   const [csvJson, setCsvJson] = useState<Array<any>>([]);
-  const [datasetType, setDatasetType] =
-    useState<DatasetType | undefined>(undefined);
+  const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
+    undefined
+  );
 
   const fetchData = useCallback(async () => {
     setLoading(true);

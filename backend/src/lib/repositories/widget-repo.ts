@@ -1,5 +1,5 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import { Widget, WidgetItem } from "../models/widget";
+import { Widget, WidgetItem, WidgetType } from "../models/widget";
 import BaseRepository from "./base";
 import WidgetFactory, {
   WIDGET_PREFIX,
@@ -149,18 +149,73 @@ class WidgetRepository extends BaseRepository {
   }
 
   public async deleteWidget(dashboardId: string, widgetId: string) {
-    await this.dynamodb.delete({
-      TableName: this.tableName,
-      Key: {
-        pk: WidgetFactory.itemPk(dashboardId),
-        sk: WidgetFactory.itemSk(widgetId),
+    const widget = await this.getWidgetById(dashboardId, widgetId);
+    let transactions: DocumentClient.TransactWriteItemList = [];
+
+    if (widget.widgetType === WidgetType.Section && widget.content.widgetIds) {
+      for (let id of widget.content.widgetIds) {
+        transactions.push({
+          Delete: {
+            TableName: this.tableName,
+            Key: {
+              pk: WidgetFactory.itemPk(dashboardId),
+              sk: WidgetFactory.itemSk(id),
+            },
+          },
+        });
+      }
+    }
+
+    if (widget.section) {
+      const section = await this.getWidgetById(dashboardId, widget.section);
+      const content: any = section.content;
+      if (content.widgetIds) {
+        content.widgetIds = content.widgetIds.filter(
+          (wi: string) => wi !== widget.id
+        );
+        transactions.push({
+          Update: {
+            TableName: this.tableName,
+            Key: {
+              pk: WidgetFactory.itemPk(dashboardId),
+              sk: WidgetFactory.itemSk(section.id),
+            },
+            UpdateExpression: "set #content = :content",
+            ExpressionAttributeValues: {
+              ":content": content,
+            },
+            ExpressionAttributeNames: {
+              "#content": "content",
+            },
+          },
+        });
+      }
+    }
+
+    transactions.push({
+      Delete: {
+        TableName: this.tableName,
+        Key: {
+          pk: WidgetFactory.itemPk(dashboardId),
+          sk: WidgetFactory.itemSk(widgetId),
+        },
       },
+    });
+
+    await this.dynamodb.transactWrite({
+      TransactItems: transactions,
     });
   }
 
   public async setWidgetOrder(
     dashboardId: string,
-    widgets: Array<{ id: string; order: number; updatedAt: string }>
+    widgets: Array<{
+      id: string;
+      order: number;
+      updatedAt: string;
+      content: any;
+      section: string;
+    }>
   ) {
     const transactions: DocumentClient.TransactWriteItemList = widgets.map(
       (widget) => ({
@@ -170,16 +225,21 @@ class WidgetRepository extends BaseRepository {
             pk: WidgetFactory.itemPk(dashboardId),
             sk: WidgetFactory.itemSk(widget.id),
           },
-          UpdateExpression: "set #order = :order, #updatedAt = :now",
+          UpdateExpression:
+            "set #order = :order, #content = :content, #section = :section, #updatedAt = :now",
           ConditionExpression: "#updatedAt <= :lastUpdated",
           ExpressionAttributeNames: {
             "#order": "order",
             "#updatedAt": "updatedAt",
+            "#content": "content",
+            "#section": "section",
           },
           ExpressionAttributeValues: {
             ":order": widget.order,
             ":now": new Date().toISOString(),
             ":lastUpdated": widget.updatedAt,
+            ":content": widget.content,
+            ":section": widget.section || "",
           },
         },
       })

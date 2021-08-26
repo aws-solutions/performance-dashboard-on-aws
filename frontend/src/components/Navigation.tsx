@@ -4,6 +4,7 @@ import { NavHashLink } from "react-router-hash-link";
 interface WidgetNameId {
   name: string;
   id: string;
+  isInsideSection: boolean;
 }
 
 interface Props {
@@ -88,7 +89,9 @@ function Navigation({
                   <NavHashLink
                     to={"#" + widget.id}
                     scroll={(el) => scrollWithOffset(el)}
-                    style={{ paddingLeft: "7px" }}
+                    style={{
+                      paddingLeft: widget.isInsideSection ? "28px" : "7px",
+                    }}
                   >
                     {widget.name}
                   </NavHashLink>

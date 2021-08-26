@@ -9,6 +9,7 @@ import {
   ChartType,
   MetricsWidget,
   ImageWidget,
+  SectionWidget,
 } from "../models/widget";
 
 export const WIDGET_ITEM_TYPE = "Widget";
@@ -21,6 +22,7 @@ type CreateWidgetInfo = {
   widgetType: WidgetType;
   showTitle?: boolean;
   content: any;
+  section?: string;
 };
 
 function createWidget(widgetInfo: CreateWidgetInfo): Widget {
@@ -33,6 +35,7 @@ function createWidget(widgetInfo: CreateWidgetInfo): Widget {
     widgetType: widgetInfo.widgetType,
     showTitle: widgetInfo.showTitle,
     content: widgetInfo.content,
+    section: widgetInfo.section,
   };
 
   switch (widgetInfo.widgetType) {
@@ -46,6 +49,8 @@ function createWidget(widgetInfo: CreateWidgetInfo): Widget {
       return createMetricsWidget(widget);
     case WidgetType.Image:
       return createImageWidget(widget);
+    case WidgetType.Section:
+      return createSectionWidget(widget);
     default:
       throw new Error("Invalid widget type");
   }
@@ -63,6 +68,7 @@ function createFromWidget(dashboardId: string, widget: Widget): Widget {
     order: widget.order,
     updatedAt: new Date(),
     showTitle: widget.showTitle,
+    section: widget.section,
     content: widget.content,
   };
 }
@@ -80,6 +86,7 @@ function fromItem(item: WidgetItem): Widget {
     order: item.order,
     updatedAt,
     showTitle,
+    section: item.section,
     content: item.content,
   };
 
@@ -95,6 +102,9 @@ function fromItem(item: WidgetItem): Widget {
 
     case WidgetType.Metrics:
       return fromMetricsItem(widget);
+
+    case WidgetType.Section:
+      return fromSectionItem(widget);
 
     default:
       return widget;
@@ -175,6 +185,20 @@ function fromMetricsItem(widget: Widget): MetricsWidget {
   };
 }
 
+function fromSectionItem(widget: Widget): SectionWidget {
+  const sectionWidget = widget as SectionWidget;
+  return {
+    ...widget,
+    content: {
+      ...widget.content,
+      widgetIds:
+        sectionWidget.content.widgetIds !== undefined
+          ? sectionWidget.content.widgetIds
+          : [],
+    },
+  };
+}
+
 function fromItems(items: Array<WidgetItem>): Array<Widget> {
   return items.map((item) => fromItem(item));
 }
@@ -189,6 +213,7 @@ function toItem(widget: Widget): WidgetItem {
     order: widget.order,
     updatedAt: widget.updatedAt?.toISOString(),
     showTitle: widget.showTitle,
+    section: widget.section,
     content: widget.content,
   };
 }
@@ -357,6 +382,22 @@ function createMetricsWidget(widget: Widget): MetricsWidget {
         widget.content.metricsCenterAlign !== undefined
           ? widget.content.metricsCenterAlign
           : false,
+    },
+  };
+}
+
+function createSectionWidget(widget: Widget): SectionWidget {
+  if (!widget.content.title) {
+    throw new Error("Section widget must have `content.title` field");
+  }
+
+  return {
+    ...widget,
+    content: {
+      title: widget.content.title,
+      widgetIds: widget.content.widgetIds,
+      summary: widget.content.summary,
+      showWithTabs: widget.content.showWithTabs,
     },
   };
 }

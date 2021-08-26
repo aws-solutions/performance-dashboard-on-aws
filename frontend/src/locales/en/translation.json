@@ -30,6 +30,7 @@
   "MoveContentItemDown": "Move {{name}} down",
   "PlusAddContentItem": "+ Add content item",
   "NoContentItems": "This dashboard has no content items. Build the dashboard by adding",
+  "MoveInOut": "Move content items in and out of this section",
   "ChartsTablesMore": "charts, tables, text, and more as content.",
   "ContentType": "Content type",
   "DeleteContent": "Delete {{name}}",
@@ -56,6 +57,7 @@
   "Chart": "Chart",
   "Table": "Table",
   "Image": "Image",
+  "Section": "Section",
   "SureDelete": "Are you sure you want to delete this",
   "ZeroDashboards": "that have zero dashboards",
   "CanDelete": "You can only delete",
@@ -196,6 +198,20 @@
     "TextError": "Please specify text content",
     "ViewMarkdownSyntax": "View Markdown Syntax"
   },
+  "AddSectionScreen": {
+    "AddSection": "Add section",
+    "AddSectionSuccess": "'{{title}}' section has been successfully added.",
+    "CreatingSection": "Creating section",
+    "AddSectionError": "Resolve error(s) to add the section",
+    "Configure": "Configure section content",
+    "SectionTitle": "Section title",
+    "SectionTitleError": "Please specify a section title",
+    "SectionTitleHint": "Give your content a descriptive title.",
+    "ShowTitle": "Show title on dashboard",
+    "ViewMarkdownSyntax": "View Markdown Syntax",
+    "SectionSummary": "Section summary - optional",
+    "SectionSummaryHint": "Give your section a summary to explain it in more depth. It can also be read by screen readers to describe the section for those with visual impairments. This field supports markdown."
+  },
   "EditTextScreen": {
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
@@ -211,6 +227,19 @@
     "TextHint": "Enter text here. This field supports markdown.",
     "TextError": "Please specify text content",
     "ViewMarkdownSyntax": "View Markdown Syntax"
+  },
+  "EditSectionScreen": {
+    "EditSection": "Edit section",
+    "EditSectionError": "Resolve error(s) to edit the section",
+    "EditSectionSuccess": "'{{title}}' section has been successfully edited.",
+    "EditingSection": "Editing section",
+    "SectionTitle": "Section title",
+    "SectionTitleError": "Please specify a section title",
+    "SectionTitleHint": "Give your content a descriptive title.",
+    "ShowTitle": "Show title on dashboard",
+    "ViewMarkdownSyntax": "View Markdown Syntax",
+    "SectionSummary": "Section summary - optional",
+    "SectionSummaryHint": "Give your section a summary to explain it in more depth. It can also be read by screen readers to describe the section for those with visual impairments. This field supports markdown."
   },
   "AddMetricScreen": {
     "AddMetric": "Add metric",
@@ -552,11 +581,13 @@
     "TableImageAlt": "Table Content Item Preview",
     "DisabledToolTip": "Choose a content item to continue",
     "ImageAlt": "Image Content Item Preview",
+    "SectionAlt": "Section Content Item Preview",
     "TextDescription": "Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.",
     "MetricsDescription": "Add one or more metrics to show point-in-time numerical data and trends.",
     "ChartDescription": "Display data as a visualization, including line, bar, column and part-to-whole charts.",
     "TableDescription": "Display data formatted in rows and columns.",
-    "ImageDescription": "Upload an image to display."
+    "ImageDescription": "Upload an image to display.",
+    "SectionDescription": "Add a section to group similar content items in a list."
   },
   "AccessDeniedScreen": {
     "RequestAccessButton": "Request access",
@@ -803,6 +834,7 @@
   "DonutChart": "Donut chart",
   "ContentItem": "content item",
   "DeletingContentItem": "Deleting this content item cannot be undone. Are you sure you want to continue?",
+  "DeletingSectionContentItem": "Deleting this content item cannot be undone. This will also delete all content items within the section. Are you sure you want to continue?",
   "Version": "Version",
   "VersionDashboard": "A version of this dashboard is",
   "ViewVersion": "View {{state}} version",

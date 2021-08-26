@@ -20,8 +20,8 @@ import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
-  text: string;
   showTitle: boolean;
+  summary: string;
 }
 
 interface PathParams {
@@ -29,7 +29,7 @@ interface PathParams {
   widgetId: string;
 }
 
-function EditText() {
+function EditSection() {
   const history = useHistory();
   const { dashboardId, widgetId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
@@ -52,7 +52,9 @@ function EditText() {
         values.title,
         values.showTitle,
         {
-          text: values.text,
+          title: values.title,
+          summary: values.summary,
+          widgetIds: widget.content.widgetIds,
         },
         widget.updatedAt
       );
@@ -61,9 +63,9 @@ function EditText() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("EditTextScreen.EditTextSuccess.part1")}${
-            values.title
-          }${t("EditTextScreen.EditTextSuccess.part2")}`,
+          message: t("EditSectionScreen.EditSectionSuccess", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {
@@ -77,14 +79,15 @@ function EditText() {
   };
 
   const onFormChange = () => {
-    const { title, text, showTitle } = getValues();
+    const { title, showTitle, summary } = getValues();
     setWidget({
       ...widget,
       name: title,
       showTitle: showTitle,
       content: {
         ...widget?.content,
-        text,
+        title,
+        summary,
       },
     });
   };
@@ -104,7 +107,7 @@ function EditText() {
 
   if (!loading && widget) {
     crumbs.push({
-      label: t("EditTextScreen.EditText"),
+      label: t("EditSectionScreen.EditSection"),
       url: "",
     });
   }
@@ -118,7 +121,7 @@ function EditText() {
           className="text-center margin-top-9"
           label={`${
             editingWidget
-              ? t("EditTextScreen.EditingText")
+              ? t("EditSectionScreen.EditingSection")
               : t("LoadingSpinnerLabel")
           }`}
         />
@@ -127,17 +130,19 @@ function EditText() {
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">{t("EditTextScreen.EditText")}</h1>
+                <h1 className="margin-top-0">
+                  {t("EditSectionScreen.EditSection")}
+                </h1>
                 <form
                   className="usa-form usa-form--large"
                   onChange={onFormChange}
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <fieldset className="usa-fieldset">
-                    {errors.title || errors.text ? (
+                    {errors.title ? (
                       <Alert
                         type="error"
-                        message={t("EditTextScreen.EditTextError")}
+                        message={t("EditSectionScreen.EditSectionError")}
                         slim
                       ></Alert>
                     ) : (
@@ -146,9 +151,11 @@ function EditText() {
                     <TextField
                       id="title"
                       name="title"
-                      label={t("EditTextScreen.TextTitle")}
-                      hint={t("EditTextScreen.TextTitleHint")}
-                      error={errors.title && t("EditTextScreen.TextTitleError")}
+                      label={t("EditSectionScreen.SectionTitle")}
+                      hint={t("EditSectionScreen.SectionTitleHint")}
+                      error={
+                        errors.title && t("EditSectionScreen.SectionTitleError")
+                      }
                       defaultValue={widget.name}
                       required
                       register={register}
@@ -167,28 +174,26 @@ function EditText() {
                         className="usa-checkbox__label"
                         htmlFor="display-title"
                       >
-                        {t("EditTextScreen.ShowTitle")}
+                        {t("EditSectionScreen.ShowTitle")}
                       </label>
                     </div>
 
                     <TextField
-                      id="text"
-                      name="text"
-                      label={t("Text")}
+                      id="summary"
+                      name="summary"
+                      label={t("EditSectionScreen.SectionSummary")}
                       hint={
                         <>
-                          {t("EditTextScreen.TextHint")}{" "}
+                          {t("EditSectionScreen.SectionSummaryHint")}{" "}
                           <Link target="_blank" to={"/admin/markdown"} external>
-                            {t("EditTextScreen.ViewMarkdownSyntax")}
+                            {t("EditSectionScreen.ViewMarkdownSyntax")}
                           </Link>
                         </>
                       }
-                      error={errors.text && t("EditTextScreen.TextError")}
-                      required
                       register={register}
-                      defaultValue={widget.content.text}
+                      defaultValue={widget.content.summary}
                       multiline
-                      rows={10}
+                      rows={5}
                     />
                   </fieldset>
                   <br />
@@ -211,15 +216,17 @@ function EditText() {
             <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
               {fullPreviewButton}
               {widget.showTitle ? (
-                <h2 className="margin-top-3 margin-left-2px">{widget.name}</h2>
+                <h2 className="margin-top-3 margin-left-2px">
+                  {widget.content.title}
+                </h2>
               ) : (
                 ""
               )}
-              {widget.content.text ? (
+              {widget.content.summary ? (
                 <div className="padding-left-05">
                   <MarkdownRender
-                    className="usa-prose textOrSummary"
-                    source={widget.content.text}
+                    className="usa-prose"
+                    source={widget.content.summary}
                   />
                 </div>
               ) : (
@@ -233,4 +240,4 @@ function EditText() {
   );
 }
 
-export default EditText;
+export default EditSection;

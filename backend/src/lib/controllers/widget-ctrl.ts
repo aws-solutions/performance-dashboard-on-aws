@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import WidgetFactory from "../factories/widget-factory";
 import WidgetRepository from "../repositories/widget-repo";
 import DashboardRepository from "../repositories/dashboard-repo";
+import { WidgetType } from "../models/widget";
 
 async function getWidgetById(req: Request, res: Response) {
   const { id, widgetId } = req.params;
@@ -144,6 +145,7 @@ async function duplicateWidget(req: Request, res: Response) {
   }
 
   let newWidget;
+  let newWidgets = [];
   try {
     newWidget = WidgetFactory.createWidget({
       name: `(${copyLabel || "Copy"}) ${widget.name}`,
@@ -158,6 +160,33 @@ async function duplicateWidget(req: Request, res: Response) {
         newWidget.content.title
       }`;
     }
+    if (
+      widget.widgetType === WidgetType.Section &&
+      widget.content.widgetIds &&
+      widget.content.widgetIds.length
+    ) {
+      for (const id of widget.content.widgetIds) {
+        const childWidget = await repo.getWidgetById(dashboardId, id);
+        const newChildWidget = WidgetFactory.createWidget({
+          name: `(${copyLabel || "Copy"}) ${childWidget.name}`,
+          dashboardId,
+          widgetType: childWidget.widgetType,
+          showTitle: childWidget.showTitle,
+          content: childWidget.content,
+          section: newWidget.id,
+        });
+        newChildWidget.updatedAt = childWidget.updatedAt;
+        if (newChildWidget.content.title) {
+          newChildWidget.content.title = `(${copyLabel || "Copy"}) ${
+            newChildWidget.content.title
+          }`;
+        }
+        newWidgets.push(newChildWidget);
+      }
+      if (newWidgets.length) {
+        newWidget.content.widgetIds = newWidgets.map((w) => w.id);
+      }
+    }
   } catch (err) {
     console.log("Invalid request to create widget", err);
     return res.status(400).send(err.message);
@@ -166,6 +195,9 @@ async function duplicateWidget(req: Request, res: Response) {
   const dashboardRepo = DashboardRepository.getInstance();
 
   await repo.saveWidget(newWidget);
+  for (const nw of newWidgets) {
+    await repo.saveWidget(nw);
+  }
   await dashboardRepo.updateAt(dashboardId, user);
 
   return res.json(newWidget);

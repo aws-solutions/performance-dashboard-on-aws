@@ -30,6 +30,7 @@
   "MoveContentItemDown": "Mover {{name}} para baixo",
   "PlusAddContentItem": "+ Adicionar item de conteúdo",
   "NoContentItems": "Este painel não tem itens de conteúdo. Crie o painel adicionando",
+  "MoveInOut": "Mover itens de conteúdo para dentro e fora desta seção",
   "ChartsTablesMore": "gráficos, tabelas, texto e muito mais como conteúdo.",
   "ContentType": "Tipo de conteúdo",
   "DeleteContent": "Excluir {{name}}",
@@ -56,6 +57,7 @@
   "Chart": "Gráfico",
   "Table": "Tabela",
   "Image": "Imagem",
+  "Section": "Seção",
   "SureDelete": "Tem certeza de que deseja excluir este/a",
   "ZeroDashboards": "que não tem nenhum painel",
   "CanDelete": "Você só pode excluir",
@@ -211,6 +213,33 @@
     "TextHint": "Insira o texto aqui. Este campo é compatível com a linguagem Markdown.",
     "TextError": "Especifique o conteúdo do texto",
     "ViewMarkdownSyntax": "Visualizar sintaxe Markdown"
+  },
+  "AddSectionScreen": {
+    "AddSection": "Adicionar seção",
+    "AddSectionSuccess": "A imagem “{{title}}” foi adicionada com êxito.",
+    "CreatingSection": "Criando seção",
+    "AddSectionError": "Resolver erro(s) para adicionar a seção",
+    "Configure": "Configurar conteúdo da seção",
+    "SectionTitle": "Título da seção",
+    "SectionTitleError": "Especifique um título de seção",
+    "SectionTitleHint": "Forneça um título descritivo ao seu conteúdo.",
+    "ShowTitle": "Mostrar título no painel",
+    "ViewMarkdownSyntax": "Visualizar sintaxe Markdown",
+    "SectionSummary": "Resumo da seção - opcional",
+    "SectionSummaryHint": "Forneça um resumo à sua seção para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a seção a usuários com deficiência visual. Esse campo oferece suporte para Markdown."
+  },
+  "EditSectionScreen": {
+    "EditSection": "Editar seção",
+    "EditSectionError": "Resolver erro(s) para editar a seção",
+    "EditSectionSuccess": "A seção “{{title}}” foi editada com êxito.",
+    "EditingSection": "Editando seção",
+    "SectionTitle": "Título da seção",
+    "SectionTitleError": "Especifique um título de seção",
+    "SectionTitleHint": "Forneça um título descritivo ao seu conteúdo.",
+    "ShowTitle": "Mostrar título no painel",
+    "ViewMarkdownSyntax": "Visualizar sintaxe Markdown",
+    "SectionSummary": "Resumo da seção - opcional",
+    "SectionSummaryHint": "Forneça um resumo à sua seção para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a seção a usuários com deficiência visual. Esse campo oferece suporte para Markdown."
   },
   "AddMetricScreen": {
     "AddMetric": "Adicionar métrica",
@@ -551,11 +580,13 @@
     "TableImageAlt": "Visualização do item de conteúdo de tabela",
     "DisabledToolTip": "Escolha um item de conteúdo para continuar",
     "ImageAlt": "Visualização do item de conteúdo de imagem",
+    "SectionAlt": "Visualização do item de conteúdo da seção",
     "TextDescription": "Adicione um bloco de texto formatado. A entrada de texto é compatível com a linguagem Markdown, incluindo links, marcadores, negrito e cabeçalhos.",
     "MetricsDescription": "Adicione uma ou mais métricas para mostrar dados numéricos pontuais e tendências.",
     "ChartDescription": "Mostre dados em uma representação visual, incluindo gráficos de linhas, barras, colunas e blocos.",
     "TableDescription": "Mostre dados formatados em linhas e colunas.",
-    "ImageDescription": "Faça upload de uma imagem a ser exibida."
+    "ImageDescription": "Faça upload de uma imagem a ser exibida.",
+    "SectionDescription": "Adicione uma seção para agrupar itens de conteúdo semelhantes em uma lista."
   },
   "AccessDeniedScreen": {
     "RequestAccessButton": "Solicitar acesso",
@@ -802,6 +833,7 @@
   "DonutChart": "Gráfico de rosca",
   "ContentItem": "item de conteúdo",
   "DeletingContentItem": "A exclusão deste item de conteúdo não pode ser desfeita. Tem certeza de que deseja continuar?",
+  "DeletingSectionContentItem": "A exclusão deste item de conteúdo não pode ser desfeita. Isso também excluirá todos os itens de conteúdo da seção. Tem certeza de que deseja continuar?",
   "Version": "Versão",
   "VersionDashboard": "Uma versão deste painel é",
   "ViewVersion": "Visualizar versão {{state}}",

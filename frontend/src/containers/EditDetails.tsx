@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 interface FormValues {
   name: string;
   topicAreaId: string;
+  displayTableOfContents: boolean;
   description: string;
 }
 
@@ -51,6 +52,7 @@ function EditDetails() {
       dashboardId,
       values.name,
       values.topicAreaId,
+      values.displayTableOfContents,
       values.description || "",
       dashboard ? dashboard.updatedAt : new Date()
     );
@@ -143,6 +145,26 @@ function EditDetails() {
                       label: topicarea.name,
                     }))}
                   />
+
+                  <div className="usa-checkbox">
+                    <br />
+                    <input
+                      className="usa-checkbox__input"
+                      id="display-table-of-contents"
+                      type="checkbox"
+                      name="displayTableOfContents"
+                      defaultChecked={
+                        dashboard ? dashboard.displayTableOfContents : false
+                      }
+                      ref={register}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="display-table-of-contents"
+                    >
+                      {t("DisplayTableOfContents")}
+                    </label>
+                  </div>
 
                   <TextField
                     id="description"

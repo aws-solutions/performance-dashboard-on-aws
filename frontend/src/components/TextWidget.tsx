@@ -12,7 +12,10 @@ function TextWidget(props: Props) {
   return (
     <div>
       {showTitle && <h2>{name}</h2>}
-      <MarkdownRender className="usa-prose" source={content.text} />
+      <MarkdownRender
+        className="usa-prose textOrSummary"
+        source={content.text}
+      />
     </div>
   );
 }

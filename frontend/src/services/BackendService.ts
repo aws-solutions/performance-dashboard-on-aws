@@ -111,6 +111,7 @@ async function editDashboard(
   dashboardId: string,
   name: string,
   topicAreaId: string,
+  displayTableOfContents: boolean,
   description: string,
   updatedAt: Date
 ) {
@@ -120,6 +121,7 @@ async function editDashboard(
     body: {
       name,
       topicAreaId,
+      displayTableOfContents,
       description,
       updatedAt,
     },
@@ -266,6 +268,8 @@ async function setWidgetOrder(
     id: widget.id,
     updatedAt: widget.updatedAt,
     order: widget.order,
+    section: widget.section,
+    content: widget.content,
   }));
   return await API.put(apiName, `dashboard/${dashboardId}/widgetorder`, {
     headers,

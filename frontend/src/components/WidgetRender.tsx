@@ -11,6 +11,7 @@ import { useWidgetDataset, useImage } from "../hooks";
 import ChartWidgetComponent from "../components/ChartWidget";
 import TableWidgetComponent from "../components/TableWidget";
 import TextWidget from "../components/TextWidget";
+import SectionWidget from "../components/SectionWidget";
 import ImageWidgetComponent from "../components/ImageWidget";
 import MetricsWidgetComponent from "../components/MetricsWidget";
 
@@ -40,6 +41,8 @@ function WidgetRender({ widget, showMobilePreview }: Props) {
       );
     case WidgetType.Image:
       return <WidgetWithImage widget={widget as ImageWidget} />;
+    case WidgetType.Section:
+      return <SectionWidget widget={widget} />;
     default:
       return null;
   }
@@ -93,6 +96,7 @@ function WidgetWithDataset({ widget, showMobilePreview }: Props) {
               : 3
           }
           significantDigitLabels={metricsWidget.content.significantDigitLabels}
+          metricsCenterAlign={metricsWidget.content.metricsCenterAlign}
         />
       );
     default:

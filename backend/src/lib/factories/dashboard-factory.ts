@@ -27,6 +27,7 @@ function createNew(
     parentDashboardId: id,
     topicAreaId,
     topicAreaName,
+    displayTableOfContents: false,
     description,
     state: DashboardState.Draft,
     createdBy: user.userId,
@@ -48,6 +49,22 @@ function createDraftFromDashboard(
     widgets = dashboard.widgets.map((widget) =>
       WidgetFactory.createFromWidget(id, widget)
     );
+    for (const widget of widgets) {
+      if (widget.section) {
+        const sectionIndex = dashboard.widgets.findIndex(
+          (w) => w.id === widget.section
+        );
+        widget.section = widgets[sectionIndex].id;
+      }
+      if (widget.content && widget.content.widgetIds) {
+        const widgetIds: string[] = [];
+        for (const id of widget.content.widgetIds) {
+          const widgetIndex = dashboard.widgets.findIndex((w) => w.id === id);
+          widgetIds.push(widgets[widgetIndex].id);
+        }
+        widget.content.widgetIds = widgetIds;
+      }
+    }
   }
 
   return {
@@ -57,6 +74,7 @@ function createDraftFromDashboard(
     parentDashboardId: dashboard.parentDashboardId,
     topicAreaId: dashboard.topicAreaId,
     topicAreaName: dashboard.topicAreaName,
+    displayTableOfContents: dashboard.displayTableOfContents,
     description: dashboard.description,
     state: DashboardState.Draft,
     createdBy: user.userId,
@@ -80,6 +98,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
     dashboardName: dashboard.name,
     topicAreaName: dashboard.topicAreaName,
     topicAreaId: TopicareaFactory.itemId(dashboard.topicAreaId),
+    displayTableOfContents: dashboard.displayTableOfContents,
     description: dashboard.description,
     state: dashboard.state,
     createdBy: dashboard.createdBy,
@@ -103,6 +122,7 @@ function fromItem(item: DashboardItem): Dashboard {
     name: item.dashboardName,
     topicAreaId: item.topicAreaId.substring(10),
     topicAreaName: item.topicAreaName,
+    displayTableOfContents: item.displayTableOfContents,
     description: item.description,
     createdBy: item.createdBy,
     parentDashboardId: item.parentDashboardId,
@@ -133,6 +153,7 @@ function toPublic(dashboard: Dashboard): PublicDashboard {
     name: dashboard.name,
     topicAreaId: dashboard.topicAreaId,
     topicAreaName: dashboard.topicAreaName,
+    displayTableOfContents: dashboard.displayTableOfContents,
     description: dashboard.description,
     updatedAt: dashboard.updatedAt,
     widgets: dashboard.widgets,

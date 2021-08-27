@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
+import ScrollTop from "../components/ScrollTop";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
 import Button from "./Button";
@@ -397,7 +398,8 @@ function CheckData(props: Props) {
                 props.sortByDesc !== undefined ? !props.sortByDesc : true
               }
               initialSortByField={props.sortByColumn}
-              disablePagination={true}
+              pageSize={50}
+              disablePagination={false}
               disableBorderless={true}
               columns={checkDataTableColumns}
               selectedHeaders={props.selectedHeaders}
@@ -409,6 +411,9 @@ function CheckData(props: Props) {
               setSortByDesc={props.setSortByDesc}
               reset={props.reset}
             />
+          </div>
+          <div className="text-right">
+            <ScrollTop />
           </div>
         </div>
       </div>

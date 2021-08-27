@@ -60,12 +60,15 @@ function EditTable() {
   const { dynamicDatasets, staticDatasets, loadingDatasets } = useDatasets();
   const { register, errors, handleSubmit, watch, reset } =
     useForm<FormValues>();
-  const [dynamicDataset, setDynamicDataset] =
-    useState<Dataset | undefined>(undefined);
-  const [staticDataset, setStaticDataset] =
-    useState<Dataset | undefined>(undefined);
-  const [csvErrors, setCsvErrors] =
-    useState<Array<object> | undefined>(undefined);
+  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
+    undefined
+  );
+  const [staticDataset, setStaticDataset] = useState<Dataset | undefined>(
+    undefined
+  );
+  const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
+    undefined
+  );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
@@ -73,8 +76,9 @@ function EditTable() {
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const [staticFileName, setStaticFileName] = useState<string | undefined>("");
   const [oldStep, setOldStep] = useState<number>(-1);
-  const [dynamicFileName, setDynamicFileName] =
-    useState<string | undefined>("");
+  const [dynamicFileName, setDynamicFileName] = useState<string | undefined>(
+    ""
+  );
   const {
     widget,
     datasetType,
@@ -93,8 +97,9 @@ function EditTable() {
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
-  const [sortByColumn, setSortByColumn] =
-    useState<string | undefined>(undefined);
+  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
+    undefined
+  );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
@@ -114,8 +119,9 @@ function EditTable() {
 
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const [displayedJson, setDisplayedJson] = useState<Array<any>>([]);
-  const [displayedDatasetType, setDisplayedDatasetType] =
-    useState<DatasetType | undefined>();
+  const [displayedDatasetType, setDisplayedDatasetType] = useState<
+    DatasetType | undefined
+  >();
 
   const initializeColumnsMetadata = () => {
     setSelectedHeaders(new Set<string>());
@@ -350,9 +356,9 @@ function EditTable() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("EditTableScreen.EditTableSuccess", {
-            title: values.title,
-          }),
+          message: `${t("EditTableScreen.EditTableSuccess.part1")}${
+            values.title
+          }${t("EditTableScreen.EditTableSuccess.part2")}`,
         },
       });
     } catch (err) {

@@ -37,6 +37,7 @@ export type Dashboard = {
   parentDashboardId: string;
   topicAreaId: string;
   topicAreaName: string;
+  displayTableOfContents: boolean;
   description?: string;
   releaseNotes?: string;
   widgets: Array<Widget>;
@@ -54,6 +55,7 @@ export type PublicDashboard = {
   name: string;
   topicAreaId: string;
   topicAreaName: string;
+  displayTableOfContents: boolean;
   description?: string;
   widgets: Array<Widget>;
   updatedAt: Date;
@@ -86,6 +88,7 @@ export enum WidgetType {
   Table = "Table",
   Image = "Image",
   Metrics = "Metrics",
+  Section = "Section",
 }
 
 export enum ChartType {
@@ -106,6 +109,7 @@ export interface Widget {
   dashboardId: string;
   content: any;
   showTitle: boolean;
+  section?: string;
 }
 
 export interface ChartWidget extends Widget {
@@ -168,10 +172,20 @@ export interface MetricsWidget extends Widget {
     oneMetricPerRow: boolean;
     datasetType?: DatasetType;
     significantDigitLabels: boolean;
+    metricsCenterAlign: boolean;
     s3Key: {
       raw: string;
       json: string;
     };
+  };
+}
+
+export interface SectionWidget extends Widget {
+  content: {
+    title: string;
+    summary: string;
+    widgetIds?: Array<string>;
+    showWithTabs: string;
   };
 }
 
@@ -275,6 +289,7 @@ export type LocationState = {
   showTitle?: boolean;
   oneMetricPerRow?: boolean;
   significantDigitLabels?: boolean;
+  metricsCenterAlign?: boolean;
   metricTitle?: string;
   origin?: string;
   json?: Array<any>;

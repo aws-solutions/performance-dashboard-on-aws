@@ -18,17 +18,19 @@ Create a file `cypress.json` in the root of this directory with the following st
   "env": {
     "username": "foo",
     "password": "bar"
-  }
+  },
+  "defaultCommandTimeout": 20000
 }
 ```
 
 Replace the values in the JSON file according to your specific installation of PDoA. This file is ignored by git because it contains sensitive information. The following table describes what each field in the JSON file is used for:
 
-| JSON Field | Description                                                         |
-| ---------- | ------------------------------------------------------------------- |
-| baseUrl    | The URL of the UI where PDoA is deployed. Likely the CloudFront URL |
-| username   | Valid Cognito username used for tests                               |
-| password   | Password for the Cognito test user                                  |
+| JSON Field            | Description                                                         |
+| --------------------- | ------------------------------------------------------------------- |
+| baseUrl               | The URL of the UI where PDoA is deployed. Likely the CloudFront URL |
+| username              | Valid Cognito username used for tests                               |
+| password              | Password for the Cognito test user                                  |
+| defaultCommandTimeout | Default timeout in milliseconds for basic Cypress functions         |
 
 ## Run the tests
 

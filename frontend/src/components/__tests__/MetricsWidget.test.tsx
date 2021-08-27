@@ -10,6 +10,7 @@ test("renders the title and summary of the metrics preview component", async () 
       metrics={[]}
       metricPerRow={3}
       significantDigitLabels={true}
+      metricsCenterAlign={true}
     />,
     { wrapper: MemoryRouter }
   );
@@ -23,6 +24,7 @@ test("metrics preview should match snapshot", async () => {
       metrics={[{ title: "test title", value: 1 }]}
       metricPerRow={3}
       significantDigitLabels={true}
+      metricsCenterAlign={true}
     />,
     { wrapper: MemoryRouter }
   );

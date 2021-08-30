@@ -37,7 +37,7 @@ function SettingsLayout(props: LayoutProps) {
     currentSetting = queryString[3];
   }
 
-  useFileLoaded(setToHide, loadingFile);
+  useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
 
   return (
     <>

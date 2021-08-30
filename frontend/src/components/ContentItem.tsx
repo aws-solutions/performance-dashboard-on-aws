@@ -29,7 +29,7 @@ const ContentItem = (props: Props) => {
       const dragIndex = item.index;
       const hoverIndex = props.index;
       // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
+      if (dragIndex === hoverIndex || Math.abs(dragIndex - hoverIndex) > 1) {
         return;
       }
       // Determine rectangle on screen
@@ -54,11 +54,6 @@ const ContentItem = (props: Props) => {
       }
       // Time to actually perform the action
       props.moveItem(dragIndex, hoverIndex);
-      // Note: we're mutating the monitor item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
-      item.index = hoverIndex;
     },
   });
 

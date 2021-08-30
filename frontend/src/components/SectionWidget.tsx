@@ -14,7 +14,10 @@ function SectionWidget(props: Props) {
       {showTitle && <h1>{content.title}</h1>}
       {content.summary ? (
         <div className="padding-left-05">
-          <MarkdownRender className="usa-prose" source={content.summary} />
+          <MarkdownRender
+            className="usa-prose textOrSummary"
+            source={content.summary}
+          />
         </div>
       ) : (
         ""

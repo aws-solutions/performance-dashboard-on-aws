@@ -110,6 +110,7 @@ function Navigation({
           style={{
             fontSize: "0.9rem",
             borderStyle: "none",
+            marginLeft: 0,
           }}
         >
           {widgetNameIds.map((widget) => {

@@ -225,7 +225,7 @@ function EditSection() {
               {widget.content.summary ? (
                 <div className="padding-left-05">
                   <MarkdownRender
-                    className="usa-prose"
+                    className="usa-prose textOrSummary"
                     source={widget.content.summary}
                   />
                 </div>

@@ -219,7 +219,10 @@ function AddSection() {
                 )}
                 {summary ? (
                   <div className="padding-left-05">
-                    <MarkdownRender className="usa-prose" source={summary} />
+                    <MarkdownRender
+                      className="usa-prose textOrSummary"
+                      source={summary}
+                    />
                   </div>
                 ) : (
                   ""

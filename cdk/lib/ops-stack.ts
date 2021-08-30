@@ -25,6 +25,7 @@ interface Props extends cdk.StackProps {
   restApi: apigateway.RestApi;
   mainTable: dynamodb.Table;
   auditTrailTable: dynamodb.Table;
+  environment: string;
 }
 
 const ENABLE_ALARM_SNS_NOTIFICATIONS = true;
@@ -48,7 +49,7 @@ export class OpsStack extends cdk.Stack {
     const targetKmsKey = new kms.Key(this, "PDoA", {
       enableKeyRotation: true,
     });
-    targetKmsKey.addAlias("PDoA/OpsNotifications");
+    targetKmsKey.addAlias(`PDoA/OpsNotifications-${props.environment}`);
 
     this.opsNotifications = new sns.Topic(this, "OpsNotifications", {
       masterKey: targetKmsKey,

@@ -1,22 +1,49 @@
 import { useRef, useEffect } from "react";
+import { PublicSettings, Settings } from "../models";
 
 export function useFileLoaded(
   setToHide: React.Dispatch<React.SetStateAction<boolean>>,
-  loadingFile: boolean
+  loadingFile: boolean,
+  loadingSettings: boolean,
+  settings: PublicSettings | Settings,
+  logoOrFav: "logo" | "favicon"
 ) {
-  // firstUpdate stops useEffect from executing after the first render
-  // secondUpdate stops useEffect from executing when resource starts loading
-  const firstUpdate = useRef(true);
-  const secondUpdate = useRef(true);
+  // firstFileUpdate stops useEffect from executing after the first render
+  // secondFileUpdate stops useEffect from executing when resource starts loading
+  const firstFileUpdate = useRef(true);
+  const secondFileUpdate = useRef(true);
   useEffect(() => {
-    if (secondUpdate.current) {
-      if (firstUpdate.current) {
-        firstUpdate.current = false;
+    if (secondFileUpdate.current) {
+      if (firstFileUpdate.current) {
+        firstFileUpdate.current = false;
         return;
       }
-      secondUpdate.current = false;
+      secondFileUpdate.current = false;
       return;
     }
     setToHide(false);
   }, [loadingFile]);
+
+  // firstSettingsUpdate stops useEffect from executing after the first render
+  // secondSettingsFileUpdate stops useEffect from executing when resource starts loading
+  const firstSettingsUpdate = useRef(true);
+  const secondSettingsUpdate = useRef(true);
+  useEffect(() => {
+    if (secondSettingsUpdate.current) {
+      if (firstSettingsUpdate.current) {
+        firstSettingsUpdate.current = false;
+        return;
+      }
+      secondSettingsUpdate.current = false;
+      return;
+    }
+
+    if (logoOrFav === "logo" && settings.customLogoS3Key === undefined) {
+      setToHide(false);
+    }
+
+    if (logoOrFav === "favicon" && settings.customFaviconS3Key === undefined) {
+      setToHide(false);
+    }
+  }, [loadingSettings]);
 }

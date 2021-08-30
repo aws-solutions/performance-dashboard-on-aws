@@ -40,7 +40,7 @@ function AdminLayout(props: LayoutProps) {
     }
   };
 
-  useFileLoaded(setToHide, loadingFile);
+  useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
 
   return (
     <>

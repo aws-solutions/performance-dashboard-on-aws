@@ -9,7 +9,12 @@ function Logo() {
   const { logo, loadingFile } = useLogo(settings.customLogoS3Key);
   const [toHide, setToHide] = useState<boolean>(true);
 
-  useFileLoaded(setToHide, loadingFile);
+  let showLogo = false;
+  if (settings.customLogoS3Key === undefined) {
+    showLogo = true;
+  }
+
+  useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "logo");
 
   return (
     <>
@@ -20,7 +25,7 @@ function Logo() {
           <img
             src={logo ? URL.createObjectURL(logo) : defaultLogo}
             alt={t("OrganizationLogo")}
-            hidden={toHide}
+            hidden={toHide && !showLogo}
           ></img>
         </>
       )}

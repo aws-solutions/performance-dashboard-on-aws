@@ -19,7 +19,7 @@ function PublicLayout(props: LayoutProps) {
   const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
 
-  useFileLoaded(setToHide, loadingFile);
+  useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
 
   return (
     <>

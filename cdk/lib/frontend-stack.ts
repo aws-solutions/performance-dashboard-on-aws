@@ -65,6 +65,11 @@ export class FrontendStack extends cdk.Stack {
             responseCode: 200,
             responsePagePath: "/index.html",
           },
+          {
+            errorCode: 403, // this is the new addition due to the bucket policy returning 403
+            responseCode: 200,
+            responsePagePath: "/index.html",
+          },
         ],
         originConfigs: [
           {

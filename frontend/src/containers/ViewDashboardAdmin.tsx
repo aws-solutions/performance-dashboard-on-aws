@@ -447,7 +447,7 @@ function ViewDashboardAdmin() {
               setActivewidgetId={setActiveWidgetId}
               isTop={showMobilePreview || windowSize.width <= moveNavBarWidth}
               displayTableOfContents={dashboard?.displayTableOfContents}
-            ></Navigation>
+            />
             {dashboard?.widgets.map((widget, index) => {
               return (
                 <div key={index}>

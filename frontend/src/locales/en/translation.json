@@ -459,7 +459,6 @@
   "MetricsGuidance": "Add metrics here and reorder them. Multiple metrics will automatically scale to fit and wrap according to the order.",
   "MetricsOnePerRow": "One metric per row",
   "MetricsZero": "No metrics added yet.",
-  "MetricsCenterAlign": "Display with center alignment",
   "ViewHistoryLink": "View history",
   "PreviewButton": "Preview",
   "ReturnToDraftButton": "Return to draft",
@@ -906,6 +905,7 @@
   "CopyContent": "Copy {{name}}",
   "DownloadCSV": "Download",
   "MobilePreview": "Mobile preview",
+  "MetricsCenterAlign": "Display with center alignment",
   "DisplayTableOfContents": "Display table of contents",
   "Current": "Current"
 }

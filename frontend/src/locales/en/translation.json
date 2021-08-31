@@ -139,7 +139,7 @@
     "Draft": " draft"
   },
   "DashboardPreviewPublishedMessage": "Below is a preview of what the published dashboard will look like. If ready to proceed, you can publish the dashboard to make it available on the published site.",
-  "RepublishDashboardToView": "This dashboard is archived. It is not viewable on the published site unless it is re-published",
+  "RepublishDashboardToView": "This dashboard is archived. It is not viewable on the published site unless it is re-published.",
   "ViewDashboardAlertVersionNotes": {
     "Show": "Show",
     "Hide": "Hide",

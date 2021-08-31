@@ -906,5 +906,6 @@
   "CopyContent": "Copy {{name}}",
   "DownloadCSV": "Download",
   "MobilePreview": "Mobile preview",
-  "DisplayTableOfContents": "Display table of contents"
+  "DisplayTableOfContents": "Display table of contents",
+  "Current": "Current"
 }

@@ -5,3 +5,7 @@
 .z-index-on-top {
   z-index: 99999;
 }
+
+.width-version {
+  width: 190px;
+}

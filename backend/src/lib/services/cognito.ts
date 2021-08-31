@@ -15,16 +15,16 @@ class CognitoService {
    * CognitoService is a Singleton, hence private constructor
    * to prevent direct constructions calls with new operator.
    */
-  private constructor() {
-    this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
+  private constructor(region: string) {
+    this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider({region:region});
   }
 
   /**
    * Controls access to the singleton instance.
    */
-  static getInstance() {
+  static getInstance(region: string) {
     if (!CognitoService.instance) {
-      CognitoService.instance = new CognitoService();
+      CognitoService.instance = new CognitoService(region);
     }
 
     return CognitoService.instance;

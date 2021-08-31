@@ -11,6 +11,7 @@ interface Props {
   auditTrailTable: dynamodb.Table;
   datasetsBucket: s3.Bucket;
   contentBucket: s3.Bucket;
+  authRegion: string;
   userPool: {
     id: string;
     arn: string;
@@ -41,6 +42,7 @@ export class LambdaFunctions extends cdk.Construct {
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
         CONTENT_BUCKET: props.contentBucket.bucketName,
         USER_POOL_ID: props.userPool.id,
+        AUTH_REGION: props.authRegion,
         LOG_LEVEL: "info",
       },
     });

@@ -12,8 +12,10 @@ class UserRepository {
     if (!process.env.USER_POOL_ID) {
       throw new Error("Environment variable USER_POOL_ID not found");
     }
-
-    this.cognito = CognitoService.getInstance();
+    if (!process.env.AUTH_REGION) {
+      throw new Error("Environment variable AUTH_REGION not found");
+    }
+    this.cognito = CognitoService.getInstance(process.env.AUTH_REGION);
     this.userPoolId = process.env.USER_POOL_ID;
   }
 

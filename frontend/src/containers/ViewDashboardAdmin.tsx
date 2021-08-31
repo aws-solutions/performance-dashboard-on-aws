@@ -324,7 +324,7 @@ function ViewDashboardAdmin() {
                           };
                         })}
                       value={`${dashboard.version}`}
-                      className="margin-top-neg-2 width-version"
+                      className="margin-top-neg-2"
                       onChange={handleVersionChange}
                     />
                   )}

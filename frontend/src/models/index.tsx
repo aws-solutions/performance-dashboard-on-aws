@@ -16,6 +16,7 @@ export enum DashboardState {
   Published = "Published",
   Archived = "Archived",
   PublishPending = "PublishPending",
+  Inactive = "Inactive",
 }
 
 export enum SourceType {

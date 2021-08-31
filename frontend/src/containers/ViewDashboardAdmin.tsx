@@ -24,6 +24,7 @@ import PrimaryActionBar from "../components/PrimaryActionBar";
 import "./ViewDashboardAdmin.css";
 import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
+import Dropdown from "../components/Dropdown";
 
 interface PathParams {
   dashboardId: string;
@@ -48,12 +49,6 @@ function ViewDashboardAdmin() {
   const mobilePreviewWidth = 400;
   const maxMobileViewportWidth = 450;
   const moveNavBarWidth = 1024;
-
-  const draftOrPublishPending = versions.find(
-    (v) =>
-      v.state === DashboardState.Draft ||
-      v.state === DashboardState.PublishPending
-  );
 
   const onClosePreview = () => {
     history.push(UtilsService.getDashboardUrlPath(dashboard));
@@ -129,6 +124,14 @@ function ViewDashboardAdmin() {
     }
   };
 
+  const handleVersionChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const version = versions.find((v) => String(v.version) === target.value);
+    if (version) {
+      history.push(`/admin/dashboard/${version.id}`);
+    }
+  };
+
   const dashboardListUrl = (dashboard: Dashboard) => {
     switch (dashboard.state) {
       case DashboardState.Published:
@@ -142,7 +145,7 @@ function ViewDashboardAdmin() {
     }
   };
 
-  if (!dashboard) {
+  if (loading || !dashboard || !versions || !versions.length) {
     return (
       <Spinner
         className="text-center margin-top-9"
@@ -151,9 +154,11 @@ function ViewDashboardAdmin() {
     );
   }
 
-  const isDraftOrPublishPending =
-    dashboard.state === DashboardState.Draft ||
-    dashboard.state === DashboardState.PublishPending;
+  const draftOrPublishPending = versions.find(
+    (v) =>
+      v.state === DashboardState.Draft ||
+      v.state === DashboardState.PublishPending
+  );
 
   return (
     <>
@@ -219,34 +224,36 @@ function ViewDashboardAdmin() {
         buttonAction={onPublishDashboard}
       />
       <PrimaryActionBar stickyPosition={75}>
-        {dashboard.state === DashboardState.Published && draftOrPublishPending && (
-          <Alert
-            type="info"
-            message={
-              <div className="margin-left-2">
-                <FontAwesomeIcon icon={faCopy} className="margin-right-2" />
-                {t("OnlyOneDraftDashboardAtATime")}
-                <div className="float-right margin-right-1">
-                  <Link
-                    to={`/admin/dashboard/${
-                      draftOrPublishPending.state === DashboardState.Draft
-                        ? "edit/" + draftOrPublishPending.id
-                        : draftOrPublishPending.id + "/publish"
-                    }`}
-                  >
-                    {`${
-                      draftOrPublishPending.state === DashboardState.Draft
-                        ? `${t("EditOrPublishDraft.Edit")}`
-                        : `${t("EditOrPublishDraft.Publish")}`
-                    } ${t("EditOrPublishDraft.Draft")}`}
-                  </Link>
+        {(dashboard.state === DashboardState.Published ||
+          dashboard.state === DashboardState.Inactive) &&
+          draftOrPublishPending && (
+            <Alert
+              type="info"
+              message={
+                <div className="margin-left-2">
+                  <FontAwesomeIcon icon={faCopy} className="margin-right-2" />
+                  {t("OnlyOneDraftDashboardAtATime")}
+                  <div className="float-right margin-right-1">
+                    <Link
+                      to={`/admin/dashboard/${
+                        draftOrPublishPending.state === DashboardState.Draft
+                          ? "edit/" + draftOrPublishPending.id
+                          : draftOrPublishPending.id + "/publish"
+                      }`}
+                    >
+                      {`${
+                        draftOrPublishPending.state === DashboardState.Draft
+                          ? `${t("EditOrPublishDraft.Edit")}`
+                          : `${t("EditOrPublishDraft.Publish")}`
+                      } ${t("EditOrPublishDraft.Draft")}`}
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            }
-            hideIcon
-            slim
-          />
-        )}
+              }
+              hideIcon
+              slim
+            />
+          )}
 
         {(dashboard.state === DashboardState.Draft ||
           dashboard.state === DashboardState.PublishPending) && (
@@ -262,17 +269,14 @@ function ViewDashboardAdmin() {
         )}
         <div
           className={`grid-row margin-top-${
-            dashboard.state === DashboardState.Published &&
+            (dashboard.state === DashboardState.Published ||
+              dashboard.state === DashboardState.Inactive) &&
             !draftOrPublishPending
               ? "0"
               : "2"
           }`}
         >
-          <div
-            className={`${
-              isDraftOrPublishPending ? "grid-col-3" : "grid-col"
-            } text-left flex-row flex-align-center display-flex`}
-          >
+          <div className="grid-col text-left flex-row flex-align-center display-flex">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
                 <span
@@ -284,12 +288,52 @@ function ViewDashboardAdmin() {
               </li>
               <li className="usa-button-group__item">
                 <span className="text-middle" style={{ cursor: "default" }}>
-                  <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
-                  {t("ViewDashboardAlertVersion")} {dashboard?.version}
+                  {(dashboard.state === DashboardState.Draft ||
+                    dashboard.state === DashboardState.PublishPending) && (
+                    <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
+                  )}
+                  {(dashboard.state === DashboardState.Draft ||
+                    dashboard.state === DashboardState.PublishPending) &&
+                    t("ViewDashboardAlertVersion")}{" "}
+                  {(dashboard.state === DashboardState.Draft ||
+                    dashboard.state === DashboardState.PublishPending) &&
+                    dashboard?.version}
+                  {(dashboard.state === DashboardState.Published ||
+                    dashboard.state === DashboardState.Archived ||
+                    dashboard.state === DashboardState.Inactive) && (
+                    <Dropdown
+                      id="version"
+                      name="version"
+                      label=""
+                      options={versions
+                        .filter(
+                          (version) =>
+                            version.state !== DashboardState.Draft &&
+                            version.state !== DashboardState.PublishPending
+                        )
+                        .map((v) => {
+                          return {
+                            value: `${v.version}`,
+                            label: `${t("ViewDashboardAlertVersion")} ${
+                              v.version
+                            }${
+                              v.state === DashboardState.Published
+                                ? ` (${t("Current")}) `
+                                : ""
+                            }`,
+                          };
+                        })}
+                      value={`${dashboard.version}`}
+                      className="margin-top-neg-2 width-version"
+                      onChange={handleVersionChange}
+                    />
+                  )}
                 </span>
               </li>
               <li>
-                {dashboard.state === DashboardState.Published && (
+                {(dashboard.state === DashboardState.Published ||
+                  dashboard.state === DashboardState.Inactive ||
+                  dashboard.state === DashboardState.Archived) && (
                   <Button
                     variant="unstyled"
                     type="button"
@@ -306,11 +350,7 @@ function ViewDashboardAdmin() {
               </li>
             </ul>
           </div>
-          <div
-            className={`${
-              isDraftOrPublishPending ? "grid-col-9" : "grid-col"
-            } text-right`}
-          >
+          <div className="grid-col text-right">
             {dashboard.state === DashboardState.Published && (
               <>
                 <Button

@@ -16,6 +16,7 @@ interface Props extends cdk.StackProps {
   identityPoolId: string;
   appClientId: string;
   backendApiUrl: string;
+  authRegion: string;
 }
 
 export class FrontendStack extends cdk.Stack {
@@ -152,6 +153,7 @@ export class FrontendStack extends cdk.Stack {
       environment: {
         FRONTEND_BUCKET: this.frontendBucket.bucketName,
         REGION: cdk.Stack.of(this).region,
+        AUTH_REGION: props.authRegion,
         BACKEND_API: props.backendApiUrl,
         USER_POOL_ID: props.userPoolId,
         APP_CLIENT_ID: props.appClientId,

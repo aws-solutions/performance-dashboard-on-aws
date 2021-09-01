@@ -7,12 +7,15 @@ import UserRepository from "../user-repo";
 jest.mock("../../services/cognito");
 
 let userPoolId: string;
+let authRegion: string;
 let repo: UserRepository;
 let cognito = mocked(CognitoService.prototype);
 
 beforeEach(() => {
   userPoolId = "abc";
+  authRegion = "region1";
   process.env.USER_POOL_ID = userPoolId;
+  process.env.AUTH_REGION = authRegion;
 
   CognitoService.getInstance = jest.fn().mockReturnValue(cognito);
   repo = UserRepository.getInstance();

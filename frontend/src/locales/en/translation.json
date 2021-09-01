@@ -906,5 +906,11 @@
   "CopyContent": "Copy {{name}}",
   "DownloadCSV": "Download",
   "MobilePreview": "Mobile preview",
-  "DisplayTableOfContents": "Display table of contents"
+  "DisplayTableOfContents": "Display table of contents",
+  "Current": "Current",
+  "SectionOptionsLabel": "Section Options",
+  "SectionOptionsDescription": "Format your section",
+  "ShowWithTabs": "Display section's content items with tabs",
+  "Horizontally": "Horizontally",
+  "Vertically": "Vertically"
 }

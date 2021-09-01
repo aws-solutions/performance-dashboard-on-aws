@@ -398,6 +398,7 @@ function createSectionWidget(widget: Widget): SectionWidget {
       widgetIds: widget.content.widgetIds,
       summary: widget.content.summary,
       showWithTabs: widget.content.showWithTabs,
+      horizontally: widget.content.horizontally,
     },
   };
 }

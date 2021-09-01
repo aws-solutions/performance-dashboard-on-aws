@@ -16,7 +16,9 @@ class CognitoService {
    * to prevent direct constructions calls with new operator.
    */
   private constructor(region: string) {
-    this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider({region:region});
+    this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider({
+      region: region,
+    });
   }
 
   /**

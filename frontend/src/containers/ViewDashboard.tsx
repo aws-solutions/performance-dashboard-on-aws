@@ -80,7 +80,7 @@ function ViewDashboard() {
               fireOnRapidScroll={false}
             >
               <div className="margin-top-6 usa-prose" id={widget.id}>
-                <WidgetRender widget={widget} />
+                <WidgetRender widget={widget} widgets={dashboard.widgets} />
               </div>
             </Waypoint>
           </div>

@@ -17,11 +17,14 @@ import Link from "../components/Link";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
 import Alert from "../components/Alert";
+import RadioButtons from "../components/RadioButtons";
 
 interface FormValues {
   title: string;
   showTitle: boolean;
   summary: string;
+  showWithTabs: boolean;
+  horizontally: string;
 }
 
 interface PathParams {
@@ -55,6 +58,8 @@ function EditSection() {
           title: values.title,
           summary: values.summary,
           widgetIds: widget.content.widgetIds,
+          showWithTabs: values.showWithTabs,
+          horizontally: values.horizontally === "horizontally",
         },
         widget.updatedAt
       );
@@ -79,7 +84,8 @@ function EditSection() {
   };
 
   const onFormChange = () => {
-    const { title, showTitle, summary } = getValues();
+    const { title, showTitle, summary, showWithTabs, horizontally } =
+      getValues();
     setWidget({
       ...widget,
       name: title,
@@ -88,6 +94,8 @@ function EditSection() {
         ...widget?.content,
         title,
         summary,
+        showWithTabs,
+        horizontally: horizontally === "horizontally",
       },
     });
   };
@@ -195,6 +203,57 @@ function EditSection() {
                       multiline
                       rows={5}
                     />
+
+                    <div>
+                      <label className="usa-label text-bold">
+                        {t("SectionOptionsLabel")}
+                      </label>
+                      <div className="usa-hint">
+                        {t("SectionOptionsDescription")}
+                      </div>
+                      <div className="usa-checkbox">
+                        <input
+                          className="usa-checkbox__input"
+                          id="showWithTabs"
+                          type="checkbox"
+                          name="showWithTabs"
+                          defaultChecked={widget.content.showWithTabs}
+                          ref={register}
+                        />
+                        <label
+                          className="usa-checkbox__label"
+                          htmlFor="showWithTabs"
+                        >
+                          {t("ShowWithTabs")}
+                        </label>
+                      </div>
+                    </div>
+
+                    <div hidden={!widget.content.showWithTabs}>
+                      <RadioButtons
+                        id="horizontally"
+                        name="horizontally"
+                        label=""
+                        register={register}
+                        defaultValue={
+                          widget.content.horizontally
+                            ? "horizontally"
+                            : "vertically"
+                        }
+                        required
+                        options={[
+                          {
+                            value: "horizontally",
+                            label: t("Horizontally"),
+                          },
+                          {
+                            value: "vertically",
+                            label: t("Vertically"),
+                          },
+                        ]}
+                        className="margin-top-0"
+                      />
+                    </div>
                   </fieldset>
                   <br />
                   <br />

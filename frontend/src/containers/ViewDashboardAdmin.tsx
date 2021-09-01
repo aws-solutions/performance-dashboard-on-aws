@@ -448,27 +448,30 @@ function ViewDashboardAdmin() {
               isTop={showMobilePreview || windowSize.width <= moveNavBarWidth}
               displayTableOfContents={dashboard?.displayTableOfContents}
             />
-            {dashboard?.widgets.map((widget, index) => {
-              return (
-                <div key={index}>
-                  <Waypoint
-                    onEnter={() => {
-                      setActiveWidgetId(widget.id);
-                    }}
-                    topOffset="240px"
-                    bottomOffset={`${windowSize.height - 250}px`}
-                    fireOnRapidScroll={false}
-                  >
-                    <div className="margin-top-6 usa-prose" id={widget.id}>
-                      <WidgetRender
-                        widget={widget}
-                        showMobilePreview={showMobilePreview}
-                      />
-                    </div>
-                  </Waypoint>
-                </div>
-              );
-            })}
+            {dashboard?.widgets
+              .filter((w) => !w.section)
+              .map((widget, index) => {
+                return (
+                  <div key={index}>
+                    <Waypoint
+                      onEnter={() => {
+                        setActiveWidgetId(widget.id);
+                      }}
+                      topOffset="240px"
+                      bottomOffset={`${windowSize.height - 250}px`}
+                      fireOnRapidScroll={false}
+                    >
+                      <div className="margin-top-6 usa-prose" id={widget.id}>
+                        <WidgetRender
+                          widget={widget}
+                          showMobilePreview={showMobilePreview}
+                          widgets={dashboard.widgets}
+                        />
+                      </div>
+                    </Waypoint>
+                  </div>
+                );
+              })}
           </>
         )}
       </div>

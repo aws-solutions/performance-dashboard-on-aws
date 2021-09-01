@@ -37,7 +37,7 @@ const backend = new BackendStack(app, "Backend", {
   },
   datasetsBucketName: datasetsBucketName,
   contentBucketName: contentBucketName,
-  authRegion: auth.authRegion
+  authRegion: auth.authRegion,
 });
 
 const frontend = new FrontendStack(app, "Frontend", {

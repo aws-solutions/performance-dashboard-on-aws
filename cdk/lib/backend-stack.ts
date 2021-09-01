@@ -52,7 +52,7 @@ export class BackendStack extends cdk.Stack {
       datasetsBucket: dataStorage.datasetsBucket,
       contentBucket: contentStorage.contentBucket,
       userPool: props.userPool,
-      authRegion: props.authRegion
+      authRegion: props.authRegion,
     });
 
     const backendApi = new BackendApi(this, "Api", {

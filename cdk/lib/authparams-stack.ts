@@ -12,9 +12,9 @@ interface Props extends cdk.StackProps {
 /**
  * Why does this class exist?
  * This is here to facility deploying auth (Cognito) to one region and the rest of the app to another.
- * This is because Cognito does not exist in all regions. In setup 1 we need to deploy auth to one region and 
- * take the output of the deploy and feed certain values to rest of the stack. We take all of the needed values here and "deploy" a stack and then feed 
- * the rest of the values to the other stacks. The reason for not using optional parameters in the other stacks is there is a bug in the plugin used for 
+ * This is because Cognito does not exist in all regions. In setup 1 we need to deploy auth to one region and
+ * take the output of the deploy and feed certain values to rest of the stack. We take all of the needed values here and "deploy" a stack and then feed
+ * the rest of the values to the other stacks. The reason for not using optional parameters in the other stacks is there is a bug in the plugin used for
  * generating http parameters which makes passing parameters into that stack broken. Cnf imports cant be used because of the cross region requirement.
  * This was the simpliest way to get the values in and change a little as possible.
  */

@@ -70,7 +70,9 @@ const BarChartWidget = (props: Props) => {
   const { data, bars, showMobilePreview } = props;
 
   const columnsMetadataDict = new Map();
-  props.columnsMetadata.forEach((el) => columnsMetadataDict.set(el.columnName,el));
+  props.columnsMetadata.forEach((el) =>
+    columnsMetadataDict.set(el.columnName, el)
+  );
 
   const yAxisType = useCallback(() => {
     let columnMetadata;

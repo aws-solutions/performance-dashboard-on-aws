@@ -215,7 +215,7 @@ const BarChartWidget = (props: Props) => {
                             Number(tick),
                             xAxisLargestValue,
                             props.significantDigitLabels,
-                            props.columnsMetadata[index]
+                            props.columnsMetadata[index+1]
                           )
                         }
                       />

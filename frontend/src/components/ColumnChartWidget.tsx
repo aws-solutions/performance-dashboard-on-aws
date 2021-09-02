@@ -226,7 +226,7 @@ const ColumnChartWidget = (props: Props) => {
                             Number(tick),
                             yAxisLargestValue,
                             props.significantDigitLabels,
-                            props.columnsMetadata[index]
+                            props.columnsMetadata[index+1]
                           )
                         }
                       />

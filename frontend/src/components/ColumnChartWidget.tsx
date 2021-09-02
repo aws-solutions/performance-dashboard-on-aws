@@ -74,6 +74,10 @@ const ColumnChartWidget = (props: Props) => {
   const smallScreenPixels = 800;
 
   const { data, columns, showMobilePreview } = props;
+
+  const columnsMetadataDict = new Map();
+  props.columnsMetadata.forEach((el) => columnsMetadataDict.set(el.columnName,el));
+
   let padding;
   if (showMobilePreview || windowSize.width < smallScreenPixels) {
     padding = 20;
@@ -226,7 +230,7 @@ const ColumnChartWidget = (props: Props) => {
                             Number(tick),
                             yAxisLargestValue,
                             props.significantDigitLabels,
-                            props.columnsMetadata[index + 1]
+                            columnsMetadataDict.get(column)
                           )
                         }
                       />

@@ -47,6 +47,7 @@ interface FormValues {
   sortData: string;
   horizontalScroll: boolean;
   dataLabels: boolean;
+  computePercentages: boolean;
   showTotal: boolean;
   significantDigitLabels: boolean;
   staticFileName: string | undefined;
@@ -175,6 +176,7 @@ function EditChart() {
       const chartType = widget.content.chartType;
       const horizontalScroll = widget.content.horizontalScroll;
       const dataLabels = widget.content.dataLabels;
+      const computePercentages = widget.content.computePercentages;
       const showTotal = widget.content.showTotal;
 
       if (dynamicDataset) {
@@ -197,6 +199,7 @@ function EditChart() {
         chartType,
         horizontalScroll,
         dataLabels,
+        computePercentages,
         showTotal,
         significantDigitLabels: widget.content.significantDigitLabels,
         dynamicDatasets:
@@ -381,6 +384,11 @@ function EditChart() {
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
+          }),
+          ...((values.chartType === ChartType.PartWholeChart ||
+            values.chartType === ChartType.PieChart ||
+            values.chartType === ChartType.DonutChart) && {
+              computePercentages: values.computePercentages,
           }),
           ...(values.chartType === ChartType.DonutChart && {
             showTotal: values.showTotal,
@@ -673,6 +681,7 @@ function EditChart() {
                   setSortByDesc={setSortByDesc}
                   horizontalScroll={horizontalScroll}
                   dataLabels={dataLabels}
+                  computePercentages={computePercentages}
                   showTotal={showTotal}
                   significantDigitLabels={significantDigitLabels}
                   columnsMetadata={ColumnsMetadataService.getColumnsMetadata(

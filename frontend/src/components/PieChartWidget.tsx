@@ -11,6 +11,7 @@ import { useColors, useWindowSize } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import {NumberDataType} from "../models/index";
 
 type Props = {
   title: string;
@@ -39,15 +40,19 @@ const PieChartWidget = (props: Props) => {
   const pieParts = useRef<Array<string>>([]);
   let total = useRef<number>(0);
 
-  const { data, parts, showMobilePreview } = props;
+  const { data, parts, showMobilePreview} = props;
+  const computePercentages = props.computePercentages === true;
 
-  console.log(data)
-  const valueSum = 
-     props.computePercentages === true && data!==undefined
-      ? data.reduce((sum, current) => {
-         return  sum + current[parts[1] as keyof object];
-        })
-      : 0; 
+  let valueSum = 0;
+  if(data!==null && data!==undefined){
+    data.forEach((ele) => {
+      return  valueSum += Number(ele[parts[1] as keyof object]);
+    });
+  }else{
+    valueSum = 1
+  }
+
+ 
 
   useMemo(() => {
     if (data && data.length) {
@@ -58,16 +63,14 @@ const PieChartWidget = (props: Props) => {
       let maxTick = -Infinity;
       for (let i = 0; i < data.length; i++) {
         const key = data[i][parts[0] as keyof object];
-        const value =
-          props.computePercentages === true
-            ? data[i][parts[1] as keyof object] / valueSum
-            : data[i][parts[1] as keyof object];
+        const value = data[i][parts[1] as keyof object];
+        const computedPercentage = (Number(value)/valueSum) * 100;
         const barKey = `${key}`;
         pie = {
           ...pie,
           [barKey]: value,
         };
-        pieData.current.push({ name: barKey, value: Number(value), total: valueSum });
+        pieData.current.push({ name: barKey, value: Number(value), total: valueSum, computedPercentage: computedPercentage });
         pieParts.current.push(barKey);
         if (hiddenParts.includes(barKey)) {
           continue;
@@ -124,6 +127,12 @@ const PieChartWidget = (props: Props) => {
       );
     }
 
+    let displayValue = Number(payload.value);
+
+    if(computePercentages){
+      displayValue = payload.computedPercentage;
+    }
+
     return !props.hideDataLabels && !hiddenParts.includes(payload.name) ? (
       <g>
         <path
@@ -139,10 +148,11 @@ const PieChartWidget = (props: Props) => {
           fill={fill}
         >
           {TickFormatter.format(
-            Number(payload.value),
+            displayValue,
             xAxisLargestValue,
             props.significantDigitLabels,
-            columnMetadata
+            columnMetadata,
+            computePercentages ? NumberDataType.Percentage : undefined
           )}
         </text>
       </g>
@@ -176,7 +186,7 @@ const PieChartWidget = (props: Props) => {
     );
   };
 
-  const renderLegendText = (value: string) => {
+  const renderLegendText = (dataKey: string) => {
     let columnMetadata;
     if (parts && parts.length > 1 && props.columnsMetadata) {
       columnMetadata = props.columnsMetadata.find(
@@ -184,21 +194,25 @@ const PieChartWidget = (props: Props) => {
       );
     }
 
+    let value = 0;
+
+    if(dataKey && dataKey !== "null"){
+      let pieDatum = (pieData.current.find((d: any) => d.name === dataKey) as any);
+
+      value = computePercentages ? pieDatum.computedPercentage: Number(pieDatum.value);
+    }
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
-          {value.toLocaleString()}
+          {dataKey.toLocaleString()}
         </span>
         <div className="margin-left-4 margin-bottom-1 text-base-darkest text-bold">
-          {value && value !== "null" ? (
-            TickFormatter.format(
-              Number(
-                (pieData.current.find((d: any) => d.name === value) as any)
-                  .value
-              ),
+          {dataKey && dataKey !== "null" ? (   
+            TickFormatter.format(value,
               xAxisLargestValue,
               props.significantDigitLabels,
-              columnMetadata
+              columnMetadata,
+              computePercentages ? NumberDataType.Percentage : undefined
             )
           ) : (
             <br />
@@ -301,21 +315,40 @@ const PieChartWidget = (props: Props) => {
             <Tooltip
               itemStyle={{ color: "#1b1b1b" }}
               isAnimationActive={false}
-              formatter={(value: Number | String) => {
+              formatter={(dataValue: Number | String, dataName: any) => {
                 // Check if there is metadata for this column
                 let columnMetadata;
+                let pieDatum;
                 if (parts && parts.length > 1 && props.columnsMetadata) {
                   columnMetadata = props.columnsMetadata.find(
-                    (cm) => cm.columnName === parts[1]
+                    (cm) => cm.columnName === dataName
+                  );
+
+                  pieDatum = pieData.current.find(
+                    (pd) => {
+                      console.log(pd)
+                      return pd.name === dataName
+                    }
                   );
                 }
-
-                return TickFormatter.format(
-                  Number(value),
+                let amount = TickFormatter.format(
+                  dataValue,
                   xAxisLargestValue,
                   props.significantDigitLabels,
                   columnMetadata
                 );
+
+                if(!computePercentages) return amount;
+
+                let percent = TickFormatter.format(pieDatum.computedPercentage,
+                  xAxisLargestValue,
+                  props.significantDigitLabels,
+                  columnMetadata,
+                  NumberDataType.Percentage
+                );
+
+                return `${amount} (${percent})`;
+
               }}
             />
           </PieChart>

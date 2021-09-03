@@ -127,6 +127,7 @@ function EditChart() {
   const chartType = watch("chartType");
   const horizontalScroll = watch("horizontalScroll");
   const dataLabels = watch("dataLabels");
+  const computePercentages = watch("computePercentages");
   const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 

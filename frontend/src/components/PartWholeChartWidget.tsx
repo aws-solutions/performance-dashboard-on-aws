@@ -20,6 +20,7 @@ type Props = {
   data?: Array<object>;
   summaryBelow: boolean;
   significantDigitLabels: boolean;
+  computePercentages?: boolean;
   colors?: {
     primary: string | undefined;
     secondary: string | undefined;

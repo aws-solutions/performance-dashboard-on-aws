@@ -26,6 +26,7 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
+  computePercentages?: computePercentages;
   showTotal?: boolean;
   isPreview?: boolean;
   showMobilePreview?: boolean;

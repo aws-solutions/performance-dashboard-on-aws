@@ -25,6 +25,7 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
+  computePercentages?: boolean;
   isPreview?: boolean;
   showMobilePreview?: boolean;
 };
@@ -39,6 +40,15 @@ const PieChartWidget = (props: Props) => {
   let total = useRef<number>(0);
 
   const { data, parts, showMobilePreview } = props;
+
+  console.log(data)
+  const valueSum = 
+     props.computePercentages === true && data!==undefined
+      ? data.reduce((sum, current) => {
+         return  sum + current[parts[1] as keyof object];
+        })
+      : 0; 
+
   useMemo(() => {
     if (data && data.length) {
       let pie = {};
@@ -48,13 +58,16 @@ const PieChartWidget = (props: Props) => {
       let maxTick = -Infinity;
       for (let i = 0; i < data.length; i++) {
         const key = data[i][parts[0] as keyof object];
-        const value = data[i][parts[1] as keyof object];
+        const value =
+          props.computePercentages === true
+            ? data[i][parts[1] as keyof object] / valueSum
+            : data[i][parts[1] as keyof object];
         const barKey = `${key}`;
         pie = {
           ...pie,
           [barKey]: value,
         };
-        pieData.current.push({ name: barKey, value: Number(value) });
+        pieData.current.push({ name: barKey, value: Number(value), total: valueSum });
         pieParts.current.push(barKey);
         if (hiddenParts.includes(barKey)) {
           continue;

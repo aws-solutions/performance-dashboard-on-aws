@@ -385,8 +385,7 @@ function EditChart() {
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
           }),
-          ...((values.chartType === ChartType.PartWholeChart ||
-            values.chartType === ChartType.PieChart ||
+          ...((values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
               computePercentages: values.computePercentages,
           }),

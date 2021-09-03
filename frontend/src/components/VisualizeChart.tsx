@@ -444,7 +444,6 @@ function VisualizeChart(props: Props) {
                   data={props.json}
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
-                  computePercentages={props.computePercentages}
                 />
               )}
               {props.chartType === ChartType.PieChart && (

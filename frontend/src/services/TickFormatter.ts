@@ -71,7 +71,7 @@ function formatNumber(
   if (isNaN(num)) {
     return "";
   }
-  console.log(percentage)
+
   if (
     columnMetadata &&
     (columnMetadata.numberType === NumberDataType.Currency ||

@@ -48,7 +48,7 @@ function SectionWidget(props: Props) {
       {props.widget.content.showWithTabs &&
         props.widget.content.horizontally &&
         props.widget.content.widgetIds && (
-          <Tabs defaultActive={"0"}>
+          <Tabs defaultActive={"0"} showArrows>
             {props.widget.content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {

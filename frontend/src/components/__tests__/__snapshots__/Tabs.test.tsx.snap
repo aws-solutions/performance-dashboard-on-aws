@@ -1,26 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders the Tabs component 1`] = `
+exports[`Tabs tests renders the Tabs component 1`] = `
 <div>
   <div
     class="tabs"
   >
-    <ol
-      class="border-base-lighter border-bottom padding-left-0"
+    <div
+      class="react-horizontal-scrolling-menu--wrapper border-base-lighter border-bottom margin-top-1"
     >
-      <li
-        class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md bg-white border-base-dark border-x-0 border-top-0 border-bottom-05"
-        style="cursor: pointer;"
+      <div
+        class="react-horizontal-scrolling-menu--scroll-container"
       >
-        Tab 1
-      </li>
-      <li
-        class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
-        style="cursor: pointer;"
-      >
-        Tab 2
-      </li>
-    </ol>
+        <div
+          class="react-horizontal-scrolling-menu--item"
+          data-index="0"
+          data-key="tab1"
+        >
+          <li
+            class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-base-dark border-x-0 border-top-0 border-bottom-05"
+            style="cursor: pointer; white-space: nowrap;"
+          >
+            Tab 1
+          </li>
+        </div>
+        <div
+          class="react-horizontal-scrolling-menu--separator"
+          data-index="0.1"
+          data-key="tab1-separator"
+        />
+        <div
+          class="react-horizontal-scrolling-menu--item"
+          data-index="1"
+          data-key="tab2"
+        >
+          <li
+            class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+            style="cursor: pointer; white-space: nowrap;"
+          >
+            Tab 2
+          </li>
+        </div>
+      </div>
+    </div>
     <div
       class="tab-content"
     >
@@ -30,27 +51,48 @@ exports[`renders the Tabs component 1`] = `
 </div>
 `;
 
-exports[`renders the Tabs component with default tab 2 selected 1`] = `
+exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] = `
 <div>
   <div
     class="tabs"
   >
-    <ol
-      class="border-base-lighter border-bottom padding-left-0"
+    <div
+      class="react-horizontal-scrolling-menu--wrapper border-base-lighter border-bottom margin-top-1"
     >
-      <li
-        class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
-        style="cursor: pointer;"
+      <div
+        class="react-horizontal-scrolling-menu--scroll-container"
       >
-        Tab 1
-      </li>
-      <li
-        class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md bg-white border-base-dark border-x-0 border-top-0 border-bottom-05"
-        style="cursor: pointer;"
-      >
-        Tab 2
-      </li>
-    </ol>
+        <div
+          class="react-horizontal-scrolling-menu--item"
+          data-index="0"
+          data-key="tab1"
+        >
+          <li
+            class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+            style="cursor: pointer; white-space: nowrap;"
+          >
+            Tab 1
+          </li>
+        </div>
+        <div
+          class="react-horizontal-scrolling-menu--separator"
+          data-index="0.1"
+          data-key="tab1-separator"
+        />
+        <div
+          class="react-horizontal-scrolling-menu--item"
+          data-index="1"
+          data-key="tab2"
+        >
+          <li
+            class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-base-dark border-x-0 border-top-0 border-bottom-05"
+            style="cursor: pointer; white-space: nowrap;"
+          >
+            Tab 2
+          </li>
+        </div>
+      </div>
+    </div>
     <div
       class="tab-content"
     >

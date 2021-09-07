@@ -78,7 +78,7 @@ const PieChartWidget = (props: Props) => {
           [item.key]: item.value,
         };
 
-        const columnMetadata = columnMetaDataMap.get(item.key);
+        const columnMetadata = columnMetaDataMap.get(item.columnName);
 
         const displayRaw = TickFormatter.format(
           item.value,
@@ -91,7 +91,7 @@ const PieChartWidget = (props: Props) => {
           computedPercentage,
           xAxisLargestValue,
           false,
-          columnMetadata,
+          undefined,
           NumberDataType.Percentage
         );
 
@@ -322,7 +322,7 @@ const PieChartWidget = (props: Props) => {
                 if (pieDatum === undefined) return "";
                 return computePercentages
                   ? pieDatum.displayPercentage
-                  : pieDatum.DisplayRawValue;
+                  : pieDatum.displayRawValue;
               }}
             />
           </PieChart>

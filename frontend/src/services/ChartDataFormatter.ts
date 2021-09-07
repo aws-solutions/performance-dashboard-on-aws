@@ -3,10 +3,12 @@ import { isString } from "util";
 export class DataKvp {
   value: number;
   key: string;
+  columnName: string;
 
-  constructor(value: number, key: string) {
+  constructor(value: number, key: string, columnName: string) {
     this.value = value;
     this.key = key;
+    this.columnName = columnName
   }
 }
 
@@ -60,7 +62,7 @@ function portionChart(
     const valueNum = isNaN(value) ? 0 : Number(value);
 
     chartData.total += valueNum;
-    chartData.values.push(new DataKvp(valueNum, valueKey));
+    chartData.values.push(new DataKvp(valueNum, valueKey, valueSelector));
     chartData.maxValue = Math.max(chartData.maxValue, valueNum);
   }
 

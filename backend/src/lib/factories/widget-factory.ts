@@ -282,7 +282,7 @@ function createChartWidget(widget: Widget): ChartWidget {
         widget.content.dataLabels !== undefined
           ? widget.content.dataLabels
           : false,
-          computePercentages:
+      computePercentages:
           widget.content.computePercentages !== undefined
             ? widget.content.computePercentages
             : false,

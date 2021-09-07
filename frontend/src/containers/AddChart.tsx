@@ -41,7 +41,7 @@ interface FormValues {
   horizontalScroll: boolean;
   significantDigitLabels: boolean;
   dataLabels: boolean;
-  computePercentages:boolean;
+  computePercentages: boolean;
   showTotal: boolean;
   sortData: string;
 }
@@ -194,7 +194,7 @@ function AddChart() {
           }),
           ...((values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
-              computePercentages: values.computePercentages,
+            computePercentages: values.computePercentages,
           }),
           ...(values.chartType === ChartType.DonutChart && {
             showTotal: values.showTotal,

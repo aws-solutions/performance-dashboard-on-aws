@@ -387,7 +387,7 @@ function EditChart() {
           }),
           ...((values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
-              computePercentages: values.computePercentages,
+            computePercentages: values.computePercentages,
           }),
           ...(values.chartType === ChartType.DonutChart && {
             showTotal: values.showTotal,

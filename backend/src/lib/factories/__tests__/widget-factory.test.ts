@@ -568,6 +568,7 @@ describe("toItem", () => {
       significantDigitLabels: true,
       dataLabels: true,
       showTotal: true,
+      computePercentages: false,
       columnsMetadata: [
         {
           hidden: false,

@@ -1,3 +1,5 @@
+import { isString } from "util";
+
 export class DataKvp  {
     value: number;
     key: string;
@@ -24,6 +26,10 @@ function portionChart(parts: Array<string>, exlcudeValues: Array<string>, data?:
     const chartData = new ChartData();
 
     if(data===undefined || data===null || !Array.isArray(data)) return chartData;
+
+    if(parts.length < 2  || typeof parts[0] !== 'string' || typeof parts[1] !== 'string') return chartData;
+    
+    exlcudeValues = exlcudeValues === undefined || exlcudeValues === null ? [] : exlcudeValues;
 
     const nameSelector = parts[0];
     const valueSelector = parts[1];

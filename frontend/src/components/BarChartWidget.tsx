@@ -302,8 +302,6 @@ const BarChartWidget = (props: Props) => {
                             Number(tick),
                             xAxisLargestValue,
                             props.significantDigitLabels,
-                            "",
-                            "",
                             columnsMetadataDict.get(bar)
                           )
                         }

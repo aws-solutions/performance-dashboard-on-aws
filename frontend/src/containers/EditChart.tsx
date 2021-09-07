@@ -46,6 +46,7 @@ interface FormValues {
   datasetType: string;
   sortData: string;
   horizontalScroll: boolean;
+  stackedChart: boolean;
   dataLabels: boolean;
   showTotal: boolean;
   significantDigitLabels: boolean;
@@ -126,6 +127,7 @@ function EditChart() {
   const summaryBelow = watch("summaryBelow");
   const chartType = watch("chartType");
   const horizontalScroll = watch("horizontalScroll");
+  const stackedChart = watch("stackedChart");
   const dataLabels = watch("dataLabels");
   const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
@@ -173,6 +175,7 @@ function EditChart() {
       const summaryBelow = widget.content.summaryBelow;
       const chartType = widget.content.chartType;
       const horizontalScroll = widget.content.horizontalScroll;
+      const stackedChart = widget.content.stackedChart;
       const dataLabels = widget.content.dataLabels;
       const showTotal = widget.content.showTotal;
 
@@ -195,6 +198,7 @@ function EditChart() {
         summaryBelow,
         chartType,
         horizontalScroll,
+        stackedChart,
         dataLabels,
         showTotal,
         significantDigitLabels: widget.content.significantDigitLabels,
@@ -374,6 +378,10 @@ function EditChart() {
           ...((values.chartType === ChartType.LineChart ||
             values.chartType === ChartType.ColumnChart) && {
             horizontalScroll: values.horizontalScroll,
+          }),
+          ...((values.chartType === ChartType.BarChart ||
+            values.chartType === ChartType.ColumnChart) && {
+            stackedChart: values.stackedChart,
           }),
           ...((values.chartType === ChartType.BarChart ||
             values.chartType === ChartType.ColumnChart ||
@@ -671,6 +679,7 @@ function EditChart() {
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
                   horizontalScroll={horizontalScroll}
+                  stackedChart={stackedChart}
                   dataLabels={dataLabels}
                   showTotal={showTotal}
                   significantDigitLabels={significantDigitLabels}

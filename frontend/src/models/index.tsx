@@ -128,6 +128,7 @@ export interface ChartWidget extends Widget {
     sortByColumn?: string;
     sortByDesc?: boolean;
     horizontalScroll?: boolean;
+    stackedChart?: boolean;
     significantDigitLabels: boolean;
     dataLabels: boolean;
     showTotal: boolean;

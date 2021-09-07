@@ -320,6 +320,23 @@ exports[`renders the VisualizeChart component 1`] = `
               Show total in chart's center
             </label>
           </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
+              class="usa-checkbox__input"
+              id="stackedChart"
+              name="stackedChart"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="stackedChart"
+            >
+              Display as stacked chart
+            </label>
+          </div>
         </div>
         <div
           class="usa-form-group"
@@ -795,6 +812,23 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               for="showTotal"
             >
               Show total in chart's center
+            </label>
+          </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
+              class="usa-checkbox__input"
+              id="stackedChart"
+              name="stackedChart"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="stackedChart"
+            >
+              Display as stacked chart
             </label>
           </div>
         </div>

@@ -28,6 +28,7 @@ type Props = {
   isPreview?: boolean;
   hideLegend?: boolean;
   horizontalScroll?: boolean;
+  stackedChart?: boolean;
   hideDataLabels?: boolean;
   setWidthPercent?: (widthPercent: number) => void;
   significantDigitLabels: boolean;
@@ -216,6 +217,7 @@ const ColumnChartWidget = (props: Props) => {
                     fillOpacity={getOpacity(column)}
                     hide={hiddenColumns.includes(column)}
                     isAnimationActive={false}
+                    stackId={props.stackedChart ? "a" : `${index}`}
                   >
                     {!props.hideDataLabels ? (
                       <LabelList

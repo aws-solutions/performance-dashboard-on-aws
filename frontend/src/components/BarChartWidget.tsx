@@ -34,6 +34,7 @@ type Props = {
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
   showMobilePreview?: boolean;
+  stackedChart?: boolean;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -204,6 +205,7 @@ const BarChartWidget = (props: Props) => {
                     key={index}
                     fillOpacity={getOpacity(bar)}
                     hide={hiddenBars.includes(bar)}
+                    stackId={props.stackedChart ? "a" : `${index}`}
                     isAnimationActive={false}
                   >
                     {!props.hideDataLabels ? (

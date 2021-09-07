@@ -8,7 +8,7 @@ export class DataKvp {
   constructor(value: number, key: string, columnName: string) {
     this.value = value;
     this.key = key;
-    this.columnName = columnName
+    this.columnName = columnName;
   }
 }
 

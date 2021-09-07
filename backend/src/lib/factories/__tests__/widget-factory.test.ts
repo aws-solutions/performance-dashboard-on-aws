@@ -525,7 +525,7 @@ describe("toItem", () => {
         sortByDesc: true,
         significantDigitLabels: true,
         dataLabels: true,
-        computePercentages:false,
+        computePercentages: false,
         showTotal: true,
         columnsMetadata: [
           {

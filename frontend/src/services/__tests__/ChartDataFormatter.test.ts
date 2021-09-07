@@ -54,8 +54,10 @@ describe("donutChart", () => {
     expect(result.values.length).toEqual(2);
     expect(result.values[0].key).toEqual("coffee");
     expect(result.values[0].value).toEqual(2);
+    expect(result.values[0].columnName).toEqual("cup count");
     expect(result.values[1].key).toEqual("tea");
     expect(result.values[1].value).toEqual(1);
+    expect(result.values[1].columnName).toEqual("cup count");
   });
 
   it("handles exclude being null", () => {
@@ -115,8 +117,10 @@ describe("pieChart", () => {
     expect(result.values.length).toEqual(2);
     expect(result.values[0].key).toEqual("coffee");
     expect(result.values[0].value).toEqual(2);
+    expect(result.values[0].columnName).toEqual("cup count");
     expect(result.values[1].key).toEqual("tea");
     expect(result.values[1].value).toEqual(1);
+    expect(result.values[1].columnName).toEqual("cup count");
   });
 
   it("handles exclude being null", () => {

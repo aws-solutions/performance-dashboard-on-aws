@@ -168,6 +168,7 @@
     "ChartTypeError": "Seleccione un tipo de gráfico",
     "DisplayHorizontalScroll": "Mostrar con desplazamiento horizontal",
     "ShowDataLabels": "Mostrar etiquetas de datos",
+    "ComputePercentages": "!!NEED TRANSLATION!!",
     "ShowTotal": "Mostrar total en el centro del gráfico",
     "ChartCorrectDisplay": "¿El gráfico parece correcto?"
   },

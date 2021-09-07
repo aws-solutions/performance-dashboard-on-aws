@@ -12,7 +12,7 @@ import "@testing-library/cypress/add-commands";
 import "cypress-file-upload";
 
 beforeEach(() => {
-  cy.viewport(1280, 768); // Run all tests in a desktop view by default
+  cy.viewport(1600, 2000); // Run all tests in a desktop view by default
 });
 
 // ***********************************************

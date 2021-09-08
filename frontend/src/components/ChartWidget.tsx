@@ -83,6 +83,7 @@ function ChartWidgetComponent(props: Props) {
           columns={keys}
           data={filteredJson}
           horizontalScroll={content.horizontalScroll}
+          stackedChart={content.stackedChart}
           significantDigitLabels={content.significantDigitLabels}
           columnsMetadata={content.columnsMetadata}
           hideDataLabels={!content.dataLabels}
@@ -104,6 +105,7 @@ function ChartWidgetComponent(props: Props) {
           columnsMetadata={content.columnsMetadata}
           hideDataLabels={!content.dataLabels}
           showMobilePreview={showMobilePreview}
+          stackedChart={content.stackedChart}
         />
       );
 

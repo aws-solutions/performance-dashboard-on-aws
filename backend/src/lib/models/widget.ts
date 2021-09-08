@@ -82,6 +82,7 @@ export interface ChartWidget extends Widget {
     summaryBelow: boolean;
     datasetType?: string;
     horizontalScroll?: boolean;
+    stackedChart?: boolean;
     dataLabels: boolean;
     computePercentages: boolean;
     showTotal: boolean;

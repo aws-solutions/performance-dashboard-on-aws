@@ -47,6 +47,7 @@ interface Props {
   summaryBelow: boolean;
   significantDigitLabels: boolean;
   horizontalScroll: boolean;
+  stackedChart: boolean;
   dataLabels: boolean;
   computePercentages: boolean;
   showTotal: boolean;
@@ -276,6 +277,26 @@ function VisualizeChart(props: Props) {
                 {t("VisualizeChartComponent.ShowTotal")}
               </label>
             </div>
+
+            <div
+              className="usa-checkbox"
+              hidden={
+                props.chartType !== ChartType.BarChart &&
+                props.chartType !== ChartType.ColumnChart
+              }
+            >
+              <input
+                className="usa-checkbox__input"
+                id="stackedChart"
+                type="checkbox"
+                name="stackedChart"
+                defaultChecked={!!props.stackedChart}
+                ref={props.register()}
+              />
+              <label className="usa-checkbox__label" htmlFor="stackedChart">
+                {t("VisualizeChartComponent.StackedChart")}
+              </label>
+            </div>
           </div>
 
           <TextField
@@ -410,6 +431,7 @@ function VisualizeChart(props: Props) {
                   summaryBelow={props.summaryBelow}
                   isPreview={!props.fullPreview}
                   horizontalScroll={props.horizontalScroll}
+                  stackedChart={props.stackedChart}
                   setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}
                   columnsMetadata={props.columnsMetadata}
@@ -430,6 +452,7 @@ function VisualizeChart(props: Props) {
                   significantDigitLabels={props.significantDigitLabels}
                   columnsMetadata={props.columnsMetadata}
                   hideDataLabels={!props.dataLabels}
+                  stackedChart={props.stackedChart}
                 />
               )}
               {props.chartType === ChartType.PartWholeChart && (

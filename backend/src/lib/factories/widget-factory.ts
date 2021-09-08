@@ -293,6 +293,9 @@ function createChartWidget(widget: Widget): ChartWidget {
       ...(widget.content.horizontalScroll && {
         horizontalScroll: widget.content.horizontalScroll,
       }),
+      ...(widget.content.stackedChart && {
+        stackedChart: widget.content.stackedChart,
+      }),
     },
   };
 }

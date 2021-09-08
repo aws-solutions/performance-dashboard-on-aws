@@ -39,6 +39,7 @@ interface FormValues {
   summaryBelow: boolean;
   datasetType: string;
   horizontalScroll: boolean;
+  stackedChart: boolean;
   significantDigitLabels: boolean;
   dataLabels: boolean;
   computePercentages: boolean;
@@ -115,6 +116,7 @@ function AddChart() {
   const chartType = watch("chartType");
   const showTitle = watch("showTitle");
   const horizontalScroll = watch("horizontalScroll");
+  const stackedChart = watch("stackedChart");
   const dataLabels = watch("dataLabels");
   const computePercentages = watch("computePercentages");
   const showTotal = watch("showTotal");
@@ -185,6 +187,10 @@ function AddChart() {
           ...((values.chartType === ChartType.LineChart ||
             values.chartType === ChartType.ColumnChart) && {
             horizontalScroll: values.horizontalScroll,
+          }),
+          ...((values.chartType === ChartType.BarChart ||
+            values.chartType === ChartType.ColumnChart) && {
+            stackedChart: values.stackedChart,
           }),
           ...((values.chartType === ChartType.BarChart ||
             values.chartType === ChartType.ColumnChart ||
@@ -508,6 +514,7 @@ function AddChart() {
                 chartType={chartType as ChartType}
                 significantDigitLabels={significantDigitLabels}
                 horizontalScroll={horizontalScroll}
+                stackedChart={stackedChart}
                 dataLabels={dataLabels}
                 computePercentages={computePercentages}
                 showTotal={showTotal}

@@ -170,7 +170,8 @@
     "ShowDataLabels": "Show data labels",
     "ComputePercentages": "Display computed percentages",
     "ShowTotal": "Show total in chart's center",
-    "ChartCorrectDisplay": "Does the chart look correct?"
+    "ChartCorrectDisplay": "Does the chart look correct?",
+    "StackedChart": "Display as stacked chart"
   },
   "ViewDashboardAlertVersionNotesFrom": "Version {{version}} notes from",
   "ViewDashboardAlertVersion": "Version",

@@ -10,9 +10,10 @@ import {
 } from "recharts";
 import { useColors, useWindowSize } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
+import ChartDataFormatter from "../services/ChartDataFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import { ColumnMetadata, NumberDataType } from "../models";
+import { NumberDataType } from "../models/index";
 
 type Props = {
   title: string;
@@ -27,6 +28,7 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
+  computePercentages?: boolean;
   showTotal?: boolean;
   isPreview?: boolean;
   showMobilePreview?: boolean;
@@ -40,33 +42,74 @@ const DonutChartWidget = (props: Props) => {
 
   const donutData = useRef<Array<object>>([]);
   const donutParts = useRef<Array<string>>([]);
+  const donutDataMap = useRef<Map<string, any>>(new Map());
   let total = useRef<number>(0);
 
   const { data, parts, showMobilePreview } = props;
+
+  const computePercentages = props.computePercentages === true;
+
+  const columnMetaDataMap = new Map();
+
+  props.columnsMetadata.forEach((ele) => {
+    columnMetaDataMap.set(ele.columnName, ele);
+  });
+
+  const chartData = ChartDataFormatter.donutChart(parts, hiddenParts, data);
+
   useMemo(() => {
     if (data && data.length) {
       let donut = {};
-      total.current = 0;
+      total.current = chartData.total;
+
       donutParts.current = [];
       donutData.current = [];
-      let maxTick = -Infinity;
-      for (let i = 0; i < data.length; i++) {
-        const key = data[i][parts[0] as keyof object];
-        const value = data[i][parts[1] as keyof object];
-        const barKey = `${key}`;
+
+      setXAxisLargestValue(chartData.maxValue);
+
+      for (
+        let i = 0, dataLength = chartData.values.length, item = null;
+        i < dataLength && (item = chartData.values[i]);
+        i++
+      ) {
+        const computedPercentage =
+          Math.round((item.value / chartData.total) * 100 * 100) / 100;
+
         donut = {
           ...donut,
-          [barKey]: value,
+          [item.key]: item.value,
         };
-        donutData.current.push({ name: barKey, value: Number(value) });
-        donutParts.current.push(barKey);
-        if (hiddenParts.includes(barKey)) {
-          continue;
-        }
-        total.current += isNaN(value) ? 0 : Number(value);
-        maxTick = Math.max(maxTick, value);
+
+        const columnMetadata = columnMetaDataMap.get(item.columnName);
+
+        const displayRaw = TickFormatter.format(
+          item.value,
+          xAxisLargestValue,
+          props.significantDigitLabels,
+          columnMetadata
+        );
+
+        const displayPercentage = TickFormatter.format(
+          computedPercentage,
+          xAxisLargestValue,
+          false,
+          undefined,
+          NumberDataType.Percentage
+        );
+
+        let datum = {
+          name: item.key,
+          value: item.value,
+          total: chartData.total,
+          displayRawValue: displayRaw,
+          displayPercentage: `${displayRaw} (${displayPercentage})`,
+        };
+
+        donutDataMap.current.set(datum.name, datum);
+        donutData.current.push(datum);
+
+        donutParts.current.push(item.key);
       }
-      setXAxisLargestValue(maxTick);
     }
   }, [data, parts, donutData, donutParts, hiddenParts]);
 
@@ -157,12 +200,9 @@ const DonutChartWidget = (props: Props) => {
     const ey = my;
     const textAnchor = cos >= 0 ? "start" : "end";
 
-    let columnMetadata;
-    if (parts && parts.length > 1 && props.columnsMetadata) {
-      columnMetadata = props.columnsMetadata.find(
-        (cm) => cm.columnName === parts[1]
-      );
-    }
+    let displayValue = computePercentages
+      ? payload.displayPercentage
+      : payload.displayRawValue;
 
     return !props.hideDataLabels && !hiddenParts.includes(payload.name) ? (
       <g>
@@ -178,7 +218,7 @@ const DonutChartWidget = (props: Props) => {
           textAnchor={textAnchor}
           fill={fill}
         >
-          {displayedAmount(payload.value, columnMetadata)}
+          {displayValue}
         </text>
       </g>
     ) : (
@@ -211,32 +251,21 @@ const DonutChartWidget = (props: Props) => {
     );
   };
 
-  const renderLegendText = (value: string) => {
-    let columnMetadata;
-    if (parts && parts.length > 1 && props.columnsMetadata) {
-      columnMetadata = props.columnsMetadata.find(
-        (cm) => cm.columnName === parts[1]
-      );
+  const renderLegendText = (dataKey: string) => {
+    let datum;
+
+    if (dataKey && dataKey !== "null") {
+      datum = donutDataMap.current.get(dataKey);
     }
 
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
-          {value.toLocaleString()}
+          {dataKey.toLocaleString()}
         </span>
         <div className="margin-left-4 margin-bottom-1 text-base-darkest text-bold">
-          {value && value !== "null" ? (
-            TickFormatter.format(
-              Number(
-                (donutData.current.find((d: any) => d.name === value) as any)
-                  .value
-              ),
-              xAxisLargestValue,
-              props.significantDigitLabels,
-              "",
-              "",
-              columnMetadata
-            )
+          {datum !== undefined && datum !== null ? (
+            datum.displayRawValue
           ) : (
             <br />
           )}
@@ -347,15 +376,13 @@ const DonutChartWidget = (props: Props) => {
             <Tooltip
               itemStyle={{ color: "#1b1b1b" }}
               isAnimationActive={false}
-              formatter={(value: Number | String) => {
-                // Check if there is metadata for this column
-                let columnMetadata;
-                if (parts && parts.length > 1 && props.columnsMetadata) {
-                  columnMetadata = props.columnsMetadata.find(
-                    (cm) => cm.columnName === parts[1]
-                  );
-                }
-                return displayedAmount(value, columnMetadata);
+              formatter={(dataValue: Number | String, dataName: any) => {
+                let pieDatum = donutDataMap.current.get(dataName);
+
+                if (pieDatum === undefined) return "";
+                return computePercentages
+                  ? pieDatum.displayPercentage
+                  : pieDatum.displayRawValue;
               }}
             />
           </PieChart>

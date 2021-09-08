@@ -22,7 +22,7 @@ function AlertContainer(props: Props) {
         type={state.alert.type}
         message={
           state.alert.linkLabel && state.alert.to ? (
-            <div className="margin-left-4">
+            <div className="margin-left-6">
               {state.alert.message}{" "}
               <Link target="_blank" to={state.alert.to} external>
                 {state.alert.linkLabel}

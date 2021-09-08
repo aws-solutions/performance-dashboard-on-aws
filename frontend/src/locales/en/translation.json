@@ -168,6 +168,7 @@
     "ChartTypeError": "Please select a chart type",
     "DisplayHorizontalScroll": "Display with horizontal scroll",
     "ShowDataLabels": "Show data labels",
+    "ComputePercentages": "Display computed percentages",
     "ShowTotal": "Show total in chart's center",
     "ChartCorrectDisplay": "Does the chart look correct?"
   },

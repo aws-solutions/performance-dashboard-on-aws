@@ -135,6 +135,7 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           hideDataLabels={!content.dataLabels}
           columnsMetadata={content.columnsMetadata}
+          computePercentages={content.computePercentages}
           showMobilePreview={showMobilePreview}
         />
       );
@@ -153,6 +154,7 @@ function ChartWidgetComponent(props: Props) {
           hideDataLabels={!content.dataLabels}
           columnsMetadata={content.columnsMetadata}
           showTotal={content.showTotal}
+          computePercentages={content.computePercentages}
           showMobilePreview={showMobilePreview}
         />
       );

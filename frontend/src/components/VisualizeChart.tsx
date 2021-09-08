@@ -48,6 +48,7 @@ interface Props {
   significantDigitLabels: boolean;
   horizontalScroll: boolean;
   dataLabels: boolean;
+  computePercentages: boolean;
   showTotal: boolean;
   columnsMetadata: Array<any>;
   configHeader: JSX.Element;
@@ -236,7 +237,29 @@ function VisualizeChart(props: Props) {
                 {t("VisualizeChartComponent.ShowDataLabels")}
               </label>
             </div>
-
+            <div
+              className="usa-checkbox"
+              hidden={
+                props.chartType !== ChartType.PieChart &&
+                props.chartType !== ChartType.DonutChart &&
+                props.chartType !== ChartType.PartWholeChart
+              }
+            >
+              <input
+                className="usa-checkbox__input"
+                id="computePercentages"
+                type="checkbox"
+                name="computePercentages"
+                defaultChecked={false}
+                ref={props.register()}
+              />
+              <label
+                className="usa-checkbox__label"
+                htmlFor="computePercentages"
+              >
+                {t("VisualizeChartComponent.ComputePercentages")}
+              </label>
+            </div>
             <div
               className="usa-checkbox"
               hidden={props.chartType !== ChartType.DonutChart}
@@ -438,6 +461,7 @@ function VisualizeChart(props: Props) {
                   hideDataLabels={!props.dataLabels}
                   isPreview={!props.fullPreview}
                   columnsMetadata={props.columnsMetadata}
+                  computePercentages={props.computePercentages}
                 />
               )}
               {props.chartType === ChartType.DonutChart && (
@@ -456,6 +480,7 @@ function VisualizeChart(props: Props) {
                   showTotal={props.showTotal}
                   isPreview={!props.fullPreview}
                   columnsMetadata={props.columnsMetadata}
+                  computePercentages={props.computePercentages}
                 />
               )}
             </>

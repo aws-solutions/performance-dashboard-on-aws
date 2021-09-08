@@ -133,6 +133,10 @@ function fromChartItem(widget: Widget): ChartWidget {
         chartWidget.content.dataLabels !== undefined
           ? chartWidget.content.dataLabels
           : false,
+      computePercentages:
+        chartWidget.content.computePercentages !== undefined
+          ? chartWidget.content.computePercentages
+          : false,
       showTotal:
         chartWidget.content.showTotal !== undefined
           ? chartWidget.content.showTotal
@@ -277,6 +281,10 @@ function createChartWidget(widget: Widget): ChartWidget {
       dataLabels:
         widget.content.dataLabels !== undefined
           ? widget.content.dataLabels
+          : false,
+      computePercentages:
+        widget.content.computePercentages !== undefined
+          ? widget.content.computePercentages
           : false,
       showTotal:
         widget.content.showTotal !== undefined

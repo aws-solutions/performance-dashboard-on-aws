@@ -83,6 +83,7 @@ export interface ChartWidget extends Widget {
     datasetType?: string;
     horizontalScroll?: boolean;
     dataLabels: boolean;
+    computePercentages: boolean;
     showTotal: boolean;
     fileName: string;
     columnsMetadata: ColumnMetadata[];

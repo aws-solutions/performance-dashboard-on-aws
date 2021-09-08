@@ -7,7 +7,6 @@ interface Props {
   children: React.ReactNode;
   defaultActive: string;
   showArrows?: boolean;
-  activeColor?: string;
 }
 
 type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;

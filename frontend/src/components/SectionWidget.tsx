@@ -4,7 +4,6 @@ import { Widget } from "../models";
 import WidgetRender from "./WidgetRender";
 import Tabs from "./Tabs";
 import TabsVertical from "./TabsVertical";
-import { useWindowSize, useColors } from "../hooks";
 
 interface Props {
   widget: Widget;
@@ -37,7 +36,7 @@ function SectionWidget(props: Props) {
           if (widget) {
             return (
               <div key={index}>
-                <div className="margin-top-4 usa-prose" id={id}>
+                <div className="margin-top-6 usa-prose" id={id}>
                   <WidgetRender
                     widget={widget}
                     showMobilePreview={props.showMobilePreview}
@@ -49,11 +48,9 @@ function SectionWidget(props: Props) {
           return false;
         })}
       {props.widget.content.showWithTabs &&
-        (props.widget.content.horizontally ||
-          props.showMobilePreview ||
-          windowSize.width <= 600) &&
+        props.widget.content.horizontally &&
         props.widget.content.widgetIds && (
-          <Tabs defaultActive={"0"} showArrows activeColor={`${primaryColor}`}>
+          <Tabs defaultActive={"0"} showArrows>
             {props.widget.content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {
@@ -73,10 +70,8 @@ function SectionWidget(props: Props) {
         )}
       {props.widget.content.showWithTabs &&
         !props.widget.content.horizontally &&
-        !props.showMobilePreview &&
-        windowSize.width > 600 &&
         props.widget.content.widgetIds && (
-          <TabsVertical defaultActive={"0"} activeColor={`${primaryColor}`}>
+          <TabsVertical defaultActive={"0"}>
             {props.widget.content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {

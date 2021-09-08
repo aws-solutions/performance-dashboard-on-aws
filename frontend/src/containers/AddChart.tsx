@@ -42,6 +42,7 @@ interface FormValues {
   stackedChart: boolean;
   significantDigitLabels: boolean;
   dataLabels: boolean;
+  computePercentages: boolean;
   showTotal: boolean;
   sortData: string;
 }
@@ -117,6 +118,7 @@ function AddChart() {
   const horizontalScroll = watch("horizontalScroll");
   const stackedChart = watch("stackedChart");
   const dataLabels = watch("dataLabels");
+  const computePercentages = watch("computePercentages");
   const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 
@@ -195,6 +197,10 @@ function AddChart() {
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
+          }),
+          ...((values.chartType === ChartType.PieChart ||
+            values.chartType === ChartType.DonutChart) && {
+            computePercentages: values.computePercentages,
           }),
           ...(values.chartType === ChartType.DonutChart && {
             showTotal: values.showTotal,
@@ -510,6 +516,7 @@ function AddChart() {
                 horizontalScroll={horizontalScroll}
                 stackedChart={stackedChart}
                 dataLabels={dataLabels}
+                computePercentages={computePercentages}
                 showTotal={showTotal}
                 columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                   hiddenColumns,

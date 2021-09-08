@@ -84,6 +84,7 @@ export interface ChartWidget extends Widget {
     horizontalScroll?: boolean;
     stackedChart?: boolean;
     dataLabels: boolean;
+    computePercentages: boolean;
     showTotal: boolean;
     fileName: string;
     columnsMetadata: ColumnMetadata[];
@@ -150,5 +151,6 @@ export interface SectionWidget extends Widget {
     summary?: string;
     widgetIds?: Array<string>;
     showWithTabs: string;
+    horizontally?: boolean;
   };
 }

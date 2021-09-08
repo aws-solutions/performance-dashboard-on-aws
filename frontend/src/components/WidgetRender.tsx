@@ -18,17 +18,25 @@ import MetricsWidgetComponent from "../components/MetricsWidget";
 interface Props {
   widget: Widget;
   showMobilePreview?: boolean;
+  hideTitle?: boolean;
+  widgets?: Array<Widget>;
 }
 
-function WidgetRender({ widget, showMobilePreview }: Props) {
+function WidgetRender({
+  widget,
+  showMobilePreview,
+  widgets,
+  hideTitle,
+}: Props) {
   switch (widget.widgetType) {
     case WidgetType.Text:
-      return <TextWidget widget={widget} />;
+      return <TextWidget widget={widget} hideTitle={hideTitle} />;
     case WidgetType.Chart:
       return (
         <ChartWidgetComponent
           widget={widget as ChartWidget}
           showMobilePreview={showMobilePreview}
+          hideTitle={hideTitle}
         />
       );
     case WidgetType.Table:
@@ -37,25 +45,34 @@ function WidgetRender({ widget, showMobilePreview }: Props) {
         <WidgetWithDataset
           widget={widget}
           showMobilePreview={showMobilePreview}
+          hideTitle={hideTitle}
         />
       );
     case WidgetType.Image:
-      return <WidgetWithImage widget={widget as ImageWidget} />;
+      return (
+        <WidgetWithImage widget={widget as ImageWidget} hideTitle={hideTitle} />
+      );
     case WidgetType.Section:
-      return <SectionWidget widget={widget} />;
+      return (
+        <SectionWidget
+          widget={widget}
+          showMobilePreview={showMobilePreview}
+          widgets={widgets}
+        />
+      );
     default:
       return null;
   }
 }
 
-function WidgetWithImage({ widget }: Props) {
+function WidgetWithImage({ widget, hideTitle }: Props) {
   const imageWidget = widget as ImageWidget;
   const content = imageWidget.content;
   const file = useImage(content.s3Key.raw);
 
   return (
     <ImageWidgetComponent
-      title={imageWidget.showTitle ? content.title : ""}
+      title={!hideTitle && imageWidget.showTitle ? content.title : ""}
       summary={content.summary ? content.summary : ""}
       summaryBelow={content.summaryBelow}
       file={file.file}
@@ -64,14 +81,16 @@ function WidgetWithImage({ widget }: Props) {
   );
 }
 
-function WidgetWithDataset({ widget, showMobilePreview }: Props) {
+function WidgetWithDataset({ widget, showMobilePreview, hideTitle }: Props) {
   const { json } = useWidgetDataset(widget);
   switch (widget.widgetType) {
     case WidgetType.Table:
       const tableWidget = widget as TableWidget;
       return (
         <TableWidgetComponent
-          title={tableWidget.showTitle ? tableWidget.content.title : ""}
+          title={
+            !hideTitle && tableWidget.showTitle ? tableWidget.content.title : ""
+          }
           summary={tableWidget.content.summary}
           data={json}
           summaryBelow={tableWidget.content.summaryBelow}
@@ -86,7 +105,11 @@ function WidgetWithDataset({ widget, showMobilePreview }: Props) {
       const metricsWidget = widget as MetricsWidget;
       return (
         <MetricsWidgetComponent
-          title={metricsWidget.showTitle ? metricsWidget.content.title : ""}
+          title={
+            !hideTitle && metricsWidget.showTitle
+              ? metricsWidget.content.title
+              : ""
+          }
           metrics={json}
           metricPerRow={
             metricsWidget.content.oneMetricPerRow ||

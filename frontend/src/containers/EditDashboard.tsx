@@ -259,6 +259,7 @@ function EditDashboard() {
                     data-tip=""
                     data-event="click"
                     data-border={true}
+                    style={{ cursor: "pointer" }}
                   >
                     <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
                     {t("Version")} {dashboard?.version}

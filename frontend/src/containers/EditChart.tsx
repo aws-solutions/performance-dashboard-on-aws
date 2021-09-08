@@ -48,6 +48,7 @@ interface FormValues {
   horizontalScroll: boolean;
   stackedChart: boolean;
   dataLabels: boolean;
+  computePercentages: boolean;
   showTotal: boolean;
   significantDigitLabels: boolean;
   staticFileName: string | undefined;
@@ -129,6 +130,7 @@ function EditChart() {
   const horizontalScroll = watch("horizontalScroll");
   const stackedChart = watch("stackedChart");
   const dataLabels = watch("dataLabels");
+  const computePercentages = watch("computePercentages");
   const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 
@@ -177,6 +179,7 @@ function EditChart() {
       const horizontalScroll = widget.content.horizontalScroll;
       const stackedChart = widget.content.stackedChart;
       const dataLabels = widget.content.dataLabels;
+      const computePercentages = widget.content.computePercentages;
       const showTotal = widget.content.showTotal;
 
       if (dynamicDataset) {
@@ -200,6 +203,7 @@ function EditChart() {
         horizontalScroll,
         stackedChart,
         dataLabels,
+        computePercentages,
         showTotal,
         significantDigitLabels: widget.content.significantDigitLabels,
         dynamicDatasets:
@@ -388,6 +392,10 @@ function EditChart() {
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
+          }),
+          ...((values.chartType === ChartType.PieChart ||
+            values.chartType === ChartType.DonutChart) && {
+            computePercentages: values.computePercentages,
           }),
           ...(values.chartType === ChartType.DonutChart && {
             showTotal: values.showTotal,
@@ -681,6 +689,7 @@ function EditChart() {
                   horizontalScroll={horizontalScroll}
                   stackedChart={stackedChart}
                   dataLabels={dataLabels}
+                  computePercentages={computePercentages}
                   showTotal={showTotal}
                   significantDigitLabels={significantDigitLabels}
                   columnsMetadata={ColumnsMetadataService.getColumnsMetadata(

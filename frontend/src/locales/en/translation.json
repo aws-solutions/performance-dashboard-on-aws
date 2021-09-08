@@ -139,7 +139,7 @@
     "Draft": " draft"
   },
   "DashboardPreviewPublishedMessage": "Below is a preview of what the published dashboard will look like. If ready to proceed, you can publish the dashboard to make it available on the published site.",
-  "RepublishDashboardToView": "This dashboard is archived. It is not viewable on the published site unless it is re-published",
+  "RepublishDashboardToView": "This dashboard is archived. It is not viewable on the published site unless it is re-published.",
   "ViewDashboardAlertVersionNotes": {
     "Show": "Show",
     "Hide": "Hide",
@@ -168,6 +168,7 @@
     "ChartTypeError": "Please select a chart type",
     "DisplayHorizontalScroll": "Display with horizontal scroll",
     "ShowDataLabels": "Show data labels",
+    "ComputePercentages": "Display computed percentages",
     "ShowTotal": "Show total in chart's center",
     "ChartCorrectDisplay": "Does the chart look correct?",
     "StackedChart": "Display as stacked chart"
@@ -460,7 +461,6 @@
   "MetricsGuidance": "Add metrics here and reorder them. Multiple metrics will automatically scale to fit and wrap according to the order.",
   "MetricsOnePerRow": "One metric per row",
   "MetricsZero": "No metrics added yet.",
-  "MetricsCenterAlign": "Display with center alignment",
   "ViewHistoryLink": "View history",
   "PreviewButton": "Preview",
   "ReturnToDraftButton": "Return to draft",
@@ -907,5 +907,12 @@
   "CopyContent": "Copy {{name}}",
   "DownloadCSV": "Download",
   "MobilePreview": "Mobile preview",
-  "DisplayTableOfContents": "Display table of contents"
+  "MetricsCenterAlign": "Display with center alignment",
+  "DisplayTableOfContents": "Display table of contents",
+  "Current": "Current",
+  "SectionOptionsLabel": "Section Options",
+  "SectionOptionsDescription": "Format your section",
+  "ShowWithTabs": "Display section's content items with tabs",
+  "Horizontally": "Horizontally",
+  "Vertically": "Vertically"
 }

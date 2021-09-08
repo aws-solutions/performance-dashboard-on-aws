@@ -17,11 +17,14 @@ import Spinner from "../components/Spinner";
 import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import RadioButtons from "../components/RadioButtons";
 
 interface FormValues {
   title: string;
   showTitle: boolean;
   summary: string;
+  showWithTabs: boolean;
+  horizontally: string;
 }
 
 interface PathParams {
@@ -38,6 +41,8 @@ function AddSection() {
   const [title, setTitle] = useState("");
   const [showTitle, setShowTitle] = useState(true);
   const [summary, setSummary] = useState("");
+  const [showWithTabs, setShowWithTabs] = useState(false);
+  const [horizontally, setHorizontally] = useState("horizontally");
   const { fullPreview, fullPreviewButton } = useFullPreview();
 
   const onSubmit = async (values: FormValues) => {
@@ -51,6 +56,8 @@ function AddSection() {
         {
           title: values.title,
           summary: values.summary,
+          showWithTabs: values.showWithTabs,
+          horizontally: values.horizontally === "horizontally",
         }
       );
       setCreatingWidget(false);
@@ -74,10 +81,13 @@ function AddSection() {
   };
 
   const onFormChange = () => {
-    const { title, showTitle, summary } = getValues();
+    const { title, showTitle, summary, showWithTabs, horizontally } =
+      getValues();
     setTitle(title);
     setShowTitle(showTitle);
     setSummary(summary);
+    setShowWithTabs(showWithTabs);
+    setHorizontally(horizontally);
   };
 
   const goBack = () => {
@@ -188,6 +198,53 @@ function AddSection() {
                       multiline
                       rows={5}
                     />
+
+                    <div>
+                      <label className="usa-label text-bold">
+                        {t("SectionOptionsLabel")}
+                      </label>
+                      <div className="usa-hint">
+                        {t("SectionOptionsDescription")}
+                      </div>
+                      <div className="usa-checkbox">
+                        <input
+                          className="usa-checkbox__input"
+                          id="showWithTabs"
+                          type="checkbox"
+                          name="showWithTabs"
+                          defaultChecked={false}
+                          ref={register}
+                        />
+                        <label
+                          className="usa-checkbox__label"
+                          htmlFor="showWithTabs"
+                        >
+                          {t("ShowWithTabs")}
+                        </label>
+                      </div>
+                    </div>
+
+                    <div hidden={!showWithTabs}>
+                      <RadioButtons
+                        id="horizontally"
+                        name="horizontally"
+                        label=""
+                        register={register}
+                        defaultValue={"horizontally"}
+                        required
+                        options={[
+                          {
+                            value: "horizontally",
+                            label: t("Horizontally"),
+                          },
+                          {
+                            value: "vertically",
+                            label: t("Vertically"),
+                          },
+                        ]}
+                        className="margin-top-0"
+                      />
+                    </div>
                   </fieldset>
                   <br />
                   <br />

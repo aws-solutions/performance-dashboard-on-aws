@@ -307,6 +307,23 @@ exports[`renders the VisualizeChart component 1`] = `
             hidden=""
           >
             <input
+              class="usa-checkbox__input"
+              id="computePercentages"
+              name="computePercentages"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="computePercentages"
+            >
+              Display computed percentages
+            </label>
+          </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
               checked=""
               class="usa-checkbox__input"
               id="showTotal"
@@ -794,6 +811,23 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               for="dataLabels"
             >
               Show data labels
+            </label>
+          </div>
+          <div
+            class="usa-checkbox"
+            hidden=""
+          >
+            <input
+              class="usa-checkbox__input"
+              id="computePercentages"
+              name="computePercentages"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="computePercentages"
+            >
+              Display computed percentages
             </label>
           </div>
           <div

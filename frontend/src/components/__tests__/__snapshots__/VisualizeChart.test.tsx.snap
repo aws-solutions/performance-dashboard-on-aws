@@ -341,17 +341,16 @@ exports[`renders the VisualizeChart component 1`] = `
             hidden=""
           >
             <input
-              checked=""
               class="usa-checkbox__input"
-              id="horizontalScroll"
-              name="horizontalScroll"
+              id="stackedChart"
+              name="stackedChart"
               type="checkbox"
             />
             <label
               class="usa-checkbox__label"
-              for="horizontalScroll"
+              for="stackedChart"
             >
-              Display with horizontal scroll
+              Display as stacked chart
             </label>
           </div>
         </div>
@@ -854,15 +853,15 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           >
             <input
               class="usa-checkbox__input"
-              id="horizontalScroll"
-              name="horizontalScroll"
+              id="stackedChart"
+              name="stackedChart"
               type="checkbox"
             />
             <label
               class="usa-checkbox__label"
-              for="horizontalScroll"
+              for="stackedChart"
             >
-              Display with horizontal scroll
+              Display as stacked chart
             </label>
           </div>
         </div>

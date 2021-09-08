@@ -4,6 +4,7 @@ import { Widget } from "../models";
 import WidgetRender from "./WidgetRender";
 import Tabs from "./Tabs";
 import TabsVertical from "./TabsVertical";
+import { useWindowSize } from "../hooks";
 
 interface Props {
   widget: Widget;
@@ -13,6 +14,7 @@ interface Props {
 
 function SectionWidget(props: Props) {
   const { content, showTitle } = props.widget;
+  const windowSize = useWindowSize();
 
   return (
     <div>
@@ -46,7 +48,9 @@ function SectionWidget(props: Props) {
           return false;
         })}
       {props.widget.content.showWithTabs &&
-        props.widget.content.horizontally &&
+        (props.widget.content.horizontally ||
+          props.showMobilePreview ||
+          windowSize.width <= 600) &&
         props.widget.content.widgetIds && (
           <Tabs defaultActive={"0"} showArrows>
             {props.widget.content.widgetIds.map((id: string, index: number) => {
@@ -68,6 +72,8 @@ function SectionWidget(props: Props) {
         )}
       {props.widget.content.showWithTabs &&
         !props.widget.content.horizontally &&
+        !props.showMobilePreview &&
+        windowSize.width > 600 &&
         props.widget.content.widgetIds && (
           <TabsVertical defaultActive={"0"}>
             {props.widget.content.widgetIds.map((id: string, index: number) => {

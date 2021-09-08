@@ -372,21 +372,98 @@ function EditDashboard() {
         />
       ) : (
         <>
-          {isMobile && (
-            <PrimaryActionBar>
-              {statusAndVersion}
-              <div className="margin-top-2">{lastSavedAndButtons}</div>
-            </PrimaryActionBar>
-          )}
-          {!isMobile && (
-            <PrimaryActionBar className="grid-row" stickyPosition={75}>
-              <div className="grid-col-4 text-left flex-row flex-align-center display-flex">
-                {statusAndVersion}
-              </div>
-              <div className="grid-col-8 text-right">{lastSavedAndButtons}</div>
-            </PrimaryActionBar>
-          )}
-
+          <PrimaryActionBar className="grid-row" stickyPosition={75}>
+            <div className="grid-col-4 text-left flex-row flex-align-center display-flex">
+              <ul className="usa-button-group">
+                <li className="usa-button-group__item">
+                  <span className="usa-tag" style={{ cursor: "text" }}>
+                    {t("Draft")}
+                  </span>
+                </li>
+                <li
+                  className={`usa-button-group__item${
+                    publishedOrArchived ? "" : " cursor-default"
+                  }`}
+                >
+                  <span
+                    className={`${publishedOrArchived ? "text-underline" : ""}`}
+                    data-for="version"
+                    data-tip=""
+                    data-event="click"
+                    data-border={true}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
+                    {t("Version")} {dashboard?.version}
+                  </span>
+                  {publishedOrArchived && (
+                    <Tooltip
+                      id="version"
+                      place="bottom"
+                      type="light"
+                      effect="solid"
+                      offset={{ right: 14 }}
+                      getContent={() => (
+                        <div className="font-sans-sm">
+                          <p className="margin-top-0">
+                            {t("VersionDashboard")}
+                            <br />
+                            {publishedOrArchived.state.toLowerCase()}.
+                          </p>
+                          <Link
+                            target="_blank"
+                            to={`/admin/dashboard${
+                              publishedOrArchived.state ===
+                              DashboardState.Archived
+                                ? "/archived"
+                                : ""
+                            }/${publishedOrArchived.id}`}
+                          >
+                            {t("ViewVersion", {
+                              state: publishedOrArchived.state.toLowerCase(),
+                            })}
+                            <FontAwesomeIcon
+                              className="margin-left-1"
+                              icon={faExternalLinkAlt}
+                              size="sm"
+                            />
+                          </Link>
+                        </div>
+                      )}
+                      clickable
+                    />
+                  )}
+                </li>
+              </ul>
+            </div>
+            <div className="grid-col-8 text-right">
+              <span className="text-base margin-right-1">
+                {dashboard &&
+                  `${t("LastSaved")} ${dayjs(dashboard.updatedAt)
+                    .locale(window.navigator.language.toLowerCase())
+                    .fromNow()}`}
+              </span>
+              <Button variant="outline" onClick={onPreview}>
+                {t("PreviewButton")}
+              </Button>
+              <span data-for="publish" data-tip="">
+                <Button variant="base" onClick={onPublishDashboard}>
+                  {t("PublishButton")}
+                </Button>
+              </span>
+              <Tooltip
+                id="publish"
+                place="bottom"
+                effect="solid"
+                offset={{ bottom: 8 }}
+                getContent={() => (
+                  <div className="font-sans-sm">
+                    {t("PrepareDashboardForPublishing")}
+                  </div>
+                )}
+              />
+            </div>
+          </PrimaryActionBar>
           <DashboardHeader
             name={dashboard?.name}
             topicAreaName={dashboard?.topicAreaName}

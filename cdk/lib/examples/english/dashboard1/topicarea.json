@@ -1,7 +1,5 @@
 {
-    "pk": "TopicArea#b2bf61d1-7e0c-405f-9aa2-56cb2deacd4d",
-    "sk": "TopicArea#b2bf61d1-7e0c-405f-9aa2-56cb2deacd4d",
     "name": "Accountability",
     "createdBy": "cdk-deploy",
     "type": "TopicArea"
-   }
+}

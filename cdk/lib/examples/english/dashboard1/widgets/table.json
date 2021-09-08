@@ -1,0 +1,25 @@
+{
+  "content": {
+   "summary": "A table arranges data in rows and columns. Tables are used to show clear comparisons of data types across categories.\n\n[Example table description] Below are the top 10 most frequent incidents that the Fire and Rescue Department receives every day. Medical emergencies were the most frequent incident by a significant margin: over twice as many as the second most frequent (falls).",
+   "fileName": "Frequent Incidents.csv",
+   "s3Key": {
+    "raw": "b629b374-9ffe-49fe-85a4-2363e2c21532.csv",
+    "json": "b629b374-9ffe-49fe-85a4-2363e2c21532.json"
+   },
+   "summaryBelow": false,
+   "datasetId": "35b1052c-3949-481e-ad6e-86bc2ad300ed",
+   "sortByDesc": true,
+   "sortByColumn": "Incident Total",
+   "title": "Table: Most frequent incidents",
+   "datasetType": "StaticDataset",
+   "columnsMetadata": [],
+   "significantDigitLabels": false
+  },
+  "section": "",
+  "updatedAt": "2021-08-30T19:48:15.420Z",
+  "widgetType": "Table",
+  "order": 8,
+  "showTitle": true,
+  "name": "Table: Most frequent incidents",
+  "type": "Widget"
+ }

@@ -1,0 +1,34 @@
+{
+  "content": {
+   "summary": "A pie chart is a circular graph that shows numerical proportion using slices that are proportional to the quantity they represent. Pie charts are used to show relative comparisons between slices as part of a total value.",
+   "fileName": "Renewable_Energy.csv",
+   "sortByDesc": false,
+   "title": "Pie chart: Renewable energy",
+   "significantDigitLabels": true,
+   "dataLabels": false,
+   "s3Key": {
+    "raw": "a2b0c70e-951a-40a9-8a24-ba05abc05ff1.csv",
+    "json": "a2b0c70e-951a-40a9-8a24-ba05abc05ff1.json"
+   },
+   "summaryBelow": false,
+   "chartType": "PieChart",
+   "datasetId": "4a723b9e-01dd-4742-bdef-6867af472fc8",
+   "sortByColumn": "Energy Type",
+   "datasetType": "StaticDataset",
+   "columnsMetadata": [
+    {
+     "numberType": "Percentage",
+     "hidden": false,
+     "columnName": "Percentage",
+     "dataType": "Number"
+    }
+   ]
+  },
+  "section": "",
+  "updatedAt": "2021-08-30T20:22:00.704Z",
+  "widgetType": "Chart",
+  "order": 5,
+  "name": "Pie chart: Renewable energy",
+  "showTitle": true,
+  "type": "Widget"
+ }

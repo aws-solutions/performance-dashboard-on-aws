@@ -1,0 +1,28 @@
+{
+  "content": {
+   "summary": "A part-to-whole chart is a rectangular graph that shows numerical proportion using blocks that have an area proportional to the quantity they represent. Part-to-whole charts are used to show relative comparisons between blocks as part of a total value.\n\nThis part-to-whole chart visualizes the data from the donut chart above it. An option was selected when creating this chart to display the summary below the chart.",
+   "fileName": "Devices used to access service.csv",
+   "sortByDesc": true,
+   "title": "Part-to-whole chart: Devices used to access service",
+   "significantDigitLabels": false,
+   "dataLabels": false,
+   "s3Key": {
+    "raw": "8765a857-9d1a-4a61-8633-e342181bff60.csv",
+    "json": "8765a857-9d1a-4a61-8633-e342181bff60.json"
+   },
+   "summaryBelow": true,
+   "showTotal": true,
+   "chartType": "PartWholeChart",
+   "datasetId": "06c65e80-3a51-493f-9252-725ce2f857ef",
+   "sortByColumn": "Usage",
+   "datasetType": "StaticDataset",
+   "columnsMetadata": []
+  },
+  "section": "",
+  "updatedAt": "2021-08-30T19:48:15.420Z",
+  "widgetType": "Chart",
+  "order": 7,
+  "showTitle": true,
+  "name": "Part-to-whole chart: Devices used to access service",
+  "type": "Widget"
+ }

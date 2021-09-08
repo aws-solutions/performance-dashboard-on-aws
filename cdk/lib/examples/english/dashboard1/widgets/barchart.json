@@ -1,0 +1,26 @@
+{
+  "content": {
+   "summary": "A bar chart displays categorical data with horizontal bars that are proportional to the value they represent. Like column charts, bar charts are used to display comparisons across qualitative groups or trends over time; however, bar charts provide more space for data labels and may be easier to view on mobile devices.\n\nThe values for this chart were adjusted to show significant digit labels (thousands). If you select \"Actions\" and then \"Show data table\" beneath this chart, you can view the original data values without significant digit labels.\n\n[Example chart description] This chart outlines the number of members who registered or attended programming geared towards adult members. Registrants are those who registered in advance either online or in-person. Attendees are those who participated in the programming.",
+   "dataLabels": false,
+   "fileName": "Program participation for adult members.csv",
+   "s3Key": {
+    "raw": "88dafb4e-9d08-4daf-b8bf-b9ee82bad75c.csv",
+    "json": "88dafb4e-9d08-4daf-b8bf-b9ee82bad75c.json"
+   },
+   "summaryBelow": false,
+   "chartType": "BarChart",
+   "datasetId": "01a4760f-c7c6-4eb2-a30c-1fe67f42965d",
+   "sortByDesc": false,
+   "title": "Bar chart: Program participation for adult members",
+   "datasetType": "StaticDataset",
+   "significantDigitLabels": true,
+   "columnsMetadata": []
+  },
+  "section": "",
+  "updatedAt": "2021-08-30T20:22:51.301Z",
+  "widgetType": "Chart",
+  "order": 3,
+  "name": "Bar chart: Program participation for adult members",
+  "showTitle": true,
+  "type": "Widget"
+ }

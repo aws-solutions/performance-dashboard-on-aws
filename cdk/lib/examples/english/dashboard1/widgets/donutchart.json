@@ -1,0 +1,34 @@
+{
+  "content": {
+   "summary": "A donut chart is a circular graph that shows numerical proportion using slices that are proportional to the quantity they represent. Like pie charts, donut charts are used to show relative comparisons between slices as part of a total value; however, the center is removed. \n\n[Example chart description] By the end of 2020, the mobile experience for the booking service accounted for 54% of all users. This marked a year-over-year increase of 11%.",
+   "fileName": "Devices used to access service.csv",
+   "sortByDesc": false,
+   "title": "Donut chart: Devices used to access service",
+   "significantDigitLabels": false,
+   "dataLabels": false,
+   "s3Key": {
+    "raw": "8765a857-9d1a-4a61-8633-e342181bff60.csv",
+    "json": "8765a857-9d1a-4a61-8633-e342181bff60.json"
+   },
+   "summaryBelow": false,
+   "showTotal": false,
+   "chartType": "DonutChart",
+   "datasetId": "06c65e80-3a51-493f-9252-725ce2f857ef",
+   "datasetType": "StaticDataset",
+   "columnsMetadata": [
+    {
+     "numberType": "Percentage",
+     "hidden": false,
+     "columnName": "Usage",
+     "dataType": "Number"
+    }
+   ]
+  },
+  "section": "",
+  "updatedAt": "2021-08-30T20:14:08.273Z",
+  "widgetType": "Chart",
+  "order": 6,
+  "name": "Donut chart: Devices used to access service",
+  "showTitle": true,
+  "type": "Widget"
+ }

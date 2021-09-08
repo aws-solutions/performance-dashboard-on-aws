@@ -1,0 +1,27 @@
+{
+  "content": {
+   "summary": "A line chart displays ordered data points that are connected by lines. Line charts are used to show trends over time and may contain multiple lines.",
+   "fileName": "User satisfaction.csv",
+   "sortByDesc": false,
+   "title": "Line chart: User satisfaction by channel",
+   "significantDigitLabels": false,
+   "dataLabels": false,
+   "s3Key": {
+    "raw": "3a57b8ac-f108-494d-bcc0-fb948b79b3b0.csv",
+    "json": "3a57b8ac-f108-494d-bcc0-fb948b79b3b0.json"
+   },
+   "summaryBelow": false,
+   "showTotal": true,
+   "chartType": "LineChart",
+   "datasetId": "a9cf8450-f5ce-40d5-b53e-8306c0e9f621",
+   "datasetType": "StaticDataset",
+   "columnsMetadata": []
+  },
+  "section": "",
+  "updatedAt": "2021-08-30T19:48:15.420Z",
+  "widgetType": "Chart",
+  "order": 2,
+  "showTitle": true,
+  "name": "Line chart: User satisfaction by channel",
+  "type": "Widget"
+ }

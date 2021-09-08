@@ -303,21 +303,20 @@ function VisualizeChart(props: Props) {
             <div
               className="usa-checkbox"
               hidden={
-                (props.chartType !== ChartType.LineChart &&
-                  props.chartType !== ChartType.ColumnChart) ||
-                widthPercent <= 100
+                props.chartType !== ChartType.BarChart &&
+                props.chartType !== ChartType.ColumnChart
               }
             >
               <input
                 className="usa-checkbox__input"
-                id="horizontalScroll"
+                id="stackedChart"
                 type="checkbox"
-                name="horizontalScroll"
-                defaultChecked={!!props.horizontalScroll}
+                name="stackedChart"
+                defaultChecked={!!props.stackedChart}
                 ref={props.register()}
               />
-              <label className="usa-checkbox__label" htmlFor="horizontalScroll">
-                {t("VisualizeChartComponent.DisplayHorizontalScroll")}
+              <label className="usa-checkbox__label" htmlFor="stackedChart">
+                {t("VisualizeChartComponent.StackedChart")}
               </label>
             </div>
           </div>

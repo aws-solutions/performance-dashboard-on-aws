@@ -109,7 +109,6 @@ function ChartWidgetComponent(props: Props) {
           parts={keys}
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
-          computePercentages={content.computePercentages}
           showMobilePreview={showMobilePreview}
         />
       );

@@ -16,6 +16,7 @@ export enum DashboardState {
   Published = "Published",
   Archived = "Archived",
   PublishPending = "PublishPending",
+  Inactive = "Inactive",
 }
 
 export enum SourceType {
@@ -187,6 +188,7 @@ export interface SectionWidget extends Widget {
     summary: string;
     widgetIds?: Array<string>;
     showWithTabs: string;
+    horizontally?: boolean;
   };
 }
 

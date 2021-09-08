@@ -24,11 +24,7 @@ function Tab(props: Props) {
     <li
       className={className}
       onClick={onClick}
-      style={{
-        cursor: "pointer",
-        whiteSpace: "nowrap",
-        borderColor: `${props.activeColor}`,
-      }}
+      style={{ cursor: "pointer", whiteSpace: "nowrap" }}
     >
       {props.label}
     </li>

@@ -5,7 +5,6 @@ interface Props {
   activeTab: string;
   label: string;
   onClick: Function;
-  activeColor?: string;
 }
 
 function TabVertical(props: Props) {
@@ -17,7 +16,7 @@ function TabVertical(props: Props) {
     "display-block border-base-lighter border-y padding-x-2 padding-y-105 text-bold font-sans-md margin-bottom-neg-1px";
 
   if (props.activeTab === props.id) {
-    className += " bg-white border-left-05 padding-left-105-important";
+    className += " bg-white border-left-05";
   }
 
   return (
@@ -26,12 +25,7 @@ function TabVertical(props: Props) {
       onClick={onClick}
       style={{
         cursor: "pointer",
-        borderLeftColor:
-          props.activeTab === props.id
-            ? props.activeColor
-              ? `${props.activeColor}`
-              : "#565c65"
-            : "#dfe1e2",
+        borderLeftColor: props.activeTab === props.id ? "#565c65" : "#dfe1e2",
       }}
     >
       {props.label}

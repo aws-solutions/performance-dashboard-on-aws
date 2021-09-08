@@ -41,7 +41,7 @@
     "react-excel-renderer": "^1.1.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^6.3.1",
-    "react-horizontal-scrolling-menu": "^2.1.1",
+    "react-horizontal-scrolling-menu": "^2.0.9",
     "react-i18next": "^11.10.0",
     "react-markdown": "^5.0.3",
     "react-modal": "^3.11.2",

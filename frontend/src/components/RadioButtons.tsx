@@ -14,12 +14,16 @@ interface Props {
   hint?: string;
   error?: string;
   onChange?: Function;
+  className?: string;
 }
 
 function RadioButtons(props: Props) {
   let formGroupClassName = "usa-form-group";
   if (props.error) {
     formGroupClassName += " usa-form-group--error";
+  }
+  if (props.className) {
+    formGroupClassName += ` ${props.className}`;
   }
 
   const handleChange = (event: React.FormEvent<HTMLFieldSetElement>) => {

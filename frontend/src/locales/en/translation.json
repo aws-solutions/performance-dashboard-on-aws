@@ -907,5 +907,10 @@
   "MobilePreview": "Mobile preview",
   "MetricsCenterAlign": "Display with center alignment",
   "DisplayTableOfContents": "Display table of contents",
-  "Current": "Current"
+  "Current": "Current",
+  "SectionOptionsLabel": "Section Options",
+  "SectionOptionsDescription": "Format your section",
+  "ShowWithTabs": "Display section's content items with tabs",
+  "Horizontally": "Horizontally",
+  "Vertically": "Vertically"
 }

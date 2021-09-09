@@ -1,12 +1,36 @@
 {
-    "fileName": "User satisfaction.csv",
-    "sourceType": "FileUpload",
-    "schema": "None",
-    "updatedAt": "2021-08-30T19:07:13.479Z",
-    "createdBy": "cdk-deploy",
-    "s3Key": {
-     "raw": "3a57b8ac-f108-494d-bcc0-fb948b79b3b0.csv",
-     "json": "3a57b8ac-f108-494d-bcc0-fb948b79b3b0.json"
+    "pk": {
+      "S": ""
     },
-    "type": "Dataset"
-}
+    "sk": {
+      "S": ""
+    },
+    "fileName": {
+      "S": "User satisfaction.csv"
+    },
+    "sourceType": {
+      "S": "FileUpload"
+    },
+    "schema": {
+      "S": "None"
+    },
+    "updatedAt": {
+      "S": "2021-08-30T19:07:13.479Z"
+    },
+    "createdBy": {
+      "S": "cdk-deploy"
+    },
+    "s3Key": {
+      "M": {
+        "raw": {
+          "S": ""
+        },
+        "json": {
+          "S": ""
+        }
+      }
+    },
+    "type": {
+      "S": "Dataset"
+    }
+  }

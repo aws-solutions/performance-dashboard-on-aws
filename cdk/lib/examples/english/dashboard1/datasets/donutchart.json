@@ -1,14 +1,36 @@
 {
- "pk": "Dataset#06c65e80-3a51-493f-9252-725ce2f857ef",
- "sk": "Dataset#06c65e80-3a51-493f-9252-725ce2f857ef",
- "fileName": "Devices used to access service.csv",
- "sourceType": "FileUpload",
- "schema": "None",
- "updatedAt": "2021-08-30T17:42:56.423Z",
- "createdBy": "cdk-deploy",
- "s3Key": {
-  "raw": "8765a857-9d1a-4a61-8633-e342181bff60.csv",
-  "json": "8765a857-9d1a-4a61-8633-e342181bff60.json"
- },
- "type": "Dataset"
-}
+    "pk": {
+      "S": ""
+    },
+    "sk": {
+      "S": ""
+    },
+    "fileName": {
+      "S": "Devices used to access service.csv"
+    },
+    "sourceType": {
+      "S": "FileUpload"
+    },
+    "schema": {
+      "S": "None"
+    },
+    "updatedAt": {
+      "S": "2021-08-30T17:42:56.423Z"
+    },
+    "createdBy": {
+      "S": "cdk-deploy"
+    },
+    "s3Key": {
+      "M": {
+        "raw": {
+          "S": ""
+        },
+        "json": {
+          "S": ""
+        }
+      }
+    },
+    "type": {
+      "S": "Dataset"
+    }
+  }

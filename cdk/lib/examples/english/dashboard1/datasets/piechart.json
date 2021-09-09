@@ -1,14 +1,36 @@
 {
-    "pk": "Dataset#4a723b9e-01dd-4742-bdef-6867af472fc8",
-    "sk": "Dataset#4a723b9e-01dd-4742-bdef-6867af472fc8",
-    "fileName": "Renewable_Energy.csv",
-    "sourceType": "FileUpload",
-    "schema": "None",
-    "updatedAt": "2021-08-30T20:21:59.515Z",
-    "createdBy": "cdk-deploy",
-    "s3Key": {
-     "raw": "a2b0c70e-951a-40a9-8a24-ba05abc05ff1.csv",
-     "json": "a2b0c70e-951a-40a9-8a24-ba05abc05ff1.json"
+    "pk": {
+      "S": ""
     },
-    "type": "Dataset"
-   }
+    "sk": {
+      "S": ""
+    },
+    "fileName": {
+      "S": "Renewable_Energy.csv"
+    },
+    "sourceType": {
+      "S": "FileUpload"
+    },
+    "schema": {
+      "S": "None"
+    },
+    "updatedAt": {
+      "S": "2021-08-30T20:21:59.515Z"
+    },
+    "createdBy": {
+      "S": "cdk-deploy"
+    },
+    "s3Key": {
+      "M": {
+        "raw": {
+          "S": ""
+        },
+        "json": {
+          "S": ""
+        }
+      }
+    },
+    "type": {
+      "S": "Dataset"
+    }
+  }

@@ -1,14 +1,36 @@
 {
-    "pk": "Dataset#02168e82-b241-4bb5-bfbd-e18413b25ce6",
-    "sk": "Dataset#02168e82-b241-4bb5-bfbd-e18413b25ce6",
-    "fileName": "Average class size.csv",
-    "sourceType": "FileUpload",
-    "schema": "None",
-    "updatedAt": "2021-08-30T18:55:47.122Z",
-    "createdBy": "cdk-deploy",
-    "s3Key": {
-     "raw": "83c62f00-2eb8-411a-ace5-a6692a9dafaf.csv",
-     "json": "83c62f00-2eb8-411a-ace5-a6692a9dafaf.json"
+    "pk": {
+      "S": ""
     },
-    "type": "Dataset"
-   }
+    "sk": {
+      "S": ""
+    },
+    "fileName": {
+      "S": "Average class size.csv"
+    },
+    "sourceType": {
+      "S": "FileUpload"
+    },
+    "schema": {
+      "S": "None"
+    },
+    "updatedAt": {
+      "S": "2021-08-30T18:55:47.122Z"
+    },
+    "createdBy": {
+      "S": "cdk-deploy"
+    },
+    "s3Key": {
+      "M": {
+        "raw": {
+          "S": ""
+        },
+        "json": {
+          "S": ""
+        }
+      }
+    },
+    "type": {
+      "S": "Dataset"
+    }
+  }

@@ -1,14 +1,36 @@
 {
-    "pk": "Dataset#01a4760f-c7c6-4eb2-a30c-1fe67f42965d",
-    "sk": "Dataset#01a4760f-c7c6-4eb2-a30c-1fe67f42965d",
-    "fileName": "Program participation for adult members.csv",
-    "sourceType": "FileUpload",
-    "schema": "None",
-    "updatedAt": "2021-08-30T19:11:32.276Z",
-    "createdBy": "cdk-deploy",
-    "s3Key": {
-     "raw": "88dafb4e-9d08-4daf-b8bf-b9ee82bad75c.csv",
-     "json": "88dafb4e-9d08-4daf-b8bf-b9ee82bad75c.json"
+    "pk": {
+      "S": ""
     },
-    "type": "Dataset"
-   }
+    "sk": {
+      "S": ""
+    },
+    "fileName": {
+      "S": "Program participation for adult members.csv"
+    },
+    "sourceType": {
+      "S": "FileUpload"
+    },
+    "schema": {
+      "S": "None"
+    },
+    "updatedAt": {
+      "S": "2021-08-30T19:11:32.276Z"
+    },
+    "createdBy": {
+      "S": "cdk-deploy"
+    },
+    "s3Key": {
+      "M": {
+        "raw": {
+          "S": ""
+        },
+        "json": {
+          "S": ""
+        }
+      }
+    },
+    "type": {
+      "S": "Dataset"
+    }
+  }

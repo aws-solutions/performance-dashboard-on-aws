@@ -1,16 +1,53 @@
 {
-  "pk": "Dashboard#14a44eb8-ddd0-4ec6-91a1-582cb67742da",
-  "sk": "Dashboard#14a44eb8-ddd0-4ec6-91a1-582cb67742da",
-  "version": 1,
-  "displayTableOfContents": true,
-  "parentDashboardId": "7fad4798-0c61-45d0-91aa-8b728a6d3d5a",
-  "updatedBy": "cdk-deploy",
-  "createdBy": "cdk-deploy",
-  "state": "Draft",
-  "dashboardName": "[Example Dashboard]",
-  "topicAreaId": "TopicArea#b2bf61d1-7e0c-405f-9aa2-56cb2deacd4d",
-  "topicAreaName": "Accountability",
-  "updatedAt": "2021-08-30T20:22:51.389Z",
-  "description": "With Performance Dashboard on AWS, you can rapidly create, maintain, and share your data-driven stories. Add a short description here to introduce this individual dashboard to your audience.",
-  "type": "Dashboard"
- }
+  "pk": {
+    "S": ""
+  },
+  "sk": {
+    "S": ""
+  },
+  "version": {
+    "N": "1"
+  },
+  "displayTableOfContents": {
+    "BOOL": true
+  },
+  "parentDashboardId": {
+    "S": ""
+  },
+  "updatedBy": {
+    "S": "cdk-deploy"
+  },
+  "createdBy": {
+    "S": "cdk-deploy"
+  },
+  "state": {
+    "S": "Inactive"
+  },
+  "dashboardName": {
+    "S": "[Example Dashboard]"
+  },
+  "publishedBy": {
+    "S": "cdk-deploy"
+  },
+  "submittedBy": {
+    "S": "cdk-deploy"
+  },
+  "topicAreaId": {
+    "S": ""
+  },
+  "topicAreaName": {
+    "S": "Accountability"
+  },
+  "updatedAt": {
+    "S": "2021-09-08T19:25:56.069Z"
+  },
+  "releaseNotes": {
+    "S": "Initial launch"
+  },
+  "description": {
+    "S": "With Performance Dashboard on AWS, you can rapidly create, maintain, and share performance stories. Add a short description here to introduce your dashboard to your audience."
+  },
+  "type": {
+    "S": "Dashboard"
+  }
+}

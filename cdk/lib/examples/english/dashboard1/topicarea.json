@@ -1,5 +1,17 @@
 {
-    "name": "Accountability",
-    "createdBy": "cdk-deploy",
-    "type": "TopicArea"
-}
+    "pk": {
+     "S": ""
+    },
+    "sk": {
+     "S": ""
+    },
+    "name": {
+     "S": "Accountability"
+    },
+    "createdBy": {
+     "S": "cdk-deploy"
+    },
+    "type": {
+     "S": "TopicArea"
+    }
+   }

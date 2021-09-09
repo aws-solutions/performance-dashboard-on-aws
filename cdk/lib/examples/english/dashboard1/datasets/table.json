@@ -1,14 +1,36 @@
 {
-    "pk": "Dataset#35b1052c-3949-481e-ad6e-86bc2ad300ed",
-    "sk": "Dataset#35b1052c-3949-481e-ad6e-86bc2ad300ed",
-    "fileName": "Frequent Incidents.csv",
-    "sourceType": "FileUpload",
-    "schema": "None",
-    "updatedAt": "2021-08-30T19:32:53.371Z",
-    "createdBy": "cdk-deploy",
-    "s3Key": {
-     "raw": "b629b374-9ffe-49fe-85a4-2363e2c21532.csv",
-     "json": "b629b374-9ffe-49fe-85a4-2363e2c21532.json"
+    "pk": {
+      "S": ""
     },
-    "type": "Dataset"
-   }
+    "sk": {
+      "S": ""
+    },
+    "fileName": {
+      "S": "Frequent Incidents.csv"
+    },
+    "sourceType": {
+      "S": "FileUpload"
+    },
+    "schema": {
+      "S": "None"
+    },
+    "updatedAt": {
+      "S": "2021-08-30T19:32:53.371Z"
+    },
+    "createdBy": {
+      "S": "cdk-deploy"
+    },
+    "s3Key": {
+      "M": {
+        "raw": {
+          "S": ""
+        },
+        "json": {
+          "S": ""
+        }
+      }
+    },
+    "type": {
+      "S": "Dataset"
+    }
+  }

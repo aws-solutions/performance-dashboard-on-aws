@@ -121,6 +121,7 @@ function ChartWidgetComponent(props: Props) {
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
           showMobilePreview={showMobilePreview}
+          columnsMetadata={content.columnsMetadata}
         />
       );
 

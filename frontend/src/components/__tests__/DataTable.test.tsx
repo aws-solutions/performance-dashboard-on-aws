@@ -5,7 +5,7 @@ import {
   CurrencyDataType,
   NumberDataType,
 } from "../../models";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import DataTable from "../DataTable";
 import userEvent from "@testing-library/user-event";
 
@@ -49,8 +49,6 @@ const columnsMetadata: ColumnMetadata[] = [
   },
 ];
 
-const fileName = "test-file-name";
-
 beforeEach(() => {
   render(
     <DataTable
@@ -86,9 +84,9 @@ test("displays a table with values properly formatted", async () => {
   expect(screen.getByText("2017")).toBeInTheDocument();
 
   // Sales column should be formatted as currency
-  expect(screen.getByText("$10,000.00")).toBeInTheDocument();
-  expect(screen.getByText("$45,000.00")).toBeInTheDocument();
-  expect(screen.getByText("$56,000.00")).toBeInTheDocument();
+  expect(screen.getByText("$10,000")).toBeInTheDocument();
+  expect(screen.getByText("$45,000")).toBeInTheDocument();
+  expect(screen.getByText("$56,000")).toBeInTheDocument();
 
   // Revenue column should be formatted as percentage
   expect(screen.getByText("34%")).toBeInTheDocument();

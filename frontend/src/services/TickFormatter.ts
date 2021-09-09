@@ -4,7 +4,6 @@ import {
   NumberDataType,
   CurrencyDataType,
 } from "../models";
-import ColumnsMetadataService from "./ColumnsMetadataService";
 
 const ONE_THOUSAND = 1000;
 const ONE_MILLION = 1000000;
@@ -18,8 +17,9 @@ function format(
   tick: any,
   largestTick: number,
   significantDigitLabels: boolean,
-  columnMetadata?: ColumnMetadata,
-  percentage?: string
+  percentage: string,
+  currency: string,
+  columnMetadata?: ColumnMetadata
 ): string {
   const dataType =
     columnMetadata && columnMetadata.dataType
@@ -35,7 +35,8 @@ function format(
         largestTick,
         significantDigitLabels,
         columnMetadata,
-        percentage
+        percentage,
+        currency
       );
     default:
       return tick;
@@ -72,32 +73,22 @@ function formatNumber(
     return "";
   }
 
+  if (columnMetadata && columnMetadata.numberType === NumberDataType.Currency) {
+    currency = columnMetadata.currencyType;
+  }
+
   if (
     columnMetadata &&
-    (columnMetadata.numberType === NumberDataType.Currency ||
-      columnMetadata.numberType === NumberDataType.Percentage)
+    columnMetadata.numberType === NumberDataType.Percentage
   ) {
-    return ColumnsMetadataService.formatNumber(
-      num,
-      columnMetadata.numberType,
-      columnMetadata.currencyType
-    );
+    percentage = NumberDataType.Percentage;
   }
 
-  let formattedNum = num.toLocaleString();
-
-  if (!significantDigitLabels || num === 0) {
-    formattedNum = num.toLocaleString();
-  } else if (Math.abs(largestTick) >= ONE_BILLION) {
-    const value = num / ONE_BILLION;
-    formattedNum = value.toLocaleString() + BILLIONS_LABEL;
-  } else if (Math.abs(largestTick) >= ONE_MILLION) {
-    const value = num / ONE_MILLION;
-    formattedNum = value.toLocaleString() + MILLIONS_LABEL;
-  } else if (Math.abs(largestTick) >= ONE_THOUSAND) {
-    const value = num / ONE_THOUSAND;
-    formattedNum = value.toLocaleString() + THOUSANDS_LABEL;
-  }
+  let formattedNum = formatSignificantDigits(
+    num,
+    largestTick,
+    significantDigitLabels
+  );
 
   if (!percentage && !currency) {
     if (formattedNum !== num.toLocaleString()) {
@@ -122,6 +113,29 @@ function formatNumber(
   }
 
   return num.toLocaleString();
+}
+
+function formatSignificantDigits(
+  num: number,
+  largestTick: number,
+  significantDigitLabels: boolean
+): string {
+  let formattedNum = num.toLocaleString();
+
+  if (!significantDigitLabels || num === 0) {
+    formattedNum = num.toLocaleString();
+  } else if (Math.abs(largestTick) >= ONE_BILLION) {
+    const value = num / ONE_BILLION;
+    formattedNum = value.toLocaleString() + BILLIONS_LABEL;
+  } else if (Math.abs(largestTick) >= ONE_MILLION) {
+    const value = num / ONE_MILLION;
+    formattedNum = value.toLocaleString() + MILLIONS_LABEL;
+  } else if (Math.abs(largestTick) >= ONE_THOUSAND) {
+    const value = num / ONE_THOUSAND;
+    formattedNum = value.toLocaleString() + THOUSANDS_LABEL;
+  }
+
+  return formattedNum;
 }
 
 const TickFormatter = {

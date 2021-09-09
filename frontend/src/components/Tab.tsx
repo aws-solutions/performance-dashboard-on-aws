@@ -5,6 +5,7 @@ interface Props {
   activeTab: string;
   label: string;
   onClick: Function;
+  activeColor?: string;
 }
 
 function Tab(props: Props) {
@@ -23,7 +24,11 @@ function Tab(props: Props) {
     <li
       className={className}
       onClick={onClick}
-      style={{ cursor: "pointer", whiteSpace: "nowrap" }}
+      style={{
+        cursor: "pointer",
+        whiteSpace: "nowrap",
+        borderColor: `${props.activeColor}`,
+      }}
     >
       {props.label}
     </li>

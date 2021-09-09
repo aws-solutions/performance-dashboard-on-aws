@@ -169,6 +169,7 @@ function FormattingCSV() {
           data={partToWhole.dataset.data}
           summaryBelow={false}
           significantDigitLabels={false}
+          columnsMetadata={[]}
         />
       </div>
 

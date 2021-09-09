@@ -213,7 +213,7 @@ function CheckData(props: Props) {
                 if (props.dataTypes.has(header)) {
                   if (props.dataTypes.get(header) === ColumnDataType.Number) {
                     return typeof row[header] === "number" ? (
-                      TickFormatter.format(row[header], 0, false, {
+                      TickFormatter.format(row[header], 0, false, "", "", {
                         columnName: header,
                         hidden: props.hiddenColumns.has(header),
                         dataType: ColumnDataType.Number,

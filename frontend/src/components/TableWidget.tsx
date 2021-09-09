@@ -89,6 +89,8 @@ const TableWidget = ({
                 row[header],
                 largestTickByColumn[header],
                 significantDigitLabels,
+                "",
+                "",
                 columnMetadata
               )
             : "-";

@@ -191,3 +191,16 @@ p {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.padding-x-2-important {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+.padding-left-105-important {
+  padding-left: 12px !important;
+}
+
+.type-dark {
+  background: #1b1b1b !important;
+}

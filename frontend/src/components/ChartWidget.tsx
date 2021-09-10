@@ -31,11 +31,10 @@ function ChartWidgetComponent(props: Props) {
 
     const newFilteredJson = new Array<any>();
     for (const row of json) {
-      const filteredRow = headers.reduce((obj: any, key: any) => {
-        obj[key] = row[key];
-        return obj;
+      const filteredRow = headers.reduce((obj, key) => {
+        return {...obj, [key]: row[key as keyof typeof row]};
       }, {});
-      if (filteredRow !== {}) {
+      if (Object.keys(filteredRow).length) {
         newFilteredJson.push(filteredRow);
       }
     }

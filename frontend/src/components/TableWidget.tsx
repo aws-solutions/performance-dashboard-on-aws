@@ -40,21 +40,19 @@ const TableWidget = ({
   const window = useWindowSize();
 
   useMemo(() => {
-    let headers =
-      data && data.length ? (Object.keys(data[0]) as Array<string>) : [];
+    let headers = data && data.length ? Object.keys(data[0]) : [];
     headers = headers.filter((h) => {
       const metadata = columnsMetadata
         ? columnsMetadata.find((c) => c.columnName === h)
         : undefined;
       return !metadata || !metadata.hidden;
     });
-    const newFilteredJson = new Array<any>();
-    for (const row of data || new Array<any>()) {
-      const filteredRow = headers.reduce((obj: any, key: any) => {
-        obj[key] = row[key];
-        return obj;
+    const newFilteredJson = [];
+    for (const row of data || []) {
+      const filteredRow = headers.reduce((obj, key) => {
+        return {...obj, [key]: row[key as keyof typeof row]};
       }, {});
-      if (filteredRow !== {}) {
+      if (Object.keys(filteredRow).length) {
         newFilteredJson.push(filteredRow);
       }
     }

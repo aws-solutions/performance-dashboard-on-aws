@@ -31,13 +31,12 @@ function getFilteredJson(
 ): Array<any> {
   let headers = json.length ? (Object.keys(json[0]) as Array<string>) : [];
   headers = headers.filter((h) => !hiddenColumns.has(h));
-  const newFilteredJson = new Array<any>();
+  const newFilteredJson = [];
   for (const row of json) {
-    const filteredRow = headers.reduce((obj: any, key: any) => {
-      obj[key] = row[key];
-      return obj;
+    const filteredRow = headers.reduce((obj, key) => {
+      return {...obj, [key]: row[key as keyof typeof row]};
     }, {});
-    if (filteredRow !== {}) {
+    if (Object.keys(filteredRow).length) {
       newFilteredJson.push(filteredRow);
     }
   }

@@ -313,6 +313,8 @@ const ColumnChartWidget = (props: Props) => {
                             Number(tick),
                             yAxisLargestValue,
                             props.significantDigitLabels,
+                            "",
+                            "",
                             columnsMetadataDict.get(column)
                           )
                         }

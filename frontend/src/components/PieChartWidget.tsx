@@ -9,10 +9,9 @@ import {
 } from "recharts";
 import { useColors, useWindowSize } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
-import ChartDataFormatter from "../services/ChartDataFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import { NumberDataType } from "../models/index";
+import { ColumnMetadata, NumberDataType } from "../models";
 
 type Props = {
   title: string;
@@ -27,7 +26,6 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
-  computePercentages?: boolean;
   isPreview?: boolean;
   showMobilePreview?: boolean;
   computePercentages?: boolean;
@@ -40,75 +38,33 @@ const PieChartWidget = (props: Props) => {
 
   const pieData = useRef<Array<object>>([]);
   const pieParts = useRef<Array<string>>([]);
-  const pieDataMap = useRef<Map<string, any>>(new Map());
   let total = useRef<number>(0);
 
   const { data, parts, showMobilePreview } = props;
-
-  const computePercentages = props.computePercentages === true;
-
-  const columnMetaDataMap = new Map();
-
-  props.columnsMetadata.forEach((ele) => {
-    columnMetaDataMap.set(ele.columnName, ele);
-  });
-
-  const chartData = ChartDataFormatter.pieChart(parts, hiddenParts, data);
-
   useMemo(() => {
     if (data && data.length) {
       let pie = {};
-
-      total.current = chartData.total;
-
+      total.current = 0;
       pieParts.current = [];
       pieData.current = [];
-
-      setXAxisLargestValue(chartData.maxValue);
-
-      for (
-        let i = 0, dataLength = chartData.values.length, item = null;
-        i < dataLength && (item = chartData.values[i]);
-        i++
-      ) {
-        const computedPercentage =
-          Math.round((item.value / chartData.total) * 100 * 100) / 100;
-
+      let maxTick = -Infinity;
+      for (let i = 0; i < data.length; i++) {
+        const key = data[i][parts[0] as keyof object];
+        const value = data[i][parts[1] as keyof object];
+        const barKey = `${key}`;
         pie = {
           ...pie,
-          [item.key]: item.value,
+          [barKey]: value,
         };
-
-        const columnMetadata = columnMetaDataMap.get(item.columnName);
-
-        const displayRaw = TickFormatter.format(
-          item.value,
-          xAxisLargestValue,
-          props.significantDigitLabels,
-          columnMetadata
-        );
-
-        const displayPercentage = TickFormatter.format(
-          computedPercentage,
-          xAxisLargestValue,
-          false,
-          undefined,
-          NumberDataType.Percentage
-        );
-
-        let datum = {
-          name: item.key,
-          value: item.value,
-          total: chartData.total,
-          displayRawValue: displayRaw,
-          displayPercentage: `${displayRaw} (${displayPercentage})`,
-        };
-
-        pieDataMap.current.set(datum.name, datum);
-        pieData.current.push(datum);
-
-        pieParts.current.push(item.key);
+        pieData.current.push({ name: barKey, value: Number(value) });
+        pieParts.current.push(barKey);
+        if (hiddenParts.includes(barKey)) {
+          continue;
+        }
+        total.current += isNaN(value) ? 0 : Number(value);
+        maxTick = Math.max(maxTick, value);
       }
+      setXAxisLargestValue(maxTick);
     }
   }, [data, parts, pieData, pieParts, hiddenParts]);
 
@@ -176,9 +132,12 @@ const PieChartWidget = (props: Props) => {
     const ey = my;
     const textAnchor = cos >= 0 ? "start" : "end";
 
-    let displayValue = computePercentages
-      ? payload.displayPercentage
-      : payload.displayRawValue;
+    let columnMetadata;
+    if (parts && parts.length > 1 && props.columnsMetadata) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === parts[1]
+      );
+    }
 
     return !props.hideDataLabels && !hiddenParts.includes(payload.name) ? (
       <g>
@@ -194,7 +153,7 @@ const PieChartWidget = (props: Props) => {
           textAnchor={textAnchor}
           fill={fill}
         >
-          {displayValue}
+          {displayedAmount(payload.value, columnMetadata)}
         </text>
       </g>
     ) : (
@@ -227,21 +186,32 @@ const PieChartWidget = (props: Props) => {
     );
   };
 
-  const renderLegendText = (dataKey: string) => {
-    let pieDatum;
-
-    if (dataKey && dataKey !== "null") {
-      pieDatum = pieDataMap.current.get(dataKey);
+  const renderLegendText = (value: string) => {
+    let columnMetadata;
+    if (parts && parts.length > 1 && props.columnsMetadata) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === parts[1]
+      );
     }
 
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
-          {dataKey.toLocaleString()}
+          {value.toLocaleString()}
         </span>
         <div className="margin-left-4 margin-bottom-1 text-base-darkest text-bold">
-          {pieDatum !== undefined && pieDatum !== null ? (
-            pieDatum.displayRawValue
+          {value && value !== "null" ? (
+            TickFormatter.format(
+              Number(
+                (pieData.current.find((d: any) => d.name === value) as any)
+                  .value
+              ),
+              xAxisLargestValue,
+              props.significantDigitLabels,
+              "",
+              "",
+              columnMetadata
+            )
           ) : (
             <br />
           )}
@@ -343,13 +313,15 @@ const PieChartWidget = (props: Props) => {
             <Tooltip
               itemStyle={{ color: "#1b1b1b" }}
               isAnimationActive={false}
-              formatter={(dataValue: Number | String, dataName: any) => {
-                let pieDatum = pieDataMap.current.get(dataName);
-
-                if (pieDatum === undefined) return "";
-                return computePercentages
-                  ? pieDatum.displayPercentage
-                  : pieDatum.displayRawValue;
+              formatter={(value: Number | String) => {
+                // Check if there is metadata for this column
+                let columnMetadata;
+                if (parts && parts.length > 1 && props.columnsMetadata) {
+                  columnMetadata = props.columnsMetadata.find(
+                    (cm) => cm.columnName === parts[1]
+                  );
+                }
+                return displayedAmount(value, columnMetadata);
               }}
             />
           </PieChart>

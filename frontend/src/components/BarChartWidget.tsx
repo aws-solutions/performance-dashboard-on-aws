@@ -17,7 +17,7 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import { ColumnDataType } from "../models";
+import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 
 type Props = {
   title: string;
@@ -100,6 +100,12 @@ const BarChartWidget = (props: Props) => {
     }
   };
 
+  const valueAccessor =
+    (attribute: string) =>
+    ({ payload }: any) => {
+      return payload;
+    };
+
   const formatYAxisLabel = (label: string) =>
     label.length > 27 ? label.substr(0, 27).concat("...") : label;
 
@@ -155,7 +161,9 @@ const BarChartWidget = (props: Props) => {
                 TickFormatter.format(
                   Number(tick),
                   xAxisLargestValue,
-                  props.significantDigitLabels
+                  props.significantDigitLabels,
+                  "",
+                  ""
                 )
               }
             />
@@ -190,6 +198,8 @@ const BarChartWidget = (props: Props) => {
                   Number(value),
                   xAxisLargestValue,
                   props.significantDigitLabels,
+                  "",
+                  "",
                   columnMetadata
                 );
               }}
@@ -214,7 +224,76 @@ const BarChartWidget = (props: Props) => {
                     stackId={props.stackedChart ? "a" : `${index}`}
                     isAnimationActive={false}
                   >
-                    {!props.hideDataLabels ? (
+                    {!props.hideDataLabels && props.stackedChart && (
+                      <LabelList
+                        position="right"
+                        valueAccessor={valueAccessor(bar)}
+                        formatter={(tick: any) => {
+                          const sum = props.bars
+                            .slice(1)
+                            .map((bar) => tick[bar])
+                            .reduce((a, b) => a + b, 0);
+                          const allPercentage = props.bars
+                            .slice(1)
+                            .every((c: string) =>
+                              props.columnsMetadata.some(
+                                (cm: any) =>
+                                  cm.columnName === c &&
+                                  cm.numberType === NumberDataType.Percentage
+                              )
+                            );
+                          const allCurrencyDollar = props.bars
+                            .slice(1)
+                            .every((c: string) =>
+                              props.columnsMetadata.some(
+                                (cm: any) =>
+                                  cm.columnName === c &&
+                                  cm.numberType === NumberDataType.Currency &&
+                                  cm.currencyType !== undefined &&
+                                  cm.currencyType ===
+                                    CurrencyDataType["Dollar $"]
+                              )
+                            );
+                          const allCurrencyEuro = props.bars
+                            .slice(1)
+                            .every((c: string) =>
+                              props.columnsMetadata.some(
+                                (cm: any) =>
+                                  cm.columnName === c &&
+                                  cm.numberType === NumberDataType.Currency &&
+                                  cm.currencyType !== undefined &&
+                                  cm.currencyType === CurrencyDataType["Euro €"]
+                              )
+                            );
+                          const allCurrencyPound = props.bars
+                            .slice(1)
+                            .every((c: string) =>
+                              props.columnsMetadata.some(
+                                (cm: any) =>
+                                  cm.columnName === c &&
+                                  cm.numberType === NumberDataType.Currency &&
+                                  cm.currencyType !== undefined &&
+                                  cm.currencyType ===
+                                    CurrencyDataType["Pound £"]
+                              )
+                            );
+                          return TickFormatter.format(
+                            sum,
+                            xAxisLargestValue,
+                            props.significantDigitLabels,
+                            allPercentage ? NumberDataType.Percentage : "",
+                            allCurrencyDollar
+                              ? CurrencyDataType["Dollar $"]
+                              : allCurrencyEuro
+                              ? CurrencyDataType["Euro €"]
+                              : allCurrencyPound
+                              ? CurrencyDataType["Pound £"]
+                              : ""
+                          );
+                        }}
+                      />
+                    )}
+                    {!props.hideDataLabels && !props.stackedChart && (
                       <LabelList
                         dataKey={bar}
                         position="right"
@@ -223,12 +302,12 @@ const BarChartWidget = (props: Props) => {
                             Number(tick),
                             xAxisLargestValue,
                             props.significantDigitLabels,
+                            "",
+                            "",
                             columnsMetadataDict.get(bar)
                           )
                         }
                       />
-                    ) : (
-                      ""
                     )}
                   </Bar>
                 );

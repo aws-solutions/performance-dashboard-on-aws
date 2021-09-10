@@ -436,7 +436,7 @@ function VisualizeChart(props: Props) {
                   stackedChart={props.stackedChart}
                   setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}
-                  columnsMetadata={props.columnsMetadata}
+                  columnsMetadata={props.columnsMetadata || []}
                   hideDataLabels={!props.dataLabels}
                 />
               )}
@@ -452,7 +452,7 @@ function VisualizeChart(props: Props) {
                   data={props.json}
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
-                  columnsMetadata={props.columnsMetadata}
+                  columnsMetadata={props.columnsMetadata || []}
                   hideDataLabels={!props.dataLabels}
                   stackedChart={props.stackedChart}
                 />

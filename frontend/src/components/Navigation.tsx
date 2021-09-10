@@ -32,7 +32,7 @@ function Navigation({
     const isBottom =
       Math.ceil(window.innerHeight + window.scrollY) >=
       document.documentElement.scrollHeight;
-    if (isBottom) {
+    if (isBottom && widgetNameIds.length) {
       setActivewidgetId(widgetNameIds[widgetNameIds.length - 1].id);
     }
   };

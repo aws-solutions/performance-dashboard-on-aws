@@ -5,6 +5,7 @@ import { FrontendStack } from "../lib/frontend-stack";
 import { BackendStack } from "../lib/backend-stack";
 import { AuthStack } from "../lib/auth-stack";
 import { OpsStack } from "../lib/ops-stack";
+import { DashboardExamplesStack } from "../lib/dashboardexamples-stack";
 import { Aspects, Tags } from "@aws-cdk/core";
 import { FunctionInvalidWarningSuppressor } from "../lib/constructs/function-aspect";
 import { PolicyInvalidWarningSuppressor } from "../lib/constructs/policy-aspect";
@@ -60,6 +61,15 @@ const operations = new OpsStack(app, "Ops", {
   environment: envName,
 });
 
+const examples = new DashboardExamplesStack(app, "DashboardExamples", {
+  stackName: stackPrefix.concat("-DashboardExamples"),
+  datasetsBucketName: datasetsBucketName,
+  datasetsBucketArn: backend.datasetsBucketArn,
+  databaseTableName: backend.mainTable.tableName,
+  databaseTableArn: backend.mainTable.tableArn,
+  adminEmail: auth.adminEmail
+});
+
 Aspects.of(app).add(new PolicyInvalidWarningSuppressor());
 Aspects.of(app).add(new FunctionInvalidWarningSuppressor());
 
@@ -67,3 +77,4 @@ Tags.of(auth).add("app-id", APP_ID);
 Tags.of(backend).add("app-id", APP_ID);
 Tags.of(frontend).add("app-id", APP_ID);
 Tags.of(operations).add("app-id", APP_ID);
+Tags.of(examples).add("app-id", APP_ID);

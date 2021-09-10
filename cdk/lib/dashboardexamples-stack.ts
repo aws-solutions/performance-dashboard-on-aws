@@ -1,79 +1,76 @@
 import * as cdk from "@aws-cdk/core";
 import * as lambda from "@aws-cdk/aws-lambda";
+import s3Deploy = require("@aws-cdk/aws-s3-deployment");
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as s3 from "@aws-cdk/aws-s3";
 import { BackendApi } from "./constructs/api";
 import { Database } from "./constructs/database";
-import { LambdaFunctions } from "./constructs/lambdas";
-import { ExamplesStorage } from "./constructs/examplesStorage";
+import { ExampleDashboardLambda } from "./constructs/exampledashboardlambda";
+import * as tasks from "@aws-cdk/aws-stepfunctions-tasks";
 
 interface DashboardExamplesProps extends cdk.StackProps {
   datasetsBucketName: string;
-  datasetsBucketArm: string;
+  datasetsBucketArn: string;
   databaseTableName: string;
   databaseTableArn: string;
-  envName: string;
-  accountId: string;
-  region: string;
+  adminEmail: string;
 }
 
 export class DashboardExamplesStack extends cdk.Stack {
-  public readonly privateApiFunction: lambda.Function;
-  public readonly publicApiFunction: lambda.Function;
-  public readonly dynamodbStreamsFunction: lambda.Function;
-  public readonly mainTable: dynamodb.Table;
-  public readonly auditTrailTable: dynamodb.Table;
-  public readonly restApi: apigateway.RestApi;
+  public readonly exampleSetupLambda: lambda.Function;
+  public readonly exampleBucket: s3.Bucket;
 
   constructor(scope: cdk.Construct, id: string, props: DashboardExamplesProps) {
     super(scope, id, props);
 
-    const examplesBucketName = `performancedash-${props.envName.toLowerCase()}-${props.accountId}-${props.region}-content`;
-
-    const exampleBucket = new s3.Bucket(scope, "ExampleBucket", {
-        encryption: s3.BucketEncryption.S3_MANAGED,
-        versioned: false 
+    const exampleLanguage = new cdk.CfnParameter(this, "exampleLanguage", {
+      type: "String",
+      description: "Language for example dashboards",
+      minLength: 5,
+      default: "english"
     });
 
-    const lambdas = new LambdaFunctions(this, "SetupExampleDashboardLambda", {
+    const exampleBucket = new s3.Bucket(this, "ExampleBucket", {
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      versioned: false
+    });
+
+
+    const lambdas = new ExampleDashboardLambda(this, "SetupExampleDashboardLambda", {
       exampleBucketArn: exampleBucket.bucketArn,
       exampleBucketName: exampleBucket.bucketName,
-      datasetBucketArn: exampleBucket.bucketArn,
-      datasetBucketName: exampleBucket.bucketName,
-      databaseTableName: "",
-      databaseTableArn: "",
-      auditTrailTable: database.auditTrailTable,
-      datasetsBucket: dataStorage.datasetsBucket,
-      contentBucket: contentStorage.contentBucket,
-      userPool: props.userPool,
-    });
-
-    const backendApi = new BackendApi(this, "Api", {
-      cognitoUserPoolArn: props.userPool.arn,
-      apiFunction: lambdas.apiHandler,
-      publicApiFunction: lambdas.publicApiHandler,
+      datasetBucketArn: props.datasetsBucketArn,
+      datasetBucketName: props.datasetsBucketName,
+      databaseTableName: props.databaseTableName,
+      databaseTableArn: props.databaseTableArn,
+      adminEmail: props.adminEmail
     });
 
     /**
+     * S3 Deploy
+     * Uploads react built code to the S3 bucket and invalidates CloudFront
+     */
+    const examplesDeploy = new s3Deploy.BucketDeployment(
+      this,
+      "Deploy-Examples",
+      {
+        sources: [s3Deploy.Source.asset("../examples/examplefiles/" + exampleLanguage.valueAsString)],
+        destinationBucket: this.exampleBucket,
+        memoryLimit: 4096,
+        prune: false
+      }
+    );
+
+
+    const invoked = new tasks.LambdaInvoke(scope, "Deploy Examples", {
+      lambdaFunction: lambdas.exampleSetupLambda
+    });
+ 
+    /**
      * Outputs
      */
-    this.privateApiFunction = lambdas.apiHandler;
-    this.publicApiFunction = lambdas.publicApiHandler;
-    this.dynamodbStreamsFunction = lambdas.ddbStreamProcessor;
-    this.mainTable = database.mainTable;
-    this.restApi = backendApi.api;
-
-    new cdk.CfnOutput(this, "ApiGatewayEndpoint", {
-      value: this.restApi.url,
-    });
-
-    new cdk.CfnOutput(this, "DynamoDbTableName", {
-      value: database.mainTable.tableName,
-    });
-
-    new cdk.CfnOutput(this, "DatasetsBucketName", {
-      value: dataStorage.datasetsBucket.bucketName,
-    });
+    this.exampleSetupLambda = lambdas.exampleSetupLambda;
+    this.exampleBucket = exampleBucket;
   }
 }

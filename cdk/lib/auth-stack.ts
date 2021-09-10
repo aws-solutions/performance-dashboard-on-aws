@@ -14,6 +14,7 @@ export class AuthStack extends cdk.Stack {
   public readonly appClientId: string;
   public readonly userPoolId: string;
   public readonly identityPoolId: string;
+  public readonly adminEmail: string;
 
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id, props);

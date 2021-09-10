@@ -37,10 +37,11 @@ class WidgetConfig {
     }
 };
 class DeploymentContext {
-    constructor(s3datasetbucket, s3examplesbucket, tableName) {
+    constructor(s3datasetbucket, s3examplesbucket, tableName, createdBy) {
       this.datasetBucket = s3datasetbucket;
       this.examplesBucket = s3examplesbucket;
       this.tableName = tableName;
+      this.createdBy = createdBy;
     }
 };
   
@@ -61,6 +62,8 @@ const saveTopicArea = async function(deploymentContext, topicAreaBucketKey){
     topicAreaEntity.pk.S = generateDBId(databaseIdPrefixes.topicArea);
     topicAreaEntity.sk.S = topicAreaEntity.pk.S;
 
+    topicAreaEntity.createdBy.S = deploymentContext.createdBy;
+
     await awsWrapper.dynamoSave(deploymentContext.tableName, topicAreaEntity);
     
     return topicAreaEntity.pk.S;
@@ -73,6 +76,11 @@ const saveDashboard = async function(deploymentContext, topicAreaId, dashboardBu
     dashboardEntity.pk.S = generateDBId(databaseIdPrefixes.dashboard);
     dashboardEntity.sk.S = dashboardEntity.pk.S;
     dashboardEntity.parentDashboardId.S = dashboardEntity.pk.S;
+
+    dashboardEntity.publishedBy.S = deploymentContext.createdBy;
+    dashboardEntity.submittedBy.S = deploymentContext.createdBy;
+    dashboardEntity.createdBy.S = deploymentContext.createdBy;
+    dashboardEntity.updatedBy.S = deploymentContext.createdBy;
 
     dashboardEntity.topicAreaId.S = topicAreaId;
 
@@ -122,6 +130,8 @@ const saveDataset = async function (deploymentContext, datasetUUID, dataFileUUID
 
     datasetEntity.pk.S = generateDBId(databaseIdPrefixes.dataset, datasetUUID);
     datasetEntity.sk.S = datasetEntity.pk.S;
+    
+    datasetEntity.createdBy.S = deploymentContext.createdBy;
 
     datasetEntity.s3Key.M.raw.S = `${dataFileUUID}.csv`;
     datasetEntity.s3Key.M.json.S = `${dataFileUUID}.json`;
@@ -263,9 +273,9 @@ const buildExamplesFromContents = function(s3Contents){
     return exampleMap;
 };
 
-const setupDashboards = async function (s3datasetbucket, s3examplesbucket, databasename) {
+const setupDashboards = async function (s3datasetbucket, s3examplesbucket, databasename , createdBy) {
 
-    const deploymentContext = new DeploymentContext(s3datasetbucket, s3examplesbucket, databasename);
+    const deploymentContext = new DeploymentContext(s3datasetbucket, s3examplesbucket, databasename, createdBy);
 
     console.log("Getting contents of examples bucket...")
     const examplesBucketContent = await awsWrapper.getBucketContents(deploymentContext.examplesBucket);

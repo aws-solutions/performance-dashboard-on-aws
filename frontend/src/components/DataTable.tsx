@@ -43,7 +43,14 @@ function DataTable({ rows, columns, columnsMetadata, fileName }: Props) {
             }
 
             return !UtilsService.isCellEmpty(row[header])
-              ? TickFormatter.format(row[header], 0, false, columnMetadata)
+              ? TickFormatter.format(
+                  row[header],
+                  0,
+                  false,
+                  "",
+                  "",
+                  columnMetadata
+                )
               : "-";
           },
         };

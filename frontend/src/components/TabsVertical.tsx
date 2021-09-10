@@ -4,6 +4,7 @@ import TabVertical from "./TabVertical";
 interface Props {
   children: React.ReactNode;
   defaultActive: string;
+  activeColor?: string;
 }
 
 function TabsVertical(props: Props) {
@@ -24,6 +25,7 @@ function TabsVertical(props: Props) {
               key={(child as any).props.id}
               label={(child as any).props.label}
               onClick={onClickTabItem}
+              activeColor={props.activeColor}
             />
           );
         })}

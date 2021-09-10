@@ -7,6 +7,7 @@ interface Props {
   children: React.ReactNode;
   defaultActive: string;
   showArrows?: boolean;
+  activeColor?: string;
 }
 
 type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
@@ -35,6 +36,7 @@ function Tabs(props: Props) {
               key={(child as any).props.id}
               label={(child as any).props.label}
               onClick={onClickTabItem}
+              activeColor={props.activeColor}
             />
           );
         })}

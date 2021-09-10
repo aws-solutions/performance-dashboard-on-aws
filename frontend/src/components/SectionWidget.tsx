@@ -4,7 +4,7 @@ import { Widget } from "../models";
 import WidgetRender from "./WidgetRender";
 import Tabs from "./Tabs";
 import TabsVertical from "./TabsVertical";
-import { useWindowSize } from "../hooks";
+import { useWindowSize, useColors } from "../hooks";
 
 interface Props {
   widget: Widget;
@@ -15,6 +15,7 @@ interface Props {
 function SectionWidget(props: Props) {
   const { content, showTitle } = props.widget;
   const windowSize = useWindowSize();
+  const primaryColor = useColors(1)[0];
 
   return (
     <div>
@@ -52,7 +53,7 @@ function SectionWidget(props: Props) {
           props.showMobilePreview ||
           windowSize.width <= 600) &&
         props.widget.content.widgetIds && (
-          <Tabs defaultActive={"0"} showArrows>
+          <Tabs defaultActive={"0"} showArrows activeColor={`${primaryColor}`}>
             {props.widget.content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {
@@ -75,7 +76,7 @@ function SectionWidget(props: Props) {
         !props.showMobilePreview &&
         windowSize.width > 600 &&
         props.widget.content.widgetIds && (
-          <TabsVertical defaultActive={"0"}>
+          <TabsVertical defaultActive={"0"} activeColor={`${primaryColor}`}>
             {props.widget.content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {

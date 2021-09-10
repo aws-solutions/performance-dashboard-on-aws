@@ -17,7 +17,7 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import { ColumnDataType } from "../models";
+import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 
 type Props = {
   title: string;
@@ -129,6 +129,12 @@ const ColumnChartWidget = (props: Props) => {
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
+  const valueAccessor =
+    (attribute: string) =>
+    ({ payload }: any) => {
+      return payload;
+    };
+
   useEffect(() => {
     if (props.setWidthPercent) {
       props.setWidthPercent(widthPercent);
@@ -181,7 +187,9 @@ const ColumnChartWidget = (props: Props) => {
                 return TickFormatter.format(
                   Number(tick),
                   yAxisLargestValue,
-                  props.significantDigitLabels
+                  props.significantDigitLabels,
+                  "",
+                  ""
                 );
               }}
             />
@@ -201,6 +209,8 @@ const ColumnChartWidget = (props: Props) => {
                   Number(value),
                   yAxisLargestValue,
                   props.significantDigitLabels,
+                  "",
+                  "",
                   columnMetadata
                 );
               }}
@@ -225,7 +235,76 @@ const ColumnChartWidget = (props: Props) => {
                     isAnimationActive={false}
                     stackId={props.stackedChart ? "a" : `${index}`}
                   >
-                    {!props.hideDataLabels ? (
+                    {!props.hideDataLabels && props.stackedChart && (
+                      <LabelList
+                        position="top"
+                        valueAccessor={valueAccessor(column)}
+                        formatter={(tick: any) => {
+                          const sum = props.columns
+                            .slice(1)
+                            .map((column) => tick[column])
+                            .reduce((a, b) => a + b, 0);
+                          const allPercentage = props.columns
+                            .slice(1)
+                            .every((c: string) =>
+                              props.columnsMetadata.some(
+                                (cm: any) =>
+                                  cm.columnName === c &&
+                                  cm.numberType === NumberDataType.Percentage
+                              )
+                            );
+                          const allCurrencyDollar = props.columns
+                            .slice(1)
+                            .every((c: string) =>
+                              props.columnsMetadata.some(
+                                (cm: any) =>
+                                  cm.columnName === c &&
+                                  cm.numberType === NumberDataType.Currency &&
+                                  cm.currencyType !== undefined &&
+                                  cm.currencyType ===
+                                    CurrencyDataType["Dollar $"]
+                              )
+                            );
+                          const allCurrencyEuro = props.columns
+                            .slice(1)
+                            .every((c: string) =>
+                              props.columnsMetadata.some(
+                                (cm: any) =>
+                                  cm.columnName === c &&
+                                  cm.numberType === NumberDataType.Currency &&
+                                  cm.currencyType !== undefined &&
+                                  cm.currencyType === CurrencyDataType["Euro €"]
+                              )
+                            );
+                          const allCurrencyPound = props.columns
+                            .slice(1)
+                            .every((c: string) =>
+                              props.columnsMetadata.some(
+                                (cm: any) =>
+                                  cm.columnName === c &&
+                                  cm.numberType === NumberDataType.Currency &&
+                                  cm.currencyType !== undefined &&
+                                  cm.currencyType ===
+                                    CurrencyDataType["Pound £"]
+                              )
+                            );
+                          return TickFormatter.format(
+                            sum,
+                            yAxisLargestValue,
+                            props.significantDigitLabels,
+                            allPercentage ? NumberDataType.Percentage : "",
+                            allCurrencyDollar
+                              ? CurrencyDataType["Dollar $"]
+                              : allCurrencyEuro
+                              ? CurrencyDataType["Euro €"]
+                              : allCurrencyPound
+                              ? CurrencyDataType["Pound £"]
+                              : ""
+                          );
+                        }}
+                      />
+                    )}
+                    {!props.hideDataLabels && !props.stackedChart && (
                       <LabelList
                         dataKey={column}
                         position="top"
@@ -234,12 +313,12 @@ const ColumnChartWidget = (props: Props) => {
                             Number(tick),
                             yAxisLargestValue,
                             props.significantDigitLabels,
+                            "",
+                            "",
                             columnsMetadataDict.get(column)
                           )
                         }
                       />
-                    ) : (
-                      ""
                     )}
                   </Bar>
                 );

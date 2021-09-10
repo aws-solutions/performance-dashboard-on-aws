@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import "./Button.css";
 
 type Variant =
@@ -10,7 +10,6 @@ type Variant =
   | "unstyled";
 
 interface Props {
-  children: ReactNode;
   onClick?: Function;
   variant?: Variant;
   className?: string;
@@ -20,28 +19,17 @@ interface Props {
   disabledToolTip?: string;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
-  let variantClassName = "";
-  switch (props.variant) {
-    case "base":
-      variantClassName = " usa-button--base";
-      break;
-    case "outline":
-      variantClassName = " usa-button--outline";
-      break;
-    case "secondary":
-      variantClassName = " usa-button--secondary";
-      break;
-    case "accent":
-      variantClassName = " usa-button--accent-cool";
-      break;
-    case "unstyled":
-      variantClassName = " usa-button--unstyled";
-      break;
-    default:
-      variantClassName = " usa-button--base";
-      break;
-  }
+const VARIANT_CLASSNAMES = {
+  outline: "usa-button--outline",
+  secondary: "usa-button--secondary",
+  accent: "usa-button--accent-cool",
+  unstyled: "usa-button--unstyled"
+}
+
+const Button = React.forwardRef<HTMLButtonElement, React.PropsWithChildren<Props>>((props, ref) => {
+  const variantClassName = props.variant
+    ? VARIANT_CLASSNAMES[props.variant as keyof typeof VARIANT_CLASSNAMES] ?? "usa-button--base"
+    : "usa-button--base";
 
   let additionalClasses = "";
   if (props.className) {
@@ -51,15 +39,11 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const button = (
     <button
       aria-label={props.ariaLabel}
-      className={`usa-button${variantClassName}${additionalClasses}`}
+      className={`usa-button ${variantClassName}${additionalClasses}`}
       disabled={props.disabled}
       ref={ref}
       type={props.type}
-      onClick={() => {
-        if (props.onClick) {
-          props.onClick();
-        }
-      }}
+      onClick={() => props.onClick?.()}
     >
       {props.children}
     </button>

@@ -21,7 +21,7 @@
     "S": "cdk-deploy"
   },
   "state": {
-    "S": "Inactive"
+    "S": "Draft"
   },
   "dashboardName": {
     "S": "[Example Dashboard]"

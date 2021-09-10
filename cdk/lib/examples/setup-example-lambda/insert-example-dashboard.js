@@ -1,10 +1,8 @@
-const aws = require('aws-sdk');
-const { fsync } = require('fs');
-const s3 = new aws.S3();
 const awsWrapper = require('./aws-wrapper');
-const pdapp = require('./pdapp');
+const crypto = require('crypto');
 
 const TOPIC_AREA_FILE = "topicarea.json";
+const DASHBOARD_FILE = "dashboard.json";
 
 const databaseIdPrefixes = {
     dataset : "Dataset",
@@ -13,120 +11,274 @@ const databaseIdPrefixes = {
     topicArea : "TopicArea",
 };
 
-class ExampleContext {
-    constructor(topicAreaId, dashboardId, example) {
+class DashboardContext {
+    constructor(topicAreaId, dashboardId, exampleBucketKeys) {
       this.topicAreaId = topicAreaId;
       this.dashboardId = dashboardId;
-      this.example = example;
+      this.exampleBucketKeys = exampleBucketKeys;
     }
-}
+};
+class ExampleConfig {
+    constructor(example) {
+      this.example = example;
+      this.topicArea = null;
+      this.dashboard = null;
+      this.widgets = [];
+      this.datasets = [];
+      this.datafiles = [];
+    }
+};
+class WidgetConfig {
+    constructor(key, name, dataset, datafiles) {
+      this.key = key;
+      this.name = name;
+      this.datasetKey = dataset;
+      this.datafiles = datafiles;
+    }
+};
 class DeploymentContext {
-    constructor(s3datasetbucket, s3examplesbucket, databasename) {
+    constructor(s3datasetbucket, s3examplesbucket, tableName) {
       this.datasetBucket = s3datasetbucket;
       this.examplesBucket = s3examplesbucket;
-      this.databaseName = databasename;
+      this.tableName = tableName;
     }
-}
+};
   
-/**
- * Best practice is to use the uuidv4 module which is maintained. This is done here 
- * to not have dependencies. Since this is used for examples and not for actual cryptographic
- * this should be fine.
- * @returns string
- */
 const uuidv4 = function () {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-    );
+    return crypto.randomUUID();
 }
 
-const generateDBId = function (prefix) {
-    return `${prefix}#${uuidv4()}`
-}
-
-
-
-const setupTopic = async function(deploymentContext){
-
-    const topicAreaEntity = await awsWrapper.getS3Content(example, TOPIC_AREA_FILE);
-
-    const topicAreaId = await pdapp.saveTopicArea(deploymentContext.databaseName, topicAreaEntity);
+const generateDBId = function (prefix, id) {
     
-    return topicAreaId;
+    id = id !== undefined ? id : uuidv4();
+    return `${prefix}#${id}`;
 }
 
-const setupDashboard = async function(deploymentContext, topicAreaId){
+const saveTopicArea = async function(deploymentContext, topicAreaBucketKey){
 
-    const dashboardEntity = await awsWrapper.getS3Content(example, DASHBOARD_FILE);
+    let topicAreaEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, topicAreaBucketKey);
 
-    const dashboardId = await pdapp.saveDashboard(deploymentContext.databaseName, dashboardEntity, topicAreaId);
+    topicAreaEntity.pk.S = generateDBId(databaseIdPrefixes.topicArea);
+    topicAreaEntity.sk.S = topicAreaEntity.pk.S;
+
+    await awsWrapper.dynamoSave(deploymentContext.tableName, topicAreaEntity);
     
-    return dashboardId;
+    return topicAreaEntity.pk.S;
 }
 
-const generateExampleContext = async function(example, deployedContext){
+const saveDashboard = async function(deploymentContext, topicAreaId, dashboardBucketKey){
+
+    let dashboardEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, dashboardBucketKey);
+
+    dashboardEntity.pk.S = generateDBId(databaseIdPrefixes.dashboard);
+    dashboardEntity.sk.S = dashboardEntity.pk.S;
+    dashboardEntity.parentDashboardId.S = dashboardEntity.pk.S;
+
+    dashboardEntity.topicAreaId.S = topicAreaId;
+
+    await awsWrapper.dynamoSave(deploymentContext.tableName, dashboardEntity);
     
-    const exampleConfig = await awsWrapper.getBucketContents(example);
+    return dashboardEntity.pk.S;
+}
 
-    const topicAreaId = await setupTopic(exampleConfig, deployedContext);
+const setupDashboardTopicAreaEntities = async function(deploymentContext, exampleBucketKeys){
+    
+    console.log("Saving TopicArea...");
+    const topicAreaId = await saveTopicArea(deploymentContext, exampleBucketKeys.topicArea);
 
-    const dashboardId = await setupTopic(exampleConfig, topicAreaId, deployedContext);
+    console.log("Saving Dashboard...");
+    const dashboardId = await saveDashboard(deploymentContext, topicAreaId, exampleBucketKeys.dashboard);
 
-    return new ExampleContext(topicAreaId, dashboardId, exampleConfig);
-
+    return new DashboardContext(topicAreaId, dashboardId, exampleBucketKeys);
 };
 
-const setupWidget = async function(exampleContext, widget, dataset, data){
-    
-    const widgetContent = await awsWrapper.getS3Content(exampleContext, WIDGETS_FOLDER);
+const saveText = async function (deploymentContext, dashboardId, widgetKey){
+
+    let widgetEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, widgetKey);
+
+    widgetEntity.pk.S = dashboardId;
+    widgetEntity.sk.S = generateDBId(databaseIdPrefixes.widget);
+
+    await awsWrapper.dynamoSave(deploymentContext.tableName, widgetEntity);
 };
 
-const setupExample = async function (example, deployedContext) {
+const saveChart = async function (deploymentContext, dashboardId, datasetUUID, datafileUUID, widgetKey){
 
-    const exampleContext = generateExampleContext(example, deployedContext);
+    let widgetEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, widgetKey);
 
-    const widgetList = await awsWrapper.getS3Content(exampleContext, WIDGETS_FOLDER);
+    widgetEntity.pk.S = dashboardId;
+    widgetEntity.sk.S = generateDBId(databaseIdPrefixes.widget);
 
-    const datasetList = await awsWrapper.getS3Content(exampleContext, DATASETS_FOLDER);
+    widgetEntity.content.M.datasetId.S = datasetUUID;
+    widgetEntity.content.M.s3Key.M.raw.S = `${datafileUUID}.csv`;
+    widgetEntity.content.M.s3Key.M.json.S = `${datafileUUID}.json`;
 
-    const dataList = await awsWrapper.getS3Content(exampleContext, DATA_FOLDER);
+    await awsWrapper.dynamoSave(deploymentContext.tableName, widgetEntity);
+};
 
-    const datasetMap = new Map(datasetList.map(i => [i.name, i]));
+const saveDataset = async function (deploymentContext, datasetUUID, dataFileUUID, datasetKey){
 
-    const dataListMap = new Map(dataList.map(i => [i.name, i]));
+    let datasetEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, datasetKey);
+
+    datasetEntity.pk.S = generateDBId(databaseIdPrefixes.dataset, datasetUUID);
+    datasetEntity.sk.S = datasetEntity.pk.S;
+
+    datasetEntity.s3Key.M.raw.S = `${dataFileUUID}.csv`;
+    datasetEntity.s3Key.M.json.S = `${dataFileUUID}.json`;
+
+    await awsWrapper.dynamoSave(deploymentContext.tableName, datasetEntity);
+};
+
+const copyContentToBucket = async function(examplesbucket, exampleFile, datasetBucket, dataFileUUID, fileExtention){
+
+    await awsWrapper.copyContent(examplesbucket, exampleFile, datasetBucket, `public/${dataFileUUID}.${fileExtention}`);
+};
+
+const setupExample = async function (deploymentContext, exampleBucketKeys) {
+
+    const dashboardContext = await setupDashboardTopicAreaEntities(deploymentContext, exampleBucketKeys);
 
     for (
-        let i = 0, widgetLength = widgetList.length, widget = null;
-        i < widgetLength && (example = widgetList[i]);
+        let i = 0, widgetLength = dashboardContext.exampleBucketKeys.widgets.length, widget = null;
+        i < widgetLength && (widget = dashboardContext.exampleBucketKeys.widgets[i]);
+        i++
+    ) {
+        console.log(`Setting up Widget: ${widget.name}`);
+        if(widget.name.startsWith("text")){
+            console.log(`Saving text for Widget: ${widget.name}`);
+            await saveText(deploymentContext, dashboardContext.dashboardId, widget.key);
+        }else{
+            let datasetUUID = uuidv4();
+            let dataFileUUID = uuidv4();
+            
+            console.log(`Saving chart for Widget: ${widget.name}`);
+            await saveChart(deploymentContext, dashboardContext.dashboardId, datasetUUID, dataFileUUID, widget.key);
+            console.log(`Saving dataset for Widget: ${widget.name}`);
+            await saveDataset(deploymentContext, datasetUUID, dataFileUUID, widget.datasetKey);
+    
+            let jsonDatasetKey = widget.datafiles[0].endsWith(".json") ? widget.datafiles[0] : widget.datafiles[1];
+            let csvDatasetKey = widget.datafiles[0].endsWith(".csv") ? widget.datafiles[0] : widget.datafiles[1];
+            
+            console.log(`Copying datafiles for Widget: ${widget.name}`);
+            await copyContentToBucket(deploymentContext.examplesBucket, jsonDatasetKey, deploymentContext.datasetBucket,dataFileUUID, "json");
+            await copyContentToBucket(deploymentContext.examplesBucket, csvDatasetKey, deploymentContext.datasetBucket,dataFileUUID, "csv");
+        }
+
+
+    }
+};
+
+const getDataset = function(list, example, key){
+
+    for (
+        let i = 0, dataLength = list.length, item = null;
+        i < dataLength && (item = list[i]);
+        i++
+    ) {
+        if(item.startsWith(example) && item.indexOf("/datasets/")!==-1  && item.endsWith(`${key}.json`)){
+            return item;
+        }
+    }
+
+    return undefined;
+}
+
+const getDatafiles = function(list, example, key){
+    
+    let returnList = [];
+
+    for (
+        let i = 0, dataLength = list.length, item = null;
+        i < dataLength && (item = list[i]);
+        i++
+    ) {
+        if(item.startsWith(example)&& item.indexOf("/data/")!==-1  && (item.endsWith(`${key}.json`) ||item.endsWith(`${key}.csv`)  )){
+            returnList.push(item);
+        }
+    }
+
+    return returnList;
+}
+
+const buildExamplesFromContents = function(s3Contents){
+
+    let datafileKeys = [];
+    let datasetsKeys = [];
+
+    for (
+        let i = 0, dataLength = s3Contents.length, content = null;
+        i < dataLength && (content = s3Contents[i]);
+        i++
+    ) {
+        let key = content.Key;
+
+        if(key.indexOf("/datasets/")!==-1){
+            datasetsKeys.push(key);
+        }
+
+        if(key.indexOf("/data/")!==-1){
+            datafileKeys.push(key);
+        }
+    }
+
+    var exampleMap = new Map();
+
+    for (
+        let i = 0, dataLength = s3Contents.length, content = null;
+        i < dataLength && (content = s3Contents[i]);
         i++
     ) {
 
-        let dataset = datasetMap.get(widget.name);
-        let data = dataMap.get(widget.name);
+        let s3path = content.Key;
 
-        await setupWidget(widget, dataset, data);
-    }
-};
+        let tokens = s3path.split("/");
 
-const getExampleSets = function (bucketname) {
-    return awsWrapper.getBucketContents(bucketname);
+        let example = tokens[0];
+        let key = tokens[tokens.length-1].split(".")[0];
+
+        let exampleConfig = exampleMap.get(tokens[0]);
+
+        if(exampleConfig === undefined){
+            exampleConfig = new ExampleConfig(example);
+            
+        }
+        
+        if(s3path.endsWith(TOPIC_AREA_FILE)){
+            exampleConfig.topicArea = s3path;
+        }
+        else if(s3path.endsWith(DASHBOARD_FILE)){
+            exampleConfig.dashboard = s3path;
+        }
+        else if(s3path.indexOf("/widgets/") !== -1){
+            
+            let dataset = getDataset(datasetsKeys, example, key);
+            let datafiles = getDatafiles(datafileKeys, example, key);
+
+            exampleConfig.widgets.push(new WidgetConfig(s3path, key, dataset, datafiles));
+        }
+
+        exampleMap.set(example, exampleConfig);
+    }   
+    
+    return exampleMap;
 };
 
 const setupDashboards = async function (s3datasetbucket, s3examplesbucket, databasename) {
 
-    const deployedContext = new DeploymentContext(s3datasetbucket, s3examplesbucket, databasename);
+    const deploymentContext = new DeploymentContext(s3datasetbucket, s3examplesbucket, databasename);
 
-    const examples = await getExampleSets(deployedContext.examplesBucket);
+    console.log("Getting contents of examples bucket...")
+    const examplesBucketContent = await awsWrapper.getBucketContents(deploymentContext.examplesBucket);
 
-    for (
-        let i = 0, dataLength = examples.length, example = null;
-        i < dataLength && (example = examples[i]);
-        i++
-    ) {
+    console.log("Building examples to setup...")
+    const exampleBucketKeys = buildExamplesFromContents(examplesBucketContent);
 
-        await setupExample(example, deployedContext);
+    
+    for (const exampleBucketKey of exampleBucketKeys.entries()) {
+        console.log(`Setting up ${exampleBucketKey[1].example}`)
+        await setupExample(deploymentContext, exampleBucketKey[1]);
     }
-};
+}
 
 module.exports = setupDashboards;
 

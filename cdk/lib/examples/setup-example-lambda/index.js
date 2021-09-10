@@ -1,3 +1,13 @@
-const exampleGo = require('./insert-example-dashboard');
+const setupDashboards = require('./insert-example-dashboard');
 
-exampleGo("performancedash-ui-852507482615-us-west-2-datasets","performancedash-ui-852507482615-us-west-2-examples","PerformanceDash-ui-Backend-MainTable74195DAB-1P4950W14AB5Z");
+exports.handler = async (event, context) => {
+    
+  try{
+      await setupDashboards(event.datasets, event.examples, event.tableName);
+  }catch (e){
+      console.log(e)
+  }
+
+  return context?.logStreamName
+  
+};

@@ -18,7 +18,8 @@ function format(
   tick: any,
   largestTick: number,
   significantDigitLabels: boolean,
-  columnMetadata?: ColumnMetadata
+  columnMetadata?: ColumnMetadata,
+  percentage?: string
 ): string {
   const dataType =
     columnMetadata && columnMetadata.dataType
@@ -33,7 +34,8 @@ function format(
         tick,
         largestTick,
         significantDigitLabels,
-        columnMetadata
+        columnMetadata,
+        percentage
       );
     default:
       return tick;

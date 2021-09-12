@@ -28,6 +28,7 @@ type Props = {
   isPreview?: boolean;
   hideLegend?: boolean;
   horizontalScroll?: boolean;
+  stackedChart?: boolean;
   hideDataLabels?: boolean;
   setWidthPercent?: (widthPercent: number) => void;
   significantDigitLabels: boolean;
@@ -74,6 +75,12 @@ const ColumnChartWidget = (props: Props) => {
   const smallScreenPixels = 800;
 
   const { data, columns, showMobilePreview } = props;
+
+  const columnsMetadataDict = new Map();
+  props.columnsMetadata.forEach((el) =>
+    columnsMetadataDict.set(el.columnName, el)
+  );
+
   let padding;
   if (showMobilePreview || windowSize.width < smallScreenPixels) {
     padding = 20;
@@ -216,6 +223,7 @@ const ColumnChartWidget = (props: Props) => {
                     fillOpacity={getOpacity(column)}
                     hide={hiddenColumns.includes(column)}
                     isAnimationActive={false}
+                    stackId={props.stackedChart ? "a" : `${index}`}
                   >
                     {!props.hideDataLabels ? (
                       <LabelList
@@ -226,7 +234,7 @@ const ColumnChartWidget = (props: Props) => {
                             Number(tick),
                             yAxisLargestValue,
                             props.significantDigitLabels,
-                            props.columnsMetadata[index]
+                            columnsMetadataDict.get(column)
                           )
                         }
                       />

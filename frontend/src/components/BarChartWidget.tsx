@@ -34,6 +34,7 @@ type Props = {
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
   showMobilePreview?: boolean;
+  stackedChart?: boolean;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -68,6 +69,12 @@ const BarChartWidget = (props: Props) => {
   );
 
   const { data, bars, showMobilePreview } = props;
+
+  const columnsMetadataDict = new Map();
+  props.columnsMetadata.forEach((el) =>
+    columnsMetadataDict.set(el.columnName, el)
+  );
+
   const yAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && bars.length) {
@@ -204,6 +211,7 @@ const BarChartWidget = (props: Props) => {
                     key={index}
                     fillOpacity={getOpacity(bar)}
                     hide={hiddenBars.includes(bar)}
+                    stackId={props.stackedChart ? "a" : `${index}`}
                     isAnimationActive={false}
                   >
                     {!props.hideDataLabels ? (
@@ -215,7 +223,7 @@ const BarChartWidget = (props: Props) => {
                             Number(tick),
                             xAxisLargestValue,
                             props.significantDigitLabels,
-                            props.columnsMetadata[index]
+                            columnsMetadataDict.get(bar)
                           )
                         }
                       />

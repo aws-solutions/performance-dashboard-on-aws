@@ -31,15 +31,12 @@ const Button = React.forwardRef<HTMLButtonElement, React.PropsWithChildren<Props
     ? VARIANT_CLASSNAMES[props.variant as keyof typeof VARIANT_CLASSNAMES] ?? "usa-button--base"
     : "usa-button--base";
 
-  let additionalClasses = "";
-  if (props.className) {
-    additionalClasses = ` ${props.className}`;
-  }
+  const className = ['usa-button', variantClassName, props.className].filter(Boolean).join(' ');
 
   const button = (
     <button
       aria-label={props.ariaLabel}
-      className={`usa-button ${variantClassName}${additionalClasses}`}
+      className={className}
       disabled={props.disabled}
       ref={ref}
       type={props.type}

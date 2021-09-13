@@ -27,7 +27,12 @@ export class AuthStack extends cdk.Stack {
       description: "Email address for the admin user",
       minLength: 5,
     });
-
+    const exampleLanguage = new cdk.CfnParameter(this, "exampleLanguage", {
+      type: "String",
+      description: "Language for example dashboards",
+      minLength: 5,
+      default: "english"
+    });
     const pool = new cognito.UserPool(this, "UserPool", {
       userInvitation: {
         emailSubject:
@@ -99,6 +104,7 @@ export class AuthStack extends cdk.Stack {
     this.userPoolArn = pool.userPoolArn;
     this.appClientId = client.userPoolClientId;
     this.userPoolId = pool.userPoolId;
+    this.adminEmail = adminEmail.valueAsString;
     this.identityPoolId = identityPool.ref;
 
     new cdk.CfnOutput(this, "UserPoolArn", { value: this.userPoolArn });

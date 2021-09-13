@@ -1,2 +1,2 @@
-mkdir build
-cp 
+mkdir -p build
+cp *.js ./build

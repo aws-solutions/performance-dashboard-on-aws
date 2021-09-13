@@ -100,11 +100,12 @@ const getPageOfS3 = function (params) {
         });
     });
 };
-const getBucketContents = async function (bucketName) {
+const getBucketContents = async function (bucketName, prefix) {
 
     var params = {
         Bucket: bucketName,
-        MaxKeys: 100
+        MaxKeys: 100,
+        Prefix:prefix
     };
 
     let hasNextPage = true;

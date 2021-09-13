@@ -6,6 +6,12 @@
       "Type": "String",
       "Description": "Email address for the admin user",
       "MinLength": 5
+    },
+    "ExampleLanguage": {
+      "Type": "String",
+      "AllowedValues" : ["english"],
+      "Description": "Language to use for examples",
+      "MinLength": 5
     }
   },
   "Resources": {
@@ -59,6 +65,16 @@
       "Properties": {
         "TemplateURL": {
           "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.3/Ops.template"
+        },
+        "TimeoutInMinutes": "60"
+      }
+    },
+    "examplesStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "DependsOn": "backendStack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.3/Examples.template"
         },
         "TimeoutInMinutes": "60"
       }

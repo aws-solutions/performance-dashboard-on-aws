@@ -8,6 +8,7 @@ import { BackendApi } from "./constructs/api";
 import { Database } from "./constructs/database";
 import { ExampleDashboardLambda } from "./constructs/exampledashboardlambda";
 import * as tasks from "@aws-cdk/aws-stepfunctions-tasks";
+import customResource = require("@aws-cdk/custom-resources");
 
 interface DashboardExamplesProps extends cdk.StackProps {
   datasetsBucketName: string;
@@ -44,33 +45,42 @@ export class DashboardExamplesStack extends cdk.Stack {
       datasetBucketName: props.datasetsBucketName,
       databaseTableName: props.databaseTableName,
       databaseTableArn: props.databaseTableArn,
-      adminEmail: props.adminEmail
+      adminEmail: props.adminEmail,
+      language:exampleLanguage.valueAsString
     });
 
     /**
      * S3 Deploy
      * Uploads react built code to the S3 bucket and invalidates CloudFront
      */
-    const examplesDeploy = new s3Deploy.BucketDeployment(
+   const examplesDeploy = new s3Deploy.BucketDeployment(
       this,
       "Deploy-Examples",
       {
-        sources: [s3Deploy.Source.asset("../examples/examplefiles/" + exampleLanguage.valueAsString)],
-        destinationBucket: this.exampleBucket,
+        sources: [s3Deploy.Source.asset("../examples/examplefiles/")],
+        destinationBucket: exampleBucket,
         memoryLimit: 4096,
         prune: false
       }
     );
-
-
-    const invoked = new tasks.LambdaInvoke(scope, "Deploy Examples", {
-      lambdaFunction: lambdas.exampleSetupLambda
-    });
  
+
+
     /**
      * Outputs
      */
     this.exampleSetupLambda = lambdas.exampleSetupLambda;
     this.exampleBucket = exampleBucket;
+
+    
+    const provider = new customResource.Provider(this, "ExampleProvider", {
+      onEventHandler: lambdas.exampleSetupLambda,
+    });
+
+    const resource =  new cdk.CustomResource(this, "ExampleDeployment", {
+      serviceToken: provider.serviceToken,
+    });
+
+    resource.node.addDependency(examplesDeploy);
   }
 }

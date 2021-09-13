@@ -178,14 +178,14 @@ const setupExample = async function (deploymentContext, exampleBucketKeys) {
     }
 };
 
-const getDataset = function(list, example, key){
+const getDataset = function(list, example, key, prefix){
 
     for (
         let i = 0, dataLength = list.length, item = null;
         i < dataLength && (item = list[i]);
         i++
     ) {
-        if(item.startsWith(example) && item.indexOf("/datasets/")!==-1  && item.endsWith(`${key}.json`)){
+        if(item.startsWith(prefix) && item.indexOf(example)!==-1 && item.indexOf("/datasets/")!==-1  && item.endsWith(`${key}.json`)){
             return item;
         }
     }
@@ -193,7 +193,7 @@ const getDataset = function(list, example, key){
     return undefined;
 }
 
-const getDatafiles = function(list, example, key){
+const getDatafiles = function(list, example, key, prefix){
     
     let returnList = [];
 
@@ -202,7 +202,7 @@ const getDatafiles = function(list, example, key){
         i < dataLength && (item = list[i]);
         i++
     ) {
-        if(item.startsWith(example)&& item.indexOf("/data/")!==-1  && (item.endsWith(`${key}.json`) ||item.endsWith(`${key}.csv`)  )){
+        if(item.startsWith(prefix)&& item.indexOf(example)!==-1 && item.indexOf("/data/")!==-1  && (item.endsWith(`${key}.json`) ||item.endsWith(`${key}.csv`)  )){
             returnList.push(item);
         }
     }
@@ -210,7 +210,7 @@ const getDatafiles = function(list, example, key){
     return returnList;
 }
 
-const buildExamplesFromContents = function(s3Contents){
+const buildExamplesFromContents = function(s3Contents, prefix){
 
     let datafileKeys = [];
     let datasetsKeys = [];
@@ -241,7 +241,7 @@ const buildExamplesFromContents = function(s3Contents){
 
         let s3path = content.Key;
 
-        let tokens = s3path.split("/");
+        let tokens = s3path.replace(prefix,"").split("/");
 
         let example = tokens[0];
         let key = tokens[tokens.length-1].split(".")[0];
@@ -261,8 +261,8 @@ const buildExamplesFromContents = function(s3Contents){
         }
         else if(s3path.indexOf("/widgets/") !== -1){
             
-            let dataset = getDataset(datasetsKeys, example, key);
-            let datafiles = getDatafiles(datafileKeys, example, key);
+            let dataset = getDataset(datasetsKeys, example, key, prefix);
+            let datafiles = getDatafiles(datafileKeys, example, key, prefix);
 
             exampleConfig.widgets.push(new WidgetConfig(s3path, key, dataset, datafiles));
         }
@@ -273,15 +273,17 @@ const buildExamplesFromContents = function(s3Contents){
     return exampleMap;
 };
 
-const setupDashboards = async function (s3datasetbucket, s3examplesbucket, databasename , createdBy) {
+const setupDashboards = async function (s3datasetbucket, s3examplesbucket, databasename , createdBy, language) {
 
-    const deploymentContext = new DeploymentContext(s3datasetbucket, s3examplesbucket, databasename, createdBy);
+    console.log(`${s3datasetbucket} ${s3examplesbucket} ${databasename} ${createdBy} ${language}`)
+    const deploymentContext = new DeploymentContext(s3datasetbucket, s3examplesbucket, databasename, createdBy, language);
 
+    const prefix = language+"/"
     console.log("Getting contents of examples bucket...")
-    const examplesBucketContent = await awsWrapper.getBucketContents(deploymentContext.examplesBucket);
+    const examplesBucketContent = await awsWrapper.getBucketContents(deploymentContext.examplesBucket, prefix);
 
     console.log("Building examples to setup...")
-    const exampleBucketKeys = buildExamplesFromContents(examplesBucketContent);
+    const exampleBucketKeys = buildExamplesFromContents(examplesBucketContent, prefix);
 
     
     for (const exampleBucketKey of exampleBucketKeys.entries()) {

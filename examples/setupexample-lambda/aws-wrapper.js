@@ -20,6 +20,8 @@ const dynamoSave = function (tableName, object) {
         });
     });
 };
+
+
 const getJsonOfKey = function (bucket, file) {
 
     return new Promise((resolve, reject) => {
@@ -42,47 +44,6 @@ const getJsonOfKey = function (bucket, file) {
     });
 }
 
-const copyContent = function (sourceBucket, sourceFile, destinationBucket, destinationFile) {
-    
-    return new Promise((resolve, reject) => {
-
-        console.log("s3.copyContent call")
-        s3.copyObject({
-            Bucket: destinationBucket,
-            Key: destinationFile,
-            CopySource: `${sourceBucket}/${sourceFile}`
-        }, function (err, data) {
-            console.log("s3.copyObject return")
-            if (err) {
-                console.log(err);
-                reject(err);
-            }
-            else {
-                resolve(data);
-            }
-        });
-    });
-
-}
-const getContentOfKey = function (bucket, file) {
-    return new Promise((resolve, reject) => {
-
-        console.log("s3.getObject call")
-        s3.getObject({
-            Bucket: bucket,
-            Key: file
-        }, function (err, data) {
-            console.log("s3.getObject return")
-            if (err) {
-                console.log(err);
-                reject(err);
-            }
-            else {
-                resolve(JSON.stringify(data.Body));
-            }
-        });
-    });
-}
 const getPageOfS3 = function (params) {
 
     return new Promise((resolve, reject) => {
@@ -132,10 +93,32 @@ const getBucketContents = async function (bucketName, prefix) {
     return returnList;
 };
 
+const copyContent = function (sourceBucket, sourceFile, destinationBucket, destinationFile) {
+    
+    return new Promise((resolve, reject) => {
+
+        console.log("s3.copyContent call")
+        s3.copyObject({
+            Bucket: destinationBucket,
+            Key: destinationFile,
+            CopySource: `${sourceBucket}/${sourceFile}`
+        }, function (err, data) {
+            console.log("s3.copyObject return")
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            else {
+                resolve(data);
+            }
+        });
+    });
+
+}
+
 module.exports = {
     getBucketContents: getBucketContents,
     getJsonOfKey: getJsonOfKey,
     dynamoSave: dynamoSave,
-    getContentOfKey: getContentOfKey,
     copyContent: copyContent,
 };

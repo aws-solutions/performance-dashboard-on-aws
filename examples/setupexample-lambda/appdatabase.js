@@ -20,6 +20,9 @@ const generateDBId = function (prefix, id) {
 
 const saveTopicArea = async function(deploymentContext, topicAreaBucketKey){
 
+    if(deploymentContext===undefined) throw new Error("deploymentContext is undefined");
+    if(topicAreaBucketKey===undefined) throw new Error("topicAreaBucketKey is undefined");
+
     let topicAreaEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, topicAreaBucketKey);
 
     topicAreaEntity.pk.S = generateDBId(databaseIdPrefixes.topicArea);
@@ -33,6 +36,10 @@ const saveTopicArea = async function(deploymentContext, topicAreaBucketKey){
 };
 
 const saveDashboard = async function(deploymentContext, topicAreaId, dashboardBucketKey){
+
+    if(deploymentContext===undefined) throw new Error("deploymentContext is undefined");
+    if(topicAreaId===undefined) throw new Error("topicAreaId is undefined");
+    if(dashboardBucketKey===undefined) throw new Error("dashboardBucketKey is undefined");
 
     let dashboardEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, dashboardBucketKey);
 
@@ -52,7 +59,13 @@ const saveDashboard = async function(deploymentContext, topicAreaId, dashboardBu
     return dashboardEntity.pk.S;
 };
 
-const saveChart = async function (deploymentContext, dashboardId, datasetUUID, datafileUUID, widgetKey){
+const saveChart = async function (deploymentContext, dashboardId, datasetUUID, dataFileUUID, widgetKey){
+
+    if(deploymentContext===undefined) throw new Error("deploymentContext is undefined");
+    if(dashboardId===undefined) throw new Error("dashboardId is undefined");
+    if(datasetUUID===undefined) throw new Error("datasetUUID is undefined");
+    if(dataFileUUID===undefined) throw new Error("datafileUUID is undefined");
+    if(widgetKey===undefined) throw new Error("widgetKey is undefined");
 
     let widgetEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, widgetKey);
 
@@ -60,13 +73,18 @@ const saveChart = async function (deploymentContext, dashboardId, datasetUUID, d
     widgetEntity.sk.S = generateDBId(databaseIdPrefixes.widget);
 
     widgetEntity.content.M.datasetId.S = datasetUUID;
-    widgetEntity.content.M.s3Key.M.raw.S = `${datafileUUID}.csv`;
-    widgetEntity.content.M.s3Key.M.json.S = `${datafileUUID}.json`;
+    widgetEntity.content.M.s3Key.M.raw.S = `${dataFileUUID}.csv`;
+    widgetEntity.content.M.s3Key.M.json.S = `${dataFileUUID}.json`;
 
     await awsWrapper.dynamoSave(deploymentContext.tableName, widgetEntity);
 };
 
 const saveDataset = async function (deploymentContext, datasetUUID, dataFileUUID, datasetKey){
+
+    if(deploymentContext===undefined) throw new Error("deploymentContext is undefined");
+    if(datasetUUID===undefined) throw new Error("datasetUUID is undefined");
+    if(dataFileUUID===undefined) throw new Error("dataFileUUID is undefined");
+    if(datasetKey===undefined) throw new Error("datasetKey is undefined");
 
     let datasetEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, datasetKey);
 
@@ -82,6 +100,10 @@ const saveDataset = async function (deploymentContext, datasetUUID, dataFileUUID
 };
 
 const saveText = async function (deploymentContext, dashboardId, widgetKey){
+
+    if(deploymentContext===undefined) throw new Error("deploymentContext is undefined");
+    if(dashboardId===undefined) throw new Error("dashboardId is undefined");
+    if(widgetKey===undefined) throw new Error("widgetKey is undefined");
 
     let widgetEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, widgetKey);
 

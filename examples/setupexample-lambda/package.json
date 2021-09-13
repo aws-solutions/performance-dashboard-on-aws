@@ -6,11 +6,13 @@
   "scripts": {
     "build": "./build.sh",
     "run": "build/cli.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "LOG_LEVEL=SILENT jest --coverage --watchAll",
+    "test:ci": "jest --coverage --ci"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.984.0"
+    "aws-sdk": "^2.984.0",
+    "jest": "^27.2.0"
   }
 }

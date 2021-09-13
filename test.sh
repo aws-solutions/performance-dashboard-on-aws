@@ -1,4 +1,4 @@
-# Runs unit tests for all 2 packages. 
+# Runs unit tests for all 3 packages. 
 
 #
 # Backend
@@ -25,3 +25,16 @@ then
   exit 1
 fi
 cd ..
+
+#
+# Insert Examples
+#
+cd examples/setupexample-lambda
+echo "Running examples unit tests"
+npm run test:ci  # Avoid interactive mode on tests
+if [ $? -eq 1 ]
+then
+  echo "Examples tests failed"
+  exit 1
+fi
+cd ../..

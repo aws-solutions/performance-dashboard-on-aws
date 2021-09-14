@@ -76,7 +76,12 @@
         "TemplateURL": {
           "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.3/Examples.template"
         },
-        "TimeoutInMinutes": "60"
+        "TimeoutInMinutes": "60",
+        "Parameters": {
+          "exampleLanguage": {
+            "Ref": "ExampleLanguage"
+          }
+        }
       }
     }
   },

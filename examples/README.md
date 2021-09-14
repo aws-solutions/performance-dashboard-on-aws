@@ -79,8 +79,8 @@ Tests can be run with `npm run test` or `npm run test:ci`
 ```
 examples/
     examplesfiles/
-        <language>
-            <example>
+        <language>/
+            <example>/
                 dashboard.json
                 topicarea.json
                 widgets/
@@ -98,7 +98,7 @@ examples/
 ```
 examples/
     examplesfiles/
-        english
+        english/
             dashboard1
                 dashboard.json
                 topicarea.json
@@ -124,6 +124,11 @@ examples/
 - The relationship between datafiles and widgets is one to one. If a data files need to be used for multiple widgets then copy the files and change the name of the copy to match the widget. This was done for setup simplcity.
 
 ## Exporting a Dashboard
+
+Add your example files to the desired language directory. `examples/examplefiles/<desired language>/<your new example>`
+If you are adding a new language, the name of the laguage folder will be the key used to select the language during deployment.
+
+### Steps
 
 1. Get the dashboard id from url `/admin/dashboard/<dashboard id>/`
 2. Find the dashboard board in Dynammo DB PK and SK will equal `Dashboard#<dashboard id>`.

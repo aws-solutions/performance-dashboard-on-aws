@@ -29,42 +29,43 @@ export class DashboardExamplesStack extends cdk.Stack {
       type: "String",
       description: "Language for example dashboards",
       minLength: 5,
-      default: "english"
+      default: "english",
     });
 
     const exampleBucket = new s3.Bucket(this, "ExampleBucket", {
       encryption: s3.BucketEncryption.S3_MANAGED,
-      versioned: false
+      versioned: false,
     });
 
-
-    const lambdas = new ExampleDashboardLambda(this, "SetupExampleDashboardLambda", {
-      exampleBucketArn: exampleBucket.bucketArn,
-      exampleBucketName: exampleBucket.bucketName,
-      datasetBucketArn: props.datasetsBucketArn,
-      datasetBucketName: props.datasetsBucketName,
-      databaseTableName: props.databaseTableName,
-      databaseTableArn: props.databaseTableArn,
-      adminEmail: props.adminEmail,
-      language:exampleLanguage.valueAsString
-    });
+    const lambdas = new ExampleDashboardLambda(
+      this,
+      "SetupExampleDashboardLambda",
+      {
+        exampleBucketArn: exampleBucket.bucketArn,
+        exampleBucketName: exampleBucket.bucketName,
+        datasetBucketArn: props.datasetsBucketArn,
+        datasetBucketName: props.datasetsBucketName,
+        databaseTableName: props.databaseTableName,
+        databaseTableArn: props.databaseTableArn,
+        adminEmail: props.adminEmail,
+        language: exampleLanguage.valueAsString,
+      }
+    );
 
     /**
      * S3 Deploy
      * Uploads react built code to the S3 bucket and invalidates CloudFront
      */
-   const examplesDeploy = new s3Deploy.BucketDeployment(
+    const examplesDeploy = new s3Deploy.BucketDeployment(
       this,
       "Deploy-Examples",
       {
         sources: [s3Deploy.Source.asset("../examples/examplefiles/")],
         destinationBucket: exampleBucket,
         memoryLimit: 4096,
-        prune: false
+        prune: false,
       }
     );
- 
-
 
     /**
      * Outputs
@@ -72,12 +73,11 @@ export class DashboardExamplesStack extends cdk.Stack {
     this.exampleSetupLambda = lambdas.exampleSetupLambda;
     this.exampleBucket = exampleBucket;
 
-    
     const provider = new customResource.Provider(this, "ExampleProvider", {
       onEventHandler: lambdas.exampleSetupLambda,
     });
 
-    const resource =  new cdk.CustomResource(this, "ExampleDeployment", {
+    const resource = new cdk.CustomResource(this, "ExampleDeployment", {
       serviceToken: provider.serviceToken,
     });
 

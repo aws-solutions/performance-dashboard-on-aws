@@ -31,7 +31,7 @@ export class AuthStack extends cdk.Stack {
       type: "String",
       description: "Language for example dashboards",
       minLength: 5,
-      default: "english"
+      default: "english",
     });
     const pool = new cognito.UserPool(this, "UserPool", {
       userInvitation: {

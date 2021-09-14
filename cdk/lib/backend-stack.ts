@@ -33,9 +33,9 @@ export class BackendStack extends cdk.Stack {
       type: "String",
       description: "Language for example dashboards",
       minLength: 5,
-      default: "english"
+      default: "english",
     });
-    
+
     const dataStorage = new DatasetStorage(this, "DatasetStorage", {
       datasetsBucketName: props.datasetsBucketName,
     });
@@ -67,7 +67,7 @@ export class BackendStack extends cdk.Stack {
     this.dynamodbStreamsFunction = lambdas.ddbStreamProcessor;
     this.mainTable = database.mainTable;
     this.restApi = backendApi.api;
-    this.datasetsBucketArn =  dataStorage.datasetsBucket.bucketArn;
+    this.datasetsBucketArn = dataStorage.datasetsBucket.bucketArn;
 
     new cdk.CfnOutput(this, "ApiGatewayEndpoint", {
       value: this.restApi.url,

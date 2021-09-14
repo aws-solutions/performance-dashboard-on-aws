@@ -67,7 +67,7 @@ const examples = new DashboardExamplesStack(app, "DashboardExamples", {
   datasetsBucketArn: backend.datasetsBucketArn,
   databaseTableName: backend.mainTable.tableName,
   databaseTableArn: backend.mainTable.tableArn,
-  adminEmail: auth.adminEmail
+  adminEmail: auth.adminEmail,
 });
 
 Aspects.of(app).add(new PolicyInvalidWarningSuppressor());

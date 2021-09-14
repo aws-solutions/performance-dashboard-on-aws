@@ -39,46 +39,29 @@ export class ExampleDashboardLambda extends cdk.Construct {
       },
     });
 
-
     const writeTablePolic = new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
       resources: [
         // Grant permissions to tables themselves
-        props.databaseTableArn
+        props.databaseTableArn,
       ],
-      actions: [
-        "dynamodb:PutItem"
-      ],
+      actions: ["dynamodb:PutItem"],
     });
 
     const s3ReadExamples = new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
-      resources: [
-        props.exampleBucketArn,
-        `${props.exampleBucketArn}/*`
-      ],
-      actions: [
-        "s3:GetObject",
-         "s3:List*"
-      ],
+      resources: [props.exampleBucketArn, `${props.exampleBucketArn}/*`],
+      actions: ["s3:GetObject", "s3:List*"],
     });
-
 
     const writeData = new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
-      resources: [
-        props.datasetBucketArn,
-        `${props.datasetBucketArn}/*`
-      ],
-      actions: [
-        "s3:PutObject",
-        "s3:ListBucket"
-      ],
+      resources: [props.datasetBucketArn, `${props.datasetBucketArn}/*`],
+      actions: ["s3:PutObject", "s3:ListBucket"],
     });
 
     this.exampleSetupLambda.addToRolePolicy(writeTablePolic);
     this.exampleSetupLambda.addToRolePolicy(s3ReadExamples);
     this.exampleSetupLambda.addToRolePolicy(writeData);
-
   }
 }

@@ -82,5 +82,9 @@ export class DashboardExamplesStack extends cdk.Stack {
     });
 
     resource.node.addDependency(examplesDeploy);
+
+    new cdk.CfnOutput(this, "ExamplesStorageBucket", {
+      value: exampleBucket.bucketName,
+    });
   }
 }

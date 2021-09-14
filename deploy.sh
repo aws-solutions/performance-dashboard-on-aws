@@ -18,6 +18,14 @@ else
     exit 0
 fi
 
+exampleLanguage=$2
+if [ "$exampleLanguage" != "" ]; then
+    echo "Example Language = $exampleLanguage"
+else
+    echo "Please specify an example language name as second argument (i.e. english)"
+    exit 0
+fi
+
 verify_prereqs() {
     # Verify necessary commands
     echo "node version"
@@ -82,7 +90,7 @@ deploy_ops() {
     npm run build
 
     cd $CDK_DIR
-    npm run cdk -- deploy DashboardExamples --require-approval never --parameters exampleLanguage=english
+    npm run cdk -- deploy DashboardExamples --require-approval never --parameters exampleLanguage=exampleLanguage
 }
 build_cdk() {
     cd $CDK_DIR

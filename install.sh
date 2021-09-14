@@ -21,3 +21,11 @@ echo "npm install on cdk"
 cd cdk
 npm install
 cd ..
+
+#
+# Examples
+#
+echo "npm install on examples"
+cd examples/setupexample-lambda
+npm install
+cd ../..

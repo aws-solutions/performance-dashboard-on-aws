@@ -158,11 +158,10 @@ function TopicareaListing(props: Props) {
             </Button>
           </span>
           <span>
-            <Button 
-            testid={"createtopicarea"}
-            onClick={createTopicArea}>{`${t(
-              "CreateNew"
-            )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
+            <Button testid={"createtopicarea"} onClick={createTopicArea}>
+              {`${t(
+                "CreateNew"
+              )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
             </Button>
           </span>
         </div>

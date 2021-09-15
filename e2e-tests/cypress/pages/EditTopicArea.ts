@@ -2,7 +2,7 @@ import TopicAreaListingPage from "./TopicAreaListing";
 
 class EditTopicAreaPage {
   editTopicArea(newName: string) {
-    cy.findByLabelText("Topic Area name").clear().type(newName);
+    cy.get("[data-testid='EditTopicAreaForm'] input").clear().type(newName);
   }
 
   submit(): TopicAreaListingPage {

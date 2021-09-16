@@ -44,7 +44,13 @@ function DraftsTab(props: Props) {
       <p>{t("DraftTabDescription")}</p>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-3 padding-top-1px">
-          <Search id="search" onSubmit={onSearch} size="small" />
+          <ul className="usa-button-group">
+            <li className="usa-button-group__item">
+              <span>
+                <Search id="search" onSubmit={onSearch} size="small" />
+              </span>
+            </li>
+          </ul>
         </div>
         <div className="tablet:grid-col-9 text-right">
           <span>

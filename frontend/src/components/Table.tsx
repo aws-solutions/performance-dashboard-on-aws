@@ -233,7 +233,7 @@ function Table(props: Props) {
   );
 
   return (
-    <>
+    <div className="overflow-x-hidden overflow-y-hidden">
       <table
         className={`usa-table${borderlessClassName}${className}`}
         width={props.width}
@@ -350,7 +350,7 @@ function Table(props: Props) {
             {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
               pageIndex * pageSize + pageSize,
               rows.length
-            )} of ${rows.length}`}
+            )} ${t("Of")} ${rows.length}`}
           </div>
           <div className="grid-col-6 text-center">
             <button
@@ -447,7 +447,7 @@ function Table(props: Props) {
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 }
 

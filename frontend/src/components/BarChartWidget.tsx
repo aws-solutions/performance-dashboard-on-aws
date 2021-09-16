@@ -133,9 +133,9 @@ const BarChartWidget = (props: Props) => {
 
   return (
     <div>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h2>
+      </h3>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

@@ -42,6 +42,7 @@ function TopicareaSettings() {
             </div>
             <div className="grid-col flex-3 text-right">
               <Button
+                testid={"edittopicarealabel"}
                 className="margin-top-2"
                 variant="outline"
                 onClick={onTopicAreaLabelEdit}

@@ -84,6 +84,7 @@ function EditTopicArea() {
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="usa-form usa-form--large"
+            data-testid="EditTopicAreaForm"
           >
             <TextField
               id="name"

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { Dashboard } from "../models";
-import { useDateTimeFormatter, useSettings } from "../hooks";
+import { useDateTimeFormatter, useSettings, useWindowSize } from "../hooks";
 import Button from "./Button";
 import Search from "./Search";
 import ScrollTop from "./ScrollTop";
@@ -27,6 +27,9 @@ function DraftsTab(props: Props) {
 
   const { t } = useTranslation();
 
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
+
   const createDashboard = () => {
     history.push("/admin/dashboard/create");
   };
@@ -42,43 +45,87 @@ function DraftsTab(props: Props) {
   return (
     <div>
       <p>{t("DraftTabDescription")}</p>
-      <div className="grid-row margin-y-3">
-        <div className="tablet:grid-col-3 padding-top-1px">
-          <ul className="usa-button-group">
-            <li className="usa-button-group__item">
-              <span>
-                <Search id="search" onSubmit={onSearch} size="small" />
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div className="tablet:grid-col-9 text-right">
-          <span>
-            <DropdownMenu
-              buttonText={t("Actions")}
-              disabled={selected.length === 0}
-              variant="outline"
-            >
-              <MenuLink
-                href={
-                  selected.length === 1
-                    ? `/admin/dashboard/${selected[0].id}/history`
-                    : "#"
-                }
-                disabled={selected.length !== 1}
+      {isMobile && (
+        <div className="margin-y-3">
+          <div className="padding-top-1px">
+            <ul className="usa-button-group">
+              <li className="usa-button-group__item">
+                <span>
+                  <Search id="search" onSubmit={onSearch} size="small" />
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div className="grid-row margin-top-105">
+            <div className="grid-col-6 padding-right-05">
+              <DropdownMenu
+                buttonText={t("Actions")}
+                disabled={selected.length === 0}
+                variant="outline"
+                className="margin-top-neg-1px"
               >
-                {t("ViewHistoryLink")}
-              </MenuLink>
-              <MenuItem onSelect={() => props.onDelete(selected)}>
-                {t("Delete")}
-              </MenuItem>
-            </DropdownMenu>
-          </span>
-          <span>
-            <Button onClick={createDashboard}>{t("CreateDashboard")}</Button>
-          </span>
+                <MenuLink
+                  href={
+                    selected.length === 1
+                      ? `/admin/dashboard/${selected[0].id}/history`
+                      : "#"
+                  }
+                  disabled={selected.length !== 1}
+                >
+                  {t("ViewHistoryLink")}
+                </MenuLink>
+                <MenuItem onSelect={() => props.onDelete(selected)}>
+                  {t("Delete")}
+                </MenuItem>
+              </DropdownMenu>
+            </div>
+            <div className="grid-col-6 padding-left-05">
+              <Button className="font-sans-xs" onClick={createDashboard}>
+                {t("CreateDashboard")}
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
+      {!isMobile && (
+        <div className="grid-row margin-y-3">
+          <div className="tablet:grid-col-3 padding-top-1px">
+            <ul className="usa-button-group">
+              <li className="usa-button-group__item">
+                <span>
+                  <Search id="search" onSubmit={onSearch} size="small" />
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div className="tablet:grid-col-9 text-right">
+            <span>
+              <DropdownMenu
+                buttonText={t("Actions")}
+                disabled={selected.length === 0}
+                variant="outline"
+              >
+                <MenuLink
+                  href={
+                    selected.length === 1
+                      ? `/admin/dashboard/${selected[0].id}/history`
+                      : "#"
+                  }
+                  disabled={selected.length !== 1}
+                >
+                  {t("ViewHistoryLink")}
+                </MenuLink>
+                <MenuItem onSelect={() => props.onDelete(selected)}>
+                  {t("Delete")}
+                </MenuItem>
+              </DropdownMenu>
+            </span>
+            <span>
+              <Button onClick={createDashboard}>{t("CreateDashboard")}</Button>
+            </span>
+          </div>
+        </div>
+      )}
       <Table
         selection="multiple"
         initialSortByField="updatedAt"

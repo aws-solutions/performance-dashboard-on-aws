@@ -149,7 +149,10 @@ function PublishedSiteSettings() {
       ) : (
         <div className="grid-row margin-top-0-important">
           <div className="grid-col flex-9">
-            <div className="published-site font-sans-lg">
+            <div
+              className="published-site font-sans-lg"
+              data-testid="published-site-headline"
+            >
               <MarkdownRender source={homepage.title} />
             </div>
             <div className="grid-col flex-9">

@@ -91,7 +91,7 @@ class PublishedSitePage {
   }
 
   verifyHeadlineAndDescription(headline: string, description: string) {
-    cy.get("div.Markdown.undefined").eq(2).contains(headline);
+    cy.get("[data-testid='published-site-headline'] .Markdown").contains(headline);
     cy.get("div.Markdown.undefined").eq(3).contains(description);
 
     cy.intercept({

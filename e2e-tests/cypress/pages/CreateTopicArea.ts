@@ -2,7 +2,7 @@ import TopicAreaListingPage from "./TopicAreaListing";
 
 class CreateTopicAreaPage {
   createTopicArea(topicAreaName: string) {
-    cy.findByLabelText("Topic Area name").type(topicAreaName);
+    cy.get("[data-testid='CreateTopicAreaForm'] input").type(topicAreaName);
   }
 
   submit(): TopicAreaListingPage {

@@ -35,7 +35,7 @@ class SettingsPage {
     }).as("settingsRequest");
 
     // Direct user to Publishing guidance settings page
-    cy.get("a").contains("Topic Areas").click();
+    cy.get("a.usa-current[href='/admin/settings/topicarea']").click();
     cy.wait(["@settingsRequest", "@listTopicAreasRequest"]);
 
     return new TopicAreaListingPage();

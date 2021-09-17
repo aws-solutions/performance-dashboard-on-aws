@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { isPropertySignature } from "typescript";
 import "./Button.css";
 
 type Variant =
@@ -14,6 +15,7 @@ interface Props {
   onClick?: Function;
   variant?: Variant;
   className?: string;
+  testid?: string;
   disabled?: boolean;
   type?: "submit" | "reset" | "button";
   ariaLabel?: string;
@@ -50,6 +52,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
   const button = (
     <button
+      data-testid={props.testid}
       aria-label={props.ariaLabel}
       className={`usa-button${variantClassName}${additionalClasses}`}
       disabled={props.disabled}

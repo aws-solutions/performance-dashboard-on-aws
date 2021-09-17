@@ -3,7 +3,7 @@ class DateTimeFormatPage {
     // Capture the http request
     cy.intercept({
       method: "GET",
-      url: "/prod/settings",
+      pathname: "/prod/settings",
     }).as("settingsRequest");
 
     // Direct user to edit date and time format page

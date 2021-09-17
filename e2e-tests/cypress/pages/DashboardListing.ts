@@ -33,6 +33,18 @@ class DashboardListingPage {
   }
 
   deleteDashboard(dashboardName: string) {
+
+    //Setup intercepts early
+    cy.intercept({
+      method: "DELETE",
+      pathname: "/prod/dashboard",
+    }).as("deleteDashboardsRequest");
+
+    cy.intercept({
+      method: "GET",
+      pathname: "/prod/dashboard",
+    }).as("listDashboardRequest");
+
     // Search for dashboard by its name
     cy.findByRole("searchbox").type(dashboardName);
     cy.get("form[role='search']").submit();
@@ -46,17 +58,6 @@ class DashboardListingPage {
     // Click delete from the actions dropdown menu
     cy.findByRole("button", { name: "Actions" }).click();
     cy.get("div").contains("Delete").click();
-
-    // Wait for the requests to finish
-    cy.intercept({
-      method: "DELETE",
-      url: "/prod/dashboard",
-    }).as("deleteDashboardsRequest");
-
-    cy.intercept({
-      method: "GET",
-      url: "/prod/dashboard",
-    }).as("listDashboardRequest");
 
     // Accept modal confirmation prompt
     cy.findByRole("button", { name: "Delete" }).click();

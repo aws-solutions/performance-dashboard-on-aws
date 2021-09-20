@@ -7,9 +7,9 @@ exports[`renders markdown text 1`] = `
     class=""
     tabindex="-1"
   >
-    <h2>
+    <h3>
       Benefits of Bananas
-    </h2>
+    </h3>
     <div
       class="Markdown usa-prose textOrSummary"
     >

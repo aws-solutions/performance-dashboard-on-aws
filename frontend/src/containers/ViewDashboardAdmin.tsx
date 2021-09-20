@@ -49,6 +49,7 @@ function ViewDashboardAdmin() {
   const mobilePreviewWidth = 400;
   const maxMobileViewportWidth = 450;
   const moveNavBarWidth = 1024;
+  const isMobile = windowSize.width <= 600;
 
   const onClosePreview = () => {
     history.push(UtilsService.getDashboardUrlPath(dashboard));
@@ -524,108 +525,6 @@ function ViewDashboardAdmin() {
         {dashboard.state === DashboardState.Archived && (
           <Alert type="info" slim message={t("RepublishDashboardToView")} />
         )}
-        <div
-          className={`grid-row margin-top-${
-            (dashboard.state === DashboardState.Published ||
-              dashboard.state === DashboardState.Inactive) &&
-            !draftOrPublishPending
-              ? "0"
-              : "2"
-          }`}
-        >
-          <div className="grid-col text-left flex-row flex-align-center display-flex">
-            <ul className="usa-button-group">
-              <li className="usa-button-group__item">
-                <span
-                  className="usa-tag text-middle"
-                  style={{ cursor: "text" }}
-                >
-                  {t(dashboard?.state)}
-                </span>
-              </li>
-              <li className="usa-button-group__item">
-                <span className="text-middle" style={{ cursor: "default" }}>
-                  {(dashboard.state === DashboardState.Draft ||
-                    dashboard.state === DashboardState.PublishPending) && (
-                    <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
-                  )}
-                  {(dashboard.state === DashboardState.Draft ||
-                    dashboard.state === DashboardState.PublishPending) &&
-                    t("ViewDashboardAlertVersion")}{" "}
-                  {(dashboard.state === DashboardState.Draft ||
-                    dashboard.state === DashboardState.PublishPending) &&
-                    dashboard?.version}
-                  {(dashboard.state === DashboardState.Published ||
-                    dashboard.state === DashboardState.Archived ||
-                    dashboard.state === DashboardState.Inactive) && (
-                    <Dropdown
-                      id="version"
-                      name="version"
-                      label=""
-                      options={versions
-                        .filter(
-                          (version) =>
-                            version.state !== DashboardState.Draft &&
-                            version.state !== DashboardState.PublishPending
-                        )
-                        .map((v) => {
-                          return {
-                            value: `${v.version}`,
-                            label: `${t("ViewDashboardAlertVersion")} ${
-                              v.version
-                            }${
-                              v.state === DashboardState.Published
-                                ? ` (${t("Current")}) `
-                                : ""
-                            }`,
-                          };
-                        })}
-                      value={`${dashboard.version}`}
-                      className="margin-top-neg-2"
-                      onChange={handleVersionChange}
-                    />
-                  )}
-                </span>
-              </li>
-              <li>
-                {(dashboard.state === DashboardState.Published ||
-                  dashboard.state === DashboardState.Inactive ||
-                  dashboard.state === DashboardState.Archived) && (
-                  <Button
-                    variant="unstyled"
-                    type="button"
-                    className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-                    onClick={() => setShowVersionNotes(!showVersionNotes)}
-                  >
-                    {`${
-                      showVersionNotes
-                        ? `${t("ViewDashboardAlertVersionNotes.Hide")}`
-                        : `${t("ViewDashboardAlertVersionNotes.Show")}`
-                    } ${t("ViewDashboardAlertVersionNotes.VersionNotes")}`}
-                  </Button>
-                )}
-              </li>
-            </ul>
-          </div>
-          <div className="grid-col text-right">
-            {dashboard.state === DashboardState.Published && (
-              <>
-                <Button
-                  variant="outline"
-                  type="button"
-                  onClick={() => setIsOpenArchiveModal(true)}
-                >
-                  {t("ViewDashboardAlertButton.Archive")}
-                </Button>
-                <Button
-                  variant="base"
-                  onClick={() => setIsOpenUpdateModal(true)}
-                  disabled={!!draftOrPublishPending}
-                >
-                  {t("ViewDashboardAlertButton.Update")}
-                </Button>
-              </>
-            )}
 
         {isMobile && (
           <>

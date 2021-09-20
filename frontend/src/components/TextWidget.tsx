@@ -12,7 +12,7 @@ function TextWidget(props: Props) {
 
   return (
     <div className={props.hideTitle ? "margin-top-3" : ""}>
-      {!props.hideTitle && showTitle && <h2>{name}</h2>}
+      {!props.hideTitle && showTitle && <h3>{name}</h3>}
       <MarkdownRender
         className="usa-prose textOrSummary"
         source={content.text}

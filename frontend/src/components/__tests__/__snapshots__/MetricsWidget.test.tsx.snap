@@ -3,11 +3,11 @@
 exports[`metrics preview should match snapshot 1`] = `
 <div>
   <div>
-    <h2
+    <h3
       class="margin-top-3"
     >
       test title
-    </h2>
+    </h3>
     <div>
       <div
         class="grid-col"

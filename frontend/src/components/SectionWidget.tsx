@@ -19,7 +19,7 @@ function SectionWidget(props: Props) {
 
   return (
     <div>
-      {showTitle && <h1>{content.title}</h1>}
+      {showTitle && <h2>{content.title}</h2>}
       {content.summary ? (
         <div className="padding-left-05">
           <MarkdownRender
@@ -37,7 +37,7 @@ function SectionWidget(props: Props) {
           if (widget) {
             return (
               <div key={index}>
-                <div className="margin-top-6 usa-prose" id={id}>
+                <div className="margin-top-4 usa-prose" id={id}>
                   <WidgetRender
                     widget={widget}
                     showMobilePreview={props.showMobilePreview}

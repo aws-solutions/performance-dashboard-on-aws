@@ -160,9 +160,17 @@ p {
   background-color: #fff;
 }
 
-.grid-container {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+@media (max-width: 64em) {
+  .mobile-margin-top-2 {
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 64em) {
+  .usa-logo {
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+  }
 }
 
 @media (min-width: 64em) {

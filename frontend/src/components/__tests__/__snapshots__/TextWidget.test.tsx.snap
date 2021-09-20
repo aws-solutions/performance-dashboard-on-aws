@@ -5,7 +5,7 @@ exports[`renders markdown text 1`] = `
   <div
     class=""
   >
-    <h2>
+    <h3>
       Benefits of Bananas
     </h3>
     <div

@@ -5,12 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { useDashboard, useDashboardVersions, useWindowSize } from "../hooks";
-import {
-  Dashboard,
-  DashboardState,
-  LocationState,
-  WidgetType,
-} from "../models";
+import { Dashboard, DashboardState, LocationState } from "../models";
 import BackendService from "../services/BackendService";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
@@ -615,8 +610,15 @@ function ViewDashboardAdmin() {
             <Navigation
               stickyPosition={80}
               offset={240}
+              area={2}
+              marginRight={27}
               widgetNameIds={dashboard?.widgets
-                .filter((w) => w.widgetType === WidgetType.Section)
+                .filter(
+                  (w) =>
+                    dashboard &&
+                    dashboard.tableOfContents &&
+                    dashboard.tableOfContents[w.id]
+                )
                 .map((widget) => {
                   return {
                     name: widget.name,
@@ -628,6 +630,7 @@ function ViewDashboardAdmin() {
               setActivewidgetId={setActiveWidgetId}
               isTop={showMobilePreview || windowSize.width <= moveNavBarWidth}
               displayTableOfContents={dashboard?.displayTableOfContents}
+              onClick={setActiveWidgetId}
             />
             {dashboard?.widgets
               .filter((w) => !w.section)
@@ -647,6 +650,7 @@ function ViewDashboardAdmin() {
                           widget={widget}
                           showMobilePreview={showMobilePreview}
                           widgets={dashboard.widgets}
+                          setActiveWidgetId={setActiveWidgetId}
                         />
                       </div>
                     </Waypoint>

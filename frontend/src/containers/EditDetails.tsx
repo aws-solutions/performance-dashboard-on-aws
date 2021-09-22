@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
@@ -17,6 +17,7 @@ import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
 import { useTranslation } from "react-i18next";
+import Navigation from "../components/Navigation";
 
 interface FormValues {
   name: string;
@@ -35,7 +36,9 @@ function EditDetails() {
   const { topicareas } = useTopicAreas();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
-  const { register, errors, handleSubmit, watch } = useForm<FormValues>();
+  const [activeWidgetId, setActiveWidgetId] = useState("");
+  const { register, errors, handleSubmit, watch, reset } =
+    useForm<FormValues>();
 
   const sortedTopicAreas = topicareas.sort((a, b) =>
     a.name > b.name ? 1 : -1
@@ -44,6 +47,16 @@ function EditDetails() {
   const name = watch("name");
   const description = watch("description");
   const topicAreaId = watch("topicAreaId");
+  const displayTableOfContents = watch("displayTableOfContents");
+
+  useEffect(() => {
+    if (dashboard) {
+      const displayTableOfContents = dashboard.displayTableOfContents;
+      reset({
+        displayTableOfContents,
+      });
+    }
+  }, [dashboard]);
 
   const { t } = useTranslation();
 
@@ -54,7 +67,8 @@ function EditDetails() {
       values.topicAreaId,
       values.displayTableOfContents,
       values.description || "",
-      dashboard ? dashboard.updatedAt : new Date()
+      dashboard ? dashboard.updatedAt : new Date(),
+      dashboard && dashboard.tableOfContents ? dashboard.tableOfContents : {}
     );
 
     history.push(`/admin/dashboard/edit/${dashboardId}`, {
@@ -68,6 +82,10 @@ function EditDetails() {
 
   const getTopicAreaName = (topicAreaId: string) => {
     return topicareas.find((t) => t.id === topicAreaId)?.name || "";
+  };
+
+  const onTableOfContentsEdit = () => {
+    history.push(`/admin/dashboard/edit/${dashboardId}/tableofcontents`);
   };
 
   const onCancel = () => {
@@ -146,24 +164,45 @@ function EditDetails() {
                     }))}
                   />
 
-                  <div className="usa-checkbox">
-                    <br />
-                    <input
-                      className="usa-checkbox__input"
-                      id="display-table-of-contents"
-                      type="checkbox"
-                      name="displayTableOfContents"
-                      defaultChecked={
-                        dashboard ? dashboard.displayTableOfContents : false
-                      }
-                      ref={register}
-                    />
-                    <label
-                      className="usa-checkbox__label"
-                      htmlFor="display-table-of-contents"
-                    >
-                      {t("DisplayTableOfContents")}
+                  <div className="usa-form-group">
+                    <label className="usa-label text-bold">
+                      {t("TableOfContents")}
                     </label>
+                    <div className="usa-hint">
+                      {t("TableOfContentsDescription")}
+                    </div>
+                    <div className="grid-row">
+                      <div className="grid-col text-left">
+                        <div className="usa-checkbox">
+                          <br />
+                          <input
+                            className="usa-checkbox__input"
+                            id="display-table-of-contents"
+                            type="checkbox"
+                            name="displayTableOfContents"
+                            defaultChecked={
+                              dashboard && dashboard.displayTableOfContents
+                            }
+                            ref={register}
+                          />
+                          <label
+                            className="usa-checkbox__label margin-top-0"
+                            htmlFor="display-table-of-contents"
+                          >
+                            {t("DisplayTableOfContents")}
+                          </label>
+                        </div>
+                      </div>
+                      <div className="grid-col text-right">
+                        <Button
+                          variant="outline"
+                          disabled={!displayTableOfContents}
+                          onClick={onTableOfContentsEdit}
+                        >
+                          {t("Edit")}
+                        </Button>
+                      </div>
+                    </div>
                   </div>
 
                   <TextField
@@ -215,6 +254,31 @@ function EditDetails() {
                 backgroundColor: "#dfe1e2",
                 margin: "2rem 0",
               }}
+            />
+            <Navigation
+              stickyPosition={80}
+              offset={240}
+              area={4}
+              marginRight={45}
+              widgetNameIds={dashboard?.widgets
+                .filter(
+                  (w) =>
+                    dashboard &&
+                    dashboard.tableOfContents &&
+                    dashboard.tableOfContents[w.id]
+                )
+                .map((widget) => {
+                  return {
+                    name: widget.name,
+                    id: widget.id,
+                    isInsideSection: !!widget.section,
+                  };
+                })}
+              activeWidgetId={activeWidgetId}
+              setActivewidgetId={setActiveWidgetId}
+              isTop={false}
+              displayTableOfContents={dashboard?.displayTableOfContents}
+              onClick={setActiveWidgetId}
             />
           </div>
         </div>

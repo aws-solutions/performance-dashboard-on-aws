@@ -139,7 +139,7 @@
     "Draft": " borrador"
   },
   "DashboardPreviewPublishedMessage": "A continuación se muestra una vista previa de cómo será el panel publicado. Si está listo para continuar, puede publicar el panel para que esté disponible en el sitio publicado.",
-  "RepublishDashboardToView": "Este panel está archivado. No se puede ver en el sitio publicado a menos que se vuelva a publicar.",
+  "RepublishDashboardToView": "Este panel está archivado. No se puede ver en el sitio publicado a menos que se vuelva a publicar",
   "ViewDashboardAlertVersionNotes": {
     "Show": "Mostrar",
     "Hide": "Ocultar",

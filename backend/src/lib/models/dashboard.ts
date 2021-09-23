@@ -25,6 +25,7 @@ export interface Dashboard {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  tableOfContents?: any;
   description: string;
   createdBy: string;
   updatedAt: Date;
@@ -51,6 +52,7 @@ export interface DashboardItem {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  tableOfContents?: any;
   description: string;
   createdBy: string;
   updatedAt: string;
@@ -73,6 +75,7 @@ export interface PublicDashboard {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  tableOfContents?: any;
   description: string;
   updatedAt: Date;
   widgets?: Array<Widget>;

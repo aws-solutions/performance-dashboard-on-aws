@@ -147,6 +147,7 @@ class DashboardRepository extends BaseRepository {
     topicAreaId: string,
     topicAreaName: string,
     displayTableOfContents: boolean,
+    tableOfContents: any,
     description: string,
     lastUpdatedAt: string,
     user: User
@@ -161,13 +162,15 @@ class DashboardRepository extends BaseRepository {
         UpdateExpression:
           "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, " +
           "#topicAreaName = :topicAreaName, #displayTableOfContents = :displayTableOfContents, " +
-          "#description = :description, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "#description = :description, #updatedAt = :updatedAt, #updatedBy = :userId, " +
+          "#tableOfContents = :tableOfContents",
         ConditionExpression: "#updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":dashboardName": name,
           ":topicAreaId": TopicAreaFactory.itemId(topicAreaId),
           ":topicAreaName": topicAreaName,
           ":displayTableOfContents": displayTableOfContents,
+          ":tableOfContents": tableOfContents,
           ":description": description,
           ":lastUpdatedAt": lastUpdatedAt,
           ":updatedAt": new Date().toISOString(),
@@ -178,6 +181,7 @@ class DashboardRepository extends BaseRepository {
           "#topicAreaId": "topicAreaId",
           "#topicAreaName": "topicAreaName",
           "#displayTableOfContents": "displayTableOfContents",
+          "#tableOfContents": "tableOfContents",
           "#description": "description",
           "#updatedBy": "updatedBy",
           "#updatedAt": "updatedAt",

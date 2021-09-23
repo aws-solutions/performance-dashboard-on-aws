@@ -93,6 +93,7 @@ describe("updateDashboard", () => {
         description: "description test",
         updatedAt: now.toISOString(),
         displayTableOfContents: false,
+        tableOfContents: {},
       },
     } as any as Request;
   });
@@ -138,6 +139,7 @@ describe("updateDashboard", () => {
       "abc",
       "abc name",
       false,
+      {},
       "description test",
       now.toISOString(),
       user

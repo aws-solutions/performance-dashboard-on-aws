@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavHashLink } from "react-router-hash-link";
 
 interface WidgetNameId {
@@ -14,7 +14,10 @@ interface Props {
   activeWidgetId: string;
   setActivewidgetId: React.Dispatch<React.SetStateAction<string>>;
   isTop: boolean;
+  area: number;
+  marginRight: number;
   displayTableOfContents: boolean;
+  onClick?: Function;
 }
 
 function Navigation({
@@ -24,7 +27,10 @@ function Navigation({
   activeWidgetId,
   setActivewidgetId,
   isTop,
+  area,
   displayTableOfContents,
+  onClick,
+  marginRight,
 }: Props) {
   // forcefully highlight the last tab in table of contents when user reaches
   // the bottom of the page
@@ -37,7 +43,7 @@ function Navigation({
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
@@ -53,15 +59,21 @@ function Navigation({
     window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
   };
 
+  const onClickHandler = (active: string) => {
+    if (onClick) {
+      onClick(active);
+    }
+  };
+
   if (!isTop) {
     return (
       <div
-        className="tablet:grid-col-2"
+        className={`tablet:grid-col-${area}`}
         style={{
           position: "sticky",
           top: stickyPosition,
           float: "right",
-          marginRight: "-27%",
+          marginRight: `-${marginRight}%`,
           borderLeft: "1px solid rgba(200, 200, 200, 1)",
         }}
         hidden={!displayTableOfContents}
@@ -72,6 +84,7 @@ function Navigation({
             style={{
               fontSize: "0.9rem",
               borderStyle: "none",
+              marginLeft: 0,
             }}
           >
             {widgetNameIds.map((widget) => {
@@ -83,14 +96,14 @@ function Navigation({
                   key={widget.id + "link"}
                   style={{
                     borderStyle: "none",
-                    marginLeft: "3px",
                   }}
+                  onClick={() => onClickHandler(widget.id)}
                 >
                   <NavHashLink
                     to={"#" + widget.id}
                     scroll={(el) => scrollWithOffset(el)}
                     style={{
-                      paddingLeft: widget.isInsideSection ? "28px" : "7px",
+                      paddingLeft: widget.isInsideSection ? "32px" : "10px",
                     }}
                   >
                     {widget.name}
@@ -116,16 +129,21 @@ function Navigation({
           {widgetNameIds.map((widget) => {
             return (
               <li
-                className="usa-sidenav__item"
+                className={`usa-sidenav__item ${
+                  widget.id === activeWidgetId ? "usa-current" : ""
+                }`}
                 key={widget.id + "link"}
                 style={{
                   borderStyle: "none",
                 }}
+                onClick={() => onClickHandler(widget.id)}
               >
                 <NavHashLink
                   to={"#" + widget.id}
                   scroll={(el) => scrollWithOffset(el)}
-                  style={{ paddingLeft: "0px" }}
+                  style={{
+                    paddingLeft: widget.isInsideSection ? "36px" : "16px",
+                  }}
                 >
                   {widget.name}
                 </NavHashLink>

@@ -96,6 +96,7 @@ describe("updateDashboard", () => {
       "456",
       "Topic1",
       false,
+      {},
       "Description Test",
       now.toISOString(),
       user
@@ -121,6 +122,7 @@ describe("updateDashboard", () => {
       "456",
       "Topic1",
       false,
+      {},
       "Description Test",
       now.toISOString(),
       user
@@ -128,12 +130,13 @@ describe("updateDashboard", () => {
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #displayTableOfContents = :displayTableOfContents, #description = :description, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #dashboardName = :dashboardName, #topicAreaId = :topicAreaId, #topicAreaName = :topicAreaName, #displayTableOfContents = :displayTableOfContents, #description = :description, #updatedAt = :updatedAt, #updatedBy = :userId, #tableOfContents = :tableOfContents",
         ExpressionAttributeValues: {
           ":dashboardName": "Dashboard1",
           ":topicAreaId": TopicAreaFactory.itemId("456"),
           ":topicAreaName": "Topic1",
           ":displayTableOfContents": false,
+          ":tableOfContents": {},
           ":description": "Description Test",
           ":lastUpdatedAt": now.toISOString(),
           ":updatedAt": now.toISOString(),

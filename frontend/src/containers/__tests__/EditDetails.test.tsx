@@ -41,7 +41,8 @@ test("submits form with the entered values", async () => {
     "123456789",
     false,
     "Some description",
-    ""
+    "",
+    {}
   );
 });
 

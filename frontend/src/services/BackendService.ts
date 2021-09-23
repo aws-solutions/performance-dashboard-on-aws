@@ -113,7 +113,8 @@ async function editDashboard(
   topicAreaId: string,
   displayTableOfContents: boolean,
   description: string,
-  updatedAt: Date
+  updatedAt: Date,
+  tableOfContents?: any
 ) {
   const headers = await authHeaders();
   return await API.put(apiName, `dashboard/${dashboardId}`, {
@@ -122,6 +123,7 @@ async function editDashboard(
       name,
       topicAreaId,
       displayTableOfContents,
+      tableOfContents,
       description,
       updatedAt,
     },

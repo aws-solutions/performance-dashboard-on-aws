@@ -156,10 +156,6 @@ p {
   opacity: 1 !important;
 }
 
-.usa-breadcrumb {
-  background-color: #fff;
-}
-
 @media (max-width: 64em) {
   .mobile-margin-top-2 {
     margin-top: 1rem;

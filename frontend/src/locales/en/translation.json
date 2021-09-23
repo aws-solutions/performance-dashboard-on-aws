@@ -914,5 +914,10 @@
   "SectionOptionsDescription": "Format your section",
   "ShowWithTabs": "Display section's content items with tabs",
   "Horizontally": "Horizontally",
-  "Vertically": "Vertically"
+  "Vertically": "Vertically",
+  "TableOfContents": "Table of Contents",
+  "TableOfContentsDescription": "Adds a table of contents to provide a dashboard overview for navigation",
+  "EditTableOfContents": "Edit Table of Contents",
+  "TableOfContentsSuccessfullyEdited": "Table of Contents successfully edited.",
+  "NoTableOfContentsItems": "This dashboard has no content items. Content items must be added to the dashboard before they can be included in the table of contents."
 }

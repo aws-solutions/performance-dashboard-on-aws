@@ -651,6 +651,8 @@ function ViewDashboardAdmin() {
                           showMobilePreview={showMobilePreview}
                           widgets={dashboard.widgets}
                           setActiveWidgetId={setActiveWidgetId}
+                          topOffset="240px"
+                          bottomOffset={`${windowSize.height - 250}px`}
                         />
                       </div>
                     </Waypoint>

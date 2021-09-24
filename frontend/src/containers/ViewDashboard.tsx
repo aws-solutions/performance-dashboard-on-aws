@@ -93,6 +93,8 @@ function ViewDashboard() {
                     widget={widget}
                     widgets={dashboard.widgets}
                     setActiveWidgetId={setActiveWidgetId}
+                    topOffset="80px"
+                    bottomOffset={`${windowSize.height - 90}px`}
                   />
                 </div>
               </Waypoint>

@@ -6,6 +6,7 @@ import {
   useDashboard,
   useSettings,
   useChangeBackgroundColor,
+  useFullPreview,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import TextField from "../components/TextField";
@@ -18,6 +19,7 @@ import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
 import { useTranslation } from "react-i18next";
 import Navigation from "../components/Navigation";
+import AlertContainer from "./AlertContainer";
 
 interface FormValues {
   name: string;
@@ -37,6 +39,7 @@ function EditDetails() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const [activeWidgetId, setActiveWidgetId] = useState("");
+  const { fullPreview, fullPreviewButton } = useFullPreview();
   const { register, errors, handleSubmit, watch, reset } =
     useForm<FormValues>();
 
@@ -51,8 +54,14 @@ function EditDetails() {
 
   useEffect(() => {
     if (dashboard) {
+      const name = dashboard.name;
+      const description = dashboard.description;
+      const topicAreaId = dashboard.topicAreaId;
       const displayTableOfContents = dashboard.displayTableOfContents;
       reset({
+        name,
+        description,
+        topicAreaId,
         displayTableOfContents,
       });
     }
@@ -121,8 +130,8 @@ function EditDetails() {
         ]}
       />
 
-      <div className="grid-row width-desktop">
-        <div className="grid-col-6">
+      <div className="grid-row width-desktop grid-gap">
+        <div className="grid-col-6" hidden={fullPreview}>
           <div className="grid-row">
             <div className="grid-col-12">
               <PrimaryActionBar>
@@ -156,13 +165,15 @@ function EditDetails() {
                     hint={`${t(
                       "SelectExistingLeading"
                     )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
-                    defaultValue={dashboard?.topicAreaId}
+                    defaultValue={dashboard.topicAreaId}
                     register={register}
                     options={sortedTopicAreas.map((topicarea) => ({
                       value: topicarea.id,
                       label: topicarea.name,
                     }))}
                   />
+
+                  <AlertContainer />
 
                   <div className="usa-form-group">
                     <label className="usa-label text-bold">
@@ -240,8 +251,9 @@ function EditDetails() {
             </div>
           </div>
         </div>
-        <div className="grid-col-6">
-          <div className="margin-left-3 margin-top-2">
+        <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+          {fullPreviewButton}
+          <div className="margin-top-2">
             <DashboardHeader
               name={name}
               topicAreaName={getTopicAreaName(topicAreaId)}
@@ -260,7 +272,7 @@ function EditDetails() {
               offset={240}
               area={4}
               marginRight={45}
-              widgetNameIds={dashboard?.widgets
+              widgetNameIds={dashboard.widgets
                 .filter(
                   (w) =>
                     dashboard &&
@@ -277,7 +289,7 @@ function EditDetails() {
               activeWidgetId={activeWidgetId}
               setActivewidgetId={setActiveWidgetId}
               isTop={false}
-              displayTableOfContents={dashboard?.displayTableOfContents}
+              displayTableOfContents={dashboard.displayTableOfContents}
               onClick={setActiveWidgetId}
             />
           </div>

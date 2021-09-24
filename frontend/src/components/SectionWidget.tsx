@@ -12,6 +12,8 @@ interface Props {
   showMobilePreview?: boolean;
   widgets?: Array<Widget>;
   setActiveWidgetId?: Function;
+  topOffset?: string;
+  bottomOffset?: string;
 }
 
 function SectionWidget(props: Props) {
@@ -45,14 +47,16 @@ function SectionWidget(props: Props) {
                       props.setActiveWidgetId(widget.id);
                     }
                   }}
-                  topOffset="240px"
-                  bottomOffset={`${windowSize.height - 250}px`}
+                  topOffset={props.topOffset}
+                  bottomOffset={props.bottomOffset}
                   fireOnRapidScroll={false}
                 >
                   <div className="margin-top-4 usa-prose" id={id}>
                     <WidgetRender
                       widget={widget}
                       showMobilePreview={props.showMobilePreview}
+                      bottomOffset={props.bottomOffset}
+                      topOffset={props.topOffset}
                     />
                   </div>
                 </Waypoint>

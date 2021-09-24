@@ -8,12 +8,14 @@ import {
   useDashboard,
   useFullPreview,
   useChangeBackgroundColor,
+  useTopicAreas,
 } from "../hooks";
 import Spinner from "../components/Spinner";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
 import { Widget } from "../models";
 import Navigation from "../components/Navigation";
+import DashboardHeader from "../components/DashboardHeader";
 
 interface FormValues {}
 
@@ -24,6 +26,7 @@ interface PathParams {
 function EditTableOfContents() {
   const history = useHistory();
   const { dashboardId } = useParams<PathParams>();
+  const { topicareas } = useTopicAreas();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, handleSubmit, getValues, reset } = useForm<FormValues>();
   const { t } = useTranslation();
@@ -67,8 +70,25 @@ function EditTableOfContents() {
     }
   };
 
+  const getTopicAreaName = (topicAreaId: string) => {
+    return topicareas.find((t) => t.id === topicAreaId)?.name || "";
+  };
+
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}/header`);
+  };
+
+  const onSelectAll = (selected: boolean) => {
+    if (dashboard) {
+      const tableOfContents: any = {};
+      for (let w of dashboard.widgets) {
+        tableOfContents[w.id] = selected;
+      }
+      setValues(tableOfContents);
+      reset({
+        ...tableOfContents,
+      });
+    }
   };
 
   const onFormChange = () => {
@@ -85,11 +105,15 @@ function EditTableOfContents() {
       label: dashboard?.name,
       url: `/admin/dashboard/edit/${dashboardId}`,
     },
+    {
+      label: t("EditHeader"),
+      url: `/admin/dashboard/edit/${dashboardId}/header`,
+    },
   ];
 
   useChangeBackgroundColor();
 
-  if (!loading) {
+  if (!loading || !dashboard || !topicareas || topicareas.length === 0) {
     crumbs.push({
       label: t("EditTableOfContents"),
       url: "",
@@ -100,7 +124,7 @@ function EditTableOfContents() {
     <>
       <Breadcrumbs crumbs={crumbs} />
 
-      {loading ? (
+      {loading || !dashboard || !topicareas || topicareas.length === 0 ? (
         <Spinner
           className="text-center margin-top-9"
           label={`${t("LoadingSpinnerLabel")}`}
@@ -118,7 +142,27 @@ function EditTableOfContents() {
                 >
                   <fieldset className="usa-fieldset">
                     <>
-                      {dashboard?.widgets.map((widget: Widget) => (
+                      {dashboard.widgets.length === 0 ? (
+                        <div>{t("NoTableOfContentsItems")}</div>
+                      ) : (
+                        <div className="margin-bottom-4">
+                          <Button
+                            variant="outline"
+                            type="button"
+                            onClick={() => onSelectAll(true)}
+                          >
+                            {t("SelectAll")}
+                          </Button>
+                          <Button
+                            variant="outline"
+                            type="button"
+                            onClick={() => onSelectAll(false)}
+                          >
+                            {t("DeselectAll")}
+                          </Button>
+                        </div>
+                      )}
+                      {dashboard.widgets.map((widget: Widget) => (
                         <div
                           className="usa-checkbox"
                           key={widget.id}
@@ -146,11 +190,6 @@ function EditTableOfContents() {
                           </label>
                         </div>
                       ))}
-                      {!dashboard || dashboard?.widgets.length === 0 ? (
-                        <div>{t("NoTableOfContentsItems")}</div>
-                      ) : (
-                        ""
-                      )}
                     </>
                   </fieldset>
                   <br />
@@ -171,11 +210,24 @@ function EditTableOfContents() {
             <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
               {fullPreviewButton}
               <div className="margin-top-2">
+                <DashboardHeader
+                  name={dashboard.name}
+                  topicAreaName={getTopicAreaName(dashboard.topicAreaId)}
+                  description={dashboard.description}
+                />
+                <hr
+                  style={{
+                    border: "none",
+                    height: "1px",
+                    backgroundColor: "#dfe1e2",
+                    margin: "2rem 0",
+                  }}
+                />
                 <Navigation
                   stickyPosition={80}
                   offset={240}
-                  area={2}
-                  marginRight={27}
+                  area={4}
+                  marginRight={45}
                   widgetNameIds={
                     dashboard?.widgets
                       .filter((w) => values[w.id])
@@ -189,8 +241,8 @@ function EditTableOfContents() {
                   }
                   activeWidgetId={activeWidgetId}
                   setActivewidgetId={setActiveWidgetId}
-                  isTop={true}
-                  displayTableOfContents={!!dashboard?.displayTableOfContents}
+                  isTop={false}
+                  displayTableOfContents={!!dashboard.displayTableOfContents}
                   onClick={setActiveWidgetId}
                 />
               </div>

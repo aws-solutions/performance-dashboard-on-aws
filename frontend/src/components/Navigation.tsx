@@ -5,6 +5,7 @@ interface WidgetNameId {
   name: string;
   id: string;
   isInsideSection: boolean;
+  sectionWithTabs: string;
 }
 
 interface Props {
@@ -100,7 +101,12 @@ function Navigation({
                   onClick={() => onClickHandler(widget.id)}
                 >
                   <NavHashLink
-                    to={"#" + widget.id}
+                    to={
+                      "#" +
+                      (widget.isInsideSection && widget.sectionWithTabs
+                        ? widget.sectionWithTabs
+                        : widget.id)
+                    }
                     scroll={(el) => scrollWithOffset(el)}
                     style={{
                       paddingLeft: widget.isInsideSection ? "32px" : "10px",
@@ -139,7 +145,12 @@ function Navigation({
                 onClick={() => onClickHandler(widget.id)}
               >
                 <NavHashLink
-                  to={"#" + widget.id}
+                  to={
+                    "#" +
+                    (widget.isInsideSection && widget.sectionWithTabs
+                      ? widget.sectionWithTabs
+                      : widget.id)
+                  }
                   scroll={(el) => scrollWithOffset(el)}
                   style={{
                     paddingLeft: widget.isInsideSection ? "36px" : "16px",

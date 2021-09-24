@@ -284,6 +284,7 @@ function EditDetails() {
                     name: widget.name,
                     id: widget.id,
                     isInsideSection: !!widget.section,
+                    sectionWithTabs: "",
                   };
                 })}
               activeWidgetId={activeWidgetId}

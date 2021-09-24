@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { useDashboard, useDashboardVersions, useWindowSize } from "../hooks";
-import { Dashboard, DashboardState, LocationState } from "../models";
+import { Dashboard, DashboardState, LocationState, Widget } from "../models";
 import BackendService from "../services/BackendService";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
@@ -128,6 +128,16 @@ function ViewDashboardAdmin() {
     }
   };
 
+  const getSectionWithTabs = (widget: Widget, dashboard: Dashboard): string => {
+    const section: Widget | undefined = dashboard.widgets.find(
+      (w) => w.id == widget.section
+    );
+    if (section) {
+      return section.content.showWithTabs ? section.id : "";
+    }
+    return "";
+  };
+
   const dashboardListUrl = (dashboard: Dashboard) => {
     switch (dashboard.state) {
       case DashboardState.Published:
@@ -174,7 +184,7 @@ function ViewDashboardAdmin() {
         }`}
       >
         <span className="usa-tag text-middle" style={{ cursor: "text" }}>
-          {t(dashboard?.state)}
+          {t(dashboard.state)}
         </span>
       </li>
       <li
@@ -195,7 +205,7 @@ function ViewDashboardAdmin() {
             t("ViewDashboardAlertVersion")}{" "}
           {(dashboard.state === DashboardState.Draft ||
             dashboard.state === DashboardState.PublishPending) &&
-            dashboard?.version}
+            dashboard.version}
           {(dashboard.state === DashboardState.Published ||
             dashboard.state === DashboardState.Archived ||
             dashboard.state === DashboardState.Inactive) && (
@@ -431,7 +441,7 @@ function ViewDashboardAdmin() {
         isOpen={isOpenUpdateModal}
         closeModal={() => setIsOpenUpdateModal(false)}
         title={`${t("CreateDraftDashboardModalTitle.part1")}${
-          dashboard?.name
+          dashboard.name
         }${t("CreateDraftDashboardModalTitle.part2")}`}
         message={t("CreateDraftDashboardModalMessage")}
         buttonType={t("CreateDraftDashboardModalButton")}
@@ -441,11 +451,11 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenArchiveModal}
         closeModal={() => setIsOpenArchiveModal(false)}
-        title={`${t("ArchiveDashboardModalTitle.part1")}${dashboard?.name}${t(
+        title={`${t("ArchiveDashboardModalTitle.part1")}${dashboard.name}${t(
           "ArchiveDashboardModalTitle.part2"
         )}`}
         message={`${t("ArchiveDashboardModalMessage.part1")}${
-          dashboard?.name
+          dashboard.name
         }${t("ArchiveDashboardModalMessage.part2")}`}
         buttonType={t("ArchiveDashboardModalButton")}
         buttonAction={onArchiveDashboard}
@@ -454,7 +464,7 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenRepublishModal}
         closeModal={() => setIsOpenRepublishModal(false)}
-        title={`${t("RepublishDashboardModalTitle.part1")}${dashboard?.name}${t(
+        title={`${t("RepublishDashboardModalTitle.part1")}${dashboard.name}${t(
           "RepublishDashboardModalTitle.part2"
         )}`}
         message={t("RepublishDashboardModalMessage")}
@@ -465,11 +475,11 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenPublishModal}
         closeModal={() => setIsOpenPublishModal(false)}
-        title={`${t("PreparePublishingModalTitle.part1")}${dashboard?.name}${t(
+        title={`${t("PreparePublishingModalTitle.part1")}${dashboard.name}${t(
           "PreparePublishingModalTitle.part2"
         )}`}
         message={`${
-          dashboard?.widgets.length === 0
+          dashboard.widgets.length === 0
             ? `${t("PreparePublishingModalMessage.part1")}`
             : ""
         }${t("PreparePublishingModalMessage.part2")}`}
@@ -538,12 +548,12 @@ function ViewDashboardAdmin() {
               <>
                 <div className="margin-top-3 text-bold font-sans-sm">
                   {t("ViewDashboardAlertVersionNotesFrom", {
-                    version: dashboard?.version,
+                    version: dashboard.version,
                   })}
-                  <span className="text-underline">{` ${dashboard?.publishedBy}`}</span>
+                  <span className="text-underline">{` ${dashboard.publishedBy}`}</span>
                 </div>
                 <div className="margin-top-2 text-base">
-                  {dashboard?.releaseNotes}
+                  {dashboard.releaseNotes}
                 </div>
               </>
             )}
@@ -570,12 +580,12 @@ function ViewDashboardAdmin() {
               <>
                 <div className="margin-top-3 text-bold font-sans-sm">
                   {t("ViewDashboardAlertVersionNotesFrom", {
-                    version: dashboard?.version,
+                    version: dashboard.version,
                   })}
-                  <span className="text-underline">{` ${dashboard?.publishedBy}`}</span>
+                  <span className="text-underline">{` ${dashboard.publishedBy}`}</span>
                 </div>
                 <div className="margin-top-2 text-base">
-                  {dashboard?.releaseNotes}
+                  {dashboard.releaseNotes}
                 </div>
               </>
             )}
@@ -601,10 +611,10 @@ function ViewDashboardAdmin() {
         ) : (
           <>
             <DashboardHeader
-              name={dashboard?.name}
-              topicAreaName={dashboard?.topicAreaName}
-              description={dashboard?.description}
-              lastUpdated={dashboard?.updatedAt}
+              name={dashboard.name}
+              topicAreaName={dashboard.topicAreaName}
+              description={dashboard.description}
+              lastUpdated={dashboard.updatedAt}
             />
             <hr />
             <Navigation
@@ -612,7 +622,7 @@ function ViewDashboardAdmin() {
               offset={240}
               area={2}
               marginRight={27}
-              widgetNameIds={dashboard?.widgets
+              widgetNameIds={dashboard.widgets
                 .filter(
                   (w) =>
                     dashboard &&
@@ -624,15 +634,16 @@ function ViewDashboardAdmin() {
                     name: widget.name,
                     id: widget.id,
                     isInsideSection: !!widget.section,
+                    sectionWithTabs: getSectionWithTabs(widget, dashboard),
                   };
                 })}
               activeWidgetId={activeWidgetId}
               setActivewidgetId={setActiveWidgetId}
               isTop={showMobilePreview || windowSize.width <= moveNavBarWidth}
-              displayTableOfContents={dashboard?.displayTableOfContents}
+              displayTableOfContents={dashboard.displayTableOfContents}
               onClick={setActiveWidgetId}
             />
-            {dashboard?.widgets
+            {dashboard.widgets
               .filter((w) => !w.section)
               .map((widget, index) => {
                 return (

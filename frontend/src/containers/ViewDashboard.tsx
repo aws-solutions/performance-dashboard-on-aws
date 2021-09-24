@@ -10,6 +10,7 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
+import { PublicDashboard, Widget } from "../models";
 
 interface PathParams {
   friendlyURL: string;
@@ -28,6 +29,19 @@ function ViewDashboard() {
   if (dashboardNotFound) {
     return <Redirect to="/404/page-not-found" />;
   }
+
+  const getSectionWithTabs = (
+    widget: Widget,
+    dashboard: PublicDashboard
+  ): string => {
+    const section: Widget | undefined = dashboard.widgets.find(
+      (w) => w.id == widget.section
+    );
+    if (section) {
+      return section.content.showWithTabs ? section.id : "";
+    }
+    return "";
+  };
 
   return loading || dashboard === undefined ? (
     <Spinner
@@ -55,7 +69,7 @@ function ViewDashboard() {
         offset={80}
         area={2}
         marginRight={27}
-        widgetNameIds={dashboard?.widgets
+        widgetNameIds={dashboard.widgets
           .filter(
             (w) =>
               dashboard &&
@@ -67,15 +81,16 @@ function ViewDashboard() {
               name: widget.name,
               id: widget.id,
               isInsideSection: !!widget.section,
+              sectionWithTabs: getSectionWithTabs(widget, dashboard),
             };
           })}
         activeWidgetId={activeWidgetId}
         setActivewidgetId={setActiveWidgetId}
         isTop={windowSize.width <= moveNavBarWidth}
-        displayTableOfContents={dashboard?.displayTableOfContents}
+        displayTableOfContents={dashboard.displayTableOfContents}
         onClick={setActiveWidgetId}
       />
-      {dashboard?.widgets
+      {dashboard.widgets
         .filter((w) => !w.section)
         .map((widget, index) => {
           return (

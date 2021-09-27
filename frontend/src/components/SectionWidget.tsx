@@ -14,12 +14,33 @@ interface Props {
   setActiveWidgetId?: Function;
   topOffset?: string;
   bottomOffset?: string;
+  defaultActive?: string;
 }
 
 function SectionWidget(props: Props) {
   const { content, showTitle } = props.widget;
   const windowSize = useWindowSize();
   const primaryColor = useColors(1)[0];
+
+  let activeTabId = "0";
+  if (props.widgets && props.defaultActive) {
+    const widget = props.widgets?.find(
+      (w: Widget) => w.id === props.defaultActive
+    );
+    if (widget && widget.section) {
+      const parent = props.widgets?.find(
+        (w: Widget) => w.id === widget.section
+      );
+      if (parent && parent.id === props.widget.id) {
+        const index = parent.content.widgetIds.findIndex(
+          (w: string) => w === props.defaultActive
+        );
+        if (index >= 0) {
+          activeTabId = index.toString();
+        }
+      }
+    }
+  }
 
   return (
     <div>
@@ -70,7 +91,11 @@ function SectionWidget(props: Props) {
           props.showMobilePreview ||
           windowSize.width <= 600) &&
         props.widget.content.widgetIds && (
-          <Tabs defaultActive={"0"} showArrows activeColor={`${primaryColor}`}>
+          <Tabs
+            defaultActive={activeTabId}
+            showArrows
+            activeColor={`${primaryColor}`}
+          >
             {props.widget.content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {
@@ -93,7 +118,10 @@ function SectionWidget(props: Props) {
         !props.showMobilePreview &&
         windowSize.width > 600 &&
         props.widget.content.widgetIds && (
-          <TabsVertical defaultActive={"0"} activeColor={`${primaryColor}`}>
+          <TabsVertical
+            defaultActive={activeTabId}
+            activeColor={`${primaryColor}`}
+          >
             {props.widget.content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {

@@ -37,6 +37,7 @@ function ViewDashboardAdmin() {
   const [showVersionNotes, setShowVersionNotes] = useState(false);
   const [showMobilePreview, setShowMobilePreview] = useState(false);
   const [activeWidgetId, setActiveWidgetId] = useState("");
+  const [activeTabId, setActiveTabId] = useState("");
   const windowSize = useWindowSize();
 
   const { t } = useTranslation();
@@ -136,6 +137,27 @@ function ViewDashboardAdmin() {
       return section.content.showWithTabs ? section.id : "";
     }
     return "";
+  };
+
+  const onClickHandler = (active: string) => {
+    setActiveTabId(active);
+    setActiveWidgetId(active);
+  };
+
+  const onBottomOfThePage = (bottom: string) => {
+    const widget = dashboard?.widgets.find((w: Widget) => w.id === bottom);
+    if (widget) {
+      if (widget.section) {
+        const parent = dashboard?.widgets.find(
+          (w: Widget) => w.id === widget.section
+        );
+        if (parent) {
+          setActiveWidgetId(parent.id);
+        }
+      } else {
+        setActiveWidgetId(bottom);
+      }
+    }
   };
 
   const dashboardListUrl = (dashboard: Dashboard) => {
@@ -638,10 +660,10 @@ function ViewDashboardAdmin() {
                   };
                 })}
               activeWidgetId={activeWidgetId}
-              setActivewidgetId={setActiveWidgetId}
+              onBottomOfThePage={onBottomOfThePage}
               isTop={showMobilePreview || windowSize.width <= moveNavBarWidth}
               displayTableOfContents={dashboard.displayTableOfContents}
-              onClick={setActiveWidgetId}
+              onClick={onClickHandler}
             />
             {dashboard.widgets
               .filter((w) => !w.section)
@@ -664,6 +686,7 @@ function ViewDashboardAdmin() {
                           setActiveWidgetId={setActiveWidgetId}
                           topOffset="240px"
                           bottomOffset={`${windowSize.height - 250}px`}
+                          defaultActive={activeTabId}
                         />
                       </div>
                     </Waypoint>

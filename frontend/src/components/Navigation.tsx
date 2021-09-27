@@ -13,7 +13,7 @@ interface Props {
   offset: number;
   widgetNameIds: Array<WidgetNameId>;
   activeWidgetId: string;
-  setActivewidgetId: React.Dispatch<React.SetStateAction<string>>;
+  onBottomOfThePage: Function;
   isTop: boolean;
   area: number;
   marginRight: number;
@@ -26,7 +26,7 @@ function Navigation({
   offset,
   widgetNameIds,
   activeWidgetId,
-  setActivewidgetId,
+  onBottomOfThePage,
   isTop,
   area,
   displayTableOfContents,
@@ -40,7 +40,7 @@ function Navigation({
       Math.ceil(window.innerHeight + window.scrollY) >=
       document.documentElement.scrollHeight;
     if (isBottom && widgetNameIds.length) {
-      setActivewidgetId(widgetNameIds[widgetNameIds.length - 1].id);
+      onBottomOfThePage(widgetNameIds[widgetNameIds.length - 1].id);
     }
   };
 

@@ -22,6 +22,7 @@ function ViewDashboard() {
   const { dashboard, loading, dashboardNotFound } =
     usePublicDashboard(friendlyURL);
   const [activeWidgetId, setActiveWidgetId] = useState("");
+  const [activeTabId, setActiveTabId] = useState("");
   const windowSize = useWindowSize();
 
   const moveNavBarWidth = 1024;
@@ -41,6 +42,27 @@ function ViewDashboard() {
       return section.content.showWithTabs ? section.id : "";
     }
     return "";
+  };
+
+  const onClickHandler = (active: string) => {
+    setActiveTabId(active);
+    setActiveWidgetId(active);
+  };
+
+  const onBottomOfThePage = (bottom: string) => {
+    const widget = dashboard?.widgets.find((w: Widget) => w.id === bottom);
+    if (widget) {
+      if (widget.section) {
+        const parent = dashboard?.widgets.find(
+          (w: Widget) => w.id === widget.section
+        );
+        if (parent) {
+          setActiveWidgetId(parent.id);
+        }
+      } else {
+        setActiveWidgetId(bottom);
+      }
+    }
   };
 
   return loading || dashboard === undefined ? (
@@ -85,10 +107,10 @@ function ViewDashboard() {
             };
           })}
         activeWidgetId={activeWidgetId}
-        setActivewidgetId={setActiveWidgetId}
+        onBottomOfThePage={onBottomOfThePage}
         isTop={windowSize.width <= moveNavBarWidth}
         displayTableOfContents={dashboard.displayTableOfContents}
-        onClick={setActiveWidgetId}
+        onClick={onClickHandler}
       />
       {dashboard.widgets
         .filter((w) => !w.section)
@@ -110,6 +132,7 @@ function ViewDashboard() {
                     setActiveWidgetId={setActiveWidgetId}
                     topOffset="80px"
                     bottomOffset={`${windowSize.height - 90}px`}
+                    defaultActive={activeTabId}
                   />
                 </div>
               </Waypoint>

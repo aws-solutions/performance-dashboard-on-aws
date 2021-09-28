@@ -15,6 +15,7 @@ import { ColumnMetadata, NumberDataType } from "../models";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   parts: Array<string>;
   data?: Array<object>;
@@ -331,7 +332,7 @@ const PieChartWidget = (props: Props) => {
         <DataTable
           rows={data || []}
           columns={parts}
-          fileName={props.title}
+          fileName={props.downloadTitle}
           columnsMetadata={props.columnsMetadata}
         />
       </div>

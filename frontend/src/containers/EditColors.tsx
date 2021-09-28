@@ -185,6 +185,7 @@ function EditColors() {
               <div className="grid-col-5">
                 <BarChartWidget
                   title=""
+                  downloadTitle="Edit colors bar sample"
                   summary=""
                   bars={datasetBar.dataset.headers}
                   data={datasetBar.dataset.data}
@@ -199,6 +200,7 @@ function EditColors() {
               <div className="grid-col-7">
                 <ColumnChartWidget
                   title=""
+                  downloadTitle="Edit colors column sample"
                   summary=""
                   columns={datasetColumn.dataset.headers}
                   data={datasetColumn.dataset.data}

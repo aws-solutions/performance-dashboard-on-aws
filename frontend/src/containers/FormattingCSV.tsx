@@ -68,6 +68,7 @@ function FormattingCSV() {
       <div>
         <LineChartWidget
           title=""
+          downloadTitle="Line chart sample"
           summary=""
           lines={lineChart.dataset.headers}
           data={lineChart.dataset.data}
@@ -100,6 +101,7 @@ function FormattingCSV() {
       <div>
         <BarChartWidget
           title=""
+          downloadTitle="Bar chart sample"
           summary=""
           bars={bar.dataset.headers}
           data={bar.dataset.data}
@@ -132,6 +134,7 @@ function FormattingCSV() {
       <div>
         <ColumnChartWidget
           title=""
+          downloadTitle="Column chart sample"
           summary=""
           columns={column.dataset.headers}
           data={column.dataset.data}
@@ -164,6 +167,7 @@ function FormattingCSV() {
       <div>
         <PartWholeChartWidget
           title=""
+          downloadTitle="Part-to-whole chart sample"
           summary=""
           parts={partToWhole.dataset.headers}
           data={partToWhole.dataset.data}
@@ -196,6 +200,7 @@ function FormattingCSV() {
       <div>
         <PieChartWidget
           title=""
+          downloadTitle="Pie chart sample"
           summary=""
           parts={pie.dataset.headers}
           data={pie.dataset.data}
@@ -228,6 +233,7 @@ function FormattingCSV() {
       <div>
         <DonutChartWidget
           title=""
+          downloadTitle="Donut chart sample"
           summary=""
           parts={donut.dataset.headers}
           data={donut.dataset.data}
@@ -259,7 +265,7 @@ function FormattingCSV() {
       <hr />
       <div>
         <TableWidget
-          title=""
+          title="Table sample"
           summary=""
           data={table.dataset.data}
           summaryBelow={false}

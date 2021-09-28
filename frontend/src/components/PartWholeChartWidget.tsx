@@ -15,6 +15,7 @@ import DataTable from "./DataTable";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   parts: Array<string>;
   data?: Array<object>;
@@ -242,7 +243,7 @@ const PartWholeChartWidget = (props: Props) => {
         <DataTable
           rows={data || []}
           columns={parts}
-          fileName={props.title}
+          fileName={props.downloadTitle}
           columnsMetadata={props.columnsMetadata}
         />
       </div>

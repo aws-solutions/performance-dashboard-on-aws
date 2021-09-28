@@ -61,6 +61,7 @@ function ChartWidgetComponent(props: Props) {
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           lines={keys}
@@ -78,6 +79,7 @@ function ChartWidgetComponent(props: Props) {
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           columns={keys}
@@ -97,6 +99,7 @@ function ChartWidgetComponent(props: Props) {
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           bars={keys}
@@ -115,6 +118,7 @@ function ChartWidgetComponent(props: Props) {
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           parts={keys}
@@ -131,6 +135,7 @@ function ChartWidgetComponent(props: Props) {
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           parts={keys}
@@ -149,6 +154,7 @@ function ChartWidgetComponent(props: Props) {
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           parts={keys}

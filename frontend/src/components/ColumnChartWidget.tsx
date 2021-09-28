@@ -21,6 +21,7 @@ import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   columns: Array<string>;
   data?: Array<any>;
@@ -331,7 +332,7 @@ const ColumnChartWidget = (props: Props) => {
           rows={data || []}
           columns={columns}
           columnsMetadata={props.columnsMetadata}
-          fileName={props.title}
+          fileName={props.downloadTitle}
         />
       </div>
       {props.summaryBelow && (

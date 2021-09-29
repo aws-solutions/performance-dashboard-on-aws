@@ -191,8 +191,8 @@ exports[`table preview should match snapshot 1`] = `
           </tr>
         </tbody>
       </table>
-      
     </div>
+    
     <div
       class="text-right margin-bottom-1"
     >

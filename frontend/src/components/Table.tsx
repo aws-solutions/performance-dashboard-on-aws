@@ -16,6 +16,7 @@ import {
   usePagination,
 } from "react-table";
 import { useTranslation } from "react-i18next";
+import { useWindowSize } from "../hooks";
 
 interface Props {
   selection: "multiple" | "single" | "none";
@@ -49,6 +50,7 @@ interface Props {
 
 function Table(props: Props) {
   const { t } = useTranslation();
+  const windowSize = useWindowSize();
   const borderlessClassName = !props.disableBorderless
     ? " usa-table--borderless"
     : "";
@@ -233,126 +235,144 @@ function Table(props: Props) {
   );
 
   return (
-    <div className="overflow-x-hidden overflow-y-hidden">
-      <table
-        className={`usa-table${borderlessClassName}${className}`}
-        width={props.width}
-        {...getTableProps()}
-      >
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, i) => (
-                <th
-                  scope="col"
-                  {...column.getHeaderProps()}
-                  style={
-                    props.selection !== "none"
-                      ? {
-                          padding: "0.5rem 1rem",
-                        }
-                      : {
-                          minWidth: column.minWidth,
-                          backgroundColor: `${getCellBackground(
-                            column.id,
-                            ""
-                          )}`,
-                        }
-                  }
-                >
-                  <span>
-                    {
-                      /**
-                       * The split is to remove the quotes from the
-                       * string, the filter to remove the resulted
-                       * empty ones, and the join to form it again.
-                       */
-                      typeof column.render("Header") === "string"
-                        ? (column.render("Header") as string)
-                            .split('"')
-                            .filter(Boolean)
-                            .join()
-                        : column.render("Header")
+    <>
+      <div className="overflow-x-hidden overflow-y-hidden">
+        <table
+          className={`usa-table${borderlessClassName}${className}`}
+          width={props.width}
+          {...getTableProps()}
+        >
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column, i) => (
+                  <th
+                    scope="col"
+                    {...column.getHeaderProps()}
+                    style={
+                      props.selection !== "none"
+                        ? {
+                            padding: "0.5rem 1rem",
+                          }
+                        : {
+                            minWidth: column.minWidth,
+                            backgroundColor: `${getCellBackground(
+                              column.id,
+                              ""
+                            )}`,
+                          }
                     }
-                  </span>
-                  {(props.selection !== "none" && i === 0) ||
-                  (column.id && column.id.startsWith("checkbox")) ||
-                  (column.id &&
-                    column.id.startsWith("numbersListing")) ? null : (
-                    <button
-                      className="margin-left-1 usa-button usa-button--unstyled"
-                      {...column.getSortByToggleProps()}
-                      title={`${t("ToggleSortBy")} ${column.Header}`}
-                      type="button"
-                    >
-                      <FontAwesomeIcon
-                        className={`hover:text-base ${
-                          column.isSorted
-                            ? "text-base-darkest"
-                            : "text-base-lighter"
-                        }`}
-                        icon={
-                          column.isSorted && column.isSortedDesc
-                            ? faChevronDown
-                            : faChevronUp
-                        }
-                      />
-                    </button>
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {currentRows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell, j) => {
-                  return j === 0 && props.selection === "none" ? (
-                    <th
-                      style={{
-                        backgroundColor: `${getCellBackground(
-                          cell.column.id,
-                          props.addNumbersColumn ? "#f0f0f0" : ""
-                        )}`,
-                      }}
-                      scope="row"
-                      {...cell.getCellProps()}
-                    >
-                      {cell.render("Cell")}
-                    </th>
-                  ) : (
-                    <td
-                      style={{
-                        backgroundColor: `${getCellBackground(
-                          cell.column.id,
-                          props.hiddenColumns?.has(cell.column.id)
-                            ? "#adadad"
-                            : ""
-                        )}`,
-                      }}
-                      {...cell.getCellProps()}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
+                  >
+                    <span>
+                      {
+                        /**
+                         * The split is to remove the quotes from the
+                         * string, the filter to remove the resulted
+                         * empty ones, and the join to form it again.
+                         */
+                        typeof column.render("Header") === "string"
+                          ? (column.render("Header") as string)
+                              .split('"')
+                              .filter(Boolean)
+                              .join()
+                          : column.render("Header")
+                      }
+                    </span>
+                    {(props.selection !== "none" && i === 0) ||
+                    (column.id && column.id.startsWith("checkbox")) ||
+                    (column.id &&
+                      column.id.startsWith("numbersListing")) ? null : (
+                      <button
+                        className="margin-left-1 usa-button usa-button--unstyled"
+                        {...column.getSortByToggleProps()}
+                        title={`${t("ToggleSortBy")} ${column.Header}`}
+                        type="button"
+                      >
+                        <FontAwesomeIcon
+                          className={`hover:text-base ${
+                            column.isSorted
+                              ? "text-base-darkest"
+                              : "text-base-lighter"
+                          }`}
+                          icon={
+                            column.isSorted && column.isSortedDesc
+                              ? faChevronDown
+                              : faChevronUp
+                          }
+                        />
+                      </button>
+                    )}
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {currentRows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell, j) => {
+                    return j === 0 && props.selection === "none" ? (
+                      <th
+                        style={{
+                          backgroundColor: `${getCellBackground(
+                            cell.column.id,
+                            props.addNumbersColumn ? "#f0f0f0" : ""
+                          )}`,
+                        }}
+                        scope="row"
+                        {...cell.getCellProps()}
+                      >
+                        {cell.render("Cell")}
+                      </th>
+                    ) : (
+                      <td
+                        style={{
+                          backgroundColor: `${getCellBackground(
+                            cell.column.id,
+                            props.hiddenColumns?.has(cell.column.id)
+                              ? "#adadad"
+                              : ""
+                          )}`,
+                        }}
+                        {...cell.getCellProps()}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       {!props.disablePagination && rows.length ? (
-        <div className="grid-row font-sans-sm">
-          <div className="grid-col-3 text-left text-base text-italic">
+        <div
+          className={`${
+            windowSize.width <= 600 ? "grid-col" : "grid-row margin-bottom-05"
+          } font-sans-sm`}
+        >
+          <div
+            className={`${
+              windowSize.width <= 600
+                ? "grid-row margin-bottom-2 margin-left-05"
+                : "grid-col-3 text-left"
+            } text-base text-italic`}
+          >
             {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
               pageIndex * pageSize + pageSize,
               rows.length
             )} ${t("Of")} ${rows.length}`}
           </div>
-          <div className="grid-col-6 text-center">
+          <div
+            className={`${
+              windowSize.width <= 600
+                ? "margin-left-05"
+                : "grid-col-6 text-center"
+            }`}
+          >
             <button
               type="button"
               className="margin-right-1"
@@ -362,7 +382,10 @@ function Table(props: Props) {
               }}
               disabled={!canPreviousPage}
             >
-              <FontAwesomeIcon icon={faAngleDoubleLeft} />
+              <FontAwesomeIcon
+                icon={faAngleDoubleLeft}
+                className="margin-top-2px"
+              />
             </button>
             <button
               type="button"
@@ -373,8 +396,9 @@ function Table(props: Props) {
               }}
               disabled={!canPreviousPage}
             >
-              <FontAwesomeIcon icon={faAngleLeft} />
+              <FontAwesomeIcon icon={faAngleLeft} className="margin-top-2px" />
             </button>
+            {windowSize.width <= 600 ? <div className="margin-bottom-1" /> : ""}
             <span className="margin-right-2px">{`${t("Page")} `}</span>
             <span className="margin-right-1">
               <input
@@ -391,7 +415,9 @@ function Table(props: Props) {
             </span>
             <button
               type="button"
-              className="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+              className={`${
+                windowSize.width <= 600 ? "" : "usa-button "
+              }usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest`}
               onClick={() => {
                 if (currentPage) {
                   const currentPageNumber = Number(currentPage);
@@ -407,6 +433,7 @@ function Table(props: Props) {
             >
               {t("Go")}
             </button>
+            {windowSize.width <= 600 ? <div className="margin-top-1" /> : ""}
             <button
               type="button"
               className="margin-right-1"
@@ -416,7 +443,7 @@ function Table(props: Props) {
               }}
               disabled={!canNextPage}
             >
-              <FontAwesomeIcon icon={faAngleRight} />
+              <FontAwesomeIcon icon={faAngleRight} className="margin-top-2px" />
             </button>
             <button
               type="button"
@@ -426,15 +453,25 @@ function Table(props: Props) {
               }}
               disabled={!canNextPage}
             >
-              <FontAwesomeIcon icon={faAngleDoubleRight} />
+              <FontAwesomeIcon
+                icon={faAngleDoubleRight}
+                className="margin-top-2px"
+              />
             </button>
           </div>
-          <div className="grid-col-3 text-right">
+          <div
+            className={`${
+              windowSize.width <= 600
+                ? "grid-row margin-top-2 margin-left-05 margin-bottom-05"
+                : "grid-col-3 text-right"
+            }`}
+          >
             <select
               value={pageSize}
               onChange={(e) => {
                 setPageSize(Number(e.target.value));
               }}
+              className="margin-right-05"
             >
               {[5, 10, 20, 25, 50, 100].map((pageSize) => (
                 <option key={pageSize} value={pageSize}>
@@ -447,7 +484,7 @@ function Table(props: Props) {
       ) : (
         ""
       )}
-    </div>
+    </>
   );
 }
 

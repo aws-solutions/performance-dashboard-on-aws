@@ -151,7 +151,7 @@ exports[`published site settings should match snapshot 1`] = `
           </nav>
         </div>
         <main
-          class="desktop:grid-col-9 usa-prose"
+          class="desktop:grid-col-9 usa-prose mobile-margin-top-2"
           id="main-content"
         >
           <h1>
@@ -314,6 +314,7 @@ exports[`published site settings should match snapshot 1`] = `
             >
               <div
                 class="published-site font-sans-lg"
+                data-testid="published-site-headline"
               >
                 <div
                   class="Markdown undefined"

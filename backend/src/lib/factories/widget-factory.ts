@@ -133,6 +133,10 @@ function fromChartItem(widget: Widget): ChartWidget {
         chartWidget.content.dataLabels !== undefined
           ? chartWidget.content.dataLabels
           : false,
+      computePercentages:
+        chartWidget.content.computePercentages !== undefined
+          ? chartWidget.content.computePercentages
+          : false,
       showTotal:
         chartWidget.content.showTotal !== undefined
           ? chartWidget.content.showTotal
@@ -278,12 +282,19 @@ function createChartWidget(widget: Widget): ChartWidget {
         widget.content.dataLabels !== undefined
           ? widget.content.dataLabels
           : false,
+      computePercentages:
+        widget.content.computePercentages !== undefined
+          ? widget.content.computePercentages
+          : false,
       showTotal:
         widget.content.showTotal !== undefined
           ? widget.content.showTotal
           : true,
       ...(widget.content.horizontalScroll && {
         horizontalScroll: widget.content.horizontalScroll,
+      }),
+      ...(widget.content.stackedChart && {
+        stackedChart: widget.content.stackedChart,
       }),
     },
   };
@@ -398,6 +409,7 @@ function createSectionWidget(widget: Widget): SectionWidget {
       widgetIds: widget.content.widgetIds,
       summary: widget.content.summary,
       showWithTabs: widget.content.showWithTabs,
+      horizontally: widget.content.horizontally,
     },
   };
 }

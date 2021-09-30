@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDashboards } from "../hooks";
+import { useDashboards, useWindowSize } from "../hooks";
 import { LocationState } from "../models";
 import Tabs from "../components/Tabs";
 import DraftsTab from "../components/DraftsTab";
@@ -18,6 +18,7 @@ function DashboardListing() {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory<LocationState>();
+  const windowSize = useWindowSize();
   const {
     draftsDashboards,
     publishedDashboards,
@@ -158,7 +159,7 @@ function DashboardListing() {
       ) : (
         <>
           <AlertContainer />
-          <Tabs defaultActive={activeTab}>
+          <Tabs defaultActive={activeTab} showArrows={windowSize.width <= 600}>
             <div
               id="drafts"
               label={`${t("DashboardListing.Drafts")} (${

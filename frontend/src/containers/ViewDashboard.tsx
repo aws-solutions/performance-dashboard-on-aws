@@ -79,8 +79,8 @@ function ViewDashboard() {
               bottomOffset={`${windowSize.height - 90}px`}
               fireOnRapidScroll={false}
             >
-              <div className="margin-top-6 usa-prose" id={widget.id}>
-                <WidgetRender widget={widget} />
+              <div className="margin-top-4 usa-prose" id={widget.id}>
+                <WidgetRender widget={widget} widgets={dashboard.widgets} />
               </div>
             </Waypoint>
           </div>

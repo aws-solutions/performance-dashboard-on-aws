@@ -12,6 +12,7 @@ import { useColors, useWindowSize } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import { ColumnMetadata, NumberDataType } from "../models";
 
 type Props = {
   title: string;
@@ -29,6 +30,7 @@ type Props = {
   showTotal?: boolean;
   isPreview?: boolean;
   showMobilePreview?: boolean;
+  computePercentages?: boolean;
 };
 
 const DonutChartWidget = (props: Props) => {
@@ -105,6 +107,8 @@ const DonutChartWidget = (props: Props) => {
       Number(total.current),
       xAxisLargestValue,
       props.significantDigitLabels,
+      "",
+      "",
       columnMetadata
     );
   }, [
@@ -113,6 +117,32 @@ const DonutChartWidget = (props: Props) => {
     props.significantDigitLabels,
     xAxisLargestValue,
   ]);
+
+  const displayedAmount = (
+    value: Number | String,
+    columnMetadata: ColumnMetadata
+  ): string => {
+    const displayedAmount = TickFormatter.format(
+      Number(value),
+      xAxisLargestValue,
+      props.significantDigitLabels,
+      "",
+      "",
+      columnMetadata
+    );
+    const computedPercentage =
+      Math.round((Number(value) / total.current) * 100 * 100) / 100;
+    const displayedPercentage = TickFormatter.format(
+      computedPercentage,
+      xAxisLargestValue,
+      false,
+      NumberDataType.Percentage,
+      ""
+    );
+    return props.computePercentages
+      ? `${displayedAmount} (${displayedPercentage})`
+      : displayedAmount;
+  };
 
   const renderCustomizedLabel = (properties: any): any => {
     const RADIAN = Math.PI / 180;
@@ -148,12 +178,7 @@ const DonutChartWidget = (props: Props) => {
           textAnchor={textAnchor}
           fill={fill}
         >
-          {TickFormatter.format(
-            Number(payload.value),
-            xAxisLargestValue,
-            props.significantDigitLabels,
-            columnMetadata
-          )}
+          {displayedAmount(payload.value, columnMetadata)}
         </text>
       </g>
     ) : (
@@ -208,6 +233,8 @@ const DonutChartWidget = (props: Props) => {
               ),
               xAxisLargestValue,
               props.significantDigitLabels,
+              "",
+              "",
               columnMetadata
             )
           ) : (
@@ -247,9 +274,9 @@ const DonutChartWidget = (props: Props) => {
 
   return (
     <div>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h2>
+      </h3>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
@@ -328,13 +355,7 @@ const DonutChartWidget = (props: Props) => {
                     (cm) => cm.columnName === parts[1]
                   );
                 }
-
-                return TickFormatter.format(
-                  Number(value),
-                  xAxisLargestValue,
-                  props.significantDigitLabels,
-                  columnMetadata
-                );
+                return displayedAmount(value, columnMetadata);
               }}
             />
           </PieChart>

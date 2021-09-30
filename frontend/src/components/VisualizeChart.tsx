@@ -47,7 +47,9 @@ interface Props {
   summaryBelow: boolean;
   significantDigitLabels: boolean;
   horizontalScroll: boolean;
+  stackedChart: boolean;
   dataLabels: boolean;
+  computePercentages: boolean;
   showTotal: boolean;
   columnsMetadata: Array<any>;
   configHeader: JSX.Element;
@@ -197,21 +199,20 @@ function VisualizeChart(props: Props) {
             <div
               className="usa-checkbox"
               hidden={
-                (props.chartType !== ChartType.LineChart &&
-                  props.chartType !== ChartType.ColumnChart) ||
-                widthPercent <= 100
+                props.chartType !== ChartType.BarChart &&
+                props.chartType !== ChartType.ColumnChart
               }
             >
               <input
                 className="usa-checkbox__input"
-                id="horizontalScroll"
+                id="stackedChart"
                 type="checkbox"
-                name="horizontalScroll"
-                defaultChecked={!!props.horizontalScroll}
+                name="stackedChart"
+                defaultChecked={!!props.stackedChart}
                 ref={props.register()}
               />
-              <label className="usa-checkbox__label" htmlFor="horizontalScroll">
-                {t("VisualizeChartComponent.DisplayHorizontalScroll")}
+              <label className="usa-checkbox__label" htmlFor="stackedChart">
+                {t("VisualizeChartComponent.StackedChart")}
               </label>
             </div>
 
@@ -239,6 +240,29 @@ function VisualizeChart(props: Props) {
 
             <div
               className="usa-checkbox"
+              hidden={
+                props.chartType !== ChartType.PieChart &&
+                props.chartType !== ChartType.DonutChart
+              }
+            >
+              <input
+                className="usa-checkbox__input"
+                id="computePercentages"
+                type="checkbox"
+                name="computePercentages"
+                defaultChecked={false}
+                ref={props.register()}
+              />
+              <label
+                className="usa-checkbox__label"
+                htmlFor="computePercentages"
+              >
+                {t("VisualizeChartComponent.ComputePercentages")}
+              </label>
+            </div>
+
+            <div
+              className="usa-checkbox"
               hidden={props.chartType !== ChartType.DonutChart}
             >
               <input
@@ -251,6 +275,27 @@ function VisualizeChart(props: Props) {
               />
               <label className="usa-checkbox__label" htmlFor="showTotal">
                 {t("VisualizeChartComponent.ShowTotal")}
+              </label>
+            </div>
+
+            <div
+              className="usa-checkbox"
+              hidden={
+                (props.chartType !== ChartType.LineChart &&
+                  props.chartType !== ChartType.ColumnChart) ||
+                widthPercent <= 100
+              }
+            >
+              <input
+                className="usa-checkbox__input"
+                id="horizontalScroll"
+                type="checkbox"
+                name="horizontalScroll"
+                defaultChecked={!!props.horizontalScroll}
+                ref={props.register()}
+              />
+              <label className="usa-checkbox__label" htmlFor="horizontalScroll">
+                {t("VisualizeChartComponent.DisplayHorizontalScroll")}
               </label>
             </div>
           </div>
@@ -271,6 +316,7 @@ function VisualizeChart(props: Props) {
             multiline
             rows={5}
           />
+
           <div className="usa-checkbox">
             <input
               className="usa-checkbox__input"
@@ -387,9 +433,10 @@ function VisualizeChart(props: Props) {
                   summaryBelow={props.summaryBelow}
                   isPreview={!props.fullPreview}
                   horizontalScroll={props.horizontalScroll}
+                  stackedChart={props.stackedChart}
                   setWidthPercent={setWidthPercent}
                   significantDigitLabels={props.significantDigitLabels}
-                  columnsMetadata={props.columnsMetadata}
+                  columnsMetadata={props.columnsMetadata || []}
                   hideDataLabels={!props.dataLabels}
                 />
               )}
@@ -405,8 +452,9 @@ function VisualizeChart(props: Props) {
                   data={props.json}
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
-                  columnsMetadata={props.columnsMetadata}
+                  columnsMetadata={props.columnsMetadata || []}
                   hideDataLabels={!props.dataLabels}
+                  stackedChart={props.stackedChart}
                 />
               )}
               {props.chartType === ChartType.PartWholeChart && (
@@ -421,6 +469,7 @@ function VisualizeChart(props: Props) {
                   data={props.json}
                   summaryBelow={props.summaryBelow}
                   significantDigitLabels={props.significantDigitLabels}
+                  columnsMetadata={props.columnsMetadata}
                 />
               )}
               {props.chartType === ChartType.PieChart && (
@@ -438,6 +487,7 @@ function VisualizeChart(props: Props) {
                   hideDataLabels={!props.dataLabels}
                   isPreview={!props.fullPreview}
                   columnsMetadata={props.columnsMetadata}
+                  computePercentages={props.computePercentages}
                 />
               )}
               {props.chartType === ChartType.DonutChart && (
@@ -456,6 +506,7 @@ function VisualizeChart(props: Props) {
                   showTotal={props.showTotal}
                   isPreview={!props.fullPreview}
                   columnsMetadata={props.columnsMetadata}
+                  computePercentages={props.computePercentages}
                 />
               )}
             </>

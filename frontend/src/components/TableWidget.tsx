@@ -89,6 +89,8 @@ const TableWidget = ({
                 row[header],
                 largestTickByColumn[header],
                 significantDigitLabels,
+                "",
+                "",
                 columnMetadata
               )
             : "-";
@@ -110,7 +112,7 @@ const TableWidget = ({
 
   return (
     <div className="overflow-x-hidden overflow-y-hidden">
-      <h2 className="margin-bottom-1">{title}</h2>
+      <h3 className="margin-bottom-1">{title}</h3>
       {!summaryBelow && (
         <MarkdownRender
           source={summary}

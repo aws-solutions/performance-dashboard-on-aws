@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Dashboard } from "../models";
-import { useDateTimeFormatter, useSettings } from "../hooks";
+import { useDateTimeFormatter, useSettings, useWindowSize } from "../hooks";
 import Search from "./Search";
 import Table from "./Table";
 import ScrollTop from "./ScrollTop";
@@ -23,6 +23,9 @@ function PublishedTab(props: Props) {
   const [selected, setSelected] = useState<Array<Dashboard>>([]);
   const { dashboards } = props;
 
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
+
   const onSearch = (query: string) => {
     setFilter(query);
   };
@@ -39,40 +42,78 @@ function PublishedTab(props: Props) {
           {t("PublishedTabDescriptionLink")}
         </Link>
       </p>
-      <div className="grid-row margin-y-3">
-        <div className="tablet:grid-col-7 text-left padding-top-1px">
-          <ul className="usa-button-group">
-            <li className="usa-button-group__item">
-              <span>
-                <Search id="search" onSubmit={onSearch} size="small" />
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div className="tablet:grid-col-5 text-right">
-          <span>
-            <DropdownMenu
-              buttonText={t("Actions")}
-              disabled={selected.length === 0}
-              variant="outline"
-            >
-              <MenuLink
-                disabled={selected.length !== 1}
-                href={
-                  selected.length === 1
-                    ? `/admin/dashboard/${selected[0].id}/history`
-                    : "#"
-                }
+      {isMobile && (
+        <div className="margin-y-3">
+          <div className="text-left padding-top-1px">
+            <ul className="usa-button-group">
+              <li className="usa-button-group__item">
+                <span>
+                  <Search id="search" onSubmit={onSearch} size="small" />
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div className="grid-row margin-top-105">
+            <div className="grid-col-6 padding-right-05">
+              <DropdownMenu
+                buttonText={t("Actions")}
+                disabled={selected.length === 0}
+                variant="outline"
               >
-                {t("ViewHistoryLink")}
-              </MenuLink>
-              <MenuItem onSelect={() => props.onArchive(selected)}>
-                {t("ArchiveButton")}
-              </MenuItem>
-            </DropdownMenu>
-          </span>
+                <MenuLink
+                  disabled={selected.length !== 1}
+                  href={
+                    selected.length === 1
+                      ? `/admin/dashboard/${selected[0].id}/history`
+                      : "#"
+                  }
+                >
+                  {t("ViewHistoryLink")}
+                </MenuLink>
+                <MenuItem onSelect={() => props.onArchive(selected)}>
+                  {t("ArchiveButton")}
+                </MenuItem>
+              </DropdownMenu>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
+      {!isMobile && (
+        <div className="grid-row margin-y-3">
+          <div className="tablet:grid-col-7 text-left padding-top-1px">
+            <ul className="usa-button-group">
+              <li className="usa-button-group__item">
+                <span>
+                  <Search id="search" onSubmit={onSearch} size="small" />
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div className="tablet:grid-col-5 text-right">
+            <span>
+              <DropdownMenu
+                buttonText={t("Actions")}
+                disabled={selected.length === 0}
+                variant="outline"
+              >
+                <MenuLink
+                  disabled={selected.length !== 1}
+                  href={
+                    selected.length === 1
+                      ? `/admin/dashboard/${selected[0].id}/history`
+                      : "#"
+                  }
+                >
+                  {t("ViewHistoryLink")}
+                </MenuLink>
+                <MenuItem onSelect={() => props.onArchive(selected)}>
+                  {t("ArchiveButton")}
+                </MenuItem>
+              </DropdownMenu>
+            </span>
+          </div>
+        </div>
+      )}
       <Table
         selection="multiple"
         initialSortByField="updatedAt"

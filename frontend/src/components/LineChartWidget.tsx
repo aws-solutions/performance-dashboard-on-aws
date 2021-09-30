@@ -120,9 +120,9 @@ const LineChartWidget = (props: Props) => {
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h2>
+      </h3>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
@@ -162,7 +162,9 @@ const LineChartWidget = (props: Props) => {
                 return TickFormatter.format(
                   Number(tick),
                   yAxisLargestValue,
-                  props.significantDigitLabels
+                  props.significantDigitLabels,
+                  "",
+                  ""
                 );
               }}
             />
@@ -183,6 +185,8 @@ const LineChartWidget = (props: Props) => {
                   Number(value),
                   yAxisLargestValue,
                   props.significantDigitLabels,
+                  "",
+                  "",
                   columnMetadata
                 );
               }}

@@ -80,8 +80,8 @@
   "WantToViewPublishedSite": "¿Quiere ver lo que ve su público?",
   "ViewPublishedSite": "Ver el sitio publicado",
   "NewDraftDashboardCreated": {
-    "part1": "Se ha creado una nueva versión provisional del panel ",
-    "part2": "."
+    "part1": "Se ha creado una nueva ",
+    "part2": " versión de borrador del panel."
   },
   "DashboardWasArchived": "se archivó correctamente.",
   "DashboardWasDeleted": "se eliminó correctamente.",
@@ -103,29 +103,29 @@
   "CreatedBy": "Creado por",
   "Dashboards": "Paneles",
   "CreateDraftDashboardModalTitle": {
-    "part1": "Actualizar panel ",
-    "part2": ""
+    "part1": "Actualizar ",
+    "part2": " panel"
   },
   "CreateDraftDashboardModalMessage": "Esto creará un nuevo borrador del panel que le permitirá editar el contenido y, a continuación, publicar la nueva versión en el sitio publicado.",
   "CreateDraftDashboardModalButton": "Crear borrador",
   "ArchiveDashboardModalTitle": {
-    "part1": "Archivar el panel ",
-    "part2": ""
+    "part1": "Archivar ",
+    "part2": " panel"
   },
   "ArchiveDashboardModalMessage": {
-    "part1": "Esta acción eliminará el panel ",
-    "part2": " del sitio publicado. Puede volver a publicar los paneles archivados en cualquier momento."
+    "part1": "Esto eliminará ",
+    "part2": " el panel del sitio publicado. Puede volver a publicar los paneles archivados en cualquier momento."
   },
   "ArchiveDashboardModalButton": "Archivar",
   "RepublishDashboardModalTitle": {
-    "part1": "Volver a publicar el panel ",
-    "part2": ""
+    "part1": "Volver a publicar ",
+    "part2": " panel"
   },
   "RepublishDashboardModalMessage": "¿Seguro que desea volver a publicar este panel?",
   "RepublishDashboardModalButton": "Volver a publicar",
   "PreparePublishingModalTitle": {
-    "part1": "Preparar el panel ",
-    "part2": " para su publicación"
+    "part1": "Preparar ",
+    "part2": " el panel para su publicación"
   },
   "PreparePublishingModalMessage": {
     "part1": "Este panel no tiene elementos de contenido. ",
@@ -459,6 +459,7 @@
   "MetricsGuidance": "Agregue métricas aquí y vuelva a ordenarlas. Varias métricas se escalarán automáticamente para adaptarse y ajustarse en función del orden.",
   "MetricsOnePerRow": "Una métrica por fila",
   "MetricsZero": "No se han agregado métricas todavía.",
+  "MetricsCenterAlign": "Mostrar con alineación centrada",
   "ViewHistoryLink": "Ver historial",
   "PreviewButton": "Vista previa",
   "ReturnToDraftButton": "Volver al borrador",
@@ -485,12 +486,12 @@
     "FailToSaveReleaseNotesError": "No se pudieron guardar las notas de la versión; inténtelo de nuevo.",
     "MissingVersionNotesError": "Escriba las notas de la versión",
     "ReturnToDraftSuccessAlert": {
-      "part1": "El panel ",
-      "part2": " se ha devuelto el estado de borrador."
+      "part1": "",
+      "part2": " el panel se ha devuelto el estado de borrador."
     },
     "PublishedSuccessAlert": {
-      "part1": "El panel ",
-      "part2": " se ha publicado correctamente."
+      "part1": "",
+      "part2": " el panel se ha publicado correctamente."
     }
   },
   "SettingsDateTimeFormat": "Formato de fecha y hora",
@@ -868,7 +869,7 @@
   "EditImageScreen": {
     "ImageEditedSuccessfully": {
       "part1": "La imagen “",
-      "part2": "” se ha editado correctamente."
+      "part2": "se ha editado correctamente."
     },
     "EditImage": "Editar imagen",
     "ResolveError": "Resolver errores al editar la imagen",
@@ -904,5 +905,6 @@
   "Copy": "Copiar",
   "CopyContent": "Copiar {{name}}",
   "DownloadCSV": "Descargar",
-  "MobilePreview": "Vista previa móvil"
+  "MobilePreview": "Vista previa móvil",
+  "DisplayTableOfContents": "Mostrar tabla de contenidos"
 }

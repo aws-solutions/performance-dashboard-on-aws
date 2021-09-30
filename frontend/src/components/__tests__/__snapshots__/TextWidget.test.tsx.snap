@@ -2,10 +2,12 @@
 
 exports[`renders markdown text 1`] = `
 <div>
-  <div>
-    <h2>
+  <div
+    class=""
+  >
+    <h3>
       Benefits of Bananas
-    </h2>
+    </h3>
     <div
       class="Markdown usa-prose textOrSummary"
     >

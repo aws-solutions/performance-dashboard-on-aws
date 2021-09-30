@@ -46,6 +46,8 @@ describe("Admin user", () => {
     topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
     topicAreaListingPage.verifyTopicAreaLabel(newName, newNames);
+    
+    cy.reload();
 
     // Customize topic area label to old name
     cy.get("@oldName").then((oldName) => {
@@ -80,6 +82,8 @@ describe("Admin user", () => {
     topicAreaListingPage = createTopicAreaPage.submit();
     topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
+    cy.reload();
+
     cy.contains(`"${topicAreaName}" topic area successfully created`);
     topicAreaListingPage.verifyTopicArea(topicAreaName);
 
@@ -93,6 +97,8 @@ describe("Admin user", () => {
 
     topicAreaListingPage = editTopicAreaPage.submit();
     topicAreaListingPage.waitUntilTopicAreasTableLoads();
+
+    cy.reload();
 
     cy.contains(`${newTopicAreaName} was successfully edited.`);
     topicAreaListingPage.verifyTopicArea(newTopicAreaName);
@@ -276,6 +282,8 @@ describe("Admin user", () => {
     cy.contains("Date and time format successfully edited.");
     dateTimeFormatPage.verifyFormat(newDateFormat, newTimeFormat);
 
+    cy.reload();
+    
     // Change to US date and time format and verify
     cy.get("@oldDateFormat").then((oldDateFormat) => {
       cy.get("@oldTimeFormat").then((oldTimeFormat) => {

@@ -48,7 +48,9 @@ function AdminHome() {
     <div className="usa-prose">
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
-          <h1 className="font-sans-3xl">{t("WelcomeToPDoA")}</h1>
+          <h1 className="font-sans-3xl line-height-sans-2 margin-top-2">
+            {t("WelcomeToPDoA")}
+          </h1>
           <p className="font-sans-lg usa-prose">
             {`${
               currentAuthenticatedUser.isAdmin
@@ -58,7 +60,7 @@ function AdminHome() {
           </p>
         </div>
       </div>
-      <div className="grid-row">
+      <div className="grid-row margin-top-2">
         {currentAuthenticatedUser.isEditor ? (
           <CardGroup>
             <Card title={t("CreateANewDashboard")} col={7}>

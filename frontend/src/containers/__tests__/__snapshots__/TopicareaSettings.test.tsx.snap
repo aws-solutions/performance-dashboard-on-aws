@@ -151,7 +151,7 @@ exports[`topic area settings should match snapshot 1`] = `
           </nav>
         </div>
         <main
-          class="desktop:grid-col-9 usa-prose"
+          class="desktop:grid-col-9 usa-prose mobile-margin-top-2"
           id="main-content"
         >
           <h1>
@@ -185,6 +185,7 @@ exports[`topic area settings should match snapshot 1`] = `
             >
               <button
                 class="usa-button usa-button--outline margin-top-2"
+                data-testid="edittopicarealabel"
               >
                 Edit
               </button>
@@ -316,6 +317,7 @@ exports[`topic area settings should match snapshot 1`] = `
               <span>
                 <button
                   class="usa-button usa-button--base"
+                  data-testid="createtopicarea"
                 >
                   Create new ministry
                 </button>

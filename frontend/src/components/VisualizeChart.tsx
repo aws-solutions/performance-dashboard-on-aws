@@ -405,6 +405,7 @@ function VisualizeChart(props: Props) {
               {props.chartType === ChartType.LineChart && (
                 <LineChartWidget
                   title={props.showTitle ? props.title : ""}
+                  downloadTitle={props.title}
                   summary={props.summary}
                   lines={
                     props.json.length
@@ -423,6 +424,7 @@ function VisualizeChart(props: Props) {
               {props.chartType === ChartType.ColumnChart && (
                 <ColumnChartWidget
                   title={props.showTitle ? props.title : ""}
+                  downloadTitle={props.title}
                   summary={props.summary}
                   columns={
                     props.json.length
@@ -443,6 +445,7 @@ function VisualizeChart(props: Props) {
               {props.chartType === ChartType.BarChart && (
                 <BarChartWidget
                   title={props.showTitle ? props.title : ""}
+                  downloadTitle={props.title}
                   summary={props.summary}
                   bars={
                     props.json.length
@@ -460,6 +463,7 @@ function VisualizeChart(props: Props) {
               {props.chartType === ChartType.PartWholeChart && (
                 <PartWholeChartWidget
                   title={props.showTitle ? props.title : ""}
+                  downloadTitle={props.title}
                   summary={props.summary}
                   parts={
                     props.json.length
@@ -475,6 +479,7 @@ function VisualizeChart(props: Props) {
               {props.chartType === ChartType.PieChart && (
                 <PieChartWidget
                   title={props.showTitle ? props.title : ""}
+                  downloadTitle={props.title}
                   summary={props.summary}
                   parts={
                     props.json.length
@@ -493,6 +498,7 @@ function VisualizeChart(props: Props) {
               {props.chartType === ChartType.DonutChart && (
                 <DonutChartWidget
                   title={props.showTitle ? props.title : ""}
+                  downloadTitle={props.title}
                   summary={props.summary}
                   parts={
                     props.json.length

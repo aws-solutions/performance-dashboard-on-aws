@@ -20,6 +20,7 @@ import { ColumnDataType } from "../models";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   lines: Array<string>;
   data?: Array<any>;
@@ -220,7 +221,7 @@ const LineChartWidget = (props: Props) => {
           rows={data || []}
           columns={lines}
           columnsMetadata={props.columnsMetadata}
-          fileName={props.title}
+          fileName={props.downloadTitle}
         />
       </div>
       {props.summaryBelow && (

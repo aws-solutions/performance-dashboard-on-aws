@@ -461,6 +461,7 @@
   "MetricsGuidance": "Agregue métricas aquí y vuelva a ordenarlas. Varias métricas se escalarán automáticamente para adaptarse y ajustarse en función del orden.",
   "MetricsOnePerRow": "Una métrica por fila",
   "MetricsZero": "No se han agregado métricas todavía.",
+  "MetricsCenterAlign": "Mostrar con alineación centrada",
   "ViewHistoryLink": "Ver historial",
   "PreviewButton": "Vista previa",
   "ReturnToDraftButton": "Volver al borrador",

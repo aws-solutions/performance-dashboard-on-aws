@@ -461,6 +461,7 @@
   "MetricsGuidance": "Adicione métricas aqui e reordene-as. Várias métricas serão dimensionadas automaticamente para encaixe e quebra de linha de acordo com a ordem.",
   "MetricsOnePerRow": "Uma métrica por linha",
   "MetricsZero": "Ainda não foram adicionadas métricas.",
+  "MetricsCenterAlign": "Exibição com alinhamento central",
   "ViewHistoryLink": "Visualizar histórico",
   "PreviewButton": "Pré-visualização",
   "ReturnToDraftButton": "Retornar ao rascunho",

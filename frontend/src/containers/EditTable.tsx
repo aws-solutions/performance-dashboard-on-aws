@@ -401,6 +401,10 @@ function EditTable() {
     setStep(step - 1);
   };
 
+  const goBack = () => {
+    history.push(`/admin/dashboard/${dashboardId}/add-content`);
+  };
+
   const browseDatasets = () => {
     history.push({
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,
@@ -526,6 +530,7 @@ function EditTable() {
                     datasetType={displayedDatasetType}
                     onFileProcessed={onFileProcessed}
                     handleChange={handleChange}
+                    backStep={goBack}
                     advanceStep={advanceStep}
                     fileLoading={fileLoading}
                     browseDatasets={browseDatasets}

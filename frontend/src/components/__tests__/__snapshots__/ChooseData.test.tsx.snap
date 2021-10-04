@@ -649,6 +649,12 @@ exports[`renders the ChooseData component 1`] = `
   <br />
   <hr />
   <button
+    class="usa-button usa-button--outline"
+    type="button"
+  >
+    Back
+  </button>
+  <button
     class="usa-button usa-button--base"
     type="button"
   >

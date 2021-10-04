@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useDashboard, useSettings } from "../hooks";
 import Spinner from "../components/Spinner";
-import DatePicker from "../components/DatePicker";
+import DateRangePicker from "../components/DateRangePicker";
 import { LocationState } from "../models";
 import { useTranslation } from "react-i18next";
 import Dropdown from "../components/Dropdown";
@@ -263,29 +263,29 @@ function EditMetric() {
                     return !input || input[0] === "+" || input[0] === "-";
                   }}
                 />
-
-                <DatePicker
-                  id="startDate"
-                  name="startDate"
-                  label={t("EditMetricScreen.StartDateOptional")}
-                  hint={settings.dateTimeFormat.date}
-                  date={startDate}
-                  dateFormat={settings.dateTimeFormat.date
-                    .toLowerCase()
-                    .replace(/m/g, "M")}
-                  setDate={setStartDate}
-                />
-
-                <DatePicker
-                  id="endDate"
-                  name="endDate"
-                  label={t("EditMetricScreen.EndDateOptional")}
-                  hint={settings.dateTimeFormat.date}
-                  date={endDate}
-                  dateFormat={settings.dateTimeFormat.date
-                    .toLowerCase()
-                    .replace(/m/g, "M")}
-                  setDate={setEndDate}
+                <DateRangePicker
+                  start={{
+                    id: "startDate",
+                    name: "startDate",
+                    label: t("AddMetricScreen.StartDateOptional"),
+                    hint: settings.dateTimeFormat.date,
+                    date: startDate,
+                    dateFormat: settings.dateTimeFormat.date
+                      .toLowerCase()
+                      .replace(/m/g, "M"),
+                    setDate: setStartDate,
+                  }}
+                  end={{
+                    id: "endDate",
+                    name: "endDate",
+                    label: t("AddMetricScreen.EndDateOptional"),
+                    hint: settings.dateTimeFormat.date,
+                    date: endDate,
+                    dateFormat: settings.dateTimeFormat.date
+                      .toLowerCase()
+                      .replace(/m/g, "M"),
+                    setDate: setEndDate,
+                  }}
                 />
                 <br />
                 <Button type="submit">{t("Save")}</Button>

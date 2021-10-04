@@ -13,7 +13,6 @@ function DateRangePicker(props: Props) {
   useEffect(() => {
     if (props.start.date) {
       let nextDate = new Date(props.start.date);
-      nextDate.setDate(props.start.date.getDate() + 1);
       setMinEndDate(nextDate);
     } else {
       setMinEndDate(null);
@@ -23,7 +22,6 @@ function DateRangePicker(props: Props) {
   useEffect(() => {
     if (props.end.date) {
       let prevDate = new Date(props.end.date);
-      prevDate.setDate(props.end.date.getDate() - 1);
       setMaxStartDate(prevDate);
     } else {
       setMaxStartDate(null);

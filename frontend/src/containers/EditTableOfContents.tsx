@@ -134,7 +134,12 @@ function EditTableOfContents() {
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">{t("EditTableOfContents")}</h1>
+                <h1 className="margin-top-0 margin-bottom-1">
+                  {t("EditTableOfContents")}
+                </h1>
+                <div className="usa-hint">
+                  {t("EditTableOfContentsDescription")}
+                </div>
                 <form
                   className="usa-form usa-form--large"
                   onChange={onFormChange}
@@ -236,6 +241,7 @@ function EditTableOfContents() {
                           name: widget.name,
                           id: widget.id,
                           isInsideSection: !!widget.section,
+                          sectionWithTabs: "",
                         };
                       }) || []
                   }

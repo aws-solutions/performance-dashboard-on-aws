@@ -217,6 +217,10 @@ function AddTable() {
     setStep(step - 1);
   };
 
+  const goBack = () => {
+    history.push(`/admin/dashboard/${dashboardId}/add-content`);
+  };
+
   const selectDynamicDataset = async (selectedDataset: Dataset) => {
     setDatasetLoading(true);
 
@@ -357,6 +361,7 @@ function AddTable() {
                 datasetType={datasetType}
                 onFileProcessed={onFileProcessed}
                 handleChange={handleChange}
+                backStep={goBack}
                 advanceStep={advanceStep}
                 fileLoading={fileLoading}
                 browseDatasets={browseDatasets}

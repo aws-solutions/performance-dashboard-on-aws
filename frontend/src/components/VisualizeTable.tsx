@@ -40,6 +40,7 @@ interface Props {
   summaryBelow: boolean;
   columnsMetadata: Array<any>;
   significantDigitLabels: boolean;
+  displayWithPages: boolean;
   configHeader: JSX.Element;
 }
 
@@ -140,6 +141,19 @@ function VisualizeTable(props: Props) {
                 htmlFor="significantDigitLabels"
               >
                 {t("SignificantDigitLabels")}
+              </label>
+            </div>
+            <div className="usa-checkbox">
+              <input
+                className="usa-checkbox__input"
+                id="displayWithPages"
+                type="checkbox"
+                name="displayWithPages"
+                defaultChecked={false}
+                ref={props.register()}
+              />
+              <label className="usa-checkbox__label" htmlFor="displayWithPages">
+                {t("DisplayWithPages")}
               </label>
             </div>
           </div>
@@ -255,6 +269,7 @@ function VisualizeTable(props: Props) {
                 sortByColumn={props.sortByColumn}
                 sortByDesc={props.sortByDesc}
                 significantDigitLabels={props.significantDigitLabels}
+                displayWithPages={props.displayWithPages}
               />
             </>
           )}

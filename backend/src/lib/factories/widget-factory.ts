@@ -163,6 +163,10 @@ function fromTableItem(widget: Widget): TableWidget {
         tableWidget.content.significantDigitLabels !== undefined
           ? tableWidget.content.significantDigitLabels
           : false,
+      displayWithPages:
+        tableWidget.content.displayWithPages !== undefined
+          ? tableWidget.content.displayWithPages
+          : false,
     },
   };
 }
@@ -333,6 +337,10 @@ function createTableWidget(widget: Widget): TableWidget {
       significantDigitLabels:
         widget.content.significantDigitLabels !== undefined
           ? widget.content.significantDigitLabels
+          : false,
+      displayWithPages:
+        widget.content.displayWithPages !== undefined
+          ? widget.content.displayWithPages
           : false,
     },
   };

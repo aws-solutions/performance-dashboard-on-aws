@@ -95,6 +95,7 @@ function AddUsers() {
               {t("UserListingRole")}
             </label>
             <div className="usa-hint">{t("AddUsersRoleSelect")}</div>
+
             <fieldset className="usa-fieldset" onChange={handleChange}>
               <legend className="usa-sr-only">Roles</legend>
               <div className="usa-radio">
@@ -114,44 +115,13 @@ function AddUsers() {
                     />
                     <label className="usa-radio__label" htmlFor="editor">
                       {UserRoles.Editor}
+                      <p className="text-base usa-checkbox__label-description">
+                        {t("AddUsersEditor")}
+                      </p>
                     </label>
-                  </div>
-                  <div className="grid-col flex-7">
-                    <div className="usa-prose text-base margin-left-4">
-                      {t("AddUsersEditor")}
-                    </div>
                   </div>
                 </div>
               </div>
-              {/*<div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    role === UserRoles.Publisher
-                      ? " bg-base-lightest"
-                      : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="publisher"
-                      value="publisher"
-                      type="radio"
-                      name="role"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="publisher">
-                      {UserRoles.Publisher}
-                    </label>
-                  </div>
-                  <div className="grid-col flex-7">
-                    <div className="usa-prose text-base margin-left-4">
-                      Have the same permissions as Editors, but can also publish
-                      and unpublish/archive dashboards.
-                    </div>
-                  </div>
-                </div>
-                </div>*/}
               <div className="usa-radio">
                 <div
                   className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
@@ -169,12 +139,10 @@ function AddUsers() {
                     />
                     <label className="usa-radio__label" htmlFor="admin">
                       {UserRoles.Admin}
+                      <p className="text-base usa-checkbox__label-description">
+                        {t("AddUsersAdmin")}
+                      </p>
                     </label>
-                  </div>
-                  <div className="grid-col flex-7">
-                    <div className="usa-prose text-base margin-left-4">
-                      {t("AddUsersAdmin")}
-                    </div>
                   </div>
                 </div>
               </div>

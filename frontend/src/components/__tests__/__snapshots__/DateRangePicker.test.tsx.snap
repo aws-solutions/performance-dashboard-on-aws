@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a date range input element 1`] = `
+<div>
+  <div
+    class="usa-form-group"
+  >
+    <label
+      class="usa-label text-bold"
+      for="startDate"
+    >
+      Select a start date
+    </label>
+    <div
+      class="usa-hint"
+    />
+    <div>
+      <div
+        class="react-datepicker-wrapper"
+      >
+        <div
+          class="react-datepicker__input-container"
+        >
+          <input
+            class="usa-input"
+            id="startDate"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="usa-form-group"
+  >
+    <label
+      class="usa-label text-bold"
+      for="endDate"
+    >
+      Select an end date
+    </label>
+    <div
+      class="usa-hint"
+    />
+    <div>
+      <div
+        class="react-datepicker-wrapper"
+      >
+        <div
+          class="react-datepicker__input-container"
+        >
+          <input
+            class="usa-input"
+            id="endDate"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

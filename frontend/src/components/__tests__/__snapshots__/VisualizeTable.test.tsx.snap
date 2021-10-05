@@ -420,8 +420,8 @@ exports[`renders the VisualizeTable component 1`] = `
                 </tr>
               </tbody>
             </table>
-            
           </div>
+          
           <div
             class="text-right margin-bottom-1"
           >

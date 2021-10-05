@@ -5,6 +5,7 @@ interface WidgetNameId {
   name: string;
   id: string;
   isInsideSection: boolean;
+  sectionWithTabs: string;
 }
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
   offset: number;
   widgetNameIds: Array<WidgetNameId>;
   activeWidgetId: string;
-  setActivewidgetId: React.Dispatch<React.SetStateAction<string>>;
+  onBottomOfThePage: Function;
   isTop: boolean;
   area: number;
   marginRight: number;
@@ -25,7 +26,7 @@ function Navigation({
   offset,
   widgetNameIds,
   activeWidgetId,
-  setActivewidgetId,
+  onBottomOfThePage,
   isTop,
   area,
   displayTableOfContents,
@@ -39,7 +40,7 @@ function Navigation({
       Math.ceil(window.innerHeight + window.scrollY) >=
       document.documentElement.scrollHeight;
     if (isBottom && widgetNameIds.length) {
-      setActivewidgetId(widgetNameIds[widgetNameIds.length - 1].id);
+      onBottomOfThePage(widgetNameIds[widgetNameIds.length - 1].id);
     }
   };
 
@@ -100,7 +101,12 @@ function Navigation({
                   onClick={() => onClickHandler(widget.id)}
                 >
                   <NavHashLink
-                    to={"#" + widget.id}
+                    to={
+                      "#" +
+                      (widget.isInsideSection && widget.sectionWithTabs
+                        ? widget.sectionWithTabs
+                        : widget.id)
+                    }
                     scroll={(el) => scrollWithOffset(el)}
                     style={{
                       paddingLeft: widget.isInsideSection ? "32px" : "10px",
@@ -139,7 +145,12 @@ function Navigation({
                 onClick={() => onClickHandler(widget.id)}
               >
                 <NavHashLink
-                  to={"#" + widget.id}
+                  to={
+                    "#" +
+                    (widget.isInsideSection && widget.sectionWithTabs
+                      ? widget.sectionWithTabs
+                      : widget.id)
+                  }
                   scroll={(el) => scrollWithOffset(el)}
                   style={{
                     paddingLeft: widget.isInsideSection ? "36px" : "16px",

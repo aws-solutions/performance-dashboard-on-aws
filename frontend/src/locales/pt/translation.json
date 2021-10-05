@@ -139,7 +139,7 @@
     "Draft": " rascunho"
   },
   "DashboardPreviewPublishedMessage": "Veja abaixo uma visualização do painel publicado. Se estiver tudo pronto, você pode publicar o painel para disponibilizá-lo no site publicado.",
-  "RepublishDashboardToView": "Este painel está arquivado. Ele só será visível no site publicado se for republicado.",
+  "RepublishDashboardToView": "O painel foi arquivado. Ele somente será visível no site se for republicado.",
   "ViewDashboardAlertVersionNotes": {
     "Show": "Mostrar",
     "Hide": "Ocultar",
@@ -168,8 +168,10 @@
     "ChartTypeError": "Selecione um tipo de gráfico",
     "DisplayHorizontalScroll": "Exibir com rolagem horizontal",
     "ShowDataLabels": "Mostrar rótulos de dados",
+    "ComputePercentages": "Exibir porcentagens calculadas",
     "ShowTotal": "Mostrar total no centro do gráfico",
-    "ChartCorrectDisplay": "O gráfico parece estar correto?"
+    "ChartCorrectDisplay": "O gráfico parece estar correto?",
+    "StackedChart": "Exibir como gráfico empilhado"
   },
   "ViewDashboardAlertVersionNotesFrom": "Notas da versão {{version}}",
   "ViewDashboardAlertVersion": "Versão",
@@ -459,7 +461,6 @@
   "MetricsGuidance": "Adicione métricas aqui e reordene-as. Várias métricas serão dimensionadas automaticamente para encaixe e quebra de linha de acordo com a ordem.",
   "MetricsOnePerRow": "Uma métrica por linha",
   "MetricsZero": "Ainda não foram adicionadas métricas.",
-  "MetricsCenterAlign": "Exibição com alinhamento central",
   "ViewHistoryLink": "Visualizar histórico",
   "PreviewButton": "Pré-visualização",
   "ReturnToDraftButton": "Retornar ao rascunho",
@@ -906,5 +907,19 @@
   "CopyContent": "Copiar {{name}}",
   "DownloadCSV": "Fazer download",
   "MobilePreview": "Pré-visualização para dispositivos móveis",
-  "DisplayTableOfContents": "Exibir índice"
+  "MetricsCenterAlign": "Exibição com alinhamento central",
+  "DisplayTableOfContents": "Exibir índice",
+  "Current": "Atual",
+  "SectionOptionsLabel": "Opções da seção",
+  "SectionOptionsDescription": "Formatar a seção",
+  "ShowWithTabs": "Exibir itens de conteúdo da seção com guias",
+  "Horizontally": "Horizontalmente",
+  "Vertically": "Verticalmente",
+  "TableOfContents": "Índice",
+  "TableOfContentsDescription": "Adiciona um índice para fornecer uma visão geral do painel de navegação",
+  "EditTableOfContents": "Exibir índice",
+  "TableOfContentsSuccessfullyEdited": "Índice editado com êxito.",
+  "NoTableOfContentsItems": "O painel não tem itens de conteúdo. Os itens de conteúdo devem ser adicionados ao painel antes de serem incluídos no índice.",
+  "SelectAll": "Selecionar tudo",
+  "DeselectAll": "Desmarcar tudo"
 }

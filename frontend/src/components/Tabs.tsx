@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Tab from "./Tab";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import { LeftArrow, RightArrow } from "./Arrows";
@@ -14,6 +14,10 @@ type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
 
 function Tabs(props: Props) {
   const [activeTab, setActiveTab] = useState<string>(props.defaultActive);
+
+  useEffect(() => {
+    setActiveTab(props.defaultActive);
+  }, [props.defaultActive]);
 
   const onClickTabItem = (tab: string) => {
     setActiveTab(tab);

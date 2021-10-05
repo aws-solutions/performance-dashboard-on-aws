@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TabVertical from "./TabVertical";
 
 interface Props {
@@ -9,6 +9,10 @@ interface Props {
 
 function TabsVertical(props: Props) {
   const [activeTab, setActiveTab] = useState<string>(props.defaultActive);
+
+  useEffect(() => {
+    setActiveTab(props.defaultActive);
+  }, [props.defaultActive]);
 
   const onClickTabItem = (tab: string) => {
     setActiveTab(tab);

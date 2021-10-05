@@ -101,6 +101,7 @@ function ChangeRole() {
                       value={UserRoles.Editor}
                       type="radio"
                       name="role"
+                      data-testid="editorRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="editor">
@@ -125,6 +126,7 @@ function ChangeRole() {
                       value={UserRoles.Admin}
                       type="radio"
                       name="role"
+                      data-testid="adminRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="admin">

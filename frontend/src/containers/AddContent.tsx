@@ -99,6 +99,7 @@ function AddContent() {
                       value="text"
                       type="radio"
                       name="widgetType"
+                      data-testid="textRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="text">
@@ -123,6 +124,7 @@ function AddContent() {
                       value="metrics"
                       type="radio"
                       name="widgetType"
+                      data-testid="metricsRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="metrics">
@@ -147,6 +149,7 @@ function AddContent() {
                       value="chart"
                       type="radio"
                       name="widgetType"
+                      data-testid="chartRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="chart">
@@ -171,6 +174,7 @@ function AddContent() {
                       value="table"
                       type="radio"
                       name="widgetType"
+                      data-testid="tableRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="table">
@@ -195,6 +199,7 @@ function AddContent() {
                       value="image"
                       type="radio"
                       name="widgetType"
+                      data-testid="imageRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="image">
@@ -219,6 +224,7 @@ function AddContent() {
                       value="section"
                       type="radio"
                       name="widgetType"
+                      data-testid="sectionRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="section">

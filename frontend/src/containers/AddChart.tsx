@@ -261,6 +261,10 @@ function AddChart() {
     document.getElementById("Home")?.focus();
   };
 
+  const goBack = () => {
+    history.push(`/admin/dashboard/${dashboardId}/add-content`);
+  };
+
   const browseDatasets = () => {
     history.push({
       pathname: `/admin/dashboard/${dashboardId}/choose-static-dataset`,

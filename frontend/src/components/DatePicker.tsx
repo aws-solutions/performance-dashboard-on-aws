@@ -14,7 +14,7 @@ import {
   ptBR,
 } from "date-fns/locale";
 
-interface Props {
+export interface Props {
   name: string;
   id: string;
   label: string;
@@ -25,6 +25,8 @@ interface Props {
   error?: string;
   className?: string;
   date: Date | null;
+  minDate?: Date | null;
+  maxDate?: Date | null;
   setDate: Function;
   dateFormat: string;
 }
@@ -83,6 +85,7 @@ function DatePicker(props: Props) {
 
       <div>
         <DatePicker1
+          id={props.id}
           selected={props.date}
           dateFormat={props.dateFormat}
           onChange={(date) => {
@@ -90,6 +93,8 @@ function DatePicker(props: Props) {
           }}
           className={className}
           locale={localeRegistered ? window.navigator.language : ""}
+          minDate={props.minDate}
+          maxDate={props.maxDate}
         />
       </div>
     </div>

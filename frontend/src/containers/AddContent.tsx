@@ -99,16 +99,15 @@ function AddContent() {
                       value="text"
                       type="radio"
                       name="widgetType"
+                      data-testid="textRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="text">
                       {t("Text")}
+                      <p className="text-base usa-checkbox__label-description">
+                        {t("AddContentScreen.TextDescription")}
+                      </p>
                     </label>
-                  </div>
-                  <div className="grid-col flex-7">
-                    <div className="usa-prose text-base margin-left-4">
-                      {t("AddContentScreen.TextDescription")}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -125,16 +124,15 @@ function AddContent() {
                       value="metrics"
                       type="radio"
                       name="widgetType"
+                      data-testid="metricsRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="metrics">
                       {t("Metrics")}
+                      <p className="text-base usa-checkbox__label-description">
+                        {t("AddContentScreen.MetricsDescription")}
+                      </p>
                     </label>
-                  </div>
-                  <div className="grid-col flex-7">
-                    <div className="usa-prose text-base margin-left-4">
-                      {t("AddContentScreen.MetricsDescription")}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -151,16 +149,15 @@ function AddContent() {
                       value="chart"
                       type="radio"
                       name="widgetType"
+                      data-testid="chartRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="chart">
                       {t("Chart")}
+                      <p className="text-base usa-checkbox__label-description">
+                        {t("AddContentScreen.ChartDescription")}
+                      </p>
                     </label>
-                  </div>
-                  <div className="grid-col flex-7">
-                    <div className="usa-prose text-base margin-left-4">
-                      {t("AddContentScreen.ChartDescription")}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -177,16 +174,15 @@ function AddContent() {
                       value="table"
                       type="radio"
                       name="widgetType"
+                      data-testid="tableRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="table">
                       {t("Table")}
+                      <p className="text-base usa-checkbox__label-description">
+                        {t("AddContentScreen.TableDescription")}
+                      </p>
                     </label>
-                  </div>
-                  <div className="grid-col flex-7">
-                    <div className="usa-prose text-base margin-left-4">
-                      {t("AddContentScreen.TableDescription")}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -203,16 +199,15 @@ function AddContent() {
                       value="image"
                       type="radio"
                       name="widgetType"
+                      data-testid="imageRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="image">
                       {t("Image")}
+                      <p className="text-base usa-checkbox__label-description">
+                        {t("AddContentScreen.ImageDescription")}
+                      </p>
                     </label>
-                  </div>
-                  <div className="grid-col flex-7">
-                    <div className="usa-prose text-base margin-left-4">
-                      {t("AddContentScreen.ImageDescription")}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -229,16 +224,15 @@ function AddContent() {
                       value="section"
                       type="radio"
                       name="widgetType"
+                      data-testid="sectionRadioButton"
                       ref={register()}
                     />
                     <label className="usa-radio__label" htmlFor="section">
                       {t("Section")}
+                      <p className="text-base usa-checkbox__label-description">
+                        {t("AddContentScreen.SectionDescription")}
+                      </p>
                     </label>
-                  </div>
-                  <div className="grid-col flex-7">
-                    <div className="usa-prose text-base margin-left-4">
-                      {t("AddContentScreen.SectionDescription")}
-                    </div>
                   </div>
                 </div>
               </div>

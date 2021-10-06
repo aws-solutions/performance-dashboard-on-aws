@@ -29,7 +29,7 @@ describe("ChangeRoleForm", () => {
   });
 
   test("submits form with the entered values", async () => {
-    fireEvent.input(screen.getByLabelText("Admin"), {
+    fireEvent.input(screen.getByTestId("adminRadioButton"), {
       target: {
         checked: true,
       },

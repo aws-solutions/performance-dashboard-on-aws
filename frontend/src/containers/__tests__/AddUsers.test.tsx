@@ -30,7 +30,7 @@ describe("AddUsersForm", () => {
       },
     });
 
-    fireEvent.input(screen.getByLabelText("Editor"), {
+    fireEvent.input(screen.getByTestId("editorRadioButton"), {
       target: {
         checked: true,
       },

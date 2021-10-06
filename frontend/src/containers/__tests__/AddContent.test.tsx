@@ -65,23 +65,23 @@ describe("Add content screen", () => {
   });
 
   test("renders preview thumbnail for each content item", async () => {
-    fireEvent.click(screen.getByLabelText("Text"));
+    fireEvent.click(screen.getByTestId("textRadioButton"));
     let thumbnail = screen.getByAltText("Text Content Item Preview");
     expect(thumbnail).toBeInTheDocument();
 
-    fireEvent.click(screen.getByLabelText("Metrics"));
+    fireEvent.click(screen.getByTestId("metricsRadioButton"));
     thumbnail = screen.getByAltText("Metrics Content Item Preview");
     expect(thumbnail).toBeInTheDocument();
 
-    fireEvent.click(screen.getByLabelText("Chart"));
+    fireEvent.click(screen.getByTestId("chartRadioButton"));
     thumbnail = screen.getByAltText("Chart Content Item Preview");
     expect(thumbnail).toBeInTheDocument();
 
-    fireEvent.click(screen.getByLabelText("Table"));
+    fireEvent.click(screen.getByTestId("tableRadioButton"));
     thumbnail = screen.getByAltText("Table Content Item Preview");
     expect(thumbnail).toBeInTheDocument();
 
-    fireEvent.click(screen.getByLabelText("Image"));
+    fireEvent.click(screen.getByTestId("imageRadioButton"));
     thumbnail = screen.getByAltText("Image Content Item Preview");
     expect(thumbnail).toBeInTheDocument();
   });

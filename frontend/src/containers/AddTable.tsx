@@ -37,6 +37,7 @@ interface FormValues {
   datasetType: string;
   sortData: string;
   significantDigitLabels: boolean;
+  displayWithPages: boolean;
 }
 
 interface PathParams {
@@ -105,6 +106,7 @@ function AddTable() {
   const summary = watch("summary");
   const summaryBelow = watch("summaryBelow");
   const significantDigitLabels = watch("significantDigitLabels");
+  const displayWithPages = watch("displayWithPages");
 
   const initializeColumnsMetadata = () => {
     setSelectedHeaders(new Set<string>());
@@ -164,6 +166,7 @@ function AddTable() {
           summaryBelow: values.summaryBelow,
           datasetType: datasetType,
           significantDigitLabels: values.significantDigitLabels,
+          displayWithPages: values.displayWithPages,
           datasetId: newDataset
             ? newDataset.id
             : datasetType === DatasetType.DynamicDataset
@@ -437,6 +440,7 @@ function AddTable() {
               title={title}
               showTitle={showTitle}
               significantDigitLabels={significantDigitLabels}
+              displayWithPages={displayWithPages}
               summary={summary}
               summaryBelow={summaryBelow}
               columnsMetadata={ColumnsMetadataService.getColumnsMetadata(

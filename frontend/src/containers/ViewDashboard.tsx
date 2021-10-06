@@ -10,7 +10,6 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
-import { WidgetType } from "../models";
 
 interface PathParams {
   friendlyURL: string;
@@ -54,8 +53,15 @@ function ViewDashboard() {
       <Navigation
         stickyPosition={80}
         offset={80}
+        area={2}
+        marginRight={27}
         widgetNameIds={dashboard?.widgets
-          .filter((w) => w.widgetType === WidgetType.Section)
+          .filter(
+            (w) =>
+              dashboard &&
+              dashboard.tableOfContents &&
+              dashboard.tableOfContents[w.id]
+          )
           .map((widget) => {
             return {
               name: widget.name,
@@ -67,25 +73,34 @@ function ViewDashboard() {
         setActivewidgetId={setActiveWidgetId}
         isTop={windowSize.width <= moveNavBarWidth}
         displayTableOfContents={dashboard?.displayTableOfContents}
-      ></Navigation>
-      {dashboard?.widgets.map((widget, index) => {
-        return (
-          <div key={index}>
-            <Waypoint
-              onEnter={() => {
-                setActiveWidgetId(widget.id);
-              }}
-              topOffset="80px"
-              bottomOffset={`${windowSize.height - 90}px`}
-              fireOnRapidScroll={false}
-            >
-              <div className="margin-top-4 usa-prose" id={widget.id}>
-                <WidgetRender widget={widget} widgets={dashboard.widgets} />
-              </div>
-            </Waypoint>
-          </div>
-        );
-      })}
+        onClick={setActiveWidgetId}
+      />
+      {dashboard?.widgets
+        .filter((w) => !w.section)
+        .map((widget, index) => {
+          return (
+            <div key={index}>
+              <Waypoint
+                onEnter={() => {
+                  setActiveWidgetId(widget.id);
+                }}
+                topOffset="80px"
+                bottomOffset={`${windowSize.height - 90}px`}
+                fireOnRapidScroll={false}
+              >
+                <div className="margin-top-4 usa-prose" id={widget.id}>
+                  <WidgetRender
+                    widget={widget}
+                    widgets={dashboard.widgets}
+                    setActiveWidgetId={setActiveWidgetId}
+                    topOffset="80px"
+                    bottomOffset={`${windowSize.height - 90}px`}
+                  />
+                </div>
+              </Waypoint>
+            </div>
+          );
+        })}
     </>
   );
 }

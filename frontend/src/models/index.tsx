@@ -39,6 +39,7 @@ export type Dashboard = {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  tableOfContents?: any;
   description?: string;
   releaseNotes?: string;
   widgets: Array<Widget>;
@@ -57,6 +58,7 @@ export type PublicDashboard = {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  tableOfContents?: any;
   description?: string;
   widgets: Array<Widget>;
   updatedAt: Date;

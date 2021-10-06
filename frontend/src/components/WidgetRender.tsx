@@ -20,6 +20,9 @@ interface Props {
   showMobilePreview?: boolean;
   hideTitle?: boolean;
   widgets?: Array<Widget>;
+  setActiveWidgetId?: Function;
+  topOffset?: string;
+  bottomOffset?: string;
 }
 
 function WidgetRender({
@@ -27,6 +30,9 @@ function WidgetRender({
   showMobilePreview,
   widgets,
   hideTitle,
+  setActiveWidgetId,
+  bottomOffset,
+  topOffset,
 }: Props) {
   switch (widget.widgetType) {
     case WidgetType.Text:
@@ -58,6 +64,9 @@ function WidgetRender({
           widget={widget}
           showMobilePreview={showMobilePreview}
           widgets={widgets}
+          setActiveWidgetId={setActiveWidgetId}
+          bottomOffset={bottomOffset}
+          topOffset={topOffset}
         />
       );
     default:

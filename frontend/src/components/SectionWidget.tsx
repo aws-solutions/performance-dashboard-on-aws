@@ -5,11 +5,15 @@ import WidgetRender from "./WidgetRender";
 import Tabs from "./Tabs";
 import TabsVertical from "./TabsVertical";
 import { useWindowSize, useColors } from "../hooks";
+import { Waypoint } from "react-waypoint";
 
 interface Props {
   widget: Widget;
   showMobilePreview?: boolean;
   widgets?: Array<Widget>;
+  setActiveWidgetId?: Function;
+  topOffset?: string;
+  bottomOffset?: string;
 }
 
 function SectionWidget(props: Props) {
@@ -37,12 +41,25 @@ function SectionWidget(props: Props) {
           if (widget) {
             return (
               <div key={index}>
-                <div className="margin-top-4 usa-prose" id={id}>
-                  <WidgetRender
-                    widget={widget}
-                    showMobilePreview={props.showMobilePreview}
-                  />
-                </div>
+                <Waypoint
+                  onEnter={() => {
+                    if (props.setActiveWidgetId) {
+                      props.setActiveWidgetId(widget.id);
+                    }
+                  }}
+                  topOffset={props.topOffset}
+                  bottomOffset={props.bottomOffset}
+                  fireOnRapidScroll={false}
+                >
+                  <div className="margin-top-4 usa-prose" id={id}>
+                    <WidgetRender
+                      widget={widget}
+                      showMobilePreview={props.showMobilePreview}
+                      bottomOffset={props.bottomOffset}
+                      topOffset={props.topOffset}
+                    />
+                  </div>
+                </Waypoint>
               </div>
             );
           }

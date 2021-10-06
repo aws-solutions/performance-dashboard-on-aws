@@ -38,10 +38,11 @@ test("submits form with the entered values", async () => {
   expect(BackendService.editDashboard).toBeCalledWith(
     "123",
     "My AWS Dashboard",
-    "123456789",
+    "",
     false,
     "Some description",
-    ""
+    "",
+    {}
   );
 });
 

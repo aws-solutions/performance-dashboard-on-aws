@@ -7,6 +7,7 @@ test("renders the chart title", async () => {
   render(
     <LineChartWidget
       title="test title"
+      downloadTitle="test title"
       summary="test summary"
       lines={["test"]}
       data={[{ test: 1 }]}
@@ -23,6 +24,7 @@ test("renders chart summary above the chart", async () => {
   render(
     <LineChartWidget
       title="test title"
+      downloadTitle="test title"
       summary="test summary"
       lines={["test"]}
       data={[{ test: 1 }]}
@@ -42,6 +44,7 @@ test("renders chart summary below the chart", async () => {
   render(
     <LineChartWidget
       title="test title"
+      downloadTitle="test title"
       summary="test summary"
       lines={["test"]}
       data={[{ test: 1 }]}

@@ -110,6 +110,7 @@ function WidgetWithDataset({ widget, showMobilePreview, hideTitle }: Props) {
           sortByColumn={tableWidget.content.sortByColumn}
           sortByDesc={tableWidget.content.sortByDesc}
           significantDigitLabels={tableWidget.content.significantDigitLabels}
+          displayWithPages={tableWidget.content.displayWithPages}
           showMobilePreview={showMobilePreview}
         />
       );

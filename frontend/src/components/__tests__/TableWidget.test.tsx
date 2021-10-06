@@ -33,6 +33,7 @@ test("renders the table title", async () => {
       summaryBelow={false}
       columnsMetadata={[]}
       significantDigitLabels={false}
+      displayWithPages={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -69,6 +70,7 @@ test("renders the summary below the chart", async () => {
       summaryBelow={true}
       columnsMetadata={[]}
       significantDigitLabels={false}
+      displayWithPages={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -102,6 +104,7 @@ test("table preview should match snapshot", async () => {
       summaryBelow={false}
       columnsMetadata={[]}
       significantDigitLabels={false}
+      displayWithPages={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -133,6 +136,7 @@ test("table should not crash when a column header is an empty string", async () 
       summaryBelow={false}
       columnsMetadata={[]}
       significantDigitLabels={false}
+      displayWithPages={false}
     />,
     { wrapper: MemoryRouter }
   );

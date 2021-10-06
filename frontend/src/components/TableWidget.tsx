@@ -20,6 +20,7 @@ type Props = {
   sortByColumn?: string;
   sortByDesc?: boolean;
   significantDigitLabels: boolean;
+  displayWithPages: boolean;
   showMobilePreview?: boolean;
 };
 
@@ -32,6 +33,7 @@ const TableWidget = ({
   sortByDesc,
   sortByColumn,
   significantDigitLabels,
+  displayWithPages,
   showMobilePreview,
 }: Props) => {
   const { largestTickByColumn } = useTableMetadata(data);
@@ -124,10 +126,11 @@ const TableWidget = ({
         rows={rows}
         initialSortAscending={sortByDesc !== undefined ? !sortByDesc : true}
         initialSortByField={sortByColumn}
-        disablePagination={true}
+        disablePagination={!displayWithPages && rows.length < 25}
         columns={columns}
         sortByColumn={sortByColumn}
         sortByDesc={sortByDesc}
+        mobileNavigation
       />
       {summaryBelow && (
         <MarkdownRender

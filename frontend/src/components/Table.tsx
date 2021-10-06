@@ -46,11 +46,13 @@ interface Props {
   setSortByColumn?: Function;
   setSortByDesc?: Function;
   reset?: Function;
+  mobileNavigation?: boolean;
 }
 
 function Table(props: Props) {
   const { t } = useTranslation();
   const windowSize = useWindowSize();
+  const isMobile = props.mobileNavigation || windowSize.width <= 600;
   const borderlessClassName = !props.disableBorderless
     ? " usa-table--borderless"
     : "";
@@ -351,12 +353,12 @@ function Table(props: Props) {
       {!props.disablePagination && rows.length ? (
         <div
           className={`${
-            windowSize.width <= 600 ? "grid-col" : "grid-row margin-bottom-05"
+            isMobile ? "grid-col" : "grid-row margin-bottom-05"
           } font-sans-sm`}
         >
           <div
             className={`${
-              windowSize.width <= 600
+              isMobile
                 ? "grid-row margin-bottom-2 margin-left-05"
                 : "grid-col-3 text-left"
             } text-base text-italic`}
@@ -368,37 +370,42 @@ function Table(props: Props) {
           </div>
           <div
             className={`${
-              windowSize.width <= 600
-                ? "margin-left-05"
-                : "grid-col-6 text-center"
+              isMobile ? "margin-left-05" : "grid-col-6 text-center"
             }`}
           >
-            <button
-              type="button"
-              className="margin-right-1"
-              onClick={() => {
-                setCurrentPage("1");
-                gotoPage(0);
-              }}
-              disabled={!canPreviousPage}
-            >
-              <FontAwesomeIcon
-                icon={faAngleDoubleLeft}
-                className="margin-top-2px"
-              />
-            </button>
-            <button
-              type="button"
-              className="margin-right-2"
-              onClick={() => {
-                setCurrentPage(`${pageIndex}`);
-                previousPage();
-              }}
-              disabled={!canPreviousPage}
-            >
-              <FontAwesomeIcon icon={faAngleLeft} className="margin-top-2px" />
-            </button>
-            {windowSize.width <= 600 ? <div className="margin-bottom-1" /> : ""}
+            {!isMobile && (
+              <>
+                <button
+                  type="button"
+                  className="margin-right-1"
+                  onClick={() => {
+                    setCurrentPage("1");
+                    gotoPage(0);
+                  }}
+                  disabled={!canPreviousPage}
+                >
+                  <FontAwesomeIcon
+                    icon={faAngleDoubleLeft}
+                    className="margin-top-2px"
+                  />
+                </button>
+                <button
+                  type="button"
+                  className="margin-right-2"
+                  onClick={() => {
+                    setCurrentPage(`${pageIndex}`);
+                    previousPage();
+                  }}
+                  disabled={!canPreviousPage}
+                >
+                  <FontAwesomeIcon
+                    icon={faAngleLeft}
+                    className="margin-top-2px"
+                  />
+                </button>
+              </>
+            )}
+            {isMobile ? <div className="margin-bottom-1" /> : ""}
             <span className="margin-right-2px">{`${t("Page")} `}</span>
             <span className="margin-right-1">
               <input
@@ -416,7 +423,7 @@ function Table(props: Props) {
             <button
               type="button"
               className={`${
-                windowSize.width <= 600 ? "" : "usa-button "
+                isMobile ? "" : "usa-button "
               }usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest`}
               onClick={() => {
                 if (currentPage) {
@@ -433,7 +440,39 @@ function Table(props: Props) {
             >
               {t("Go")}
             </button>
-            {windowSize.width <= 600 ? <div className="margin-top-1" /> : ""}
+            {isMobile ? <div className="margin-top-1" /> : ""}
+            {isMobile && (
+              <>
+                <button
+                  type="button"
+                  className="margin-right-1"
+                  onClick={() => {
+                    setCurrentPage("1");
+                    gotoPage(0);
+                  }}
+                  disabled={!canPreviousPage}
+                >
+                  <FontAwesomeIcon
+                    icon={faAngleDoubleLeft}
+                    className="margin-top-2px"
+                  />
+                </button>
+                <button
+                  type="button"
+                  className="margin-right-2"
+                  onClick={() => {
+                    setCurrentPage(`${pageIndex}`);
+                    previousPage();
+                  }}
+                  disabled={!canPreviousPage}
+                >
+                  <FontAwesomeIcon
+                    icon={faAngleLeft}
+                    className="margin-top-2px"
+                  />
+                </button>
+              </>
+            )}
             <button
               type="button"
               className="margin-right-1"
@@ -461,7 +500,7 @@ function Table(props: Props) {
           </div>
           <div
             className={`${
-              windowSize.width <= 600
+              isMobile
                 ? "grid-row margin-top-2 margin-left-05 margin-bottom-05"
                 : "grid-col-3 text-right"
             }`}

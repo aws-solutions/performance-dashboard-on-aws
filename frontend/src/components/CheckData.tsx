@@ -323,58 +323,54 @@ function CheckData(props: Props) {
                 {t("HideFromVisualization")}
               </label>
             </div>
-            {props.selectedHeaders.size >= 1 && props.selectedHeaders && (
+            <div className="margin-top-3 margin-right-3">
+              <Dropdown
+                id="dataType"
+                name="dataType"
+                label={t("DataFormat")}
+                options={[
+                  { value: "", label: t("SelectAnOption") },
+                  { value: ColumnDataType.Text, label: t("Text") },
+                  {
+                    value: ColumnDataType.Number,
+                    label: t("Number"),
+                  },
+                  {
+                    value: ColumnDataType.Date,
+                    label: t("Date"),
+                  },
+                ]}
+                value={dataType}
+                onChange={handleDataTypeChange}
+              />
+            </div>
+            {dataType === ColumnDataType.Number && (
               <div className="margin-top-3 margin-right-3">
                 <Dropdown
-                  id="dataType"
-                  name="dataType"
-                  label={t("DataFormat")}
+                  id="numberType"
+                  name="numberType"
+                  label={t("NumberFormat")}
                   options={[
                     { value: "", label: t("SelectAnOption") },
-                    { value: ColumnDataType.Text, label: t("Text") },
                     {
-                      value: ColumnDataType.Number,
-                      label: t("Number"),
+                      value: NumberDataType.Percentage,
+                      label: t("Percentage"),
                     },
                     {
-                      value: ColumnDataType.Date,
-                      label: t("Date"),
+                      value: NumberDataType.Currency,
+                      label: t("Currency"),
+                    },
+                    {
+                      value: NumberDataType["With thousands separators"],
+                      label: t("WithThousandsSeparators"),
                     },
                   ]}
-                  value={dataType}
-                  onChange={handleDataTypeChange}
+                  value={numberType}
+                  onChange={handleNumberTypeChange}
                 />
               </div>
             )}
-            {props.selectedHeaders.size >= 1 &&
-              dataType === ColumnDataType.Number && (
-                <div className="margin-top-3 margin-right-3">
-                  <Dropdown
-                    id="numberType"
-                    name="numberType"
-                    label={t("NumberFormat")}
-                    options={[
-                      { value: "", label: t("SelectAnOption") },
-                      {
-                        value: NumberDataType.Percentage,
-                        label: t("Percentage"),
-                      },
-                      {
-                        value: NumberDataType.Currency,
-                        label: t("Currency"),
-                      },
-                      {
-                        value: NumberDataType["With thousands separators"],
-                        label: t("WithThousandsSeparators"),
-                      },
-                    ]}
-                    value={numberType}
-                    onChange={handleNumberTypeChange}
-                  />
-                </div>
-              )}
-            {props.selectedHeaders.size >= 1 &&
-              dataType === ColumnDataType.Number &&
+            {dataType === ColumnDataType.Number &&
               numberType === NumberDataType.Currency && (
                 <div className="margin-top-3 margin-right-3">
                   <Dropdown

@@ -64,6 +64,15 @@ describe("Add content screen", () => {
     expect(description).toBeInTheDocument();
   });
 
+  test("renders section option", async () => {
+    const header = await screen.findByText("Section");
+    const description = await screen.findByText(
+      "Add a section to group similar content items in a list."
+    );
+    expect(header).toBeInTheDocument();
+    expect(description).toBeInTheDocument();
+  });
+
   test("renders preview thumbnail for each content item", async () => {
     fireEvent.click(screen.getByTestId("textRadioButton"));
     let thumbnail = screen.getByAltText("Text Content Item Preview");
@@ -83,6 +92,10 @@ describe("Add content screen", () => {
 
     fireEvent.click(screen.getByTestId("imageRadioButton"));
     thumbnail = screen.getByAltText("Image Content Item Preview");
+    expect(thumbnail).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("sectionRadioButton"));
+    thumbnail = screen.getByAltText("Section Content Item Preview");
     expect(thumbnail).toBeInTheDocument();
   });
 });

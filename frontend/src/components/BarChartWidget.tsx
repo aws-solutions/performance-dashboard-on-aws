@@ -230,66 +230,12 @@ const BarChartWidget = (props: Props) => {
                         position="right"
                         valueAccessor={valueAccessor(bar)}
                         formatter={(tick: any) => {
-                          const sum = props.bars
-                            .slice(1)
-                            .map((bar) => tick[bar])
-                            .reduce((a, b) => a + b, 0);
-                          const allPercentage = props.bars
-                            .slice(1)
-                            .every((c: string) =>
-                              props.columnsMetadata.some(
-                                (cm: any) =>
-                                  cm.columnName === c &&
-                                  cm.numberType === NumberDataType.Percentage
-                              )
-                            );
-                          const allCurrencyDollar = props.bars
-                            .slice(1)
-                            .every((c: string) =>
-                              props.columnsMetadata.some(
-                                (cm: any) =>
-                                  cm.columnName === c &&
-                                  cm.numberType === NumberDataType.Currency &&
-                                  cm.currencyType !== undefined &&
-                                  cm.currencyType ===
-                                    CurrencyDataType["Dollar $"]
-                              )
-                            );
-                          const allCurrencyEuro = props.bars
-                            .slice(1)
-                            .every((c: string) =>
-                              props.columnsMetadata.some(
-                                (cm: any) =>
-                                  cm.columnName === c &&
-                                  cm.numberType === NumberDataType.Currency &&
-                                  cm.currencyType !== undefined &&
-                                  cm.currencyType === CurrencyDataType["Euro €"]
-                              )
-                            );
-                          const allCurrencyPound = props.bars
-                            .slice(1)
-                            .every((c: string) =>
-                              props.columnsMetadata.some(
-                                (cm: any) =>
-                                  cm.columnName === c &&
-                                  cm.numberType === NumberDataType.Currency &&
-                                  cm.currencyType !== undefined &&
-                                  cm.currencyType ===
-                                    CurrencyDataType["Pound £"]
-                              )
-                            );
-                          return TickFormatter.format(
-                            sum,
+                          return TickFormatter.stackedFormat(
+                            tick,
                             xAxisLargestValue,
                             props.significantDigitLabels,
-                            allPercentage ? NumberDataType.Percentage : "",
-                            allCurrencyDollar
-                              ? CurrencyDataType["Dollar $"]
-                              : allCurrencyEuro
-                              ? CurrencyDataType["Euro €"]
-                              : allCurrencyPound
-                              ? CurrencyDataType["Pound £"]
-                              : ""
+                            props.bars.slice(1),
+                            props.columnsMetadata
                           );
                         }}
                       />

@@ -184,3 +184,81 @@ describe("format when columnMetadata is Percentage", () => {
     ).toEqual("100K%");
   });
 });
+
+describe("stacked labels formatting", () => {
+  it("value should be the sum of all values", () => {
+    expect(TickFormatter.stackedFormat(
+      {a: 1, b: 2, c: 3, d: 4},
+      10,
+      true,
+      ["a", "b", "c", "d"],
+      []
+    )).toBe("10");
+  })
+
+  it("should apply percentage format if all match", () => {
+    expect(TickFormatter.stackedFormat(
+      {a: 1, b: 2},
+      3,
+      true,
+      ["a", "b"],
+      [{
+        columnName: "a",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Percentage,
+      }, 
+      {
+        columnName: "b",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Percentage,
+      }]
+    )).toBe("3%");
+  })
+
+  it("should apply currency format if all match", () => {
+    expect(TickFormatter.stackedFormat(
+      {a: 1, b: 2},
+      10,
+      true,
+      ["a", "b"],
+      [{
+        columnName: "a",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Currency,
+        currencyType: CurrencyDataType["Euro €"],
+      }, 
+      {
+        columnName: "b",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Currency,
+        currencyType: CurrencyDataType["Euro €"],
+      }]
+    )).toBe("€3");
+  })
+
+  it("should not apply formatting when different", () => {
+    expect(TickFormatter.stackedFormat(
+      {a: 1, b: 2},
+      3,
+      true,
+      ["a", "b"],
+      [{
+        columnName: "a",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Percentage,
+      }, 
+      {
+        columnName: "b",
+        hidden: false,
+        dataType: ColumnDataType.Number,
+        numberType: NumberDataType.Currency,
+        currencyType: CurrencyDataType["Euro €"],
+      }]
+    )).toBe("3");
+  })
+});

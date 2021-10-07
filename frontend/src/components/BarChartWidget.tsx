@@ -225,21 +225,23 @@ const BarChartWidget = (props: Props) => {
                     stackId={props.stackedChart ? "a" : `${index}`}
                     isAnimationActive={false}
                   >
-                    {!props.hideDataLabels && props.stackedChart && (
-                      <LabelList
-                        position="right"
-                        valueAccessor={valueAccessor(bar)}
-                        formatter={(tick: any) => {
-                          return TickFormatter.stackedFormat(
-                            tick,
-                            xAxisLargestValue,
-                            props.significantDigitLabels,
-                            props.bars.slice(1),
-                            props.columnsMetadata
-                          );
-                        }}
-                      />
-                    )}
+                    {!props.hideDataLabels &&
+                      props.stackedChart &&
+                      index === props.bars.length - 2 && (
+                        <LabelList
+                          position="right"
+                          valueAccessor={valueAccessor(bar)}
+                          formatter={(tick: any) => {
+                            return TickFormatter.stackedFormat(
+                              tick,
+                              xAxisLargestValue,
+                              props.significantDigitLabels,
+                              props.bars.slice(1),
+                              props.columnsMetadata
+                            );
+                          }}
+                        />
+                      )}
                     {!props.hideDataLabels && !props.stackedChart && (
                       <LabelList
                         dataKey={bar}

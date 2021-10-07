@@ -10,9 +10,13 @@ exports[`renders the CheckData component 1`] = `
   <div
     class="grid-row"
   >
-    
     <div
-      class="check-data-table grid-col-12"
+      class="grid-col-3 margin-top-3 font-sans-md text-bold"
+    >
+      Select columns to format data.
+    </div>
+    <div
+      class="check-data-table grid-col-9"
     >
       <div
         class="margin-left-2"

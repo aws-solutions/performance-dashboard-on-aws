@@ -138,56 +138,47 @@ function formatSignificantDigits(
   return formattedNum;
 }
 
-function stackedFormat(tick: any,
+function stackedFormat(
+  tick: any,
   largestTick: number,
   significantDigitLabels: boolean,
   labels: string[],
   labelsMetadata: ColumnMetadata[]
 ) {
-  const sum = labels
-    .map((column) => tick[column])
-    .reduce((a, b) => a + b, 0);
-  const allPercentage = labels
-    .every((c: string) =>
-      labelsMetadata.some(
-        (cm: any) =>
-          cm.columnName === c &&
-          cm.numberType === NumberDataType.Percentage
-      )
-    );
-  const allCurrencyDollar = labels
-    .every((c: string) =>
-      labelsMetadata.some(
-        (cm: any) =>
-          cm.columnName === c &&
-          cm.numberType === NumberDataType.Currency &&
-          cm.currencyType !== undefined &&
-          cm.currencyType ===
-            CurrencyDataType["Dollar $"]
-      )
-    );
-  const allCurrencyEuro = labels
-    .every((c: string) =>
-      labelsMetadata.some(
-        (cm: any) =>
-          cm.columnName === c &&
-          cm.numberType === NumberDataType.Currency &&
-          cm.currencyType !== undefined &&
-          cm.currencyType ===
-            CurrencyDataType["Euro €"]
-      )
-    );
-  const allCurrencyPound = labels
-    .every((c: string) =>
-      labelsMetadata.some(
-        (cm: any) =>
-          cm.columnName === c &&
-          cm.numberType === NumberDataType.Currency &&
-          cm.currencyType !== undefined &&
-          cm.currencyType ===
-            CurrencyDataType["Pound £"]
-      )
-    );
+  const sum = labels.map((column) => tick[column]).reduce((a, b) => a + b, 0);
+  const allPercentage = labels.every((c: string) =>
+    labelsMetadata.some(
+      (cm: any) =>
+        cm.columnName === c && cm.numberType === NumberDataType.Percentage
+    )
+  );
+  const allCurrencyDollar = labels.every((c: string) =>
+    labelsMetadata.some(
+      (cm: any) =>
+        cm.columnName === c &&
+        cm.numberType === NumberDataType.Currency &&
+        cm.currencyType !== undefined &&
+        cm.currencyType === CurrencyDataType["Dollar $"]
+    )
+  );
+  const allCurrencyEuro = labels.every((c: string) =>
+    labelsMetadata.some(
+      (cm: any) =>
+        cm.columnName === c &&
+        cm.numberType === NumberDataType.Currency &&
+        cm.currencyType !== undefined &&
+        cm.currencyType === CurrencyDataType["Euro €"]
+    )
+  );
+  const allCurrencyPound = labels.every((c: string) =>
+    labelsMetadata.some(
+      (cm: any) =>
+        cm.columnName === c &&
+        cm.numberType === NumberDataType.Currency &&
+        cm.currencyType !== undefined &&
+        cm.currencyType === CurrencyDataType["Pound £"]
+    )
+  );
   return format(
     sum,
     largestTick,
@@ -206,7 +197,7 @@ function stackedFormat(tick: any,
 const TickFormatter = {
   format,
   formatNumber,
-  stackedFormat: stackedFormat
+  stackedFormat: stackedFormat,
 };
 
 export default TickFormatter;

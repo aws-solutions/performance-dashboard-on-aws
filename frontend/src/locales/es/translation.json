@@ -139,7 +139,7 @@
     "Draft": " borrador"
   },
   "DashboardPreviewPublishedMessage": "A continuación se muestra una vista previa de cómo será el panel publicado. Si está listo para continuar, puede publicar el panel para que esté disponible en el sitio publicado.",
-  "RepublishDashboardToView": "Este panel está archivado. No se puede ver en el sitio publicado a menos que se vuelva a publicar.",
+  "RepublishDashboardToView": "Este panel está archivado. No se puede ver en el sitio publicado a menos que se vuelva a publicar",
   "ViewDashboardAlertVersionNotes": {
     "Show": "Mostrar",
     "Hide": "Ocultar",
@@ -168,10 +168,8 @@
     "ChartTypeError": "Seleccione un tipo de gráfico",
     "DisplayHorizontalScroll": "Mostrar con desplazamiento horizontal",
     "ShowDataLabels": "Mostrar etiquetas de datos",
-    "ComputePercentages": "Mostrar los porcentajes calculados",
     "ShowTotal": "Mostrar total en el centro del gráfico",
-    "ChartCorrectDisplay": "¿El gráfico parece correcto?",
-    "StackedChart": "Mostrar como gráfico apilado"
+    "ChartCorrectDisplay": "¿El gráfico parece correcto?"
   },
   "ViewDashboardAlertVersionNotesFrom": "Notas de la versión {{version}} de",
   "ViewDashboardAlertVersion": "Versión",
@@ -461,6 +459,7 @@
   "MetricsGuidance": "Agregue métricas aquí y vuelva a ordenarlas. Varias métricas se escalarán automáticamente para adaptarse y ajustarse en función del orden.",
   "MetricsOnePerRow": "Una métrica por fila",
   "MetricsZero": "No se han agregado métricas todavía.",
+  "MetricsCenterAlign": "Mostrar con alineación centrada",
   "ViewHistoryLink": "Ver historial",
   "PreviewButton": "Vista previa",
   "ReturnToDraftButton": "Volver al borrador",
@@ -907,19 +906,5 @@
   "CopyContent": "Copiar {{name}}",
   "DownloadCSV": "Descargar",
   "MobilePreview": "Vista previa móvil",
-  "MetricsCenterAlign": "Mostrar con alineación centrada",
-  "DisplayTableOfContents": "Mostrar tabla de contenidos",
-  "Current": "Actual",
-  "SectionOptionsLabel": "Opciones de sección",
-  "SectionOptionsDescription": "Dar formato a la sección",
-  "ShowWithTabs": "Mostrar los elementos de contenido de la sección con pestañas",
-  "Horizontally": "Horizontalmente",
-  "Vertically": "Verticalmente",
-  "TableOfContents": "Tabla de contenidos",
-  "TableOfContentsDescription": "Agrega una tabla de contenidos para proporcionar información general sobre el panel para la navegación",
-  "EditTableOfContents": "Editar la tabla de contenidos",
-  "TableOfContentsSuccessfullyEdited": "La tabla de contenidos se ha editado correctamente.",
-  "NoTableOfContentsItems": "Este panel no tiene elementos de contenido. Los elementos de contenido se deben agregar al panel para que se puedan incluir en la tabla de contenidos.",
-  "SelectAll": "Seleccionar todo",
-  "DeselectAll": "Anular la selección de todos"
+  "DisplayTableOfContents": "Mostrar tabla de contenidos"
 }

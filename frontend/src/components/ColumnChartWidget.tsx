@@ -275,16 +275,17 @@ const ColumnChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <div style={showMobilePreview ? { float: "left" } : {}}>
+      <div>
         <DataTable
           rows={data || []}
           columns={columns}
           columnsMetadata={props.columnsMetadata}
           fileName={props.downloadTitle}
+          showMobilePreview={showMobilePreview}
         />
       </div>
       {props.summaryBelow && (
-        <div style={showMobilePreview ? { clear: "left" } : {}}>
+        <div>
           <MarkdownRender
             source={props.summary}
             className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"

@@ -16,9 +16,16 @@ interface Props {
   columns: string[];
   columnsMetadata?: ColumnMetadata[];
   fileName?: string;
+  showMobilePreview?: boolean;
 }
 
-function DataTable({ rows, columns, columnsMetadata, fileName }: Props) {
+function DataTable({
+  rows,
+  columns,
+  columnsMetadata,
+  fileName,
+  showMobilePreview,
+}: Props) {
   const { t } = useTranslation();
   const [showDataTable, setShowDataTable] = useState(false);
 
@@ -60,7 +67,11 @@ function DataTable({ rows, columns, columnsMetadata, fileName }: Props) {
 
   return (
     <>
-      <div className="text-right">
+      <div
+        className={
+          showMobilePreview ? "margin-left-05" : "text-right margin-right-05"
+        }
+      >
         <DropdownMenu
           className="text-base"
           buttonText={t("Actions")}

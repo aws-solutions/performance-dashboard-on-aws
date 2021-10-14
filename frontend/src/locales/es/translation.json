@@ -921,5 +921,8 @@
   "TableOfContentsSuccessfullyEdited": "La tabla de contenidos se ha editado correctamente.",
   "NoTableOfContentsItems": "Este panel no tiene elementos de contenido. Los elementos de contenido se deben agregar al panel para que se puedan incluir en la tabla de contenidos.",
   "SelectAll": "Seleccionar todo",
-  "DeselectAll": "Anular la selección de todos"
+  "DeselectAll": "Anular la selección de todos",
+  "EditTableOfContentsDescription": "La tabla de contenidos muestra una descripción general de los elementos de contenido en su panel. Personalice la tabla de contenido seleccionando cuales elementos de contenido incluir. Si se selecciona un elemento de contenido a continuación, su título se incluirá en la tabla de contenido.",
+  "DisplayWithPages": "Mostrar con páginas",
+  "SelectColumns": "Seleccione columnas para dar formato a los datos."
 }

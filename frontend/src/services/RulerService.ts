@@ -5,10 +5,14 @@ type FontWidthMap = { [font: string]: FontSizeWidthMap };
 let ruler: HTMLElement | null = null;
 function getRuler() {
   if (!ruler) {
-    ruler = document.getElementById("ruler");
-    if (!ruler) {
-      throw new Error("Unable to locate ruler");
-    }
+    ruler = document.createElement("div");
+    ruler.id = "ruler";
+    document.body.appendChild(ruler);
+    ruler.style.position = "absolute";
+    ruler.style.visibility = "hidden";
+    ruler.style.width = "auto";
+    ruler.style.height = "auto";
+    ruler.style.whiteSpace = "nowrap";
   }
   return ruler;
 }
@@ -31,11 +35,11 @@ function getVisualWidth(label: any, font?: string, fontSize?: string) {
   const map = getCharWidthMap(font, fontSize);
   for (let i = 0; i < str.length; i++) {
     if (map[str[i]] === undefined) {
-      if (!!font && font !== ruler.style.font) {
-        ruler.style.font = font;
+      if (font !== ruler.style.font) {
+        ruler.style.font = font || "";
       }
-      if (!!fontSize && fontSize !== ruler.style.fontSize) {
-        ruler.style.fontSize = fontSize;
+      if (fontSize !== ruler.style.fontSize) {
+        ruler.style.fontSize = fontSize || "";
       }
       ruler.innerHTML = str[i];
       map[str[i]] = ruler.clientWidth + 1;

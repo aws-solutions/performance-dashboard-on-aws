@@ -1,11 +1,3 @@
-#ruler {
-  position: absolute;
-  visibility: hidden;
-  height: auto;
-  width: auto;
-  white-space: nowrap;
-}
-
 p {
   line-height: 1.4;
 }

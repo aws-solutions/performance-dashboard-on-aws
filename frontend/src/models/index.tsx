@@ -154,6 +154,7 @@ export interface TableWidget extends Widget {
     sortByColumn?: string;
     sortByDesc?: boolean;
     significantDigitLabels: boolean;
+    displayWithPages: boolean;
   };
 }
 

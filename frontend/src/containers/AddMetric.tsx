@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";
@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useDashboard, useSettings } from "../hooks";
 import Spinner from "../components/Spinner";
-import DatePicker from "../components/DatePicker";
+import DateRangePicker from "../components/DateRangePicker";
 import { LocationState } from "../models";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
@@ -223,27 +223,29 @@ function AddMetric() {
                       return !input || input[0] === "+" || input[0] === "-";
                     }}
                   />
-                  <DatePicker
-                    id="startDate"
-                    name="startDate"
-                    label={t("AddMetricScreen.StartDateOptional")}
-                    hint={settings.dateTimeFormat.date}
-                    date={startDate}
-                    dateFormat={settings.dateTimeFormat.date
-                      .toLowerCase()
-                      .replace(/m/g, "M")}
-                    setDate={setStartDate}
-                  />
-                  <DatePicker
-                    id="endDate"
-                    name="endDate"
-                    label={t("AddMetricScreen.EndDateOptional")}
-                    hint={settings.dateTimeFormat.date}
-                    date={endDate}
-                    dateFormat={settings.dateTimeFormat.date
-                      .toLowerCase()
-                      .replace(/m/g, "M")}
-                    setDate={setEndDate}
+                  <DateRangePicker
+                    start={{
+                      id: "startDate",
+                      name: "startDate",
+                      label: t("AddMetricScreen.StartDateOptional"),
+                      hint: settings.dateTimeFormat.date,
+                      date: startDate,
+                      dateFormat: settings.dateTimeFormat.date
+                        .toLowerCase()
+                        .replace(/m/g, "M"),
+                      setDate: setStartDate,
+                    }}
+                    end={{
+                      id: "endDate",
+                      name: "endDate",
+                      label: t("AddMetricScreen.EndDateOptional"),
+                      hint: settings.dateTimeFormat.date,
+                      date: endDate,
+                      dateFormat: settings.dateTimeFormat.date
+                        .toLowerCase()
+                        .replace(/m/g, "M"),
+                      setDate: setEndDate,
+                    }}
                   />
                   <br />
                   <Button type="submit">

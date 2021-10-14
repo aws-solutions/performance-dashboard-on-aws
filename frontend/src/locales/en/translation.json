@@ -57,6 +57,7 @@
   "Chart": "Chart",
   "Table": "Table",
   "Image": "Image",
+  "CheckBox": "CheckBox",
   "Section": "Section",
   "SureDelete": "Are you sure you want to delete this",
   "ZeroDashboards": "that have zero dashboards",

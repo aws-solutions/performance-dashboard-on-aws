@@ -921,5 +921,8 @@
   "TableOfContentsSuccessfullyEdited": "Índice editado com êxito.",
   "NoTableOfContentsItems": "O painel não tem itens de conteúdo. Os itens de conteúdo devem ser adicionados ao painel antes de serem incluídos no índice.",
   "SelectAll": "Selecionar tudo",
-  "DeselectAll": "Desmarcar tudo"
+  "DeselectAll": "Desmarcar tudo",
+  "EditTableOfContentsDescription": "O índice mostra uma visão geral dos itens de conteúdo em seu painel. Personalize o índice, selecionando quais itens de conteúdo incluir. Se um item de conteúdo for selecionado abaixo, seu título será incluído no índice.",
+  "DisplayWithPages": "Exibir com páginas",
+  "SelectColumns": "Selecione as colunas para formatar os dados."
 }

@@ -48,6 +48,7 @@ exports[`renders the CheckData component 1`] = `
                       class="text-center usa-checkbox margin-bottom-1"
                     >
                       <input
+                        aria-label="id CheckBox"
                         class="usa-checkbox__input"
                         id="checkbox-header-0"
                         name="id"
@@ -70,6 +71,7 @@ exports[`renders the CheckData component 1`] = `
                       class="text-center usa-checkbox margin-bottom-1"
                     >
                       <input
+                        aria-label="name CheckBox"
                         class="usa-checkbox__input"
                         id="checkbox-header-1"
                         name="name"
@@ -92,6 +94,7 @@ exports[`renders the CheckData component 1`] = `
                       class="text-center usa-checkbox margin-bottom-1"
                     >
                       <input
+                        aria-label="updatedAt CheckBox"
                         class="usa-checkbox__input"
                         id="checkbox-header-2"
                         name="updatedAt"

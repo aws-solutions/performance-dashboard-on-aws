@@ -191,6 +191,7 @@ function CheckData(props: Props) {
                 className="usa-checkbox__input"
                 id={`checkbox-header-${i}`}
                 type="checkbox"
+                aria-label={header + " " + t("CheckBox")}
                 name={header}
                 defaultChecked={props.selectedHeaders.has(header)}
                 onChange={handleSelectedHeadersChange}

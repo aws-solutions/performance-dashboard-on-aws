@@ -23,6 +23,7 @@ test("renders the ChooseData component", async () => {
       datasetType={DatasetType.DynamicDataset}
       onFileProcessed={() => {}}
       handleChange={() => {}}
+      backStep={() => {}}
       advanceStep={() => {}}
       fileLoading={false}
       browseDatasets={() => {}}

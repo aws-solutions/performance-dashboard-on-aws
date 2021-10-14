@@ -62,6 +62,7 @@ test("renders the VisualizeTable component", async () => {
       ]}
       showTitle={true}
       significantDigitLabels={false}
+      displayWithPages={false}
       summary={""}
       title={""}
       configHeader={<></>}

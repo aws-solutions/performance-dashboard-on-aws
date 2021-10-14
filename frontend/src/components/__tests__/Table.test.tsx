@@ -157,3 +157,16 @@ test("renders a basic table without pagination", async () => {
   );
   expect(container).toMatchSnapshot();
 });
+
+test("renders a basic table with mobile navigation", async () => {
+  const { container } = render(
+    <Table
+      selection="none"
+      columns={columns}
+      rows={rows}
+      disablePagination={true}
+      mobileNavigation
+    />
+  );
+  expect(container).toMatchSnapshot();
+});

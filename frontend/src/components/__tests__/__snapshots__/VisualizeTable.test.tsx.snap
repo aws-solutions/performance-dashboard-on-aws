@@ -137,6 +137,22 @@ exports[`renders the VisualizeTable component 1`] = `
               Significant digit labels (123K, 1.2M)
             </label>
           </div>
+          <div
+            class="usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="displayWithPages"
+              name="displayWithPages"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="displayWithPages"
+            >
+              Display with pages
+            </label>
+          </div>
         </div>
         <div
           class="usa-form-group"
@@ -420,8 +436,8 @@ exports[`renders the VisualizeTable component 1`] = `
                 </tr>
               </tbody>
             </table>
-            
           </div>
+          
           <div
             class="text-right margin-bottom-1"
           >

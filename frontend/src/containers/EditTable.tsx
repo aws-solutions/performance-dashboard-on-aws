@@ -42,6 +42,7 @@ interface FormValues {
   datasetType: string;
   sortData: string;
   significantDigitLabels: boolean;
+  displayWithPages: boolean;
   staticFileName: string | undefined;
   dynamicFileName: string | undefined;
 }
@@ -116,6 +117,7 @@ function EditTable() {
   const summary = watch("summary");
   const summaryBelow = watch("summaryBelow");
   const significantDigitLabels = watch("significantDigitLabels");
+  const displayWithPages = watch("displayWithPages");
 
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
   const [displayedJson, setDisplayedJson] = useState<Array<any>>([]);
@@ -154,6 +156,7 @@ function EditTable() {
       const summary = widget.content.summary;
       const summaryBelow = widget.content.summaryBelow;
       const significantDigitLabels = widget.content.significantDigitLabels;
+      const displayWithPages = widget.content.displayWithPages;
 
       if (dynamicDataset) {
         setDynamicFileName(dynamicDataset?.fileName);
@@ -172,7 +175,8 @@ function EditTable() {
           : datasetType,
         summary,
         summaryBelow,
-        significantDigitLabels: significantDigitLabels,
+        significantDigitLabels,
+        displayWithPages,
         dynamicDatasets:
           widget.content.datasetType === DatasetType.DynamicDataset
             ? widget.content.s3Key.json
@@ -325,6 +329,7 @@ function EditTable() {
           summaryBelow: values.summaryBelow,
           datasetType: displayedDatasetType,
           significantDigitLabels: values.significantDigitLabels,
+          displayWithPages: values.displayWithPages,
           datasetId: newDataset
             ? newDataset.id
             : displayedDatasetType === DatasetType.DynamicDataset
@@ -399,6 +404,10 @@ function EditTable() {
 
   const backStep = () => {
     setStep(step - 1);
+  };
+
+  const goBack = () => {
+    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const browseDatasets = () => {
@@ -526,6 +535,7 @@ function EditTable() {
                     datasetType={displayedDatasetType}
                     onFileProcessed={onFileProcessed}
                     handleChange={handleChange}
+                    backStep={goBack}
                     advanceStep={advanceStep}
                     fileLoading={fileLoading}
                     browseDatasets={browseDatasets}
@@ -600,6 +610,7 @@ function EditTable() {
                   setSortByColumn={setSortByColumn}
                   setSortByDesc={setSortByDesc}
                   significantDigitLabels={significantDigitLabels}
+                  displayWithPages={displayWithPages}
                   columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                     hiddenColumns,
                     dataTypes,

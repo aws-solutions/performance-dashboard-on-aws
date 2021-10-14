@@ -23,6 +23,7 @@ interface Props {
   setActiveWidgetId?: Function;
   topOffset?: string;
   bottomOffset?: string;
+  defaultActive?: string;
 }
 
 function WidgetRender({
@@ -33,6 +34,7 @@ function WidgetRender({
   setActiveWidgetId,
   bottomOffset,
   topOffset,
+  defaultActive,
 }: Props) {
   switch (widget.widgetType) {
     case WidgetType.Text:
@@ -67,6 +69,7 @@ function WidgetRender({
           setActiveWidgetId={setActiveWidgetId}
           bottomOffset={bottomOffset}
           topOffset={topOffset}
+          defaultActive={defaultActive}
         />
       );
     default:
@@ -107,6 +110,7 @@ function WidgetWithDataset({ widget, showMobilePreview, hideTitle }: Props) {
           sortByColumn={tableWidget.content.sortByColumn}
           sortByDesc={tableWidget.content.sortByDesc}
           significantDigitLabels={tableWidget.content.significantDigitLabels}
+          displayWithPages={tableWidget.content.displayWithPages}
           showMobilePreview={showMobilePreview}
         />
       );

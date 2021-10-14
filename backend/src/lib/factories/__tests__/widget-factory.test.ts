@@ -239,6 +239,7 @@ describe("createTableWidget", () => {
       sortByColumn: "cases",
       sortByDesc: false,
       significantDigitLabels: true,
+      displayWithPages: true,
       columnsMetadata: [
         {
           hidden: false,
@@ -274,6 +275,7 @@ describe("createTableWidget", () => {
     expect(widget.content.sortByColumn).toEqual("cases");
     expect(widget.content.sortByDesc).toBe(false);
     expect(widget.content.significantDigitLabels).toBe(true);
+    expect(widget.content.displayWithPages).toBe(true);
   });
 
   it("throws an error if table title is undefined", () => {
@@ -406,6 +408,7 @@ describe("fromItem", () => {
         sortByColumn: "foo",
         sortByDesc: false,
         significantDigitLabels: true,
+        displayWithPages: true,
         columnsMetadata: [
           {
             columnName: "foo",
@@ -434,6 +437,7 @@ describe("fromItem", () => {
     expect(widget.content.sortByColumn).toEqual("foo");
     expect(widget.content.sortByDesc).toBe(false);
     expect(widget.content.significantDigitLabels).toBe(true);
+    expect(widget.content.displayWithPages).toBe(true);
     expect(widget.content.columnsMetadata).toEqual([
       {
         columnName: "foo",
@@ -607,6 +611,7 @@ describe("toItem", () => {
         sortByColumn: "deaths",
         sortByDesc: true,
         significantDigitLabels: true,
+        displayWithPages: true,
         columnsMetadata: [
           {
             hidden: false,
@@ -645,6 +650,7 @@ describe("toItem", () => {
       sortByColumn: "deaths",
       sortByDesc: true,
       significantDigitLabels: true,
+      displayWithPages: true,
       columnsMetadata: [
         {
           hidden: false,

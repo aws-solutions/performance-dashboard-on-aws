@@ -10,6 +10,7 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
+import { PublicDashboard, Widget } from "../models";
 
 interface PathParams {
   friendlyURL: string;
@@ -21,6 +22,7 @@ function ViewDashboard() {
   const { dashboard, loading, dashboardNotFound } =
     usePublicDashboard(friendlyURL);
   const [activeWidgetId, setActiveWidgetId] = useState("");
+  const [activeTabId, setActiveTabId] = useState("");
   const windowSize = useWindowSize();
 
   const moveNavBarWidth = 1024;
@@ -28,6 +30,40 @@ function ViewDashboard() {
   if (dashboardNotFound) {
     return <Redirect to="/404/page-not-found" />;
   }
+
+  const getSectionWithTabs = (
+    widget: Widget,
+    dashboard: PublicDashboard
+  ): string => {
+    const section: Widget | undefined = dashboard.widgets.find(
+      (w) => w.id == widget.section
+    );
+    if (section) {
+      return section.content.showWithTabs ? section.id : "";
+    }
+    return "";
+  };
+
+  const onClickHandler = (active: string) => {
+    setActiveTabId(active);
+    setActiveWidgetId(active);
+  };
+
+  const onBottomOfThePage = (bottom: string) => {
+    const widget = dashboard?.widgets.find((w: Widget) => w.id === bottom);
+    if (widget) {
+      if (widget.section) {
+        const parent = dashboard?.widgets.find(
+          (w: Widget) => w.id === widget.section
+        );
+        if (parent) {
+          setActiveWidgetId(parent.id);
+        }
+      } else {
+        setActiveWidgetId(bottom);
+      }
+    }
+  };
 
   return loading || dashboard === undefined ? (
     <Spinner
@@ -55,7 +91,7 @@ function ViewDashboard() {
         offset={80}
         area={2}
         marginRight={27}
-        widgetNameIds={dashboard?.widgets
+        widgetNameIds={dashboard.widgets
           .filter(
             (w) =>
               dashboard &&
@@ -67,15 +103,16 @@ function ViewDashboard() {
               name: widget.name,
               id: widget.id,
               isInsideSection: !!widget.section,
+              sectionWithTabs: getSectionWithTabs(widget, dashboard),
             };
           })}
         activeWidgetId={activeWidgetId}
-        setActivewidgetId={setActiveWidgetId}
+        onBottomOfThePage={onBottomOfThePage}
         isTop={windowSize.width <= moveNavBarWidth}
-        displayTableOfContents={dashboard?.displayTableOfContents}
-        onClick={setActiveWidgetId}
+        displayTableOfContents={dashboard.displayTableOfContents}
+        onClick={onClickHandler}
       />
-      {dashboard?.widgets
+      {dashboard.widgets
         .filter((w) => !w.section)
         .map((widget, index) => {
           return (
@@ -95,6 +132,7 @@ function ViewDashboard() {
                     setActiveWidgetId={setActiveWidgetId}
                     topOffset="80px"
                     bottomOffset={`${windowSize.height - 90}px`}
+                    defaultActive={activeTabId}
                   />
                 </div>
               </Waypoint>

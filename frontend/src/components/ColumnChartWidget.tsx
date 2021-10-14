@@ -236,75 +236,23 @@ const ColumnChartWidget = (props: Props) => {
                     isAnimationActive={false}
                     stackId={props.stackedChart ? "a" : `${index}`}
                   >
-                    {!props.hideDataLabels && props.stackedChart && (
-                      <LabelList
-                        position="top"
-                        valueAccessor={valueAccessor(column)}
-                        formatter={(tick: any) => {
-                          const sum = props.columns
-                            .slice(1)
-                            .map((column) => tick[column])
-                            .reduce((a, b) => a + b, 0);
-                          const allPercentage = props.columns
-                            .slice(1)
-                            .every((c: string) =>
-                              props.columnsMetadata.some(
-                                (cm: any) =>
-                                  cm.columnName === c &&
-                                  cm.numberType === NumberDataType.Percentage
-                              )
+                    {!props.hideDataLabels &&
+                      props.stackedChart &&
+                      index === props.columns.length - 2 && (
+                        <LabelList
+                          position="top"
+                          valueAccessor={valueAccessor(column)}
+                          formatter={(tick: any) => {
+                            return TickFormatter.stackedFormat(
+                              tick,
+                              yAxisLargestValue,
+                              props.significantDigitLabels,
+                              props.columns.slice(1),
+                              props.columnsMetadata
                             );
-                          const allCurrencyDollar = props.columns
-                            .slice(1)
-                            .every((c: string) =>
-                              props.columnsMetadata.some(
-                                (cm: any) =>
-                                  cm.columnName === c &&
-                                  cm.numberType === NumberDataType.Currency &&
-                                  cm.currencyType !== undefined &&
-                                  cm.currencyType ===
-                                    CurrencyDataType["Dollar $"]
-                              )
-                            );
-                          const allCurrencyEuro = props.columns
-                            .slice(1)
-                            .every((c: string) =>
-                              props.columnsMetadata.some(
-                                (cm: any) =>
-                                  cm.columnName === c &&
-                                  cm.numberType === NumberDataType.Currency &&
-                                  cm.currencyType !== undefined &&
-                                  cm.currencyType === CurrencyDataType["Euro €"]
-                              )
-                            );
-                          const allCurrencyPound = props.columns
-                            .slice(1)
-                            .every((c: string) =>
-                              props.columnsMetadata.some(
-                                (cm: any) =>
-                                  cm.columnName === c &&
-                                  cm.numberType === NumberDataType.Currency &&
-                                  cm.currencyType !== undefined &&
-                                  cm.currencyType ===
-                                    CurrencyDataType["Pound £"]
-                              )
-                            );
-                          return TickFormatter.format(
-                            sum,
-                            yAxisLargestValue,
-                            props.significantDigitLabels,
-                            allPercentage ? NumberDataType.Percentage : "",
-                            allCurrencyDollar
-                              ? CurrencyDataType["Dollar $"]
-                              : allCurrencyEuro
-                              ? CurrencyDataType["Euro €"]
-                              : allCurrencyPound
-                              ? CurrencyDataType["Pound £"]
-                              : ""
-                          );
-                        }}
-                      />
-                    )}
+                          }}
+                        />
+                      )}
                     {!props.hideDataLabels && !props.stackedChart && (
                       <LabelList
                         dataKey={column}

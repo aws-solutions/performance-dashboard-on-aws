@@ -916,10 +916,13 @@
   "Horizontally": "Horizontally",
   "Vertically": "Vertically",
   "TableOfContents": "Table of Contents",
-  "TableOfContentsDescription": "Adds a table of contents to provide a dashboard overview for navigation",
+  "TableOfContentsDescription": "Adds a table of contents to display a dashboard overview",
   "EditTableOfContents": "Edit Table of Contents",
   "TableOfContentsSuccessfullyEdited": "Table of Contents successfully edited.",
   "NoTableOfContentsItems": "This dashboard has no content items. Content items must be added to the dashboard before they can be included in the table of contents.",
   "SelectAll": "Select all",
-  "DeselectAll": "Deselect all"
+  "DeselectAll": "Deselect all",
+  "EditTableOfContentsDescription": "The table of contents displays an overview of the content items in your dashboard. Customize the table of contents by selecting which content items to include. If a content item is selected below, its title will be included in the table of contents.",
+  "DisplayWithPages": "Display with pages",
+  "SelectColumns": "Select columns to format data."
 }

@@ -40,4 +40,4 @@ mv $HOMEDIR/NOTICE $HOMEDIR/NOTICE.txt
 cp $HOMEDIR/solutions/buildspec.yml $HOMEDIR
 cp $HOMEDIR/solutions/.viperlightignore $HOMEDIR
 cp $HOMEDIR/solutions/.viperlightrc $HOMEDIR
-cp $HOMEDIR/solutions/CHANGELOG.md $HOMEDIR
+# cp $HOMEDIR/solutions/CHANGELOG.md $HOMEDIR

@@ -41,7 +41,7 @@ function getVisualWidth(label: any, font?: string, fontSize?: string) {
       if (fontSize !== ruler.style.fontSize) {
         ruler.style.fontSize = fontSize || "";
       }
-      ruler.innerHTML = str[i];
+      ruler.innerText = str[i];
       map[str[i]] = ruler.clientWidth + 1;
     }
     count += map[str[i]];

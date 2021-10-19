@@ -43,7 +43,7 @@ export class DashboardExamplesStack extends cdk.Stack {
         databaseTableName: props.databaseTableName,
         databaseTableArn: props.databaseTableArn,
         adminEmail: props.adminEmail,
-        exampleLanguage: parameters.exampleLanguage.valueAsString,
+        exampleLanguage: exampleLanguage.valueAsString,
       }
     );
 

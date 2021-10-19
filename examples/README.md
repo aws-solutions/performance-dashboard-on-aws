@@ -5,7 +5,7 @@ The insert script requires the following parameters
 - tableName - the name of the dynamo db table to store entities in. This is DynamoDbTableName in CloudFormation.
 - examples - the name of the examples bucket where the examples files are stored. This is ExamplesStorageBucket in CloudFormation.
 - datasets - the name of the datasets bucket where uploaded files are stored. This is DatasetsBucketName in CloudFormation.
-- useremail - the name of the use to be used for created by in examples. This is the same as the adminEmail. Passed in through adminEmail CloudFormation Patameter.
+- userEmail - the name of the use to be used for created by in examples. This is the same as the adminEmail. Passed in through adminEmail CloudFormation Patameter.
 - language - the name of the language to be used for examples. Defaults to english. Passed in through exampleLanguage CloudFormation Patameter.
 
 When the scripts runs through the cli or the lambda it looks for these parameters in environment variables.
@@ -61,7 +61,7 @@ EXAMPLE_DATASETBUCKET=
 EXAMPLE_USEREMAIL=
 EXAMPLE_LANGUAGE=
 
-ISENGARD_PRODUCTION_ACCOUNT=false
+# AWS CLI Credentials
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_SESSION_TOKEN=

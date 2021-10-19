@@ -11,7 +11,7 @@ interface Props {
   databaseTableName: string;
   databaseTableArn: string;
   adminEmail: string;
-  language: string;
+  exampleLanguage: string;
 }
 
 export class ExampleDashboardLambda extends cdk.Construct {
@@ -35,7 +35,7 @@ export class ExampleDashboardLambda extends cdk.Construct {
         EXAMPLE_EXAMPLESBUCKET: props.exampleBucketName,
         EXAMPLE_DATASETBUCKET: props.datasetBucketName,
         EXAMPLE_USEREMAIL: props.adminEmail,
-        EXAMPLE_LANGUAGE: props.language,
+        EXAMPLE_LANGUAGE: props.exampleLanguage,
       },
     });
 

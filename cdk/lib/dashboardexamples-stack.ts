@@ -4,7 +4,6 @@ import s3Deploy = require("@aws-cdk/aws-s3-deployment");
 import * as s3 from "@aws-cdk/aws-s3";
 import { ExampleDashboardLambda } from "./constructs/exampledashboardlambda";
 import customResource = require("@aws-cdk/custom-resources");
-import { ExampleLanguageParameter } from "./constructs/parameters";
 
 interface DashboardExamplesProps extends cdk.StackProps {
   datasetsBucketName: string;
@@ -21,7 +20,12 @@ export class DashboardExamplesStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: DashboardExamplesProps) {
     super(scope, id, props);
 
-    const exampleLanguage = new ExampleLanguageParameter(this);
+    const exampleLanguage = new cdk.CfnParameter(this, "exampleLanguage", {
+      type: "String",
+      description: "Language for example dashboards",
+      allowedValues: ["english", "spanish", "portuguese"],
+      default: "english",
+    });
 
     const exampleBucket = new s3.Bucket(this, "ExampleBucket", {
       encryption: s3.BucketEncryption.S3_MANAGED,
@@ -39,7 +43,7 @@ export class DashboardExamplesStack extends cdk.Stack {
         databaseTableName: props.databaseTableName,
         databaseTableArn: props.databaseTableArn,
         adminEmail: props.adminEmail,
-        language: exampleLanguage.valueAsString.toLowerCase(),
+        exampleLanguage: parameters.exampleLanguage.valueAsString,
       }
     );
 

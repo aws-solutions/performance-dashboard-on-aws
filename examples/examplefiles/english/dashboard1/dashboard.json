@@ -26,12 +26,6 @@
   "dashboardName": {
     "S": "[Example Dashboard]"
   },
-  "publishedBy": {
-    "S": "cdk-deploy"
-  },
-  "submittedBy": {
-    "S": "cdk-deploy"
-  },
   "topicAreaId": {
     "S": ""
   },

@@ -43,9 +43,10 @@ const saveDashboard = async function(deploymentContext, topicAreaId, dashboardBu
 
     let dashboardEntity = await awsWrapper.getJsonOfKey(deploymentContext.examplesBucket, dashboardBucketKey);
 
-    dashboardEntity.pk.S = generateDBId(databaseIdPrefixes.dashboard);
+    const entityId = uuidv4();
+    dashboardEntity.pk.S = generateDBId(databaseIdPrefixes.dashboard, entityId);
     dashboardEntity.sk.S = dashboardEntity.pk.S;
-    dashboardEntity.parentDashboardId.S = dashboardEntity.pk.S;
+    dashboardEntity.parentDashboardId.S = entityId;
 
     dashboardEntity.publishedBy.S = deploymentContext.createdBy;
     dashboardEntity.submittedBy.S = deploymentContext.createdBy;

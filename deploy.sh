@@ -90,7 +90,7 @@ deploy_ops() {
     npm run build
 
     cd $CDK_DIR
-    npm run cdk -- deploy DashboardExamples --require-approval never --parameters exampleLanguage=$exampleLanguage
+    npm run cdk -- deploy DashboardExamples --require-approval never --parameters PerformanceDash-${environment}-Frontend:exampleLanguage=${exampleLanguage}
 }
 build_cdk() {
     cd $CDK_DIR

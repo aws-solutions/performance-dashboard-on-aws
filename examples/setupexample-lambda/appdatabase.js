@@ -48,8 +48,6 @@ const saveDashboard = async function(deploymentContext, topicAreaId, dashboardBu
     dashboardEntity.sk.S = dashboardEntity.pk.S;
     dashboardEntity.parentDashboardId.S = entityId;
 
-    dashboardEntity.publishedBy.S = deploymentContext.createdBy;
-    dashboardEntity.submittedBy.S = deploymentContext.createdBy;
     dashboardEntity.createdBy.S = deploymentContext.createdBy;
     dashboardEntity.updatedBy.S = deploymentContext.createdBy;
 

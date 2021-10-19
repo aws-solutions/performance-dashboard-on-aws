@@ -54,6 +54,11 @@ async function downloadFile(
   if (!data || !data.Body) {
     throw new Error(t("DownloadFileError"));
   }
+  try {
+    data.Body.name = data.Metadata.filename;
+  } catch (err) {
+    console.log(t("FileNameDoesNotExist"));
+  }
   return data.Body as File;
 }
 
@@ -103,12 +108,14 @@ async function uploadFile(
         contentDisposition: `attachment; filename="${rawFile.name}"`,
         contentType: rawFile.type,
         serverSideEncryption,
+        metadata: { fileName: rawFile.name },
       })
     : await Storage.put(fileS3Key, rawFile, {
         level: accessLevel,
         contentDisposition: `attachment; filename="${rawFile.name}"`,
         contentType: rawFile.type,
         serverSideEncryption,
+        metadata: { fileName: rawFile.name },
       });
 }
 

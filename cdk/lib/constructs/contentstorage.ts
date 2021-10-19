@@ -55,6 +55,7 @@ export class ContentStorage extends cdk.Construct {
             "x-amz-server-side-encryption",
             "x-amz-request-id",
             "x-amz-id-2",
+            "x-amz-meta-filename",
             "ETag",
           ],
         },

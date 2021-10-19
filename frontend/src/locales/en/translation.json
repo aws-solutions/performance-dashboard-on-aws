@@ -289,6 +289,7 @@
     "ChooseData": "Choose data",
     "Visualize": "Visualize",
     "UploadingFile": "Uploading file",
+    "FileNameDoesNotExist": "Metadata does not contain file name",
     "CreatingMetrics": "Creating metrics",
     "Data": "Data",
     "DataHint": "Choose an existing dataset or create a new one to populate this metrics",

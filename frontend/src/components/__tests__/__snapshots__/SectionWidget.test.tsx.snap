@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`section preview should match snapshot 1`] = `
+<div>
+  <div>
+    <div>
+      <h2>
+        test title
+      </h2>
+      <div
+        class="padding-left-05"
+      >
+        <div
+          class="Markdown usa-prose textOrSummary"
+        >
+          <p>
+            test summary
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

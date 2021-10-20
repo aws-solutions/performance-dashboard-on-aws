@@ -1,0 +1,489 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a Data Table element 1`] = `
+<div>
+  <div
+    class="text-right margin-right-05"
+  >
+    <button
+      aria-controls="menu--33"
+      aria-haspopup="true"
+      class="usa-button usa-button--unstyled text-base"
+      data-reach-menu-button=""
+      id="menu-button--menu--33"
+      type="button"
+    >
+      Actions
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+        data-icon="caret-down"
+        data-prefix="fas"
+        focusable="false"
+        role="img"
+        viewBox="0 0 320 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+          fill="currentColor"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="overflow-x-hidden overflow-y-hidden"
+  >
+    <table
+      class="usa-table usa-table--borderless"
+      role="table"
+    >
+      <thead>
+        <tr
+          role="row"
+        >
+          <th
+            colspan="1"
+            role="columnheader"
+            scope="col"
+            style="min-width: 150px;"
+          >
+            <span>
+              year
+            </span>
+            <button
+              class="margin-left-1 usa-button usa-button--unstyled"
+              style="cursor: pointer;"
+              title="Toggle SortBy year"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                data-icon="chevron-up"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </th>
+          <th
+            colspan="1"
+            role="columnheader"
+            scope="col"
+            style="min-width: 150px;"
+          >
+            <span>
+              sales
+            </span>
+            <button
+              class="margin-left-1 usa-button usa-button--unstyled"
+              style="cursor: pointer;"
+              title="Toggle SortBy sales"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                data-icon="chevron-up"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </th>
+          <th
+            colspan="1"
+            role="columnheader"
+            scope="col"
+            style="min-width: 150px;"
+          >
+            <span>
+              revenue
+            </span>
+            <button
+              class="margin-left-1 usa-button usa-button--unstyled"
+              style="cursor: pointer;"
+              title="Toggle SortBy revenue"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                data-icon="chevron-up"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        role="rowgroup"
+      >
+        <tr
+          role="row"
+        >
+          <th
+            role="cell"
+            scope="row"
+          >
+            2015
+          </th>
+          <td
+            role="cell"
+          >
+            $10,000
+          </td>
+          <td
+            role="cell"
+          >
+            34%
+          </td>
+        </tr>
+        <tr
+          role="row"
+        >
+          <th
+            role="cell"
+            scope="row"
+          >
+            2016
+          </th>
+          <td
+            role="cell"
+          >
+            $45,000
+          </td>
+          <td
+            role="cell"
+          >
+            74%
+          </td>
+        </tr>
+        <tr
+          role="row"
+        >
+          <th
+            role="cell"
+            scope="row"
+          >
+            2017
+          </th>
+          <td
+            role="cell"
+          >
+            $56,000
+          </td>
+          <td
+            role="cell"
+          >
+            23%
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+`;
+
+exports[`renders a Data Table element on mobile 1`] = `
+<div>
+  <div
+    class="margin-left-05"
+  >
+    <button
+      aria-controls="menu--40"
+      aria-haspopup="true"
+      class="usa-button usa-button--unstyled text-base"
+      data-reach-menu-button=""
+      id="menu-button--menu--40"
+      type="button"
+    >
+      Actions
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+        data-icon="caret-down"
+        data-prefix="fas"
+        focusable="false"
+        role="img"
+        viewBox="0 0 320 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+          fill="currentColor"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="overflow-x-hidden overflow-y-hidden"
+  >
+    <table
+      class="usa-table usa-table--borderless"
+      role="table"
+    >
+      <thead>
+        <tr
+          role="row"
+        >
+          <th
+            colspan="1"
+            role="columnheader"
+            scope="col"
+            style="min-width: 150px;"
+          >
+            <span>
+              year
+            </span>
+            <button
+              class="margin-left-1 usa-button usa-button--unstyled"
+              style="cursor: pointer;"
+              title="Toggle SortBy year"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                data-icon="chevron-up"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </th>
+          <th
+            colspan="1"
+            role="columnheader"
+            scope="col"
+            style="min-width: 150px;"
+          >
+            <span>
+              sales
+            </span>
+            <button
+              class="margin-left-1 usa-button usa-button--unstyled"
+              style="cursor: pointer;"
+              title="Toggle SortBy sales"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                data-icon="chevron-up"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </th>
+          <th
+            colspan="1"
+            role="columnheader"
+            scope="col"
+            style="min-width: 150px;"
+          >
+            <span>
+              revenue
+            </span>
+            <button
+              class="margin-left-1 usa-button usa-button--unstyled"
+              style="cursor: pointer;"
+              title="Toggle SortBy revenue"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                data-icon="chevron-up"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        role="rowgroup"
+      >
+        <tr
+          role="row"
+        >
+          <th
+            role="cell"
+            scope="row"
+          >
+            2015
+          </th>
+          <td
+            role="cell"
+          >
+            $10,000
+          </td>
+          <td
+            role="cell"
+          >
+            34%
+          </td>
+        </tr>
+        <tr
+          role="row"
+        >
+          <th
+            role="cell"
+            scope="row"
+          >
+            2016
+          </th>
+          <td
+            role="cell"
+          >
+            $45,000
+          </td>
+          <td
+            role="cell"
+          >
+            74%
+          </td>
+        </tr>
+        <tr
+          role="row"
+        >
+          <th
+            role="cell"
+            scope="row"
+          >
+            2017
+          </th>
+          <td
+            role="cell"
+          >
+            $56,000
+          </td>
+          <td
+            role="cell"
+          >
+            23%
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+`;
+
+exports[`renders a Data Table element with hidden table 1`] = `
+<div>
+  <div
+    class="text-right margin-right-05"
+  >
+    <button
+      aria-controls="menu--23"
+      aria-haspopup="true"
+      class="usa-button usa-button--unstyled text-base"
+      data-reach-menu-button=""
+      id="menu-button--menu--23"
+      type="button"
+    >
+      Actions
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+        data-icon="caret-down"
+        data-prefix="fas"
+        focusable="false"
+        role="img"
+        viewBox="0 0 320 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+          fill="currentColor"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`renders a Data Table element with hidden table on mobile 1`] = `
+<div>
+  <div
+    class="margin-left-05"
+  >
+    <button
+      aria-controls="menu--28"
+      aria-haspopup="true"
+      class="usa-button usa-button--unstyled text-base"
+      data-reach-menu-button=""
+      id="menu-button--menu--28"
+      type="button"
+    >
+      Actions
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+        data-icon="caret-down"
+        data-prefix="fas"
+        focusable="false"
+        role="img"
+        viewBox="0 0 320 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+          fill="currentColor"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;

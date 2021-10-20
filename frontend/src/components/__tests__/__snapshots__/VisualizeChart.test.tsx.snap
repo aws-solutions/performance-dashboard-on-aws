@@ -476,7 +476,7 @@ exports[`renders the VisualizeChart component 1`] = `
           />
           <div>
             <div
-              class="text-right"
+              class="text-right margin-right-05"
             >
               <button
                 aria-controls="menu--1"
@@ -987,7 +987,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           />
           <div>
             <div
-              class="text-right"
+              class="text-right margin-right-05"
             >
               <button
                 aria-controls="menu--7"

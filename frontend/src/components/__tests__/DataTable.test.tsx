@@ -49,22 +49,29 @@ const columnsMetadata: ColumnMetadata[] = [
   },
 ];
 
-beforeEach(() => {
+test("table should be hidden by default", async () => {
   render(
     <DataTable
       rows={rows}
       columns={columns}
       columnsMetadata={columnsMetadata}
       fileName={"test-file-name"}
+      showMobilePreview={false}
     />
   );
-});
-
-test("table should be hidden by default", async () => {
   expect(screen.queryByRole("table")).not.toBeInTheDocument();
 });
 
 test("shows and hides table when button is clicked", async () => {
+  render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      columnsMetadata={columnsMetadata}
+      fileName={"test-file-name"}
+      showMobilePreview={false}
+    />
+  );
   const showTableBtn = screen.getByText("Show data table");
   userEvent.click(showTableBtn);
   expect(screen.getByRole("table")).toBeInTheDocument();
@@ -75,6 +82,15 @@ test("shows and hides table when button is clicked", async () => {
 });
 
 test("displays a table with values properly formatted", async () => {
+  render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      columnsMetadata={columnsMetadata}
+      fileName={"test-file-name"}
+      showMobilePreview={false}
+    />
+  );
   const showTableBtn = screen.getByText("Show data table");
   userEvent.click(showTableBtn);
 
@@ -92,4 +108,66 @@ test("displays a table with values properly formatted", async () => {
   expect(screen.getByText("34%")).toBeInTheDocument();
   expect(screen.getByText("74%")).toBeInTheDocument();
   expect(screen.getByText("23%")).toBeInTheDocument();
+});
+
+test("renders a Data Table element with hidden table", async () => {
+  const wrapper = render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      columnsMetadata={columnsMetadata}
+      fileName={"test-file-name"}
+      showMobilePreview={false}
+    />
+  );
+
+  expect(wrapper.container).toMatchSnapshot();
+});
+
+test("renders a Data Table element with hidden table on mobile", async () => {
+  const wrapper = render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      columnsMetadata={columnsMetadata}
+      fileName={"test-file-name"}
+      showMobilePreview={true}
+    />
+  );
+
+  expect(wrapper.container).toMatchSnapshot();
+});
+
+test("renders a Data Table element", async () => {
+  const wrapper = render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      columnsMetadata={columnsMetadata}
+      fileName={"test-file-name"}
+      showMobilePreview={false}
+    />
+  );
+
+  const showTableBtn = wrapper.getByText("Show data table");
+  userEvent.click(showTableBtn);
+
+  expect(wrapper.container).toMatchSnapshot();
+});
+
+test("renders a Data Table element on mobile", async () => {
+  const wrapper = render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      columnsMetadata={columnsMetadata}
+      fileName={"test-file-name"}
+      showMobilePreview={true}
+    />
+  );
+
+  const showTableBtn = wrapper.getByText("Show data table");
+  userEvent.click(showTableBtn);
+
+  expect(wrapper.container).toMatchSnapshot();
 });

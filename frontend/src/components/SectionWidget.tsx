@@ -44,20 +44,49 @@ function SectionWidget(props: Props) {
 
   return (
     <div>
-      {showTitle && <h2>{content.title}</h2>}
-      {content.summary ? (
-        <div className="padding-left-05">
-          <MarkdownRender
-            className="usa-prose textOrSummary"
-            source={content.summary}
-          />
-        </div>
+      {!content.showWithTabs ? (
+        <Waypoint
+          onEnter={() => {
+            if (props.setActiveWidgetId) {
+              props.setActiveWidgetId(props.widget.id);
+            }
+          }}
+          topOffset={props.topOffset}
+          bottomOffset={props.bottomOffset}
+          fireOnRapidScroll={false}
+        >
+          <div>
+            {showTitle && <h2>{content.title}</h2>}
+            {content.summary ? (
+              <div className="padding-left-05">
+                <MarkdownRender
+                  className="usa-prose textOrSummary"
+                  source={content.summary}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </Waypoint>
       ) : (
-        ""
+        <>
+          {showTitle && <h2>{content.title}</h2>}
+          {content.summary ? (
+            <div className="padding-left-05">
+              <MarkdownRender
+                className="usa-prose textOrSummary"
+                source={content.summary}
+              />
+            </div>
+          ) : (
+            ""
+          )}
+        </>
       )}
-      {!props.widget.content.showWithTabs &&
-        props.widget.content.widgetIds &&
-        props.widget.content.widgetIds.map((id: string, index: number) => {
+      {!content.showWithTabs &&
+        content.widgetIds &&
+        content.widgetIds.map((id: string, index: number) => {
           const widget = props.widgets?.find((w) => w.id === id);
           if (widget) {
             return (
@@ -86,17 +115,17 @@ function SectionWidget(props: Props) {
           }
           return false;
         })}
-      {props.widget.content.showWithTabs &&
-        (props.widget.content.horizontally ||
+      {content.showWithTabs &&
+        (content.horizontally ||
           props.showMobilePreview ||
           windowSize.width <= 600) &&
-        props.widget.content.widgetIds && (
+        content.widgetIds && (
           <Tabs
             defaultActive={activeTabId}
             showArrows
             activeColor={`${primaryColor}`}
           >
-            {props.widget.content.widgetIds.map((id: string, index: number) => {
+            {content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {
                 return (
@@ -113,16 +142,16 @@ function SectionWidget(props: Props) {
             })}
           </Tabs>
         )}
-      {props.widget.content.showWithTabs &&
-        !props.widget.content.horizontally &&
+      {content.showWithTabs &&
+        !content.horizontally &&
         !props.showMobilePreview &&
         windowSize.width > 600 &&
-        props.widget.content.widgetIds && (
+        content.widgetIds && (
           <TabsVertical
             defaultActive={activeTabId}
             activeColor={`${primaryColor}`}
           >
-            {props.widget.content.widgetIds.map((id: string, index: number) => {
+            {content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {
                 return (

@@ -159,11 +159,13 @@ export function useDashboards() {
 }
 
 export function useDashboard(dashboardId: string) {
+  const [dashboard] = useState(dummyDashboard);
+
   return {
     loading: false,
     reloadDashboard: jest.fn(),
     setDashboard: jest.fn(),
-    dashboard: dummyDashboard,
+    dashboard,
   };
 }
 

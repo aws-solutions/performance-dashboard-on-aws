@@ -8,6 +8,7 @@ interface Props {
   topicAreaName?: string;
   description?: string;
   unpublished?: boolean;
+  isMobile?: boolean;
   link?: React.ReactNode;
   lastUpdated?: Date;
 }
@@ -18,17 +19,21 @@ function DashboardHeader(props: Props) {
 
   return (
     <div className="usa-prose">
-      <div className={props.unpublished ? "" : "margin-top-2"}>
+      <div className={props.unpublished ? "" : "margin-top-0"}>
         <h1
           className={`display-inline-block ${
-            props.unpublished
-              ? "margin-bottom-0"
-              : "margin-bottom-1 font-sans-2xl"
+            props.isMobile ? "line-height-sans-2 " : ""
+          }${
+            props.unpublished ? "margin-bottom-0" : "margin-y-1 font-sans-xl"
           }`}
         >
           {props.name}
         </h1>
-        {props.link}
+        {props.isMobile ? (
+          <div className="margin-top-1">{props.link}</div>
+        ) : (
+          props.link
+        )}
         <div className="text-base text-italic margin-bottom-2">
           {props.topicAreaName}
           {props.lastUpdated &&

@@ -14,6 +14,7 @@ interface Props {
   datasetType: DatasetType | undefined;
   register: Function;
   onCancel: Function;
+  backStep: Function;
   advanceStep: Function;
   fileLoading: boolean;
   csvErrors: Array<object> | undefined;
@@ -248,6 +249,9 @@ function ChooseData(props: Props) {
       <br />
       <br />
       <hr />
+      <Button variant="outline" type="button" onClick={props.backStep}>
+        {t("BackButton")}
+      </Button>
       <Button
         type="button"
         onClick={props.advanceStep}

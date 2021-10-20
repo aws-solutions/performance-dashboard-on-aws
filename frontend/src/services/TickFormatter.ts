@@ -4,7 +4,6 @@ import {
   NumberDataType,
   CurrencyDataType,
 } from "../models";
-import ColumnsMetadataService from "./ColumnsMetadataService";
 
 const ONE_THOUSAND = 1000;
 const ONE_MILLION = 1000000;
@@ -18,6 +17,8 @@ function format(
   tick: any,
   largestTick: number,
   significantDigitLabels: boolean,
+  percentage: string,
+  currency: string,
   columnMetadata?: ColumnMetadata
 ): string {
   const dataType =
@@ -33,7 +34,9 @@ function format(
         tick,
         largestTick,
         significantDigitLabels,
-        columnMetadata
+        columnMetadata,
+        percentage,
+        currency
       );
     default:
       return tick;
@@ -70,32 +73,22 @@ function formatNumber(
     return "";
   }
 
+  if (columnMetadata && columnMetadata.numberType === NumberDataType.Currency) {
+    currency = columnMetadata.currencyType;
+  }
+
   if (
     columnMetadata &&
-    (columnMetadata.numberType === NumberDataType.Currency ||
-      columnMetadata.numberType === NumberDataType.Percentage)
+    columnMetadata.numberType === NumberDataType.Percentage
   ) {
-    return ColumnsMetadataService.formatNumber(
-      num,
-      columnMetadata.numberType,
-      columnMetadata.currencyType
-    );
+    percentage = NumberDataType.Percentage;
   }
 
-  let formattedNum = num.toLocaleString();
-
-  if (!significantDigitLabels || num === 0) {
-    formattedNum = num.toLocaleString();
-  } else if (Math.abs(largestTick) >= ONE_BILLION) {
-    const value = num / ONE_BILLION;
-    formattedNum = value.toLocaleString() + BILLIONS_LABEL;
-  } else if (Math.abs(largestTick) >= ONE_MILLION) {
-    const value = num / ONE_MILLION;
-    formattedNum = value.toLocaleString() + MILLIONS_LABEL;
-  } else if (Math.abs(largestTick) >= ONE_THOUSAND) {
-    const value = num / ONE_THOUSAND;
-    formattedNum = value.toLocaleString() + THOUSANDS_LABEL;
-  }
+  let formattedNum = formatSignificantDigits(
+    num,
+    largestTick,
+    significantDigitLabels
+  );
 
   if (!percentage && !currency) {
     if (formattedNum !== num.toLocaleString()) {
@@ -122,9 +115,89 @@ function formatNumber(
   return num.toLocaleString();
 }
 
+function formatSignificantDigits(
+  num: number,
+  largestTick: number,
+  significantDigitLabels: boolean
+): string {
+  let formattedNum = num.toLocaleString();
+
+  if (!significantDigitLabels || num === 0) {
+    formattedNum = num.toLocaleString();
+  } else if (Math.abs(largestTick) >= ONE_BILLION) {
+    const value = num / ONE_BILLION;
+    formattedNum = value.toLocaleString() + BILLIONS_LABEL;
+  } else if (Math.abs(largestTick) >= ONE_MILLION) {
+    const value = num / ONE_MILLION;
+    formattedNum = value.toLocaleString() + MILLIONS_LABEL;
+  } else if (Math.abs(largestTick) >= ONE_THOUSAND) {
+    const value = num / ONE_THOUSAND;
+    formattedNum = value.toLocaleString() + THOUSANDS_LABEL;
+  }
+
+  return formattedNum;
+}
+
+function stackedFormat(
+  tick: any,
+  largestTick: number,
+  significantDigitLabels: boolean,
+  labels: string[],
+  labelsMetadata: ColumnMetadata[]
+) {
+  const sum = labels.map((column) => tick[column]).reduce((a, b) => a + b, 0);
+  const allPercentage = labels.every((c: string) =>
+    labelsMetadata.some(
+      (cm: any) =>
+        cm.columnName === c && cm.numberType === NumberDataType.Percentage
+    )
+  );
+  const allCurrencyDollar = labels.every((c: string) =>
+    labelsMetadata.some(
+      (cm: any) =>
+        cm.columnName === c &&
+        cm.numberType === NumberDataType.Currency &&
+        cm.currencyType !== undefined &&
+        cm.currencyType === CurrencyDataType["Dollar $"]
+    )
+  );
+  const allCurrencyEuro = labels.every((c: string) =>
+    labelsMetadata.some(
+      (cm: any) =>
+        cm.columnName === c &&
+        cm.numberType === NumberDataType.Currency &&
+        cm.currencyType !== undefined &&
+        cm.currencyType === CurrencyDataType["Euro €"]
+    )
+  );
+  const allCurrencyPound = labels.every((c: string) =>
+    labelsMetadata.some(
+      (cm: any) =>
+        cm.columnName === c &&
+        cm.numberType === NumberDataType.Currency &&
+        cm.currencyType !== undefined &&
+        cm.currencyType === CurrencyDataType["Pound £"]
+    )
+  );
+  return format(
+    sum,
+    largestTick,
+    significantDigitLabels,
+    allPercentage ? NumberDataType.Percentage : "",
+    allCurrencyDollar
+      ? CurrencyDataType["Dollar $"]
+      : allCurrencyEuro
+      ? CurrencyDataType["Euro €"]
+      : allCurrencyPound
+      ? CurrencyDataType["Pound £"]
+      : ""
+  );
+}
+
 const TickFormatter = {
   format,
   formatNumber,
+  stackedFormat: stackedFormat,
 };
 
 export default TickFormatter;

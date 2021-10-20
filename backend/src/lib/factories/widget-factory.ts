@@ -133,6 +133,10 @@ function fromChartItem(widget: Widget): ChartWidget {
         chartWidget.content.dataLabels !== undefined
           ? chartWidget.content.dataLabels
           : false,
+      computePercentages:
+        chartWidget.content.computePercentages !== undefined
+          ? chartWidget.content.computePercentages
+          : false,
       showTotal:
         chartWidget.content.showTotal !== undefined
           ? chartWidget.content.showTotal
@@ -158,6 +162,10 @@ function fromTableItem(widget: Widget): TableWidget {
       significantDigitLabels:
         tableWidget.content.significantDigitLabels !== undefined
           ? tableWidget.content.significantDigitLabels
+          : false,
+      displayWithPages:
+        tableWidget.content.displayWithPages !== undefined
+          ? tableWidget.content.displayWithPages
           : false,
     },
   };
@@ -278,12 +286,19 @@ function createChartWidget(widget: Widget): ChartWidget {
         widget.content.dataLabels !== undefined
           ? widget.content.dataLabels
           : false,
+      computePercentages:
+        widget.content.computePercentages !== undefined
+          ? widget.content.computePercentages
+          : false,
       showTotal:
         widget.content.showTotal !== undefined
           ? widget.content.showTotal
           : true,
       ...(widget.content.horizontalScroll && {
         horizontalScroll: widget.content.horizontalScroll,
+      }),
+      ...(widget.content.stackedChart && {
+        stackedChart: widget.content.stackedChart,
       }),
     },
   };
@@ -322,6 +337,10 @@ function createTableWidget(widget: Widget): TableWidget {
       significantDigitLabels:
         widget.content.significantDigitLabels !== undefined
           ? widget.content.significantDigitLabels
+          : false,
+      displayWithPages:
+        widget.content.displayWithPages !== undefined
+          ? widget.content.displayWithPages
           : false,
     },
   };
@@ -398,6 +417,7 @@ function createSectionWidget(widget: Widget): SectionWidget {
       widgetIds: widget.content.widgetIds,
       summary: widget.content.summary,
       showWithTabs: widget.content.showWithTabs,
+      horizontally: widget.content.horizontally,
     },
   };
 }

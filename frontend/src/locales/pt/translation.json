@@ -80,8 +80,8 @@
   "WantToViewPublishedSite": "Deseja ver o que seu público vê?",
   "ViewPublishedSite": "Visualizar o site publicado",
   "NewDraftDashboardCreated": {
-    "part1": "Uma nova versão de rascunho do painel ",
-    "part2": " foi criada."
+    "part1": "Uma nova versão de rascunho do ",
+    "part2": " painel foi criado."
   },
   "DashboardWasArchived": "foi arquivado com êxito.",
   "DashboardWasDeleted": "foi excluído com êxito.",
@@ -103,29 +103,29 @@
   "CreatedBy": "Criado por",
   "Dashboards": "Painéis",
   "CreateDraftDashboardModalTitle": {
-    "part1": "Atualizar o painel ",
-    "part2": ""
+    "part1": "Atualizar ",
+    "part2": " painel"
   },
-  "CreateDraftDashboardModalMessage": "Isso criará um novo rascunho do painel cujo conteúdo você poderá editar e, em seguida, publicar no site publicado.",
+  "CreateDraftDashboardModalMessage": "Isso criará um novo rascunho do painel que permitirá que você edite o conteúdo e publique a nova versão no site publicado.",
   "CreateDraftDashboardModalButton": "Criar rascunho",
   "ArchiveDashboardModalTitle": {
-    "part1": "Arquivar o painel ",
-    "part2": ""
+    "part1": "Arquivar ",
+    "part2": " painel"
   },
   "ArchiveDashboardModalMessage": {
-    "part1": "Isso removerá o painel ",
-    "part2": " do site publicado. Você pode republicar painéis arquivados a qualquer momento."
+    "part1": "Isso removerá ",
+    "part2": " o painel do site publicado. Você pode publicar novamente os painéis arquivados a qualquer momento."
   },
   "ArchiveDashboardModalButton": "Arquivar",
   "RepublishDashboardModalTitle": {
-    "part1": "Republicar o painel ",
-    "part2": ""
+    "part1": "Republicar ",
+    "part2": " painel"
   },
   "RepublishDashboardModalMessage": "Tem certeza de que deseja republicar este painel?",
   "RepublishDashboardModalButton": "Republicar",
   "PreparePublishingModalTitle": {
-    "part1": "Preparar o painel ",
-    "part2": " para publicação"
+    "part1": "Prepare ",
+    "part2": " o painel para publicação"
   },
   "PreparePublishingModalMessage": {
     "part1": "Este painel não tem itens de conteúdo. ",
@@ -139,7 +139,7 @@
     "Draft": " rascunho"
   },
   "DashboardPreviewPublishedMessage": "Veja abaixo uma visualização do painel publicado. Se estiver tudo pronto, você pode publicar o painel para disponibilizá-lo no site publicado.",
-  "RepublishDashboardToView": "Este painel está arquivado. Ele só será visível no site publicado se for republicado.",
+  "RepublishDashboardToView": "O painel foi arquivado. Ele somente será visível no site se for republicado.",
   "ViewDashboardAlertVersionNotes": {
     "Show": "Mostrar",
     "Hide": "Ocultar",
@@ -168,8 +168,10 @@
     "ChartTypeError": "Selecione um tipo de gráfico",
     "DisplayHorizontalScroll": "Exibir com rolagem horizontal",
     "ShowDataLabels": "Mostrar rótulos de dados",
+    "ComputePercentages": "Exibir porcentagens calculadas",
     "ShowTotal": "Mostrar total no centro do gráfico",
-    "ChartCorrectDisplay": "O gráfico parece estar correto?"
+    "ChartCorrectDisplay": "O gráfico parece estar correto?",
+    "StackedChart": "Exibir como gráfico empilhado"
   },
   "ViewDashboardAlertVersionNotesFrom": "Notas da versão {{version}}",
   "ViewDashboardAlertVersion": "Versão",
@@ -185,27 +187,11 @@
     "AddText": "Adicionar texto",
     "AddTextError": "Resolver erros para adicionar o texto",
     "AddTextSuccess": {
-      "part1": "O texto “",
-      "part2": "” foi adicionado com êxito."
+      "part1": "O texto '",
+      "part2": "' foi adicionado com êxito."
     },
     "CreatingText": "Criação de texto",
     "Configure": "Configurar conteúdo do texto",
-    "TextTitle": "Título do texto",
-    "TextTitleError": "Especifique um título para o texto",
-    "TextTitleHint": "Forneça um título descritivo ao seu conteúdo.",
-    "ShowTitle": "Mostrar título no painel",
-    "TextHint": "Insira o texto aqui. Este campo é compatível com a linguagem Markdown.",
-    "TextError": "Especifique o conteúdo do texto",
-    "ViewMarkdownSyntax": "Visualizar sintaxe Markdown"
-  },
-  "EditTextScreen": {
-    "EditText": "Editar texto",
-    "EditTextError": "Resolva o(s) erro(s) para editar o texto",
-    "EditTextSuccess": {
-      "part1": "O texto “",
-      "part2": "” foi editado com êxito."
-    },
-    "EditingText": "Editando texto",
     "TextTitle": "Título do texto",
     "TextTitleError": "Especifique um título para o texto",
     "TextTitleHint": "Forneça um título descritivo ao seu conteúdo.",
@@ -227,6 +213,22 @@
     "ViewMarkdownSyntax": "Visualizar sintaxe Markdown",
     "SectionSummary": "Resumo da seção - opcional",
     "SectionSummaryHint": "Forneça um resumo à sua seção para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a seção a usuários com deficiência visual. Esse campo oferece suporte para Markdown."
+  },
+  "EditTextScreen": {
+    "EditText": "Editar texto",
+    "EditTextError": "Resolva o(s) erro(s) para editar o texto",
+    "EditTextSuccess": {
+      "part1": "O texto '",
+      "part2": "' foi editado com êxito."
+    },
+    "EditingText": "Editando texto",
+    "TextTitle": "Título do texto",
+    "TextTitleError": "Especifique um título para o texto",
+    "TextTitleHint": "Forneça um título descritivo ao seu conteúdo.",
+    "ShowTitle": "Mostrar título no painel",
+    "TextHint": "Insira o texto aqui. Este campo é compatível com a linguagem Markdown.",
+    "TextError": "Especifique o conteúdo do texto",
+    "ViewMarkdownSyntax": "Visualizar sintaxe Markdown"
   },
   "EditSectionScreen": {
     "EditSection": "Editar seção",
@@ -275,8 +277,8 @@
   },
   "AddMetricsScreen": {
     "MetricsAddedSuccessfully": {
-      "part1": "As métricas “",
-      "part2": "” foram adicionadas com êxito."
+      "part1": "As métricas '",
+      "part2": "' foram adicionadas com êxito."
     },
     "Name": "Nome",
     "LastUpdated": "Última atualização",
@@ -308,8 +310,8 @@
   },
   "EditMetricsScreen": {
     "MetricsEditedSuccessfully": {
-      "part1": "As métricas “",
-      "part2": "” foram editadas com êxito."
+      "part1": "As métricas '",
+      "part2": "' foram editadas com êxito."
     },
     "EditMetrics": "Editar métricas",
     "UploadingFile": "Fazendo upload do arquivo",
@@ -328,8 +330,8 @@
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
     "AddChartSuccess": {
-      "part1": "O gráfico “",
-      "part2": "” foi adicionado com êxito."
+      "part1": "O gráfico '",
+      "part2": "' foi adicionado com êxito."
     },
     "ResolveError": "Falha ao fazer o upload do arquivo. Certifique-se de que haja valores para todos os cabeçalhos de coluna."
   },
@@ -340,8 +342,8 @@
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
     "EditChartSuccess": {
-      "part1": "O gráfico “",
-      "part2": "” foi editado com êxito."
+      "part1": "O gráfico '",
+      "part2": "' foi editado com êxito."
     },
     "ResolveError": "Falha ao fazer o upload do arquivo. Certifique-se de que haja valores para todos os cabeçalhos de coluna."
   },
@@ -351,8 +353,8 @@
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
     "AddTableSuccess": {
-      "part1": "A tabela “",
-      "part2": "” foi adicionada com êxito."
+      "part1": "A tabela '",
+      "part2": "' foi adicionada com êxito."
     },
     "ChooseDataset": "Escolha um conjunto de dados para continuar"
   },
@@ -362,8 +364,8 @@
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
     "EditTableSuccess": {
-      "part1": "A tabela “",
-      "part2": "” foi editada com êxito."
+      "part1": "A tabela '",
+      "part2": "' foi editada com êxito."
     }
   },
   "BrandingAndStyling": "Marca e estilo",
@@ -485,12 +487,12 @@
     "FailToSaveReleaseNotesError": "Falha ao salvar as notas de release. Tente novamente.",
     "MissingVersionNotesError": "Insira as notas da versão",
     "ReturnToDraftSuccessAlert": {
-      "part1": "Painel ",
-      "part2": " retornado com êxito ao estado de rascunho."
+      "part1": "",
+      "part2": " painel retornado com êxito ao estado de rascunho."
     },
     "PublishedSuccessAlert": {
-      "part1": "O painel ",
-      "part2": " foi publicado com êxito."
+      "part1": "",
+      "part2": " o painel foi publicado com êxito."
     }
   },
   "SettingsDateTimeFormat": "Formato de data e hora",
@@ -841,8 +843,8 @@
   "AddImageScreen": {
     "ImageFileNotSpecified": "Arquivo de imagem não especificado",
     "ImageAddedSuccessfully": {
-      "part1": "A imagem “",
-      "part2": "” foi adicionada com êxito."
+      "part1": "A imagem '",
+      "part2": "' foi adicionada com êxito."
     },
     "AddImage": "Adicionar imagem",
     "ConfigureImage": "Configurar imagem",
@@ -867,8 +869,8 @@
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": {
-      "part1": "A imagem “",
-      "part2": "” foi editada com êxito."
+      "part1": "A imagem '",
+      "part2": "' foi editada com êxito."
     },
     "EditImage": "Editar imagem",
     "ResolveError": "Resolva o(s) erro(s) para editar a imagem",
@@ -904,5 +906,23 @@
   "Copy": "Copiar",
   "CopyContent": "Copiar {{name}}",
   "DownloadCSV": "Fazer download",
-  "MobilePreview": "Pré-visualização para dispositivos móveis"
+  "MobilePreview": "Pré-visualização para dispositivos móveis",
+  "MetricsCenterAlign": "Exibição com alinhamento central",
+  "DisplayTableOfContents": "Exibir índice",
+  "Current": "Atual",
+  "SectionOptionsLabel": "Opções da seção",
+  "SectionOptionsDescription": "Formatar a seção",
+  "ShowWithTabs": "Exibir itens de conteúdo da seção com guias",
+  "Horizontally": "Horizontalmente",
+  "Vertically": "Verticalmente",
+  "TableOfContents": "Índice",
+  "TableOfContentsDescription": "Adiciona um índice para fornecer uma visão geral do painel de navegação",
+  "EditTableOfContents": "Exibir índice",
+  "TableOfContentsSuccessfullyEdited": "Índice editado com êxito.",
+  "NoTableOfContentsItems": "O painel não tem itens de conteúdo. Os itens de conteúdo devem ser adicionados ao painel antes de serem incluídos no índice.",
+  "SelectAll": "Selecionar tudo",
+  "DeselectAll": "Desmarcar tudo",
+  "EditTableOfContentsDescription": "O índice mostra uma visão geral dos itens de conteúdo em seu painel. Personalize o índice, selecionando quais itens de conteúdo incluir. Se um item de conteúdo for selecionado abaixo, seu título será incluído no índice.",
+  "DisplayWithPages": "Exibir com páginas",
+  "SelectColumns": "Selecione as colunas para formatar os dados."
 }

@@ -83,7 +83,7 @@ function EditPublishingGuidance() {
               <Markdown
                 id="publishingGuidance"
                 name="publishingGuidance"
-                label={t("AcknowledgementStatement")}
+                label={t("AcknowledgeStatement")}
                 defaultValue={settings.publishingGuidance}
                 register={register}
                 hint=""

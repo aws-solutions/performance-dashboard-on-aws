@@ -6,10 +6,10 @@ exports[`renders a dashboard header for a published view 1`] = `
     class="usa-prose"
   >
     <div
-      class="margin-top-2"
+      class="margin-top-0"
     >
       <h1
-        class="display-inline-block margin-bottom-1 font-sans-2xl"
+        class="display-inline-block margin-y-1 font-sans-xl"
       >
         Dashboard 1
       </h1>

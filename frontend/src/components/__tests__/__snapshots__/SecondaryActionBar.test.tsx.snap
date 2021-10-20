@@ -3,7 +3,7 @@
 exports[`renders a secondary action bar 1`] = `
 <div>
   <div
-    class="border-base-lighter border-1px shadow-2 z-300 radius-md padding-x-2 padding-top-2 padding-bottom-1 margin-top-2 margin-bottom-1 position-sticky bg-white undefined"
+    class="border-base-lighter border-1px shadow-2 z-300 radius-md padding-x-2 padding-top-2 padding-bottom-1 margin-top-2 margin-bottom-1 bg-white position-sticky undefined"
     style="top: 75px;"
   >
     <p>

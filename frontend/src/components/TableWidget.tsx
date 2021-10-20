@@ -20,6 +20,7 @@ type Props = {
   sortByColumn?: string;
   sortByDesc?: boolean;
   significantDigitLabels: boolean;
+  displayWithPages: boolean;
   showMobilePreview?: boolean;
 };
 
@@ -32,6 +33,7 @@ const TableWidget = ({
   sortByDesc,
   sortByColumn,
   significantDigitLabels,
+  displayWithPages,
   showMobilePreview,
 }: Props) => {
   const { largestTickByColumn } = useTableMetadata(data);
@@ -89,6 +91,8 @@ const TableWidget = ({
                 row[header],
                 largestTickByColumn[header],
                 significantDigitLabels,
+                "",
+                "",
                 columnMetadata
               )
             : "-";
@@ -110,7 +114,7 @@ const TableWidget = ({
 
   return (
     <div className="overflow-x-hidden overflow-y-hidden">
-      <h2 className="margin-bottom-1">{title}</h2>
+      <h3 className="margin-bottom-1">{title}</h3>
       {!summaryBelow && (
         <MarkdownRender
           source={summary}
@@ -122,10 +126,11 @@ const TableWidget = ({
         rows={rows}
         initialSortAscending={sortByDesc !== undefined ? !sortByDesc : true}
         initialSortByField={sortByColumn}
-        disablePagination={true}
+        disablePagination={!displayWithPages && rows.length < 25}
         columns={columns}
         sortByColumn={sortByColumn}
         sortByDesc={sortByDesc}
+        mobileNavigation
       />
       {summaryBelow && (
         <MarkdownRender

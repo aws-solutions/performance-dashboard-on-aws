@@ -15,6 +15,7 @@ import Home from "./containers/Home";
 import DashboardListing from "./containers/DashboardListing";
 import CreateDashboard from "./containers/CreateDashboard";
 import EditDetails from "./containers/EditDetails";
+import EditTableOfContents from "./containers/EditTableOfContents";
 import AddContent from "./containers/AddContent";
 import EditDashboard from "./containers/EditDashboard";
 import DashboardHistory from "./containers/DashboardHistory";
@@ -167,6 +168,10 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/dashboard/edit/:dashboardId/header",
     component: EditDetails,
+  },
+  {
+    path: "/admin/dashboard/edit/:dashboardId/tableofcontents",
+    component: EditTableOfContents,
   },
   {
     path: "/admin/dashboard/:dashboardId/edit-table/:widgetId",

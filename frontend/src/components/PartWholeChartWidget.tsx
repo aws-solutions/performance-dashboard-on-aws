@@ -15,11 +15,13 @@ import DataTable from "./DataTable";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   parts: Array<string>;
   data?: Array<object>;
   summaryBelow: boolean;
   significantDigitLabels: boolean;
+  columnsMetadata: Array<any>;
   colors?: {
     primary: string | undefined;
     secondary: string | undefined;
@@ -94,6 +96,14 @@ const PartWholeChartWidget = (props: Props) => {
     const index = value.lastIndexOf(" ");
     const label = value.substring(0, index);
     const amount = value.substring(index + 1);
+
+    let columnMetadata;
+    if (parts && parts.length > 1 && props.columnsMetadata) {
+      columnMetadata = props.columnsMetadata.find(
+        (cm) => cm.columnName === parts[1]
+      );
+    }
+
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
@@ -104,7 +114,10 @@ const PartWholeChartWidget = (props: Props) => {
             TickFormatter.format(
               Number(amount),
               xAxisLargestValue,
-              props.significantDigitLabels
+              props.significantDigitLabels,
+              "",
+              "",
+              columnMetadata
             )
           ) : (
             <br />
@@ -141,9 +154,9 @@ const PartWholeChartWidget = (props: Props) => {
 
   return (
     <div>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h2>
+      </h3>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
@@ -172,7 +185,9 @@ const PartWholeChartWidget = (props: Props) => {
                 TickFormatter.format(
                   Number(tick),
                   xAxisLargestValue,
-                  props.significantDigitLabels
+                  props.significantDigitLabels,
+                  "",
+                  ""
                 )
               }
             />
@@ -225,7 +240,12 @@ const PartWholeChartWidget = (props: Props) => {
         </ResponsiveContainer>
       )}
       <div style={showMobilePreview ? { float: "left" } : {}}>
-        <DataTable rows={data || []} columns={parts} fileName={props.title} />
+        <DataTable
+          rows={data || []}
+          columns={parts}
+          fileName={props.downloadTitle}
+          columnsMetadata={props.columnsMetadata}
+        />
       </div>
       {props.summaryBelow && (
         <div style={showMobilePreview ? { clear: "left" } : {}}>

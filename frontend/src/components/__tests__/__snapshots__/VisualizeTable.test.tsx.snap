@@ -137,6 +137,22 @@ exports[`renders the VisualizeTable component 1`] = `
               Significant digit labels (123K, 1.2M)
             </label>
           </div>
+          <div
+            class="usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="displayWithPages"
+              name="displayWithPages"
+              type="checkbox"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="displayWithPages"
+            >
+              Display with pages
+            </label>
+          </div>
         </div>
         <div
           class="usa-form-group"
@@ -240,183 +256,187 @@ exports[`renders the VisualizeTable component 1`] = `
         <div
           class="overflow-x-hidden overflow-y-hidden"
         >
-          <h2
+          <h3
             class="margin-bottom-1"
           />
           <div
             class="Markdown usa-prose margin-top-0 margin-bottom-3 tableSummaryAbove textOrSummary"
           />
-          <table
-            class="usa-table usa-table--borderless"
-            role="table"
+          <div
+            class="overflow-x-hidden overflow-y-hidden"
           >
-            <thead>
-              <tr
-                role="row"
-              >
-                <th
-                  colspan="1"
-                  role="columnheader"
-                  scope="col"
-                  style="min-width: 150px;"
-                >
-                  <span>
-                    id
-                  </span>
-                  <button
-                    class="margin-left-1 usa-button usa-button--unstyled"
-                    style="cursor: pointer;"
-                    title="Toggle SortBy id"
-                    type="button"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
-                      data-icon="chevron-up"
-                      data-prefix="fas"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 448 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
-                </th>
-                <th
-                  colspan="1"
-                  role="columnheader"
-                  scope="col"
-                  style="min-width: 150px;"
-                >
-                  <span>
-                    name
-                  </span>
-                  <button
-                    class="margin-left-1 usa-button usa-button--unstyled"
-                    style="cursor: pointer;"
-                    title="Toggle SortBy name"
-                    type="button"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
-                      data-icon="chevron-up"
-                      data-prefix="fas"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 448 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
-                </th>
-                <th
-                  colspan="1"
-                  role="columnheader"
-                  scope="col"
-                  style="min-width: 150px;"
-                >
-                  <span>
-                    updatedAt
-                  </span>
-                  <button
-                    class="margin-left-1 usa-button usa-button--unstyled"
-                    style="cursor: pointer;"
-                    title="Toggle SortBy updatedAt"
-                    type="button"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
-                      data-icon="chevron-up"
-                      data-prefix="fas"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 448 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              role="rowgroup"
+            <table
+              class="usa-table usa-table--borderless"
+              role="table"
             >
-              <tr
-                role="row"
+              <thead>
+                <tr
+                  role="row"
+                >
+                  <th
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="min-width: 150px;"
+                  >
+                    <span>
+                      id
+                    </span>
+                    <button
+                      class="margin-left-1 usa-button usa-button--unstyled"
+                      style="cursor: pointer;"
+                      title="Toggle SortBy id"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                        data-icon="chevron-up"
+                        data-prefix="fas"
+                        focusable="false"
+                        role="img"
+                        viewBox="0 0 448 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                  <th
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="min-width: 150px;"
+                  >
+                    <span>
+                      name
+                    </span>
+                    <button
+                      class="margin-left-1 usa-button usa-button--unstyled"
+                      style="cursor: pointer;"
+                      title="Toggle SortBy name"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                        data-icon="chevron-up"
+                        data-prefix="fas"
+                        focusable="false"
+                        role="img"
+                        viewBox="0 0 448 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                  <th
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="min-width: 150px;"
+                  >
+                    <span>
+                      updatedAt
+                    </span>
+                    <button
+                      class="margin-left-1 usa-button usa-button--unstyled"
+                      style="cursor: pointer;"
+                      title="Toggle SortBy updatedAt"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                        data-icon="chevron-up"
+                        data-prefix="fas"
+                        focusable="false"
+                        role="img"
+                        viewBox="0 0 448 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                role="rowgroup"
               >
-                <th
-                  role="cell"
-                  scope="row"
+                <tr
+                  role="row"
                 >
-                  1
-                </th>
-                <td
-                  role="cell"
+                  <th
+                    role="cell"
+                    scope="row"
+                  >
+                    1
+                  </th>
+                  <td
+                    role="cell"
+                  >
+                    Banana
+                  </td>
+                  <td
+                    role="cell"
+                  >
+                    2021-11-11
+                  </td>
+                </tr>
+                <tr
+                  role="row"
                 >
-                  Banana
-                </td>
-                <td
-                  role="cell"
+                  <th
+                    role="cell"
+                    scope="row"
+                  >
+                    2
+                  </th>
+                  <td
+                    role="cell"
+                  >
+                    Chocolate
+                  </td>
+                  <td
+                    role="cell"
+                  >
+                    2020-11-11
+                  </td>
+                </tr>
+                <tr
+                  role="row"
                 >
-                  2021-11-11
-                </td>
-              </tr>
-              <tr
-                role="row"
-              >
-                <th
-                  role="cell"
-                  scope="row"
-                >
-                  2
-                </th>
-                <td
-                  role="cell"
-                >
-                  Chocolate
-                </td>
-                <td
-                  role="cell"
-                >
-                  2020-11-11
-                </td>
-              </tr>
-              <tr
-                role="row"
-              >
-                <th
-                  role="cell"
-                  scope="row"
-                >
-                  3
-                </th>
-                <td
-                  role="cell"
-                >
-                  Vanilla
-                </td>
-                <td
-                  role="cell"
-                >
-                  2019-11-11
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <th
+                    role="cell"
+                    scope="row"
+                  >
+                    3
+                  </th>
+                  <td
+                    role="cell"
+                  >
+                    Vanilla
+                  </td>
+                  <td
+                    role="cell"
+                  >
+                    2019-11-11
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           
           <div
             class="text-right margin-bottom-1"

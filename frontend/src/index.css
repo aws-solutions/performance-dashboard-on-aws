@@ -156,13 +156,17 @@ p {
   opacity: 1 !important;
 }
 
-.usa-breadcrumb {
-  background-color: #fff;
+@media (max-width: 64em) {
+  .mobile-margin-top-2 {
+    margin-top: 1rem;
+  }
 }
 
-.grid-container {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+@media (min-width: 64em) {
+  .usa-logo {
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+  }
 }
 
 @media (min-width: 64em) {
@@ -170,4 +174,37 @@ p {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.tabs-horizontally::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.tabs-horizontally {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.react-horizontal-scrolling-menu--scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.padding-x-2-important {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+.padding-left-105-important {
+  padding-left: 12px !important;
+}
+
+.type-dark {
+  background: #1b1b1b !important;
 }

@@ -16,6 +16,7 @@ export enum DashboardState {
   Published = "Published",
   Archived = "Archived",
   PublishPending = "PublishPending",
+  Inactive = "Inactive",
 }
 
 export enum SourceType {
@@ -38,6 +39,7 @@ export type Dashboard = {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  tableOfContents?: any;
   description?: string;
   releaseNotes?: string;
   widgets: Array<Widget>;
@@ -56,6 +58,7 @@ export type PublicDashboard = {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  tableOfContents?: any;
   description?: string;
   widgets: Array<Widget>;
   updatedAt: Date;
@@ -128,8 +131,10 @@ export interface ChartWidget extends Widget {
     sortByColumn?: string;
     sortByDesc?: boolean;
     horizontalScroll?: boolean;
+    stackedChart?: boolean;
     significantDigitLabels: boolean;
     dataLabels: boolean;
+    computePercentages: boolean;
     showTotal: boolean;
   };
 }
@@ -149,6 +154,7 @@ export interface TableWidget extends Widget {
     sortByColumn?: string;
     sortByDesc?: boolean;
     significantDigitLabels: boolean;
+    displayWithPages: boolean;
   };
 }
 
@@ -186,6 +192,7 @@ export interface SectionWidget extends Widget {
     summary: string;
     widgetIds?: Array<string>;
     showWithTabs: string;
+    horizontally?: boolean;
   };
 }
 

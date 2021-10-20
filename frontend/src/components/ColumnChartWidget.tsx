@@ -17,10 +17,11 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import { ColumnDataType } from "../models";
+import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   columns: Array<string>;
   data?: Array<any>;
@@ -28,6 +29,7 @@ type Props = {
   isPreview?: boolean;
   hideLegend?: boolean;
   horizontalScroll?: boolean;
+  stackedChart?: boolean;
   hideDataLabels?: boolean;
   setWidthPercent?: (widthPercent: number) => void;
   significantDigitLabels: boolean;
@@ -74,6 +76,12 @@ const ColumnChartWidget = (props: Props) => {
   const smallScreenPixels = 800;
 
   const { data, columns, showMobilePreview } = props;
+
+  const columnsMetadataDict = new Map();
+  props.columnsMetadata.forEach((el) =>
+    columnsMetadataDict.set(el.columnName, el)
+  );
+
   let padding;
   if (showMobilePreview || windowSize.width < smallScreenPixels) {
     padding = 20;
@@ -122,6 +130,12 @@ const ColumnChartWidget = (props: Props) => {
       100) /
     (props.isPreview ? previewWidth : fullWidth);
 
+  const valueAccessor =
+    (attribute: string) =>
+    ({ payload }: any) => {
+      return payload;
+    };
+
   useEffect(() => {
     if (props.setWidthPercent) {
       props.setWidthPercent(widthPercent);
@@ -134,9 +148,9 @@ const ColumnChartWidget = (props: Props) => {
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h2>
+      </h3>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
@@ -174,7 +188,9 @@ const ColumnChartWidget = (props: Props) => {
                 return TickFormatter.format(
                   Number(tick),
                   yAxisLargestValue,
-                  props.significantDigitLabels
+                  props.significantDigitLabels,
+                  "",
+                  ""
                 );
               }}
             />
@@ -194,6 +210,8 @@ const ColumnChartWidget = (props: Props) => {
                   Number(value),
                   yAxisLargestValue,
                   props.significantDigitLabels,
+                  "",
+                  "",
                   columnMetadata
                 );
               }}
@@ -216,8 +234,26 @@ const ColumnChartWidget = (props: Props) => {
                     fillOpacity={getOpacity(column)}
                     hide={hiddenColumns.includes(column)}
                     isAnimationActive={false}
+                    stackId={props.stackedChart ? "a" : `${index}`}
                   >
-                    {!props.hideDataLabels ? (
+                    {!props.hideDataLabels &&
+                      props.stackedChart &&
+                      index === props.columns.length - 2 && (
+                        <LabelList
+                          position="top"
+                          valueAccessor={valueAccessor(column)}
+                          formatter={(tick: any) => {
+                            return TickFormatter.stackedFormat(
+                              tick,
+                              yAxisLargestValue,
+                              props.significantDigitLabels,
+                              props.columns.slice(1),
+                              props.columnsMetadata
+                            );
+                          }}
+                        />
+                      )}
+                    {!props.hideDataLabels && !props.stackedChart && (
                       <LabelList
                         dataKey={column}
                         position="top"
@@ -226,12 +262,12 @@ const ColumnChartWidget = (props: Props) => {
                             Number(tick),
                             yAxisLargestValue,
                             props.significantDigitLabels,
-                            props.columnsMetadata[index]
+                            "",
+                            "",
+                            columnsMetadataDict.get(column)
                           )
                         }
                       />
-                    ) : (
-                      ""
                     )}
                   </Bar>
                 );
@@ -244,7 +280,7 @@ const ColumnChartWidget = (props: Props) => {
           rows={data || []}
           columns={columns}
           columnsMetadata={props.columnsMetadata}
-          fileName={props.title}
+          fileName={props.downloadTitle}
         />
       </div>
       {props.summaryBelow && (

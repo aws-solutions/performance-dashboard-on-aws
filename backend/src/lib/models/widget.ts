@@ -82,7 +82,9 @@ export interface ChartWidget extends Widget {
     summaryBelow: boolean;
     datasetType?: string;
     horizontalScroll?: boolean;
+    stackedChart?: boolean;
     dataLabels: boolean;
+    computePercentages: boolean;
     showTotal: boolean;
     fileName: string;
     columnsMetadata: ColumnMetadata[];
@@ -108,6 +110,7 @@ export interface TableWidget extends Widget {
     sortByColumn?: string;
     sortByDesc?: boolean;
     significantDigitLabels: boolean;
+    displayWithPages: boolean;
     s3Key: {
       raw: string;
       json: string;
@@ -149,5 +152,6 @@ export interface SectionWidget extends Widget {
     summary?: string;
     widgetIds?: Array<string>;
     showWithTabs: string;
+    horizontally?: boolean;
   };
 }

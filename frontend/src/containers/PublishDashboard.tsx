@@ -8,6 +8,7 @@ import {
   useSettings,
   useFriendlyUrl,
   useChangeBackgroundColor,
+  useWindowSize,
 } from "../hooks";
 import { DashboardState, LocationState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -51,6 +52,9 @@ function PublishDashboard() {
 
   const { register, errors, handleSubmit, trigger, getValues, watch } =
     useForm<FormValues>();
+
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const releaseNotes = watch("releaseNotes");
   const acknowledge = watch("acknowledge");
@@ -165,6 +169,30 @@ function PublishDashboard() {
     );
   }
 
+  const statusAndVersion = (
+    <ul
+      className={`usa-button-group flex-1${isMobile ? " display-inline" : ""}`}
+    >
+      <li
+        className={`usa-button-group__item${isMobile ? " display-inline" : ""}`}
+      >
+        <span className="usa-tag" style={{ cursor: "text", marginTop: "2px" }}>
+          {t("PublishPendingStateLabel")}
+        </span>
+      </li>
+      <li
+        className={`usa-button-group__item cursor-default${
+          isMobile ? " display-inline" : ""
+        }`}
+      >
+        <span>
+          <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
+          {t("ViewDashboardAlertVersion")} {dashboard?.version}
+        </span>
+      </li>
+    </ul>
+  );
+
   return (
     <>
       <Breadcrumbs
@@ -181,45 +209,66 @@ function PublishDashboard() {
       <PrimaryActionBar>
         <Alert type="info" message={t("PublishWorkflow.InfoAlert")} slim />
         <AlertContainer id="top-alert" />
-        <div className="grid-row">
-          <div className="grid-col text-right display-flex flex-row flex-align-center padding-top-2">
-            <ul className="usa-button-group flex-1">
-              <li className="usa-button-group__item">
-                <span
-                  className="usa-tag"
-                  style={{ cursor: "text", marginTop: "2px" }}
-                >
-                  {t("PublishPendingStateLabel")}
-                </span>
-              </li>
-              <li className="usa-button-group__item cursor-default">
-                <span>
-                  <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
-                  {t("ViewDashboardAlertVersion")} {dashboard?.version}
-                </span>
-              </li>
-            </ul>
-            <span className="text-base margin-right-1">
+        {isMobile && (
+          <>
+            <div className="margin-top-2">{statusAndVersion}</div>
+            <div className="text-base margin-right-1 margin-y-2">
               {dashboard &&
                 `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
                   .locale(window.navigator.language.toLowerCase())
                   .fromNow()}`}
-            </span>
-            <DropdownMenu buttonText={t("Actions")} variant="outline">
-              <DropdownMenu.MenuLink
-                href={`/admin/dashboard/${dashboard.id}/history`}
-              >
-                {t("ViewHistoryLink")}
-              </DropdownMenu.MenuLink>
-              <DropdownMenu.MenuItem onSelect={onPreview}>
-                {t("PreviewButton")}
-              </DropdownMenu.MenuItem>
-            </DropdownMenu>
-            <Button variant="outline" onClick={onReturnToDraft}>
-              {t("ReturnToDraftButton")}
-            </Button>
+            </div>
+            <div className="grid-row margin-top-105">
+              <div className="grid-col-6 padding-right-05">
+                <DropdownMenu
+                  className="margin-top-neg-1px"
+                  buttonText={t("Actions")}
+                  variant="outline"
+                >
+                  <DropdownMenu.MenuLink
+                    href={`/admin/dashboard/${dashboard.id}/history`}
+                  >
+                    {t("ViewHistoryLink")}
+                  </DropdownMenu.MenuLink>
+                  <DropdownMenu.MenuItem onSelect={onPreview}>
+                    {t("PreviewButton")}
+                  </DropdownMenu.MenuItem>
+                </DropdownMenu>
+              </div>
+              <div className="grid-col-6 padding-left-05">
+                <Button variant="outline" onClick={onReturnToDraft}>
+                  {t("ReturnToDraftButton")}
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
+        {!isMobile && (
+          <div className="grid-row">
+            <div className="grid-col text-right display-flex flex-row flex-align-center padding-top-2">
+              {statusAndVersion}
+              <span className="text-base margin-right-1">
+                {dashboard &&
+                  `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
+                    .locale(window.navigator.language.toLowerCase())
+                    .fromNow()}`}
+              </span>
+              <DropdownMenu buttonText={t("Actions")} variant="outline">
+                <DropdownMenu.MenuLink
+                  href={`/admin/dashboard/${dashboard.id}/history`}
+                >
+                  {t("ViewHistoryLink")}
+                </DropdownMenu.MenuLink>
+                <DropdownMenu.MenuItem onSelect={onPreview}>
+                  {t("PreviewButton")}
+                </DropdownMenu.MenuItem>
+              </DropdownMenu>
+              <Button variant="outline" onClick={onReturnToDraft}>
+                {t("ReturnToDraftButton")}
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </PrimaryActionBar>
       <div>
         <h1 className="margin-bottom-0 display-inline-block">

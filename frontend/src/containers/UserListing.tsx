@@ -123,7 +123,7 @@ function UserListing() {
 
   return (
     <>
-      <h1>{t("ManageUsers")}</h1>
+      <h1 className="margin-top-1">{t("ManageUsers")}</h1>
       <Modal
         isOpen={isOpenResendInviteModal}
         closeModal={closeResendInviteModal}

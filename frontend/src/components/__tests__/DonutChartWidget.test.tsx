@@ -7,6 +7,7 @@ test("renders the chart title", async () => {
   render(
     <DonutChartWidget
       title="test title"
+      downloadTitle="test title"
       summary="test summary"
       parts={["test"]}
       summaryBelow={false}
@@ -23,6 +24,7 @@ test("renders the summary above the chart", async () => {
   render(
     <DonutChartWidget
       title="test title"
+      downloadTitle="test title"
       summary="test summary"
       parts={["test"]}
       summaryBelow={false}
@@ -42,6 +44,7 @@ test("renders the summary below the chart", async () => {
   render(
     <DonutChartWidget
       title="test title"
+      downloadTitle="test title"
       summary="test summary"
       parts={["test"]}
       summaryBelow={true}

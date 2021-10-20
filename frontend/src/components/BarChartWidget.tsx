@@ -17,10 +17,11 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import { ColumnDataType } from "../models";
+import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   bars: Array<string>;
   data?: Array<any>;
@@ -34,6 +35,7 @@ type Props = {
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
   showMobilePreview?: boolean;
+  stackedChart?: boolean;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -68,6 +70,12 @@ const BarChartWidget = (props: Props) => {
   );
 
   const { data, bars, showMobilePreview } = props;
+
+  const columnsMetadataDict = new Map();
+  props.columnsMetadata.forEach((el) =>
+    columnsMetadataDict.set(el.columnName, el)
+  );
+
   const yAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && bars.length) {
@@ -92,6 +100,12 @@ const BarChartWidget = (props: Props) => {
       setHiddenBars([...hiddenBars, e.dataKey]);
     }
   };
+
+  const valueAccessor =
+    (attribute: string) =>
+    ({ payload }: any) => {
+      return payload;
+    };
 
   const formatYAxisLabel = (label: string) =>
     label.length > 27 ? label.substr(0, 27).concat("...") : label;
@@ -120,9 +134,9 @@ const BarChartWidget = (props: Props) => {
 
   return (
     <div>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h2>
+      </h3>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
@@ -148,7 +162,9 @@ const BarChartWidget = (props: Props) => {
                 TickFormatter.format(
                   Number(tick),
                   xAxisLargestValue,
-                  props.significantDigitLabels
+                  props.significantDigitLabels,
+                  "",
+                  ""
                 )
               }
             />
@@ -183,6 +199,8 @@ const BarChartWidget = (props: Props) => {
                   Number(value),
                   xAxisLargestValue,
                   props.significantDigitLabels,
+                  "",
+                  "",
                   columnMetadata
                 );
               }}
@@ -204,9 +222,27 @@ const BarChartWidget = (props: Props) => {
                     key={index}
                     fillOpacity={getOpacity(bar)}
                     hide={hiddenBars.includes(bar)}
+                    stackId={props.stackedChart ? "a" : `${index}`}
                     isAnimationActive={false}
                   >
-                    {!props.hideDataLabels ? (
+                    {!props.hideDataLabels &&
+                      props.stackedChart &&
+                      index === props.bars.length - 2 && (
+                        <LabelList
+                          position="right"
+                          valueAccessor={valueAccessor(bar)}
+                          formatter={(tick: any) => {
+                            return TickFormatter.stackedFormat(
+                              tick,
+                              xAxisLargestValue,
+                              props.significantDigitLabels,
+                              props.bars.slice(1),
+                              props.columnsMetadata
+                            );
+                          }}
+                        />
+                      )}
+                    {!props.hideDataLabels && !props.stackedChart && (
                       <LabelList
                         dataKey={bar}
                         position="right"
@@ -215,12 +251,12 @@ const BarChartWidget = (props: Props) => {
                             Number(tick),
                             xAxisLargestValue,
                             props.significantDigitLabels,
-                            props.columnsMetadata[index]
+                            "",
+                            "",
+                            columnsMetadataDict.get(bar)
                           )
                         }
                       />
-                    ) : (
-                      ""
                     )}
                   </Bar>
                 );
@@ -233,7 +269,7 @@ const BarChartWidget = (props: Props) => {
           rows={data || []}
           columns={bars}
           columnsMetadata={props.columnsMetadata}
-          fileName={props.title}
+          fileName={props.downloadTitle}
         />
       </div>
       {props.summaryBelow && (

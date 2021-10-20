@@ -5,11 +5,11 @@ exports[`image preview should match snapshot 1`] = `
   <div
     class="preview-container"
   >
-    <h2
+    <h3
       class="margin-top-3"
     >
       test title
-    </h2>
+    </h3>
     <div
       class="Markdown usa-prose margin-top-0 margin-bottom-3 imageSummaryAbove textOrSummary"
     >

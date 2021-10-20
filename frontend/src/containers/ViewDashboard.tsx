@@ -10,7 +10,7 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
-import { WidgetType } from "../models";
+import { PublicDashboard, Widget } from "../models";
 
 interface PathParams {
   friendlyURL: string;
@@ -22,6 +22,7 @@ function ViewDashboard() {
   const { dashboard, loading, dashboardNotFound } =
     usePublicDashboard(friendlyURL);
   const [activeWidgetId, setActiveWidgetId] = useState("");
+  const [activeTabId, setActiveTabId] = useState("");
   const windowSize = useWindowSize();
 
   const moveNavBarWidth = 1024;
@@ -29,6 +30,40 @@ function ViewDashboard() {
   if (dashboardNotFound) {
     return <Redirect to="/404/page-not-found" />;
   }
+
+  const getSectionWithTabs = (
+    widget: Widget,
+    dashboard: PublicDashboard
+  ): string => {
+    const section: Widget | undefined = dashboard.widgets.find(
+      (w) => w.id == widget.section
+    );
+    if (section) {
+      return section.content.showWithTabs ? section.id : "";
+    }
+    return "";
+  };
+
+  const onClickHandler = (active: string) => {
+    setActiveTabId(active);
+    setActiveWidgetId(active);
+  };
+
+  const onBottomOfThePage = (bottom: string) => {
+    const widget = dashboard?.widgets.find((w: Widget) => w.id === bottom);
+    if (widget) {
+      if (widget.section) {
+        const parent = dashboard?.widgets.find(
+          (w: Widget) => w.id === widget.section
+        );
+        if (parent) {
+          setActiveWidgetId(parent.id);
+        }
+      } else {
+        setActiveWidgetId(bottom);
+      }
+    }
+  };
 
   return loading || dashboard === undefined ? (
     <Spinner
@@ -54,38 +89,56 @@ function ViewDashboard() {
       <Navigation
         stickyPosition={80}
         offset={80}
-        widgetNameIds={dashboard?.widgets
-          .filter((w) => w.widgetType === WidgetType.Section)
+        area={2}
+        marginRight={27}
+        widgetNameIds={dashboard.widgets
+          .filter(
+            (w) =>
+              dashboard &&
+              dashboard.tableOfContents &&
+              dashboard.tableOfContents[w.id]
+          )
           .map((widget) => {
             return {
               name: widget.name,
               id: widget.id,
               isInsideSection: !!widget.section,
+              sectionWithTabs: getSectionWithTabs(widget, dashboard),
             };
           })}
         activeWidgetId={activeWidgetId}
-        setActivewidgetId={setActiveWidgetId}
+        onBottomOfThePage={onBottomOfThePage}
         isTop={windowSize.width <= moveNavBarWidth}
-        displayTableOfContents={dashboard?.displayTableOfContents}
-      ></Navigation>
-      {dashboard?.widgets.map((widget, index) => {
-        return (
-          <div key={index}>
-            <Waypoint
-              onEnter={() => {
-                setActiveWidgetId(widget.id);
-              }}
-              topOffset="80px"
-              bottomOffset={`${windowSize.height - 90}px`}
-              fireOnRapidScroll={false}
-            >
-              <div className="margin-top-6 usa-prose" id={widget.id}>
-                <WidgetRender widget={widget} />
-              </div>
-            </Waypoint>
-          </div>
-        );
-      })}
+        displayTableOfContents={dashboard.displayTableOfContents}
+        onClick={onClickHandler}
+      />
+      {dashboard.widgets
+        .filter((w) => !w.section)
+        .map((widget, index) => {
+          return (
+            <div key={index}>
+              <Waypoint
+                onEnter={() => {
+                  setActiveWidgetId(widget.id);
+                }}
+                topOffset="80px"
+                bottomOffset={`${windowSize.height - 90}px`}
+                fireOnRapidScroll={false}
+              >
+                <div className="margin-top-4 usa-prose" id={widget.id}>
+                  <WidgetRender
+                    widget={widget}
+                    widgets={dashboard.widgets}
+                    setActiveWidgetId={setActiveWidgetId}
+                    topOffset="80px"
+                    bottomOffset={`${windowSize.height - 90}px`}
+                    defaultActive={activeTabId}
+                  />
+                </div>
+              </Waypoint>
+            </div>
+          );
+        })}
     </>
   );
 }

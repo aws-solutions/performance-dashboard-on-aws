@@ -10,13 +10,13 @@ class TopicAreaListingPage {
   }
 
   goToEditTopicAreaLabel(): EditTopicAreaLabelPage {
-    cy.get("button").contains("Edit").click();
+    cy.get("[data-testid='edittopicarealabel']",).click();
     cy.contains("Edit topic area name");
     return new EditTopicAreaLabelPage();
   }
 
   goToCreateTopicArea(): CreateTopicAreaPage {
-    cy.get("button").contains("Create new topic area").click();
+    cy.get("[data-testid='createtopicarea']").click();
     cy.get("h1").contains("Create new topic area");
     return new CreateTopicAreaPage();
   }
@@ -54,7 +54,7 @@ class TopicAreaListingPage {
     // Capture the http requests
     cy.intercept({
       method: "DELETE",
-      url: "/prod/topicarea",
+      url: new RegExp('/prod/topicarea/'),
     }).as("deleteTopicAreaRequest");
 
     cy.intercept({

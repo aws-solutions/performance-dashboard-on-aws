@@ -29,10 +29,6 @@ describe("general dashboard details", () => {
     });
   });
 
-  test("renders dashboard version", () => {
-    expect(screen.getByText("Version 1")).toBeInTheDocument();
-  });
-
   test("renders dashboard title", () => {
     expect(
       screen.getByRole("heading", { name: "My AWS Dashboard" })

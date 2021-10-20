@@ -39,8 +39,10 @@ interface FormValues {
   summaryBelow: boolean;
   datasetType: string;
   horizontalScroll: boolean;
+  stackedChart: boolean;
   significantDigitLabels: boolean;
   dataLabels: boolean;
+  computePercentages: boolean;
   showTotal: boolean;
   sortData: string;
 }
@@ -114,7 +116,9 @@ function AddChart() {
   const chartType = watch("chartType");
   const showTitle = watch("showTitle");
   const horizontalScroll = watch("horizontalScroll");
+  const stackedChart = watch("stackedChart");
   const dataLabels = watch("dataLabels");
+  const computePercentages = watch("computePercentages");
   const showTotal = watch("showTotal");
   const significantDigitLabels = watch("significantDigitLabels");
 
@@ -185,10 +189,18 @@ function AddChart() {
             horizontalScroll: values.horizontalScroll,
           }),
           ...((values.chartType === ChartType.BarChart ||
+            values.chartType === ChartType.ColumnChart) && {
+            stackedChart: values.stackedChart,
+          }),
+          ...((values.chartType === ChartType.BarChart ||
             values.chartType === ChartType.ColumnChart ||
             values.chartType === ChartType.PieChart ||
             values.chartType === ChartType.DonutChart) && {
             dataLabels: values.dataLabels,
+          }),
+          ...((values.chartType === ChartType.PieChart ||
+            values.chartType === ChartType.DonutChart) && {
+            computePercentages: values.computePercentages,
           }),
           ...(values.chartType === ChartType.DonutChart && {
             showTotal: values.showTotal,
@@ -246,6 +258,10 @@ function AddChart() {
 
   const backStep = () => {
     setStep(step - 1);
+  };
+
+  const goBack = () => {
+    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const browseDatasets = () => {
@@ -421,6 +437,7 @@ function AddChart() {
                   datasetType={datasetType}
                   onFileProcessed={onFileProcessed}
                   handleChange={handleChange}
+                  backStep={goBack}
                   advanceStep={advanceStep}
                   fileLoading={fileLoading}
                   browseDatasets={browseDatasets}
@@ -502,7 +519,9 @@ function AddChart() {
                 chartType={chartType as ChartType}
                 significantDigitLabels={significantDigitLabels}
                 horizontalScroll={horizontalScroll}
+                stackedChart={stackedChart}
                 dataLabels={dataLabels}
+                computePercentages={computePercentages}
                 showTotal={showTotal}
                 columnsMetadata={ColumnsMetadataService.getColumnsMetadata(
                   hiddenColumns,

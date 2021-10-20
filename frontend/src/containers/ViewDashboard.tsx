@@ -10,7 +10,7 @@ import Spinner from "../components/Spinner";
 import DashboardHeader from "../components/DashboardHeader";
 import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
-import { PublicDashboard, Widget } from "../models";
+import { PublicDashboard, Widget, WidgetType } from "../models";
 
 interface PathParams {
   friendlyURL: string;
@@ -117,14 +117,8 @@ function ViewDashboard() {
         .map((widget, index) => {
           return (
             <div key={index}>
-              <Waypoint
-                onEnter={() => {
-                  setActiveWidgetId(widget.id);
-                }}
-                topOffset="80px"
-                bottomOffset={`${windowSize.height - 90}px`}
-                fireOnRapidScroll={false}
-              >
+              {widget.widgetType == WidgetType.Section &&
+              !widget.content.showWithTabs ? (
                 <div className="margin-top-4 usa-prose" id={widget.id}>
                   <WidgetRender
                     widget={widget}
@@ -135,7 +129,27 @@ function ViewDashboard() {
                     defaultActive={activeTabId}
                   />
                 </div>
-              </Waypoint>
+              ) : (
+                <Waypoint
+                  onEnter={() => {
+                    setActiveWidgetId(widget.id);
+                  }}
+                  topOffset="80px"
+                  bottomOffset={`${windowSize.height - 90}px`}
+                  fireOnRapidScroll={false}
+                >
+                  <div className="margin-top-4 usa-prose" id={widget.id}>
+                    <WidgetRender
+                      widget={widget}
+                      widgets={dashboard.widgets}
+                      setActiveWidgetId={setActiveWidgetId}
+                      topOffset="80px"
+                      bottomOffset={`${windowSize.height - 90}px`}
+                      defaultActive={activeTabId}
+                    />
+                  </div>
+                </Waypoint>
+              )}
             </div>
           );
         })}

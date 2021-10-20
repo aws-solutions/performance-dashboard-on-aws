@@ -5,7 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { useDashboard, useDashboardVersions, useWindowSize } from "../hooks";
-import { Dashboard, DashboardState, LocationState, Widget } from "../models";
+import {
+  Dashboard,
+  DashboardState,
+  LocationState,
+  Widget,
+  WidgetType,
+} from "../models";
 import BackendService from "../services/BackendService";
 import WidgetRender from "../components/WidgetRender";
 import Button from "../components/Button";
@@ -670,14 +676,8 @@ function ViewDashboardAdmin() {
               .map((widget, index) => {
                 return (
                   <div key={index}>
-                    <Waypoint
-                      onEnter={() => {
-                        setActiveWidgetId(widget.id);
-                      }}
-                      topOffset="240px"
-                      bottomOffset={`${windowSize.height - 250}px`}
-                      fireOnRapidScroll={false}
-                    >
+                    {widget.widgetType == WidgetType.Section &&
+                    !widget.content.showWithTabs ? (
                       <div className="margin-top-6 usa-prose" id={widget.id}>
                         <WidgetRender
                           widget={widget}
@@ -689,7 +689,28 @@ function ViewDashboardAdmin() {
                           defaultActive={activeTabId}
                         />
                       </div>
-                    </Waypoint>
+                    ) : (
+                      <Waypoint
+                        onEnter={() => {
+                          setActiveWidgetId(widget.id);
+                        }}
+                        topOffset="240px"
+                        bottomOffset={`${windowSize.height - 250}px`}
+                        fireOnRapidScroll={false}
+                      >
+                        <div className="margin-top-6 usa-prose" id={widget.id}>
+                          <WidgetRender
+                            widget={widget}
+                            showMobilePreview={showMobilePreview}
+                            widgets={dashboard.widgets}
+                            setActiveWidgetId={setActiveWidgetId}
+                            topOffset="240px"
+                            bottomOffset={`${windowSize.height - 250}px`}
+                            defaultActive={activeTabId}
+                          />
+                        </div>
+                      </Waypoint>
+                    )}
                   </div>
                 );
               })}

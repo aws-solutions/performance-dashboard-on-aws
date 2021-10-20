@@ -1,0 +1,32 @@
+{
+  "name": "lambda",
+  "version": "1.0.0",
+  "description": "test project for lambda",
+  "main": "index.js",
+  "scripts": {
+    "run": "build/cli.js",
+    "test": "LOG_LEVEL=SILENT jest --coverage --watchAll",
+    "test:ci": "jest --coverage --ci",
+    "build": "npm run clean && tsc && npm run install:prod",
+    "copy:package": "cp package.json build/",
+    "install:prod": "npm run copy:package && npm install --production --prefix build",
+    "clean": "rm -rf build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.84",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/jest": "^27.0.2",
+    "@types/uuid": "^8.3.1",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.984.0",
+    "uuid": "^8.3.2"
+  }
+}

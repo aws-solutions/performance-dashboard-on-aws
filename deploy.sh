@@ -6,7 +6,7 @@ WORKSPACE=$(pwd)
 CDK_DIR=$WORKSPACE/cdk
 FRONTEND_DIR=$WORKSPACE/frontend
 BACKEND_DIR=$WORKSPACE/backend
-EXAMPLES_DIR=$WORKSPACE/examples/setupexample-lambda
+EXAMPLES_DIR=$WORKSPACE/examples
 
 # Validate environment name from input
 environment=$1
@@ -84,7 +84,7 @@ deploy_ops() {
     cd $CDK_DIR
     npm run cdk -- deploy Ops --require-approval never
 }
-deploy_ops() {
+deploy_examples() {
     echo "Deploying examples"
     cd $EXAMPLES_DIR
     npm run build
@@ -105,3 +105,4 @@ deploy_auth
 deploy_backend
 deploy_frontend
 deploy_ops
+deploy_examples

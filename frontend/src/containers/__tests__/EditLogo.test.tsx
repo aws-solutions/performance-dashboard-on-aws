@@ -47,8 +47,22 @@ test("renders file upload description constraint", async () => {
   expect(getByText("Must be a PNG, JPEG, or SVG file")).toBeInTheDocument();
 });
 
+test("renders a alt text input", async () => {
+  render(<EditLogo />, { wrapper: MemoryRouter });
+  expect(await screen.findByLabelText("Logo alt text")).toBeInTheDocument();
+});
+
+test("renders alt text description constraint", async () => {
+  const { getByText } = render(<EditLogo />, { wrapper: MemoryRouter });
+  expect(
+    getByText(
+      "Provide a short description of the logo for users with visual impairments using a screen reader. This description will not display on the dashboard."
+    )
+  ).toBeInTheDocument();
+});
+
 test("on submit, it calls updateSetting and upload logo", async () => {
-  const { getByRole, getByText, getByLabelText } = render(<EditLogo />, {
+  const { getByRole, getByLabelText } = render(<EditLogo />, {
     wrapper: MemoryRouter,
   });
 
@@ -57,6 +71,11 @@ test("on submit, it calls updateSetting and upload logo", async () => {
   fireEvent.change(getByLabelText("File upload"), {
     target: {
       files: ["image.jpg"],
+    },
+  });
+  fireEvent.change(getByLabelText("Logo alt text"), {
+    target: {
+      value: "Alt text",
     },
   });
 

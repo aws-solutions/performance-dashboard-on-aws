@@ -20,6 +20,7 @@ async function updateSettings(req: Request, res: Response) {
     navbarTitle,
     topicAreaLabels,
     customLogoS3Key,
+    customLogoAltText,
     customFaviconS3Key,
     colors,
     adminContactEmailAddress,
@@ -85,6 +86,15 @@ async function updateSettings(req: Request, res: Response) {
     updatedAt = await repo.updateSetting(
       "customLogoS3Key",
       customLogoS3Key,
+      updatedAt,
+      user
+    );
+  }
+
+  if (customLogoAltText) {
+    updatedAt = await repo.updateSetting(
+      "customLogoAltText",
+      customLogoAltText,
       updatedAt,
       user
     );

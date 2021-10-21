@@ -4,6 +4,7 @@ exports[`renders a logo 1`] = `
 <div>
   <img
     alt="Organization logo"
+    data-testid="logoImage"
     src="logo.svg"
   />
 </div>

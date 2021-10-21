@@ -368,7 +368,8 @@
     "EditTableSuccess": {
       "part1": "'",
       "part2": "' table has been successfully edited."
-    }
+    },
+    "ChooseDataset": "Choose a dataset to continue"
   },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",

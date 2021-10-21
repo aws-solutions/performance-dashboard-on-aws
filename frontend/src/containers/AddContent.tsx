@@ -6,6 +6,7 @@ import { useDashboard, useChangeBackgroundColor } from "../hooks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import RadioButtonsTile from "../components/RadioButtonsTile";
 
 interface FormValues {
   widgetType: string;
@@ -86,156 +87,60 @@ function AddContent() {
               <legend className="usa-sr-only">
                 {t("ContentItemTypesLabel")}
               </legend>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    widgetType === "text" ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="text"
-                      value="text"
-                      type="radio"
-                      name="widgetType"
-                      data-testid="textRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="text">
-                      {t("Text")}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("AddContentScreen.TextDescription")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    widgetType === "metrics" ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="metrics"
-                      value="metrics"
-                      type="radio"
-                      name="widgetType"
-                      data-testid="metricsRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="metrics">
-                      {t("Metrics")}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("AddContentScreen.MetricsDescription")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    widgetType === "chart" ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="chart"
-                      value="chart"
-                      type="radio"
-                      name="widgetType"
-                      data-testid="chartRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="chart">
-                      {t("Chart")}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("AddContentScreen.ChartDescription")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    widgetType === "table" ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="table"
-                      value="table"
-                      type="radio"
-                      name="widgetType"
-                      data-testid="tableRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="table">
-                      {t("Table")}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("AddContentScreen.TableDescription")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    widgetType === "image" ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="image"
-                      value="image"
-                      type="radio"
-                      name="widgetType"
-                      data-testid="imageRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="image">
-                      {t("Image")}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("AddContentScreen.ImageDescription")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    widgetType === "section" ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="section"
-                      value="section"
-                      type="radio"
-                      name="widgetType"
-                      data-testid="sectionRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="section">
-                      {t("Section")}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("AddContentScreen.SectionDescription")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
+              <RadioButtonsTile
+                isHorizontally={false}
+                register={register}
+                options={[
+                  {
+                    id: "text",
+                    value: "text",
+                    name: "widgetType",
+                    dataTestId: "textRadioButton",
+                    label: t("Text"),
+                    description: t("AddContentScreen.TextDescription"),
+                  },
+                  {
+                    id: "metrics",
+                    value: "metrics",
+                    name: "widgetType",
+                    dataTestId: "metricsRadioButton",
+                    label: t("Metrics"),
+                    description: t("AddContentScreen.MetricsDescription"),
+                  },
+                  {
+                    id: "chart",
+                    value: "chart",
+                    name: "widgetType",
+                    dataTestId: "chartRadioButton",
+                    label: t("Chart"),
+                    description: t("AddContentScreen.ChartDescription"),
+                  },
+                  {
+                    id: "table",
+                    value: "table",
+                    name: "widgetType",
+                    dataTestId: "tableRadioButton",
+                    label: t("Table"),
+                    description: t("AddContentScreen.TableDescription"),
+                  },
+                  {
+                    id: "image",
+                    value: "image",
+                    name: "widgetType",
+                    dataTestId: "imageRadioButton",
+                    label: t("Image"),
+                    description: t("AddContentScreen.ImageDescription"),
+                  },
+                  {
+                    id: "section",
+                    value: "section",
+                    name: "widgetType",
+                    dataTestId: "sectionRadioButton",
+                    label: t("Section"),
+                    description: t("AddContentScreen.SectionDescription"),
+                  },
+                ]}
+              />
             </fieldset>
             <br />
             <hr />

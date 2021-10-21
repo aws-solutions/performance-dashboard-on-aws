@@ -45,13 +45,16 @@ test("renders the Metrics title", async () => {
 });
 
 test("on submit, it does not call createWidget api and upload dataset without a metric added", async () => {
-  const { getByRole, getAllByText, getByLabelText } = render(<AddMetrics />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByRole, getAllByText, getByLabelText, getByTestId } = render(
+    <AddMetrics />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
 
   const continueButton = getByRole("button", { name: "Continue" });
 
-  const radioButton = getByLabelText("Create new");
+  const radioButton = getByTestId("createNewRadioButton");
 
   await waitFor(() => {
     continueButton.removeAttribute("disabled");

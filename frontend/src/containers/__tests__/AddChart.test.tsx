@@ -51,7 +51,7 @@ test("renders a textfield for chart title", async () => {
 test("renders a file upload input", async () => {
   render(<AddChart />, { wrapper: MemoryRouter });
 
-  const radioButton = await screen.findByLabelText("Static dataset");
+  const radioButton = await screen.getByTestId("staticDatasetRadioButton");
   fireEvent.click(radioButton);
 
   expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();
@@ -60,7 +60,7 @@ test("renders a file upload input", async () => {
 test("renders table for dynamic dataset", async () => {
   render(<AddChart />, { wrapper: MemoryRouter });
 
-  const radioButton = await screen.findByLabelText("Dynamic dataset");
+  const radioButton = await screen.getByTestId("dynamicDatasetRadioButton");
   await act(async () => {
     fireEvent.click(radioButton);
   });
@@ -71,16 +71,14 @@ test("renders table for dynamic dataset", async () => {
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
   const parseSpy = jest.spyOn(papaparse, "parse");
-  const { getByRole, getByText, getByLabelText, getAllByText } = render(
-    <AddChart />,
-    {
+  const { getByRole, getByText, getByLabelText, getAllByText, getByTestId } =
+    render(<AddChart />, {
       wrapper: MemoryRouter,
-    }
-  );
+    });
 
   let continueButton = getByRole("button", { name: "Continue" });
 
-  const radioButton = getByLabelText("Static dataset");
+  const radioButton = getByTestId("staticDatasetRadioButton");
 
   await waitFor(() => {
     continueButton.removeAttribute("disabled");

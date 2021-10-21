@@ -50,7 +50,7 @@ test("renders a textfield for table title", async () => {
 test("renders a file upload input", async () => {
   render(<AddTable />, { wrapper: MemoryRouter });
 
-  const radioButton = await screen.findByLabelText("Static dataset");
+  const radioButton = await screen.getByTestId("staticDatasetRadioButton");
   fireEvent.click(radioButton);
 
   expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();
@@ -58,12 +58,15 @@ test("renders a file upload input", async () => {
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
   const parseSpy = jest.spyOn(papaparse, "parse");
-  const { getByRole, getAllByText, getByLabelText } = render(<AddTable />, {
-    wrapper: MemoryRouter,
-  });
+  const { getByRole, getAllByText, getByLabelText, getByTestId } = render(
+    <AddTable />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
 
   const continueButton = getByRole("button", { name: "Continue" });
-  const radioButton = getByLabelText("Static dataset");
+  const radioButton = getByTestId("staticDatasetRadioButton");
 
   await waitFor(() => {
     continueButton.removeAttribute("disabled");

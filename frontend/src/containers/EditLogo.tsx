@@ -16,7 +16,7 @@ function EditLogo() {
   const { t } = useTranslation();
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
-  const { loadingFile, logo } = useLogo(settings.customLogoS3Key);
+  const { loadingFile, logo, logoFileName } = useLogo(settings.customLogoS3Key);
   const { register, handleSubmit } = useForm();
 
   const [currentLogo, setCurrentLogo] = useState(logo);
@@ -118,6 +118,8 @@ function EditLogo() {
                 fileName={
                   currentLogo
                     ? currentLogo.name
+                    : logoFileName
+                    ? logoFileName
                     : defaultLogo.replace(/^.*[\\/]/, "")
                 }
                 onFileProcessed={onFileProcessed}

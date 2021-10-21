@@ -11,18 +11,39 @@ import Spinner from "../components/Spinner";
 import defaultLogo from "../logo.svg";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
+import TextField from "../components/TextField";
 
 function EditLogo() {
   const { t } = useTranslation();
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
   const { loadingFile, logo } = useLogo(settings.customLogoS3Key);
-  const { register, handleSubmit } = useForm();
+  const { register, errors, handleSubmit } = useForm();
 
   const [currentLogo, setCurrentLogo] = useState(logo);
   const [imageUploading, setImageUploading] = useState(false);
+  const [altText, setAltText] = useState("");
 
   const onSubmit = async () => {
+    let refreshSettings = false;
+    if (altText) {
+      try {
+        await BackendService.updateSetting(
+          "customLogoAltText",
+          altText,
+          new Date()
+        );
+        refreshSettings = true;
+      } catch (err) {
+        history.push("/admin/settings/brandingandstyling", {
+          alert: {
+            type: "error",
+            message: t("SettingsLogoEditFailed"),
+          },
+        });
+      }
+    }
+
     if (currentLogo) {
       try {
         setImageUploading(true);
@@ -37,10 +58,25 @@ function EditLogo() {
           s3Key,
           new Date()
         );
-        await reloadSettings();
 
         setImageUploading(false);
 
+        refreshSettings = true;
+      } catch (err) {
+        setImageUploading(false);
+
+        history.push("/admin/settings/brandingandstyling", {
+          alert: {
+            type: "error",
+            message: t("SettingsLogoEditFailed"),
+          },
+        });
+      }
+    }
+
+    if (refreshSettings) {
+      try {
+        await reloadSettings();
         history.push("/admin/settings/brandingandstyling", {
           alert: {
             type: "success",
@@ -48,8 +84,6 @@ function EditLogo() {
           },
         });
       } catch (err) {
-        setImageUploading(false);
-
         history.push("/admin/settings/brandingandstyling", {
           alert: {
             type: "error",
@@ -84,6 +118,10 @@ function EditLogo() {
     if (data) {
       setCurrentLogo(data);
     }
+  };
+
+  const handleAltTextChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setAltText((event.target as HTMLInputElement).value);
   };
 
   return (
@@ -123,6 +161,20 @@ function EditLogo() {
                 onFileProcessed={onFileProcessed}
               />
 
+              <TextField
+                id="altText"
+                name="altText"
+                label={t("SettingsLogoAltText")}
+                hint={t("SettingsLogoTextHint")}
+                register={register}
+                error={errors.altText && t("SettingsLogoTextError")}
+                required
+                onChange={handleAltTextChange}
+                defaultValue={settings.customLogoAltText}
+                multiline
+                rows={1}
+              />
+
               <br />
               <Button type="submit" disabled={!settings.updatedAt}>
                 {t("Save")}
@@ -147,13 +199,13 @@ function EditLogo() {
                       {currentLogo && (
                         <img
                           src={URL.createObjectURL(currentLogo)}
-                          alt="logo"
+                          alt={altText || t("SettingsLogoOrganization")}
                         ></img>
                       )}
                       {!currentLogo && (
                         <img
                           src={logo ? URL.createObjectURL(logo) : defaultLogo}
-                          alt={t("SettingsLogoOrganization")}
+                          alt={altText || t("SettingsLogoOrganization")}
                         ></img>
                       )}
                     </div>

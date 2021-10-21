@@ -142,7 +142,7 @@ function calculateBarDimentions(
 ): ComputedDimensions {
   const style = container ? window.getComputedStyle(container) : undefined;
   if (!maxLabelWidth) {
-    maxLabelWidth = 0.3 * window.innerWidth;
+    maxLabelWidth = container ? 0.3 * container.clientWidth : 200;
   }
   if (!barSize) {
     barSize = 32;

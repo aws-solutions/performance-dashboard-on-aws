@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { isPropertySignature } from "typescript";
 import "./Button.css";
 
 type Variant =

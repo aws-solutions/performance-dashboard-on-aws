@@ -44,7 +44,7 @@ test("renders a textfield for chart title", async () => {
 test("renders a file upload input", async () => {
   render(<EditChart />, { wrapper: MemoryRouter });
 
-  const radioButton = await screen.findByLabelText("Static dataset");
+  const radioButton = await screen.getByTestId("staticDatasetRadioButton");
   fireEvent.click(radioButton);
 
   expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();

@@ -63,7 +63,13 @@ const BarChartWidget = (props: Props) => {
         props.data
       )
     );
-  }, [chartRef, props.bars, props.data, props.stackedChart]);
+  }, [
+    chartRef,
+    props.showMobilePreview,
+    props.bars,
+    props.data,
+    props.stackedChart,
+  ]);
 
   const { xAxisLargestValue } = useXAxisMetadata(
     chartRef,

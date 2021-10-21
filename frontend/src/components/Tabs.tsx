@@ -19,7 +19,30 @@ function Tabs(props: Props) {
     setActiveTab(props.defaultActive);
   }, [props.defaultActive]);
 
-  const onClickTabItem = (tab: string) => {
+  const onClickTabItem = (tab: string, currentTab: HTMLElement) => {
+    const rect = currentTab.getBoundingClientRect();
+    const wrapper = currentTab?.closest(
+      ".react-horizontal-scrolling-menu--wrapper"
+    );
+    if (rect && wrapper) {
+      const wrapperRect = wrapper.getBoundingClientRect();
+      if (rect.left < wrapperRect.left) {
+        wrapper.querySelector<HTMLElement>("button:first-child")?.click();
+      } else {
+        const shownWidth = wrapperRect.right - rect.left;
+        if (shownWidth < rect.width) {
+          wrapper.querySelector<HTMLElement>("button:last-child")?.click();
+        }
+      }
+      console.log({
+        left: rect.left,
+        right: rect.right,
+      });
+      console.log({
+        left: wrapperRect.left,
+        right: wrapperRect.right,
+      });
+    }
     setActiveTab(tab);
   };
 

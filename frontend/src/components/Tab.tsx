@@ -10,30 +10,7 @@ interface Props {
 
 function Tab(props: Props) {
   const onClick = (e: MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const wrapper = e.currentTarget?.closest(
-      ".react-horizontal-scrolling-menu--wrapper"
-    );
-    if (rect && wrapper) {
-      const wrapperRect = wrapper.getBoundingClientRect();
-      if (rect.left < wrapperRect.left) {
-        wrapper.querySelector<HTMLElement>("button:first-child")?.click();
-      } else {
-        const shownWidth = wrapperRect.right - rect.left;
-        if (shownWidth < rect.width) {
-          wrapper.querySelector<HTMLElement>("button:last-child")?.click();
-        }
-      }
-      console.log({
-        left: rect.left,
-        right: rect.right,
-      });
-      console.log({
-        left: wrapperRect.left,
-        right: wrapperRect.right,
-      });
-    }
-    props.onClick(props.id);
+    props.onClick(props.id, e.currentTarget);
   };
 
   let className =

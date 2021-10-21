@@ -82,4 +82,23 @@ describe("Tabs tests", () => {
       expect(getByText(`Tab ${index + 1}`)).toBeInTheDocument();
     });
   });
+
+  test("it should contains .react-horizontal-scrolling-menu--wrapper class for auto scroll to work", () => {
+    const wrapper = render(
+      <Tabs defaultActive="tab1">
+        <div id="tab1" label="Tab 1">
+          Tab 1
+        </div>
+        <div id="tab2" label="Tab 2">
+          Tab 2
+        </div>
+      </Tabs>
+    );
+
+    expect(
+      wrapper.baseElement.querySelector(
+        ".react-horizontal-scrolling-menu--wrapper"
+      )
+    ).toBeDefined();
+  });
 });

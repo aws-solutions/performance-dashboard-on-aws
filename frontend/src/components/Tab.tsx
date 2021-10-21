@@ -15,15 +15,23 @@ function Tab(props: Props) {
       ".react-horizontal-scrolling-menu--wrapper"
     );
     if (rect && wrapper) {
-      if (rect.left < 0) {
-        const leftScroll: HTMLElement | null =
-          wrapper.querySelector("button:first-child");
-        leftScroll?.click();
-      } else if (rect.right > wrapper.clientWidth + 50) {
-        const rightScroll: HTMLElement | null =
-          wrapper.querySelector("button:last-child");
-        rightScroll?.click();
+      const wrapperRect = wrapper.getBoundingClientRect();
+      if (rect.left < wrapperRect.left) {
+        wrapper.querySelector<HTMLElement>("button:first-child")?.click();
+      } else {
+        const shownWidth = wrapperRect.right - rect.left;
+        if (shownWidth < rect.width) {
+          wrapper.querySelector<HTMLElement>("button:last-child")?.click();
+        }
       }
+      console.log({
+        left: rect.left,
+        right: rect.right,
+      });
+      console.log({
+        left: wrapperRect.left,
+        right: wrapperRect.right,
+      });
     }
     props.onClick(props.id);
   };

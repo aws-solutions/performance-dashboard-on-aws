@@ -262,6 +262,7 @@ export type Settings = {
     plural: string;
   };
   customLogoS3Key?: string;
+  customLogoAltText?: string;
   customFaviconS3Key?: string;
   contactEmailAddress?: string;
   adminContactEmailAddress?: string;

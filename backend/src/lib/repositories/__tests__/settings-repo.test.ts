@@ -52,6 +52,7 @@ describe("getSettings", () => {
         plural: "Topic Areas",
       },
       customLogoS3Key: "12345",
+      customLogoAltText: "Alt text",
       customFaviconS3Key: "12345",
     };
 

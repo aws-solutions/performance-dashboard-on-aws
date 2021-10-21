@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import Tab from "./Tab";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import { LeftArrow, RightArrow } from "./Arrows";

@@ -24,8 +24,9 @@ function Logo() {
         <>
           <img
             src={logo ? URL.createObjectURL(logo) : defaultLogo}
-            alt={t("OrganizationLogo")}
+            alt={settings.customLogoAltText || t("OrganizationLogo")}
             hidden={toHide && !showLogo}
+            data-testid="logoImage"
           ></img>
         </>
       )}

@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useDateTimeFormatter } from "../hooks";
 import { Dataset, DatasetType } from "../models";
 import Button from "./Button";
+import RadioButtonsTile from "./RadioButtonsTile";
 import FileInput from "./FileInput";
 import Link from "./Link";
 import Table from "./Table";
@@ -25,9 +26,9 @@ interface Props {
   browseDatasets: Function;
   selectDynamicDataset: Function;
   dynamicDatasets: Array<Dataset>;
-  continueButtonDisabled: boolean;
-  continueButtonDisabledTooltip?: string;
+  hasErrors: boolean;
   widgetType: string;
+  setShowNoDatasetTypeAlert: Function;
 }
 
 function ChooseData(props: Props) {
@@ -38,7 +39,18 @@ function ChooseData(props: Props) {
   const onSelect = useCallback(
     (selectedDataset: Array<Dataset>) => {
       if (props.datasetType === DatasetType.DynamicDataset) {
-        props.selectDynamicDataset(selectedDataset[0]);
+        if (selectedDataset.length) {
+          props.selectDynamicDataset(selectedDataset[0]);
+          props.setShowNoDatasetTypeAlert(false);
+        } else if (props.dynamicFileName) {
+          props.setShowNoDatasetTypeAlert(false);
+        }
+      }
+      if (
+        props.datasetType === DatasetType.StaticDataset &&
+        (props.csvFile || props.staticFileName)
+      ) {
+        props.setShowNoDatasetTypeAlert(false);
       }
     },
     [props.datasetType]
@@ -46,6 +58,14 @@ function ChooseData(props: Props) {
 
   const onSearch = (query: string) => {
     setFilter(query);
+  };
+
+  const onAdvanceStep = () => {
+    if (props.hasErrors) {
+      props.setShowNoDatasetTypeAlert(true);
+    } else {
+      props.advanceStep();
+    }
   };
 
   return (
@@ -70,66 +90,28 @@ function ChooseData(props: Props) {
       >
         <legend className="usa-sr-only">{t("ContentItemTypesLabel")}</legend>
         <div className="grid-row">
-          <div className="grid-col-4 padding-right-2">
-            <div className="usa-radio">
-              <div
-                className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                  props.datasetType === DatasetType.StaticDataset
-                    ? " bg-base-lightest"
-                    : "-lighter"
-                } border-2px padding-2 margin-y-1`}
-              >
-                <div className="grid-col flex-5">
-                  <input
-                    className="usa-radio__input"
-                    id="staticDataset"
-                    value="StaticDataset"
-                    type="radio"
-                    name="datasetType"
-                    ref={props.register()}
-                  />
-                  <label className="usa-radio__label" htmlFor="staticDataset">
-                    {t("StaticDataset")}
-                  </label>
-                </div>
-                <div className="grid-col flex-7">
-                  <div className="usa-prose text-base margin-left-4">
-                    {t("StaticDatasetDescription")}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="grid-col-4 padding-left-2">
-            <div className="usa-radio">
-              <div
-                className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                  props.datasetType === DatasetType.DynamicDataset
-                    ? " bg-base-lightest"
-                    : "-lighter"
-                } border-2px padding-2 margin-y-1`}
-              >
-                <div className="grid-col flex-5">
-                  <input
-                    className="usa-radio__input"
-                    id="dynamicDataset"
-                    value="DynamicDataset"
-                    type="radio"
-                    name="datasetType"
-                    ref={props.register()}
-                  />
-                  <label className="usa-radio__label" htmlFor="dynamicDataset">
-                    {t("DynamicDataset")}
-                  </label>
-                </div>
-                <div className="grid-col flex-7">
-                  <div className="usa-prose text-base margin-left-4">
-                    {t("DynamicDatasetDescription")}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <RadioButtonsTile
+            isHorizontally={true}
+            register={props.register}
+            options={[
+              {
+                id: "staticDataset",
+                value: "StaticDataset",
+                name: "datasetType",
+                dataTestId: "staticDatasetRadioButton",
+                label: t("StaticDataset"),
+                description: t("StaticDatasetDescription"),
+              },
+              {
+                id: "dynamicDataset",
+                value: "DynamicDataset",
+                name: "datasetType",
+                dataTestId: "dynamicDatasetRadioButton",
+                label: t("DynamicDataset"),
+                description: t("DynamicDatasetDescription"),
+              },
+            ]}
+          />
         </div>
 
         <div hidden={props.datasetType !== DatasetType.StaticDataset}>
@@ -252,18 +234,7 @@ function ChooseData(props: Props) {
       <Button variant="outline" type="button" onClick={props.backStep}>
         {t("BackButton")}
       </Button>
-      <Button
-        type="button"
-        onClick={props.advanceStep}
-        disabled={props.continueButtonDisabled}
-        disabledToolTip={
-          props.datasetType === DatasetType.DynamicDataset
-            ? t("DynamicDatasetContinue")
-            : props.datasetType === DatasetType.StaticDataset
-            ? t("StaticDatasetContinue")
-            : props.continueButtonDisabledTooltip
-        }
-      >
+      <Button type="button" onClick={onAdvanceStep}>
         {t("ContinueButton")}
       </Button>
       <Button

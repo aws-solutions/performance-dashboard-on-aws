@@ -82,7 +82,8 @@ function EditChart() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
+  const [showColumnHeaderAlert, setShowColumnHeaderAlert] = useState(false);
+  const [showNoDatasetTypeAlert, setShowNoDatasetTypeAlert] = useState(false);
   const [enableContinueButton, setEnableContinueButton] = useState(true);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const [oldStep, setOldStep] = useState<number>(-1);
@@ -299,12 +300,12 @@ function EditChart() {
 
         if (wrongCSV) {
           setEnableContinueButton(false);
-          setShowWarning(true);
+          setShowColumnHeaderAlert(true);
           setCsvFile(undefined);
           return;
         } else {
           setEnableContinueButton(true);
-          setShowWarning(false);
+          setShowColumnHeaderAlert(false);
         }
 
         if (errors !== null && errors.length) {
@@ -312,6 +313,7 @@ function EditChart() {
           setCsvJson([]);
           setDisplayedJson([]);
         } else {
+          setShowNoDatasetTypeAlert(false);
           setCsvErrors(undefined);
           const csvJson = ParsingFileService.isExcelFile(data.type)
             ? DatasetParsingService.createHeaderRowJson(results)
@@ -460,7 +462,7 @@ function EditChart() {
         setDisplayedJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        if (csvJson) {
+        if (csvJson && csvJson.length) {
           setDisplayedJson(csvJson);
         } else {
           setDisplayedJson(staticJson);
@@ -600,12 +602,19 @@ function EditChart() {
               <div hidden={step !== 0}>
                 <PrimaryActionBar>
                   {configHeader}
-                  <div className="margin-y-3" hidden={!showWarning}>
+                  <div className="margin-y-3" hidden={!showColumnHeaderAlert}>
                     <Alert
                       type="error"
                       message={t("EditChartScreen.ResolveError")}
                       slim
                     ></Alert>
+                  </div>
+                  <div className="margin-y-3" hidden={!showNoDatasetTypeAlert}>
+                    <Alert
+                      type="error"
+                      message={t("EditChartScreen.ChooseDataset")}
+                      slim
+                    />
                   </div>
                   <ChooseData
                     selectDynamicDataset={selectDynamicDataset}
@@ -617,12 +626,7 @@ function EditChart() {
                     advanceStep={advanceStep}
                     fileLoading={fileLoading}
                     browseDatasets={browseDatasets}
-                    continueButtonDisabled={
-                      !enableContinueButton || !displayedJson.length
-                    }
-                    continueButtonDisabledTooltip={t(
-                      "EditChartScreen.ChooseDataset"
-                    )}
+                    hasErrors={!enableContinueButton || !displayedJson.length}
                     csvErrors={csvErrors}
                     csvFile={csvFile}
                     staticFileName={staticFileName}
@@ -630,6 +634,7 @@ function EditChart() {
                     onCancel={onCancel}
                     register={register}
                     widgetType={t("ChooseDataDescriptionChart")}
+                    setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
                   />
                 </PrimaryActionBar>
               </div>

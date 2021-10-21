@@ -9,6 +9,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { UserRoles } from "../models";
 import { useTranslation } from "react-i18next";
 import { useChangeBackgroundColor } from "../hooks";
+import RadioButtonsTile from "../components/RadioButtonsTile";
 
 interface FormValues {
   emails: string;
@@ -97,57 +98,29 @@ function AddUsers() {
             <div className="usa-hint">{t("AddUsersRoleSelect")}</div>
 
             <fieldset className="usa-fieldset" onChange={handleChange}>
-              <legend className="usa-sr-only">Roles</legend>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    role === UserRoles.Editor ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="editor"
-                      value={UserRoles.Editor}
-                      type="radio"
-                      name="role"
-                      data-testid="editorRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="editor">
-                      {UserRoles.Editor}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("AddUsersEditor")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    role === UserRoles.Admin ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="admin"
-                      value={UserRoles.Admin}
-                      type="radio"
-                      name="role"
-                      data-testid="adminRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="admin">
-                      {UserRoles.Admin}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("AddUsersAdmin")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
+              <legend className="usa-sr-only">{t("ChangeRole.Roles")}</legend>
+              <RadioButtonsTile
+                isHorizontally={false}
+                register={register}
+                options={[
+                  {
+                    id: "editor",
+                    value: UserRoles.Editor,
+                    name: "role",
+                    dataTestId: "editorRadioButton",
+                    label: t(UserRoles.Editor),
+                    description: t("AddUsersEditor"),
+                  },
+                  {
+                    id: "admin",
+                    value: UserRoles.Admin,
+                    name: "role",
+                    dataTestId: "adminRadioButton",
+                    label: t(UserRoles.Admin),
+                    description: t("AddUsersAdmin"),
+                  },
+                ]}
+              />
             </fieldset>
 
             <br />

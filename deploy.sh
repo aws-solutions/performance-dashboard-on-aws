@@ -37,13 +37,14 @@ verify_prereqs() {
 }
 
 create_build_directories() {
-    # CDK complains if the backend/build and frontend/build
+    # CDK complains if the backend/build, frontend/build, and examples/build
     # directories don't exist during synth. So we need to trick
     # CDK by creating empty directories for now. Later on, these
     # directories will be populated by building the backend and 
     # frontend for real.
     mkdir -p $FRONTEND_DIR/build
     mkdir -p $BACKEND_DIR/build
+    mkdir -p $EXAMPLES_DIR/build
 }
 
 deploy_auth() {

@@ -33,14 +33,6 @@ function Tabs(props: Props) {
           scrollMenuObj?.scrollNext();
         }
       }
-      console.log({
-        left: rect.left,
-        right: rect.right,
-      });
-      console.log({
-        left: wrapperRect.left,
-        right: wrapperRect.right,
-      });
     }
     setActiveTab(tab);
   };

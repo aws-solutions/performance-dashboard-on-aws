@@ -61,6 +61,7 @@ async function saveDashboard(
   dashboardEntity.parentDashboardId.S = entityId;
   dashboardEntity.createdBy.S = deploymentContext.userEmail;
   dashboardEntity.updatedBy.S = deploymentContext.userEmail;
+  dashboardEntity.updatedAt.S = new Date().toISOString();
   dashboardEntity.topicAreaId.S = topicAreaId;
 
   await awsWrapper.dynamoSave(deploymentContext.tableName, dashboardEntity);
@@ -90,6 +91,8 @@ const saveChart = async function (
   // ts-ignore
   widgetEntity.pk.S = dashboardId;
   widgetEntity.sk.S = generateDBId(databaseIdPrefixes.widget);
+  widgetEntity.updatedAt.S = new Date().toISOString();
+
   if (widgetEntity.content.M) {
     widgetEntity.content.M.datasetId.S = datasetUUID;
     if (widgetEntity.content.M.s3Key.M) {
@@ -125,6 +128,7 @@ const saveDataset = async function (
   datasetEntity.pk.S = generateDBId(databaseIdPrefixes.dataset, datasetUUID);
   datasetEntity.sk.S = datasetEntity.pk.S;
   datasetEntity.createdBy.S = deploymentContext.userEmail;
+  datasetEntity.updatedAt.S = new Date().toISOString();
   if (datasetEntity.s3Key.M) {
     datasetEntity.s3Key.M.raw.S = `${dataFileUUID}.csv`;
     datasetEntity.s3Key.M.json.S = `${dataFileUUID}.json`;
@@ -152,6 +156,7 @@ const saveText = async function (
 
   widgetEntity.pk.S = dashboardId;
   widgetEntity.sk.S = generateDBId(databaseIdPrefixes.widget);
+  widgetEntity.updatedAt.S = new Date().toISOString();
 
   await awsWrapper.dynamoSave(deploymentContext.tableName, widgetEntity);
 };

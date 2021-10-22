@@ -13,13 +13,27 @@ interface Props {
 type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
 
 function Tabs(props: Props) {
+  const [scrollMenuObj, setScrollMenuObj] = useState<scrollVisibilityApiType>();
   const [activeTab, setActiveTab] = useState<string>(props.defaultActive);
 
   useEffect(() => {
     setActiveTab(props.defaultActive);
   }, [props.defaultActive]);
 
-  const onClickTabItem = (tab: string) => {
+  const onClickTabItem = (tab: string, currentTab: HTMLElement) => {
+    const rect = currentTab.getBoundingClientRect();
+    const wrapper = scrollMenuObj?.scrollContainer?.current;
+    if (rect && wrapper) {
+      const wrapperRect = wrapper.getBoundingClientRect();
+      if (rect.left < wrapperRect.left) {
+        scrollMenuObj?.scrollPrev();
+      } else {
+        const shownWidth = wrapperRect.right - rect.left;
+        if (shownWidth < rect.width) {
+          scrollMenuObj?.scrollNext();
+        }
+      }
+    }
     setActiveTab(tab);
   };
 
@@ -28,6 +42,7 @@ function Tabs(props: Props) {
       <ScrollMenu
         LeftArrow={props.showArrows && LeftArrow}
         RightArrow={props.showArrows && RightArrow}
+        onInit={setScrollMenuObj}
         onWheel={onWheel}
         wrapperClassName="border-base-lighter border-bottom margin-top-1"
       >

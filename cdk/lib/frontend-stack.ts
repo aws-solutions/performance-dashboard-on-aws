@@ -55,6 +55,7 @@ export class FrontendStack extends cdk.Stack {
       this,
       "CloudFrontOriginAccess"
     );
+    this.frontendBucket.grantRead(originAccess);
     const distribution = new cloudFront.CloudFrontWebDistribution(
       this,
       "CloudFrontDistribution",
@@ -64,12 +65,7 @@ export class FrontendStack extends cdk.Stack {
             errorCode: 404,
             responseCode: 200,
             responsePagePath: "/index.html",
-          },
-          {
-            errorCode: 403, // this is the new addition due to the bucket policy returning 403
-            responseCode: 200,
-            responsePagePath: "/index.html",
-          },
+          }
         ],
         originConfigs: [
           {

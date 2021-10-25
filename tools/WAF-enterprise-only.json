@@ -3,11 +3,39 @@
     "Parameters": {
       "InternalCIDR": {
         "Type": "CommaDelimitedList"
-      }
-    },  
+      },
+      "RestrictPublicDashboard": {
+        "Description": "Whether to restrict access to public dashboards.",
+        "Default": false,
+        "Type": "String",
+        "AllowedValues": [
+            true,
+            false
+        ]
+      } 
+    },
+    "Conditions": {
+      "RestrictPublicDashboardToEnterprise": {
+          "Fn::Equals": [
+              true,
+              {
+                  "Ref": "RestrictPublicDashboard"
+              }
+          ]
+      },
+      "NotRestrictPublicDashboardToEnterprise": {
+        "Fn::Equals": [
+            false,
+            {
+                "Ref": "RestrictPublicDashboard"
+            }
+        ]
+    }
+  }, 
     "Resources": {
       "StackPerformanceDashboardEnterpriseOnly": {
         "Type": "AWS::WAFv2::WebACL",
+        "Condition": "RestrictPublicDashboardToEnterprise",
         "Properties": {
           "DefaultAction": {
             "Allow": {}
@@ -18,81 +46,66 @@
             "MetricName": "EnterpriseOnly",
             "SampledRequestsEnabled": true
           },
-          "Description": "EnterpriseOnly",
-          "Name": "PerformanceDashboardEnterpriseOnly",
+          "Name": "EnterpriseOnly",
           "Rules": [
             {
-              "Action": {
-                "Allow": {}
-              },
-              "Name": "AdminFromEnterprise",
-              "Priority": 1,
+              "Name": "EnterpriseOnly",
+              "Priority": 0,
               "Statement": {
-                "AndStatement": {
-                  "Statements": [
-                    {
-                      "IPSetReferenceStatement": {
-                        "Arn": {
-                          "Fn::GetAtt": [
-                            "InternalOnlyIPV4",
-                            "Arn"
-                          ]
-                        }
-                      }
-                    },
-                    {
-                      "ByteMatchStatement": {
-                        "FieldToMatch": {
-                          "UriPath": {}
-                        },
-                        "PositionalConstraint": "CONTAINS",
-                        "SearchString": "/admin",
-                        "TextTransformations": [
-                          {
-                            "Priority": 0,
-                            "Type": "NONE"
-                          }
+                "NotStatement": {
+                  "Statement": {
+                    "IPSetReferenceStatement": {
+                      "ARN": {
+                        "Fn::GetAtt": [
+                          "InternalOnlyIPV4",
+                          "Arn"
                         ]
                       }
                     }
-                  ]
+                  }
                 }
               },
               "VisibilityConfig": {
                 "CloudWatchMetricsEnabled": true,
-                "MetricName": "AdminFromEnterprise",
+                "MetricName": "EnterpriseOnly",
                 "SampledRequestsEnabled": true
-              }
-            },
-            {
+              },
               "Action": {
                 "Block": {}
-              },
-              "Name": "AdminNotFromEnterprise",
-              "Priority": 2,
+              }
+            }        
+          ]
+        },
+        "DependsOn": [
+          "InternalOnlyIPV4"
+        ]
+      },
+      "StackPerformanceDashboardEnterpriseOnlyForAdmin": {
+        "Type": "AWS::WAFv2::WebACL",
+        "Condition": "NotRestrictPublicDashboardToEnterprise",
+        "Properties": {
+          "DefaultAction": {
+            "Allow": {}
+          },
+          "Scope": "CLOUDFRONT",
+          "VisibilityConfig": {
+            "CloudWatchMetricsEnabled": true,
+            "MetricName": "EnterpriseOnly",
+            "SampledRequestsEnabled": true
+          },
+          "Name": "EnterpriseOnly",
+          "Rules": [
+            {
+              "Name": "EnterpriseOnly",
+              "Priority": 0,
               "Statement": {
                 "AndStatement": {
                   "Statements": [
                     {
-                      "ByteMatchStatement": {
-                        "FieldToMatch": {
-                          "UriPath": {}
-                        },
-                        "PositionalConstraint": "CONTAINS",
-                        "SearchString": "/admin",
-                        "TextTransformations": [
-                          {
-                            "Priority": 0,
-                            "Type": "NONE"
-                          }
-                        ]
-                      }
-                    },
-                    {
                       "NotStatement": {
                         "Statement": {
                           "IPSetReferenceStatement": {
-                            "Arn": {
+                            "ARN": {
                               "Fn::GetAtt": [
                                 "InternalOnlyIPV4",
                                 "Arn"
@@ -101,47 +114,34 @@
                           }
                         }
                       }
+                    },
+                    {
+                      "ByteMatchStatement": {
+                        "FieldToMatch": {
+                          "UriPath": {}
+                        },
+                        "PositionalConstraint": "CONTAINS",
+                        "SearchString": "/admin",
+                        "TextTransformations": [
+                          {
+                            "Type": "NONE",
+                            "Priority": 0
+                          }
+                        ]
+                      }
                     }
                   ]
-                }
+                }              
               },
               "VisibilityConfig": {
                 "CloudWatchMetricsEnabled": true,
-                "MetricName": "AdminNotFromEnterprise",
+                "MetricName": "EnterpriseOnly",
                 "SampledRequestsEnabled": true
-              }
-            },
-            {
+              },
               "Action": {
-                "Allow": {}
-              },
-              "Name": "PublicPage",
-              "Priority": 3,
-              "Statement": {
-                "NotStatement": {
-                  "Statement": {
-                    "ByteMatchStatement": {
-                      "FieldToMatch": {
-                        "UriPath": {}
-                      },
-                      "PositionalConstraint": "CONTAINS",
-                      "SearchString": "/admin",
-                      "TextTransformations": [
-                        {
-                          "Priority": 0,
-                          "Type": "NONE"
-                        }
-                      ]
-                    }
-                  }
-                }
-              },
-              "VisibilityConfig": {
-                "CloudWatchMetricsEnabled": true,
-                "MetricName": "PublicPage",
-                "SampledRequestsEnabled": true
+                "Block": {}
               }
-            }
+            }        
           ]
         },
         "DependsOn": [
@@ -157,7 +157,7 @@
           "IPAddressVersion": "IPV4",
           "Scope": "CLOUDFRONT",
           "Description": "This is the WAF v2 IPSet designating the CIDR of the internal network",
-          "Name": "InternalOnly_Performance_Dashboard"
+          "Name": "EnterpriseCIDROnly"
         }
       }
     }

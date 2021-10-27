@@ -1,1 +1,42 @@
-[{"Tipo de incidente":"Sobredosis"," Total de incidentes":157},{"Tipo de incidente":"Problema de respiración"," Total de incidentes":301},{"Tipo de incidente":"Accidente con lesión"," Total de incidentes":380},{"Tipo de incidente":"Lesión/accidente desconocido "," Total de incidentes":380},{"Tipo de incidente":"Desmayo"," Total de incidentes":412},{"Tipo de incidente":"Asistencia para incendio"," Total de incidentes":618},{"Tipo de incidente":"Alarma de incendio"," Total de incidentes":796},{"Tipo de incidente":"Enfermedad"," Total de incidentes":947},{"Tipo de incidente":"Caída "," Total de incidentes":1016},{"Tipo de incidente":"Atención médica "," Total de incidentes":2331}]
+[
+  {
+    "Tipo de incidente": "Sobredosis",
+    "Total de incidentes": 157
+  },
+  {
+    "Tipo de incidente": "Problema de respiración",
+    "Total de incidentes": 301
+  },
+  {
+    "Tipo de incidente": "Accidente con lesión",
+    "Total de incidentes": 380
+  },
+  {
+    "Tipo de incidente": "Lesión/accidente desconocido ",
+    "Total de incidentes": 380
+  },
+  {
+    "Tipo de incidente": "Desmayo",
+    "Total de incidentes": 412
+  },
+  {
+    "Tipo de incidente": "Asistencia para incendio",
+    "Total de incidentes": 618
+  },
+  {
+    "Tipo de incidente": "Alarma de incendio",
+    "Total de incidentes": 796
+  },
+  {
+    "Tipo de incidente": "Enfermedad",
+    "Total de incidentes": 947
+  },
+  {
+    "Tipo de incidente": "Caída ",
+    "Total de incidentes": 1016
+  },
+  {
+    "Tipo de incidente": "Atención médica ",
+    "Total de incidentes": 2331
+  }
+]

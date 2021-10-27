@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2021-10-28
+
+### Added
+
+- On public dashboard page, scrolling up now highlights a Section's table of contents entry
+- Improved accessiblity by adding labels to the Check Data column checkboxes and alt-text for the logo upload in Settings
+- Uploaded favicon retains original filename
+
 ## [1.1.2] - 2021-10-14
 
 ### Added

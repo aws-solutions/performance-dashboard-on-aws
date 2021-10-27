@@ -1,0 +1,17 @@
+{
+    "pk": {
+     "S": ""
+    },
+    "sk": {
+     "S": ""
+    },
+    "name": {
+     "S": "Contabilidad"
+    },
+    "createdBy": {
+     "S": "cdk-deploy"
+    },
+    "type": {
+     "S": "TopicArea"
+    }
+   }

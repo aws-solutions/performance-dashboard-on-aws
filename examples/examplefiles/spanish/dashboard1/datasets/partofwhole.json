@@ -1,0 +1,36 @@
+{
+  "pk": {
+    "S": ""
+  },
+  "sk": {
+    "S": ""
+  },
+  "fileName": {
+    "S": "Dispositivos.csv"
+  },
+  "sourceType": {
+    "S": "FileUpload"
+  },
+  "schema": {
+    "S": "None"
+  },
+  "updatedAt": {
+    "S": "2021-10-04T13:58:28.230Z"
+  },
+  "createdBy": {
+    "S": "gudalis"
+  },
+  "s3Key": {
+    "M": {
+      "raw": {
+        "S": ""
+      },
+      "json": {
+        "S": ""
+      }
+    }
+  },
+  "type": {
+    "S": "Dataset"
+  }
+}

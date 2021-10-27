@@ -1,0 +1,44 @@
+{
+  "pk": {
+    "S": ""
+  },
+  "sk": {
+    "S": ""
+  },
+  "version": {
+    "N": "1"
+  },
+  "displayTableOfContents": {
+    "BOOL": true
+  },
+  "parentDashboardId": {
+    "S": ""
+  },
+  "updatedBy": {
+    "S": "cdk-deploy"
+  },
+  "createdBy": {
+    "S": "cdk-deploy"
+  },
+  "state": {
+    "S": "Draft"
+  },
+  "dashboardName": {
+    "S": "[Panel de ejemplo]"
+  },
+  "topicAreaId": {
+    "S": ""
+  },
+  "topicAreaName": {
+    "S": "Contabilidad"
+  },
+  "releaseNotes": {
+    "S": "Publicación inicial"
+  },
+  "description": {
+    "S": "Con Performance Dashboard on AWS, puede crear, mantener y compartir rápidamente sus historias controladas por datos. Agregue una breve descripción aquí para presentar este panel individual al público."
+  },
+  "type": {
+    "S": "Dashboard"
+  }
+}

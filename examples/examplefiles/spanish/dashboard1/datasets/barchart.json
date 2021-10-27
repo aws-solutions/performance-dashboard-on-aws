@@ -6,7 +6,7 @@
       "S": ""
     },
     "fileName": {
-      "S": "Program participation for adult members.csv"
+      "S": "Participacion_en_el_programa.csv"
     },
     "sourceType": {
       "S": "FileUpload"
@@ -15,7 +15,7 @@
       "S": "None"
     },
     "updatedAt": {
-      "S": "2021-10-01T18:23:38.318Z"
+      "S": "2021-08-30T19:11:32.276Z"
     },
     "createdBy": {
       "S": "cdk-deploy"

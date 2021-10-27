@@ -1,0 +1,36 @@
+{
+  "pk": {
+    "S": ""
+  },
+  "sk": {
+    "S": ""
+  },
+  "fileName": {
+    "S": "Satisfaccion_del_usario.csv"
+  },
+  "sourceType": {
+    "S": "FileUpload"
+  },
+  "schema": {
+    "S": "None"
+  },
+  "updatedAt": {
+    "S": "2021-10-01T18:17:42.624Z"
+  },
+  "createdBy": {
+    "S": "gudalis"
+  },
+  "s3Key": {
+    "M": {
+      "raw": {
+        "S": ""
+      },
+      "json": {
+        "S": ""
+      }
+    }
+  },
+  "type": {
+    "S": "Dataset"
+  }
+}

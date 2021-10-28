@@ -57,6 +57,7 @@
   "Chart": "Gráfico",
   "Table": "Tabela",
   "Image": "Imagem",
+  "CheckBox": "Caixa de seleção",
   "Section": "Seção",
   "SureDelete": "Tem certeza de que deseja excluir este/a",
   "ZeroDashboards": "que não tem nenhum painel",
@@ -288,6 +289,7 @@
     "ChooseData": "Escolher dados",
     "Visualize": "Visualizar",
     "UploadingFile": "Fazendo upload do arquivo",
+    "FileNameDoesNotExist": "Os metadados não contêm o nome do arquivo",
     "CreatingMetrics": "Criando métricas",
     "Data": "Dados",
     "DataHint": "Escolha um conjunto de dados existente ou crie um novo para preencher essas métricas",
@@ -299,7 +301,7 @@
     "DynamicDatasetDescription": "Escolha em uma lista de conjuntos de dados atualizados continuamente.",
     "Back": "Voltar",
     "SelectDataset": "Você deve selecionar um conjunto de dados para continuar",
-    "ChooseDataset": "Escolha um conjunto de dados para continuar",
+    "ChooseDataset": "Escolher um conjunto de dados para continuar",
     "Continue": "Continuar",
     "EnterMetric": "Insira pelo menos uma métrica para continuar",
     "ResolveErrors": "Resolva o(s) erro(s) para adicionar as métricas",
@@ -324,7 +326,7 @@
     "ShowTitle": "Mostrar título no painel"
   },
   "AddChartScreen": {
-    "ChooseDataset": "Escolha um conjunto de dados para continuar",
+    "ChooseDataset": "Escolher um conjunto de dados para continuar",
     "AddChart": "Adicionar gráfico",
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
@@ -356,7 +358,7 @@
       "part1": "A tabela '",
       "part2": "' foi adicionada com êxito."
     },
-    "ChooseDataset": "Escolha um conjunto de dados para continuar"
+    "ChooseDataset": "Escolher um conjunto de dados para continuar"
   },
   "EditTableScreen": {
     "EditTable": "Editar tabela",
@@ -366,7 +368,8 @@
     "EditTableSuccess": {
       "part1": "A tabela '",
       "part2": "' foi editada com êxito."
-    }
+    },
+    "ChooseDataset": "Escolher um conjunto de dados para continuar"
   },
   "BrandingAndStyling": "Marca e estilo",
   "BrandingAndStylingDescription": "Personalize seu painel de performance.",
@@ -522,6 +525,9 @@
   "SettingsLogoFileUploadHint": "Deve ser um arquivo PNG, JPEG ou SVG",
   "SettingsLogoPreview": "Pré-visualização",
   "SettingsLogoOrganization": "Logotipo da organização",
+  "SettingsLogoAltText": "Texto alternativo do logotipo",
+  "SettingsLogoTextHint": "Forneça uma breve descrição do logotipo para usuários com deficiência visual que usam leitor de tela. Essa descrição não será exibida no painel.",
+  "SettingsLogoTextError": "Especifique um texto alternativo para o logotipo",
   "SettingsFaviconEditSuccess": "Favicon modificado com êxito.",
   "SettingsFaviconEditFailed": "Falha ao atualizar o favicon.",
   "SettingsFaviconEdit": "Editar favicon",
@@ -916,13 +922,13 @@
   "Horizontally": "Horizontalmente",
   "Vertically": "Verticalmente",
   "TableOfContents": "Índice",
-  "TableOfContentsDescription": "Adiciona um índice para fornecer uma visão geral do painel de navegação",
+  "TableOfContentsDescription": "Adiciona um índice para exibir uma visão geral do painel",
   "EditTableOfContents": "Exibir índice",
   "TableOfContentsSuccessfullyEdited": "Índice editado com êxito.",
   "NoTableOfContentsItems": "O painel não tem itens de conteúdo. Os itens de conteúdo devem ser adicionados ao painel antes de serem incluídos no índice.",
   "SelectAll": "Selecionar tudo",
   "DeselectAll": "Desmarcar tudo",
-  "EditTableOfContentsDescription": "O índice mostra uma visão geral dos itens de conteúdo em seu painel. Personalize o índice, selecionando quais itens de conteúdo incluir. Se um item de conteúdo for selecionado abaixo, seu título será incluído no índice.",
+  "EditTableOfContentsDescription": "O sumário exibe uma visão geral dos itens de conteúdo em seu painel. Para personalizar o sumário, selecione os itens de conteúdo que serão incluídos. Se um item de conteúdo for selecionado abaixo, o respectivo título será incluído no sumário.",
   "DisplayWithPages": "Exibir com páginas",
   "SelectColumns": "Selecione as colunas para formatar os dados."
 }

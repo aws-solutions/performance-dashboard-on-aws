@@ -19,6 +19,7 @@ source/frontend/src/locales/en/translation.json:394
 source/frontend/src/locales/en/translation.json:396
 # Amazon Internal: Potential confidential designation found  Check line number: 396
 source/frontend/src/locales/en/translation.json:475
+source/frontend/src/locales/en/translation.json:478
 # Amazon Internal: Potential confidential designation found  Check line number: 475
 CODE_OF_CONDUCT.md:4
 # Potential email address discovered                         Check line number: 4                       
@@ -45,14 +46,19 @@ source/backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:173
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:46
 # Potential email address discovered                         Check line number: 46                      
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:48
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:49
 # Potential email address discovered                         Check line number: 48                      
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:70
 # Potential email address discovered                         Check line number: 70                      
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:71
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:72
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:73
 # Potential email address discovered                         Check line number: 71
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:96
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:99
 # Potential email address discovered                         Check line number: 96                      
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:116
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:119
 # Potential email address discovered                         Check line number: 116                      
 source/backend/src/lib/controllers/__tests__/user-ctrl.test.ts:31
 # Potential email address discovered                         Check line number: 31                      

@@ -16,7 +16,6 @@ test("renders title and subtitles", async () => {
   });
   expect(getByRole("heading", { name: "Add text" })).toBeInTheDocument();
   expect(getByText("Configure text content")).toBeInTheDocument();
-  expect(getByText("Step 2 of 2")).toBeInTheDocument();
 });
 
 test("renders a text input for title", async () => {

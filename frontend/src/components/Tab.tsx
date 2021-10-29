@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 interface Props {
   id: string;
   itemId: string;
@@ -9,8 +9,8 @@ interface Props {
 }
 
 function Tab(props: Props) {
-  const onClick = () => {
-    props.onClick(props.id);
+  const onClick = (e: MouseEvent<HTMLElement>) => {
+    props.onClick(props.id, e.currentTarget);
   };
 
   let className =

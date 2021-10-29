@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 // @ts-ignore
 import { CategoricalChartWrapper } from "recharts";
 import {
@@ -13,11 +13,12 @@ import {
   Tooltip,
 } from "recharts";
 import { useColors, useXAxisMetadata } from "../hooks";
-import UtilsService from "../services/UtilsService";
+import UtilsService, { ComputedDimensions } from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
+import { ColumnDataType } from "../models";
+import RulerService from "../services/RulerService";
 
 type Props = {
   title: string;
@@ -43,6 +44,33 @@ const BarChartWidget = (props: Props) => {
   const [barsHover, setBarsHover] = useState(null);
   const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
   const [chartLoaded, setChartLoaded] = useState(false);
+  const [dims, setDims] = useState<ComputedDimensions>({
+    labelWidth: 260,
+    chartHeight: 500,
+  });
+
+  function getCharContainer() {
+    const instance = chartRef.current as CategoricalChartWrapper;
+    return instance?.container;
+  }
+
+  useEffect(() => {
+    setDims(
+      UtilsService.calculateBarDimentions(
+        getCharContainer(),
+        !!props.stackedChart,
+        props.bars,
+        props.data
+      )
+    );
+  }, [
+    chartRef,
+    props.showMobilePreview,
+    props.bars,
+    props.data,
+    props.stackedChart,
+  ]);
+
   const { xAxisLargestValue } = useXAxisMetadata(
     chartRef,
     chartLoaded,
@@ -54,10 +82,6 @@ const BarChartWidget = (props: Props) => {
     props.colors?.primary,
     props.colors?.secondary
   );
-
-  const pixelsByCharacter = 8;
-  const yAxisWidthOffset = 24;
-  const yAxisLabelMaxWidth = 220;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -107,30 +131,12 @@ const BarChartWidget = (props: Props) => {
       return payload;
     };
 
-  const formatYAxisLabel = (label: string) =>
-    label.length > 27 ? label.substr(0, 27).concat("...") : label;
-
-  const calculateChartHeight = (): number => {
-    // When there are 15 rows of data and each row has 3 columns (excluding row
-    // name), having a chart height of 400px is still visually appealing to users.
-    // Adding more rows or columns would require additional height increments.
-    const defaultNumRows = 15;
-    const defaultNumCols = 3;
-    const unitHeight = 400;
-    let multiplicity;
-
-    if (data && data.length) {
-      const numRows = data.length;
-      const numCols = Object.keys(data[0]).length - 1;
-      const rowMultiplicity = Math.floor((numRows - 1) / defaultNumRows) + 1;
-      const colMultiplicity = Math.floor((numCols - 1) / defaultNumCols) + 1;
-      multiplicity = rowMultiplicity * colMultiplicity;
-    } else {
-      multiplicity = 1;
-    }
-
-    return unitHeight * multiplicity;
-  };
+  function formatYAxisLabel(label: any) {
+    const container = getCharContainer();
+    const style = container ? window.getComputedStyle(container) : undefined;
+    const width = dims.labelWidth - RulerService.getVisualWidth("M");
+    return RulerService.trimToWidth(label, width, style?.font, style?.fontSize);
+  }
 
   return (
     <div>
@@ -144,7 +150,7 @@ const BarChartWidget = (props: Props) => {
         />
       )}
       {data && data.length && (
-        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
+        <ResponsiveContainer width="100%" height={dims.chartHeight}>
           <BarChart
             className="bar-chart"
             data={props.data}
@@ -171,12 +177,7 @@ const BarChartWidget = (props: Props) => {
             <YAxis
               dataKey={props.bars.length ? props.bars[0] : ""}
               type={yAxisType()}
-              width={Math.min(
-                UtilsService.getLargestHeader(props.bars, props.data) *
-                  pixelsByCharacter +
-                  yAxisWidthOffset,
-                yAxisLabelMaxWidth
-              )}
+              width={dims.labelWidth}
               minTickGap={0}
               domain={["dataMin - 1", "dataMax + 1"]}
               scale={yAxisType() === "number" ? "linear" : "auto"}
@@ -264,16 +265,17 @@ const BarChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <div style={showMobilePreview ? { float: "left" } : {}}>
+      <div>
         <DataTable
           rows={data || []}
           columns={bars}
           columnsMetadata={props.columnsMetadata}
           fileName={props.downloadTitle}
+          showMobilePreview={showMobilePreview}
         />
       </div>
       {props.summaryBelow && (
-        <div style={showMobilePreview ? { clear: "left" } : {}}>
+        <div>
           <MarkdownRender
             source={props.summary}
             className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"

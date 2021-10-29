@@ -5,12 +5,14 @@ import { useTranslation } from "react-i18next";
 type UseFaviconHook = {
   loadingFile: boolean;
   favicon: File | undefined;
+  faviconFileName: string | undefined;
 };
 
 export function useFavicon(s3Key?: string): UseFaviconHook {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
   const [favicon, setFile] = useState<File>();
+  const [faviconFileName, setFileName] = useState<string>();
 
   const fetchData = useCallback(async () => {
     if (s3Key) {
@@ -19,6 +21,7 @@ export function useFavicon(s3Key?: string): UseFaviconHook {
         const data = await StorageService.downloadFavicon(s3Key, t);
         setFile(data);
         setLoading(false);
+        setFileName(data.name);
       } catch (err) {
         console.log("Can't retrieve favicon from S3", err);
         setLoading(false);
@@ -33,5 +36,6 @@ export function useFavicon(s3Key?: string): UseFaviconHook {
   return {
     loadingFile: loading,
     favicon,
+    faviconFileName,
   };
 }

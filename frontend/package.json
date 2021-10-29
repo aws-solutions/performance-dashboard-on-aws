@@ -1,6 +1,6 @@
 {
   "name": "performance-dashboard-frontend",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "private": true,
   "description": "Performance Dashboard on AWS Frontend",
   "dependencies": {
@@ -60,10 +60,21 @@
     "start": "react-scripts start",
     "build": "INLINE_RUNTIME_CHUNK=false react-scripts build",
     "test": "react-scripts test",
+    "test:ci": "CI=true react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 45,
+        "functions": 45,
+        "lines": 55,
+        "statements": 55
+      }
+    }
   },
   "browserslist": {
     "production": [

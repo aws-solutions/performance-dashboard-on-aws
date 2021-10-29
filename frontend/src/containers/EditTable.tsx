@@ -31,6 +31,7 @@ import CheckData from "../components/CheckData";
 import Visualize from "../components/VisualizeTable";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -74,6 +75,7 @@ function EditTable() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [editingWidget, setEditingWidget] = useState(false);
+  const [showNoDatasetTypeAlert, setShowNoDatasetTypeAlert] = useState(false);
   const [step, setStep] = useState<number>(state && state.json ? 1 : 2);
   const [staticFileName, setStaticFileName] = useState<string | undefined>("");
   const [oldStep, setOldStep] = useState<number>(-1);
@@ -263,6 +265,7 @@ function EditTable() {
           setCsvJson([]);
           setDisplayedJson([]);
         } else {
+          setShowNoDatasetTypeAlert(false);
           setCsvErrors(undefined);
           const csvJson = DatasetParsingService.createHeaderRowJson(results);
           setCsvJson(csvJson);
@@ -388,7 +391,7 @@ function EditTable() {
         setDisplayedJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        if (csvJson) {
+        if (csvJson && csvJson.length) {
           setDisplayedJson(csvJson);
         } else {
           setDisplayedJson(staticJson);
@@ -529,6 +532,13 @@ function EditTable() {
               <div hidden={step !== 0}>
                 <PrimaryActionBar>
                   {configHeader}
+                  <div className="margin-y-3" hidden={!showNoDatasetTypeAlert}>
+                    <Alert
+                      type="error"
+                      message={t("EditTableScreen.ChooseDataset")}
+                      slim
+                    />
+                  </div>
                   <ChooseData
                     selectDynamicDataset={selectDynamicDataset}
                     dynamicDatasets={dynamicDatasets}
@@ -539,7 +549,7 @@ function EditTable() {
                     advanceStep={advanceStep}
                     fileLoading={fileLoading}
                     browseDatasets={browseDatasets}
-                    continueButtonDisabled={!displayedJson.length}
+                    hasErrors={!displayedJson.length}
                     csvErrors={csvErrors}
                     csvFile={csvFile}
                     onCancel={onCancel}
@@ -547,6 +557,7 @@ function EditTable() {
                     widgetType={t("ChooseDataDescriptionTable")}
                     staticFileName={staticFileName}
                     dynamicFileName={dynamicFileName}
+                    setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
                   />
                 </PrimaryActionBar>
               </div>

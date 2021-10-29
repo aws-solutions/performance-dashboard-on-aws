@@ -1,9 +1,11 @@
+import { Label } from "recharts";
 import {
   Dashboard,
   DashboardState,
   PublicDashboard,
   PublicTopicArea,
 } from "../models";
+import RulerService from "./RulerService";
 
 /**
  * Takes an array of dashboards and groups them by topic area.
@@ -49,12 +51,15 @@ function isCellEmpty(value: any): boolean {
   return value === undefined || value === null || value === "";
 }
 
+function getLabels(headers: Array<string>, data?: Array<any>) {
+  return data?.map((d) => d[headers.length ? headers[0] : ""] || "");
+}
+
 function getLargestHeader(headers: Array<string>, data?: Array<any>) {
   return (
-    data
-      ?.map((d) => (d as any)[headers.length ? headers[0] : ""] || "")
-      .map((c) => c.toString().length)
-      .reduce((a, b) => (a > b ? a : b), 0) || 0
+    getLabels(headers, data)
+      ?.map((c) => c.length)
+      .reduce((a, b) => Math.max(a, b), 0) || 0
   );
 }
 
@@ -127,6 +132,41 @@ function getTranslationUserStatusValue(userStatus: string) {
   return translationUserStatusValue;
 }
 
+function calculateBarDimentions(
+  container: Element,
+  stacked: boolean,
+  headers: string[],
+  data?: any[],
+  maxLabelWidth?: number,
+  barSize?: number
+): ComputedDimensions {
+  const style = container ? window.getComputedStyle(container) : undefined;
+  if (!maxLabelWidth) {
+    maxLabelWidth = container ? 0.3 * container.clientWidth : 200;
+  }
+  if (!barSize) {
+    barSize = 32;
+  }
+  const cols = stacked ? 2 : Math.max(headers.length - 1, 1);
+  const labels = getLabels(headers, data) || [];
+  const labelWidth = Math.min(
+    labels
+      .map((c) => RulerService.getVisualWidth(c, style?.font, style?.fontSize))
+      .reduce((a, b) => Math.max(a, b), 0) + RulerService.getVisualWidth("M"),
+    maxLabelWidth
+  );
+
+  return {
+    labelWidth,
+    chartHeight: cols * Math.max(labels.length, 1) * barSize,
+  };
+}
+
+export interface ComputedDimensions {
+  labelWidth: number;
+  chartHeight: number;
+}
+
 const UtilsService = {
   groupByTopicArea,
   validateEmails,
@@ -136,6 +176,7 @@ const UtilsService = {
   calculateYAxisMargin,
   isCellEmpty,
   getTranslationUserStatusValue,
+  calculateBarDimentions,
 };
 
 export default UtilsService;

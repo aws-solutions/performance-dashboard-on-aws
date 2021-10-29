@@ -35,6 +35,7 @@ import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import RadioButtonsTile from "../components/RadioButtonsTile";
 
 interface FormValues {
   title: string;
@@ -389,72 +390,32 @@ function AddMetrics() {
                   </legend>
 
                   <div className="grid-row">
-                    <div className="grid-col-4 padding-right-2">
-                      <div className="usa-radio">
-                        <div
-                          className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                            datasetType === DatasetType.CreateNew
-                              ? " bg-base-lightest"
-                              : "-lighter"
-                          } border-2px padding-2 margin-y-1`}
-                        >
-                          <div className="grid-col flex-5">
-                            <input
-                              className="usa-radio__input"
-                              id="createNew"
-                              value="CreateNew"
-                              type="radio"
-                              name="datasetType"
-                              ref={register()}
-                            />
-                            <label
-                              className="usa-radio__label"
-                              htmlFor="createNew"
-                            >
-                              {t("AddMetricsScreen.CreateNew")}
-                            </label>
-                          </div>
-                          <div className="grid-col flex-7">
-                            <div className="usa-prose text-base margin-left-4">
-                              {t("AddMetricsScreen.CreateNewDescription")}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="grid-col-4 padding-left-2">
-                      <div className="usa-radio">
-                        <div
-                          className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                            datasetType === DatasetType.DynamicDataset
-                              ? " bg-base-lightest"
-                              : "-lighter"
-                          } border-2px padding-2 margin-y-1`}
-                        >
-                          <div className="grid-col flex-5">
-                            <input
-                              className="usa-radio__input"
-                              id="dynamicDataset"
-                              value="DynamicDataset"
-                              type="radio"
-                              name="datasetType"
-                              ref={register()}
-                            />
-                            <label
-                              className="usa-radio__label"
-                              htmlFor="dynamicDataset"
-                            >
-                              {t("AddMetricsScreen.DynamicDataset")}
-                            </label>
-                          </div>
-                          <div className="grid-col flex-7">
-                            <div className="usa-prose text-base margin-left-4">
-                              {t("AddMetricsScreen.DynamicDatasetDescription")}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <RadioButtonsTile
+                      isHorizontally={true}
+                      register={register}
+                      options={[
+                        {
+                          id: "createNew",
+                          value: "CreateNew",
+                          name: "datasetType",
+                          dataTestId: "createNewRadioButton",
+                          label: t("AddMetricsScreen.CreateNew"),
+                          description: t(
+                            "AddMetricsScreen.CreateNewDescription"
+                          ),
+                        },
+                        {
+                          id: "dynamicDataset",
+                          value: "DynamicDataset",
+                          name: "datasetType",
+                          dataTestId: "dynamicRadioButton",
+                          label: t("AddMetricsScreen.DynamicDataset"),
+                          description: t(
+                            "AddMetricsScreen.DynamicDatasetDescription"
+                          ),
+                        },
+                      ]}
+                    />
                   </div>
 
                   <div hidden={datasetType !== DatasetType.DynamicDataset}>

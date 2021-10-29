@@ -28,6 +28,7 @@ import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import UtilsService from "../services/UtilsService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -75,6 +76,7 @@ function AddTable() {
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
+  const [showNoDatasetTypeAlert, setShowNoDatasetTypeAlert] = useState(false);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.json ? DatasetType.StaticDataset : undefined
   );
@@ -266,6 +268,7 @@ function AddTable() {
         setCsvJson([]);
         setCurrentJson([]);
       } else {
+        setShowNoDatasetTypeAlert(false);
         setCsvErrors(undefined);
         const csvJson = DatasetParsingService.createHeaderRowJson(results);
         setCsvJson(csvJson);
@@ -287,7 +290,7 @@ function AddTable() {
         setCurrentJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        if (csvJson) {
+        if (csvJson && csvJson.length) {
           setCurrentJson(csvJson);
         } else {
           setCurrentJson(staticJson);
@@ -358,6 +361,13 @@ function AddTable() {
           <div hidden={step !== 0}>
             <PrimaryActionBar>
               {configHeader}
+              <div className="margin-y-3" hidden={!showNoDatasetTypeAlert}>
+                <Alert
+                  type="error"
+                  message={t("AddTableScreen.ChooseDataset")}
+                  slim
+                />
+              </div>
               <ChooseData
                 selectDynamicDataset={selectDynamicDataset}
                 dynamicDatasets={dynamicDatasets}
@@ -368,10 +378,7 @@ function AddTable() {
                 advanceStep={advanceStep}
                 fileLoading={fileLoading}
                 browseDatasets={browseDatasets}
-                continueButtonDisabled={!currentJson.length}
-                continueButtonDisabledTooltip={t(
-                  "AddTableScreen.ChooseDataset"
-                )}
+                hasErrors={!currentJson.length}
                 csvErrors={csvErrors}
                 csvFile={csvFile}
                 onCancel={onCancel}
@@ -379,6 +386,7 @@ function AddTable() {
                 widgetType={t("ChooseDataDescriptionTable")}
                 staticFileName={undefined}
                 dynamicFileName={undefined}
+                setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
               />
             </PrimaryActionBar>
           </div>

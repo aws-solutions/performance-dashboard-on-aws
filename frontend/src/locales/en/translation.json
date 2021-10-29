@@ -57,6 +57,7 @@
   "Chart": "Chart",
   "Table": "Table",
   "Image": "Image",
+  "CheckBox": "CheckBox",
   "Section": "Section",
   "SureDelete": "Are you sure you want to delete this",
   "ZeroDashboards": "that have zero dashboards",
@@ -288,6 +289,7 @@
     "ChooseData": "Choose data",
     "Visualize": "Visualize",
     "UploadingFile": "Uploading file",
+    "FileNameDoesNotExist": "Metadata does not contain file name",
     "CreatingMetrics": "Creating metrics",
     "Data": "Data",
     "DataHint": "Choose an existing dataset or create a new one to populate this metrics",
@@ -366,7 +368,8 @@
     "EditTableSuccess": {
       "part1": "'",
       "part2": "' table has been successfully edited."
-    }
+    },
+    "ChooseDataset": "Choose a dataset to continue"
   },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",
@@ -522,6 +525,9 @@
   "SettingsLogoFileUploadHint": "Must be a PNG, JPEG, or SVG file",
   "SettingsLogoPreview": "Preview",
   "SettingsLogoOrganization": "Organization logo",
+  "SettingsLogoAltText": "Logo alt text",
+  "SettingsLogoTextHint": "Provide a short description of the logo for users with visual impairments using a screen reader. This description will not display on the dashboard.",
+  "SettingsLogoTextError": "Please specify a logo alt text",
   "SettingsFaviconEditSuccess": "Favicon successfully modified.",
   "SettingsFaviconEditFailed": "Failed to update favicon.",
   "SettingsFaviconEdit": "Edit favicon",

@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { LocationState, UserRoles } from "../models";
 import { useTranslation } from "react-i18next";
+import RadioButtonsTile from "../components/RadioButtonsTile";
 
 interface FormValues {
   emails: string;
@@ -88,56 +89,28 @@ function ChangeRole() {
             <div className="usa-hint">{t("ChangeRole.RoleDescription")}</div>
             <fieldset className="usa-fieldset" onChange={handleChange}>
               <legend className="usa-sr-only">{t("ChangeRole.Roles")}</legend>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    role === UserRoles.Editor ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="editor"
-                      value={UserRoles.Editor}
-                      type="radio"
-                      name="role"
-                      data-testid="editorRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="editor">
-                      {t(`ChangeRole.${UserRoles.Editor}`)}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("ChangeRole.EditorDescription")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="usa-radio">
-                <div
-                  className={`grid-row hover:bg-base-lightest hover:border-base flex-column border-base${
-                    role === UserRoles.Admin ? " bg-base-lightest" : "-lighter"
-                  } border-2px padding-2 margin-y-1`}
-                >
-                  <div className="grid-col flex-5">
-                    <input
-                      className="usa-radio__input"
-                      id="admin"
-                      value={UserRoles.Admin}
-                      type="radio"
-                      name="role"
-                      data-testid="adminRadioButton"
-                      ref={register()}
-                    />
-                    <label className="usa-radio__label" htmlFor="admin">
-                      {t(`ChangeRole.${UserRoles.Admin}`)}
-                      <p className="text-base usa-checkbox__label-description">
-                        {t("ChangeRole.AdminDescription")}
-                      </p>
-                    </label>
-                  </div>
-                </div>
-              </div>
+              <RadioButtonsTile
+                isHorizontally={false}
+                register={register}
+                options={[
+                  {
+                    id: "editor",
+                    value: UserRoles.Editor,
+                    name: "role",
+                    dataTestId: "editorRadioButton",
+                    label: t(`ChangeRole.${UserRoles.Editor}`),
+                    description: t("ChangeRole.EditorDescription"),
+                  },
+                  {
+                    id: "admin",
+                    value: UserRoles.Admin,
+                    name: "role",
+                    dataTestId: "adminRadioButton",
+                    label: t(`ChangeRole.${UserRoles.Admin}`),
+                    description: t("ChangeRole.AdminDescription"),
+                  },
+                ]}
+              />
             </fieldset>
 
             <br />

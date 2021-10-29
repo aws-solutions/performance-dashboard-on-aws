@@ -36,6 +36,7 @@ describe("uploadImage", () => {
       contentType: "image/png",
       contentDisposition: 'attachment; filename="myphoto.png"',
       serverSideEncryption: "aws:kms",
+      metadata: { fileName: "myphoto.png" },
     });
   });
 
@@ -65,6 +66,7 @@ describe("uploadDataset", () => {
       contentType: "text/csv",
       contentDisposition: 'attachment; filename="dataset.csv"',
       serverSideEncryption: "aws:kms",
+      metadata: { fileName: "dataset.csv" },
     });
   });
 

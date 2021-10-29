@@ -29,7 +29,6 @@ test("renders title and subtitles", async () => {
     await screen.findByRole("heading", { name: "Add Image" })
   ).toBeInTheDocument();
   expect(await screen.findByText("Configure image")).toBeInTheDocument();
-  expect(await screen.findByText("Step 2 of 2")).toBeInTheDocument();
 });
 
 test("renders a textfield for image title", async () => {

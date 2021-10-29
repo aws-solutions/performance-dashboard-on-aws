@@ -37,6 +37,23 @@ function Tabs(props: Props) {
     setActiveTab(tab);
   };
 
+  const onEnterTabItem = (tab: string, currentTab: HTMLElement) => {
+    const rect = currentTab.getBoundingClientRect();
+    const wrapper = scrollMenuObj?.scrollContainer?.current;
+    if (rect && wrapper) {
+      const wrapperRect = wrapper.getBoundingClientRect();
+      if (rect.left < wrapperRect.left) {
+        scrollMenuObj?.scrollPrev();
+      } else {
+        const shownWidth = wrapperRect.right - rect.left;
+        if (shownWidth < rect.width) {
+          scrollMenuObj?.scrollNext();
+        }
+      }
+    }
+    setActiveTab(tab);
+  };
+
   return (
     <div className="tabs">
       <ScrollMenu
@@ -55,6 +72,7 @@ function Tabs(props: Props) {
               key={(child as any).props.id}
               label={(child as any).props.label}
               onClick={onClickTabItem}
+              onEnter={onEnterTabItem}
               activeColor={props.activeColor}
             />
           );

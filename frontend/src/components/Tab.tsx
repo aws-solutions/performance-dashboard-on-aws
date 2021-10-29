@@ -1,16 +1,24 @@
 import React, { MouseEvent } from "react";
+
 interface Props {
   id: string;
   itemId: string;
   activeTab: string;
   label: string;
   onClick: Function;
+  onEnter: Function;
   activeColor?: string;
 }
 
 function Tab(props: Props) {
   const onClick = (e: MouseEvent<HTMLElement>) => {
     props.onClick(props.id, e.currentTarget);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === "Enter") {
+      props.onEnter(props.id, e.currentTarget);
+    }
   };
 
   let className =
@@ -24,6 +32,13 @@ function Tab(props: Props) {
     <li
       className={className}
       onClick={onClick}
+      onKeyDown={onKeyDown}
+      tabIndex={0}
+      aria-label={
+        props.activeTab === props.id
+          ? "Active Dashboard Tab " + props.label.split("(")[0]
+          : "Dashboard Tab " + props.label.split("(")[0]
+      }
       style={{
         cursor: "pointer",
         whiteSpace: "nowrap",

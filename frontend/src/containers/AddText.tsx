@@ -119,9 +119,6 @@ function AddText() {
               <PrimaryActionBar>
                 <h1 className="margin-top-0">{t("AddTextScreen.AddText")}</h1>
 
-                <div className="text-base text-italic">
-                  {t("StepOfTotal", { step: "2", total: "2" })}
-                </div>
                 <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
                   {t("AddTextScreen.Configure")}
                 </div>

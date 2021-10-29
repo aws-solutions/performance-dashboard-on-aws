@@ -16,11 +16,6 @@ describe("Add content screen", () => {
     expect(addContent).toBeInTheDocument();
   });
 
-  test("renders Step 1 of 2", async () => {
-    const stepOneOfTwo = await screen.findByText("Step 1 of 2");
-    expect(stepOneOfTwo).toBeInTheDocument();
-  });
-
   test("renders text option", async () => {
     const header = await screen.findByText("Text");
     const description = await screen.findByText(

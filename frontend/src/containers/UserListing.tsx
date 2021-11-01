@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { useUsers } from "../hooks";
 import Button from "../components/Button";
-import ScrollTop from "../components/ScrollTop";
 import Search from "../components/Search";
 import Table from "../components/Table";
 import { LocationState, User } from "../models";
@@ -239,9 +238,6 @@ function UserListing() {
         )}
         rows={users}
       />
-      <div className="text-right">
-        <ScrollTop />
-      </div>
     </>
   );
 }

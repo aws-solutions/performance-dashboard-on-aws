@@ -17,6 +17,9 @@ import {
 } from "react-table";
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
+import Button from "./Button";
+import { CSVLink } from "react-csv";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   selection: "multiple" | "single" | "none";
@@ -47,6 +50,8 @@ interface Props {
   setSortByDesc?: Function;
   reset?: Function;
   mobileNavigation?: boolean;
+  keepBorderBottom?: boolean;
+  title?: string;
 }
 
 function Table(props: Props) {
@@ -237,293 +242,356 @@ function Table(props: Props) {
   );
 
   return (
-    <>
-      <div className="overflow-x-hidden overflow-y-hidden">
-        <table
-          className={`usa-table${borderlessClassName}${className}`}
-          width={props.width}
-          {...getTableProps()}
-        >
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column, i) => (
-                  <th
-                    scope="col"
-                    {...column.getHeaderProps()}
-                    style={
-                      props.selection !== "none"
-                        ? {
-                            padding: "0.5rem 1rem",
-                          }
-                        : {
-                            minWidth: column.minWidth,
-                            backgroundColor: `${getCellBackground(
-                              column.id,
-                              ""
-                            )}`,
-                          }
-                    }
-                  >
-                    <span>
-                      {
-                        /**
-                         * The split is to remove the quotes from the
-                         * string, the filter to remove the resulted
-                         * empty ones, and the join to form it again.
-                         */
-                        typeof column.render("Header") === "string"
-                          ? (column.render("Header") as string)
-                              .split('"')
-                              .filter(Boolean)
-                              .join()
-                          : column.render("Header")
-                      }
-                    </span>
-                    {(props.selection !== "none" && i === 0) ||
-                    (column.id && column.id.startsWith("checkbox")) ||
-                    (column.id &&
-                      column.id.startsWith("numbersListing")) ? null : (
-                      <button
-                        className="margin-left-1 usa-button usa-button--unstyled"
-                        {...column.getSortByToggleProps()}
-                        title={`${t("ToggleSortBy")} ${column.Header}`}
-                        type="button"
-                      >
-                        <FontAwesomeIcon
-                          className={`hover:text-base ${
-                            column.isSorted
-                              ? "text-base-darkest"
-                              : "text-base-lighter"
-                          }`}
-                          icon={
-                            column.isSorted && column.isSortedDesc
-                              ? faChevronDown
-                              : faChevronUp
-                          }
-                        />
-                      </button>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {currentRows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell, j) => {
-                    return j === 0 && props.selection === "none" ? (
-                      <th
-                        style={{
+    <div className="overflow-x-hidden overflow-y-hidden">
+      <table
+        className={`usa-table${borderlessClassName}${className}`}
+        width={props.width}
+        {...getTableProps()}
+      >
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column, i) => (
+                <th
+                  scope="col"
+                  {...column.getHeaderProps()}
+                  style={
+                    props.selection !== "none"
+                      ? {
+                          padding: "0.5rem 1rem",
+                        }
+                      : {
+                          minWidth: column.minWidth,
                           backgroundColor: `${getCellBackground(
-                            cell.column.id,
-                            props.addNumbersColumn ? "#f0f0f0" : ""
+                            column.id,
+                            ""
                           )}`,
-                        }}
-                        scope="row"
-                        {...cell.getCellProps()}
-                      >
-                        {cell.render("Cell")}
-                      </th>
-                    ) : (
-                      <td
-                        style={{
-                          backgroundColor: `${getCellBackground(
-                            cell.column.id,
-                            props.hiddenColumns?.has(cell.column.id)
-                              ? "#adadad"
-                              : ""
-                          )}`,
-                        }}
-                        {...cell.getCellProps()}
-                      >
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      {!props.disablePagination && rows.length ? (
-        <div
-          className={`${
-            isMobile ? "grid-col" : "grid-row margin-bottom-05"
-          } font-sans-sm`}
-        >
-          <div
-            className={`${
-              isMobile
-                ? "grid-row margin-bottom-2 margin-left-05"
-                : "grid-col-3 text-left"
-            } text-base text-italic`}
-          >
-            {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
-              pageIndex * pageSize + pageSize,
-              rows.length
-            )} ${t("Of")} ${rows.length}`}
-          </div>
-          <div
-            className={`${
-              isMobile ? "margin-left-05" : "grid-col-6 text-center"
-            }`}
-          >
-            {!isMobile && (
-              <>
-                <button
-                  type="button"
-                  className="margin-right-1"
-                  onClick={() => {
-                    setCurrentPage("1");
-                    gotoPage(0);
-                  }}
-                  disabled={!canPreviousPage}
-                >
-                  <FontAwesomeIcon
-                    icon={faAngleDoubleLeft}
-                    className="margin-top-2px"
-                  />
-                </button>
-                <button
-                  type="button"
-                  className="margin-right-2"
-                  onClick={() => {
-                    setCurrentPage(`${pageIndex}`);
-                    previousPage();
-                  }}
-                  disabled={!canPreviousPage}
-                >
-                  <FontAwesomeIcon
-                    icon={faAngleLeft}
-                    className="margin-top-2px"
-                  />
-                </button>
-              </>
-            )}
-            {isMobile ? <div className="margin-bottom-1" /> : ""}
-            <span className="margin-right-2px">{`${t("Page")} `}</span>
-            <span className="margin-right-1">
-              <input
-                type="text"
-                value={`${currentPage}`}
-                className="margin-right-2px"
-                onChange={(e) => {
-                  setCurrentPage(e.target.value);
-                }}
-                style={{ width: "33px" }}
-                pattern="\d*"
-              />
-              {` of ${pageOptions.length} `}
-            </span>
-            <button
-              type="button"
-              className={`${
-                isMobile ? "" : "usa-button "
-              }usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest`}
-              onClick={() => {
-                if (currentPage) {
-                  const currentPageNumber = Number(currentPage);
-                  if (
-                    !isNaN(currentPageNumber) &&
-                    currentPageNumber >= 1 &&
-                    currentPageNumber <= pageOptions.length
-                  ) {
-                    gotoPage(currentPageNumber - 1);
+                        }
                   }
-                }
-              }}
-            >
-              {t("Go")}
-            </button>
-            {isMobile ? <div className="margin-top-1" /> : ""}
-            {isMobile && (
-              <>
-                <button
-                  type="button"
-                  className="margin-right-1"
-                  onClick={() => {
-                    setCurrentPage("1");
-                    gotoPage(0);
-                  }}
-                  disabled={!canPreviousPage}
                 >
-                  <FontAwesomeIcon
-                    icon={faAngleDoubleLeft}
-                    className="margin-top-2px"
-                  />
-                </button>
-                <button
-                  type="button"
-                  className="margin-right-2"
-                  onClick={() => {
-                    setCurrentPage(`${pageIndex}`);
-                    previousPage();
-                  }}
-                  disabled={!canPreviousPage}
-                >
-                  <FontAwesomeIcon
-                    icon={faAngleLeft}
-                    className="margin-top-2px"
-                  />
-                </button>
-              </>
-            )}
-            <button
-              type="button"
-              className="margin-right-1"
-              onClick={() => {
-                setCurrentPage(`${pageIndex + 2}`);
-                nextPage();
-              }}
-              disabled={!canNextPage}
-            >
-              <FontAwesomeIcon icon={faAngleRight} className="margin-top-2px" />
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setCurrentPage(`${pageCount}`);
-                gotoPage(pageCount - 1);
-              }}
-              disabled={!canNextPage}
-            >
-              <FontAwesomeIcon
-                icon={faAngleDoubleRight}
-                className="margin-top-2px"
-              />
-            </button>
-          </div>
-          <div
-            className={`${
-              isMobile
-                ? "grid-row margin-top-2 margin-left-05 margin-bottom-05"
-                : "grid-col-3 text-right"
-            }`}
-          >
-            <select
-              value={pageSize}
-              onChange={(e) => {
-                setPageSize(Number(e.target.value));
-              }}
-              className="margin-right-05"
-            >
-              {[5, 10, 20, 25, 50, 100].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  {t("Show")} {pageSize}
-                </option>
+                  <span>
+                    {
+                      /**
+                       * The split is to remove the quotes from the
+                       * string, the filter to remove the resulted
+                       * empty ones, and the join to form it again.
+                       */
+                      typeof column.render("Header") === "string"
+                        ? (column.render("Header") as string)
+                            .split('"')
+                            .filter(Boolean)
+                            .join()
+                        : column.render("Header")
+                    }
+                  </span>
+                  {(props.selection !== "none" && i === 0) ||
+                  (column.id && column.id.startsWith("checkbox")) ||
+                  (column.id &&
+                    column.id.startsWith("numbersListing")) ? null : (
+                    <button
+                      className="margin-left-1 usa-button usa-button--unstyled"
+                      {...column.getSortByToggleProps()}
+                      title={`${t("ToggleSortBy")} ${column.Header}`}
+                      type="button"
+                    >
+                      <FontAwesomeIcon
+                        className={`hover:text-base ${
+                          column.isSorted
+                            ? "text-base-darkest"
+                            : "text-base-lighter"
+                        }`}
+                        icon={
+                          column.isSorted && column.isSortedDesc
+                            ? faChevronDown
+                            : faChevronUp
+                        }
+                      />
+                    </button>
+                  )}
+                </th>
               ))}
-            </select>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-    </>
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {currentRows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell, j) => {
+                  return j === 0 && props.selection === "none" ? (
+                    <th
+                      style={{
+                        backgroundColor: `${getCellBackground(
+                          cell.column.id,
+                          props.addNumbersColumn ? "#f0f0f0" : ""
+                        )}`,
+                      }}
+                      scope="row"
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </th>
+                  ) : (
+                    <td
+                      style={{
+                        backgroundColor: `${getCellBackground(
+                          cell.column.id,
+                          props.hiddenColumns?.has(cell.column.id)
+                            ? "#adadad"
+                            : ""
+                        )}`,
+                      }}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+          {!props.disablePagination && rows.length ? (
+            <tr role="row">
+              <td
+                role="cell"
+                colSpan={
+                  props.columns.length -
+                  (props.hiddenColumns ? props.hiddenColumns.size : 0) +
+                  (props.title ? 0 : 1)
+                }
+                className={`button-cell-padding${
+                  props.keepBorderBottom ? "" : " button-cell-border"
+                }`}
+              >
+                <div
+                  className={`${
+                    isMobile ? "grid-col margin-top-2" : "grid-row margin-y-1"
+                  } font-sans-sm`}
+                >
+                  <div className={`${isMobile ? "text-center" : "grid-col-4"}`}>
+                    <span className="margin-left-1 margin-right-2px">{`${t(
+                      "Page"
+                    )} `}</span>
+                    <span className="margin-right-1">
+                      <input
+                        type="text"
+                        value={`${currentPage}`}
+                        className="margin-right-2px"
+                        onChange={(e) => {
+                          setCurrentPage(e.target.value);
+                        }}
+                        style={{ width: "33px" }}
+                        pattern="\d*"
+                      />
+                      {` of ${pageOptions.length} `}
+                    </span>
+                    <button
+                      type="button"
+                      className={`${
+                        isMobile ? "" : "usa-button "
+                      }usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest`}
+                      onClick={() => {
+                        if (currentPage) {
+                          const currentPageNumber = Number(currentPage);
+                          if (
+                            !isNaN(currentPageNumber) &&
+                            currentPageNumber >= 1 &&
+                            currentPageNumber <= pageOptions.length
+                          ) {
+                            gotoPage(currentPageNumber - 1);
+                          }
+                        }
+                      }}
+                    >
+                      {t("Go")}
+                    </button>
+                  </div>
+                  <div
+                    className={`${
+                      isMobile ? "margin-left-05" : "grid-col-4"
+                    } text-center`}
+                  >
+                    {!isMobile && (
+                      <>
+                        <button
+                          type="button"
+                          className="margin-right-1"
+                          onClick={() => {
+                            setCurrentPage("1");
+                            gotoPage(0);
+                          }}
+                          disabled={!canPreviousPage}
+                        >
+                          <FontAwesomeIcon
+                            icon={faAngleDoubleLeft}
+                            className="margin-top-2px"
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          className="margin-right-2"
+                          onClick={() => {
+                            setCurrentPage(`${pageIndex}`);
+                            previousPage();
+                          }}
+                          disabled={!canPreviousPage}
+                        >
+                          <FontAwesomeIcon
+                            icon={faAngleLeft}
+                            className="margin-top-2px"
+                          />
+                        </button>
+                      </>
+                    )}
+                    {isMobile ? <div className="margin-top-2" /> : ""}
+                    {isMobile && (
+                      <>
+                        <button
+                          type="button"
+                          className="margin-right-1"
+                          onClick={() => {
+                            setCurrentPage("1");
+                            gotoPage(0);
+                          }}
+                          disabled={!canPreviousPage}
+                        >
+                          <FontAwesomeIcon
+                            icon={faAngleDoubleLeft}
+                            className="margin-top-2px"
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          className="margin-right-2"
+                          onClick={() => {
+                            setCurrentPage(`${pageIndex}`);
+                            previousPage();
+                          }}
+                          disabled={!canPreviousPage}
+                        >
+                          <FontAwesomeIcon
+                            icon={faAngleLeft}
+                            className="margin-top-2px"
+                          />
+                        </button>
+                      </>
+                    )}
+                    <button
+                      type="button"
+                      className="margin-right-1"
+                      onClick={() => {
+                        setCurrentPage(`${pageIndex + 2}`);
+                        nextPage();
+                      }}
+                      disabled={!canNextPage}
+                    >
+                      <FontAwesomeIcon
+                        icon={faAngleRight}
+                        className="margin-top-2px"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCurrentPage(`${pageCount}`);
+                        gotoPage(pageCount - 1);
+                      }}
+                      disabled={!canNextPage}
+                    >
+                      <FontAwesomeIcon
+                        icon={faAngleDoubleRight}
+                        className="margin-top-2px"
+                      />
+                    </button>
+                  </div>
+                  <div
+                    className={`${
+                      isMobile
+                        ? "margin-top-2 margin-left-05 margin-y-2 text-center"
+                        : "grid-col-4 text-right"
+                    }`}
+                  >
+                    <select
+                      value={pageSize}
+                      onChange={(e) => {
+                        setPageSize(Number(e.target.value));
+                      }}
+                      className="margin-right-05"
+                    >
+                      {[5, 10, 20, 25, 50, 100].map((pageSize) => (
+                        <option key={pageSize} value={pageSize}>
+                          {t("Show")} {pageSize}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <hr className="border-top margin-0" />
+                <div
+                  className={`${
+                    isMobile ? "padding-left-05" : "grid-row"
+                  } text-base-darkest text-italic padding-y-05 padding-right-1`}
+                >
+                  {isMobile && (
+                    <div className="text-center">
+                      {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
+                        pageIndex * pageSize + pageSize,
+                        rows.length
+                      )} ${t("Of")} ${rows.length}`}
+                    </div>
+                  )}
+                  {props.title && (
+                    <div
+                      className={`${
+                        isMobile
+                          ? "text-center margin-top-05"
+                          : "grid-col-6 text-left"
+                      }`}
+                    >
+                      <div style={{ display: "inline-flex" }}>
+                        <FontAwesomeIcon
+                          icon={faDownload}
+                          className="margin-right-1"
+                          size="xs"
+                        />
+                      </div>
+                      <div style={{ display: "inline-flex" }}>
+                        <Button
+                          type="button"
+                          variant="unstyled"
+                          className="margin-right-05"
+                        >
+                          <CSVLink
+                            className="text-base-darkest"
+                            data={rows}
+                            filename={props.title}
+                          >
+                            {t("DownloadCSV")}
+                          </CSVLink>
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                  {!isMobile && (
+                    <div
+                      className={`grid-col-${
+                        props.title ? "6" : "12"
+                      } text-right`}
+                    >
+                      {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
+                        pageIndex * pageSize + pageSize,
+                        rows.length
+                      )} ${t("Of")} ${rows.length}`}
+                    </div>
+                  )}
+                </div>
+              </td>
+            </tr>
+          ) : null}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

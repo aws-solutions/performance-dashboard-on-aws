@@ -1,15 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { ColumnMetadata } from "../models";
-import { useTableMetadata, useWindowSize } from "../hooks";
+import { useTableMetadata } from "../hooks";
 import MarkdownRender from "./MarkdownRender";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
 import Table from "./Table";
-import Button from "./Button";
-import { CSVLink } from "react-csv";
-import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   title: string;
@@ -34,12 +29,9 @@ const TableWidget = ({
   sortByColumn,
   significantDigitLabels,
   displayWithPages,
-  showMobilePreview,
 }: Props) => {
   const { largestTickByColumn } = useTableMetadata(data);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
-  const { t } = useTranslation();
-  const window = useWindowSize();
 
   useMemo(() => {
     let headers =
@@ -106,8 +98,6 @@ const TableWidget = ({
     filteredJson,
   ]);
 
-  const maxMobileViewportWidth = 450;
-
   if (!filteredJson || filteredJson.length === 0) {
     return null;
   }
@@ -130,7 +120,7 @@ const TableWidget = ({
         columns={columns}
         sortByColumn={sortByColumn}
         sortByDesc={sortByDesc}
-        mobileNavigation
+        title={title}
       />
       {summaryBelow && (
         <MarkdownRender
@@ -138,28 +128,6 @@ const TableWidget = ({
           className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow textOrSummary"
         />
       )}
-      <div
-        className={
-          showMobilePreview || window.width < maxMobileViewportWidth
-            ? "text-left margin-bottom-1"
-            : "text-right margin-bottom-1"
-        }
-      >
-        <div style={{ display: "inline-flex" }}>
-          <FontAwesomeIcon
-            icon={faDownload}
-            className="margin-right-1"
-            size="sm"
-          />
-        </div>
-        <div style={{ display: "inline-flex" }}>
-          <Button type="button" variant="unstyled" className="margin-right-05">
-            <CSVLink className="text-base" data={rows} filename={title}>
-              {t("DownloadCSV")}
-            </CSVLink>
-          </Button>
-        </div>
-      </div>
     </div>
   );
 };

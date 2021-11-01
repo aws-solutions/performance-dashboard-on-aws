@@ -7,7 +7,11 @@ import Table from "./Table";
 import DropdownMenu from "../components/DropdownMenu";
 import { CSVLink } from "react-csv";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
 
 const { MenuItem } = DropdownMenu;
 
@@ -83,6 +87,11 @@ function DataTable({
               !showDataTable ? setShowDataTable(true) : setShowDataTable(false)
             }
           >
+            <FontAwesomeIcon
+              icon={!showDataTable ? faEye : faEyeSlash}
+              className="margin-right-1 margin-bottom-1px"
+              size="xs"
+            />
             {!showDataTable
               ? t("ShowDataTableButton")
               : t("HideDataTableButton")}
@@ -91,7 +100,7 @@ function DataTable({
             <FontAwesomeIcon
               icon={faDownload}
               className="margin-right-1"
-              size="sm"
+              size="xs"
             />
             <CSVLink
               data={tableRows}

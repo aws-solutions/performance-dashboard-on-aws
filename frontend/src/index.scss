@@ -230,3 +230,10 @@ textarea::placeholder {
 .text-overflow-ellipsis {
   text-overflow: ellipsis;
 }
+
+@media (min-width: 64em) {
+  .usa-nav-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

@@ -23,7 +23,7 @@ export interface Configuration {
 }
 
 export interface ExampleBuilder {
-  build(config: Configuration): Promise<DashboardCollection>;
+  build(config: Configuration): Promise<Dashboard>;
 }
 
 export interface DatasetResource {

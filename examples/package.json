@@ -9,7 +9,8 @@
     "test:ci": "jest --coverage --ci",
     "build": "npm run clean && tsc && npm run install:prod",
     "install:prod": "npm install --production --prefix build && npm install --production --prefix ../backend && cp -R ../backend/build/* build/node_modules/performance-dashboard-backend",
-    "clean": "rm -rf build"
+    "clean": "rm -rf build",
+    "export": "ts-node src/export.ts"
   },
   "author": "",
   "license": "ISC",
@@ -17,8 +18,11 @@
     "@types/aws-lambda": "^8.10.84",
     "@types/aws-sdk": "^2.7.0",
     "@types/jest": "^27.0.2",
+    "@types/prompt": "^1.1.1",
     "@types/uuid": "^8.3.1",
+    "fs-extra": "^10.0.0",
     "jest": "^27.3.1",
+    "prompt": "^1.2.0",
     "ts-jest": "^27.0.7",
     "ts-loader": "^9.2.6",
     "ts-node": "^8.10.2",

@@ -11,7 +11,8 @@ export class DashboardBuilder {
   private id: string | undefined;
   private version: number = 1;
   private parentId: string | undefined;
-  private topicArea: TopicArea | undefined;
+  private topicAreaId: string | undefined;
+  private topicAreaName: string | undefined;
   private displayTableOfContents: boolean | undefined;
   private description: string | undefined;
   private author: string | undefined;
@@ -34,7 +35,18 @@ export class DashboardBuilder {
   }
 
   withTopicArea(topicArea: TopicArea): DashboardBuilder {
-    this.topicArea = topicArea;
+    this.topicAreaId = topicArea.id;
+    this.topicAreaName = topicArea.name;
+    return this;
+  }
+
+  withTopicAreaId(topicAreaId: string): DashboardBuilder {
+    this.topicAreaId = topicAreaId;
+    return this;
+  }
+
+  withTopicAreaName(topicAreaName: string): DashboardBuilder {
+    this.topicAreaName = topicAreaName;
     return this;
   }
 
@@ -80,7 +92,10 @@ export class DashboardBuilder {
     if (!this.id) {
       throw new Error("id is required");
     }
-    if (!this.topicArea) {
+    if (!this.topicAreaId) {
+      throw new Error("topicArea is required");
+    }
+    if (!this.topicAreaName) {
       throw new Error("topicArea is required");
     }
     if (!this.description) {
@@ -96,8 +111,8 @@ export class DashboardBuilder {
       id: this.id,
       version: this.version,
       parentDashboardId: this.parentId || this.id,
-      topicAreaId: this.topicArea.id,
-      topicAreaName: this.topicArea.name,
+      topicAreaId: this.topicAreaId,
+      topicAreaName: this.topicAreaName,
       displayTableOfContents: this.displayTableOfContents || true,
       description: this.description,
       name: this.name,

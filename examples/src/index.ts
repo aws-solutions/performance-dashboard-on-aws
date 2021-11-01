@@ -1,7 +1,8 @@
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
 import { Configuration, ExampleBuilder, Language, Languages } from "./common";
 import { env } from "./env";
-import { englishBuilder } from "./languages/english/example";
+import { englishBuilder } from "./examples/english/example";
+import t1Builder from "./examples/t1/example";
 
 function logRequest(event: APIGatewayProxyEvent, context: Context) {
   // Don't log sensitive data such as API body and authorization headers
@@ -45,6 +46,7 @@ export const handler = async (
 
     const builderMap = new Map<Language, ExampleBuilder>();
     builderMap.set(Languages.English, englishBuilder);
+    builderMap.set(Languages.Spanish, t1Builder);
 
     const builder = builderMap.get(config.language);
     if (!builder) {

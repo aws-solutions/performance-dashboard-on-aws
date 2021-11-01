@@ -27,8 +27,6 @@ export const englishBuilder: ExampleBuilder = {
       .addWidget(widgetBuilders.table)
       .build();
 
-    return {
-      welcome: dashboard,
-    };
+    return dashboard;
   },
 };

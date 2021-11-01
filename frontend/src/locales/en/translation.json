@@ -930,5 +930,7 @@
   "DeselectAll": "Deselect all",
   "EditTableOfContentsDescription": "The table of contents displays an overview of the content items in your dashboard. Customize the table of contents by selecting which content items to include. If a content item is selected below, its title will be included in the table of contents.",
   "DisplayWithPages": "Display with pages",
-  "SelectColumns": "Select columns to format data."
+  "SelectColumns": "Select columns to format data.",
+  "Tab": "Tab",
+  "Active": "Active"
 }

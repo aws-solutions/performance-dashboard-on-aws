@@ -208,3 +208,10 @@ p {
 .type-dark {
   background: #1b1b1b !important;
 }
+
+@media (min-width: 64em) {
+  .usa-nav-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

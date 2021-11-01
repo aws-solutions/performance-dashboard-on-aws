@@ -72,9 +72,6 @@ function AddContent() {
         <PrimaryActionBar className="tablet:grid-col-6 grid-col-12">
           <h1 className="margin-top-0">{t("AddContentScreen.Title")}</h1>
 
-          <div className="text-base text-italic">
-            {t("StepOfTotal", { step: 1, total: 2 })}
-          </div>
           <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
             {t("AddContentScreen.Instructions")}
           </div>

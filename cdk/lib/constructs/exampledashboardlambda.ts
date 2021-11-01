@@ -4,12 +4,13 @@ import * as iam from "@aws-cdk/aws-iam";
 import logs = require("@aws-cdk/aws-logs");
 
 interface Props {
-  exampleBucketArn: string;
-  exampleBucketName: string;
-  datasetBucketArn: string;
-  datasetBucketName: string;
+  region: string;
   databaseTableName: string;
   databaseTableArn: string;
+  datasetBucketArn: string;
+  datasetBucketName: string;
+  exampleBucketArn: string;
+  exampleBucketName: string;
   adminEmail: string;
   exampleLanguage: string;
 }
@@ -31,11 +32,12 @@ export class ExampleDashboardLambda extends cdk.Construct {
       reservedConcurrentExecutions: 1,
       logRetention: logs.RetentionDays.TEN_YEARS,
       environment: {
-        EXAMPLE_TABLENAME: props.databaseTableName,
-        EXAMPLE_EXAMPLESBUCKET: props.exampleBucketName,
-        EXAMPLE_DATASETBUCKET: props.datasetBucketName,
-        EXAMPLE_USEREMAIL: props.adminEmail,
-        EXAMPLE_LANGUAGE: props.exampleLanguage,
+        AWS_REGION: props.region,
+        MAIN_TABLE: props.databaseTableName,
+        DATASETS_BUCKET: props.datasetBucketName,
+        EXAMPLES_BUCKET: props.exampleBucketName,
+        USER_EMAIL: props.adminEmail,
+        LANGUAGE: props.exampleLanguage,
       },
     });
 

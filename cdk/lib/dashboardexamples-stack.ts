@@ -23,8 +23,8 @@ export class DashboardExamplesStack extends cdk.Stack {
     const exampleLanguage = new cdk.CfnParameter(this, "exampleLanguage", {
       type: "String",
       description: "Language for example dashboards",
-      allowedValues: ["english", "spanish", "portuguese"],
-      default: "english",
+      allowedValues: ["en", "es", "pt"],
+      default: "en",
     });
 
     const exampleBucket = new s3.Bucket(this, "ExampleBucket", {
@@ -36,6 +36,7 @@ export class DashboardExamplesStack extends cdk.Stack {
       this,
       "SetupExampleDashboardLambda",
       {
+        region: this.region,
         exampleBucketArn: exampleBucket.bucketArn,
         exampleBucketName: exampleBucket.bucketName,
         datasetBucketArn: props.datasetsBucketArn,
@@ -55,7 +56,7 @@ export class DashboardExamplesStack extends cdk.Stack {
       this,
       "Deploy-Examples",
       {
-        sources: [s3Deploy.Source.asset("../examples/examplefiles/")],
+        sources: [s3Deploy.Source.asset("../examples/resources/")],
         destinationBucket: exampleBucket,
         memoryLimit: 4096,
         prune: false,

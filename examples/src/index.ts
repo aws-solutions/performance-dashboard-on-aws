@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
-import { processConfig, Config } from "./config";
-import { setupDashboards } from "./insert-example-dashboard";
+import { Configuration, ExampleBuilder, Language, Languages } from "./common";
+import { env } from "./env";
+import { englishBuilder } from "./languages/english/example";
 
 function logRequest(event: APIGatewayProxyEvent, context: Context) {
   // Don't log sensitive data such as API body and authorization headers
@@ -34,9 +35,24 @@ export const handler = async (
   logRequest(event, context);
 
   try {
-    const eventConfig = event.body as unknown as Config;
-    const config: Config = { ...processConfig, ...eventConfig };
-    await setupDashboards(config);
+    const config = event.body as unknown as Configuration;
+    if (!config.language) {
+      config.language = env.LANGUAGE as Language;
+    }
+    if (!config.author) {
+      config.author = env.USER_EMAIL;
+    }
+
+    const builderMap = new Map<Language, ExampleBuilder>();
+    builderMap.set(Languages.English, englishBuilder);
+
+    const builder = builderMap.get(config.language);
+    if (!builder) {
+      throw new Error(`Language ${config.language} not supported`);
+    }
+
+    const dashboard = await builder.build(config);
+    console.log({ dashboard });
   } catch (e) {
     console.log(e);
   }

@@ -36,7 +36,6 @@ export class DashboardExamplesStack extends cdk.Stack {
       this,
       "SetupExampleDashboardLambda",
       {
-        region: this.region,
         exampleBucketArn: exampleBucket.bucketArn,
         exampleBucketName: exampleBucket.bucketName,
         datasetBucketArn: props.datasetsBucketArn,

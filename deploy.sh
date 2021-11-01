@@ -18,11 +18,11 @@ else
     exit 0
 fi
 
-exampleLanguage=${2:-english}
+exampleLanguage=${2:-en}
 if [ "$exampleLanguage" != "" ]; then
     echo "Example Language = $exampleLanguage"
 else
-    echo "Please specify an example language name as second argument (i.e. english)"
+    echo "Please specify an example language name as second argument (i.e. en|es|pt)"
     exit 0
 fi
 

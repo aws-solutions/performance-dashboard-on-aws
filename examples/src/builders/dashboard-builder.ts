@@ -111,22 +111,30 @@ export class DashboardBuilder {
       updatedAt: new Date(),
       state: DashboardState.Draft,
     };
+    console.log("building dashboard: {}", dashboard);
     await DashboardRepository.getInstance().putDashboard(dashboard);
+    console.log("dashboard created");
 
+    console.log("adding widgets to dashboard...");
     const tableOfContents: { [widgetId: string]: boolean } = {};
     let order = 0;
     for (const [widgetBuilder, showTableOfContent] of this.widgets) {
+      console.log(`> dashboard: ${this.id}`);
+      console.log(`> order: ${order}`);
       widgetBuilder.withDashboardId(this.id);
       order = widgetBuilder.withOrder(order);
 
       const widget = await widgetBuilder.build();
+      console.log("> widget added: {}", widget);
 
       tableOfContents[widget.id] = showTableOfContent;
     }
 
     // update table of contents
     dashboard.tableOfContents = tableOfContents;
+    console.log("> udating table of content: {}", tableOfContents);
     await DashboardRepository.getInstance().putDashboard(dashboard);
+    console.log("dashboard configured");
 
     return dashboard;
   }

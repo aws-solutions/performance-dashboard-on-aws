@@ -82,6 +82,8 @@ export class DatasetBuilder {
       sourceType: SourceType.FileUpload,
       schema: this.datasetResource.schema,
     };
+    console.log("building dataset: {}", dataset);
+    console.log("> copying raw file: {}", this.datasetResource.key.raw);
     copyFile(
       env.EXAMPLES_BUCKET,
       this.datasetResource.key.raw,
@@ -89,6 +91,7 @@ export class DatasetBuilder {
       `public/${this.datasetResource.key.raw}`
     );
     if (this.datasetResource.key.raw !== this.datasetResource.key.json) {
+      console.log("> copying json file: {}", this.datasetResource.key.json);
       copyFile(
         env.EXAMPLES_BUCKET,
         this.datasetResource.key.json,
@@ -97,6 +100,7 @@ export class DatasetBuilder {
       );
     }
     DatasetRepository.getInstance().saveDataset(dataset);
+    console.log("dataset created");
     return dataset;
   }
 }

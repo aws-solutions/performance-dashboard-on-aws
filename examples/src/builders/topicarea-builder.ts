@@ -47,7 +47,10 @@ export class TopicAreaBuilder {
         this.id
       ),
     };
+    console.log("building topic area: {}", topicArea);
     await TopicAreRepository.getInstance().create(topicArea);
+    console.log("topic area created");
+
     return topicArea;
   }
 }

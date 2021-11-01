@@ -2,10 +2,6 @@ import { cleanEnv, email, str } from "envalid";
 import { Language, Languages } from "./common";
 
 export const env = cleanEnv(process.env, {
-  AWS_REGION: str({
-    desc: "AWS region to use",
-    default: "us-east-1",
-  }),
   MAIN_TABLE: str({
     desc: "Main DynamoDB table name",
     devDefault: "PerformanceDash-dev-Backend-MainTable74195DAB-1BDQ3ZCEZKIPT",

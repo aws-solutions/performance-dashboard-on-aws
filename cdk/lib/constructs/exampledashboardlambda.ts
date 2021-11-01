@@ -4,7 +4,6 @@ import * as iam from "@aws-cdk/aws-iam";
 import logs = require("@aws-cdk/aws-logs");
 
 interface Props {
-  region: string;
   databaseTableName: string;
   databaseTableArn: string;
   datasetBucketArn: string;
@@ -32,7 +31,6 @@ export class ExampleDashboardLambda extends cdk.Construct {
       reservedConcurrentExecutions: 1,
       logRetention: logs.RetentionDays.TEN_YEARS,
       environment: {
-        AWS_REGION: props.region,
         MAIN_TABLE: props.databaseTableName,
         DATASETS_BUCKET: props.datasetBucketName,
         EXAMPLES_BUCKET: props.exampleBucketName,

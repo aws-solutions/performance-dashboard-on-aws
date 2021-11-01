@@ -82,6 +82,7 @@ export class WidgetBuilder {
   }
 
   async build(): Promise<Widget> {
+    console.log("building widget: {}", this);
     if (!this.dashboardId) {
       throw new Error("dashboardId is required");
     }
@@ -105,7 +106,8 @@ export class WidgetBuilder {
       showTitle: true,
       content: await Promise.resolve(this.contentBuilder.build(this.id)),
     };
-    WidgetRepository.getInstance().saveWidget(widget);
+    await WidgetRepository.getInstance().saveWidget(widget);
+    console.log("widget createdd");
     return widget;
   }
 }

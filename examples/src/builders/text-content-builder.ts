@@ -17,12 +17,14 @@ export class TextContentBuilder extends WidgetContentBuilder {
   }
 
   build() {
+    console.log("building content: {}", this);
     if (!this.text) {
       throw new Error("text is required");
     }
     const content: TextWidget["content"] = {
       text: this.text,
     };
+    console.log("content created");
     return content;
   }
 }

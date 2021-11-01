@@ -4,7 +4,6 @@ import { Language, Languages } from "./common";
 export const env = cleanEnv(process.env, {
   MAIN_TABLE: str({
     desc: "Main DynamoDB table name",
-    devDefault: "PerformanceDash-dev-Backend-MainTable74195DAB-1BDQ3ZCEZKIPT",
   }),
   //   AUDIT_TRAIL_TABLE: str({
   //     desc: "Audit trail DynamoDB table name",
@@ -12,7 +11,6 @@ export const env = cleanEnv(process.env, {
   //   }),
   DATASETS_BUCKET: str({
     desc: "S3 bucket name for datasets",
-    devDefault: "performancedash-dev-558378773035-us-east-1-datasets",
   }),
   EXAMPLES_BUCKET: str({
     desc: "S3 bucket name for examples resources",
@@ -28,7 +26,6 @@ export const env = cleanEnv(process.env, {
   //   }),
   USER_EMAIL: email({
     desc: "User email of the owner of the resources",
-    devDefault: "miabreu@amazon.com",
   }),
   LANGUAGE: str<Language>({
     desc: "Language to use",

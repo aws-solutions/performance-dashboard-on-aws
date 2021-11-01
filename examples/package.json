@@ -8,7 +8,7 @@
     "test": "LOG_LEVEL=SILENT jest --coverage --watchAll",
     "test:ci": "jest --coverage --ci",
     "build": "npm run clean && tsc && npm run install:prod",
-    "install:prod": "npm install --production --prefix build",
+    "install:prod": "npm install --production --prefix build && npm install --production --prefix ../backend && cp -R ../backend/build/* build/node_modules/performance-dashboard-backend",
     "clean": "rm -rf build"
   },
   "author": "",

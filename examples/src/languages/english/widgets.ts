@@ -9,8 +9,8 @@ import { ChartContentBuilder } from "../../builders/chart-content-builder";
 import { MetricContentBuilder } from "../../builders/metric-content-builder";
 import { SectionContentBuilder } from "../../builders/section-content-builder";
 import { TextContentBuilder } from "../../builders/text-content-builder";
+import { TableContentBuilder } from "../../builders/table-content-builder";
 import { buildDatasets } from "./datasets";
-import { TableContentBuilder } from "src/builders/table-content-builder";
 
 export async function createWidgetsBuilder(config: Configuration) {
   const datasets = await buildDatasets(config);

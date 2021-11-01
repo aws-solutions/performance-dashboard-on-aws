@@ -24,7 +24,7 @@ export class ChartContentBuilder extends WidgetContentBuilder {
   private columnsMetadata: ColumnMetadata[] = [];
 
   constructor() {
-    super(WidgetType.Text);
+    super(WidgetType.Chart);
   }
 
   withTitle(title: string) {
@@ -98,6 +98,7 @@ export class ChartContentBuilder extends WidgetContentBuilder {
   }
 
   build() {
+    console.log("building content: {}", this);
     if (!this.title) {
       throw new Error("Title is required");
     }
@@ -126,6 +127,7 @@ export class ChartContentBuilder extends WidgetContentBuilder {
       significantDigitLabels: this.significantDigitLabels || false,
       columnsMetadata: this.columnsMetadata,
     };
+    console.log("content created");
     return content;
   }
 }

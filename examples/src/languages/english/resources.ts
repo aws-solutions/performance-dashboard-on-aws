@@ -18,7 +18,7 @@ export const resources: DatasetCollection = {
       json: "5824d4b0-a64b-4e0d-be3e-126476e9ca7f.json",
     },
   },
-  userSaticfaction: {
+  userSatisfaction: {
     fileName: "User satisfaction.csv",
     schema: DatasetSchema.None,
     key: {

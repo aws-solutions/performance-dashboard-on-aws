@@ -9,7 +9,7 @@ import { WidgetBuilder } from "./widget-builder";
 
 export class DashboardBuilder {
   private id: string | undefined;
-  private version: number = 0;
+  private version: number = 1;
   private parentId: string | undefined;
   private topicArea: TopicArea | undefined;
   private displayTableOfContents: boolean | undefined;
@@ -76,14 +76,9 @@ export class DashboardBuilder {
   }
 
   async build(): Promise<Dashboard> {
+    console.log("building dashboard: {}", this);
     if (!this.id) {
       throw new Error("id is required");
-    }
-    if (!this.version) {
-      throw new Error("version is required");
-    }
-    if (!this.parentId) {
-      throw new Error("parentId is required");
     }
     if (!this.topicArea) {
       throw new Error("topicArea is required");

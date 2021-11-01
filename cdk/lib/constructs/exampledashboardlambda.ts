@@ -45,7 +45,7 @@ export class ExampleDashboardLambda extends cdk.Construct {
         // Grant permissions to tables themselves
         props.databaseTableArn,
       ],
-      actions: ["dynamodb:PutItem"],
+      actions: ["dynamodb:PutItem", "dynamodb:Query"],
     });
 
     const s3ReadExamples = new iam.PolicyStatement({

@@ -67,6 +67,7 @@ export class TableContentBuilder extends WidgetContentBuilder {
   }
 
   build() {
+    console.log("building content: {}", this);
     if (!this.title) {
       throw new Error("Title is required");
     }
@@ -87,6 +88,7 @@ export class TableContentBuilder extends WidgetContentBuilder {
       displayWithPages: this.displayWithPages || false,
       columnsMetadata: this.columnsMetadata,
     };
+    console.log("content created");
     return content;
   }
 }

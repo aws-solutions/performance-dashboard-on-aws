@@ -35,7 +35,7 @@ export const handler = async (
   logRequest(event, context);
 
   try {
-    const config = event.body as unknown as Configuration;
+    const config = (event.body as unknown as Configuration) || {};
     if (!config.language) {
       config.language = env.LANGUAGE as Language;
     }

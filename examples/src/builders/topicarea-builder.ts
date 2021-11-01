@@ -30,6 +30,7 @@ export class TopicAreaBuilder {
   }
 
   async build(): Promise<TopicArea> {
+    console.log("building topic area: {}", this);
     if (!this.id) {
       throw new Error("TopicAreaBuilder requires an id");
     }

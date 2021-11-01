@@ -14,7 +14,7 @@ export async function buildDatasets(config: Configuration) {
       .withId("da20c7bf-999f-4e75-b76f-0faecfffb9d5")
       .generateIdIf(!config.reuseDataset)
       .withAuthor(config.author)
-      .withDatasetResource(resources.programParticipation)
+      .withDatasetResource(resources.digitalTransformationProgress)
       .build(),
     userSatisfaction: await new DatasetBuilder()
       .withId("32b67933-0c22-43c0-ac4a-9ccb9f22ae5b")

@@ -53,6 +53,7 @@ export class SectionContentBuilder extends WidgetContentBuilder {
   }
 
   async build(widgetId: string) {
+    console.log("building content: {}", this);
     if (!this.title) {
       throw new Error("Section title is required");
     }
@@ -74,6 +75,7 @@ export class SectionContentBuilder extends WidgetContentBuilder {
       horizontally: this.horizontally || false,
       widgetIds: widgetIds,
     };
+    console.log("content created");
     return content;
   }
 }

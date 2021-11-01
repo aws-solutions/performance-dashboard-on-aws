@@ -69,9 +69,11 @@ export class DatasetBuilder {
     return this;
   }
 
-  build(): Dataset {
+  async build(): Promise<Dataset> {
+    console.log("building dataset: {}", this);
+
     if (!this.datasetResource) {
-      throw new Error("Dataset resource not set");
+      throw new Error(`Dataset resource not set: ${JSON.stringify(this)}`);
     }
     const dataset: Dataset = {
       id: this.id || uuidv4(),
@@ -82,9 +84,10 @@ export class DatasetBuilder {
       sourceType: SourceType.FileUpload,
       schema: this.datasetResource.schema,
     };
-    console.log("building dataset: {}", dataset);
+
+    console.log("creating dataset: {}", dataset);
     console.log("> copying raw file: {}", this.datasetResource.key.raw);
-    copyFile(
+    await copyFile(
       env.EXAMPLES_BUCKET,
       this.datasetResource.key.raw,
       env.DATASETS_BUCKET,
@@ -92,14 +95,15 @@ export class DatasetBuilder {
     );
     if (this.datasetResource.key.raw !== this.datasetResource.key.json) {
       console.log("> copying json file: {}", this.datasetResource.key.json);
-      copyFile(
+      await copyFile(
         env.EXAMPLES_BUCKET,
         this.datasetResource.key.json,
         env.DATASETS_BUCKET,
         `public/${this.datasetResource.key.json}`
       );
     }
-    DatasetRepository.getInstance().saveDataset(dataset);
+
+    await DatasetRepository.getInstance().saveDataset(dataset);
     console.log("dataset created");
     return dataset;
   }

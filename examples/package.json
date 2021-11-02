@@ -10,7 +10,8 @@
     "build": "npm run clean && tsc && npm run install:prod",
     "install:prod": "npm install --production --prefix build && npm install --production --prefix ../backend && cp -R ../backend/build/* build/node_modules/performance-dashboard-backend",
     "clean": "rm -rf build",
-    "export": "ts-node src/export.ts"
+    "export": "ts-node src/cli.ts --operation export && prettier --write resources && prettier --write src/examples",
+    "import": "ts-node src/cli.ts --operation import"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +23,8 @@
     "@types/uuid": "^8.3.1",
     "fs-extra": "^10.0.0",
     "jest": "^27.3.1",
+    "optimist": "^0.6.1",
+    "prettier": "^2.4.1",
     "prompt": "^1.2.0",
     "ts-jest": "^27.0.7",
     "ts-loader": "^9.2.6",

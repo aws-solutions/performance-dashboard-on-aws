@@ -1,5 +1,4 @@
 import { cleanEnv, email, str } from "envalid";
-import { Language, Languages } from "./common";
 
 export const env = cleanEnv(process.env, {
   MAIN_TABLE: str({
@@ -27,8 +26,8 @@ export const env = cleanEnv(process.env, {
   USER_EMAIL: email({
     desc: "User email of the owner of the resources",
   }),
-  LANGUAGE: str<Language>({
-    desc: "Language to use",
-    default: Languages.English,
+  EXAMPLE: str({
+    desc: "Example to use",
+    default: "english",
   }),
 });

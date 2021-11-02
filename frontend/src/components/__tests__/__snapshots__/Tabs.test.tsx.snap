@@ -17,8 +17,10 @@ exports[`Tabs tests renders the Tabs component 1`] = `
           data-key="tab1"
         >
           <li
+            aria-label="Active tab1test Tab Tab 1"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-base-dark border-x-0 border-top-0 border-bottom-05"
             style="cursor: pointer; white-space: nowrap;"
+            tabindex="0"
           >
             Tab 1
           </li>
@@ -34,8 +36,10 @@ exports[`Tabs tests renders the Tabs component 1`] = `
           data-key="tab2"
         >
           <li
+            aria-label="tab1test Tab Tab 2"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
             style="cursor: pointer; white-space: nowrap;"
+            tabindex="0"
           >
             Tab 2
           </li>
@@ -68,8 +72,10 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
           data-key="tab1"
         >
           <li
+            aria-label="tab2test Tab Tab 1"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
             style="cursor: pointer; white-space: nowrap;"
+            tabindex="0"
           >
             Tab 1
           </li>
@@ -85,8 +91,10 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
           data-key="tab2"
         >
           <li
+            aria-label="Active tab2test Tab Tab 2"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-base-dark border-x-0 border-top-0 border-bottom-05"
             style="cursor: pointer; white-space: nowrap;"
+            tabindex="0"
           >
             Tab 2
           </li>

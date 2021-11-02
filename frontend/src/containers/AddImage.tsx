@@ -153,9 +153,6 @@ function AddImage() {
           <PrimaryActionBar>
             <h1 className="margin-top-0">{t("AddImageScreen.AddImage")}</h1>
 
-            <div className="text-base text-italic">
-              {t("AddImageScreen.StepTwo")}
-            </div>
             <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
               {t("AddImageScreen.ConfigureImage")}
             </div>

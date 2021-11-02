@@ -132,9 +132,6 @@ function AddSection() {
                   {t("AddSectionScreen.AddSection")}
                 </h1>
 
-                <div className="text-base text-italic">
-                  {t("StepOfTotal", { step: "2", total: "2" })}
-                </div>
                 <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
                   {t("AddSectionScreen.Configure")}
                 </div>

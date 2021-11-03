@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
 import { Configuration } from "./common";
 import { env } from "./env";
-import { importDashboard } from "./ops/importer";
+import { importDashboard } from "./services/importer-service";
 
 function logRequest(event: APIGatewayProxyEvent, context: Context) {
   // Don't log sensitive data such as API body and authorization headers

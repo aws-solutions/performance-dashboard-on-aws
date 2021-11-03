@@ -1,5 +1,5 @@
-import { exportDashboard } from "./ops/exporter";
-import { importDashboard } from "./ops/importer";
+import { exportDashboard } from "./services/exporter-service";
+import { importDashboard } from "./services/importer-service";
 import { Configuration } from "./common";
 
 var prompts = require("prompt"),

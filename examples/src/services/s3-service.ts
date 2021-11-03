@@ -1,11 +1,15 @@
 import { env } from "../env";
 import { S3 } from "aws-sdk";
 import { DashboardSnapshot } from "../common";
+import {
+  readSnapshot as readSnapshotFromResources,
+  writeResource,
+} from "./fs-service";
 
 const fs = require("fs-extra");
 
 export const downloadResource = async function (name: string, file: string) {
-  const folder = `${__dirname}/../../resources/${name}`;
+  const folder = `${__dirname}/../../resources/${name}/files`;
   fs.ensureDirSync(folder);
 
   const s3 = new S3();
@@ -16,23 +20,8 @@ export const downloadResource = async function (name: string, file: string) {
     })
     .createReadStream();
 
-  let writeStream = fs.createWriteStream(`${folder}/${file}`);
-  return new Promise((resolve, reject) =>
-    readStream
-      .pipe(writeStream)
-      .on("finish", resolve)
-      .on("error", reject)
-      .on("close", () => {
-        console.log(`Downloaded ${file}`);
-      })
-  );
+  return writeResource(name, file, readStream);
 };
-
-function readSnapshotFromResources(name: string) {
-  const file = `${__dirname}/../../resources/${name}.json`;
-  const text = fs.readFileSync(file, "utf8");
-  return JSON.parse(text) as DashboardSnapshot;
-}
 
 export const readSnapshot = async function (
   name: string
@@ -42,7 +31,7 @@ export const readSnapshot = async function (
     s3.getObject(
       {
         Bucket: env.EXAMPLES_BUCKET,
-        Key: `${name}.json`,
+        Key: `${name}/snapshot.json`,
       },
       (err, data) => {
         if (err) {

@@ -39,9 +39,6 @@ export const handler = async (
     if (!config.example) {
       config.example = env.EXAMPLE;
     }
-    if (!config.author) {
-      config.author = env.USER_EMAIL;
-    }
 
     const dashboard = await importDashboard(config);
     console.log({ dashboard });

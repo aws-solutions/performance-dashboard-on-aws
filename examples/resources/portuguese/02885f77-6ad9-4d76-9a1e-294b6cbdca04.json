@@ -1,0 +1,19 @@
+[
+  {
+    "Programação ": "Saúde e bem-estar",
+    "Inscritos ": 5600,
+    "Participantes": 5380
+  },
+  { "Programação ": "Tecnologia", "Inscritos ": 6525, "Participantes": 6450 },
+  {
+    "Programação ": "Conhecimento e aprendizagem",
+    "Inscritos ": 6820,
+    "Participantes": 6600
+  },
+  { "Programação ": "Jogos", "Inscritos ": 4900, "Participantes": 3500 },
+  {
+    "Programação ": "Discussão e palestra",
+    "Inscritos ": 5300,
+    "Participantes": 4750
+  }
+]

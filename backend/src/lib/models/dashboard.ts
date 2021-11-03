@@ -80,4 +80,8 @@ export interface PublicDashboard {
   updatedAt: Date;
   widgets?: Array<Widget>;
   friendlyURL?: string;
+
+  // Filled on a homepage search with dashboard content
+  // that matches the search query.
+  queryMatches?: Array<string>;
 }

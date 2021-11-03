@@ -102,7 +102,9 @@ async function getPublicHomepageWithQuery(req: Request, res: Response) {
       let dashboard = publicDashboards[index];
       dashboard.queryMatches = [];
 
-      const dashboardWithWidgets = await dashboardRepo.getDashboardWithWidgets(dashboard.id);
+      const dashboardWithWidgets = await dashboardRepo.getDashboardWithWidgets(
+        dashboard.id
+      );
 
       if (dashboardWithWidgets.name.toLowerCase().includes(query)) {
         dashboard.queryMatches.push(dashboardWithWidgets.name);

@@ -208,22 +208,22 @@ describe("updateHomepage", () => {
 
 describe("getPublicHomepageWithQuery", () => {
   let req: Request;
-    beforeEach(() => {
-      req = {
-        user,
-        params: {
-          query: "UK",
-        },
-      } as any as Request;
-      jest.resetAllMocks();
-      jest.resetModules();
-      HomepageRepository.getInstance = jest.fn().mockReturnValue(repository);
-      DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
-    });
+  beforeEach(() => {
+    req = {
+      user,
+      params: {
+        query: "UK",
+      },
+    } as any as Request;
+    jest.resetAllMocks();
+    jest.resetModules();
+    HomepageRepository.getInstance = jest.fn().mockReturnValue(repository);
+    DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
+  });
 
   it("returns a list of published dashboards with content matching a query", async () => {
     const now = new Date();
- 
+
     // The two public dashboards.
     const publicDashboard1: PublicDashboard = {
       id: "123",
@@ -233,7 +233,7 @@ describe("getPublicHomepageWithQuery", () => {
       displayTableOfContents: false,
       description: "All about the United States of America.",
       updatedAt: now,
-     };
+    };
     const publicDashboard2: PublicDashboard = {
       id: "456",
       name: "UK",
@@ -243,7 +243,7 @@ describe("getPublicHomepageWithQuery", () => {
       description: "All about the United Kingdom.",
       updatedAt: now,
     };
-    
+
     // The two corresponding published dashboards.
     let publishedDashboard1: Dashboard = {
       ...publicDashboard1,
@@ -259,24 +259,28 @@ describe("getPublicHomepageWithQuery", () => {
       createdBy: "johndoe",
       state: DashboardState.Published,
     };
-    
+
     // The two corresponding published dashboards with widgets.
     let publishedDashboardWithWidget1: Dashboard = {
       ...publishedDashboard1,
-      widgets: [{
-        id: "111",
-        name: "Geography of the USA",
-        widgetType: WidgetType.Text,
-        dashboardId: "123",
-        order: 1,
-        updatedAt: now,
-        content: {
-          text: "The USA is in North America. The capital of the USA is Washington, DC."
+      widgets: [
+        {
+          id: "111",
+          name: "Geography of the USA",
+          widgetType: WidgetType.Text,
+          dashboardId: "123",
+          order: 1,
+          updatedAt: now,
+          content: {
+            text: "The USA is in North America. The capital of the USA is Washington, DC.",
+          },
         },
-      },],};
-      let publishedDashboardWithWidget2: Dashboard = {
-        ...publishedDashboard2,
-        widgets: [{
+      ],
+    };
+    let publishedDashboardWithWidget2: Dashboard = {
+      ...publishedDashboard2,
+      widgets: [
+        {
           id: "222",
           name: "Geography of the UK",
           widgetType: WidgetType.Text,
@@ -284,9 +288,11 @@ describe("getPublicHomepageWithQuery", () => {
           order: 1,
           updatedAt: now,
           content: {
-            text: "The UK is in Europe. The capital of the UK is London."
+            text: "The UK is in Europe. The capital of the UK is London.",
           },
-        },],};
+        },
+      ],
+    };
 
     repository.getHomepage = jest.fn().mockReturnValueOnce({
       title: "Performance Dashboard",
@@ -308,20 +314,22 @@ describe("getPublicHomepageWithQuery", () => {
       .mockReturnValueOnce(publishedDashboardWithWidget2)
       .mockReturnValueOnce(publishedDashboardWithWidget1);
 
-    const matchedDashboard: PublicDashboard[] = [{
-      id: "456",
-      name: "UK",
-      topicAreaId: "abc",
-      topicAreaName: "Europe",
-      displayTableOfContents: false,
-      description: "All about the United Kingdom.",
-      updatedAt: now,
-      queryMatches: [
-        "UK",
-        "The UK is in Europe.",
-        "The capital of the UK is London.",
-      ]
-    },];
+    const matchedDashboard: PublicDashboard[] = [
+      {
+        id: "456",
+        name: "UK",
+        topicAreaId: "abc",
+        topicAreaName: "Europe",
+        displayTableOfContents: false,
+        description: "All about the United Kingdom.",
+        updatedAt: now,
+        queryMatches: [
+          "UK",
+          "The UK is in Europe.",
+          "The capital of the UK is London.",
+        ],
+      },
+    ];
 
     await HomepageCtrl.getPublicHomepageWithQuery(req, res);
     expect(res.json).toBeCalledWith(

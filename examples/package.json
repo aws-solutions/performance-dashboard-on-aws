@@ -10,7 +10,7 @@
     "build": "npm run clean && tsc && npm run install:prod",
     "install:prod": "npm install --production --prefix build && npm install --production --prefix ../backend && cp -R ../backend/build/* build/node_modules/performance-dashboard-backend",
     "clean": "rm -rf build",
-    "export": "ts-node src/cli.ts --operation export && prettier --write resources && prettier --write src/examples",
+    "export": "ts-node src/cli.ts --operation export && prettier --write resources",
     "import": "ts-node src/cli.ts --operation import"
   },
   "author": "",

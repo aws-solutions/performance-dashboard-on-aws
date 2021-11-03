@@ -1,45 +1,8 @@
 import DashboardRepository from "performance-dashboard-backend/src/lib/repositories/dashboard-repo";
 import DatasetRepository from "performance-dashboard-backend/src/lib/repositories/dataset-repo";
 import { DashboardSnapshot } from "../common";
-import { env } from "../env";
-import { S3 } from "aws-sdk";
-
-const fs = require("fs-extra");
-
-export const downloadResource = async function (name: string, file: string) {
-  const folder = `${__dirname}/../../resources/${name}`;
-  fs.ensureDirSync(folder);
-
-  const s3 = new S3();
-  let readStream = s3
-    .getObject({
-      Bucket: env.DATASETS_BUCKET,
-      Key: `public/${file}`,
-    })
-    .createReadStream();
-
-  let writeStream = fs.createWriteStream(`${folder}/${file}`);
-  return new Promise((resolve, reject) =>
-    readStream
-      .pipe(writeStream)
-      .on("finish", resolve)
-      .on("error", reject)
-      .on("close", () => {
-        console.log(`Downloaded ${file}`);
-      })
-  );
-};
-
-export const writeSnapshot = function (
-  name: string,
-  snapshot: DashboardSnapshot
-) {
-  fs.writeFileSync(
-    `${__dirname}/../examples/${name}.json`,
-    JSON.stringify(snapshot),
-    "utf8"
-  );
-};
+import { writeSnapshot } from "./fs-service";
+import { downloadResource } from "./s3-service";
 
 export async function exportDashboard(name: string, dashboardId: string) {
   console.log("exporting dashboard: {}", dashboardId);

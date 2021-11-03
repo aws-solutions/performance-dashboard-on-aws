@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import WidgetRepository from "performance-dashboard-backend/src/lib/repositories/widget-repo";
 import { S3 } from "aws-sdk";
 import { env } from "../env";
+import { readSnapshot } from "./s3-service";
 
 const fs = require("fs-extra");
 
@@ -25,12 +26,6 @@ const getOrAdd = (map: Map<string, string>, id: string) => {
     map.set(id, newId);
   }
   return newId;
-};
-
-const readSnapshot = async function (name: string) {
-  const file = `${__dirname}/../examples/${name}.json`;
-  const text = fs.readFileSync(file, "utf8");
-  return JSON.parse(text) as DashboardSnapshot;
 };
 
 const rewriteIds = function (

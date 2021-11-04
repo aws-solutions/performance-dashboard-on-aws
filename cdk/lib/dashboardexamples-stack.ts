@@ -23,8 +23,8 @@ export class DashboardExamplesStack extends cdk.Stack {
     const exampleLanguage = new cdk.CfnParameter(this, "exampleLanguage", {
       type: "String",
       description: "Language for example dashboards",
-      allowedValues: ["en", "es", "pt"],
-      default: "en",
+      allowedValues: ["english", "spanish", "portuguese"],
+      default: "english",
     });
 
     const exampleBucket = new s3.Bucket(this, "ExampleBucket", {

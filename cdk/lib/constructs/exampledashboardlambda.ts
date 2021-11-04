@@ -35,7 +35,7 @@ export class ExampleDashboardLambda extends cdk.Construct {
         DATASETS_BUCKET: props.datasetBucketName,
         EXAMPLES_BUCKET: props.exampleBucketName,
         USER_EMAIL: props.adminEmail,
-        LANGUAGE: props.exampleLanguage,
+        EXAMPLE: props.exampleLanguage,
       },
     });
 

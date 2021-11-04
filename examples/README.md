@@ -16,8 +16,10 @@ export DATASETS_BUCKET=<value>
 export USER_EMAIL=<value>
 npm install
 npm run export
-prompt: exampleName:  (english) <sampleName>
-prompt: dashboardId:  <dashboardId>
+
+Welcome to Performance Dashboard on AWS Export Tool
+✔ What is the template name? … template
+✔ Which dashboard you want to export? … dashboardId
 -----
 exported dashboard: {}
 
@@ -38,7 +40,17 @@ export EXAMPLES_BUCKET=<value>
 export USER_EMAIL=<value>
 npm install
 npm run import
-prompt: exampleName:  (english) <sampleName>
+
+Welcome to Performance Dashboard on AWS Import Tool
+✔ Which template you want to install? › english
+✔ Do you want to use the default config? … yes
+Using default config: {} {
+  example: 'english',
+  author: 'some@email.com',
+  reuseTopicArea: true,
+  reuseDashboard: false,
+  reuseDataset: false
+}
 -----
 dashboard created
 

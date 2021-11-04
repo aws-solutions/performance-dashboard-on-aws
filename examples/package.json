@@ -11,16 +11,18 @@
     "build:backend": "npm run build --prefix ../backend",
     "install:prod": "npm install --production --prefix build && rm -rf backend/* && cp -R ../backend/build/* backend/",
     "clean": "rm -rf build && rm -rf backend",
-    "export": "ts-node src/cli.ts --operation export && prettier --write resources",
-    "import": "ts-node src/cli.ts --operation import"
+    "export": "ts-node src/export.ts && prettier --write resources",
+    "import": "ts-node src/import.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.57",
     "@types/aws-sdk": "^2.7.0",
+    "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.0.2",
     "@types/prompt": "^1.1.1",
+    "@types/prompts": "^2.0.14",
     "@types/uuid": "^8.3.1",
     "jest": "^27.3.1",
     "prettier": "^2.4.1",
@@ -33,9 +35,9 @@
     "aws-sdk": "^2.1021.0",
     "envalid": "^7.2.2",
     "fs-extra": "^10.0.0",
-    "optimist": "^0.6.1",
     "performance-dashboard-backend": "file:../backend",
-    "prompt": "^1.2.0",
-    "uuid": "^8.3.2"
+    "prompts": "^2.4.2",
+    "uuid": "^8.3.2",
+    "yargs": "^17.2.1"
   }
 }

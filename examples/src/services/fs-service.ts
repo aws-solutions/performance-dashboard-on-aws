@@ -1,7 +1,6 @@
 import { DashboardSnapshot } from "../common";
 import { Readable } from "stream";
-
-const fs = require("fs-extra");
+import fs from "fs-extra";
 
 export const writeSnapshot = function (
   name: string,
@@ -38,4 +37,11 @@ export const readSnapshot = function (name: string) {
   const file = `${__dirname}/../../resources/${name}/snapshot.json`;
   const text = fs.readFileSync(file, "utf8");
   return JSON.parse(text) as DashboardSnapshot;
+};
+
+export const availableResources = function () {
+  const folders = fs.readdirSync(`${__dirname}/../../resources`);
+  return folders.filter((folder) =>
+    fs.statSync(`${__dirname}/../../resources/${folder}`).isDirectory()
+  );
 };

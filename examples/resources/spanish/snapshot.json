@@ -11,10 +11,7 @@
     "parentDashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
     "updatedAt": "2021-10-18T14:47:46.495Z",
     "updatedBy": "gudalis",
-    "submittedBy": "gudalis",
-    "publishedBy": "gudalis",
-    "archivedBy": "gudalis",
-    "state": "Published",
+    "state": "Draft",
     "releaseNotes": "Removed few remaining English words",
     "friendlyURL": "panel-de-ejemplo",
     "widgets": [

@@ -11,10 +11,7 @@
     "parentDashboardId": "42396494-02ef-4469-98c9-298ee0393691",
     "updatedAt": "2021-10-04T15:28:44.464Z",
     "updatedBy": "gudalis",
-    "submittedBy": "gudalis",
-    "publishedBy": "gudalis",
-    "archivedBy": "gudalis",
-    "state": "Published",
+    "state": "Draft",
     "releaseNotes": "Initial launch of Port. example dashboard",
     "friendlyURL": "painel-de-exemplo",
     "widgets": [

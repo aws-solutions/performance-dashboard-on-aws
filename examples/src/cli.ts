@@ -1,6 +1,7 @@
 import { exportDashboard } from "./services/exporter-service";
 import { importDashboard } from "./services/importer-service";
 import { Configuration } from "./common";
+import { env } from "./env";
 
 var prompts = require("prompt"),
   optimist = require("optimist");
@@ -20,7 +21,7 @@ prompts.get(
       name: "exampleName",
       pattern: /^[a-zA-Z0-9\-]+$/,
       message: "Name must be only letters, spaces, or dashes",
-      default: "english",
+      default: env.EXAMPLE,
       required: true,
     },
   ],
@@ -47,6 +48,7 @@ prompts.get(
       try {
         await importDashboard({
           example: initial.exampleName,
+          author: env.USER_EMAIL,
           reuseTopicArea: true,
           reuseDashboard: false,
           reuseDataset: false,

@@ -3,6 +3,7 @@ import { Dashboard } from "performance-dashboard-backend/src/lib/models/dashboar
 
 export interface Configuration {
   example: string;
+  author: string;
   reuseTopicArea: boolean;
   reuseDashboard: boolean;
   reuseDataset: boolean;

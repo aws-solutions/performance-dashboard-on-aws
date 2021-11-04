@@ -3,9 +3,8 @@ import DatasetRepository from "performance-dashboard-backend/src/lib/repositorie
 import { Configuration, DashboardSnapshot } from "../common";
 import { v4 as uuidv4 } from "uuid";
 import WidgetRepository from "performance-dashboard-backend/src/lib/repositories/widget-repo";
-import { S3 } from "aws-sdk";
 import { env } from "../env";
-import { readSnapshot } from "./s3-service";
+import { copyResource, readSnapshot } from "./s3-service";
 
 const fs = require("fs-extra");
 
@@ -107,40 +106,6 @@ const rewriteIds = function (
   return snapshot;
 };
 
-function copyFile(
-  sourceBucket: string,
-  sourceFile: string,
-  destinationBucket: string,
-  destinationFile: string
-): Promise<S3.CopyObjectOutput> {
-  const s3Client = new S3();
-  return new Promise((resolve, reject) => {
-    console.log(
-      "s3.copyContent call: {}/{} -> {}/{}",
-      sourceBucket,
-      sourceFile,
-      destinationBucket,
-      destinationFile
-    );
-    s3Client.copyObject(
-      {
-        Bucket: destinationBucket,
-        Key: destinationFile,
-        CopySource: `${sourceBucket}/${sourceFile}`,
-      },
-      function (err, data) {
-        console.log("s3.copyObject completed");
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      }
-    );
-  });
-}
-
 export async function importDashboard(config: Configuration) {
   const name = config.example;
   console.log("importing dashboard: {}", name);
@@ -161,22 +126,12 @@ export async function importDashboard(config: Configuration) {
     if (dataset.s3Key?.raw) {
       const originalFile =
         original.get(dataset.s3Key.raw) || dataset.s3Key?.raw;
-      await copyFile(
-        env.EXAMPLES_BUCKET,
-        `${name}/${originalFile}`,
-        env.DATASETS_BUCKET,
-        `public/${dataset.s3Key.raw}`
-      );
+      await copyResource(name, originalFile, dataset.s3Key.raw);
     }
     if (dataset.s3Key?.json && dataset.s3Key?.json !== dataset.s3Key.raw) {
       const originalFile =
         original.get(dataset.s3Key.json) || dataset.s3Key?.json;
-      await copyFile(
-        env.EXAMPLES_BUCKET,
-        `${name}/${originalFile}`,
-        env.DATASETS_BUCKET,
-        `public/${dataset.s3Key.json}`
-      );
+      await copyResource(name, originalFile, dataset.s3Key.json);
     }
 
     dataset.updatedAt = new Date();
@@ -185,6 +140,7 @@ export async function importDashboard(config: Configuration) {
   }
 
   snapshot.dashboard.updatedAt = new Date();
+  snapshot.dashboard.updatedBy = config.author;
   console.log("inserting dashboard: {}", snapshot.dashboard);
   await DashboardRepository.getInstance().putDashboard(snapshot.dashboard);
 

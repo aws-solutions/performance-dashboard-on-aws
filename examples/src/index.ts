@@ -39,6 +39,12 @@ export const handler = async (
     if (!config.example) {
       config.example = env.EXAMPLE;
     }
+    if (!config.author) {
+      config.author = env.USER_EMAIL;
+    }
+    if (config.reuseTopicArea === undefined) {
+      config.reuseTopicArea = true;
+    }
 
     const dashboard = await importDashboard(config);
     console.log({ dashboard });

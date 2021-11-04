@@ -104,7 +104,7 @@ test("table preview should match snapshot", async () => {
       summaryBelow={false}
       columnsMetadata={[]}
       significantDigitLabels={false}
-      displayWithPages={false}
+      displayWithPages={true}
     />,
     { wrapper: MemoryRouter }
   );

@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import { Dashboard } from "../models";
 import { useDateTimeFormatter, useSettings } from "../hooks";
 import Search from "./Search";
-import ScrollTop from "./ScrollTop";
 import Link from "./Link";
 import Table from "./Table";
 import { useTranslation } from "react-i18next";
@@ -94,9 +93,6 @@ function PublishQueueTab(props: Props) {
           [dateFormatter, settings, t]
         )}
       />
-      <div className="text-right">
-        <ScrollTop />
-      </div>
     </div>
   );
 }

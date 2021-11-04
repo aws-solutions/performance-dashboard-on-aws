@@ -6,7 +6,6 @@ import { useDashboard, useDateTimeFormatter, useDatasets } from "../hooks";
 import Table from "../components/Table";
 import Button from "../components/Button";
 import Search from "../components/Search";
-import ScrollTop from "../components/ScrollTop";
 import StorageService from "../services/StorageService";
 import { Dataset } from "../models";
 import { useTranslation } from "react-i18next";
@@ -134,9 +133,6 @@ function ChooseStaticDataset() {
           [dateFormatter, t]
         )}
       />
-      <div className="text-right">
-        <ScrollTop />
-      </div>
 
       <br />
       <br />

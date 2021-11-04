@@ -4,7 +4,6 @@ import { Dashboard } from "../models";
 import { useDateTimeFormatter, useSettings, useWindowSize } from "../hooks";
 import Button from "./Button";
 import Search from "./Search";
-import ScrollTop from "./ScrollTop";
 import Table from "./Table";
 import Link from "./Link";
 import DropdownMenu from "../components/DropdownMenu";
@@ -167,9 +166,6 @@ function DraftsTab(props: Props) {
           [dateFormatter, settings, t]
         )}
       />
-      <div className="text-right">
-        <ScrollTop />
-      </div>
     </div>
   );
 }

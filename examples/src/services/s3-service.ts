@@ -9,9 +9,6 @@ import {
 const fs = require("fs-extra");
 
 export const downloadResource = async function (name: string, file: string) {
-  const folder = `${__dirname}/../../resources/${name}/files`;
-  fs.ensureDirSync(folder);
-
   const s3 = new S3();
   let readStream = s3
     .getObject({

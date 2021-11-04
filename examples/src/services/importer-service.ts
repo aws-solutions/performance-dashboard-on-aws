@@ -83,8 +83,8 @@ const rewriteIds = function (
         if (widget.content?.s3Key?.json) {
           widget.content.s3Key.json = getOrAdd(ids, widget.content.s3Key.json);
         }
-        if (widget.content?.s3Key?.csv) {
-          widget.content.s3Key.csv = getOrAdd(ids, widget.content.s3Key.csv);
+        if (widget.content?.s3Key?.raw) {
+          widget.content.s3Key.raw = getOrAdd(ids, widget.content.s3Key.raw);
         }
       }
     });
@@ -124,13 +124,12 @@ export async function importDashboard(config: Configuration) {
   for (const dataset of snapshot.datasets) {
     console.log("copying resources");
     if (dataset.s3Key?.raw) {
-      const originalFile =
-        original.get(dataset.s3Key.raw) || dataset.s3Key?.raw;
+      const originalFile = original.get(dataset.s3Key.raw) || dataset.s3Key.raw;
       await copyResource(name, originalFile, dataset.s3Key.raw);
     }
     if (dataset.s3Key?.json && dataset.s3Key?.json !== dataset.s3Key.raw) {
       const originalFile =
-        original.get(dataset.s3Key.json) || dataset.s3Key?.json;
+        original.get(dataset.s3Key.json) || dataset.s3Key.json;
       await copyResource(name, originalFile, dataset.s3Key.json);
     }
 

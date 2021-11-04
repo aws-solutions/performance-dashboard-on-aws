@@ -18,7 +18,7 @@ else
     exit 0
 fi
 
-exampleLanguage=${2:-en}
+exampleLanguage=${2:-english}
 if [ "$exampleLanguage" != "" ]; then
     echo "Example Language = $exampleLanguage"
 else

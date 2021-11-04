@@ -127,7 +127,7 @@ export async function importDashboard(config: Configuration) {
       const originalFile = original.get(dataset.s3Key.raw) || dataset.s3Key.raw;
       await copyResource(name, originalFile, dataset.s3Key.raw);
     }
-    if (dataset.s3Key?.json && dataset.s3Key?.json !== dataset.s3Key.raw) {
+    if (dataset.s3Key?.json) {
       const originalFile =
         original.get(dataset.s3Key.json) || dataset.s3Key.json;
       await copyResource(name, originalFile, dataset.s3Key.json);

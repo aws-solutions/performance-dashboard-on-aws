@@ -28,14 +28,14 @@ export const copyResource = function (
   const s3Client = new S3();
   const sourceFile = `${name}/files/${source}`;
   const destinationFile = `public/${destination}`;
+  console.log(
+    "s3.copyContent call: {}/{} -> {}/{}",
+    env.EXAMPLES_BUCKET,
+    sourceFile,
+    env.DATASETS_BUCKET,
+    destinationFile
+  );
   return new Promise((resolve, reject) => {
-    console.log(
-      "s3.copyContent call: {}/{} -> {}/{}",
-      env.EXAMPLES_BUCKET,
-      sourceFile,
-      env.DATASETS_BUCKET,
-      destinationFile
-    );
     s3Client.copyObject(
       {
         Bucket: env.DATASETS_BUCKET,
@@ -47,7 +47,7 @@ export const copyResource = function (
           console.log(err);
           reject(err);
         } else {
-          console.log("resource copied");
+          console.log("resource copied: {}", data);
           resolve(data);
         }
       }

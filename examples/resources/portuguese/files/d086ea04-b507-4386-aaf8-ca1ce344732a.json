@@ -1,0 +1,21 @@
+[
+  { "Tipo de incidente": "Overdose", "Total de incidentes": 157 },
+  { "Tipo de incidente": "Problema respiratório", "Total de incidentes": 301 },
+  {
+    "Tipo de incidente": "Acidente com ferimentos",
+    "Total de incidentes": 380
+  },
+  {
+    "Tipo de incidente": "Ferimento/acidente desconhecido",
+    "Total de incidentes": 380
+  },
+  { "Tipo de incidente": "Desmaio", "Total de incidentes": 412 },
+  {
+    "Tipo de incidente": "Assistência contra incêndio",
+    "Total de incidentes": 618
+  },
+  { "Tipo de incidente": "Alarme de incêndio", "Total de incidentes": 796 },
+  { "Tipo de incidente": "Doente", "Total de incidentes": 947 },
+  { "Tipo de incidente": "Queda", "Total de incidentes": 1016 },
+  { "Tipo de incidente": "Médica", "Total de incidentes": 2331 }
+]

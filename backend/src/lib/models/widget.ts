@@ -151,7 +151,7 @@ export interface SectionWidget extends Widget {
     title: string;
     summary?: string;
     widgetIds?: Array<string>;
-    showWithTabs: string;
+    showWithTabs: boolean;
     horizontally?: boolean;
   };
 }

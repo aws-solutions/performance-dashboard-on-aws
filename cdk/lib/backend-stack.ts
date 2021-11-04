@@ -24,9 +24,17 @@ export class BackendStack extends cdk.Stack {
   public readonly mainTable: dynamodb.Table;
   public readonly auditTrailTable: dynamodb.Table;
   public readonly restApi: apigateway.RestApi;
+  public readonly datasetsBucketArn: string;
 
   constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
     super(scope, id, props);
+
+    const exampleLanguage = new cdk.CfnParameter(this, "exampleLanguage", {
+      type: "String",
+      description: "Language for example dashboards",
+      minLength: 5,
+      default: "english",
+    });
 
     const dataStorage = new DatasetStorage(this, "DatasetStorage", {
       datasetsBucketName: props.datasetsBucketName,
@@ -59,6 +67,7 @@ export class BackendStack extends cdk.Stack {
     this.dynamodbStreamsFunction = lambdas.ddbStreamProcessor;
     this.mainTable = database.mainTable;
     this.restApi = backendApi.api;
+    this.datasetsBucketArn = dataStorage.datasetsBucket.bucketArn;
 
     new cdk.CfnOutput(this, "ApiGatewayEndpoint", {
       value: this.restApi.url,

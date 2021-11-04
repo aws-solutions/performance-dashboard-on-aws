@@ -14,6 +14,7 @@ export class AuthStack extends cdk.Stack {
   public readonly appClientId: string;
   public readonly userPoolId: string;
   public readonly identityPoolId: string;
+  public readonly adminEmail: string;
 
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id, props);
@@ -26,7 +27,6 @@ export class AuthStack extends cdk.Stack {
       description: "Email address for the admin user",
       minLength: 5,
     });
-
     const pool = new cognito.UserPool(this, "UserPool", {
       userInvitation: {
         emailSubject:
@@ -98,6 +98,7 @@ export class AuthStack extends cdk.Stack {
     this.userPoolArn = pool.userPoolArn;
     this.appClientId = client.userPoolClientId;
     this.userPoolId = pool.userPoolId;
+    this.adminEmail = adminEmail.valueAsString;
     this.identityPoolId = identityPool.ref;
 
     new cdk.CfnOutput(this, "UserPoolArn", { value: this.userPoolArn });

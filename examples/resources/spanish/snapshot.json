@@ -1,0 +1,424 @@
+{
+  "dashboard": {
+    "id": "7511e57e-4def-4006-b422-b3910cd08382",
+    "version": 1,
+    "name": "Panel de ejemplo",
+    "topicAreaId": "b2bf61d1-7e0c-405f-9aa2-56cb2deacd4d",
+    "topicAreaName": "Contabilidad",
+    "displayTableOfContents": false,
+    "description": "Con Performance Dashboard on AWS, puede crear, mantener y compartir rápidamente sus historias controladas por datos. Agregue una breve descripción aquí para presentar este panel individual al público.",
+    "createdBy": "gudalis",
+    "parentDashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+    "updatedAt": "2021-10-18T14:47:46.495Z",
+    "updatedBy": "gudalis",
+    "state": "Draft",
+    "releaseNotes": "Removed few remaining English words",
+    "friendlyURL": "panel-de-ejemplo",
+    "widgets": [
+      {
+        "id": "a8f7d6a4-24fd-4fa7-8478-a4c1b94aeaf6",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Introducción",
+        "widgetType": "Text",
+        "order": 0,
+        "updatedAt": "2021-10-18T14:44:38.797Z",
+        "showTitle": true,
+        "section": "",
+        "content": {
+          "text": "Performance Dashboard on AWS ayuda a su equipo a compartir fácilmente datos e historias de rendimiento con los inversores clave y el público. Puede compartir métricas, como el costo por transacción, la satisfacción del usuario, la aceptación digital y la tasa de finalización, u otras métricas operativas para rastrear y mejorar la prestación de su servicio.\n\n**¿Qué puedo hacer con Performance Dashboard on AWS?**\n\nPuede crear y compartir historias controladas por datos mediante una variedad de tipos de elementos de contenido que incluyen texto, tablas, gráficos, métricas e imágenes.\n\nLos elementos de contenido se pueden agregar de forma individual, duplicar y reorganizar para contar su historia. También puede agrupar elementos de contenido en secciones e incluir una tabla de contenido para organizar la visualización de su panel.\n\n**¿Cómo puedo usar este panel de ejemplo?**\n\nEl panel de ejemplo se incluye para ayudarlo a comenzar. Puede leer este panel para ver qué es posible hacer, editar este panel para explorar cómo se creó o duplicar este panel para personalizar su contenido.\n\nDebajo de cada gráfico, también puede seleccionar “Acciones” y luego “Descargar” para descargar y modificar el conjunto de datos. Esto lo ayudará a estructurar los datos para su visualización.\n\nActualmente, está leyendo un elemento de contenido de texto, que admite sintaxis de marcación **(NEEDS TO BE DYNAMIC)**. Continúe leyendo para ver cómo cargar datos y mostrar datos junto con otros tipos de elementos de contenido.\n"
+        }
+      },
+      {
+        "id": "b8c77108-1d1e-4d22-a790-9ab5af12ce27",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Use conjuntos de datos para crear visualizaciones de datos",
+        "widgetType": "Text",
+        "order": 1,
+        "updatedAt": "2021-10-18T14:45:24.608Z",
+        "showTitle": true,
+        "section": "",
+        "content": {
+          "text": "Hay tres métodos para completar visualizaciones de datos de tablas o gráficos:\n\n**1. Cree un nuevo conjunto de datos a partir de un archivo**\n\nCargue un archivo CSV o Excel para crear un nuevo conjunto de datos. Si desea utilizar un conjunto de datos que ya se ha cargado, puede elegir “seleccionar un conjunto de datos estático” y explorar los conjuntos de datos existentes.\n\n**2. Seleccione un conjunto de datos estático**\n\nSe trata de un conjunto de datos fijo que debe actualizarse manualmente con el fin de actualizar la visualización de datos. Para actualizar estos datos, debe realizar cambios en los datos de su dispositivo local y luego cargar el nuevo conjunto de datos como un archivo CSV o Excel.\n\n**3. Seleccione un conjunto de datos dinámico**\nEstos conjuntos de datos actualizan la visualización de datos automáticamente a medida que se agregan nuevos datos a la fuente mediante la API disponible del sistema. Los conjuntos de datos dinámicos son útiles para visualizar datos de streaming que se actualizan con frecuencia y no requieren intervención manual. Los conjuntos de datos dinámicos no se pueden configurar en la interfaz. Puede obtener más información en [la Guía de implementación](https://docs.aws.amazon.com/solutions/latest/performance-dashboard-on-aws/welcome.html).\n"
+        }
+      },
+      {
+        "id": "e454a02c-1a3e-4b29-8fd9-21aa181f2298",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Gráfico de líneas: satisfacción del usuario por canal",
+        "widgetType": "Metrics",
+        "order": 2,
+        "updatedAt": "2021-10-18T14:43:41.145Z",
+        "showTitle": true,
+        "section": "",
+        "content": {
+          "s3Key": {
+            "raw": "86fc71c6-2b0a-4eaa-a8b5-8a7472289094.json",
+            "json": "86fc71c6-2b0a-4eaa-a8b5-8a7472289094.json"
+          },
+          "oneMetricPerRow": false,
+          "metricsCenterAlign": false,
+          "datasetId": "fc8f9d57-6e1b-4529-981b-374fe8b2d686",
+          "title": "Gráfico de líneas: satisfacción del usuario por canal",
+          "datasetType": "CreateNew",
+          "significantDigitLabels": false
+        }
+      },
+      {
+        "id": "6e3a5de2-b4bd-46d8-9260-1e8f872da417",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Gráfico de líneas: satisfacción del usuario por canal",
+        "widgetType": "Chart",
+        "order": 3,
+        "updatedAt": "2021-10-18T14:43:41.145Z",
+        "showTitle": true,
+        "section": "",
+        "content": {
+          "summary": "Un gráfico de líneas muestra puntos de datos ordenados que están conectados por líneas. Los gráficos de líneas se utilizan para mostrar tendencias a lo largo del tiempo y pueden contener varias líneas.",
+          "fileName": "Satisfaccion_del_usario.csv",
+          "sortByDesc": false,
+          "title": "Gráfico de líneas: satisfacción del usuario por canal",
+          "significantDigitLabels": false,
+          "dataLabels": false,
+          "s3Key": {
+            "raw": "43ab1b2c-87b0-49d7-b4f0-3713e5c28f0b.csv",
+            "json": "43ab1b2c-87b0-49d7-b4f0-3713e5c28f0b.json"
+          },
+          "summaryBelow": false,
+          "showTotal": true,
+          "chartType": "LineChart",
+          "datasetId": "4eb50825-2775-427e-8e7f-6911d447f463",
+          "computePercentages": false,
+          "datasetType": "StaticDataset",
+          "columnsMetadata": [
+            {
+              "numberType": "Percentage",
+              "hidden": false,
+              "columnName": " Satisfacción del usuario (en línea)",
+              "dataType": "Number"
+            },
+            {
+              "numberType": "Percentage",
+              "hidden": false,
+              "columnName": "Satisfacción del usuario (presencial)",
+              "dataType": "Number"
+            }
+          ]
+        }
+      },
+      {
+        "id": "b09ae009-3f44-4d8c-8755-7d99c0a62dc7",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Gráfico de barras: participación en el programa para miembros adultos",
+        "widgetType": "Chart",
+        "order": 4,
+        "updatedAt": "2021-10-18T14:43:41.145Z",
+        "showTitle": true,
+        "section": "",
+        "content": {
+          "summary": "Un gráfico de barras muestra datos de las categorías con barras horizontales que son proporcionales al valor que representan. Al igual que los gráficos de columnas, los gráficos de barras se utilizan para mostrar comparaciones entre grupos cualitativos o tendencias a lo largo del tiempo; sin embargo, los gráficos de barras proporcionan más espacio para las etiquetas de datos y pueden ser más fáciles de ver en dispositivos móviles.\n\nLos valores de este gráfico se ajustaron para mostrar etiquetas de dígitos significativos (miles). Si selecciona “Acciones” y luego “Mostrar gráfico de datos\" debajo de este gráfico, puede ver los valores de datos originales sin etiquetas de dígitos significativos.\n\n[Ejemplo de descripción del gráfico] Este gráfico describe el número de miembros que se registraron o asistieron a la programación orientada a miembros adultos. Los inscritos son aquellos que se inscribieron con anticipación, ya sea en línea o de forma presencial. Los asistentes son los que participaron en la programación.\n",
+          "fileName": "Participacion_en_el_programa.csv",
+          "sortByDesc": false,
+          "title": "Gráfico de barras: participación en el programa para miembros adultos",
+          "significantDigitLabels": true,
+          "dataLabels": false,
+          "s3Key": {
+            "raw": "24428a15-c6ee-4e00-9609-efac5603e596.csv",
+            "json": "24428a15-c6ee-4e00-9609-efac5603e596.json"
+          },
+          "summaryBelow": false,
+          "showTotal": true,
+          "chartType": "BarChart",
+          "datasetId": "ee281a44-cc7f-48b5-96ae-91a71d80338e",
+          "computePercentages": false,
+          "datasetType": "StaticDataset",
+          "columnsMetadata": []
+        }
+      },
+      {
+        "id": "e4e07c6d-5ba4-4cad-8fd7-5ad9abd57b84",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Gráfico de columnas: tamaño promedio de la clase",
+        "widgetType": "Chart",
+        "order": 5,
+        "updatedAt": "2021-10-18T14:43:41.130Z",
+        "showTitle": true,
+        "section": "",
+        "content": {
+          "summary": "Un gráfico de columnas muestra datos de categorías con columnas verticales que son proporcionales al valor que representan. Los gráficos de columnas se utilizan para mostrar comparaciones entre grupos cualitativos o tendencias a lo largo del tiempo.\n\n[Ejemplo de descripción del gráfico] El tamaño de las clases del distrito escolar ha promediado **21 estudiantes** durante la última década. Esto está justo por encima del promedio estatal. Más recientemente, el tamaño de las clases ha estado por detrás del promedio estatal.\n",
+          "fileName": "Tamano_promedio_de_la_clase.csv",
+          "sortByDesc": false,
+          "title": "Gráfico de columnas: tamaño promedio de la clase",
+          "significantDigitLabels": false,
+          "dataLabels": false,
+          "s3Key": {
+            "raw": "94939686-5b80-4cbc-b0cf-b1717193a3c5.csv",
+            "json": "94939686-5b80-4cbc-b0cf-b1717193a3c5.json"
+          },
+          "summaryBelow": false,
+          "showTotal": true,
+          "chartType": "ColumnChart",
+          "datasetId": "0414d606-c0e5-4564-87b9-2214584931d4",
+          "computePercentages": false,
+          "datasetType": "StaticDataset",
+          "columnsMetadata": [
+            { "hidden": false, "columnName": "Año", "dataType": "Text" }
+          ]
+        }
+      },
+      {
+        "id": "ee3eb0b4-32a7-4c9e-b5c9-34e02e168b38",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Secciones: agrupación de elementos de contenido relacionados ",
+        "widgetType": "Section",
+        "order": 6,
+        "updatedAt": "2021-10-18T14:43:41.145Z",
+        "showTitle": true,
+        "section": "",
+        "content": {
+          "summary": "Una sección organiza los elementos de contenido juntos dentro de un solo panel mediante el uso de encabezados de sección más grandes y pantallas opcionales con pestañas.",
+          "horizontally": false,
+          "title": "Secciones: agrupación de elementos de contenido relacionados ",
+          "showWithTabs": true,
+          "widgetIds": [
+            "66b4f3ac-1e8c-4148-bc05-7e4a93b178aa",
+            "f42ffddb-8470-41ec-9a1f-87c82941e419",
+            "30697731-45c1-4dea-b480-5b79dbfc3e5c"
+          ]
+        }
+      },
+      {
+        "id": "66b4f3ac-1e8c-4148-bc05-7e4a93b178aa",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Gráfico circular: energía renovable",
+        "widgetType": "Chart",
+        "order": 7,
+        "updatedAt": "2021-10-18T14:43:41.130Z",
+        "showTitle": true,
+        "section": "ee3eb0b4-32a7-4c9e-b5c9-34e02e168b38",
+        "content": {
+          "summary": "Un gráfico circular es un gráfico redondo que muestra una proporción numérica con porciones que son proporcionales a la cantidad que representan. Los gráficos circulares se utilizan para mostrar comparaciones relativas entre sectores como parte de un valor total.",
+          "fileName": "Energia_renovable.csv",
+          "sortByDesc": true,
+          "title": "Gráfico circular: energía renovable",
+          "significantDigitLabels": false,
+          "dataLabels": false,
+          "s3Key": {
+            "raw": "cce3ef0b-074d-41d0-8782-00205aa41134.csv",
+            "json": "cce3ef0b-074d-41d0-8782-00205aa41134.json"
+          },
+          "summaryBelow": false,
+          "showTotal": true,
+          "chartType": "PieChart",
+          "datasetId": "9430c0df-632d-4a50-8d6a-711bf53cd892",
+          "computePercentages": false,
+          "sortByColumn": " Porcentaje",
+          "datasetType": "StaticDataset",
+          "columnsMetadata": [
+            {
+              "numberType": "Percentage",
+              "hidden": false,
+              "columnName": " Porcentaje",
+              "dataType": "Number"
+            }
+          ]
+        }
+      },
+      {
+        "id": "f42ffddb-8470-41ec-9a1f-87c82941e419",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Gráfico de anillo: dispositivos utilizados para acceder al servicio",
+        "widgetType": "Chart",
+        "order": 8,
+        "updatedAt": "2021-10-18T14:43:41.145Z",
+        "showTitle": true,
+        "section": "ee3eb0b4-32a7-4c9e-b5c9-34e02e168b38",
+        "content": {
+          "summary": "Un gráfico de anillo es un gráfico circular que muestra una proporción numérica con porciones que son proporcionales a la cantidad que representan. Al igual que los gráficos circulares, los gráficos de anillos se utilizan para mostrar comparaciones relativas entre sectores como parte de un valor total, pero sin el centro.\n\n[Ejemplo de descripción del gráfico] A finales de 2020, la experiencia móvil para el servicio de reservas representaba el 54 % de todos los usuarios. Esto marcó un aumento interanual del 11 %.\n",
+          "fileName": "Dispositivos.csv",
+          "sortByDesc": false,
+          "title": "Gráfico de anillo: dispositivos utilizados para acceder al servicio",
+          "significantDigitLabels": false,
+          "dataLabels": false,
+          "s3Key": {
+            "raw": "688ec0bc-acf1-4ac2-9e86-7367f55e8fd7.csv",
+            "json": "688ec0bc-acf1-4ac2-9e86-7367f55e8fd7.json"
+          },
+          "summaryBelow": false,
+          "showTotal": false,
+          "chartType": "DonutChart",
+          "datasetId": "617a24e3-f30e-495f-920f-d1dbbb97884f",
+          "computePercentages": false,
+          "datasetType": "StaticDataset",
+          "columnsMetadata": [
+            {
+              "numberType": "Percentage",
+              "hidden": false,
+              "columnName": "Uso",
+              "dataType": "Number"
+            }
+          ]
+        }
+      },
+      {
+        "id": "30697731-45c1-4dea-b480-5b79dbfc3e5c",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Gráfico de parte con respecto al todo: dispositivos utilizados para acceder al servicio",
+        "widgetType": "Chart",
+        "order": 9,
+        "updatedAt": "2021-10-18T14:43:41.145Z",
+        "showTitle": true,
+        "section": "ee3eb0b4-32a7-4c9e-b5c9-34e02e168b38",
+        "content": {
+          "summary": "Un gráfico de parte con respecto al todo es un gráfico circular que muestra una proporción numérica mediante bloques que tienen un área proporcional a la cantidad que representan. Los gráficos de parte con respecto al todo se utilizan para mostrar comparaciones relativas entre bloques como parte de un valor total.\n\nEste gráfico de parte con respecto al todo permite visualizar los datos del gráfico de anillo que se encuentra encima. Se seleccionó una opción al crear este gráfico para mostrar el resumen debajo del gráfico.\n\n",
+          "fileName": "Dispositivos.csv",
+          "sortByDesc": false,
+          "title": "Gráfico de parte con respecto al todo: dispositivos utilizados para acceder al servicio",
+          "significantDigitLabels": false,
+          "dataLabels": false,
+          "s3Key": {
+            "raw": "688ec0bc-acf1-4ac2-9e86-7367f55e8fd7.csv",
+            "json": "688ec0bc-acf1-4ac2-9e86-7367f55e8fd7.json"
+          },
+          "summaryBelow": true,
+          "showTotal": true,
+          "chartType": "PartWholeChart",
+          "datasetId": "617a24e3-f30e-495f-920f-d1dbbb97884f",
+          "computePercentages": false,
+          "datasetType": "StaticDataset",
+          "columnsMetadata": [
+            {
+              "numberType": "Percentage",
+              "hidden": false,
+              "columnName": "Uso",
+              "dataType": "Number"
+            }
+          ]
+        }
+      },
+      {
+        "id": "3d977645-cfef-4bd3-9e28-0aa41c4df543",
+        "dashboardId": "7511e57e-4def-4006-b422-b3910cd08382",
+        "name": "Tabla: incidentes más frecuentes",
+        "widgetType": "Table",
+        "order": 10,
+        "updatedAt": "2021-10-18T14:43:41.130Z",
+        "showTitle": true,
+        "content": {
+          "summary": "Una tabla organiza los datos en filas y columnas. Las tablas se utilizan para mostrar comparaciones claras de tipos de datos entre categorías.\n\n[Ejemplo de descripción de la tabla] A continuación, se muestran los 10 incidentes más frecuentes que el Departamento de Bomberos y Rescate recibe todos los días. Las emergencias médicas fueron el incidente más frecuente por un margen significativo: más del doble que el segundo más frecuente (caídas).",
+          "fileName": "Incidentes_mas_frecuentes.csv",
+          "s3Key": {
+            "raw": "9d565e3e-ff59-4ab1-b33c-8ed0191b0c66.csv",
+            "json": "9d565e3e-ff59-4ab1-b33c-8ed0191b0c66.json"
+          },
+          "summaryBelow": false,
+          "displayWithPages": false,
+          "datasetId": "a070677b-b0f3-4d01-a51e-e5314a50973b",
+          "sortByDesc": true,
+          "sortByColumn": " Total de incidentes",
+          "title": "Tabla: incidentes más frecuentes",
+          "datasetType": "StaticDataset",
+          "columnsMetadata": [],
+          "significantDigitLabels": false
+        }
+      }
+    ]
+  },
+  "datasets": [
+    {
+      "id": "fc8f9d57-6e1b-4529-981b-374fe8b2d686",
+      "fileName": "Gráfico de líneas: satisfacción del usuario por canal",
+      "createdBy": "gudalis",
+      "s3Key": {
+        "raw": "86fc71c6-2b0a-4eaa-a8b5-8a7472289094.json",
+        "json": "86fc71c6-2b0a-4eaa-a8b5-8a7472289094.json"
+      },
+      "updatedAt": "2021-10-01T15:59:21.778Z",
+      "sourceType": "FileUpload",
+      "schema": "Metrics"
+    },
+    {
+      "id": "4eb50825-2775-427e-8e7f-6911d447f463",
+      "fileName": "Satisfaccion_del_usario.csv",
+      "createdBy": "gudalis",
+      "s3Key": {
+        "raw": "43ab1b2c-87b0-49d7-b4f0-3713e5c28f0b.csv",
+        "json": "43ab1b2c-87b0-49d7-b4f0-3713e5c28f0b.json"
+      },
+      "updatedAt": "2021-10-01T18:17:42.624Z",
+      "sourceType": "FileUpload",
+      "schema": "None"
+    },
+    {
+      "id": "ee281a44-cc7f-48b5-96ae-91a71d80338e",
+      "fileName": "Participacion_en_el_programa.csv",
+      "createdBy": "gudalis",
+      "s3Key": {
+        "raw": "24428a15-c6ee-4e00-9609-efac5603e596.csv",
+        "json": "24428a15-c6ee-4e00-9609-efac5603e596.json"
+      },
+      "updatedAt": "2021-10-01T18:23:38.318Z",
+      "sourceType": "FileUpload",
+      "schema": "None"
+    },
+    {
+      "id": "0414d606-c0e5-4564-87b9-2214584931d4",
+      "fileName": "Tamano_promedio_de_la_clase.csv",
+      "createdBy": "gudalis",
+      "s3Key": {
+        "raw": "94939686-5b80-4cbc-b0cf-b1717193a3c5.csv",
+        "json": "94939686-5b80-4cbc-b0cf-b1717193a3c5.json"
+      },
+      "updatedAt": "2021-10-01T18:27:56.808Z",
+      "sourceType": "FileUpload",
+      "schema": "None"
+    },
+    {
+      "id": "9430c0df-632d-4a50-8d6a-711bf53cd892",
+      "fileName": "Energia_renovable.csv",
+      "createdBy": "gudalis",
+      "s3Key": {
+        "raw": "cce3ef0b-074d-41d0-8782-00205aa41134.csv",
+        "json": "cce3ef0b-074d-41d0-8782-00205aa41134.json"
+      },
+      "updatedAt": "2021-10-04T13:54:12.167Z",
+      "sourceType": "FileUpload",
+      "schema": "None"
+    },
+    {
+      "id": "617a24e3-f30e-495f-920f-d1dbbb97884f",
+      "fileName": "Dispositivos.csv",
+      "createdBy": "gudalis",
+      "s3Key": {
+        "raw": "688ec0bc-acf1-4ac2-9e86-7367f55e8fd7.csv",
+        "json": "688ec0bc-acf1-4ac2-9e86-7367f55e8fd7.json"
+      },
+      "updatedAt": "2021-10-04T13:58:28.230Z",
+      "sourceType": "FileUpload",
+      "schema": "None"
+    },
+    {
+      "id": "617a24e3-f30e-495f-920f-d1dbbb97884f",
+      "fileName": "Dispositivos.csv",
+      "createdBy": "gudalis",
+      "s3Key": {
+        "raw": "688ec0bc-acf1-4ac2-9e86-7367f55e8fd7.csv",
+        "json": "688ec0bc-acf1-4ac2-9e86-7367f55e8fd7.json"
+      },
+      "updatedAt": "2021-10-04T13:58:28.230Z",
+      "sourceType": "FileUpload",
+      "schema": "None"
+    },
+    {
+      "id": "a070677b-b0f3-4d01-a51e-e5314a50973b",
+      "fileName": "Incidentes_mas_frecuentes.csv",
+      "createdBy": "gudalis",
+      "s3Key": {
+        "raw": "9d565e3e-ff59-4ab1-b33c-8ed0191b0c66.csv",
+        "json": "9d565e3e-ff59-4ab1-b33c-8ed0191b0c66.json"
+      },
+      "updatedAt": "2021-10-04T14:05:52.390Z",
+      "sourceType": "FileUpload",
+      "schema": "None"
+    }
+  ]
+}

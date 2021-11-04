@@ -29,7 +29,7 @@ cd ..
 #
 # Insert Examples
 #
-cd examples/setupexample-lambda
+cd examples
 echo "Running examples unit tests"
 npm run test:ci  # Avoid interactive mode on tests
 if [ $? -eq 1 ]

@@ -4,9 +4,8 @@
   "description": "test project for lambda",
   "main": "index.js",
   "scripts": {
-    "run": "build/cli.js",
     "test": "LOG_LEVEL=SILENT jest --coverage --watchAll",
-    "test:ci": "jest --coverage --ci",
+    "test:ci": "jest --coverage --ci --passWithNoTests",
     "build": "npm run clean && tsc && npm run build:backend && npm run install:prod",
     "build:backend": "npm run build --prefix ../backend",
     "install:prod": "npm install --production --prefix build && rm -rf backend/* && cp -R ../backend/build/* backend/",

@@ -10,24 +10,24 @@ prompts.override(yargs.argv);
 (async () => {
   console.log("Welcome to Performance Dashboard on AWS Import Tool");
 
-  const { templateName } = await prompts({
-    type: "select",
-    name: "templateName",
-    choices: availableResources().map((resource) => ({
-      title: resource,
-      value: resource,
-    })),
-    message: "Which template you want to install?",
-    initial: 0,
-  });
-
   const {
+    templateName,
     useDefaultConfig,
     author,
     reuseTopicArea,
     reuseDashboard,
     reuseDataset,
   } = await prompts([
+    {
+      type: "select",
+      name: "templateName",
+      choices: availableResources().map((resource) => ({
+        title: resource,
+        value: resource,
+      })),
+      message: "Which template you want to install?",
+      initial: 0,
+    },
     {
       type: "confirm",
       name: "useDefaultConfig",

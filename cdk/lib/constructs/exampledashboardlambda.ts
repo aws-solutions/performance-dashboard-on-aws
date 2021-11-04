@@ -57,7 +57,7 @@ export class ExampleDashboardLambda extends cdk.Construct {
     const writeData = new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
       resources: [props.datasetBucketArn, `${props.datasetBucketArn}/*`],
-      actions: ["s3:PutObject", "s3:ListBucket"],
+      actions: ["s3:PutObject", "s3:GetObject", "s3:ListBucket"],
     });
 
     this.exampleSetupLambda.addToRolePolicy(writeTablePolic);

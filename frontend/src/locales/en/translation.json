@@ -909,7 +909,7 @@
   "DashboardWasCopied": "was successfully copied.",
   "Copy": "Copy",
   "CopyContent": "Copy {{name}}",
-  "DownloadCSV": "Download",
+  "DownloadCSV": "Download table",
   "MobilePreview": "Mobile preview",
   "MetricsCenterAlign": "Display with center alignment",
   "DisplayTableOfContents": "Display table of contents",

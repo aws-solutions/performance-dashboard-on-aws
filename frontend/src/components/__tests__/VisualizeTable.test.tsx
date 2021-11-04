@@ -62,9 +62,9 @@ test("renders the VisualizeTable component", async () => {
       ]}
       showTitle={true}
       significantDigitLabels={false}
-      displayWithPages={false}
+      displayWithPages={true}
       summary={""}
-      title={""}
+      title={"Test"}
       configHeader={<></>}
     />,
     { wrapper: MemoryRouter }

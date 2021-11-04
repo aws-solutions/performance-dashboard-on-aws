@@ -26,6 +26,6 @@ cd ..
 # Examples
 #
 echo "npm install on examples"
-cd examples/setupexample-lambda
+cd examples
 npm install
 cd ../..

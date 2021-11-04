@@ -215,3 +215,15 @@ p {
     padding-right: 0 !important;
   }
 }
+
+.usa-table {
+  margin: 0.75rem 0 !important;
+}
+
+.button-cell-padding {
+  padding: 0 !important;
+}
+
+.button-cell-border {
+  border-bottom: 0 !important;
+}

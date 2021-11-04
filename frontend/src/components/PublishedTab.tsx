@@ -4,7 +4,6 @@ import { Dashboard } from "../models";
 import { useDateTimeFormatter, useSettings, useWindowSize } from "../hooks";
 import Search from "./Search";
 import Table from "./Table";
-import ScrollTop from "./ScrollTop";
 import Link from "./Link";
 import DropdownMenu from "../components/DropdownMenu";
 
@@ -155,9 +154,6 @@ function PublishedTab(props: Props) {
           [dateFormatter, settings, t]
         )}
       />
-      <div className="text-right">
-        <ScrollTop />
-      </div>
     </div>
   );
 }

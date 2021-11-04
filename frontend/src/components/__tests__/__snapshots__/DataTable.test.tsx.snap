@@ -206,7 +206,6 @@ exports[`renders a Data Table element 1`] = `
       </tbody>
     </table>
   </div>
-  
 </div>
 `;
 
@@ -416,7 +415,6 @@ exports[`renders a Data Table element on mobile 1`] = `
       </tbody>
     </table>
   </div>
-  
 </div>
 `;
 

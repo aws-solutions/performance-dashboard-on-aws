@@ -1,0 +1,7 @@
+[
+  { "Energy Type": "Actual Energy from Renewable Sources", "Percentage": 32 },
+  {
+    "Energy Type": "Actual Energy from Non-renewable Sources",
+    "Percentage": 68
+  }
+]

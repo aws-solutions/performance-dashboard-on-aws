@@ -231,40 +231,6 @@ exports[`branding and styling settings should match snapshot 1`] = `
           <h3
             class="margin-top-2-important"
           >
-            Favicon
-          </h3>
-          <p>
-            This favicon will appear in the browser tab.
-          </p>
-          <br />
-          <div
-            class="grid-row margin-top-0-important"
-          >
-            <div
-              class="grid-col flex-1 text-left"
-            >
-              <img
-                alt="Organization favicon"
-                hidden=""
-                src="favicon.svg"
-              />
-            </div>
-            <div
-              class="grid-col flex-9 padding-left-3"
-            >
-              <button
-                class="usa-button usa-button--outline margin-top-2"
-              >
-                Edit
-              </button>
-            </div>
-          </div>
-          <hr
-            style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
-          />
-          <h3
-            class="margin-top-2-important"
-          >
             Colors
           </h3>
           <p>

@@ -37,7 +37,7 @@ function SettingsLayout(props: LayoutProps) {
     currentSetting = queryString[3];
   }
 
-  useFileLoaded(setToHide, loadingFile);
+  useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
 
   return (
     <>
@@ -174,7 +174,10 @@ function SettingsLayout(props: LayoutProps) {
                 </nav>
               </div>
 
-              <main className="desktop:grid-col-9 usa-prose" id="main-content">
+              <main
+                className="desktop:grid-col-9 usa-prose mobile-margin-top-2"
+                id="main-content"
+              >
                 {props.children}
               </main>
             </div>

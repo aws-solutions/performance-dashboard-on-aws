@@ -59,3 +59,33 @@ export function usePublicHomepage(): UsePublicHomepageHook {
     homepage,
   };
 }
+
+type UsePublicHomepageSearchHook = {
+  loading: boolean;
+  homepage: PublicHomepage;
+};
+
+export function usePublicHomepageSearch(query :string)
+    : UsePublicHomepageSearchHook {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [homepage, setHomepage] = useState<PublicHomepage>({
+    title: "",
+    description: "",
+    dashboards: [],
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const data = await BackendService.fetchPublicHomepageWithQuery(query);
+      setHomepage(data);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  return {
+    loading,
+    homepage,
+  };
+}

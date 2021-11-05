@@ -28,4 +28,4 @@ cd ..
 echo "npm install on examples"
 cd examples
 npm install
-cd ../..
+cd ..

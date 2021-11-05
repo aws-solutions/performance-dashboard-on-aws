@@ -30,6 +30,7 @@
   "MoveContentItemDown": "Mover {{name}} hacia abajo",
   "PlusAddContentItem": "+ Agregar elemento de contenido",
   "NoContentItems": "Este panel no tiene elementos de contenido. Cree el panel agregando",
+  "MoveInOut": "Mover los elementos de contenido dentro y fuera de esta sección",
   "ChartsTablesMore": "gráficos, tablas, texto y mucho más como contenido.",
   "ContentType": "Tipo de contenido",
   "DeleteContent": "Eliminar {{name}}",
@@ -49,13 +50,14 @@
   "Progress": "progreso",
   "Completed": "completado",
   "NotCompleted": "no completado",
-  "StepOfTotal": "Paso {{step}} de {{total}}",
   "ContentItemTypesLabel": "Tipos de elementos de contenido",
   "Text": "Texto",
   "Metrics": "Métricas",
   "Chart": "Gráfico",
   "Table": "Tabla",
   "Image": "Imagen",
+  "CheckBox": "CheckBox",
+  "Section": "Sección",
   "SureDelete": "¿Seguro que desea eliminar este archivo?",
   "ZeroDashboards": "que no tienen paneles",
   "CanDelete": "Solo puede eliminar",
@@ -77,7 +79,10 @@
   "PDoASite": "Este sitio es donde administra el panel de rendimiento.",
   "WantToViewPublishedSite": "¿Quiere ver lo que ve su público?",
   "ViewPublishedSite": "Ver el sitio publicado",
-  "NewDraftDashboardCreated": "Se ha creado una nueva versión provisional del panel {{name}}.",
+  "NewDraftDashboardCreated": {
+    "part1": "Se ha creado una nueva ",
+    "part2": " versión de borrador del panel."
+  },
   "DashboardWasArchived": "se archivó correctamente.",
   "DashboardWasDeleted": "se eliminó correctamente.",
   "DashboardWasRepublished": "el panel se ha vuelto a publicar correctamente.",
@@ -97,16 +102,31 @@
   "LearnHowToFormatCSV": "Aprenda a formatear los datos.",
   "CreatedBy": "Creado por",
   "Dashboards": "Paneles",
-  "CreateDraftDasboardModalTitle": "Actualizar panel {{name}}",
-  "CreateDraftDasboardModalMessage": "Esto creará un nuevo borrador del panel que le permitirá editar el contenido y, a continuación, publicar la nueva versión en el sitio publicado.",
-  "CreateDraftDasboardModalButton": "Crear borrador",
-  "ArchiveDashboardModalTitle": "Archivar el panel {{name}}",
-  "ArchiveDashboardModalMessage": "Esta acción eliminará el panel {{name}} del sitio publicado. Puede volver a publicar los paneles archivados en cualquier momento.",
+  "CreateDraftDashboardModalTitle": {
+    "part1": "Actualizar ",
+    "part2": " panel"
+  },
+  "CreateDraftDashboardModalMessage": "Esto creará un nuevo borrador del panel que le permitirá editar el contenido y, a continuación, publicar la nueva versión en el sitio publicado.",
+  "CreateDraftDashboardModalButton": "Crear borrador",
+  "ArchiveDashboardModalTitle": {
+    "part1": "Archivar ",
+    "part2": " panel"
+  },
+  "ArchiveDashboardModalMessage": {
+    "part1": "Esto eliminará ",
+    "part2": " el panel del sitio publicado. Puede volver a publicar los paneles archivados en cualquier momento."
+  },
   "ArchiveDashboardModalButton": "Archivar",
-  "RepublishDashboardModalTitle": "Volver a publicar el panel {{name}}",
+  "RepublishDashboardModalTitle": {
+    "part1": "Volver a publicar ",
+    "part2": " panel"
+  },
   "RepublishDashboardModalMessage": "¿Seguro que desea volver a publicar este panel?",
   "RepublishDashboardModalButton": "Volver a publicar",
-  "PreparePublishingModalTitle": "Preparar el panel {{name}} para su publicación",
+  "PreparePublishingModalTitle": {
+    "part1": "Preparar ",
+    "part2": " el panel para su publicación"
+  },
   "PreparePublishingModalMessage": {
     "part1": "Este panel no tiene elementos de contenido. ",
     "part2": "¿Seguro que desea preparar este panel para su publicación?"
@@ -119,7 +139,7 @@
     "Draft": " borrador"
   },
   "DashboardPreviewPublishedMessage": "A continuación se muestra una vista previa de cómo será el panel publicado. Si está listo para continuar, puede publicar el panel para que esté disponible en el sitio publicado.",
-  "RepublishDashboardToView": "Este panel está archivado. No se puede ver en el sitio publicado a menos que se vuelva a publicar",
+  "RepublishDashboardToView": "Este panel está archivado. No se puede ver en el sitio publicado a menos que se vuelva a publicar.",
   "ViewDashboardAlertVersionNotes": {
     "Show": "Mostrar",
     "Hide": "Ocultar",
@@ -148,8 +168,10 @@
     "ChartTypeError": "Seleccione un tipo de gráfico",
     "DisplayHorizontalScroll": "Mostrar con desplazamiento horizontal",
     "ShowDataLabels": "Mostrar etiquetas de datos",
+    "ComputePercentages": "Mostrar los porcentajes calculados",
     "ShowTotal": "Mostrar total en el centro del gráfico",
-    "ChartCorrectDisplay": "¿El gráfico parece correcto?"
+    "ChartCorrectDisplay": "¿El gráfico parece correcto?",
+    "StackedChart": "Mostrar como gráfico apilado"
   },
   "ViewDashboardAlertVersionNotesFrom": "Notas de la versión {{version}} de",
   "ViewDashboardAlertVersion": "Versión",
@@ -164,7 +186,10 @@
   "AddTextScreen": {
     "AddText": "Agregar texto",
     "AddTextError": "Resolver errores al agregar el texto",
-    "AddTextSuccess": "El texto “{{title}}” se ha agregado correctamente.",
+    "AddTextSuccess": {
+      "part1": "El texto “",
+      "part2": "” se ha agregado correctamente."
+    },
     "CreatingText": "Creación de texto",
     "Configure": "Configurar contenido del texto",
     "TextTitle": "Título del texto",
@@ -175,10 +200,27 @@
     "TextError": "Especifique el contenido del texto",
     "ViewMarkdownSyntax": "Ver sintaxis de marcado"
   },
+  "AddSectionScreen": {
+    "AddSection": "Agregar sección",
+    "AddSectionSuccess": "La sección “{{title}}” se ha agregado correctamente.",
+    "CreatingSection": "Creando la sección",
+    "AddSectionError": "Resolver los errores para agregar la sección",
+    "Configure": "Configurar el contenido de la sección",
+    "SectionTitle": "Título de la sección",
+    "SectionTitleError": "Especifique un título de sección",
+    "SectionTitleHint": "Asigne un título descriptivo al contenido.",
+    "ShowTitle": "Mostrar el título en el panel",
+    "ViewMarkdownSyntax": "Ver la sintaxis de marcado",
+    "SectionSummary": "Resumen de sección: opcional",
+    "SectionSummaryHint": "Incorpore un resumen a la sección para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la sección a personas con discapacidades visuales. Este campo admite el marcado."
+  },
   "EditTextScreen": {
     "EditText": "Editar texto",
     "EditTextError": "Resolver errores al editar el texto",
-    "EditTextSuccess": "El texto “{{title}}” se ha editado correctamente.",
+    "EditTextSuccess": {
+      "part1": "El texto “",
+      "part2": "” se ha editado correctamente."
+    },
     "EditingText": "Editando texto",
     "TextTitle": "Título del texto",
     "TextTitleError": "Especifique un título de texto",
@@ -187,6 +229,19 @@
     "TextHint": "Escriba el texto aquí. Este campo admite el marcado.",
     "TextError": "Especifique el contenido del texto",
     "ViewMarkdownSyntax": "Ver sintaxis de marcado"
+  },
+  "EditSectionScreen": {
+    "EditSection": "Editar la sección",
+    "EditSectionError": "Resolver los errores para editar la sección",
+    "EditSectionSuccess": "La sección “{{title}}” se ha editado correctamente.",
+    "EditingSection": "Editando la sección",
+    "SectionTitle": "Título de la sección",
+    "SectionTitleError": "Especifique un título de sección",
+    "SectionTitleHint": "Asigne un título descriptivo al contenido.",
+    "ShowTitle": "Mostrar el título en el panel",
+    "ViewMarkdownSyntax": "Ver la sintaxis de marcado",
+    "SectionSummary": "Resumen de sección: opcional",
+    "SectionSummaryHint": "Incorpore un resumen a la sección para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la sección a personas con discapacidades visuales. Este campo admite el marcado."
   },
   "AddMetricScreen": {
     "AddMetric": "Agregar métrica",
@@ -221,7 +276,10 @@
     "MetricSuccessfullyEdited": "La métrica se ha editado correctamente"
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessffully": "Las métricas “{{title}}” se han agregado correctamente.",
+    "MetricsAddedSuccessfully": {
+      "part1": "Las métricas “",
+      "part2": "” se han agregado correctamente."
+    },
     "Name": "Nombre",
     "LastUpdated": "Última actualización",
     "Description": "Descripción",
@@ -230,6 +288,7 @@
     "ChooseData": "Elegir datos",
     "Visualize": "Visualizar",
     "UploadingFile": "Cargando archivo",
+    "FileNameDoesNotExist": "Los metadatos no contienen el nombre de archivo",
     "CreatingMetrics": "Creando métricas",
     "Data": "Datos",
     "DataHint": "Elija un conjunto de datos existente o cree uno nuevo para rellenar estas métricas",
@@ -251,7 +310,10 @@
     "ShowTitle": "Mostrar título en el panel"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessffully": "Las métricas “{{title}}” se han editado correctamente.",
+    "MetricsEditedSuccessfully": {
+      "part1": "Las métricas “",
+      "part2": "” se han editado correctamente."
+    },
     "EditMetrics": "Editar métricas",
     "UploadingFile": "Cargando archivo",
     "EditingMetrics": "Editando métricas",
@@ -268,7 +330,10 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "AddChartSuccess": "El gráfico “{{title}}” se ha agregado correctamente.",
+    "AddChartSuccess": {
+      "part1": "El gráfico “",
+      "part2": "” se ha agregado correctamente."
+    },
     "ResolveError": "No se pudo cargar el archivo. Asegúrese de que todos los encabezados de columna tengan valores."
   },
   "EditChartScreen": {
@@ -277,7 +342,10 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "EditChartSuccess": "El gráfico “{{title}}” se ha editado correctamente.",
+    "EditChartSuccess": {
+      "part1": "El gráfico “",
+      "part2": "” se ha editado correctamente."
+    },
     "ResolveError": "No se pudo cargar el archivo. Asegúrese de que todos los encabezados de columna tengan valores."
   },
   "AddTableScreen": {
@@ -285,7 +353,10 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "AddTableSuccess": "La tabla “{{title}}” se ha agregado correctamente.",
+    "AddTableSuccess": {
+      "part1": "La tabla “",
+      "part2": "” se ha agregado correctamente."
+    },
     "ChooseDataset": "Elija un conjunto de datos para continuar"
   },
   "EditTableScreen": {
@@ -293,7 +364,11 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "EditTableSuccess": "La tabla “{{title}}” se ha editado correctamente."
+    "EditTableSuccess": {
+      "part1": "La tabla “",
+      "part2": "” se ha editado correctamente."
+    },
+    "ChooseDataset": "Elija un conjunto de datos para continuar"
   },
   "BrandingAndStyling": "Marca y estilo",
   "BrandingAndStylingDescription": "Personalice el panel de rendimiento.",
@@ -413,8 +488,14 @@
     "FailToReturnToDraftError": "No se pudo devolver el panel al estado de borrador. Inténtelo de nuevo.",
     "FailToSaveReleaseNotesError": "No se pudieron guardar las notas de la versión; inténtelo de nuevo.",
     "MissingVersionNotesError": "Escriba las notas de la versión",
-    "ReturnToDraftSuccessAlert": "El panel {{dashboardName}} se ha devuelto el estado de borrador.",
-    "PublishedSuccessAlert": "El panel {{dashboardName}} se ha publicado correctamente."
+    "ReturnToDraftSuccessAlert": {
+      "part1": "",
+      "part2": " el panel se ha devuelto el estado de borrador."
+    },
+    "PublishedSuccessAlert": {
+      "part1": "",
+      "part2": " el panel se ha publicado correctamente."
+    }
   },
   "SettingsDateTimeFormat": "Formato de fecha y hora",
   "SettingsDateTimeFormatEdit": "Editar formato de fecha y hora",
@@ -443,6 +524,9 @@
   "SettingsLogoFileUploadHint": "Debe ser un archivo PNG, JPEG o SVG",
   "SettingsLogoPreview": "Vista previa",
   "SettingsLogoOrganization": "Logotipo de organización",
+  "SettingsLogoAltText": "Texto alternativo del logotipo",
+  "SettingsLogoTextHint": "Proporcione una breve descripción del logotipo para los usuarios con discapacidades visuales que utilicen un lector de pantalla. Esta descripción no se mostrará en el panel.",
+  "SettingsLogoTextError": "Especifique un texto alternativo para el logotipo",
   "SettingsFaviconEditSuccess": "Icono de favoritos modificado correctamente.",
   "SettingsFaviconEditFailed": "No se pudo actualizar el icono de favoritos.",
   "SettingsFaviconEdit": "Editar icono de favoritos",
@@ -503,11 +587,13 @@
     "TableImageAlt": "Vista previa de elementos de contenido de tabla",
     "DisabledToolTip": "Elija un elemento de contenido para continuar",
     "ImageAlt": "Vista previa del elemento de contenido de imagen",
+    "SectionAlt": "Vista previa del elemento de contenido de sección",
     "TextDescription": "Agregue un bloque de texto con formato. La entrada admite marcado, incluidos enlaces, viñetas, negrita y encabezados.",
     "MetricsDescription": "Agregue una o varias métricas para mostrar tendencias y datos numéricos de un momento dado.",
     "ChartDescription": "Mostrar datos como una visualización, incluidos gráficos de línea, barra, columna y de parte a todo.",
     "TableDescription": "Mostrar datos formateados en filas y columnas.",
-    "ImageDescription": "Cargue una imagen para mostrar."
+    "ImageDescription": "Cargue una imagen para mostrar.",
+    "SectionDescription": "Agregue una sección para agrupar elementos de contenido similares en una lista."
   },
   "AccessDeniedScreen": {
     "RequestAccessButton": "Solicitar acceso",
@@ -754,16 +840,19 @@
   "DonutChart": "Gráfico de anillos",
   "ContentItem": "elemento de contenido",
   "DeletingContentItem": "La eliminación de este elemento de contenido no se puede deshacer. ¿Está seguro de que desea continuar?",
+  "DeletingSectionContentItem": "La eliminación de este elemento de contenido no se puede deshacer. Esto también eliminará todos los elementos de contenido de la sección. ¿Está seguro de que desea continuar?",
   "Version": "Versión",
   "VersionDashboard": "Una versión de este panel es",
   "ViewVersion": "Ver versión {{state}}",
   "LastSaved": "Guardado por último vez",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Archivo de imagen no especificado",
-    "ImageAddedSuccessffully": "La imagen “{{image}}” se ha agregado correctamente.",
+    "ImageAddedSuccessfully": {
+      "part1": "La imagen “",
+      "part2": "” se ha agregado correctamente."
+    },
     "AddImage": "Agregar imagen",
     "ConfigureImage": "Configurar imagen",
-    "StepTwo": "Paso 2 de 2",
     "ResolveError": "Resolver errores al agregar la imagen",
     "Title": "Título de la imagen",
     "Hint": "Asigne a la imagen un título descriptivo.",
@@ -783,7 +872,10 @@
     "Cancel": "Cancelar"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessffully": "La imagen “{{image}}” se ha editado correctamente.",
+    "ImageEditedSuccessfully": {
+      "part1": "La imagen “",
+      "part2": "se ha editado correctamente."
+    },
     "EditImage": "Editar imagen",
     "ResolveError": "Resolver errores al editar la imagen",
     "Title": "Título de la imagen",
@@ -818,5 +910,23 @@
   "Copy": "Copiar",
   "CopyContent": "Copiar {{name}}",
   "DownloadCSV": "Descargar",
-  "MobilePreview": "Vista previa móvil"
+  "MobilePreview": "Vista previa móvil",
+  "MetricsCenterAlign": "Mostrar con alineación centrada",
+  "DisplayTableOfContents": "Mostrar tabla de contenidos",
+  "Current": "Actual",
+  "SectionOptionsLabel": "Opciones de sección",
+  "SectionOptionsDescription": "Dar formato a la sección",
+  "ShowWithTabs": "Mostrar los elementos de contenido de la sección con pestañas",
+  "Horizontally": "Horizontalmente",
+  "Vertically": "Verticalmente",
+  "TableOfContents": "Tabla de contenidos",
+  "TableOfContentsDescription": "Añada un índice para mostrar información general sobre un panel.",
+  "EditTableOfContents": "Editar la tabla de contenidos",
+  "TableOfContentsSuccessfullyEdited": "La tabla de contenidos se ha editado correctamente.",
+  "NoTableOfContentsItems": "Este panel no tiene elementos de contenido. Los elementos de contenido se deben agregar al panel para que se puedan incluir en la tabla de contenidos.",
+  "SelectAll": "Seleccionar todo",
+  "DeselectAll": "Anular la selección de todos",
+  "EditTableOfContentsDescription": "El índice muestra información general de los elementos de contenido del panel. Personalice la tabla de contenido seleccionando los elementos de contenido que quiera incluir. Si se selecciona un elemento a continuación, el título se incluirá en la tabla de contenido.",
+  "DisplayWithPages": "Mostrar con páginas",
+  "SelectColumns": "Seleccione columnas para dar formato a los datos."
 }

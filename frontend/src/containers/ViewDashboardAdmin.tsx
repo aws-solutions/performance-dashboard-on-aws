@@ -142,10 +142,6 @@ function ViewDashboardAdmin() {
     );
   }
 
-  const isDraftOrPublishPending =
-    dashboard.state === DashboardState.Draft ||
-    dashboard.state === DashboardState.PublishPending;
-
   return (
     <>
       <Breadcrumbs
@@ -249,11 +245,7 @@ function ViewDashboardAdmin() {
               : "2"
           }`}
         >
-          <div
-            className={`${
-              isDraftOrPublishPending ? "grid-col-3" : "grid-col"
-            } text-left flex-row flex-align-center display-flex`}
-          >
+          <div className="grid-col text-left flex-row flex-align-center display-flex">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
                 <span
@@ -287,11 +279,7 @@ function ViewDashboardAdmin() {
               </li>
             </ul>
           </div>
-          <div
-            className={`${
-              isDraftOrPublishPending ? "grid-col-9" : "grid-col"
-            } text-right`}
-          >
+          <div className="grid-col text-right">
             {dashboard.state === DashboardState.Published && (
               <>
                 <Button

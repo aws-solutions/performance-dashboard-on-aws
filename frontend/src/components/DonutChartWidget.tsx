@@ -8,7 +8,7 @@ import {
   Tooltip,
   Label,
 } from "recharts";
-import { useColors, useWindowSize } from "../hooks";
+import { useColors } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
@@ -218,33 +218,6 @@ const DonutChartWidget = (props: Props) => {
     );
   };
 
-  const windowSize = useWindowSize();
-  const smallScreenPixels = 800;
-
-  const calculateChartHeight = (): number => {
-    const baseHeight = 300;
-    const pixelsByPart = 60;
-    const pixelsByPartInPreview = 50;
-    const labelsPerRow = 4;
-    const labelsPerRowInPreview = 2;
-
-    if (!data || !data.length) {
-      return baseHeight;
-    }
-
-    let additional;
-    if (windowSize.width <= smallScreenPixels || showMobilePreview) {
-      additional = data.length * pixelsByPart;
-    } else if (props.isPreview) {
-      additional =
-        (Math.floor(data.length / labelsPerRowInPreview) + 1) *
-        pixelsByPartInPreview;
-    } else {
-      additional = (Math.floor(data.length / labelsPerRow) + 1) * pixelsByPart;
-    }
-    return baseHeight + additional;
-  };
-
   return (
     <div>
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
@@ -257,7 +230,7 @@ const DonutChartWidget = (props: Props) => {
         />
       )}
       {donutData.current.length && (
-        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
+        <ResponsiveContainer width="100%" height={420}>
           <PieChart>
             <Legend
               verticalAlign="top"
@@ -271,11 +244,6 @@ const DonutChartWidget = (props: Props) => {
               onClick={toggleParts}
               onMouseLeave={() => setPartsHover(null)}
               onMouseEnter={(e: any) => setPartsHover(e.value)}
-              layout={
-                windowSize.width <= smallScreenPixels || showMobilePreview
-                  ? "vertical"
-                  : undefined
-              }
             />
             <Pie
               data={donutData.current.map((d: any) => {
@@ -285,13 +253,7 @@ const DonutChartWidget = (props: Props) => {
               })}
               dataKey="value"
               nameKey="name"
-              cx={
-                props.isPreview ||
-                windowSize.width <= smallScreenPixels ||
-                showMobilePreview
-                  ? "50%"
-                  : "28%"
-              }
+              cx={props.isPreview ? "50%" : "28%"}
               cy="50%"
               outerRadius={120}
               innerRadius={80}

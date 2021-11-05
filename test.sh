@@ -37,4 +37,4 @@ then
   echo "Examples tests failed"
   exit 1
 fi
-cd ../..
+cd ..

@@ -10,14 +10,14 @@ prompts.override(yargs.argv);
   const { templateName } = await prompts({
     type: "text",
     name: "templateName",
-    message: "What is the template name?",
+    message: "? What is the template name",
     validate: (value) => /^[a-zA-Z0-9]+$/.test(value),
   });
 
   const { dashboardId } = await prompts({
     type: "text",
     name: "dashboardId",
-    message: "Please specify the dashboardId you want to export?",
+    message: "? Please specify the dashboardId you want to export",
     validate: (value) =>
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
         value

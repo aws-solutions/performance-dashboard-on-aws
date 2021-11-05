@@ -8,13 +8,15 @@ import {
   Tooltip,
   Label,
 } from "recharts";
-import { useColors } from "../hooks";
+import { useColors, useWindowSize } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import { ColumnMetadata, NumberDataType } from "../models";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   parts: Array<string>;
   data?: Array<object>;
@@ -28,6 +30,8 @@ type Props = {
   hideDataLabels?: boolean;
   showTotal?: boolean;
   isPreview?: boolean;
+  showMobilePreview?: boolean;
+  computePercentages?: boolean;
 };
 
 const DonutChartWidget = (props: Props) => {
@@ -39,7 +43,7 @@ const DonutChartWidget = (props: Props) => {
   const donutParts = useRef<Array<string>>([]);
   let total = useRef<number>(0);
 
-  const { data, parts } = props;
+  const { data, parts, showMobilePreview } = props;
   useMemo(() => {
     if (data && data.length) {
       let donut = {};
@@ -55,7 +59,7 @@ const DonutChartWidget = (props: Props) => {
           ...donut,
           [barKey]: value,
         };
-        donutData.current.push({ name: barKey, value });
+        donutData.current.push({ name: barKey, value: Number(value) });
         donutParts.current.push(barKey);
         if (hiddenParts.includes(barKey)) {
           continue;
@@ -104,6 +108,8 @@ const DonutChartWidget = (props: Props) => {
       Number(total.current),
       xAxisLargestValue,
       props.significantDigitLabels,
+      "",
+      "",
       columnMetadata
     );
   }, [
@@ -112,6 +118,32 @@ const DonutChartWidget = (props: Props) => {
     props.significantDigitLabels,
     xAxisLargestValue,
   ]);
+
+  const displayedAmount = (
+    value: Number | String,
+    columnMetadata: ColumnMetadata
+  ): string => {
+    const displayedAmount = TickFormatter.format(
+      Number(value),
+      xAxisLargestValue,
+      props.significantDigitLabels,
+      "",
+      "",
+      columnMetadata
+    );
+    const computedPercentage =
+      Math.round((Number(value) / total.current) * 100 * 100) / 100;
+    const displayedPercentage = TickFormatter.format(
+      computedPercentage,
+      xAxisLargestValue,
+      false,
+      NumberDataType.Percentage,
+      ""
+    );
+    return props.computePercentages
+      ? `${displayedAmount} (${displayedPercentage})`
+      : displayedAmount;
+  };
 
   const renderCustomizedLabel = (properties: any): any => {
     const RADIAN = Math.PI / 180;
@@ -147,12 +179,7 @@ const DonutChartWidget = (props: Props) => {
           textAnchor={textAnchor}
           fill={fill}
         >
-          {TickFormatter.format(
-            Number(payload.value),
-            xAxisLargestValue,
-            props.significantDigitLabels,
-            columnMetadata
-          )}
+          {displayedAmount(payload.value, columnMetadata)}
         </text>
       </g>
     ) : (
@@ -207,6 +234,8 @@ const DonutChartWidget = (props: Props) => {
               ),
               xAxisLargestValue,
               props.significantDigitLabels,
+              "",
+              "",
               columnMetadata
             )
           ) : (
@@ -217,19 +246,46 @@ const DonutChartWidget = (props: Props) => {
     );
   };
 
+  const windowSize = useWindowSize();
+  const smallScreenPixels = 800;
+
+  const calculateChartHeight = (): number => {
+    const baseHeight = 300;
+    const pixelsByPart = 60;
+    const pixelsByPartInPreview = 50;
+    const labelsPerRow = 4;
+    const labelsPerRowInPreview = 2;
+
+    if (!data || !data.length) {
+      return baseHeight;
+    }
+
+    let additional;
+    if (windowSize.width <= smallScreenPixels || showMobilePreview) {
+      additional = data.length * pixelsByPart;
+    } else if (props.isPreview) {
+      additional =
+        (Math.floor(data.length / labelsPerRowInPreview) + 1) *
+        pixelsByPartInPreview;
+    } else {
+      additional = (Math.floor(data.length / labelsPerRow) + 1) * pixelsByPart;
+    }
+    return baseHeight + additional;
+  };
+
   return (
     <div>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h2>
+      </h3>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
       {donutData.current.length && (
-        <ResponsiveContainer width="100%" height={420}>
+        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
           <PieChart>
             <Legend
               verticalAlign="top"
@@ -243,6 +299,11 @@ const DonutChartWidget = (props: Props) => {
               onClick={toggleParts}
               onMouseLeave={() => setPartsHover(null)}
               onMouseEnter={(e: any) => setPartsHover(e.value)}
+              layout={
+                windowSize.width <= smallScreenPixels || showMobilePreview
+                  ? "vertical"
+                  : undefined
+              }
             />
             <Pie
               data={donutData.current.map((d: any) => {
@@ -252,7 +313,13 @@ const DonutChartWidget = (props: Props) => {
               })}
               dataKey="value"
               nameKey="name"
-              cx={props.isPreview ? "50%" : "28%"}
+              cx={
+                props.isPreview ||
+                windowSize.width <= smallScreenPixels ||
+                showMobilePreview
+                  ? "50%"
+                  : "28%"
+              }
               cy="50%"
               outerRadius={120}
               innerRadius={80}
@@ -289,29 +356,28 @@ const DonutChartWidget = (props: Props) => {
                     (cm) => cm.columnName === parts[1]
                   );
                 }
-
-                return TickFormatter.format(
-                  Number(value),
-                  xAxisLargestValue,
-                  props.significantDigitLabels,
-                  columnMetadata
-                );
+                return displayedAmount(value, columnMetadata);
               }}
             />
           </PieChart>
         </ResponsiveContainer>
       )}
-      <DataTable
-        rows={data || []}
-        columns={parts}
-        fileName={props.title}
-        columnsMetadata={props.columnsMetadata}
-      />
-      {props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
+      <div>
+        <DataTable
+          rows={data || []}
+          columns={parts}
+          fileName={props.downloadTitle}
+          columnsMetadata={props.columnsMetadata}
+          showMobilePreview={showMobilePreview}
         />
+      </div>
+      {props.summaryBelow && (
+        <div>
+          <MarkdownRender
+            source={props.summary}
+            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+          />
+        </div>
       )}
     </div>
   );

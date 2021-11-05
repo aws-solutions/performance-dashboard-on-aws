@@ -81,9 +81,10 @@ function EditTableOfContents() {
   };
 
   const onCancel = () => {
-    history.push(`/admin/dashboard/edit/${dashboardId}/header`, {
-      tableOfContents: dashboard?.tableOfContents,
-    });
+    history.push(
+      `/admin/dashboard/edit/${dashboardId}/header`,
+      history.location.state
+    );
   };
 
   const onSelectAll = (selected: boolean) => {

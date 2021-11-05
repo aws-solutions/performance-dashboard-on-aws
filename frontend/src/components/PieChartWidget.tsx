@@ -54,12 +54,12 @@ const PieChartWidget = (props: Props) => {
           ...pie,
           [barKey]: value,
         };
-        pieData.current.push({ name: barKey, value: Number(value) });
+        pieData.current.push({ name: barKey, value });
         pieParts.current.push(barKey);
         if (hiddenParts.includes(barKey)) {
           continue;
         }
-        total.current += isNaN(value) ? 0 : Number(value);
+        total.current += isNaN(value) ? 0 : value;
         maxTick = Math.max(maxTick, value);
       }
       setXAxisLargestValue(maxTick);

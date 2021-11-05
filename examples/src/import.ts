@@ -25,40 +25,40 @@ prompts.override(yargs.argv);
         title: resource,
         value: resource,
       })),
-      message: "Which template you want to install?",
+      message: "? Which template you want to install",
       initial: 0,
     },
     {
       type: "confirm",
       name: "useDefaultConfig",
-      message: `Do you want to use the default config?`,
+      message: `? Do you want to use the default config`,
       initial: true,
     },
     {
       type: (_prev, { useDefaultConfig }) => (useDefaultConfig ? null : "text"),
       name: "author",
-      message: `Please specify the author doing the import`,
+      message: `? Please specify the author doing the import`,
       validate: (value) => /^\S+@\S+\.\S+$/.test(value),
     },
     {
       type: (_prev, { useDefaultConfig }) =>
         useDefaultConfig ? null : "toggle",
       name: "reuseTopicArea",
-      message: `Do you want to reuse topic areas? System will reuse existing Ids to avoid duplication of topic areas.`,
+      message: `? Do you want to reuse topic areas. System will reuse existing Ids to avoid duplication of topic areas.`,
       initial: true,
     },
     {
       type: (_prev, { useDefaultConfig }) =>
         useDefaultConfig ? null : "toggle",
       name: "reuseDashboard",
-      message: `Do you want to reuse dashboard? System will reuse existing Ids to avoid duplication of dashboards.`,
+      message: `? Do you want to reuse dashboard. System will reuse existing Ids to avoid duplication of dashboards.`,
       initial: false,
     },
     {
       type: (_prev, { useDefaultConfig }) =>
         useDefaultConfig ? null : "toggle",
       name: "reuseDataset",
-      message: `Do you want to reuse datasets? System will reuse existing Ids to avoid duplication of datasets.`,
+      message: `? Do you want to reuse datasets. System will reuse existing Ids to avoid duplication of datasets.`,
       initial: false,
     },
   ]);

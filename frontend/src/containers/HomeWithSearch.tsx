@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { useParams, Redirect } from "react-router-dom";
+import React, { useParams } from "react-router-dom";
 import Link from "../components/Link";
-import { usePublicHomepage, useDateTimeFormatter, usePublicHomepageSearch } from "../hooks";
+import { useDateTimeFormatter, usePublicHomepageSearch } from "../hooks";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
@@ -9,7 +8,6 @@ import Search from "../components/Search";
 import { PublicHomepage } from "../models";
 import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
-import Button from "../components/Button";
 import "./Home.css";
 
 interface PathParams {
@@ -25,7 +23,7 @@ function HomeWithSearch() {
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   const onSearch = (query: string) => {
-    window.location.assign("/search/"+query);
+    window.location.assign("/search/" + query);
   };
 
   const onClear = () => {
@@ -65,8 +63,7 @@ function HomeWithSearch() {
             results={homepage.dashboards.length}
           />
           {homepage.dashboards.length} dashboard(s) contain "{query}" &emsp;
-          <Link to={`/`}>{t("ClearSearchText")}
-          </Link>
+          <Link to={`/`}>{t("ClearSearchText")}</Link>
           <br />
         </div>
       </div>
@@ -97,13 +94,15 @@ function HomeWithSearch() {
                       <br />
                       <span className="text-base text-italic">
                         {t("LastUpdatedLabel")} {updatedAt}
-                      <br />
+                        <br />
                       </span>
                       {dashboard.queryMatches?.map((queryMatch) => {
                         return (
-                          <span className="text-base margin-left-2 margin-right-2"> ... {queryMatch} ...
-                          <br />
-                          </span>
+                          <p className="text-base margin-left-2 margin-right-2">
+                            {" "}
+                            ... {queryMatch} ...
+                            <br />
+                          </p>
                         );
                       })}
                     </div>

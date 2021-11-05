@@ -1,12 +1,12 @@
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Home from "../Home";
+import HomeWithSearch from "../HomeWithSearch";
 
 jest.mock("../../hooks");
 
-test("renders homepage title", async () => {
-  const { getByRole } = render(<Home />, {
+test("Renders homepage title", async () => {
+  const { getByRole } = render(<HomeWithSearch />, {
     wrapper: MemoryRouter,
   });
   expect(
@@ -14,15 +14,15 @@ test("renders homepage title", async () => {
   ).toBeInTheDocument();
 });
 
-test("renders homepage description", async () => {
-  const { getByText } = render(<Home />, { wrapper: MemoryRouter });
+test("Renders homepage description", async () => {
+  const { getByText } = render(<HomeWithSearch />, {
+    wrapper: MemoryRouter,
+  });
   expect(getByText("Welcome to our dashboard")).toBeInTheDocument();
 });
 
-test("renders dashboards list", async () => {
-  const { getByText } = render(<Home />, { wrapper: MemoryRouter });
+test("Renders dashboards list", async () => {
+  const { getByText } = render(<HomeWithSearch />, { wrapper: MemoryRouter });
   expect(getByText("Topic Area Bananas")).toBeInTheDocument();
   expect(getByText("Dashboard One")).toBeInTheDocument();
-  expect(getByText("Topic Area Grapes")).toBeInTheDocument();
-  expect(getByText("Dashboard Two")).toBeInTheDocument();
 });

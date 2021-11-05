@@ -8,7 +8,11 @@ import {
 } from "./dashboard-hooks";
 import { useWidget, useColors, useWidgetDataset } from "./widget-hooks";
 import { useTopicAreas, useTopicArea } from "./topicarea-hooks";
-import { useHomepage, usePublicHomepage, usePublicHomepageSearch } from "./homepage-hooks";
+import {
+  useHomepage,
+  usePublicHomepage,
+  usePublicHomepageSearch,
+} from "./homepage-hooks";
 import { useSettings, usePublicSettings } from "./settings-hooks";
 import { useJsonDataset, useSampleDataset } from "./dataset-hooks";
 import { useUsers, useCurrentAuthenticatedUser } from "./user-hooks";

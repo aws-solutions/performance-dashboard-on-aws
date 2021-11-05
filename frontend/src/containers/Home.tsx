@@ -16,7 +16,7 @@ function Home() {
   const dateFormatter = useDateTimeFormatter();
 
   const onSearch = (query: string) => {
-    window.location.assign("/search/"+query);
+    window.location.assign("/search/" + query);
   };
 
   const onClear = () => {

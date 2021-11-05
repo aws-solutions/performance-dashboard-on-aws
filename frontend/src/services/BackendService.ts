@@ -65,8 +65,9 @@ async function fetchPublicDashboardByURL(
   );
 }
 
-async function fetchPublicHomepageWithQuery(query: string)
-    : Promise<PublicHomepage> {
+async function fetchPublicHomepageWithQuery(
+  query: string
+): Promise<PublicHomepage> {
   return await API.get(apiName, `public/search/${query}`, {});
 }
 

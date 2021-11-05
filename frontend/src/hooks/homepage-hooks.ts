@@ -65,8 +65,9 @@ type UsePublicHomepageSearchHook = {
   homepage: PublicHomepage;
 };
 
-export function usePublicHomepageSearch(query :string)
-    : UsePublicHomepageSearchHook {
+export function usePublicHomepageSearch(
+  query: string
+): UsePublicHomepageSearchHook {
   const [loading, setLoading] = useState<boolean>(false);
   const [homepage, setHomepage] = useState<PublicHomepage>({
     title: "",

@@ -38,7 +38,6 @@
     "react-dnd-html5-backend": "^14.0.0",
     "react-dnd-touch-backend": "^14.0.0",
     "react-dom": "^16.14.0",
-    "react-excel-renderer": "^1.1.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^6.3.1",
     "react-i18next": "^11.10.0",

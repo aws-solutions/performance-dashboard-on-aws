@@ -23,10 +23,11 @@ test("renders the ChooseData component", async () => {
       datasetType={DatasetType.DynamicDataset}
       onFileProcessed={() => {}}
       handleChange={() => {}}
+      backStep={() => {}}
       advanceStep={() => {}}
       fileLoading={false}
       browseDatasets={() => {}}
-      continueButtonDisabled={false}
+      hasErrors={false}
       csvErrors={[]}
       csvFile={undefined}
       onCancel={() => {}}
@@ -34,7 +35,7 @@ test("renders the ChooseData component", async () => {
       widgetType="chart"
       dynamicFileName=""
       staticFileName=""
-      continueButtonDisabledTooltip=""
+      setShowNoDatasetTypeAlert={() => {}}
     />,
     { wrapper: MemoryRouter }
   );

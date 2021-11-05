@@ -5,11 +5,6 @@ import MarkdownRender from "./MarkdownRender";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
 import Table from "./Table";
-import Button from "./Button";
-import { CSVLink } from "react-csv";
-import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   title: string;
@@ -20,6 +15,8 @@ type Props = {
   sortByColumn?: string;
   sortByDesc?: boolean;
   significantDigitLabels: boolean;
+  displayWithPages: boolean;
+  showMobilePreview?: boolean;
 };
 
 const TableWidget = ({
@@ -31,10 +28,10 @@ const TableWidget = ({
   sortByDesc,
   sortByColumn,
   significantDigitLabels,
+  displayWithPages,
 }: Props) => {
   const { largestTickByColumn } = useTableMetadata(data);
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
-  const { t } = useTranslation();
 
   useMemo(() => {
     let headers =
@@ -86,6 +83,8 @@ const TableWidget = ({
                 row[header],
                 largestTickByColumn[header],
                 significantDigitLabels,
+                "",
+                "",
                 columnMetadata
               )
             : "-";
@@ -105,11 +104,11 @@ const TableWidget = ({
 
   return (
     <div className="overflow-x-hidden overflow-y-hidden">
-      <h2 className="margin-bottom-1">{title}</h2>
+      <h3 className="margin-bottom-1">{title}</h3>
       {!summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="usa-prose margin-top-0 margin-bottom-3 tableSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-3 tableSummaryAbove textOrSummary"
         />
       )}
       <Table
@@ -117,29 +116,18 @@ const TableWidget = ({
         rows={rows}
         initialSortAscending={sortByDesc !== undefined ? !sortByDesc : true}
         initialSortByField={sortByColumn}
-        disablePagination={true}
+        disablePagination={!displayWithPages && rows.length < 25}
         columns={columns}
         sortByColumn={sortByColumn}
         sortByDesc={sortByDesc}
+        title={title}
       />
       {summaryBelow && (
         <MarkdownRender
           source={summary}
-          className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow"
+          className="usa-prose margin-top-3 margin-bottom-0 tableSummaryBelow textOrSummary"
         />
       )}
-      <div className="text-right margin-bottom-1">
-        <FontAwesomeIcon
-          icon={faDownload}
-          className="margin-right-1"
-          size="sm"
-        />
-        <Button type="button" variant="unstyled" className="margin-right-05">
-          <CSVLink className="text-base" data={rows} filename={title}>
-            {t("DownloadCSV")}
-          </CSVLink>
-        </Button>
-      </div>
     </div>
   );
 };

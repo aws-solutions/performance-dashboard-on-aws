@@ -28,6 +28,7 @@ import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import UtilsService from "../services/UtilsService";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import Alert from "../components/Alert";
 
 interface FormValues {
   title: string;
@@ -37,6 +38,7 @@ interface FormValues {
   datasetType: string;
   sortData: string;
   significantDigitLabels: boolean;
+  displayWithPages: boolean;
 }
 
 interface PathParams {
@@ -61,17 +63,20 @@ function AddTable() {
   );
   const [csvJson, setCsvJson] = useState<Array<any>>([]);
   const [filteredJson, setFilteredJson] = useState<Array<any>>(currentJson);
-  const [dynamicDataset, setDynamicDataset] =
-    useState<Dataset | undefined>(undefined);
+  const [dynamicDataset, setDynamicDataset] = useState<Dataset | undefined>(
+    undefined
+  );
   const [staticDataset] = useState<Dataset | undefined>(
     state && state.staticDataset ? state.staticDataset : undefined
   );
-  const [csvErrors, setCsvErrors] =
-    useState<Array<object> | undefined>(undefined);
+  const [csvErrors, setCsvErrors] = useState<Array<object> | undefined>(
+    undefined
+  );
   const [csvFile, setCsvFile] = useState<File | undefined>(undefined);
   const [fileLoading, setFileLoading] = useState(false);
   const [datasetLoading, setDatasetLoading] = useState(false);
   const [creatingWidget, setCreatingWidget] = useState(false);
+  const [showNoDatasetTypeAlert, setShowNoDatasetTypeAlert] = useState(false);
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.json ? DatasetType.StaticDataset : undefined
   );
@@ -82,8 +87,9 @@ function AddTable() {
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
-  const [sortByColumn, setSortByColumn] =
-    useState<string | undefined>(undefined);
+  const [sortByColumn, setSortByColumn] = useState<string | undefined>(
+    undefined
+  );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
   const { fullPreview, fullPreviewButton } = useFullPreview();
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
@@ -102,6 +108,7 @@ function AddTable() {
   const summary = watch("summary");
   const summaryBelow = watch("summaryBelow");
   const significantDigitLabels = watch("significantDigitLabels");
+  const displayWithPages = watch("displayWithPages");
 
   const initializeColumnsMetadata = () => {
     setSelectedHeaders(new Set<string>());
@@ -161,6 +168,7 @@ function AddTable() {
           summaryBelow: values.summaryBelow,
           datasetType: datasetType,
           significantDigitLabels: values.significantDigitLabels,
+          displayWithPages: values.displayWithPages,
           datasetId: newDataset
             ? newDataset.id
             : datasetType === DatasetType.DynamicDataset
@@ -191,7 +199,9 @@ function AddTable() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: t("AddTableScreen.AddTableSuccess", { title: values.title }),
+          message: `${t("AddTableScreen.AddTableSuccess.part1")}${
+            values.title
+          }${t("AddTableScreen.AddTableSuccess.part2")}`,
         },
       });
     } catch (err) {
@@ -210,6 +220,10 @@ function AddTable() {
 
   const backStep = () => {
     setStep(step - 1);
+  };
+
+  const goBack = () => {
+    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const selectDynamicDataset = async (selectedDataset: Dataset) => {
@@ -254,6 +268,7 @@ function AddTable() {
         setCsvJson([]);
         setCurrentJson([]);
       } else {
+        setShowNoDatasetTypeAlert(false);
         setCsvErrors(undefined);
         const csvJson = DatasetParsingService.createHeaderRowJson(results);
         setCsvJson(csvJson);
@@ -275,7 +290,7 @@ function AddTable() {
         setCurrentJson(dynamicJson);
       }
       if (datasetType === DatasetType.StaticDataset) {
-        if (csvJson) {
+        if (csvJson && csvJson.length) {
           setCurrentJson(csvJson);
         } else {
           setCurrentJson(staticJson);
@@ -346,19 +361,24 @@ function AddTable() {
           <div hidden={step !== 0}>
             <PrimaryActionBar>
               {configHeader}
+              <div className="margin-y-3" hidden={!showNoDatasetTypeAlert}>
+                <Alert
+                  type="error"
+                  message={t("AddTableScreen.ChooseDataset")}
+                  slim
+                />
+              </div>
               <ChooseData
                 selectDynamicDataset={selectDynamicDataset}
                 dynamicDatasets={dynamicDatasets}
                 datasetType={datasetType}
                 onFileProcessed={onFileProcessed}
                 handleChange={handleChange}
+                backStep={goBack}
                 advanceStep={advanceStep}
                 fileLoading={fileLoading}
                 browseDatasets={browseDatasets}
-                continueButtonDisabled={!currentJson.length}
-                continueButtonDisabledTooltip={t(
-                  "AddTableScreen.ChooseDataset"
-                )}
+                hasErrors={!currentJson.length}
                 csvErrors={csvErrors}
                 csvFile={csvFile}
                 onCancel={onCancel}
@@ -366,6 +386,7 @@ function AddTable() {
                 widgetType={t("ChooseDataDescriptionTable")}
                 staticFileName={undefined}
                 dynamicFileName={undefined}
+                setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
               />
             </PrimaryActionBar>
           </div>
@@ -427,6 +448,7 @@ function AddTable() {
               title={title}
               showTitle={showTitle}
               significantDigitLabels={significantDigitLabels}
+              displayWithPages={displayWithPages}
               summary={summary}
               summaryBelow={summaryBelow}
               columnsMetadata={ColumnsMetadataService.getColumnsMetadata(

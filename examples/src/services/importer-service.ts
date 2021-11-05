@@ -1,5 +1,6 @@
 import DashboardRepository from "performance-dashboard-backend/src/lib/repositories/dashboard-repo";
 import DatasetRepository from "performance-dashboard-backend/src/lib/repositories/dataset-repo";
+import TopicAreaRepository from "performance-dashboard-backend/src/lib/repositories/topicarea-repo";
 import { Configuration, DashboardSnapshot } from "../common";
 import { v4 as uuidv4 } from "uuid";
 import WidgetRepository from "performance-dashboard-backend/src/lib/repositories/widget-repo";
@@ -119,6 +120,12 @@ export async function importDashboard(config: Configuration) {
   const original = new Map<string, string>();
   ids.forEach((value, key) => {
     original.set(value, key);
+  });
+
+  await TopicAreaRepository.getInstance().create({
+    id: snapshot.dashboard.topicAreaId,
+    name: snapshot.dashboard.topicAreaName,
+    createdBy: config.author,
   });
 
   for (const dataset of snapshot.datasets) {

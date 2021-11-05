@@ -1,19 +1,28 @@
 import React, { useState } from "react";
+import { useParams, Redirect } from "react-router-dom";
 import Link from "../components/Link";
-import { usePublicHomepage, useDateTimeFormatter } from "../hooks";
+import { usePublicHomepage, useDateTimeFormatter, usePublicHomepageSearch } from "../hooks";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
-import { PublicDashboard } from "../models";
+import { PublicHomepage } from "../models";
 import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
+import Button from "../components/Button";
 import "./Home.css";
 
-function Home() {
-  const { homepage, loading } = usePublicHomepage();
+interface PathParams {
+  query: string;
+}
+
+function HomeWithSearch() {
+  const { query } = useParams<PathParams>();
+  const { homepage, loading } = usePublicHomepageSearch(query);
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
+
+  const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   const onSearch = (query: string) => {
     window.location.assign("/search/"+query);
@@ -22,8 +31,6 @@ function Home() {
   const onClear = () => {
     window.location.assign("/");
   };
-
-  const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   return loading ? (
     <Spinner
@@ -52,11 +59,15 @@ function Home() {
           <Search
             id="search"
             onSubmit={onSearch}
-            size="big"
             onClear={onClear}
+            size="big"
             query=""
             results={homepage.dashboards.length}
           />
+          {homepage.dashboards.length} dashboard(s) contain "{query}" &emsp;
+          <Link to={`/`}>{t("ClearSearchText")}
+          </Link>
+          <br />
         </div>
       </div>
       <div className="grid-row">
@@ -86,7 +97,15 @@ function Home() {
                       <br />
                       <span className="text-base text-italic">
                         {t("LastUpdatedLabel")} {updatedAt}
+                      <br />
                       </span>
+                      {dashboard.queryMatches?.map((queryMatch) => {
+                        return (
+                          <span className="text-base margin-left-2 margin-right-2"> ... {queryMatch} ...
+                          <br />
+                          </span>
+                        );
+                      })}
                     </div>
                   );
                 })}
@@ -99,4 +118,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomeWithSearch;

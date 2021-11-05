@@ -5,6 +5,7 @@ import {
   DashboardVersion,
   Dataset,
   PublicDashboard,
+  PublicHomepage,
   Widget,
   User,
   DatasetSchema,
@@ -62,6 +63,11 @@ async function fetchPublicDashboardByURL(
     `public/dashboard/friendly-url/${friendlyURL}`,
     {}
   );
+}
+
+async function fetchPublicHomepageWithQuery(query: string)
+    : Promise<PublicHomepage> {
+  return await API.get(apiName, `public/search/${query}`, {});
 }
 
 async function fetchTopicAreas() {
@@ -456,6 +462,7 @@ async function changeRole(role: string, usernames: Array<string>) {
 const BackendService = {
   fetchDashboards,
   fetchDashboardById,
+  fetchPublicHomepageWithQuery,
   fetchTopicAreas,
   fetchTopicAreaById,
   fetchWidgetById,

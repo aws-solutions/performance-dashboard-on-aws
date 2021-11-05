@@ -26,7 +26,6 @@ type Props = {
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
   isPreview?: boolean;
-  showMobilePreview?: boolean;
 };
 
 const PieChartWidget = (props: Props) => {
@@ -38,7 +37,7 @@ const PieChartWidget = (props: Props) => {
   const pieParts = useRef<Array<string>>([]);
   let total = useRef<number>(0);
 
-  const { data, parts, showMobilePreview } = props;
+  const { data, parts } = props;
   useMemo(() => {
     if (data && data.length) {
       let pie = {};
@@ -270,14 +269,12 @@ const PieChartWidget = (props: Props) => {
           </PieChart>
         </ResponsiveContainer>
       )}
-      <div style={showMobilePreview ? { float: "left" } : {}}>
-        <DataTable
-          rows={data || []}
-          columns={parts}
-          fileName={props.title}
-          columnsMetadata={props.columnsMetadata}
-        />
-      </div>
+      <DataTable
+        rows={data || []}
+        columns={parts}
+        fileName={props.title}
+        columnsMetadata={props.columnsMetadata}
+      />
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

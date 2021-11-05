@@ -4,7 +4,7 @@ import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import { useDashboard, useDashboardVersions, useWindowSize } from "../hooks";
+import { useDashboard, useDashboardVersions } from "../hooks";
 import { Dashboard, DashboardState, LocationState } from "../models";
 import BackendService from "../services/BackendService";
 import WidgetRender from "../components/WidgetRender";
@@ -32,13 +32,8 @@ function ViewDashboardAdmin() {
   const [isOpenRepublishModal, setIsOpenRepublishModal] = useState(false);
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [showVersionNotes, setShowVersionNotes] = useState(false);
-  const [showMobilePreview, setShowMobilePreview] = useState(false);
-  const windowSize = useWindowSize();
 
   const { t } = useTranslation();
-
-  const mobilePreviewWidth = 400;
-  const maxMobileViewportWidth = 450;
 
   const draftOrPublishPending = versions.find(
     (v) =>
@@ -321,28 +316,6 @@ function ViewDashboardAdmin() {
             {(dashboard.state === DashboardState.Draft ||
               dashboard.state === DashboardState.PublishPending) && (
               <>
-                <span
-                  className="usa-checkbox"
-                  style={{ marginRight: "8px" }}
-                  hidden={windowSize.width < maxMobileViewportWidth}
-                >
-                  <input
-                    className="usa-checkbox__input"
-                    id="display-mobile-view"
-                    type="checkbox"
-                    name="showMobileView"
-                    defaultChecked={false}
-                    onChange={() => {
-                      setShowMobilePreview(!showMobilePreview);
-                    }}
-                  />
-                  <label
-                    className="usa-checkbox__label"
-                    htmlFor="display-mobile-view"
-                  >
-                    {t("MobilePreview")}
-                  </label>
-                </span>
                 <Button
                   variant="outline"
                   type="button"
@@ -376,43 +349,29 @@ function ViewDashboardAdmin() {
         )}
       </PrimaryActionBar>
 
-      <div
-        style={
-          showMobilePreview
-            ? {
-                width: `${mobilePreviewWidth}px`,
-                margin: "auto",
-              }
-            : {}
-        }
-      >
-        {loading ? (
-          <Spinner
-            className="text-center margin-top-9"
-            label={t("LoadingSpinnerLabel")}
+      {loading ? (
+        <Spinner
+          className="text-center margin-top-9"
+          label={t("LoadingSpinnerLabel")}
+        />
+      ) : (
+        <>
+          <DashboardHeader
+            name={dashboard?.name}
+            topicAreaName={dashboard?.topicAreaName}
+            description={dashboard?.description}
+            lastUpdated={dashboard?.updatedAt}
           />
-        ) : (
-          <>
-            <DashboardHeader
-              name={dashboard?.name}
-              topicAreaName={dashboard?.topicAreaName}
-              description={dashboard?.description}
-              lastUpdated={dashboard?.updatedAt}
-            />
-            <hr />
-            {dashboard?.widgets.map((widget, index) => {
-              return (
-                <div className="margin-top-6 usa-prose" key={index}>
-                  <WidgetRender
-                    widget={widget}
-                    showMobilePreview={showMobilePreview}
-                  />
-                </div>
-              );
-            })}
-          </>
-        )}
-      </div>
+          <hr />
+          {dashboard?.widgets.map((widget, index) => {
+            return (
+              <div className="margin-top-6 usa-prose" key={index}>
+                <WidgetRender widget={widget} />
+              </div>
+            );
+          })}
+        </>
+      )}
     </>
   );
 }

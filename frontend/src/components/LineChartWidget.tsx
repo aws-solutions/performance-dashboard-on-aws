@@ -20,6 +20,7 @@ import { ColumnDataType } from "../models";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   lines: Array<string>;
   data?: Array<any>;
@@ -120,13 +121,13 @@ const LineChartWidget = (props: Props) => {
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}
     >
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h2>
+      </h3>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
       {data && data.length && (
@@ -162,7 +163,9 @@ const LineChartWidget = (props: Props) => {
                 return TickFormatter.format(
                   Number(tick),
                   yAxisLargestValue,
-                  props.significantDigitLabels
+                  props.significantDigitLabels,
+                  "",
+                  ""
                 );
               }}
             />
@@ -183,6 +186,8 @@ const LineChartWidget = (props: Props) => {
                   Number(value),
                   yAxisLargestValue,
                   props.significantDigitLabels,
+                  "",
+                  "",
                   columnMetadata
                 );
               }}
@@ -211,19 +216,22 @@ const LineChartWidget = (props: Props) => {
           </LineChart>
         </ResponsiveContainer>
       )}
-      <div style={showMobilePreview ? { float: "left" } : {}}>
+      <div>
         <DataTable
           rows={data || []}
           columns={lines}
           columnsMetadata={props.columnsMetadata}
-          fileName={props.title}
+          fileName={props.downloadTitle}
+          showMobilePreview={showMobilePreview}
         />
       </div>
       {props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
-        />
+        <div>
+          <MarkdownRender
+            source={props.summary}
+            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+          />
+        </div>
       )}
     </div>
   );

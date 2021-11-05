@@ -28,7 +28,6 @@ type Props = {
   hideDataLabels?: boolean;
   showTotal?: boolean;
   isPreview?: boolean;
-  showMobilePreview?: boolean;
 };
 
 const DonutChartWidget = (props: Props) => {
@@ -40,7 +39,7 @@ const DonutChartWidget = (props: Props) => {
   const donutParts = useRef<Array<string>>([]);
   let total = useRef<number>(0);
 
-  const { data, parts, showMobilePreview } = props;
+  const { data, parts } = props;
   useMemo(() => {
     if (data && data.length) {
       let donut = {};
@@ -302,14 +301,12 @@ const DonutChartWidget = (props: Props) => {
           </PieChart>
         </ResponsiveContainer>
       )}
-      <div style={showMobilePreview ? { float: "left" } : {}}>
-        <DataTable
-          rows={data || []}
-          columns={parts}
-          fileName={props.title}
-          columnsMetadata={props.columnsMetadata}
-        />
-      </div>
+      <DataTable
+        rows={data || []}
+        columns={parts}
+        fileName={props.title}
+        columnsMetadata={props.columnsMetadata}
+      />
       {props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

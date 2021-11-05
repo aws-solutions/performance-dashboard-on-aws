@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 // @ts-ignore
 import { CategoricalChartWrapper } from "recharts";
 import {
@@ -13,14 +13,16 @@ import {
   Tooltip,
 } from "recharts";
 import { useColors, useXAxisMetadata } from "../hooks";
-import UtilsService from "../services/UtilsService";
+import UtilsService, { ComputedDimensions } from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
 import { ColumnDataType } from "../models";
+import RulerService from "../services/RulerService";
 
 type Props = {
   title: string;
+  downloadTitle: string;
   summary: string;
   bars: Array<string>;
   data?: Array<any>;
@@ -34,6 +36,7 @@ type Props = {
   columnsMetadata: Array<any>;
   hideDataLabels?: boolean;
   showMobilePreview?: boolean;
+  stackedChart?: boolean;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -41,6 +44,33 @@ const BarChartWidget = (props: Props) => {
   const [barsHover, setBarsHover] = useState(null);
   const [hiddenBars, setHiddenBars] = useState<Array<string>>([]);
   const [chartLoaded, setChartLoaded] = useState(false);
+  const [dims, setDims] = useState<ComputedDimensions>({
+    labelWidth: 260,
+    chartHeight: 500,
+  });
+
+  function getCharContainer() {
+    const instance = chartRef.current as CategoricalChartWrapper;
+    return instance?.container;
+  }
+
+  useEffect(() => {
+    setDims(
+      UtilsService.calculateBarDimentions(
+        getCharContainer(),
+        !!props.stackedChart,
+        props.bars,
+        props.data
+      )
+    );
+  }, [
+    chartRef,
+    props.showMobilePreview,
+    props.bars,
+    props.data,
+    props.stackedChart,
+  ]);
+
   const { xAxisLargestValue } = useXAxisMetadata(
     chartRef,
     chartLoaded,
@@ -53,10 +83,6 @@ const BarChartWidget = (props: Props) => {
     props.colors?.secondary
   );
 
-  const pixelsByCharacter = 8;
-  const yAxisWidthOffset = 24;
-  const yAxisLabelMaxWidth = 220;
-
   const getOpacity = useCallback(
     (dataKey) => {
       if (!barsHover) {
@@ -68,6 +94,12 @@ const BarChartWidget = (props: Props) => {
   );
 
   const { data, bars, showMobilePreview } = props;
+
+  const columnsMetadataDict = new Map();
+  props.columnsMetadata.forEach((el) =>
+    columnsMetadataDict.set(el.columnName, el)
+  );
+
   const yAxisType = useCallback(() => {
     let columnMetadata;
     if (props.columnsMetadata && bars.length) {
@@ -93,30 +125,32 @@ const BarChartWidget = (props: Props) => {
     }
   };
 
-  const formatYAxisLabel = (label: string) =>
-    label.length > 27 ? label.substr(0, 27).concat("...") : label;
+  const valueAccessor =
+    (attribute: string) =>
+    ({ payload }: any) => {
+      return payload;
+    };
+
+  function formatYAxisLabel(label: any) {
+    const container = getCharContainer();
+    const style = container ? window.getComputedStyle(container) : undefined;
+    const width = dims.labelWidth - RulerService.getVisualWidth("M");
+    return RulerService.trimToWidth(label, width, style?.font, style?.fontSize);
+  }
 
   return (
     <div>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h2>
+      </h3>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
-          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove"
+          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
       {data && data.length && (
-        <ResponsiveContainer
-          width="100%"
-          height={
-            (data && data.length > 15) ||
-            (data && data[0] && Object.keys(data[0]).length > 4)
-              ? 800
-              : 400
-          }
-        >
+        <ResponsiveContainer width="100%" height={dims.chartHeight}>
           <BarChart
             className="bar-chart"
             data={props.data}
@@ -134,19 +168,16 @@ const BarChartWidget = (props: Props) => {
                 TickFormatter.format(
                   Number(tick),
                   xAxisLargestValue,
-                  props.significantDigitLabels
+                  props.significantDigitLabels,
+                  "",
+                  ""
                 )
               }
             />
             <YAxis
               dataKey={props.bars.length ? props.bars[0] : ""}
               type={yAxisType()}
-              width={Math.min(
-                UtilsService.getLargestHeader(props.bars, props.data) *
-                  pixelsByCharacter +
-                  yAxisWidthOffset,
-                yAxisLabelMaxWidth
-              )}
+              width={dims.labelWidth}
               minTickGap={0}
               domain={["dataMin - 1", "dataMax + 1"]}
               scale={yAxisType() === "number" ? "linear" : "auto"}
@@ -169,6 +200,8 @@ const BarChartWidget = (props: Props) => {
                   Number(value),
                   xAxisLargestValue,
                   props.significantDigitLabels,
+                  "",
+                  "",
                   columnMetadata
                 );
               }}
@@ -190,9 +223,27 @@ const BarChartWidget = (props: Props) => {
                     key={index}
                     fillOpacity={getOpacity(bar)}
                     hide={hiddenBars.includes(bar)}
+                    stackId={props.stackedChart ? "a" : `${index}`}
                     isAnimationActive={false}
                   >
-                    {!props.hideDataLabels ? (
+                    {!props.hideDataLabels &&
+                      props.stackedChart &&
+                      index === props.bars.length - 2 && (
+                        <LabelList
+                          position="right"
+                          valueAccessor={valueAccessor(bar)}
+                          formatter={(tick: any) => {
+                            return TickFormatter.stackedFormat(
+                              tick,
+                              xAxisLargestValue,
+                              props.significantDigitLabels,
+                              props.bars.slice(1),
+                              props.columnsMetadata
+                            );
+                          }}
+                        />
+                      )}
+                    {!props.hideDataLabels && !props.stackedChart && (
                       <LabelList
                         dataKey={bar}
                         position="right"
@@ -201,12 +252,12 @@ const BarChartWidget = (props: Props) => {
                             Number(tick),
                             xAxisLargestValue,
                             props.significantDigitLabels,
-                            props.columnsMetadata[index]
+                            "",
+                            "",
+                            columnsMetadataDict.get(bar)
                           )
                         }
                       />
-                    ) : (
-                      ""
                     )}
                   </Bar>
                 );
@@ -214,19 +265,22 @@ const BarChartWidget = (props: Props) => {
           </BarChart>
         </ResponsiveContainer>
       )}
-      <div style={showMobilePreview ? { float: "left" } : {}}>
+      <div>
         <DataTable
           rows={data || []}
           columns={bars}
           columnsMetadata={props.columnsMetadata}
-          fileName={props.title}
+          fileName={props.downloadTitle}
+          showMobilePreview={showMobilePreview}
         />
       </div>
       {props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow"
-        />
+        <div>
+          <MarkdownRender
+            source={props.summary}
+            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+          />
+        </div>
       )}
     </div>
   );

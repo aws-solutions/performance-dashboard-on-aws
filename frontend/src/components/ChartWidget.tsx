@@ -12,6 +12,7 @@ import DonutChartWidget from "./DonutChartWidget";
 interface Props {
   widget: ChartWidget;
   showMobilePreview?: boolean;
+  hideTitle?: boolean;
 }
 
 function ChartWidgetComponent(props: Props) {
@@ -57,7 +58,10 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.LineChart:
       return (
         <LineChartWidget
-          title={props.widget.showTitle ? content.title : ""}
+          title={
+            !props.hideTitle && props.widget.showTitle ? content.title : ""
+          }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           lines={keys}
@@ -72,14 +76,18 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.ColumnChart:
       return (
         <ColumnChartWidget
-          title={props.widget.showTitle ? content.title : ""}
+          title={
+            !props.hideTitle && props.widget.showTitle ? content.title : ""
+          }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           columns={keys}
           data={filteredJson}
           horizontalScroll={content.horizontalScroll}
+          stackedChart={content.stackedChart}
           significantDigitLabels={content.significantDigitLabels}
-          columnsMetadata={content.columnsMetadata}
+          columnsMetadata={content.columnsMetadata || []}
           hideDataLabels={!content.dataLabels}
           showMobilePreview={showMobilePreview}
         />
@@ -88,35 +96,46 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.BarChart:
       return (
         <BarChartWidget
-          title={props.widget.showTitle ? content.title : ""}
+          title={
+            !props.hideTitle && props.widget.showTitle ? content.title : ""
+          }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           bars={keys}
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
-          columnsMetadata={content.columnsMetadata}
+          columnsMetadata={content.columnsMetadata || []}
           hideDataLabels={!content.dataLabels}
           showMobilePreview={showMobilePreview}
+          stackedChart={content.stackedChart}
         />
       );
 
     case ChartType.PartWholeChart:
       return (
         <PartWholeChartWidget
-          title={props.widget.showTitle ? content.title : ""}
+          title={
+            !props.hideTitle && props.widget.showTitle ? content.title : ""
+          }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           parts={keys}
           data={filteredJson}
           significantDigitLabels={content.significantDigitLabels}
           showMobilePreview={showMobilePreview}
+          columnsMetadata={content.columnsMetadata}
         />
       );
 
     case ChartType.PieChart:
       return (
         <PieChartWidget
-          title={props.widget.showTitle ? content.title : ""}
+          title={
+            !props.hideTitle && props.widget.showTitle ? content.title : ""
+          }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           parts={keys}
@@ -124,6 +143,7 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           hideDataLabels={!content.dataLabels}
           columnsMetadata={content.columnsMetadata}
+          computePercentages={content.computePercentages}
           showMobilePreview={showMobilePreview}
         />
       );
@@ -131,7 +151,10 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.DonutChart:
       return (
         <DonutChartWidget
-          title={props.widget.showTitle ? content.title : ""}
+          title={
+            !props.hideTitle && props.widget.showTitle ? content.title : ""
+          }
+          downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
           parts={keys}
@@ -140,6 +163,7 @@ function ChartWidgetComponent(props: Props) {
           hideDataLabels={!content.dataLabels}
           columnsMetadata={content.columnsMetadata}
           showTotal={content.showTotal}
+          computePercentages={content.computePercentages}
           showMobilePreview={showMobilePreview}
         />
       );

@@ -817,6 +817,5 @@
   "DashboardWasCopied": "was successfully copied.",
   "Copy": "Copy",
   "CopyContent": "Copy {{name}}",
-  "DownloadCSV": "Download",
-  "MobilePreview": "Mobile preview"
+  "DownloadCSV": "Download"
 }

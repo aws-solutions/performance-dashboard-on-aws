@@ -36,9 +36,12 @@ function EditTableOfContents() {
 
   useEffect(() => {
     if (dashboard) {
-      dashboard.tableOfContents =
-        (history.location.state as any)?.tableOfContents ||
-        dashboard.tableOfContents;
+      const routeTableOfContents = (history.location.state as any)
+        .tableOfContents;
+      if (routeTableOfContents) {
+        dashboard.displayTableOfContents = true;
+        dashboard.tableOfContents = routeTableOfContents;
+      }
 
       if (dashboard.tableOfContents) {
         setValues(dashboard.tableOfContents);

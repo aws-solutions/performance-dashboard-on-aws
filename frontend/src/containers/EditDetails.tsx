@@ -53,10 +53,11 @@ function EditDetails() {
   const displayTableOfContents = watch("displayTableOfContents");
 
   useEffect(() => {
-    if (dashboard) {
-      dashboard.tableOfContents =
-        (history.location.state as any)?.tableOfContents ||
-        dashboard.tableOfContents;
+    const routeTableOfContents = (history.location.state as any)
+      ?.tableOfContents;
+    if (dashboard && routeTableOfContents) {
+      dashboard.displayTableOfContents = true;
+      dashboard.tableOfContents = routeTableOfContents;
     }
   }, [dashboard, history.location.state]);
 

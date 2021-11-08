@@ -564,7 +564,7 @@ function Table(props: Props) {
                         >
                           <CSVLink
                             className="text-base-darkest"
-                            data={rows}
+                            data={props.rows}
                             filename={props.title}
                           >
                             {t("DownloadCSV")}

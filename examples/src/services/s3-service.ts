@@ -2,6 +2,7 @@ import { env } from "../env";
 import { S3 } from "aws-sdk";
 import { DashboardSnapshot } from "../common";
 import {
+  readResource,
   readSnapshot as readSnapshotFromResources,
   writeResource,
 } from "./fs-service";
@@ -24,7 +25,7 @@ export const copyResource = function (
   name: string,
   source: string,
   destination: string
-): Promise<S3.CopyObjectOutput> {
+) {
   const s3Client = new S3();
   const sourceFile = `${name}/files/${source}`;
   const destinationFile = `public/${destination}`;
@@ -45,7 +46,24 @@ export const copyResource = function (
       function (err, data) {
         if (err) {
           console.log(err);
-          reject(err);
+          console.log("uploading from local files");
+
+          s3Client.upload(
+            {
+              Bucket: env.DATASETS_BUCKET,
+              Key: destinationFile,
+              Body: readResource(name, source),
+            },
+            (uploadErr, uploadData) => {
+              if (uploadErr) {
+                console.log(uploadErr);
+                reject(uploadErr);
+              } else {
+                console.log("resource uploaded: {}", uploadData);
+                resolve(uploadData);
+              }
+            }
+          );
         } else {
           console.log("resource copied: {}", data);
           resolve(data);
@@ -76,14 +94,14 @@ export const readSnapshot = async function (
           } catch (e) {
             reject(err);
           }
-        }
+        } else {
+          const text = data.Body?.toString();
+          if (!text) {
+            reject("No data");
+          }
 
-        const text = data.Body?.toString();
-        if (!text) {
-          reject("No data");
+          resolve(JSON.parse(text as string));
         }
-
-        resolve(JSON.parse(text as string));
       }
     );
   });

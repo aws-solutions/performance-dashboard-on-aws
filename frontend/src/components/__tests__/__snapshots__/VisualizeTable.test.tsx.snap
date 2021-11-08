@@ -639,76 +639,10 @@ exports[`renders the VisualizeTable component 1`] = `
                             <a
                               class="text-base-darkest"
                               download="Test"
-                              href="data:text/csv;charset=utf-8,﻿\\"id\\",\\"original\\",\\"index\\",\\"depth\\",\\"cells\\",\\"values\\",\\"originalSubRows\\",\\"subRows\\",\\"isSelected\\",\\"isSomeSelected\\",\\"getRowProps\\",\\"allCells\\",\\"toggleRowSelected\\",\\"getToggleRowSelectedProps\\"
-\\"0\\",\\"[object Object]\\",\\"0\\",\\"0\\",\\"[object Object],[object Object],[object Object]\\",\\"[object Object]\\",\\"\\",\\"\\",\\"\\",\\"\\",\\"function (userProps) {
-      if (userProps === void 0) {
-        userProps = {};
-      }
-
-      return [].concat(hooks, [userProps]).reduce(function (prev, next) {
-        return handlePropGetter(prev, next, _extends({}, meta, {
-          userProps: userProps
-        }));
-      }, {});
-    }\\",\\"[object Object],[object Object],[object Object]\\",\\"function (set) {
-      return instance.toggleRowSelected(row.id, set);
-    }\\",\\"function (userProps) {
-      if (userProps === void 0) {
-        userProps = {};
-      }
-
-      return [].concat(hooks, [userProps]).reduce(function (prev, next) {
-        return handlePropGetter(prev, next, _extends({}, meta, {
-          userProps: userProps
-        }));
-      }, {});
-    }\\"
-\\"1\\",\\"[object Object]\\",\\"1\\",\\"0\\",\\"[object Object],[object Object],[object Object]\\",\\"[object Object]\\",\\"\\",\\"\\",\\"\\",\\"\\",\\"function (userProps) {
-      if (userProps === void 0) {
-        userProps = {};
-      }
-
-      return [].concat(hooks, [userProps]).reduce(function (prev, next) {
-        return handlePropGetter(prev, next, _extends({}, meta, {
-          userProps: userProps
-        }));
-      }, {});
-    }\\",\\"[object Object],[object Object],[object Object]\\",\\"function (set) {
-      return instance.toggleRowSelected(row.id, set);
-    }\\",\\"function (userProps) {
-      if (userProps === void 0) {
-        userProps = {};
-      }
-
-      return [].concat(hooks, [userProps]).reduce(function (prev, next) {
-        return handlePropGetter(prev, next, _extends({}, meta, {
-          userProps: userProps
-        }));
-      }, {});
-    }\\"
-\\"2\\",\\"[object Object]\\",\\"2\\",\\"0\\",\\"[object Object],[object Object],[object Object]\\",\\"[object Object]\\",\\"\\",\\"\\",\\"\\",\\"\\",\\"function (userProps) {
-      if (userProps === void 0) {
-        userProps = {};
-      }
-
-      return [].concat(hooks, [userProps]).reduce(function (prev, next) {
-        return handlePropGetter(prev, next, _extends({}, meta, {
-          userProps: userProps
-        }));
-      }, {});
-    }\\",\\"[object Object],[object Object],[object Object]\\",\\"function (set) {
-      return instance.toggleRowSelected(row.id, set);
-    }\\",\\"function (userProps) {
-      if (userProps === void 0) {
-        userProps = {};
-      }
-
-      return [].concat(hooks, [userProps]).reduce(function (prev, next) {
-        return handlePropGetter(prev, next, _extends({}, meta, {
-          userProps: userProps
-        }));
-      }, {});
-    }\\""
+                              href="data:text/csv;charset=utf-8,﻿\\"id\\",\\"name\\",\\"updatedAt\\"
+\\"1\\",\\"Banana\\",\\"2021-11-11\\"
+\\"2\\",\\"Chocolate\\",\\"2020-11-11\\"
+\\"3\\",\\"Vanilla\\",\\"2019-11-11\\""
                               target="_self"
                             >
                               Download table

@@ -13,6 +13,13 @@ export const writeSnapshot = function (
   );
 };
 
+export const readResource = function (name: string, file: string) {
+  return fs.readFileSync(
+    `${__dirname}/../../resources/${name}/files/${file}`,
+    "utf8"
+  );
+};
+
 export const writeResource = async function (
   name: string,
   file: string,

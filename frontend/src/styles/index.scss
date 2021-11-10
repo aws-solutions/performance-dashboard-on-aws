@@ -1,15 +1,14 @@
-@import "uswds-theme-general";
-@import "uswds-theme-typography";
-@import "uswds-theme-spacing";
-@import "uswds-theme-color";
-@import "uswds-theme-utilities";
+@import "~uswds/src/stylesheets/theme/uswds-theme-general";
+@import "~uswds/src/stylesheets/theme/uswds-theme-typography";
+@import "~uswds/src/stylesheets/theme/uswds-theme-spacing";
+@import "~uswds/src/stylesheets/theme/uswds-theme-color";
+@import "~uswds/src/stylesheets/theme/uswds-theme-utilities";
+@import "./settings";
 
-// components import needs to be last
-@import "uswds-theme-components";
-
+@import "~uswds/src/stylesheets/theme/uswds-theme-components";
 @import "uswds";
 
 // -------------------------------------
 // Import theme custom styles
-
-@import "uswds-theme-custom-styles";
+@import "./backgrounds";
+@import "./type";

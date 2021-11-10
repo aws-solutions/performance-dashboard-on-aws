@@ -1,13 +1,4 @@
-@import "./theme/uswds-theme-general";
-@import "./theme/uswds-theme-typography";
-@import "./theme/uswds-theme-spacing";
-@import "./theme/uswds-theme-color";
-@import "./theme/uswds-theme-utilities";
-
-@import "./theme/uswds-theme-components";
-@import "uswds/dist/css/uswds.css";
-
-@import "./theme/uswds-theme-custom-styles";
+@import "./styles";
 
 p {
   line-height: 1.4;

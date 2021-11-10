@@ -4,10 +4,6 @@
 @import "uswds-theme-color";
 @import "uswds-theme-utilities";
 
-$theme-show-notifications: false;
-$theme-image-path: "~uswds/dist/img";
-$theme-font-path: "~uswds/dist/fonts";
-
 // components import needs to be last
 @import "uswds-theme-components";
 

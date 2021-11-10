@@ -9,7 +9,7 @@ function Footer() {
 
   return (
     <footer>
-      <div className="grid-container margin-bottom-9 text-base font-sans-sm">
+      <div className="grid-container margin-bottom-9 font-sans-sm">
         {loadingSettings ? (
           ""
         ) : (
@@ -20,7 +20,7 @@ function Footer() {
               href={`mailto:${settings.adminContactEmailAddress}?subject=${t(
                 "AdminFooter.PerformanceDashboardAssistance"
               )}`}
-              className="text-base"
+              className="usa-link"
             >
               {t("AdminFooter.ContactSupport")}
             </a>

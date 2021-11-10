@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import "./Button.css";
+import "./Button.scss";
 
 type Variant =
   | "base"
@@ -40,7 +40,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       variantClassName = " usa-button--unstyled";
       break;
     default:
-      variantClassName = " usa-button--base";
+      variantClassName = ` usa-button--base`;
       break;
   }
 

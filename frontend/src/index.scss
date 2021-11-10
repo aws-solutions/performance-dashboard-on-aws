@@ -1,4 +1,4 @@
-@import "./styles";
+@import "./styles/base";
 
 p {
   line-height: 1.4;
@@ -14,27 +14,6 @@ p {
   .navbar-long {
     width: 50% !important;
   }
-}
-
-.usa-button--outline {
-  background-color: transparent;
-  box-shadow: inset 0 0 0 2px #565c65;
-  color: #565c65;
-}
-.usa-button--outline:visited {
-  color: #565c65;
-}
-.usa-button--outline:hover,
-.usa-button--outline.usa-button--hover {
-  background-color: transparent;
-  box-shadow: inset 0 0 0 2px #3d4551;
-  color: #3d4551;
-}
-.usa-button--outline:active,
-.usa-button--outline.usa-button--active {
-  background-color: transparent;
-  box-shadow: inset 0 0 0 2px #1b1b1b;
-  color: #1b1b1b;
 }
 
 .width-50 {

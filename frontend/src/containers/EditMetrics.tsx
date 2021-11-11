@@ -27,6 +27,7 @@ import StorageService from "../services/StorageService";
 import Spinner from "../components/Spinner";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Alert from "../components/Alert";
+import AlertContainer from "../containers/AlertContainer";
 
 interface FormValues {
   title: string;
@@ -245,6 +246,7 @@ function EditMetrics() {
 
   return (
     <>
+      <AlertContainer />
       <Breadcrumbs crumbs={crumbs} />
 
       {loading || !widget || !currentJson || fileLoading || editingWidget ? (

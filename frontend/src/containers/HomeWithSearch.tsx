@@ -1,11 +1,11 @@
-import React, { useParams } from "react-router-dom";
+import React, { useParams, useHistory } from "react-router-dom";
 import Link from "../components/Link";
 import { useDateTimeFormatter, usePublicHomepageSearch } from "../hooks";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
-import { PublicHomepage } from "../models";
+import { PublicHomepage, LocationState } from "../models";
 import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
 import "./Home.css";
@@ -19,15 +19,16 @@ function HomeWithSearch() {
   const { homepage, loading } = usePublicHomepageSearch(query);
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
-
+  const history = useHistory<LocationState>();
+ 
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   const onSearch = (query: string) => {
-    window.location.assign("/search/" + query);
+    history.push("/search/" + query);
   };
 
   const onClear = () => {
-    window.location.assign("/");
+    history.push("/");
   };
 
   return loading ? (
@@ -98,7 +99,9 @@ function HomeWithSearch() {
                       </span>
                       {dashboard.queryMatches?.map((queryMatch) => {
                         return (
-                          <p className="text-base margin-left-2 margin-right-2">
+                          <p 
+                            key={queryMatch}
+                            className="text-base margin-left-2 margin-right-2">
                             {" "}
                             ... {queryMatch} ...
                             <br />

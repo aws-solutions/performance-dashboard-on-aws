@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Link from "../components/Link";
 import { usePublicHomepage, useDateTimeFormatter } from "../hooks";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
-import { PublicDashboard } from "../models";
+import { PublicDashboard, LocationState } from "../models";
 import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
 import "./Home.css";
@@ -14,13 +15,14 @@ function Home() {
   const { homepage, loading } = usePublicHomepage();
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
+  const history = useHistory<LocationState>();
 
   const onSearch = (query: string) => {
-    window.location.assign("/search/" + query);
+    history.push("/search/" + query);
   };
 
   const onClear = () => {
-    window.location.assign("/");
+    history.push("/");
   };
 
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);

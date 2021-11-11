@@ -20,6 +20,7 @@ import "dayjs/locale/pt";
 import "dayjs/locale/pt-br";
 
 import "./index.scss";
+import "uswds/dist/js/uswds.min.js";
 
 declare module "react" {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {

@@ -80,34 +80,34 @@ p {
 
 .usa-header--basic .usa-nav__primary-item > .usa-current::after,
 .usa-header--basic .usa-nav__link:hover::after {
-  background-color: #71767a !important;
+  @include u-bg("base", "!important");
 }
 
 .usa-header--basic .usa-nav__primary-item > .usa-current::after,
 .usa-header--basic .usa-nav__link:hover::after {
-  background-color: #71767a !important;
+  @include u-bg("base", "!important");
 }
 
 @media all and (min-width: 64em) {
   .usa-nav__primary > .usa-nav__primary-item > a:hover {
-    color: #71767a !important;
+    color: color("base", "!important");
   }
 }
 
 .usa-nav__primary button:hover {
-  color: #71767a !important;
+  color: color("base", "!important");
 }
 
 @media all and (min-width: 64em) {
   .usa-nav__primary button[aria-expanded="true"] {
-    background-color: #71767a !important;
+    @include u-bg("base", "!important");
     color: white !important;
   }
 }
 
 @media all and (min-width: 64em) {
   .usa-nav__submenu {
-    background-color: #71767a !important;
+    @include u-bg("base", "!important");
   }
 }
 
@@ -120,7 +120,7 @@ p {
 }
 
 .usa-table tr:hover {
-  background-color: #dfe1e2 !important;
+  @include u-bg("base-lighter", "!important");
 }
 
 .usa-table td,
@@ -187,7 +187,7 @@ p {
 }
 
 .type-dark {
-  background: #1b1b1b !important;
+  @include u-bg("base-darkest", "!important");
 }
 
 @media (min-width: 64em) {

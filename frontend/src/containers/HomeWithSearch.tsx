@@ -20,7 +20,7 @@ function HomeWithSearch() {
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
   const history = useHistory<LocationState>();
- 
+
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   const onSearch = (query: string) => {
@@ -99,9 +99,10 @@ function HomeWithSearch() {
                       </span>
                       {dashboard.queryMatches?.map((queryMatch) => {
                         return (
-                          <p 
+                          <p
                             key={queryMatch}
-                            className="text-base margin-left-2 margin-right-2">
+                            className="text-base margin-left-2 margin-right-2"
+                          >
                             {" "}
                             ... {queryMatch} ...
                             <br />

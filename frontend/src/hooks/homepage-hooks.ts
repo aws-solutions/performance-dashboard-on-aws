@@ -84,7 +84,7 @@ export function usePublicHomepageSearch(
       updateLoading && setLoading(false);
     },
     [query]
-  );  
+  );
 
   useEffect(() => {
     fetchData();

@@ -78,7 +78,7 @@ exports[`renders the ChooseData component 1`] = `
             >
               Static dataset
               <p
-                class="text-base usa-prose usa-checkbox__label-description"
+                class="usa-prose usa-checkbox__label-description"
               >
                 Upload a new dataset from file or elect an existing dataset.
               </p>
@@ -109,7 +109,7 @@ exports[`renders the ChooseData component 1`] = `
             >
               Dynamic dataset
               <p
-                class="text-base usa-prose usa-checkbox__label-description"
+                class="usa-prose usa-checkbox__label-description"
               >
                 Choose from a list of continuously updated datasets.
               </p>

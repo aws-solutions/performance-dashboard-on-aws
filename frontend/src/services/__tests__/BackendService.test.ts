@@ -29,6 +29,16 @@ test("fetchDashboardById makes a GET request to dashboard API", async () => {
   );
 });
 
+test("fetchPublicHomepageWithQuery makes a GET request to homepage API", async () => {
+  const query = "Hello";
+  await BackendService.fetchPublicHomepageWithQuery(query);
+  expect(API.get).toHaveBeenCalledWith(
+    "BackendApi",
+    `public/search/${query}`,
+    expect.anything()
+  );
+});
+
 test("createDashboard should make a POST request with payload", async () => {
   const name = "One Pretty Dashboard";
   const description = "Alexa, how is the weather?";

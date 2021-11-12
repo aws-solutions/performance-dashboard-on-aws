@@ -1,37 +1,22 @@
 @import "../styles/base";
 
-.usa-button--base {
-  @include u-bg("base-darker", "!important");
-}
-.usa-button--base:hover,
-.usa-button--base.usa-button--hover {
-  @include u-bg("base-darkest", "!important");
-}
-.usa-button--base:active,
-.usa-button--base.usa-button--active {
-  @include u-bg("ink", "!important");
-}
-.usa-button--base:disabled {
-  @include u-bg("base", "!important");
-}
-
 .usa-button--outline {
+  @include u-text("base", "!important");
   background-color: transparent !important;
-  box-shadow: inset 0 0 0 2px #565c65 !important;
-  color: #565c65 !important;
+  box-shadow: inset 0 0 0 2px color("base") !important;
 }
 .usa-button--outline:visited {
-  color: #565c65 !important;
+  @include u-text("base", "!important");
 }
 .usa-button--outline:hover,
 .usa-button--outline.usa-button--hover {
+  @include u-text("base-dark", "!important");
   background-color: transparent !important;
-  box-shadow: inset 0 0 0 2px #3d4551 !important;
-  color: #3d4551 !important;
+  box-shadow: inset 0 0 0 2px color("base-dark") !important;
 }
 .usa-button--outline:active,
 .usa-button--outline.usa-button--active {
+  @include u-text("base-dark", "!important");
   background-color: transparent !important;
-  box-shadow: inset 0 0 0 2px #1b1b1b !important;
-  color: #1b1b1b !important;
+  box-shadow: inset 0 0 0 2px color("base-dark") !important;
 }

@@ -111,14 +111,6 @@ p {
   }
 }
 
-.usa-breadcrumb {
-  background-color: #fafafa;
-}
-
-.usa-table tr {
-  background-color: #fafafa;
-}
-
 .usa-table tr:hover {
   @include u-bg("base-lighter", "!important");
 }

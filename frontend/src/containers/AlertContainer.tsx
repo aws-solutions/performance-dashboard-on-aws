@@ -17,7 +17,7 @@ function AlertContainer(props: Props) {
   }
 
   return (
-    <div className="margin-y-2">
+    <div className="margin-bottom-2 margin-top-1">
       <Alert
         type={state.alert.type}
         message={

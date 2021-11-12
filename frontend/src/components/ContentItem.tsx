@@ -8,6 +8,7 @@ interface Props {
   id: any;
   index: number;
   moveItem: (dragIndex: number, hoverIndex: number) => void;
+  onDrop?: (dragIndex: number, hoverIndex: number) => void;
   itemType: string;
 }
 

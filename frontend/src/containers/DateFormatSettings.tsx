@@ -4,7 +4,6 @@ import { useSettings } from "../hooks";
 import dayjs from "dayjs";
 import SettingsLayout from "../layouts/Settings";
 import Button from "../components/Button";
-import AlertContainer from "./AlertContainer";
 import Spinner from "../components/Spinner";
 import "./PublishedSiteSettings.css";
 import { useTranslation } from "react-i18next";
@@ -23,8 +22,6 @@ function DateFormatSettings() {
       <h1>{t("SettingsDateTimeFormat")}</h1>
 
       <p>{t("SettingsDateTimeFormatDescription")}</p>
-
-      <AlertContainer />
 
       {loadingSettings ? (
         <Spinner

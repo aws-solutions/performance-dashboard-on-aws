@@ -137,6 +137,7 @@ function EditDetails() {
 
   return (
     <>
+      <AlertContainer />
       <Breadcrumbs
         crumbs={[
           {
@@ -195,8 +196,6 @@ function EditDetails() {
                       label: topicarea.name,
                     }))}
                   />
-
-                  <AlertContainer />
 
                   <div className="usa-form-group">
                     <label className="usa-label text-bold">

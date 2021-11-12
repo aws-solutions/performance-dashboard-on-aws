@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { useSettings } from "../hooks";
 import SettingsLayout from "../layouts/Settings";
 import Button from "../components/Button";
-import AlertContainer from "./AlertContainer";
 import Spinner from "../components/Spinner";
 import "./PublishedSiteSettings.css";
 import { useTranslation } from "react-i18next";
@@ -22,8 +21,6 @@ function AdminSiteSettings() {
       <h1>{t("AdminSettingsScreen.Header")}</h1>
 
       <p>{t("AdminSettingsScreen.HeaderDescription")}</p>
-
-      <AlertContainer />
 
       {loadingSettings ? (
         <Spinner

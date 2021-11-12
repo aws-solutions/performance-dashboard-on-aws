@@ -39,7 +39,6 @@
   "NameUpperCase": "Name",
   "Cancel": "Cancel",
   "Create": "Create",
-  "SuccessfullyDeleted": "successfully deleted",
   "Delete": "Delete",
   "Save": "Save",
   "Edit": "Edit",
@@ -930,5 +929,7 @@
   "DisplayWithPages": "Display with pages",
   "SelectColumns": "Select columns to format data.",
   "Tab": "Tab",
-  "Active": "Active"
+  "Active": "Active",
+  "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} was successfully created.",
+  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} was successfully deleted."
 }

@@ -4,7 +4,6 @@ import { useSettings } from "../hooks";
 import SettingsLayout from "../layouts/Settings";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
-import AlertContainer from "./AlertContainer";
 import Spinner from "../components/Spinner";
 import "./PublishingGuidanceSettings.css";
 import { useTranslation } from "react-i18next";
@@ -23,8 +22,6 @@ function PublishingGuidanceSettings() {
       <h1>{t("PublishingGuidance")}</h1>
 
       <p>{t("PublishingGuidanceDescription")}</p>
-
-      <AlertContainer />
 
       {loadingSettings ? (
         <Spinner

@@ -18,7 +18,7 @@ describe("getDefaultSettings", () => {
       },
       customLogoS3ID: undefined,
       colors: {
-        primary: "#2491ff",
+        primary: "#005EA2",
         secondary: "#54278f",
       },
     });
@@ -66,7 +66,7 @@ describe("fromItem", () => {
       customLogoAltText: "Alt text",
       customFaviconS3Key: "12345",
       colors: {
-        primary: "#2491ff",
+        primary: "#005EA2",
         secondary: "#54278f",
       },
       contactEmailAddress: "test@aol.com",

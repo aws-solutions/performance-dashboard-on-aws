@@ -9,7 +9,6 @@ import {
 import Button from "./Button";
 import "./MetricsList.css";
 import ContentItem from "./ContentItem";
-import AlertContainer from "../containers/AlertContainer";
 import { useTranslation } from "react-i18next";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -131,7 +130,6 @@ function MetricsList(props: Props) {
       </div>
       {props.metrics && props.metrics.length ? (
         <div>
-          <AlertContainer />
           <DndProvider
             backend={window.innerWidth < 1024 ? TouchBackend : HTML5Backend}
             options={{ enableMouseEvents: true }}

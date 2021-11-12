@@ -4,7 +4,6 @@ import { useSettings, useTopicAreas } from "../hooks";
 import Button from "../components/Button";
 import TopicareaListing from "./TopicareaListing";
 import SettingsLayout from "../layouts/Settings";
-import AlertContainer from "./AlertContainer";
 import MarkdownRender from "../components/MarkdownRender";
 import { useTranslation } from "react-i18next";
 import Spinner from "../components/Spinner";
@@ -31,7 +30,7 @@ function TopicareaSettings() {
           <h1>{settings.topicAreaLabels.plural}</h1>
 
           <p>{t("SettingsTopicAreaDescription")}</p>
-          <AlertContainer />
+
           <h3 className="margin-top-2-important">{t("TopicAreaName")}</h3>
 
           <p>{t("SettingsTopicAreaNameDescription")}</p>

@@ -124,6 +124,7 @@ function DashboardListing() {
 
   return (
     <>
+      <AlertContainer />
       <h1>{t("DashboardListing.Dashboards")}</h1>
       <Modal
         isOpen={isOpenArchiveModal}
@@ -158,7 +159,6 @@ function DashboardListing() {
         />
       ) : (
         <>
-          <AlertContainer />
           <Tabs
             defaultActive={activeTab}
             showArrows={windowSize.width <= 600}

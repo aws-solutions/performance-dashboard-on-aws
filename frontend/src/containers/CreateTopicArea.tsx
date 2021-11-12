@@ -26,9 +26,10 @@ function CreateTopicArea() {
     history.push("/admin/settings/topicarea", {
       alert: {
         type: "success",
-        message: `"${
-          topicarea.name
-        }" ${settings.topicAreaLabels.singular.toLowerCase()} successfully created`,
+        message: t("SettingsTopicAreaNameCreateSuccess", {
+          name: `${topicarea.name}`,
+          topicAreaName: `${settings.topicAreaLabels.singular.toLowerCase()}`,
+        }),
       },
     });
   };

@@ -195,6 +195,7 @@ function PublishDashboard() {
 
   return (
     <>
+      <AlertContainer id="top-alert" />
       <Breadcrumbs
         crumbs={[
           {
@@ -208,7 +209,6 @@ function PublishDashboard() {
       />
       <PrimaryActionBar>
         <Alert type="info" message={t("PublishWorkflow.InfoAlert")} slim />
-        <AlertContainer id="top-alert" />
         {isMobile && (
           <>
             <div className="margin-top-2">{statusAndVersion}</div>

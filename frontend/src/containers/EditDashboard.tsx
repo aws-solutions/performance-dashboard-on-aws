@@ -319,6 +319,8 @@ function EditDashboard() {
 
   return (
     <>
+      <AlertContainer id="top-alert" />
+      <AlertContainer />
       <Breadcrumbs
         crumbs={[
           {
@@ -401,7 +403,7 @@ function EditDashboard() {
             }
             isMobile={isMobile}
           />
-          <AlertContainer id="top-alert" />
+
           <WidgetList
             widgets={dashboard ? dashboard.widgets : []}
             onClick={onAddContent}

@@ -5,7 +5,6 @@ import SettingsLayout from "../layouts/Settings";
 import Spinner from "../components/Spinner";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
-import AlertContainer from "./AlertContainer";
 import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
@@ -43,7 +42,6 @@ function PublishedSiteSettings() {
         </Link>
       </p>
 
-      <AlertContainer />
       <h3 className="margin-top-2-important">
         {t("PublishedSiteSettings.NavigationBar")}
       </h3>

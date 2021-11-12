@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet";
 import defaultFavicon from "../favicon.svg";
+import "./Admin.scss";
 
 interface LayoutProps {
   children: ReactNode;
@@ -80,7 +81,10 @@ function AdminLayout(props: LayoutProps) {
             </div>
             <button className="usa-menu-btn">{t("AdminMenu.Menu")}</button>
           </div>
-          <nav aria-label="Primary navigation" className="usa-nav">
+          <nav
+            aria-label={t("AdminMenu.PrimaryNavigation")}
+            className="usa-nav"
+          >
             <button className="usa-nav__close">
               <FontAwesomeIcon icon={faWindowClose} size="lg" role="img" />
             </button>

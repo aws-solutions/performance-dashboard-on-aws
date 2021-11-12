@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import "./Button.css";
+import "./Button.scss";
 
 type Variant =
   | "base"

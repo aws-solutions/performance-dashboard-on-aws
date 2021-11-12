@@ -20,7 +20,7 @@ function Footer() {
               href={`mailto:${settings.adminContactEmailAddress}?subject=${t(
                 "AdminFooter.PerformanceDashboardAssistance"
               )}`}
-              className="text-base"
+              className="usa-link"
             >
               {t("AdminFooter.ContactSupport")}
             </a>

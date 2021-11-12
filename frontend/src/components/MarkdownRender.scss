@@ -1,0 +1,21 @@
+@import "../styles/base";
+
+.Markdown a {
+  color: color("base", "!important");
+}
+
+.Markdown a:hover {
+  color: color("base-dark", "!important");
+}
+
+.Markdown a:active {
+  color: color("base-darker", "!important");
+}
+
+.Markdown a:visited {
+  color: color("base", "!important");
+}
+
+.textOrSummary p {
+  max-width: 100ex !important;
+}

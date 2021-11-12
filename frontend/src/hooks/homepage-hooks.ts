@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Homepage, PublicHomepage } from "../models";
 import BackendService from "../services/BackendService";
 
@@ -57,5 +57,42 @@ export function usePublicHomepage(): UsePublicHomepageHook {
   return {
     loading,
     homepage,
+  };
+}
+
+type UsePublicHomepageSearchHook = {
+  loading: boolean;
+  homepage: PublicHomepage;
+  reloadHomepage: Function;
+};
+
+export function usePublicHomepageSearch(
+  query: string
+): UsePublicHomepageSearchHook {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [homepage, setHomepage] = useState<PublicHomepage>({
+    title: "",
+    description: "",
+    dashboards: [],
+  });
+
+  const fetchData = useCallback(
+    async (updateLoading: boolean = true) => {
+      updateLoading && setLoading(true);
+      const data = await BackendService.fetchPublicHomepageWithQuery(query);
+      setHomepage(data);
+      updateLoading && setLoading(false);
+    },
+    [query]
+  );
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return {
+    loading,
+    homepage,
+    reloadHomepage: fetchData,
   };
 }

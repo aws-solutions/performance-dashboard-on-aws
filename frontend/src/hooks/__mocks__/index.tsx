@@ -250,6 +250,25 @@ export function usePublicHomepage() {
   };
 }
 
+export function usePublicHomepageSearch(query: string) {
+  return {
+    loading: false,
+    homepage: {
+      title: "Kingdom of Wakanda",
+      description: "Welcome to our dashboard",
+      dashboards: [
+        {
+          id: "abc",
+          name: "Dashboard One",
+          topicAreaId: "123456789",
+          topicAreaName: "Topic Area Bananas",
+          queryMatches: ["Dashboard One"],
+        },
+      ],
+    },
+  };
+}
+
 export function useHomepage() {
   return {
     loading: false,

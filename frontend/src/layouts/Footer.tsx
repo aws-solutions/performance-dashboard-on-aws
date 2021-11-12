@@ -9,7 +9,7 @@ function Footer() {
 
   return (
     <footer>
-      <div className="grid-container margin-bottom-9 font-sans-sm">
+      <div className="grid-container margin-bottom-9 text-base font-sans-sm">
         {loadingSettings ? (
           ""
         ) : (

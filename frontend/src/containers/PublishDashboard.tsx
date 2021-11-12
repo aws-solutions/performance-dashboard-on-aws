@@ -56,7 +56,6 @@ function PublishDashboard() {
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
-  const releaseNotes = watch("releaseNotes");
   const acknowledge = watch("acknowledge");
 
   const onPreview = () => {
@@ -320,12 +319,7 @@ function PublishDashboard() {
               </div>
 
               <div className="padding-top-2 border-top border-base-lighter">
-                <Button
-                  variant="default"
-                  type="button"
-                  onClick={onContinue}
-                  disabled={!releaseNotes}
-                >
+                <Button variant="default" type="button" onClick={onContinue}>
                   {t("ContinueButton")}
                 </Button>
               </div>

@@ -39,6 +39,18 @@ test("renders topic area", () => {
   expect(screen.getByText("Bananas")).toBeInTheDocument();
 });
 
+test("continue button does not advance to step 2 due to empty field", async () => {
+  await act(async () => {
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Continue",
+      })
+    );
+  });
+
+  expect(screen.getByText("Please enter version notes")).toBeInTheDocument();
+});
+
 test("continue button advances to step 2 and saves releaseNotes", async () => {
   fireEvent.input(screen.getAllByLabelText("")[0], {
     target: {

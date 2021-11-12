@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SettingsLayout from "../layouts/Settings";
 import Button from "../components/Button";
-import AlertContainer from "./AlertContainer";
 import "./PublishingGuidanceSettings.css";
 import Logo from "../components/Logo";
 import Favicon from "../components/Favicon";
@@ -32,9 +31,7 @@ function BrandingAndStylingSettings() {
       <h1>{t("BrandingAndStyling")}</h1>
 
       <p>{t("BrandingAndStylingDescription")}</p>
-      <br></br>
-
-      <AlertContainer />
+      <br />
 
       <h3 className="margin-top-2-important">{t("BrandingAndStylingLogo")}</h3>
       <p>{t("BrandingAndStylingLogoDescription")}</p>

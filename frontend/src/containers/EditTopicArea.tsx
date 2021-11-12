@@ -57,6 +57,7 @@ function EditTopicArea() {
 
   return (
     <>
+      <AlertContainer />
       <Breadcrumbs
         crumbs={[
           {
@@ -72,9 +73,7 @@ function EditTopicArea() {
           },
         ]}
       />
-      <AlertContainer />
       <h1>
-        {" "}
         {t("SettingsTopicAreaNameEdit", {
           singularname: settings.topicAreaLabels.singular,
         })}

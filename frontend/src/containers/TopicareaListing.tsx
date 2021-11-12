@@ -64,11 +64,10 @@ function TopicareaListing(props: Props) {
       history.replace("/admin/settings/topicarea", {
         alert: {
           type: "success",
-          message: `"${
-            selected.name
-          }" ${settings.topicAreaLabels.singular.toLowerCase()} ${t(
-            "SuccessfullyDeleted"
-          )}`,
+          message: t("SettingsTopicAreaNameSuccessfullyDeleted", {
+            name: `${selected.name}`,
+            topicAreaName: `${settings.topicAreaLabels.singular.toLowerCase()}`,
+          }),
         },
       });
 

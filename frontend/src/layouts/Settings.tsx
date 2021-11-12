@@ -7,6 +7,7 @@ import { useSettings, useFavicon, useFileLoaded } from "../hooks";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 import defaultFavicon from "../favicon.svg";
+import AlertContainer from "../containers/AlertContainer";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -59,6 +60,8 @@ function SettingsLayout(props: LayoutProps) {
           />
         </Helmet>
       )}
+
+      <AlertContainer />
 
       <Breadcrumbs
         crumbs={[

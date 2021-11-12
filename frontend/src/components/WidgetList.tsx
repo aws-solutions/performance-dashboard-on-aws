@@ -9,7 +9,6 @@ import {
 import Button from "./Button";
 import "./WidgetList.css";
 import Link from "./Link";
-import AlertContainer from "../containers/AlertContainer";
 import SecondaryActionBar from "./SecondaryActionBar";
 import ContentItem from "./ContentItem";
 import { useTranslation } from "react-i18next";
@@ -108,7 +107,6 @@ function WidgetList(props: Props) {
     <div>
       {props.widgets && props.widgets.length ? (
         <div>
-          <AlertContainer />
           <SecondaryActionBar stickyPosition={160}>
             <h3 className="margin-bottom-0 margin-top-0">
               {t("DashboardContent")}

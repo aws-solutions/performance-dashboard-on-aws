@@ -1,0 +1,5 @@
+@import "../styles/base";
+
+[data-reach-menu-item][data-selected] a {
+  color: color("white") !important;
+}

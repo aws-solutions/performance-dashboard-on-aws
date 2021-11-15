@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, RefObject } from "react";
 import { ColumnMetadata } from "../models";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
@@ -12,6 +12,7 @@ import {
   faEye,
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
+import "./DataTable.scss";
 
 const { MenuItem } = DropdownMenu;
 
@@ -30,6 +31,7 @@ function DataTable({
   fileName,
   showMobilePreview,
 }: Props) {
+  const downloadButton = React.createRef<CSVLink>();
   const { t } = useTranslation();
   const [showDataTable, setShowDataTable] = useState(false);
 
@@ -96,17 +98,21 @@ function DataTable({
               ? t("ShowDataTableButton")
               : t("HideDataTableButton")}
           </MenuItem>
-          <MenuItem onSelect={() => {}}>
+          <MenuItem
+            onSelect={() => {
+              const downloadButton: HTMLAnchorElement | null =
+                document.querySelector(
+                  "[data-reach-menu-item][data-selected] a"
+                );
+              downloadButton?.click();
+            }}
+          >
             <FontAwesomeIcon
               icon={faDownload}
               className="margin-right-1"
               size="xs"
             />
-            <CSVLink
-              data={tableRows}
-              filename={fileName}
-              style={{ color: "#1b1b1b" }}
-            >
+            <CSVLink data={tableRows} filename={fileName} className="usa-link">
               {t("DownloadCSV")}
             </CSVLink>
           </MenuItem>

@@ -4,7 +4,7 @@ class ChangeUsersRolePage {
   }
 
   verifyEmailAddress(userEmail: string) {
-    cy.findByLabelText("User email address(es)").contains(userEmail);
+    cy.findByLabelText("User email address(es)*").contains(userEmail);
   }
 
   selectEditorRole() {

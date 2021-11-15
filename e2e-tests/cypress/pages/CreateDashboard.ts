@@ -9,11 +9,11 @@ class CreateDashboardPage {
   }
 
   fillName(name: string) {
-    cy.findByLabelText("Dashboard Name").type(name);
+    cy.findByLabelText("Dashboard Name*").type(name);
   }
 
   fillDescription(description: string) {
-    cy.findByLabelText("Description - optional").type(description);
+    cy.findByLabelText("Description (optional)").type(description);
   }
 
   submit(): EditDashboardPage {

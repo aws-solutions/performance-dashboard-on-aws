@@ -6,7 +6,7 @@ class AddChartPage {
   }
 
   selectStaticDataset() {
-    cy.findByLabelText("Static dataset").check({ force: true });
+    cy.findByTestId("staticDatasetRadioButton").check({ force: true });
   }
 
   uploadDataset(fixture: string) {
@@ -21,11 +21,11 @@ class AddChartPage {
   }
 
   fillTitle(title: string) {
-    cy.findByLabelText("Chart title").type(title);
+    cy.findByLabelText("Chart title*").type(title);
   }
 
   fillSummary(summary: string) {
-    cy.findByLabelText("Chart summary - optional").type(summary);
+    cy.findByLabelText("Chart summary (optional)").type(summary);
   }
 
   verifyPreview(title: string, summary: string) {

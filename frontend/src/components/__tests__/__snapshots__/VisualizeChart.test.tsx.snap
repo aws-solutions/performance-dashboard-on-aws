@@ -19,6 +19,9 @@ exports[`renders the VisualizeChart component 1`] = `
             for="title"
           >
             Chart title
+            <span>
+              *
+            </span>
           </label>
           <div
             class="usa-hint"
@@ -362,7 +365,7 @@ exports[`renders the VisualizeChart component 1`] = `
             class="usa-label text-bold"
             for="summary"
           >
-            Chart summary - optional
+            Chart summary (optional)
           </label>
           <div
             class="usa-hint"
@@ -531,6 +534,9 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             for="title"
           >
             Chart title
+            <span>
+              *
+            </span>
           </label>
           <div
             class="usa-hint"
@@ -873,7 +879,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             class="usa-label text-bold"
             for="summary"
           >
-            Chart summary - optional
+            Chart summary (optional)
           </label>
           <div
             class="usa-hint"

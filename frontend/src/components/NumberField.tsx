@@ -37,6 +37,7 @@ function NumberField(props: Props) {
     <div className={formGroupClassName}>
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
+        {props.label && props.required && <span>&#42;</span>}
       </label>
       <div className="usa-hint">{props.hint}</div>
       {props.error && (

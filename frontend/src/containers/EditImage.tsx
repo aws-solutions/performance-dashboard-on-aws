@@ -265,6 +265,7 @@ function EditImage() {
                         hint={t("EditImageScreen.TextHint")}
                         register={register}
                         error={errors.altText && t("EditImageScreen.TextError")}
+                        required
                         defaultValue={widget.content.imageAltText}
                         multiline
                         rows={1}

@@ -909,7 +909,7 @@
   "DashboardWasCopied": "se ha copiado correctamente.",
   "Copy": "Copiar",
   "CopyContent": "Copiar {{name}}",
-  "DownloadCSV": "Descargar",
+  "DownloadCSV": "Descargar tabla",
   "MobilePreview": "Vista previa móvil",
   "MetricsCenterAlign": "Mostrar con alineación centrada",
   "DisplayTableOfContents": "Mostrar tabla de contenidos",
@@ -928,5 +928,7 @@
   "DeselectAll": "Anular la selección de todos",
   "EditTableOfContentsDescription": "El índice muestra información general de los elementos de contenido del panel. Personalice la tabla de contenido seleccionando los elementos de contenido que quiera incluir. Si se selecciona un elemento a continuación, el título se incluirá en la tabla de contenido.",
   "DisplayWithPages": "Mostrar con páginas",
-  "SelectColumns": "Seleccione columnas para dar formato a los datos."
+  "SelectColumns": "Seleccione columnas para dar formato a los datos.",
+  "Tab": "Pestaña",
+  "Active": "Activo"
 }

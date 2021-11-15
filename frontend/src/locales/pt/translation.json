@@ -909,7 +909,7 @@
   "DashboardWasCopied": "foi copiado com êxito.",
   "Copy": "Copiar",
   "CopyContent": "Copiar {{name}}",
-  "DownloadCSV": "Fazer download",
+  "DownloadCSV": "Baixar a tabela",
   "MobilePreview": "Pré-visualização para dispositivos móveis",
   "MetricsCenterAlign": "Exibição com alinhamento central",
   "DisplayTableOfContents": "Exibir índice",
@@ -928,5 +928,7 @@
   "DeselectAll": "Desmarcar tudo",
   "EditTableOfContentsDescription": "O sumário exibe uma visão geral dos itens de conteúdo em seu painel. Para personalizar o sumário, selecione os itens de conteúdo que serão incluídos. Se um item de conteúdo for selecionado abaixo, o respectivo título será incluído no sumário.",
   "DisplayWithPages": "Exibir com páginas",
-  "SelectColumns": "Selecione as colunas para formatar os dados."
+  "SelectColumns": "Selecione as colunas para formatar os dados.",
+  "Tab": "Guia",
+  "Active": "Ativa"
 }

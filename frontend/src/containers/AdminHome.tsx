@@ -30,13 +30,6 @@ function AdminHome() {
     history.push("/admin/settings");
   };
 
-  const onViewPublicWebsite = () => {
-    const win = window.open("/", "_blank");
-    if (!!win) {
-      win.focus();
-    }
-  };
-
   if (
     !currentAuthenticatedUser ||
     (!currentAuthenticatedUser.isEditor && !currentAuthenticatedUser.isAdmin)
@@ -52,11 +45,10 @@ function AdminHome() {
             {t("WelcomeToPDoA")}
           </h1>
           <p className="font-sans-lg usa-prose">
-            {`${
-              currentAuthenticatedUser.isAdmin
+            {`${currentAuthenticatedUser.isAdmin
                 ? `${t("WhatYouCanDoAsAdmin")}`
                 : `${t("WhatYouCanDoAsNotAdmin")}`
-            }`}
+              }`}
           </p>
         </div>
       </div>
@@ -154,10 +146,18 @@ function AdminHome() {
           <p className="font-sans-md">
             {t("PDoASite")} <br /> {t("WantToViewPublishedSite")}
           </p>
-          <Button type="button" variant="outline" onClick={onViewPublicWebsite}>
-            {t("ViewPublishedSite")}{" "}
-            <FontAwesomeIcon size="sm" icon={faExternalLinkAlt} />
-          </Button>
+          <a
+            href="/"
+            target="_blank"
+            title="(opens in a new tab)"
+            className="link">
+            {t("ViewPublishedSite")}
+            <FontAwesomeIcon
+              icon={faExternalLinkAlt}
+              className="margin-left-05"
+              size="xs"
+            />
+          </a>
         </div>
       </div>
     </div>

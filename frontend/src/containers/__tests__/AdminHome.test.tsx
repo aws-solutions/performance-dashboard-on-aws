@@ -55,15 +55,13 @@ test("renders a view dashboard button", async () => {
   expect(history.push).toBeCalledWith("/admin/settings");
 });
 
-test("renders a view public site button", async () => {
-  const viewButton = screen.getByRole("button", {
-    name: "View the published site",
-  });
-  expect(viewButton).toBeInTheDocument();
-
-  await act(async () => {
-    fireEvent.click(viewButton);
+test("renders a view public site link", async () => {
+  const viewLink = screen.getByRole("link", {
+    name: "(opens in a new tab)",
   });
 
-  expect(global.open).toBeCalledWith("/", "_blank");
+  expect(viewLink).toBeInTheDocument();
+  expect(viewLink).toHaveAttribute("target", "_blank");
+  expect(viewLink).toHaveAttribute("href", "/");
+  expect(viewLink).toHaveAttribute("title", "(opens in a new tab)");
 });

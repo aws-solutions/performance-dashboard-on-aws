@@ -6,11 +6,11 @@ class AddTextPage {
   }
 
   fillTitle(title: string) {
-    cy.findByLabelText("Text title").type(title);
+    cy.findByLabelText("Text title*").type(title);
   }
 
   fillTextContent(content: string) {
-    cy.findByLabelText("Text").type(content);
+    cy.findByLabelText("Text*").type(content);
   }
 
   verifyPreview(title: string, content: string) {

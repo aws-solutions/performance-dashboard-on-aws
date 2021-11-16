@@ -116,6 +116,7 @@ function CreateDashboard() {
                       value: topicarea.id,
                       label: topicarea.name,
                     }))}
+                    required
                   />
 
                   <TextField

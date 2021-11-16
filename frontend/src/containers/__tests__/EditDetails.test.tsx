@@ -6,6 +6,7 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import { Route, Router } from "react-router-dom";
 import BackendService from "../../services/BackendService";
@@ -31,6 +32,8 @@ beforeEach(async () => {
 });
 
 test("submits form with the entered values", async () => {
+  userEvent.selectOptions(screen.getByLabelText("Ministry*"), "123456789");
+
   await act(async () => {
     fireEvent.submit(screen.getByTestId("EditDetailsForm"));
   });
@@ -38,7 +41,7 @@ test("submits form with the entered values", async () => {
   expect(BackendService.editDashboard).toBeCalledWith(
     "123",
     "My AWS Dashboard",
-    "",
+    "123456789",
     false,
     "Some description",
     "",
@@ -54,13 +57,13 @@ test("invokes cancel function when use clicks cancel", async () => {
 });
 
 test("renders a preview of dashboard name and description", async () => {
-  fireEvent.input(screen.getByLabelText("Dashboard Name"), {
+  fireEvent.input(screen.getByLabelText("Dashboard Name*"), {
     target: {
       value: "Foo Bar",
     },
   });
 
-  fireEvent.input(screen.getByLabelText("Description - optional"), {
+  fireEvent.input(screen.getByLabelText("Description (optional)"), {
     target: {
       value: "FizzBuzz",
     },

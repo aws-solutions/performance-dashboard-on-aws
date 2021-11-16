@@ -19,6 +19,9 @@ exports[`renders the VisualizeTable component 1`] = `
             for="title"
           >
             Table title
+            <span>
+              *
+            </span>
           </label>
           <div
             class="usa-hint"
@@ -161,7 +164,7 @@ exports[`renders the VisualizeTable component 1`] = `
             class="usa-label text-bold"
             for="summary"
           >
-            Table summary - optional
+            Table summary (optional)
           </label>
           <div
             class="usa-hint"

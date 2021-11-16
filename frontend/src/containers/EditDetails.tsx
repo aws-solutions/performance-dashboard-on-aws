@@ -195,6 +195,7 @@ function EditDetails() {
                       value: topicarea.id,
                       label: topicarea.name,
                     }))}
+                    required
                   />
 
                   <div className="usa-form-group">

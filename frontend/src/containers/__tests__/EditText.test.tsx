@@ -20,12 +20,12 @@ test("renders title", async () => {
 
 test("renders a text input for title", async () => {
   const { getByLabelText } = render(<EditText />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Text title")).toBeInTheDocument();
+  expect(getByLabelText("Text title*")).toBeInTheDocument();
 });
 
 test("renders a text input for content", async () => {
   const { getByLabelText } = render(<EditText />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Text")).toBeInTheDocument();
+  expect(getByLabelText("Text*")).toBeInTheDocument();
 });
 
 test("renders the expand preview button", async () => {

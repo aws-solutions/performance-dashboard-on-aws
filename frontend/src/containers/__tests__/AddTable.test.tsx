@@ -44,7 +44,7 @@ test("renders title and subtitles", async () => {
 
 test("renders a textfield for table title", async () => {
   render(<AddTable />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("Table title")).toBeInTheDocument();
+  expect(await screen.findByLabelText("Table title*")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {
@@ -83,7 +83,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     fireEvent.click(continueButton);
   });
 
-  fireEvent.input(getByLabelText("Table title"), {
+  fireEvent.input(getByLabelText("Table title*"), {
     target: {
       value: "COVID Cases",
     },

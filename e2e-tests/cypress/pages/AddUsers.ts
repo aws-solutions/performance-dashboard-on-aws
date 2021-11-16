@@ -4,7 +4,7 @@ class AddUsersPage {
   }
 
   fillEmailAddress(userEmail: string) {
-    cy.findByLabelText("User email address(es)").type(userEmail);
+    cy.findByLabelText("User email address(es)*").type(userEmail);
   }
 
   selectAdminRole() {

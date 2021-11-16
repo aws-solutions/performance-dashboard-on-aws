@@ -4,7 +4,7 @@ class PublishedSitePage {
   }
 
   updateNavBarTitle(title: string) {
-    cy.findByLabelText("Title").clear().type(title);
+    cy.findByLabelText("Title*").clear().type(title);
   }
 
   updateNavBarEmail(email: string) {
@@ -57,7 +57,7 @@ class PublishedSitePage {
   }
 
   updateHomepageHeadline(headline: string) {
-    cy.findByLabelText("Headline").clear().type(headline);
+    cy.findByLabelText("Headline*").clear().type(headline);
   }
 
   updateHomepageDescription(description: string) {
@@ -91,7 +91,9 @@ class PublishedSitePage {
   }
 
   verifyHeadlineAndDescription(headline: string, description: string) {
-    cy.get("[data-testid='published-site-headline'] .Markdown").contains(headline);
+    cy.get("[data-testid='published-site-headline'] .Markdown").contains(
+      headline
+    );
     cy.get("div.Markdown.undefined").eq(3).contains(description);
 
     cy.intercept({

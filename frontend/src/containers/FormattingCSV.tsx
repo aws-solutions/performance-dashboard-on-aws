@@ -270,6 +270,7 @@ function FormattingCSV() {
           data={table.dataset.data}
           summaryBelow={false}
           columnsMetadata={[]}
+          displayWithPages={false}
           significantDigitLabels={false}
         />
       </div>

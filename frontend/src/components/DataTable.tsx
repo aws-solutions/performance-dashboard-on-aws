@@ -1,4 +1,4 @@
-import React, { useState, useMemo, RefObject } from "react";
+import React, { useState, useMemo } from "react";
 import { ColumnMetadata } from "../models";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
@@ -13,6 +13,7 @@ import {
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import "./DataTable.scss";
+import { useHistory } from "react-router-dom";
 
 const { MenuItem } = DropdownMenu;
 
@@ -31,9 +32,10 @@ function DataTable({
   fileName,
   showMobilePreview,
 }: Props) {
-  const downloadButton = React.createRef<CSVLink>();
+  const history = useHistory();
   const { t } = useTranslation();
   const [showDataTable, setShowDataTable] = useState(false);
+  let canDownload = false;
 
   const tableRows = useMemo(() => rows, [rows]);
   const tableColumns = useMemo(
@@ -104,7 +106,12 @@ function DataTable({
                 document.querySelector(
                   "[data-reach-menu-item][data-selected] a"
                 );
-              downloadButton?.click();
+              if (downloadButton) {
+                // de-duplicate clicks when link clicked
+                canDownload = true;
+                downloadButton.click();
+                canDownload = false;
+              }
             }}
           >
             <FontAwesomeIcon
@@ -112,7 +119,25 @@ function DataTable({
               className="margin-right-1"
               size="xs"
             />
-            <CSVLink data={tableRows} filename={fileName} className="usa-link">
+            <CSVLink
+              data={tableRows}
+              filename={fileName}
+              className="usa-link"
+              onClick={() => {
+                if (!canDownload) {
+                  return false;
+                }
+                history.replace(history.location.pathname, {
+                  alert: {
+                    type: "success",
+                    message: t("DownloadFileSuccess", {
+                      fileName: `${fileName}.csv`,
+                    }),
+                  },
+                });
+                return true;
+              }}
+            >
               {t("DownloadCSV")}
             </CSVLink>
           </MenuItem>

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 2021-11-15
+
+- An example dashboard in English, Spanish, or Portuguese is included on solution installation.
+- Search on Homepage now extends to other text portions of the dashboard, beyond the name.
+- The pagination feature for a table component now has its display vary based on size for improved customer experience.
+
 ## [1.1.3] - 2021-10-28
 
 ### Added

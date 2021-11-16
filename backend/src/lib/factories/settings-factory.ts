@@ -19,7 +19,7 @@ function getDefaultSettings(): Settings {
     customLogoAltText: undefined,
     customFaviconS3Key: undefined,
     colors: {
-      primary: "#2491ff",
+      primary: "#005EA2",
       secondary: "#54278f",
     },
   };

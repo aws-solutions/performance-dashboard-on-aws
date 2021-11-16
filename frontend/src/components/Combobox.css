@@ -1,6 +1,6 @@
-.usa-combo-box__list-option[data-value="#2491ff"]::after {
-  background-color: #2491ff;
-  color: #2491ff;
+.usa-combo-box__list-option[data-value="#005EA2"]::after {
+  background-color: #005ea2;
+  color: #005ea2;
   margin: 5px;
   border-radius: 4px;
   content: "pla";
@@ -30,25 +30,25 @@
   content: "pla";
 }
 
-.usa-combo-box__list-option[data-value="#00a398"]::after {
-  background-color: #00a398;
-  color: #00a398;
+.usa-combo-box__list-option[data-value="#136C66"]::after {
+  background-color: #136c66;
+  color: #136c66;
   margin: 5px;
   border-radius: 4px;
   content: "pla";
 }
 
-.usa-combo-box__list-option[data-value="#c2850c"]::after {
-  background-color: #c2850c;
-  color: #c2850c;
+.usa-combo-box__list-option[data-value="#996600"]::after {
+  background-color: #996600;
+  color: #996600;
   margin: 5px;
   border-radius: 4px;
   content: "pla";
 }
 
-.usa-combo-box__list-option[data-value="#fd4496"]::after {
-  background-color: #fd4496;
-  color: #fd4496;
+.usa-combo-box__list-option[data-value="#DC0061"]::after {
+  background-color: #dc0061;
+  color: #dc0061;
   margin: 5px;
   border-radius: 4px;
   content: "pla";

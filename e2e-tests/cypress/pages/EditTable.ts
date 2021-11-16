@@ -21,11 +21,11 @@ class EditTablePage {
   }
 
   fillTitle(title: string) {
-    cy.findByLabelText("Table title").clear().type(title);
+    cy.findByLabelText("Table title*").clear().type(title);
   }
 
   fillSummary(summary: string) {
-    cy.findByLabelText("Table summary - optional").clear().type(summary);
+    cy.findByLabelText("Table summary (optional)").clear().type(summary);
   }
 
   verifyPreview(title: string, summary: string) {

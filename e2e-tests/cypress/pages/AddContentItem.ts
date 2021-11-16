@@ -11,27 +11,27 @@ class AddContentItemPage {
   }
 
   selectTextContentItem() {
-    cy.findByLabelText("Text").check({ force: true });
+    cy.findByTestId("textRadioButton").check({ force: true });
     this.selectedContentItem = "Text";
   }
 
   selectMetricsContentItem() {
-    cy.findByLabelText("Metrics").check({ force: true });
+    cy.findByTestId("metricsRadioButton").check({ force: true });
     this.selectedContentItem = "Metrics";
   }
 
   selectChartContentItem() {
-    cy.findByLabelText("Chart").check({ force: true });
+    cy.findByTestId("chartRadioButton").check({ force: true });
     this.selectedContentItem = "Chart";
   }
 
   selectTableContentItem() {
-    cy.findByLabelText("Table").check({ force: true });
+    cy.findByTestId("tableRadioButton").check({ force: true });
     this.selectedContentItem = "Table";
   }
 
   selectImageContentItem() {
-    cy.findByLabelText("Image").check({ force: true });
+    cy.findByTestId("imageRadioButton").check({ force: true });
     this.selectedContentItem = "Image";
   }
 

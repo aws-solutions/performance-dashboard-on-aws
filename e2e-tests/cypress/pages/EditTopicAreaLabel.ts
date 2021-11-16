@@ -2,11 +2,11 @@ import TopicAreaListingPage from "./TopicAreaListing";
 
 class EditTopicAreaLabelPage {
   renameTopicAreaLabel(newName: string) {
-    cy.findByLabelText("Rename single 'topic area'").clear().type(newName);
+    cy.findByLabelText("Rename single 'topic area'*").clear().type(newName);
   }
 
   renameTopicAreasLabel(newNames: string) {
-    cy.findByLabelText("Rename multiple 'topic areas'").clear().type(newNames);
+    cy.findByLabelText("Rename multiple 'topic areas'*").clear().type(newNames);
   }
 
   submit(): TopicAreaListingPage {

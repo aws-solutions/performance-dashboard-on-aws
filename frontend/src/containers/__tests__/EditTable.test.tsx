@@ -30,7 +30,7 @@ test("renders title", async () => {
 
 test("renders a textfield for table title", async () => {
   render(<EditTable />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("Table title")).toBeInTheDocument();
+  expect(await screen.findByLabelText("Table title*")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {

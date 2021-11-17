@@ -369,7 +369,7 @@ function WidgetList(props: Props) {
                                     </Link>
                                     <Button
                                       variant="unstyled"
-                                      className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
+                                      className="margin-left-2 usa-link"
                                       onClick={() => onDuplicate(widget)}
                                       ariaLabel={t("CopyContent", {
                                         name: widget.name,
@@ -379,7 +379,7 @@ function WidgetList(props: Props) {
                                     </Button>
                                     <Button
                                       variant="unstyled"
-                                      className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
+                                      className="margin-left-2 usa-link"
                                       onClick={() => onDelete(widget)}
                                       ariaLabel={t("DeleteContent", {
                                         name: widget.name,

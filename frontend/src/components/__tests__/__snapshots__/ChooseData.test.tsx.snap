@@ -18,7 +18,7 @@ exports[`renders the ChooseData component 1`] = `
        
       <a
         aria-label=""
-        class="link"
+        class="usa-link action-link"
         href="/admin/apihelp"
         target="_blank"
       >
@@ -144,7 +144,7 @@ exports[`renders the ChooseData component 1`] = `
                  
                 <a
                   aria-label=""
-                  class="link"
+                  class="usa-link action-link"
                   href="/admin/formatting"
                   target="_blank"
                 >

@@ -81,7 +81,7 @@ function DataTable({
         }
       >
         <DropdownMenu
-          className="text-base"
+          className="text-base-dark"
           buttonText={t("Actions")}
           disabled={false}
           variant="unstyled"

@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import BarChartWidget from "../components/BarChartWidget";
 import PieChartWidget from "../components/PieChartWidget";
 import DonutChartWidget from "../components/DonutChartWidget";
+import AlertContainer from "./AlertContainer";
 
 const LINE_CHART_CSV = "Example-CSV-Line.csv";
 const BAR_CHART_CSV = "Example-CSV-Bar.csv";
@@ -36,6 +37,8 @@ function FormattingCSV() {
 
   return (
     <>
+      <AlertContainer />
+
       <h1 className="font-sans-2xl">
         {t("FormatCSVScreen.FormattingCSVFiles")}
       </h1>

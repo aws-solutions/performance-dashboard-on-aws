@@ -24,7 +24,7 @@ exports[`renders the VisualizeTable component 1`] = `
             </span>
           </label>
           <div
-            class="usa-hint"
+            class="usa-hint text-base-dark"
           >
             Give your table a descriptive title.
           </div>
@@ -167,7 +167,7 @@ exports[`renders the VisualizeTable component 1`] = `
             Table summary (optional)
           </label>
           <div
-            class="usa-hint"
+            class="usa-hint text-base-dark"
           >
             Give your table a summary to explain it in more depth. It can also be read by screen readers to describe the table for those with visual impairments. This field supports markdown.
              

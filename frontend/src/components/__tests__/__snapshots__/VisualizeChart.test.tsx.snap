@@ -374,7 +374,7 @@ exports[`renders the VisualizeChart component 1`] = `
              
             <a
               aria-label=""
-              class="link"
+              class="usa-link action-link"
               href="/admin/markdown"
               target="_blank"
             >
@@ -888,7 +888,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
              
             <a
               aria-label=""
-              class="link"
+              class="usa-link action-link"
               href="/admin/markdown"
               target="_blank"
             >

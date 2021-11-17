@@ -121,7 +121,7 @@ function DataTable({
             />
             <CSVLink
               data={tableRows}
-              filename={fileName}
+              filename={`${fileName}.csv`}
               className="usa-link"
               onClick={() => {
                 if (!canDownload) {

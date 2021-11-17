@@ -45,10 +45,11 @@ function AdminHome() {
             {t("WelcomeToPDoA")}
           </h1>
           <p className="font-sans-lg usa-prose">
-            {`${currentAuthenticatedUser.isAdmin
+            {`${
+              currentAuthenticatedUser.isAdmin
                 ? `${t("WhatYouCanDoAsAdmin")}`
                 : `${t("WhatYouCanDoAsNotAdmin")}`
-              }`}
+            }`}
           </p>
         </div>
       </div>
@@ -150,7 +151,8 @@ function AdminHome() {
             href="/"
             target="_blank"
             title="(opens in a new tab)"
-            className="link">
+            className="link"
+          >
             {t("ViewPublishedSite")}
             <FontAwesomeIcon
               icon={faExternalLinkAlt}

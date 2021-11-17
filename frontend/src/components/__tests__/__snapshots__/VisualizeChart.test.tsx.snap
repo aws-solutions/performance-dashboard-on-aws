@@ -374,7 +374,7 @@ exports[`renders the VisualizeChart component 1`] = `
              
             <a
               aria-label=""
-              class="link"
+              class="usa-link action-link"
               href="/admin/markdown"
               target="_blank"
             >
@@ -484,7 +484,7 @@ exports[`renders the VisualizeChart component 1`] = `
               <button
                 aria-controls="menu--1"
                 aria-haspopup="true"
-                class="usa-button usa-button--unstyled text-base"
+                class="usa-button usa-button--unstyled text-base-dark"
                 data-reach-menu-button=""
                 id="menu-button--menu--1"
                 type="button"
@@ -888,7 +888,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
              
             <a
               aria-label=""
-              class="link"
+              class="usa-link action-link"
               href="/admin/markdown"
               target="_blank"
             >
@@ -998,7 +998,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               <button
                 aria-controls="menu--7"
                 aria-haspopup="true"
-                class="usa-button usa-button--unstyled text-base"
+                class="usa-button usa-button--unstyled text-base-dark"
                 data-reach-menu-button=""
                 id="menu-button--menu--7"
                 type="button"

@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import "./Link.css";
+import "./Link.scss";
 
 interface Props {
   children: ReactNode | string;
@@ -17,7 +17,7 @@ function Link(props: Props) {
     <ReactRouterLink
       target={props.target || ""}
       to={props.to}
-      className="link"
+      className="usa-link action-link"
       aria-label={props.ariaLabel || ""}
     >
       <span>{props.children}</span>

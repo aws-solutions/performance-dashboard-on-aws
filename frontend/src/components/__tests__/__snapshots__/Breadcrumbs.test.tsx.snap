@@ -49,7 +49,7 @@ exports[`renders a breadcrumb with two crumbs 1`] = `
       >
         <a
           aria-label=""
-          class="link"
+          class="usa-link action-link"
           href="/home"
           target=""
         >

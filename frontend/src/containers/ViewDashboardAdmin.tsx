@@ -26,6 +26,7 @@ import "./ViewDashboardAdmin.css";
 import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
 import Dropdown from "../components/Dropdown";
+import AlertContainer from "./AlertContainer";
 
 interface PathParams {
   dashboardId: string;
@@ -638,6 +639,7 @@ function ViewDashboardAdmin() {
           />
         ) : (
           <>
+            <AlertContainer />
             <DashboardHeader
               name={dashboard.name}
               topicAreaName={dashboard.topicAreaName}

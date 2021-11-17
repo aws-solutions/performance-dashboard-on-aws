@@ -60,7 +60,7 @@ exports[`renders the API Help Page component 1`] = `
        
       <a
         aria-label=""
-        class="link"
+        class="usa-link action-link"
         href="/admin/formatting"
         target="_blank"
       >

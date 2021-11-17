@@ -779,7 +779,7 @@
   "Pie": "Pie",
   "Donut": "Donut",
   "ToggleSortBy": "Toggle SortBy",
-  "Showing": "Showing",
+  "ShowingPages": "Showing {{startItem}}-{{endItem}} of {{totalItems}}",
   "Page": "Page",
   "Go": "Go",
   "Show": "Show",

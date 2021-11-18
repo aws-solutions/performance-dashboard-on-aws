@@ -81,8 +81,11 @@ function splitAndSearch(paragraph: string, query: string) {
 // Returns homepage title, description and a list of dashboards
 // with content that matches a search query.
 async function getPublicHomepageWithQuery(req: Request, res: Response) {
-  let { query } = req.params;
-  query = query.toLowerCase();
+  const { q } = req.query;
+  if (!q) {
+    return getHomepage(req, res);
+  }
+  const query = (q as string).toLowerCase().trim();
 
   const repo = HomepageRepository.getInstance();
   let homepage = await repo.getHomepage();

@@ -279,6 +279,11 @@ const routes: Array<AppRoute> = [
     component: ChangeRole,
   },
   {
+    path: "/public/search",
+    component: HomeWithSearch,
+    public: true,
+  },
+  {
     path: "/403/access-denied",
     component: AccessDenied,
   },
@@ -295,11 +300,6 @@ const routes: Array<AppRoute> = [
   {
     path: "/",
     component: Home,
-    public: true,
-  },
-  {
-    path: "/search/:query",
-    component: HomeWithSearch,
     public: true,
   },
 ];

@@ -830,6 +830,7 @@
   "HighToLow": "high to low",
   "AZ": "A-Z",
   "ZA": "Z-A",
+  "DownloadFileSuccess": "'{{fileName}}' has been downloaded.",
   "DownloadFileError": "The query using the provided S3 key, returned no results.",
   "UploadDatasetError": "Raw file is not an accepted format.",
   "PartWholeChart": "Part-to-whole Chart",

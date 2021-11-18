@@ -16,10 +16,7 @@ router.get(
   errorHandler(DashboardCtrl.getPublicDashboardByFriendlyURL)
 );
 
-router.get(
-  "/search/:query",
-  errorHandler(HomepageCtrl.getPublicHomepageWithQuery)
-);
+router.get("/search", errorHandler(HomepageCtrl.getPublicHomepageWithQuery));
 
 router.get("/homepage", errorHandler(HomepageCtrl.getPublicHomepage));
 router.get("/settings", errorHandler(SettingsCtrl.getPublicSettings));

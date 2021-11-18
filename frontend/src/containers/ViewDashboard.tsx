@@ -11,6 +11,7 @@ import DashboardHeader from "../components/DashboardHeader";
 import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
 import { PublicDashboard, Widget, WidgetType } from "../models";
+import AlertContainer from "./AlertContainer";
 
 interface PathParams {
   friendlyURL: string;
@@ -76,6 +77,8 @@ function ViewDashboard() {
     />
   ) : (
     <>
+      <AlertContainer />
+
       <Link to="/">
         <FontAwesomeIcon icon={faArrowLeft} /> {t("AllDashboardsLink")}
       </Link>

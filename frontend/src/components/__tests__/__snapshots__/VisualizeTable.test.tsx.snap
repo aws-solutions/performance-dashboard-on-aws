@@ -173,7 +173,7 @@ exports[`renders the VisualizeTable component 1`] = `
              
             <a
               aria-label=""
-              class="link"
+              class="usa-link action-link"
               href="/admin/markdown"
               target="_blank"
             >
@@ -279,6 +279,7 @@ exports[`renders the VisualizeTable component 1`] = `
                   role="row"
                 >
                   <th
+                    aria-sort=""
                     colspan="1"
                     role="columnheader"
                     scope="col"
@@ -311,6 +312,7 @@ exports[`renders the VisualizeTable component 1`] = `
                     </button>
                   </th>
                   <th
+                    aria-sort=""
                     colspan="1"
                     role="columnheader"
                     scope="col"
@@ -343,6 +345,7 @@ exports[`renders the VisualizeTable component 1`] = `
                     </button>
                   </th>
                   <th
+                    aria-sort=""
                     colspan="1"
                     role="columnheader"
                     scope="col"

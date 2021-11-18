@@ -255,6 +255,13 @@ function Table(props: Props) {
                 <th
                   scope="col"
                   {...column.getHeaderProps()}
+                  aria-sort={
+                    column.isSorted
+                      ? column.isSortedDesc
+                        ? "desc"
+                        : "asc"
+                      : ""
+                  }
                   style={
                     props.selection !== "none"
                       ? {

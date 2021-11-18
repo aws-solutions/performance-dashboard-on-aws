@@ -3,10 +3,13 @@ $theme-image-path: "~uswds/dist/img";
 $theme-font-path: "~uswds/dist/fonts";
 
 // links
-$theme-link-color: "base-dark";
+$theme-link-color: "base";
 $theme-link-visited-color: "base-light";
-$theme-link-hover-color: "base-darkest";
-$theme-link-active-color: "base-darkest";
+$theme-link-hover-color: "base-dark";
+$theme-link-active-color: "base-darker";
+$theme-link-reverse-color: "base-lighter";
+$theme-link-reverse-hover-color: "base-lightest";
+$theme-link-reverse-active-color: "white";
 
 // Base colors
 $theme-color-base: "gray-cool-70";

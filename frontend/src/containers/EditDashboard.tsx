@@ -254,7 +254,7 @@ function EditDashboard() {
 
   const lastSavedAndButtons = (
     <>
-      <span className="text-base-dark margin-right-1">
+      <span className="text-base margin-right-1">
         {dashboard &&
           `${t("LastSaved")} ${dayjs(dashboard.updatedAt)
             .locale(window.navigator.language.toLowerCase())

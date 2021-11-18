@@ -211,7 +211,7 @@ function PublishDashboard() {
         {isMobile && (
           <>
             <div className="margin-top-2">{statusAndVersion}</div>
-            <div className="text-base-dark margin-right-1 margin-y-2">
+            <div className="text-base margin-right-1 margin-y-2">
               {dashboard &&
                 `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
                   .locale(window.navigator.language.toLowerCase())
@@ -246,7 +246,7 @@ function PublishDashboard() {
           <div className="grid-row">
             <div className="grid-col text-right display-flex flex-row flex-align-center padding-top-2">
               {statusAndVersion}
-              <span className="text-base-dark margin-right-1">
+              <span className="text-base margin-right-1">
                 {dashboard &&
                   `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
                     .locale(window.navigator.language.toLowerCase())
@@ -274,7 +274,7 @@ function PublishDashboard() {
           {dashboard.name}
         </h1>
         <div className="margin-top-1 margin-bottom-4">
-          <span className="text-base-dark text-italic">
+          <span className="text-base text-italic">
             {dashboard.topicAreaName}
           </span>
         </div>

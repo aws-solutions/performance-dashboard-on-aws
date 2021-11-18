@@ -24,7 +24,7 @@ exports[`renders the VisualizeChart component 1`] = `
             </span>
           </label>
           <div
-            class="usa-hint text-base-dark"
+            class="usa-hint"
           >
             Give your chart a descriptive title.
           </div>
@@ -368,7 +368,7 @@ exports[`renders the VisualizeChart component 1`] = `
             Chart summary (optional)
           </label>
           <div
-            class="usa-hint text-base-dark"
+            class="usa-hint"
           >
             Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
              
@@ -484,7 +484,7 @@ exports[`renders the VisualizeChart component 1`] = `
               <button
                 aria-controls="menu--1"
                 aria-haspopup="true"
-                class="usa-button usa-button--unstyled text-base-dark"
+                class="usa-button usa-button--unstyled text-base"
                 data-reach-menu-button=""
                 id="menu-button--menu--1"
                 type="button"
@@ -539,7 +539,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             </span>
           </label>
           <div
-            class="usa-hint text-base-dark"
+            class="usa-hint"
           >
             Give your chart a descriptive title.
           </div>
@@ -882,7 +882,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             Chart summary (optional)
           </label>
           <div
-            class="usa-hint text-base-dark"
+            class="usa-hint"
           >
             Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
              
@@ -998,7 +998,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               <button
                 aria-controls="menu--7"
                 aria-haspopup="true"
-                class="usa-button usa-button--unstyled text-base-dark"
+                class="usa-button usa-button--unstyled text-base"
                 data-reach-menu-button=""
                 id="menu-button--menu--7"
                 type="button"

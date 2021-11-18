@@ -33,7 +33,7 @@ exports[`renders a FourZeroFour component 1`] = `
   </div>
   <footer>
     <div
-      class="grid-container margin-bottom-9 text-base-dark font-sans-sm"
+      class="grid-container margin-bottom-9 text-base font-sans-sm"
     >
       <hr
         class="margin-top-9 border-base-lightest"

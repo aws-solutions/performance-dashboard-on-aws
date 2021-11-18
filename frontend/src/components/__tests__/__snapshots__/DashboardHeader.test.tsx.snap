@@ -14,7 +14,7 @@ exports[`renders a dashboard header for a published view 1`] = `
         Dashboard 1
       </h1>
       <div
-        class="text-base-dark text-italic margin-bottom-2"
+        class="text-base text-italic margin-bottom-2"
       >
         Test Topic Area
       </div>
@@ -48,7 +48,7 @@ exports[`renders a dashboard header for an unpublished view 1`] = `
         Dashboard 1
       </h1>
       <div
-        class="text-base-dark text-italic margin-bottom-2"
+        class="text-base text-italic margin-bottom-2"
       >
         Test Topic Area
       </div>
@@ -83,7 +83,7 @@ exports[`renders a dashboard header for an unpublished view with a link 1`] = `
       </h1>
       A test link
       <div
-        class="text-base-dark text-italic margin-bottom-2"
+        class="text-base text-italic margin-bottom-2"
       >
         Test Topic Area
       </div>

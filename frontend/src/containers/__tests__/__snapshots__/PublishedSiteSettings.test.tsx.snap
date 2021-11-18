@@ -14,7 +14,7 @@ exports[`published site settings should match snapshot 1`] = `
       >
         <a
           aria-label=""
-          class="link"
+          class="usa-link action-link"
           href="/admin/settings/topicarea"
           target=""
         >
@@ -162,7 +162,7 @@ exports[`published site settings should match snapshot 1`] = `
              
             <a
               aria-label=""
-              class="link"
+              class="usa-link action-link"
               href="/"
               target="_blank"
             >

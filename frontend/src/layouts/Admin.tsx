@@ -79,7 +79,9 @@ function AdminLayout(props: LayoutProps) {
                 </Link>
               </em>
             </div>
-            <button className="usa-menu-btn">{t("AdminMenu.Menu")}</button>
+            <button className="usa-menu-btn bg-primary-dark">
+              {t("AdminMenu.Menu")}
+            </button>
           </div>
           <nav
             aria-label={t("AdminMenu.PrimaryNavigation")}

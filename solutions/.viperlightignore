@@ -19,6 +19,7 @@ source/frontend/src/locales/en/translation.json:394
 source/frontend/src/locales/en/translation.json:396
 # Amazon Internal: Potential confidential designation found  Check line number: 396
 source/frontend/src/locales/en/translation.json:475
+source/frontend/src/locales/en/translation.json:476
 source/frontend/src/locales/en/translation.json:478
 # Amazon Internal: Potential confidential designation found  Check line number: 475
 CODE_OF_CONDUCT.md:4
@@ -130,6 +131,10 @@ source/frontend/src/services/__tests__/BackendService.test.ts:386
 # Potential email address discovered                         Check line number: 386  
 source/frontend/src/services/__tests__/BackendService.test.ts:392
 # Potential email address discovered                         Check line number: 392                       
+source/frontend/src/services/__tests__/BackendService.test.ts:382
+source/frontend/src/services/__tests__/BackendService.test.ts:389
+source/frontend/src/services/__tests__/BackendService.test.ts:396
+source/frontend/src/services/__tests__/BackendService.test.ts:402
 source/frontend/src/services/__tests__/EnvConfig.test.ts:14
 # Potential email address discovered                         Check line number: 14                      
 docs/user-guide.pdf
@@ -159,3 +164,4 @@ THIRD-PARTY-LICENSES:878
 THIRD-PARTY-LICENSES:879
 THIRD-PARTY-LICENSES:1021
 THIRD-PARTY-LICENSES:1025
+source/examples/README.md:49

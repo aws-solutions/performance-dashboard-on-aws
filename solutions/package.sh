@@ -6,6 +6,7 @@ WORKSPACE=$(pwd)
 CDK_DIR=$WORKSPACE/cdk
 FRONTEND_DIR=$WORKSPACE/frontend
 BACKEND_DIR=$WORKSPACE/backend
+EXAMPLES_DIR=$WORKSPACE/examples
 
 if [ "$#" -ne 2 ]; then
     echo "package.sh <environment> <cloudformation output directory>"
@@ -28,6 +29,14 @@ if [ "$outputdir" == "" ]; then
     exit 1
 fi
 
+exampleLanguage=${3:-english}
+if [ "$exampleLanguage" != "" ]; then
+    echo "Example Language = $exampleLanguage"
+else
+    echo "Please specify an example language name as third argument (i.e. en|es|pt)"
+    exit 0
+fi
+
 verify_prereqs() {
     # Verify necessary commands
     echo "node version"
@@ -46,6 +55,7 @@ create_build_directories() {
     # frontend for real.
     mkdir -p $FRONTEND_DIR/build
     mkdir -p $BACKEND_DIR/build
+    mkdir -p $EXAMPLES_DIR/build
 }
 
 package_auth() {
@@ -80,9 +90,18 @@ package_frontend() {
 }
 
 package_ops() {
-    echo "Deploying ops stack"
+    echo "Packaging ops stack"
     cd $CDK_DIR
     npm run cdk -- synth Ops --output=$outputdir
+}
+
+package_examples() {
+    echo "Packaging examples stack"
+    cd $EXAMPLES_DIR
+    npm run build
+
+    cd $CDK_DIR
+    npm run cdk -- synth DashboardExamples --require-approval never --output=$outputdir --parameters PerformanceDash-${environment}-DashboardExamples:exampleLanguage=${exampleLanguage}
 }
 
 build_cdk() {
@@ -98,3 +117,4 @@ package_auth
 package_backend
 package_frontend
 package_ops
+package_examples

@@ -20,6 +20,10 @@ if [ -d "$HOMEDIR/backend/node_modules" ]; then rm -Rf $HOMEDIR/backend/node_mod
 echo "copy to /source/backend"
 mv $HOMEDIR/backend $SOURCEDIR
 
+if [ -d "$HOMEDIR/examples/node_modules" ]; then rm -Rf $HOMEDIR/examples/node_modules; fi
+echo "copy to /source/examples"
+mv $HOMEDIR/examples $SOURCEDIR
+
 if [ -d "$HOMEDIR/cdk/node_modules" ]; then rm -Rf $HOMEDIR/cdk/node_modules; fi
 if [ -d "$HOMEDIR/cdk/cdk.out" ]; then rm -Rf $HOMEDIR/cdk/cdk.out; fi
 echo "copy to /source/cdk"
@@ -40,4 +44,3 @@ mv $HOMEDIR/NOTICE $HOMEDIR/NOTICE.txt
 cp $HOMEDIR/solutions/buildspec.yml $HOMEDIR
 cp $HOMEDIR/solutions/.viperlightignore $HOMEDIR
 cp $HOMEDIR/solutions/.viperlightrc $HOMEDIR
-# cp $HOMEDIR/solutions/CHANGELOG.md $HOMEDIR

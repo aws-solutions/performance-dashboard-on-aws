@@ -1,10 +1,16 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "(SO0157) Performance Dashboard on AWS Solution Implementation v1.1.3",
+  "Description": "(SO0157) Performance Dashboard on AWS Solution Implementation v1.1.4",
   "Parameters": {
     "AdminEmail": {
       "Type": "String",
       "Description": "Email address for the admin user",
+      "MinLength": 5
+    },
+    "ExampleLanguage": {
+      "Type": "String",
+      "AllowedValues" : ["english","spanish","portuguese"],
+      "Description": "Language to use for examples",
       "MinLength": 5
     }
   },
@@ -49,6 +55,21 @@
       "Properties": {
         "TemplateURL": {"Fn::Sub" : "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Ops.template"},
         "TimeoutInMinutes": "60"
+      }
+    },
+    "examplesStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "DependsOn": "opsStack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/DashboardExamples.template"
+        },
+        "TimeoutInMinutes": "60",
+        "Parameters": {
+          "exampleLanguage": {
+            "Ref": "ExampleLanguage"
+          }
+        }
       }
     }
   },

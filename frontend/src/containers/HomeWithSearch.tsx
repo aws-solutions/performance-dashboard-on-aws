@@ -16,7 +16,7 @@ interface QueryParams {
 
 function HomeWithSearch() {
   const params = new URLSearchParams(window.location.search);
-  const query = params.get('q');
+  const query = params.get("q");
   const { homepage, loading } = usePublicHomepageSearch(query as string);
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();

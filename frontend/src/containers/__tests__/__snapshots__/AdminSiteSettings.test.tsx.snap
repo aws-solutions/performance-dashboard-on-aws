@@ -14,7 +14,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
       >
         <a
           aria-label=""
-          class="link"
+          class="usa-link action-link"
           href="/admin/settings/topicarea"
           target=""
         >

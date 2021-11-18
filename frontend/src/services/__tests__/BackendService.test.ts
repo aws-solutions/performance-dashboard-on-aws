@@ -34,7 +34,7 @@ test("fetchPublicHomepageWithQuery makes a GET request to homepage API", async (
   await BackendService.fetchPublicHomepageWithQuery(query);
   expect(API.get).toHaveBeenCalledWith(
     "BackendApi",
-    `public/search/${query}`,
+    `public/search?q=${query}`,
     expect.anything()
   );
 });

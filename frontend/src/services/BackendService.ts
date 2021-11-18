@@ -58,17 +58,18 @@ async function fetchDashboardById(dashboardId: string): Promise<Dashboard> {
 async function fetchPublicDashboardByURL(
   friendlyURL: string
 ): Promise<Dashboard> {
+  const headers = await authHeaders();
   return await API.get(
     apiName,
     `public/dashboard/friendly-url/${friendlyURL}`,
-    {}
+    { headers }
   );
 }
 
 async function fetchPublicHomepageWithQuery(
   query: string
 ): Promise<PublicHomepage> {
-  return await API.get(apiName, `public/search/${query}`, {});
+  return await API.get(apiName, `public/search?q=${query}`, {});
 }
 
 async function fetchTopicAreas() {

@@ -249,3 +249,7 @@ textarea::placeholder {
 .button-cell-border {
   border-bottom: 0 !important;
 }
+
+.usa-table thead th[aria-sort] {
+  background-color: inherit !important;
+}

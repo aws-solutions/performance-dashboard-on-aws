@@ -253,3 +253,7 @@ textarea::placeholder {
 .usa-table thead th[aria-sort] {
   background-color: inherit !important;
 }
+
+.usa-hint {
+  @include u-text("base-dark");
+}

@@ -686,7 +686,7 @@ function ViewDashboardAdmin() {
                   })}
                   <span className="text-underline">{` ${dashboard.publishedBy}`}</span>
                 </div>
-                <div className="margin-top-2 text-base">
+                <div className="margin-top-2 text-base-dark">
                   {dashboard.releaseNotes}
                 </div>
               </>
@@ -718,7 +718,7 @@ function ViewDashboardAdmin() {
                   })}
                   <span className="text-underline">{` ${dashboard.publishedBy}`}</span>
                 </div>
-                <div className="margin-top-2 text-base">
+                <div className="margin-top-2 text-base-dark">
                   {dashboard.releaseNotes}
                 </div>
               </>

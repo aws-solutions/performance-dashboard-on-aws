@@ -1,19 +1,19 @@
 @import "../styles/base";
 
 .Markdown a {
-  color: color("base", "!important");
+  @include u-text("base-dark", "!important");
 }
 
 .Markdown a:hover {
-  color: color("base-dark", "!important");
+  @include u-text("base-darkest", "!important");
 }
 
 .Markdown a:active {
-  color: color("base-darker", "!important");
+  @include u-text("base-darkest", "!important");
 }
 
 .Markdown a:visited {
-  color: color("base", "!important");
+  @include u-text("base-light", "!important");
 }
 
 .textOrSummary p {

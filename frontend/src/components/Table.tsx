@@ -542,10 +542,14 @@ function Table(props: Props) {
                 >
                   {isMobile && (
                     <div className="text-center">
-                      {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
-                        pageIndex * pageSize + pageSize,
-                        rows.length
-                      )} ${t("Of")} ${rows.length}`}
+                      {t("ShowingPages", {
+                        startItem: pageIndex * pageSize + 1,
+                        endItem: Math.min(
+                          pageIndex * pageSize + pageSize,
+                          rows.length
+                        ),
+                        totalItems: rows.length,
+                      })}
                     </div>
                   )}
                   {props.title && (
@@ -586,10 +590,14 @@ function Table(props: Props) {
                         props.title ? "6" : "12"
                       } text-right`}
                     >
-                      {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
-                        pageIndex * pageSize + pageSize,
-                        rows.length
-                      )} ${t("Of")} ${rows.length}`}
+                      {t("ShowingPages", {
+                        startItem: pageIndex * pageSize + 1,
+                        endItem: Math.min(
+                          pageIndex * pageSize + pageSize,
+                          rows.length
+                        ),
+                        totalItems: rows.length,
+                      })}
                     </div>
                   )}
                 </div>

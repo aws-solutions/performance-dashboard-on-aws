@@ -41,7 +41,7 @@ function TextField(props: Props) {
         {props.label}
         {props.label && props.required && <span>&#42;</span>}
       </label>
-      <div className="usa-hint">{props.hint}</div>
+      <div className="usa-hint text-base-dark">{props.hint}</div>
       {props.error && (
         <span
           className="usa-error-message"

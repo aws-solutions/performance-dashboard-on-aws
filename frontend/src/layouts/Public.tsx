@@ -57,7 +57,9 @@ function PublicLayout(props: LayoutProps) {
                 </Link>
               </em>
             </div>
-            <button className="usa-menu-btn">{t("Public.Menu")}</button>
+            <button className="usa-menu-btn bg-primary-dark">
+              {t("Public.Menu")}
+            </button>
           </div>
           <nav aria-label="Primary navigation" className="usa-nav">
             <button className="usa-nav__close">

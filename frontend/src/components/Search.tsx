@@ -71,7 +71,7 @@ function Search(props: Props) {
         </button>
       </form>
       {props.onClear && props.query && (
-        <div className="text-base text-italic margin-top-3">
+        <div className="text-base-dark text-italic margin-top-3">
           {`${props.results} results for "${props.query}"`}
           <Button
             variant="unstyled"

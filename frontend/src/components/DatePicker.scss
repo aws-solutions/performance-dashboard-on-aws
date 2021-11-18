@@ -1,0 +1,6 @@
+@import "../styles/base";
+
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__day--selected {
+  @include u-bg("primary-dark", "!important");
+}

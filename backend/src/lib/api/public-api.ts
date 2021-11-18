@@ -17,7 +17,7 @@ router.get(
 );
 
 router.get(
-  "/search/:query",
+  "/search",
   errorHandler(HomepageCtrl.getPublicHomepageWithQuery)
 );
 

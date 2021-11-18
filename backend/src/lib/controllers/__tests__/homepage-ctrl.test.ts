@@ -211,8 +211,8 @@ describe("getPublicHomepageWithQuery", () => {
   beforeEach(() => {
     req = {
       user,
-      params: {
-        query: "UK",
+      query: {
+        q: "UK",
       },
     } as any as Request;
     jest.resetAllMocks();

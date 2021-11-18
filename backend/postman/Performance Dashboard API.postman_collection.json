@@ -1039,18 +1039,18 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/public/search/:query",
+              "raw": "{{baseUrl}}/public/search?q=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "public",
                 "search",
-                ":query"
+                "?q="
               ],
               "variable": [
                 {
-                  "key": "query",
+                  "key": "q",
                   "value": ""
                 }
               ]

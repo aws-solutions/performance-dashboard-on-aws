@@ -1,4 +1,4 @@
-import React, { useParams, useHistory } from "react-router-dom";
+import React, { useHistory } from "react-router-dom";
 import Link from "../components/Link";
 import { useDateTimeFormatter, usePublicHomepageSearch } from "../hooks";
 import { useTranslation } from "react-i18next";
@@ -10,13 +10,14 @@ import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
 import "./Home.css";
 
-interface PathParams {
-  query: string;
+interface QueryParams {
+  q: string;
 }
 
 function HomeWithSearch() {
-  const { query } = useParams<PathParams>();
-  const { homepage, loading } = usePublicHomepageSearch(query);
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get("q");
+  const { homepage, loading } = usePublicHomepageSearch(query as string);
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
   const history = useHistory<LocationState>();
@@ -24,7 +25,7 @@ function HomeWithSearch() {
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   const onSearch = (query: string) => {
-    history.push("/search/" + query);
+    history.push("/public/search?q=" + query);
   };
 
   const onClear = () => {

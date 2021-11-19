@@ -47,11 +47,6 @@ exports[`renders the ChooseData component 1`] = `
     class="usa-fieldset"
     id="fieldset"
   >
-    <legend
-      class="usa-sr-only"
-    >
-      Content item types
-    </legend>
     <div
       class="grid-row"
     >
@@ -228,12 +223,6 @@ exports[`renders the ChooseData component 1`] = `
             class="usa-search usa-search--small"
             role="search"
           >
-            <label
-              class="usa-sr-only"
-              for="search"
-            >
-              Search
-            </label>
             <input
               class="usa-input"
               id="search"
@@ -264,11 +253,6 @@ exports[`renders the ChooseData component 1`] = `
                   fill="currentColor"
                 />
               </svg>
-              <span
-                class="usa-sr-only"
-              >
-                Search
-              </span>
             </button>
           </div>
         </div>

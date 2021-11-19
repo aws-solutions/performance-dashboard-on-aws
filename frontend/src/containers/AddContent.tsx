@@ -81,9 +81,6 @@ function AddContent() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <fieldset className="usa-fieldset">
-              <legend className="usa-sr-only">
-                {t("ContentItemTypesLabel")}
-              </legend>
               <RadioButtonsTile
                 isHorizontally={false}
                 register={register}

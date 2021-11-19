@@ -375,11 +375,13 @@ function Table(props: Props) {
                   } font-sans-sm`}
                 >
                   <div className={`${isMobile ? "text-center" : "grid-col-4"}`}>
-                    <span className="margin-left-1 margin-right-2px">{`${t(
-                      "Page"
-                    )} `}</span>
+                    <label
+                      htmlFor="Page"
+                      className="margin-left-1 margin-right-2px"
+                    >{`${t("Page")} `}</label>
                     <span className="margin-right-1">
                       <input
+                        id="Page"
                         type="text"
                         value={`${currentPage}`}
                         className="margin-right-2px"
@@ -427,6 +429,7 @@ function Table(props: Props) {
                             gotoPage(0);
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToFirstPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleDoubleLeft}
@@ -441,6 +444,7 @@ function Table(props: Props) {
                             previousPage();
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToPrevPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleLeft}
@@ -460,6 +464,7 @@ function Table(props: Props) {
                             gotoPage(0);
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToFirstPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleDoubleLeft}
@@ -474,6 +479,7 @@ function Table(props: Props) {
                             previousPage();
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToPrevPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleLeft}
@@ -490,6 +496,7 @@ function Table(props: Props) {
                         nextPage();
                       }}
                       disabled={!canNextPage}
+                      aria-label={t("GoToNextPage")}
                     >
                       <FontAwesomeIcon
                         icon={faAngleRight}
@@ -503,6 +510,7 @@ function Table(props: Props) {
                         gotoPage(pageCount - 1);
                       }}
                       disabled={!canNextPage}
+                      aria-label={t("GoToLastPag")}
                     >
                       <FontAwesomeIcon
                         icon={faAngleDoubleRight}
@@ -523,6 +531,7 @@ function Table(props: Props) {
                         setPageSize(Number(e.target.value));
                       }}
                       className="margin-right-05"
+                      aria-label={t("SelectPageSize")}
                     >
                       {[5, 10, 20, 25, 50, 100].map((pageSize) => (
                         <option key={pageSize} value={pageSize}>

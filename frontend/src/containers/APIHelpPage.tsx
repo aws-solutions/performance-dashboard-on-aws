@@ -21,14 +21,14 @@ const APIHelpPage = () => {
             href={`mailto:${settings.adminContactEmailAddress}?subject=${t(
               "PerformanceDashboardAssistance"
             )}`}
-            className="text-base-darkest"
+            className="text-base-darker"
           >
             {t("APIHelpSelectDynamicDatasetSupport")}
           </a>
           {t("APIHelpSelectDynamicDatasetLearn")}{" "}
           <a
             href="https://github.com/awslabs/performance-dashboard-on-aws"
-            className="text-base-darkest"
+            className="text-base-darker"
           >
             {t("APIHelpSelectDynamicDatasetDoc")}
           </a>

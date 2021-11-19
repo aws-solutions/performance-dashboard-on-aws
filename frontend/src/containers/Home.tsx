@@ -90,7 +90,7 @@ function Home() {
                         <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
                       )}
                       <br />
-                      <span className="text-base-dark text-italic">
+                      <span className="text-base text-italic">
                         {t("LastUpdatedLabel")} {updatedAt}
                       </span>
                     </div>

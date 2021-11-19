@@ -42,7 +42,7 @@ exports[`renders a table with topic areas 1`] = `
             Dashboards
           </span>
           <button
-            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darkest"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darker"
           >
             <svg
               aria-hidden="true"
@@ -105,7 +105,7 @@ exports[`renders a table with topic areas 1`] = `
         </td>
         <td>
           <span
-            class="text-bold text-base-darkest font-sans-md"
+            class="text-bold text-base-darker font-sans-md"
           >
             USWDS
           </span>
@@ -172,7 +172,7 @@ exports[`renders an empty table 1`] = `
             Dashboards
           </span>
           <button
-            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darkest"
+            class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darker"
           >
             <svg
               aria-hidden="true"

@@ -98,7 +98,7 @@ function HomeWithSearch() {
                         <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
                       )}
                       <br />
-                      <span className="text-base-dark text-italic">
+                      <span className="text-base text-italic">
                         {t("LastUpdatedLabel")} {updatedAt}
                         <br />
                       </span>
@@ -106,7 +106,7 @@ function HomeWithSearch() {
                         return (
                           <p
                             key={queryMatch}
-                            className="text-base-dark margin-left-2 margin-right-2"
+                            className="text-base margin-left-2 margin-right-2"
                           >
                             {" "}
                             ... {queryMatch} ...

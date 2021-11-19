@@ -46,7 +46,7 @@ exports[`table preview should match snapshot 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                  class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                   data-icon="chevron-up"
                   data-prefix="fas"
                   focusable="false"
@@ -79,7 +79,7 @@ exports[`table preview should match snapshot 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                  class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                   data-icon="chevron-up"
                   data-prefix="fas"
                   focusable="false"
@@ -112,7 +112,7 @@ exports[`table preview should match snapshot 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                  class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                   data-icon="chevron-up"
                   data-prefix="fas"
                   focusable="false"
@@ -361,7 +361,7 @@ exports[`table preview should match snapshot 1`] = `
                 class="border-top margin-0"
               />
               <div
-                class="grid-row text-base-darkest text-italic padding-y-05 padding-right-1"
+                class="grid-row text-base-darker text-italic padding-y-05 padding-right-1"
               >
                 <div
                   class="grid-col-6 text-left"
@@ -393,7 +393,7 @@ exports[`table preview should match snapshot 1`] = `
                       type="button"
                     >
                       <a
-                        class="text-base-darkest"
+                        class="text-base-darker"
                         download="test title"
                         href="data:text/csv;charset=utf-8,﻿\\"id\\",\\"name\\",\\"updatedAt\\"
 \\"1\\",\\"Banana\\",\\"2021-11-11\\"

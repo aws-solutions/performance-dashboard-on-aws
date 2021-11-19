@@ -60,7 +60,7 @@ exports[`renders a Data Table element 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -93,7 +93,7 @@ exports[`renders a Data Table element 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -126,7 +126,7 @@ exports[`renders a Data Table element 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -272,7 +272,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -305,7 +305,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -338,7 +338,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"

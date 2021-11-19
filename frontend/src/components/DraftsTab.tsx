@@ -142,7 +142,7 @@ function DraftsTab(props: Props) {
                 const dashboard = props.row.original as Dashboard;
                 return (
                   <Link to={`/admin/dashboard/edit/${dashboard.id}`}>
-                    <span className="text-bold text-base-darkest">
+                    <span className="text-bold text-base-darker">
                       {dashboard.name}
                     </span>
                   </Link>

@@ -31,7 +31,7 @@ exports[`renders a basic table 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -64,7 +64,7 @@ exports[`renders a basic table 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -97,7 +97,7 @@ exports[`renders a basic table 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -346,7 +346,7 @@ exports[`renders a basic table 1`] = `
               class="border-top margin-0"
             />
             <div
-              class="grid-row text-base-darkest text-italic padding-y-05 padding-right-1"
+              class="grid-row text-base-darker text-italic padding-y-05 padding-right-1"
             >
               <div
                 class="grid-col-12 text-right"
@@ -393,7 +393,7 @@ exports[`renders a basic table with mobile navigation 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -426,7 +426,7 @@ exports[`renders a basic table with mobile navigation 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -459,7 +459,7 @@ exports[`renders a basic table with mobile navigation 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -576,7 +576,7 @@ exports[`renders a basic table without pagination 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -609,7 +609,7 @@ exports[`renders a basic table without pagination 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -642,7 +642,7 @@ exports[`renders a basic table without pagination 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -774,7 +774,7 @@ exports[`sorting buttons are clickable 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -807,7 +807,7 @@ exports[`sorting buttons are clickable 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -840,7 +840,7 @@ exports[`sorting buttons are clickable 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-darkest"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-darker"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -1113,7 +1113,7 @@ exports[`sorting buttons are clickable 1`] = `
               class="border-top margin-0"
             />
             <div
-              class="grid-row text-base-darkest text-italic padding-y-05 padding-right-1"
+              class="grid-row text-base-darker text-italic padding-y-05 padding-right-1"
             >
               <div
                 class="grid-col-12 text-right"
@@ -1175,7 +1175,7 @@ exports[`sorting buttons are clickable 2`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -1208,7 +1208,7 @@ exports[`sorting buttons are clickable 2`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -1241,7 +1241,7 @@ exports[`sorting buttons are clickable 2`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 hover:text-base text-base-darkest"
+                class="svg-inline--fa fa-chevron-down fa-w-14 hover:text-base text-base-darker"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -1514,7 +1514,7 @@ exports[`sorting buttons are clickable 2`] = `
               class="border-top margin-0"
             />
             <div
-              class="grid-row text-base-darkest text-italic padding-y-05 padding-right-1"
+              class="grid-row text-base-darker text-italic padding-y-05 padding-right-1"
             >
               <div
                 class="grid-col-12 text-right"

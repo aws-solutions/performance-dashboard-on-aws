@@ -69,7 +69,11 @@ async function fetchPublicDashboardByURL(
 async function fetchPublicHomepageWithQuery(
   query: string
 ): Promise<PublicHomepage> {
-  return await API.get(apiName, `public/search?q=${query}`, {});
+  if (query == undefined || query == "") {
+    return API.get(apiName, "public/homepage", {});
+  } else {
+    return await API.get(apiName, `public/search?q=${query}`, {});
+  }
 }
 
 async function fetchTopicAreas() {

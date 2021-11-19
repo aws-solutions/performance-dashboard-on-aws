@@ -364,7 +364,7 @@ exports[`topic area settings should match snapshot 1`] = `
                     Dashboards
                   </span>
                   <button
-                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darkest"
+                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darker"
                   >
                     <svg
                       aria-hidden="true"
@@ -427,7 +427,7 @@ exports[`topic area settings should match snapshot 1`] = `
                 </td>
                 <td>
                   <span
-                    class="text-bold text-base-darkest font-sans-md"
+                    class="text-bold text-base-darker font-sans-md"
                   >
                     Topic Area Grapes
                   </span>
@@ -462,7 +462,7 @@ exports[`topic area settings should match snapshot 1`] = `
                 </td>
                 <td>
                   <span
-                    class="text-bold text-base-darkest font-sans-md"
+                    class="text-bold text-base-darker font-sans-md"
                   >
                     Topic Area Bananas
                   </span>

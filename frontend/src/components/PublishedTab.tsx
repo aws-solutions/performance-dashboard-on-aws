@@ -130,7 +130,7 @@ function PublishedTab(props: Props) {
                 const dashboard = props.row.original as Dashboard;
                 return (
                   <Link to={`/admin/dashboard/${dashboard.id}`}>
-                    <span className="text-bold text-base-darkest">
+                    <span className="text-bold text-base-darker">
                       {dashboard.name}
                     </span>
                   </Link>

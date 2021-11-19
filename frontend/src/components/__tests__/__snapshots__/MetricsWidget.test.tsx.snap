@@ -29,7 +29,7 @@ exports[`metrics preview should match snapshot 1`] = `
                   class="flex-5"
                 >
                   <p
-                    class="text-base-darkest text-bold margin-0 text-no-wrap"
+                    class="text-base-darker text-bold margin-0 text-no-wrap"
                   >
                     test title
                   </p>

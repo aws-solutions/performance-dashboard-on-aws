@@ -303,9 +303,7 @@ function Table(props: Props) {
                     >
                       <FontAwesomeIcon
                         className={`hover:text-base ${
-                          column.isSorted
-                            ? "text-base-darkest"
-                            : "text-base-lighter"
+                          column.isSorted ? "text-base-darker" : "text-base"
                         }`}
                         icon={
                           column.isSorted && column.isSortedDesc
@@ -538,7 +536,7 @@ function Table(props: Props) {
                 <div
                   className={`${
                     isMobile ? "padding-left-05" : "grid-row"
-                  } text-base-darkest text-italic padding-y-05 padding-right-1`}
+                  } text-base-darker text-italic padding-y-05 padding-right-1`}
                 >
                   {isMobile && (
                     <div className="text-center">
@@ -574,7 +572,7 @@ function Table(props: Props) {
                           className="margin-right-05"
                         >
                           <CSVLink
-                            className="text-base-darkest"
+                            className="text-base-darker"
                             data={props.rows}
                             filename={props.title}
                           >

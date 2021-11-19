@@ -121,7 +121,7 @@ function SectionWidget(props: Props) {
         (content.horizontally ||
           props.showMobilePreview ||
           windowSize.width <= 600) &&
-        content.widgetIds && (
+        content.widgetIds.length > 0 && (
           <Tabs
             defaultActive={activeTabId}
             showArrows

@@ -10,10 +10,6 @@ import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
 import "./Home.css";
 
-interface QueryParams {
-  q: string;
-}
-
 function HomeWithSearch() {
   const params = new URLSearchParams(window.location.search);
   const query = params.get("q");
@@ -25,7 +21,11 @@ function HomeWithSearch() {
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   const onSearch = (query: string) => {
-    history.push("/public/search?q=" + query);
+    if (query == undefined || query == "") {
+      history.push("/");
+    } else {
+      history.push("/public/search?q=" + query);
+    }
   };
 
   const onClear = () => {

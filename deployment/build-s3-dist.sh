@@ -158,7 +158,10 @@ cd $staging_dist_dir
 echo "cp *.zip $build_dist_dir"
 cp *.zip $build_dist_dir
 
-for fname in `find . -mindepth 1 -maxdepth 1 -type d`; do
+echo "cp -r $source_dir/backend/build/ backend/"
+cp -r $source_dir/backend/build/ backend/
+
+for fname in `find . ! -name "backend" -mindepth 1 -maxdepth 1 -type d`; do
 
     # Build the artifcats
     if ls $fname/package.json 1> /dev/null 2>&1; then

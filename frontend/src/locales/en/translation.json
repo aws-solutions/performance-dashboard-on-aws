@@ -938,5 +938,7 @@
   "GoToLastPage": "Go to the last page",
   "GoToNextPage": "Go to the next page",
   "GoToPrevPage": "Go to the previous page",
-  "SelectPageSize": "Select the amount of results displayed on the page"
+  "SelectPageSize": "Select the amount of results displayed on the page",
+  "SortDashboards": "Sort by dashboard name",
+  "SortCreatedBy": "Sort by created by name"
 }

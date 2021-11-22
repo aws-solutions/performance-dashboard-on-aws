@@ -16,7 +16,7 @@ interface FormValues {
 function EditPublishingGuidance() {
   const history = useHistory();
   const { settings, reloadSettings, loadingSettings } = useSettings(true);
-  const { register, handleSubmit, reset } = useForm<FormValues>();
+  const { register, handleSubmit, reset, errors } = useForm<FormValues>();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -86,6 +86,11 @@ function EditPublishingGuidance() {
                 label={t("AcknowledgeStatement")}
                 defaultValue={settings.publishingGuidance}
                 register={register}
+                error={
+                  errors.publishingGuidance &&
+                  t("EditAcknowledgeStatementError")
+                }
+                required
                 hint=""
               />
 

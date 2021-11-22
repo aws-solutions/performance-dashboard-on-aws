@@ -33,7 +33,7 @@ test("renders page description", async () => {
 
 test("renders a file upload input", async () => {
   render(<EditLogo />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
+  expect(await screen.findByLabelText("File upload*")).toBeInTheDocument();
 });
 
 test("renders file upload description constraint", async () => {
@@ -62,7 +62,7 @@ test("on submit, it calls updateSetting and upload logo", async () => {
 
   const submitButton = getByRole("button", { name: "Save" });
 
-  fireEvent.change(getByLabelText("File upload"), {
+  fireEvent.change(getByLabelText("File upload*"), {
     target: {
       files: ["image.jpg"],
     },

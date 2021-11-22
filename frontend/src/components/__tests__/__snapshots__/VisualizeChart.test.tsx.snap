@@ -62,12 +62,12 @@ exports[`renders the VisualizeChart component 1`] = `
             <legend
               class="usa-sr-only"
             >
-              Chart type
+              Chart type (optional)
             </legend>
             <span
               class="usa-label text-bold"
             >
-              Chart type
+              Chart type (optional)
             </span>
             <div
               class="usa-hint"
@@ -193,7 +193,7 @@ exports[`renders the VisualizeChart component 1`] = `
               class="usa-label text-bold"
               for="sortData"
             >
-              Sort data
+              Sort data (optional)
             </label>
             <div
               class="usa-hint"
@@ -247,7 +247,7 @@ exports[`renders the VisualizeChart component 1`] = `
           <label
             class="usa-label text-bold"
           >
-            Chart Options
+            Chart Options (optional)
           </label>
           <div
             class="usa-hint"
@@ -577,12 +577,12 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             <legend
               class="usa-sr-only"
             >
-              Chart type
+              Chart type (optional)
             </legend>
             <span
               class="usa-label text-bold"
             >
-              Chart type
+              Chart type (optional)
             </span>
             <div
               class="usa-hint"
@@ -708,7 +708,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               class="usa-label text-bold"
               for="sortData"
             >
-              Sort data
+              Sort data (optional)
             </label>
             <div
               class="usa-hint"
@@ -762,7 +762,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           <label
             class="usa-label text-bold"
           >
-            Chart Options
+            Chart Options (optional)
           </label>
           <div
             class="usa-hint"

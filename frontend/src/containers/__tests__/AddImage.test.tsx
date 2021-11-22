@@ -38,7 +38,7 @@ test("renders a textfield for image title", async () => {
 
 test("renders a file upload input", async () => {
   render(<AddImage />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
+  expect(await screen.findByLabelText("File upload*")).toBeInTheDocument();
 });
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
@@ -58,7 +58,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
-  fireEvent.change(getByLabelText("File upload"), {
+  fireEvent.change(getByLabelText("File upload*"), {
     target: {
       files: ["image.jpg"],
     },

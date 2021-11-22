@@ -80,11 +80,13 @@ function ChangeRole() {
               rows={5}
               defaultValue={state.emails}
               register={register}
+              required
               disabled
             />
 
             <label className="usa-label text-bold">
               {t("ChangeRole.Role")}
+              <span>&#42;</span>
             </label>
             <div className="usa-hint">{t("ChangeRole.RoleDescription")}</div>
             <fieldset className="usa-fieldset" onChange={handleChange}>

@@ -58,11 +58,10 @@ async function fetchDashboardById(dashboardId: string): Promise<Dashboard> {
 async function fetchPublicDashboardByURL(
   friendlyURL: string
 ): Promise<Dashboard> {
-  const headers = await authHeaders();
   return await API.get(
     apiName,
     `public/dashboard/friendly-url/${friendlyURL}`,
-    { headers }
+    {}
   );
 }
 

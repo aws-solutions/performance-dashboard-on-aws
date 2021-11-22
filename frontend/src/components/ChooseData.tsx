@@ -88,7 +88,6 @@ function ChooseData(props: Props) {
         className="usa-fieldset"
         onChange={props.handleChange}
       >
-        <legend className="usa-sr-only">{t("ContentItemTypesLabel")}</legend>
         <div className="grid-row">
           <RadioButtonsTile
             isHorizontally={true}
@@ -155,9 +154,6 @@ function ChooseData(props: Props) {
           <div className="grid-row margin-top-3 margin-bottom-1">
             <div className="tablet:grid-col-4 padding-top-1px">
               <div role="search" className="usa-search usa-search--small">
-                <label className="usa-sr-only" htmlFor="search">
-                  {t("SearchButton")}
-                </label>
                 <input
                   className="usa-input"
                   id="search"
@@ -184,7 +180,6 @@ function ChooseData(props: Props) {
                     style={{ marginTop: "-3px" }}
                     icon={faSearch}
                   />
-                  <span className="usa-sr-only">{t("SearchButton")}</span>
                 </button>
               </div>
             </div>

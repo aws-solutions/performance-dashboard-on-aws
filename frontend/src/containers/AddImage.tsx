@@ -207,6 +207,7 @@ function AddImage() {
                     accept={supportedImageFileTypes.toString()}
                     loading={imageUploading}
                     register={register}
+                    required
                     hint={<span>{t("AddImageScreen.FileHint")}</span>}
                     fileName={imageFile && imageFile.name}
                     onFileProcessed={onFileProcessed}

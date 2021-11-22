@@ -91,6 +91,10 @@ function EditHomepageContent() {
                 label={t("SettingsHomePageDescription")}
                 defaultValue={homepage.description}
                 register={register}
+                required
+                error={
+                  errors.description && t("SettingsHomepageDescriptionErrors")
+                }
                 hint=""
               />
 

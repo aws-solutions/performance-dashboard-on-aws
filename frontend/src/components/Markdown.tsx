@@ -12,6 +12,8 @@ type MarkdownProps = {
   label: string;
   defaultValue?: string;
   register?: Function;
+  required?: boolean;
+  error?: string;
   hint?: string;
 };
 
@@ -26,10 +28,16 @@ const Markdown = (props: MarkdownProps) => {
     setBoxHeight(height + 2);
   }, []);
 
+  let formGroupClassName = "usa-form-group";
+  if (props.error) {
+    formGroupClassName += " usa-form-group--error";
+  }
+
   return (
-    <div className="markdown">
+    <div className={`markdown ${formGroupClassName}`}>
       <label htmlFor="markdownarea" className="usa-label text-bold">
         {props.label}
+        {props.label && props.required && <span>&#42;</span>}
       </label>
       <span className="usa-hint">
         {props.hint} {t("MarkdownSupport")}{" "}
@@ -56,6 +64,15 @@ const Markdown = (props: MarkdownProps) => {
           {t("PreviewLiveText")}
         </label>
       </div>
+      {props.error && (
+        <span
+          className="usa-error-message margin-top-105"
+          id="input-error-message"
+          role="alert"
+        >
+          {props.error}
+        </span>
+      )}
       <div hidden={!disabled}>
         <textarea
           id={props.id}
@@ -65,7 +82,7 @@ const Markdown = (props: MarkdownProps) => {
           rows={6}
           ref={(e) => {
             if (props.register) {
-              props.register(e);
+              props.register(e, { required: props.required });
             }
             text.current = e;
           }}

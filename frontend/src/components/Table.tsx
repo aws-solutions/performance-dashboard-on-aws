@@ -510,7 +510,7 @@ function Table(props: Props) {
                         gotoPage(pageCount - 1);
                       }}
                       disabled={!canNextPage}
-                      aria-label={t("GoToLastPag")}
+                      aria-label={t("GoToLastPage")}
                     >
                       <FontAwesomeIcon
                         icon={faAngleDoubleRight}

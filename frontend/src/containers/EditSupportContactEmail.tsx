@@ -93,6 +93,7 @@ function EditSupportContactEmail() {
                 )}
                 register={register}
                 error={errors.adminContactEmailAddress && t("EmailInvalid")}
+                required
                 validate={UtilsService.validateEmails}
               />
 

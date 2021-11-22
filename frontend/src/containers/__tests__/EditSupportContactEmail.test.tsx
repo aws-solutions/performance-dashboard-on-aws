@@ -26,9 +26,9 @@ beforeEach(async () => {
 });
 
 test("submits form with the entered values", async () => {
-  userEvent.clear(screen.getByLabelText("Support Contact Email Address"));
+  userEvent.clear(screen.getByLabelText("Support Contact Email Address*"));
   userEvent.type(
-    screen.getByLabelText("Support Contact Email Address"),
+    screen.getByLabelText("Support Contact Email Address*"),
     "test1234@hotmail.com"
   );
 

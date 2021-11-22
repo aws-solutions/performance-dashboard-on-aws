@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  render,
-  screen,
-  fireEvent,
-  act,
-  waitFor,
-} from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
@@ -37,7 +31,7 @@ test("renders page description", async () => {
 
 test("renders a file upload input", async () => {
   render(<EditFavicon />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
+  expect(await screen.findByLabelText("File upload*")).toBeInTheDocument();
 });
 
 test("renders file upload description constraint", async () => {
@@ -46,13 +40,13 @@ test("renders file upload description constraint", async () => {
 });
 
 test("on submit, it calls updateSetting and upload favicon", async () => {
-  const { getByRole, getByText, getByLabelText } = render(<EditFavicon />, {
+  const { getByRole, getByLabelText } = render(<EditFavicon />, {
     wrapper: MemoryRouter,
   });
 
   const submitButton = getByRole("button", { name: "Save" });
 
-  fireEvent.change(getByLabelText("File upload"), {
+  fireEvent.change(getByLabelText("File upload*"), {
     target: {
       files: ["image.jpg"],
     },

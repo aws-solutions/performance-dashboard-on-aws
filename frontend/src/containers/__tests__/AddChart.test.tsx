@@ -54,7 +54,7 @@ test("renders a file upload input", async () => {
   const radioButton = await screen.getByTestId("staticDatasetRadioButton");
   fireEvent.click(radioButton);
 
-  expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();
+  expect(await screen.findByLabelText("Static datasets*")).toBeInTheDocument();
 });
 
 test("renders table for dynamic dataset", async () => {
@@ -85,7 +85,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     fireEvent.click(radioButton);
   });
 
-  fireEvent.change(getByLabelText("Static datasets"), {
+  fireEvent.change(getByLabelText("Static datasets*"), {
     target: {
       files: ["dataset.csv"],
     },

@@ -51,7 +51,7 @@ test("renders element descriptions", async () => {
 
 test("renders a file upload input", async () => {
   render(<EditImage />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
+  expect(await screen.findByLabelText("File upload*")).toBeInTheDocument();
 });
 
 test("on submit, it calls editWidget api and uploads dataset", async () => {
@@ -73,7 +73,7 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
     },
   });
 
-  fireEvent.change(getByLabelText("File upload"), {
+  fireEvent.change(getByLabelText("File upload*"), {
     target: {
       files: ["image.jpg"],
     },

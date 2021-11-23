@@ -634,7 +634,8 @@
     "Dashboards": "Painéis",
     "ManageUsers": "Gerenciar usuários",
     "Settings": "Configurações",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "PrimaryNavigation": "Navegação Primária"
   },
   "PageNotFound": "404/Página não encontrada",
   "PageNotFoundDescription": "Verifique seu link e tente novamente ou volte ao",
@@ -824,6 +825,7 @@
   "HighToLow": "alto a baixo",
   "AZ": "A-Z",
   "ZA": "Z-A",
+  "DownloadFileSuccess": "'{{fileName}}' foi baixado.",
   "DownloadFileError": "A consulta usando a chave do S3 fornecida não retornou resultados.",
   "UploadDatasetError": "O arquivo bruto não é um formato aceito.",
   "PartWholeChart": "Gráfico de blocos",
@@ -924,5 +926,7 @@
   "DisplayWithPages": "Exibir com páginas",
   "SelectColumns": "Selecione as colunas para formatar os dados.",
   "Tab": "Guia",
-  "Active": "Ativa"
+  "Active": "Ativa",
+  "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} foi criado com sucesso.",
+  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} foi excluído com sucesso."
 }

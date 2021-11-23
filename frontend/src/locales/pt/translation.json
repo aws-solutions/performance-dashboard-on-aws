@@ -488,8 +488,8 @@
     "FailToReturnToDraftError": "Falha ao retornar o painel ao estado de rascunho. Tente novamente.",
     "FailToSaveReleaseNotesError": "Falha ao salvar as notas de release. Tente novamente.",
     "MissingVersionNotesError": "Insira as notas da versão",
-    "ReturnToDraftSuccessAlert": "{{dashboardName}} painel retornado com êxito ao estado de rascunho.",
-    "PublishedSuccessAlert": "{{dashboardName}} o painel foi publicado com êxito."
+    "ReturnToDraftSuccessAlert": "'{{dashboardName}}' painel retornado com êxito ao estado de rascunho.",
+    "PublishedSuccessAlert": "'{{dashboardName}}' o painel foi publicado com êxito."
   },
   "SettingsDateTimeFormat": "Formato de data e hora",
   "SettingsDateTimeFormatEdit": "Editar formato de data e hora",

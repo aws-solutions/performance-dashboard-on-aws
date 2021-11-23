@@ -488,11 +488,8 @@
     "FailToReturnToDraftError": "Failed to return dashboard to draft. Please try again.",
     "FailToSaveReleaseNotesError": "Failed to save release notes, please try again.",
     "MissingVersionNotesError": "Please enter version notes",
-    "ReturnToDraftSuccessAlert": "{{dashboardName}} dashboard successfully returned to draft.",
-    "PublishedSuccessAlert": {
-      "part1": "",
-      "part2": " dashboard was successfully published."
-    }
+    "ReturnToDraftSuccessAlert": "'{{dashboardName}}' dashboard successfully returned to draft.",
+    "PublishedSuccessAlert": "'{{dashboardName}}' dashboard was successfully published."
   },
   "SettingsDateTimeFormat": "Date and time format",
   "SettingsDateTimeFormatEdit": "Edit date and time format",

@@ -340,7 +340,7 @@ function EditDashboard() {
           dashboardName: dashboard?.name,
         })}
         message={t("PreparePublishingModalMessage", {
-          count: dashboard?.widgets.length || 0,
+          context: dashboard?.widgets.length.toString(),
         })}
         buttonType={t("PreparePublishingModalButton")}
         buttonAction={publishDashboard}

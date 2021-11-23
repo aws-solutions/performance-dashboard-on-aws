@@ -79,10 +79,7 @@
   "PDoASite": "Este sitio es donde administra el panel de rendimiento.",
   "WantToViewPublishedSite": "¿Quiere ver lo que ve su público?",
   "ViewPublishedSite": "Ver el sitio publicado",
-  "NewDraftDashboardCreated": {
-    "part1": "Se ha creado una nueva ",
-    "part2": " versión de borrador del panel."
-  },
+  "NewDraftDashboardCreated": "Se ha creado una nueva {{dashboardName}} versión de borrador del panel.",
   "DashboardWasArchived": "se archivó correctamente.",
   "DashboardWasDeleted": "se eliminó correctamente.",
   "DashboardWasRepublished": "el panel se ha vuelto a publicar correctamente.",
@@ -102,35 +99,18 @@
   "LearnHowToFormatCSV": "Aprenda a formatear los datos.",
   "CreatedBy": "Creado por",
   "Dashboards": "Paneles",
-  "CreateDraftDashboardModalTitle": {
-    "part1": "Actualizar ",
-    "part2": " panel"
-  },
+  "CreateDraftDashboardModalTitle": "Actualizar {{dashboardName}} panel",
   "CreateDraftDashboardModalMessage": "Esto creará un nuevo borrador del panel que le permitirá editar el contenido y, a continuación, publicar la nueva versión en el sitio publicado.",
   "CreateDraftDashboardModalButton": "Crear borrador",
-  "ArchiveDashboardModalTitle": {
-    "part1": "Archivar ",
-    "part2": " panel"
-  },
-  "ArchiveDashboardModalMessage": {
-    "part1": "Esto eliminará ",
-    "part2": " el panel del sitio publicado. Puede volver a publicar los paneles archivados en cualquier momento."
-  },
+  "ArchiveDashboardModalTitle": "Archivar {{dashboardName}} panel",
+  "ArchiveDashboardModalMessage": "Esto eliminará {{dashboardName}} el panel del sitio publicado. Puede volver a publicar los paneles archivados en cualquier momento.",
   "ArchiveDashboardModalButton": "Archivar",
-  "RepublishDashboardModalTitle": {
-    "part1": "Volver a publicar ",
-    "part2": " panel"
-  },
+  "RepublishDashboardModalTitle": "Volver a publicar {{dashboardName}} panel",
   "RepublishDashboardModalMessage": "¿Seguro que desea volver a publicar este panel?",
   "RepublishDashboardModalButton": "Volver a publicar",
-  "PreparePublishingModalTitle": {
-    "part1": "Preparar ",
-    "part2": " el panel para su publicación"
-  },
-  "PreparePublishingModalMessage": {
-    "part1": "Este panel no tiene elementos de contenido. ",
-    "part2": "¿Seguro que desea preparar este panel para su publicación?"
-  },
+  "PreparePublishingModalTitle": "Preparar {{dashboardName}} el panel para su publicación",
+  "PreparePublishingModalMessage_zero": "Este panel no tiene elementos de contenido. ¿Seguro que desea preparar este panel para su publicación?",
+  "PreparePublishingModalMessage_other": "¿Seguro que desea preparar este panel para su publicación?",
   "PreparePublishingModalButton": "Preparar para la publicación",
   "OnlyOneDraftDashboardAtATime": "Se ha creado un borrador para actualizar este panel. Solo se permite un borrador a la vez.",
   "EditOrPublishDraft": {
@@ -186,10 +166,7 @@
   "AddTextScreen": {
     "AddText": "Agregar texto",
     "AddTextError": "Resolver errores al agregar el texto",
-    "AddTextSuccess": {
-      "part1": "El texto “",
-      "part2": "” se ha agregado correctamente."
-    },
+    "AddTextSuccess": "El texto “{{title}}” se ha agregado correctamente.",
     "CreatingText": "Creación de texto",
     "Configure": "Configurar contenido del texto",
     "TextTitle": "Título del texto",
@@ -217,10 +194,7 @@
   "EditTextScreen": {
     "EditText": "Editar texto",
     "EditTextError": "Resolver errores al editar el texto",
-    "EditTextSuccess": {
-      "part1": "El texto “",
-      "part2": "” se ha editado correctamente."
-    },
+    "EditTextSuccess": "El texto “{{title}}” se ha editado correctamente.",
     "EditingText": "Editando texto",
     "TextTitle": "Título del texto",
     "TextTitleError": "Especifique un título de texto",
@@ -276,10 +250,7 @@
     "MetricSuccessfullyEdited": "La métrica se ha editado correctamente"
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessfully": {
-      "part1": "Las métricas “",
-      "part2": "” se han agregado correctamente."
-    },
+    "MetricsAddedSuccessfully": "Las métricas “{{title}}” se han agregado correctamente.",
     "Name": "Nombre",
     "LastUpdated": "Última actualización",
     "Description": "Descripción",
@@ -310,10 +281,7 @@
     "ShowTitle": "Mostrar título en el panel"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessfully": {
-      "part1": "Las métricas “",
-      "part2": "” se han editado correctamente."
-    },
+    "MetricsEditedSuccessfully": "Las métricas “{{title}}” se han editado correctamente.",
     "EditMetrics": "Editar métricas",
     "UploadingFile": "Cargando archivo",
     "EditingMetrics": "Editando métricas",
@@ -330,10 +298,7 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "AddChartSuccess": {
-      "part1": "El gráfico “",
-      "part2": "” se ha agregado correctamente."
-    },
+    "AddChartSuccess": "El gráfico “{{title}}” se ha agregado correctamente.",
     "ResolveError": "No se pudo cargar el archivo. Asegúrese de que todos los encabezados de columna tengan valores."
   },
   "EditChartScreen": {
@@ -342,10 +307,7 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "EditChartSuccess": {
-      "part1": "El gráfico “",
-      "part2": "” se ha editado correctamente."
-    },
+    "EditChartSuccess": "El gráfico “{{title}}” se ha editado correctamente.",
     "ResolveError": "No se pudo cargar el archivo. Asegúrese de que todos los encabezados de columna tengan valores."
   },
   "AddTableScreen": {
@@ -353,10 +315,7 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "AddTableSuccess": {
-      "part1": "La tabla “",
-      "part2": "” se ha agregado correctamente."
-    },
+    "AddTableSuccess": "La tabla “{{title}}” se ha agregado correctamente.",
     "ChooseDataset": "Elija un conjunto de datos para continuar"
   },
   "EditTableScreen": {
@@ -364,10 +323,7 @@
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
-    "EditTableSuccess": {
-      "part1": "La tabla “",
-      "part2": "” se ha editado correctamente."
-    },
+    "EditTableSuccess": "La tabla “{{title}}” se ha editado correctamente.",
     "ChooseDataset": "Elija un conjunto de datos para continuar"
   },
   "BrandingAndStyling": "Marca y estilo",
@@ -394,11 +350,8 @@
   "UserListingDropdownResendInviteText": "Volver a enviar correos electrónicos de invitación a usuarios no confirmados",
   "UserListingActionsResendInvites": "Volver a enviar el correo electrónico de invitación",
   "UserListingActionsRemoveUsers": "Eliminar usuarios",
-  "UserListingActionsRemoveUsersMessage": {
-    "part0": "¿Seguro que desea eliminar ",
-    "part1": "usuario",
-    "part2": "usuarios"
-  },
+  "UserListingActionsRemoveUsersMessage_one": "¿Seguro que desea eliminar 1 usuario?",
+  "UserListingActionsRemoveUsersMessage_other": "¿Seguro que desea eliminar {{count}} usuarios?",
   "AddUsersInvites": "Agregar usuarios y enviar invitaciones",
   "AddUsersAdmin": "Además de los permisos del editor, puede administrar los usuarios y la configuración del sitio web.",
   "AddUsersEditor": "Puede crear, editar y publicar paneles.",
@@ -430,10 +383,8 @@
   },
   "UserListingAddUsers": "Agregar usuario/s",
   "UserListingModalTitleResendInvites": "Volver a enviar el correo electrónico de invitación",
-  "UserListingModalTitleResendInvitesMessage": {
-    "part1": "¿Seguro que desea volver a enviar la invitación de este usuario?",
-    "part2": "¿Seguro que desea volver a enviar las invitaciones de estos usuarios?"
-  },
+  "UserListingModalTitleResendInvitesMessage_one": "¿Seguro que desea volver a enviar la invitación de este usuario?",
+  "UserListingModalTitleResendInvitesMessage_other": "¿Seguro que desea volver a enviar las invitaciones de estos usuarios?",
   "GlobalCancel": "Cancelar",
   "GlobalClose": "Cerrar",
   "GlobalDelete": "Eliminar",
@@ -843,10 +794,7 @@
   "LastSaved": "Guardado por último vez",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Archivo de imagen no especificado",
-    "ImageAddedSuccessfully": {
-      "part1": "La imagen “",
-      "part2": "” se ha agregado correctamente."
-    },
+    "ImageAddedSuccessfully": "La imagen “{{title}}” se ha agregado correctamente.",
     "AddImage": "Agregar imagen",
     "ConfigureImage": "Configurar imagen",
     "ResolveError": "Resolver errores al agregar la imagen",
@@ -868,10 +816,7 @@
     "Cancel": "Cancelar"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessfully": {
-      "part1": "La imagen “",
-      "part2": "se ha editado correctamente."
-    },
+    "ImageEditedSuccessfully": "La imagen “{{title}}” se ha editado correctamente.",
     "EditImage": "Editar imagen",
     "ResolveError": "Resolver errores al editar la imagen",
     "Title": "Título de la imagen",

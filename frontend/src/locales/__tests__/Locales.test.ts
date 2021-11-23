@@ -3,6 +3,7 @@ import es from "../en/translation.json";
 import pt from "../en/translation.json";
 
 const itif = (condition: boolean) => (condition ? it : it.skip);
+const itIsRelease = itif(!!process.env.RELEASE);
 
 function toDictionary(o: any, path = ""): { [key: string]: any } {
   if (!o || typeof o !== "object") {
@@ -22,7 +23,7 @@ function toDictionary(o: any, path = ""): { [key: string]: any } {
 describe("Locales", () => {
   const enDict = toDictionary(en);
 
-  itif(true).each([es, pt])(
+  itIsRelease.each([es, pt])(
     "language should have the same keys",
     (translation) => {
       expect(Object.keys(toDictionary(translation))).toEqual(

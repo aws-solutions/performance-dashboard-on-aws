@@ -336,14 +336,12 @@ function EditDashboard() {
       <Modal
         isOpen={isOpenPublishModal}
         closeModal={closePublishModal}
-        title={`${t("PreparePublishingModalTitle.part1")}${dashboard?.name}${t(
-          "PreparePublishingModalTitle.part2"
-        )}`}
-        message={`${
-          dashboard?.widgets.length === 0
-            ? `${t("PreparePublishingModalMessage.part1")}`
-            : ""
-        }${t("PreparePublishingModalMessage.part2")}`}
+        title={t("PreparePublishingModalTitle", {
+          dashboardName: dashboard?.name,
+        })}
+        message={t("PreparePublishingModalMessage", {
+          count: dashboard?.widgets.length || 0,
+        })}
         buttonType={t("PreparePublishingModalButton")}
         buttonAction={publishDashboard}
       />

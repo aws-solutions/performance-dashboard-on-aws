@@ -488,14 +488,8 @@
     "FailToReturnToDraftError": "No se pudo devolver el panel al estado de borrador. Inténtelo de nuevo.",
     "FailToSaveReleaseNotesError": "No se pudieron guardar las notas de la versión; inténtelo de nuevo.",
     "MissingVersionNotesError": "Escriba las notas de la versión",
-    "ReturnToDraftSuccessAlert": {
-      "part1": "",
-      "part2": " el panel se ha devuelto el estado de borrador."
-    },
-    "PublishedSuccessAlert": {
-      "part1": "",
-      "part2": " el panel se ha publicado correctamente."
-    }
+    "ReturnToDraftSuccessAlert": "{{dashboardName}} el panel se ha devuelto el estado de borrador.",
+    "PublishedSuccessAlert": "{{dashboardName}} el panel se ha publicado correctamente."
   },
   "SettingsDateTimeFormat": "Formato de fecha y hora",
   "SettingsDateTimeFormatEdit": "Editar formato de fecha y hora",

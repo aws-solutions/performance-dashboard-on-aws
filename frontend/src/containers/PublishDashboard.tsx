@@ -103,9 +103,9 @@ function PublishDashboard() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("PublishWorkflow.ReturnToDraftSuccessAlert.part1")}${
-            dashboard.name
-          }${t("PublishWorkflow.ReturnToDraftSuccessAlert.part2")}`,
+          message: t("PublishWorkflow.ReturnToDraftSuccessAlert", {
+            dashboardName: dashboard.name,
+          }),
         },
         id: "top-alert",
       });
@@ -134,9 +134,9 @@ function PublishDashboard() {
         history.push(`/admin/dashboards?tab=published`, {
           alert: {
             type: "success",
-            message: `${t("PublishWorkflow.PublishedSuccessAlert.part1")}${
-              dashboard.name
-            }${t("PublishWorkflow.PublishedSuccessAlert.part2")}`,
+            message: t("PublishWorkflow.PublishedSuccessAlert", {
+              dashboardName: dashboard.name,
+            }),
             to: `/${dashboardId}`,
             linkLabel: t("ViewPublishedDashboard"),
           },

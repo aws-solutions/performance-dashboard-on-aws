@@ -32,17 +32,22 @@ describe("Locales", () => {
     }
   );
 
-  it.each([en, es, pt])("entry should not be empty", (translation) => {
+  it.each([en, es, pt])("entry value should be defined", (translation) => {
     const dict = toDictionary(translation);
-    const emptyValues = Object.keys(dict).filter((key) => !dict[key]);
-    expect(emptyValues).toEqual([]);
+    const invalidValues = Object.keys(dict).filter(
+      (key) => dict[key] === null || dict[key] === undefined || dict[key] === ""
+    );
+    expect(invalidValues).toEqual([]);
   });
 
-  it.each([en, es, pt])("entry should not be empty", (translation) => {
-    const dict = toDictionary(translation);
-    const nonStringValues = Object.keys(dict).filter(
-      (key) => typeof dict[key] !== "string"
-    );
-    expect(nonStringValues).toEqual([]);
-  });
+  it.each([en, es, pt])(
+    "entry value should be of type string",
+    (translation) => {
+      const dict = toDictionary(translation);
+      const nonStringValues = Object.keys(dict).filter(
+        (key) => typeof dict[key] !== "string"
+      );
+      expect(nonStringValues).toEqual([]);
+    }
+  );
 });

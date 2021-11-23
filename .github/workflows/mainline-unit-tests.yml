@@ -29,4 +29,4 @@ jobs:
       - run: ./install.sh
 
       # Run unit tests
-      - run: ./test.sh
+      - run: RELEASE=1 ./test.sh

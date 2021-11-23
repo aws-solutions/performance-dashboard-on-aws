@@ -640,7 +640,8 @@
     "Dashboards": "Paneles",
     "ManageUsers": "Administrar usuarios",
     "Settings": "Configuración",
-    "Logout": "Cerrar sesión"
+    "Logout": "Cerrar sesión",
+    "PrimaryNavigation": "Navegacion primaria"
   },
   "PageNotFound": "404/Página no encontrada",
   "PageNotFoundDescription": "Es posible que desee comprobar el enlace e intentarlo de nuevo, o volver a la",
@@ -830,6 +831,7 @@
   "HighToLow": "de alto a bajo",
   "AZ": "A-Z",
   "ZA": "Z-A",
+  "DownloadFileSuccess": "'{{fileName}}' ha sido descargado.",
   "DownloadFileError": "La consulta con la clave de S3 proporcionada no ha devuelto ningún resultado.",
   "UploadDatasetError": "El archivo sin procesar no está en un formato aceptado.",
   "PartWholeChart": "Gráfico de parte a todo",
@@ -930,5 +932,7 @@
   "DisplayWithPages": "Mostrar con páginas",
   "SelectColumns": "Seleccione columnas para dar formato a los datos.",
   "Tab": "Pestaña",
-  "Active": "Activo"
+  "Active": "Activo",
+  "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} se ha creado correctamente.",
+  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} se eliminó correctamente."
 }

@@ -6,6 +6,7 @@ import Tabs from "./Tabs";
 import TabsVertical from "./TabsVertical";
 import { useWindowSize, useColors } from "../hooks";
 import { Waypoint } from "react-waypoint";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   widget: Widget;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 function SectionWidget(props: Props) {
+  const { t } = useTranslation();
   const { content, showTitle } = props.widget;
   const windowSize = useWindowSize();
   const primaryColor = useColors(1)[0];
@@ -124,6 +126,7 @@ function SectionWidget(props: Props) {
             defaultActive={activeTabId}
             showArrows
             activeColor={`${primaryColor}`}
+            container={t("Section")}
           >
             {content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);

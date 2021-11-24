@@ -50,6 +50,7 @@ export type Dashboard = {
   publishedBy?: string;
   archivedBy?: string;
   friendlyURL?: string;
+  queryMatches?: Array<string>;
 };
 
 export type PublicDashboard = {
@@ -63,6 +64,7 @@ export type PublicDashboard = {
   widgets: Array<Widget>;
   updatedAt: Date;
   friendlyURL?: string;
+  queryMatches?: Array<string>;
 };
 
 export type DashboardVersion = {
@@ -191,7 +193,7 @@ export interface SectionWidget extends Widget {
     title: string;
     summary: string;
     widgetIds?: Array<string>;
-    showWithTabs: string;
+    showWithTabs: boolean;
     horizontally?: boolean;
   };
 }

@@ -33,7 +33,7 @@ describe("Tabs tests", () => {
 
   test("renders the Tabs component", async () => {
     const wrapper = render(
-      <Tabs defaultActive="tab1">
+      <Tabs defaultActive="tab1" container="tab1test">
         <div id="tab1" label="Tab 1">
           Tab 1
         </div>
@@ -47,7 +47,7 @@ describe("Tabs tests", () => {
 
   test("renders the Tabs component with default tab 2 selected", async () => {
     const wrapper = render(
-      <Tabs defaultActive="tab2">
+      <Tabs defaultActive="tab2" container="tab2test">
         <div id="tab1" label="Tab 1">
           Tab 1
         </div>

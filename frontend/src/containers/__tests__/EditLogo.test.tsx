@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  render,
-  screen,
-  fireEvent,
-  act,
-  waitFor,
-} from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
@@ -49,7 +43,7 @@ test("renders file upload description constraint", async () => {
 
 test("renders a alt text input", async () => {
   render(<EditLogo />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("Logo alt text")).toBeInTheDocument();
+  expect(await screen.findByLabelText("Logo alt text*")).toBeInTheDocument();
 });
 
 test("renders alt text description constraint", async () => {
@@ -73,7 +67,7 @@ test("on submit, it calls updateSetting and upload logo", async () => {
       files: ["image.jpg"],
     },
   });
-  fireEvent.change(getByLabelText("Logo alt text"), {
+  fireEvent.change(getByLabelText("Logo alt text*"), {
     target: {
       value: "Alt text",
     },

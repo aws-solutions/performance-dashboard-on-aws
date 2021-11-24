@@ -21,11 +21,11 @@ class EditChartPage {
   }
 
   fillTitle(title: string) {
-    cy.findByLabelText("Chart title").clear().type(title);
+    cy.findByLabelText("Chart title*").clear().type(title);
   }
 
   fillSummary(summary: string) {
-    cy.findByLabelText("Chart summary - optional").clear().type(summary);
+    cy.findByLabelText("Chart summary (optional)").clear().type(summary);
   }
 
   verifyPreview(title: string, summary: string) {

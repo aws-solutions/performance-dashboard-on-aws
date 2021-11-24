@@ -53,6 +53,15 @@ function EditDetails() {
   const displayTableOfContents = watch("displayTableOfContents");
 
   useEffect(() => {
+    const routeTableOfContents = (history.location.state as any)
+      ?.tableOfContents;
+    if (dashboard && routeTableOfContents) {
+      dashboard.displayTableOfContents = true;
+      dashboard.tableOfContents = routeTableOfContents;
+    }
+  }, [dashboard, history.location.state]);
+
+  useEffect(() => {
     if (dashboard) {
       const name = dashboard.name;
       const description = dashboard.description;
@@ -65,9 +74,21 @@ function EditDetails() {
         displayTableOfContents,
       });
     }
-  }, [dashboard]);
+  }, [dashboard, reset]);
 
   const { t } = useTranslation();
+
+  const onDisplayTableOfContentsChange = (value: boolean) => {
+    if (!dashboard) {
+      return;
+    }
+    if (!dashboard.tableOfContents) {
+      dashboard.tableOfContents = {};
+    }
+    for (const widget of dashboard.widgets || []) {
+      dashboard.tableOfContents[widget.id] = value;
+    }
+  };
 
   const onSubmit = async (values: FormValues) => {
     await BackendService.editDashboard(
@@ -94,7 +115,9 @@ function EditDetails() {
   };
 
   const onTableOfContentsEdit = () => {
-    history.push(`/admin/dashboard/edit/${dashboardId}/tableofcontents`);
+    history.push(`/admin/dashboard/edit/${dashboardId}/tableofcontents`, {
+      tableOfContents: dashboard?.tableOfContents,
+    });
   };
 
   const onCancel = () => {
@@ -114,6 +137,7 @@ function EditDetails() {
 
   return (
     <>
+      <AlertContainer />
       <Breadcrumbs
         crumbs={[
           {
@@ -171,9 +195,8 @@ function EditDetails() {
                       value: topicarea.id,
                       label: topicarea.name,
                     }))}
+                    required
                   />
-
-                  <AlertContainer />
 
                   <div className="usa-form-group">
                     <label className="usa-label text-bold">
@@ -195,6 +218,9 @@ function EditDetails() {
                               dashboard && dashboard.displayTableOfContents
                             }
                             ref={register}
+                            onChange={(e) =>
+                              onDisplayTableOfContentsChange(e.target.checked)
+                            }
                           />
                           <label
                             className="usa-checkbox__label margin-top-0"
@@ -288,9 +314,9 @@ function EditDetails() {
                   };
                 })}
               activeWidgetId={activeWidgetId}
-              setActivewidgetId={setActiveWidgetId}
               isTop={false}
-              displayTableOfContents={dashboard.displayTableOfContents}
+              displayTableOfContents={displayTableOfContents}
+              onBottomOfThePage={() => {}}
               onClick={setActiveWidgetId}
             />
           </div>

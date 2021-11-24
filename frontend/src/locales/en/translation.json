@@ -39,7 +39,6 @@
   "NameUpperCase": "Name",
   "Cancel": "Cancel",
   "Create": "Create",
-  "SuccessfullyDeleted": "successfully deleted",
   "Delete": "Delete",
   "Save": "Save",
   "Edit": "Edit",
@@ -50,7 +49,6 @@
   "Progress": "progress",
   "Completed": "completed",
   "NotCompleted": "not completed",
-  "StepOfTotal": "Step {{step}} of {{total}}",
   "ContentItemTypesLabel": "Content item types",
   "Text": "Text",
   "Metrics": "Metrics",
@@ -149,7 +147,7 @@
   "VisualizeTableComponent": {
     "ResolveErrors": "Resolve error(s) to add the table",
     "TableShowSummary": "Show summary below table",
-    "TableSummary": "Table summary - optional",
+    "TableSummary": "Table summary (optional)",
     "TableSummaryHint": "Give your table a summary to explain it in more depth. It can also be read by screen readers to describe the table for those with visual impairments. This field supports markdown.",
     "TableTitle": "Table title",
     "TableTitleHint": "Give your table a descriptive title.",
@@ -159,7 +157,7 @@
   "VisualizeChartComponent": {
     "ResolveErrors": "Resolve error(s) to add the chart",
     "ChartShowSummary": "Show summary below chart",
-    "ChartSummary": "Chart summary - optional",
+    "ChartSummary": "Chart summary (optional)",
     "ChartSummaryHint": "Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.",
     "ChartTitle": "Chart title",
     "ChartTitleHint": "Give your chart a descriptive title.",
@@ -212,7 +210,7 @@
     "SectionTitleHint": "Give your content a descriptive title.",
     "ShowTitle": "Show title on dashboard",
     "ViewMarkdownSyntax": "View Markdown Syntax",
-    "SectionSummary": "Section summary - optional",
+    "SectionSummary": "Section summary (optional)",
     "SectionSummaryHint": "Give your section a summary to explain it in more depth. It can also be read by screen readers to describe the section for those with visual impairments. This field supports markdown."
   },
   "EditTextScreen": {
@@ -241,7 +239,7 @@
     "SectionTitleHint": "Give your content a descriptive title.",
     "ShowTitle": "Show title on dashboard",
     "ViewMarkdownSyntax": "View Markdown Syntax",
-    "SectionSummary": "Section summary - optional",
+    "SectionSummary": "Section summary (optional)",
     "SectionSummaryHint": "Give your section a summary to explain it in more depth. It can also be read by screen readers to describe the section for those with visual impairments. This field supports markdown."
   },
   "AddMetricScreen": {
@@ -254,11 +252,11 @@
     "MetricValueError": "Please specify a value",
     "MetricFormatHint": "Select a Format",
     "MetricCurrencyHint": "Select a Currency",
-    "ChangeOverTime": "Change over time - optional",
+    "ChangeOverTime": "Change over time (optional)",
     "ChangeOverTimeHint": "Indicate the increase or decrease since the previous time period. For example, +10.1% or -56%. Most includes '+' or '-'.",
     "ChangeOverTimeError": "Must start with '+' or '-'.",
-    "StartDateOptional": "Start date - optional",
-    "EndDateOptional": "End date - optional",
+    "StartDateOptional": "Start date (optional)",
+    "EndDateOptional": "End date (optional)",
     "MetricSuccessfullyAdded": "Metric successfully added."
   },
   "EditMetricScreen": {
@@ -269,11 +267,11 @@
     "MetricValue": "Metric value",
     "MetricValueHint": "Enter a number here.",
     "MetricValueError": "Please specify a value",
-    "ChangeOverTime": "Change over time - optional",
+    "ChangeOverTime": "Change over time (optional)",
     "ChangeOverTimeHint": "Indicate the increase or decrease since the previous time period. For example, +10.1% or -56%. Most includes '+' or '-'.",
     "ChangeOverTimeError": "Must start with '+' or '-'.",
-    "StartDateOptional": "Start date - optional",
-    "EndDateOptional": "End date - optional",
+    "StartDateOptional": "Start date (optional)",
+    "EndDateOptional": "End date (optional)",
     "MetricSuccessfullyEdited": "Metric successfully edited."
   },
   "AddMetricsScreen": {
@@ -456,7 +454,7 @@
   "TopicAreaNamePlural": "Multiple topic areas name",
   "SelectExistingLeading": "Select an existing",
   "Description": "Description",
-  "DescriptionOptional": "Description - optional",
+  "DescriptionOptional": "Description (optional)",
   "ErrorNameSpecify": "Please specify a name",
   "MetricsAdd": "+ Add metric",
   "MetricsOptionsLabel": "Metrics Options",
@@ -641,7 +639,8 @@
     "Dashboards": "Dashboards",
     "ManageUsers": "Manage users",
     "Settings": "Settings",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "PrimaryNavigation": "Primary navigation"
   },
   "PageNotFound": "404 / Page not found",
   "PageNotFoundDescription": "You may want to double-check your link and try again, or return to the",
@@ -728,7 +727,7 @@
   "EditColumns": "Edit columns",
   "HideFromVisualization": "Hide from visualization",
   "DataFormat": "Data format",
-  "NumberFormat": "Number format",
+  "NumberFormat": "Number format (optional)",
   "Currency": "Currency",
   "Number": "Number",
   "Date": "Date",
@@ -831,6 +830,7 @@
   "HighToLow": "high to low",
   "AZ": "A-Z",
   "ZA": "Z-A",
+  "DownloadFileSuccess": "'{{fileName}}' has been downloaded.",
   "DownloadFileError": "The query using the provided S3 key, returned no results.",
   "UploadDatasetError": "Raw file is not an accepted format.",
   "PartWholeChart": "Part-to-whole Chart",
@@ -854,7 +854,6 @@
     },
     "AddImage": "Add Image",
     "ConfigureImage": "Configure image",
-    "StepTwo": "Step 2 of 2",
     "ResolveError": "Resolve error(s) to add the image",
     "Title": "Image title",
     "Hint": "Give your image a descriptive title.",
@@ -865,7 +864,7 @@
     "AltText": "Image alt text",
     "TextHint": "Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard.",
     "TextError": "Please specify image alt text",
-    "SummaryLabel": "Image description - optional",
+    "SummaryLabel": "Image description (optional)",
     "SummaryHint": "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments. This field supports markdown.",
     "MarkdownLink": "View Markdown Syntax",
     "ToggleSummary": "Show description below image",
@@ -889,7 +888,7 @@
     "AltText": "Image alt text",
     "TextHint": "Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard.",
     "TextError": "Please specify image alt text",
-    "SummaryLabel": "Image description - optional",
+    "SummaryLabel": "Image description (optional)",
     "SummaryHint": "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments. This field supports markdown.",
     "MarkdownLink": "View Markdown Syntax",
     "ToggleSummary": "Show description below image"
@@ -911,7 +910,7 @@
   "DashboardWasCopied": "was successfully copied.",
   "Copy": "Copy",
   "CopyContent": "Copy {{name}}",
-  "DownloadCSV": "Download",
+  "DownloadCSV": "Download table",
   "MobilePreview": "Mobile preview",
   "MetricsCenterAlign": "Display with center alignment",
   "DisplayTableOfContents": "Display table of contents",
@@ -930,5 +929,9 @@
   "DeselectAll": "Deselect all",
   "EditTableOfContentsDescription": "The table of contents displays an overview of the content items in your dashboard. Customize the table of contents by selecting which content items to include. If a content item is selected below, its title will be included in the table of contents.",
   "DisplayWithPages": "Display with pages",
-  "SelectColumns": "Select columns to format data."
+  "SelectColumns": "Select columns to format data.",
+  "Tab": "Tab",
+  "Active": "Active",
+  "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} was successfully created.",
+  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} was successfully deleted."
 }

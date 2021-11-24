@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import "./MarkdownRender.css";
+import "./MarkdownRender.scss";
 
 type MarkdownRenderProps = {
   source: string | undefined;

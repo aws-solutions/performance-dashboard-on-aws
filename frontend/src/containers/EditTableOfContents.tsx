@@ -36,15 +36,21 @@ function EditTableOfContents() {
 
   useEffect(() => {
     if (dashboard) {
-      const tableOfContents = dashboard.tableOfContents;
-      if (tableOfContents) {
-        setValues(tableOfContents);
+      const routeTableOfContents = (history.location.state as any)
+        .tableOfContents;
+      if (routeTableOfContents) {
+        dashboard.displayTableOfContents = true;
+        dashboard.tableOfContents = routeTableOfContents;
+      }
+
+      if (dashboard.tableOfContents) {
+        setValues(dashboard.tableOfContents);
         reset({
-          ...tableOfContents,
+          ...dashboard.tableOfContents,
         });
       }
     }
-  }, [dashboard]);
+  }, [dashboard, history.location.state, reset]);
 
   const onSubmit = async (values: FormValues) => {
     if (dashboard) {
@@ -75,7 +81,10 @@ function EditTableOfContents() {
   };
 
   const onCancel = () => {
-    history.push(`/admin/dashboard/edit/${dashboardId}/header`);
+    history.push(
+      `/admin/dashboard/edit/${dashboardId}/header`,
+      history.location.state
+    );
   };
 
   const onSelectAll = (selected: boolean) => {
@@ -246,9 +255,9 @@ function EditTableOfContents() {
                       }) || []
                   }
                   activeWidgetId={activeWidgetId}
-                  setActivewidgetId={setActiveWidgetId}
                   isTop={false}
                   displayTableOfContents={!!dashboard.displayTableOfContents}
+                  onBottomOfThePage={() => {}}
                   onClick={setActiveWidgetId}
                 />
               </div>

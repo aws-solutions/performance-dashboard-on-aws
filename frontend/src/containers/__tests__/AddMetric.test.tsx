@@ -32,13 +32,13 @@ describe("AddMetricForm", () => {
   });
 
   test("submits form with the entered values", async () => {
-    fireEvent.input(screen.getByLabelText("Metric title"), {
+    fireEvent.input(screen.getByLabelText("Metric title*"), {
       target: {
         value: "Test metric",
       },
     });
 
-    fireEvent.input(screen.getByLabelText("Metric value"), {
+    fireEvent.input(screen.getByLabelText("Metric value*"), {
       target: {
         value: "1.0",
       },

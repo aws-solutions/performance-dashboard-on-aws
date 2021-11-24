@@ -14,7 +14,7 @@ exports[`topic area settings should match snapshot 1`] = `
       >
         <a
           aria-label=""
-          class="link"
+          class="usa-link action-link"
           href="/admin/settings/topicarea"
           target=""
         >
@@ -484,16 +484,6 @@ exports[`topic area settings should match snapshot 1`] = `
               </tr>
             </tbody>
           </table>
-          <div
-            class="text-right"
-          >
-            <button
-              class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-2"
-              type="button"
-            >
-              Return to top
-            </button>
-          </div>
         </main>
       </div>
     </div>

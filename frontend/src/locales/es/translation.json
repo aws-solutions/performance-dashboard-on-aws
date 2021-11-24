@@ -50,7 +50,6 @@
   "Progress": "progreso",
   "Completed": "completado",
   "NotCompleted": "no completado",
-  "StepOfTotal": "Paso {{step}} de {{total}}",
   "ContentItemTypesLabel": "Tipos de elementos de contenido",
   "Text": "Texto",
   "Metrics": "Métricas",
@@ -641,7 +640,8 @@
     "Dashboards": "Paneles",
     "ManageUsers": "Administrar usuarios",
     "Settings": "Configuración",
-    "Logout": "Cerrar sesión"
+    "Logout": "Cerrar sesión",
+    "PrimaryNavigation": "Navegacion primaria"
   },
   "PageNotFound": "404/Página no encontrada",
   "PageNotFoundDescription": "Es posible que desee comprobar el enlace e intentarlo de nuevo, o volver a la",
@@ -831,6 +831,7 @@
   "HighToLow": "de alto a bajo",
   "AZ": "A-Z",
   "ZA": "Z-A",
+  "DownloadFileSuccess": "'{{fileName}}' ha sido descargado.",
   "DownloadFileError": "La consulta con la clave de S3 proporcionada no ha devuelto ningún resultado.",
   "UploadDatasetError": "El archivo sin procesar no está en un formato aceptado.",
   "PartWholeChart": "Gráfico de parte a todo",
@@ -854,7 +855,6 @@
     },
     "AddImage": "Agregar imagen",
     "ConfigureImage": "Configurar imagen",
-    "StepTwo": "Paso 2 de 2",
     "ResolveError": "Resolver errores al agregar la imagen",
     "Title": "Título de la imagen",
     "Hint": "Asigne a la imagen un título descriptivo.",
@@ -911,7 +911,7 @@
   "DashboardWasCopied": "se ha copiado correctamente.",
   "Copy": "Copiar",
   "CopyContent": "Copiar {{name}}",
-  "DownloadCSV": "Descargar",
+  "DownloadCSV": "Descargar tabla",
   "MobilePreview": "Vista previa móvil",
   "MetricsCenterAlign": "Mostrar con alineación centrada",
   "DisplayTableOfContents": "Mostrar tabla de contenidos",
@@ -930,5 +930,9 @@
   "DeselectAll": "Anular la selección de todos",
   "EditTableOfContentsDescription": "El índice muestra información general de los elementos de contenido del panel. Personalice la tabla de contenido seleccionando los elementos de contenido que quiera incluir. Si se selecciona un elemento a continuación, el título se incluirá en la tabla de contenido.",
   "DisplayWithPages": "Mostrar con páginas",
-  "SelectColumns": "Seleccione columnas para dar formato a los datos."
+  "SelectColumns": "Seleccione columnas para dar formato a los datos.",
+  "Tab": "Pestaña",
+  "Active": "Activo",
+  "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} se ha creado correctamente.",
+  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} se eliminó correctamente."
 }

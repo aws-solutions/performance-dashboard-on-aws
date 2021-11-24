@@ -7,7 +7,13 @@ import Table from "./Table";
 import DropdownMenu from "../components/DropdownMenu";
 import { CSVLink } from "react-csv";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
+import "./DataTable.scss";
+import { useHistory } from "react-router-dom";
 
 const { MenuItem } = DropdownMenu;
 
@@ -26,8 +32,10 @@ function DataTable({
   fileName,
   showMobilePreview,
 }: Props) {
+  const history = useHistory();
   const { t } = useTranslation();
   const [showDataTable, setShowDataTable] = useState(false);
+  let canDownload = false;
 
   const tableRows = useMemo(() => rows, [rows]);
   const tableColumns = useMemo(
@@ -73,7 +81,7 @@ function DataTable({
         }
       >
         <DropdownMenu
-          className="text-base"
+          className="text-base-dark"
           buttonText={t("Actions")}
           disabled={false}
           variant="unstyled"
@@ -83,20 +91,52 @@ function DataTable({
               !showDataTable ? setShowDataTable(true) : setShowDataTable(false)
             }
           >
+            <FontAwesomeIcon
+              icon={!showDataTable ? faEye : faEyeSlash}
+              className="margin-right-1 margin-bottom-1px"
+              size="xs"
+            />
             {!showDataTable
               ? t("ShowDataTableButton")
               : t("HideDataTableButton")}
           </MenuItem>
-          <MenuItem onSelect={() => {}}>
+          <MenuItem
+            onSelect={() => {
+              const downloadButton: HTMLAnchorElement | null =
+                document.querySelector(
+                  "[data-reach-menu-item][data-selected] a"
+                );
+              if (downloadButton) {
+                // de-duplicate clicks when link clicked
+                canDownload = true;
+                downloadButton.click();
+                canDownload = false;
+              }
+            }}
+          >
             <FontAwesomeIcon
               icon={faDownload}
               className="margin-right-1"
-              size="sm"
+              size="xs"
             />
             <CSVLink
               data={tableRows}
-              filename={fileName}
-              style={{ color: "#1b1b1b" }}
+              filename={`${fileName}.csv`}
+              className="usa-link"
+              onClick={() => {
+                if (!canDownload) {
+                  return false;
+                }
+                history.replace(history.location.pathname, {
+                  alert: {
+                    type: "success",
+                    message: t("DownloadFileSuccess", {
+                      fileName: `${fileName}.csv`,
+                    }),
+                  },
+                });
+                return true;
+              }}
             >
               {t("DownloadCSV")}
             </CSVLink>

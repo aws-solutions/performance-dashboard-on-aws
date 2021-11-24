@@ -1,0 +1,35 @@
+[
+  {
+    "title": "User satisfaction",
+    "value": "88.1",
+    "changeOverTime": "+3%",
+    "percentage": "Percentage",
+    "startDate": "2021-08-01T04:00:00.000Z",
+    "endDate": "2021-09-01T04:00:00.000Z"
+  },
+  {
+    "title": "Cost per transaction",
+    "value": "3.91",
+    "changeOverTime": "-1.3%",
+    "percentage": "Currency",
+    "currency": "Dollar $",
+    "startDate": "2021-08-01T04:00:00.000Z",
+    "endDate": "2021-09-01T04:00:00.000Z"
+  },
+  {
+    "title": "Digital take-up",
+    "value": "63",
+    "changeOverTime": "+4%",
+    "percentage": "Percentage",
+    "startDate": "2021-08-01T04:00:00.000Z",
+    "endDate": "2021-09-01T04:00:00.000Z"
+  },
+  {
+    "title": "Completion rate",
+    "value": "48.6",
+    "changeOverTime": "+4.1",
+    "percentage": "Percentage",
+    "startDate": "2021-08-01T04:00:00.000Z",
+    "endDate": "2021-09-01T04:00:00.000Z"
+  }
+]

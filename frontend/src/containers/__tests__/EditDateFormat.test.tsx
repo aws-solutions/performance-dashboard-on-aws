@@ -15,13 +15,13 @@ beforeEach(async () => {
 });
 
 test("submits form with date and time format values", async () => {
-  fireEvent.change(screen.getByLabelText("Date format"), {
+  fireEvent.change(screen.getByLabelText("Date format*"), {
     target: {
       value: "YYYY-MM-DD",
     },
   });
 
-  fireEvent.change(screen.getByLabelText("Time format"), {
+  fireEvent.change(screen.getByLabelText("Time format*"), {
     target: {
       value: "h:mm A",
     },

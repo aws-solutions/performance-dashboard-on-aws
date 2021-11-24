@@ -50,7 +50,6 @@
   "Progress": "progresso",
   "Completed": "concluído",
   "NotCompleted": "não concluído",
-  "StepOfTotal": "Etapa {{step}} de {{total}}",
   "ContentItemTypesLabel": "Tipos de item de conteúdo",
   "Text": "Texto",
   "Metrics": "Métricas",
@@ -641,7 +640,8 @@
     "Dashboards": "Painéis",
     "ManageUsers": "Gerenciar usuários",
     "Settings": "Configurações",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "PrimaryNavigation": "Navegação Primária"
   },
   "PageNotFound": "404/Página não encontrada",
   "PageNotFoundDescription": "Verifique seu link e tente novamente ou volte ao",
@@ -831,6 +831,7 @@
   "HighToLow": "alto a baixo",
   "AZ": "A-Z",
   "ZA": "Z-A",
+  "DownloadFileSuccess": "'{{fileName}}' foi baixado.",
   "DownloadFileError": "A consulta usando a chave do S3 fornecida não retornou resultados.",
   "UploadDatasetError": "O arquivo bruto não é um formato aceito.",
   "PartWholeChart": "Gráfico de blocos",
@@ -854,7 +855,6 @@
     },
     "AddImage": "Adicionar imagem",
     "ConfigureImage": "Configurar imagem",
-    "StepTwo": "Etapa 2 de 2",
     "ResolveError": "Resolva o(s) erro(s) para adicionar a imagem",
     "Title": "Título da imagem",
     "Hint": "Dê um título descritivo para a sua imagem.",
@@ -911,7 +911,7 @@
   "DashboardWasCopied": "foi copiado com êxito.",
   "Copy": "Copiar",
   "CopyContent": "Copiar {{name}}",
-  "DownloadCSV": "Fazer download",
+  "DownloadCSV": "Baixar a tabela",
   "MobilePreview": "Pré-visualização para dispositivos móveis",
   "MetricsCenterAlign": "Exibição com alinhamento central",
   "DisplayTableOfContents": "Exibir índice",
@@ -930,5 +930,9 @@
   "DeselectAll": "Desmarcar tudo",
   "EditTableOfContentsDescription": "O sumário exibe uma visão geral dos itens de conteúdo em seu painel. Para personalizar o sumário, selecione os itens de conteúdo que serão incluídos. Se um item de conteúdo for selecionado abaixo, o respectivo título será incluído no sumário.",
   "DisplayWithPages": "Exibir com páginas",
-  "SelectColumns": "Selecione as colunas para formatar os dados."
+  "SelectColumns": "Selecione as colunas para formatar os dados.",
+  "Tab": "Guia",
+  "Active": "Ativa",
+  "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} foi criado com sucesso.",
+  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} foi excluído com sucesso."
 }

@@ -1,42 +1,35 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Link from "../components/Link";
 import { usePublicHomepage, useDateTimeFormatter } from "../hooks";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
-import { PublicDashboard } from "../models";
+import { PublicDashboard, LocationState } from "../models";
 import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
 import "./Home.css";
 
 function Home() {
-  const [filter, setFilter] = useState("");
   const { homepage, loading } = usePublicHomepage();
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
+  const history = useHistory<LocationState>();
 
   const onSearch = (query: string) => {
-    setFilter(query);
+    if (query == undefined || query == "") {
+      history.push("/");
+    } else {
+      history.push("/public/search?q=" + query);
+    }
   };
 
   const onClear = () => {
-    setFilter("");
+    history.push("/");
   };
 
-  const filterPublicDashboards = (
-    dashboards: Array<PublicDashboard>
-  ): Array<PublicDashboard> => {
-    return dashboards.filter((dashboard) => {
-      const name = dashboard.name.toLowerCase().trim();
-      const query = filter.toLowerCase();
-      return name.includes(query);
-    });
-  };
-
-  const topicareas = UtilsService.groupByTopicArea(
-    filterPublicDashboards(homepage.dashboards)
-  );
+  const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   return loading ? (
     <Spinner
@@ -67,8 +60,8 @@ function Home() {
             onSubmit={onSearch}
             size="big"
             onClear={onClear}
-            query={filter}
-            results={filterPublicDashboards(homepage.dashboards).length}
+            query=""
+            results={homepage.dashboards.length}
           />
         </div>
       </div>

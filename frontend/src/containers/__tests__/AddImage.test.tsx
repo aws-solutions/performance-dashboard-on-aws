@@ -29,12 +29,11 @@ test("renders title and subtitles", async () => {
     await screen.findByRole("heading", { name: "Add Image" })
   ).toBeInTheDocument();
   expect(await screen.findByText("Configure image")).toBeInTheDocument();
-  expect(await screen.findByText("Step 2 of 2")).toBeInTheDocument();
 });
 
 test("renders a textfield for image title", async () => {
   render(<AddImage />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("Image title")).toBeInTheDocument();
+  expect(await screen.findByLabelText("Image title*")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {
@@ -47,13 +46,13 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     wrapper: MemoryRouter,
   });
 
-  fireEvent.input(getByLabelText("Image title"), {
+  fireEvent.input(getByLabelText("Image title*"), {
     target: {
       value: "Test Image",
     },
   });
 
-  fireEvent.input(getByLabelText("Image alt text"), {
+  fireEvent.input(getByLabelText("Image alt text*"), {
     target: {
       value: "Test alt text",
     },
@@ -69,14 +68,14 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
 
   await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {
-    expect(getByText("Image alt text")).toBeInTheDocument();
+    expect(getByLabelText("Image alt text*")).toBeInTheDocument();
     expect(
       getByText(
         "Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard."
       )
     ).toBeInTheDocument();
 
-    expect(getByText("Image description - optional")).toBeInTheDocument();
+    expect(getByText("Image description (optional)")).toBeInTheDocument();
     expect(
       getByText(
         "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments. This field supports markdown."

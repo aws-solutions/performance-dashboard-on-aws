@@ -26,33 +26,3 @@ test("renders dashboards list", async () => {
   expect(getByText("Topic Area Grapes")).toBeInTheDocument();
   expect(getByText("Dashboard Two")).toBeInTheDocument();
 });
-
-test("filters dashboards based on search input", async () => {
-  const { getByLabelText, getByRole } = render(<Home />, {
-    wrapper: MemoryRouter,
-  });
-
-  const dashboard1 = getByRole("link", { name: "Dashboard One" });
-  const dashboard2 = getByRole("link", { name: "Dashboard Two" });
-
-  // Make sure both dashboards show up in the table
-  expect(dashboard1).toBeInTheDocument();
-  expect(dashboard2).toBeInTheDocument();
-
-  // Use search input to filter
-  const search = getByLabelText("Search");
-  await act(async () => {
-    fireEvent.input(search, {
-      target: {
-        value: "Dashboard two",
-      },
-    });
-
-    const searchButton = getByRole("button", { name: "Search" });
-    fireEvent.click(searchButton);
-  });
-
-  // Dashboard one should dissapear
-  expect(dashboard1).not.toBeInTheDocument();
-  expect(dashboard2).toBeInTheDocument();
-});

@@ -1,15 +1,8 @@
 import * as Chance from "chance";
 import EditDashboardPage from "../pages/EditDashboard";
 import CreateDashboardPage from "../pages/CreateDashboard";
-import AddMetricsPage from "../pages/AddMetrics";
-import AddTextPage from "../pages/AddText";
 import AddChartPage from "../pages/AddChart";
-import AddTablePage from "../pages/AddTable";
 import LoginPage from "../pages/Login";
-import EditTextPage from "../pages/EditText";
-import EditMetricsPage from "../pages/EditMetrics";
-import EditChartPage from "../pages/EditChart";
-import EditTablePage from "../pages/EditTable";
 
 const random = new Chance();
 let dashboardName: string;
@@ -56,7 +49,7 @@ describe("Admin user", () => {
     cy.get("label[for='checkbox-header-2']").click();
 
     //Continue
-    cy.get('button:contains(Continue)').last().click();
+    cy.get("button:contains(Continue)").last().click();
 
     // Enter chart details
     const chartTitle = random.word();
@@ -68,7 +61,6 @@ describe("Admin user", () => {
     cy.get("label[for='BarChart']").click();
     cy.get("label[for='dataLabels']").click();
 
-
     cy.get(".recharts-surface").contains("€80.00");
     cy.get(".recharts-surface").contains("€85.00");
     cy.get(".recharts-surface").contains("€94.00");
@@ -79,7 +71,7 @@ describe("Admin user", () => {
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();
     dashboardListingPage.deleteDashboard(dashboardName);
-  }); 
+  });
 
   it("can add a Column Chart content item to a dashboard", () => {
     const addContentItemPage = editDashboardPage.goToAddContentItem();
@@ -105,7 +97,7 @@ describe("Admin user", () => {
     cy.get("label[for='checkbox-header-2']").click();
 
     //Continue
-    cy.get('button:contains(Continue)').last().click();
+    cy.get("button:contains(Continue)").last().click();
 
     // Enter chart details
     const chartTitle = random.word();
@@ -117,7 +109,6 @@ describe("Admin user", () => {
     cy.get("label[for='ColumnChart']").click();
     cy.get("label[for='dataLabels']").click();
 
-
     cy.get(".recharts-surface").contains("€80.00");
     cy.get(".recharts-surface").contains("€85.00");
     cy.get(".recharts-surface").contains("€94.00");
@@ -128,7 +119,7 @@ describe("Admin user", () => {
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();
     dashboardListingPage.deleteDashboard(dashboardName);
-  }); 
+  });
 
   it("can add a Pie Chart content item to a dashboard", () => {
     const addContentItemPage = editDashboardPage.goToAddContentItem();
@@ -148,7 +139,7 @@ describe("Admin user", () => {
     cy.get("label[for='checkbox-header-1']").click();
 
     //Continue
-    cy.get('button:contains(Continue)').last().click();
+    cy.get("button:contains(Continue)").last().click();
 
     // Enter chart details
     const chartTitle = random.word();
@@ -160,7 +151,6 @@ describe("Admin user", () => {
     cy.get("label[for='PieChart']").click();
     cy.get("label[for='dataLabels']").click();
     cy.get("label[for='computePercentages']").click();
-
 
     cy.get(".recharts-pie").contains("€5,000.00 (48.45%)");
     cy.get(".recharts-pie").contains("€4,300.00 (41.67%)");
@@ -175,5 +165,5 @@ describe("Admin user", () => {
     // Delete the dashboard
     const dashboardListingPage = editDashboardPage.goToDashboardListing();
     dashboardListingPage.deleteDashboard(dashboardName);
-  }); 
+  });
 });

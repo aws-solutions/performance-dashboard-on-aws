@@ -8,7 +8,7 @@ exports[`renders a Data Table element 1`] = `
     <button
       aria-controls="menu--33"
       aria-haspopup="true"
-      class="usa-button usa-button--unstyled text-base"
+      class="usa-button usa-button--unstyled text-base-dark"
       data-reach-menu-button=""
       id="menu-button--menu--33"
       type="button"
@@ -206,7 +206,6 @@ exports[`renders a Data Table element 1`] = `
       </tbody>
     </table>
   </div>
-  
 </div>
 `;
 
@@ -218,7 +217,7 @@ exports[`renders a Data Table element on mobile 1`] = `
     <button
       aria-controls="menu--40"
       aria-haspopup="true"
-      class="usa-button usa-button--unstyled text-base"
+      class="usa-button usa-button--unstyled text-base-dark"
       data-reach-menu-button=""
       id="menu-button--menu--40"
       type="button"
@@ -416,7 +415,6 @@ exports[`renders a Data Table element on mobile 1`] = `
       </tbody>
     </table>
   </div>
-  
 </div>
 `;
 
@@ -428,7 +426,7 @@ exports[`renders a Data Table element with hidden table 1`] = `
     <button
       aria-controls="menu--23"
       aria-haspopup="true"
-      class="usa-button usa-button--unstyled text-base"
+      class="usa-button usa-button--unstyled text-base-dark"
       data-reach-menu-button=""
       id="menu-button--menu--23"
       type="button"
@@ -462,7 +460,7 @@ exports[`renders a Data Table element with hidden table on mobile 1`] = `
     <button
       aria-controls="menu--28"
       aria-haspopup="true"
-      class="usa-button usa-button--unstyled text-base"
+      class="usa-button usa-button--unstyled text-base-dark"
       data-reach-menu-button=""
       id="menu-button--menu--28"
       type="button"

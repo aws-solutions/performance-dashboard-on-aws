@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Search from "../components/Search";
 import { LocationState, TopicArea } from "../models";
 import Button from "../components/Button";
-import ScrollTop from "../components/ScrollTop";
 import TopicareasTable from "../components/TopicareasTable";
 import BackendService from "../services/BackendService";
 import Modal from "../components/Modal";
@@ -65,11 +64,10 @@ function TopicareaListing(props: Props) {
       history.replace("/admin/settings/topicarea", {
         alert: {
           type: "success",
-          message: `"${
-            selected.name
-          }" ${settings.topicAreaLabels.singular.toLowerCase()} ${t(
-            "SuccessfullyDeleted"
-          )}`,
+          message: t("SettingsTopicAreaNameSuccessfullyDeleted", {
+            name: `${selected.name}`,
+            topicAreaName: `${settings.topicAreaLabels.singular.toLowerCase()}`,
+          }),
         },
       });
 
@@ -170,9 +168,6 @@ function TopicareaListing(props: Props) {
         topicAreas={sortTopicareas(filterTopicAreas(props.topicareas))}
         onSelect={onSelect}
       />
-      <div className="text-right">
-        <ScrollTop />
-      </div>
     </>
   );
 }

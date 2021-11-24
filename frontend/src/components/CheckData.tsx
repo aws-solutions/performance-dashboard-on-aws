@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
-import ScrollTop from "../components/ScrollTop";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
 import Button from "./Button";
@@ -425,10 +424,9 @@ function CheckData(props: Props) {
               setSortByColumn={props.setSortByColumn}
               setSortByDesc={props.setSortByDesc}
               reset={props.reset}
+              keepBorderBottom
+              mobileNavigation
             />
-          </div>
-          <div className="text-right">
-            <ScrollTop />
           </div>
         </div>
       </div>

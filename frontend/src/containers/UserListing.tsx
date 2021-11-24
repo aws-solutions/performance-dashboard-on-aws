@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { useUsers } from "../hooks";
 import Button from "../components/Button";
-import ScrollTop from "../components/ScrollTop";
 import Search from "../components/Search";
 import Table from "../components/Table";
 import { LocationState, User } from "../models";
@@ -123,6 +122,7 @@ function UserListing() {
 
   return (
     <>
+      <AlertContainer />
       <h1 className="margin-top-1">{t("ManageUsers")}</h1>
       <Modal
         isOpen={isOpenResendInviteModal}
@@ -156,7 +156,6 @@ function UserListing() {
           {t("UserListingLink")}
         </Link>
       </p>
-      <AlertContainer />
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-4 text-left padding-top-1px">
           <ul className="usa-button-group">
@@ -239,9 +238,6 @@ function UserListing() {
         )}
         rows={users}
       />
-      <div className="text-right">
-        <ScrollTop />
-      </div>
     </>
   );
 }

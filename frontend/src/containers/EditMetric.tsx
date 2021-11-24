@@ -267,7 +267,7 @@ function EditMetric() {
                   start={{
                     id: "startDate",
                     name: "startDate",
-                    label: t("AddMetricScreen.StartDateOptional"),
+                    label: t("EditMetricScreen.StartDateOptional"),
                     hint: settings.dateTimeFormat.date,
                     date: startDate,
                     dateFormat: settings.dateTimeFormat.date
@@ -278,7 +278,7 @@ function EditMetric() {
                   end={{
                     id: "endDate",
                     name: "endDate",
-                    label: t("AddMetricScreen.EndDateOptional"),
+                    label: t("EditMetricScreen.EndDateOptional"),
                     hint: settings.dateTimeFormat.date,
                     date: endDate,
                     dateFormat: settings.dateTimeFormat.date

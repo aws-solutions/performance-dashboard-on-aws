@@ -12,6 +12,7 @@ import withPublicLayout from "./layouts/Public";
 import withAdminLayout from "./layouts/Admin";
 
 import Home from "./containers/Home";
+import HomeWithSearch from "./containers/HomeWithSearch";
 import DashboardListing from "./containers/DashboardListing";
 import CreateDashboard from "./containers/CreateDashboard";
 import EditDetails from "./containers/EditDetails";
@@ -276,6 +277,11 @@ const routes: Array<AppRoute> = [
   {
     path: "/admin/users/changerole",
     component: ChangeRole,
+  },
+  {
+    path: "/public/search",
+    component: HomeWithSearch,
+    public: true,
   },
   {
     path: "/403/access-denied",

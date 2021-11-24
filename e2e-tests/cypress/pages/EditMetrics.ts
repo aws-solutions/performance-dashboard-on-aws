@@ -30,11 +30,11 @@ class EditMetricsPage {
     cy.get("button").contains("Add metric").click();
     cy.wait(["@viewDashboardRequest"]);
 
-    cy.findByLabelText("Metric title").type(title);
-    cy.findByLabelText("Metric value").type(value.toString());
+    cy.findByLabelText("Metric title*").type(title);
+    cy.findByLabelText("Metric value*").type(value.toString());
     cy.get("select#percentage").select("Currency");
     cy.get("select#currency").select("Dollar $");
-    cy.findByLabelText("Change over time - optional").type("+10%");
+    cy.findByLabelText("Change over time (optional)").type("+10%");
 
     // Direct to Add metrics page
     cy.get("button").contains("Add metric").click();

@@ -87,9 +87,9 @@ function EditImage() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("EditImageScreen.ImageEditedSuccessfully.part1")}${
-            values.title
-          }${t("EditImageScreen.ImageEditedSuccessfully.part2")}`,
+          message: t("EditImageScreen.ImageEditedSuccessfully", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {

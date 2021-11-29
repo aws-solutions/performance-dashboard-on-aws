@@ -194,9 +194,9 @@ function AddMetrics() {
         history.push(`/admin/dashboard/edit/${dashboardId}`, {
           alert: {
             type: "success",
-            message: `${t("AddMetricsScreen.MetricsAddedSuccessfully.part1")}${
-              values.title
-            }${t("AddMetricsScreen.MetricsAddedSuccessfully.part2")}`,
+            message: t("AddMetricsScreen.MetricsAddedSuccessfully", {
+              title: values.title,
+            }),
           },
         });
       }

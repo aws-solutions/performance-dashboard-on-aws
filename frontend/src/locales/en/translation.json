@@ -78,10 +78,7 @@
   "PDoASite": "This site is where you manage the performance dashboard.",
   "WantToViewPublishedSite": "Do you want to see what your audience sees?",
   "ViewPublishedSite": "View the published site",
-  "NewDraftDashboardCreated": {
-    "part1": "A new draft version of ",
-    "part2": " dashboard has been created."
-  },
+  "NewDraftDashboardCreated": "A new draft version of {{dashboardName}} dashboard has been created.",
   "DashboardWasArchived": "was successfully archived.",
   "DashboardWasDeleted": "was successfully deleted.",
   "DashboardWasRepublished": "dashboard was successfully re-published.",
@@ -101,35 +98,18 @@
   "LearnHowToFormatCSV": "Learn how to format your data.",
   "CreatedBy": "Created by",
   "Dashboards": "Dashboards",
-  "CreateDraftDashboardModalTitle": {
-    "part1": "Update ",
-    "part2": " dashboard"
-  },
+  "CreateDraftDashboardModalTitle": "Update {{dashboardName}} dashboard",
   "CreateDraftDashboardModalMessage": "This will create a new draft of the dashboard that will allow you to edit the content, then publish the new version to the published site.",
   "CreateDraftDashboardModalButton": "Create draft",
-  "ArchiveDashboardModalTitle": {
-    "part1": "Archive ",
-    "part2": " dashboard"
-  },
-  "ArchiveDashboardModalMessage": {
-    "part1": "This will remove ",
-    "part2": " dashboard from the published site. You can re-publish archived dashboards at any time."
-  },
+  "ArchiveDashboardModalTitle": "Archive {{dashboardName}} dashboard",
+  "ArchiveDashboardModalMessage": "This will remove {{dashboardName}} dashboard from the published site. You can re-publish archived dashboards at any time.",
   "ArchiveDashboardModalButton": "Archive",
-  "RepublishDashboardModalTitle": {
-    "part1": "Re-publish ",
-    "part2": " dashboard"
-  },
+  "RepublishDashboardModalTitle": "Re-publish {{dashboardName}} dashboard",
   "RepublishDashboardModalMessage": "Are you sure you want to re-publish this dashboard?",
   "RepublishDashboardModalButton": "Re-publish",
-  "PreparePublishingModalTitle": {
-    "part1": "Prepare ",
-    "part2": " dashboard for publishing"
-  },
-  "PreparePublishingModalMessage": {
-    "part1": "This dashboard has no content items. ",
-    "part2": "Are you sure you want to prepare this dashboard for publishing?"
-  },
+  "PreparePublishingModalTitle": "Prepare {{dashboardName}} dashboard for publishing",
+  "PreparePublishingModalMessage_0": "This dashboard has no content items. Are you sure you want to prepare this dashboard for publishing?",
+  "PreparePublishingModalMessage": "Are you sure you want to prepare this dashboard for publishing?",
   "PreparePublishingModalButton": "Prepare for publishing",
   "OnlyOneDraftDashboardAtATime": "A draft has been created to update this dashboard. Only one draft at a time is allowed.",
   "EditOrPublishDraft": {
@@ -185,10 +165,7 @@
   "AddTextScreen": {
     "AddText": "Add text",
     "AddTextError": "Resolve error(s) to add the text",
-    "AddTextSuccess": {
-      "part1": "'",
-      "part2": "' text has been successfully added."
-    },
+    "AddTextSuccess": "'{{title}}' text has been successfully added.",
     "CreatingText": "Creating text",
     "Configure": "Configure text content",
     "TextTitle": "Text title",
@@ -216,10 +193,7 @@
   "EditTextScreen": {
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
-    "EditTextSuccess": {
-      "part1": "'",
-      "part2": "' text has been successfully edited."
-    },
+    "EditTextSuccess": "'{{title}}' text has been successfully edited.",
     "EditingText": "Editing text",
     "TextTitle": "Text title",
     "TextTitleError": "Please specify a text title",
@@ -275,10 +249,7 @@
     "MetricSuccessfullyEdited": "Metric successfully edited."
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessfully": {
-      "part1": "Metrics '",
-      "part2": "' have been successfully added."
-    },
+    "MetricsAddedSuccessfully": "Metrics '{{title}}' have been successfully added.",
     "Name": "Name",
     "LastUpdated": "Last updated",
     "Description": "Description",
@@ -309,10 +280,7 @@
     "ShowTitle": "Show title on dashboard"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessfully": {
-      "part1": "Metrics '",
-      "part2": "' have been successfully edited."
-    },
+    "MetricsEditedSuccessfully": "Metrics '{{title}}' have been successfully edited.",
     "EditMetrics": "Edit metrics",
     "UploadingFile": "Uploading file",
     "EditingMetrics": "Editing metrics",
@@ -329,10 +297,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddChartSuccess": {
-      "part1": "'",
-      "part2": "' chart has been successfully added."
-    },
+    "AddChartSuccess": "'{{title}}' chart has been successfully added.",
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "EditChartScreen": {
@@ -341,10 +306,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditChartSuccess": {
-      "part1": "'",
-      "part2": "' chart has been successfully edited."
-    },
+    "EditChartSuccess": "'{{title}}' chart has been successfully edited.",
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "AddTableScreen": {
@@ -352,10 +314,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddTableSuccess": {
-      "part1": "'",
-      "part2": "' table has been successfully added."
-    },
+    "AddTableSuccess": "'{{title}}' table has been successfully added.",
     "ChooseDataset": "Choose a dataset to continue"
   },
   "EditTableScreen": {
@@ -363,10 +322,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditTableSuccess": {
-      "part1": "'",
-      "part2": "' table has been successfully edited."
-    },
+    "EditTableSuccess": "'{{title}}' table has been successfully edited.",
     "ChooseDataset": "Choose a dataset to continue"
   },
   "BrandingAndStyling": "Branding and styling",
@@ -393,11 +349,8 @@
   "UserListingDropdownResendInviteText": "Resend invite emails to unconfirmed users",
   "UserListingActionsResendInvites": "Resend invite email",
   "UserListingActionsRemoveUsers": "Remove users",
-  "UserListingActionsRemoveUsersMessage": {
-    "part0": "Are you sure you want to remove ",
-    "part1": "user",
-    "part2": "users"
-  },
+  "UserListingActionsRemoveUsersMessage": "Are you sure you want to remove 1 user?",
+  "UserListingActionsRemoveUsersMessage_plural": "Are you sure you want to remove {{count}} users?",
   "AddUsersInvites": "Add user(s) and send invite",
   "AddUsersAdmin": "In addition to Editor permissions, can manage users and website settings.",
   "AddUsersEditor": "Can create, edit, and publish dashboards.",
@@ -429,10 +382,8 @@
   },
   "UserListingAddUsers": "Add user(s)",
   "UserListingModalTitleResendInvites": "Resend invite email",
-  "UserListingModalTitleResendInvitesMessage": {
-    "part1": "Are you sure you want to resend the invite for this user?",
-    "part2": "Are you sure you want to resend the invites for these users?"
-  },
+  "UserListingModalTitleResendInvitesMessage": "Are you sure you want to resend the invite for this user?",
+  "UserListingModalTitleResendInvitesMessage_plural": "Are you sure you want to resend the invites for these {{count}} users?",
   "GlobalCancel": "Cancel",
   "GlobalClose": "Close",
   "GlobalDelete": "Delete",
@@ -488,14 +439,8 @@
     "FailToReturnToDraftError": "Failed to return dashboard to draft. Please try again.",
     "FailToSaveReleaseNotesError": "Failed to save release notes, please try again.",
     "MissingVersionNotesError": "Please enter version notes",
-    "ReturnToDraftSuccessAlert": {
-      "part1": "",
-      "part2": " dashboard successfully returned to draft."
-    },
-    "PublishedSuccessAlert": {
-      "part1": "",
-      "part2": " dashboard was successfully published."
-    }
+    "ReturnToDraftSuccessAlert": "'{{dashboardName}}' dashboard successfully returned to draft.",
+    "PublishedSuccessAlert": "'{{dashboardName}}' dashboard was successfully published."
   },
   "SettingsDateTimeFormat": "Date and time format",
   "SettingsDateTimeFormatEdit": "Edit date and time format",
@@ -642,7 +587,7 @@
     "ManageUsers": "Manage users",
     "Settings": "Settings",
     "Logout": "Logout",
-    "PrimaryNavigation": ""
+    "PrimaryNavigation": "Primary navigation"
   },
   "PageNotFound": "404 / Page not found",
   "PageNotFoundDescription": "You may want to double-check your link and try again, or return to the",
@@ -850,10 +795,7 @@
   "LastSaved": "Last saved",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Image file not specified",
-    "ImageAddedSuccessfully": {
-      "part1": "Image '",
-      "part2": "' has been successfully added."
-    },
+    "ImageAddedSuccessfully": "Image '{{title}}' has been successfully added.",
     "AddImage": "Add Image",
     "ConfigureImage": "Configure image",
     "ResolveError": "Resolve error(s) to add the image",
@@ -875,10 +817,7 @@
     "Cancel": "Cancel"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessfully": {
-      "part1": "Image '",
-      "part2": "' has been successfully edited."
-    },
+    "ImageEditedSuccessfully": "Image '{{title}}' has been successfully edited.",
     "EditImage": "Edit Image",
     "ResolveError": "Resolve error(s) to edit the image",
     "Title": "Image title",

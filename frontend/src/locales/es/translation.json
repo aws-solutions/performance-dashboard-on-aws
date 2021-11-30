@@ -39,7 +39,6 @@
   "NameUpperCase": "Nombre",
   "Cancel": "Cancelar",
   "Create": "Crear",
-  "SuccessfullyDeleted": "eliminado correctamente",
   "Delete": "Eliminar",
   "Save": "Guardar",
   "Edit": "Editar",
@@ -128,7 +127,7 @@
   "VisualizeTableComponent": {
     "ResolveErrors": "Resolver errores al agregar la tabla",
     "TableShowSummary": "Mostrar resumen a continuación de la tabla",
-    "TableSummary": "Resumen de la tabla: opcional",
+    "TableSummary": "Resumen de la tabla (opcional)",
     "TableSummaryHint": "Incorpore a la tabla un resumen para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la tabla a personas con discapacidades visuales. Este campo admite el marcado.",
     "TableTitle": "Título de la tabla",
     "TableTitleHint": "Asigne un título descriptivo a la tabla.",
@@ -138,7 +137,7 @@
   "VisualizeChartComponent": {
     "ResolveErrors": "Resolver errores al agregar el gráfico",
     "ChartShowSummary": "Mostrar resumen debajo del gráfico",
-    "ChartSummary": "Resumen del gráfico: opcional",
+    "ChartSummary": "Resumen del gráfico (opcional)",
     "ChartSummaryHint": "Incorpore al gráfico un resumen para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir el gráfico a personas con discapacidades visuales. Este campo admite el marcado.",
     "ChartTitle": "Título del gráfico",
     "ChartTitleHint": "Asigne un título descriptivo al gráfico.",
@@ -188,7 +187,7 @@
     "SectionTitleHint": "Asigne un título descriptivo al contenido.",
     "ShowTitle": "Mostrar el título en el panel",
     "ViewMarkdownSyntax": "Ver la sintaxis de marcado",
-    "SectionSummary": "Resumen de sección: opcional",
+    "SectionSummary": "Resumen de la sección (opcional)",
     "SectionSummaryHint": "Incorpore un resumen a la sección para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la sección a personas con discapacidades visuales. Este campo admite el marcado."
   },
   "EditTextScreen": {
@@ -214,7 +213,7 @@
     "SectionTitleHint": "Asigne un título descriptivo al contenido.",
     "ShowTitle": "Mostrar el título en el panel",
     "ViewMarkdownSyntax": "Ver la sintaxis de marcado",
-    "SectionSummary": "Resumen de sección: opcional",
+    "SectionSummary": "Resumen de la sección (opcional)",
     "SectionSummaryHint": "Incorpore un resumen a la sección para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la sección a personas con discapacidades visuales. Este campo admite el marcado."
   },
   "AddMetricScreen": {
@@ -227,11 +226,11 @@
     "MetricValueError": "Especifique un valor",
     "MetricFormatHint": "Seleccione un formato",
     "MetricCurrencyHint": "Seleccione una divisa",
-    "ChangeOverTime": "Cambio a lo largo del tiempo: opcional",
+    "ChangeOverTime": "Cambio a lo largo del tiempo (opcional)",
     "ChangeOverTimeHint": "Indique el aumento o la disminución desde el periodo de tiempo anterior. Por ejemplo, +10,1 % o -56 %. La mayoría incluye “+” o “-”.",
     "ChangeOverTimeError": "Debe comenzar por “+” o “-”.",
-    "StartDateOptional": "Fecha de inicio: opcional",
-    "EndDateOptional": "Fecha de finalización: opcional",
+    "StartDateOptional": "Fecha de inicio (opcional)",
+    "EndDateOptional": "Fecha de finalización (opcional)",
     "MetricSuccessfullyAdded": "Métrica agregada correctamente."
   },
   "EditMetricScreen": {
@@ -242,11 +241,11 @@
     "MetricValue": "Valor de la métrica",
     "MetricValueHint": "Escriba un número aquí.",
     "MetricValueError": "Especifique un valor",
-    "ChangeOverTime": "Cambio a lo largo del tiempo: opcional",
+    "ChangeOverTime": "Cambio a lo largo del tiempo (opcional)",
     "ChangeOverTimeHint": "Indique el aumento o la disminución desde el periodo de tiempo anterior. Por ejemplo, +10,1 % o -56 %. La mayoría incluye “+” o “-”.",
     "ChangeOverTimeError": "Debe comenzar por “+” o “-”.",
-    "StartDateOptional": "Fecha de inicio: opcional",
-    "EndDateOptional": "Fecha de finalización: opcional",
+    "StartDateOptional": "Fecha de inicio (opcional)",
+    "EndDateOptional": "Fecha de finalización (opcional)",
     "MetricSuccessfullyEdited": "La métrica se ha editado correctamente"
   },
   "AddMetricsScreen": {
@@ -406,7 +405,7 @@
   "TopicAreaNamePlural": "Nombre de varias áreas de temas",
   "SelectExistingLeading": "Seleccionar uno existente",
   "Description": "Descripción",
-  "DescriptionOptional": "Descripción: opcional",
+  "DescriptionOptional": "Descripción (opcional)",
   "ErrorNameSpecify": "Especifique un nombre",
   "MetricsAdd": "+ Agregar métrica",
   "MetricsOptionsLabel": "Opciones de métricas",
@@ -673,7 +672,7 @@
   "EditColumns": "Editar columnas",
   "HideFromVisualization": "Ocultar de la visualización",
   "DataFormat": "Formato de datos",
-  "NumberFormat": "Formato de número",
+  "NumberFormat": "Formato de número (opcional)",
   "Currency": "Divisa",
   "Number": "Número",
   "Date": "Fecha",
@@ -725,7 +724,7 @@
   "Pie": "Circular",
   "Donut": "Anillos",
   "ToggleSortBy": "Alternar SortBy",
-  "Showing": "Mostrando",
+  "ShowingPages": "Mostrando {{startItem}}-{{endItem}} de {{totalItems}}",
   "Page": "Página",
   "Go": "Ir",
   "Show": "Mostrar",
@@ -776,7 +775,7 @@
   "HighToLow": "de alto a bajo",
   "AZ": "A-Z",
   "ZA": "Z-A",
-  "DownloadFileSuccess": "'{{fileName}}' ha sido descargado.",
+  "DownloadFileSuccess": "“{{fileName}}” se ha descargado.",
   "DownloadFileError": "La consulta con la clave de S3 proporcionada no ha devuelto ningún resultado.",
   "UploadDatasetError": "El archivo sin procesar no está en un formato aceptado.",
   "PartWholeChart": "Gráfico de parte a todo",
@@ -807,7 +806,7 @@
     "AltText": "Texto alternativo de imagen",
     "TextHint": "Proporcione una breve descripción de la imagen para los usuarios con discapacidades visuales que utilicen un lector de pantalla. Esta descripción no se mostrará en el panel.",
     "TextError": "Especifique el texto alternativo de la imagen",
-    "SummaryLabel": "Descripción de imagen: opcional",
+    "SummaryLabel": "Descripción de la imagen (opcional)",
     "SummaryHint": "Incorpore a la imagen una descripción para explicarla con más detalle. También pueden leerla los lectores de pantalla para describir la imagen a personas con discapacidades visuales. Este campo admite el marcado.",
     "MarkdownLink": "Ver sintaxis de marcado",
     "ToggleSummary": "Mostrar la descripción a continuación de la imagen",
@@ -828,7 +827,7 @@
     "AltText": "Texto alternativo de imagen",
     "TextHint": "Proporcione una breve descripción de la imagen para los usuarios con discapacidades visuales que utilicen un lector de pantalla. Esta descripción no se mostrará en el panel.",
     "TextError": "Especifique el texto alternativo de la imagen",
-    "SummaryLabel": "Descripción de imagen: opcional",
+    "SummaryLabel": "Descripción de la imagen (opcional)",
     "SummaryHint": "Incorpore a la imagen una descripción para explicarla con más detalle. También pueden leerla los lectores de pantalla para describir la imagen a personas con discapacidades visuales. Este campo admite el marcado.",
     "MarkdownLink": "Ver sintaxis de marcado",
     "ToggleSummary": "Mostrar la descripción a continuación de la imagen"
@@ -872,6 +871,6 @@
   "SelectColumns": "Seleccione columnas para dar formato a los datos.",
   "Tab": "Pestaña",
   "Active": "Activo",
-  "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} se ha creado correctamente.",
-  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} se eliminó correctamente."
+  "SettingsTopicAreaNameCreateSuccess": "“{{name}}” {{topicAreaName}} se ha creado correctamente.",
+  "SettingsTopicAreaNameSuccessfullyDeleted": "“{{name}}” {{topicAreaName}} se ha eliminado correctamente."
 }

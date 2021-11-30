@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.5] - 2021-11-29
+
+- Made improvements to meet accessibility requirements
+  - Improve text color contrast ratio
+  - Improve contrast for non-text elements
+  - Ensure all optional and mandatory fields are marked
+  - Move status alerts to top of page
+  - Improve accessibility of column sorting in tables
+
 ## [1.1.4] - 2021-11-15
 
 - An example dashboard in English, Spanish, or Portuguese is included on solution installation.

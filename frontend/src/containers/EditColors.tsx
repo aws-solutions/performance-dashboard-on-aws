@@ -92,6 +92,7 @@ function EditColors() {
             >
               <label htmlFor="primary" className="usa-label text-bold">
                 {t("SettingsColorsPrimaryColor")}
+                <span>&#42;</span>
               </label>
               <div className="usa-hint">
                 {t("SettingsColorsPrimaryColorDescription")}

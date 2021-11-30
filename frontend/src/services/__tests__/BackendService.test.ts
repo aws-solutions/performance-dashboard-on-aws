@@ -364,7 +364,7 @@ test("fetchDashboardByFriendlyURL makes a GET request to public API", async () =
   expect(API.get).toHaveBeenCalledWith(
     "BackendApi",
     `public/dashboard/friendly-url/my-friendly-url`,
-    expect.anything()
+    {}
   );
 });
 

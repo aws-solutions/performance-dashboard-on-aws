@@ -199,9 +199,7 @@ function AddTable() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("AddTableScreen.AddTableSuccess.part1")}${
-            values.title
-          }${t("AddTableScreen.AddTableSuccess.part2")}`,
+          message: t("AddTableScreen.AddTableSuccess", { title: values.title }),
         },
       });
     } catch (err) {

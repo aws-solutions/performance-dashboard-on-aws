@@ -63,7 +63,7 @@ exports[`renders the VisualizeTable component 1`] = `
               class="usa-label text-bold"
               for="sortData"
             >
-              Sort data
+              Sort data (optional)
             </label>
             <div
               class="usa-hint"
@@ -117,7 +117,7 @@ exports[`renders the VisualizeTable component 1`] = `
           <label
             class="usa-label text-bold"
           >
-            Table Options
+            Table Options (optional)
           </label>
           <div
             class="usa-hint"

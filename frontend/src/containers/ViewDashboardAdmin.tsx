@@ -75,9 +75,9 @@ function ViewDashboardAdmin() {
       history.push(`/admin/dashboard/edit/${draft.id}`, {
         alert: {
           type: "success",
-          message: `${t("NewDraftDashboardCreated.part1")}${draft.name}${t(
-            "NewDraftDashboardCreated.part2"
-          )}`,
+          message: t("NewDraftDashboardCreated", {
+            dashboardName: draft.name,
+          }),
         },
         id: "top-alert",
       });
@@ -469,9 +469,9 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenUpdateModal}
         closeModal={() => setIsOpenUpdateModal(false)}
-        title={`${t("CreateDraftDashboardModalTitle.part1")}${
-          dashboard.name
-        }${t("CreateDraftDashboardModalTitle.part2")}`}
+        title={t("CreateDraftDashboardModalTitle", {
+          dashboardName: dashboard.name,
+        })}
         message={t("CreateDraftDashboardModalMessage")}
         buttonType={t("CreateDraftDashboardModalButton")}
         buttonAction={onUpdateDashboard}
@@ -480,12 +480,12 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenArchiveModal}
         closeModal={() => setIsOpenArchiveModal(false)}
-        title={`${t("ArchiveDashboardModalTitle.part1")}${dashboard.name}${t(
-          "ArchiveDashboardModalTitle.part2"
-        )}`}
-        message={`${t("ArchiveDashboardModalMessage.part1")}${
-          dashboard.name
-        }${t("ArchiveDashboardModalMessage.part2")}`}
+        title={t("ArchiveDashboardModalTitle", {
+          dashboardName: dashboard.name,
+        })}
+        message={t("ArchiveDashboardModalMessage", {
+          dashboardName: dashboard.name,
+        })}
         buttonType={t("ArchiveDashboardModalButton")}
         buttonAction={onArchiveDashboard}
       />
@@ -493,9 +493,9 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenRepublishModal}
         closeModal={() => setIsOpenRepublishModal(false)}
-        title={`${t("RepublishDashboardModalTitle.part1")}${dashboard.name}${t(
-          "RepublishDashboardModalTitle.part2"
-        )}`}
+        title={t("RepublishDashboardModalTitle", {
+          dashboardName: dashboard.name,
+        })}
         message={t("RepublishDashboardModalMessage")}
         buttonType={t("RepublishDashboardModalButton")}
         buttonAction={onRepublishDashboard}
@@ -504,14 +504,12 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenPublishModal}
         closeModal={() => setIsOpenPublishModal(false)}
-        title={`${t("PreparePublishingModalTitle.part1")}${dashboard.name}${t(
-          "PreparePublishingModalTitle.part2"
-        )}`}
-        message={`${
-          dashboard.widgets.length === 0
-            ? `${t("PreparePublishingModalMessage.part1")}`
-            : ""
-        }${t("PreparePublishingModalMessage.part2")}`}
+        title={t("PreparePublishingModalTitle", {
+          dashboardName: dashboard.name,
+        })}
+        message={t("PreparePublishingModalMessage", {
+          context: dashboard?.widgets.length.toString(),
+        })}
         buttonType={t("PreparePublishingModalButton")}
         buttonAction={onPublishDashboard}
       />

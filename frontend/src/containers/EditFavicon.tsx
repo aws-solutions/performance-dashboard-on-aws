@@ -115,6 +115,7 @@ function EditFavicon() {
                 accept=".png,.jpeg,.jpg,.svg"
                 loading={imageUploading}
                 register={register}
+                required
                 hint={<span>{t("SettingsFaviconFileUploadHint")}</span>}
                 fileName={
                   currentFavicon

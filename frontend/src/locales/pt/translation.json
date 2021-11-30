@@ -39,7 +39,6 @@
   "NameUpperCase": "Nome",
   "Cancel": "Cancelar",
   "Create": "Criar",
-  "SuccessfullyDeleted": "excluído com êxito",
   "Delete": "Excluir",
   "Save": "Salvar",
   "Edit": "Editar",
@@ -128,7 +127,7 @@
   "VisualizeTableComponent": {
     "ResolveErrors": "Resolva o(s) erro(s) para adicionar a tabela",
     "TableShowSummary": "Mostrar resumo abaixo da tabela",
-    "TableSummary": "Resumo da tabela - opcional",
+    "TableSummary": "Resumo da tabela (opcional)",
     "TableSummaryHint": "Forneça um resumo à sua tabela para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela, para descrever a tabela a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
     "TableTitle": "Título da tabela",
     "TableTitleHint": "Dê um título descritivo para a sua tabela.",
@@ -138,7 +137,7 @@
   "VisualizeChartComponent": {
     "ResolveErrors": "Resolva o(s) erro(s) para adicionar o gráfico",
     "ChartShowSummary": "Mostrar resumo abaixo do gráfico",
-    "ChartSummary": "Resumo do gráfico - opcional",
+    "ChartSummary": "Resumo do gráfico (opcional)",
     "ChartSummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
     "ChartTitle": "Título do gráfico",
     "ChartTitleHint": "Dê um título descritivo para o seu gráfico.",
@@ -188,7 +187,7 @@
     "SectionTitleHint": "Forneça um título descritivo ao seu conteúdo.",
     "ShowTitle": "Mostrar título no painel",
     "ViewMarkdownSyntax": "Visualizar sintaxe Markdown",
-    "SectionSummary": "Resumo da seção - opcional",
+    "SectionSummary": "Resumo da seção (opcional)",
     "SectionSummaryHint": "Forneça um resumo à sua seção para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a seção a usuários com deficiência visual. Esse campo oferece suporte para Markdown."
   },
   "EditTextScreen": {
@@ -214,7 +213,7 @@
     "SectionTitleHint": "Forneça um título descritivo ao seu conteúdo.",
     "ShowTitle": "Mostrar título no painel",
     "ViewMarkdownSyntax": "Visualizar sintaxe Markdown",
-    "SectionSummary": "Resumo da seção - opcional",
+    "SectionSummary": "Resumo da seção (opcional)",
     "SectionSummaryHint": "Forneça um resumo à sua seção para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a seção a usuários com deficiência visual. Esse campo oferece suporte para Markdown."
   },
   "AddMetricScreen": {
@@ -227,11 +226,11 @@
     "MetricValueError": "Especifique um valor",
     "MetricFormatHint": "Selecionar um formato",
     "MetricCurrencyHint": "Selecionar uma moeda",
-    "ChangeOverTime": "Alteração ao longo do tempo - opcional",
+    "ChangeOverTime": "Alteração ao longo do tempo (opcional)",
     "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo, +10,1% ou -56%. A maioria inclui “+” ou “-”.",
     "ChangeOverTimeError": "Deve começar com “+” ou “-”.",
-    "StartDateOptional": "Data de início - opcional",
-    "EndDateOptional": "Data de término - opcional",
+    "StartDateOptional": "Data de início (opcional)",
+    "EndDateOptional": "Data de término (opcional)",
     "MetricSuccessfullyAdded": "Métrica adicionada com êxito."
   },
   "EditMetricScreen": {
@@ -242,11 +241,11 @@
     "MetricValue": "Valor da métrica",
     "MetricValueHint": "Insira um número aqui.",
     "MetricValueError": "Especifique um valor",
-    "ChangeOverTime": "Alteração ao longo do tempo - opcional",
+    "ChangeOverTime": "Alteração ao longo do tempo (opcional)",
     "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo, +10,1% ou -56%. A maioria inclui “+” ou “-”.",
     "ChangeOverTimeError": "Deve começar com “+” ou “-”.",
-    "StartDateOptional": "Data de início - opcional",
-    "EndDateOptional": "Data de término - opcional",
+    "StartDateOptional": "Data de início (opcional)",
+    "EndDateOptional": "Data de término (opcional)",
     "MetricSuccessfullyEdited": "Métrica editada com êxito."
   },
   "AddMetricsScreen": {
@@ -673,7 +672,7 @@
   "EditColumns": "Editar colunas",
   "HideFromVisualization": "Ocultar da visualização",
   "DataFormat": "Formato de dados",
-  "NumberFormat": "Formato numérico",
+  "NumberFormat": "Formato numérico (opcional)",
   "Currency": "Moeda",
   "Number": "Número",
   "Date": "Data",
@@ -725,7 +724,7 @@
   "Pie": "Pizza",
   "Donut": "Rosca",
   "ToggleSortBy": "Alternar Classificar por",
-  "Showing": "Mostrando",
+  "ShowingPages": "Exibição {{startItem}}-{{endItem}} de {{totalItems}}",
   "Page": "Página",
   "Go": "Ir",
   "Show": "Mostrar",
@@ -776,7 +775,7 @@
   "HighToLow": "alto a baixo",
   "AZ": "A-Z",
   "ZA": "Z-A",
-  "DownloadFileSuccess": "'{{fileName}}' foi baixado.",
+  "DownloadFileSuccess": "“{{fileName}}” foi baixado.",
   "DownloadFileError": "A consulta usando a chave do S3 fornecida não retornou resultados.",
   "UploadDatasetError": "O arquivo bruto não é um formato aceito.",
   "PartWholeChart": "Gráfico de blocos",
@@ -807,7 +806,7 @@
     "AltText": "Texto alternativo da imagem",
     "TextHint": "Forneça uma breve descrição da imagem para usuários com deficiência visual que usam leitor de tela. Essa descrição não será exibida no painel.",
     "TextError": "Especificar texto alternativo da imagem",
-    "SummaryLabel": "Descrição da imagem - opcional",
+    "SummaryLabel": "Descrição da imagem (opcional)",
     "SummaryHint": "Dê à sua imagem uma descrição para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a imagem para usuários com deficiência visual. Esse campo oferece suporte a markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
     "ToggleSummary": "Mostrar descrição abaixo da imagem",
@@ -828,7 +827,7 @@
     "AltText": "Texto alternativo da imagem",
     "TextHint": "Forneça uma breve descrição da imagem para usuários com deficiência visual que usam leitor de tela. Essa descrição não será exibida no painel.",
     "TextError": "Especificar texto alternativo da imagem",
-    "SummaryLabel": "Descrição da imagem - opcional",
+    "SummaryLabel": "Descrição da imagem (opcional)",
     "SummaryHint": "Dê à sua imagem uma descrição para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a imagem para usuários com deficiência visual. Esse campo oferece suporte a markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
     "ToggleSummary": "Mostrar descrição abaixo da imagem"
@@ -872,6 +871,6 @@
   "SelectColumns": "Selecione as colunas para formatar os dados.",
   "Tab": "Guia",
   "Active": "Ativa",
-  "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} foi criado com sucesso.",
-  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} foi excluído com sucesso."
+  "SettingsTopicAreaNameCreateSuccess": "“{{name}}” {{topicAreaName}} foi criado com êxito.",
+  "SettingsTopicAreaNameSuccessfullyDeleted": "“{{name}}” {{topicAreaName}} foi excluído com êxito."
 }

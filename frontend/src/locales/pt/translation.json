@@ -383,7 +383,7 @@
   "UserListingAddUsers": "Adicionar usuário(s)",
   "UserListingModalTitleResendInvites": "Reenviar convite por e-mail",
   "UserListingModalTitleResendInvitesMessage": "Tem certeza de que deseja reenviar o convite para este usuário?",
-  "UserListingModalTitleResendInvitesMessage_plural": "Tem certeza de que deseja reenviar os convites para estes usuários?",
+  "UserListingModalTitleResendInvitesMessage_plural": "Tem certeza de que deseja reenviar os convites para estes {{count}} usuários?",
   "GlobalCancel": "Cancelar",
   "GlobalClose": "Fechar",
   "GlobalDelete": "Excluir",

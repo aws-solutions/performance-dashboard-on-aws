@@ -1,6 +1,6 @@
 import en from "../en/translation.json";
-import es from "../en/translation.json";
-import pt from "../en/translation.json";
+import es from "../es/translation.json";
+import pt from "../pt/translation.json";
 
 const itif = (condition: boolean) => (condition ? it : it.skip);
 const itIsRelease = itif(!!process.env.RELEASE);
@@ -20,8 +20,27 @@ function toDictionary(o: any, path = ""): { [key: string]: any } {
   return aggregate;
 }
 
+function extractVariables(dict: { [key: string]: any }): {
+  [key: string]: string[];
+} {
+  const varRegex = /{{(.+?)}}/gm;
+  const vars: { [key: string]: string[] } = {};
+
+  for (const key in dict) {
+    const value = dict[key];
+    const matches = [...value.matchAll(varRegex)];
+    if (matches.length) {
+      const names = matches.map((m) => m[1]);
+      names.sort();
+      vars[key] = names;
+    }
+  }
+  return vars;
+}
+
 describe("Locales", () => {
   const enDict = toDictionary(en);
+  const enVars = extractVariables(enDict);
 
   itIsRelease.each([es, pt])(
     "language should have the same keys",
@@ -29,6 +48,13 @@ describe("Locales", () => {
       expect(Object.keys(toDictionary(translation))).toEqual(
         Object.keys(enDict)
       );
+    }
+  );
+
+  itIsRelease.each([es, pt])(
+    "language should use same variables",
+    (translation) => {
+      expect(extractVariables(toDictionary(translation))).toEqual(enVars);
     }
   );
 

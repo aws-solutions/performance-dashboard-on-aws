@@ -870,17 +870,20 @@ describe("copyDashboard", () => {
       createdBy: "johndoe",
       state: DashboardState.Published,
       description: "",
-      widgets: [{
-        id: "12345678",
-        name: "Text Widget",
-        widgetType: WidgetType.Text,
-        dashboardId: "abcdef00",
-        order: 0,
-        updatedAt: new Date(),
-        showTitle: true,
-        content: {
-          text: "Just some simple text."
-        }}],
+      widgets: [
+        {
+          id: "12345678",
+          name: "Text Widget",
+          widgetType: WidgetType.Text,
+          dashboardId: "abcdef00",
+          order: 0,
+          updatedAt: new Date(),
+          showTitle: true,
+          content: {
+            text: "Just some simple text.",
+          },
+        },
+      ],
       releaseNotes: "Release note test",
     };
   });

@@ -13,6 +13,7 @@ import FriendlyURLService from "../../services/friendlyurl-service";
 import DashboardRepository from "../../repositories/dashboard-repo";
 import TopicAreaRepository from "../../repositories/topicarea-repo";
 import dashboardCtrl from "../dashboard-ctrl";
+import { WidgetType } from "../../models/widget";
 
 jest.mock("../../repositories/dashboard-repo");
 jest.mock("../../repositories/topicarea-repo");
@@ -869,8 +870,18 @@ describe("copyDashboard", () => {
       createdBy: "johndoe",
       state: DashboardState.Published,
       description: "",
-      widgets: [],
-      releaseNotes: "release note test",
+      widgets: [{
+        id: "12345678",
+        name: "Text Widget",
+        widgetType: WidgetType.Text,
+        dashboardId: "abcdef00",
+        order: 0,
+        updatedAt: new Date(),
+        showTitle: true,
+        content: {
+          text: "Just some simple text."
+        }}],
+      releaseNotes: "Release note test",
     };
   });
 

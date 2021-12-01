@@ -70,6 +70,12 @@ router.put(
   errorHandler(DashboardCtrl.moveToDraftDashboard)
 );
 
+router.post(
+  "/:id/copy",
+  rbac(Role.Admin, Role.Editor),
+  errorHandler(DashboardCtrl.copyDashboard)
+);
+
 router.put(
   "/:id/widgetorder",
   rbac(Role.Admin, Role.Editor),

@@ -845,3 +845,40 @@ describe("getPublicDashboardByFriendlyURL", () => {
     expect(res.send).toBeCalledWith("Dashboard not found");
   });
 });
+
+describe("copyDashboard", () => {
+  let req: Request;
+  let dashboard: Dashboard;
+  beforeEach(() => {
+    req = {
+      user,
+      params: {
+        id: "abcdef00",
+      },
+    } as any as Request;
+
+    dashboard = {
+      id: "abcdef00",
+      version: 3,
+      parentDashboardId: "abcdef00",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      widgets: [],
+      releaseNotes: "release note test",
+    };
+  });
+
+  it("creates a copy dashboard in draft state", async () => {
+    repository.getDashboardWithWidgets = jest.fn().mockReturnValue(dashboard);
+
+    await DashboardCtrl.copyDashboard(req, res);
+
+    expect(repository.saveDashboardAndWidgets).toBeCalledTimes(2);
+  });
+});

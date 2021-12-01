@@ -5,6 +5,7 @@ import {
   DashboardState,
 } from "../../models/dashboard";
 import { User } from "../../models/user";
+import { convertCompilerOptionsFromJson } from "typescript";
 
 const user: User = {
   userId: "johndoe",
@@ -302,5 +303,36 @@ describe("createDraftFromDashboard", () => {
       nextVersion
     );
     expect(draft.friendlyURL).toBeUndefined();
+  });
+});
+
+describe("createCopyFromDashboard", () => {
+  const dashboard: Dashboard = {
+    id: "123",
+    version: 3,
+    parentDashboardId: "123",
+    name: "Original Dashboard",
+    topicAreaId: "456",
+    topicAreaName: "Topic 1",
+    displayTableOfContents: false,
+    description: "Description original dashboard",
+    createdBy: user.userId,
+    updatedAt: new Date(),
+    state: DashboardState.Published,
+    releaseNotes: "release note test",
+  };
+
+  it("Should create a copy of the original dashboard", () => {
+    const copy = factory.createCopyFromDashboard(dashboard, user);
+
+    expect(copy.id).not.toEqual(dashboard.id);
+    expect(copy.name).toEqual("Copy of Original Dashboard");
+    expect(copy.version).toEqual(1);
+    expect(copy.topicAreaId).toEqual(dashboard.topicAreaId);
+    expect(copy.topicAreaName).toEqual(dashboard.topicAreaName);
+    expect(copy.createdBy).toEqual(dashboard.createdBy);
+    expect(copy.state).toEqual(DashboardState.Draft);
+    expect(copy.parentDashboardId).not.toEqual(dashboard.parentDashboardId);
+    expect(copy.friendlyURL).toBeUndefined();
   });
 });

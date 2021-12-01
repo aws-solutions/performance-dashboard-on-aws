@@ -352,6 +352,23 @@ async function createNewDraft(req: Request, res: Response) {
   return res.json(draft);
 }
 
+async function copyDashboard(req: Request, res: Response) {
+  const user = req.user;
+  const { id } = req.params;
+
+  const repo = DashboardRepository.getInstance();
+
+  const origDashboard = await repo.getDashboardWithWidgets(id);
+
+  const newDashboard = DashboardFactory.createCopyFromDashboard(
+    origDashboard,
+    user
+  );
+
+  await repo.saveDashboardAndWidgets(newDashboard);
+  res.json(newDashboard);
+}
+
 export default {
   listDashboards,
   createDashboard,
@@ -367,4 +384,5 @@ export default {
   deleteDashboards,
   getPublicDashboardById,
   createNewDraft,
+  copyDashboard,
 };

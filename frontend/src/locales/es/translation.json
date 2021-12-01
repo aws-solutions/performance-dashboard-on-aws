@@ -383,7 +383,7 @@
   "UserListingAddUsers": "Agregar usuario/s",
   "UserListingModalTitleResendInvites": "Volver a enviar el correo electrónico de invitación",
   "UserListingModalTitleResendInvitesMessage": "¿Seguro que desea volver a enviar la invitación de este usuario?",
-  "UserListingModalTitleResendInvitesMessage_plural": "¿Seguro que desea volver a enviar las invitaciones de estos usuarios?",
+  "UserListingModalTitleResendInvitesMessage_plural": "¿Seguro que desea volver a enviar las invitaciones de estos {{count}} usuarios?",
   "GlobalCancel": "Cancelar",
   "GlobalClose": "Cerrar",
   "GlobalDelete": "Eliminar",

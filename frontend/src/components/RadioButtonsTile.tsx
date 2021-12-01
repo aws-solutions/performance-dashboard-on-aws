@@ -41,7 +41,7 @@ function RadioButtonsTile(props: Props) {
   };
 
   return (
-    <>
+    <section role="radiogroup">
       {props.options.map((option: Option, index: number) => {
         const usaRatio = getUsaRatio(option, index);
 
@@ -53,7 +53,7 @@ function RadioButtonsTile(props: Props) {
           usaRatio
         );
       })}
-    </>
+    </section>
   );
 }
 

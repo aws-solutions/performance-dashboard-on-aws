@@ -940,5 +940,11 @@
   "Tab": "Tab",
   "Active": "Active",
   "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} was successfully created.",
-  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} was successfully deleted."
+  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} was successfully deleted.",
+  "ARIA": {
+    "Header": "Header",
+    "Main": "Main",
+    "Logo": "Logo",
+    "Footer": "Footer"
+  }
 }

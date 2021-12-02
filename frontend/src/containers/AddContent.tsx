@@ -70,13 +70,13 @@ function AddContent() {
       <Breadcrumbs crumbs={crumbs} />
       <div className="grid-row">
         <PrimaryActionBar className="tablet:grid-col-6 grid-col-12">
-          <h1 id="formHeader" className="margin-top-0">
+          <h1 id="addContentFormHeader" className="margin-top-0">
             {t("AddContentScreen.Title")}
           </h1>
 
           <form
             className="usa-form usa-form--large"
-            aria-labelledby="formHeader"
+            aria-labelledby="addContentFormHeader"
             onSubmit={handleSubmit(onSubmit)}
           >
             <fieldset className="usa-fieldset">

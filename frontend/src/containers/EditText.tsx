@@ -125,13 +125,20 @@ function EditText() {
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">{t("EditTextScreen.EditText")}</h1>
+                <h1 id="editTextFormHeader" className="margin-top-0">
+                  {t("EditTextScreen.EditText")}
+                </h1>
                 <form
+                  aria-labelledby="editTextFormHeader"
                   className="usa-form usa-form--large"
                   onChange={onFormChange}
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <fieldset className="usa-fieldset">
+                    <legend className="margin-y-1 text-semibold display-inline-block font-sans-lg">
+                      {t("AddTextScreen.Configure")}
+                    </legend>
+
                     {errors.title || errors.text ? (
                       <Alert
                         type="error"

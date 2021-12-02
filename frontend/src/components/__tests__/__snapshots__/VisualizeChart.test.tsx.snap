@@ -25,10 +25,12 @@ exports[`renders the VisualizeChart component 1`] = `
           </label>
           <div
             class="usa-hint"
+            id="title-description"
           >
             Give your chart a descriptive title.
           </div>
           <input
+            aria-describedby="title-description"
             class="usa-input"
             id="title"
             name="title"
@@ -369,6 +371,7 @@ exports[`renders the VisualizeChart component 1`] = `
           </label>
           <div
             class="usa-hint"
+            id="summary-description"
           >
             Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
              
@@ -399,6 +402,7 @@ exports[`renders the VisualizeChart component 1`] = `
             </a>
           </div>
           <textarea
+            aria-describedby="summary-description"
             class="usa-textarea"
             id="summary"
             name="summary"
@@ -540,10 +544,12 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           </label>
           <div
             class="usa-hint"
+            id="title-description"
           >
             Give your chart a descriptive title.
           </div>
           <input
+            aria-describedby="title-description"
             class="usa-input"
             id="title"
             name="title"
@@ -883,6 +889,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           </label>
           <div
             class="usa-hint"
+            id="summary-description"
           >
             Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
              
@@ -913,6 +920,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             </a>
           </div>
           <textarea
+            aria-describedby="summary-description"
             class="usa-textarea"
             id="summary"
             name="summary"

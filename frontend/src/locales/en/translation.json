@@ -264,6 +264,7 @@
     "ViewMarkdownSyntax": "View Markdown Syntax"
   },
   "EditSectionScreen": {
+    "Configure": "Configure text content",
     "EditSection": "Edit section",
     "EditSectionError": "Resolve error(s) to edit the section",
     "EditSectionSuccess": "'{{title}}' section has been successfully edited.",

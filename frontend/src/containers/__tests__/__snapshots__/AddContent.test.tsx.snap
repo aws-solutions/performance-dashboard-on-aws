@@ -62,12 +62,12 @@ Object {
         >
           <h1
             class="margin-top-0"
-            id="formHeader"
+            id="addContentFormHeader"
           >
             Add content item
           </h1>
           <form
-            aria-labelledby="formHeader"
+            aria-labelledby="addContentFormHeader"
             class="usa-form usa-form--large"
           >
             <fieldset
@@ -332,12 +332,12 @@ Object {
       >
         <h1
           class="margin-top-0"
-          id="formHeader"
+          id="addContentFormHeader"
         >
           Add content item
         </h1>
         <form
-          aria-labelledby="formHeader"
+          aria-labelledby="addContentFormHeader"
           class="usa-form usa-form--large"
         >
           <fieldset

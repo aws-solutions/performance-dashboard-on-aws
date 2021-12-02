@@ -13,8 +13,10 @@ exports[`renders a multiline textarea 1`] = `
     </label>
     <div
       class="usa-hint"
+      id="x-description"
     />
     <textarea
+      aria-describedby="x-description"
       class="usa-textarea"
       id="x"
       name="x"
@@ -38,8 +40,10 @@ exports[`renders a text input 1`] = `
     </label>
     <div
       class="usa-hint"
+      id="x-description"
     />
     <input
+      aria-describedby="x-description"
       class="usa-input"
       id="x"
       name="x"
@@ -63,10 +67,12 @@ exports[`renders a text input with hint 1`] = `
     </label>
     <div
       class="usa-hint"
+      id="x-description"
     >
       Additional text
     </div>
     <input
+      aria-describedby="x-description"
       class="usa-input"
       id="x"
       name="x"
@@ -90,6 +96,7 @@ exports[`shows an error message 1`] = `
     </label>
     <div
       class="usa-hint"
+      id="x-description"
     >
       Also displays hint
     </div>
@@ -101,6 +108,7 @@ exports[`shows an error message 1`] = `
       Something went wrong
     </span>
     <input
+      aria-describedby="x-description"
       class="usa-input"
       id="x"
       name="x"

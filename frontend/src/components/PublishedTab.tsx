@@ -12,6 +12,7 @@ const { MenuItem, MenuLink } = DropdownMenu;
 interface Props {
   dashboards: Array<Dashboard>;
   onArchive: Function;
+  onCopy: Function;
 }
 
 function PublishedTab(props: Props) {
@@ -72,6 +73,9 @@ function PublishedTab(props: Props) {
                 <MenuItem onSelect={() => props.onArchive(selected)}>
                   {t("ArchiveButton")}
                 </MenuItem>
+                <MenuItem onSelect={() => props.onCopy(selected)}>
+                  {t("CopyButton")}
+                </MenuItem>
               </DropdownMenu>
             </div>
           </div>
@@ -107,6 +111,9 @@ function PublishedTab(props: Props) {
                 </MenuLink>
                 <MenuItem onSelect={() => props.onArchive(selected)}>
                   {t("ArchiveButton")}
+                </MenuItem>
+                <MenuItem onSelect={() => props.onCopy(selected)}>
+                  {t("CopyButton")}
                 </MenuItem>
               </DropdownMenu>
             </span>

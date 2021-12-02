@@ -36,9 +36,12 @@ const dashboards: Array<Dashboard> = [
 ];
 
 test("renders a button to archive", async () => {
-  render(<PublishedTab dashboards={[]} onArchive={() => {}} />, {
-    wrapper: MemoryRouter,
-  });
+  render(
+    <PublishedTab dashboards={[]} onArchive={() => {}} onCopy={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
 
   const actionsButton = screen.getByRole("button", { name: "Actions" });
   fireEvent.click(actionsButton);
@@ -47,9 +50,28 @@ test("renders a button to archive", async () => {
   expect(archiveButton).toBeInTheDocument();
 });
 
+test("renders a button to copy a dashboard", async () => {
+  render(
+    <PublishedTab dashboards={[]} onArchive={() => {}} onCopy={() => {}} />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+
+  const actionsButton = screen.getByRole("button", { name: "Actions" });
+  fireEvent.click(actionsButton);
+
+  const copyButton = screen.getByText("Copy");
+  expect(copyButton).toBeInTheDocument();
+});
+
 test("renders a dashboard table", async () => {
   const { getByRole } = render(
-    <PublishedTab dashboards={dashboards} onArchive={() => {}} />,
+    <PublishedTab
+      dashboards={dashboards}
+      onArchive={() => {}}
+      onCopy={() => {}}
+    />,
     {
       wrapper: MemoryRouter,
     }
@@ -64,7 +86,11 @@ test("renders a dashboard table", async () => {
 
 test("filters dashboards based on search input", async () => {
   const { getByLabelText, getByRole } = render(
-    <PublishedTab dashboards={dashboards} onArchive={() => {}} />,
+    <PublishedTab
+      dashboards={dashboards}
+      onArchive={() => {}}
+      onCopy={() => {}}
+    />,
     {
       wrapper: MemoryRouter,
     }

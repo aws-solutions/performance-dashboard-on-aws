@@ -30,6 +30,7 @@ function DashboardListing() {
 
   const [isOpenArchiveModal, setIsOpenArchiveModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const [isOpenCopyModal, setIsOpenCopyModal] = useState(false);
   const [selectedDashboards, setSelectedDashboards] = useState<
     Array<Dashboard>
   >([]);
@@ -42,6 +43,10 @@ function DashboardListing() {
     setIsOpenDeleteModal(false);
   };
 
+  const closeCopyModal = () => {
+    setIsOpenCopyModal(false);
+  };
+
   const onArchiveDashboards = (selected: Array<Dashboard>) => {
     setSelectedDashboards(selected);
     setIsOpenArchiveModal(true);
@@ -50,6 +55,11 @@ function DashboardListing() {
   const onDeleteDashboards = (selected: Array<Dashboard>) => {
     setSelectedDashboards(selected);
     setIsOpenDeleteModal(true);
+  };
+
+  const onCopyDashboards = (selected: Array<Dashboard>) => {
+    setSelectedDashboards(selected);
+    setIsOpenCopyModal(true);
   };
 
   const archiveDashboards = async () => {
@@ -106,6 +116,33 @@ function DashboardListing() {
     }
   };
 
+  const copyDashboards = async () => {
+    closeCopyModal();
+
+    if (selectedDashboards.length) {
+      for (let dashboard of selectedDashboards) {
+        await BackendService.copyDashboard(dashboard.id);
+      }
+
+      history.replace("/admin/dashboards", {
+        alert: {
+          type: "success",
+          message: `${
+            selectedDashboards.length > 1
+              ? selectedDashboards.length
+              : selectedDashboards[0].name
+          } ${
+            selectedDashboards.length > 1
+              ? t("DashboardListing.DashboardPlural")
+              : t("DashboardListing.DashboardSingular")
+          } ${t("DashboardListing.SuccessfullyCopied")}`,
+        },
+      });
+
+      await reloadDashboards();
+    }
+  };
+
   let activeTab = "drafts";
   const validTabs = ["drafts", "pending", "published", "archived"];
 
@@ -152,6 +189,19 @@ function DashboardListing() {
         buttonAction={deleteDashboards}
       />
 
+      <Modal
+        isOpen={isOpenCopyModal}
+        closeModal={closeCopyModal}
+        title={`${t("DashboardListing.Copy")} ${dashboardLabel}?`}
+        message={`${t("DashboardListing.ThisWillCopy")} ${
+          selectedDashboards.length !== 1
+            ? t("DashboardListing.TheseDashboards")
+            : t("DashboardListing.ThisDashboard")
+        }. ${t("DashboardListing.CopyModalMessage")}`}
+        buttonType={t("DashboardListing.Copy")}
+        buttonAction={copyDashboards}
+      />
+
       {loading ? (
         <Spinner
           className="text-center margin-top-9"
@@ -173,6 +223,7 @@ function DashboardListing() {
               <DraftsTab
                 dashboards={draftsDashboards}
                 onDelete={onDeleteDashboards}
+                onCopy={onCopyDashboards}
               />
             </div>
             <div
@@ -192,6 +243,7 @@ function DashboardListing() {
               <PublishedTab
                 dashboards={publishedDashboards}
                 onArchive={onArchiveDashboards}
+                onCopy={onCopyDashboards}
               />
             </div>
             <div

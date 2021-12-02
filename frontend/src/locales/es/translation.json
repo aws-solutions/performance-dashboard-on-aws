@@ -2,6 +2,7 @@
   "LastUpdatedLabel": "Última actualización",
   "SearchButton": "Buscar",
   "ArchiveButton": "Archivar",
+  "CopyButton": "Copiar",
   "ClearSearchText": "Borrar términos de búsqueda",
   "AllDashboardsLink": "Todos los paneles",
   "ArchivedTabDescription": "Estos son los paneles archivados de su organización. Los paneles archivados no se pueden ver en el sitio publicado. Haga clic en cualquier nombre de panel para ver el panel. También puede volver a publicar los paneles archivados en el sitio publicado.",
@@ -652,7 +653,13 @@
     "Drafts": "Borradores",
     "PublishQueue": "Cola de publicación",
     "Published": "Publicado",
-    "Archived": "Archivado"
+    "Archived": "Archivado",
+    "Copy": "",
+    "ThisWillCopy": "",
+    "TheseDashboards": "",
+    "ThisDashboard": "",
+    "CopyModalMessage": "",
+    "SuccessfullyCopied": ""
   },
   "ShowDataTableButton": "Mostrar tabla de datos",
   "HideDataTableButton": "Ocultar tabla de datos",

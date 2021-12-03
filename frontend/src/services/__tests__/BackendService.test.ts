@@ -440,3 +440,14 @@ test("removeUsers makes a DELETE request to the users API", async () => {
     })
   );
 });
+
+test("copyDashboard makes a COPY request to dashboard API", async () => {
+  const dashboardId = "123";
+
+  await BackendService.copyDashboard(dashboardId);
+  expect(API.post).toHaveBeenCalledWith(
+    "BackendApi",
+    `dashboard/123/copy`,
+    expect.anything()
+  );
+});

@@ -5,6 +5,7 @@ interface Props {
   children: React.ReactNode;
   defaultActive: string;
   activeColor?: string;
+  container?: string;
 }
 
 function TabsVertical(props: Props) {
@@ -14,7 +15,11 @@ function TabsVertical(props: Props) {
     setActiveTab(props.defaultActive);
   }, [props.defaultActive]);
 
-  const onClickTabItem = (tab: string) => {
+  const onClickTabItem = (tab: string, currentTab: HTMLElement) => {
+    setActiveTab(tab);
+  };
+
+  const onEnterTabItem = (tab: string, currentTab: HTMLElement) => {
     setActiveTab(tab);
   };
 
@@ -25,11 +30,14 @@ function TabsVertical(props: Props) {
           return (
             <TabVertical
               id={(child as any).props.id}
+              itemId={(child as any).props.id}
               activeTab={activeTab}
               key={(child as any).props.id}
               label={(child as any).props.label}
               onClick={onClickTabItem}
+              onEnter={onEnterTabItem}
               activeColor={props.activeColor}
+              container={props.container}
             />
           );
         })}

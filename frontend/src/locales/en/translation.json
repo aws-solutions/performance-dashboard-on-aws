@@ -61,6 +61,7 @@
   "LastUpdatedLabel": "Last updated",
   "SearchButton": "Search",
   "ArchiveButton": "Archive",
+  "CopyButton": "Copy",
   "ClearSearchText": "Clear search terms",
   "AllDashboardsLink": "All Dashboards",
   "ArchivedTabDescription": "These are your organization's archived dashboards. Archived dashboards are not viewable on the published site. Click on any dashboard name to view the dashboard. You can also re-publish archived dashboards to the published site.",
@@ -713,7 +714,13 @@
     "Drafts": "Drafts",
     "PublishQueue": "Publish queue",
     "Published": "Published",
-    "Archived": "Archived"
+    "Archived": "Archived",
+    "Copy": "Copy",
+    "ThisWillCopy": "This will copy",
+    "TheseDashboards": "these dashboards",
+    "ThisDashboard": "this dashboard",
+    "CopyModalMessage": "Are you sure you want to continue?",
+    "SuccessfullyCopied": "successfully copied."
   },
   "ShowDataTableButton": "Show data table",
   "HideDataTableButton": "Hide data table",

@@ -464,6 +464,11 @@ async function changeRole(role: string, usernames: Array<string>) {
   });
 }
 
+async function copyDashboard(dashboardId: string): Promise<Dashboard> {
+  const headers = await authHeaders();
+  return await API.post(apiName, `dashboard/${dashboardId}/copy`, { headers });
+}
+
 const BackendService = {
   fetchDashboards,
   fetchDashboardById,
@@ -507,6 +512,7 @@ const BackendService = {
   removeUsers,
   resendInvite,
   changeRole,
+  copyDashboard,
 };
 
 export default BackendService;

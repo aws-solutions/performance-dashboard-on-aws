@@ -13,6 +13,7 @@ import FriendlyURLService from "../../services/friendlyurl-service";
 import DashboardRepository from "../../repositories/dashboard-repo";
 import TopicAreaRepository from "../../repositories/topicarea-repo";
 import dashboardCtrl from "../dashboard-ctrl";
+import { WidgetType } from "../../models/widget";
 
 jest.mock("../../repositories/dashboard-repo");
 jest.mock("../../repositories/topicarea-repo");
@@ -843,5 +844,55 @@ describe("getPublicDashboardByFriendlyURL", () => {
     await DashboardCtrl.getPublicDashboardByFriendlyURL(req, res);
     expect(res.status).toBeCalledWith(404);
     expect(res.send).toBeCalledWith("Dashboard not found");
+  });
+});
+
+describe("copyDashboard", () => {
+  let req: Request;
+  let dashboard: Dashboard;
+  beforeEach(() => {
+    req = {
+      user,
+      params: {
+        id: "abcdef00",
+      },
+    } as any as Request;
+
+    dashboard = {
+      id: "abcdef00",
+      version: 3,
+      parentDashboardId: "abcdef00",
+      name: "My Dashboard",
+      topicAreaId: "abc",
+      topicAreaName: "My Topic Area",
+      displayTableOfContents: false,
+      updatedAt: new Date(),
+      createdBy: "johndoe",
+      state: DashboardState.Published,
+      description: "",
+      widgets: [
+        {
+          id: "12345678",
+          name: "Text Widget",
+          widgetType: WidgetType.Text,
+          dashboardId: "abcdef00",
+          order: 0,
+          updatedAt: new Date(),
+          showTitle: true,
+          content: {
+            text: "Just some simple text.",
+          },
+        },
+      ],
+      releaseNotes: "Release note test",
+    };
+  });
+
+  it("creates a copy dashboard in draft state", async () => {
+    repository.getDashboardWithWidgets = jest.fn().mockReturnValue(dashboard);
+
+    await DashboardCtrl.copyDashboard(req, res);
+
+    expect(repository.saveDashboardAndWidgets).toBeCalledTimes(2);
   });
 });

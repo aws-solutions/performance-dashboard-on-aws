@@ -38,7 +38,7 @@ const dashboards: Array<Dashboard> = [
 
 test("renders a button to create dashboard", async () => {
   const { getByRole } = render(
-    <DraftsTab dashboards={[]} onDelete={() => {}} />,
+    <DraftsTab dashboards={[]} onDelete={() => {}} onCopy={() => {}} />,
     {
       wrapper: MemoryRouter,
     }
@@ -49,7 +49,7 @@ test("renders a button to create dashboard", async () => {
 
 test("renders a dashboard table", async () => {
   const { getByRole } = render(
-    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} onCopy={() => {}} />,
     {
       wrapper: MemoryRouter,
     }
@@ -64,7 +64,7 @@ test("renders a dashboard table", async () => {
 
 test("filters dashboards based on search input", async () => {
   const { getByLabelText, getByRole } = render(
-    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} onCopy={() => {}} />,
     {
       wrapper: MemoryRouter,
     }
@@ -97,7 +97,7 @@ test("filters dashboards based on search input", async () => {
 
 test("renders the dropdown menu", () => {
   const { getByText } = render(
-    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} onCopy={() => {}} />,
     {
       wrapper: MemoryRouter,
     }
@@ -107,7 +107,7 @@ test("renders the dropdown menu", () => {
 
 test("when no dashboard is selected Actions button is disabled", () => {
   const { getByText } = render(
-    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} onCopy={() => {}} />,
     {
       wrapper: MemoryRouter,
     }
@@ -115,9 +115,9 @@ test("when no dashboard is selected Actions button is disabled", () => {
   expect(getByText("Actions")).toHaveAttribute("disabled");
 });
 
-test("when one dashboard is selected both dropdown options are enabled", () => {
+test("when one dashboard is selected all dropdown options are enabled", () => {
   const { getByText, getByRole } = render(
-    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} onCopy={() => {}} />,
     {
       wrapper: MemoryRouter,
     }
@@ -132,11 +132,12 @@ test("when one dashboard is selected both dropdown options are enabled", () => {
     "true"
   );
   expect(getByText("Delete")).not.toHaveAttribute("aria-disabled", "true");
+  expect(getByText("Copy")).not.toHaveAttribute("aria-disabled", "true");
 });
 
-test("when two dashboards are selected only Delete option is enabled", () => {
+test("when two dashboards are selected only Delete and Copy options are enabled", () => {
   const { getByText, getByRole } = render(
-    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} onCopy={() => {}} />,
     {
       wrapper: MemoryRouter,
     }
@@ -150,11 +151,12 @@ test("when two dashboards are selected only Delete option is enabled", () => {
 
   expect(getByText("View history")).toHaveAttribute("aria-disabled", "true");
   expect(getByText("Delete")).not.toHaveAttribute("aria-disabled", "true");
+  expect(getByText("Copy")).not.toHaveAttribute("aria-disabled", "true");
 });
 
 test("view history navigates to the correct location", () => {
   const { getByText, getByRole } = render(
-    <DraftsTab dashboards={dashboards} onDelete={() => {}} />,
+    <DraftsTab dashboards={dashboards} onDelete={() => {}} onCopy={() => {}} />,
     {
       wrapper: MemoryRouter,
     }

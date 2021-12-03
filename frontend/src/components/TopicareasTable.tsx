@@ -66,7 +66,9 @@ function TopicareasTable(props: Props) {
                 sortedBy === "name" ? "text-base-darker" : "text-white"
               }`}
               onClick={() => sortBy("name")}
-              ariaLabel={"Sort " + settings.topicAreaLabels.singular}
+              ariaLabel={t("SortTopicAreaName", {
+                topicAreaName: `${settings.topicAreaLabels.singular}`,
+              })}
             >
               <FontAwesomeIcon
                 icon={

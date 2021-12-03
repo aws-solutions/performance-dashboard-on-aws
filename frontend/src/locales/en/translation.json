@@ -947,5 +947,6 @@
   "GoToPrevPage": "Go to the previous page",
   "SelectPageSize": "Select the amount of results displayed on the page",
   "SortDashboards": "Sort by dashboard name",
-  "SortCreatedBy": "Sort by created by name"
+  "SortCreatedBy": "Sort by created by name",
+  "SortTopicAreaName": "Sort by {{topicAreaName}} name"
 }

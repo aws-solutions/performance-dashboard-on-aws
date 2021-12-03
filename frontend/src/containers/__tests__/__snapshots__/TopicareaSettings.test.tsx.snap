@@ -338,7 +338,7 @@ exports[`topic area settings should match snapshot 1`] = `
                     Ministry
                   </span>
                   <button
-                    aria-label="Sort Ministry"
+                    aria-label="Sort by Ministry name"
                     class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
                   >
                     <svg

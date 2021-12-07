@@ -194,9 +194,9 @@ function AddMetrics() {
         history.push(`/admin/dashboard/edit/${dashboardId}`, {
           alert: {
             type: "success",
-            message: `${t("AddMetricsScreen.MetricsAddedSuccessfully.part1")}${
-              values.title
-            }${t("AddMetricsScreen.MetricsAddedSuccessfully.part2")}`,
+            message: t("AddMetricsScreen.MetricsAddedSuccessfully", {
+              title: values.title,
+            }),
           },
         });
       }
@@ -385,10 +385,6 @@ function AddMetrics() {
                   className="usa-fieldset"
                   onChange={handleChange}
                 >
-                  <legend className="usa-sr-only">
-                    {t("AddMetricsScreen.ContentItemTypes")}
-                  </legend>
-
                   <div className="grid-row">
                     <RadioButtonsTile
                       isHorizontally={true}
@@ -425,9 +421,6 @@ function AddMetrics() {
                           role="search"
                           className="usa-search usa-search--small"
                         >
-                          <label className="usa-sr-only" htmlFor="search">
-                            {t("SearchButton")}
-                          </label>
                           <input
                             className="usa-input"
                             id="search"
@@ -453,9 +446,6 @@ function AddMetrics() {
                               style={{ marginTop: "-3px" }}
                               icon={faSearch}
                             />
-                            <span className="usa-sr-only">
-                              {t("SearchButton")}
-                            </span>
                           </button>
                         </div>
                       </div>

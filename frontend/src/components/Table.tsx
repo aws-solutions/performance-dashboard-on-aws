@@ -255,6 +255,13 @@ function Table(props: Props) {
                 <th
                   scope="col"
                   {...column.getHeaderProps()}
+                  aria-sort={
+                    column.isSorted
+                      ? column.isSortedDesc
+                        ? "desc"
+                        : "asc"
+                      : ""
+                  }
                   style={
                     props.selection !== "none"
                       ? {
@@ -296,9 +303,7 @@ function Table(props: Props) {
                     >
                       <FontAwesomeIcon
                         className={`hover:text-base ${
-                          column.isSorted
-                            ? "text-base-darkest"
-                            : "text-base-lighter"
+                          column.isSorted ? "text-base-darker" : "text-base"
                         }`}
                         icon={
                           column.isSorted && column.isSortedDesc
@@ -531,14 +536,18 @@ function Table(props: Props) {
                 <div
                   className={`${
                     isMobile ? "padding-left-05" : "grid-row"
-                  } text-base-darkest text-italic padding-y-05 padding-right-1`}
+                  } text-base-darker text-italic padding-y-05 padding-right-1`}
                 >
                   {isMobile && (
                     <div className="text-center">
-                      {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
-                        pageIndex * pageSize + pageSize,
-                        rows.length
-                      )} ${t("Of")} ${rows.length}`}
+                      {t("ShowingPages", {
+                        startItem: pageIndex * pageSize + 1,
+                        endItem: Math.min(
+                          pageIndex * pageSize + pageSize,
+                          rows.length
+                        ),
+                        totalItems: rows.length,
+                      })}
                     </div>
                   )}
                   {props.title && (
@@ -563,7 +572,7 @@ function Table(props: Props) {
                           className="margin-right-05"
                         >
                           <CSVLink
-                            className="text-base-darkest"
+                            className="text-base-darker"
                             data={props.rows}
                             filename={props.title}
                           >
@@ -579,10 +588,14 @@ function Table(props: Props) {
                         props.title ? "6" : "12"
                       } text-right`}
                     >
-                      {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
-                        pageIndex * pageSize + pageSize,
-                        rows.length
-                      )} ${t("Of")} ${rows.length}`}
+                      {t("ShowingPages", {
+                        startItem: pageIndex * pageSize + 1,
+                        endItem: Math.min(
+                          pageIndex * pageSize + pageSize,
+                          rows.length
+                        ),
+                        totalItems: rows.length,
+                      })}
                     </div>
                   )}
                 </div>

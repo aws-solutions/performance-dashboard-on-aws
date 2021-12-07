@@ -8,7 +8,7 @@ exports[`renders a Data Table element 1`] = `
     <button
       aria-controls="menu--33"
       aria-haspopup="true"
-      class="usa-button usa-button--unstyled text-base-dark"
+      class="usa-button usa-button--unstyled text-base"
       data-reach-menu-button=""
       id="menu-button--menu--33"
       type="button"
@@ -43,6 +43,7 @@ exports[`renders a Data Table element 1`] = `
           role="row"
         >
           <th
+            aria-sort=""
             colspan="1"
             role="columnheader"
             scope="col"
@@ -59,7 +60,7 @@ exports[`renders a Data Table element 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -75,6 +76,7 @@ exports[`renders a Data Table element 1`] = `
             </button>
           </th>
           <th
+            aria-sort=""
             colspan="1"
             role="columnheader"
             scope="col"
@@ -91,7 +93,7 @@ exports[`renders a Data Table element 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -107,6 +109,7 @@ exports[`renders a Data Table element 1`] = `
             </button>
           </th>
           <th
+            aria-sort=""
             colspan="1"
             role="columnheader"
             scope="col"
@@ -123,7 +126,7 @@ exports[`renders a Data Table element 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -217,7 +220,7 @@ exports[`renders a Data Table element on mobile 1`] = `
     <button
       aria-controls="menu--40"
       aria-haspopup="true"
-      class="usa-button usa-button--unstyled text-base-dark"
+      class="usa-button usa-button--unstyled text-base"
       data-reach-menu-button=""
       id="menu-button--menu--40"
       type="button"
@@ -252,6 +255,7 @@ exports[`renders a Data Table element on mobile 1`] = `
           role="row"
         >
           <th
+            aria-sort=""
             colspan="1"
             role="columnheader"
             scope="col"
@@ -268,7 +272,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -284,6 +288,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             </button>
           </th>
           <th
+            aria-sort=""
             colspan="1"
             role="columnheader"
             scope="col"
@@ -300,7 +305,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -316,6 +321,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             </button>
           </th>
           <th
+            aria-sort=""
             colspan="1"
             role="columnheader"
             scope="col"
@@ -332,7 +338,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                 data-icon="chevron-up"
                 data-prefix="fas"
                 focusable="false"
@@ -426,7 +432,7 @@ exports[`renders a Data Table element with hidden table 1`] = `
     <button
       aria-controls="menu--23"
       aria-haspopup="true"
-      class="usa-button usa-button--unstyled text-base-dark"
+      class="usa-button usa-button--unstyled text-base"
       data-reach-menu-button=""
       id="menu-button--menu--23"
       type="button"
@@ -460,7 +466,7 @@ exports[`renders a Data Table element with hidden table on mobile 1`] = `
     <button
       aria-controls="menu--28"
       aria-haspopup="true"
-      class="usa-button usa-button--unstyled text-base-dark"
+      class="usa-button usa-button--unstyled text-base"
       data-reach-menu-button=""
       id="menu-button--menu--28"
       type="button"

@@ -33,6 +33,7 @@ exports[`renders the CheckData component 1`] = `
                 role="row"
               >
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -43,6 +44,7 @@ exports[`renders the CheckData component 1`] = `
                   </span>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -66,6 +68,7 @@ exports[`renders the CheckData component 1`] = `
                   </span>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -89,6 +92,7 @@ exports[`renders the CheckData component 1`] = `
                   </span>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -116,6 +120,7 @@ exports[`renders the CheckData component 1`] = `
                 role="row"
               >
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -128,6 +133,7 @@ exports[`renders the CheckData component 1`] = `
                   </span>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -144,7 +150,7 @@ exports[`renders the CheckData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                       data-icon="chevron-up"
                       data-prefix="fas"
                       focusable="false"
@@ -160,6 +166,7 @@ exports[`renders the CheckData component 1`] = `
                   </button>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -176,7 +183,7 @@ exports[`renders the CheckData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                       data-icon="chevron-up"
                       data-prefix="fas"
                       focusable="false"
@@ -192,6 +199,7 @@ exports[`renders the CheckData component 1`] = `
                   </button>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -208,7 +216,7 @@ exports[`renders the CheckData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                       data-icon="chevron-up"
                       data-prefix="fas"
                       focusable="false"
@@ -483,7 +491,7 @@ exports[`renders the CheckData component 1`] = `
                     class="border-top margin-0"
                   />
                   <div
-                    class="padding-left-05 text-base-darkest text-italic padding-y-05 padding-right-1"
+                    class="padding-left-05 text-base-darker text-italic padding-y-05 padding-right-1"
                   >
                     <div
                       class="text-center"

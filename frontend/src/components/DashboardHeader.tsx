@@ -34,7 +34,7 @@ function DashboardHeader(props: Props) {
         ) : (
           props.link
         )}
-        <div className="text-base-dark text-italic margin-bottom-2">
+        <div className="text-base text-italic margin-bottom-2">
           {props.topicAreaName}
           {props.lastUpdated &&
             ` | ${t("LastUpdatedLabel")} ${dateFormatter(props.lastUpdated)}`}

@@ -78,9 +78,9 @@ function AddImage() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("AddImageScreen.ImageAddedSuccessfully.part1")}${
-            values.title
-          }${t("AddImageScreen.ImageAddedSuccessfully.part2")}`,
+          message: t("AddImageScreen.ImageAddedSuccessfully", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {
@@ -207,6 +207,7 @@ function AddImage() {
                     accept={supportedImageFileTypes.toString()}
                     loading={imageUploading}
                     register={register}
+                    required
                     hint={<span>{t("AddImageScreen.FileHint")}</span>}
                     fileName={imageFile && imageFile.name}
                     onFileProcessed={onFileProcessed}

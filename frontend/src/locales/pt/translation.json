@@ -39,7 +39,6 @@
   "NameUpperCase": "Nome",
   "Cancel": "Cancelar",
   "Create": "Criar",
-  "SuccessfullyDeleted": "excluído com êxito",
   "Delete": "Excluir",
   "Save": "Salvar",
   "Edit": "Editar",
@@ -79,10 +78,7 @@
   "PDoASite": "É aqui que você gerencia o painel de performance.",
   "WantToViewPublishedSite": "Deseja ver o que seu público vê?",
   "ViewPublishedSite": "Visualizar o site publicado",
-  "NewDraftDashboardCreated": {
-    "part1": "Uma nova versão de rascunho do ",
-    "part2": " painel foi criado."
-  },
+  "NewDraftDashboardCreated": "Uma nova versão de rascunho do {{dashboardName}} painel foi criado.",
   "DashboardWasArchived": "foi arquivado com êxito.",
   "DashboardWasDeleted": "foi excluído com êxito.",
   "DashboardWasRepublished": "O painel foi republicado com êxito.",
@@ -102,35 +98,18 @@
   "LearnHowToFormatCSV": "Saiba como formatar seus dados.",
   "CreatedBy": "Criado por",
   "Dashboards": "Painéis",
-  "CreateDraftDashboardModalTitle": {
-    "part1": "Atualizar ",
-    "part2": " painel"
-  },
+  "CreateDraftDashboardModalTitle": "Atualizar {{dashboardName}} painel",
   "CreateDraftDashboardModalMessage": "Isso criará um novo rascunho do painel que permitirá que você edite o conteúdo e publique a nova versão no site publicado.",
   "CreateDraftDashboardModalButton": "Criar rascunho",
-  "ArchiveDashboardModalTitle": {
-    "part1": "Arquivar ",
-    "part2": " painel"
-  },
-  "ArchiveDashboardModalMessage": {
-    "part1": "Isso removerá ",
-    "part2": " o painel do site publicado. Você pode publicar novamente os painéis arquivados a qualquer momento."
-  },
+  "ArchiveDashboardModalTitle": "Arquivar {{dashboardName}} painel",
+  "ArchiveDashboardModalMessage": "Isso removerá {{dashboardName}} o painel do site publicado. Você pode publicar novamente os painéis arquivados a qualquer momento.",
   "ArchiveDashboardModalButton": "Arquivar",
-  "RepublishDashboardModalTitle": {
-    "part1": "Republicar ",
-    "part2": " painel"
-  },
+  "RepublishDashboardModalTitle": "Republicar {{dashboardName}} painel",
   "RepublishDashboardModalMessage": "Tem certeza de que deseja republicar este painel?",
   "RepublishDashboardModalButton": "Republicar",
-  "PreparePublishingModalTitle": {
-    "part1": "Prepare ",
-    "part2": " o painel para publicação"
-  },
-  "PreparePublishingModalMessage": {
-    "part1": "Este painel não tem itens de conteúdo. ",
-    "part2": "Tem certeza de que deseja preparar este painel para publicação?"
-  },
+  "PreparePublishingModalTitle": "Prepare {{dashboardName}} o painel para publicação",
+  "PreparePublishingModalMessage_0": "Este painel não tem itens de conteúdo. Tem certeza de que deseja preparar este painel para publicação?",
+  "PreparePublishingModalMessage": "Tem certeza de que deseja preparar este painel para publicação?",
   "PreparePublishingModalButton": "Preparar para publicação",
   "OnlyOneDraftDashboardAtATime": "Foi criado um rascunho para atualizar este painel. Só é permitido um rascunho por vez.",
   "EditOrPublishDraft": {
@@ -148,7 +127,7 @@
   "VisualizeTableComponent": {
     "ResolveErrors": "Resolva o(s) erro(s) para adicionar a tabela",
     "TableShowSummary": "Mostrar resumo abaixo da tabela",
-    "TableSummary": "Resumo da tabela - opcional",
+    "TableSummary": "Resumo da tabela (opcional)",
     "TableSummaryHint": "Forneça um resumo à sua tabela para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela, para descrever a tabela a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
     "TableTitle": "Título da tabela",
     "TableTitleHint": "Dê um título descritivo para a sua tabela.",
@@ -158,7 +137,7 @@
   "VisualizeChartComponent": {
     "ResolveErrors": "Resolva o(s) erro(s) para adicionar o gráfico",
     "ChartShowSummary": "Mostrar resumo abaixo do gráfico",
-    "ChartSummary": "Resumo do gráfico - opcional",
+    "ChartSummary": "Resumo do gráfico (opcional)",
     "ChartSummaryHint": "Forneça um resumo ao seu gráfico para explicá-lo com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever o gráfico a usuários com deficiência visual. Esse campo oferece suporte para Markdown.",
     "ChartTitle": "Título do gráfico",
     "ChartTitleHint": "Dê um título descritivo para o seu gráfico.",
@@ -186,10 +165,7 @@
   "AddTextScreen": {
     "AddText": "Adicionar texto",
     "AddTextError": "Resolver erros para adicionar o texto",
-    "AddTextSuccess": {
-      "part1": "O texto '",
-      "part2": "' foi adicionado com êxito."
-    },
+    "AddTextSuccess": "O texto '{{title}}' foi adicionado com êxito.",
     "CreatingText": "Criação de texto",
     "Configure": "Configurar conteúdo do texto",
     "TextTitle": "Título do texto",
@@ -211,16 +187,13 @@
     "SectionTitleHint": "Forneça um título descritivo ao seu conteúdo.",
     "ShowTitle": "Mostrar título no painel",
     "ViewMarkdownSyntax": "Visualizar sintaxe Markdown",
-    "SectionSummary": "Resumo da seção - opcional",
+    "SectionSummary": "Resumo da seção (opcional)",
     "SectionSummaryHint": "Forneça um resumo à sua seção para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a seção a usuários com deficiência visual. Esse campo oferece suporte para Markdown."
   },
   "EditTextScreen": {
     "EditText": "Editar texto",
     "EditTextError": "Resolva o(s) erro(s) para editar o texto",
-    "EditTextSuccess": {
-      "part1": "O texto '",
-      "part2": "' foi editado com êxito."
-    },
+    "EditTextSuccess": "O texto '{{title}}' foi editado com êxito.",
     "EditingText": "Editando texto",
     "TextTitle": "Título do texto",
     "TextTitleError": "Especifique um título para o texto",
@@ -240,7 +213,7 @@
     "SectionTitleHint": "Forneça um título descritivo ao seu conteúdo.",
     "ShowTitle": "Mostrar título no painel",
     "ViewMarkdownSyntax": "Visualizar sintaxe Markdown",
-    "SectionSummary": "Resumo da seção - opcional",
+    "SectionSummary": "Resumo da seção (opcional)",
     "SectionSummaryHint": "Forneça um resumo à sua seção para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a seção a usuários com deficiência visual. Esse campo oferece suporte para Markdown."
   },
   "AddMetricScreen": {
@@ -253,11 +226,11 @@
     "MetricValueError": "Especifique um valor",
     "MetricFormatHint": "Selecionar um formato",
     "MetricCurrencyHint": "Selecionar uma moeda",
-    "ChangeOverTime": "Alteração ao longo do tempo - opcional",
+    "ChangeOverTime": "Alteração ao longo do tempo (opcional)",
     "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo, +10,1% ou -56%. A maioria inclui “+” ou “-”.",
     "ChangeOverTimeError": "Deve começar com “+” ou “-”.",
-    "StartDateOptional": "Data de início - opcional",
-    "EndDateOptional": "Data de término - opcional",
+    "StartDateOptional": "Data de início (opcional)",
+    "EndDateOptional": "Data de término (opcional)",
     "MetricSuccessfullyAdded": "Métrica adicionada com êxito."
   },
   "EditMetricScreen": {
@@ -268,18 +241,15 @@
     "MetricValue": "Valor da métrica",
     "MetricValueHint": "Insira um número aqui.",
     "MetricValueError": "Especifique um valor",
-    "ChangeOverTime": "Alteração ao longo do tempo - opcional",
+    "ChangeOverTime": "Alteração ao longo do tempo (opcional)",
     "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo, +10,1% ou -56%. A maioria inclui “+” ou “-”.",
     "ChangeOverTimeError": "Deve começar com “+” ou “-”.",
-    "StartDateOptional": "Data de início - opcional",
-    "EndDateOptional": "Data de término - opcional",
+    "StartDateOptional": "Data de início (opcional)",
+    "EndDateOptional": "Data de término (opcional)",
     "MetricSuccessfullyEdited": "Métrica editada com êxito."
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessfully": {
-      "part1": "As métricas '",
-      "part2": "' foram adicionadas com êxito."
-    },
+    "MetricsAddedSuccessfully": "As métricas '{{title}}' foram adicionadas com êxito.",
     "Name": "Nome",
     "LastUpdated": "Última atualização",
     "Description": "Descrição",
@@ -310,10 +280,7 @@
     "ShowTitle": "Mostrar título no painel"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessfully": {
-      "part1": "As métricas '",
-      "part2": "' foram editadas com êxito."
-    },
+    "MetricsEditedSuccessfully": "As métricas '{{title}}' foram editadas com êxito.",
     "EditMetrics": "Editar métricas",
     "UploadingFile": "Fazendo upload do arquivo",
     "EditingMetrics": "Editando métricas",
@@ -330,10 +297,7 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "AddChartSuccess": {
-      "part1": "O gráfico '",
-      "part2": "' foi adicionado com êxito."
-    },
+    "AddChartSuccess": "O gráfico '{{title}}' foi adicionado com êxito.",
     "ResolveError": "Falha ao fazer o upload do arquivo. Certifique-se de que haja valores para todos os cabeçalhos de coluna."
   },
   "EditChartScreen": {
@@ -342,10 +306,7 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "EditChartSuccess": {
-      "part1": "O gráfico '",
-      "part2": "' foi editado com êxito."
-    },
+    "EditChartSuccess": "O gráfico '{{title}}' foi editado com êxito.",
     "ResolveError": "Falha ao fazer o upload do arquivo. Certifique-se de que haja valores para todos os cabeçalhos de coluna."
   },
   "AddTableScreen": {
@@ -353,10 +314,7 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "AddTableSuccess": {
-      "part1": "A tabela '",
-      "part2": "' foi adicionada com êxito."
-    },
+    "AddTableSuccess": "A tabela '{{title}}' foi adicionada com êxito.",
     "ChooseDataset": "Escolher um conjunto de dados para continuar"
   },
   "EditTableScreen": {
@@ -364,10 +322,7 @@
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
-    "EditTableSuccess": {
-      "part1": "A tabela '",
-      "part2": "' foi editada com êxito."
-    },
+    "EditTableSuccess": "A tabela '{{title}}' foi editada com êxito.",
     "ChooseDataset": "Escolher um conjunto de dados para continuar"
   },
   "BrandingAndStyling": "Marca e estilo",
@@ -394,11 +349,8 @@
   "UserListingDropdownResendInviteText": "Reenviar e-mails de convite para usuários não confirmados",
   "UserListingActionsResendInvites": "Reenviar convite por e-mail",
   "UserListingActionsRemoveUsers": "Remover usuários",
-  "UserListingActionsRemoveUsersMessage": {
-    "part0": "Tem certeza de que deseja remover ",
-    "part1": "usuário",
-    "part2": "usuários"
-  },
+  "UserListingActionsRemoveUsersMessage": "Tem certeza de que deseja remover 1 usuário",
+  "UserListingActionsRemoveUsersMessage_plural": "Tem certeza de que deseja remover {{count}} usuários",
   "AddUsersInvites": "Adicionar usuário(s) e enviar convite",
   "AddUsersAdmin": "Além das permissões de Editor, pode gerenciar usuários e configurações de sites.",
   "AddUsersEditor": "Pode criar, editar e publicar painéis.",
@@ -430,10 +382,8 @@
   },
   "UserListingAddUsers": "Adicionar usuário(s)",
   "UserListingModalTitleResendInvites": "Reenviar convite por e-mail",
-  "UserListingModalTitleResendInvitesMessage": {
-    "part1": "Tem certeza de que deseja reenviar o convite para este usuário?",
-    "part2": "Tem certeza de que deseja reenviar os convites para estes usuários?"
-  },
+  "UserListingModalTitleResendInvitesMessage": "Tem certeza de que deseja reenviar o convite para este usuário?",
+  "UserListingModalTitleResendInvitesMessage_plural": "Tem certeza de que deseja reenviar os convites para estes usuários?",
   "GlobalCancel": "Cancelar",
   "GlobalClose": "Fechar",
   "GlobalDelete": "Excluir",
@@ -488,14 +438,8 @@
     "FailToReturnToDraftError": "Falha ao retornar o painel ao estado de rascunho. Tente novamente.",
     "FailToSaveReleaseNotesError": "Falha ao salvar as notas de release. Tente novamente.",
     "MissingVersionNotesError": "Insira as notas da versão",
-    "ReturnToDraftSuccessAlert": {
-      "part1": "",
-      "part2": " painel retornado com êxito ao estado de rascunho."
-    },
-    "PublishedSuccessAlert": {
-      "part1": "",
-      "part2": " o painel foi publicado com êxito."
-    }
+    "ReturnToDraftSuccessAlert": "'{{dashboardName}}' painel retornado com êxito ao estado de rascunho.",
+    "PublishedSuccessAlert": "'{{dashboardName}}' o painel foi publicado com êxito."
   },
   "SettingsDateTimeFormat": "Formato de data e hora",
   "SettingsDateTimeFormatEdit": "Editar formato de data e hora",
@@ -728,7 +672,7 @@
   "EditColumns": "Editar colunas",
   "HideFromVisualization": "Ocultar da visualização",
   "DataFormat": "Formato de dados",
-  "NumberFormat": "Formato numérico",
+  "NumberFormat": "Formato numérico (opcional)",
   "Currency": "Moeda",
   "Number": "Número",
   "Date": "Data",
@@ -780,7 +724,7 @@
   "Pie": "Pizza",
   "Donut": "Rosca",
   "ToggleSortBy": "Alternar Classificar por",
-  "Showing": "Mostrando",
+  "ShowingPages": "Exibição {{startItem}}-{{endItem}} de {{totalItems}}",
   "Page": "Página",
   "Go": "Ir",
   "Show": "Mostrar",
@@ -831,7 +775,7 @@
   "HighToLow": "alto a baixo",
   "AZ": "A-Z",
   "ZA": "Z-A",
-  "DownloadFileSuccess": "'{{fileName}}' foi baixado.",
+  "DownloadFileSuccess": "“{{fileName}}” foi baixado.",
   "DownloadFileError": "A consulta usando a chave do S3 fornecida não retornou resultados.",
   "UploadDatasetError": "O arquivo bruto não é um formato aceito.",
   "PartWholeChart": "Gráfico de blocos",
@@ -849,10 +793,7 @@
   "LastSaved": "Salvo pela última vez",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Arquivo de imagem não especificado",
-    "ImageAddedSuccessfully": {
-      "part1": "A imagem '",
-      "part2": "' foi adicionada com êxito."
-    },
+    "ImageAddedSuccessfully": "A imagem '{{title}}' foi adicionada com êxito.",
     "AddImage": "Adicionar imagem",
     "ConfigureImage": "Configurar imagem",
     "ResolveError": "Resolva o(s) erro(s) para adicionar a imagem",
@@ -865,7 +806,7 @@
     "AltText": "Texto alternativo da imagem",
     "TextHint": "Forneça uma breve descrição da imagem para usuários com deficiência visual que usam leitor de tela. Essa descrição não será exibida no painel.",
     "TextError": "Especificar texto alternativo da imagem",
-    "SummaryLabel": "Descrição da imagem - opcional",
+    "SummaryLabel": "Descrição da imagem (opcional)",
     "SummaryHint": "Dê à sua imagem uma descrição para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a imagem para usuários com deficiência visual. Esse campo oferece suporte a markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
     "ToggleSummary": "Mostrar descrição abaixo da imagem",
@@ -874,10 +815,7 @@
     "Cancel": "Cancelar"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessfully": {
-      "part1": "A imagem '",
-      "part2": "' foi editada com êxito."
-    },
+    "ImageEditedSuccessfully": "A imagem '{{title}}' foi editada com êxito.",
     "EditImage": "Editar imagem",
     "ResolveError": "Resolva o(s) erro(s) para editar a imagem",
     "Title": "Título da imagem",
@@ -889,7 +827,7 @@
     "AltText": "Texto alternativo da imagem",
     "TextHint": "Forneça uma breve descrição da imagem para usuários com deficiência visual que usam leitor de tela. Essa descrição não será exibida no painel.",
     "TextError": "Especificar texto alternativo da imagem",
-    "SummaryLabel": "Descrição da imagem - opcional",
+    "SummaryLabel": "Descrição da imagem (opcional)",
     "SummaryHint": "Dê à sua imagem uma descrição para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a imagem para usuários com deficiência visual. Esse campo oferece suporte a markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
     "ToggleSummary": "Mostrar descrição abaixo da imagem"
@@ -933,6 +871,6 @@
   "SelectColumns": "Selecione as colunas para formatar os dados.",
   "Tab": "Guia",
   "Active": "Ativa",
-  "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} foi criado com sucesso.",
-  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} foi excluído com sucesso."
+  "SettingsTopicAreaNameCreateSuccess": "“{{name}}” {{topicAreaName}} foi criado com êxito.",
+  "SettingsTopicAreaNameSuccessfullyDeleted": "“{{name}}” {{topicAreaName}} foi excluído com êxito."
 }

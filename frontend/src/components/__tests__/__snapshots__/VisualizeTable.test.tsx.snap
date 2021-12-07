@@ -63,7 +63,7 @@ exports[`renders the VisualizeTable component 1`] = `
               class="usa-label text-bold"
               for="sortData"
             >
-              Sort data
+              Sort data (optional)
             </label>
             <div
               class="usa-hint"
@@ -117,7 +117,7 @@ exports[`renders the VisualizeTable component 1`] = `
           <label
             class="usa-label text-bold"
           >
-            Table Options
+            Table Options (optional)
           </label>
           <div
             class="usa-hint"
@@ -279,6 +279,7 @@ exports[`renders the VisualizeTable component 1`] = `
                   role="row"
                 >
                   <th
+                    aria-sort=""
                     colspan="1"
                     role="columnheader"
                     scope="col"
@@ -295,7 +296,7 @@ exports[`renders the VisualizeTable component 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                        class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                         data-icon="chevron-up"
                         data-prefix="fas"
                         focusable="false"
@@ -311,6 +312,7 @@ exports[`renders the VisualizeTable component 1`] = `
                     </button>
                   </th>
                   <th
+                    aria-sort=""
                     colspan="1"
                     role="columnheader"
                     scope="col"
@@ -327,7 +329,7 @@ exports[`renders the VisualizeTable component 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                        class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                         data-icon="chevron-up"
                         data-prefix="fas"
                         focusable="false"
@@ -343,6 +345,7 @@ exports[`renders the VisualizeTable component 1`] = `
                     </button>
                   </th>
                   <th
+                    aria-sort=""
                     colspan="1"
                     role="columnheader"
                     scope="col"
@@ -359,7 +362,7 @@ exports[`renders the VisualizeTable component 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                        class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                         data-icon="chevron-up"
                         data-prefix="fas"
                         focusable="false"
@@ -608,7 +611,7 @@ exports[`renders the VisualizeTable component 1`] = `
                       class="border-top margin-0"
                     />
                     <div
-                      class="grid-row text-base-darkest text-italic padding-y-05 padding-right-1"
+                      class="grid-row text-base-darker text-italic padding-y-05 padding-right-1"
                     >
                       <div
                         class="grid-col-6 text-left"
@@ -640,7 +643,7 @@ exports[`renders the VisualizeTable component 1`] = `
                             type="button"
                           >
                             <a
-                              class="text-base-darkest"
+                              class="text-base-darker"
                               download="Test"
                               href="data:text/csv;charset=utf-8,﻿\\"id\\",\\"name\\",\\"updatedAt\\"
 \\"1\\",\\"Banana\\",\\"2021-11-11\\"

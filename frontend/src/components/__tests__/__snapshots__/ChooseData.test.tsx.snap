@@ -47,11 +47,6 @@ exports[`renders the ChooseData component 1`] = `
     class="usa-fieldset"
     id="fieldset"
   >
-    <legend
-      class="usa-sr-only"
-    >
-      Content item types
-    </legend>
     <div
       class="grid-row"
     >
@@ -78,7 +73,7 @@ exports[`renders the ChooseData component 1`] = `
             >
               Static dataset
               <p
-                class="usa-prose usa-checkbox__label-description"
+                class="text-base usa-prose usa-checkbox__label-description"
               >
                 Upload a new dataset from file or elect an existing dataset.
               </p>
@@ -109,7 +104,7 @@ exports[`renders the ChooseData component 1`] = `
             >
               Dynamic dataset
               <p
-                class="usa-prose usa-checkbox__label-description"
+                class="text-base usa-prose usa-checkbox__label-description"
               >
                 Choose from a list of continuously updated datasets.
               </p>
@@ -228,12 +223,6 @@ exports[`renders the ChooseData component 1`] = `
             class="usa-search usa-search--small"
             role="search"
           >
-            <label
-              class="usa-sr-only"
-              for="search"
-            >
-              Search
-            </label>
             <input
               class="usa-input"
               id="search"
@@ -264,11 +253,6 @@ exports[`renders the ChooseData component 1`] = `
                   fill="currentColor"
                 />
               </svg>
-              <span
-                class="usa-sr-only"
-              >
-                Search
-              </span>
             </button>
           </div>
         </div>
@@ -289,6 +273,7 @@ exports[`renders the ChooseData component 1`] = `
                 role="row"
               >
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -299,6 +284,7 @@ exports[`renders the ChooseData component 1`] = `
                   </span>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -315,7 +301,7 @@ exports[`renders the ChooseData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                       data-icon="chevron-up"
                       data-prefix="fas"
                       focusable="false"
@@ -331,6 +317,7 @@ exports[`renders the ChooseData component 1`] = `
                   </button>
                 </th>
                 <th
+                  aria-sort="desc"
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -347,7 +334,7 @@ exports[`renders the ChooseData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-down fa-w-14 hover:text-base text-base-darkest"
+                      class="svg-inline--fa fa-chevron-down fa-w-14 hover:text-base text-base-darker"
                       data-icon="chevron-down"
                       data-prefix="fas"
                       focusable="false"
@@ -363,6 +350,7 @@ exports[`renders the ChooseData component 1`] = `
                   </button>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -379,7 +367,7 @@ exports[`renders the ChooseData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                       data-icon="chevron-up"
                       data-prefix="fas"
                       focusable="false"
@@ -395,6 +383,7 @@ exports[`renders the ChooseData component 1`] = `
                   </button>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -411,7 +400,7 @@ exports[`renders the ChooseData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                       data-icon="chevron-up"
                       data-prefix="fas"
                       focusable="false"
@@ -635,7 +624,7 @@ exports[`renders the ChooseData component 1`] = `
                     class="border-top margin-0"
                   />
                   <div
-                    class="grid-row text-base-darkest text-italic padding-y-05 padding-right-1"
+                    class="grid-row text-base-darker text-italic padding-y-05 padding-right-1"
                   >
                     <div
                       class="grid-col-12 text-right"

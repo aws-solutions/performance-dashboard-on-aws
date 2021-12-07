@@ -128,11 +128,9 @@ function UserListing() {
         isOpen={isOpenResendInviteModal}
         closeModal={closeResendInviteModal}
         title={t("UserListingModalTitleResendInvites")}
-        message={`${
-          selected.length === 1
-            ? `${t("UserListingModalTitleResendInvitesMessage.part1")}`
-            : `${t("UserListingModalTitleResendInvitesMessage.part2")}`
-        }`}
+        message={t("UserListingModalTitleResendInvitesMessage", {
+          count: selected.length,
+        })}
         buttonType={t("GlobalResend")}
         buttonAction={resendInvite}
       />
@@ -140,13 +138,9 @@ function UserListing() {
         isOpen={isOpenRemoveUsersModal}
         closeModal={closeRemoveUsersModal}
         title={t("UserListingActionsRemoveUsers")}
-        message={`${t("UserListingActionsRemoveUsersMessage.part0")} ${
-          selected.length
-        } ${
-          selected.length > 1
-            ? `${t("UserListingActionsRemoveUsersMessage.part2")}`
-            : `${t("UserListingActionsRemoveUsersMessage.part1")}`
-        }?`}
+        message={t("UserListingActionsRemoveUsersMessage", {
+          count: selected.length,
+        })}
         buttonType={t("GlobalDelete")}
         buttonAction={removeUsers}
       />

@@ -20,3 +20,10 @@
   background-color: transparent !important;
   box-shadow: inset 0 0 0 2px color("base-dark") !important;
 }
+
+.usa-button--outline:disabled,
+.usa-button--outline.usa-button--disabled {
+  @include u-text("base-lighter", "!important");
+  background-color: transparent !important;
+  box-shadow: inset 0 0 0 2px color("base-lighter") !important;
+}

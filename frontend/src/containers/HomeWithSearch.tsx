@@ -10,10 +10,6 @@ import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
 import "./Home.css";
 
-interface QueryParams {
-  q: string;
-}
-
 function HomeWithSearch() {
   const params = new URLSearchParams(window.location.search);
   const query = params.get("q");

@@ -34,12 +34,12 @@ function Dropdown(props: Props) {
   };
 
   return (
-    <div className={formGroupClassName}>
+    <div className={formGroupClassName} role="contentinfo">
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
         {props.label && props.required && <span>&#42;</span>}
       </label>
-      <div className="usa-hint" id="event-date-start-hint">
+      <div id={`${props.id}-description`} className="usa-hint">
         {props.hint}
       </div>
       {props.error && (
@@ -53,6 +53,7 @@ function Dropdown(props: Props) {
       )}
       <select
         id={props.id}
+        aria-describedby={`${props.id}-description`}
         defaultValue={props.defaultValue}
         value={props.value}
         ref={props.register && props.register({ required: props.required })}

@@ -1,15 +1,27 @@
 import React from "react";
-import { render, fireEvent, act, screen } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  act,
+  screen,
+  RenderResult,
+} from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { MemoryRouter, Router } from "react-router-dom";
 import AddContent from "../AddContent";
 
 describe("Add content screen", () => {
+  let component: RenderResult;
+
   beforeEach(() => {
-    render(<AddContent />, { wrapper: MemoryRouter });
+    component = render(<AddContent />, { wrapper: MemoryRouter });
   });
 
   test("renders Add content", async () => {
+    expect(component).toMatchSnapshot();
+  });
+
+  test("renders header", async () => {
     const addContent = await screen.getByRole("heading", {
       name: "Add content item",
     });

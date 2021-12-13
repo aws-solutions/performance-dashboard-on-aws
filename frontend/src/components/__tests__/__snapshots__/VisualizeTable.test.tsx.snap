@@ -13,6 +13,7 @@ exports[`renders the VisualizeTable component 1`] = `
       >
         <div
           class="usa-form-group"
+          role="contentinfo"
         >
           <label
             class="usa-label text-bold"
@@ -25,10 +26,12 @@ exports[`renders the VisualizeTable component 1`] = `
           </label>
           <div
             class="usa-hint"
+            id="title-description"
           >
             Give your table a descriptive title.
           </div>
           <input
+            aria-describedby="title-description"
             class="usa-input"
             id="title"
             name="title"
@@ -58,6 +61,7 @@ exports[`renders the VisualizeTable component 1`] = `
         >
           <div
             class="usa-form-group"
+            role="contentinfo"
           >
             <label
               class="usa-label text-bold"
@@ -67,9 +71,10 @@ exports[`renders the VisualizeTable component 1`] = `
             </label>
             <div
               class="usa-hint"
-              id="event-date-start-hint"
+              id="sortData-description"
             />
             <select
+              aria-describedby="sortData-description"
               class="usa-select"
               id="sortData"
               name="sortData"
@@ -159,6 +164,7 @@ exports[`renders the VisualizeTable component 1`] = `
         </div>
         <div
           class="usa-form-group"
+          role="contentinfo"
         >
           <label
             class="usa-label text-bold"
@@ -168,6 +174,7 @@ exports[`renders the VisualizeTable component 1`] = `
           </label>
           <div
             class="usa-hint"
+            id="summary-description"
           >
             Give your table a summary to explain it in more depth. It can also be read by screen readers to describe the table for those with visual impairments. This field supports markdown.
              
@@ -198,6 +205,7 @@ exports[`renders the VisualizeTable component 1`] = `
             </a>
           </div>
           <textarea
+            aria-describedby="summary-description"
             class="usa-textarea"
             id="summary"
             name="summary"

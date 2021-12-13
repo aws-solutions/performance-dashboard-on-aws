@@ -36,12 +36,14 @@ function TextField(props: Props) {
   }`;
 
   return (
-    <div className={formGroupClassName}>
+    <div className={formGroupClassName} role="contentinfo">
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
         {props.label && props.required && <span>&#42;</span>}
       </label>
-      <div className="usa-hint">{props.hint}</div>
+      <div id={`${props.id}-description`} className="usa-hint">
+        {props.hint}
+      </div>
       {props.error && (
         <span
           className="usa-error-message"
@@ -54,6 +56,7 @@ function TextField(props: Props) {
       {props.multiline ? (
         <textarea
           id={props.id}
+          aria-describedby={`${props.id}-description`}
           name={props.name}
           className={className}
           defaultValue={props.defaultValue}
@@ -74,6 +77,7 @@ function TextField(props: Props) {
       ) : (
         <input
           id={props.id}
+          aria-describedby={`${props.id}-description`}
           className={className}
           name={props.name}
           type="text"

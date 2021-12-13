@@ -3,7 +3,9 @@
 exports[`renders a header 1`] = `
 <div>
   <header
+    aria-label="Header"
     class="border-base-lighter border-width-1px shadow-2 z-top position-sticky top-0 bg-white bg-red"
+    role="contentinfo"
   >
     <p>
       Test

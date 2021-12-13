@@ -34,12 +34,14 @@ function NumberField(props: Props) {
   const className = `usa-input${props.className ? " " + props.className : ""}`;
 
   return (
-    <div className={formGroupClassName}>
+    <div className={formGroupClassName} role="contentinfo">
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
         {props.label && props.required && <span>&#42;</span>}
       </label>
-      <div className="usa-hint">{props.hint}</div>
+      <div id={`${props.id}-description`} className="usa-hint">
+        {props.hint}
+      </div>
       {props.error && (
         <span
           className="usa-error-message"
@@ -52,11 +54,12 @@ function NumberField(props: Props) {
 
       <input
         id={props.id}
+        aria-describedby={`${props.id}-description`}
         className={className}
         name={props.name}
         type="number"
         step={props.step}
-        defaultValue={props.defaultValue}
+        defaultValue={props.defaultValue?.toString()}
         ref={
           props.register &&
           (props.validate

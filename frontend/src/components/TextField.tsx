@@ -36,7 +36,7 @@ function TextField(props: Props) {
   }`;
 
   return (
-    <div className={formGroupClassName}>
+    <div className={formGroupClassName} role="contentinfo">
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
         {props.label && props.required && <span>&#42;</span>}

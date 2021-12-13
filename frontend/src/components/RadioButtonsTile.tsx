@@ -18,7 +18,7 @@ interface Props {
 function RadioButtonsTile(props: Props) {
   const getUsaRatio = (option: Option, index: number) => {
     return (
-      <div className="usa-radio" key={index}>
+      <div className="usa-radio" role="contentinfo" key={index}>
         <div className="grid-col flex-5">
           <input
             className="usa-radio__input usa-radio__input--tile"
@@ -41,7 +41,7 @@ function RadioButtonsTile(props: Props) {
   };
 
   return (
-    <section role="radiogroup">
+    <>
       {props.options.map((option: Option, index: number) => {
         const usaRatio = getUsaRatio(option, index);
 
@@ -53,7 +53,7 @@ function RadioButtonsTile(props: Props) {
           usaRatio
         );
       })}
-    </section>
+    </>
   );
 }
 

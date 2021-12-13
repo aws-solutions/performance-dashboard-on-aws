@@ -50,72 +50,70 @@ exports[`renders the ChooseData component 1`] = `
     <div
       class="grid-row"
     >
-      <section
-        role="radiogroup"
+      <div
+        class="grid-col-4 padding-right-2 padding-top-2"
       >
         <div
-          class="grid-col-4 padding-right-2 padding-top-2"
+          class="usa-radio"
+          role="contentinfo"
         >
           <div
-            class="usa-radio"
+            class="grid-col flex-5"
           >
-            <div
-              class="grid-col flex-5"
+            <input
+              class="usa-radio__input usa-radio__input--tile"
+              data-testid="staticDatasetRadioButton"
+              id="staticDataset"
+              name="datasetType"
+              type="radio"
+              value="StaticDataset"
+            />
+            <label
+              class="usa-radio__label"
+              for="staticDataset"
             >
-              <input
-                class="usa-radio__input usa-radio__input--tile"
-                data-testid="staticDatasetRadioButton"
-                id="staticDataset"
-                name="datasetType"
-                type="radio"
-                value="StaticDataset"
-              />
-              <label
-                class="usa-radio__label"
-                for="staticDataset"
+              Static dataset
+              <p
+                class="text-base usa-prose usa-checkbox__label-description"
               >
-                Static dataset
-                <p
-                  class="text-base usa-prose usa-checkbox__label-description"
-                >
-                  Upload a new dataset from file or elect an existing dataset.
-                </p>
-              </label>
-            </div>
+                Upload a new dataset from file or elect an existing dataset.
+              </p>
+            </label>
           </div>
         </div>
+      </div>
+      <div
+        class="grid-col-4 padding-right-2 padding-top-2"
+      >
         <div
-          class="grid-col-4 padding-right-2 padding-top-2"
+          class="usa-radio"
+          role="contentinfo"
         >
           <div
-            class="usa-radio"
+            class="grid-col flex-5"
           >
-            <div
-              class="grid-col flex-5"
+            <input
+              class="usa-radio__input usa-radio__input--tile"
+              data-testid="dynamicDatasetRadioButton"
+              id="dynamicDataset"
+              name="datasetType"
+              type="radio"
+              value="DynamicDataset"
+            />
+            <label
+              class="usa-radio__label"
+              for="dynamicDataset"
             >
-              <input
-                class="usa-radio__input usa-radio__input--tile"
-                data-testid="dynamicDatasetRadioButton"
-                id="dynamicDataset"
-                name="datasetType"
-                type="radio"
-                value="DynamicDataset"
-              />
-              <label
-                class="usa-radio__label"
-                for="dynamicDataset"
+              Dynamic dataset
+              <p
+                class="text-base usa-prose usa-checkbox__label-description"
               >
-                Dynamic dataset
-                <p
-                  class="text-base usa-prose usa-checkbox__label-description"
-                >
-                  Choose from a list of continuously updated datasets.
-                </p>
-              </label>
-            </div>
+                Choose from a list of continuously updated datasets.
+              </p>
+            </label>
           </div>
         </div>
-      </section>
+      </div>
     </div>
     <div
       hidden=""

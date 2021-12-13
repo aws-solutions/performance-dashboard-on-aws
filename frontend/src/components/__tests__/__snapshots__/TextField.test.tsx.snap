@@ -4,6 +4,7 @@ exports[`renders a multiline textarea 1`] = `
 <div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"
@@ -31,6 +32,7 @@ exports[`renders a text input 1`] = `
 <div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"
@@ -58,6 +60,7 @@ exports[`renders a text input with hint 1`] = `
 <div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"
@@ -87,6 +90,7 @@ exports[`shows an error message 1`] = `
 <div>
   <div
     class="usa-form-group usa-form-group--error"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"

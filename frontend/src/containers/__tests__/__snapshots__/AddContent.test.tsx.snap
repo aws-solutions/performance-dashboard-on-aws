@@ -78,172 +78,174 @@ Object {
               >
                 Select the type of content you want to add
               </legend>
-              <section
-                role="radiogroup"
+              <div
+                class="usa-radio"
+                role="contentinfo"
               >
                 <div
-                  class="usa-radio"
+                  class="grid-col flex-5"
                 >
-                  <div
-                    class="grid-col flex-5"
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="textRadioButton"
+                    id="text"
+                    name="widgetType"
+                    type="radio"
+                    value="text"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="text"
                   >
-                    <input
-                      class="usa-radio__input usa-radio__input--tile"
-                      data-testid="textRadioButton"
-                      id="text"
-                      name="widgetType"
-                      type="radio"
-                      value="text"
-                    />
-                    <label
-                      class="usa-radio__label"
-                      for="text"
+                    Text
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
                     >
-                      Text
-                      <p
-                        class="text-base usa-prose usa-checkbox__label-description"
-                      >
-                        Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
-                      </p>
-                    </label>
-                  </div>
+                      Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
+                    </p>
+                  </label>
                 </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
                 <div
-                  class="usa-radio"
+                  class="grid-col flex-5"
                 >
-                  <div
-                    class="grid-col flex-5"
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="metricsRadioButton"
+                    id="metrics"
+                    name="widgetType"
+                    type="radio"
+                    value="metrics"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="metrics"
                   >
-                    <input
-                      class="usa-radio__input usa-radio__input--tile"
-                      data-testid="metricsRadioButton"
-                      id="metrics"
-                      name="widgetType"
-                      type="radio"
-                      value="metrics"
-                    />
-                    <label
-                      class="usa-radio__label"
-                      for="metrics"
+                    Metrics
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
                     >
-                      Metrics
-                      <p
-                        class="text-base usa-prose usa-checkbox__label-description"
-                      >
-                        Add one or more metrics to show point-in-time numerical data and trends.
-                      </p>
-                    </label>
-                  </div>
+                      Add one or more metrics to show point-in-time numerical data and trends.
+                    </p>
+                  </label>
                 </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
                 <div
-                  class="usa-radio"
+                  class="grid-col flex-5"
                 >
-                  <div
-                    class="grid-col flex-5"
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="chartRadioButton"
+                    id="chart"
+                    name="widgetType"
+                    type="radio"
+                    value="chart"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="chart"
                   >
-                    <input
-                      class="usa-radio__input usa-radio__input--tile"
-                      data-testid="chartRadioButton"
-                      id="chart"
-                      name="widgetType"
-                      type="radio"
-                      value="chart"
-                    />
-                    <label
-                      class="usa-radio__label"
-                      for="chart"
+                    Chart
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
                     >
-                      Chart
-                      <p
-                        class="text-base usa-prose usa-checkbox__label-description"
-                      >
-                        Display data as a visualization, including line, bar, column and part-to-whole charts.
-                      </p>
-                    </label>
-                  </div>
+                      Display data as a visualization, including line, bar, column and part-to-whole charts.
+                    </p>
+                  </label>
                 </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
                 <div
-                  class="usa-radio"
+                  class="grid-col flex-5"
                 >
-                  <div
-                    class="grid-col flex-5"
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="tableRadioButton"
+                    id="table"
+                    name="widgetType"
+                    type="radio"
+                    value="table"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="table"
                   >
-                    <input
-                      class="usa-radio__input usa-radio__input--tile"
-                      data-testid="tableRadioButton"
-                      id="table"
-                      name="widgetType"
-                      type="radio"
-                      value="table"
-                    />
-                    <label
-                      class="usa-radio__label"
-                      for="table"
+                    Table
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
                     >
-                      Table
-                      <p
-                        class="text-base usa-prose usa-checkbox__label-description"
-                      >
-                        Display data formatted in rows and columns.
-                      </p>
-                    </label>
-                  </div>
+                      Display data formatted in rows and columns.
+                    </p>
+                  </label>
                 </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
                 <div
-                  class="usa-radio"
+                  class="grid-col flex-5"
                 >
-                  <div
-                    class="grid-col flex-5"
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="imageRadioButton"
+                    id="image"
+                    name="widgetType"
+                    type="radio"
+                    value="image"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="image"
                   >
-                    <input
-                      class="usa-radio__input usa-radio__input--tile"
-                      data-testid="imageRadioButton"
-                      id="image"
-                      name="widgetType"
-                      type="radio"
-                      value="image"
-                    />
-                    <label
-                      class="usa-radio__label"
-                      for="image"
+                    Image
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
                     >
-                      Image
-                      <p
-                        class="text-base usa-prose usa-checkbox__label-description"
-                      >
-                        Upload an image to display.
-                      </p>
-                    </label>
-                  </div>
+                      Upload an image to display.
+                    </p>
+                  </label>
                 </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
                 <div
-                  class="usa-radio"
+                  class="grid-col flex-5"
                 >
-                  <div
-                    class="grid-col flex-5"
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="sectionRadioButton"
+                    id="section"
+                    name="widgetType"
+                    type="radio"
+                    value="section"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="section"
                   >
-                    <input
-                      class="usa-radio__input usa-radio__input--tile"
-                      data-testid="sectionRadioButton"
-                      id="section"
-                      name="widgetType"
-                      type="radio"
-                      value="section"
-                    />
-                    <label
-                      class="usa-radio__label"
-                      for="section"
+                    Section
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
                     >
-                      Section
-                      <p
-                        class="text-base usa-prose usa-checkbox__label-description"
-                      >
-                        Add a section to group similar content items in a list.
-                      </p>
-                    </label>
-                  </div>
+                      Add a section to group similar content items in a list.
+                    </p>
+                  </label>
                 </div>
-              </section>
+              </div>
             </fieldset>
             <br />
             <hr />
@@ -348,172 +350,174 @@ Object {
             >
               Select the type of content you want to add
             </legend>
-            <section
-              role="radiogroup"
+            <div
+              class="usa-radio"
+              role="contentinfo"
             >
               <div
-                class="usa-radio"
+                class="grid-col flex-5"
               >
-                <div
-                  class="grid-col flex-5"
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="textRadioButton"
+                  id="text"
+                  name="widgetType"
+                  type="radio"
+                  value="text"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="text"
                 >
-                  <input
-                    class="usa-radio__input usa-radio__input--tile"
-                    data-testid="textRadioButton"
-                    id="text"
-                    name="widgetType"
-                    type="radio"
-                    value="text"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="text"
+                  Text
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
                   >
-                    Text
-                    <p
-                      class="text-base usa-prose usa-checkbox__label-description"
-                    >
-                      Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
-                    </p>
-                  </label>
-                </div>
+                    Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
+                  </p>
+                </label>
               </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
               <div
-                class="usa-radio"
+                class="grid-col flex-5"
               >
-                <div
-                  class="grid-col flex-5"
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="metricsRadioButton"
+                  id="metrics"
+                  name="widgetType"
+                  type="radio"
+                  value="metrics"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="metrics"
                 >
-                  <input
-                    class="usa-radio__input usa-radio__input--tile"
-                    data-testid="metricsRadioButton"
-                    id="metrics"
-                    name="widgetType"
-                    type="radio"
-                    value="metrics"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="metrics"
+                  Metrics
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
                   >
-                    Metrics
-                    <p
-                      class="text-base usa-prose usa-checkbox__label-description"
-                    >
-                      Add one or more metrics to show point-in-time numerical data and trends.
-                    </p>
-                  </label>
-                </div>
+                    Add one or more metrics to show point-in-time numerical data and trends.
+                  </p>
+                </label>
               </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
               <div
-                class="usa-radio"
+                class="grid-col flex-5"
               >
-                <div
-                  class="grid-col flex-5"
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="chartRadioButton"
+                  id="chart"
+                  name="widgetType"
+                  type="radio"
+                  value="chart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="chart"
                 >
-                  <input
-                    class="usa-radio__input usa-radio__input--tile"
-                    data-testid="chartRadioButton"
-                    id="chart"
-                    name="widgetType"
-                    type="radio"
-                    value="chart"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="chart"
+                  Chart
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
                   >
-                    Chart
-                    <p
-                      class="text-base usa-prose usa-checkbox__label-description"
-                    >
-                      Display data as a visualization, including line, bar, column and part-to-whole charts.
-                    </p>
-                  </label>
-                </div>
+                    Display data as a visualization, including line, bar, column and part-to-whole charts.
+                  </p>
+                </label>
               </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
               <div
-                class="usa-radio"
+                class="grid-col flex-5"
               >
-                <div
-                  class="grid-col flex-5"
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="tableRadioButton"
+                  id="table"
+                  name="widgetType"
+                  type="radio"
+                  value="table"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="table"
                 >
-                  <input
-                    class="usa-radio__input usa-radio__input--tile"
-                    data-testid="tableRadioButton"
-                    id="table"
-                    name="widgetType"
-                    type="radio"
-                    value="table"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="table"
+                  Table
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
                   >
-                    Table
-                    <p
-                      class="text-base usa-prose usa-checkbox__label-description"
-                    >
-                      Display data formatted in rows and columns.
-                    </p>
-                  </label>
-                </div>
+                    Display data formatted in rows and columns.
+                  </p>
+                </label>
               </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
               <div
-                class="usa-radio"
+                class="grid-col flex-5"
               >
-                <div
-                  class="grid-col flex-5"
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="imageRadioButton"
+                  id="image"
+                  name="widgetType"
+                  type="radio"
+                  value="image"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="image"
                 >
-                  <input
-                    class="usa-radio__input usa-radio__input--tile"
-                    data-testid="imageRadioButton"
-                    id="image"
-                    name="widgetType"
-                    type="radio"
-                    value="image"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="image"
+                  Image
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
                   >
-                    Image
-                    <p
-                      class="text-base usa-prose usa-checkbox__label-description"
-                    >
-                      Upload an image to display.
-                    </p>
-                  </label>
-                </div>
+                    Upload an image to display.
+                  </p>
+                </label>
               </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
               <div
-                class="usa-radio"
+                class="grid-col flex-5"
               >
-                <div
-                  class="grid-col flex-5"
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="sectionRadioButton"
+                  id="section"
+                  name="widgetType"
+                  type="radio"
+                  value="section"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="section"
                 >
-                  <input
-                    class="usa-radio__input usa-radio__input--tile"
-                    data-testid="sectionRadioButton"
-                    id="section"
-                    name="widgetType"
-                    type="radio"
-                    value="section"
-                  />
-                  <label
-                    class="usa-radio__label"
-                    for="section"
+                  Section
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
                   >
-                    Section
-                    <p
-                      class="text-base usa-prose usa-checkbox__label-description"
-                    >
-                      Add a section to group similar content items in a list.
-                    </p>
-                  </label>
-                </div>
+                    Add a section to group similar content items in a list.
+                  </p>
+                </label>
               </div>
-            </section>
+            </div>
           </fieldset>
           <br />
           <hr />

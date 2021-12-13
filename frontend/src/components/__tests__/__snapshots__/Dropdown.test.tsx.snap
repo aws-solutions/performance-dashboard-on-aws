@@ -4,6 +4,7 @@ exports[`renders a dropdown with options 1`] = `
 <div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"
@@ -13,9 +14,10 @@ exports[`renders a dropdown with options 1`] = `
     </label>
     <div
       class="usa-hint"
-      id="event-date-start-hint"
+      id="aws-service-description"
     />
     <select
+      aria-describedby="aws-service-description"
       class="usa-select"
       id="aws-service"
       name="aws-service"
@@ -39,6 +41,7 @@ exports[`renders a select with a default value 1`] = `
 <div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"
@@ -48,9 +51,10 @@ exports[`renders a select with a default value 1`] = `
     </label>
     <div
       class="usa-hint"
-      id="event-date-start-hint"
+      id="aws-service-description"
     />
     <select
+      aria-describedby="aws-service-description"
       class="usa-select"
       id="aws-service"
       name="aws-service"
@@ -75,6 +79,7 @@ exports[`renders a select with error 1`] = `
 <div>
   <div
     class="usa-form-group usa-form-group--error"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"
@@ -84,7 +89,7 @@ exports[`renders a select with error 1`] = `
     </label>
     <div
       class="usa-hint"
-      id="event-date-start-hint"
+      id="aws-service-description"
     />
     <span
       class="usa-error-message"
@@ -94,6 +99,7 @@ exports[`renders a select with error 1`] = `
       Something bad happened
     </span>
     <select
+      aria-describedby="aws-service-description"
       class="usa-select"
       id="aws-service"
       name="aws-service"
@@ -106,6 +112,7 @@ exports[`renders a select with hint 1`] = `
 <div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"
@@ -115,11 +122,12 @@ exports[`renders a select with hint 1`] = `
     </label>
     <div
       class="usa-hint"
-      id="event-date-start-hint"
+      id="aws-service-description"
     >
       Think twice before selecting
     </div>
     <select
+      aria-describedby="aws-service-description"
       class="usa-select"
       id="aws-service"
       name="aws-service"
@@ -132,6 +140,7 @@ exports[`renders an empty dropdown 1`] = `
 <div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"
@@ -141,9 +150,10 @@ exports[`renders an empty dropdown 1`] = `
     </label>
     <div
       class="usa-hint"
-      id="event-date-start-hint"
+      id="aws-service-description"
     />
     <select
+      aria-describedby="aws-service-description"
       class="usa-select"
       id="aws-service"
       name="aws-service"

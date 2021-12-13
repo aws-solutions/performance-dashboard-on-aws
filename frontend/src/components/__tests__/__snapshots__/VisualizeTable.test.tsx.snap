@@ -464,16 +464,18 @@ exports[`renders the VisualizeTable component 1`] = `
                       <div
                         class="grid-col-4"
                       >
-                        <span
+                        <label
                           class="margin-left-1 margin-right-2px"
+                          for="Page"
                         >
                           Page 
-                        </span>
+                        </label>
                         <span
                           class="margin-right-1"
                         >
                           <input
                             class="margin-right-2px"
+                            id="Page"
                             pattern="\\\\d*"
                             style="width: 33px;"
                             type="text"
@@ -492,6 +494,7 @@ exports[`renders the VisualizeTable component 1`] = `
                         class="grid-col-4 text-center"
                       >
                         <button
+                          aria-label="Go to the first page"
                           class="margin-right-1"
                           disabled=""
                           type="button"
@@ -513,6 +516,7 @@ exports[`renders the VisualizeTable component 1`] = `
                           </svg>
                         </button>
                         <button
+                          aria-label="Go to the previous page"
                           class="margin-right-2"
                           disabled=""
                           type="button"
@@ -535,6 +539,7 @@ exports[`renders the VisualizeTable component 1`] = `
                         </button>
                         
                         <button
+                          aria-label="Go to the next page"
                           class="margin-right-1"
                           disabled=""
                           type="button"
@@ -556,6 +561,7 @@ exports[`renders the VisualizeTable component 1`] = `
                           </svg>
                         </button>
                         <button
+                          aria-label="Go to the last page"
                           disabled=""
                           type="button"
                         >
@@ -580,6 +586,7 @@ exports[`renders the VisualizeTable component 1`] = `
                         class="grid-col-4 text-right"
                       >
                         <select
+                          aria-label="Select the amount of results displayed on the page"
                           class="margin-right-05"
                         >
                           <option

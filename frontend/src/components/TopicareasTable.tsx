@@ -66,6 +66,9 @@ function TopicareasTable(props: Props) {
                 sortedBy === "name" ? "text-base-darker" : "text-white"
               }`}
               onClick={() => sortBy("name")}
+              ariaLabel={t("SortTopicAreaName", {
+                topicAreaName: `${settings.topicAreaLabels.singular}`,
+              })}
             >
               <FontAwesomeIcon
                 icon={
@@ -84,6 +87,7 @@ function TopicareasTable(props: Props) {
                 sortedBy === "dashboards" ? "text-base-darker" : "text-white"
               }`}
               onClick={() => sortBy("dashboards")}
+              ariaLabel={t("SortDashboards")}
             >
               <FontAwesomeIcon
                 icon={
@@ -102,6 +106,7 @@ function TopicareasTable(props: Props) {
                 sortedBy === "createdBy" ? "text-base-darker" : "text-white"
               }`}
               onClick={() => sortBy("createdBy")}
+              ariaLabel={t("SortCreatedBy")}
             >
               <FontAwesomeIcon
                 icon={

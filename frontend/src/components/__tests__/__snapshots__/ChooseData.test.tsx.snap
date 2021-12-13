@@ -55,6 +55,7 @@ exports[`renders the ChooseData component 1`] = `
       >
         <div
           class="usa-radio"
+          role="contentinfo"
         >
           <div
             class="grid-col flex-5"
@@ -86,6 +87,7 @@ exports[`renders the ChooseData component 1`] = `
       >
         <div
           class="usa-radio"
+          role="contentinfo"
         >
           <div
             class="grid-col flex-5"

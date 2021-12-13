@@ -264,6 +264,7 @@
     "ViewMarkdownSyntax": "View Markdown Syntax"
   },
   "EditSectionScreen": {
+    "Configure": "Configure text content",
     "EditSection": "Edit section",
     "EditSectionError": "Resolve error(s) to edit the section",
     "EditSectionSuccess": "'{{title}}' section has been successfully edited.",
@@ -278,6 +279,7 @@
   },
   "AddMetricScreen": {
     "AddMetric": "Add metric",
+    "Configure": "Configure metric content",
     "MetricTitle": "Metric title",
     "MetricTitleHint": "For example, 'Transactions per year'.",
     "MetricTitleError": "Please specify a title",
@@ -294,6 +296,7 @@
     "MetricSuccessfullyAdded": "Metric successfully added."
   },
   "EditMetricScreen": {
+    "Configure": "Configure metric content",
     "EditMetric": "Edit metric",
     "MetricTitle": "Metric title",
     "MetricTitleHint": "For example, 'Transactions per year'.",
@@ -316,6 +319,7 @@
     "Tags": "Tags",
     "AddMetrics": "Add metrics",
     "ChooseData": "Choose data",
+    "Configure": "Configure metrics content.",
     "Visualize": "Visualize",
     "UploadingFile": "Uploading file",
     "FileNameDoesNotExist": "Metadata does not contain file name",
@@ -342,6 +346,7 @@
   "EditMetricsScreen": {
     "MetricsEditedSuccessfully": "Metrics '{{title}}' have been successfully edited.",
     "EditMetrics": "Edit metrics",
+    "Configure": "Configure metrics content.",
     "UploadingFile": "Uploading file",
     "EditingMetrics": "Editing metrics",
     "EnterMetric": "Enter at least one metric to continue",
@@ -940,5 +945,11 @@
   "Tab": "Tab",
   "Active": "Active",
   "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} was successfully created.",
-  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} was successfully deleted."
+  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} was successfully deleted.",
+  "ARIA": {
+    "Header": "Header",
+    "Main": "Main",
+    "Logo": "Logo",
+    "Footer": "Footer"
+  }
 }

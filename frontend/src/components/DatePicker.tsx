@@ -69,7 +69,7 @@ function DatePicker(props: Props) {
   const className = `usa-input${props.className ? " " + props.className : ""}`;
 
   return (
-    <div className={formGroupClassName}>
+    <div className={formGroupClassName} role="contentinfo">
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
       </label>

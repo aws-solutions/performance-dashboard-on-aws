@@ -4,6 +4,7 @@ exports[`renders a date input element 1`] = `
 <div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"

@@ -51,7 +51,7 @@ function ViewDashboardAdmin() {
 
   const mobilePreviewWidth = 400;
   const maxMobileViewportWidth = 450;
-  const moveNavBarWidth = 1024;
+  const moveNavBarWidth = 1280;
   const isMobile = windowSize.width <= 600;
 
   const onClosePreview = () => {

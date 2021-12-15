@@ -434,6 +434,7 @@ function Table(props: Props) {
                           <FontAwesomeIcon
                             icon={faAngleDoubleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToFirstPage")}
                           />
                         </button>
                         <button
@@ -449,6 +450,7 @@ function Table(props: Props) {
                           <FontAwesomeIcon
                             icon={faAngleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToPrevPage")}
                           />
                         </button>
                       </>
@@ -469,6 +471,7 @@ function Table(props: Props) {
                           <FontAwesomeIcon
                             icon={faAngleDoubleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToFirstPage")}
                           />
                         </button>
                         <button
@@ -484,6 +487,7 @@ function Table(props: Props) {
                           <FontAwesomeIcon
                             icon={faAngleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToPrevPage")}
                           />
                         </button>
                       </>
@@ -501,6 +505,7 @@ function Table(props: Props) {
                       <FontAwesomeIcon
                         icon={faAngleRight}
                         className="margin-top-2px"
+                        aria-label={t("GoToNextPage")}
                       />
                     </button>
                     <button
@@ -515,6 +520,7 @@ function Table(props: Props) {
                       <FontAwesomeIcon
                         icon={faAngleDoubleRight}
                         className="margin-top-2px"
+                        aria-label={t("GoToLastPage")}
                       />
                     </button>
                   </div>

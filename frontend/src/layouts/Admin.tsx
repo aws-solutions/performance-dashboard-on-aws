@@ -87,8 +87,14 @@ function AdminLayout(props: LayoutProps) {
             aria-label={t("AdminMenu.PrimaryNavigation")}
             className="usa-nav"
           >
-            <button className="usa-nav__close">
-              <FontAwesomeIcon icon={faWindowClose} size="lg" role="img" />
+            <button className="usa-nav__close" aria-label={t("CloseMenu")}>
+              <FontAwesomeIcon
+                icon={faWindowClose}
+                size="lg"
+                role="img"
+                aria-hidden="true"
+                aria-label={t("CloseMenu")}
+              />
             </button>
             <ul className="usa-nav__primary usa-accordion">
               {isAdmin || isEditor ? (

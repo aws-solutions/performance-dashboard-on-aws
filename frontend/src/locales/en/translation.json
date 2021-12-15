@@ -954,6 +954,7 @@
   "SortDashboards": "Sort by dashboard name",
   "SortCreatedBy": "Sort by created by name",
   "SortTopicAreaName": "Sort by {{topicAreaName}} name",
+  "CloseMenu": "Close Menu",
   "ARIA": {
     "Header": "Header",
     "Main": "Main",

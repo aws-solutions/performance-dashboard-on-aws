@@ -508,6 +508,7 @@ exports[`renders the ChooseData component 1`] = `
                       >
                         <svg
                           aria-hidden="true"
+                          aria-label="Go to the first page"
                           class="svg-inline--fa fa-angle-double-left fa-w-14 margin-top-2px"
                           data-icon="angle-double-left"
                           data-prefix="fas"
@@ -530,6 +531,7 @@ exports[`renders the ChooseData component 1`] = `
                       >
                         <svg
                           aria-hidden="true"
+                          aria-label="Go to the previous page"
                           class="svg-inline--fa fa-angle-left fa-w-8 margin-top-2px"
                           data-icon="angle-left"
                           data-prefix="fas"
@@ -553,6 +555,7 @@ exports[`renders the ChooseData component 1`] = `
                       >
                         <svg
                           aria-hidden="true"
+                          aria-label="Go to the next page"
                           class="svg-inline--fa fa-angle-right fa-w-8 margin-top-2px"
                           data-icon="angle-right"
                           data-prefix="fas"
@@ -574,6 +577,7 @@ exports[`renders the ChooseData component 1`] = `
                       >
                         <svg
                           aria-hidden="true"
+                          aria-label="Go to the last page"
                           class="svg-inline--fa fa-angle-double-right fa-w-14 margin-top-2px"
                           data-icon="angle-double-right"
                           data-prefix="fas"

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import "./Button.scss";
 
 type Variant =
@@ -11,7 +11,8 @@ type Variant =
 
 interface Props {
   children: ReactNode;
-  onClick?: Function;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onKeyDown?: (event: KeyboardEvent<HTMLButtonElement>) => void;
   variant?: Variant;
   className?: string;
   testid?: string;
@@ -57,9 +58,14 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       disabled={props.disabled}
       ref={ref}
       type={props.type}
-      onClick={() => {
+      onClick={(e) => {
         if (props.onClick) {
-          props.onClick();
+          props.onClick(e);
+        }
+      }}
+      onKeyDown={(e) => {
+        if (props.onKeyDown) {
+          props.onKeyDown(e);
         }
       }}
     >

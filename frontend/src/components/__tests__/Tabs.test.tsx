@@ -74,7 +74,7 @@ describe("Tabs tests", () => {
       }
     );
 
-    const listItems = getAllByRole("listitem");
+    const listItems = getAllByRole("tab");
     expect(listItems).toHaveLength(2);
 
     listItems.forEach((item, index) => {

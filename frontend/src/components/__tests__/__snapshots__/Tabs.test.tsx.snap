@@ -4,6 +4,7 @@ exports[`Tabs tests renders the Tabs component 1`] = `
 <div>
   <div
     class="tabs"
+    role="tablist"
   >
     <div
       class="react-horizontal-scrolling-menu--wrapper border-base-lighter border-bottom margin-top-1"
@@ -19,6 +20,7 @@ exports[`Tabs tests renders the Tabs component 1`] = `
           <li
             aria-label="Active tab1test Tab Tab 1"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-base-dark border-x-0 border-top-0 border-bottom-05"
+            role="tab"
             style="cursor: pointer; white-space: nowrap;"
             tabindex="0"
           >
@@ -38,6 +40,7 @@ exports[`Tabs tests renders the Tabs component 1`] = `
           <li
             aria-label="tab1test Tab Tab 2"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+            role="tab"
             style="cursor: pointer; white-space: nowrap;"
             tabindex="0"
           >
@@ -48,6 +51,7 @@ exports[`Tabs tests renders the Tabs component 1`] = `
     </div>
     <div
       class="tab-content"
+      role="tabpanel"
     >
       Tab 1
     </div>
@@ -59,6 +63,7 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
 <div>
   <div
     class="tabs"
+    role="tablist"
   >
     <div
       class="react-horizontal-scrolling-menu--wrapper border-base-lighter border-bottom margin-top-1"
@@ -74,6 +79,7 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
           <li
             aria-label="tab2test Tab Tab 1"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+            role="tab"
             style="cursor: pointer; white-space: nowrap;"
             tabindex="0"
           >
@@ -93,6 +99,7 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
           <li
             aria-label="Active tab2test Tab Tab 2"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-base-dark border-x-0 border-top-0 border-bottom-05"
+            role="tab"
             style="cursor: pointer; white-space: nowrap;"
             tabindex="0"
           >
@@ -103,6 +110,7 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
     </div>
     <div
       class="tab-content"
+      role="tabpanel"
     >
       Tab 2
     </div>

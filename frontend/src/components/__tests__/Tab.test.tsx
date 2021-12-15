@@ -43,7 +43,7 @@ test("renders the tab", async () => {
     }
   );
 
-  const listItems = getAllByRole("listitem");
+  const listItems = getAllByRole("tab");
   expect(listItems).toHaveLength(1);
 
   listItems.forEach((item, index) => {

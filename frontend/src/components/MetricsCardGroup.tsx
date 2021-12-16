@@ -1,4 +1,4 @@
-import React from "react";
+import React, { KeyboardEvent } from "react";
 import { Metric, NumberDataType } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
@@ -51,7 +51,10 @@ function MetricsCardGroup(props: Props) {
                     className={`grid-col-${12 / props.metricPerRow} padding-05`}
                     key={j}
                   >
-                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-hidden overflow-y-hidden">
+                    <div
+                      className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-auto"
+                      tabIndex={0}
+                    >
                       <div className="flex-5">
                         <p className="text-base-darker text-bold margin-0 text-no-wrap">
                           {metric.title}

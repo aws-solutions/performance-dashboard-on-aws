@@ -35,7 +35,7 @@ function EditTableOfContents() {
   const [activeWidgetId, setActiveWidgetId] = useState("");
 
   useEffect(() => {
-    if (dashboard) {
+    if (dashboard && history.location.state) {
       const routeTableOfContents = (history.location.state as any)
         .tableOfContents;
       if (routeTableOfContents) {

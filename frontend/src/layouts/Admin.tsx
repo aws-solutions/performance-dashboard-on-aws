@@ -47,14 +47,10 @@ function AdminLayout(props: LayoutProps) {
     <>
       {loadingFile || loadingSettings || toHide ? (
         <Helmet>
-          <title></title>
           <link />
         </Helmet>
       ) : (
         <Helmet>
-          <title>
-            {settings ? settings.navbarTitle : "Performance Dashboard on AWS"}
-          </title>
           <link
             id="favicon"
             rel="icon"
@@ -68,7 +64,11 @@ function AdminLayout(props: LayoutProps) {
       <Header className="usa-header usa-header--basic">
         <div className="usa-nav-container">
           <div className="usa-navbar navbar-long">
-            <div className="usa-logo" id="basic-logo">
+            <div
+              className="usa-logo"
+              id="basic-logo"
+              aria-label={t("ARIA.Logo")}
+            >
               <em className="usa-logo__text display-flex flex-align-center">
                 <div className="logo">
                   <Logo />
@@ -79,14 +79,22 @@ function AdminLayout(props: LayoutProps) {
                 </Link>
               </em>
             </div>
-            <button className="usa-menu-btn">{t("AdminMenu.Menu")}</button>
+            <button className="usa-menu-btn bg-primary-dark">
+              {t("AdminMenu.Menu")}
+            </button>
           </div>
           <nav
             aria-label={t("AdminMenu.PrimaryNavigation")}
             className="usa-nav"
           >
-            <button className="usa-nav__close">
-              <FontAwesomeIcon icon={faWindowClose} size="lg" role="img" />
+            <button className="usa-nav__close" aria-label={t("CloseMenu")}>
+              <FontAwesomeIcon
+                icon={faWindowClose}
+                size="lg"
+                role="img"
+                aria-hidden="true"
+                aria-label={t("CloseMenu")}
+              />
             </button>
             <ul className="usa-nav__primary usa-accordion">
               {isAdmin || isEditor ? (
@@ -140,7 +148,7 @@ function AdminLayout(props: LayoutProps) {
           </nav>
         </div>
       </Header>
-      <main className="padding-y-3">
+      <main className="padding-y-3" aria-label={t("ARIA.Main")}>
         {!hasRole && <Redirect to="/403/access-denied" />}
         <div className="grid-container">{props.children}</div>
       </main>

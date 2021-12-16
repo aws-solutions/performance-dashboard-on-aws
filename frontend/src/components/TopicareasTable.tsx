@@ -63,9 +63,12 @@ function TopicareasTable(props: Props) {
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${
-                sortedBy === "name" ? "text-base-darkest" : "text-white"
+                sortedBy === "name" ? "text-base-darker" : "text-white"
               }`}
               onClick={() => sortBy("name")}
+              ariaLabel={t("SortTopicAreaName", {
+                topicAreaName: `${settings.topicAreaLabels.singular}`,
+              })}
             >
               <FontAwesomeIcon
                 icon={
@@ -81,9 +84,10 @@ function TopicareasTable(props: Props) {
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${
-                sortedBy === "dashboards" ? "text-base-darkest" : "text-white"
+                sortedBy === "dashboards" ? "text-base-darker" : "text-white"
               }`}
               onClick={() => sortBy("dashboards")}
+              ariaLabel={t("SortDashboards")}
             >
               <FontAwesomeIcon
                 icon={
@@ -99,9 +103,10 @@ function TopicareasTable(props: Props) {
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${
-                sortedBy === "createdBy" ? "text-base-darkest" : "text-white"
+                sortedBy === "createdBy" ? "text-base-darker" : "text-white"
               }`}
               onClick={() => sortBy("createdBy")}
+              ariaLabel={t("SortCreatedBy")}
             >
               <FontAwesomeIcon
                 icon={
@@ -134,7 +139,7 @@ function TopicareasTable(props: Props) {
                 />
               </td>
               <td>
-                <span className="text-bold text-base-darkest font-sans-md">
+                <span className="text-bold text-base-darker font-sans-md">
                   {topicarea.name}
                 </span>
               </td>

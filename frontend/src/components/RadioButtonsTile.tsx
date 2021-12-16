@@ -18,7 +18,7 @@ interface Props {
 function RadioButtonsTile(props: Props) {
   const getUsaRatio = (option: Option, index: number) => {
     return (
-      <div className="usa-radio" key={index}>
+      <div className="usa-radio" role="contentinfo" key={index}>
         <div className="grid-col flex-5">
           <input
             className="usa-radio__input usa-radio__input--tile"
@@ -31,7 +31,7 @@ function RadioButtonsTile(props: Props) {
           />
           <label className="usa-radio__label" htmlFor={option.id}>
             {option.label}
-            <p className="usa-prose usa-checkbox__label-description">
+            <p className="text-base usa-prose usa-checkbox__label-description">
               {option.description}
             </p>
           </label>

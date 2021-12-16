@@ -194,9 +194,9 @@ function AddMetrics() {
         history.push(`/admin/dashboard/edit/${dashboardId}`, {
           alert: {
             type: "success",
-            message: `${t("AddMetricsScreen.MetricsAddedSuccessfully.part1")}${
-              values.title
-            }${t("AddMetricsScreen.MetricsAddedSuccessfully.part2")}`,
+            message: t("AddMetricsScreen.MetricsAddedSuccessfully", {
+              title: values.title,
+            }),
           },
         });
       }
@@ -333,7 +333,9 @@ function AddMetrics() {
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">{t("AddMetricsScreen.AddMetrics")}</h1>
+      <h1 id="addMetricsFormHeader" className="margin-top-0">
+        {t("AddMetricsScreen.AddMetrics")}
+      </h1>
       <StepIndicator
         current={step}
         segments={[
@@ -365,28 +367,29 @@ function AddMetrics() {
         />
       ) : (
         <div className="grid-row width-desktop">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            aria-labelledby="addMetricsFormHeader"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div hidden={step !== 0}>
               <PrimaryActionBar>
                 {configHeader}
-                <div className="grid-col-6">
-                  <label htmlFor="fieldset" className="usa-label text-bold">
-                    {t("AddMetricsScreen.Data")}
-                  </label>
-                  <div className="usa-hint">
-                    {t("AddMetricsScreen.DataHint")}.{" "}
-                    <Link to="/admin/apihelp" target="_blank" external>
-                      {t("AddMetricsScreen.DataHelp")}
-                    </Link>
-                  </div>
-                </div>
+
                 <fieldset
                   id="fieldset"
                   className="usa-fieldset"
                   onChange={handleChange}
                 >
-                  <legend className="usa-sr-only">
-                    {t("AddMetricsScreen.ContentItemTypes")}
+                  <legend className="usa-hint grid-col-6">
+                    <span className="usa-label text-bold">
+                      {t("AddMetricsScreen.Data")}
+                    </span>
+                    <p>
+                      {t("AddMetricsScreen.DataHint")}.{" "}
+                      <Link to="/admin/apihelp" target="_blank" external>
+                        {t("AddMetricsScreen.DataHelp")}
+                      </Link>
+                    </p>
                   </legend>
 
                   <div className="grid-row">
@@ -425,9 +428,6 @@ function AddMetrics() {
                           role="search"
                           className="usa-search usa-search--small"
                         >
-                          <label className="usa-sr-only" htmlFor="search">
-                            {t("SearchButton")}
-                          </label>
                           <input
                             className="usa-input"
                             id="search"
@@ -453,9 +453,6 @@ function AddMetrics() {
                               style={{ marginTop: "-3px" }}
                               icon={faSearch}
                             />
-                            <span className="usa-sr-only">
-                              {t("SearchButton")}
-                            </span>
                           </button>
                         </div>
                       </div>
@@ -513,7 +510,12 @@ function AddMetrics() {
                 <div className="grid-col-6" hidden={fullPreview}>
                   <PrimaryActionBar>
                     {configHeader}
-                    <fieldset className="usa-fieldset">
+
+                    <fieldset id="fieldset-visualize" className="usa-fieldset">
+                      <legend className="usa-hint grid-col-6">
+                        {t("AddMetricsScreen.Configure")}
+                      </legend>
+
                       {(errors.title || submittedMetricsNum === 0) && (
                         <Alert
                           type="error"
@@ -555,12 +557,12 @@ function AddMetrics() {
                         </label>
                       </div>
 
-                      <label className="usa-label text-bold">
+                      <span className="usa-label text-bold">
                         {t("MetricsOptionsLabel")}
-                      </label>
-                      <div className="usa-hint">
+                      </span>
+                      <span className="usa-hint">
                         {t("MetricsOptionsDescription")}
-                      </div>
+                      </span>
                       <div className="usa-checkbox">
                         <input
                           className="usa-checkbox__input"

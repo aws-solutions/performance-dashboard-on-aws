@@ -94,6 +94,7 @@ function AddUsers() {
 
             <label className="usa-label text-bold">
               {t("UserListingRole")}
+              <span>&#42;</span>
             </label>
             <div className="usa-hint">{t("AddUsersRoleSelect")}</div>
 

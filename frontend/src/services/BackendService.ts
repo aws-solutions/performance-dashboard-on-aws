@@ -68,7 +68,11 @@ async function fetchPublicDashboardByURL(
 async function fetchPublicHomepageWithQuery(
   query: string
 ): Promise<PublicHomepage> {
-  return await API.get(apiName, `public/search/${query}`, {});
+  if (query == undefined || query == "") {
+    return API.get(apiName, "public/homepage", {});
+  } else {
+    return await API.get(apiName, `public/search?q=${query}`, {});
+  }
 }
 
 async function fetchTopicAreas() {
@@ -460,6 +464,11 @@ async function changeRole(role: string, usernames: Array<string>) {
   });
 }
 
+async function copyDashboard(dashboardId: string): Promise<Dashboard> {
+  const headers = await authHeaders();
+  return await API.post(apiName, `dashboard/${dashboardId}/copy`, { headers });
+}
+
 const BackendService = {
   fetchDashboards,
   fetchDashboardById,
@@ -503,6 +512,7 @@ const BackendService = {
   removeUsers,
   resendInvite,
   changeRole,
+  copyDashboard,
 };
 
 export default BackendService;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DatePicker1, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./DatePicker.scss";
 import {
   enUS,
   enGB,
@@ -68,7 +69,7 @@ function DatePicker(props: Props) {
   const className = `usa-input${props.className ? " " + props.className : ""}`;
 
   return (
-    <div className={formGroupClassName}>
+    <div className={formGroupClassName} role="contentinfo">
       <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
       </label>

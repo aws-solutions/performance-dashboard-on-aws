@@ -298,6 +298,50 @@
           "response": []
         },
         {
+          "name": "Copy Dashboard",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/:id/copy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                ":id",
+                "copy"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "49b1e4c5-c621-459b-96c4-66504a6b21eb"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "Archive Dashboard",
           "request": {
             "auth": {
@@ -1039,18 +1083,18 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/public/search/:query",
+              "raw": "{{baseUrl}}/public/search?q=",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "public",
                 "search",
-                ":query"
+                "?q="
               ],
               "variable": [
                 {
-                  "key": "query",
+                  "key": "q",
                   "value": ""
                 }
               ]

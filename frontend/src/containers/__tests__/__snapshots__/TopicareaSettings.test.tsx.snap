@@ -14,7 +14,7 @@ exports[`topic area settings should match snapshot 1`] = `
       >
         <a
           aria-label=""
-          class="link"
+          class="usa-link action-link"
           href="/admin/settings/topicarea"
           target=""
         >
@@ -338,6 +338,7 @@ exports[`topic area settings should match snapshot 1`] = `
                     Ministry
                   </span>
                   <button
+                    aria-label="Sort by Ministry name"
                     class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
                   >
                     <svg
@@ -364,7 +365,8 @@ exports[`topic area settings should match snapshot 1`] = `
                     Dashboards
                   </span>
                   <button
-                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darkest"
+                    aria-label="Sort by dashboard name"
+                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-base-darker"
                   >
                     <svg
                       aria-hidden="true"
@@ -390,6 +392,7 @@ exports[`topic area settings should match snapshot 1`] = `
                     Created by
                   </span>
                   <button
+                    aria-label="Sort by created by name"
                     class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
                   >
                     <svg
@@ -427,7 +430,7 @@ exports[`topic area settings should match snapshot 1`] = `
                 </td>
                 <td>
                   <span
-                    class="text-bold text-base-darkest font-sans-md"
+                    class="text-bold text-base-darker font-sans-md"
                   >
                     Topic Area Grapes
                   </span>
@@ -462,7 +465,7 @@ exports[`topic area settings should match snapshot 1`] = `
                 </td>
                 <td>
                   <span
-                    class="text-bold text-base-darkest font-sans-md"
+                    class="text-bold text-base-darker font-sans-md"
                   >
                     Topic Area Bananas
                   </span>

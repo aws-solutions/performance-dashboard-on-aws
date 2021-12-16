@@ -1,0 +1,602 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add content screen renders Add content 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <nav
+        aria-label="Breadcrumbs"
+        class="usa-breadcrumb padding-top-0"
+      >
+        <ol
+          class="usa-breadcrumb__list"
+        >
+          <li
+            class="usa-breadcrumb__list-item"
+          >
+            <a
+              aria-label=""
+              class="usa-link action-link"
+              href="/admin/dashboards"
+              target=""
+            >
+              <span>
+                <span>
+                  Dashboards
+                </span>
+              </span>
+            </a>
+          </li>
+          <li
+            class="usa-breadcrumb__list-item"
+          >
+            <a
+              aria-label=""
+              class="usa-link action-link"
+              href="/admin/dashboard/edit/undefined"
+              target=""
+            >
+              <span>
+                <span>
+                  My AWS Dashboard
+                </span>
+              </span>
+            </a>
+          </li>
+          <li
+            aria-current="page"
+            class="usa-breadcrumb__list-item usa-current cursor-default"
+          >
+            <span>
+              Add content item
+            </span>
+          </li>
+        </ol>
+      </nav>
+      <div
+        class="grid-row"
+      >
+        <div
+          class="border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white position-sticky tablet:grid-col-6 grid-col-12"
+        >
+          <h1
+            class="margin-top-0"
+            id="addContentFormHeader"
+          >
+            Add content item
+          </h1>
+          <form
+            aria-labelledby="addContentFormHeader"
+            class="usa-form usa-form--large"
+          >
+            <fieldset
+              class="usa-fieldset"
+            >
+              <legend
+                class="margin-y-1 text-semibold display-inline-block font-sans-lg"
+              >
+                Select the type of content you want to add
+              </legend>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
+                <div
+                  class="grid-col flex-5"
+                >
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="textRadioButton"
+                    id="text"
+                    name="widgetType"
+                    type="radio"
+                    value="text"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="text"
+                  >
+                    Text
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
+                    >
+                      Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
+                    </p>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
+                <div
+                  class="grid-col flex-5"
+                >
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="metricsRadioButton"
+                    id="metrics"
+                    name="widgetType"
+                    type="radio"
+                    value="metrics"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="metrics"
+                  >
+                    Metrics
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
+                    >
+                      Add one or more metrics to show point-in-time numerical data and trends.
+                    </p>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
+                <div
+                  class="grid-col flex-5"
+                >
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="chartRadioButton"
+                    id="chart"
+                    name="widgetType"
+                    type="radio"
+                    value="chart"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="chart"
+                  >
+                    Chart
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
+                    >
+                      Display data as a visualization, including line, bar, column and part-to-whole charts.
+                    </p>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
+                <div
+                  class="grid-col flex-5"
+                >
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="tableRadioButton"
+                    id="table"
+                    name="widgetType"
+                    type="radio"
+                    value="table"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="table"
+                  >
+                    Table
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
+                    >
+                      Display data formatted in rows and columns.
+                    </p>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
+                <div
+                  class="grid-col flex-5"
+                >
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="imageRadioButton"
+                    id="image"
+                    name="widgetType"
+                    type="radio"
+                    value="image"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="image"
+                  >
+                    Image
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
+                    >
+                      Upload an image to display.
+                    </p>
+                  </label>
+                </div>
+              </div>
+              <div
+                class="usa-radio"
+                role="contentinfo"
+              >
+                <div
+                  class="grid-col flex-5"
+                >
+                  <input
+                    class="usa-radio__input usa-radio__input--tile"
+                    data-testid="sectionRadioButton"
+                    id="section"
+                    name="widgetType"
+                    type="radio"
+                    value="section"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="section"
+                  >
+                    Section
+                    <p
+                      class="text-base usa-prose usa-checkbox__label-description"
+                    >
+                      Add a section to group similar content items in a list.
+                    </p>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+            <br />
+            <hr />
+            <span
+              data-placement="top"
+              data-toggle="tooltip"
+              title="Choose a content item to continue"
+            >
+              <button
+                class="usa-button usa-button--base"
+                disabled=""
+                type="submit"
+              >
+                Continue
+              </button>
+            </span>
+            <button
+              class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+              type="button"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+        <div
+          class="tablet:grid-col-6 grid-col-12"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <nav
+      aria-label="Breadcrumbs"
+      class="usa-breadcrumb padding-top-0"
+    >
+      <ol
+        class="usa-breadcrumb__list"
+      >
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            aria-label=""
+            class="usa-link action-link"
+            href="/admin/dashboards"
+            target=""
+          >
+            <span>
+              <span>
+                Dashboards
+              </span>
+            </span>
+          </a>
+        </li>
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            aria-label=""
+            class="usa-link action-link"
+            href="/admin/dashboard/edit/undefined"
+            target=""
+          >
+            <span>
+              <span>
+                My AWS Dashboard
+              </span>
+            </span>
+          </a>
+        </li>
+        <li
+          aria-current="page"
+          class="usa-breadcrumb__list-item usa-current cursor-default"
+        >
+          <span>
+            Add content item
+          </span>
+        </li>
+      </ol>
+    </nav>
+    <div
+      class="grid-row"
+    >
+      <div
+        class="border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white position-sticky tablet:grid-col-6 grid-col-12"
+      >
+        <h1
+          class="margin-top-0"
+          id="addContentFormHeader"
+        >
+          Add content item
+        </h1>
+        <form
+          aria-labelledby="addContentFormHeader"
+          class="usa-form usa-form--large"
+        >
+          <fieldset
+            class="usa-fieldset"
+          >
+            <legend
+              class="margin-y-1 text-semibold display-inline-block font-sans-lg"
+            >
+              Select the type of content you want to add
+            </legend>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
+              <div
+                class="grid-col flex-5"
+              >
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="textRadioButton"
+                  id="text"
+                  name="widgetType"
+                  type="radio"
+                  value="text"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="text"
+                >
+                  Text
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
+                  >
+                    Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
+                  </p>
+                </label>
+              </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
+              <div
+                class="grid-col flex-5"
+              >
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="metricsRadioButton"
+                  id="metrics"
+                  name="widgetType"
+                  type="radio"
+                  value="metrics"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="metrics"
+                >
+                  Metrics
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
+                  >
+                    Add one or more metrics to show point-in-time numerical data and trends.
+                  </p>
+                </label>
+              </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
+              <div
+                class="grid-col flex-5"
+              >
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="chartRadioButton"
+                  id="chart"
+                  name="widgetType"
+                  type="radio"
+                  value="chart"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="chart"
+                >
+                  Chart
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
+                  >
+                    Display data as a visualization, including line, bar, column and part-to-whole charts.
+                  </p>
+                </label>
+              </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
+              <div
+                class="grid-col flex-5"
+              >
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="tableRadioButton"
+                  id="table"
+                  name="widgetType"
+                  type="radio"
+                  value="table"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="table"
+                >
+                  Table
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
+                  >
+                    Display data formatted in rows and columns.
+                  </p>
+                </label>
+              </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
+              <div
+                class="grid-col flex-5"
+              >
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="imageRadioButton"
+                  id="image"
+                  name="widgetType"
+                  type="radio"
+                  value="image"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="image"
+                >
+                  Image
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
+                  >
+                    Upload an image to display.
+                  </p>
+                </label>
+              </div>
+            </div>
+            <div
+              class="usa-radio"
+              role="contentinfo"
+            >
+              <div
+                class="grid-col flex-5"
+              >
+                <input
+                  class="usa-radio__input usa-radio__input--tile"
+                  data-testid="sectionRadioButton"
+                  id="section"
+                  name="widgetType"
+                  type="radio"
+                  value="section"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="section"
+                >
+                  Section
+                  <p
+                    class="text-base usa-prose usa-checkbox__label-description"
+                  >
+                    Add a section to group similar content items in a list.
+                  </p>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <br />
+          <hr />
+          <span
+            data-placement="top"
+            data-toggle="tooltip"
+            title="Choose a content item to continue"
+          >
+            <button
+              class="usa-button usa-button--base"
+              disabled=""
+              type="submit"
+            >
+              Continue
+            </button>
+          </span>
+          <button
+            class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+            type="button"
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
+      <div
+        class="tablet:grid-col-6 grid-col-12"
+      />
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

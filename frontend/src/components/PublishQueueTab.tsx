@@ -69,7 +69,7 @@ function PublishQueueTab(props: Props) {
                       },
                     }}
                   >
-                    <span className="text-bold text-base-darkest">
+                    <span className="text-bold text-base-darker">
                       {dashboard.name}
                     </span>
                   </Link>

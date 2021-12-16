@@ -187,6 +187,9 @@ export class BackendApi extends cdk.Construct {
     const widgets = dashboard.addResource("widget");
     widgets.addMethod("POST", apiIntegration, methodProps);
 
+    const copy = dashboard.addResource("copy");
+    copy.addMethod("POST", apiIntegration, methodProps);
+
     const widget = widgets.addResource("{widgetId}");
     widget.addMethod("GET", apiIntegration, methodProps);
     widget.addMethod("POST", apiIntegration, methodProps);
@@ -267,5 +270,8 @@ export class BackendApi extends cdk.Construct {
 
     const settings = publicapi.addResource("settings");
     this.cfn_nag_warn_w59(settings.addMethod("GET", apiIntegration));
+
+    const search = publicapi.addResource("search");
+    this.cfn_nag_warn_w59(search.addMethod("GET", apiIntegration));
   }
 }

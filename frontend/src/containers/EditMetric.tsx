@@ -133,160 +133,174 @@ function EditMetric() {
       ) : (
         <>
           <div className="grid-row">
-            <div className="grid-col-12">
-              <h1>{t("EditMetricScreen.EditMetric")}</h1>
+            <div className="grid-col-auto">
+              <h1 id="editMetricFormHeader">
+                {t("EditMetricScreen.EditMetric")}
+              </h1>
 
               <form
+                aria-labelledby="editMetricFormHeader"
                 onSubmit={handleSubmit(onSubmit)}
                 className="usa-form usa-form--large"
                 data-testid="EditMetricForm"
               >
-                <TextField
-                  id="title"
-                  name="title"
-                  label={t("EditMetricScreen.MetricTitle")}
-                  hint={t("EditMetricScreen.MetricTitleHint")}
-                  register={register}
-                  defaultValue={state.metric.title}
-                  error={errors.title && t("EditMetricScreen.MetricTitleError")}
-                  required
-                />
+                <fieldset className="usa-fieldset">
+                  <legend className="usa-hint grid-col-6">
+                    {t("EditMetricScreen.Configure")}
+                  </legend>
 
-                <NumberField
-                  id="value"
-                  name="value"
-                  label={t("EditMetricScreen.MetricValue")}
-                  hint={t("EditMetricScreen.MetricValueHint")}
-                  register={register}
-                  error={errors.value && t("EditMetricScreen.MetricValueError")}
-                  className="width-50"
-                  defaultValue={state.metric.value}
-                  step={0.01}
-                  required
-                />
+                  <TextField
+                    id="title"
+                    name="title"
+                    label={t("EditMetricScreen.MetricTitle")}
+                    hint={t("EditMetricScreen.MetricTitleHint")}
+                    register={register}
+                    defaultValue={state.metric.title}
+                    error={
+                      errors.title && t("EditMetricScreen.MetricTitleError")
+                    }
+                    required
+                  />
 
-                <Dropdown
-                  id="percentage"
-                  name="percentage"
-                  label={t("NumberFormat")}
-                  hint={t("AddMetricScreen.MetricFormatHint")}
-                  options={[
-                    { value: "", label: t("SelectAnOption") },
-                    {
-                      value: NumberDataType.Percentage,
-                      label: t("Percentage"),
-                    },
-                    {
-                      value: NumberDataType.Currency,
-                      label: t("Currency"),
-                    },
-                  ]}
-                  defaultValue={state.metric.percentage}
-                  onChange={handleSymbol}
-                  register={register}
-                />
+                  <NumberField
+                    id="value"
+                    name="value"
+                    label={t("EditMetricScreen.MetricValue")}
+                    hint={t("EditMetricScreen.MetricValueHint")}
+                    register={register}
+                    error={
+                      errors.value && t("EditMetricScreen.MetricValueError")
+                    }
+                    className="width-50"
+                    defaultValue={state.metric.value}
+                    step={0.01}
+                    required
+                  />
 
-                {symbolType === "Currency" &&
-                  (state.metric.percentage === "Percentage" ||
-                    state.metric.percentage === "SelectAnOption" ||
-                    state.metric.percentage === "" ||
-                    state.metric.percentage === undefined) && (
-                    <Dropdown
-                      id="currency"
-                      name="currency"
-                      label={t("Currency")}
-                      hint={t("AddMetricScreen.MetricCurrencyHint")}
-                      options={[
-                        { value: "", label: t("SelectAnOption") },
-                        {
-                          value: CurrencyDataType["Dollar $"],
-                          label: t("Dollar"),
-                        },
-                        {
-                          value: CurrencyDataType["Euro €"],
-                          label: t("Euro"),
-                        },
-                        {
-                          value: CurrencyDataType["Pound £"],
-                          label: t("Pound"),
-                        },
-                      ]}
-                      defaultValue={state.metric.currency}
-                      register={register}
-                      required
-                    />
-                  )}
-                {state.metric.percentage === "Currency" &&
-                  symbolType !== "Percentage" &&
-                  symbolType !== "SelectAnOption" && (
-                    <Dropdown
-                      id="currency"
-                      name="currency"
-                      label={t("Currency")}
-                      hint={t("AddMetricScreen.MetricCurrencyHint")}
-                      options={[
-                        { value: "", label: t("SelectAnOption") },
-                        {
-                          value: CurrencyDataType["Dollar $"],
-                          label: t("Dollar"),
-                        },
-                        {
-                          value: CurrencyDataType["Euro €"],
-                          label: t("Euro"),
-                        },
-                        {
-                          value: CurrencyDataType["Pound £"],
-                          label: t("Pound"),
-                        },
-                      ]}
-                      defaultValue={state.metric.currency}
-                      register={register}
-                      required
-                    />
-                  )}
+                  <Dropdown
+                    id="percentage"
+                    name="percentage"
+                    label={t("NumberFormat")}
+                    hint={t("AddMetricScreen.MetricFormatHint")}
+                    options={[
+                      { value: "", label: t("SelectAnOption") },
+                      {
+                        value: NumberDataType.Percentage,
+                        label: t("Percentage"),
+                      },
+                      {
+                        value: NumberDataType.Currency,
+                        label: t("Currency"),
+                      },
+                    ]}
+                    defaultValue={state.metric.percentage}
+                    onChange={handleSymbol}
+                    register={register}
+                  />
 
-                <TextField
-                  id="changeOverTime"
-                  name="changeOverTime"
-                  label={t("EditMetricScreen.ChangeOverTime")}
-                  hint={t("EditMetricScreen.ChangeOverTimeHint")}
-                  register={register}
-                  className="width-50"
-                  defaultValue={state.metric.changeOverTime}
-                  error={
-                    errors.changeOverTime &&
-                    errors.changeOverTime.type === "validate"
-                      ? t("EditMetricScreen.ChangeOverTimeError")
-                      : undefined
-                  }
-                  validate={(input: string) => {
-                    return !input || input[0] === "+" || input[0] === "-";
-                  }}
-                />
-                <DateRangePicker
-                  start={{
-                    id: "startDate",
-                    name: "startDate",
-                    label: t("EditMetricScreen.StartDateOptional"),
-                    hint: settings.dateTimeFormat.date,
-                    date: startDate,
-                    dateFormat: settings.dateTimeFormat.date
-                      .toLowerCase()
-                      .replace(/m/g, "M"),
-                    setDate: setStartDate,
-                  }}
-                  end={{
-                    id: "endDate",
-                    name: "endDate",
-                    label: t("EditMetricScreen.EndDateOptional"),
-                    hint: settings.dateTimeFormat.date,
-                    date: endDate,
-                    dateFormat: settings.dateTimeFormat.date
-                      .toLowerCase()
-                      .replace(/m/g, "M"),
-                    setDate: setEndDate,
-                  }}
-                />
+                  {symbolType === "Currency" &&
+                    (state.metric.percentage === "Percentage" ||
+                      state.metric.percentage === "SelectAnOption" ||
+                      state.metric.percentage === "" ||
+                      state.metric.percentage === undefined) && (
+                      <Dropdown
+                        id="currency"
+                        name="currency"
+                        label={t("Currency")}
+                        hint={t("AddMetricScreen.MetricCurrencyHint")}
+                        options={[
+                          { value: "", label: t("SelectAnOption") },
+                          {
+                            value: CurrencyDataType["Dollar $"],
+                            label: t("Dollar"),
+                          },
+                          {
+                            value: CurrencyDataType["Euro €"],
+                            label: t("Euro"),
+                          },
+                          {
+                            value: CurrencyDataType["Pound £"],
+                            label: t("Pound"),
+                          },
+                        ]}
+                        defaultValue={state.metric.currency}
+                        register={register}
+                        required
+                      />
+                    )}
+                  {state.metric.percentage === "Currency" &&
+                    symbolType !== "Percentage" &&
+                    symbolType !== "SelectAnOption" && (
+                      <Dropdown
+                        id="currency"
+                        name="currency"
+                        label={t("Currency")}
+                        hint={t("AddMetricScreen.MetricCurrencyHint")}
+                        options={[
+                          { value: "", label: t("SelectAnOption") },
+                          {
+                            value: CurrencyDataType["Dollar $"],
+                            label: t("Dollar"),
+                          },
+                          {
+                            value: CurrencyDataType["Euro €"],
+                            label: t("Euro"),
+                          },
+                          {
+                            value: CurrencyDataType["Pound £"],
+                            label: t("Pound"),
+                          },
+                        ]}
+                        defaultValue={state.metric.currency}
+                        register={register}
+                        required
+                      />
+                    )}
+
+                  <TextField
+                    id="changeOverTime"
+                    name="changeOverTime"
+                    label={t("EditMetricScreen.ChangeOverTime")}
+                    hint={t("EditMetricScreen.ChangeOverTimeHint")}
+                    register={register}
+                    className="width-50"
+                    defaultValue={state.metric.changeOverTime}
+                    error={
+                      errors.changeOverTime &&
+                      errors.changeOverTime.type === "validate"
+                        ? t("EditMetricScreen.ChangeOverTimeError")
+                        : undefined
+                    }
+                    validate={(input: string) => {
+                      return !input || input[0] === "+" || input[0] === "-";
+                    }}
+                  />
+                  <DateRangePicker
+                    start={{
+                      id: "startDate",
+                      name: "startDate",
+                      label: t("EditMetricScreen.StartDateOptional"),
+                      hint: settings.dateTimeFormat.date,
+                      date: startDate,
+                      dateFormat: settings.dateTimeFormat.date
+                        .toLowerCase()
+                        .replace(/m/g, "M"),
+                      setDate: setStartDate,
+                    }}
+                    end={{
+                      id: "endDate",
+                      name: "endDate",
+                      label: t("EditMetricScreen.EndDateOptional"),
+                      hint: settings.dateTimeFormat.date,
+                      date: endDate,
+                      dateFormat: settings.dateTimeFormat.date
+                        .toLowerCase()
+                        .replace(/m/g, "M"),
+                      setDate: setEndDate,
+                    }}
+                  />
+                </fieldset>
+                <br />
                 <br />
                 <Button type="submit">{t("Save")}</Button>
                 <Button

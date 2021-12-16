@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "./Link";
+import "./Breadcrumbs.scss";
 
 interface Props {
   crumbs: Array<{

@@ -56,7 +56,6 @@ function PublishDashboard() {
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
-  const releaseNotes = watch("releaseNotes");
   const acknowledge = watch("acknowledge");
 
   const onPreview = () => {
@@ -104,9 +103,9 @@ function PublishDashboard() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("PublishWorkflow.ReturnToDraftSuccessAlert.part1")}${
-            dashboard.name
-          }${t("PublishWorkflow.ReturnToDraftSuccessAlert.part2")}`,
+          message: t("PublishWorkflow.ReturnToDraftSuccessAlert", {
+            dashboardName: dashboard.name,
+          }),
         },
         id: "top-alert",
       });
@@ -135,9 +134,9 @@ function PublishDashboard() {
         history.push(`/admin/dashboards?tab=published`, {
           alert: {
             type: "success",
-            message: `${t("PublishWorkflow.PublishedSuccessAlert.part1")}${
-              dashboard.name
-            }${t("PublishWorkflow.PublishedSuccessAlert.part2")}`,
+            message: t("PublishWorkflow.PublishedSuccessAlert", {
+              dashboardName: dashboard.name,
+            }),
             to: `/${dashboardId}`,
             linkLabel: t("ViewPublishedDashboard"),
           },
@@ -320,12 +319,7 @@ function PublishDashboard() {
               </div>
 
               <div className="padding-top-2 border-top border-base-lighter">
-                <Button
-                  variant="default"
-                  type="button"
-                  onClick={onContinue}
-                  disabled={!releaseNotes}
-                >
+                <Button variant="default" type="button" onClick={onContinue}>
                   {t("ContinueButton")}
                 </Button>
               </div>

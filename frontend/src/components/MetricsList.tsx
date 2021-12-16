@@ -112,8 +112,11 @@ function MetricsList(props: Props) {
   );
 
   return (
-    <div className="display-block">
-      <h4 className="margin-bottom-0">{t("Metrics")}</h4>
+    <div className="display-block" role="group" aria-label={t("Metrics")}>
+      <label className="margin-bottom-0 margin-top-2 usa-label text-bold">
+        {t("Metrics")}
+        <span>&#42;</span>
+      </label>
       <p className="margin-top-2px usa-hint">{t("MetricsGuidance")}</p>
       <div className="usa-checkbox margin-bottom-2">
         <input
@@ -129,7 +132,7 @@ function MetricsList(props: Props) {
         </label>
       </div>
       {props.metrics && props.metrics.length ? (
-        <div>
+        <div role="list">
           <DndProvider
             backend={window.innerWidth < 1024 ? TouchBackend : HTML5Backend}
             options={{ enableMouseEvents: true }}

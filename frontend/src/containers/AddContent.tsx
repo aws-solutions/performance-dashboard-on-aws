@@ -70,19 +70,18 @@ function AddContent() {
       <Breadcrumbs crumbs={crumbs} />
       <div className="grid-row">
         <PrimaryActionBar className="tablet:grid-col-6 grid-col-12">
-          <h1 className="margin-top-0">{t("AddContentScreen.Title")}</h1>
-
-          <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-            {t("AddContentScreen.Instructions")}
-          </div>
+          <h1 id="addContentFormHeader" className="margin-top-0">
+            {t("AddContentScreen.Title")}
+          </h1>
 
           <form
             className="usa-form usa-form--large"
+            aria-labelledby="addContentFormHeader"
             onSubmit={handleSubmit(onSubmit)}
           >
             <fieldset className="usa-fieldset">
-              <legend className="usa-sr-only">
-                {t("ContentItemTypesLabel")}
+              <legend className="margin-y-1 text-semibold display-inline-block font-sans-lg">
+                {t("AddContentScreen.Instructions")}
               </legend>
               <RadioButtonsTile
                 isHorizontally={false}

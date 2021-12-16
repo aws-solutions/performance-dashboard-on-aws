@@ -80,22 +80,17 @@ p {
 
 .usa-header--basic .usa-nav__primary-item > .usa-current::after,
 .usa-header--basic .usa-nav__link:hover::after {
-  @include u-bg("base", "!important");
-}
-
-.usa-header--basic .usa-nav__primary-item > .usa-current::after,
-.usa-header--basic .usa-nav__link:hover::after {
-  @include u-bg("base", "!important");
+  @include u-bg("base-dark", "!important");
 }
 
 @media all and (min-width: 64em) {
   .usa-nav__primary > .usa-nav__primary-item > a:hover {
-    color: color("base", "!important");
+    color: color("base-dark", "!important");
   }
 }
 
 .usa-nav__primary button:hover {
-  color: color("base", "!important");
+  color: color("base-dark", "!important");
 }
 
 @media all and (min-width: 64em) {
@@ -178,10 +173,6 @@ p {
   padding-left: 12px !important;
 }
 
-.type-dark {
-  @include u-bg("base-darkest", "!important");
-}
-
 @media (min-width: 64em) {
   .usa-nav-container {
     padding-left: 0 !important;
@@ -199,4 +190,8 @@ p {
 
 .button-cell-border {
   border-bottom: 0 !important;
+}
+
+.usa-table thead th[aria-sort] {
+  background-color: inherit !important;
 }

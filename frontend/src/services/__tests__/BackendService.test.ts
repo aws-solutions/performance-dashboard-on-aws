@@ -34,7 +34,7 @@ test("fetchPublicHomepageWithQuery makes a GET request to homepage API", async (
   await BackendService.fetchPublicHomepageWithQuery(query);
   expect(API.get).toHaveBeenCalledWith(
     "BackendApi",
-    `public/search/${query}`,
+    `public/search?q=${query}`,
     expect.anything()
   );
 });
@@ -364,7 +364,7 @@ test("fetchDashboardByFriendlyURL makes a GET request to public API", async () =
   expect(API.get).toHaveBeenCalledWith(
     "BackendApi",
     `public/dashboard/friendly-url/my-friendly-url`,
-    expect.anything()
+    {}
   );
 });
 
@@ -438,5 +438,16 @@ test("removeUsers makes a DELETE request to the users API", async () => {
         usernames: ["Bob", "Alice"],
       },
     })
+  );
+});
+
+test("copyDashboard makes a COPY request to dashboard API", async () => {
+  const dashboardId = "123";
+
+  await BackendService.copyDashboard(dashboardId);
+  expect(API.post).toHaveBeenCalledWith(
+    "BackendApi",
+    `dashboard/123/copy`,
+    expect.anything()
   );
 });

@@ -163,9 +163,9 @@ function EditMetrics() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("EditMetricsScreen.MetricsEditedSuccessfully.part1")}${
-            values.title
-          }${t("EditMetricsScreen.MetricsEditedSuccessfully.part2")}`,
+          message: t("EditMetricsScreen.MetricsEditedSuccessfully", {
+            title: values.title,
+          }),
         },
       });
     } catch (err) {
@@ -264,14 +264,18 @@ function EditMetrics() {
         <div className="grid-row width-desktop grid-gap">
           <div className="grid-col-6" hidden={fullPreview}>
             <PrimaryActionBar>
-              <h1 className="margin-top-0">
+              <h1 id="editMetricsFormHeader" className="margin-top-0">
                 {t("EditMetricsScreen.EditMetrics")}
               </h1>
               <form
+                aria-labelledby="editMetricsFormHeader"
                 className="usa-form usa-form--large"
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <fieldset className="usa-fieldset">
+                  <legend className="usa-hint grid-col-6">
+                    {t("EditMetricsScreen.Configure")}
+                  </legend>
                   {(errors.title || submittedMetricsNum === 0) && (
                     <Alert
                       type="error"

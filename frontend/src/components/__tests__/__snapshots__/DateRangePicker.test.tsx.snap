@@ -4,6 +4,7 @@ exports[`renders a date range input element 1`] = `
 <div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"
@@ -33,6 +34,7 @@ exports[`renders a date range input element 1`] = `
   </div>
   <div
     class="usa-form-group"
+    role="contentinfo"
   >
     <label
       class="usa-label text-bold"

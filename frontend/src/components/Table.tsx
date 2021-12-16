@@ -255,6 +255,13 @@ function Table(props: Props) {
                 <th
                   scope="col"
                   {...column.getHeaderProps()}
+                  aria-sort={
+                    column.isSorted
+                      ? column.isSortedDesc
+                        ? "desc"
+                        : "asc"
+                      : ""
+                  }
                   style={
                     props.selection !== "none"
                       ? {
@@ -296,9 +303,7 @@ function Table(props: Props) {
                     >
                       <FontAwesomeIcon
                         className={`hover:text-base ${
-                          column.isSorted
-                            ? "text-base-darkest"
-                            : "text-base-lighter"
+                          column.isSorted ? "text-base-darker" : "text-base"
                         }`}
                         icon={
                           column.isSorted && column.isSortedDesc
@@ -370,11 +375,13 @@ function Table(props: Props) {
                   } font-sans-sm`}
                 >
                   <div className={`${isMobile ? "text-center" : "grid-col-4"}`}>
-                    <span className="margin-left-1 margin-right-2px">{`${t(
-                      "Page"
-                    )} `}</span>
+                    <label
+                      htmlFor="Page"
+                      className="margin-left-1 margin-right-2px"
+                    >{`${t("Page")} `}</label>
                     <span className="margin-right-1">
                       <input
+                        id="Page"
                         type="text"
                         value={`${currentPage}`}
                         className="margin-right-2px"
@@ -422,10 +429,12 @@ function Table(props: Props) {
                             gotoPage(0);
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToFirstPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleDoubleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToFirstPage")}
                           />
                         </button>
                         <button
@@ -436,10 +445,12 @@ function Table(props: Props) {
                             previousPage();
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToPrevPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToPrevPage")}
                           />
                         </button>
                       </>
@@ -455,10 +466,12 @@ function Table(props: Props) {
                             gotoPage(0);
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToFirstPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleDoubleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToFirstPage")}
                           />
                         </button>
                         <button
@@ -469,10 +482,12 @@ function Table(props: Props) {
                             previousPage();
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToPrevPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToPrevPage")}
                           />
                         </button>
                       </>
@@ -485,10 +500,12 @@ function Table(props: Props) {
                         nextPage();
                       }}
                       disabled={!canNextPage}
+                      aria-label={t("GoToNextPage")}
                     >
                       <FontAwesomeIcon
                         icon={faAngleRight}
                         className="margin-top-2px"
+                        aria-label={t("GoToNextPage")}
                       />
                     </button>
                     <button
@@ -498,10 +515,12 @@ function Table(props: Props) {
                         gotoPage(pageCount - 1);
                       }}
                       disabled={!canNextPage}
+                      aria-label={t("GoToLastPage")}
                     >
                       <FontAwesomeIcon
                         icon={faAngleDoubleRight}
                         className="margin-top-2px"
+                        aria-label={t("GoToLastPage")}
                       />
                     </button>
                   </div>
@@ -518,6 +537,7 @@ function Table(props: Props) {
                         setPageSize(Number(e.target.value));
                       }}
                       className="margin-right-05"
+                      aria-label={t("SelectPageSize")}
                     >
                       {[5, 10, 20, 25, 50, 100].map((pageSize) => (
                         <option key={pageSize} value={pageSize}>
@@ -531,14 +551,18 @@ function Table(props: Props) {
                 <div
                   className={`${
                     isMobile ? "padding-left-05" : "grid-row"
-                  } text-base-darkest text-italic padding-y-05 padding-right-1`}
+                  } text-base-darker text-italic padding-y-05 padding-right-1`}
                 >
                   {isMobile && (
                     <div className="text-center">
-                      {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
-                        pageIndex * pageSize + pageSize,
-                        rows.length
-                      )} ${t("Of")} ${rows.length}`}
+                      {t("ShowingPages", {
+                        startItem: pageIndex * pageSize + 1,
+                        endItem: Math.min(
+                          pageIndex * pageSize + pageSize,
+                          rows.length
+                        ),
+                        totalItems: rows.length,
+                      })}
                     </div>
                   )}
                   {props.title && (
@@ -563,7 +587,7 @@ function Table(props: Props) {
                           className="margin-right-05"
                         >
                           <CSVLink
-                            className="text-base-darkest"
+                            className="text-base-darker"
                             data={props.rows}
                             filename={props.title}
                           >
@@ -579,10 +603,14 @@ function Table(props: Props) {
                         props.title ? "6" : "12"
                       } text-right`}
                     >
-                      {`${t("Showing")} ${pageIndex * pageSize + 1}-${Math.min(
-                        pageIndex * pageSize + pageSize,
-                        rows.length
-                      )} ${t("Of")} ${rows.length}`}
+                      {t("ShowingPages", {
+                        startItem: pageIndex * pageSize + 1,
+                        endItem: Math.min(
+                          pageIndex * pageSize + pageSize,
+                          rows.length
+                        ),
+                        totalItems: rows.length,
+                      })}
                     </div>
                   )}
                 </div>

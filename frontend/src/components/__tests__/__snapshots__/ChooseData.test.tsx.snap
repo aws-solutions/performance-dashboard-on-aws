@@ -18,7 +18,7 @@ exports[`renders the ChooseData component 1`] = `
        
       <a
         aria-label=""
-        class="link"
+        class="usa-link action-link"
         href="/admin/apihelp"
         target="_blank"
       >
@@ -47,11 +47,6 @@ exports[`renders the ChooseData component 1`] = `
     class="usa-fieldset"
     id="fieldset"
   >
-    <legend
-      class="usa-sr-only"
-    >
-      Content item types
-    </legend>
     <div
       class="grid-row"
     >
@@ -60,6 +55,7 @@ exports[`renders the ChooseData component 1`] = `
       >
         <div
           class="usa-radio"
+          role="contentinfo"
         >
           <div
             class="grid-col flex-5"
@@ -78,7 +74,7 @@ exports[`renders the ChooseData component 1`] = `
             >
               Static dataset
               <p
-                class="usa-prose usa-checkbox__label-description"
+                class="text-base usa-prose usa-checkbox__label-description"
               >
                 Upload a new dataset from file or elect an existing dataset.
               </p>
@@ -91,6 +87,7 @@ exports[`renders the ChooseData component 1`] = `
       >
         <div
           class="usa-radio"
+          role="contentinfo"
         >
           <div
             class="grid-col flex-5"
@@ -109,7 +106,7 @@ exports[`renders the ChooseData component 1`] = `
             >
               Dynamic dataset
               <p
-                class="usa-prose usa-checkbox__label-description"
+                class="text-base usa-prose usa-checkbox__label-description"
               >
                 Choose from a list of continuously updated datasets.
               </p>
@@ -144,7 +141,7 @@ exports[`renders the ChooseData component 1`] = `
                  
                 <a
                   aria-label=""
-                  class="link"
+                  class="usa-link action-link"
                   href="/admin/formatting"
                   target="_blank"
                 >
@@ -228,12 +225,6 @@ exports[`renders the ChooseData component 1`] = `
             class="usa-search usa-search--small"
             role="search"
           >
-            <label
-              class="usa-sr-only"
-              for="search"
-            >
-              Search
-            </label>
             <input
               class="usa-input"
               id="search"
@@ -264,11 +255,6 @@ exports[`renders the ChooseData component 1`] = `
                   fill="currentColor"
                 />
               </svg>
-              <span
-                class="usa-sr-only"
-              >
-                Search
-              </span>
             </button>
           </div>
         </div>
@@ -289,6 +275,7 @@ exports[`renders the ChooseData component 1`] = `
                 role="row"
               >
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -299,6 +286,7 @@ exports[`renders the ChooseData component 1`] = `
                   </span>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -315,7 +303,7 @@ exports[`renders the ChooseData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                       data-icon="chevron-up"
                       data-prefix="fas"
                       focusable="false"
@@ -331,6 +319,7 @@ exports[`renders the ChooseData component 1`] = `
                   </button>
                 </th>
                 <th
+                  aria-sort="desc"
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -347,7 +336,7 @@ exports[`renders the ChooseData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-down fa-w-14 hover:text-base text-base-darkest"
+                      class="svg-inline--fa fa-chevron-down fa-w-14 hover:text-base text-base-darker"
                       data-icon="chevron-down"
                       data-prefix="fas"
                       focusable="false"
@@ -363,6 +352,7 @@ exports[`renders the ChooseData component 1`] = `
                   </button>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -379,7 +369,7 @@ exports[`renders the ChooseData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                       data-icon="chevron-up"
                       data-prefix="fas"
                       focusable="false"
@@ -395,6 +385,7 @@ exports[`renders the ChooseData component 1`] = `
                   </button>
                 </th>
                 <th
+                  aria-sort=""
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -411,7 +402,7 @@ exports[`renders the ChooseData component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base-lighter"
+                      class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
                       data-icon="chevron-up"
                       data-prefix="fas"
                       focusable="false"
@@ -480,16 +471,18 @@ exports[`renders the ChooseData component 1`] = `
                     <div
                       class="grid-col-4"
                     >
-                      <span
+                      <label
                         class="margin-left-1 margin-right-2px"
+                        for="Page"
                       >
                         Page 
-                      </span>
+                      </label>
                       <span
                         class="margin-right-1"
                       >
                         <input
                           class="margin-right-2px"
+                          id="Page"
                           pattern="\\\\d*"
                           style="width: 33px;"
                           type="text"
@@ -508,12 +501,14 @@ exports[`renders the ChooseData component 1`] = `
                       class="grid-col-4 text-center"
                     >
                       <button
+                        aria-label="Go to the first page"
                         class="margin-right-1"
                         disabled=""
                         type="button"
                       >
                         <svg
                           aria-hidden="true"
+                          aria-label="Go to the first page"
                           class="svg-inline--fa fa-angle-double-left fa-w-14 margin-top-2px"
                           data-icon="angle-double-left"
                           data-prefix="fas"
@@ -529,12 +524,14 @@ exports[`renders the ChooseData component 1`] = `
                         </svg>
                       </button>
                       <button
+                        aria-label="Go to the previous page"
                         class="margin-right-2"
                         disabled=""
                         type="button"
                       >
                         <svg
                           aria-hidden="true"
+                          aria-label="Go to the previous page"
                           class="svg-inline--fa fa-angle-left fa-w-8 margin-top-2px"
                           data-icon="angle-left"
                           data-prefix="fas"
@@ -551,12 +548,14 @@ exports[`renders the ChooseData component 1`] = `
                       </button>
                       
                       <button
+                        aria-label="Go to the next page"
                         class="margin-right-1"
                         disabled=""
                         type="button"
                       >
                         <svg
                           aria-hidden="true"
+                          aria-label="Go to the next page"
                           class="svg-inline--fa fa-angle-right fa-w-8 margin-top-2px"
                           data-icon="angle-right"
                           data-prefix="fas"
@@ -572,11 +571,13 @@ exports[`renders the ChooseData component 1`] = `
                         </svg>
                       </button>
                       <button
+                        aria-label="Go to the last page"
                         disabled=""
                         type="button"
                       >
                         <svg
                           aria-hidden="true"
+                          aria-label="Go to the last page"
                           class="svg-inline--fa fa-angle-double-right fa-w-14 margin-top-2px"
                           data-icon="angle-double-right"
                           data-prefix="fas"
@@ -596,6 +597,7 @@ exports[`renders the ChooseData component 1`] = `
                       class="grid-col-4 text-right"
                     >
                       <select
+                        aria-label="Select the amount of results displayed on the page"
                         class="margin-right-05"
                       >
                         <option
@@ -635,7 +637,7 @@ exports[`renders the ChooseData component 1`] = `
                     class="border-top margin-0"
                   />
                   <div
-                    class="grid-row text-base-darkest text-italic padding-y-05 padding-right-1"
+                    class="grid-row text-base-darker text-italic padding-y-05 padding-right-1"
                   >
                     <div
                       class="grid-col-12 text-right"

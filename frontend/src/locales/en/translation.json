@@ -1,7 +1,67 @@
 {
+  "PageTitle": {
+    "Default": "Performance Dashboard on AWS",
+    "AdminHome": "Admmin Home",
+    "Settings": "Settings",
+    "TopicAreaSettings": "Topic Area Settings",
+    "BrandingAndStylingSettings": "Branding and Styling Settings",
+    "EditLogo": "Edit Logo",
+    "EditFavicon": "Edit Favicon",
+    "PublishingGuidanceSettings": "Publishing Guidance Settings",
+    "EditPublishingGuidance": "Edit Publishing Guidance",
+    "PublishedSiteSettings": "Published Site Settings",
+    "EditHomepageContent": "Edit Homepage Content",
+    "EditNavbar": "Edit Navigation Bar",
+    "CreateTopicArea": "Create {{topicArea}}",
+    "EditTopicArea": "Edit {{topicArea}}",
+    "DateFormatSettings": "Date Format Settings",
+    "EditDateFormat": "Edit Date Format",
+    "AdminSiteSettings": "Admin Site Settings",
+    "EditSupportContactEmail": "Edit Support Contact Email",
+    "EditTopicAreaLabels": "Edit Topic Area Labels",
+    "EditColors": "Edit Colors",
+    "AdminDashboards": "Admin Dashboards",
+    "CreateDashboard": "Create Dashboard",
+    "PreviewDashboard": "Preview Dashboard",
+    "EditDashboard": "Edit Dashboard",
+    "EditDashboardHeader": "Edit Dashboard Header",
+    "EditTableOfContents": "Edit Table of Contents",
+    "EditTable": "Edit Table",
+    "AddTable": "Add Table",
+    "EditChart": "Edit Chart",
+    "AddChart": "Add Chart",
+    "ChooseStaticDataset": "Choose Static Dataset",
+    "AddImage": "Add Image",
+    "EditImage": "Edit Image",
+    "EditText": "Edit Text",
+    "EditSection": "Edit Section",
+    "AddText": "Add Text",
+    "AddSection": "Add Section",
+    "EditMetrics": "Edit Metrics",
+    "AddMetrics": "Add Metrics",
+    "AddMetric": "Add Metric",
+    "EditMetric": "Edit Metric",
+    "AddContent": "Add Content",
+    "DashboardHistory": "Dashboard History",
+    "PublishDashboard": "Publish Dashboard",
+    "MarkdownGuide": "Markdown Guide",
+    "UserStatus": "User Status",
+    "FormattingGuide": "Formatting Guide",
+    "APIHelp": "API Help",
+    "ColorsHelp": "Colors Help",
+    "AdminUsers": "Admin Users",
+    "AddUser": "Add User",
+    "ChangeUserRole": "Change User Role",
+    "Search": "Search",
+    "AccessDenied": "Access Denied",
+    "ViewDashboard": "View Dashboard",
+    "PageNotFound": "Page Not Found",
+    "Home": "Home"
+  },
   "LastUpdatedLabel": "Last updated",
   "SearchButton": "Search",
   "ArchiveButton": "Archive",
+  "CopyButton": "Copy",
   "ClearSearchText": "Clear search terms",
   "AllDashboardsLink": "All Dashboards",
   "ArchivedTabDescription": "These are your organization's archived dashboards. Archived dashboards are not viewable on the published site. Click on any dashboard name to view the dashboard. You can also re-publish archived dashboards to the published site.",
@@ -78,10 +138,7 @@
   "PDoASite": "This site is where you manage the performance dashboard.",
   "WantToViewPublishedSite": "Do you want to see what your audience sees?",
   "ViewPublishedSite": "View the published site",
-  "NewDraftDashboardCreated": {
-    "part1": "A new draft version of ",
-    "part2": " dashboard has been created."
-  },
+  "NewDraftDashboardCreated": "A new draft version of {{dashboardName}} dashboard has been created.",
   "DashboardWasArchived": "was successfully archived.",
   "DashboardWasDeleted": "was successfully deleted.",
   "DashboardWasRepublished": "dashboard was successfully re-published.",
@@ -101,35 +158,18 @@
   "LearnHowToFormatCSV": "Learn how to format your data.",
   "CreatedBy": "Created by",
   "Dashboards": "Dashboards",
-  "CreateDraftDashboardModalTitle": {
-    "part1": "Update ",
-    "part2": " dashboard"
-  },
+  "CreateDraftDashboardModalTitle": "Update {{dashboardName}} dashboard",
   "CreateDraftDashboardModalMessage": "This will create a new draft of the dashboard that will allow you to edit the content, then publish the new version to the published site.",
   "CreateDraftDashboardModalButton": "Create draft",
-  "ArchiveDashboardModalTitle": {
-    "part1": "Archive ",
-    "part2": " dashboard"
-  },
-  "ArchiveDashboardModalMessage": {
-    "part1": "This will remove ",
-    "part2": " dashboard from the published site. You can re-publish archived dashboards at any time."
-  },
+  "ArchiveDashboardModalTitle": "Archive {{dashboardName}} dashboard",
+  "ArchiveDashboardModalMessage": "This will remove {{dashboardName}} dashboard from the published site. You can re-publish archived dashboards at any time.",
   "ArchiveDashboardModalButton": "Archive",
-  "RepublishDashboardModalTitle": {
-    "part1": "Re-publish ",
-    "part2": " dashboard"
-  },
+  "RepublishDashboardModalTitle": "Re-publish {{dashboardName}} dashboard",
   "RepublishDashboardModalMessage": "Are you sure you want to re-publish this dashboard?",
   "RepublishDashboardModalButton": "Re-publish",
-  "PreparePublishingModalTitle": {
-    "part1": "Prepare ",
-    "part2": " dashboard for publishing"
-  },
-  "PreparePublishingModalMessage": {
-    "part1": "This dashboard has no content items. ",
-    "part2": "Are you sure you want to prepare this dashboard for publishing?"
-  },
+  "PreparePublishingModalTitle": "Prepare {{dashboardName}} dashboard for publishing",
+  "PreparePublishingModalMessage_0": "This dashboard has no content items. Are you sure you want to prepare this dashboard for publishing?",
+  "PreparePublishingModalMessage": "Are you sure you want to prepare this dashboard for publishing?",
   "PreparePublishingModalButton": "Prepare for publishing",
   "OnlyOneDraftDashboardAtATime": "A draft has been created to update this dashboard. Only one draft at a time is allowed.",
   "EditOrPublishDraft": {
@@ -162,7 +202,7 @@
     "ChartTitle": "Chart title",
     "ChartTitleHint": "Give your chart a descriptive title.",
     "ChartTitleError": "Please specify a chart title",
-    "ChartType": "Chart type",
+    "ChartType": "Chart type (optional)",
     "ChartTypeHint": "Choose a chart type.",
     "ChartTypeError": "Please select a chart type",
     "DisplayHorizontalScroll": "Display with horizontal scroll",
@@ -185,10 +225,7 @@
   "AddTextScreen": {
     "AddText": "Add text",
     "AddTextError": "Resolve error(s) to add the text",
-    "AddTextSuccess": {
-      "part1": "'",
-      "part2": "' text has been successfully added."
-    },
+    "AddTextSuccess": "'{{title}}' text has been successfully added.",
     "CreatingText": "Creating text",
     "Configure": "Configure text content",
     "TextTitle": "Text title",
@@ -216,10 +253,7 @@
   "EditTextScreen": {
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
-    "EditTextSuccess": {
-      "part1": "'",
-      "part2": "' text has been successfully edited."
-    },
+    "EditTextSuccess": "'{{title}}' text has been successfully edited.",
     "EditingText": "Editing text",
     "TextTitle": "Text title",
     "TextTitleError": "Please specify a text title",
@@ -230,6 +264,7 @@
     "ViewMarkdownSyntax": "View Markdown Syntax"
   },
   "EditSectionScreen": {
+    "Configure": "Configure text content",
     "EditSection": "Edit section",
     "EditSectionError": "Resolve error(s) to edit the section",
     "EditSectionSuccess": "'{{title}}' section has been successfully edited.",
@@ -244,6 +279,7 @@
   },
   "AddMetricScreen": {
     "AddMetric": "Add metric",
+    "Configure": "Configure metric content",
     "MetricTitle": "Metric title",
     "MetricTitleHint": "For example, 'Transactions per year'.",
     "MetricTitleError": "Please specify a title",
@@ -260,6 +296,7 @@
     "MetricSuccessfullyAdded": "Metric successfully added."
   },
   "EditMetricScreen": {
+    "Configure": "Configure metric content",
     "EditMetric": "Edit metric",
     "MetricTitle": "Metric title",
     "MetricTitleHint": "For example, 'Transactions per year'.",
@@ -275,16 +312,14 @@
     "MetricSuccessfullyEdited": "Metric successfully edited."
   },
   "AddMetricsScreen": {
-    "MetricsAddedSuccessfully": {
-      "part1": "Metrics '",
-      "part2": "' have been successfully added."
-    },
+    "MetricsAddedSuccessfully": "Metrics '{{title}}' have been successfully added.",
     "Name": "Name",
     "LastUpdated": "Last updated",
     "Description": "Description",
     "Tags": "Tags",
     "AddMetrics": "Add metrics",
     "ChooseData": "Choose data",
+    "Configure": "Configure metrics content.",
     "Visualize": "Visualize",
     "UploadingFile": "Uploading file",
     "FileNameDoesNotExist": "Metadata does not contain file name",
@@ -309,11 +344,9 @@
     "ShowTitle": "Show title on dashboard"
   },
   "EditMetricsScreen": {
-    "MetricsEditedSuccessfully": {
-      "part1": "Metrics '",
-      "part2": "' have been successfully edited."
-    },
+    "MetricsEditedSuccessfully": "Metrics '{{title}}' have been successfully edited.",
     "EditMetrics": "Edit metrics",
+    "Configure": "Configure metrics content.",
     "UploadingFile": "Uploading file",
     "EditingMetrics": "Editing metrics",
     "EnterMetric": "Enter at least one metric to continue",
@@ -329,10 +362,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddChartSuccess": {
-      "part1": "'",
-      "part2": "' chart has been successfully added."
-    },
+    "AddChartSuccess": "'{{title}}' chart has been successfully added.",
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "EditChartScreen": {
@@ -341,10 +371,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditChartSuccess": {
-      "part1": "'",
-      "part2": "' chart has been successfully edited."
-    },
+    "EditChartSuccess": "'{{title}}' chart has been successfully edited.",
     "ResolveError": "Failed to upload file. Please make sure there are values for all column headers."
   },
   "AddTableScreen": {
@@ -352,10 +379,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "AddTableSuccess": {
-      "part1": "'",
-      "part2": "' table has been successfully added."
-    },
+    "AddTableSuccess": "'{{title}}' table has been successfully added.",
     "ChooseDataset": "Choose a dataset to continue"
   },
   "EditTableScreen": {
@@ -363,10 +387,7 @@
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Visualize": "Visualize",
-    "EditTableSuccess": {
-      "part1": "'",
-      "part2": "' table has been successfully edited."
-    },
+    "EditTableSuccess": "'{{title}}' table has been successfully edited.",
     "ChooseDataset": "Choose a dataset to continue"
   },
   "BrandingAndStyling": "Branding and styling",
@@ -381,11 +402,11 @@
   "BrandingAndStylingColorsDescription": "Customize these colors to make your dashboards appear similar in style to your organization's brand and color palette.",
   "BrandingAndStylingPrimaryColor": "Primary color",
   "BuildDashboardGuidance": "Build the dashboard by adding charts, tables, text, and more as content.",
-  "SortData": "Sort data",
+  "SortData": "Sort data (optional)",
   "SignificantDigitLabels": "Significant digit labels (123K, 1.2M)",
-  "ChartOptionsLabel": "Chart Options",
+  "ChartOptionsLabel": "Chart Options (optional)",
   "ChartOptionsDescription": "Format your chart",
-  "TableOptionsLabel": "Table Options",
+  "TableOptionsLabel": "Table Options (optional)",
   "TableOptionsDescription": "Format your table",
   "UserListingDescription": "These are all of the users who have access. You can add and remove users, change users' roles, or resend email invites.",
   "UserListingLink": "What do the statuses mean?",
@@ -393,11 +414,8 @@
   "UserListingDropdownResendInviteText": "Resend invite emails to unconfirmed users",
   "UserListingActionsResendInvites": "Resend invite email",
   "UserListingActionsRemoveUsers": "Remove users",
-  "UserListingActionsRemoveUsersMessage": {
-    "part0": "Are you sure you want to remove ",
-    "part1": "user",
-    "part2": "users"
-  },
+  "UserListingActionsRemoveUsersMessage": "Are you sure you want to remove 1 user?",
+  "UserListingActionsRemoveUsersMessage_plural": "Are you sure you want to remove {{count}} users?",
   "AddUsersInvites": "Add user(s) and send invite",
   "AddUsersAdmin": "In addition to Editor permissions, can manage users and website settings.",
   "AddUsersEditor": "Can create, edit, and publish dashboards.",
@@ -429,10 +447,8 @@
   },
   "UserListingAddUsers": "Add user(s)",
   "UserListingModalTitleResendInvites": "Resend invite email",
-  "UserListingModalTitleResendInvitesMessage": {
-    "part1": "Are you sure you want to resend the invite for this user?",
-    "part2": "Are you sure you want to resend the invites for these users?"
-  },
+  "UserListingModalTitleResendInvitesMessage": "Are you sure you want to resend the invite for this user?",
+  "UserListingModalTitleResendInvitesMessage_plural": "Are you sure you want to resend the invites for these {{count}} users?",
   "GlobalCancel": "Cancel",
   "GlobalClose": "Close",
   "GlobalDelete": "Delete",
@@ -457,7 +473,7 @@
   "DescriptionOptional": "Description (optional)",
   "ErrorNameSpecify": "Please specify a name",
   "MetricsAdd": "+ Add metric",
-  "MetricsOptionsLabel": "Metrics Options",
+  "MetricsOptionsLabel": "Metrics Options (optional)",
   "MetricsOptionsDescription": "Format your metrics",
   "MetricsGuidance": "Add metrics here and reorder them. Multiple metrics will automatically scale to fit and wrap according to the order.",
   "MetricsOnePerRow": "One metric per row",
@@ -475,6 +491,7 @@
   "PublishingGuidanceEditSuccess": "Publishing guidance successfully edited.",
   "PublishingGuidanceDescription": "Publishing guidance is text that users must acknowledge before they publish a dashboard. For example, use this text to remind them to check for errors or mistakes, sensitive or confidential data, or guidance specific to your organization.",
   "AcknowledgeStatement": "Acknowledge statement",
+  "EditAcknowledgeStatementError": "Please specify the acknowledge statement",
   "PublishWorkflow": {
     "OverwriteWarning": "I also understand that this will overwrite the existing published version of the dashboard.",
     "InternalVersionNotes": "Internal version notes",
@@ -487,14 +504,8 @@
     "FailToReturnToDraftError": "Failed to return dashboard to draft. Please try again.",
     "FailToSaveReleaseNotesError": "Failed to save release notes, please try again.",
     "MissingVersionNotesError": "Please enter version notes",
-    "ReturnToDraftSuccessAlert": {
-      "part1": "",
-      "part2": " dashboard successfully returned to draft."
-    },
-    "PublishedSuccessAlert": {
-      "part1": "",
-      "part2": " dashboard was successfully published."
-    }
+    "ReturnToDraftSuccessAlert": "'{{dashboardName}}' dashboard successfully returned to draft.",
+    "PublishedSuccessAlert": "'{{dashboardName}}' dashboard was successfully published."
   },
   "SettingsDateTimeFormat": "Date and time format",
   "SettingsDateTimeFormatEdit": "Edit date and time format",
@@ -513,7 +524,7 @@
   "SettingsColorsPrimaryColorLink": "Learn more about how color relates to accessibility.",
   "SettingsColorsPrimaryColorInvalid": "Color is not a valid HEX color value",
   "SettingsColorsPrimaryColorEmpty": "Please specify a color",
-  "SettingsColorsSecondColor": "Data visualization second color",
+  "SettingsColorsSecondColor": "Data visualization second color (optional)",
   "SettingsColorsSecondColorDescription": "Choose a color that will follow your primary color in categorical data visualizations. These color were chosen to meet accessibility standards.",
   "SettingsLogoEditSuccess": "Logo successfully modified.",
   "SettingsLogoEditFailed": "Failed to update logo.",
@@ -542,6 +553,7 @@
   "SettingsHomepageHeadline": "Headline",
   "SettingsHomepageHeadlineHint": "Give your homepage a descriptive headline.",
   "SettingsHomepageHeadlineErrors": "Please specify a name",
+  "SettingsHomepageDescriptionErrors": "Please specify a description",
   "SettingsPublishedSite": "Published site",
   "SettingsNavBarEdit": "Edit navigation bar",
   "SettingsNavBarEditSuccess": "Navigation bar successfully edited.",
@@ -640,7 +652,7 @@
     "ManageUsers": "Manage users",
     "Settings": "Settings",
     "Logout": "Logout",
-    "PrimaryNavigation": ""
+    "PrimaryNavigation": "Primary navigation"
   },
   "PageNotFound": "404 / Page not found",
   "PageNotFoundDescription": "You may want to double-check your link and try again, or return to the",
@@ -707,7 +719,13 @@
     "Drafts": "Drafts",
     "PublishQueue": "Publish queue",
     "Published": "Published",
-    "Archived": "Archived"
+    "Archived": "Archived",
+    "Copy": "Copy",
+    "ThisWillCopy": "This will copy",
+    "TheseDashboards": "these dashboards",
+    "ThisDashboard": "this dashboard",
+    "CopyModalMessage": "Are you sure you want to continue?",
+    "SuccessfullyCopied": "successfully copied."
   },
   "ShowDataTableButton": "Show data table",
   "HideDataTableButton": "Hide data table",
@@ -779,7 +797,7 @@
   "Pie": "Pie",
   "Donut": "Donut",
   "ToggleSortBy": "Toggle SortBy",
-  "Showing": "Showing",
+  "ShowingPages": "Showing {{startItem}}-{{endItem}} of {{totalItems}}",
   "Page": "Page",
   "Go": "Go",
   "Show": "Show",
@@ -830,6 +848,7 @@
   "HighToLow": "high to low",
   "AZ": "A-Z",
   "ZA": "Z-A",
+  "DownloadFileSuccess": "'{{fileName}}' has been downloaded.",
   "DownloadFileError": "The query using the provided S3 key, returned no results.",
   "UploadDatasetError": "Raw file is not an accepted format.",
   "PartWholeChart": "Part-to-whole Chart",
@@ -847,10 +866,7 @@
   "LastSaved": "Last saved",
   "AddImageScreen": {
     "ImageFileNotSpecified": "Image file not specified",
-    "ImageAddedSuccessfully": {
-      "part1": "Image '",
-      "part2": "' has been successfully added."
-    },
+    "ImageAddedSuccessfully": "Image '{{title}}' has been successfully added.",
     "AddImage": "Add Image",
     "ConfigureImage": "Configure image",
     "ResolveError": "Resolve error(s) to add the image",
@@ -872,10 +888,7 @@
     "Cancel": "Cancel"
   },
   "EditImageScreen": {
-    "ImageEditedSuccessfully": {
-      "part1": "Image '",
-      "part2": "' has been successfully edited."
-    },
+    "ImageEditedSuccessfully": "Image '{{title}}' has been successfully edited.",
     "EditImage": "Edit Image",
     "ResolveError": "Resolve error(s) to edit the image",
     "Title": "Image title",
@@ -914,12 +927,12 @@
   "MetricsCenterAlign": "Display with center alignment",
   "DisplayTableOfContents": "Display table of contents",
   "Current": "Current",
-  "SectionOptionsLabel": "Section Options",
+  "SectionOptionsLabel": "Section Options (optional)",
   "SectionOptionsDescription": "Format your section",
   "ShowWithTabs": "Display section's content items with tabs",
   "Horizontally": "Horizontally",
   "Vertically": "Vertically",
-  "TableOfContents": "Table of Contents",
+  "TableOfContents": "Table of Contents (optional)",
   "TableOfContentsDescription": "Adds a table of contents to display a dashboard overview",
   "EditTableOfContents": "Edit Table of Contents",
   "TableOfContentsSuccessfullyEdited": "Table of Contents successfully edited.",
@@ -932,5 +945,20 @@
   "Tab": "Tab",
   "Active": "Active",
   "SettingsTopicAreaNameCreateSuccess": "'{{name}}' {{topicAreaName}} was successfully created.",
-  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} was successfully deleted."
+  "SettingsTopicAreaNameSuccessfullyDeleted": "'{{name}}' {{topicAreaName}} was successfully deleted.",
+  "GoToFirstPage": "Go to the first page",
+  "GoToLastPage": "Go to the last page",
+  "GoToNextPage": "Go to the next page",
+  "GoToPrevPage": "Go to the previous page",
+  "SelectPageSize": "Select the amount of results displayed on the page",
+  "SortDashboards": "Sort by dashboard name",
+  "SortCreatedBy": "Sort by created by name",
+  "SortTopicAreaName": "Sort by {{topicAreaName}} name",
+  "CloseMenu": "Close Menu",
+  "ARIA": {
+    "Header": "Header",
+    "Main": "Main",
+    "Logo": "Logo",
+    "Footer": "Footer"
+  }
 }

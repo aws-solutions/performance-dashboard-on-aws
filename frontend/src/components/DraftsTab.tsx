@@ -14,6 +14,7 @@ const { MenuItem, MenuLink } = DropdownMenu;
 interface Props {
   dashboards: Array<Dashboard>;
   onDelete: Function;
+  onCopy: Function;
 }
 
 function DraftsTab(props: Props) {
@@ -76,6 +77,9 @@ function DraftsTab(props: Props) {
                 <MenuItem onSelect={() => props.onDelete(selected)}>
                   {t("Delete")}
                 </MenuItem>
+                <MenuItem onSelect={() => props.onCopy(selected)}>
+                  {t("CopyButton")}
+                </MenuItem>
               </DropdownMenu>
             </div>
             <div className="grid-col-6 padding-left-05">
@@ -117,6 +121,9 @@ function DraftsTab(props: Props) {
                 <MenuItem onSelect={() => props.onDelete(selected)}>
                   {t("Delete")}
                 </MenuItem>
+                <MenuItem onSelect={() => props.onCopy(selected)}>
+                  {t("CopyButton")}
+                </MenuItem>
               </DropdownMenu>
             </span>
             <span>
@@ -142,7 +149,7 @@ function DraftsTab(props: Props) {
                 const dashboard = props.row.original as Dashboard;
                 return (
                   <Link to={`/admin/dashboard/edit/${dashboard.id}`}>
-                    <span className="text-bold text-base-darkest">
+                    <span className="text-bold text-base-darker">
                       {dashboard.name}
                     </span>
                   </Link>

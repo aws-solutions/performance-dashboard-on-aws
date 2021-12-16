@@ -195,6 +195,7 @@ const LineChartWidget = (props: Props) => {
             <Legend
               verticalAlign="top"
               onClick={toggleLines}
+              iconType="plainline"
               onMouseLeave={() => setLinesHover(null)}
               onMouseEnter={(e: any) => setLinesHover(e.dataKey)}
             />
@@ -206,7 +207,9 @@ const LineChartWidget = (props: Props) => {
                     type="monotone"
                     stroke={colors[index]}
                     key={index}
-                    strokeWidth={3}
+                    strokeWidth={2}
+                    dot={{ strokeDasharray: "1 0" }}
+                    strokeDasharray={`${index * 5} ${index * 5}`}
                     strokeOpacity={getOpacity(line)}
                     hide={hiddenLines.includes(line)}
                     isAnimationActive={false}

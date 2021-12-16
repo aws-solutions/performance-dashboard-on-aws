@@ -57,9 +57,7 @@ function AddText() {
       history.push(`/admin/dashboard/edit/${dashboardId}`, {
         alert: {
           type: "success",
-          message: `${t("AddTextScreen.AddTextSuccess.part1")}${
-            values.title
-          }${t("AddTextScreen.AddTextSuccess.part2")}`,
+          message: t("AddTextScreen.AddTextSuccess", { title: values.title }),
         },
       });
     } catch (err) {
@@ -117,17 +115,21 @@ function AddText() {
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">{t("AddTextScreen.AddText")}</h1>
+                <h1 id="addTextFormHeader" className="margin-top-0">
+                  {t("AddTextScreen.AddText")}
+                </h1>
 
-                <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-                  {t("AddTextScreen.Configure")}
-                </div>
                 <form
                   className="usa-form usa-form--large"
+                  aria-labelledby="addTextFormHeader"
                   onChange={onFormChange}
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <fieldset className="usa-fieldset">
+                    <legend className="margin-y-1 text-semibold display-inline-block font-sans-lg">
+                      {t("AddTextScreen.Configure")}
+                    </legend>
+
                     {errors.title || errors.text ? (
                       <Alert
                         type="error"

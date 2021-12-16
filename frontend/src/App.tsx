@@ -66,245 +66,313 @@ import EditFavicon from "./containers/EditFavicon";
 import UserStatus from "./containers/UserStatus";
 import ChooseStaticDataset from "./containers/ChooseStaticDataset";
 import AccessDenied from "./containers/AccessDenied";
+import Page from "./components/Page";
+import { useTranslation } from "react-i18next";
+import { settings } from "cluster";
+import { useSettings } from "./hooks";
 
 interface AppRoute {
   path: string;
   component: React.FunctionComponent<any>;
+  title: string;
   public?: boolean;
 }
 
-const routes: Array<AppRoute> = [
-  {
-    path: "/admin",
-    component: AdminHome,
-  },
-  {
-    path: "/admin/settings",
-    component: TopicareaSettings,
-  },
-  {
-    path: "/admin/settings/topicarea",
-    component: TopicareaSettings,
-  },
-  {
-    path: "/admin/settings/brandingandstyling",
-    component: BrandingAndStylingSettings,
-  },
-  {
-    path: "/admin/settings/brandingandstyling/editlogo",
-    component: EditLogo,
-  },
-  {
-    path: "/admin/settings/brandingandstyling/editfavicon",
-    component: EditFavicon,
-  },
-  {
-    path: "/admin/settings/publishingguidance",
-    component: PublishingGuidanceSettings,
-  },
-  {
-    path: "/admin/settings/publishedsite",
-    component: PublishedSiteSettings,
-  },
-  {
-    path: "/admin/settings/publishingguidance/edit",
-    component: EditPublishingGuidance,
-  },
-  {
-    path: "/admin/settings/publishedsite/contentedit",
-    component: EditHomepageContent,
-  },
-  {
-    path: "/admin/settings/publishedsite/navbaredit",
-    component: EditNavbar,
-  },
-  {
-    path: "/admin/settings/topicarea/create",
-    component: CreateTopicArea,
-  },
-  {
-    path: "/admin/settings/dateformat",
-    component: DateFormatSettings,
-  },
-  {
-    path: "/admin/settings/dateformat/edit",
-    component: EditDateFormat,
-  },
-  {
-    path: "/admin/settings/adminsite",
-    component: AdminSiteSettings,
-  },
-  {
-    path: "/admin/settings/supportcontact/edit",
-    component: EditSupportContactEmail,
-  },
-  {
-    path: "/admin/settings/topicarea/:topicAreaId/edit",
-    component: EditTopicArea,
-  },
-  {
-    path: "/admin/settings/topicarea/editlabel",
-    component: EditTopicAreaLabel,
-  },
-  {
-    path: "/admin/settings/brandingandstyling/editcolors",
-    component: EditColors,
-  },
-  {
-    path: "/admin/dashboards",
-    component: DashboardListing,
-  },
-  {
-    path: "/admin/dashboard/create",
-    component: CreateDashboard,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId",
-    component: ViewDashboardAdmin,
-  },
-  {
-    path: "/admin/dashboard/edit/:dashboardId",
-    component: EditDashboard,
-  },
-  {
-    path: "/admin/dashboard/edit/:dashboardId/header",
-    component: EditDetails,
-  },
-  {
-    path: "/admin/dashboard/edit/:dashboardId/tableofcontents",
-    component: EditTableOfContents,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/edit-table/:widgetId",
-    component: EditTable,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/add-table",
-    component: AddTable,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/edit-chart/:widgetId",
-    component: EditChart,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/add-chart",
-    component: AddChart,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/choose-static-dataset",
-    component: ChooseStaticDataset,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/add-image",
-    component: AddImage,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/edit-image/:widgetId",
-    component: EditImage,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/edit-text/:widgetId",
-    component: EditText,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/edit-section/:widgetId",
-    component: EditSection,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/add-text",
-    component: AddText,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/add-section",
-    component: AddSection,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/edit-metrics/:widgetId",
-    component: EditMetrics,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/add-metrics",
-    component: AddMetrics,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/add-metric",
-    component: AddMetric,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/edit-metric",
-    component: EditMetric,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/add-content",
-    component: AddContent,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/history",
-    component: DashboardHistory,
-  },
-  {
-    path: "/admin/dashboard/:dashboardId/publish",
-    component: PublishDashboard,
-  },
-  {
-    path: "/admin/markdown",
-    component: MarkdownSyntax,
-  },
-  {
-    path: "/admin/userstatus",
-    component: UserStatus,
-  },
-  {
-    path: "/admin/formatting",
-    component: FormattingCSV,
-  },
-  {
-    path: "/admin/apihelp",
-    component: APIHelpPage,
-  },
-  {
-    path: "/admin/colorshelp",
-    component: ColorsHelpPage,
-  },
-  {
-    path: "/admin/users",
-    component: UserListing,
-  },
-  {
-    path: "/admin/users/add",
-    component: AddUsers,
-  },
-  {
-    path: "/admin/users/changerole",
-    component: ChangeRole,
-  },
-  {
-    path: "/403/access-denied",
-    component: AccessDenied,
-  },
-  {
-    path: "/:friendlyURL",
-    component: ViewDashboard,
-    public: true,
-  },
-  {
-    path: "/404/page-not-found",
-    component: FourZeroFour,
-    public: true,
-  },
-  {
-    path: "/",
-    component: Home,
-    public: true,
-  },
-  {
-    path: "/search/:query",
-    component: HomeWithSearch,
-    public: true,
-  },
-];
-
 function App() {
+  const { t } = useTranslation();
+  const { settings } = useSettings();
+
+  const routes: Array<AppRoute> = [
+    {
+      path: "/admin",
+      title: t("PageTitle.AdminHome"),
+      component: AdminHome,
+    },
+    {
+      path: "/admin/settings",
+      title: t("PageTitle.Settings"),
+      component: TopicareaSettings,
+    },
+    {
+      path: "/admin/settings/topicarea",
+      title: t("PageTitle.TopicAreaSettings"),
+      component: TopicareaSettings,
+    },
+    {
+      path: "/admin/settings/brandingandstyling",
+      title: t("PageTitle.BrandingAndStylingSettings"),
+      component: BrandingAndStylingSettings,
+    },
+    {
+      path: "/admin/settings/brandingandstyling/editlogo",
+      title: t("PageTitle.EditLogo"),
+      component: EditLogo,
+    },
+    {
+      path: "/admin/settings/brandingandstyling/editfavicon",
+      title: t("PageTitle.EditFavicon"),
+      component: EditFavicon,
+    },
+    {
+      path: "/admin/settings/publishingguidance",
+      title: t("PageTitle.PublishingGuidanceSettings"),
+      component: PublishingGuidanceSettings,
+    },
+    {
+      path: "/admin/settings/publishingguidance/edit",
+      title: t("PageTitle.EditPublishingGuidance"),
+      component: EditPublishingGuidance,
+    },
+    {
+      path: "/admin/settings/publishedsite",
+      title: t("PageTitle.PublishedSiteSettings"),
+      component: PublishedSiteSettings,
+    },
+    {
+      path: "/admin/settings/publishedsite/contentedit",
+      title: t("PageTitle.EditHomepageContent"),
+      component: EditHomepageContent,
+    },
+    {
+      path: "/admin/settings/publishedsite/navbaredit",
+      title: t("PageTitle.EditNavbar"),
+      component: EditNavbar,
+    },
+    {
+      path: "/admin/settings/topicarea/create",
+      title: t("PageTitle.CreateTopicArea", {
+        topicArea: settings.topicAreaLabels.singular,
+      }),
+      component: CreateTopicArea,
+    },
+    {
+      path: "/admin/settings/dateformat",
+      title: t("PageTitle.DateFormatSettings"),
+      component: DateFormatSettings,
+    },
+    {
+      path: "/admin/settings/dateformat/edit",
+      title: t("PageTitle.EditDateFormat"),
+      component: EditDateFormat,
+    },
+    {
+      path: "/admin/settings/adminsite",
+      title: t("PageTitle.AdminSiteSettings"),
+      component: AdminSiteSettings,
+    },
+    {
+      path: "/admin/settings/supportcontact/edit",
+      title: t("PageTitle.EditSupportContactEmail"),
+      component: EditSupportContactEmail,
+    },
+    {
+      path: "/admin/settings/topicarea/:topicAreaId/edit",
+      title: t("PageTitle.EditTopicArea", {
+        topicArea: settings.topicAreaLabels.singular,
+      }),
+      component: EditTopicArea,
+    },
+    {
+      path: "/admin/settings/topicarea/editlabel",
+      title: t("PageTitle.EditTopicAreaLabels"),
+      component: EditTopicAreaLabel,
+    },
+    {
+      path: "/admin/settings/brandingandstyling/editcolors",
+      title: t("PageTitle.EditColors"),
+      component: EditColors,
+    },
+    {
+      path: "/admin/dashboards",
+      title: t("PageTitle.AdminDashboards"),
+      component: DashboardListing,
+    },
+    {
+      path: "/admin/dashboard/create",
+      title: t("PageTitle.CreateDashboard"),
+      component: CreateDashboard,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId",
+      title: t("PageTitle.PreviewDashboard"),
+      component: ViewDashboardAdmin,
+    },
+    {
+      path: "/admin/dashboard/edit/:dashboardId",
+      title: t("PageTitle.EditDashboard"),
+      component: EditDashboard,
+    },
+    {
+      path: "/admin/dashboard/edit/:dashboardId/header",
+      title: t("PageTitle.EditDashboardHeader"),
+      component: EditDetails,
+    },
+    {
+      path: "/admin/dashboard/edit/:dashboardId/tableofcontents",
+      title: t("PageTitle.EditTableOfContents"),
+      component: EditTableOfContents,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/edit-table/:widgetId",
+      title: t("PageTitle.EditTable"),
+      component: EditTable,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/add-table",
+      title: t("PageTitle.AddTable"),
+      component: AddTable,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/edit-chart/:widgetId",
+      title: t("PageTitle.EditChart"),
+      component: EditChart,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/add-chart",
+      title: t("PageTitle.AddChart"),
+      component: AddChart,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/choose-static-dataset",
+      title: t("PageTitle.ChooseStaticDataset"),
+      component: ChooseStaticDataset,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/add-image",
+      title: t("PageTitle.AddImage"),
+      component: AddImage,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/edit-image/:widgetId",
+      title: t("PageTitle.EditImage"),
+      component: EditImage,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/edit-text/:widgetId",
+      title: t("PageTitle.EditText"),
+      component: EditText,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/edit-section/:widgetId",
+      title: t("PageTitle.EditSection"),
+      component: EditSection,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/add-text",
+      title: t("PageTitle.AddText"),
+      component: AddText,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/add-section",
+      title: t("PageTitle.AddSection"),
+      component: AddSection,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/edit-metrics/:widgetId",
+      title: t("PageTitle.EditMetrics"),
+      component: EditMetrics,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/add-metrics",
+      title: t("PageTitle.AddMetrics"),
+      component: AddMetrics,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/add-metric",
+      title: t("PageTitle.AddMetric"),
+      component: AddMetric,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/edit-metric",
+      title: t("PageTitle.EditMetric"),
+      component: EditMetric,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/add-content",
+      title: t("PageTitle.AddContent"),
+      component: AddContent,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/history",
+      title: t("PageTitle.DashboardHistory"),
+      component: DashboardHistory,
+    },
+    {
+      path: "/admin/dashboard/:dashboardId/publish",
+      title: t("PageTitle.PublishDashboard"),
+      component: PublishDashboard,
+    },
+    {
+      path: "/admin/markdown",
+      title: t("PageTitle.MarkdownGuide"),
+      component: MarkdownSyntax,
+    },
+    {
+      path: "/admin/userstatus",
+      title: t("PageTitle.UserStatus"),
+      component: UserStatus,
+    },
+    {
+      path: "/admin/formatting",
+      title: t("PageTitle.FormattingGuide"),
+      component: FormattingCSV,
+    },
+    {
+      path: "/admin/apihelp",
+      title: t("PageTitle.APIHelp"),
+      component: APIHelpPage,
+    },
+    {
+      path: "/admin/colorshelp",
+      title: t("PageTitle.ColorsHelp"),
+      component: ColorsHelpPage,
+    },
+    {
+      path: "/admin/users",
+      title: t("PageTitle.AdminUsers"),
+      component: UserListing,
+    },
+    {
+      path: "/admin/users/add",
+      title: t("PageTitle.AddUser"),
+      component: AddUsers,
+    },
+    {
+      path: "/admin/users/changerole",
+      title: t("PageTitle.ChangeUserRole"),
+      component: ChangeRole,
+    },
+    {
+      path: "/public/search",
+      title: t("PageTitle.Search"),
+      component: HomeWithSearch,
+      public: true,
+    },
+    {
+      path: "/403/access-denied",
+      title: t("PageTitle.AccessDenied"),
+      component: AccessDenied,
+    },
+    {
+      path: "/:friendlyURL",
+      title: t("PageTitle.ViewDashboard"),
+      component: ViewDashboard,
+      public: true,
+    },
+    {
+      path: "/404/page-not-found",
+      title: t("PageTitle.PageNotFound"),
+      component: FourZeroFour,
+      public: true,
+    },
+    {
+      path: "/",
+      title: t("PageTitle.Home"),
+      component: Home,
+      public: true,
+    },
+  ];
+
   return (
     <SettingsProvider>
       <Router>
@@ -314,7 +382,8 @@ function App() {
               ? withPublicLayout(route.component)
               : withSAMLAuthenticator(withAdminLayout(route.component));
             return (
-              <Route
+              <Page
+                title={route.title}
                 exact
                 key={route.path}
                 component={component}

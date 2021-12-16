@@ -47,5 +47,5 @@ test("renders a file upload input", async () => {
   const radioButton = await screen.getByTestId("staticDatasetRadioButton");
   fireEvent.click(radioButton);
 
-  expect(await screen.findByLabelText("Static datasets")).toBeInTheDocument();
+  expect(await screen.findByLabelText("Static datasets*")).toBeInTheDocument();
 });

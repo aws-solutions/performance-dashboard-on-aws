@@ -581,11 +581,7 @@ function Table(props: Props) {
                         />
                       </div>
                       <div style={{ display: "inline-flex" }}>
-                        <Button
-                          type="button"
-                          variant="unstyled"
-                          className="margin-right-05"
-                        >
+                        <div className="margin-right-05">
                           <CSVLink
                             className="text-base-darker"
                             data={props.rows}
@@ -593,7 +589,7 @@ function Table(props: Props) {
                           >
                             {t("DownloadCSV")}
                           </CSVLink>
-                        </Button>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -616,7 +612,54 @@ function Table(props: Props) {
                 </div>
               </td>
             </tr>
-          ) : null}
+          ) : (
+            <>
+              {props.title && (
+                <tr role="row">
+                  <td
+                    role="cell"
+                    colSpan={
+                      props.columns.length -
+                      (props.hiddenColumns ? props.hiddenColumns.size : 0) +
+                      (props.title ? 0 : 1)
+                    }
+                    className={`button-cell-padding${
+                      props.keepBorderBottom ? "" : " button-cell-border"
+                    }`}
+                  >
+                    <div className="grid-row text-base-darker text-italic padding-y-05 padding-right-1">
+                      <div
+                        className={`${
+                          isMobile
+                            ? "text-center margin-top-05"
+                            : "grid-col-6 text-left"
+                        }`}
+                      >
+                        <div style={{ display: "inline-flex" }}>
+                          <FontAwesomeIcon
+                            icon={faDownload}
+                            className="margin-right-1"
+                            size="xs"
+                          />
+                        </div>
+                        <div style={{ display: "inline-flex" }}>
+                          <div className="margin-right-05">
+                            <CSVLink
+                              className="text-base-darker"
+                              data={props.rows}
+                              filename={props.title}
+                            >
+                              {t("DownloadCSV")}
+                            </CSVLink>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </>
+          )}
         </tbody>
       </table>
     </div>

@@ -657,9 +657,8 @@ exports[`renders the VisualizeTable component 1`] = `
                         <div
                           style="display: inline-flex;"
                         >
-                          <button
-                            class="usa-button usa-button--unstyled margin-right-05"
-                            type="button"
+                          <div
+                            class="margin-right-05"
                           >
                             <a
                               class="text-base-darker"
@@ -672,7 +671,7 @@ exports[`renders the VisualizeTable component 1`] = `
                             >
                               Download table
                             </a>
-                          </button>
+                          </div>
                         </div>
                       </div>
                       <div

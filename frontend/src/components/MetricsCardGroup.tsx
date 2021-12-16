@@ -1,4 +1,4 @@
-import React, from "react";
+import React from "react";
 import { Metric, NumberDataType } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";

@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../components/Button";
 import CardGroup from "../components/CardGroup";
+import Link from "../components/Link";
 
 const { Card, CardFooter, CardBody } = CardGroup;
 
@@ -147,19 +148,9 @@ function AdminHome() {
           <p className="font-sans-md">
             {t("PDoASite")} <br /> {t("WantToViewPublishedSite")}
           </p>
-          <a
-            href="/"
-            target="_blank"
-            title="(opens in a new tab)"
-            className="usa-link"
-          >
+          <Link target="_blank" to="/" external>
             {t("ViewPublishedSite")}
-            <FontAwesomeIcon
-              icon={faExternalLinkAlt}
-              className="margin-left-05"
-              size="xs"
-            />
-          </a>
+          </Link>
         </div>
       </div>
     </div>

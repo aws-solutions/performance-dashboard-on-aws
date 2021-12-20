@@ -151,7 +151,7 @@ function AdminHome() {
             href="/"
             target="_blank"
             title="(opens in a new tab)"
-            className="link"
+            className="usa-link"
           >
             {t("ViewPublishedSite")}
             <FontAwesomeIcon

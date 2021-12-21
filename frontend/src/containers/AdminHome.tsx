@@ -148,7 +148,12 @@ function AdminHome() {
           <p className="font-sans-md">
             {t("PDoASite")} <br /> {t("WantToViewPublishedSite")}
           </p>
-          <Link target="_blank" to="/" external>
+          <Link
+            target="_blank"
+            to="/"
+            external
+            ariaLabel={`${t("ViewPublishedSite")} ${t("ARIA.OpenInNewTab")}`}
+          >
             {t("ViewPublishedSite")}
           </Link>
         </div>

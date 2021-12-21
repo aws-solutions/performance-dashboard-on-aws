@@ -57,11 +57,10 @@ test("renders a view dashboard button", async () => {
 
 test("renders a view public site link", async () => {
   const viewLink = screen.getByRole("link", {
-    name: "(opens in a new tab)",
+    name: "View the published site (opens in a new tab)",
   });
 
   expect(viewLink).toBeInTheDocument();
   expect(viewLink).toHaveAttribute("target", "_blank");
   expect(viewLink).toHaveAttribute("href", "/");
-  expect(viewLink).toHaveAttribute("title", "(opens in a new tab)");
 });

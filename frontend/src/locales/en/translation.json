@@ -959,6 +959,7 @@
     "Header": "Header",
     "Main": "Main",
     "Logo": "Logo",
-    "Footer": "Footer"
+    "Footer": "Footer",
+    "OpenInNewTab": "(opens in a new tab)"
   }
 }

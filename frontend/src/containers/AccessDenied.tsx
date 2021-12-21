@@ -5,6 +5,7 @@ import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import Button from "../components/Button";
 import CardGroup from "../components/CardGroup";
 import { usePublicSettings } from "../hooks";
+import Link from "../components/Link";
 
 const { Card, CardFooter, CardBody } = CardGroup;
 
@@ -56,10 +57,14 @@ function AccessDenied() {
           <p className="font-sans-md">
             {t("PDoASite")} <br /> {t("WantToViewPublishedSite")}
           </p>
-          <Button type="button" variant="outline" onClick={onViewPublicWebsite}>
-            {t("ViewPublishedSite")}{" "}
-            <FontAwesomeIcon size="sm" icon={faExternalLinkAlt} />
-          </Button>
+          <Link
+            target="_blank"
+            to="/"
+            external
+            ariaLabel={`${t("ViewPublishedSite")} ${t("ARIA.OpenInNewTab")}`}
+          >
+            {t("ViewPublishedSite")}
+          </Link>
         </div>
       </div>
     </div>

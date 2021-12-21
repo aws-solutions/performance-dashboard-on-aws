@@ -86,6 +86,55 @@ function createDraftFromDashboard(
   };
 }
 
+function createCopyFromDashboard(dashboard: Dashboard, user: User): Dashboard {
+  const id = uuidv4();
+
+  // Copy all widgets associated with the dashboard.
+  let widgets: Array<Widget> = [];
+  if (dashboard.widgets) {
+    widgets = dashboard.widgets.map((widget) =>
+      WidgetFactory.createFromWidget(id, widget)
+    );
+    for (const widget of widgets) {
+      if (widget.section) {
+        const sectionIndex = dashboard.widgets.findIndex(
+          (w) => w.id === widget.section
+        );
+        widget.section = widgets[sectionIndex].id;
+      }
+      if (widget.content && widget.content.widgetIds) {
+        const widgetIds: string[] = [];
+        for (const id of widget.content.widgetIds) {
+          const widgetIndex = dashboard.widgets.findIndex((w) => w.id === id);
+          widgetIds.push(widgets[widgetIndex].id);
+        }
+        widget.content.widgetIds = widgetIds;
+      }
+    }
+  }
+
+  return {
+    id,
+    name: "Copy of " + dashboard.name,
+    version: 1,
+    parentDashboardId: id,
+    topicAreaId: dashboard.topicAreaId,
+    topicAreaName: dashboard.topicAreaName,
+    displayTableOfContents: dashboard.displayTableOfContents,
+    tableOfContents: dashboard.tableOfContents,
+    description: dashboard.description,
+    state: DashboardState.Draft,
+    createdBy: user.userId,
+    updatedAt: new Date(),
+    updatedBy: user.userId,
+    submittedBy: undefined,
+    publishedBy: undefined,
+    archivedBy: undefined,
+    widgets,
+    friendlyURL: undefined,
+  };
+}
+
 /**
  * Converts a Dashboard to a DynamoDB item.
  */
@@ -177,6 +226,7 @@ function toVersion(dashboard: Dashboard): DashboardVersion {
 export default {
   createNew,
   createDraftFromDashboard,
+  createCopyFromDashboard,
   toItem,
   fromItem,
   itemId,

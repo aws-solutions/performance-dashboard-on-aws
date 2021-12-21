@@ -47,14 +47,10 @@ function AdminLayout(props: LayoutProps) {
     <>
       {loadingFile || loadingSettings || toHide ? (
         <Helmet>
-          <title></title>
           <link />
         </Helmet>
       ) : (
         <Helmet>
-          <title>
-            {settings ? settings.navbarTitle : "Performance Dashboard on AWS"}
-          </title>
           <link
             id="favicon"
             rel="icon"

@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page renders a page 1`] = `
+<body>
+  <div />
+</body>
+`;

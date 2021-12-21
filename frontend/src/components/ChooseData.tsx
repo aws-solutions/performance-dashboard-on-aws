@@ -70,24 +70,19 @@ function ChooseData(props: Props) {
 
   return (
     <>
-      <div className="grid-col-6">
-        <label htmlFor="fieldset" className="usa-label text-bold">
-          {t("Data")}
-        </label>
-        <div className="usa-hint">
-          {t("ChooseDataDescription", {
-            widgetType: props.widgetType,
-          })}{" "}
-          <Link to="/admin/apihelp" target="_blank" external>
-            {t("HowDoIAddDatasets")}
-          </Link>
-        </div>
-      </div>
-      <fieldset
-        id="fieldset"
-        className="usa-fieldset"
-        onChange={props.handleChange}
-      >
+      <fieldset className="usa-fieldset" onChange={props.handleChange}>
+        <legend className="usa-hint grid-col-6">
+          <label className="usa-label text-bold">{t("Data")}</label>
+          <div className="usa-hint">
+            {t("ChooseDataDescription", {
+              widgetType: props.widgetType,
+            })}{" "}
+            <Link to="/admin/apihelp" target="_blank" external>
+              {t("HowDoIAddDatasets")}
+            </Link>
+          </div>
+        </legend>
+
         <div className="grid-row">
           <RadioButtonsTile
             isHorizontally={true}

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, MouseEvent } from "react";
 import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
@@ -12,9 +12,9 @@ interface Props {
   hiddenColumns: Set<string>;
   setSelectedHeaders: Function;
   setHiddenColumns: Function;
-  backStep: Function;
-  advanceStep: Function;
-  onCancel: Function;
+  backStep: (event: MouseEvent<HTMLButtonElement>) => void;
+  advanceStep: (event: MouseEvent<HTMLButtonElement>) => void;
+  onCancel: (event: MouseEvent<HTMLButtonElement>) => void;
   data: Array<any>;
   dataTypes: Map<string, ColumnDataType>;
   setDataTypes: Function;
@@ -291,165 +291,167 @@ function CheckData(props: Props) {
 
   return (
     <>
-      <div className="grid-col-6 margin-top-3 margin-bottom-1">
-        {t("CheckDataDescription", { widgetType: props.widgetType })}
-      </div>
+      <fieldset className="usa-fieldset">
+        <legend className="grid-col-6 margin-top-3 margin-bottom-1">
+          {t("CheckDataDescription", { widgetType: props.widgetType })}
+        </legend>
 
-      <div className="grid-row">
-        {props.selectedHeaders.size ? (
-          <div className="grid-col-3 margin-top-3">
-            <div className="font-sans-md text-bold">
-              {`${
-                props.selectedHeaders.size > 1
-                  ? t("EditColumns")
-                  : t("EditColumn")
-              } "${Array.from(props.selectedHeaders).join(", ")}"`}
-            </div>
-            <div className="usa-checkbox margin-top-3 margin-bottom-1">
-              <input
-                className="usa-checkbox__input"
-                id="hideFromVisualization"
-                type="checkbox"
-                name="hideFromVisualization"
-                checked={Array.from(props.selectedHeaders).every((s) =>
-                  props.hiddenColumns.has(s)
-                )}
-                onChange={handleHideFromVisualizationChange}
-              />
-              <label
-                className="usa-checkbox__label"
-                htmlFor="hideFromVisualization"
-              >
-                {t("HideFromVisualization")}
-              </label>
-            </div>
-            <div className="margin-top-3 margin-right-3">
-              <Dropdown
-                id="dataType"
-                name="dataType"
-                label={t("DataFormat")}
-                options={[
-                  { value: "", label: t("SelectAnOption") },
-                  { value: ColumnDataType.Text, label: t("Text") },
-                  {
-                    value: ColumnDataType.Number,
-                    label: t("Number"),
-                  },
-                  {
-                    value: ColumnDataType.Date,
-                    label: t("Date"),
-                  },
-                ]}
-                value={dataType}
-                onChange={handleDataTypeChange}
-              />
-            </div>
-            {dataType === ColumnDataType.Number && (
+        <div className="grid-row">
+          {props.selectedHeaders.size ? (
+            <div className="grid-col-3 margin-top-3">
+              <div className="font-sans-md text-bold">
+                {`${
+                  props.selectedHeaders.size > 1
+                    ? t("EditColumns")
+                    : t("EditColumn")
+                } "${Array.from(props.selectedHeaders).join(", ")}"`}
+              </div>
+              <div className="usa-checkbox margin-top-3 margin-bottom-1">
+                <input
+                  className="usa-checkbox__input"
+                  id="hideFromVisualization"
+                  type="checkbox"
+                  name="hideFromVisualization"
+                  checked={Array.from(props.selectedHeaders).every((s) =>
+                    props.hiddenColumns.has(s)
+                  )}
+                  onChange={handleHideFromVisualizationChange}
+                />
+                <label
+                  className="usa-checkbox__label"
+                  htmlFor="hideFromVisualization"
+                >
+                  {t("HideFromVisualization")}
+                </label>
+              </div>
               <div className="margin-top-3 margin-right-3">
                 <Dropdown
-                  id="numberType"
-                  name="numberType"
-                  label={t("NumberFormat")}
+                  id="dataType"
+                  name="dataType"
+                  label={t("DataFormat")}
                   options={[
                     { value: "", label: t("SelectAnOption") },
+                    { value: ColumnDataType.Text, label: t("Text") },
                     {
-                      value: NumberDataType.Percentage,
-                      label: t("Percentage"),
+                      value: ColumnDataType.Number,
+                      label: t("Number"),
                     },
                     {
-                      value: NumberDataType.Currency,
-                      label: t("Currency"),
-                    },
-                    {
-                      value: NumberDataType["With thousands separators"],
-                      label: t("WithThousandsSeparators"),
+                      value: ColumnDataType.Date,
+                      label: t("Date"),
                     },
                   ]}
-                  value={numberType}
-                  onChange={handleNumberTypeChange}
+                  value={dataType}
+                  onChange={handleDataTypeChange}
                 />
               </div>
-            )}
-            {dataType === ColumnDataType.Number &&
-              numberType === NumberDataType.Currency && (
+              {dataType === ColumnDataType.Number && (
                 <div className="margin-top-3 margin-right-3">
                   <Dropdown
-                    id="currencyType"
-                    name="currencyType"
-                    label={t("Currency")}
+                    id="numberType"
+                    name="numberType"
+                    label={t("NumberFormat")}
                     options={[
                       { value: "", label: t("SelectAnOption") },
                       {
-                        value: CurrencyDataType["Dollar $"],
-                        label: t("Dollar"),
+                        value: NumberDataType.Percentage,
+                        label: t("Percentage"),
                       },
                       {
-                        value: CurrencyDataType["Euro €"],
-                        label: t("Euro"),
+                        value: NumberDataType.Currency,
+                        label: t("Currency"),
                       },
                       {
-                        value: CurrencyDataType["Pound £"],
-                        label: t("Pound"),
+                        value: NumberDataType["With thousands separators"],
+                        label: t("WithThousandsSeparators"),
                       },
                     ]}
-                    value={currencyType}
-                    onChange={handleCurrencyTypeChange}
+                    value={numberType}
+                    onChange={handleNumberTypeChange}
                   />
                 </div>
               )}
-          </div>
-        ) : (
-          <div className="grid-col-3 margin-top-3 font-sans-md text-bold">
-            {t("SelectColumns")}
-          </div>
-        )}
-        <div className="check-data-table grid-col-9">
-          <div className="margin-left-2">
-            <Table
-              selection="none"
-              rows={checkDataTableRows}
-              initialSortAscending={
-                props.sortByDesc !== undefined ? !props.sortByDesc : true
-              }
-              initialSortByField={props.sortByColumn}
-              pageSize={50}
-              disablePagination={false}
-              disableBorderless={true}
-              columns={checkDataTableColumns}
-              selectedHeaders={props.selectedHeaders}
-              hiddenColumns={props.hiddenColumns}
-              addNumbersColumn={true}
-              sortByColumn={props.sortByColumn}
-              sortByDesc={props.sortByDesc}
-              setSortByColumn={props.setSortByColumn}
-              setSortByDesc={props.setSortByDesc}
-              reset={props.reset}
-              keepBorderBottom
-              mobileNavigation
-            />
+              {dataType === ColumnDataType.Number &&
+                numberType === NumberDataType.Currency && (
+                  <div className="margin-top-3 margin-right-3">
+                    <Dropdown
+                      id="currencyType"
+                      name="currencyType"
+                      label={t("Currency")}
+                      options={[
+                        { value: "", label: t("SelectAnOption") },
+                        {
+                          value: CurrencyDataType["Dollar $"],
+                          label: t("Dollar"),
+                        },
+                        {
+                          value: CurrencyDataType["Euro €"],
+                          label: t("Euro"),
+                        },
+                        {
+                          value: CurrencyDataType["Pound £"],
+                          label: t("Pound"),
+                        },
+                      ]}
+                      value={currencyType}
+                      onChange={handleCurrencyTypeChange}
+                    />
+                  </div>
+                )}
+            </div>
+          ) : (
+            <div className="grid-col-3 margin-top-3 font-sans-md text-bold">
+              {t("SelectColumns")}
+            </div>
+          )}
+          <div className="check-data-table grid-col-9">
+            <div className="margin-left-2">
+              <Table
+                selection="none"
+                rows={checkDataTableRows}
+                initialSortAscending={
+                  props.sortByDesc !== undefined ? !props.sortByDesc : true
+                }
+                initialSortByField={props.sortByColumn}
+                pageSize={50}
+                disablePagination={false}
+                disableBorderless={true}
+                columns={checkDataTableColumns}
+                selectedHeaders={props.selectedHeaders}
+                hiddenColumns={props.hiddenColumns}
+                addNumbersColumn={true}
+                sortByColumn={props.sortByColumn}
+                sortByDesc={props.sortByDesc}
+                setSortByColumn={props.setSortByColumn}
+                setSortByDesc={props.setSortByDesc}
+                reset={props.reset}
+                keepBorderBottom
+                mobileNavigation
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <hr />
-      <Button variant="outline" type="button" onClick={props.backStep}>
-        {t("BackButton")}
-      </Button>
-      <Button
-        type="button"
-        onClick={props.advanceStep}
-        disabled={!props.data.length}
-      >
-        {t("ContinueButton")}
-      </Button>
-      <Button
-        variant="unstyled"
-        className="text-base-dark hover:text-base-darker active:text-base-darkest"
-        type="button"
-        onClick={props.onCancel}
-      >
-        {t("Cancel")}
-      </Button>
+        <hr />
+        <Button variant="outline" type="button" onClick={props.backStep}>
+          {t("BackButton")}
+        </Button>
+        <Button
+          type="button"
+          onClick={props.advanceStep}
+          disabled={!props.data.length}
+        >
+          {t("ContinueButton")}
+        </Button>
+        <Button
+          variant="unstyled"
+          className="text-base-dark hover:text-base-darker active:text-base-darkest"
+          type="button"
+          onClick={props.onCancel}
+        >
+          {t("Cancel")}
+        </Button>
+      </fieldset>
     </>
   );
 }

@@ -38,7 +38,14 @@ function PublishedTab(props: Props) {
     <div>
       <p>
         {t("PublishedTabDescription")}{" "}
-        <Link target="_blank" to={"/"} external>
+        <Link
+          target="_blank"
+          to="/"
+          external
+          ariaLabel={`${t("PublishedTabDescriptionLink")} ${t(
+            "ARIA.OpenInNewTab"
+          )}`}
+        >
           {t("PublishedTabDescriptionLink")}
         </Link>
       </p>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, MouseEvent } from "react";
 import { useDateTimeFormatter } from "../hooks";
 import { Dataset, DatasetType } from "../models";
 import Button from "./Button";
@@ -23,7 +23,7 @@ interface Props {
   staticFileName: string | undefined;
   dynamicFileName: string | undefined;
   onFileProcessed: Function;
-  browseDatasets: Function;
+  browseDatasets: (event: MouseEvent<HTMLButtonElement>) => void;
   selectDynamicDataset: Function;
   dynamicDatasets: Array<Dataset>;
   hasErrors: boolean;
@@ -108,7 +108,12 @@ function ChooseData(props: Props) {
           />
         </div>
 
-        <div hidden={props.datasetType !== DatasetType.StaticDataset}>
+        <div
+          hidden={props.datasetType !== DatasetType.StaticDataset}
+          role="tabpanel"
+          tabIndex={0}
+          aria-label={t("ChooseStaticDataset")}
+        >
           <div className="grid-row">
             <div className="grid-col-5">
               <FileInput
@@ -146,7 +151,12 @@ function ChooseData(props: Props) {
           </div>
         </div>
 
-        <div hidden={props.datasetType !== DatasetType.DynamicDataset}>
+        <div
+          hidden={props.datasetType !== DatasetType.DynamicDataset}
+          role="tabpanel"
+          tabIndex={0}
+          aria-label={t("ChooseDynamicDataset")}
+        >
           <div className="grid-row margin-top-3 margin-bottom-1">
             <div className="tablet:grid-col-4 padding-top-1px">
               <div role="search" className="usa-search usa-search--small">

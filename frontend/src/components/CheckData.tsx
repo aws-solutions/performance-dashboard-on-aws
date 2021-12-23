@@ -292,7 +292,7 @@ function CheckData(props: Props) {
   return (
     <>
       <fieldset className="usa-fieldset">
-        <legend className="grid-col-6 margin-top-3 margin-bottom-1">
+        <legend className="usa-hint grid-col-6 margin-top-3 margin-bottom-1">
           {t("CheckDataDescription", { widgetType: props.widgetType })}
         </legend>
 

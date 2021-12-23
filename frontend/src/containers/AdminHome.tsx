@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../components/Button";
 import CardGroup from "../components/CardGroup";
+import Link from "../components/Link";
 
 const { Card, CardFooter, CardBody } = CardGroup;
 
@@ -28,13 +29,6 @@ function AdminHome() {
 
   const onViewSettings = () => {
     history.push("/admin/settings");
-  };
-
-  const onViewPublicWebsite = () => {
-    const win = window.open("/", "_blank");
-    if (!!win) {
-      win.focus();
-    }
   };
 
   if (
@@ -154,10 +148,14 @@ function AdminHome() {
           <p className="font-sans-md">
             {t("PDoASite")} <br /> {t("WantToViewPublishedSite")}
           </p>
-          <Button type="button" variant="outline" onClick={onViewPublicWebsite}>
-            {t("ViewPublishedSite")}{" "}
-            <FontAwesomeIcon size="sm" icon={faExternalLinkAlt} />
-          </Button>
+          <Link
+            target="_blank"
+            to="/"
+            external
+            ariaLabel={`${t("ViewPublishedSite")} ${t("ARIA.OpenInNewTab")}`}
+          >
+            {t("ViewPublishedSite")}
+          </Link>
         </div>
       </div>
     </div>

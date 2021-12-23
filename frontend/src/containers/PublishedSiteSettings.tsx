@@ -31,14 +31,15 @@ function PublishedSiteSettings() {
 
       <p>
         {t("PublishedSiteSettings.HeaderDescription")}{" "}
-        <Link target="_blank" to={"/"}>
+        <Link
+          target="_blank"
+          to="/"
+          external
+          ariaLabel={`${t("PublishedSiteSettings.ViewPublishedSite")} ${t(
+            "ARIA.OpenInNewTab"
+          )}`}
+        >
           {t("PublishedSiteSettings.ViewPublishedSite")}
-
-          <FontAwesomeIcon
-            className="margin-left-05"
-            icon={faExternalLinkAlt}
-            size="xs"
-          />
         </Link>
       </p>
 

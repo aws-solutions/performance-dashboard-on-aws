@@ -2,121 +2,127 @@
 
 exports[`renders the ChooseData component 1`] = `
 <div>
-  <div
-    class="grid-col-6"
-  >
-    <label
-      class="usa-label text-bold"
-      for="fieldset"
-    >
-      Data
-    </label>
-    <div
-      class="usa-hint"
-    >
-      Choose an existing dataset or create a new one to populate this chart.
-       
-      <a
-        aria-label=""
-        class="usa-link action-link"
-        href="/admin/apihelp"
-        target="_blank"
-      >
-        <span>
-          How do I add datasets?
-        </span>
-        <svg
-          aria-hidden="true"
-          class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
-          data-icon="external-link-alt"
-          data-prefix="fas"
-          focusable="false"
-          role="img"
-          viewBox="0 0 512 512"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-            fill="currentColor"
-          />
-        </svg>
-      </a>
-    </div>
-  </div>
   <fieldset
     class="usa-fieldset"
-    id="fieldset"
   >
+    <legend
+      class="usa-hint grid-col-6"
+    >
+      <label
+        class="usa-label text-bold"
+      >
+        Data
+      </label>
+      <div
+        class="usa-hint"
+      >
+        Choose an existing dataset or create a new one to populate this chart.
+         
+        <a
+          aria-label=""
+          class="usa-link action-link"
+          href="/admin/apihelp"
+          target="_blank"
+        >
+          <span>
+            How do I add datasets?
+          </span>
+          <svg
+            aria-hidden="true"
+            class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
+            data-icon="external-link-alt"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+              fill="currentColor"
+            />
+          </svg>
+        </a>
+      </div>
+    </legend>
     <div
       class="grid-row"
     >
       <div
-        class="grid-col-4 padding-right-2 padding-top-2"
+        class="grid-row"
+        role="radiogroup"
       >
         <div
-          class="usa-radio"
-          role="contentinfo"
+          class="grid-col-4 padding-right-2 padding-top-2"
         >
           <div
-            class="grid-col flex-5"
+            class="usa-radio"
+            role="contentinfo"
           >
-            <input
-              class="usa-radio__input usa-radio__input--tile"
-              data-testid="staticDatasetRadioButton"
-              id="staticDataset"
-              name="datasetType"
-              type="radio"
-              value="StaticDataset"
-            />
-            <label
-              class="usa-radio__label"
-              for="staticDataset"
+            <div
+              class="grid-col flex-5"
             >
-              Static dataset
-              <p
-                class="text-base usa-prose usa-checkbox__label-description"
+              <input
+                class="usa-radio__input usa-radio__input--tile"
+                data-testid="staticDatasetRadioButton"
+                id="staticDataset"
+                name="datasetType"
+                type="radio"
+                value="StaticDataset"
+              />
+              <label
+                class="usa-radio__label"
+                for="staticDataset"
               >
-                Upload a new dataset from file or elect an existing dataset.
-              </p>
-            </label>
+                Static dataset
+                <p
+                  class="text-base usa-prose usa-checkbox__label-description"
+                >
+                  Upload a new dataset from file or elect an existing dataset.
+                </p>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="grid-col-4 padding-right-2 padding-top-2"
-      >
         <div
-          class="usa-radio"
-          role="contentinfo"
+          class="grid-col-4 padding-right-2 padding-top-2"
         >
           <div
-            class="grid-col flex-5"
+            class="usa-radio"
+            role="contentinfo"
           >
-            <input
-              class="usa-radio__input usa-radio__input--tile"
-              data-testid="dynamicDatasetRadioButton"
-              id="dynamicDataset"
-              name="datasetType"
-              type="radio"
-              value="DynamicDataset"
-            />
-            <label
-              class="usa-radio__label"
-              for="dynamicDataset"
+            <div
+              class="grid-col flex-5"
             >
-              Dynamic dataset
-              <p
-                class="text-base usa-prose usa-checkbox__label-description"
+              <input
+                class="usa-radio__input usa-radio__input--tile"
+                data-testid="dynamicDatasetRadioButton"
+                id="dynamicDataset"
+                name="datasetType"
+                type="radio"
+                value="DynamicDataset"
+              />
+              <label
+                class="usa-radio__label"
+                for="dynamicDataset"
               >
-                Choose from a list of continuously updated datasets.
-              </p>
-            </label>
+                Dynamic dataset
+                <p
+                  class="text-base usa-prose usa-checkbox__label-description"
+                >
+                  Choose from a list of continuously updated datasets.
+                </p>
+              </label>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div
+      aria-label="Choose static dataset"
       hidden=""
+      role="tabpanel"
+      tabindex="0"
     >
       <div
         class="grid-row"
@@ -214,7 +220,11 @@ exports[`renders the ChooseData component 1`] = `
         </div>
       </div>
     </div>
-    <div>
+    <div
+      aria-label="Choose dynamic dataset"
+      role="tabpanel"
+      tabindex="0"
+    >
       <div
         class="grid-row margin-top-3 margin-bottom-1"
       >

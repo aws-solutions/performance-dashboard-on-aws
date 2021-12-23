@@ -145,8 +145,9 @@ export async function importDashboard(config: Configuration) {
     await DatasetRepository.getInstance().saveDataset(dataset);
   }
 
-  snapshot.dashboard.updatedAt = new Date();
+  snapshot.dashboard.createdBy = config.author;
   snapshot.dashboard.updatedBy = config.author;
+  snapshot.dashboard.updatedAt = new Date();
   console.log("inserting dashboard: {}", snapshot.dashboard);
   await DashboardRepository.getInstance().putDashboard(snapshot.dashboard);
 

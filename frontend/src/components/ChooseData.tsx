@@ -115,7 +115,7 @@ function ChooseData(props: Props) {
           aria-label={t("ChooseStaticDataset")}
         >
           <div className="grid-row">
-            <div className="grid-col-5">
+            <div className="grid-col-6">
               <FileInput
                 id="dataset"
                 name="dataset"

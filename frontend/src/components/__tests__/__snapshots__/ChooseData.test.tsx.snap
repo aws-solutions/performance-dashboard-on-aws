@@ -128,7 +128,7 @@ exports[`renders the ChooseData component 1`] = `
         class="grid-row"
       >
         <div
-          class="grid-col-5"
+          class="grid-col-6"
         >
           <div
             class="usa-form-group"

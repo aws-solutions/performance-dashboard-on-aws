@@ -41,7 +41,7 @@ function RadioButtonsTile(props: Props) {
   };
 
   return (
-    <>
+    <div role="radiogroup" className={props.isHorizontally ? "grid-row" : ""}>
       {props.options.map((option: Option, index: number) => {
         const usaRatio = getUsaRatio(option, index);
 
@@ -53,7 +53,7 @@ function RadioButtonsTile(props: Props) {
           usaRatio
         );
       })}
-    </>
+    </div>
   );
 }
 

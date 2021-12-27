@@ -1,7 +1,7 @@
 {
   "PageTitle": {
     "Default": "Performance Dashboard on AWS",
-    "AdminHome": "Admmin Home",
+    "AdminHome": "Admin Home",
     "Settings": "Settings",
     "TopicAreaSettings": "Topic Area Settings",
     "BrandingAndStylingSettings": "Branding and Styling Settings",
@@ -360,6 +360,8 @@
     "ChooseDataset": "Choose a dataset to continue",
     "AddChart": "Add chart",
     "ChooseData": "Choose data",
+    "Configure": "Configure chart content.",
+    "Preview": "Preview chart",
     "CheckData": "Check data",
     "Visualize": "Visualize",
     "AddChartSuccess": "'{{title}}' chart has been successfully added.",
@@ -802,6 +804,7 @@
   "Go": "Go",
   "Show": "Show",
   "ChooseStaticDataset": "Choose static dataset",
+  "ChooseDynamicDataset": "Choose dynamic dataset",
   "ChooseStaticDatasetDescription": "These are all of the static datasets that have been uploaded. Find and select a dataset to use in your visualization.",
   "UploadedBy": "Uploaded by",
   "UploadedAt": "Uploaded at",

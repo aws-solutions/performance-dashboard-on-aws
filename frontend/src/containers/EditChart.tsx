@@ -534,9 +534,19 @@ function EditChart() {
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">{t("EditChartScreen.EditChart")}</h1>
-      <ul className="usa-button-group usa-button-group--segmented">
-        <li className="usa-button-group__item">
+      <h1 id="editChartFormHeader" className="margin-top-0">
+        {t("EditChartScreen.EditChart")}
+      </h1>
+      <ul
+        className="usa-button-group usa-button-group--segmented"
+        role="tablist"
+      >
+        <li
+          id="editChartFormHeaderStep1"
+          className="usa-button-group__item"
+          role="tab"
+          aria-selected={step === 0}
+        >
           <button
             className={
               step !== 0 ? "usa-button usa-button--outline" : "usa-button"
@@ -548,7 +558,12 @@ function EditChart() {
             {t("EditChartScreen.ChooseData")}
           </button>
         </li>
-        <li className="usa-button-group__item">
+        <li
+          id="editChartFormHeaderStep2"
+          className="usa-button-group__item"
+          role="tab"
+          aria-selected={step === 0}
+        >
           <button
             className={
               step !== 1 ? "usa-button usa-button--outline" : "usa-button"
@@ -561,7 +576,12 @@ function EditChart() {
             {t("EditChartScreen.CheckData")}
           </button>
         </li>
-        <li className="usa-button-group__item">
+        <li
+          id="editChartFormHeaderStep3"
+          className="usa-button-group__item"
+          role="tab"
+          aria-selected={step === 0}
+        >
           <button
             className={
               step !== 2 ? "usa-button usa-button--outline" : "usa-button"
@@ -598,8 +618,16 @@ function EditChart() {
       ) : (
         <div className="grid-row width-desktop">
           <div className="grid-col-12">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div hidden={step !== 0}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              aria-labelledby="editChartFormHeader"
+            >
+              <div
+                hidden={step !== 0}
+                role="tabpanel"
+                tabIndex={0}
+                aria-labelledby="editChartFormHeaderStep1"
+              >
                 <PrimaryActionBar>
                   {configHeader}
                   <div className="margin-y-3" hidden={!showColumnHeaderAlert}>
@@ -638,7 +666,12 @@ function EditChart() {
                   />
                 </PrimaryActionBar>
               </div>
-              <div hidden={step !== 1}>
+              <div
+                hidden={step !== 1}
+                role="tabpanel"
+                tabIndex={0}
+                aria-labelledby="editChartFormHeaderStep2"
+              >
                 <PrimaryActionBar>
                   {configHeader}
                   <CheckData
@@ -665,7 +698,12 @@ function EditChart() {
                   />
                 </PrimaryActionBar>
               </div>
-              <div hidden={step !== 2}>
+              <div
+                hidden={step !== 2}
+                role="tabpanel"
+                tabIndex={0}
+                aria-labelledby="editChartFormHeaderStep3"
+              >
                 <VisualizeChart
                   errors={errors}
                   register={register}

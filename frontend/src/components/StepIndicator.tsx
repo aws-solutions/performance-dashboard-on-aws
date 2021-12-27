@@ -55,6 +55,10 @@ function StepIndicator(props: Props) {
   return (
     <div
       className="usa-step-indicator usa-step-indicator--counters-sm"
+      role="progressbar"
+      aria-valuemin={1}
+      aria-valuemax={props.segments.length}
+      aria-valuenow={props.current + 1}
       aria-label={t("Progress")}
     >
       {props.showStepChart ? stepChart : ""}

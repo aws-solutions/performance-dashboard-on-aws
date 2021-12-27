@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useState, MouseEvent } from "react";
 import { ChartType, DatasetType } from "../models";
 import { useTranslation } from "react-i18next";
 import Alert from "./Alert";
@@ -28,9 +28,9 @@ interface Props {
   csvJson: Array<any>;
   datasetLoading: boolean;
   datasetType: DatasetType | undefined;
-  onCancel: Function;
-  backStep: Function;
-  advanceStep: Function;
+  onCancel: (event: MouseEvent<HTMLButtonElement>) => void;
+  backStep: (event: MouseEvent<HTMLButtonElement>) => void;
+  advanceStep: (event: MouseEvent<HTMLButtonElement>) => void;
   fileLoading: boolean;
   processingWidget: boolean;
   fullPreviewButton: JSX.Element;
@@ -86,275 +86,292 @@ function VisualizeChart(props: Props) {
               slim
             ></Alert>
           )}
-          <TextField
-            id="title"
-            name="title"
-            label={t("VisualizeChartComponent.ChartTitle")}
-            hint={t("VisualizeChartComponent.ChartTitleHint")}
-            error={
-              props.errors.title && t("VisualizeChartComponent.ChartTitleError")
-            }
-            required
-            register={props.register}
-          />
 
-          <div className="usa-checkbox">
-            <input
-              className="usa-checkbox__input"
-              id="display-title"
-              type="checkbox"
-              name="showTitle"
-              defaultChecked={true}
-              ref={props.register()}
-            />
-            <label className="usa-checkbox__label" htmlFor="display-title">
-              {t("AddTextScreen.ShowTitle")}
-            </label>
-          </div>
+          <fieldset className="usa-fieldset">
+            <legend className="usa-hint grid-col-6">
+              {t("AddChartScreen.Configure")}
+            </legend>
 
-          <RadioButtons
-            id="chartType"
-            name="chartType"
-            label={t("VisualizeChartComponent.ChartType")}
-            hint={t("VisualizeChartComponent.ChartTypeHint")}
-            register={props.register}
-            error={
-              props.errors.chartType &&
-              t("VisualizeChartComponent.ChartTypeError")
-            }
-            defaultValue={ChartType.LineChart}
-            required
-            options={[
-              {
-                value: ChartType.LineChart,
-                label: t("Line"),
-              },
-              {
-                value: ChartType.BarChart,
-                label: t("Bar"),
-              },
-              {
-                value: ChartType.ColumnChart,
-                label: t("Column"),
-              },
-              {
-                value: ChartType.PartWholeChart,
-                label: t("PartToWhole"),
-              },
-              {
-                value: ChartType.PieChart,
-                label: t("Pie"),
-              },
-              {
-                value: ChartType.DonutChart,
-                label: t("Donut"),
-              },
-            ]}
-          />
-          <div className="margin-top-3">
-            <Dropdown
-              id="sortData"
-              name="sortData"
-              label={t("SortData")}
-              options={DatasetParsingService.getDatasetSortOptions(
-                props.originalJson,
-                props.headers,
-                t,
-                props.chartType
-              )}
-              onChange={handleSortDataChange}
-              defaultValue={
-                props.sortByColumn
-                  ? `${props.sortByColumn}###${
-                      props.sortByDesc ? "desc" : "asc"
-                    }`
-                  : ""
+            <TextField
+              id="title"
+              name="title"
+              label={t("VisualizeChartComponent.ChartTitle")}
+              hint={t("VisualizeChartComponent.ChartTitleHint")}
+              error={
+                props.errors.title &&
+                t("VisualizeChartComponent.ChartTitleError")
               }
+              required
               register={props.register}
             />
-          </div>
 
-          <div>
-            <label className="usa-label text-bold">
-              {t("ChartOptionsLabel")}
-            </label>
-            <div className="usa-hint">{t("ChartOptionsDescription")}</div>
             <div className="usa-checkbox">
               <input
                 className="usa-checkbox__input"
-                id="significantDigitLabels"
+                id="display-title"
                 type="checkbox"
-                name="significantDigitLabels"
-                defaultChecked={false}
-                ref={props.register()}
-              />
-              <label
-                className="usa-checkbox__label"
-                htmlFor="significantDigitLabels"
-              >
-                {t("SignificantDigitLabels")}
-              </label>
-            </div>
-
-            <div
-              className="usa-checkbox"
-              hidden={
-                props.chartType !== ChartType.BarChart &&
-                props.chartType !== ChartType.ColumnChart
-              }
-            >
-              <input
-                className="usa-checkbox__input"
-                id="stackedChart"
-                type="checkbox"
-                name="stackedChart"
-                defaultChecked={!!props.stackedChart}
-                ref={props.register()}
-              />
-              <label className="usa-checkbox__label" htmlFor="stackedChart">
-                {t("VisualizeChartComponent.StackedChart")}
-              </label>
-            </div>
-
-            <div
-              className="usa-checkbox"
-              hidden={
-                props.chartType !== ChartType.BarChart &&
-                props.chartType !== ChartType.ColumnChart &&
-                props.chartType !== ChartType.PieChart &&
-                props.chartType !== ChartType.DonutChart
-              }
-            >
-              <input
-                className="usa-checkbox__input"
-                id="dataLabels"
-                type="checkbox"
-                name="dataLabels"
-                defaultChecked={false}
-                ref={props.register()}
-              />
-              <label className="usa-checkbox__label" htmlFor="dataLabels">
-                {t("VisualizeChartComponent.ShowDataLabels")}
-              </label>
-            </div>
-
-            <div
-              className="usa-checkbox"
-              hidden={
-                props.chartType !== ChartType.PieChart &&
-                props.chartType !== ChartType.DonutChart
-              }
-            >
-              <input
-                className="usa-checkbox__input"
-                id="computePercentages"
-                type="checkbox"
-                name="computePercentages"
-                defaultChecked={false}
-                ref={props.register()}
-              />
-              <label
-                className="usa-checkbox__label"
-                htmlFor="computePercentages"
-              >
-                {t("VisualizeChartComponent.ComputePercentages")}
-              </label>
-            </div>
-
-            <div
-              className="usa-checkbox"
-              hidden={props.chartType !== ChartType.DonutChart}
-            >
-              <input
-                className="usa-checkbox__input"
-                id="showTotal"
-                type="checkbox"
-                name="showTotal"
+                name="showTitle"
                 defaultChecked={true}
                 ref={props.register()}
               />
-              <label className="usa-checkbox__label" htmlFor="showTotal">
-                {t("VisualizeChartComponent.ShowTotal")}
+              <label className="usa-checkbox__label" htmlFor="display-title">
+                {t("AddTextScreen.ShowTitle")}
               </label>
             </div>
 
-            <div
-              className="usa-checkbox"
-              hidden={
-                (props.chartType !== ChartType.LineChart &&
-                  props.chartType !== ChartType.ColumnChart) ||
-                widthPercent <= 100
+            <RadioButtons
+              id="chartType"
+              name="chartType"
+              label={t("VisualizeChartComponent.ChartType")}
+              hint={t("VisualizeChartComponent.ChartTypeHint")}
+              register={props.register}
+              error={
+                props.errors.chartType &&
+                t("VisualizeChartComponent.ChartTypeError")
               }
-            >
+              defaultValue={ChartType.LineChart}
+              required
+              options={[
+                {
+                  value: ChartType.LineChart,
+                  label: t("Line"),
+                },
+                {
+                  value: ChartType.BarChart,
+                  label: t("Bar"),
+                },
+                {
+                  value: ChartType.ColumnChart,
+                  label: t("Column"),
+                },
+                {
+                  value: ChartType.PartWholeChart,
+                  label: t("PartToWhole"),
+                },
+                {
+                  value: ChartType.PieChart,
+                  label: t("Pie"),
+                },
+                {
+                  value: ChartType.DonutChart,
+                  label: t("Donut"),
+                },
+              ]}
+            />
+            <div className="margin-top-3">
+              <Dropdown
+                id="sortData"
+                name="sortData"
+                label={t("SortData")}
+                options={DatasetParsingService.getDatasetSortOptions(
+                  props.originalJson,
+                  props.headers,
+                  t,
+                  props.chartType
+                )}
+                onChange={handleSortDataChange}
+                defaultValue={
+                  props.sortByColumn
+                    ? `${props.sortByColumn}###${
+                        props.sortByDesc ? "desc" : "asc"
+                      }`
+                    : ""
+                }
+                register={props.register}
+              />
+            </div>
+
+            <div>
+              <label className="usa-label text-bold">
+                {t("ChartOptionsLabel")}
+              </label>
+              <div className="usa-hint">{t("ChartOptionsDescription")}</div>
+              <div className="usa-checkbox">
+                <input
+                  className="usa-checkbox__input"
+                  id="significantDigitLabels"
+                  type="checkbox"
+                  name="significantDigitLabels"
+                  defaultChecked={false}
+                  ref={props.register()}
+                />
+                <label
+                  className="usa-checkbox__label"
+                  htmlFor="significantDigitLabels"
+                >
+                  {t("SignificantDigitLabels")}
+                </label>
+              </div>
+
+              <div
+                className="usa-checkbox"
+                hidden={
+                  props.chartType !== ChartType.BarChart &&
+                  props.chartType !== ChartType.ColumnChart
+                }
+              >
+                <input
+                  className="usa-checkbox__input"
+                  id="stackedChart"
+                  type="checkbox"
+                  name="stackedChart"
+                  defaultChecked={!!props.stackedChart}
+                  ref={props.register()}
+                />
+                <label className="usa-checkbox__label" htmlFor="stackedChart">
+                  {t("VisualizeChartComponent.StackedChart")}
+                </label>
+              </div>
+
+              <div
+                className="usa-checkbox"
+                hidden={
+                  props.chartType !== ChartType.BarChart &&
+                  props.chartType !== ChartType.ColumnChart &&
+                  props.chartType !== ChartType.PieChart &&
+                  props.chartType !== ChartType.DonutChart
+                }
+              >
+                <input
+                  className="usa-checkbox__input"
+                  id="dataLabels"
+                  type="checkbox"
+                  name="dataLabels"
+                  defaultChecked={false}
+                  ref={props.register()}
+                />
+                <label className="usa-checkbox__label" htmlFor="dataLabels">
+                  {t("VisualizeChartComponent.ShowDataLabels")}
+                </label>
+              </div>
+
+              <div
+                className="usa-checkbox"
+                hidden={
+                  props.chartType !== ChartType.PieChart &&
+                  props.chartType !== ChartType.DonutChart
+                }
+              >
+                <input
+                  className="usa-checkbox__input"
+                  id="computePercentages"
+                  type="checkbox"
+                  name="computePercentages"
+                  defaultChecked={false}
+                  ref={props.register()}
+                />
+                <label
+                  className="usa-checkbox__label"
+                  htmlFor="computePercentages"
+                >
+                  {t("VisualizeChartComponent.ComputePercentages")}
+                </label>
+              </div>
+
+              <div
+                className="usa-checkbox"
+                hidden={props.chartType !== ChartType.DonutChart}
+              >
+                <input
+                  className="usa-checkbox__input"
+                  id="showTotal"
+                  type="checkbox"
+                  name="showTotal"
+                  defaultChecked={true}
+                  ref={props.register()}
+                />
+                <label className="usa-checkbox__label" htmlFor="showTotal">
+                  {t("VisualizeChartComponent.ShowTotal")}
+                </label>
+              </div>
+
+              <div
+                className="usa-checkbox"
+                hidden={
+                  (props.chartType !== ChartType.LineChart &&
+                    props.chartType !== ChartType.ColumnChart) ||
+                  widthPercent <= 100
+                }
+              >
+                <input
+                  className="usa-checkbox__input"
+                  id="horizontalScroll"
+                  type="checkbox"
+                  name="horizontalScroll"
+                  defaultChecked={!!props.horizontalScroll}
+                  ref={props.register()}
+                />
+                <label
+                  className="usa-checkbox__label"
+                  htmlFor="horizontalScroll"
+                >
+                  {t("VisualizeChartComponent.DisplayHorizontalScroll")}
+                </label>
+              </div>
+            </div>
+
+            <TextField
+              id="summary"
+              name="summary"
+              label={t("VisualizeChartComponent.ChartSummary")}
+              hint={
+                <>
+                  {t("VisualizeChartComponent.ChartSummaryHint")}{" "}
+                  <Link target="_blank" to={"/admin/markdown"} external>
+                    {t("AddTextScreen.ViewMarkdownSyntax")}
+                  </Link>
+                </>
+              }
+              register={props.register}
+              multiline
+              rows={5}
+            />
+
+            <div className="usa-checkbox">
               <input
                 className="usa-checkbox__input"
-                id="horizontalScroll"
+                id="summary-below"
                 type="checkbox"
-                name="horizontalScroll"
-                defaultChecked={!!props.horizontalScroll}
+                name="summaryBelow"
+                defaultChecked={false}
                 ref={props.register()}
               />
-              <label className="usa-checkbox__label" htmlFor="horizontalScroll">
-                {t("VisualizeChartComponent.DisplayHorizontalScroll")}
+              <label className="usa-checkbox__label" htmlFor="summary-below">
+                {t("VisualizeChartComponent.ChartShowSummary")}
               </label>
             </div>
-          </div>
-
-          <TextField
-            id="summary"
-            name="summary"
-            label={t("VisualizeChartComponent.ChartSummary")}
-            hint={
-              <>
-                {t("VisualizeChartComponent.ChartSummaryHint")}{" "}
-                <Link target="_blank" to={"/admin/markdown"} external>
-                  {t("AddTextScreen.ViewMarkdownSyntax")}
-                </Link>
-              </>
-            }
-            register={props.register}
-            multiline
-            rows={5}
-          />
-
-          <div className="usa-checkbox">
-            <input
-              className="usa-checkbox__input"
-              id="summary-below"
-              type="checkbox"
-              name="summaryBelow"
-              defaultChecked={false}
-              ref={props.register()}
-            />
-            <label className="usa-checkbox__label" htmlFor="summary-below">
-              {t("VisualizeChartComponent.ChartShowSummary")}
-            </label>
-          </div>
-          <br />
-          <br />
-          <hr />
-          <Button variant="outline" type="button" onClick={props.backStep}>
-            {t("BackButton")}
-          </Button>
-          <Button
-            type="submit"
-            disabled={
-              !props.json.length || props.fileLoading || props.processingWidget
-            }
-          >
-            {props.submitButtonLabel}
-          </Button>
-          <Button
-            variant="unstyled"
-            className="text-base-dark hover:text-base-darker active:text-base-darkest"
-            type="button"
-            onClick={props.onCancel}
-          >
-            {t("Cancel")}
-          </Button>
+            <br />
+            <br />
+            <hr />
+            <Button variant="outline" type="button" onClick={props.backStep}>
+              {t("BackButton")}
+            </Button>
+            <Button
+              type="submit"
+              disabled={
+                !props.json.length ||
+                props.fileLoading ||
+                props.processingWidget
+              }
+            >
+              {props.submitButtonLabel}
+            </Button>
+            <Button
+              variant="unstyled"
+              className="text-base-dark hover:text-base-darker active:text-base-darkest"
+              type="button"
+              onClick={props.onCancel}
+            >
+              {t("Cancel")}
+            </Button>
+          </fieldset>
         </PrimaryActionBar>
       </div>
-      <div className={props.fullPreview ? "grid-col-12" : "grid-col-7"}>
+      <div
+        className={props.fullPreview ? "grid-col-12" : "grid-col-7"}
+        role="contentinfo"
+        aria-label={t("AddChartScreen.Preview")}
+      >
         <div
           hidden={!props.json.length}
           className={`${

@@ -397,7 +397,7 @@ function Table(props: Props) {
                       type="button"
                       className={`${
                         isMobile ? "" : "usa-button "
-                      }usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest`}
+                      }usa-button--unstyled margin-right-1 text-base-darker hover:text-base-darkest active:text-base-darkest`}
                       onClick={() => {
                         if (currentPage) {
                           const currentPageNumber = Number(currentPage);
@@ -439,7 +439,7 @@ function Table(props: Props) {
                         </button>
                         <button
                           type="button"
-                          className="margin-right-2"
+                          className="margin-right-1"
                           onClick={() => {
                             setCurrentPage(`${pageIndex}`);
                             previousPage();

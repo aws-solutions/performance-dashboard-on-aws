@@ -72,7 +72,7 @@ function EditColors() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>{t("SettingsColorsEdit")}</h1>
+        <h1 id="settingsColorsLabel">{t("SettingsColorsEdit")}</h1>
 
         <p>{t("SettingsColorsDescription")}</p>
       </div>
@@ -89,6 +89,7 @@ function EditColors() {
               onSubmit={handleSubmit(onSubmit)}
               className="edit-homepage-content-form usa-form usa-form--large"
               data-testid="EditColorsForm"
+              aria-labelledby="settingsColorsLabel"
             >
               <label htmlFor="primary" className="usa-label text-bold">
                 {t("SettingsColorsPrimaryColor")}

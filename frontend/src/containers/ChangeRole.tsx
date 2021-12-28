@@ -64,13 +64,14 @@ function ChangeRole() {
         ]}
       />
 
-      <h1>{t("ChangeRole.Label")}</h1>
+      <h1 id="changeRoleLabel">{t("ChangeRole.Label")}</h1>
       <div className="grid-row">
         <div className="grid-col-12">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="usa-form usa-form--large"
             data-testid="ChangeRoleForm"
+            aria-labelledby="changeRoleLabel"
           >
             <TextField
               id="emails"
@@ -88,9 +89,11 @@ function ChangeRole() {
               {t("ChangeRole.Role")}
               <span>&#42;</span>
             </label>
-            <div className="usa-hint">{t("ChangeRole.RoleDescription")}</div>
+
             <fieldset className="usa-fieldset" onChange={handleChange}>
-              <legend className="usa-sr-only">{t("ChangeRole.Roles")}</legend>
+              <legend className="usa-hint">
+                {t("ChangeRole.RoleDescription")}
+              </legend>
               <RadioButtonsTile
                 isHorizontally={false}
                 register={register}

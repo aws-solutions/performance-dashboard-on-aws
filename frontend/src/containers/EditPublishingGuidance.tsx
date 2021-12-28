@@ -64,7 +64,7 @@ function EditPublishingGuidance() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>{t("PublishingGuidanceEdit")}</h1>
+        <h1 id="publishingGuidanceLabel">{t("PublishingGuidanceEdit")}</h1>
 
         <p>{t("PublishingGuidanceDescription")}</p>
 
@@ -79,6 +79,7 @@ function EditPublishingGuidance() {
               onSubmit={handleSubmit(onSubmit)}
               className="edit-publishing-guidance-form usa-form usa-form--large"
               data-testid="EditPublishingGuidanceForm"
+              aria-labelledby="publishingGuidanceLabel"
             >
               <Markdown
                 id="publishingGuidance"

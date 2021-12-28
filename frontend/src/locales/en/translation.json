@@ -380,6 +380,7 @@
     "AddTable": "Add table",
     "ChooseData": "Choose data",
     "CheckData": "Check data",
+    "Configure": "Configure table content.",
     "Visualize": "Visualize",
     "AddTableSuccess": "'{{title}}' table has been successfully added.",
     "ChooseDataset": "Choose a dataset to continue"

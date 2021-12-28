@@ -546,6 +546,7 @@ function EditChart() {
           className="usa-button-group__item"
           role="tab"
           aria-selected={step === 0}
+          aria-controls="panel1"
         >
           <button
             className={
@@ -562,7 +563,8 @@ function EditChart() {
           id="editChartFormHeaderStep2"
           className="usa-button-group__item"
           role="tab"
-          aria-selected={step === 0}
+          aria-selected={step === 1}
+          aria-controls="panel2"
         >
           <button
             className={
@@ -580,7 +582,8 @@ function EditChart() {
           id="editChartFormHeaderStep3"
           className="usa-button-group__item"
           role="tab"
-          aria-selected={step === 0}
+          aria-selected={step === 2}
+          aria-controls="panel3"
         >
           <button
             className={
@@ -623,6 +626,7 @@ function EditChart() {
               aria-labelledby="editChartFormHeader"
             >
               <div
+                id="panel1"
                 hidden={step !== 0}
                 role="tabpanel"
                 tabIndex={0}
@@ -667,6 +671,7 @@ function EditChart() {
                 </PrimaryActionBar>
               </div>
               <div
+                id="panel2"
                 hidden={step !== 1}
                 role="tabpanel"
                 tabIndex={0}
@@ -699,6 +704,7 @@ function EditChart() {
                 </PrimaryActionBar>
               </div>
               <div
+                id="panel3"
                 hidden={step !== 2}
                 role="tabpanel"
                 tabIndex={0}

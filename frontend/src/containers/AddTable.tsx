@@ -325,7 +325,9 @@ function AddTable() {
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">{t("AddTableScreen.AddTable")}</h1>
+      <h1 id="addTableFormHeader" className="margin-top-0">
+        {t("AddTableScreen.AddTable")}
+      </h1>
       <StepIndicator
         current={step}
         segments={[
@@ -353,7 +355,10 @@ function AddTable() {
       <Breadcrumbs crumbs={crumbs} />
 
       <div className="grid-row width-desktop">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          aria-labelledby="addTableFormHeader"
+        >
           <div className="grid-col-12"></div>
 
           <div hidden={step !== 0}>

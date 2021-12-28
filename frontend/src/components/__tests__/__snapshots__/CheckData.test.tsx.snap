@@ -332,36 +332,7 @@ exports[`renders the CheckData component 1`] = `
                     role="cell"
                   >
                     <div
-                      class="text-center"
-                    >
-                      <label
-                        class="margin-left-1 margin-right-2px"
-                        for="Page"
-                      >
-                        Page 
-                      </label>
-                      <span
-                        class="margin-right-1"
-                      >
-                        <input
-                          class="margin-right-2px"
-                          id="Page"
-                          pattern="\\\\d*"
-                          style="width: 33px;"
-                          type="text"
-                          value="1"
-                        />
-                         of 1 
-                      </span>
-                      <button
-                        class="usa-button--unstyled margin-right-1 text-base-darker hover:text-base-darkest active:text-base-darkest"
-                        type="button"
-                      >
-                        Go
-                      </button>
-                    </div>
-                    <div
-                      class="margin-left-05 text-center"
+                      class="grid-col margin-top-2 font-sans-sm"
                     >
                       <div
                         class="text-center"

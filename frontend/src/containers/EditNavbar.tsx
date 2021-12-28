@@ -71,7 +71,7 @@ function EditNavBar() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>{t("SettingsNavBarEdit")}</h1>
+        <h1 id="settingsNavBarLabel">{t("SettingsNavBarEdit")}</h1>
 
         <p>{t("SettingsNavBarEditDescription")}</p>
 
@@ -86,6 +86,7 @@ function EditNavBar() {
               onSubmit={handleSubmit(onSubmit)}
               className="edit-homepage-content-form usa-form usa-form--large"
               data-testid="EditNavbarForm"
+              aria-labelledby="settingsNavBarLabel"
             >
               <TextField
                 id="title"

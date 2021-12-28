@@ -73,7 +73,7 @@ function EditTopicArea() {
           },
         ]}
       />
-      <h1>
+      <h1 id="topicAreaNameLabel">
         {t("SettingsTopicAreaNameEdit", {
           singularname: settings.topicAreaLabels.singular,
         })}
@@ -84,6 +84,7 @@ function EditTopicArea() {
             onSubmit={handleSubmit(onSubmit)}
             className="usa-form usa-form--large"
             data-testid="EditTopicAreaForm"
+            aria-labelledby="topicAreaNameLabel"
           >
             <TextField
               id="name"

@@ -211,7 +211,7 @@ exports[`renders a basic table 1`] = `
                    of 1 
                 </span>
                 <button
-                  class="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+                  class="usa-button usa-button--unstyled margin-right-1 text-base-darker hover:text-base-darkest active:text-base-darkest"
                   type="button"
                 >
                   Go
@@ -245,7 +245,7 @@ exports[`renders a basic table 1`] = `
                 </button>
                 <button
                   aria-label="Go to the previous page"
-                  class="margin-right-2"
+                  class="margin-right-1"
                   disabled=""
                   type="button"
                 >
@@ -989,7 +989,7 @@ exports[`sorting buttons are clickable 1`] = `
                    of 1 
                 </span>
                 <button
-                  class="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+                  class="usa-button usa-button--unstyled margin-right-1 text-base-darker hover:text-base-darkest active:text-base-darkest"
                   type="button"
                 >
                   Go
@@ -1023,7 +1023,7 @@ exports[`sorting buttons are clickable 1`] = `
                 </button>
                 <button
                   aria-label="Go to the previous page"
-                  class="margin-right-2"
+                  class="margin-right-1"
                   disabled=""
                   type="button"
                 >
@@ -1401,7 +1401,7 @@ exports[`sorting buttons are clickable 2`] = `
                    of 1 
                 </span>
                 <button
-                  class="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+                  class="usa-button usa-button--unstyled margin-right-1 text-base-darker hover:text-base-darkest active:text-base-darkest"
                   type="button"
                 >
                   Go
@@ -1435,7 +1435,7 @@ exports[`sorting buttons are clickable 2`] = `
                 </button>
                 <button
                   aria-label="Go to the previous page"
-                  class="margin-right-2"
+                  class="margin-right-1"
                   disabled=""
                   type="button"
                 >

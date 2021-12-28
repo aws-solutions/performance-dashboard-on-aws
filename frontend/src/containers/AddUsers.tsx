@@ -66,13 +66,14 @@ function AddUsers() {
         ]}
       />
 
-      <h1>{t("AddUsers")}</h1>
+      <h1 id="addUsersLabel">{t("AddUsers")}</h1>
       <div className="grid-row">
         <div className="grid-col-12">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="usa-form usa-form--large"
             data-testid="AddUsersForm"
+            aria-labelledby="addUsersLabel"
           >
             <TextField
               id="emails"
@@ -96,10 +97,9 @@ function AddUsers() {
               {t("UserListingRole")}
               <span>&#42;</span>
             </label>
-            <div className="usa-hint">{t("AddUsersRoleSelect")}</div>
 
             <fieldset className="usa-fieldset" onChange={handleChange}>
-              <legend className="usa-sr-only">{t("ChangeRole.Roles")}</legend>
+              <legend className="usa-hint">{t("AddUsersRoleSelect")}</legend>
               <RadioButtonsTile
                 isHorizontally={false}
                 register={register}

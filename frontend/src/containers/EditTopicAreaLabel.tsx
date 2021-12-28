@@ -60,7 +60,7 @@ function EditTopicAreaLabel() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>{t("SettingsTopicAreaNameEditGeneric")}</h1>
+        <h1 id="topicAreaLabel">{t("SettingsTopicAreaNameEditGeneric")}</h1>
 
         <p>{t("EditSettingsTopicAreaNameScreen.Description")}</p>
 
@@ -75,6 +75,7 @@ function EditTopicAreaLabel() {
               onSubmit={handleSubmit(onSubmit)}
               className="edit-homepage-content-form usa-form usa-form--large"
               data-testid="EditTopicAreaLabelForm"
+              aria-labelledby="topicAreaLabel"
             >
               <TextField
                 id="topicAreaSingular"

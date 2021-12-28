@@ -354,7 +354,7 @@ exports[`renders the CheckData component 1`] = `
                          of 1 
                       </span>
                       <button
-                        class="usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+                        class="usa-button--unstyled margin-right-1 text-base-darker hover:text-base-darkest active:text-base-darkest"
                         type="button"
                       >
                         Go

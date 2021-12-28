@@ -91,7 +91,7 @@ function EditFavicon() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>{t("SettingsFaviconEdit")}</h1>
+        <h1 id="settingsFaviconLabel">{t("SettingsFaviconEdit")}</h1>
 
         <p>{t("SettingsFaviconDescription")}</p>
       </div>
@@ -107,6 +107,7 @@ function EditFavicon() {
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="usa-form usa-form--large"
+              aria-labelledby="settingsFaviconLabel"
             >
               <FileInput
                 id="dataset"

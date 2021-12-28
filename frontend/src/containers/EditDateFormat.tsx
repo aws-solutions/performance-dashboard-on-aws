@@ -82,7 +82,9 @@ function EditDateFormat() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>{t("SettingsDateTimeFormatEdit")}</h1>
+        <h1 id="settingsDateTimeFormatLabel">
+          {t("SettingsDateTimeFormatEdit")}
+        </h1>
 
         <p>{t("SettingsDateTimeFormatDescription")}</p>
 
@@ -96,6 +98,7 @@ function EditDateFormat() {
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="usa-form usa-form--large"
+              aria-labelledby="settingsDateTimeFormatLabel"
             >
               <Dropdown
                 id="dateFormat"

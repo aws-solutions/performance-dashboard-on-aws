@@ -128,7 +128,7 @@ function EditLogo() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>{t("SettingsLogoEdit")}</h1>
+        <h1 id="settingsLogoLabel">{t("SettingsLogoEdit")}</h1>
 
         <p>{t("SettingsLogoDescription")}</p>
       </div>
@@ -144,6 +144,7 @@ function EditLogo() {
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="usa-form usa-form--large"
+              aria-labelledby="settingsLogoLabel"
             >
               <FileInput
                 id="dataset"

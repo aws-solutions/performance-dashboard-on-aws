@@ -68,7 +68,9 @@ function EditSupportContactEmail() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>{t("EditSupportContactEmail.Header")}</h1>
+        <h1 id="editSupportContactEmailLabel">
+          {t("EditSupportContactEmail.Header")}
+        </h1>
 
         <p>{t("EditSupportContactEmail.HeaderDescription")}</p>
 
@@ -83,6 +85,7 @@ function EditSupportContactEmail() {
               onSubmit={handleSubmit(onSubmit)}
               className="usa-form usa-form--large"
               data-testid="EditSupportContactEmailForm"
+              aria-labelledby="editSupportContactEmailLabel"
             >
               <TextField
                 id="title"

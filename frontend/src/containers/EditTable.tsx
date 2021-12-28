@@ -463,9 +463,20 @@ function EditTable() {
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">{t("EditTableScreen.EditTable")}</h1>
-      <ul className="usa-button-group usa-button-group--segmented">
-        <li className="usa-button-group__item">
+      <h1 id="editTableFormHeader" className="margin-top-0">
+        {t("EditTableScreen.EditTable")}
+      </h1>
+      <ul
+        className="usa-button-group usa-button-group--segmented"
+        role="tablist"
+      >
+        <li
+          id="editTableFormHeaderStep1"
+          className="usa-button-group__item"
+          role="tab"
+          aria-selected={step === 0}
+          aria-controls="panel1"
+        >
           <button
             className={
               step !== 0 ? "usa-button usa-button--outline" : "usa-button"
@@ -477,7 +488,13 @@ function EditTable() {
             {t("EditTableScreen.ChooseData")}
           </button>
         </li>
-        <li className="usa-button-group__item">
+        <li
+          id="editTableFormHeaderStep2"
+          className="usa-button-group__item"
+          role="tab"
+          aria-selected={step === 1}
+          aria-controls="panel2"
+        >
           <button
             className={
               step !== 1 ? "usa-button usa-button--outline" : "usa-button"
@@ -490,7 +507,13 @@ function EditTable() {
             {t("EditTableScreen.CheckData")}
           </button>
         </li>
-        <li className="usa-button-group__item">
+        <li
+          id="editTableFormHeaderStep3"
+          className="usa-button-group__item"
+          role="tab"
+          aria-selected={step === 2}
+          aria-controls="panel3"
+        >
           <button
             className={
               step !== 2 ? "usa-button usa-button--outline" : "usa-button"
@@ -528,8 +551,17 @@ function EditTable() {
       ) : (
         <>
           <div className="grid-row width-desktop">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div hidden={step !== 0}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              aria-labelledby="editTableFormHeader"
+            >
+              <div
+                id="panel1"
+                hidden={step !== 0}
+                role="tabpanel"
+                tabIndex={0}
+                aria-labelledby="editTableFormHeaderStep1"
+              >
                 <PrimaryActionBar>
                   {configHeader}
                   <div className="margin-y-3" hidden={!showNoDatasetTypeAlert}>
@@ -562,7 +594,13 @@ function EditTable() {
                 </PrimaryActionBar>
               </div>
 
-              <div hidden={step !== 1}>
+              <div
+                id="panel2"
+                hidden={step !== 1}
+                role="tabpanel"
+                tabIndex={0}
+                aria-labelledby="editTableFormHeaderStep2"
+              >
                 <PrimaryActionBar>
                   {configHeader}
                   <CheckData
@@ -590,7 +628,13 @@ function EditTable() {
                 </PrimaryActionBar>
               </div>
 
-              <div hidden={step !== 2}>
+              <div
+                id="panel3"
+                hidden={step !== 2}
+                role="tabpanel"
+                tabIndex={0}
+                aria-labelledby="editTableFormHeaderStep3"
+              >
                 <Visualize
                   errors={errors}
                   register={register}

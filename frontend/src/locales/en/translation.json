@@ -251,6 +251,7 @@
     "SectionSummaryHint": "Give your section a summary to explain it in more depth. It can also be read by screen readers to describe the section for those with visual impairments. This field supports markdown."
   },
   "EditTextScreen": {
+    "Configure": "Configure section content",
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
     "EditTextSuccess": "'{{title}}' text has been successfully edited.",
@@ -893,6 +894,7 @@
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "Image '{{title}}' has been successfully edited.",
+    "ConfigureImage": "Configure image",
     "EditImage": "Edit Image",
     "ResolveError": "Resolve error(s) to edit the image",
     "Title": "Image title",

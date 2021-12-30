@@ -192,12 +192,13 @@ function EditImage() {
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">
+                <h1 id="editImageFormHeader" className="margin-top-0">
                   {t("EditImageScreen.EditImage")}
                 </h1>
                 <form
                   className="usa-form usa-form--large"
                   onSubmit={handleSubmit(onSubmit)}
+                  aria-labelledby="editImageFormHeader"
                 >
                   <fieldset className="usa-fieldset">
                     {errors.title || errors.altText ? (
@@ -209,6 +210,11 @@ function EditImage() {
                     ) : (
                       ""
                     )}
+
+                    <legend className="usa-hint">
+                      {t("EditImageScreen.ConfigureImage")}
+                    </legend>
+
                     <TextField
                       id="title"
                       name="title"

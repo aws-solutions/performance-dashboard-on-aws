@@ -128,17 +128,15 @@ function AddSection() {
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">
+                <h1 id="addSectionFormHeader" className="margin-top-0">
                   {t("AddSectionScreen.AddSection")}
                 </h1>
 
-                <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-                  {t("AddSectionScreen.Configure")}
-                </div>
                 <form
                   className="usa-form usa-form--large"
                   onChange={onFormChange}
                   onSubmit={handleSubmit(onSubmit)}
+                  aria-labelledby="addSectionFormHeader"
                 >
                   <fieldset className="usa-fieldset">
                     {errors.title ? (
@@ -150,6 +148,11 @@ function AddSection() {
                     ) : (
                       ""
                     )}
+
+                    <legend className="usa-hint">
+                      {t("AddSectionScreen.Configure")}
+                    </legend>
+
                     <TextField
                       id="title"
                       name="title"

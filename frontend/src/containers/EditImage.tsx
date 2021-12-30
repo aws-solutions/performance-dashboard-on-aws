@@ -211,7 +211,7 @@ function EditImage() {
                       ""
                     )}
 
-                    <legend className="margin-y-1 text-semibold display-inline-block font-sans-lg">
+                    <legend className="usa-hint">
                       {t("EditImageScreen.ConfigureImage")}
                     </legend>
 

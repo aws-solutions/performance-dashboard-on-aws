@@ -210,9 +210,11 @@ function EditImage() {
                     ) : (
                       ""
                     )}
-                    <legend className="usa-hint">
+
+                    <legend className="margin-y-1 text-semibold display-inline-block font-sans-lg">
                       {t("EditImageScreen.ConfigureImage")}
                     </legend>
+
                     <TextField
                       id="title"
                       name="title"

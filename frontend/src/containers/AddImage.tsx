@@ -151,16 +151,19 @@ function AddImage() {
       <div className="grid-row width-desktop grid-gap">
         <div className="grid-col-6" hidden={fullPreview}>
           <PrimaryActionBar>
-            <h1 className="margin-top-0">{t("AddImageScreen.AddImage")}</h1>
+            <h1 id="addImageFormHeader" className="margin-top-0">
+              {t("AddImageScreen.AddImage")}
+            </h1>
 
-            <div className="margin-y-1 text-semibold display-inline-block font-sans-lg">
-              {t("AddImageScreen.ConfigureImage")}
-            </div>
             <form
               className="usa-form usa-form--large"
               onSubmit={handleSubmit(onSubmit)}
+              aria-labelledby="addImageFormHeader"
             >
               <fieldset className="usa-fieldset">
+                <legend className="usa-hint">
+                  {t("AddImageScreen.ConfigureImage")}
+                </legend>
                 {errors.title || errors.altText ? (
                   <Alert
                     type="error"

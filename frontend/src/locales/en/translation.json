@@ -893,6 +893,7 @@
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "Image '{{title}}' has been successfully edited.",
+    "ConfigureImage": "Configure image",
     "EditImage": "Edit Image",
     "ResolveError": "Resolve error(s) to edit the image",
     "Title": "Image title",

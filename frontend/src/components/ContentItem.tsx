@@ -72,6 +72,8 @@ const ContentItem = (props: Props) => {
 
   return (
     <div
+      role="listitem"
+      aria-label={(props.index + 1)?.toString()}
       ref={ref}
       className={`${
         isDragging ? "usa-focus " : ""

@@ -38,6 +38,7 @@ function TabVertical(props: Props) {
 
   return (
     <li
+      role="tab"
       className={className}
       onClick={onClick}
       onKeyDown={onKeyDown}

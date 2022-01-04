@@ -375,11 +375,13 @@ function Table(props: Props) {
                   } font-sans-sm`}
                 >
                   <div className={`${isMobile ? "text-center" : "grid-col-4"}`}>
-                    <span className="margin-left-1 margin-right-2px">{`${t(
-                      "Page"
-                    )} `}</span>
+                    <label
+                      htmlFor="Page"
+                      className="margin-left-1 margin-right-2px"
+                    >{`${t("Page")} `}</label>
                     <span className="margin-right-1">
                       <input
+                        id="Page"
                         type="text"
                         value={`${currentPage}`}
                         className="margin-right-2px"
@@ -427,10 +429,12 @@ function Table(props: Props) {
                             gotoPage(0);
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToFirstPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleDoubleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToFirstPage")}
                           />
                         </button>
                         <button
@@ -441,10 +445,12 @@ function Table(props: Props) {
                             previousPage();
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToPrevPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToPrevPage")}
                           />
                         </button>
                       </>
@@ -460,10 +466,12 @@ function Table(props: Props) {
                             gotoPage(0);
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToFirstPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleDoubleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToFirstPage")}
                           />
                         </button>
                         <button
@@ -474,10 +482,12 @@ function Table(props: Props) {
                             previousPage();
                           }}
                           disabled={!canPreviousPage}
+                          aria-label={t("GoToPrevPage")}
                         >
                           <FontAwesomeIcon
                             icon={faAngleLeft}
                             className="margin-top-2px"
+                            aria-label={t("GoToPrevPage")}
                           />
                         </button>
                       </>
@@ -490,10 +500,12 @@ function Table(props: Props) {
                         nextPage();
                       }}
                       disabled={!canNextPage}
+                      aria-label={t("GoToNextPage")}
                     >
                       <FontAwesomeIcon
                         icon={faAngleRight}
                         className="margin-top-2px"
+                        aria-label={t("GoToNextPage")}
                       />
                     </button>
                     <button
@@ -503,10 +515,12 @@ function Table(props: Props) {
                         gotoPage(pageCount - 1);
                       }}
                       disabled={!canNextPage}
+                      aria-label={t("GoToLastPage")}
                     >
                       <FontAwesomeIcon
                         icon={faAngleDoubleRight}
                         className="margin-top-2px"
+                        aria-label={t("GoToLastPage")}
                       />
                     </button>
                   </div>
@@ -523,6 +537,7 @@ function Table(props: Props) {
                         setPageSize(Number(e.target.value));
                       }}
                       className="margin-right-05"
+                      aria-label={t("SelectPageSize")}
                     >
                       {[5, 10, 20, 25, 50, 100].map((pageSize) => (
                         <option key={pageSize} value={pageSize}>
@@ -566,11 +581,7 @@ function Table(props: Props) {
                         />
                       </div>
                       <div style={{ display: "inline-flex" }}>
-                        <Button
-                          type="button"
-                          variant="unstyled"
-                          className="margin-right-05"
-                        >
+                        <div className="margin-right-05">
                           <CSVLink
                             className="text-base-darker"
                             data={props.rows}
@@ -578,7 +589,7 @@ function Table(props: Props) {
                           >
                             {t("DownloadCSV")}
                           </CSVLink>
-                        </Button>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -601,7 +612,54 @@ function Table(props: Props) {
                 </div>
               </td>
             </tr>
-          ) : null}
+          ) : (
+            <>
+              {props.title && (
+                <tr role="row">
+                  <td
+                    role="cell"
+                    colSpan={
+                      props.columns.length -
+                      (props.hiddenColumns ? props.hiddenColumns.size : 0) +
+                      (props.title ? 0 : 1)
+                    }
+                    className={`button-cell-padding${
+                      props.keepBorderBottom ? "" : " button-cell-border"
+                    }`}
+                  >
+                    <div className="grid-row text-base-darker text-italic padding-y-05 padding-right-1">
+                      <div
+                        className={`${
+                          isMobile
+                            ? "text-center margin-top-05"
+                            : "grid-col-6 text-left"
+                        }`}
+                      >
+                        <div style={{ display: "inline-flex" }}>
+                          <FontAwesomeIcon
+                            icon={faDownload}
+                            className="margin-right-1"
+                            size="xs"
+                          />
+                        </div>
+                        <div style={{ display: "inline-flex" }}>
+                          <div className="margin-right-05">
+                            <CSVLink
+                              className="text-base-darker"
+                              data={props.rows}
+                              filename={props.title}
+                            >
+                              {t("DownloadCSV")}
+                            </CSVLink>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </>
+          )}
         </tbody>
       </table>
     </div>

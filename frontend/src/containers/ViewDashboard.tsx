@@ -122,7 +122,11 @@ function ViewDashboard() {
             <div key={index}>
               {widget.widgetType == WidgetType.Section &&
               !widget.content.showWithTabs ? (
-                <div className="margin-top-4 usa-prose" id={widget.id}>
+                <div
+                  className="margin-top-4 usa-prose"
+                  id={widget.id}
+                  tabIndex={-1}
+                >
                   <WidgetRender
                     widget={widget}
                     widgets={dashboard.widgets}
@@ -141,7 +145,11 @@ function ViewDashboard() {
                   bottomOffset={`${windowSize.height - 90}px`}
                   fireOnRapidScroll={false}
                 >
-                  <div className="margin-top-4 usa-prose" id={widget.id}>
+                  <div
+                    className="margin-top-4 usa-prose"
+                    id={widget.id}
+                    tabIndex={-1}
+                  >
                     <WidgetRender
                       widget={widget}
                       widgets={dashboard.widgets}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, KeyboardEvent } from "react";
 import Tab from "./Tab";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import { LeftArrow, RightArrow } from "./Arrows";
@@ -16,6 +16,7 @@ type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
 function Tabs(props: Props) {
   const [scrollMenuObj, setScrollMenuObj] = useState<scrollVisibilityApiType>();
   const [activeTab, setActiveTab] = useState<string>(props.defaultActive);
+  const tabsMap = new Map<number, string>();
 
   useEffect(() => {
     setActiveTab(props.defaultActive);
@@ -38,6 +39,32 @@ function Tabs(props: Props) {
     setActiveTab(tab);
   };
 
+  function getActiveTabIndex(): number {
+    let index = 0;
+    tabsMap.forEach((value: string, key: number) => {
+      if (value === activeTab) {
+        index = key;
+        return;
+      }
+    });
+    return index;
+  }
+
+  const onKeyDown = (e: KeyboardEvent<HTMLElement>) => {
+    console.log(e.key);
+    if (e.key === "ArrowRight") {
+      const index = getActiveTabIndex();
+      if (index < tabsMap.size - 1) {
+        setActiveTab(tabsMap.get(index + 1) || props.defaultActive);
+      }
+    } else if (e.key === "ArrowLeft") {
+      const index = getActiveTabIndex();
+      if (index > 0) {
+        setActiveTab(tabsMap.get(index - 1) || props.defaultActive);
+      }
+    }
+  };
+
   const onEnterTabItem = (tab: string, currentTab: HTMLElement) => {
     const rect = currentTab.getBoundingClientRect();
     const wrapper = scrollMenuObj?.scrollContainer?.current;
@@ -56,7 +83,7 @@ function Tabs(props: Props) {
   };
 
   return (
-    <div className="tabs">
+    <div className="tabs" onKeyDown={onKeyDown} role="tablist">
       <ScrollMenu
         LeftArrow={props.showArrows && LeftArrow}
         RightArrow={props.showArrows && RightArrow}
@@ -64,14 +91,16 @@ function Tabs(props: Props) {
         onWheel={onWheel}
         wrapperClassName="border-base-lighter border-bottom margin-top-1"
       >
-        {React.Children.map(props.children, (child) => {
+        {React.Children.map(props.children, (child: any, index) => {
+          tabsMap.set(index, child.props.id);
           return (
             <Tab
-              id={(child as any).props.id}
-              itemId={(child as any).props.id}
+              aria-controls={child.props.id}
+              id={child.props.id}
+              itemId={child.props.id}
               activeTab={activeTab}
-              key={(child as any).props.id}
-              label={(child as any).props.label}
+              key={child.props.id}
+              label={child.props.label}
               onClick={onClickTabItem}
               onEnter={onEnterTabItem}
               activeColor={props.activeColor}
@@ -80,7 +109,7 @@ function Tabs(props: Props) {
           );
         })}
       </ScrollMenu>
-      <div className="tab-content">
+      <div className="tab-content" role="tabpanel">
         {React.Children.map(props.children, (child) => {
           if ((child as any).props.id !== activeTab) return undefined;
           return (child as any).props.children;
@@ -97,7 +126,6 @@ function onWheel(apiObj: scrollVisibilityApiType, ev: React.WheelEvent): void {
     ev.stopPropagation();
     return;
   }
-
   if (ev.deltaY < 0) {
     apiObj.scrollNext();
   } else if (ev.deltaY > 0) {

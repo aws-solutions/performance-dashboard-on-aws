@@ -227,7 +227,7 @@
     "AddTextError": "Resolver errores al agregar el texto",
     "AddTextSuccess": "El texto “{{title}}” se ha agregado correctamente.",
     "CreatingText": "Creación de texto",
-    "Configure": "Configurar contenido del texto",
+    "Configure": "Configurar el contenido del texto",
     "TextTitle": "Título del texto",
     "TextTitleError": "Especifique un título de texto",
     "TextTitleHint": "Asigne un título descriptivo al contenido.",
@@ -264,6 +264,7 @@
     "ViewMarkdownSyntax": "Ver sintaxis de marcado"
   },
   "EditSectionScreen": {
+    "Configure": "Configurar el contenido del texto",
     "EditSection": "Editar la sección",
     "EditSectionError": "Resolver los errores para editar la sección",
     "EditSectionSuccess": "La sección “{{title}}” se ha editado correctamente.",
@@ -278,6 +279,7 @@
   },
   "AddMetricScreen": {
     "AddMetric": "Agregar métrica",
+    "Configure": "Configurar el contenido de la métrica",
     "MetricTitle": "Título de la métrica",
     "MetricTitleHint": "Por ejemplo, “Transacciones por año”.",
     "MetricTitleError": "Especifique un título",
@@ -294,6 +296,7 @@
     "MetricSuccessfullyAdded": "Métrica agregada correctamente."
   },
   "EditMetricScreen": {
+    "Configure": "Configurar el contenido de la métrica",
     "EditMetric": "Editar métrica",
     "MetricTitle": "Título de la métrica",
     "MetricTitleHint": "Por ejemplo, “Transacciones por año”.",
@@ -316,6 +319,7 @@
     "Tags": "Etiquetas",
     "AddMetrics": "Agregar métricas",
     "ChooseData": "Elegir datos",
+    "Configure": "Configure el contenido de las métricas.",
     "Visualize": "Visualizar",
     "UploadingFile": "Cargando archivo",
     "FileNameDoesNotExist": "Los metadatos no contienen el nombre de archivo",
@@ -342,6 +346,7 @@
   "EditMetricsScreen": {
     "MetricsEditedSuccessfully": "Las métricas “{{title}}” se han editado correctamente.",
     "EditMetrics": "Editar métricas",
+    "Configure": "Configure el contenido de las métricas.",
     "UploadingFile": "Cargando archivo",
     "EditingMetrics": "Editando métricas",
     "EnterMetric": "Escriba al menos una métrica para continuar",
@@ -940,5 +945,20 @@
   "Tab": "Pestaña",
   "Active": "Activo",
   "SettingsTopicAreaNameCreateSuccess": "“{{name}}” {{topicAreaName}} se ha creado correctamente.",
-  "SettingsTopicAreaNameSuccessfullyDeleted": "“{{name}}” {{topicAreaName}} se ha eliminado correctamente."
+  "SettingsTopicAreaNameSuccessfullyDeleted": "“{{name}}” {{topicAreaName}} se ha eliminado correctamente.",
+  "GoToFirstPage": "Ir a la primera página",
+  "GoToLastPage": "Ir a la última página",
+  "GoToNextPage": "Ir a la página siguiente",
+  "GoToPrevPage": "Ir a la página anterior",
+  "SelectPageSize": "Seleccionar la cantidad de resultados que se muestran en la página",
+  "SortDashboards": "Ordenar por nombre de panel",
+  "SortCreatedBy": "Ordenar por creado por nombre",
+  "SortTopicAreaName": "Ordenar por nombre de {{topicAreaName}}",
+  "CloseMenu": "Cerrar menú",
+  "ARIA": {
+    "Header": "Encabezado",
+    "Main": "Principal",
+    "Logo": "Logotipo",
+    "Footer": "Pie de página"
+  }
 }

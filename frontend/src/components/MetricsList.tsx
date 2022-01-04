@@ -112,7 +112,7 @@ function MetricsList(props: Props) {
   );
 
   return (
-    <div className="display-block">
+    <div className="display-block" role="group" aria-label={t("Metrics")}>
       <label className="margin-bottom-0 margin-top-2 usa-label text-bold">
         {t("Metrics")}
         <span>&#42;</span>
@@ -132,7 +132,7 @@ function MetricsList(props: Props) {
         </label>
       </div>
       {props.metrics && props.metrics.length ? (
-        <div>
+        <div role="list">
           <DndProvider
             backend={window.innerWidth < 1024 ? TouchBackend : HTML5Backend}
             options={{ enableMouseEvents: true }}

@@ -136,8 +136,6 @@ describe("dashboard archived", () => {
   });
 
   test("renders a view history button", async () => {
-    expect(
-      screen.getByRole("button", { name: "Actions" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Actions" })).toBeInTheDocument();
   });
 });

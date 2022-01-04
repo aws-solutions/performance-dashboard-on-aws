@@ -264,6 +264,7 @@
     "ViewMarkdownSyntax": "Visualizar sintaxe Markdown"
   },
   "EditSectionScreen": {
+    "Configure": "Configurar conteúdo do texto",
     "EditSection": "Editar seção",
     "EditSectionError": "Resolver erro(s) para editar a seção",
     "EditSectionSuccess": "A seção “{{title}}” foi editada com êxito.",
@@ -278,6 +279,7 @@
   },
   "AddMetricScreen": {
     "AddMetric": "Adicionar métrica",
+    "Configure": "Configurar conteúdo da métrica",
     "MetricTitle": "Título da métrica",
     "MetricTitleHint": "Por exemplo, “Transações por ano”.",
     "MetricTitleError": "Especifique um título",
@@ -294,6 +296,7 @@
     "MetricSuccessfullyAdded": "Métrica adicionada com êxito."
   },
   "EditMetricScreen": {
+    "Configure": "Configurar conteúdo da métrica",
     "EditMetric": "Editar métrica",
     "MetricTitle": "Título da métrica",
     "MetricTitleHint": "Por exemplo, “Transações por ano”.",
@@ -316,6 +319,7 @@
     "Tags": "Tags",
     "AddMetrics": "Adicionar métricas",
     "ChooseData": "Escolher dados",
+    "Configure": "Configure o conteúdo das métricas.",
     "Visualize": "Visualizar",
     "UploadingFile": "Fazendo upload do arquivo",
     "FileNameDoesNotExist": "Os metadados não contêm o nome do arquivo",
@@ -342,6 +346,7 @@
   "EditMetricsScreen": {
     "MetricsEditedSuccessfully": "As métricas “{{title}}” foram editadas com êxito.",
     "EditMetrics": "Editar métricas",
+    "Configure": "Configure o conteúdo das métricas.",
     "UploadingFile": "Fazendo upload do arquivo",
     "EditingMetrics": "Editando métricas",
     "EnterMetric": "Insira pelo menos uma métrica para continuar",
@@ -940,5 +945,20 @@
   "Tab": "Guia",
   "Active": "Ativa",
   "SettingsTopicAreaNameCreateSuccess": "“{{name}}” {{topicAreaName}} foi criado com êxito.",
-  "SettingsTopicAreaNameSuccessfullyDeleted": "“{{name}}” {{topicAreaName}} foi excluído com êxito."
+  "SettingsTopicAreaNameSuccessfullyDeleted": "“{{name}}” {{topicAreaName}} foi excluído com êxito.",
+  "GoToFirstPage": "Ir para a primeira página",
+  "GoToLastPage": "Ir para a última página",
+  "GoToNextPage": "Ir para a próxima página",
+  "GoToPrevPage": "Ir para a página anterior",
+  "SelectPageSize": "Selecione a quantidade de resultados exibidos na página",
+  "SortDashboards": "Classificar por nome do painel",
+  "SortCreatedBy": "Classificar por nome de Criado por",
+  "SortTopicAreaName": "Classificar por nome de {{topicAreaName}}",
+  "CloseMenu": "Fechar menu",
+  "ARIA": {
+    "Header": "Cabeçalho",
+    "Main": "Principal",
+    "Logo": "Logotipo",
+    "Footer": "Rodapé"
+  }
 }

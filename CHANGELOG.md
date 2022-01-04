@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.7] - 2022-01-04
+
+- Made improvements to meet accessibility requirements
+  - Made "Return to Top" link actionable for screen readers
+  - Made table of contents scrollable and visible
+  - Made Settings acknowledge statement mandatory
+  - Made scrollable regions focusable for accessibility
+  - Improved focus order of table of contents
+  - Added programmatic context to grouped form elements to benefit screen readers
+
 ## [1.1.6] - 2021-12-17
 
 - Copy/duplicate an individual dashboard

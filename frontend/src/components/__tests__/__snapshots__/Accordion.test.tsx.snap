@@ -21,9 +21,11 @@ exports[`renders an accordion with multiple elements 1`] = `
       class="usa-accordion__content usa-prose"
       id="1"
     >
-      <p>
-        Hello this is an item in the accordion.
-      </p>
+      <ul>
+        <p>
+          Hello this is an item in the accordion.
+        </p>
+      </ul>
     </div>
     <h2
       class="usa-accordion__heading"
@@ -40,9 +42,11 @@ exports[`renders an accordion with multiple elements 1`] = `
       class="usa-accordion__content usa-prose"
       id="2"
     >
-      <p>
-        Hello this is a second item in the accordion.
-      </p>
+      <ul>
+        <p>
+          Hello this is a second item in the accordion.
+        </p>
+      </ul>
     </div>
     <h2
       class="usa-accordion__heading"
@@ -59,9 +63,11 @@ exports[`renders an accordion with multiple elements 1`] = `
       class="usa-accordion__content usa-prose"
       id="3"
     >
-      <p>
-        Hello this is a third item in the accordion.
-      </p>
+      <ul>
+        <p>
+          Hello this is a third item in the accordion.
+        </p>
+      </ul>
     </div>
   </div>
 </div>

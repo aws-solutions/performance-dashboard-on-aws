@@ -561,9 +561,7 @@ function ViewDashboardAdmin() {
         isOpen={isOpenCopyModal}
         closeModal={closeCopyModal}
         title={`${t("DashboardListing.Copy")} "${dashboard.name}"?`}
-        message={`${t("DashboardListing.ThisWillCopy")}
-          ${t("DashboardListing.ThisDashboard")}.
-          ${t("DashboardListing.CopyModalMessage")}`}
+        message={`${t("DashboardListing.CopyDashboard")}`}
         buttonType={t("DashboardListing.Copy")}
         buttonAction={copyDashboard}
       />

@@ -31,7 +31,7 @@ function Item(props: ItemProps) {
         </button>
       </h2>
       <div id={props.id} className="usa-accordion__content usa-prose">
-        {props.children}
+        <ul>{props.children}</ul>
       </div>
     </>
   );

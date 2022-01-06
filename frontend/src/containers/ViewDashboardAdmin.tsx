@@ -276,18 +276,21 @@ function ViewDashboardAdmin() {
         {(dashboard.state === DashboardState.Published ||
           dashboard.state === DashboardState.Inactive ||
           dashboard.state === DashboardState.Archived) && (
-          <Button
-            variant="unstyled"
-            type="button"
-            className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-            onClick={() => setShowVersionNotes(!showVersionNotes)}
-          >
-            {`${
-              showVersionNotes
-                ? `${t("ViewDashboardAlertVersionNotes.Hide")}`
-                : `${t("ViewDashboardAlertVersionNotes.Show")}`
-            } ${t("ViewDashboardAlertVersionNotes.VersionNotes")}`}
-          </Button>
+          <div>
+            <input
+              className="checkbox"
+              type="checkbox"
+              id="ShowVersionNotes"
+              checked={showVersionNotes}
+              onClick={() => setShowVersionNotes(!showVersionNotes)}
+              onChange={() => setShowVersionNotes(!showVersionNotes)}
+            />
+            <label className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest">
+              {`${t("ViewDashboardAlertVersionNotes.Show")} ${t(
+                "ViewDashboardAlertVersionNotes.VersionNotes"
+              )}`}
+            </label>
+          </div>
         )}
       </li>
     </ul>

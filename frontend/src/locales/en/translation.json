@@ -725,11 +725,10 @@
     "Published": "Published",
     "Archived": "Archived",
     "Copy": "Copy",
-    "ThisWillCopy": "This will create a draft copy of",
     "CopyDashboard": "This will create a draft copy of this dashboard. Are you sure you want to continue?",
+    "CopyDashboard_plural": "This will create draft copies of these dashboards. Are you sure you want to continue?",
     "TheseDashboards": "these dashboards",
     "ThisDashboard": "this dashboard",
-    "CopyModalMessage": "Are you sure you want to continue?",
     "SuccessfullyCopied": "successfully copied."
   },
   "ShowDataTableButton": "Show data table",

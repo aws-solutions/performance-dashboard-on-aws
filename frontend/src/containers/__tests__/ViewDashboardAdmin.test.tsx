@@ -107,11 +107,9 @@ describe("dashboard published", () => {
     expect(screen.getByRole("button", { name: "Update" })).toBeInTheDocument();
   });
 
-  test("renders show version notes button", async () => {
-    const viewButton = screen.getByRole("button", {
-      name: "Show version notes",
-    });
-    expect(viewButton).toBeInTheDocument();
+  test("renders show version notes checkbox", async () => {
+    const viewCheckbox = screen.getByText("Show version notes");
+    expect(viewCheckbox).toBeInTheDocument();
   });
 });
 

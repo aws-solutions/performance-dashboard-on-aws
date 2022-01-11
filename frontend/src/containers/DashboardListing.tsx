@@ -193,11 +193,9 @@ function DashboardListing() {
         isOpen={isOpenCopyModal}
         closeModal={closeCopyModal}
         title={`${t("DashboardListing.Copy")} ${dashboardLabel}?`}
-        message={`${t("DashboardListing.ThisWillCopy")} ${
-          selectedDashboards.length !== 1
-            ? t("DashboardListing.TheseDashboards")
-            : t("DashboardListing.ThisDashboard")
-        }. ${t("DashboardListing.CopyModalMessage")}`}
+        message={`${t("DashboardListing.CopyDashboard", {
+          count: selectedDashboards.length,
+        })}`}
         buttonType={t("DashboardListing.Copy")}
         buttonAction={copyDashboards}
       />

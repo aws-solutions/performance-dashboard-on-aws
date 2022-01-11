@@ -100,7 +100,7 @@ describe("dashboard published", () => {
   });
 
   test("renders an archive button", async () => {
-    expect(screen.getByRole("button", { name: "Archive" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Actions" })).toBeInTheDocument();
   });
 
   test("renders an update button", async () => {
@@ -134,8 +134,6 @@ describe("dashboard archived", () => {
   });
 
   test("renders a view history button", async () => {
-    expect(
-      screen.getByRole("button", { name: "View history" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Actions" })).toBeInTheDocument();
   });
 });

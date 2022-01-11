@@ -394,6 +394,12 @@
     "EditTableSuccess": "'{{title}}' table has been successfully edited.",
     "ChooseDataset": "Choose a dataset to continue"
   },
+  "ViewDashboardAdmin": {
+    "Copy": "Copy",
+    "CopyDashboard": "This will create a draft copy of this dashboard. Are you sure you want to continue?",
+    "Dashboard": "dashboard",
+    "SuccessfullyCopied": "successfully copied."
+  },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",
   "BrandingAndStylingLogo": "Logo",

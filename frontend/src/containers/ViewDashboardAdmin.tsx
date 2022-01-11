@@ -131,8 +131,8 @@ function ViewDashboardAdmin() {
         alert: {
           type: "success",
           message: `${dashboard.name}
-                    ${t("DashboardListing.DashboardSingular")}
-                    ${t("DashboardListing.SuccessfullyCopied")}`,
+                    ${t("ViewDashboardAdmin.Dashboard")}
+                    ${t("ViewDashboardAdmin.SuccessfullyCopied")}`,
         },
       });
     }
@@ -560,9 +560,9 @@ function ViewDashboardAdmin() {
       <Modal
         isOpen={isOpenCopyModal}
         closeModal={closeCopyModal}
-        title={`${t("DashboardListing.Copy")} "${dashboard.name}"?`}
-        message={`${t("DashboardListing.CopyDashboard")}`}
-        buttonType={t("DashboardListing.Copy")}
+        title={`${t("ViewDashboardAdmin.Copy")} "${dashboard.name}"?`}
+        message={`${t("ViewDashboardAdmin.CopyDashboard")}`}
+        buttonType={t("ViewDashboardAdmin.Copy")}
         buttonAction={copyDashboard}
       />
 

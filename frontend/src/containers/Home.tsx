@@ -77,23 +77,25 @@ function Home() {
                 {topicarea.dashboards?.map((dashboard) => {
                   const updatedAt = dateFormatter(dashboard.updatedAt);
                   return (
-                    <div
-                      key={dashboard.id}
-                      className="border-bottom border-base-light padding-2"
-                    >
-                      {dashboard.friendlyURL ? (
-                        <Link to={`/${dashboard.friendlyURL}`}>
-                          {dashboard.name}
-                        </Link>
-                      ) : (
-                        // If dashboard doesn't have a friendlyURL, use the dashboardId.
-                        <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
-                      )}
-                      <br />
-                      <span className="text-base text-italic">
-                        {t("LastUpdatedLabel")} {updatedAt}
-                      </span>
-                    </div>
+                    <li key={dashboard.id} style={{ listStyleType: "none" }}>
+                      <div
+                        key={dashboard.id}
+                        className="border-bottom border-base-light padding-2"
+                      >
+                        {dashboard.friendlyURL ? (
+                          <Link to={`/${dashboard.friendlyURL}`}>
+                            {dashboard.name}
+                          </Link>
+                        ) : (
+                          // If dashboard doesn't have a friendlyURL, use the dashboardId.
+                          <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
+                        )}
+                        <br />
+                        <span className="text-base text-italic">
+                          {t("LastUpdatedLabel")} {updatedAt}
+                        </span>
+                      </div>
+                    </li>
                   );
                 })}
               </Accordion.Item>

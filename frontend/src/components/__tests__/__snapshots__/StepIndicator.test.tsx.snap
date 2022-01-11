@@ -3,7 +3,6 @@
 exports[`renders a step indicator with multiple segments 1`] = `
 <div>
   <div
-    aria-label="progress"
     aria-valuemax="3"
     aria-valuemin="1"
     aria-valuenow="1"
@@ -11,6 +10,7 @@ exports[`renders a step indicator with multiple segments 1`] = `
     role="progressbar"
   >
     <ol
+      aria-label="progress"
       class="usa-step-indicator__segments"
     >
       <li
@@ -74,7 +74,6 @@ exports[`renders a step indicator with multiple segments 1`] = `
 exports[`renders a step indicator with one completed step 1`] = `
 <div>
   <div
-    aria-label="progress"
     aria-valuemax="3"
     aria-valuemin="1"
     aria-valuenow="2"
@@ -82,6 +81,7 @@ exports[`renders a step indicator with one completed step 1`] = `
     role="progressbar"
   >
     <ol
+      aria-label="progress"
       class="usa-step-indicator__segments"
     >
       <li

@@ -2,7 +2,9 @@
 
 exports[`section preview should match snapshot 1`] = `
 <div>
-  <div>
+  <div
+    aria-label="test title"
+  >
     <div>
       <h2>
         test title

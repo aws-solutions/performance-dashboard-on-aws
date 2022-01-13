@@ -893,11 +893,7 @@
     "Cancel": "Cancel",
     "ImageSize": "Image size (optional)",
     "ImageSizeHint": "How your image will display in the dashboard.",
-    "AsUploaded": "As uploaded (do not scale)",
-    "100": "100%",
-    "75": "75%",
-    "50": "50%",
-    "25": "25%"
+    "AsUploaded": "As uploaded (do not scale)"
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "Image '{{title}}' has been successfully edited.",
@@ -919,11 +915,7 @@
     "ToggleSummary": "Show description below image",
     "ImageSize": "Image size (optional)",
     "ImageSizeHint": "How your image will display in the dashboard.",
-    "AsUploaded": "As uploaded (do not scale)",
-    "100": "100%",
-    "75": "75%",
-    "50": "50%",
-    "25": "25%"
+    "AsUploaded": "As uploaded (do not scale)"
   },
   "EnterpriseSignIn": "Enterprise Sign-in",
   "Actions": "Actions",
@@ -981,5 +973,6 @@
     "Logo": "Logo",
     "Footer": "Footer",
     "OpenInNewTab": "(opens in a new tab)"
-  }
+  },
+  "percentage": "{{pct}}%"
 }

@@ -242,49 +242,32 @@ function AddImage() {
                         },
                         {
                           value: "100%",
-                          label: t("AddImageScreen.100"),
+                          label: t("percentage", { pct: "100" }),
                         },
                         {
                           value: "75%",
-                          label: t("AddImageScreen.75"),
+                          label: t("percentage", { pct: "75" }),
                         },
                         {
                           value: "50%",
-                          label: t("AddImageScreen.50"),
+                          label: t("percentage", { pct: "50" }),
                         },
                         {
                           value: "25%",
-                          label: t("AddImageScreen.25"),
+                          label: t("percentage", { pct: "25" }),
                         },
                       ]}
                     />
                   </div>
                   <div className="grid-col-3 margin-top-10">
                     <div style={{ position: "absolute", bottom: "0px" }}>
-                      {scalePct === "100%" && (
+                      {scalePct !== undefined && scalePct !== "auto" && (
                         <img
-                          src={`${process.env.PUBLIC_URL}/images/image-scale-100.svg`}
-                          width="100%"
-                          height="auto"
-                        />
-                      )}
-                      {scalePct === "75%" && (
-                        <img
-                          src={`${process.env.PUBLIC_URL}/images/image-scale-75.svg`}
-                          width="100%"
-                          height="auto"
-                        />
-                      )}
-                      {scalePct === "50%" && (
-                        <img
-                          src={`${process.env.PUBLIC_URL}/images/image-scale-50.svg`}
-                          width="100%"
-                          height="auto"
-                        />
-                      )}
-                      {scalePct === "25%" && (
-                        <img
-                          src={`${process.env.PUBLIC_URL}/images/image-scale-25.svg`}
+                          src={
+                            `${process.env.PUBLIC_URL}/images/image-scale-` +
+                            scalePct.slice(0, scalePct.length - 1) +
+                            `.svg`
+                          }
                           width="100%"
                           height="auto"
                         />

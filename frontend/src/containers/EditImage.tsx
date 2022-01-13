@@ -173,6 +173,11 @@ function EditImage() {
     }
   };
 
+  const getScaleImageUrl = (scalePct: string) => {
+    let url =
+      "${process.env.PUBLIC_URL}/images/image-scale-" + scalePct + ".svg";
+  };
+
   const crumbs = [
     {
       label: t("Dashboards"),
@@ -296,53 +301,40 @@ function EditImage() {
                             },
                             {
                               value: "100%",
-                              label: t("EditImageScreen.100"),
+                              label: t("percentage", { pct: "100" }),
                             },
                             {
                               value: "75%",
-                              label: t("EditImageScreen.75"),
+                              label: t("percentage", { pct: "75" }),
                             },
                             {
                               value: "50%",
-                              label: t("EditImageScreen.50"),
+                              label: t("percentage", { pct: "50" }),
                             },
                             {
                               value: "25%",
-                              label: t("EditImageScreen.25"),
+                              label: t("percentage", { pct: "25" }),
                             },
                           ]}
                         />
                       </div>
                       <div className="grid-col-3 margin-top-10">
                         <div style={{ position: "absolute", bottom: "0px" }}>
-                          {widget.content.scalePct === "100%" && (
-                            <img
-                              src={`${process.env.PUBLIC_URL}/images/image-scale-100.svg`}
-                              width="100%"
-                              height="auto"
-                            />
-                          )}
-                          {widget.content.scalePct === "75%" && (
-                            <img
-                              src={`${process.env.PUBLIC_URL}/images/image-scale-75.svg`}
-                              width="100%"
-                              height="auto"
-                            />
-                          )}
-                          {widget.content.scalePct === "50%" && (
-                            <img
-                              src={`${process.env.PUBLIC_URL}/images/image-scale-50.svg`}
-                              width="100%"
-                              height="auto"
-                            />
-                          )}
-                          {widget.content.scalePct === "25%" && (
-                            <img
-                              src={`${process.env.PUBLIC_URL}/images/image-scale-25.svg`}
-                              width="100%"
-                              height="auto"
-                            />
-                          )}
+                          {widget.content.scalePct !== undefined &&
+                            widget.content.scalePct !== "auto" && (
+                              <img
+                                src={
+                                  `${process.env.PUBLIC_URL}/images/image-scale-` +
+                                  widget.content.scalePct.slice(
+                                    0,
+                                    widget.content.scalePct.length - 1
+                                  ) +
+                                  `.svg`
+                                }
+                                width="100%"
+                                height="auto"
+                              />
+                            )}
                         </div>
                       </div>
                     </div>

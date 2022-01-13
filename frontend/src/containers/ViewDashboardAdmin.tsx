@@ -27,10 +27,13 @@ import Navigation from "../components/Navigation";
 import { Waypoint } from "react-waypoint";
 import Dropdown from "../components/Dropdown";
 import AlertContainer from "./AlertContainer";
+import DropdownMenu from "../components/DropdownMenu";
 
 interface PathParams {
   dashboardId: string;
 }
+
+const { MenuItem } = DropdownMenu;
 
 function ViewDashboardAdmin() {
   const history = useHistory<LocationState>();
@@ -45,6 +48,7 @@ function ViewDashboardAdmin() {
   const [showMobilePreview, setShowMobilePreview] = useState(false);
   const [activeWidgetId, setActiveWidgetId] = useState("");
   const [activeTabId, setActiveTabId] = useState("");
+  const [isOpenCopyModal, setIsOpenCopyModal] = useState(false);
   const windowSize = useWindowSize();
 
   const { t } = useTranslation();
@@ -107,6 +111,35 @@ function ViewDashboardAdmin() {
     if (dashboard) {
       history.push(`/admin/dashboard/${dashboard.id}/history`);
     }
+  };
+
+  const closeCopyModal = () => {
+    setIsOpenCopyModal(false);
+  };
+
+  const onCopyDashboard = () => {
+    setIsOpenCopyModal(true);
+  };
+
+  const copyDashboard = async () => {
+    closeCopyModal();
+
+    if (dashboard) {
+      await BackendService.copyDashboard(dashboard.id);
+
+      history.push("/admin/dashboards?tab=draft", {
+        alert: {
+          type: "success",
+          message: `${dashboard.name}
+                    ${t("ViewDashboardAdmin.Dashboard")}
+                    ${t("ViewDashboardAdmin.SuccessfullyCopied")}`,
+        },
+      });
+    }
+  };
+
+  const onArchivePublishedDashboard = () => {
+    setIsOpenArchiveModal(true);
   };
 
   const onRepublishDashboard = async () => {
@@ -303,13 +336,17 @@ function ViewDashboardAdmin() {
           {isMobile && (
             <div className="grid-row margin-top-2">
               <div className="grid-col-6 padding-right-05">
-                <Button
-                  variant="outline"
-                  type="button"
-                  onClick={() => setIsOpenArchiveModal(true)}
-                >
-                  {t("ViewDashboardAlertButton.Archive")}
-                </Button>
+                <DropdownMenu buttonText={t("Actions")} variant="outline">
+                  <MenuItem onSelect={onDashboardHistory}>
+                    {t("ViewHistoryLink")}
+                  </MenuItem>
+                  <MenuItem onSelect={onArchivePublishedDashboard}>
+                    {t("ViewDashboardAlertButton.Archive")}
+                  </MenuItem>
+                  <MenuItem onSelect={onCopyDashboard}>
+                    {t("CopyButton")}
+                  </MenuItem>
+                </DropdownMenu>
               </div>
               <div className="grid-col-6 padding-left-05">
                 <Button
@@ -324,13 +361,17 @@ function ViewDashboardAdmin() {
           )}
           {!isMobile && (
             <>
-              <Button
-                variant="outline"
-                type="button"
-                onClick={() => setIsOpenArchiveModal(true)}
-              >
-                {t("ViewDashboardAlertButton.Archive")}
-              </Button>
+              <DropdownMenu buttonText={t("Actions")} variant="outline">
+                <MenuItem onSelect={onDashboardHistory}>
+                  {t("ViewHistoryLink")}
+                </MenuItem>
+                <MenuItem onSelect={onArchivePublishedDashboard}>
+                  {t("ViewDashboardAlertButton.Archive")}
+                </MenuItem>
+                <MenuItem onSelect={onCopyDashboard}>
+                  {t("CopyButton")}
+                </MenuItem>
+              </DropdownMenu>
               <Button
                 variant="base"
                 onClick={() => setIsOpenUpdateModal(true)}
@@ -348,13 +389,14 @@ function ViewDashboardAdmin() {
           {isMobile && (
             <div className="grid-row margin-top-2">
               <div className="grid-col-6 padding-right-05">
-                <Button
-                  variant="outline"
-                  type="button"
-                  onClick={onDashboardHistory}
-                >
-                  {t("ViewHistoryLink")}
-                </Button>
+                <DropdownMenu buttonText={t("Actions")} variant="outline">
+                  <MenuItem onSelect={onDashboardHistory}>
+                    {t("ViewHistoryLink")}
+                  </MenuItem>
+                  <MenuItem onSelect={onCopyDashboard}>
+                    {t("CopyButton")}
+                  </MenuItem>
+                </DropdownMenu>
               </div>
               <div className="grid-col-6 padding-left-05">
                 <Button
@@ -369,13 +411,14 @@ function ViewDashboardAdmin() {
           )}
           {!isMobile && (
             <>
-              <Button
-                variant="outline"
-                type="button"
-                onClick={onDashboardHistory}
-              >
-                {t("ViewHistoryLink")}
-              </Button>
+              <DropdownMenu buttonText={t("Actions")} variant="outline">
+                <MenuItem onSelect={onDashboardHistory}>
+                  {t("ViewHistoryLink")}
+                </MenuItem>
+                <MenuItem onSelect={onCopyDashboard}>
+                  {t("CopyButton")}
+                </MenuItem>
+              </DropdownMenu>
               <Button
                 variant="base"
                 type="button"
@@ -516,6 +559,16 @@ function ViewDashboardAdmin() {
         buttonType={t("PreparePublishingModalButton")}
         buttonAction={onPublishDashboard}
       />
+
+      <Modal
+        isOpen={isOpenCopyModal}
+        closeModal={closeCopyModal}
+        title={`${t("ViewDashboardAdmin.Copy")} "${dashboard.name}"?`}
+        message={`${t("ViewDashboardAdmin.CopyDashboard")}`}
+        buttonType={t("ViewDashboardAdmin.Copy")}
+        buttonAction={copyDashboard}
+      />
+
       <PrimaryActionBar stickyPosition={75}>
         {(dashboard.state === DashboardState.Published ||
           dashboard.state === DashboardState.Inactive) &&

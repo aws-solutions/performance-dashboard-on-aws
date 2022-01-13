@@ -21,6 +21,8 @@ exports[`image preview should match snapshot 1`] = `
     <div>
       <img
         alt="alt text"
+        height="auto"
+        width="75%"
       />
     </div>
   </div>

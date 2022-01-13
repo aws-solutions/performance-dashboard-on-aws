@@ -170,6 +170,7 @@ export interface ImageWidget extends Widget {
       raw: string;
     };
     filename: string;
+    scalePct?: string;
   };
 }
 

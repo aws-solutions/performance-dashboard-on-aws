@@ -20,6 +20,7 @@ import Link from "../components/Link";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
 import Alert from "../components/Alert";
+import RadioButtons from "../components/RadioButtons";
 
 interface FormValues {
   title: string;
@@ -27,6 +28,7 @@ interface FormValues {
   showTitle: boolean;
   summaryBelow: boolean;
   altText: string;
+  scalePct: string;
 }
 
 interface PathParams {
@@ -79,6 +81,7 @@ function EditImage() {
           imageAltText: values.altText,
           summary: values.summary,
           summaryBelow: values.summaryBelow,
+          scalePct: values.scalePct,
         },
         widget.updatedAt
       );
@@ -152,10 +155,27 @@ function EditImage() {
     }
   };
 
+  const handleImageScaleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    if (widget) {
+      setWidget({
+        ...widget,
+        content: {
+          ...widget.content,
+          scalePct: (event.target as HTMLInputElement).value,
+        },
+      });
+    }
+  };
+
   const onFileProcessed = (data: File) => {
     if (data) {
       setNewImageFile(data);
     }
+  };
+
+  const getScaleImageUrl = (scalePct: string) => {
+    let url =
+      "${process.env.PUBLIC_URL}/images/image-scale-" + scalePct + ".svg";
   };
 
   const crumbs = [
@@ -264,6 +284,61 @@ function EditImage() {
                       />
                     </div>
 
+                    <div className="grid-row">
+                      <div className="grid-col-9">
+                        <RadioButtons
+                          id="scalePct"
+                          name="scalePct"
+                          label={t("EditImageScreen.ImageSize")}
+                          hint={t("EditImageScreen.ImageSizeHint")}
+                          defaultValue={widget.content.scalePct}
+                          register={register}
+                          onChange={handleImageScaleChange}
+                          options={[
+                            {
+                              value: "auto",
+                              label: t("EditImageScreen.AsUploaded"),
+                            },
+                            {
+                              value: "100%",
+                              label: t("percentage", { pct: "100" }),
+                            },
+                            {
+                              value: "75%",
+                              label: t("percentage", { pct: "75" }),
+                            },
+                            {
+                              value: "50%",
+                              label: t("percentage", { pct: "50" }),
+                            },
+                            {
+                              value: "25%",
+                              label: t("percentage", { pct: "25" }),
+                            },
+                          ]}
+                        />
+                      </div>
+                      <div className="grid-col-3 margin-top-10">
+                        <div style={{ position: "absolute", bottom: "0px" }}>
+                          {widget.content.scalePct !== undefined &&
+                            widget.content.scalePct !== "auto" && (
+                              <img
+                                src={
+                                  `${process.env.PUBLIC_URL}/images/image-scale-` +
+                                  widget.content.scalePct.slice(
+                                    0,
+                                    widget.content.scalePct.length - 1
+                                  ) +
+                                  `.svg`
+                                }
+                                width="100%"
+                                height="auto"
+                              />
+                            )}
+                        </div>
+                      </div>
+                    </div>
+
                     <div>
                       <TextField
                         id="altText"
@@ -350,6 +425,7 @@ function EditImage() {
                     file={newImageFile ? newImageFile : file}
                     summaryBelow={widget.content.summaryBelow}
                     altText={widget.content.imageAltText}
+                    scalePct={widget.content.scalePct}
                   />
                 )}
               </div>

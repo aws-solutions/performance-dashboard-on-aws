@@ -372,6 +372,7 @@ function createImageWidget(widget: Widget): ImageWidget {
       summaryBelow: widget.content.summaryBelow,
       s3Key: widget.content.s3Key,
       fileName: widget.content.fileName,
+      scalePct: widget.content.scalePct,
     },
   };
 }

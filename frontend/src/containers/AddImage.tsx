@@ -17,6 +17,7 @@ import ImageWidget from "../components/ImageWidget";
 import Link from "../components/Link";
 import Alert from "../components/Alert";
 import PrimaryActionBar from "../components/PrimaryActionBar";
+import RadioButtons from "../components/RadioButtons";
 import { useTranslation } from "react-i18next";
 
 interface FormValues {
@@ -25,6 +26,7 @@ interface FormValues {
   altText: string;
   showTitle: boolean;
   summaryBelow: boolean;
+  scalePct: string;
 }
 
 interface PathParams {
@@ -44,6 +46,7 @@ function AddImage() {
   const [showTitle, setShowTitle] = useState(true);
   const [summaryBelow, setSummaryBelow] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
+  const [scalePct, setScalePct] = useState("auto");
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
@@ -71,6 +74,7 @@ function AddImage() {
           imageAltText: altText,
           summary: summary,
           summaryBelow: summaryBelow,
+          scalePct: scalePct,
         }
       );
       setImageUploading(false);
@@ -117,6 +121,10 @@ function AddImage() {
 
   const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setShowTitle((event.target as HTMLInputElement).checked);
+  };
+
+  const handleImageScaleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setScalePct((event.target as HTMLInputElement).value);
   };
 
   const onFileProcessed = (data: File) => {
@@ -217,6 +225,74 @@ function AddImage() {
                   />
                 </div>
 
+                <div className="grid-row">
+                  <div className="grid-col-9">
+                    <RadioButtons
+                      id="scalePct"
+                      name="scalePct"
+                      label={t("AddImageScreen.ImageSize")}
+                      hint={t("AddImageScreen.ImageSizeHint")}
+                      defaultValue={"auto"}
+                      register={register}
+                      onChange={handleImageScaleChange}
+                      options={[
+                        {
+                          value: "auto",
+                          label: t("AddImageScreen.AsUploaded"),
+                        },
+                        {
+                          value: "100%",
+                          label: t("AddImageScreen.100"),
+                        },
+                        {
+                          value: "75%",
+                          label: t("AddImageScreen.75"),
+                        },
+                        {
+                          value: "50%",
+                          label: t("AddImageScreen.50"),
+                        },
+                        {
+                          value: "25%",
+                          label: t("AddImageScreen.25"),
+                        },
+                      ]}
+                    />
+                  </div>
+                  <div className="grid-col-3 margin-top-10">
+                    <div style={{ position: "absolute", bottom: "0px" }}>
+                      {scalePct === "100%" && (
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/image-scale-100.svg`}
+                          width="100%"
+                          height="auto"
+                        />
+                      )}
+                      {scalePct === "75%" && (
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/image-scale-75.svg`}
+                          width="100%"
+                          height="auto"
+                        />
+                      )}
+                      {scalePct === "50%" && (
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/image-scale-50.svg`}
+                          width="100%"
+                          height="auto"
+                        />
+                      )}
+                      {scalePct === "25%" && (
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/image-scale-25.svg`}
+                          width="100%"
+                          height="auto"
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+
                 <div>
                   <div hidden={!imageFile}>
                     <TextField
@@ -301,6 +377,7 @@ function AddImage() {
               file={imageFile}
               summaryBelow={summaryBelow}
               altText={altText}
+              scalePct={scalePct}
             />
           </div>
         </div>

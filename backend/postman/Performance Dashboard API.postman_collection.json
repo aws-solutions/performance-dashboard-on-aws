@@ -801,7 +801,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Image\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"summaryBelow\": false,\n        \"imageAltText\": \"{{$randomWord}}\",\n        \"fileName\": \"123.png\",\n        \"s3Key\": {\n            \"raw\": \"123.png\"\n        }\n    }\n}",
+              "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Image\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"summaryBelow\": false,\n        \"imageAltText\": \"{{$randomWord}}\",\n        \"fileName\": \"123.png\",\n        \"scalePct\": \"75%\",\n        \"s3Key\": {\n            \"raw\": \"123.png\"\n        }\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"

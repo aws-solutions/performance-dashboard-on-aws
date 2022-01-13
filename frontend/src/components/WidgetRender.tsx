@@ -89,6 +89,7 @@ function WidgetWithImage({ widget, hideTitle }: Props) {
       summaryBelow={content.summaryBelow}
       file={file.file}
       altText={content.imageAltText}
+      scalePct={content.scalePct ? content.scalePct : "auto"}
     />
   );
 }

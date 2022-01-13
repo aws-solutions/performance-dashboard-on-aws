@@ -7,10 +7,11 @@ type Props = {
   file: File | undefined;
   summaryBelow: boolean;
   altText: string;
+  scalePct: string;
 };
 
 const ImageWidget = (props: Props) => {
-  const { file, summaryBelow, summary, title, altText } = props;
+  const { file, summaryBelow, summary, title, altText, scalePct } = props;
 
   return (
     <div className="preview-container">
@@ -22,7 +23,12 @@ const ImageWidget = (props: Props) => {
         />
       )}
       <div>
-        <img src={file ? URL.createObjectURL(file) : ""} alt={altText}></img>
+        <img
+          src={file ? URL.createObjectURL(file) : ""}
+          alt={altText}
+          width={scalePct}
+          height="auto"
+        ></img>
       </div>
       {summaryBelow && (
         <MarkdownRender

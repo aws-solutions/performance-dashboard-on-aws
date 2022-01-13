@@ -3,6 +3,7 @@
 exports[`image preview should match snapshot 1`] = `
 <div>
   <div
+    aria-label="test title"
     class="preview-container"
   >
     <h3

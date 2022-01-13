@@ -3,6 +3,7 @@
 exports[`renders markdown text 1`] = `
 <div>
   <div
+    aria-label="Benefits of Bananas"
     class=""
   >
     <h3>

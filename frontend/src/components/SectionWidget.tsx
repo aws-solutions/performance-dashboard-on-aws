@@ -45,7 +45,7 @@ function SectionWidget(props: Props) {
   }
 
   return (
-    <div>
+    <div aria-label={content.title}>
       {!content.showWithTabs ? (
         <Waypoint
           onEnter={() => {

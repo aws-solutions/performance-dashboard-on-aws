@@ -3,6 +3,7 @@
 exports[`table preview should match snapshot 1`] = `
 <div>
   <div
+    aria-label="test title"
     class="overflow-x-hidden overflow-y-hidden"
   >
     <h3

@@ -11,7 +11,7 @@ function TextWidget(props: Props) {
   const { content, showTitle, name } = props.widget;
 
   return (
-    <div className={props.hideTitle ? "margin-top-3" : ""}>
+    <div aria-label={name} className={props.hideTitle ? "margin-top-3" : ""}>
       {!props.hideTitle && showTitle && <h3>{name}</h3>}
       <MarkdownRender
         className="usa-prose textOrSummary"

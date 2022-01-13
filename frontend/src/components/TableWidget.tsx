@@ -103,7 +103,7 @@ const TableWidget = ({
   }
 
   return (
-    <div className="overflow-x-hidden overflow-y-hidden">
+    <div aria-label={title} className="overflow-x-hidden overflow-y-hidden">
       <h3 className="margin-bottom-1">{title}</h3>
       {!summaryBelow && (
         <MarkdownRender

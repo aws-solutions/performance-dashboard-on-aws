@@ -153,7 +153,7 @@ const PartWholeChartWidget = (props: Props) => {
   };
 
   return (
-    <div>
+    <div aria-label={props.title}>
       <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
       </h3>

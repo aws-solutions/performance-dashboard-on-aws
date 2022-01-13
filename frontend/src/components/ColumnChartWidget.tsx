@@ -144,6 +144,7 @@ const ColumnChartWidget = (props: Props) => {
 
   return (
     <div
+      aria-label={props.title}
       className={`overflow-x-hidden overflow-y-hidden${
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
       }`}

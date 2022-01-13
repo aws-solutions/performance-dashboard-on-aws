@@ -274,6 +274,7 @@ exports[`renders the VisualizeTable component 1`] = `
         </button>
         
         <div
+          aria-label="Test"
           class="overflow-x-hidden overflow-y-hidden"
         >
           <h3

@@ -896,7 +896,10 @@
     "ToggleSummary": "Show description below image",
     "Back": "Back",
     "DisabledToolTip": "Upload a file to continue",
-    "Cancel": "Cancel"
+    "Cancel": "Cancel",
+    "ImageSize": "Image size (optional)",
+    "ImageSizeHint": "How your image will display in the dashboard.",
+    "AsUploaded": "As uploaded (do not scale)"
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "Image '{{title}}' has been successfully edited.",
@@ -915,7 +918,10 @@
     "SummaryLabel": "Image description (optional)",
     "SummaryHint": "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments. This field supports markdown.",
     "MarkdownLink": "View Markdown Syntax",
-    "ToggleSummary": "Show description below image"
+    "ToggleSummary": "Show description below image",
+    "ImageSize": "Image size (optional)",
+    "ImageSizeHint": "How your image will display in the dashboard.",
+    "AsUploaded": "As uploaded (do not scale)"
   },
   "EnterpriseSignIn": "Enterprise Sign-in",
   "Actions": "Actions",
@@ -973,5 +979,6 @@
     "Logo": "Logo",
     "Footer": "Footer",
     "OpenInNewTab": "(opens in a new tab)"
-  }
+  },
+  "percentage": "{{pct}}%"
 }

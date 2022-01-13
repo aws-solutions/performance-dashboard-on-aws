@@ -41,6 +41,16 @@ test("renders a file upload input", async () => {
   expect(await screen.findByLabelText("File upload*")).toBeInTheDocument();
 });
 
+test("renders an image size/scale input", async () => {
+  render(<AddImage />, { wrapper: MemoryRouter });
+  expect(
+    await screen.findByText("How your image will display in the dashboard.")
+  ).toBeInTheDocument();
+  expect(
+    await screen.findByText("As uploaded (do not scale)")
+  ).toBeInTheDocument();
+});
+
 test("on submit, it calls createWidget api and uploads dataset", async () => {
   const { getAllByText, getByText, getByLabelText } = render(<AddImage />, {
     wrapper: MemoryRouter,
@@ -61,6 +71,12 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
   fireEvent.change(getByLabelText("File upload*"), {
     target: {
       files: ["image.jpg"],
+    },
+  });
+
+  fireEvent.change(getByLabelText("75%"), {
+    target: {
+      value: ["75%"],
     },
   });
 

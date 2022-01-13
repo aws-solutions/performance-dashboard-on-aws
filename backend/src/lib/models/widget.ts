@@ -125,6 +125,7 @@ export interface ImageWidget extends Widget {
     summary?: string;
     summaryBelow: boolean;
     fileName: string;
+    scalePct?: string;
     s3Key: {
       raw: string;
     };

@@ -99,6 +99,12 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
     },
   });
 
+  fireEvent.change(getByLabelText("75%"), {
+    target: {
+      value: ["75%"],
+    },
+  });
+
   await waitFor(() => expect(submitButton).toBeEnabled());
   await waitFor(() => {
     expect(getByLabelText("Image alt text*")).toBeInTheDocument();

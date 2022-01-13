@@ -84,6 +84,12 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     },
   });
 
+  fireEvent.change(getByLabelText("75%"), {
+    target: {
+      value: ["75%"],
+    },
+  });
+
   const submitButton = getAllByText("Add Image")[2];
 
   await waitFor(() => expect(submitButton).toBeEnabled());

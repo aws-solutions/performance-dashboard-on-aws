@@ -13,7 +13,7 @@ const ImageWidget = (props: Props) => {
   const { file, summaryBelow, summary, title, altText } = props;
 
   return (
-    <div className="preview-container">
+    <div aria-label={title} className="preview-container">
       <h3 className="margin-top-3">{title}</h3>
       {!summaryBelow && (
         <MarkdownRender

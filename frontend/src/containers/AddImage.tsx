@@ -268,6 +268,9 @@ function AddImage() {
                             scalePct.slice(0, scalePct.length - 1) +
                             `.svg`
                           }
+                          alt={t("AddImageScreen.ImageScale", {
+                            scale: scalePct,
+                          })}
                           width="100%"
                           height="auto"
                         />

@@ -899,7 +899,8 @@
     "Cancel": "Cancel",
     "ImageSize": "Image size (optional)",
     "ImageSizeHint": "How your image will display in the dashboard.",
-    "AsUploaded": "As uploaded (do not scale)"
+    "AsUploaded": "As uploaded (do not scale)",
+    "ImageScale": "Image at {{scale}} scale"
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "Image '{{title}}' has been successfully edited.",
@@ -921,7 +922,8 @@
     "ToggleSummary": "Show description below image",
     "ImageSize": "Image size (optional)",
     "ImageSizeHint": "How your image will display in the dashboard.",
-    "AsUploaded": "As uploaded (do not scale)"
+    "AsUploaded": "As uploaded (do not scale)",
+    "ImageScale": "Image at {{scale}} scale"
   },
   "EnterpriseSignIn": "Enterprise Sign-in",
   "Actions": "Actions",

@@ -251,6 +251,7 @@
     "SectionSummaryHint": "Forneça um resumo à sua seção para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a seção a usuários com deficiência visual. Esse campo oferece suporte para Markdown."
   },
   "EditTextScreen": {
+    "Configure": "Configurar conteúdo da seção",
     "EditText": "Editar texto",
     "EditTextError": "Resolva o(s) erro(s) para editar o texto",
     "EditTextSuccess": "O texto “{{title}}” foi editado com êxito.",
@@ -360,6 +361,8 @@
     "ChooseDataset": "Escolher um conjunto de dados para continuar",
     "AddChart": "Adicionar gráfico",
     "ChooseData": "Escolher dados",
+    "Configure": "Configure o conteúdo do gráfico.",
+    "Preview": "Visualizar gráfico",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
     "AddChartSuccess": "O gráfico “{{title}}” foi adicionado com êxito.",
@@ -378,6 +381,7 @@
     "AddTable": "Adicionar tabela",
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
+    "Configure": "Configure o conteúdo da tabela.",
     "Visualize": "Visualizar",
     "AddTableSuccess": "A tabela “{{title}}” foi adicionada com êxito.",
     "ChooseDataset": "Escolher um conjunto de dados para continuar"
@@ -802,6 +806,7 @@
   "Go": "Ir",
   "Show": "Mostrar",
   "ChooseStaticDataset": "Escolher conjunto de dados estático",
+  "ChooseDynamicDataset": "Escolher conjunto de dados dinâmico",
   "ChooseStaticDatasetDescription": "Estes são todos os conjuntos de dados estáticos que foram carregados. Encontre e selecione um conjunto de dados para usar na sua visualização.",
   "UploadedBy": "Carregado por",
   "UploadedAt": "Carregado em",
@@ -889,6 +894,7 @@
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "A imagem “{{title}}” foi editada com êxito.",
+    "ConfigureImage": "Configurar imagem",
     "EditImage": "Editar imagem",
     "ResolveError": "Resolva o(s) erro(s) para editar a imagem",
     "Title": "Título da imagem",
@@ -959,6 +965,7 @@
     "Header": "Cabeçalho",
     "Main": "Principal",
     "Logo": "Logotipo",
-    "Footer": "Rodapé"
+    "Footer": "Rodapé",
+    "OpenInNewTab": "(abre em uma nova guia)"
   }
 }

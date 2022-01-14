@@ -3,6 +3,7 @@ import * as sns from "@aws-cdk/aws-sns";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
+import * as cloudwatch from '@aws-cdk/aws-cloudwatch';
 import { SnsAction } from "@aws-cdk/aws-cloudwatch-actions";
 import * as kms from "@aws-cdk/aws-kms";
 import {
@@ -34,6 +35,7 @@ const LAMBDA_ALARMS_EVALUATION_PERIODS = 2;
 const DASHBOARD_AGGREGATION_PERIOD_MINUTES = 5;
 const DASHBOARD_WIDGET_HEIGHT = 9;
 const DASHBOARD_DEFAULT_PERIOD = "-PT12H";
+const LAMBDA_THROTTLE_THRESHOLD = 10;
 
 export class OpsStack extends cdk.Stack {
   private readonly opsNotifications: sns.Topic;
@@ -109,7 +111,7 @@ export class OpsStack extends cdk.Stack {
     const throttlesAlarm = new Alarm(this, id.concat("ThrottleRateAlarm"), {
       alarmDescription: "At least 10 Lambda invocations were throttled",
       evaluationPeriods: LAMBDA_ALARMS_EVALUATION_PERIODS,
-      threshold: 10,
+      threshold: LAMBDA_THROTTLE_THRESHOLD,
       actionsEnabled: ENABLE_ALARM_SNS_NOTIFICATIONS,
       treatMissingData: TreatMissingData.NOT_BREACHING,
       comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
@@ -203,10 +205,17 @@ export class OpsStack extends cdk.Stack {
     label: string,
     width: number = 12
   ): GraphWidget {
+    const horizontalAnnotation: cloudwatch.HorizontalAnnotation = {
+      value: LAMBDA_THROTTLE_THRESHOLD,
+      color: Color.ORANGE,
+      visible: true,
+      label: "Throttle",
+    };
     return new GraphWidget({
       title: `Lambda Invocations - ${label}`,
       width,
       height: DASHBOARD_WIDGET_HEIGHT,
+      leftAnnotations: [horizontalAnnotation],
       left: [
         new Metric({
           namespace: "AWS/Lambda",

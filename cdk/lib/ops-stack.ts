@@ -3,7 +3,7 @@ import * as sns from "@aws-cdk/aws-sns";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
-import * as cloudwatch from '@aws-cdk/aws-cloudwatch';
+import * as cloudwatch from "@aws-cdk/aws-cloudwatch";
 import { SnsAction } from "@aws-cdk/aws-cloudwatch-actions";
 import * as kms from "@aws-cdk/aws-kms";
 import {

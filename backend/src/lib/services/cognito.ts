@@ -20,7 +20,9 @@ class CognitoService {
    * to prevent direct constructions calls with new operator.
    */
   private constructor() {
-    this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider(this.options);
+    this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider(
+      this.options
+    );
   }
 
   /**

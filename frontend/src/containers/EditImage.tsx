@@ -331,6 +331,9 @@ function EditImage() {
                                   ) +
                                   `.svg`
                                 }
+                                alt={t("EditImageScreen.ImageScale", {
+                                  scale: widget.content.scalePct,
+                                })}
                                 width="100%"
                                 height="auto"
                               />

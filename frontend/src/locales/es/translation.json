@@ -251,6 +251,7 @@
     "SectionSummaryHint": "Incorpore un resumen a la sección para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la sección a personas con discapacidades visuales. Este campo admite el marcado."
   },
   "EditTextScreen": {
+    "Configure": "Configurar el contenido de la sección",
     "EditText": "Editar texto",
     "EditTextError": "Resolver errores al editar el texto",
     "EditTextSuccess": "El texto “{{title}}” se ha editado correctamente.",
@@ -360,6 +361,8 @@
     "ChooseDataset": "Elija un conjunto de datos para continuar",
     "AddChart": "Agregar gráfico",
     "ChooseData": "Elegir datos",
+    "Configure": "Configure el contenido del gráfico.",
+    "Preview": "Previsualizar el gráfico",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
     "AddChartSuccess": "El gráfico “{{title}}” se ha agregado correctamente.",
@@ -378,6 +381,7 @@
     "AddTable": "Agregar tabla",
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
+    "Configure": "Configure el contenido de la tabla.",
     "Visualize": "Visualizar",
     "AddTableSuccess": "La tabla “{{title}}” se ha agregado correctamente.",
     "ChooseDataset": "Elija un conjunto de datos para continuar"
@@ -802,6 +806,7 @@
   "Go": "Ir",
   "Show": "Mostrar",
   "ChooseStaticDataset": "Elegir conjunto de datos estáticos",
+  "ChooseDynamicDataset": "Elegir conjunto de datos dinámico",
   "ChooseStaticDatasetDescription": "Estos son todos los conjuntos de datos estáticos que se han cargado. Busque y seleccione un conjunto de datos para utilizarlo en la visualización.",
   "UploadedBy": "Cargado por",
   "UploadedAt": "Cargado a las",
@@ -889,6 +894,7 @@
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "La imagen “{{title}}” se ha editado correctamente.",
+    "ConfigureImage": "Configurar imagen",
     "EditImage": "Editar imagen",
     "ResolveError": "Resolver errores al editar la imagen",
     "Title": "Título de la imagen",
@@ -959,6 +965,7 @@
     "Header": "Encabezado",
     "Main": "Principal",
     "Logo": "Logotipo",
-    "Footer": "Pie de página"
+    "Footer": "Pie de página",
+    "OpenInNewTab": "(se abre en una pestaña nueva)"
   }
 }

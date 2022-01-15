@@ -1,5 +1,6 @@
 import CognitoIdentityServiceProvider from "aws-sdk/clients/cognitoidentityserviceprovider";
 import logger from "./logger";
+import packagejson from "../../../package.json";
 
 /**
  * This class serves as a wrapper to the Cognito Identity Service Provider.
@@ -10,13 +11,18 @@ import logger from "./logger";
 class CognitoService {
   private cognitoIdentityServiceProvider: CognitoIdentityServiceProvider;
   private static instance: CognitoService;
+  private options = {
+    customUserAgent: packagejson.awssdkUserAgent + packagejson.version,
+  };
 
   /**
    * CognitoService is a Singleton, hence private constructor
    * to prevent direct constructions calls with new operator.
    */
   private constructor() {
-    this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
+    this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider(
+      this.options
+    );
   }
 
   /**

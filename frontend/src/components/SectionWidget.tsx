@@ -109,6 +109,7 @@ function SectionWidget(props: Props) {
                       showMobilePreview={props.showMobilePreview}
                       bottomOffset={props.bottomOffset}
                       topOffset={props.topOffset}
+                      disableShare={true}
                     />
                   </div>
                 </Waypoint>
@@ -137,6 +138,7 @@ function SectionWidget(props: Props) {
                       widget={widget}
                       showMobilePreview={props.showMobilePreview}
                       hideTitle={true}
+                      disableShare={true}
                     />
                   </div>
                 );
@@ -163,6 +165,7 @@ function SectionWidget(props: Props) {
                       widget={widget}
                       showMobilePreview={props.showMobilePreview}
                       hideTitle={true}
+                      disableShare={true}
                     />
                   </div>
                 );

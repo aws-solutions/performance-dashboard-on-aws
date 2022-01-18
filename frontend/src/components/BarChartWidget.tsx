@@ -139,7 +139,7 @@ const BarChartWidget = (props: Props) => {
   }
 
   return (
-    <div aria-label={props.title}>
+    <div aria-label={props.title} tabIndex={-1}>
       <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
       </h3>

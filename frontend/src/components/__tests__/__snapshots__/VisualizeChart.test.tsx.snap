@@ -479,6 +479,7 @@ exports[`renders the VisualizeChart component 1`] = `
         <div
           aria-label="title"
           class="overflow-x-hidden overflow-y-hidden"
+          tabindex="-1"
         >
           <h3
             class="margin-bottom-1"
@@ -1013,6 +1014,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         <div
           aria-label="title"
           class="overflow-x-hidden overflow-y-hidden"
+          tabindex="-1"
         >
           <h3
             class="margin-bottom-1"

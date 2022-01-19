@@ -102,6 +102,8 @@
   "Delete": "Delete",
   "Save": "Save",
   "Edit": "Edit",
+  "CopyLink": "Copy link: {{title}}",
+  "LinkCopied": "Link copied: {{title}}",
   "EditHeader": "Edit header",
   "To": "to",
   "Step": "Step",

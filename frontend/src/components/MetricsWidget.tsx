@@ -18,7 +18,7 @@ const MetricsWidget = ({
   metricsCenterAlign,
 }: Props) => {
   return (
-    <div aria-label={title}>
+    <div aria-label={title} tabIndex={-1}>
       <h3 className="margin-top-3">{title}</h3>
       {metrics.length ? (
         <div>

@@ -5,6 +5,7 @@ exports[`table preview should match snapshot 1`] = `
   <div
     aria-label="test title"
     class="overflow-x-hidden overflow-y-hidden"
+    tabindex="-1"
   >
     <h3
       class="margin-bottom-1"

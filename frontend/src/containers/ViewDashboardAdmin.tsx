@@ -787,11 +787,7 @@ function ViewDashboardAdmin() {
                   >
                     {widget.widgetType === WidgetType.Section &&
                     !widget.content.showWithTabs ? (
-                      <div
-                        className="margin-top-6 usa-prose"
-                        id={widget.id}
-                        tabIndex={-1}
-                      >
+                      <div className="margin-top-6 usa-prose" id={widget.id}>
                         <WidgetRender
                           widget={widget}
                           showMobilePreview={showMobilePreview}
@@ -811,11 +807,7 @@ function ViewDashboardAdmin() {
                         bottomOffset={`${windowSize.height - 250}px`}
                         fireOnRapidScroll={false}
                       >
-                        <div
-                          className="margin-top-6 usa-prose"
-                          id={widget.id}
-                          tabIndex={-1}
-                        >
+                        <div className="margin-top-6 usa-prose" id={widget.id}>
                           <WidgetRender
                             widget={widget}
                             showMobilePreview={showMobilePreview}

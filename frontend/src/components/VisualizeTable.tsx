@@ -225,7 +225,10 @@ function VisualizeTable(props: Props) {
         </PrimaryActionBar>
       </div>
 
-      <div className={props.fullPreview ? "grid-col-12" : "grid-col-7"}>
+      <section
+        className={props.fullPreview ? "grid-col-12" : "grid-col-6"}
+        aria-label={t("ContentPreview")}
+      >
         <div
           hidden={!props.json.length}
           className={`${
@@ -287,7 +290,7 @@ function VisualizeTable(props: Props) {
             </>
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

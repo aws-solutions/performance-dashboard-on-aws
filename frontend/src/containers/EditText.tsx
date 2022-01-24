@@ -213,7 +213,7 @@ function EditText() {
                 </form>
               </PrimaryActionBar>
             </div>
-            <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+            <section className={fullPreview ? "grid-col-12" : "grid-col-6"}>
               {fullPreviewButton}
               {widget.showTitle ? (
                 <h2 className="margin-top-3 margin-left-2px">{widget.name}</h2>
@@ -230,7 +230,7 @@ function EditText() {
               ) : (
                 ""
               )}
-            </div>
+            </section>
           </div>
         </>
       )}

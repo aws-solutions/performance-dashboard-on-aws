@@ -813,6 +813,7 @@
   "Page": "Page",
   "Go": "Go",
   "Show": "Show",
+  "ContentPreview": "Content preview",
   "ChooseStaticDataset": "Choose static dataset",
   "ChooseDynamicDataset": "Choose dynamic dataset",
   "ChooseStaticDatasetDescription": "These are all of the static datasets that have been uploaded. Find and select a dataset to use in your visualization.",

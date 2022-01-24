@@ -278,7 +278,10 @@ function EditSection() {
                 </form>
               </PrimaryActionBar>
             </div>
-            <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+            <section
+              className={fullPreview ? "grid-col-12" : "grid-col-6"}
+              aria-label={t("ContentPreview")}
+            >
               {fullPreviewButton}
               {widget.showTitle ? (
                 <h2 className="margin-top-3 margin-left-2px">
@@ -297,7 +300,7 @@ function EditSection() {
               ) : (
                 ""
               )}
-            </div>
+            </section>
           </div>
         </>
       )}

@@ -354,7 +354,10 @@ function AddImage() {
             </form>
           </PrimaryActionBar>
         </div>
-        <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+        <section
+          className={fullPreview ? "grid-col-12" : "grid-col-6"}
+          aria-label={t("ContentPreview")}
+        >
           <div className="sticky-preview">
             {fullPreviewButton}
             <ImageWidget
@@ -366,7 +369,7 @@ function AddImage() {
               scalePct={scalePct}
             />
           </div>
-        </div>
+        </section>
       </div>
     </>
   );

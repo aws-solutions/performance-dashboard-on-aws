@@ -278,7 +278,10 @@ function EditDetails() {
             </div>
           </div>
         </div>
-        <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+        <section
+          className={fullPreview ? "grid-col-12" : "grid-col-6"}
+          aria-label={t("ContentPreview")}
+        >
           {fullPreviewButton}
           <div className="margin-top-2">
             <DashboardHeader
@@ -321,7 +324,7 @@ function EditDetails() {
               onClick={setActiveWidgetId}
             />
           </div>
-        </div>
+        </section>
       </div>
     </>
   );

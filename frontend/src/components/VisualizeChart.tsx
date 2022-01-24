@@ -367,10 +367,9 @@ function VisualizeChart(props: Props) {
           </fieldset>
         </PrimaryActionBar>
       </div>
-      <div
-        className={props.fullPreview ? "grid-col-12" : "grid-col-7"}
-        role="contentinfo"
-        aria-label={t("AddChartScreen.Preview")}
+      <section
+        className={props.fullPreview ? "grid-col-12" : "grid-col-6"}
+        aria-label={t("ContentPreview")}
       >
         <div
           hidden={!props.json.length}
@@ -535,7 +534,7 @@ function VisualizeChart(props: Props) {
             </>
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -630,7 +630,10 @@ function AddMetrics() {
                     </Button>
                   </PrimaryActionBar>
                 </div>
-                <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+                <section
+                  className={fullPreview ? "grid-col-12" : "grid-col-6"}
+                  aria-label={t("ContentPreview")}
+                >
                   <div className="sticky-preview">
                     {fullPreviewButton}
                     <MetricsWidget
@@ -641,7 +644,7 @@ function AddMetrics() {
                       metricsCenterAlign={metricsCenterAlign}
                     />
                   </div>
-                </div>
+                </section>
               </div>
             </div>
           </form>

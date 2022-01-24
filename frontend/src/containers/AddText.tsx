@@ -205,26 +205,27 @@ function AddText() {
                 </form>
               </PrimaryActionBar>
             </div>
-            <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
-              <div>
-                {fullPreviewButton}
-                {showTitle ? (
-                  <h2 className="margin-top-3 margin-left-2px">{title}</h2>
-                ) : (
-                  ""
-                )}
-                {text ? (
-                  <div className="padding-left-05">
-                    <MarkdownRender
-                      className="usa-prose textOrSummary"
-                      source={text}
-                    />
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
+            <section
+              className={fullPreview ? "grid-col-12" : "grid-col-6"}
+              aria-label={t("LivePreview")}
+            >
+              {fullPreviewButton}
+              {showTitle ? (
+                <h2 className="margin-top-3 margin-left-2px">{title}</h2>
+              ) : (
+                ""
+              )}
+              {text ? (
+                <div className="padding-left-05">
+                  <MarkdownRender
+                    className="usa-prose textOrSummary"
+                    source={text}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+            </section>
           </div>
         </>
       )}

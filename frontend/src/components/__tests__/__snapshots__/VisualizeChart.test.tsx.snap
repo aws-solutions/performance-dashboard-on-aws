@@ -462,10 +462,9 @@ exports[`renders the VisualizeChart component 1`] = `
         </fieldset>
       </div>
     </div>
-    <div
-      aria-label="Preview chart"
-      class="grid-col-7"
-      role="contentinfo"
+    <section
+      aria-label="Content preview"
+      class="grid-col-6"
     >
       <div
         class="margin-left-4 sticky-preview"
@@ -531,7 +530,7 @@ exports[`renders the VisualizeChart component 1`] = `
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </div>
 `;
@@ -997,10 +996,9 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         </fieldset>
       </div>
     </div>
-    <div
-      aria-label="Preview chart"
-      class="grid-col-7"
-      role="contentinfo"
+    <section
+      aria-label="Content preview"
+      class="grid-col-6"
     >
       <div
         class="margin-left-4 sticky-preview"
@@ -1066,7 +1064,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </div>
 `;

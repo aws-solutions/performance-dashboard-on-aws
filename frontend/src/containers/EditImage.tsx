@@ -413,7 +413,10 @@ function EditImage() {
                 </form>
               </PrimaryActionBar>
             </div>
-            <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+            <section
+              className={fullPreview ? "grid-col-12" : "grid-col-6"}
+              aria-label={t("ContentPreview")}
+            >
               <div hidden={false} className="sticky-preview">
                 {fullPreviewButton}
                 {loadingFile ? (
@@ -432,7 +435,7 @@ function EditImage() {
                   />
                 )}
               </div>
-            </div>
+            </section>
           </div>
         </>
       )}

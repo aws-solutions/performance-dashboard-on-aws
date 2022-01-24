@@ -207,7 +207,7 @@ function AddText() {
             </div>
             <section
               className={fullPreview ? "grid-col-12" : "grid-col-6"}
-              aria-label={t("LivePreview")}
+              aria-label={t("ContentPreview")}
             >
               {fullPreviewButton}
               {showTitle ? (

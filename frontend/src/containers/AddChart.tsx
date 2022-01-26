@@ -253,14 +253,17 @@ function AddChart() {
 
   const advanceStep = () => {
     setStep(step + 1);
+    document.getElementById("Home")?.focus();
   };
 
   const backStep = () => {
     setStep(step - 1);
+    document.getElementById("Home")?.focus();
   };
 
   const goBack = () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
+    document.getElementById("Home")?.focus();
   };
 
   const browseDatasets = () => {

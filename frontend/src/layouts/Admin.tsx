@@ -74,7 +74,13 @@ function AdminLayout(props: LayoutProps) {
                   <Logo />
                 </div>
 
-                <Link to="/admin" title="Home" aria-label="Home" className="">
+                <Link
+                  to="/admin"
+                  id="Home"
+                  title="Home"
+                  aria-label="Home"
+                  className=""
+                >
                   {settings.navbarTitle}
                 </Link>
               </em>

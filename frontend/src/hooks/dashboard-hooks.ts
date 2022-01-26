@@ -30,6 +30,7 @@ export function useDashboard(dashboardId: string): UseDashboardHook {
         data.widgets.sort((a, b) => a.order - b.order);
         setDashboard(data);
       }
+      document.getElementById("Home")?.focus();
     },
     [dashboardId]
   );

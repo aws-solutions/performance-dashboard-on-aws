@@ -260,6 +260,7 @@ function AddMetrics() {
 
   const goBack = () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
+    document.getElementById("Home")?.focus();
   };
 
   const handleChange = async (event: React.FormEvent<HTMLFieldSetElement>) => {
@@ -300,10 +301,12 @@ function AddMetrics() {
 
   const advanceStep = () => {
     setStep(1);
+    document.getElementById("Home")?.focus();
   };
 
   const backStep = () => {
     setStep(0);
+    document.getElementById("Home")?.focus();
   };
 
   const onSearch = (query: string) => {

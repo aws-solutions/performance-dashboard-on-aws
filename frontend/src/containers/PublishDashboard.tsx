@@ -66,6 +66,16 @@ function PublishDashboard() {
     return !!versions.find((v) => v.state === DashboardState.Published);
   };
 
+  const advanceStep = () => {
+    setStep(step + 1);
+    document.getElementById("Home")?.focus();
+  };
+
+  const backStep = () => {
+    setStep(step - 1);
+    document.getElementById("Home")?.focus();
+  };
+
   const onContinue = async () => {
     const isFormValid = await trigger();
     if (isFormValid && dashboard) {
@@ -79,7 +89,7 @@ function PublishDashboard() {
         );
 
         setDashboard(updatedDashboard);
-        setStep(step + 1);
+        advanceStep();
       } catch (err) {
         await reloadDashboard();
         history.push(`/admin/dashboard/${dashboardId}/publish`, {
@@ -336,14 +346,14 @@ function PublishDashboard() {
                 <Button
                   variant="outline"
                   type="button"
-                  onClick={() => setStep(step - 1)}
+                  onClick={() => backStep()}
                 >
                   {t("BackButton")}
                 </Button>
                 <Button
                   variant="default"
                   type="button"
-                  onClick={() => setStep(step + 1)}
+                  onClick={() => advanceStep()}
                 >
                   {t("ContinueButton")}
                 </Button>
@@ -397,7 +407,7 @@ function PublishDashboard() {
                 <Button
                   variant="outline"
                   type="button"
-                  onClick={() => setStep(step - 1)}
+                  onClick={() => backStep()}
                 >
                   {t("BackButton")}
                 </Button>

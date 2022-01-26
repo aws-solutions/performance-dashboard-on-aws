@@ -316,6 +316,7 @@
   },
   "AddMetricsScreen": {
     "MetricsAddedSuccessfully": "Metrics '{{title}}' have been successfully added.",
+    "InvalidDatasetType": "Choose a dataset to continue",
     "Name": "Name",
     "LastUpdated": "Last updated",
     "Description": "Description",

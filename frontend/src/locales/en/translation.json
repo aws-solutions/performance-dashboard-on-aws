@@ -603,6 +603,7 @@
   "SettingsTopicAreaNameEditSuccess": "{{name}} was successfully edited.",
   "AddContentScreen": {
     "Title": "Add content item",
+    "InvalidWidgetType": "Please select content type to continue.",
     "Instructions": "Select the type of content you want to add",
     "TextImageAlt": "Text Content Item Preview",
     "MetricsImageAlt": "Metrics Content Item Preview",

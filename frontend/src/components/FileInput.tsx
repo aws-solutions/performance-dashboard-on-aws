@@ -46,7 +46,7 @@ function FileInput(props: Props) {
           {t("SelectedFile")}{" "}
           <span className="usa-file-input__choose">{t("ChangeFile")}</span>
         </div>
-        <div className="usa-file-input__preview" aria-hidden="true">
+        <div className="usa-file-input__preview">
           <div className="usa-file-input__preview-image">
             <div className="fileIcon" id="fileIconDiv">
               <FontAwesomeIcon icon={faFile} size="lg" />

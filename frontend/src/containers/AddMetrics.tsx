@@ -89,6 +89,21 @@ function AddMetrics() {
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.datasetType ? state.datasetType : undefined
   );
+  const [datasetError, setDatasetError] = useState("");
+
+  function hasDatasetErrors() {
+    return (
+      !datasetType ||
+      (datasetType === DatasetType.DynamicDataset && !metrics.length)
+    );
+  }
+
+  useEffect(() => {
+    if (datasetError && !hasDatasetErrors()) {
+      setDatasetError("");
+    }
+  }, [datasetError, datasetType, metrics]);
+
   const { fullPreview, fullPreviewButton } = useFullPreview();
   const [oldStep, setOldStep] = useState<number>(-1);
   const title = watch("title");
@@ -96,17 +111,6 @@ function AddMetrics() {
   const oneMetricPerRow = watch("oneMetricPerRow");
   const significantDigitLabels = watch("significantDigitLabels");
   const metricsCenterAlign = watch("metricsCenterAlign");
-
-  useEffect(() => {
-    if (datasetType) {
-      reset({
-        title,
-        showTitle,
-        oneMetricPerRow,
-        datasetType,
-      });
-    }
-  }, []);
 
   const rows = useMemo(() => dynamicMetricDatasets, [dynamicMetricDatasets]);
   const columns = useMemo(
@@ -300,6 +304,10 @@ function AddMetrics() {
   );
 
   const advanceStep = () => {
+    if (hasDatasetErrors()) {
+      setDatasetError(t("AddMetricsScreen.InvalidDatasetType"));
+      return;
+    }
     setStep(1);
     document.getElementById("Home")?.focus();
   };
@@ -395,6 +403,10 @@ function AddMetrics() {
                     </p>
                   </legend>
 
+                  {datasetError && (
+                    <Alert type="error" message={datasetError} slim></Alert>
+                  )}
+
                   <div className="grid-row">
                     <RadioButtonsTile
                       isHorizontally={true}
@@ -484,11 +496,6 @@ function AddMetrics() {
                 <Button
                   type="button"
                   onClick={advanceStep}
-                  disabled={
-                    !datasetType ||
-                    (datasetType === DatasetType.DynamicDataset &&
-                      !metrics.length)
-                  }
                   disabledToolTip={
                     datasetType === DatasetType.DynamicDataset
                       ? t("AddMetricsScreen.SelectDataset")

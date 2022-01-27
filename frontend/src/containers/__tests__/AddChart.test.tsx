@@ -85,11 +85,15 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     fireEvent.click(radioButton);
   });
 
-  fireEvent.change(getByLabelText("Static datasets*"), {
-    target: {
-      files: ["dataset.csv"],
-    },
+  const file = new File(["dummy content"], "test.csv", {
+    type: "text/csv",
   });
+  const uploadFile = getByLabelText("Static datasets*");
+  Object.defineProperty(uploadFile, "files", { value: [file] });
+  Object.defineProperty(uploadFile, "value", {
+    value: file.name,
+  });
+  fireEvent.change(uploadFile);
 
   await act(async () => {
     fireEvent.click(continueButton);

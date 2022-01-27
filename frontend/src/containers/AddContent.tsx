@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import RadioButtonsTile from "../components/RadioButtonsTile";
+import Alert from "../components/Alert";
 
 interface FormValues {
   widgetType: string;
@@ -22,8 +23,15 @@ function AddContent() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { register, handleSubmit, watch } = useForm<FormValues>();
+  const [error, setError] = useState("");
 
   const widgetType = watch("widgetType");
+
+  useEffect(() => {
+    if (error && widgetType) {
+      setError("");
+    }
+  }, [widgetType, error]);
 
   const onSubmit = async (values: FormValues) => {
     if (values.widgetType === "chart") {
@@ -38,6 +46,8 @@ function AddContent() {
       history.push(`/admin/dashboard/${dashboardId}/add-metrics`);
     } else if (values.widgetType === "section") {
       history.push(`/admin/dashboard/${dashboardId}/add-section`);
+    } else {
+      setError(t("AddContentScreen.InvalidWidgetType"));
     }
   };
 
@@ -83,6 +93,9 @@ function AddContent() {
               <legend className="margin-y-1 text-semibold display-inline-block font-sans-lg">
                 {t("AddContentScreen.Instructions")}
               </legend>
+
+              {error && <Alert type="error" message={error} slim></Alert>}
+
               <RadioButtonsTile
                 isHorizontally={false}
                 register={register}
@@ -142,7 +155,6 @@ function AddContent() {
             <hr />
             <Button
               variant="base"
-              disabled={!widgetType}
               type="submit"
               disabledToolTip={
                 !widgetType ? t("AddContentScreen.DisabledToolTip") : ""

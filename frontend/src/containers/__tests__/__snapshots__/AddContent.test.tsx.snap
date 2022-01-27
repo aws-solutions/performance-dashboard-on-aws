@@ -78,6 +78,7 @@ Object {
               >
                 Select the type of content you want to add
               </legend>
+              
               <div
                 class=""
                 role="radiogroup"
@@ -254,19 +255,12 @@ Object {
             </fieldset>
             <br />
             <hr />
-            <span
-              data-placement="top"
-              data-toggle="tooltip"
-              title="Choose a content item to continue"
+            <button
+              class="usa-button usa-button--base"
+              type="submit"
             >
-              <button
-                class="usa-button usa-button--base"
-                disabled=""
-                type="submit"
-              >
-                Continue
-              </button>
-            </span>
+              Continue
+            </button>
             <button
               class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
@@ -355,6 +349,7 @@ Object {
             >
               Select the type of content you want to add
             </legend>
+            
             <div
               class=""
               role="radiogroup"
@@ -531,19 +526,12 @@ Object {
           </fieldset>
           <br />
           <hr />
-          <span
-            data-placement="top"
-            data-toggle="tooltip"
-            title="Choose a content item to continue"
+          <button
+            class="usa-button usa-button--base"
+            type="submit"
           >
-            <button
-              class="usa-button usa-button--base"
-              disabled=""
-              type="submit"
-            >
-              Continue
-            </button>
-          </span>
+            Continue
+          </button>
           <button
             class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
             type="button"

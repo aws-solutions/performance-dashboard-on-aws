@@ -172,7 +172,11 @@ exports[`renders the ChooseData component 1`] = `
                 </a>
               </span>
             </div>
-            0
+            <span
+              class="usa-error-message"
+              id="file-input-error-alert"
+              role="alert"
+            />
             <div
               class="usa-file-input"
             >

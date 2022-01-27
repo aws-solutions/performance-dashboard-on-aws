@@ -316,6 +316,7 @@
   },
   "AddMetricsScreen": {
     "MetricsAddedSuccessfully": "Metrics '{{title}}' have been successfully added.",
+    "InvalidDatasetType": "Choose a dataset to continue",
     "Name": "Name",
     "LastUpdated": "Last updated",
     "Description": "Description",
@@ -603,6 +604,7 @@
   "SettingsTopicAreaNameEditSuccess": "{{name}} was successfully edited.",
   "AddContentScreen": {
     "Title": "Add content item",
+    "InvalidWidgetType": "Please select content type to continue.",
     "Instructions": "Select the type of content you want to add",
     "TextImageAlt": "Text Content Item Preview",
     "MetricsImageAlt": "Metrics Content Item Preview",

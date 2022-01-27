@@ -62,11 +62,16 @@ test("on submit, it calls updateSetting and upload logo", async () => {
 
   const submitButton = getByRole("button", { name: "Save" });
 
-  fireEvent.change(getByLabelText("File upload*"), {
-    target: {
-      files: ["image.jpg"],
-    },
+  const file = new File(["dummy content"], "filename.png", {
+    type: "image/png",
   });
+  const uploadFile = getByLabelText("File upload*");
+  Object.defineProperty(uploadFile, "files", { value: [file] });
+  Object.defineProperty(uploadFile, "value", {
+    value: file.name,
+  });
+  fireEvent.change(uploadFile);
+
   fireEvent.change(getByLabelText("Logo alt text*"), {
     target: {
       value: "Alt text",

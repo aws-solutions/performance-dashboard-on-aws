@@ -16,7 +16,7 @@ interface Props {
   staticFileName?: string | undefined;
   hint?: string | React.ReactNode;
   accept?: string;
-  errors?: object[];
+  errors?: any;
   loading?: boolean;
   onFileProcessed?: Function;
 }
@@ -73,17 +73,15 @@ function FileInput(props: Props) {
         {props.label && props.required && <span>&#42;</span>}
       </label>
       <div className="usa-hint">{props.hint}</div>
-      {props.errors &&
-        props.errors.length > 0 &&
-        props.errors.map((error) => (
-          <span
-            className="usa-error-message"
-            id="file-input-error-alert"
-            role="alert"
-          >
-            {error}
-          </span>
-        ))}
+      {props.errors && (
+        <span
+          className="usa-error-message"
+          id="file-input-error-alert"
+          role="alert"
+        >
+          {props.errors}
+        </span>
+      )}
       <div
         className={`usa-file-input${
           props.disabled ? " usa-file-input--disabled" : ""

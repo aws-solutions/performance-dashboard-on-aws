@@ -192,9 +192,8 @@ function AddImage() {
                       imageFile && imageFile.length > 0 ? imageFile[0].name : ""
                     }
                     errors={
-                      errors.imageFile
-                        ? [t("AddImageScreen.ImageFileNotSpecified")]
-                        : []
+                      errors.imageFile &&
+                      t("AddImageScreen.ImageFileNotSpecified")
                     }
                   />
                 </div>

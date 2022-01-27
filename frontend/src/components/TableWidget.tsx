@@ -108,7 +108,7 @@ const TableWidget = ({
       tabIndex={-1}
       className="overflow-x-hidden overflow-y-hidden"
     >
-      <h3 className="margin-bottom-1">{title}</h3>
+      <h2 className="margin-bottom-1">{title}</h2>
       {!summaryBelow && (
         <MarkdownRender
           source={summary}

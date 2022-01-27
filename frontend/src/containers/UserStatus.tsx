@@ -20,51 +20,51 @@ function UserStatus() {
         </p>
       </div>
 
-      <h3 className="margin-top-4 margin-bottom-1">
+      <h2 className="margin-top-4 margin-bottom-1">
         {t("UserStatuses.Unconfirmed")}
-      </h3>
+      </h2>
       <div className="usa-prose">
         <p>{t("UserStatuses.UnconfirmedDesc")}</p>
       </div>
 
-      <h3 className="margin-top-4 margin-bottom-1">
+      <h2 className="margin-top-4 margin-bottom-1">
         {t("UserStatuses.Confirmed")}
-      </h3>
+      </h2>
       <div className="usa-prose">
         <p>{t("UserStatuses.ConfirmedDesc")}</p>
       </div>
 
-      <h3 className="margin-top-4 margin-bottom-1">
+      <h2 className="margin-top-4 margin-bottom-1">
         {t("UserStatuses.Archived")}
-      </h3>
+      </h2>
       <div className="usa-prose">
         <p>{t("UserStatuses.ArchivedDesc")}</p>
       </div>
 
-      <h3 className="margin-top-4 margin-bottom-1">
+      <h2 className="margin-top-4 margin-bottom-1">
         {t("UserStatuses.Compromised")}
-      </h3>
+      </h2>
       <div className="usa-prose">
         <p>{t("UserStatuses.CompromisedDesc")}</p>
       </div>
 
-      <h3 className="margin-top-4 margin-bottom-1">
+      <h2 className="margin-top-4 margin-bottom-1">
         {t("UserStatuses.Unknown")}
-      </h3>
+      </h2>
       <div className="usa-prose">
         <p>{t("UserStatuses.UnknownDesc")}</p>
       </div>
 
-      <h3 className="margin-top-4 margin-bottom-1">
+      <h2 className="margin-top-4 margin-bottom-1">
         {t("UserStatuses.Reset_Required")}
-      </h3>
+      </h2>
       <div className="usa-prose">
         <p>{t("UserStatuses.Reset_RequiredDesc")}</p>
       </div>
 
-      <h3 className="margin-top-4 margin-bottom-1">
+      <h2 className="margin-top-4 margin-bottom-1">
         {t("UserStatuses.Force_Change_Password")}
-      </h3>
+      </h2>
       <div className="usa-prose">
         <p>{t("UserStatuses.Force_Change_PasswordDesc")}</p>
       </div>

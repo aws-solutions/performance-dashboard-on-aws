@@ -160,11 +160,11 @@ exports[`topic area settings should match snapshot 1`] = `
           <p>
             Dashboards are organized by topic areas. A dashboard must have a topic area and can have only one topic area.
           </p>
-          <h3
+          <h2
             class="margin-top-2-important"
           >
             Topic area name
-          </h3>
+          </h2>
           <p>
             You can customize the name 'topic area' and it will be replaced throughout the interface. For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc.
           </p>
@@ -247,11 +247,11 @@ exports[`topic area settings should match snapshot 1`] = `
           <hr
             style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
           />
-          <h3
+          <h2
             id="section-heading-h3"
           >
             Ministries (2)
-          </h3>
+          </h2>
           <div
             class="grid-row margin-y-3"
           >

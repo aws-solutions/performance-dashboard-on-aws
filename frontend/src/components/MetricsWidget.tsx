@@ -19,7 +19,7 @@ const MetricsWidget = ({
 }: Props) => {
   return (
     <div aria-label={title} tabIndex={-1}>
-      <h3 className="margin-top-3">{title}</h3>
+      <h2 className="margin-top-3">{title}</h2>
       {metrics.length ? (
         <div>
           <MetricsCardGroup

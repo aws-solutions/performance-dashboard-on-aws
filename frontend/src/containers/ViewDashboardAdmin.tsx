@@ -611,7 +611,7 @@ function ViewDashboardAdmin() {
         )}
 
         {dashboard.state === DashboardState.Archived && (
-          <Alert type="info" slim message={t("RepublishDashboardToView")} />
+          <Alert type="info" message={t("RepublishDashboardToView")} slim />
         )}
 
         {isMobile && (

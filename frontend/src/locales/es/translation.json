@@ -102,6 +102,8 @@
   "Delete": "Eliminar",
   "Save": "Guardar",
   "Edit": "Editar",
+  "CopyLink": "Copiar enlace: {{title}}",
+  "LinkCopied": "Enlace copiado: {{title}}",
   "EditHeader": "Editar encabezado",
   "To": "a",
   "Step": "Paso",
@@ -393,6 +395,12 @@
     "Visualize": "Visualizar",
     "EditTableSuccess": "La tabla “{{title}}” se ha editado correctamente.",
     "ChooseDataset": "Elija un conjunto de datos para continuar"
+  },
+  "ViewDashboardAdmin": {
+    "Copy": "Copiar",
+    "CopyDashboard": "Esta acción creará una copia en borrador de este panel. ¿Está seguro de que desea continuar?",
+    "Dashboard": "panel",
+    "SuccessfullyCopied": "copiado correctamente."
   },
   "BrandingAndStyling": "Marca y estilo",
   "BrandingAndStylingDescription": "Personalice el panel de rendimiento.",
@@ -725,10 +733,10 @@
     "Published": "Publicado",
     "Archived": "Archivado",
     "Copy": "Copiar",
-    "ThisWillCopy": "Esto copiará",
+    "CopyDashboard": "Esta acción creará una copia en borrador de este panel. ¿Está seguro de que desea continuar?",
+    "CopyDashboard_plural": "Esta acción creará copias en borrador de estos paneles. ¿Está seguro de que desea continuar?",
     "TheseDashboards": "estos paneles",
     "ThisDashboard": "este panel",
-    "CopyModalMessage": "¿Está seguro de que desea eliminar continuar?",
     "SuccessfullyCopied": "copiado correctamente."
   },
   "ShowDataTableButton": "Mostrar tabla de datos",
@@ -890,7 +898,11 @@
     "ToggleSummary": "Mostrar la descripción a continuación de la imagen",
     "Back": "Volver",
     "DisabledToolTip": "Cargar un archivo para continuar",
-    "Cancel": "Cancelar"
+    "Cancel": "Cancelar",
+    "ImageSize": "Tamaño de imagen (opcional)",
+    "ImageSizeHint": "Cómo se mostrará la imagen en el panel.",
+    "AsUploaded": "Como se ha cargado (no escalar)",
+    "ImageScale": "Imagen a escala de {{scale}}"
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "La imagen “{{title}}” se ha editado correctamente.",
@@ -909,7 +921,11 @@
     "SummaryLabel": "Descripción de la imagen (opcional)",
     "SummaryHint": "Incorpore a la imagen una descripción para explicarla con más detalle. También pueden leerla los lectores de pantalla para describir la imagen a personas con discapacidades visuales. Este campo admite el marcado.",
     "MarkdownLink": "Ver sintaxis de marcado",
-    "ToggleSummary": "Mostrar la descripción a continuación de la imagen"
+    "ToggleSummary": "Mostrar la descripción a continuación de la imagen",
+    "ImageSize": "Tamaño de imagen (opcional)",
+    "ImageSizeHint": "Cómo se mostrará la imagen en el panel.",
+    "AsUploaded": "Como se ha cargado (no escalar)",
+    "ImageScale": "Imagen a escala de {{scale}}"
   },
   "EnterpriseSignIn": "Inicio de sesión empresarial",
   "Actions": "Acciones",
@@ -967,5 +983,6 @@
     "Logo": "Logotipo",
     "Footer": "Pie de página",
     "OpenInNewTab": "(se abre en una pestaña nueva)"
-  }
+  },
+  "percentage": "{{pct}} %"
 }

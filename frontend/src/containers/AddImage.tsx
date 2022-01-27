@@ -188,6 +188,9 @@ function AddImage() {
                     register={register}
                     required
                     hint={<span>{t("AddImageScreen.FileHint")}</span>}
+                    fileName={
+                      imageFile && imageFile.length > 0 ? imageFile[0].name : ""
+                    }
                     errors={
                       errors.imageFile
                         ? [t("AddImageScreen.ImageFileNotSpecified")]

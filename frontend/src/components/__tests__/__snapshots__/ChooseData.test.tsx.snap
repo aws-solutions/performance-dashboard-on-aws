@@ -172,7 +172,6 @@ exports[`renders the ChooseData component 1`] = `
                 </a>
               </span>
             </div>
-            0
             <div
               class="usa-file-input"
             >

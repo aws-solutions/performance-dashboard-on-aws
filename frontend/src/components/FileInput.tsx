@@ -16,7 +16,7 @@ interface Props {
   staticFileName?: string | undefined;
   hint?: string | React.ReactNode;
   accept?: string;
-  errors?: Array<object>;
+  errors?: object[];
   loading?: boolean;
   onFileProcessed?: Function;
 }
@@ -65,7 +65,7 @@ function FileInput(props: Props) {
   return (
     <div
       className={`usa-form-group${
-        props.errors && props.errors.length ? " usa-form-group--error" : ""
+        props.errors && props.errors.length > 0 ? " usa-form-group--error" : ""
       }`}
     >
       <label className="usa-label text-bold" htmlFor={props.id}>
@@ -73,15 +73,17 @@ function FileInput(props: Props) {
         {props.label && props.required && <span>&#42;</span>}
       </label>
       <div className="usa-hint">{props.hint}</div>
-      {props.errors && props.errors.length && (
-        <span
-          className="usa-error-message"
-          id="file-input-error-alert"
-          role="alert"
-        >
-          {t("InvalidFileFormat")}
-        </span>
-      )}
+      {props.errors &&
+        props.errors.length > 0 &&
+        props.errors.map((error) => (
+          <span
+            className="usa-error-message"
+            id="file-input-error-alert"
+            role="alert"
+          >
+            {error}
+          </span>
+        ))}
       <div
         className={`usa-file-input${
           props.disabled ? " usa-file-input--disabled" : ""
@@ -89,7 +91,7 @@ function FileInput(props: Props) {
       >
         <div
           className={`${
-            props.errors && props.errors.length
+            props.errors && props.errors.length > 0
               ? "usa-form-group--error margin-left-1px "
               : ""
           }usa-file-input__target`}
@@ -103,7 +105,7 @@ function FileInput(props: Props) {
             name={props.name}
             accept={props.accept}
             disabled={props.disabled}
-            ref={props.register && props.register()}
+            ref={props.register && props.register({ required: props.required })}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               if (props.onFileProcessed) {
                 props.onFileProcessed(

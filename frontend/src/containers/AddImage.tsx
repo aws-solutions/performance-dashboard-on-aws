@@ -27,6 +27,7 @@ interface FormValues {
   showTitle: boolean;
   summaryBelow: boolean;
   scalePct: string;
+  imageFile: FileList;
 }
 
 interface PathParams {
@@ -38,15 +39,17 @@ function AddImage() {
   const { t } = useTranslation();
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
-  const { register, errors, handleSubmit } = useForm<FormValues>();
-  const [imageFile, setImageFile] = useState<File | undefined>(undefined);
-  const [title, setTitle] = useState("");
-  const [altText, setAltText] = useState("");
-  const [summary, setSummary] = useState("");
-  const [showTitle, setShowTitle] = useState(true);
-  const [summaryBelow, setSummaryBelow] = useState(false);
+  const { register, errors, handleSubmit, watch } = useForm<FormValues>();
+
+  const title = watch("title");
+  const summary = watch("summary");
+  const altText = watch("altText");
+  const showTitle = watch("showTitle");
+  const summaryBelow = watch("summaryBelow");
+  const scalePct = watch("scalePct");
+  const imageFile = watch("imageFile");
+
   const [imageUploading, setImageUploading] = useState(false);
-  const [scalePct, setScalePct] = useState("auto");
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
@@ -54,11 +57,12 @@ function AddImage() {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      if (!imageFile) {
+      if (!values.imageFile || !values.imageFile[0]) {
         throw new Error(t("AddImageScreen.ImageFileNotSpecified"));
       }
+
       setImageUploading(true);
-      const s3Key = await StorageService.uploadImage(imageFile);
+      const s3Key = await StorageService.uploadImage(values.imageFile[0]);
 
       await BackendService.createWidget(
         dashboardId,
@@ -66,15 +70,15 @@ function AddImage() {
         WidgetType.Image,
         values.showTitle,
         {
-          title: title,
+          title: values.title,
           s3Key: {
             raw: s3Key,
           },
-          fileName: imageFile.name,
-          imageAltText: altText,
-          summary: summary,
-          summaryBelow: summaryBelow,
-          scalePct: scalePct,
+          fileName: values.imageFile[0].name,
+          imageAltText: values.altText,
+          summary: values.summary,
+          summaryBelow: values.summaryBelow,
+          scalePct: values.scalePct,
         }
       );
       setImageUploading(false);
@@ -99,38 +103,6 @@ function AddImage() {
 
   const onCancel = () => {
     history.push(`/admin/dashboard/edit/${dashboardId}`);
-  };
-
-  const handleChangeTitle = (event: React.FormEvent<HTMLInputElement>) => {
-    setTitle((event.target as HTMLInputElement).value);
-  };
-
-  const handleAltTextChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setAltText((event.target as HTMLInputElement).value);
-  };
-
-  const handleSummaryChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    setSummary((event.target as HTMLTextAreaElement).value);
-  };
-
-  const handleSummaryBelowChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    setSummaryBelow((event.target as HTMLInputElement).checked);
-  };
-
-  const handleShowTitleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setShowTitle((event.target as HTMLInputElement).checked);
-  };
-
-  const handleImageScaleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setScalePct((event.target as HTMLInputElement).value);
-  };
-
-  const onFileProcessed = (data: File) => {
-    if (data) {
-      setImageFile(data);
-    }
   };
 
   const crumbs = [
@@ -172,14 +144,12 @@ function AddImage() {
                 <legend className="usa-hint">
                   {t("AddImageScreen.ConfigureImage")}
                 </legend>
-                {errors.title || errors.altText ? (
+                {(errors.title || errors.altText || errors.imageFile) && (
                   <Alert
                     type="error"
                     message={t("AddImageScreen.ResolveError")}
                     slim
                   ></Alert>
-                ) : (
-                  ""
                 )}
                 <TextField
                   id="title"
@@ -187,7 +157,6 @@ function AddImage() {
                   label={t("AddImageScreen.Title")}
                   hint={t("AddImageScreen.Hint")}
                   error={errors.title && t("AddImageScreen.TitleError")}
-                  onChange={handleChangeTitle}
                   required
                   register={register}
                 />
@@ -199,7 +168,6 @@ function AddImage() {
                     type="checkbox"
                     name="showTitle"
                     defaultChecked={true}
-                    onChange={handleShowTitleChange}
                     ref={register()}
                   />
                   <label
@@ -212,16 +180,19 @@ function AddImage() {
 
                 <div>
                   <FileInput
-                    id="dataset"
-                    name="dataset"
+                    id="imageFile"
+                    name="imageFile"
                     label={t("AddImageScreen.FileUpload")}
                     accept={supportedImageFileTypes.toString()}
                     loading={imageUploading}
                     register={register}
                     required
                     hint={<span>{t("AddImageScreen.FileHint")}</span>}
-                    fileName={imageFile && imageFile.name}
-                    onFileProcessed={onFileProcessed}
+                    errors={
+                      errors.imageFile
+                        ? [t("AddImageScreen.ImageFileNotSpecified")]
+                        : []
+                    }
                   />
                 </div>
 
@@ -234,7 +205,6 @@ function AddImage() {
                       hint={t("AddImageScreen.ImageSizeHint")}
                       defaultValue={"auto"}
                       register={register}
-                      onChange={handleImageScaleChange}
                       options={[
                         {
                           value: "auto",
@@ -289,7 +259,6 @@ function AddImage() {
                       register={register}
                       error={errors.altText && t("AddImageScreen.TextError")}
                       required
-                      onChange={handleAltTextChange}
                       multiline
                       rows={1}
                     />
@@ -307,7 +276,6 @@ function AddImage() {
                         </>
                       }
                       register={register}
-                      onChange={handleSummaryChange}
                       multiline
                       rows={5}
                     />
@@ -318,7 +286,6 @@ function AddImage() {
                         type="checkbox"
                         name="summaryBelow"
                         defaultChecked={false}
-                        onChange={handleSummaryBelowChange}
                         ref={register()}
                       />
                       <label
@@ -337,7 +304,7 @@ function AddImage() {
                 {t("AddImageScreen.Back")}
               </Button>
               <Button
-                disabled={!imageFile || imageUploading}
+                disabled={imageUploading}
                 type="submit"
                 disabledToolTip={t("AddImageScreen.DisabledToolTip")}
               >
@@ -363,7 +330,7 @@ function AddImage() {
             <ImageWidget
               title={showTitle ? title : ""}
               summary={summary}
-              file={imageFile}
+              file={imageFile && imageFile[0]}
               summaryBelow={summaryBelow}
               altText={altText}
               scalePct={scalePct}

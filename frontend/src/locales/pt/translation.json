@@ -102,6 +102,8 @@
   "Delete": "Excluir",
   "Save": "Salvar",
   "Edit": "Editar",
+  "CopyLink": "Copiar link: {{title}}",
+  "LinkCopied": "Link copiado: {{title}}",
   "EditHeader": "Editar cabeçalho",
   "To": "a",
   "Step": "Etapa",
@@ -393,6 +395,12 @@
     "Visualize": "Visualizar",
     "EditTableSuccess": "A tabela “{{title}}” foi editada com êxito.",
     "ChooseDataset": "Escolher um conjunto de dados para continuar"
+  },
+  "ViewDashboardAdmin": {
+    "Copy": "Copiar",
+    "CopyDashboard": "Isso criará uma cópia de rascunho desse painel. Tem certeza de que deseja continuar?",
+    "Dashboard": "painel",
+    "SuccessfullyCopied": "copiado com êxito."
   },
   "BrandingAndStyling": "Marca e estilo",
   "BrandingAndStylingDescription": "Personalize seu painel de performance.",
@@ -725,10 +733,10 @@
     "Published": "Publicado",
     "Archived": "Arquivado",
     "Copy": "Copiar",
-    "ThisWillCopy": "Isto copiará",
+    "CopyDashboard": "Isso criará uma cópia de rascunho desse painel. Tem certeza de que deseja continuar?",
+    "CopyDashboard_plural": "Isso criará cópias de rascunho desses painéis. Tem certeza de que deseja continuar?",
     "TheseDashboards": "esses painéis",
     "ThisDashboard": "este painel",
-    "CopyModalMessage": "Tem certeza de que deseja continuar?",
     "SuccessfullyCopied": "copiado com êxito."
   },
   "ShowDataTableButton": "Mostrar tabela de dados",
@@ -890,7 +898,11 @@
     "ToggleSummary": "Mostrar descrição abaixo da imagem",
     "Back": "Voltar",
     "DisabledToolTip": "Faça upload de um arquivo para continuar",
-    "Cancel": "Cancelar"
+    "Cancel": "Cancelar",
+    "ImageSize": "Tamanho da imagem (opcional)",
+    "ImageSizeHint": "Como sua imagem será exibida no painel.",
+    "AsUploaded": "Conforme carregado (não dimensionar)",
+    "ImageScale": "Imagem na escala de {{scale}}"
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "A imagem “{{title}}” foi editada com êxito.",
@@ -909,7 +921,11 @@
     "SummaryLabel": "Descrição da imagem (opcional)",
     "SummaryHint": "Dê à sua imagem uma descrição para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a imagem para usuários com deficiência visual. Esse campo oferece suporte a markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
-    "ToggleSummary": "Mostrar descrição abaixo da imagem"
+    "ToggleSummary": "Mostrar descrição abaixo da imagem",
+    "ImageSize": "Tamanho da imagem (opcional)",
+    "ImageSizeHint": "Como sua imagem será exibida no painel.",
+    "AsUploaded": "Conforme carregado (não dimensionar)",
+    "ImageScale": "Imagem na escala de {{scale}}"
   },
   "EnterpriseSignIn": "Login empresarial",
   "Actions": "Ações",
@@ -967,5 +983,6 @@
     "Logo": "Logotipo",
     "Footer": "Rodapé",
     "OpenInNewTab": "(abre em uma nova guia)"
-  }
+  },
+  "percentage": "{{pct}}%"
 }

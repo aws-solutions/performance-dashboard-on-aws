@@ -31,7 +31,7 @@ function TopicareaSettings() {
 
           <p>{t("SettingsTopicAreaDescription")}</p>
 
-          <h3 className="margin-top-2-important">{t("TopicAreaName")}</h3>
+          <h2 className="margin-top-2-important">{t("TopicAreaName")}</h2>
 
           <p>{t("SettingsTopicAreaNameDescription")}</p>
 

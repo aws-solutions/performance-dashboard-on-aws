@@ -10,7 +10,7 @@ const MarkdownSyntax = () => {
       <h1>{t("MarkdownSyntax.Label")}</h1>
       <p className="font-sans-lg">{t("MarkdownSyntax.Description")}</p>
 
-      <h3 className="margin-top-5">{t("MarkdownSyntax.Bold")}</h3>
+      <h2 className="margin-top-5">{t("MarkdownSyntax.Bold")}</h2>
       <p>{t("MarkdownSyntax.BoldDescription")}</p>
       <table className="usa-table usa-table--borderless" width="100%">
         <thead>
@@ -31,7 +31,7 @@ const MarkdownSyntax = () => {
         </tbody>
       </table>
 
-      <h3 className="margin-top-7">{t("MarkdownSyntax.Hyperlink")}</h3>
+      <h2 className="margin-top-7">{t("MarkdownSyntax.Hyperlink")}</h2>
       <p>{t("MarkdownSyntax.HyperlinkDescription")}</p>
       <table className="usa-table usa-table--borderless" width="100%">
         <thead>
@@ -52,7 +52,7 @@ const MarkdownSyntax = () => {
         </tbody>
       </table>
 
-      <h3 className="margin-top-7">{t("MarkdownSyntax.UnorderedList")}</h3>
+      <h2 className="margin-top-7">{t("MarkdownSyntax.UnorderedList")}</h2>
       <p>{t("MarkdownSyntax.UnorderedListDescription")}</p>
       <table className="usa-table usa-table--borderless" width="100%">
         <thead>

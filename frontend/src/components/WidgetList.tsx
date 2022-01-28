@@ -108,9 +108,9 @@ function WidgetList(props: Props) {
       {props.widgets && props.widgets.length ? (
         <div>
           <SecondaryActionBar stickyPosition={160}>
-            <h3 className="margin-bottom-0 margin-top-0">
+            <h2 className="margin-bottom-0 margin-top-0">
               {t("DashboardContent")}
-            </h3>
+            </h2>
             <p className="margin-top-2px margin-bottom-0">
               {t("BuildDashboardGuidance")}
             </p>

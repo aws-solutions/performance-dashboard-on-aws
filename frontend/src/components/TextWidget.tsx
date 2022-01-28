@@ -16,7 +16,7 @@ function TextWidget(props: Props) {
       tabIndex={-1}
       className={props.hideTitle ? "margin-top-3" : ""}
     >
-      {!props.hideTitle && showTitle && <h3>{name}</h3>}
+      {!props.hideTitle && showTitle && <h2>{name}</h2>}
       <MarkdownRender
         className="usa-prose textOrSummary"
         source={content.text}

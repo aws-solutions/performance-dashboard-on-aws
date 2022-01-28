@@ -279,11 +279,11 @@ exports[`renders the VisualizeTable component 1`] = `
           class="overflow-x-hidden overflow-y-hidden"
           tabindex="-1"
         >
-          <h3
+          <h2
             class="margin-bottom-1"
           >
             Test
-          </h3>
+          </h2>
           <div
             class="Markdown usa-prose margin-top-0 margin-bottom-3 tableSummaryAbove textOrSummary"
           />

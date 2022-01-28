@@ -186,11 +186,11 @@ exports[`published site settings should match snapshot 1`] = `
               </svg>
             </a>
           </p>
-          <h3
+          <h2
             class="margin-top-2-important"
           >
             Navigation bar
-          </h3>
+          </h2>
           <p>
             You can customize the header and navigation of the published site.
           </p>
@@ -276,11 +276,11 @@ exports[`published site settings should match snapshot 1`] = `
           <hr
             style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
           />
-          <h3
+          <h2
             class="margin-top-2-important"
           >
             Homepage content
-          </h3>
+          </h2>
           <p>
             These components appear on the homepage of your published site and explain what your published site is about.
           </p>

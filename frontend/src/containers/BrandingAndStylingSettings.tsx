@@ -33,7 +33,7 @@ function BrandingAndStylingSettings() {
       <p>{t("BrandingAndStylingDescription")}</p>
       <br />
 
-      <h3 className="margin-top-2-important">{t("BrandingAndStylingLogo")}</h3>
+      <h2 className="margin-top-2-important">{t("BrandingAndStylingLogo")}</h2>
       <p>{t("BrandingAndStylingLogoDescription")}</p>
       <br />
 
@@ -61,9 +61,9 @@ function BrandingAndStylingSettings() {
         }}
       />
 
-      <h3 className="margin-top-2-important">
+      <h2 className="margin-top-2-important">
         {t("BrandingAndStylingFavicon")}
-      </h3>
+      </h2>
       <p>{t("BrandingAndStylingFaviconDescription")}</p>
       <br />
 
@@ -91,9 +91,9 @@ function BrandingAndStylingSettings() {
         }}
       />
 
-      <h3 className="margin-top-2-important">
+      <h2 className="margin-top-2-important">
         {t("BrandingAndStylingColors")}
-      </h3>
+      </h2>
       <p>{t("BrandingAndStylingColorsDescription")}</p>
       <br />
 

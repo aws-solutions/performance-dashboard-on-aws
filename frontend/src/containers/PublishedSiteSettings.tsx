@@ -43,9 +43,9 @@ function PublishedSiteSettings() {
         </Link>
       </p>
 
-      <h3 className="margin-top-2-important">
+      <h2 className="margin-top-2-important">
         {t("PublishedSiteSettings.NavigationBar")}
-      </h3>
+      </h2>
 
       <p>{t("PublishedSiteSettings.NavagationBarDescription")}</p>
 
@@ -119,9 +119,9 @@ function PublishedSiteSettings() {
         }}
       />
 
-      <h3 className="margin-top-2-important">
+      <h2 className="margin-top-2-important">
         {t("PublishedSiteSettings.HomepageContentHeader")}
-      </h3>
+      </h2>
 
       <p>{t("PublishedSiteSettings.HomepageContentDescription")}</p>
 

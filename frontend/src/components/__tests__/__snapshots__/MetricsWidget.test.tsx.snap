@@ -6,11 +6,11 @@ exports[`metrics preview should match snapshot 1`] = `
     aria-label="test title"
     tabindex="-1"
   >
-    <h3
+    <h2
       class="margin-top-3"
     >
       test title
-    </h3>
+    </h2>
     <div>
       <div
         class="grid-col"

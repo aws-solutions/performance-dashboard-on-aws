@@ -110,7 +110,7 @@ function TopicareaListing(props: Props) {
         buttonAction={deleteTopicArea}
       />
 
-      <h3 id="section-heading-h3">{`${settings.topicAreaLabels.plural} (${props.topicareas.length})`}</h3>
+      <h2 id="section-heading-h3">{`${settings.topicAreaLabels.plural} (${props.topicareas.length})`}</h2>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-4 padding-top-1px">
           <Search id="search" onSubmit={onSearch} size="small" />

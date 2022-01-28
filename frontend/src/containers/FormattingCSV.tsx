@@ -44,7 +44,7 @@ function FormattingCSV() {
       </h1>
       <div className="font-sans-lg usa-prose">
         <p>{t("FormatCSVScreen.FormattingCSVDescription")}</p>
-        <h3>{t("FormatCSVScreen.MacOS")}</h3>
+        <h2>{t("FormatCSVScreen.MacOS")}</h2>
         <p>{t("FormatCSVScreen.MacOSDescription")}</p>
       </div>
 

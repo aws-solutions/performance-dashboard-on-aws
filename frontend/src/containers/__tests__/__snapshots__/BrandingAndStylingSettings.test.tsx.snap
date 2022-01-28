@@ -161,11 +161,11 @@ exports[`branding and styling settings should match snapshot 1`] = `
             Customize your performance dashboard.
           </p>
           <br />
-          <h3
+          <h2
             class="margin-top-2-important"
           >
             Logo
-          </h3>
+          </h2>
           <p>
             This logo will appear in the header next to the performance dashboard name and in the published site header.
           </p>
@@ -195,11 +195,11 @@ exports[`branding and styling settings should match snapshot 1`] = `
           <hr
             style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
           />
-          <h3
+          <h2
             class="margin-top-2-important"
           >
             Favicon
-          </h3>
+          </h2>
           <p>
             This favicon will appear in the browser tab.
           </p>
@@ -228,11 +228,11 @@ exports[`branding and styling settings should match snapshot 1`] = `
           <hr
             style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
           />
-          <h3
+          <h2
             class="margin-top-2-important"
           >
             Colors
-          </h3>
+          </h2>
           <p>
             Customize these colors to make your dashboards appear similar in style to your organization's brand and color palette.
           </p>

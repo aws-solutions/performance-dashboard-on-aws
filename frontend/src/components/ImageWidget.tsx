@@ -15,7 +15,7 @@ const ImageWidget = (props: Props) => {
 
   return (
     <div aria-label={title} className="preview-container" tabIndex={-1}>
-      <h3 className="margin-top-3">{title}</h3>
+      <h2 className="margin-top-3">{title}</h2>
       {!summaryBelow && (
         <MarkdownRender
           source={summary}

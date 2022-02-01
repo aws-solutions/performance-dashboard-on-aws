@@ -37,6 +37,9 @@ function Shareable(props: Props) {
       setTimeout(() => {
         scrollElementIntoView(element);
       }, 500);
+      setTimeout(() => {
+        scrollElementIntoView(element);
+      }, 1000);
     }
   }, [pathname, hash, key, anchorId]);
 

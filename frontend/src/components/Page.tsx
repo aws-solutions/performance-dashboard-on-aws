@@ -20,10 +20,6 @@ function Page({ title, ...routeProps }: Props) {
     document.title = title ? `${title} - ${appTitle}` : appTitle;
   }, [settings.navbarTitle, t, title]);
 
-  useEffect(() => {
-    console.log(document.title);
-  }, [document.title]);
-
   return <Route {...routeProps} />;
 }
 

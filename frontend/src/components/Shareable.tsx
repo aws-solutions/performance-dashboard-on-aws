@@ -1,9 +1,8 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, MouseEvent, ReactElement } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 import "./Shareable.scss";
-import Button from "./Button";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -16,43 +15,66 @@ interface Props {
 function Shareable(props: Props) {
   const history = useHistory();
   const { t } = useTranslation();
+  const { pathname, hash, key, state } = useLocation();
 
-  function getAnchorId() {
-    return `section-${getShortId()}`;
+  const shortId = props.id.substring(0, 8);
+  const anchorId = `section-${shortId}`;
+
+  function scrollElementIntoView(element: HTMLElement | null) {
+    if (element) {
+      element.scrollIntoView({ block: "start", behavior: "smooth" });
+      const top = element.getBoundingClientRect().top;
+      if (top <= 0 && top >= window.innerHeight) {
+        setTimeout(() => scrollElementIntoView(element), 100);
+      }
+    }
   }
 
-  function getShortId() {
-    return props.id.substring(0, 8);
-  }
+  useEffect(() => {
+    // if not a hash link, scroll to top
+    if (hash === `#${anchorId}`) {
+      const element = document.getElementById(anchorId);
+      setTimeout(() => {
+        scrollElementIntoView(element);
+      }, 500);
+      setTimeout(() => {
+        scrollElementIntoView(element);
+      }, 1000);
+    }
+  }, [pathname, hash, key, anchorId]);
 
   function getWidgetUrl() {
     const widgetUrl = `${window.location.href.replace(
       window.location.hash,
       ""
-    )}#${getAnchorId()}`;
+    )}#${anchorId}`;
     return widgetUrl;
   }
-  function copyWidgetUrlToClipboard() {
+
+  function copyWidgetUrlToClipboard(event: MouseEvent) {
     navigator.clipboard.writeText(getWidgetUrl());
-    history.replace(`${history.location.pathname}#${getAnchorId()}`, {
+    console.log(window.location.href);
+    console.log(window.location.href.replace(window.location.hash, ""));
+    history.replace(window.location.pathname, {
       alert: {
         type: "success",
         message: t("LinkCopied", { title: props.title }),
       },
     });
+    event.preventDefault();
   }
 
   return (
     <div className={`shareable-container ${props.className}`}>
-      <span id={getAnchorId()} className="anchor"></span>
-      <Button
-        className="share-button"
-        variant="unstyled"
+      <span id={anchorId} className="anchor"></span>
+      <a
+        className="share-button text-base-darker"
         onClick={copyWidgetUrlToClipboard}
-        ariaLabel={t("CopyLink", { title: props.title })}
+        href={getWidgetUrl()}
+        aria-label={t("CopyLink", { title: props.title })}
       >
         <FontAwesomeIcon icon={faLink} />
-      </Button>
+      </a>
       <div className="shareable-content">{props.children}</div>
     </div>
   );

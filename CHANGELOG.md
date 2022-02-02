@@ -5,9 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2022-02-02
+
+- Made improvements to meet WCAG accessibility requirements
+  - Provided appropriate text alternative for icons
+  - Made errors clearly identifiable and described to assistive technology
+  - Removed hidden buttons from assistive technology
+  - Improved the application of non-decorative content in CSS to support assistive technology
+  - Added section aria label to live previews
+- Provided additional control over image formatting
+
 ## [1.1.7] - 2022-01-04
 
-- Made improvements to meet accessibility requirements
+- Made improvements to meet WCAG accessibility requirements
   - Made "Return to Top" link actionable for screen readers
   - Made table of contents scrollable and visible
   - Made Settings acknowledge statement mandatory
@@ -18,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.6] - 2021-12-17
 
 - Copy/duplicate an individual dashboard
-- Made improvements to meet accessibility requirements
+- Made improvements to meet WCAG accessibility requirements
   - Added text alternative to label images
   - Establish unique page titles
   - Made global button color changes
@@ -27,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.5] - 2021-11-29
 
-- Made improvements to meet accessibility requirements
+- Made improvements to meet WCAG accessibility requirements
   - Improve text color contrast ratio
   - Improve contrast for non-text elements
   - Ensure all optional and mandatory fields are marked

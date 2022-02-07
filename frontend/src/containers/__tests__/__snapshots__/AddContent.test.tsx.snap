@@ -45,7 +45,7 @@ Object {
             </a>
           </li>
           <li
-            aria-current="page"
+            aria-current="location"
             class="usa-breadcrumb__list-item usa-current cursor-default"
           >
             <span>
@@ -316,7 +316,7 @@ Object {
           </a>
         </li>
         <li
-          aria-current="page"
+          aria-current="location"
           class="usa-breadcrumb__list-item usa-current cursor-default"
         >
           <span>

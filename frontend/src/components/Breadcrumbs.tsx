@@ -26,7 +26,7 @@ function Breadcrumbs(props: Props) {
           ) : (
             <li
               className="usa-breadcrumb__list-item usa-current cursor-default"
-              aria-current="page"
+              aria-current="location"
               key={crumb.label || index}
             >
               <span>{crumb.label}</span>

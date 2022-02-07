@@ -76,10 +76,7 @@ function Segment(props: SegmentProps) {
   const { t } = useTranslation();
   if (props.current) {
     return (
-      <li
-        className="usa-step-indicator__segment usa-step-indicator__segment--current"
-        aria-current="true"
-      >
+      <li className="usa-step-indicator__segment usa-step-indicator__segment--current">
         <span className="usa-step-indicator__segment-label">
           <div className="text-base-dark">{props.label}</div>
         </span>

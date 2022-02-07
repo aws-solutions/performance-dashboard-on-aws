@@ -89,6 +89,21 @@ function AddMetrics() {
   const [datasetType, setDatasetType] = useState<DatasetType | undefined>(
     state && state.datasetType ? state.datasetType : undefined
   );
+  const [datasetError, setDatasetError] = useState("");
+
+  function hasDatasetErrors() {
+    return (
+      !datasetType ||
+      (datasetType === DatasetType.DynamicDataset && !metrics.length)
+    );
+  }
+
+  useEffect(() => {
+    if (datasetError && !hasDatasetErrors()) {
+      setDatasetError("");
+    }
+  }, [datasetError, datasetType, metrics]);
+
   const { fullPreview, fullPreviewButton } = useFullPreview();
   const [oldStep, setOldStep] = useState<number>(-1);
   const title = watch("title");
@@ -96,17 +111,6 @@ function AddMetrics() {
   const oneMetricPerRow = watch("oneMetricPerRow");
   const significantDigitLabels = watch("significantDigitLabels");
   const metricsCenterAlign = watch("metricsCenterAlign");
-
-  useEffect(() => {
-    if (datasetType) {
-      reset({
-        title,
-        showTitle,
-        oneMetricPerRow,
-        datasetType,
-      });
-    }
-  }, []);
 
   const rows = useMemo(() => dynamicMetricDatasets, [dynamicMetricDatasets]);
   const columns = useMemo(
@@ -260,6 +264,7 @@ function AddMetrics() {
 
   const goBack = () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
+    document.getElementById("Home")?.focus();
   };
 
   const handleChange = async (event: React.FormEvent<HTMLFieldSetElement>) => {
@@ -299,11 +304,17 @@ function AddMetrics() {
   );
 
   const advanceStep = () => {
+    if (hasDatasetErrors()) {
+      setDatasetError(t("AddMetricsScreen.InvalidDatasetType"));
+      return;
+    }
     setStep(1);
+    document.getElementById("Home")?.focus();
   };
 
   const backStep = () => {
     setStep(0);
+    document.getElementById("Home")?.focus();
   };
 
   const onSearch = (query: string) => {
@@ -391,6 +402,10 @@ function AddMetrics() {
                       </Link>
                     </p>
                   </legend>
+
+                  {datasetError && (
+                    <Alert type="error" message={datasetError} slim></Alert>
+                  )}
 
                   <div className="grid-row">
                     <RadioButtonsTile
@@ -481,11 +496,6 @@ function AddMetrics() {
                 <Button
                   type="button"
                   onClick={advanceStep}
-                  disabled={
-                    !datasetType ||
-                    (datasetType === DatasetType.DynamicDataset &&
-                      !metrics.length)
-                  }
                   disabledToolTip={
                     datasetType === DatasetType.DynamicDataset
                       ? t("AddMetricsScreen.SelectDataset")
@@ -630,7 +640,10 @@ function AddMetrics() {
                     </Button>
                   </PrimaryActionBar>
                 </div>
-                <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+                <section
+                  className={fullPreview ? "grid-col-12" : "grid-col-6"}
+                  aria-label={t("ContentPreview")}
+                >
                   <div className="sticky-preview">
                     {fullPreviewButton}
                     <MetricsWidget
@@ -641,7 +654,7 @@ function AddMetrics() {
                       metricsCenterAlign={metricsCenterAlign}
                     />
                   </div>
-                </div>
+                </section>
               </div>
             </div>
           </form>

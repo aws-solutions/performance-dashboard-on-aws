@@ -16,7 +16,7 @@ interface Props {
   staticFileName?: string | undefined;
   hint?: string | React.ReactNode;
   accept?: string;
-  errors?: Array<object>;
+  errors?: any;
   loading?: boolean;
   onFileProcessed?: Function;
 }
@@ -46,7 +46,7 @@ function FileInput(props: Props) {
           {t("SelectedFile")}{" "}
           <span className="usa-file-input__choose">{t("ChangeFile")}</span>
         </div>
-        <div className="usa-file-input__preview" aria-hidden="true">
+        <div className="usa-file-input__preview">
           <div className="usa-file-input__preview-image">
             <div className="fileIcon" id="fileIconDiv">
               <FontAwesomeIcon icon={faFile} size="lg" />
@@ -65,7 +65,7 @@ function FileInput(props: Props) {
   return (
     <div
       className={`usa-form-group${
-        props.errors && props.errors.length ? " usa-form-group--error" : ""
+        props.errors && props.errors.length > 0 ? " usa-form-group--error" : ""
       }`}
     >
       <label className="usa-label text-bold" htmlFor={props.id}>
@@ -73,13 +73,13 @@ function FileInput(props: Props) {
         {props.label && props.required && <span>&#42;</span>}
       </label>
       <div className="usa-hint">{props.hint}</div>
-      {props.errors && props.errors.length && (
+      {props.errors && (
         <span
           className="usa-error-message"
           id="file-input-error-alert"
           role="alert"
         >
-          {t("InvalidFileFormat")}
+          {props.errors}
         </span>
       )}
       <div
@@ -89,7 +89,7 @@ function FileInput(props: Props) {
       >
         <div
           className={`${
-            props.errors && props.errors.length
+            props.errors && props.errors.length > 0
               ? "usa-form-group--error margin-left-1px "
               : ""
           }usa-file-input__target`}
@@ -103,7 +103,7 @@ function FileInput(props: Props) {
             name={props.name}
             accept={props.accept}
             disabled={props.disabled}
-            ref={props.register && props.register()}
+            ref={props.register && props.register({ required: props.required })}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               if (props.onFileProcessed) {
                 props.onFileProcessed(

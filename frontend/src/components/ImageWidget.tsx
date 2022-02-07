@@ -7,14 +7,15 @@ type Props = {
   file: File | undefined;
   summaryBelow: boolean;
   altText: string;
+  scalePct: string;
 };
 
 const ImageWidget = (props: Props) => {
-  const { file, summaryBelow, summary, title, altText } = props;
+  const { file, summaryBelow, summary, title, altText, scalePct } = props;
 
   return (
-    <div className="preview-container">
-      <h3 className="margin-top-3">{title}</h3>
+    <div aria-label={title} className="preview-container" tabIndex={-1}>
+      <h2 className="margin-top-3">{title}</h2>
       {!summaryBelow && (
         <MarkdownRender
           source={summary}
@@ -22,7 +23,12 @@ const ImageWidget = (props: Props) => {
         />
       )}
       <div>
-        <img src={file ? URL.createObjectURL(file) : ""} alt={altText}></img>
+        <img
+          src={file ? URL.createObjectURL(file) : ""}
+          alt={altText}
+          width={scalePct}
+          height="auto"
+        ></img>
       </div>
       {summaryBelow && (
         <MarkdownRender

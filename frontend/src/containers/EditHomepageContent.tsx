@@ -58,7 +58,9 @@ function EditHomepageContent() {
     <div className="grid-row">
       <div className="grid-col-8">
         <Breadcrumbs crumbs={crumbs} />
-        <h1>{t("SettingsHomePageContentEdit")}</h1>
+        <h1 id="settingsHomepageContentLabel">
+          {t("SettingsHomePageContentEdit")}
+        </h1>
 
         <p>{t("SettingsHomePageContentEditDescription")}</p>
 
@@ -73,6 +75,7 @@ function EditHomepageContent() {
               onSubmit={handleSubmit(onSubmit)}
               className="edit-homepage-content-form usa-form usa-form--large"
               data-testid="EditHomepageContentForm"
+              aria-labelledby="settingsHomepageContentLabel"
             >
               <TextField
                 id="title"

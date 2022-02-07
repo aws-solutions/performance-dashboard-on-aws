@@ -57,7 +57,7 @@ function CreateTopicArea() {
           },
         ]}
       />
-      <h1>
+      <h1 id="createNewTopicAreaLabel">
         {`${t("CreateNew")} ${settings.topicAreaLabels.singular.toLowerCase()}`}
       </h1>
 
@@ -67,6 +67,7 @@ function CreateTopicArea() {
             onSubmit={handleSubmit(onSubmit)}
             className="usa-form usa-form--large"
             data-testid="CreateTopicAreaForm"
+            aria-labelledby="createNewTopicAreaLabel"
           >
             <TextField
               id="name"

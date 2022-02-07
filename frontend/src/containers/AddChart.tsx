@@ -253,14 +253,17 @@ function AddChart() {
 
   const advanceStep = () => {
     setStep(step + 1);
+    document.getElementById("Home")?.focus();
   };
 
   const backStep = () => {
     setStep(step - 1);
+    document.getElementById("Home")?.focus();
   };
 
   const goBack = () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
+    document.getElementById("Home")?.focus();
   };
 
   const browseDatasets = () => {
@@ -391,7 +394,9 @@ function AddChart() {
 
   const configHeader = (
     <div>
-      <h1 className="margin-top-0">{t("AddChartScreen.AddChart")}</h1>
+      <h1 id="addChartFormHeader" className="margin-top-0">
+        {t("AddChartScreen.AddChart")}
+      </h1>
       <StepIndicator
         current={step}
         segments={[
@@ -420,7 +425,10 @@ function AddChart() {
 
       <div className="grid-row">
         <div className="grid-col-12">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            aria-labelledby="addChartFormHeader"
+          >
             <div hidden={step !== 0}>
               <PrimaryActionBar>
                 {configHeader}

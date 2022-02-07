@@ -88,11 +88,14 @@ function CreateDashboard() {
           <div className="grid-row">
             <div className="grid-col-12">
               <PrimaryActionBar>
-                <h1 className="margin-top-0">{t("CreateDashboard")}</h1>
+                <h1 id="createDashboardLabel" className="margin-top-0">
+                  {t("CreateDashboard")}
+                </h1>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="usa-form usa-form--large"
                   data-testid="CreateDashboardForm"
+                  aria-labelledby="createDashboardLabel"
                 >
                   <TextField
                     id="name"

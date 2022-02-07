@@ -14,6 +14,8 @@ import TextWidget from "../components/TextWidget";
 import SectionWidget from "../components/SectionWidget";
 import ImageWidgetComponent from "../components/ImageWidget";
 import MetricsWidgetComponent from "../components/MetricsWidget";
+import Shareable from "./Shareable";
+import { isPropertySignature } from "typescript";
 
 interface Props {
   widget: Widget;
@@ -24,6 +26,7 @@ interface Props {
   topOffset?: string;
   bottomOffset?: string;
   defaultActive?: string;
+  disableShare?: boolean;
 }
 
 function WidgetRender({
@@ -35,46 +38,62 @@ function WidgetRender({
   bottomOffset,
   topOffset,
   defaultActive,
+  disableShare,
 }: Props) {
-  switch (widget.widgetType) {
-    case WidgetType.Text:
-      return <TextWidget widget={widget} hideTitle={hideTitle} />;
-    case WidgetType.Chart:
-      return (
-        <ChartWidgetComponent
-          widget={widget as ChartWidget}
-          showMobilePreview={showMobilePreview}
-          hideTitle={hideTitle}
-        />
-      );
-    case WidgetType.Table:
-    case WidgetType.Metrics:
-      return (
-        <WidgetWithDataset
-          widget={widget}
-          showMobilePreview={showMobilePreview}
-          hideTitle={hideTitle}
-        />
-      );
-    case WidgetType.Image:
-      return (
-        <WidgetWithImage widget={widget as ImageWidget} hideTitle={hideTitle} />
-      );
-    case WidgetType.Section:
-      return (
-        <SectionWidget
-          widget={widget}
-          showMobilePreview={showMobilePreview}
-          widgets={widgets}
-          setActiveWidgetId={setActiveWidgetId}
-          bottomOffset={bottomOffset}
-          topOffset={topOffset}
-          defaultActive={defaultActive}
-        />
-      );
-    default:
-      return null;
+  function getWidget() {
+    switch (widget.widgetType) {
+      case WidgetType.Text:
+        return <TextWidget widget={widget} hideTitle={hideTitle} />;
+      case WidgetType.Chart:
+        return (
+          <ChartWidgetComponent
+            widget={widget as ChartWidget}
+            showMobilePreview={showMobilePreview}
+            hideTitle={hideTitle}
+          />
+        );
+      case WidgetType.Table:
+      case WidgetType.Metrics:
+        return (
+          <WidgetWithDataset
+            widget={widget}
+            showMobilePreview={showMobilePreview}
+            hideTitle={hideTitle}
+          />
+        );
+      case WidgetType.Image:
+        return (
+          <WidgetWithImage
+            widget={widget as ImageWidget}
+            hideTitle={hideTitle}
+          />
+        );
+      case WidgetType.Section:
+        return (
+          <SectionWidget
+            widget={widget}
+            showMobilePreview={showMobilePreview}
+            widgets={widgets}
+            setActiveWidgetId={setActiveWidgetId}
+            bottomOffset={bottomOffset}
+            topOffset={topOffset}
+            defaultActive={defaultActive}
+          />
+        );
+      default:
+        return null;
+    }
   }
+
+  if (!!disableShare) {
+    return getWidget();
+  }
+
+  return (
+    <Shareable id={widget.id} title={widget.name}>
+      {getWidget()}
+    </Shareable>
+  );
 }
 
 function WidgetWithImage({ widget, hideTitle }: Props) {
@@ -89,6 +108,7 @@ function WidgetWithImage({ widget, hideTitle }: Props) {
       summaryBelow={content.summaryBelow}
       file={file.file}
       altText={content.imageAltText}
+      scalePct={content.scalePct ? content.scalePct : "auto"}
     />
   );
 }

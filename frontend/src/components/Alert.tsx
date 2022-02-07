@@ -25,7 +25,7 @@ function Alert(props: Props) {
       ) : (
         <div className="usa-alert__body">
           {props.title && !props.slim && (
-            <h3 className="usa-alert__heading">{props.title}</h3>
+            <h2 className="usa-alert__heading">{props.title}</h2>
           )}
           <p className="usa-alert__text">{props.message}</p>
         </div>

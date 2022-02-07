@@ -18,7 +18,7 @@ function StepIndicator(props: Props) {
   }
 
   const stepChart = (
-    <ol className="usa-step-indicator__segments">
+    <ol className="usa-step-indicator__segments" aria-label={t("Progress")}>
       {props.segments.map((segment, index) => {
         return (
           <Segment
@@ -55,7 +55,10 @@ function StepIndicator(props: Props) {
   return (
     <div
       className="usa-step-indicator usa-step-indicator--counters-sm"
-      aria-label={t("Progress")}
+      role="progressbar"
+      aria-valuemin={1}
+      aria-valuemax={props.segments.length}
+      aria-valuenow={props.current + 1}
     >
       {props.showStepChart ? stepChart : ""}
       {props.showStepText ? stepText : ""}

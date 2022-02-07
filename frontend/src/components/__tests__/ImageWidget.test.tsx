@@ -19,6 +19,7 @@ test("renders the image title", async () => {
       file={imageFile}
       summaryBelow={false}
       altText="alt text"
+      scalePct="75%"
     />,
     { wrapper: MemoryRouter }
   );
@@ -33,6 +34,7 @@ test("renders the summary below the image", async () => {
       file={imageFile}
       summaryBelow={true}
       altText="alt text"
+      scalePct="75%"
     />,
     { wrapper: MemoryRouter }
   );
@@ -50,6 +52,7 @@ test("renders the summary above the image", async () => {
       file={imageFile}
       summaryBelow={false}
       altText="alt text"
+      scalePct="75%"
     />,
     { wrapper: MemoryRouter }
   );
@@ -67,6 +70,7 @@ test("image preview should match snapshot", async () => {
       file={imageFile}
       summaryBelow={false}
       altText="alt text"
+      scalePct="75%"
     />,
     { wrapper: MemoryRouter }
   );

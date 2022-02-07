@@ -2,12 +2,15 @@
 
 exports[`metrics preview should match snapshot 1`] = `
 <div>
-  <div>
-    <h3
+  <div
+    aria-label="test title"
+    tabindex="-1"
+  >
+    <h2
       class="margin-top-3"
     >
       test title
-    </h3>
+    </h2>
     <div>
       <div
         class="grid-col"

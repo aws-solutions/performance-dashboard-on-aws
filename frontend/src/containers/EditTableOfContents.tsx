@@ -143,19 +143,23 @@ function EditTableOfContents() {
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0 margin-bottom-1">
+                <h1
+                  id="editTableOfContentsLabel"
+                  className="margin-top-0 margin-bottom-1"
+                >
                   {t("EditTableOfContents")}
                 </h1>
-                <div className="usa-hint">
-                  {t("EditTableOfContentsDescription")}
-                </div>
                 <form
                   className="usa-form usa-form--large"
                   onChange={onFormChange}
                   onSubmit={handleSubmit(onSubmit)}
+                  aria-labelledby="editTableOfContentsLabel"
                 >
                   <fieldset className="usa-fieldset">
                     <>
+                      <legend className="usa-hint">
+                        {t("EditTableOfContentsDescription")}
+                      </legend>
                       {dashboard.widgets.length === 0 ? (
                         <div>{t("NoTableOfContentsItems")}</div>
                       ) : (
@@ -221,7 +225,10 @@ function EditTableOfContents() {
                 </form>
               </PrimaryActionBar>
             </div>
-            <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+            <section
+              className={fullPreview ? "grid-col-12" : "grid-col-6"}
+              aria-label={t("ContentPreview")}
+            >
               {fullPreviewButton}
               <div className="margin-top-2">
                 <DashboardHeader
@@ -261,7 +268,7 @@ function EditTableOfContents() {
                   onClick={setActiveWidgetId}
                 />
               </div>
-            </div>
+            </section>
           </div>
         </>
       )}

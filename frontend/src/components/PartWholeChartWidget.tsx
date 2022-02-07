@@ -153,10 +153,10 @@ const PartWholeChartWidget = (props: Props) => {
   };
 
   return (
-    <div>
-      <h3 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+    <div aria-label={props.title} tabIndex={-1}>
+      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
         {props.title}
-      </h3>
+      </h2>
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

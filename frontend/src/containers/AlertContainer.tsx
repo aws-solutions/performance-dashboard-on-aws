@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { LocationState } from "../models";
 import Alert from "../components/Alert";
 import Link from "../components/Link";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   id?: string;
@@ -10,6 +11,7 @@ interface Props {
 
 function AlertContainer(props: Props) {
   const history = useHistory<LocationState>();
+  const { t } = useTranslation();
   const { state } = history.location;
 
   if (!state || !state.alert || state.id !== props.id) {
@@ -24,7 +26,12 @@ function AlertContainer(props: Props) {
           state.alert.linkLabel && state.alert.to ? (
             <div className="margin-left-6">
               {state.alert.message}{" "}
-              <Link target="_blank" to={state.alert.to} external>
+              <Link
+                target="_blank"
+                to={state.alert.to}
+                ariaLabel={`${state.alert.linkLabel} ${t("ARIA.OpenInNewTab")}`}
+                external
+              >
                 {state.alert.linkLabel}
               </Link>
             </div>

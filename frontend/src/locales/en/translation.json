@@ -1,7 +1,7 @@
 {
   "PageTitle": {
     "Default": "Performance Dashboard on AWS",
-    "AdminHome": "Admmin Home",
+    "AdminHome": "Admin Home",
     "Settings": "Settings",
     "TopicAreaSettings": "Topic Area Settings",
     "BrandingAndStylingSettings": "Branding and Styling Settings",
@@ -102,6 +102,8 @@
   "Delete": "Delete",
   "Save": "Save",
   "Edit": "Edit",
+  "CopyLink": "Copy link: {{title}}",
+  "LinkCopied": "Link copied: {{title}}",
   "EditHeader": "Edit header",
   "To": "to",
   "Step": "Step",
@@ -251,6 +253,7 @@
     "SectionSummaryHint": "Give your section a summary to explain it in more depth. It can also be read by screen readers to describe the section for those with visual impairments. This field supports markdown."
   },
   "EditTextScreen": {
+    "Configure": "Configure section content",
     "EditText": "Edit text",
     "EditTextError": "Resolve error(s) to edit the text",
     "EditTextSuccess": "'{{title}}' text has been successfully edited.",
@@ -313,6 +316,7 @@
   },
   "AddMetricsScreen": {
     "MetricsAddedSuccessfully": "Metrics '{{title}}' have been successfully added.",
+    "InvalidDatasetType": "Choose a dataset to continue",
     "Name": "Name",
     "LastUpdated": "Last updated",
     "Description": "Description",
@@ -360,6 +364,8 @@
     "ChooseDataset": "Choose a dataset to continue",
     "AddChart": "Add chart",
     "ChooseData": "Choose data",
+    "Configure": "Configure chart content.",
+    "Preview": "Preview chart",
     "CheckData": "Check data",
     "Visualize": "Visualize",
     "AddChartSuccess": "'{{title}}' chart has been successfully added.",
@@ -378,6 +384,7 @@
     "AddTable": "Add table",
     "ChooseData": "Choose data",
     "CheckData": "Check data",
+    "Configure": "Configure table content.",
     "Visualize": "Visualize",
     "AddTableSuccess": "'{{title}}' table has been successfully added.",
     "ChooseDataset": "Choose a dataset to continue"
@@ -389,6 +396,12 @@
     "Visualize": "Visualize",
     "EditTableSuccess": "'{{title}}' table has been successfully edited.",
     "ChooseDataset": "Choose a dataset to continue"
+  },
+  "ViewDashboardAdmin": {
+    "Copy": "Copy",
+    "CopyDashboard": "This will create a draft copy of this dashboard. Are you sure you want to continue?",
+    "Dashboard": "dashboard",
+    "SuccessfullyCopied": "successfully copied."
   },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",
@@ -591,6 +604,7 @@
   "SettingsTopicAreaNameEditSuccess": "{{name}} was successfully edited.",
   "AddContentScreen": {
     "Title": "Add content item",
+    "InvalidWidgetType": "Please select content type to continue.",
     "Instructions": "Select the type of content you want to add",
     "TextImageAlt": "Text Content Item Preview",
     "MetricsImageAlt": "Metrics Content Item Preview",
@@ -721,10 +735,10 @@
     "Published": "Published",
     "Archived": "Archived",
     "Copy": "Copy",
-    "ThisWillCopy": "This will copy",
+    "CopyDashboard": "This will create a draft copy of this dashboard. Are you sure you want to continue?",
+    "CopyDashboard_plural": "This will create draft copies of these dashboards. Are you sure you want to continue?",
     "TheseDashboards": "these dashboards",
     "ThisDashboard": "this dashboard",
-    "CopyModalMessage": "Are you sure you want to continue?",
     "SuccessfullyCopied": "successfully copied."
   },
   "ShowDataTableButton": "Show data table",
@@ -801,7 +815,9 @@
   "Page": "Page",
   "Go": "Go",
   "Show": "Show",
+  "ContentPreview": "Content preview",
   "ChooseStaticDataset": "Choose static dataset",
+  "ChooseDynamicDataset": "Choose dynamic dataset",
   "ChooseStaticDatasetDescription": "These are all of the static datasets that have been uploaded. Find and select a dataset to use in your visualization.",
   "UploadedBy": "Uploaded by",
   "UploadedAt": "Uploaded at",
@@ -885,10 +901,15 @@
     "ToggleSummary": "Show description below image",
     "Back": "Back",
     "DisabledToolTip": "Upload a file to continue",
-    "Cancel": "Cancel"
+    "Cancel": "Cancel",
+    "ImageSize": "Image size (optional)",
+    "ImageSizeHint": "How your image will display in the dashboard.",
+    "AsUploaded": "As uploaded (do not scale)",
+    "ImageScale": "Image at {{scale}} scale"
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "Image '{{title}}' has been successfully edited.",
+    "ConfigureImage": "Configure image",
     "EditImage": "Edit Image",
     "ResolveError": "Resolve error(s) to edit the image",
     "Title": "Image title",
@@ -903,7 +924,11 @@
     "SummaryLabel": "Image description (optional)",
     "SummaryHint": "Give your image a description to explain it in more depth. It can also be read by screen readers to describe the image for those with visual impairments. This field supports markdown.",
     "MarkdownLink": "View Markdown Syntax",
-    "ToggleSummary": "Show description below image"
+    "ToggleSummary": "Show description below image",
+    "ImageSize": "Image size (optional)",
+    "ImageSizeHint": "How your image will display in the dashboard.",
+    "AsUploaded": "As uploaded (do not scale)",
+    "ImageScale": "Image at {{scale}} scale"
   },
   "EnterpriseSignIn": "Enterprise Sign-in",
   "Actions": "Actions",
@@ -914,8 +939,8 @@
   "SupportContactEmailEditSuccess": "Support contact email successfully edited.",
   "Draft": "Draft",
   "DashboardContent": "Dashboard content",
-  "ExpandPreview": "Expand preview",
-  "ClosePreview": "Close preview",
+  "ExpandPreview": "Full screen preview",
+  "ClosePreview": "Exit full screen preview",
   "Admin": "Admin",
   "Editor": "Editor",
   "GlobalUser": "user",
@@ -959,6 +984,8 @@
     "Header": "Header",
     "Main": "Main",
     "Logo": "Logo",
-    "Footer": "Footer"
-  }
+    "Footer": "Footer",
+    "OpenInNewTab": "(opens in a new tab)"
+  },
+  "percentage": "{{pct}}%"
 }

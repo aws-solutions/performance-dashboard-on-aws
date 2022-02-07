@@ -102,6 +102,8 @@
   "Delete": "Eliminar",
   "Save": "Guardar",
   "Edit": "Editar",
+  "CopyLink": "Copiar enlace: {{title}}",
+  "LinkCopied": "Enlace copiado: {{title}}",
   "EditHeader": "Editar encabezado",
   "To": "a",
   "Step": "Paso",
@@ -251,6 +253,7 @@
     "SectionSummaryHint": "Incorpore un resumen a la sección para explicarla con más detalle. También pueden leerlo los lectores de pantalla para describir la sección a personas con discapacidades visuales. Este campo admite el marcado."
   },
   "EditTextScreen": {
+    "Configure": "Configurar el contenido de la sección",
     "EditText": "Editar texto",
     "EditTextError": "Resolver errores al editar el texto",
     "EditTextSuccess": "El texto “{{title}}” se ha editado correctamente.",
@@ -313,6 +316,7 @@
   },
   "AddMetricsScreen": {
     "MetricsAddedSuccessfully": "Las métricas “{{title}}” se han agregado correctamente.",
+    "InvalidDatasetType": "Elija un conjunto de datos para continuar",
     "Name": "Nombre",
     "LastUpdated": "Última actualización",
     "Description": "Descripción",
@@ -360,6 +364,8 @@
     "ChooseDataset": "Elija un conjunto de datos para continuar",
     "AddChart": "Agregar gráfico",
     "ChooseData": "Elegir datos",
+    "Configure": "Configure el contenido del gráfico.",
+    "Preview": "Previsualizar el gráfico",
     "CheckData": "Comprobar datos",
     "Visualize": "Visualizar",
     "AddChartSuccess": "El gráfico “{{title}}” se ha agregado correctamente.",
@@ -378,6 +384,7 @@
     "AddTable": "Agregar tabla",
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
+    "Configure": "Configure el contenido de la tabla.",
     "Visualize": "Visualizar",
     "AddTableSuccess": "La tabla “{{title}}” se ha agregado correctamente.",
     "ChooseDataset": "Elija un conjunto de datos para continuar"
@@ -389,6 +396,12 @@
     "Visualize": "Visualizar",
     "EditTableSuccess": "La tabla “{{title}}” se ha editado correctamente.",
     "ChooseDataset": "Elija un conjunto de datos para continuar"
+  },
+  "ViewDashboardAdmin": {
+    "Copy": "Copiar",
+    "CopyDashboard": "Esta acción creará una copia en borrador de este panel. ¿Está seguro de que desea continuar?",
+    "Dashboard": "panel",
+    "SuccessfullyCopied": "copiado correctamente."
   },
   "BrandingAndStyling": "Marca y estilo",
   "BrandingAndStylingDescription": "Personalice el panel de rendimiento.",
@@ -591,6 +604,7 @@
   "SettingsTopicAreaNameEditSuccess": "{{name}} se ha editado correctamente.",
   "AddContentScreen": {
     "Title": "Agregar elemento de contenido",
+    "InvalidWidgetType": "Seleccione el tipo de contenido para continuar.",
     "Instructions": "Seleccione el tipo de contenido que desea agregar",
     "TextImageAlt": "Vista previa de elementos de contenido de texto",
     "MetricsImageAlt": "Vista previa del elemento de contenido de métricas",
@@ -721,10 +735,10 @@
     "Published": "Publicado",
     "Archived": "Archivado",
     "Copy": "Copiar",
-    "ThisWillCopy": "Esto copiará",
+    "CopyDashboard": "Esta acción creará una copia en borrador de este panel. ¿Está seguro de que desea continuar?",
+    "CopyDashboard_plural": "Esta acción creará copias en borrador de estos paneles. ¿Está seguro de que desea continuar?",
     "TheseDashboards": "estos paneles",
     "ThisDashboard": "este panel",
-    "CopyModalMessage": "¿Está seguro de que desea eliminar continuar?",
     "SuccessfullyCopied": "copiado correctamente."
   },
   "ShowDataTableButton": "Mostrar tabla de datos",
@@ -801,7 +815,9 @@
   "Page": "Página",
   "Go": "Ir",
   "Show": "Mostrar",
+  "ContentPreview": "Vista previa del contenido",
   "ChooseStaticDataset": "Elegir conjunto de datos estáticos",
+  "ChooseDynamicDataset": "Elegir conjunto de datos dinámico",
   "ChooseStaticDatasetDescription": "Estos son todos los conjuntos de datos estáticos que se han cargado. Busque y seleccione un conjunto de datos para utilizarlo en la visualización.",
   "UploadedBy": "Cargado por",
   "UploadedAt": "Cargado a las",
@@ -885,10 +901,15 @@
     "ToggleSummary": "Mostrar la descripción a continuación de la imagen",
     "Back": "Volver",
     "DisabledToolTip": "Cargar un archivo para continuar",
-    "Cancel": "Cancelar"
+    "Cancel": "Cancelar",
+    "ImageSize": "Tamaño de imagen (opcional)",
+    "ImageSizeHint": "Cómo se mostrará la imagen en el panel.",
+    "AsUploaded": "Como se ha cargado (no escalar)",
+    "ImageScale": "Imagen a escala de {{scale}}"
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "La imagen “{{title}}” se ha editado correctamente.",
+    "ConfigureImage": "Configurar imagen",
     "EditImage": "Editar imagen",
     "ResolveError": "Resolver errores al editar la imagen",
     "Title": "Título de la imagen",
@@ -903,7 +924,11 @@
     "SummaryLabel": "Descripción de la imagen (opcional)",
     "SummaryHint": "Incorpore a la imagen una descripción para explicarla con más detalle. También pueden leerla los lectores de pantalla para describir la imagen a personas con discapacidades visuales. Este campo admite el marcado.",
     "MarkdownLink": "Ver sintaxis de marcado",
-    "ToggleSummary": "Mostrar la descripción a continuación de la imagen"
+    "ToggleSummary": "Mostrar la descripción a continuación de la imagen",
+    "ImageSize": "Tamaño de imagen (opcional)",
+    "ImageSizeHint": "Cómo se mostrará la imagen en el panel.",
+    "AsUploaded": "Como se ha cargado (no escalar)",
+    "ImageScale": "Imagen a escala de {{scale}}"
   },
   "EnterpriseSignIn": "Inicio de sesión empresarial",
   "Actions": "Acciones",
@@ -914,8 +939,8 @@
   "SupportContactEmailEditSuccess": "Se ha editado correctamente el correo electrónico de contacto con el servicio de soporte.",
   "Draft": "Borrador",
   "DashboardContent": "Contenido del panel",
-  "ExpandPreview": "Ampliar vista previa",
-  "ClosePreview": "Cerrar vista previa",
+  "ExpandPreview": "Vista previa en pantalla completa",
+  "ClosePreview": "Salir de la vista previa en pantalla completa",
   "Admin": "Administrador",
   "Editor": "Editor",
   "GlobalUser": "Usuario",
@@ -959,6 +984,8 @@
     "Header": "Encabezado",
     "Main": "Principal",
     "Logo": "Logotipo",
-    "Footer": "Pie de página"
-  }
+    "Footer": "Pie de página",
+    "OpenInNewTab": "(se abre en una pestaña nueva)"
+  },
+  "percentage": "{{pct}} %"
 }

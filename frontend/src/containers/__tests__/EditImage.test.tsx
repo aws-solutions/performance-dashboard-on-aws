@@ -54,6 +54,16 @@ test("renders a file upload input", async () => {
   expect(await screen.findByLabelText("File upload*")).toBeInTheDocument();
 });
 
+test("renders an image size/scale input", async () => {
+  render(<EditImage />, { wrapper: MemoryRouter });
+  expect(
+    await screen.findByText("How your image will display in the dashboard.")
+  ).toBeInTheDocument();
+  expect(
+    await screen.findByText("As uploaded (do not scale)")
+  ).toBeInTheDocument();
+});
+
 test("on submit, it calls editWidget api and uploads dataset", async () => {
   const { getByRole, getByText, getByLabelText } = render(<EditImage />, {
     wrapper: MemoryRouter,
@@ -73,9 +83,19 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
     },
   });
 
-  fireEvent.change(getByLabelText("File upload*"), {
+  const file = new File(["dummy content"], "filename.png", {
+    type: "image/png",
+  });
+  const uploadFile = getByLabelText("File upload*");
+  Object.defineProperty(uploadFile, "files", { value: [file] });
+  Object.defineProperty(uploadFile, "value", {
+    value: file.name,
+  });
+  fireEvent.change(uploadFile);
+
+  fireEvent.change(getByLabelText("75%"), {
     target: {
-      files: ["image.jpg"],
+      value: ["75%"],
     },
   });
 

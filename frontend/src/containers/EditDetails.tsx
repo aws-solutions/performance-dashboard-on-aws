@@ -159,7 +159,7 @@ function EditDetails() {
           <div className="grid-row">
             <div className="grid-col-12">
               <PrimaryActionBar>
-                <h1 className="margin-top-0">
+                <h1 id="editHeaderLabel" className="margin-top-0">
                   {t("EditHeader")
                     .split(" ")
                     .map((word) => {
@@ -171,6 +171,7 @@ function EditDetails() {
                   onSubmit={handleSubmit(onSubmit)}
                   className="edit-details-form usa-form usa-form--large"
                   data-testid="EditDetailsForm"
+                  aria-labelledby="editHeaderLabel"
                 >
                   <TextField
                     id="name"
@@ -277,7 +278,10 @@ function EditDetails() {
             </div>
           </div>
         </div>
-        <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+        <section
+          className={fullPreview ? "grid-col-12" : "grid-col-6"}
+          aria-label={t("ContentPreview")}
+        >
           {fullPreviewButton}
           <div className="margin-top-2">
             <DashboardHeader
@@ -320,7 +324,7 @@ function EditDetails() {
               onClick={setActiveWidgetId}
             />
           </div>
-        </div>
+        </section>
       </div>
     </>
   );

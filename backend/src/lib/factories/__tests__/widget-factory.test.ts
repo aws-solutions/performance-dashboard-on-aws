@@ -799,6 +799,7 @@ describe("createImageWidget", () => {
     },
     fileName: "example name",
     imageAltText: "Image of a widget",
+    scalePct: "75%",
   };
   it("builds a image widget", () => {
     const widget = WidgetFactory.createWidget({
@@ -821,6 +822,7 @@ describe("createImageWidget", () => {
     });
     expect(widget.content.imageAltText).toEqual("Image of a widget");
     expect(widget.content.fileName).toEqual("example name");
+    expect(widget.content.scalePct).toEqual("75%");
   });
 
   it("throws an error if image title is undefined", () => {

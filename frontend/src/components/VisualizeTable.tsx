@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useState, MouseEvent } from "react";
 import { DatasetType } from "../models";
 import { useTranslation } from "react-i18next";
 import Alert from "./Alert";
@@ -22,8 +22,8 @@ interface Props {
   csvJson: Array<any>;
   datasetLoading: boolean;
   datasetType: DatasetType | undefined;
-  onCancel: Function;
-  backStep: Function;
+  onCancel: (event: MouseEvent<HTMLButtonElement>) => void;
+  backStep: (event: MouseEvent<HTMLButtonElement>) => void;
   advanceStep: Function;
   fileLoading: boolean;
   processingWidget: boolean;
@@ -74,145 +74,161 @@ function VisualizeTable(props: Props) {
               slim
             ></Alert>
           )}
-          <TextField
-            id="title"
-            name="title"
-            label={t("VisualizeTableComponent.TableTitle")}
-            hint={t("VisualizeTableComponent.TableTitleHint")}
-            error={
-              props.errors.title && t("VisualizeTableComponent.TableTitleError")
-            }
-            required
-            register={props.register}
-          />
 
-          <div className="usa-checkbox">
-            <input
-              className="usa-checkbox__input"
-              id="display-title"
-              type="checkbox"
-              name="showTitle"
-              defaultChecked={true}
-              ref={props.register()}
-            />
-            <label className="usa-checkbox__label" htmlFor="display-title">
-              {t("AddTextScreen.ShowTitle")}
-            </label>
-          </div>
+          <fieldset className="usa-fieldset">
+            <legend className="usa-hint grid-col-6">
+              {t("AddTableScreen.Configure")}
+            </legend>
 
-          <div className="margin-top-3 grid-col-6">
-            <Dropdown
-              id="sortData"
-              name="sortData"
-              label={t("SortData")}
-              options={DatasetParsingService.getDatasetSortOptions(
-                props.originalJson,
-                props.headers,
-                t
-              )}
-              onChange={handleSortDataChange}
-              defaultValue={
-                props.sortByColumn
-                  ? `${props.sortByColumn}###${
-                      props.sortByDesc ? "desc" : "asc"
-                    }`
-                  : ""
+            <TextField
+              id="title"
+              name="title"
+              label={t("VisualizeTableComponent.TableTitle")}
+              hint={t("VisualizeTableComponent.TableTitleHint")}
+              error={
+                props.errors.title &&
+                t("VisualizeTableComponent.TableTitleError")
               }
+              required
               register={props.register}
             />
-          </div>
 
-          <div>
-            <label className="usa-label text-bold">
-              {t("TableOptionsLabel")}
-            </label>
-            <div className="usa-hint">{t("TableOptionsDescription")}</div>
             <div className="usa-checkbox">
               <input
                 className="usa-checkbox__input"
-                id="significantDigitLabels"
+                id="display-title"
                 type="checkbox"
-                name="significantDigitLabels"
-                defaultChecked={false}
+                name="showTitle"
+                defaultChecked={true}
                 ref={props.register()}
               />
-              <label
-                className="usa-checkbox__label"
-                htmlFor="significantDigitLabels"
-              >
-                {t("SignificantDigitLabels")}
+              <label className="usa-checkbox__label" htmlFor="display-title">
+                {t("AddTextScreen.ShowTitle")}
               </label>
             </div>
-            <div className="usa-checkbox">
-              <input
-                className="usa-checkbox__input"
-                id="displayWithPages"
-                type="checkbox"
-                name="displayWithPages"
-                defaultChecked={false}
-                ref={props.register()}
-              />
-              <label className="usa-checkbox__label" htmlFor="displayWithPages">
-                {t("DisplayWithPages")}
-              </label>
-            </div>
-          </div>
 
-          <TextField
-            id="summary"
-            name="summary"
-            label={t("VisualizeTableComponent.TableSummary")}
-            hint={
-              <>
-                {t("VisualizeTableComponent.TableSummaryHint")}{" "}
-                <Link target="_blank" to={"/admin/markdown"} external>
-                  {t("AddTextScreen.ViewMarkdownSyntax")}
-                </Link>
-              </>
-            }
-            register={props.register}
-            multiline
-            rows={5}
-          />
-          <div className="usa-checkbox">
-            <input
-              className="usa-checkbox__input"
-              id="summary-below"
-              type="checkbox"
-              name="summaryBelow"
-              defaultChecked={false}
-              ref={props.register()}
+            <div className="margin-top-3 grid-col-6">
+              <Dropdown
+                id="sortData"
+                name="sortData"
+                label={t("SortData")}
+                options={DatasetParsingService.getDatasetSortOptions(
+                  props.originalJson,
+                  props.headers,
+                  t
+                )}
+                onChange={handleSortDataChange}
+                defaultValue={
+                  props.sortByColumn
+                    ? `${props.sortByColumn}###${
+                        props.sortByDesc ? "desc" : "asc"
+                      }`
+                    : ""
+                }
+                register={props.register}
+              />
+            </div>
+
+            <div>
+              <label className="usa-label text-bold">
+                {t("TableOptionsLabel")}
+              </label>
+              <div className="usa-hint">{t("TableOptionsDescription")}</div>
+              <div className="usa-checkbox">
+                <input
+                  className="usa-checkbox__input"
+                  id="significantDigitLabels"
+                  type="checkbox"
+                  name="significantDigitLabels"
+                  defaultChecked={false}
+                  ref={props.register()}
+                />
+                <label
+                  className="usa-checkbox__label"
+                  htmlFor="significantDigitLabels"
+                >
+                  {t("SignificantDigitLabels")}
+                </label>
+              </div>
+              <div className="usa-checkbox">
+                <input
+                  className="usa-checkbox__input"
+                  id="displayWithPages"
+                  type="checkbox"
+                  name="displayWithPages"
+                  defaultChecked={false}
+                  ref={props.register()}
+                />
+                <label
+                  className="usa-checkbox__label"
+                  htmlFor="displayWithPages"
+                >
+                  {t("DisplayWithPages")}
+                </label>
+              </div>
+            </div>
+
+            <TextField
+              id="summary"
+              name="summary"
+              label={t("VisualizeTableComponent.TableSummary")}
+              hint={
+                <>
+                  {t("VisualizeTableComponent.TableSummaryHint")}{" "}
+                  <Link target="_blank" to={"/admin/markdown"} external>
+                    {t("AddTextScreen.ViewMarkdownSyntax")}
+                  </Link>
+                </>
+              }
+              register={props.register}
+              multiline
+              rows={5}
             />
-            <label className="usa-checkbox__label" htmlFor="summary-below">
-              {t("VisualizeTableComponent.TableShowSummary")}
-            </label>
-          </div>
-          <br />
-          <br />
-          <hr />
-          <Button variant="outline" type="button" onClick={props.backStep}>
-            {t("BackButton")}
-          </Button>
-          <Button
-            type="submit"
-            disabled={
-              !props.json.length || props.fileLoading || props.processingWidget
-            }
-          >
-            {props.submitButtonLabel}
-          </Button>
-          <Button
-            variant="unstyled"
-            className="text-base-dark hover:text-base-darker active:text-base-darkest"
-            type="button"
-            onClick={props.onCancel}
-          >
-            {t("Cancel")}
-          </Button>
+            <div className="usa-checkbox">
+              <input
+                className="usa-checkbox__input"
+                id="summary-below"
+                type="checkbox"
+                name="summaryBelow"
+                defaultChecked={false}
+                ref={props.register()}
+              />
+              <label className="usa-checkbox__label" htmlFor="summary-below">
+                {t("VisualizeTableComponent.TableShowSummary")}
+              </label>
+            </div>
+            <br />
+            <br />
+            <hr />
+            <Button variant="outline" type="button" onClick={props.backStep}>
+              {t("BackButton")}
+            </Button>
+            <Button
+              type="submit"
+              disabled={
+                !props.json.length ||
+                props.fileLoading ||
+                props.processingWidget
+              }
+            >
+              {props.submitButtonLabel}
+            </Button>
+            <Button
+              variant="unstyled"
+              className="text-base-dark hover:text-base-darker active:text-base-darkest"
+              type="button"
+              onClick={props.onCancel}
+            >
+              {t("Cancel")}
+            </Button>
+          </fieldset>
         </PrimaryActionBar>
       </div>
 
-      <div className={props.fullPreview ? "grid-col-12" : "grid-col-7"}>
+      <section
+        className={props.fullPreview ? "grid-col-12" : "grid-col-6"}
+        aria-label={t("ContentPreview")}
+      >
         <div
           hidden={!props.json.length}
           className={`${
@@ -274,7 +290,7 @@ function VisualizeTable(props: Props) {
             </>
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

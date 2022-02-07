@@ -102,6 +102,8 @@
   "Delete": "Excluir",
   "Save": "Salvar",
   "Edit": "Editar",
+  "CopyLink": "Copiar link: {{title}}",
+  "LinkCopied": "Link copiado: {{title}}",
   "EditHeader": "Editar cabeçalho",
   "To": "a",
   "Step": "Etapa",
@@ -251,6 +253,7 @@
     "SectionSummaryHint": "Forneça um resumo à sua seção para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a seção a usuários com deficiência visual. Esse campo oferece suporte para Markdown."
   },
   "EditTextScreen": {
+    "Configure": "Configurar conteúdo da seção",
     "EditText": "Editar texto",
     "EditTextError": "Resolva o(s) erro(s) para editar o texto",
     "EditTextSuccess": "O texto “{{title}}” foi editado com êxito.",
@@ -313,6 +316,7 @@
   },
   "AddMetricsScreen": {
     "MetricsAddedSuccessfully": "As métricas “{{title}}” foram adicionadas com êxito.",
+    "InvalidDatasetType": "Escolher um conjunto de dados para continuar",
     "Name": "Nome",
     "LastUpdated": "Última atualização",
     "Description": "Descrição",
@@ -360,6 +364,8 @@
     "ChooseDataset": "Escolher um conjunto de dados para continuar",
     "AddChart": "Adicionar gráfico",
     "ChooseData": "Escolher dados",
+    "Configure": "Configure o conteúdo do gráfico.",
+    "Preview": "Visualizar gráfico",
     "CheckData": "Verificar dados",
     "Visualize": "Visualizar",
     "AddChartSuccess": "O gráfico “{{title}}” foi adicionado com êxito.",
@@ -378,6 +384,7 @@
     "AddTable": "Adicionar tabela",
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
+    "Configure": "Configure o conteúdo da tabela.",
     "Visualize": "Visualizar",
     "AddTableSuccess": "A tabela “{{title}}” foi adicionada com êxito.",
     "ChooseDataset": "Escolher um conjunto de dados para continuar"
@@ -389,6 +396,12 @@
     "Visualize": "Visualizar",
     "EditTableSuccess": "A tabela “{{title}}” foi editada com êxito.",
     "ChooseDataset": "Escolher um conjunto de dados para continuar"
+  },
+  "ViewDashboardAdmin": {
+    "Copy": "Copiar",
+    "CopyDashboard": "Isso criará uma cópia de rascunho desse painel. Tem certeza de que deseja continuar?",
+    "Dashboard": "painel",
+    "SuccessfullyCopied": "copiado com êxito."
   },
   "BrandingAndStyling": "Marca e estilo",
   "BrandingAndStylingDescription": "Personalize seu painel de performance.",
@@ -591,6 +604,7 @@
   "SettingsTopicAreaNameEditSuccess": "{{name}} foi editado com êxito.",
   "AddContentScreen": {
     "Title": "Adicionar item de conteúdo",
+    "InvalidWidgetType": "Selecione o tipo de conteúdo para continuar.",
     "Instructions": "Selecione o tipo de conteúdo que deseja adicionar",
     "TextImageAlt": "Visualização do item de conteúdo de texto",
     "MetricsImageAlt": "Visualização do item de conteúdo de métricas",
@@ -721,10 +735,10 @@
     "Published": "Publicado",
     "Archived": "Arquivado",
     "Copy": "Copiar",
-    "ThisWillCopy": "Isto copiará",
+    "CopyDashboard": "Isso criará uma cópia de rascunho desse painel. Tem certeza de que deseja continuar?",
+    "CopyDashboard_plural": "Isso criará cópias de rascunho desses painéis. Tem certeza de que deseja continuar?",
     "TheseDashboards": "esses painéis",
     "ThisDashboard": "este painel",
-    "CopyModalMessage": "Tem certeza de que deseja continuar?",
     "SuccessfullyCopied": "copiado com êxito."
   },
   "ShowDataTableButton": "Mostrar tabela de dados",
@@ -801,7 +815,9 @@
   "Page": "Página",
   "Go": "Ir",
   "Show": "Mostrar",
+  "ContentPreview": "Visualização de conteúdo",
   "ChooseStaticDataset": "Escolher conjunto de dados estático",
+  "ChooseDynamicDataset": "Escolher conjunto de dados dinâmico",
   "ChooseStaticDatasetDescription": "Estes são todos os conjuntos de dados estáticos que foram carregados. Encontre e selecione um conjunto de dados para usar na sua visualização.",
   "UploadedBy": "Carregado por",
   "UploadedAt": "Carregado em",
@@ -885,10 +901,15 @@
     "ToggleSummary": "Mostrar descrição abaixo da imagem",
     "Back": "Voltar",
     "DisabledToolTip": "Faça upload de um arquivo para continuar",
-    "Cancel": "Cancelar"
+    "Cancel": "Cancelar",
+    "ImageSize": "Tamanho da imagem (opcional)",
+    "ImageSizeHint": "Como sua imagem será exibida no painel.",
+    "AsUploaded": "Conforme carregado (não dimensionar)",
+    "ImageScale": "Imagem na escala de {{scale}}"
   },
   "EditImageScreen": {
     "ImageEditedSuccessfully": "A imagem “{{title}}” foi editada com êxito.",
+    "ConfigureImage": "Configurar imagem",
     "EditImage": "Editar imagem",
     "ResolveError": "Resolva o(s) erro(s) para editar a imagem",
     "Title": "Título da imagem",
@@ -903,7 +924,11 @@
     "SummaryLabel": "Descrição da imagem (opcional)",
     "SummaryHint": "Dê à sua imagem uma descrição para explicá-la com mais detalhes. Esse resumo também pode ser lido por leitores de tela para descrever a imagem para usuários com deficiência visual. Esse campo oferece suporte a markdown.",
     "MarkdownLink": "Visualizar sintaxe Markdown",
-    "ToggleSummary": "Mostrar descrição abaixo da imagem"
+    "ToggleSummary": "Mostrar descrição abaixo da imagem",
+    "ImageSize": "Tamanho da imagem (opcional)",
+    "ImageSizeHint": "Como sua imagem será exibida no painel.",
+    "AsUploaded": "Conforme carregado (não dimensionar)",
+    "ImageScale": "Imagem na escala de {{scale}}"
   },
   "EnterpriseSignIn": "Login empresarial",
   "Actions": "Ações",
@@ -914,8 +939,8 @@
   "SupportContactEmailEditSuccess": "E-mail do contato de suporte editado com êxito.",
   "Draft": "Rascunho",
   "DashboardContent": "Conteúdo do painel",
-  "ExpandPreview": "Expandir a pré-visualização",
-  "ClosePreview": "Fechar a pré-visualização",
+  "ExpandPreview": "Visualização em tela cheia",
+  "ClosePreview": "Sair da visualização em tela cheia",
   "Admin": "Administrador",
   "Editor": "Editor",
   "GlobalUser": "usuário",
@@ -959,6 +984,8 @@
     "Header": "Cabeçalho",
     "Main": "Principal",
     "Logo": "Logotipo",
-    "Footer": "Rodapé"
-  }
+    "Footer": "Rodapé",
+    "OpenInNewTab": "(abre em uma nova guia)"
+  },
+  "percentage": "{{pct}}%"
 }

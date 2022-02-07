@@ -112,11 +112,11 @@ exports[`renders an alert with title 1`] = `
     <div
       class="usa-alert__body"
     >
-      <h3
+      <h2
         class="usa-alert__heading"
       >
         Informative status
-      </h3>
+      </h2>
       <p
         class="usa-alert__text"
       >

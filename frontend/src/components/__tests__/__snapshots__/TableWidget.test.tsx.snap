@@ -3,13 +3,15 @@
 exports[`table preview should match snapshot 1`] = `
 <div>
   <div
+    aria-label="test title"
     class="overflow-x-hidden overflow-y-hidden"
+    tabindex="-1"
   >
-    <h3
+    <h2
       class="margin-bottom-1"
     >
       test title
-    </h3>
+    </h2>
     <div
       class="Markdown usa-prose margin-top-0 margin-bottom-3 tableSummaryAbove textOrSummary"
     >
@@ -226,7 +228,7 @@ exports[`table preview should match snapshot 1`] = `
                      of 1 
                   </span>
                   <button
-                    class="usa-button usa-button--unstyled margin-right-2 text-base-darker hover:text-base-darkest active:text-base-darkest"
+                    class="usa-button usa-button--unstyled margin-right-1 text-base-darker hover:text-base-darkest active:text-base-darkest"
                     type="button"
                   >
                     Go
@@ -260,7 +262,7 @@ exports[`table preview should match snapshot 1`] = `
                   </button>
                   <button
                     aria-label="Go to the previous page"
-                    class="margin-right-2"
+                    class="margin-right-1"
                     disabled=""
                     type="button"
                   >

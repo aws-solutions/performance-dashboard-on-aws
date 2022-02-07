@@ -55,6 +55,8 @@ export async function exportDashboard(name: string, dashboardId: string) {
   }
 
   snapshot.dashboard.parentDashboardId = snapshot.dashboard.id;
+  snapshot.dashboard.createdBy = "<system>";
+  snapshot.dashboard.updatedBy = "";
   writeSnapshot(name, snapshot);
   console.log("exported dashboard: {}", dashboardId);
   return snapshot;

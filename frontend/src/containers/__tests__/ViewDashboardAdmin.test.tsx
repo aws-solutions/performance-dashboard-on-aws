@@ -100,18 +100,16 @@ describe("dashboard published", () => {
   });
 
   test("renders an archive button", async () => {
-    expect(screen.getByRole("button", { name: "Archive" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Actions" })).toBeInTheDocument();
   });
 
   test("renders an update button", async () => {
     expect(screen.getByRole("button", { name: "Update" })).toBeInTheDocument();
   });
 
-  test("renders show version notes button", async () => {
-    const viewButton = screen.getByRole("button", {
-      name: "Show version notes",
-    });
-    expect(viewButton).toBeInTheDocument();
+  test("renders show version notes checkbox", async () => {
+    const viewCheckbox = screen.getByText("Show version notes");
+    expect(viewCheckbox).toBeInTheDocument();
   });
 });
 
@@ -136,8 +134,6 @@ describe("dashboard archived", () => {
   });
 
   test("renders a view history button", async () => {
-    expect(
-      screen.getByRole("button", { name: "View history" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Actions" })).toBeInTheDocument();
   });
 });

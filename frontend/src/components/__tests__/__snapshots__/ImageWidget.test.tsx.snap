@@ -3,13 +3,15 @@
 exports[`image preview should match snapshot 1`] = `
 <div>
   <div
+    aria-label="test title"
     class="preview-container"
+    tabindex="-1"
   >
-    <h3
+    <h2
       class="margin-top-3"
     >
       test title
-    </h3>
+    </h2>
     <div
       class="Markdown usa-prose margin-top-0 margin-bottom-3 imageSummaryAbove textOrSummary"
     >
@@ -20,6 +22,8 @@ exports[`image preview should match snapshot 1`] = `
     <div>
       <img
         alt="alt text"
+        height="auto"
+        width="75%"
       />
     </div>
   </div>

@@ -138,13 +138,14 @@ function EditSection() {
           <div className="grid-row width-desktop grid-gap">
             <div className="grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
-                <h1 className="margin-top-0">
+                <h1 id="editSectionFormHeader" className="margin-top-0">
                   {t("EditSectionScreen.EditSection")}
                 </h1>
                 <form
                   className="usa-form usa-form--large"
                   onChange={onFormChange}
                   onSubmit={handleSubmit(onSubmit)}
+                  aria-labelledby="editSectionFormHeader"
                 >
                   <fieldset className="usa-fieldset">
                     {errors.title ? (
@@ -156,6 +157,11 @@ function EditSection() {
                     ) : (
                       ""
                     )}
+
+                    <legend className="usa-hint">
+                      {t("EditTextScreen.Configure")}
+                    </legend>
+
                     <TextField
                       id="title"
                       name="title"
@@ -272,7 +278,10 @@ function EditSection() {
                 </form>
               </PrimaryActionBar>
             </div>
-            <div className={fullPreview ? "grid-col-12" : "grid-col-6"}>
+            <section
+              className={fullPreview ? "grid-col-12" : "grid-col-6"}
+              aria-label={t("ContentPreview")}
+            >
               {fullPreviewButton}
               {widget.showTitle ? (
                 <h2 className="margin-top-3 margin-left-2px">
@@ -291,7 +300,7 @@ function EditSection() {
               ) : (
                 ""
               )}
-            </div>
+            </section>
           </div>
         </>
       )}

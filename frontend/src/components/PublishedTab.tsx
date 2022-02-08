@@ -66,6 +66,7 @@ function PublishedTab(props: Props) {
                 buttonText={t("Actions")}
                 disabled={selected.length === 0}
                 variant="outline"
+                ariaLabel={t("ARIA.PublishedDashboardActions")}
               >
                 <MenuLink
                   disabled={selected.length !== 1}
@@ -74,13 +75,20 @@ function PublishedTab(props: Props) {
                       ? `/admin/dashboard/${selected[0].id}/history`
                       : "#"
                   }
+                  aria-label={t("ARIA.ViewPublishedHistory")}
                 >
                   {t("ViewHistoryLink")}
                 </MenuLink>
-                <MenuItem onSelect={() => props.onArchive(selected)}>
+                <MenuItem
+                  onSelect={() => props.onArchive(selected)}
+                  aria-label={t("ARIA.ArchivePublishedDashboard")}
+                >
                   {t("ArchiveButton")}
                 </MenuItem>
-                <MenuItem onSelect={() => props.onCopy(selected)}>
+                <MenuItem
+                  onSelect={() => props.onCopy(selected)}
+                  aria-label={t("ARIA.CopyPublishedDashboard")}
+                >
                   {t("CopyButton")}
                 </MenuItem>
               </DropdownMenu>
@@ -105,6 +113,7 @@ function PublishedTab(props: Props) {
                 buttonText={t("Actions")}
                 disabled={selected.length === 0}
                 variant="outline"
+                ariaLabel={t("ARIA.PublishedDashboardActions")}
               >
                 <MenuLink
                   disabled={selected.length !== 1}
@@ -113,13 +122,20 @@ function PublishedTab(props: Props) {
                       ? `/admin/dashboard/${selected[0].id}/history`
                       : "#"
                   }
+                  aria-label={t("ARIA.ViewPublishedHistory")}
                 >
                   {t("ViewHistoryLink")}
                 </MenuLink>
-                <MenuItem onSelect={() => props.onArchive(selected)}>
+                <MenuItem
+                  onSelect={() => props.onArchive(selected)}
+                  aria-label={t("ARIA.ArchivePublishedDashboard")}
+                >
                   {t("ArchiveButton")}
                 </MenuItem>
-                <MenuItem onSelect={() => props.onCopy(selected)}>
+                <MenuItem
+                  onSelect={() => props.onCopy(selected)}
+                  aria-label={t("ARIA.CopyPublishedDashboard")}
+                >
                   {t("CopyButton")}
                 </MenuItem>
               </DropdownMenu>

@@ -43,7 +43,9 @@ test("renders a button to archive", async () => {
     }
   );
 
-  const actionsButton = screen.getByRole("button", { name: "Actions" });
+  const actionsButton = screen.getByRole("button", {
+    name: "Published dashboard actions",
+  });
   fireEvent.click(actionsButton);
 
   const archiveButton = screen.getByText("Archive");
@@ -58,7 +60,9 @@ test("renders a button to copy a dashboard", async () => {
     }
   );
 
-  const actionsButton = screen.getByRole("button", { name: "Actions" });
+  const actionsButton = screen.getByRole("button", {
+    name: "Published dashboard actions",
+  });
   fireEvent.click(actionsButton);
 
   const copyButton = screen.getByText("Copy");

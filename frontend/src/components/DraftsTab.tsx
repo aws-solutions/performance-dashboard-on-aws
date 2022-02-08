@@ -63,6 +63,7 @@ function DraftsTab(props: Props) {
                 disabled={selected.length === 0}
                 variant="outline"
                 className="margin-top-neg-1px"
+                ariaLabel={t("ARIA.DraftDashboardActions")}
               >
                 <MenuLink
                   href={
@@ -71,13 +72,20 @@ function DraftsTab(props: Props) {
                       : "#"
                   }
                   disabled={selected.length !== 1}
+                  aria-label={t("ARIA.ViewDraftHistory")}
                 >
                   {t("ViewHistoryLink")}
                 </MenuLink>
-                <MenuItem onSelect={() => props.onDelete(selected)}>
+                <MenuItem
+                  onSelect={() => props.onDelete(selected)}
+                  aria-label={t("ARIA.DeleteDraftDashboard")}
+                >
                   {t("Delete")}
                 </MenuItem>
-                <MenuItem onSelect={() => props.onCopy(selected)}>
+                <MenuItem
+                  onSelect={() => props.onCopy(selected)}
+                  aria-label={t("ARIA.CopyDraftDashboard")}
+                >
                   {t("CopyButton")}
                 </MenuItem>
               </DropdownMenu>
@@ -107,6 +115,7 @@ function DraftsTab(props: Props) {
                 buttonText={t("Actions")}
                 disabled={selected.length === 0}
                 variant="outline"
+                ariaLabel={t("ARIA.DraftDashboardActions")}
               >
                 <MenuLink
                   href={
@@ -115,13 +124,20 @@ function DraftsTab(props: Props) {
                       : "#"
                   }
                   disabled={selected.length !== 1}
+                  aria-label={t("ARIA.ViewDraftHistory")}
                 >
                   {t("ViewHistoryLink")}
                 </MenuLink>
-                <MenuItem onSelect={() => props.onDelete(selected)}>
+                <MenuItem
+                  onSelect={() => props.onDelete(selected)}
+                  aria-label={t("ARIA.DeleteDraftDashboard")}
+                >
                   {t("Delete")}
                 </MenuItem>
-                <MenuItem onSelect={() => props.onCopy(selected)}>
+                <MenuItem
+                  onSelect={() => props.onCopy(selected)}
+                  aria-label={t("ARIA.CopyDraftDashboard")}
+                >
                   {t("CopyButton")}
                 </MenuItem>
               </DropdownMenu>

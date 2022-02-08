@@ -85,10 +85,16 @@ function DataTable({
           buttonText={t("Actions")}
           disabled={false}
           variant="unstyled"
+          ariaLabel={t("ARIA.DataTableActions")}
         >
           <MenuItem
             onSelect={() =>
               !showDataTable ? setShowDataTable(true) : setShowDataTable(false)
+            }
+            aria-label={
+              !showDataTable
+                ? t("ShowDataTableButton")
+                : t("HideDataTableButton")
             }
           >
             <FontAwesomeIcon
@@ -113,6 +119,7 @@ function DataTable({
                 canDownload = false;
               }
             }}
+            aria-label={t("DownloadCSV")}
           >
             <FontAwesomeIcon
               icon={faDownload}

@@ -233,13 +233,18 @@ function PublishDashboard() {
                   className="margin-top-neg-1px"
                   buttonText={t("Actions")}
                   variant="outline"
+                  ariaLabel={t("ARIA.PublishDashboardActions")}
                 >
                   <DropdownMenu.MenuLink
                     href={`/admin/dashboard/${dashboard.id}/history`}
+                    aria-label={t("ARIA.ViewDashboardHistory")}
                   >
                     {t("ViewHistoryLink")}
                   </DropdownMenu.MenuLink>
-                  <DropdownMenu.MenuItem onSelect={onPreview}>
+                  <DropdownMenu.MenuItem
+                    onSelect={onPreview}
+                    aria-label={t("ARIA.PreviewDashboard")}
+                  >
                     {t("PreviewButton")}
                   </DropdownMenu.MenuItem>
                 </DropdownMenu>
@@ -262,13 +267,21 @@ function PublishDashboard() {
                     .locale(window.navigator.language.toLowerCase())
                     .fromNow()}`}
               </span>
-              <DropdownMenu buttonText={t("Actions")} variant="outline">
+              <DropdownMenu
+                buttonText={t("Actions")}
+                variant="outline"
+                ariaLabel={t("ARIA.PublishDashboardActions")}
+              >
                 <DropdownMenu.MenuLink
                   href={`/admin/dashboard/${dashboard.id}/history`}
+                  aria-label={t("ARIA.ViewDashboardHistory")}
                 >
                   {t("ViewHistoryLink")}
                 </DropdownMenu.MenuLink>
-                <DropdownMenu.MenuItem onSelect={onPreview}>
+                <DropdownMenu.MenuItem
+                  onSelect={onPreview}
+                  aria-label={t("ARIA.PreviewDashboard")}
+                >
                   {t("PreviewButton")}
                 </DropdownMenu.MenuItem>
               </DropdownMenu>

@@ -103,6 +103,7 @@ function WidgetList(props: Props) {
     [props.widgets, onDrag]
   );
 
+  let subCount: 0;
   return (
     <div>
       {props.widgets && props.widgets.length ? (
@@ -131,6 +132,9 @@ function WidgetList(props: Props) {
             options={{ enableMouseEvents: true }}
           >
             {props.widgets.map((widget, index) => {
+              if (index === 0) {
+                subCount = 0;
+              }
               return widget.section ? (
                 ""
               ) : (
@@ -152,9 +156,9 @@ function WidgetList(props: Props) {
                           />
                         </div>
                         <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
-                          {index + 1}
+                          {index + 1 - subCount}
                         </div>
-                        <div className="grid-col flex-4 grid-row flex-column text-center">
+                        <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2">
                           <div className="grid-col flex-6">
                             {index > 0 && (
                               <Button
@@ -218,7 +222,9 @@ function WidgetList(props: Props) {
                         </div>
                         <div className="grid-col flex-3 text-right">
                           <Link
-                            ariaLabel={t("EditContent", { name: widget.name })}
+                            ariaLabel={t("EditContent", {
+                              name: widget.name,
+                            })}
                             to={`/admin/dashboard/${
                               widget.dashboardId
                             }/edit-${widget.widgetType.toLowerCase()}/${
@@ -270,10 +276,12 @@ function WidgetList(props: Props) {
                         .filter((wc) =>
                           widget.content.widgetIds.includes(wc.id)
                         )
-                        .map((widget, indexChild) => {
+                        .map((wc) => ({ widget: wc, parentCount: index }))
+                        .map(({ widget, parentCount }, indexChild) => {
+                          subCount++;
                           return (
                             <ContentItem
-                              className="grid-col margin-1"
+                              className="grid-col margin-1 margin-left-2"
                               key={widget.id}
                               index={index + indexChild + 1}
                               id={index + indexChild + 1}
@@ -289,9 +297,9 @@ function WidgetList(props: Props) {
                                     />
                                   </div>
                                   <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
-                                    {index + indexChild + 2}
+                                    {`${parentCount + 1}.${indexChild + 1}`}
                                   </div>
-                                  <div className="grid-col flex-4 grid-row flex-column text-center">
+                                  <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2">
                                     <div className="grid-col flex-6">
                                       <Button
                                         variant="unstyled"

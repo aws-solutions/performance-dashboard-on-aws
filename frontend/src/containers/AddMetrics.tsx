@@ -448,6 +448,7 @@ function AddMetrics() {
                             id="search"
                             type="search"
                             name="query"
+                            aria-label={t("ARIA.SearchInput")}
                             style={{ height: "37px" }}
                             value={query}
                             onChange={(
@@ -457,6 +458,7 @@ function AddMetrics() {
                           <button
                             className="usa-button usa-button--base padding-x-2"
                             type="button"
+                            aria-label={t("ARIA.SearchButton")}
                             style={{
                               height: "37px",
                               borderTopLeftRadius: "0",

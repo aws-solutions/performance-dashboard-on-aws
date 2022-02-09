@@ -5,22 +5,26 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { VisibilityContext } from "react-horizontal-scrolling-menu";
+import { useTranslation } from "react-i18next";
 
 function Arrow({
   children,
   disabled,
   onClick,
   className,
+  ariaLabel,
 }: {
   children: ReactNode;
   disabled: boolean;
   onClick: VoidFunction;
   className: string;
+  ariaLabel?: string;
 }) {
   return (
     <button
       disabled={disabled}
       onClick={onClick}
+      aria-label={ariaLabel}
       className={`usa-button--unstyled text-base-darker hover:text-base-darkest active:text-base-darkest ${
         className ? className : ""
       }`}
@@ -43,6 +47,7 @@ function Arrow({
 }
 
 export function LeftArrow() {
+  const { t } = useTranslation();
   const { initComplete, isFirstItemVisible, scrollPrev } =
     useContext(VisibilityContext);
 
@@ -57,6 +62,7 @@ export function LeftArrow() {
         disabled={!initComplete || (initComplete && isFirstItemVisible)}
         onClick={() => scrollPrev()}
         className="margin-right-2"
+        ariaLabel={t("ARIA.PreviosItems")}
       >
         <FontAwesomeIcon
           icon={faChevronLeft}
@@ -69,6 +75,7 @@ export function LeftArrow() {
 }
 
 export function RightArrow() {
+  const { t } = useTranslation();
   const { initComplete, isLastItemVisible, scrollNext } =
     useContext(VisibilityContext);
 
@@ -83,6 +90,7 @@ export function RightArrow() {
         disabled={!initComplete || (initComplete && isLastItemVisible)}
         onClick={() => scrollNext()}
         className="margin-left-2"
+        ariaLabel={t("ARIA.NextItems")}
       >
         <FontAwesomeIcon
           icon={faChevronRight}

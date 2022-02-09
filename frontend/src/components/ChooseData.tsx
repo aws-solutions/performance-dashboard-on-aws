@@ -165,6 +165,7 @@ function ChooseData(props: Props) {
                   id="search"
                   type="search"
                   name="query"
+                  aria-label={t("ARIA.SearchInput")}
                   style={{ height: "37px" }}
                   value={query}
                   placeholder={props.dynamicFileName}
@@ -175,6 +176,7 @@ function ChooseData(props: Props) {
                 <button
                   className="usa-button usa-button--base padding-x-2"
                   type="button"
+                  aria-label={t("ARIA.SearchButton")}
                   style={{
                     height: "37px",
                     borderTopLeftRadius: "0",

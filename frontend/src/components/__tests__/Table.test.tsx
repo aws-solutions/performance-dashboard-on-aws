@@ -53,23 +53,24 @@ test("renders a table with selection checkboxes", async () => {
       columns={columns}
       rows={rows}
       screenReaderField="name"
+      rowTitleComponents={["name", "updatedAt"]}
     />
   );
   expect(
     screen.getByRole("checkbox", {
-      name: "Banana",
+      name: "Banana - 2021-11-11",
     })
   ).toBeInTheDocument();
 
   expect(
     screen.getByRole("checkbox", {
-      name: "Chocolate",
+      name: "Chocolate - 2020-11-11",
     })
   ).toBeInTheDocument();
 
   expect(
     screen.getByRole("checkbox", {
-      name: "Vanilla",
+      name: "Vanilla - 2019-11-11",
     })
   ).toBeInTheDocument();
 });

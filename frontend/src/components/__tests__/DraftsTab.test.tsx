@@ -18,7 +18,7 @@ const dashboards: Array<Dashboard> = [
     displayTableOfContents: false,
     createdBy: "test user",
     state: "Draft",
-    updatedAt: new Date(),
+    updatedAt: "2022-02-02",
     widgets: [],
   },
   {
@@ -31,7 +31,7 @@ const dashboards: Array<Dashboard> = [
     displayTableOfContents: false,
     createdBy: "test user",
     state: "Draft",
-    updatedAt: new Date(),
+    updatedAt: "2022-02-02",
     widgets: [],
   },
 ];
@@ -123,7 +123,9 @@ test("when one dashboard is selected all dropdown options are enabled", () => {
     }
   );
 
-  const checkbox = getByRole("checkbox", { name: "Dashboard One" });
+  const checkbox = getByRole("checkbox", {
+    name: "Dashboard One - Topic Area Bananas - 2022-02-02 - test user",
+  });
   userEvent.click(checkbox);
   userEvent.click(getByText("Actions"));
 
@@ -143,9 +145,13 @@ test("when two dashboards are selected only Delete and Copy options are enabled"
     }
   );
 
-  const checkbox1 = getByRole("checkbox", { name: "Dashboard One" });
+  const checkbox1 = getByRole("checkbox", {
+    name: "Dashboard One - Topic Area Bananas - 2022-02-02 - test user",
+  });
   userEvent.click(checkbox1);
-  const checkbox2 = getByRole("checkbox", { name: "Dashboard Two" });
+  const checkbox2 = getByRole("checkbox", {
+    name: "Dashboard Two - Topic Area Grapes - 2022-02-02 - test user",
+  });
   userEvent.click(checkbox2);
   userEvent.click(getByText("Actions"));
 
@@ -162,7 +168,9 @@ test("view history navigates to the correct location", () => {
     }
   );
 
-  const checkbox = getByRole("checkbox", { name: "Dashboard One" });
+  const checkbox = getByRole("checkbox", {
+    name: "Dashboard One - Topic Area Bananas - 2022-02-02 - test user",
+  });
   userEvent.click(checkbox);
 
   userEvent.click(getByText("Actions"));

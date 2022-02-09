@@ -113,7 +113,7 @@ test("sorting buttons are clickable", async () => {
   // Sort by ascending order
   fireEvent.click(
     screen.getByRole("button", {
-      name: "Toggle SortBy Last Updated",
+      name: "Toggle SortBy: Last Updated",
     })
   );
 
@@ -123,7 +123,7 @@ test("sorting buttons are clickable", async () => {
   // Toggle to descending
   fireEvent.click(
     screen.getByRole("button", {
-      name: "Toggle SortBy Last Updated",
+      name: "Toggle SortBy: Last Updated",
     })
   );
 

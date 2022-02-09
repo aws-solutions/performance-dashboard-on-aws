@@ -66,6 +66,7 @@ exports[`renders the VisualizeChart component 1`] = `
           </div>
           <div
             class="usa-form-group"
+            role="radiogroup"
           >
             <fieldset
               class="usa-fieldset"
@@ -504,6 +505,7 @@ exports[`renders the VisualizeChart component 1`] = `
               <button
                 aria-controls="menu--1"
                 aria-haspopup="true"
+                aria-label="Data table actions"
                 class="usa-button usa-button--unstyled text-base"
                 data-reach-menu-button=""
                 id="menu-button--menu--1"
@@ -601,6 +603,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           </div>
           <div
             class="usa-form-group"
+            role="radiogroup"
           >
             <fieldset
               class="usa-fieldset"
@@ -1038,6 +1041,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               <button
                 aria-controls="menu--7"
                 aria-haspopup="true"
+                aria-label="Data table actions"
                 class="usa-button usa-button--unstyled text-base"
                 data-reach-menu-button=""
                 id="menu-button--menu--7"

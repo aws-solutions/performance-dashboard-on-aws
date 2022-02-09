@@ -318,7 +318,10 @@ function ViewDashboardAdmin() {
               onClick={() => setShowVersionNotes(!showVersionNotes)}
               onChange={() => setShowVersionNotes(!showVersionNotes)}
             />
-            <label className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest">
+            <label
+              htmlFor="ShowVersionNotes"
+              className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+            >
               {`${t("ViewDashboardAlertVersionNotes.Show")} ${t(
                 "ViewDashboardAlertVersionNotes.VersionNotes"
               )}`}
@@ -336,14 +339,27 @@ function ViewDashboardAdmin() {
           {isMobile && (
             <div className="grid-row margin-top-2">
               <div className="grid-col-6 padding-right-05">
-                <DropdownMenu buttonText={t("Actions")} variant="outline">
-                  <MenuItem onSelect={onDashboardHistory}>
+                <DropdownMenu
+                  buttonText={t("Actions")}
+                  variant="outline"
+                  ariaLabel={t("ARIA.PublishedDashboardActions")}
+                >
+                  <MenuItem
+                    onSelect={onDashboardHistory}
+                    aria-label={t("ARIA.ViewPublishedHistory")}
+                  >
                     {t("ViewHistoryLink")}
                   </MenuItem>
-                  <MenuItem onSelect={onArchivePublishedDashboard}>
+                  <MenuItem
+                    onSelect={onArchivePublishedDashboard}
+                    aria-label={t("ARIA.ArchivePublishedDashboard")}
+                  >
                     {t("ViewDashboardAlertButton.Archive")}
                   </MenuItem>
-                  <MenuItem onSelect={onCopyDashboard}>
+                  <MenuItem
+                    onSelect={onCopyDashboard}
+                    aria-label={t("ARIA.CopyPublishedDashboard")}
+                  >
                     {t("CopyButton")}
                   </MenuItem>
                 </DropdownMenu>
@@ -361,14 +377,27 @@ function ViewDashboardAdmin() {
           )}
           {!isMobile && (
             <>
-              <DropdownMenu buttonText={t("Actions")} variant="outline">
-                <MenuItem onSelect={onDashboardHistory}>
+              <DropdownMenu
+                buttonText={t("Actions")}
+                variant="outline"
+                ariaLabel={t("ARIA.PublishedDashboardActions")}
+              >
+                <MenuItem
+                  onSelect={onDashboardHistory}
+                  aria-label={t("ARIA.ViewPublishedHistory")}
+                >
                   {t("ViewHistoryLink")}
                 </MenuItem>
-                <MenuItem onSelect={onArchivePublishedDashboard}>
+                <MenuItem
+                  onSelect={onArchivePublishedDashboard}
+                  aria-label={t("ARIA.ArchivePublishedDashboard")}
+                >
                   {t("ViewDashboardAlertButton.Archive")}
                 </MenuItem>
-                <MenuItem onSelect={onCopyDashboard}>
+                <MenuItem
+                  onSelect={onCopyDashboard}
+                  aria-label={t("ARIA.CopyPublishedDashboard")}
+                >
                   {t("CopyButton")}
                 </MenuItem>
               </DropdownMenu>
@@ -389,11 +418,21 @@ function ViewDashboardAdmin() {
           {isMobile && (
             <div className="grid-row margin-top-2">
               <div className="grid-col-6 padding-right-05">
-                <DropdownMenu buttonText={t("Actions")} variant="outline">
-                  <MenuItem onSelect={onDashboardHistory}>
+                <DropdownMenu
+                  buttonText={t("Actions")}
+                  variant="outline"
+                  ariaLabel={t("ARIA.ArchivedDashboardActions")}
+                >
+                  <MenuItem
+                    onSelect={onDashboardHistory}
+                    aria-label={t("ARIA.ViewArchivedHistory")}
+                  >
                     {t("ViewHistoryLink")}
                   </MenuItem>
-                  <MenuItem onSelect={onCopyDashboard}>
+                  <MenuItem
+                    onSelect={onCopyDashboard}
+                    aria-label={t("ARIA.CopyArchivedDashboard")}
+                  >
                     {t("CopyButton")}
                   </MenuItem>
                 </DropdownMenu>
@@ -411,11 +450,21 @@ function ViewDashboardAdmin() {
           )}
           {!isMobile && (
             <>
-              <DropdownMenu buttonText={t("Actions")} variant="outline">
-                <MenuItem onSelect={onDashboardHistory}>
+              <DropdownMenu
+                buttonText={t("Actions")}
+                variant="outline"
+                ariaLabel={t("ARIA.ArchivedDashboardActions")}
+              >
+                <MenuItem
+                  onSelect={onDashboardHistory}
+                  aria-label={t("ARIA.ViewArchivedHistory")}
+                >
                   {t("ViewHistoryLink")}
                 </MenuItem>
-                <MenuItem onSelect={onCopyDashboard}>
+                <MenuItem
+                  onSelect={onCopyDashboard}
+                  aria-label={t("ARIA.CopyArchivedDashboard")}
+                >
                   {t("CopyButton")}
                 </MenuItem>
               </DropdownMenu>

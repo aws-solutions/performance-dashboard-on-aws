@@ -298,7 +298,10 @@ function Table(props: Props) {
                     <button
                       className="margin-left-1 usa-button usa-button--unstyled"
                       {...column.getSortByToggleProps()}
-                      title={`${t("ToggleSortBy")} ${column.Header}`}
+                      title={t("ToggleSortBy", { columnName: column.Header })}
+                      aria-label={t("ToggleSortBy", {
+                        columnName: column.Header,
+                      })}
                       type="button"
                     >
                       <FontAwesomeIcon

@@ -240,6 +240,7 @@ exports[`renders the ChooseData component 1`] = `
             role="search"
           >
             <input
+              aria-label="Enter search terms"
               class="usa-input"
               id="search"
               name="query"
@@ -249,6 +250,7 @@ exports[`renders the ChooseData component 1`] = `
               value=""
             />
             <button
+              aria-label="Perform search"
               class="usa-button usa-button--base padding-x-2"
               style="height: 37px; border-top-left-radius: 0; border-bottom-left-radius: 0;"
               type="button"
@@ -310,9 +312,10 @@ exports[`renders the ChooseData component 1`] = `
                     Name
                   </span>
                   <button
+                    aria-label="Toggle SortBy: Name"
                     class="margin-left-1 usa-button usa-button--unstyled"
                     style="cursor: pointer;"
-                    title="Toggle SortBy Name"
+                    title="Toggle SortBy: Name"
                     type="button"
                   >
                     <svg
@@ -343,9 +346,10 @@ exports[`renders the ChooseData component 1`] = `
                     Last updated
                   </span>
                   <button
+                    aria-label="Toggle SortBy: Last updated"
                     class="margin-left-1 usa-button usa-button--unstyled"
                     style="cursor: pointer;"
-                    title="Toggle SortBy Last updated"
+                    title="Toggle SortBy: Last updated"
                     type="button"
                   >
                     <svg
@@ -376,9 +380,10 @@ exports[`renders the ChooseData component 1`] = `
                     Description
                   </span>
                   <button
+                    aria-label="Toggle SortBy: Description"
                     class="margin-left-1 usa-button usa-button--unstyled"
                     style="cursor: pointer;"
-                    title="Toggle SortBy Description"
+                    title="Toggle SortBy: Description"
                     type="button"
                   >
                     <svg
@@ -409,9 +414,10 @@ exports[`renders the ChooseData component 1`] = `
                     Tags
                   </span>
                   <button
+                    aria-label="Toggle SortBy: Tags"
                     class="margin-left-1 usa-button usa-button--unstyled"
                     style="cursor: pointer;"
-                    title="Toggle SortBy Tags"
+                    title="Toggle SortBy: Tags"
                     type="button"
                   >
                     <svg

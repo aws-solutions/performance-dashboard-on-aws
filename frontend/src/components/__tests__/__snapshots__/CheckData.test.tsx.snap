@@ -146,9 +146,10 @@ exports[`renders the CheckData component 1`] = `
                       id
                     </span>
                     <button
+                      aria-label="Toggle SortBy: id"
                       class="margin-left-1 usa-button usa-button--unstyled"
                       style="cursor: pointer;"
-                      title="Toggle SortBy id"
+                      title="Toggle SortBy: id"
                       type="button"
                     >
                       <svg
@@ -179,9 +180,10 @@ exports[`renders the CheckData component 1`] = `
                       name
                     </span>
                     <button
+                      aria-label="Toggle SortBy: name"
                       class="margin-left-1 usa-button usa-button--unstyled"
                       style="cursor: pointer;"
-                      title="Toggle SortBy name"
+                      title="Toggle SortBy: name"
                       type="button"
                     >
                       <svg
@@ -212,9 +214,10 @@ exports[`renders the CheckData component 1`] = `
                       updatedAt
                     </span>
                     <button
+                      aria-label="Toggle SortBy: updatedAt"
                       class="margin-left-1 usa-button usa-button--unstyled"
                       style="cursor: pointer;"
-                      title="Toggle SortBy updatedAt"
+                      title="Toggle SortBy: updatedAt"
                       type="button"
                     >
                       <svg

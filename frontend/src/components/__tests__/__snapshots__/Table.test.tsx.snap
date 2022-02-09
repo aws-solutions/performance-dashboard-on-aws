@@ -24,9 +24,10 @@ exports[`renders a basic table 1`] = `
               ID
             </span>
             <button
+              aria-label="Toggle SortBy: ID"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy ID"
+              title="Toggle SortBy: ID"
               type="button"
             >
               <svg
@@ -57,9 +58,10 @@ exports[`renders a basic table 1`] = `
               Name
             </span>
             <button
+              aria-label="Toggle SortBy: Name"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Name"
+              title="Toggle SortBy: Name"
               type="button"
             >
               <svg
@@ -90,9 +92,10 @@ exports[`renders a basic table 1`] = `
               Last Updated
             </span>
             <button
+              aria-label="Toggle SortBy: Last Updated"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Last Updated"
+              title="Toggle SortBy: Last Updated"
               type="button"
             >
               <svg
@@ -397,9 +400,10 @@ exports[`renders a basic table with mobile navigation 1`] = `
               ID
             </span>
             <button
+              aria-label="Toggle SortBy: ID"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy ID"
+              title="Toggle SortBy: ID"
               type="button"
             >
               <svg
@@ -430,9 +434,10 @@ exports[`renders a basic table with mobile navigation 1`] = `
               Name
             </span>
             <button
+              aria-label="Toggle SortBy: Name"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Name"
+              title="Toggle SortBy: Name"
               type="button"
             >
               <svg
@@ -463,9 +468,10 @@ exports[`renders a basic table with mobile navigation 1`] = `
               Last Updated
             </span>
             <button
+              aria-label="Toggle SortBy: Last Updated"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Last Updated"
+              title="Toggle SortBy: Last Updated"
               type="button"
             >
               <svg
@@ -580,9 +586,10 @@ exports[`renders a basic table without pagination 1`] = `
               ID
             </span>
             <button
+              aria-label="Toggle SortBy: ID"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy ID"
+              title="Toggle SortBy: ID"
               type="button"
             >
               <svg
@@ -613,9 +620,10 @@ exports[`renders a basic table without pagination 1`] = `
               Name
             </span>
             <button
+              aria-label="Toggle SortBy: Name"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Name"
+              title="Toggle SortBy: Name"
               type="button"
             >
               <svg
@@ -646,9 +654,10 @@ exports[`renders a basic table without pagination 1`] = `
               Last Updated
             </span>
             <button
+              aria-label="Toggle SortBy: Last Updated"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Last Updated"
+              title="Toggle SortBy: Last Updated"
               type="button"
             >
               <svg
@@ -778,9 +787,10 @@ exports[`sorting buttons are clickable 1`] = `
               ID
             </span>
             <button
+              aria-label="Toggle SortBy: ID"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy ID"
+              title="Toggle SortBy: ID"
               type="button"
             >
               <svg
@@ -811,9 +821,10 @@ exports[`sorting buttons are clickable 1`] = `
               Name
             </span>
             <button
+              aria-label="Toggle SortBy: Name"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Name"
+              title="Toggle SortBy: Name"
               type="button"
             >
               <svg
@@ -844,9 +855,10 @@ exports[`sorting buttons are clickable 1`] = `
               Last Updated
             </span>
             <button
+              aria-label="Toggle SortBy: Last Updated"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Last Updated"
+              title="Toggle SortBy: Last Updated"
               type="button"
             >
               <svg
@@ -1190,9 +1202,10 @@ exports[`sorting buttons are clickable 2`] = `
               ID
             </span>
             <button
+              aria-label="Toggle SortBy: ID"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy ID"
+              title="Toggle SortBy: ID"
               type="button"
             >
               <svg
@@ -1223,9 +1236,10 @@ exports[`sorting buttons are clickable 2`] = `
               Name
             </span>
             <button
+              aria-label="Toggle SortBy: Name"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Name"
+              title="Toggle SortBy: Name"
               type="button"
             >
               <svg
@@ -1256,9 +1270,10 @@ exports[`sorting buttons are clickable 2`] = `
               Last Updated
             </span>
             <button
+              aria-label="Toggle SortBy: Last Updated"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Last Updated"
+              title="Toggle SortBy: Last Updated"
               type="button"
             >
               <svg

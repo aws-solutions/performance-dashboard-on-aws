@@ -162,7 +162,9 @@ function MetricsList(props: Props) {
                             variant="unstyled"
                             type="button"
                             className="margin-top-0-important text-base-darker hover:text-base-darkest active:text-base-darkest"
-                            ariaLabel={`Move ${metric.title} up`}
+                            ariaLabel={t("ARIA.MoveUp", {
+                              metric: metric.title,
+                            })}
                             onClick={() => onMoveUp(index)}
                             ref={caretUpRefs[index]}
                           >
@@ -180,7 +182,9 @@ function MetricsList(props: Props) {
                             variant="unstyled"
                             type="button"
                             className="margin-top-0-important text-base-darker hover:text-base-darkest active:text-base-darkest"
-                            ariaLabel={`Move ${metric.title} down`}
+                            ariaLabel={t("ARIA.MoveDown", {
+                              metric: metric.title,
+                            })}
                             onClick={() => onMoveDown(index)}
                             ref={caretDownRefs[index]}
                           >

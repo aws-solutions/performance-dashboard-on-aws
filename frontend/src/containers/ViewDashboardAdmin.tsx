@@ -318,7 +318,10 @@ function ViewDashboardAdmin() {
               onClick={() => setShowVersionNotes(!showVersionNotes)}
               onChange={() => setShowVersionNotes(!showVersionNotes)}
             />
-            <label className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest">
+            <label
+              htmlFor="ShowVersionNotes"
+              className="margin-left-1 margin-top-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+            >
               {`${t("ViewDashboardAlertVersionNotes.Show")} ${t(
                 "ViewDashboardAlertVersionNotes.VersionNotes"
               )}`}

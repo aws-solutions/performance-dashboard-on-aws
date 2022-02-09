@@ -66,6 +66,7 @@ exports[`renders the VisualizeChart component 1`] = `
           </div>
           <div
             class="usa-form-group"
+            role="radiogroup"
           >
             <fieldset
               class="usa-fieldset"
@@ -602,6 +603,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           </div>
           <div
             class="usa-form-group"
+            role="radiogroup"
           >
             <fieldset
               class="usa-fieldset"

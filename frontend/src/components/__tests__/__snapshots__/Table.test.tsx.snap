@@ -395,9 +395,10 @@ exports[`renders a basic table with mobile navigation 1`] = `
               ID
             </span>
             <button
+              aria-label="Toggle SortBy: ID"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy ID"
+              title="Toggle SortBy: ID"
               type="button"
             >
               <svg
@@ -427,9 +428,10 @@ exports[`renders a basic table with mobile navigation 1`] = `
               Name
             </span>
             <button
+              aria-label="Toggle SortBy: Name"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy Name"
+              title="Toggle SortBy: Name"
               type="button"
             >
               <svg

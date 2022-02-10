@@ -154,6 +154,7 @@ function DraftsTab(props: Props) {
         filterQuery={filter}
         rows={React.useMemo(() => dashboards, [dashboards])}
         screenReaderField="name"
+        rowTitleComponents={["name", "topicAreaName", "updatedAt", "createdBy"]}
         onSelection={onSelect}
         width="100%"
         columns={React.useMemo(

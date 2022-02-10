@@ -64,6 +64,11 @@ function AdminLayout(props: LayoutProps) {
       <Header className="usa-header usa-header--basic">
         <div className="usa-nav-container">
           <div className="usa-navbar navbar-long">
+            <div>
+              <a className="usa-skipnav" href="#main">
+                {t("SkipToMainContent")}
+              </a>
+            </div>
             <div
               className="usa-logo"
               id="basic-logo"
@@ -149,6 +154,7 @@ function AdminLayout(props: LayoutProps) {
         </div>
       </Header>
       <main className="padding-y-3" aria-label={t("ARIA.Main")}>
+        <div id="main" tabIndex={-1}></div>
         {!hasRole && <Redirect to="/403/access-denied" />}
         <div className="grid-container">{props.children}</div>
       </main>

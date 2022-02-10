@@ -1,6 +1,5 @@
 import React, { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
-import Button from "./Button";
 
 interface Props {
   id: string;
@@ -38,7 +37,7 @@ function Tab(props: Props) {
   }
 
   return (
-    <li
+    <div
       role="tab"
       className={className}
       onClick={onClick}
@@ -52,7 +51,7 @@ function Tab(props: Props) {
       }}
     >
       {props.label}
-    </li>
+    </div>
   );
 }
 

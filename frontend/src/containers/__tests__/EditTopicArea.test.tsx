@@ -26,7 +26,7 @@ beforeEach(() => {
 });
 
 test("saves the new topic area name", async () => {
-  const nameInput = screen.getByLabelText("Ministry name*");
+  const nameInput = screen.getByLabelText("Topic area name*");
   fireEvent.input(nameInput, {
     target: {
       value: "New topic area name",

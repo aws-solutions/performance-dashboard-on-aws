@@ -13,10 +13,10 @@ exports[`renders a table with topic areas 1`] = `
           <span
             class="font-sans-xs"
           >
-            Ministry
+            Topic area
           </span>
           <button
-            aria-label="Sort by Ministry name"
+            aria-label="Sort by topic area name"
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
             <svg
@@ -146,10 +146,10 @@ exports[`renders an empty table 1`] = `
           <span
             class="font-sans-xs"
           >
-            Ministry
+            Topic area
           </span>
           <button
-            aria-label="Sort by Ministry name"
+            aria-label="Sort by topic area name"
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
           >
             <svg

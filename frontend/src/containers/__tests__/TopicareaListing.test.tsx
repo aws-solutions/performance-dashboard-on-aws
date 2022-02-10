@@ -23,7 +23,7 @@ test("renders a button to create topic area", async () => {
       wrapper: MemoryRouter,
     }
   );
-  const button = getByRole("button", { name: "Create new ministry" });
+  const button = getByRole("button", { name: "Create new topic area" });
   expect(button).toBeInTheDocument();
 });
 

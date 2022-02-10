@@ -14,6 +14,7 @@ import {
   useRowSelect,
   useGlobalFilter,
   usePagination,
+  Row,
 } from "react-table";
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
@@ -26,6 +27,7 @@ interface Props {
   initialSortByField?: string;
   initialSortAscending?: boolean;
   screenReaderField?: string;
+  rowTitleComponents?: Array<string>;
   filterQuery?: string;
   className?: string;
   onSelection?: Function;
@@ -84,6 +86,14 @@ function Table(props: Props) {
         ]
       : [];
   }, [initialSortByField, initialSortAscending]);
+
+  const createLongTitleName = (row: Row<object>, accessors: Array<string>) => {
+    let title = "";
+    accessors.map((accessor: string) => {
+      title += row.values[accessor] + " - ";
+    });
+    return title.substring(0, title.length - 3);
+  };
 
   const {
     getTableProps,
@@ -157,7 +167,9 @@ function Table(props: Props) {
               <IndeterminateCheckbox
                 {...row.getToggleRowSelectedProps()}
                 title={
-                  props.screenReaderField
+                  props.rowTitleComponents
+                    ? createLongTitleName(row, props.rowTitleComponents)
+                    : props.screenReaderField
                     ? row.values[props.screenReaderField]
                     : null
                 }

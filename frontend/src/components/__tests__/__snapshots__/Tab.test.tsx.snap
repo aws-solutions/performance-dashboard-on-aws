@@ -2,7 +2,7 @@
 
 exports[`renders the Tab component 1`] = `
 <div>
-  <li
+  <div
     aria-label="Active undefined Tab Tab 1"
     class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-base-dark border-x-0 border-top-0 border-bottom-05"
     role="tab"
@@ -10,13 +10,13 @@ exports[`renders the Tab component 1`] = `
     tabindex="0"
   >
     Tab 1
-  </li>
+  </div>
 </div>
 `;
 
 exports[`renders the Tab component with default tab 2 selected 1`] = `
 <div>
-  <li
+  <div
     aria-label="undefined Tab Tab 1"
     class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
     role="tab"
@@ -24,6 +24,6 @@ exports[`renders the Tab component with default tab 2 selected 1`] = `
     tabindex="0"
   >
     Tab 1
-  </li>
+  </div>
 </div>
 `;

@@ -103,18 +103,14 @@ function AdminLayout(props: LayoutProps) {
               />
             </button>
             <ul className="usa-nav__primary usa-accordion">
-              {isAdmin || isEditor ? (
-                <>
-                  <li className="usa-nav__primary-item">
-                    <Link className="usa-nav__link" to="/admin/dashboards">
-                      {t("AdminMenu.Dashboards")}
-                    </Link>
-                  </li>
-                </>
-              ) : (
-                ""
+              {(isAdmin || isEditor) && (
+                <li className="usa-nav__primary-item">
+                  <Link className="usa-nav__link" to="/admin/dashboards">
+                    {t("AdminMenu.Dashboards")}
+                  </Link>
+                </li>
               )}
-              {isAdmin ? (
+              {isAdmin && (
                 <>
                   <li className="usa-nav__primary-item">
                     <Link className="usa-nav__link" to="/admin/users">
@@ -127,8 +123,6 @@ function AdminLayout(props: LayoutProps) {
                     </Link>
                   </li>
                 </>
-              ) : (
-                ""
               )}
               <li className="usa-nav__primary-item">
                 <button

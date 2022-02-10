@@ -9,14 +9,14 @@ test("renders the title", async () => {
   const { getByRole } = render(<TopicareaSettings />, {
     wrapper: MemoryRouter,
   });
-  expect(getByRole("heading", { name: "Ministries" })).toBeInTheDocument();
+  expect(getByRole("heading", { name: "Topic areas" })).toBeInTheDocument();
 });
 
 test("renders the title with set value of topic areas", async () => {
   const { getByRole } = render(<TopicareaSettings />, {
     wrapper: MemoryRouter,
   });
-  expect(getByRole("heading", { name: "Ministries" })).toBeInTheDocument();
+  expect(getByRole("heading", { name: "Topic areas" })).toBeInTheDocument();
 });
 
 test("renders the description", async () => {
@@ -85,7 +85,7 @@ test("renders a button to create topic area", async () => {
   const { getByRole } = render(<TopicareaSettings />, {
     wrapper: MemoryRouter,
   });
-  const button = getByRole("button", { name: "Create new ministry" });
+  const button = getByRole("button", { name: "Create new topic area" });
   expect(button).toBeInTheDocument();
 });
 

@@ -66,7 +66,6 @@ function TopicareaListing(props: Props) {
           type: "success",
           message: t("SettingsTopicAreaNameSuccessfullyDeleted", {
             name: `${selected.name}`,
-            topicAreaName: `${settings.topicAreaLabels.singular.toLowerCase()}`,
           }),
         },
       });
@@ -100,17 +99,15 @@ function TopicareaListing(props: Props) {
       <Modal
         isOpen={isOpenDeleteModal}
         closeModal={closeDeleteModal}
-        title={`${t("Delete")} "${
-          selected?.name
-        }" ${settings.topicAreaLabels.singular.toLowerCase()}?`}
-        message={`${t(
-          "SureDelete"
-        )} ${settings.topicAreaLabels.singular.toLowerCase()}?`}
+        title={t("DeleteTopicArea", { name: selected?.name })}
+        message={t("ConfirmDeleteTopicArea")}
         buttonType="Delete"
         buttonAction={deleteTopicArea}
       />
 
-      <h2 id="section-heading-h3">{`${settings.topicAreaLabels.plural} (${props.topicareas.length})`}</h2>
+      <h2 id="section-heading-h3">{`${t("TopicArea", {
+        count: props.topicareas.length,
+      })} (${props.topicareas.length})`}</h2>
       <div className="grid-row margin-y-3">
         <div className="tablet:grid-col-4 padding-top-1px">
           <Search id="search" onSubmit={onSearch} size="small" />
@@ -141,10 +138,7 @@ function TopicareaListing(props: Props) {
               getContent={() => (
                 <div className="font-sans-sm">
                   <p className="margin-y-0">
-                    {`${t(
-                      "CanDelete"
-                    )} ${settings.topicAreaLabels.plural.toLocaleLowerCase()} ` +
-                      `${t("ZeroDashboards")}`}
+                    {t("OnlyEmptyTopicAreasCanBeDeleted")}
                   </p>
                 </div>
               )}
@@ -157,9 +151,7 @@ function TopicareaListing(props: Props) {
           </span>
           <span>
             <Button testid={"createtopicarea"} onClick={createTopicArea}>
-              {`${t(
-                "CreateNew"
-              )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
+              {t("CreateNewTopicArea")}
             </Button>
           </span>
         </div>

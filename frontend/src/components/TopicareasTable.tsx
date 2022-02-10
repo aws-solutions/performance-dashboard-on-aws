@@ -57,18 +57,14 @@ function TopicareasTable(props: Props) {
         <tr>
           <th></th>
           <th>
-            <span className="font-sans-xs">
-              {settings.topicAreaLabels.singular}
-            </span>
+            <span className="font-sans-xs">{t("TopicArea")}</span>
             <Button
               variant="unstyled"
               className={`margin-left-1 hover:text-base-light ${
                 sortedBy === "name" ? "text-base-darker" : "text-white"
               }`}
               onClick={() => sortBy("name")}
-              ariaLabel={t("SortTopicAreaName", {
-                topicAreaName: `${settings.topicAreaLabels.singular}`,
-              })}
+              ariaLabel={t("SortTopicAreaName")}
             >
               <FontAwesomeIcon
                 icon={

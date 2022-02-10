@@ -335,7 +335,7 @@ exports[`topic area settings should match snapshot 1`] = `
                   <span
                     class="font-sans-xs"
                   >
-                    Ministry
+                    Topic area
                   </span>
                   <button
                     aria-label="Sort by topic area name"

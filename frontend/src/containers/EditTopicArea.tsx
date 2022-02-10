@@ -65,19 +65,15 @@ function EditTopicArea() {
             url: "/admin/settings/topicarea",
           },
           {
-            label: settings.topicAreaLabels.plural,
+            label: t("TopicAreas"),
             url: "/admin/settings/topicarea",
           },
           {
-            label: t("SettingsTopicAreaEdit", { name: topicarea.name }),
+            label: t("SettingsTopicAreaEdit"),
           },
         ]}
       />
-      <h1 id="topicAreaNameLabel">
-        {t("SettingsTopicAreaNameEdit", {
-          singularname: settings.topicAreaLabels.singular,
-        })}
-      </h1>
+      <h1 id="topicAreaNameLabel">{t("SettingsTopicAreaNameEdit")}</h1>
       <div className="grid-row">
         <div className="grid-col-12">
           <form
@@ -89,9 +85,7 @@ function EditTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={t("SettingsTopicAreaName", {
-                singularname: settings.topicAreaLabels.singular,
-              })}
+              label={t("SettingsTopicAreaName")}
               register={register}
               error={errors.name && t("SettingsTopicAreaNameEditError")}
               defaultValue={topicarea?.name}

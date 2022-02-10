@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet";
 import defaultFavicon from "../favicon.svg";
+import "./Admin.scss";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -42,6 +43,11 @@ function PublicLayout(props: LayoutProps) {
       <Header className="usa-header usa-header--basic">
         <div className="usa-nav-container">
           <div className="usa-navbar navbar-long">
+            <div>
+              <a className="skip-link" href="#main">
+                {t("SkipToMainContent")}
+              </a>
+            </div>
             <div className="usa-logo" id="basic-logo">
               <em className="usa-logo__text display-flex flex-align-center">
                 <div className="logo">
@@ -83,6 +89,7 @@ function PublicLayout(props: LayoutProps) {
         </div>
       </Header>
       <main className="padding-y-3">
+        <div id="main" tabIndex={-1}></div>
         <div className="grid-container">{props.children}</div>
       </main>
     </>

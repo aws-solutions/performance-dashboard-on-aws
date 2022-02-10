@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet";
 import defaultFavicon from "../favicon.svg";
-import "./Admin.scss";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -44,7 +43,7 @@ function PublicLayout(props: LayoutProps) {
         <div className="usa-nav-container">
           <div className="usa-navbar navbar-long">
             <div>
-              <a className="skip-link" href="#main">
+              <a className="usa-skipnav" href="#main">
                 {t("SkipToMainContent")}
               </a>
             </div>

@@ -22,7 +22,7 @@ function SettingsLayout(props: LayoutProps) {
   let currentSetting = "topicarea";
 
   const validSettings: any = {
-    topicarea: settings.topicAreaLabels.plural,
+    topicarea: t("TopicAreas"),
     publishingguidance: t("PublishingGuidance"),
     publishedsite: t("SettingsPublishedSite"),
     dateformat: t("SettingsDateTimeFormat"),

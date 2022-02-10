@@ -48,7 +48,7 @@ function EditTopicAreaLabel() {
       url: "/admin/settings/topicarea",
     },
     {
-      label: settings.topicAreaLabels.plural,
+      label: t("TopicAreas"),
       url: "/admin/settings/topicarea",
     },
     {

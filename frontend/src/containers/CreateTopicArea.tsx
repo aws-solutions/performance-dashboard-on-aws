@@ -43,23 +43,19 @@ function CreateTopicArea() {
       <Breadcrumbs
         crumbs={[
           {
-            label: `${t("Settings")}`,
+            label: t("Settings"),
             url: "/admin/settings/topicarea",
           },
           {
-            label: settings.topicAreaLabels.plural,
+            label: t("TopicAreas"),
             url: "/admin/settings/topicarea",
           },
           {
-            label: `${t(
-              "CreateNew"
-            )} ${settings.topicAreaLabels.singular.toLowerCase()}`,
+            label: t("CreateNewTopicArea"),
           },
         ]}
       />
-      <h1 id="createNewTopicAreaLabel">
-        {`${t("CreateNew")} ${settings.topicAreaLabels.singular.toLowerCase()}`}
-      </h1>
+      <h1 id="createNewTopicAreaLabel">{t("CreateNewTopicArea")}</h1>
 
       <div className="grid-row">
         <div className="grid-col-12">
@@ -72,18 +68,14 @@ function CreateTopicArea() {
             <TextField
               id="name"
               name="name"
-              label={`${settings.topicAreaLabels.singular} ${t("Name")}`}
+              label={t("TopicAreaName")}
               register={register}
               error={errors.name && "Please specify a name"}
               required
             />
 
             <br />
-            <Button type="submit">
-              {`${t(
-                "Create"
-              )} ${settings.topicAreaLabels.singular.toLowerCase()}`}
-            </Button>
+            <Button type="submit">{t("CreateTopicArea")}</Button>
             <Button
               className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               variant="unstyled"

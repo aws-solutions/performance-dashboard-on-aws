@@ -24,7 +24,7 @@ describe("CreateTopicAreaForm", () => {
   });
 
   test("submits form with the entered values", async () => {
-    fireEvent.input(screen.getByLabelText("Ministry name*"), {
+    fireEvent.input(screen.getByLabelText("Topic area name*"), {
       target: {
         value: "AWS Topic Area",
       },

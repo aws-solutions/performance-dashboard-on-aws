@@ -27,7 +27,7 @@ function TopicareaSettings() {
         />
       ) : (
         <>
-          <h1>{settings.topicAreaLabels.plural}</h1>
+          <h1>{t("TopicAreas")}</h1>
 
           <p>{t("SettingsTopicAreaDescription")}</p>
 

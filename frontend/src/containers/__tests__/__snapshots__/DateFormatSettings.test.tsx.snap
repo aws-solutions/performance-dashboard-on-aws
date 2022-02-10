@@ -30,7 +30,7 @@ exports[`date format settings should match snapshot 1`] = `
         class="usa-breadcrumb__list-item usa-current cursor-default"
       >
         <span>
-          Ministries
+          Topic areas
         </span>
       </li>
     </ol>
@@ -72,7 +72,7 @@ exports[`date format settings should match snapshot 1`] = `
                       class="usa-current"
                       href="/admin/settings/topicarea"
                     >
-                      Ministries
+                      Topic areas
                     </a>
                   </li>
                 </ul>

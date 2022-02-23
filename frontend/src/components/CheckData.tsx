@@ -6,7 +6,6 @@ import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Table from "./Table";
 import { useTranslation } from "react-i18next";
-import Accordion from "../components/Accordion";
 
 interface Props {
   selectedHeaders: Set<string>;
@@ -33,10 +32,6 @@ interface Props {
 
 function CheckData(props: Props) {
   const { t } = useTranslation();
-
-  let dataTypesSet = new Map<string, ColumnDataType>(props.dataTypes);
-  let numberTypesSet = new Map<string, NumberDataType>(props.numberTypes);
-  let currencyTypes = new Map<string, CurrencyDataType>(props.currencyTypes);
 
   const handleHideFromVisualizationChange = useCallback(
     (event: React.FormEvent<HTMLInputElement>) => {

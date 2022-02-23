@@ -59,6 +59,11 @@ function StepIndicator(props: Props) {
       aria-valuemin={1}
       aria-valuemax={props.segments.length}
       aria-valuenow={props.current + 1}
+      aria-valuetext={t("StepIndicatorLabel", {
+        current: props.current + 1,
+        total: props.segments.length,
+        title: props.segments[props.current].label,
+      })}
     >
       {props.showStepChart ? stepChart : ""}
       {props.showStepText ? stepText : ""}
@@ -76,7 +81,10 @@ function Segment(props: SegmentProps) {
   const { t } = useTranslation();
   if (props.current) {
     return (
-      <li className="usa-step-indicator__segment usa-step-indicator__segment--current">
+      <li
+        className="usa-step-indicator__segment usa-step-indicator__segment--current"
+        aria-current="step"
+      >
         <span className="usa-step-indicator__segment-label">
           <div className="text-base-dark">{props.label}</div>
         </span>

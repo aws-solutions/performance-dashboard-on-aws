@@ -37,7 +37,7 @@ function TopicareaSettings() {
 
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
-              <p className="text-bold">{t("TopicAreaNameSingle")}</p>
+              <h3>{t("TopicAreaNameSingle")}</h3>
             </div>
             <div className="grid-col flex-3 text-right">
               <Button
@@ -59,7 +59,7 @@ function TopicareaSettings() {
             <div className="grid-col flex-3 text-right"></div>
           </div>
           <div className="grid-col flex-9">
-            <p className="text-bold">{t("TopicAreaNamePlural")}</p>
+            <h3>{t("TopicAreaNamePlural")}</h3>
           </div>
 
           <div className="grid-row margin-top-0-important margin-bottom-4">

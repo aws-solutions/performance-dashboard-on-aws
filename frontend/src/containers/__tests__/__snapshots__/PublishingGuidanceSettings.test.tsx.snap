@@ -166,11 +166,11 @@ exports[`publishing guidance settings should match snapshot 1`] = `
             <div
               class="grid-col flex-9"
             >
-              <p
+              <h2
                 class="text-bold"
               >
                 Acknowledge statement
-              </p>
+              </h2>
             </div>
             <div
               class="grid-col flex-3 text-right"

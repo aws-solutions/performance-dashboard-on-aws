@@ -32,7 +32,7 @@ function PublishingGuidanceSettings() {
         <>
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
-              <p className="text-bold">{t("AcknowledgeStatement")}</p>
+              <h2 className="text-bold">{t("AcknowledgeStatement")}</h2>
             </div>
             <div className="grid-col flex-3 text-right">
               <Button

@@ -200,11 +200,9 @@ exports[`published site settings should match snapshot 1`] = `
             <div
               class="grid-col flex-9"
             >
-              <p
-                class="text-bold"
-              >
+              <h3>
                 Title
-              </p>
+              </h3>
             </div>
             <div
               class="grid-col flex-3 text-right"
@@ -244,11 +242,9 @@ exports[`published site settings should match snapshot 1`] = `
             <div
               class="grid-col flex-9"
             >
-              <p
-                class="text-bold"
-              >
+              <h3>
                 Contact email address
-              </p>
+              </h3>
             </div>
           </div>
           <div
@@ -290,11 +286,9 @@ exports[`published site settings should match snapshot 1`] = `
             <div
               class="grid-col flex-9"
             >
-              <p
-                class="text-bold"
-              >
+              <h3>
                 Headline
-              </p>
+              </h3>
             </div>
             <div
               class="grid-col flex-3 text-right"
@@ -327,11 +321,9 @@ exports[`published site settings should match snapshot 1`] = `
               <div
                 class="grid-col flex-9"
               >
-                <p
-                  class="text-bold"
-                >
+                <h3>
                   Description
-                </p>
+                </h3>
               </div>
               <div
                 class="font-sans-lg"

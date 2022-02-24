@@ -35,9 +35,7 @@ function AdminSiteSettings() {
         <>
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
-              <p className="text-bold">
-                {t("AdminSettingsScreen.SupportContactEmailAddress")}
-              </p>
+              <h3>{t("AdminSettingsScreen.SupportContactEmailAddress")}</h3>
             </div>
             <div className="grid-col flex-3 text-right">
               <Button

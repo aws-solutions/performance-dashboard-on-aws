@@ -36,7 +36,7 @@ function DateFormatSettings() {
         <>
           <div className="grid-row margin-top-0-important">
             <div className="grid-col flex-9">
-              <p className="text-bold">{t("SettingsDateFormat")}</p>
+              <h2>{t("SettingsDateFormat")}</h2>
             </div>
             <div className="grid-col flex-3 text-right">
               <Button
@@ -58,7 +58,7 @@ function DateFormatSettings() {
                 ({settings.dateTimeFormat.date})
               </div>
               <div className="grid-col flex-9">
-                <p className="text-bold">{t("SettingsTimeFormat")}</p>
+                <h2>{t("SettingsTimeFormat")}</h2>
               </div>
               <div className="font-sans-lg">
                 {dayjs()

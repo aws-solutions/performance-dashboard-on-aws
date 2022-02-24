@@ -30,7 +30,7 @@ test("renders title and subtitles", async () => {
     wrapper: MemoryRouter,
   });
   expect(
-    await screen.findByRole("heading", { name: "Add metrics" })
+    await screen.findByRole("heading", { name: "Add metrics - choose data" })
   ).toBeInTheDocument();
 });
 

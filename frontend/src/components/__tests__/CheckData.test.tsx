@@ -25,9 +25,7 @@ test("renders the CheckData component", async () => {
       advanceStep={() => {}}
       backStep={() => {}}
       onCancel={() => {}}
-      setSelectedHeaders={() => {}}
       setHiddenColumns={() => {}}
-      selectedHeaders={new Set<string>()}
       hiddenColumns={new Set<string>()}
       dataTypes={new Map()}
       setDataTypes={() => {}}

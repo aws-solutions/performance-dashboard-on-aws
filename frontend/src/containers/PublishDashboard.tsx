@@ -202,6 +202,18 @@ function PublishDashboard() {
     </ul>
   );
 
+  const segments = [
+    {
+      label: t("PublishWorkflow.InternalVersionNotes"),
+    },
+    {
+      label: t("PublishWorkflow.ConfirmURL"),
+    },
+    {
+      label: t("PublishWorkflow.ReviewAndPublish"),
+    },
+  ];
+
   return (
     <>
       <AlertContainer id="top-alert" />
@@ -216,21 +228,59 @@ function PublishDashboard() {
           },
         ]}
       />
-      <PrimaryActionBar>
-        <Alert type="info" message={t("PublishWorkflow.InfoAlert")} slim />
-        {isMobile && (
-          <>
-            <div className="margin-top-2">{statusAndVersion}</div>
-            <div className="text-base margin-right-1 margin-y-2">
-              {dashboard &&
-                `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
-                  .locale(window.navigator.language.toLowerCase())
-                  .fromNow()}`}
-            </div>
-            <div className="grid-row margin-top-105">
-              <div className="grid-col-6 padding-right-05">
+      <section aria-label={t("PublishWorkflow.ActionBarLabel")}>
+        <PrimaryActionBar>
+          <Alert type="info" message={t("PublishWorkflow.InfoAlert")} slim />
+          {isMobile && (
+            <>
+              <div className="margin-top-2">{statusAndVersion}</div>
+              <div className="text-base margin-right-1 margin-y-2">
+                {dashboard &&
+                  `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
+                    .locale(window.navigator.language.toLowerCase())
+                    .fromNow()}`}
+              </div>
+              <div className="grid-row margin-top-105">
+                <div className="grid-col-6 padding-right-05">
+                  <DropdownMenu
+                    className="margin-top-neg-1px"
+                    buttonText={t("Actions")}
+                    variant="outline"
+                    ariaLabel={t("ARIA.PublishDashboardActions")}
+                  >
+                    <DropdownMenu.MenuLink
+                      href={`/admin/dashboard/${dashboard.id}/history`}
+                      aria-label={t("ARIA.ViewDashboardHistory")}
+                    >
+                      {t("ViewHistoryLink")}
+                    </DropdownMenu.MenuLink>
+                    <DropdownMenu.MenuItem
+                      onSelect={onPreview}
+                      aria-label={t("ARIA.PreviewDashboard")}
+                    >
+                      {t("PreviewButton")}
+                    </DropdownMenu.MenuItem>
+                  </DropdownMenu>
+                </div>
+                <div className="grid-col-6 padding-left-05">
+                  <Button variant="outline" onClick={onReturnToDraft}>
+                    {t("ReturnToDraftButton")}
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+          {!isMobile && (
+            <div className="grid-row">
+              <div className="grid-col text-right display-flex flex-row flex-align-center padding-top-2">
+                {statusAndVersion}
+                <span className="text-base margin-right-1">
+                  {dashboard &&
+                    `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
+                      .locale(window.navigator.language.toLowerCase())
+                      .fromNow()}`}
+                </span>
                 <DropdownMenu
-                  className="margin-top-neg-1px"
                   buttonText={t("Actions")}
                   variant="outline"
                   ariaLabel={t("ARIA.PublishDashboardActions")}
@@ -248,52 +298,23 @@ function PublishDashboard() {
                     {t("PreviewButton")}
                   </DropdownMenu.MenuItem>
                 </DropdownMenu>
-              </div>
-              <div className="grid-col-6 padding-left-05">
                 <Button variant="outline" onClick={onReturnToDraft}>
                   {t("ReturnToDraftButton")}
                 </Button>
               </div>
             </div>
-          </>
-        )}
-        {!isMobile && (
-          <div className="grid-row">
-            <div className="grid-col text-right display-flex flex-row flex-align-center padding-top-2">
-              {statusAndVersion}
-              <span className="text-base margin-right-1">
-                {dashboard &&
-                  `${t("LastUpdatedLabel")} ${dayjs(dashboard.updatedAt)
-                    .locale(window.navigator.language.toLowerCase())
-                    .fromNow()}`}
-              </span>
-              <DropdownMenu
-                buttonText={t("Actions")}
-                variant="outline"
-                ariaLabel={t("ARIA.PublishDashboardActions")}
-              >
-                <DropdownMenu.MenuLink
-                  href={`/admin/dashboard/${dashboard.id}/history`}
-                  aria-label={t("ARIA.ViewDashboardHistory")}
-                >
-                  {t("ViewHistoryLink")}
-                </DropdownMenu.MenuLink>
-                <DropdownMenu.MenuItem
-                  onSelect={onPreview}
-                  aria-label={t("ARIA.PreviewDashboard")}
-                >
-                  {t("PreviewButton")}
-                </DropdownMenu.MenuItem>
-              </DropdownMenu>
-              <Button variant="outline" onClick={onReturnToDraft}>
-                {t("ReturnToDraftButton")}
-              </Button>
-            </div>
-          </div>
-        )}
-      </PrimaryActionBar>
+          )}
+        </PrimaryActionBar>
+      </section>
       <div>
-        <h1 className="margin-bottom-0 display-inline-block">
+        <h1
+          id="publish-workflow-header"
+          className="margin-bottom-0 display-inline-block"
+          aria-label={t("PublishWorkflow.TitleLabel", {
+            dashboard: dashboard.name,
+            step: segments[step].label.toLowerCase(),
+          })}
+        >
           {dashboard.name}
         </h1>
         <div className="margin-top-1 margin-bottom-4">
@@ -306,22 +327,15 @@ function PublishDashboard() {
         <div className="margin-top-1">
           <StepIndicator
             current={step}
-            segments={[
-              {
-                label: t("PublishWorkflow.InternalVersionNotes"),
-              },
-              {
-                label: t("PublishWorkflow.ConfirmURL"),
-              },
-              {
-                label: t("PublishWorkflow.ReviewAndPublish"),
-              },
-            ]}
+            segments={segments}
             showStepChart={true}
             showStepText={false}
           />
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          aria-labelledby="publish-workflow-header"
+        >
           <div>
             <div hidden={step !== 0}>
               <div className="margin-bottom-4">

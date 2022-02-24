@@ -81,9 +81,6 @@ function AddTable() {
     state && state.json ? DatasetType.StaticDataset : undefined
   );
   const [step, setStep] = useState<number>(state && state.json ? 1 : 0);
-  const [selectedHeaders, setSelectedHeaders] = useState<Set<string>>(
-    new Set<string>()
-  );
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
@@ -111,7 +108,6 @@ function AddTable() {
   const displayWithPages = watch("displayWithPages");
 
   const initializeColumnsMetadata = () => {
-    setSelectedHeaders(new Set<string>());
     setHiddenColumns(new Set<string>());
     setDataTypes(new Map<string, ColumnDataType>());
     setNumberTypes(new Map<string, NumberDataType>());
@@ -404,8 +400,6 @@ function AddTable() {
                 data={currentJson}
                 advanceStep={advanceStep}
                 backStep={backStep}
-                selectedHeaders={selectedHeaders}
-                setSelectedHeaders={setSelectedHeaders}
                 hiddenColumns={hiddenColumns}
                 setHiddenColumns={setHiddenColumns}
                 onCancel={onCancel}

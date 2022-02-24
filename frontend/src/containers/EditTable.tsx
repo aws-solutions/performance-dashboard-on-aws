@@ -94,9 +94,6 @@ function EditTable() {
   } = useWidget(dashboardId, widgetId);
   const { fullPreview, fullPreviewButton } = useFullPreview();
 
-  const [selectedHeaders, setSelectedHeaders] = useState<Set<string>>(
-    new Set<string>()
-  );
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
@@ -128,7 +125,6 @@ function EditTable() {
   >();
 
   const initializeColumnsMetadata = () => {
-    setSelectedHeaders(new Set<string>());
     setHiddenColumns(new Set<string>());
     setDataTypes(new Map<string, ColumnDataType>());
     setNumberTypes(new Map<string, NumberDataType>());
@@ -607,8 +603,6 @@ function EditTable() {
                     data={displayedJson}
                     advanceStep={advanceStep}
                     backStep={backStep}
-                    selectedHeaders={selectedHeaders}
-                    setSelectedHeaders={setSelectedHeaders}
                     hiddenColumns={hiddenColumns}
                     setHiddenColumns={setHiddenColumns}
                     onCancel={onCancel}

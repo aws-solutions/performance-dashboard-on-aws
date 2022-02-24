@@ -103,9 +103,6 @@ function EditChart() {
   } = useWidget(dashboardId, widgetId);
   const { fullPreviewButton, fullPreview } = useFullPreview();
 
-  const [selectedHeaders, setSelectedHeaders] = useState<Set<string>>(
-    new Set<string>()
-  );
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
@@ -142,7 +139,6 @@ function EditChart() {
   >(undefined);
 
   const initializeColumnsMetadata = () => {
-    setSelectedHeaders(new Set<string>());
     setHiddenColumns(new Set<string>());
     setDataTypes(new Map<string, ColumnDataType>());
     setNumberTypes(new Map<string, NumberDataType>());
@@ -683,8 +679,6 @@ function EditChart() {
                     data={displayedJson}
                     advanceStep={advanceStep}
                     backStep={backStep}
-                    selectedHeaders={selectedHeaders}
-                    setSelectedHeaders={setSelectedHeaders}
                     hiddenColumns={hiddenColumns}
                     setHiddenColumns={setHiddenColumns}
                     onCancel={onCancel}

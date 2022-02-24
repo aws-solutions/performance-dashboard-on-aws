@@ -8,9 +8,7 @@ import Table from "./Table";
 import { useTranslation } from "react-i18next";
 
 interface Props {
-  selectedHeaders: Set<string>;
   hiddenColumns: Set<string>;
-  setSelectedHeaders: Function;
   setHiddenColumns: Function;
   backStep: (event: MouseEvent<HTMLButtonElement>) => void;
   advanceStep: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -194,13 +192,7 @@ function CheckData(props: Props) {
           ],
         };
       }),
-    [
-      props.data,
-      props.selectedHeaders,
-      props.dataTypes,
-      props.numberTypes,
-      props.currencyTypes,
-    ]
+    [props.data, props.dataTypes, props.numberTypes, props.currencyTypes]
   );
 
   return (
@@ -226,7 +218,6 @@ function CheckData(props: Props) {
             disablePagination={false}
             disableBorderless={true}
             columns={checkDataTableColumns}
-            selectedHeaders={props.selectedHeaders}
             hiddenColumns={props.hiddenColumns}
             addNumbersColumn={true}
             sortByColumn={props.sortByColumn}
@@ -236,6 +227,7 @@ function CheckData(props: Props) {
             reset={props.reset}
             keepBorderBottom
             mobileNavigation
+            settingTable={true}
           />
         </div>
         <br />

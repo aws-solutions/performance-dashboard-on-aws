@@ -322,24 +322,31 @@ function AddTable() {
     });
   }
 
+  const segments = [
+    {
+      label: t("AddTableScreen.ChooseData"),
+    },
+    {
+      label: t("AddTableScreen.CheckData"),
+    },
+    {
+      label: t("AddTableScreen.Visualize"),
+    },
+  ];
   const configHeader = (
     <div>
-      <h1 id="addTableFormHeader" className="margin-top-0">
+      <h1
+        id="addTableFormHeader"
+        className="margin-top-0"
+        aria-label={t("AddTableScreen.AddTableLabel", {
+          step: segments[step].label.toLowerCase(),
+        })}
+      >
         {t("AddTableScreen.AddTable")}
       </h1>
       <StepIndicator
         current={step}
-        segments={[
-          {
-            label: t("AddTableScreen.ChooseData"),
-          },
-          {
-            label: t("AddTableScreen.CheckData"),
-          },
-          {
-            label: t("AddTableScreen.Visualize"),
-          },
-        ]}
+        segments={segments}
         showStepChart={true}
         showStepText={false}
       />

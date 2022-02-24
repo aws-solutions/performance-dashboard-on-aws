@@ -388,24 +388,31 @@ function AddChart() {
     });
   }
 
+  const segments = [
+    {
+      label: t("AddChartScreen.ChooseData"),
+    },
+    {
+      label: t("AddChartScreen.CheckData"),
+    },
+    {
+      label: t("AddChartScreen.Visualize"),
+    },
+  ];
   const configHeader = (
     <div>
-      <h1 id="addChartFormHeader" className="margin-top-0">
+      <h1
+        id="addChartFormHeader"
+        className="margin-top-0"
+        aria-label={t("AddChartScreen.AddChartTitle", {
+          step: segments[step].label.toLowerCase(),
+        })}
+      >
         {t("AddChartScreen.AddChart")}
       </h1>
       <StepIndicator
         current={step}
-        segments={[
-          {
-            label: t("AddChartScreen.ChooseData"),
-          },
-          {
-            label: t("AddChartScreen.CheckData"),
-          },
-          {
-            label: t("AddChartScreen.Visualize"),
-          },
-        ]}
+        segments={segments}
         showStepChart={true}
         showStepText={false}
       />

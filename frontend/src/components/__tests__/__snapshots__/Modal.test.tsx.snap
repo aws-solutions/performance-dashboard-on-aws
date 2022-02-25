@@ -24,12 +24,14 @@ exports[`renders a create draft type Modal 1`] = `
       <div
         aria-describedby="message"
         aria-labelledby="title"
+        aria-modal="true"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
       >
         <div
           class="clearfix"
+          role="dialog"
         >
           <div
             class="float-left"
@@ -117,12 +119,14 @@ exports[`renders a delete type Modal 1`] = `
       <div
         aria-describedby="message"
         aria-labelledby="title"
+        aria-modal="true"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
       >
         <div
           class="clearfix"
+          role="dialog"
         >
           <div
             class="float-left"
@@ -210,12 +214,14 @@ exports[`renders a publish type Modal 1`] = `
       <div
         aria-describedby="message"
         aria-labelledby="title"
+        aria-modal="true"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
       >
         <div
           class="clearfix"
+          role="dialog"
         >
           <div
             class="float-left"
@@ -303,12 +309,14 @@ exports[`renders a re-publish type Modal 1`] = `
       <div
         aria-describedby="message"
         aria-labelledby="title"
+        aria-modal="true"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
       >
         <div
           class="clearfix"
+          role="dialog"
         >
           <div
             class="float-left"
@@ -396,12 +404,14 @@ exports[`renders an archive type Modal 1`] = `
       <div
         aria-describedby="message"
         aria-labelledby="title"
+        aria-modal="true"
         class="ReactModal__Content ReactModal__Content--after-open modal"
         role="dialog"
         tabindex="-1"
       >
         <div
           class="clearfix"
+          role="dialog"
         >
           <div
             class="float-left"

@@ -62,7 +62,12 @@ function AdminLayout(props: LayoutProps) {
 
       <div className="usa-overlay"></div>
       <Header className="usa-header usa-header--basic">
-        <div className="usa-nav-container">
+        <div
+          className="usa-nav-container hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("ARIA.Header")}
+        >
           <div className="usa-navbar navbar-long">
             <div>
               <a className="usa-skipnav" href="#main">

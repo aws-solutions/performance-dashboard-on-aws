@@ -661,6 +661,7 @@ exports[`renders the ChooseData component 1`] = `
                   >
                     <div
                       class="grid-col-12 text-right"
+                      role="status"
                     >
                       Showing 1-1 of 1
                     </div>

@@ -509,6 +509,7 @@ exports[`renders the CheckData component 1`] = `
                 >
                   <div
                     class="text-center"
+                    role="status"
                   >
                     Showing 1-3 of 3
                   </div>

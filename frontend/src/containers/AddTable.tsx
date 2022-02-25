@@ -81,9 +81,6 @@ function AddTable() {
     state && state.json ? DatasetType.StaticDataset : undefined
   );
   const [step, setStep] = useState<number>(state && state.json ? 1 : 0);
-  const [selectedHeaders, setSelectedHeaders] = useState<Set<string>>(
-    new Set<string>()
-  );
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
   );
@@ -111,7 +108,6 @@ function AddTable() {
   const displayWithPages = watch("displayWithPages");
 
   const initializeColumnsMetadata = () => {
-    setSelectedHeaders(new Set<string>());
     setHiddenColumns(new Set<string>());
     setDataTypes(new Map<string, ColumnDataType>());
     setNumberTypes(new Map<string, NumberDataType>());
@@ -326,24 +322,31 @@ function AddTable() {
     });
   }
 
+  const segments = [
+    {
+      label: t("AddTableScreen.ChooseData"),
+    },
+    {
+      label: t("AddTableScreen.CheckData"),
+    },
+    {
+      label: t("AddTableScreen.Visualize"),
+    },
+  ];
   const configHeader = (
     <div>
-      <h1 id="addTableFormHeader" className="margin-top-0">
+      <h1
+        id="addTableFormHeader"
+        className="margin-top-0"
+        aria-label={t("AddTableScreen.AddTableLabel", {
+          step: segments[step].label.toLowerCase(),
+        })}
+      >
         {t("AddTableScreen.AddTable")}
       </h1>
       <StepIndicator
         current={step}
-        segments={[
-          {
-            label: t("AddTableScreen.ChooseData"),
-          },
-          {
-            label: t("AddTableScreen.CheckData"),
-          },
-          {
-            label: t("AddTableScreen.Visualize"),
-          },
-        ]}
+        segments={segments}
         showStepChart={true}
         showStepText={false}
       />
@@ -404,8 +407,6 @@ function AddTable() {
                 data={currentJson}
                 advanceStep={advanceStep}
                 backStep={backStep}
-                selectedHeaders={selectedHeaders}
-                setSelectedHeaders={setSelectedHeaders}
                 hiddenColumns={hiddenColumns}
                 setHiddenColumns={setHiddenColumns}
                 onCancel={onCancel}

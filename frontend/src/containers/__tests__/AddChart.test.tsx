@@ -33,7 +33,7 @@ test("renders title and subtitles", async () => {
     wrapper: MemoryRouter,
   });
   expect(
-    await screen.findByRole("heading", { name: "Add chart" })
+    await screen.findByRole("heading", { name: "Add chart - choose data" })
   ).toBeInTheDocument();
   expect(await screen.findByText("Data")).toBeInTheDocument();
   expect(

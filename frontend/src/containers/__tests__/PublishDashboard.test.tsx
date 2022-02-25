@@ -30,7 +30,7 @@ beforeEach(() => {
 test("renders dashboard title", () => {
   expect(
     screen.getByRole("heading", {
-      name: "My AWS Dashboard",
+      name: "My AWS Dashboard - internal version notes",
     })
   ).toBeInTheDocument();
 });

@@ -342,21 +342,28 @@ function AddMetrics() {
   useChangeBackgroundColor();
   useScrollUp(oldStep, step, setOldStep);
 
+  const segments = [
+    {
+      label: t("AddMetricsScreen.ChooseData"),
+    },
+    {
+      label: t("AddMetricsScreen.Visualize"),
+    },
+  ];
   const configHeader = (
     <div>
-      <h1 id="addMetricsFormHeader" className="margin-top-0">
+      <h1
+        id="addMetricsFormHeader"
+        className="margin-top-0"
+        aria-label={t("AddMetricsScreen.AddMetricsLabel", {
+          step: segments[step].label.toLowerCase(),
+        })}
+      >
         {t("AddMetricsScreen.AddMetrics")}
       </h1>
       <StepIndicator
         current={step}
-        segments={[
-          {
-            label: t("AddMetricsScreen.ChooseData"),
-          },
-          {
-            label: t("AddMetricsScreen.Visualize"),
-          },
-        ]}
+        segments={segments}
         showStepChart={true}
         showStepText={false}
       />

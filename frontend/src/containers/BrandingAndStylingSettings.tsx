@@ -99,8 +99,8 @@ function BrandingAndStylingSettings() {
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-1 text-left">
-          <div className="text-bold grid-col flex-1 text-left">
-            {t("BrandingAndStylingPrimaryColor")}
+          <div className="grid-col flex-1 text-left">
+            <h3>{t("BrandingAndStylingPrimaryColor")}</h3>
           </div>
           {settings && settings.colors ? (
             <div className="grid-row margin-top-0-important">

@@ -113,6 +113,7 @@
   "Completed": "completed",
   "NotCompleted": "not completed",
   "ContentItemTypesLabel": "Content item types",
+  "StepIndicatorLabel": "{{current}} of {{total}}: {{title}}",
   "Text": "Text",
   "Metrics": "Metrics",
   "Chart": "Chart",
@@ -323,6 +324,7 @@
     "Description": "Description",
     "Tags": "Tags",
     "AddMetrics": "Add metrics",
+    "AddMetricsLabel": "Add metrics - {{step}}",
     "ChooseData": "Choose data",
     "Configure": "Configure metrics content.",
     "Visualize": "Visualize",
@@ -364,6 +366,7 @@
   "AddChartScreen": {
     "ChooseDataset": "Choose a dataset to continue",
     "AddChart": "Add chart",
+    "AddChartTitle": "Add chart - {{step}}",
     "ChooseData": "Choose data",
     "Configure": "Configure chart content.",
     "Preview": "Preview chart",
@@ -383,6 +386,7 @@
   },
   "AddTableScreen": {
     "AddTable": "Add table",
+    "AddTableLabel": "Add table - {{step}}",
     "ChooseData": "Choose data",
     "CheckData": "Check data",
     "Configure": "Configure table content.",
@@ -519,7 +523,9 @@
     "FailToSaveReleaseNotesError": "Failed to save release notes, please try again.",
     "MissingVersionNotesError": "Please enter version notes",
     "ReturnToDraftSuccessAlert": "'{{dashboardName}}' dashboard successfully returned to draft.",
-    "PublishedSuccessAlert": "'{{dashboardName}}' dashboard was successfully published."
+    "PublishedSuccessAlert": "'{{dashboardName}}' dashboard was successfully published.",
+    "TitleLabel": "{{dashboard}} - {{step}}",
+    "ActionBarLabel": "Tool Bar"
   },
   "SettingsDateTimeFormat": "Date and time format",
   "SettingsDateTimeFormatEdit": "Edit date and time format",
@@ -973,6 +979,8 @@
   "EditTableOfContentsDescription": "The table of contents displays an overview of the content items in your dashboard. Customize the table of contents by selecting which content items to include. If a content item is selected below, its title will be included in the table of contents.",
   "DisplayWithPages": "Display with pages",
   "SelectColumns": "Select columns to format data.",
+  "IncludeInVisualization": "Include in visualization",
+  "FormatColumns": "Format columns",
   "Tab": "Tab",
   "Active": "Active",
   "SettingsTopicAreaNameCreateSuccess": "'{{name}}' topic area was successfully created.",

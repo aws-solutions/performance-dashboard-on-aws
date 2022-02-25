@@ -51,7 +51,7 @@ function PublishedSiteSettings() {
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
-          <p className="text-bold">{t("PublishedSiteSettings.Title")}</p>
+          <h3>{t("PublishedSiteSettings.Title")}</h3>
         </div>
         <div className="grid-col flex-3 text-right">
           <Button
@@ -82,9 +82,7 @@ function PublishedSiteSettings() {
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
-          <p className="text-bold">
-            {t("PublishedSiteSettings.ContactEmailAddressLabel")}
-          </p>
+          <h3>{t("PublishedSiteSettings.ContactEmailAddressLabel")}</h3>
         </div>
       </div>
 
@@ -127,7 +125,7 @@ function PublishedSiteSettings() {
 
       <div className="grid-row margin-top-0-important">
         <div className="grid-col flex-9">
-          <p className="text-bold">{t("PublishedSiteSettings.Headline")}</p>
+          <h3>{t("PublishedSiteSettings.Headline")}</h3>
         </div>
         <div className="grid-col flex-3 text-right">
           <Button
@@ -155,7 +153,7 @@ function PublishedSiteSettings() {
               <MarkdownRender source={homepage.title} />
             </div>
             <div className="grid-col flex-9">
-              <p className="text-bold">{t("Description")}</p>
+              <h3>{t("Description")}</h3>
             </div>
             <div className="font-sans-lg">
               <MarkdownRender source={homepage.description} />

@@ -6,6 +6,7 @@ exports[`renders a step indicator with multiple segments 1`] = `
     aria-valuemax="3"
     aria-valuemin="1"
     aria-valuenow="1"
+    aria-valuetext="1 of 3: Step 1"
     class="usa-step-indicator usa-step-indicator--counters-sm"
     role="progressbar"
   >
@@ -14,6 +15,7 @@ exports[`renders a step indicator with multiple segments 1`] = `
       class="usa-step-indicator__segments"
     >
       <li
+        aria-current="step"
         class="usa-step-indicator__segment usa-step-indicator__segment--current"
       >
         <span
@@ -76,6 +78,7 @@ exports[`renders a step indicator with one completed step 1`] = `
     aria-valuemax="3"
     aria-valuemin="1"
     aria-valuenow="2"
+    aria-valuetext="2 of 3: Step 2"
     class="usa-step-indicator usa-step-indicator--counters-sm"
     role="progressbar"
   >
@@ -103,6 +106,7 @@ exports[`renders a step indicator with one completed step 1`] = `
         </span>
       </li>
       <li
+        aria-current="step"
         class="usa-step-indicator__segment usa-step-indicator__segment--current"
       >
         <span

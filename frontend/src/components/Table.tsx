@@ -546,7 +546,7 @@ function Table(props: Props) {
                   } text-base-darker text-italic padding-y-05 padding-right-1`}
                 >
                   {isMobile && (
-                    <div className="text-center">
+                    <div className="text-center" role="status">
                       {t("ShowingPages", {
                         startItem: pageIndex * pageSize + 1,
                         endItem: Math.min(
@@ -590,6 +590,7 @@ function Table(props: Props) {
                       className={`grid-col-${
                         props.title ? "6" : "12"
                       } text-right`}
+                      role="status"
                     >
                       {t("ShowingPages", {
                         startItem: pageIndex * pageSize + 1,

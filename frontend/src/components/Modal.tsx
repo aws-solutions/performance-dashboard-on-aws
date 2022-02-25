@@ -26,14 +26,16 @@ function Modal(props: PathParams) {
       }}
       className="modal"
       overlayClassName="overlay"
-      shouldFocusAfterRender={false}
+      shouldFocusAfterRender={true}
+      shouldReturnFocusAfterClose={true}
       aria={{
         labelledby: t("title"),
         describedby: t("message"),
+        modal: "true",
       }}
-      ariaHideApp={props.ariaHideApp !== false}
+      ariaHideApp={true}
     >
-      <div className="clearfix">
+      <div className="clearfix" role="dialog">
         <div
           className="float-left"
           style={{

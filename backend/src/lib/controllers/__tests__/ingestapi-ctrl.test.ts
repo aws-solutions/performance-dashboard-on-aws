@@ -185,6 +185,9 @@ describe("createDataset", () => {
     await IngestApiCtrl.createDataset(req, res);
 
     expect(res.status).toBeCalledWith(400);
+    expect(res.send).toHaveBeenLastCalledWith(
+      "Unable to parse dataset: 0: instance is not of a type(s) array"
+    );
     expect(DatasetService.parse).toBeCalledWith(
       "This is not a valid JSON",
       undefined

@@ -26,11 +26,11 @@ exports[`branding and styling settings should match snapshot 1`] = `
         </a>
       </li>
       <li
-        aria-current="page"
+        aria-current="location"
         class="usa-breadcrumb__list-item usa-current cursor-default"
       >
         <span>
-          Ministries
+          Topic areas
         </span>
       </li>
     </ol>
@@ -72,7 +72,7 @@ exports[`branding and styling settings should match snapshot 1`] = `
                       class="usa-current"
                       href="/admin/settings/topicarea"
                     >
-                      Ministries
+                      Topic areas
                     </a>
                   </li>
                 </ul>
@@ -244,9 +244,11 @@ exports[`branding and styling settings should match snapshot 1`] = `
               class="grid-col flex-1 text-left"
             >
               <div
-                class="text-bold grid-col flex-1 text-left"
+                class="grid-col flex-1 text-left"
               >
-                Primary color
+                <h3>
+                  Primary color
+                </h3>
               </div>
               <div
                 class="grid-row margin-top-0-important"

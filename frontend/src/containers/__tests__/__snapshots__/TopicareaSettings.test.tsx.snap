@@ -26,11 +26,11 @@ exports[`topic area settings should match snapshot 1`] = `
         </a>
       </li>
       <li
-        aria-current="page"
+        aria-current="location"
         class="usa-breadcrumb__list-item usa-current cursor-default"
       >
         <span>
-          Ministries
+          Topic areas
         </span>
       </li>
     </ol>
@@ -72,7 +72,7 @@ exports[`topic area settings should match snapshot 1`] = `
                       class="usa-current"
                       href="/admin/settings/topicarea"
                     >
-                      Ministries
+                      Topic areas
                     </a>
                   </li>
                 </ul>
@@ -155,7 +155,7 @@ exports[`topic area settings should match snapshot 1`] = `
           id="main-content"
         >
           <h1>
-            Ministries
+            Topic areas
           </h1>
           <p>
             Dashboards are organized by topic areas. A dashboard must have a topic area and can have only one topic area.
@@ -174,11 +174,9 @@ exports[`topic area settings should match snapshot 1`] = `
             <div
               class="grid-col flex-9"
             >
-              <p
-                class="text-bold"
-              >
+              <h3>
                 Single topic area name
-              </p>
+              </h3>
             </div>
             <div
               class="grid-col flex-3 text-right"
@@ -216,11 +214,9 @@ exports[`topic area settings should match snapshot 1`] = `
           <div
             class="grid-col flex-9"
           >
-            <p
-              class="text-bold"
-            >
+            <h3>
               Multiple topic areas name
-            </p>
+            </h3>
           </div>
           <div
             class="grid-row margin-top-0-important margin-bottom-4"
@@ -250,7 +246,7 @@ exports[`topic area settings should match snapshot 1`] = `
           <h2
             id="section-heading-h3"
           >
-            Ministries (2)
+            Topic areas (2)
           </h2>
           <div
             class="grid-row margin-y-3"
@@ -319,7 +315,7 @@ exports[`topic area settings should match snapshot 1`] = `
                   class="usa-button usa-button--base"
                   data-testid="createtopicarea"
                 >
-                  Create new ministry
+                  Create new topic area
                 </button>
               </span>
             </div>
@@ -335,10 +331,10 @@ exports[`topic area settings should match snapshot 1`] = `
                   <span
                     class="font-sans-xs"
                   >
-                    Ministry
+                    Topic area
                   </span>
                   <button
-                    aria-label="Sort by Ministry name"
+                    aria-label="Sort by topic area name"
                     class="usa-button usa-button--unstyled margin-left-1 hover:text-base-light text-white"
                   >
                     <svg

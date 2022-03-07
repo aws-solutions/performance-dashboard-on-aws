@@ -91,7 +91,9 @@ async function createDataset(req: Request, res: Response) {
     parsedData = DatasetService.parse(data, metadata.schema);
   } catch (err) {
     logger.warn("Unable to parse dataset %o", data);
-    return res.status(400).send(err.message);
+    return res
+      .status(400)
+      .send(`Unable to parse dataset: ${escapeHtml(err.message)}`.trim());
   }
 
   try {

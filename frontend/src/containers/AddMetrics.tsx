@@ -342,21 +342,28 @@ function AddMetrics() {
   useChangeBackgroundColor();
   useScrollUp(oldStep, step, setOldStep);
 
+  const segments = [
+    {
+      label: t("AddMetricsScreen.ChooseData"),
+    },
+    {
+      label: t("AddMetricsScreen.Visualize"),
+    },
+  ];
   const configHeader = (
     <div>
-      <h1 id="addMetricsFormHeader" className="margin-top-0">
+      <h1
+        id="addMetricsFormHeader"
+        className="margin-top-0"
+        aria-label={t("AddMetricsScreen.AddMetricsLabel", {
+          step: segments[step].label.toLowerCase(),
+        })}
+      >
         {t("AddMetricsScreen.AddMetrics")}
       </h1>
       <StepIndicator
         current={step}
-        segments={[
-          {
-            label: t("AddMetricsScreen.ChooseData"),
-          },
-          {
-            label: t("AddMetricsScreen.Visualize"),
-          },
-        ]}
+        segments={segments}
         showStepChart={true}
         showStepText={false}
       />
@@ -448,6 +455,7 @@ function AddMetrics() {
                             id="search"
                             type="search"
                             name="query"
+                            aria-label={t("ARIA.SearchInput")}
                             style={{ height: "37px" }}
                             value={query}
                             onChange={(
@@ -457,6 +465,7 @@ function AddMetrics() {
                           <button
                             className="usa-button usa-button--base padding-x-2"
                             type="button"
+                            aria-label={t("ARIA.SearchButton")}
                             style={{
                               height: "37px",
                               borderTopLeftRadius: "0",

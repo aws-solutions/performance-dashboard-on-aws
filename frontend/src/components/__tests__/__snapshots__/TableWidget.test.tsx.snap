@@ -41,9 +41,10 @@ exports[`table preview should match snapshot 1`] = `
                 id
               </span>
               <button
+                aria-label="Toggle SortBy: id"
                 class="margin-left-1 usa-button usa-button--unstyled"
                 style="cursor: pointer;"
-                title="Toggle SortBy id"
+                title="Toggle SortBy: id"
                 type="button"
               >
                 <svg
@@ -74,9 +75,10 @@ exports[`table preview should match snapshot 1`] = `
                 name
               </span>
               <button
+                aria-label="Toggle SortBy: name"
                 class="margin-left-1 usa-button usa-button--unstyled"
                 style="cursor: pointer;"
-                title="Toggle SortBy name"
+                title="Toggle SortBy: name"
                 type="button"
               >
                 <svg
@@ -107,9 +109,10 @@ exports[`table preview should match snapshot 1`] = `
                 updatedAt
               </span>
               <button
+                aria-label="Toggle SortBy: updatedAt"
                 class="margin-left-1 usa-button usa-button--unstyled"
                 style="cursor: pointer;"
-                title="Toggle SortBy updatedAt"
+                title="Toggle SortBy: updatedAt"
                 type="button"
               >
                 <svg
@@ -420,6 +423,7 @@ exports[`table preview should match snapshot 1`] = `
                 </div>
                 <div
                   class="grid-col-6 text-right"
+                  role="status"
                 >
                   Showing 1-3 of 3
                 </div>

@@ -17,7 +17,7 @@ exports[`Tabs tests renders the Tabs component 1`] = `
           data-index="0"
           data-key="tab1"
         >
-          <li
+          <div
             aria-label="Active tab1test Tab Tab 1"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-base-dark border-x-0 border-top-0 border-bottom-05"
             role="tab"
@@ -25,7 +25,7 @@ exports[`Tabs tests renders the Tabs component 1`] = `
             tabindex="0"
           >
             Tab 1
-          </li>
+          </div>
         </div>
         <div
           class="react-horizontal-scrolling-menu--separator"
@@ -37,7 +37,7 @@ exports[`Tabs tests renders the Tabs component 1`] = `
           data-index="1"
           data-key="tab2"
         >
-          <li
+          <div
             aria-label="tab1test Tab Tab 2"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
             role="tab"
@@ -45,7 +45,7 @@ exports[`Tabs tests renders the Tabs component 1`] = `
             tabindex="0"
           >
             Tab 2
-          </li>
+          </div>
         </div>
       </div>
     </div>
@@ -76,7 +76,7 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
           data-index="0"
           data-key="tab1"
         >
-          <li
+          <div
             aria-label="tab2test Tab Tab 1"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
             role="tab"
@@ -84,7 +84,7 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
             tabindex="0"
           >
             Tab 1
-          </li>
+          </div>
         </div>
         <div
           class="react-horizontal-scrolling-menu--separator"
@@ -96,7 +96,7 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
           data-index="1"
           data-key="tab2"
         >
-          <li
+          <div
             aria-label="Active tab2test Tab Tab 2"
             class="display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-base-dark border-x-0 border-top-0 border-bottom-05"
             role="tab"
@@ -104,7 +104,7 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
             tabindex="0"
           >
             Tab 2
-          </li>
+          </div>
         </div>
       </div>
     </div>

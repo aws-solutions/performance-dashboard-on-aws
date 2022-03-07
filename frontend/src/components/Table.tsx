@@ -14,6 +14,7 @@ import {
   useRowSelect,
   useGlobalFilter,
   usePagination,
+  Row,
 } from "react-table";
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
@@ -26,6 +27,7 @@ interface Props {
   initialSortByField?: string;
   initialSortAscending?: boolean;
   screenReaderField?: string;
+  rowTitleComponents?: Array<string>;
   filterQuery?: string;
   className?: string;
   onSelection?: Function;
@@ -41,7 +43,6 @@ interface Props {
     id?: string;
     minWidth?: string | number | undefined;
   }>;
-  selectedHeaders?: Set<string>;
   hiddenColumns?: Set<string>;
   addNumbersColumn?: boolean;
   sortByColumn?: string;
@@ -52,6 +53,7 @@ interface Props {
   mobileNavigation?: boolean;
   keepBorderBottom?: boolean;
   title?: string;
+  settingTable?: boolean;
 }
 
 function Table(props: Props) {
@@ -84,6 +86,14 @@ function Table(props: Props) {
         ]
       : [];
   }, [initialSortByField, initialSortAscending]);
+
+  const createLongTitleName = (row: Row<object>, accessors: Array<string>) => {
+    let title = "";
+    accessors.map((accessor: string) => {
+      title += row.values[accessor] + " - ";
+    });
+    return title.substring(0, title.length - 3);
+  };
 
   const {
     getTableProps,
@@ -157,7 +167,9 @@ function Table(props: Props) {
               <IndeterminateCheckbox
                 {...row.getToggleRowSelectedProps()}
                 title={
-                  props.screenReaderField
+                  props.rowTitleComponents
+                    ? createLongTitleName(row, props.rowTitleComponents)
+                    : props.screenReaderField
                     ? row.values[props.screenReaderField]
                     : null
                 }
@@ -225,22 +237,6 @@ function Table(props: Props) {
 
   const currentRows = props.disablePagination ? rows : page;
 
-  const getCellBackground = useCallback(
-    (id: string, defaultColor: string) => {
-      if (id.startsWith("checkbox")) {
-        for (const selectedHeader of Array.from(props.selectedHeaders ?? [])) {
-          if (id.includes(selectedHeader)) {
-            return "#97d4ea";
-          }
-        }
-        return defaultColor;
-      } else {
-        return props.selectedHeaders?.has(id) ? "#97d4ea" : defaultColor;
-      }
-    },
-    [props.selectedHeaders]
-  );
-
   return (
     <div className="overflow-x-hidden overflow-y-hidden">
       <table
@@ -269,10 +265,7 @@ function Table(props: Props) {
                         }
                       : {
                           minWidth: column.minWidth,
-                          backgroundColor: `${getCellBackground(
-                            column.id,
-                            ""
-                          )}`,
+                          backgroundColor: "",
                         }
                   }
                 >
@@ -298,7 +291,10 @@ function Table(props: Props) {
                     <button
                       className="margin-left-1 usa-button usa-button--unstyled"
                       {...column.getSortByToggleProps()}
-                      title={`${t("ToggleSortBy")} ${column.Header}`}
+                      title={t("ToggleSortBy", { columnName: column.Header })}
+                      aria-label={t("ToggleSortBy", {
+                        columnName: column.Header,
+                      })}
                       type="button"
                     >
                       <FontAwesomeIcon
@@ -327,10 +323,9 @@ function Table(props: Props) {
                   return j === 0 && props.selection === "none" ? (
                     <th
                       style={{
-                        backgroundColor: `${getCellBackground(
-                          cell.column.id,
+                        backgroundColor: `${
                           props.addNumbersColumn ? "#f0f0f0" : ""
-                        )}`,
+                        }`,
                       }}
                       scope="row"
                       {...cell.getCellProps()}
@@ -340,12 +335,7 @@ function Table(props: Props) {
                   ) : (
                     <td
                       style={{
-                        backgroundColor: `${getCellBackground(
-                          cell.column.id,
-                          props.hiddenColumns?.has(cell.column.id)
-                            ? "#adadad"
-                            : ""
-                        )}`,
+                        backgroundColor: "",
                       }}
                       {...cell.getCellProps()}
                     >
@@ -361,9 +351,11 @@ function Table(props: Props) {
               <td
                 role="cell"
                 colSpan={
-                  props.columns.length -
-                  (props.hiddenColumns ? props.hiddenColumns.size : 0) +
-                  (props.title ? 0 : 1)
+                  props.columns.length +
+                  (props.title ? 0 : 1) -
+                  (!props.settingTable && props.hiddenColumns
+                    ? props.hiddenColumns.size
+                    : 0)
                 }
                 className={`button-cell-padding${
                   props.keepBorderBottom ? "" : " button-cell-border"
@@ -554,7 +546,7 @@ function Table(props: Props) {
                   } text-base-darker text-italic padding-y-05 padding-right-1`}
                 >
                   {isMobile && (
-                    <div className="text-center">
+                    <div className="text-center" role="status">
                       {t("ShowingPages", {
                         startItem: pageIndex * pageSize + 1,
                         endItem: Math.min(
@@ -598,6 +590,7 @@ function Table(props: Props) {
                       className={`grid-col-${
                         props.title ? "6" : "12"
                       } text-right`}
+                      role="status"
                     >
                       {t("ShowingPages", {
                         startItem: pageIndex * pageSize + 1,

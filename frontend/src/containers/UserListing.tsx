@@ -169,8 +169,13 @@ function UserListing() {
             <DropdownMenu
               buttonText={t("UserListingDropdownMenuActions")}
               variant="outline"
+              ariaLabel={t("ARIA.UserListingActions")}
             >
-              <MenuItem onSelect={changeRole} disabled={selected.length === 0}>
+              <MenuItem
+                onSelect={changeRole}
+                disabled={selected.length === 0}
+                aria-label={t("ARIA.UserListingChangeRole")}
+              >
                 {t("UserListingDropdownChangeRole")}
               </MenuItem>
 
@@ -178,12 +183,14 @@ function UserListing() {
                 onSelect={onResendInvite}
                 disabled={resendInviteEmailDisabled()}
                 title={t("UserListingDropdownResendInviteText")}
+                aria-label={t("ARIA.UserListingResendInvites")}
               >
                 {t("UserListingActionsResendInvites")}
               </MenuItem>
               <MenuItem
                 onSelect={onRemoveUsers}
                 disabled={selected.length === 0}
+                aria-label={t("ARIA.UserListingRemoveUsers")}
               >
                 {t("UserListingActionsRemoveUsers")}
               </MenuItem>

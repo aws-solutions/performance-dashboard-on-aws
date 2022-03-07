@@ -26,11 +26,11 @@ exports[`publishing guidance settings should match snapshot 1`] = `
         </a>
       </li>
       <li
-        aria-current="page"
+        aria-current="location"
         class="usa-breadcrumb__list-item usa-current cursor-default"
       >
         <span>
-          Ministries
+          Topic areas
         </span>
       </li>
     </ol>
@@ -72,7 +72,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
                       class="usa-current"
                       href="/admin/settings/topicarea"
                     >
-                      Ministries
+                      Topic areas
                     </a>
                   </li>
                 </ul>
@@ -166,11 +166,11 @@ exports[`publishing guidance settings should match snapshot 1`] = `
             <div
               class="grid-col flex-9"
             >
-              <p
+              <h2
                 class="text-bold"
               >
                 Acknowledge statement
-              </p>
+              </h2>
             </div>
             <div
               class="grid-col flex-3 text-right"

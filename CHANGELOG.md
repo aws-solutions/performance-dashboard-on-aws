@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2022-03-07
+
+- Made improvements to meet WCAG accessibility requirements
+  - Added programmatic structure to sections in dashboard editor
+  - Removed ARIA 'Current' attributes for dashboard to avoid misleading screen readers
+  - Updated modal experience to be more accessible
+  - Updated Settings pages to use proper heading mark-ups
+  - Improved the user experience of working with Check Data step columns
+  - Added programmatic status messages when actions are taken
+- Updated dependency libraries to address potential security vulnerabilities
+
 ## [1.2.0] - 2022-02-02
 
 - Made improvements to meet WCAG accessibility requirements

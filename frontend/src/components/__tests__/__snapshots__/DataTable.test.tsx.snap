@@ -8,6 +8,7 @@ exports[`renders a Data Table element 1`] = `
     <button
       aria-controls="menu--33"
       aria-haspopup="true"
+      aria-label="Data table actions"
       class="usa-button usa-button--unstyled text-base"
       data-reach-menu-button=""
       id="menu-button--menu--33"
@@ -53,9 +54,10 @@ exports[`renders a Data Table element 1`] = `
               year
             </span>
             <button
+              aria-label="Toggle SortBy: year"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy year"
+              title="Toggle SortBy: year"
               type="button"
             >
               <svg
@@ -86,9 +88,10 @@ exports[`renders a Data Table element 1`] = `
               sales
             </span>
             <button
+              aria-label="Toggle SortBy: sales"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy sales"
+              title="Toggle SortBy: sales"
               type="button"
             >
               <svg
@@ -119,9 +122,10 @@ exports[`renders a Data Table element 1`] = `
               revenue
             </span>
             <button
+              aria-label="Toggle SortBy: revenue"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy revenue"
+              title="Toggle SortBy: revenue"
               type="button"
             >
               <svg
@@ -220,6 +224,7 @@ exports[`renders a Data Table element on mobile 1`] = `
     <button
       aria-controls="menu--40"
       aria-haspopup="true"
+      aria-label="Data table actions"
       class="usa-button usa-button--unstyled text-base"
       data-reach-menu-button=""
       id="menu-button--menu--40"
@@ -265,9 +270,10 @@ exports[`renders a Data Table element on mobile 1`] = `
               year
             </span>
             <button
+              aria-label="Toggle SortBy: year"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy year"
+              title="Toggle SortBy: year"
               type="button"
             >
               <svg
@@ -298,9 +304,10 @@ exports[`renders a Data Table element on mobile 1`] = `
               sales
             </span>
             <button
+              aria-label="Toggle SortBy: sales"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy sales"
+              title="Toggle SortBy: sales"
               type="button"
             >
               <svg
@@ -331,9 +338,10 @@ exports[`renders a Data Table element on mobile 1`] = `
               revenue
             </span>
             <button
+              aria-label="Toggle SortBy: revenue"
               class="margin-left-1 usa-button usa-button--unstyled"
               style="cursor: pointer;"
-              title="Toggle SortBy revenue"
+              title="Toggle SortBy: revenue"
               type="button"
             >
               <svg
@@ -432,6 +440,7 @@ exports[`renders a Data Table element with hidden table 1`] = `
     <button
       aria-controls="menu--23"
       aria-haspopup="true"
+      aria-label="Data table actions"
       class="usa-button usa-button--unstyled text-base"
       data-reach-menu-button=""
       id="menu-button--menu--23"
@@ -466,6 +475,7 @@ exports[`renders a Data Table element with hidden table on mobile 1`] = `
     <button
       aria-controls="menu--28"
       aria-haspopup="true"
+      aria-label="Data table actions"
       class="usa-button usa-button--unstyled text-base"
       data-reach-menu-button=""
       id="menu-button--menu--28"

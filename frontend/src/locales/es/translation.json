@@ -113,6 +113,7 @@
   "Completed": "completado",
   "NotCompleted": "no completado",
   "ContentItemTypesLabel": "Tipos de elementos de contenido",
+  "StepIndicatorLabel": "{{current}} de {{total}}: {{title}}",
   "Text": "Texto",
   "Metrics": "Métricas",
   "Chart": "Gráfico",
@@ -323,6 +324,7 @@
     "Description": "Descripción",
     "Tags": "Etiquetas",
     "AddMetrics": "Agregar métricas",
+    "AddMetricsLabel": "Agregar métricas: {{step}}",
     "ChooseData": "Elegir datos",
     "Configure": "Configure el contenido de las métricas.",
     "Visualize": "Visualizar",
@@ -364,6 +366,7 @@
   "AddChartScreen": {
     "ChooseDataset": "Elija un conjunto de datos para continuar",
     "AddChart": "Agregar gráfico",
+    "AddChartTitle": "Agregar gráfico: {{step}}",
     "ChooseData": "Elegir datos",
     "Configure": "Configure el contenido del gráfico.",
     "Preview": "Previsualizar el gráfico",
@@ -383,6 +386,7 @@
   },
   "AddTableScreen": {
     "AddTable": "Agregar tabla",
+    "AddTableLabel": "Agregar tabla: {{step}}",
     "ChooseData": "Elegir datos",
     "CheckData": "Comprobar datos",
     "Configure": "Configure el contenido de la tabla.",
@@ -519,7 +523,9 @@
     "FailToSaveReleaseNotesError": "No se pudieron guardar las notas de la versión; inténtelo de nuevo.",
     "MissingVersionNotesError": "Escriba las notas de la versión",
     "ReturnToDraftSuccessAlert": "El panel {{dashboardName}} se ha devuelto al estado de borrador.",
-    "PublishedSuccessAlert": "El panel {{dashboardName}} se ha publicado correctamente."
+    "PublishedSuccessAlert": "El panel {{dashboardName}} se ha publicado correctamente.",
+    "TitleLabel": "{{dashboard}} - {{step}}",
+    "ActionBarLabel": "Barra de herramientas"
   },
   "SettingsDateTimeFormat": "Formato de fecha y hora",
   "SettingsDateTimeFormatEdit": "Editar formato de fecha y hora",
@@ -973,6 +979,8 @@
   "EditTableOfContentsDescription": "El índice muestra información general de los elementos de contenido del panel. Personalice la tabla de contenido seleccionando los elementos de contenido que quiera incluir. Si se selecciona un elemento a continuación, el título se incluirá en la tabla de contenido.",
   "DisplayWithPages": "Mostrar con páginas",
   "SelectColumns": "Seleccione columnas para dar formato a los datos.",
+  "IncludeInVisualization": "Incluir en la visualización",
+  "FormatColumns": "Formatear columnas",
   "Tab": "Pestaña",
   "Active": "Activo",
   "SettingsTopicAreaNameCreateSuccess": "El “{{name}}” del área de tema se ha creado correctamente.",

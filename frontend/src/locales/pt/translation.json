@@ -113,6 +113,7 @@
   "Completed": "concluído",
   "NotCompleted": "não concluído",
   "ContentItemTypesLabel": "Tipos de item de conteúdo",
+  "StepIndicatorLabel": "{{current}} de {{total}}: {{title}}",
   "Text": "Texto",
   "Metrics": "Métricas",
   "Chart": "Gráfico",
@@ -323,6 +324,7 @@
     "Description": "Descrição",
     "Tags": "Tags",
     "AddMetrics": "Adicionar métricas",
+    "AddMetricsLabel": "Adicionar métricas: {{step}}",
     "ChooseData": "Escolher dados",
     "Configure": "Configure o conteúdo das métricas.",
     "Visualize": "Visualizar",
@@ -364,6 +366,7 @@
   "AddChartScreen": {
     "ChooseDataset": "Escolher um conjunto de dados para continuar",
     "AddChart": "Adicionar gráfico",
+    "AddChartTitle": "Adicionar gráfico: {{step}}",
     "ChooseData": "Escolher dados",
     "Configure": "Configure o conteúdo do gráfico.",
     "Preview": "Visualizar gráfico",
@@ -383,6 +386,7 @@
   },
   "AddTableScreen": {
     "AddTable": "Adicionar tabela",
+    "AddTableLabel": "Adicionar tabela: {{step}}",
     "ChooseData": "Escolher dados",
     "CheckData": "Verificar dados",
     "Configure": "Configure o conteúdo da tabela.",
@@ -519,7 +523,9 @@
     "FailToSaveReleaseNotesError": "Falha ao salvar as notas de release. Tente novamente.",
     "MissingVersionNotesError": "Insira as notas da versão",
     "ReturnToDraftSuccessAlert": "Painel “{{dashboardName}}” retornado com êxito ao estado de rascunho.",
-    "PublishedSuccessAlert": "Painel “{{dashboardName}}” publicado com êxito."
+    "PublishedSuccessAlert": "Painel “{{dashboardName}}” publicado com êxito.",
+    "TitleLabel": "{{dashboard}}: {{step}}",
+    "ActionBarLabel": "Barra de ferramentas"
   },
   "SettingsDateTimeFormat": "Formato de data e hora",
   "SettingsDateTimeFormatEdit": "Editar formato de data e hora",
@@ -973,6 +979,8 @@
   "EditTableOfContentsDescription": "O sumário exibe uma visão geral dos itens de conteúdo em seu painel. Para personalizar o sumário, selecione os itens de conteúdo que serão incluídos. Se um item de conteúdo for selecionado abaixo, o respectivo título será incluído no sumário.",
   "DisplayWithPages": "Exibir com páginas",
   "SelectColumns": "Selecione as colunas para formatar os dados.",
+  "IncludeInVisualization": "Incluir na visualização",
+  "FormatColumns": "Formatar colunas",
   "Tab": "Guia",
   "Active": "Ativa",
   "SettingsTopicAreaNameCreateSuccess": "A área de tópico “{{name}}” foi criada com êxito.",

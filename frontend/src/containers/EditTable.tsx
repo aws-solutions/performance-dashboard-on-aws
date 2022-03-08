@@ -586,6 +586,7 @@ function EditTable() {
                     staticFileName={staticFileName}
                     dynamicFileName={dynamicFileName}
                     setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
+                    addingNew={false}
                   />
                 </PrimaryActionBar>
               </div>

@@ -663,6 +663,7 @@ function EditChart() {
                     register={register}
                     widgetType={t("ChooseDataDescriptionChart")}
                     setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
+                    addingNew={false}
                   />
                 </PrimaryActionBar>
               </div>

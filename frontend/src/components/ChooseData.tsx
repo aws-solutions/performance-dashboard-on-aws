@@ -29,6 +29,7 @@ interface Props {
   hasErrors: boolean;
   widgetType: string;
   setShowNoDatasetTypeAlert: Function;
+  addingNew?: boolean;
 }
 
 function ChooseData(props: Props) {
@@ -124,7 +125,10 @@ function ChooseData(props: Props) {
                 loading={props.fileLoading}
                 errors={props.csvErrors}
                 register={props.register}
-                required={props.datasetType === DatasetType.StaticDataset}
+                required={
+                  props.addingNew &&
+                  props.datasetType === DatasetType.StaticDataset
+                }
                 hint={
                   <span>
                     {t("StaticDatasetsHint")}{" "}

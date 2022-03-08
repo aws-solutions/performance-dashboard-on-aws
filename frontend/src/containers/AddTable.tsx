@@ -396,6 +396,7 @@ function AddTable() {
                 staticFileName={undefined}
                 dynamicFileName={undefined}
                 setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
+                addingNew={true}
               />
             </PrimaryActionBar>
           </div>

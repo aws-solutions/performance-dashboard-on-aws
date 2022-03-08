@@ -33,9 +33,9 @@ test("renders a textfield for table title", async () => {
   expect(await screen.findByLabelText("Table title*")).toBeInTheDocument();
 });
 
-test("renders a file upload input", async () => {
+test("renders a choose data button", async () => {
   render(<EditTable />, { wrapper: MemoryRouter });
-  const radioButton = await screen.getByTestId("staticDatasetRadioButton");
-  fireEvent.click(radioButton);
-  expect(await screen.findByLabelText("Static datasets*")).toBeInTheDocument();
+  expect(
+    await screen.findByRole("button", { name: "Choose data" })
+  ).toBeInTheDocument();
 });

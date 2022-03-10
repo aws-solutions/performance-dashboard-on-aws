@@ -52,11 +52,16 @@ test("continue button does not advance to step 2 due to empty field", async () =
 });
 
 test("continue button advances to step 2 and saves releaseNotes", async () => {
-  fireEvent.input(screen.getAllByLabelText("")[0], {
-    target: {
-      value: "Some release notes",
-    },
-  });
+  fireEvent.input(
+    screen.getAllByLabelText(
+      "Describe what changes you are publishing to the dashboard.*"
+    )[0],
+    {
+      target: {
+        value: "Some release notes",
+      },
+    }
+  );
 
   await act(async () => {
     fireEvent.click(
@@ -74,11 +79,16 @@ test("continue button advances to step 2 and saves releaseNotes", async () => {
 });
 
 test("publish button invokes BackendService", async () => {
-  fireEvent.input(screen.getAllByLabelText("")[0], {
-    target: {
-      value: "Some release notes",
-    },
-  });
+  fireEvent.input(
+    screen.getAllByLabelText(
+      "Describe what changes you are publishing to the dashboard.*"
+    )[0],
+    {
+      target: {
+        value: "Some release notes",
+      },
+    }
+  );
 
   // Move to step 2
   fireEvent.click(

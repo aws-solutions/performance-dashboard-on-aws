@@ -342,12 +342,12 @@ function PublishDashboard() {
                 <TextField
                   id="releaseNotes"
                   name="releaseNotes"
-                  label=""
+                  label={t("PublishWorkflow.InternalVersionNotesDescription")}
                   error={
                     errors.releaseNotes &&
                     t("PublishWorkflow.MissingVersionNotesError")
                   }
-                  hint={t("PublishWorkflow.InternalVersionNotesDescription")}
+                  hint={t("PublishWorkflow.OnlyAccessedByAdmins")}
                   register={register}
                   defaultValue={dashboard.releaseNotes}
                   required
@@ -407,27 +407,25 @@ function PublishDashboard() {
                       className="usa-checkbox__label"
                       htmlFor="acknowledge"
                       data-testid="AcknowledgementCheckboxLabel"
-                    />
+                    >
+                      <span className="font-sans-sm">
+                        <MarkdownRender
+                          className="margin-left-4 margin-top-neg-3 measure-2 publishing-guidance"
+                          source={`${settings.publishingGuidance}${
+                            settings.publishingGuidance[
+                              settings.publishingGuidance.length - 1
+                            ] === "."
+                              ? ""
+                              : "."
+                          } ${
+                            hasPublishedVersion()
+                              ? t("PublishWorkflow.OverwriteWarning")
+                              : ""
+                          }`}
+                        />
+                      </span>
+                    </label>
                   </div>
-                </div>
-                <div>
-                  <span className="font-sans-sm">
-                    <MarkdownRender
-                      className="margin-left-2 measure-2 publishing-guidance"
-                      source={`${settings.publishingGuidance}${
-                        settings.publishingGuidance[
-                          settings.publishingGuidance.length - 1
-                        ] === "."
-                          ? ""
-                          : "."
-                      } ${
-                        hasPublishedVersion()
-                          ? t("PublishWorkflow.OverwriteWarning")
-                          : ""
-                      }`}
-                    />
-                  </span>
-                  {}
                 </div>
               </div>
               <div className="padding-top-2 border-top border-base-lighter margin-top-4">

@@ -282,23 +282,6 @@ const DonutChartWidget = (props: Props) => {
     return baseHeight + additional;
   };
 
-  const renderLegend = (value: string, entry: any) => {
-    return (
-      <span className="recharts-legend-item-text">
-        <button
-          style={{
-            backgroundColor: "transparent",
-            color: entry.color,
-            borderWidth: 0,
-          }}
-          aria-label={`toggle ${entry.value}`}
-        >
-          {entry.value}
-        </button>
-      </span>
-    );
-  };
-
   return (
     <div aria-label={props.title} tabIndex={-1}>
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>

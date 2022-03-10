@@ -115,6 +115,23 @@ const LineChartWidget = (props: Props) => {
     }
   }, [props, widthPercent]);
 
+  const renderLegendText = (value: string, entry: any) => {
+    return (
+      <span className="recharts-legend-item-text">
+        <button
+          style={{
+            backgroundColor: "transparent",
+            color: entry.color,
+            borderWidth: 0,
+          }}
+          aria-label={`Hide/unhide data for ${value}`}
+        >
+          {value}
+        </button>
+      </span>
+    );
+  };
+
   return (
     <div
       aria-label={props.title}
@@ -200,6 +217,7 @@ const LineChartWidget = (props: Props) => {
               iconType="plainline"
               onMouseLeave={() => setLinesHover(null)}
               onMouseEnter={(e: any) => setLinesHover(e.dataKey)}
+              formatter={renderLegendText}
             />
             {props.lines.length &&
               props.lines.slice(1).map((line, index) => {

@@ -92,7 +92,7 @@ const PartWholeChartWidget = (props: Props) => {
     }
   };
 
-  const renderLegendText = (value: string) => {
+  const renderLegendText = (value: string, entry: any) => {
     const index = value.lastIndexOf(" ");
     const label = value.substring(0, index);
     const amount = value.substring(index + 1);
@@ -107,7 +107,16 @@ const PartWholeChartWidget = (props: Props) => {
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
-          {label.toLocaleString()}
+          <button
+            style={{
+              backgroundColor: "transparent",
+              color: entry.color,
+              borderWidth: 0,
+            }}
+            aria-label={`Hide/unhide data for ${value}`}
+          >
+            {label.toLocaleString()}
+          </button>
         </span>
         <div className="margin-left-4 margin-bottom-1 text-base-darker text-bold">
           {amount && amount !== "null" ? (

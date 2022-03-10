@@ -212,7 +212,7 @@ const DonutChartWidget = (props: Props) => {
     );
   };
 
-  const renderLegendText = (value: string) => {
+  const renderLegendText = (value: string, entry: any) => {
     let columnMetadata;
     if (parts && parts.length > 1 && props.columnsMetadata) {
       columnMetadata = props.columnsMetadata.find(
@@ -223,7 +223,16 @@ const DonutChartWidget = (props: Props) => {
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
-          {value.toLocaleString()}
+          <button
+            style={{
+              backgroundColor: "transparent",
+              color: entry.color,
+              borderWidth: 0,
+            }}
+            aria-label={`Hide/unhide data for ${value}`}
+          >
+            {value.toLocaleString()}
+          </button>
         </span>
         <div className="margin-left-4 margin-bottom-1 text-base-darker text-bold">
           {value && value !== "null" ? (
@@ -271,6 +280,23 @@ const DonutChartWidget = (props: Props) => {
       additional = (Math.floor(data.length / labelsPerRow) + 1) * pixelsByPart;
     }
     return baseHeight + additional;
+  };
+
+  const renderLegend = (value: string, entry: any) => {
+    return (
+      <span className="recharts-legend-item-text">
+        <button
+          style={{
+            backgroundColor: "transparent",
+            color: entry.color,
+            borderWidth: 0,
+          }}
+          aria-label={`toggle ${entry.value}`}
+        >
+          {entry.value}
+        </button>
+      </span>
+    );
   };
 
   return (

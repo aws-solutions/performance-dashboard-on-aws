@@ -17,6 +17,7 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import RenderLegendText from "./Legend"
 import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 
 type Props = {
@@ -142,23 +143,6 @@ const ColumnChartWidget = (props: Props) => {
     }
   }, [props, widthPercent]);
 
-  const renderLegendText = (value: string, entry: any) => {
-    return (
-      <span className="recharts-legend-item-text">
-        <button
-          style={{
-            backgroundColor: "transparent",
-            color: entry.color,
-            borderWidth: 0,
-          }}
-          aria-label={`Hide/unhide data for ${value}`}
-        >
-          {value}
-        </button>
-      </span>
-    );
-  };
-
   return (
     <div
       aria-label={props.title}
@@ -241,7 +225,7 @@ const ColumnChartWidget = (props: Props) => {
                 onClick={toggleColumns}
                 onMouseLeave={() => setColumnsHover(null)}
                 onMouseEnter={(e: any) => setColumnsHover(e.dataKey)}
-                formatter={renderLegendText}
+                formatter={RenderLegendText}
               />
             )}
             {props.columns.length &&

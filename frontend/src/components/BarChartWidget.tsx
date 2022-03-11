@@ -17,6 +17,7 @@ import UtilsService, { ComputedDimensions } from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import RenderLegendText from "./Legend"
 import { ColumnDataType } from "../models";
 import RulerService from "../services/RulerService";
 
@@ -138,23 +139,6 @@ const BarChartWidget = (props: Props) => {
     return RulerService.trimToWidth(label, width, style?.font, style?.fontSize);
   }
 
-  const renderLegendText = (value: string, entry: any) => {
-    return (
-      <span className="recharts-legend-item-text">
-        <button
-          style={{
-            backgroundColor: "transparent",
-            color: entry.color,
-            borderWidth: 0,
-          }}
-          aria-label={`Hide/unhide data for ${value}`}
-        >
-          {value}
-        </button>
-      </span>
-    );
-  };
-
   return (
     <div aria-label={props.title} tabIndex={-1}>
       <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
@@ -229,7 +213,7 @@ const BarChartWidget = (props: Props) => {
                 onClick={toggleBars}
                 onMouseLeave={() => setBarsHover(null)}
                 onMouseEnter={(e: any) => setBarsHover(e.dataKey)}
-                formatter={renderLegendText}
+                formatter={RenderLegendText}
               />
             )}
             {props.bars.length &&

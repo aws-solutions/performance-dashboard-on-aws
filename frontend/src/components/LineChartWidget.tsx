@@ -16,7 +16,7 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import RenderLegendText from "./Legend"
+import RenderLegendText from "./Legend";
 import { ColumnDataType } from "../models";
 
 type Props = {

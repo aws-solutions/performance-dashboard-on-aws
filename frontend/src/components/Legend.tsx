@@ -15,6 +15,6 @@ function RenderLegendText(value: string, entry: any) {
       </button>
     </span>
   );
-};
+}
 
 export default RenderLegendText;

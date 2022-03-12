@@ -12,6 +12,7 @@ import { useColors, useWindowSize } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import RenderLegendText from "./Legend";
 
 type Props = {
   title: string;
@@ -107,16 +108,7 @@ const PartWholeChartWidget = (props: Props) => {
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
-          <button
-            style={{
-              backgroundColor: "transparent",
-              color: entry.color,
-              borderWidth: 0,
-            }}
-            aria-label={`Hide/unhide data for ${value}`}
-          >
-            {label.toLocaleString()}
-          </button>
+          {RenderLegendText(label.toLocaleString(), entry)}
         </span>
         <div className="margin-left-4 margin-bottom-1 text-base-darker text-bold">
           {amount && amount !== "null" ? (

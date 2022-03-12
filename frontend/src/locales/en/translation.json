@@ -513,7 +513,8 @@
   "PublishWorkflow": {
     "OverwriteWarning": "I also understand that this will overwrite the existing published version of the dashboard.",
     "InternalVersionNotes": "Internal version notes",
-    "InternalVersionNotesDescription": "Describe what changes you are publishing to the dashboard. The version notes can only be accessed by Admins and Editors.",
+    "InternalVersionNotesDescription": "Describe what changes you are publishing to the dashboard.",
+    "OnlyAccessedByAdmins": "The version notes can only be accessed by Admins and Editors.",
     "ConfirmURL": "Confirm URL",
     "ReviewAndPublish": "Review and publish",
     "InfoAlert": "This dashboard is now in the publish pending state and cannot be edited unless returned to draft.",

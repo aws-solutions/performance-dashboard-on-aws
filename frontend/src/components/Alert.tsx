@@ -19,7 +19,7 @@ function Alert(props: Props) {
   }
 
   return (
-    <div className={className}>
+    <div className={className} role="alert">
       {typeof props.message === "object" ? (
         props.message
       ) : (

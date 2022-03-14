@@ -17,6 +17,7 @@ import UtilsService, { ComputedDimensions } from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import RenderLegendText from "./Legend";
 import { ColumnDataType } from "../models";
 import RulerService from "../services/RulerService";
 
@@ -212,6 +213,7 @@ const BarChartWidget = (props: Props) => {
                 onClick={toggleBars}
                 onMouseLeave={() => setBarsHover(null)}
                 onMouseEnter={(e: any) => setBarsHover(e.dataKey)}
+                formatter={RenderLegendText}
               />
             )}
             {props.bars.length &&

@@ -16,6 +16,7 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import RenderLegendText from "./Legend";
 import { ColumnDataType } from "../models";
 
 type Props = {
@@ -200,6 +201,7 @@ const LineChartWidget = (props: Props) => {
               iconType="plainline"
               onMouseLeave={() => setLinesHover(null)}
               onMouseEnter={(e: any) => setLinesHover(e.dataKey)}
+              formatter={RenderLegendText}
             />
             {props.lines.length &&
               props.lines.slice(1).map((line, index) => {

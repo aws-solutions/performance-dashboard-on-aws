@@ -257,7 +257,7 @@ function VisualizeTable(props: Props) {
                         </Link>
                       </div>
                       <div className="grid-col-1">
-                        <div className="margin-left-3">
+                        <div className="margin-1">
                           <Button
                             variant="unstyled"
                             className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"

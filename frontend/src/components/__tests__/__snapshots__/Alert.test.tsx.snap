@@ -4,6 +4,7 @@ exports[`renders a info alert 1`] = `
 <div>
   <div
     class="usa-alert usa-alert--info"
+    role="alert"
   >
     <div
       class="usa-alert__body"
@@ -22,6 +23,7 @@ exports[`renders a slim alert 1`] = `
 <div>
   <div
     class="usa-alert usa-alert--success usa-alert--slim"
+    role="alert"
   >
     <div
       class="usa-alert__body"
@@ -40,6 +42,7 @@ exports[`renders a slim alert ignoring title 1`] = `
 <div>
   <div
     class="usa-alert usa-alert--success usa-alert--slim"
+    role="alert"
   >
     <div
       class="usa-alert__body"
@@ -58,6 +61,7 @@ exports[`renders a success alert 1`] = `
 <div>
   <div
     class="usa-alert usa-alert--success"
+    role="alert"
   >
     <div
       class="usa-alert__body"
@@ -76,6 +80,7 @@ exports[`renders a warning alert 1`] = `
 <div>
   <div
     class="usa-alert usa-alert--warning"
+    role="alert"
   >
     <div
       class="usa-alert__body"
@@ -94,6 +99,7 @@ exports[`renders an alert with HTML content as message 1`] = `
 <div>
   <div
     class="usa-alert usa-alert--success usa-alert--slim usa-alert--no-icon"
+    role="alert"
   >
     <a
       href="#"
@@ -108,6 +114,7 @@ exports[`renders an alert with title 1`] = `
 <div>
   <div
     class="usa-alert usa-alert--success"
+    role="alert"
   >
     <div
       class="usa-alert__body"
@@ -131,6 +138,7 @@ exports[`renders an alert without icon 1`] = `
 <div>
   <div
     class="usa-alert usa-alert--success usa-alert--slim usa-alert--no-icon"
+    role="alert"
   >
     <div
       class="usa-alert__body"
@@ -149,6 +157,7 @@ exports[`renders an error alert 1`] = `
 <div>
   <div
     class="usa-alert usa-alert--error"
+    role="alert"
   >
     <div
       class="usa-alert__body"

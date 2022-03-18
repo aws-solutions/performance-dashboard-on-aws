@@ -103,7 +103,7 @@ function WidgetList(props: Props) {
     [props.widgets, onDrag]
   );
 
-  let subCount: 0;
+  let sectionCount: 0;
   return (
     <div>
       {props.widgets && props.widgets.length ? (
@@ -133,8 +133,9 @@ function WidgetList(props: Props) {
           >
             {props.widgets.map((widget, index) => {
               if (index === 0) {
-                subCount = 0;
+                sectionCount = 0;
               }
+              const order = index + 1 - sectionCount;
               return widget.section ? (
                 ""
               ) : (
@@ -156,7 +157,7 @@ function WidgetList(props: Props) {
                           />
                         </div>
                         <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
-                          {index + 1 - subCount}
+                          {order}
                         </div>
                         <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2">
                           <div className="grid-col flex-6">
@@ -273,18 +274,21 @@ function WidgetList(props: Props) {
                   widget.content.widgetIds.length ? (
                     <div className="bg-base-lightest padding-1">
                       {props.widgets
-                        .filter((wc) =>
-                          widget.content.widgetIds.includes(wc.id)
+                        .map((wc, arrIndex) => ({
+                          widget: wc,
+                          arrIndex: arrIndex,
+                        }))
+                        .filter((current) =>
+                          widget.content.widgetIds.includes(current.widget.id)
                         )
-                        .map((wc) => ({ widget: wc, parentCount: index }))
-                        .map(({ widget, parentCount }, indexChild) => {
-                          subCount++;
+                        .map(({ widget, arrIndex }, childIndex) => {
+                          sectionCount++;
                           return (
                             <ContentItem
                               className="grid-col margin-1 margin-left-2"
                               key={widget.id}
-                              index={index + indexChild + 1}
-                              id={index + indexChild + 1}
+                              index={arrIndex}
+                              id={arrIndex}
                               moveItem={moveWidget}
                               itemType="widget"
                             >
@@ -297,7 +301,7 @@ function WidgetList(props: Props) {
                                     />
                                   </div>
                                   <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
-                                    {`${parentCount + 1}.${indexChild + 1}`}
+                                    {`${order}.${childIndex + 1}`}
                                   </div>
                                   <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2">
                                     <div className="grid-col flex-6">
@@ -307,12 +311,8 @@ function WidgetList(props: Props) {
                                         ariaLabel={t("MoveContentItemUp", {
                                           name: widget.name,
                                         })}
-                                        onClick={() =>
-                                          onMoveUp(index + indexChild + 1)
-                                        }
-                                        ref={
-                                          caretUpRefs[index + indexChild + 1]
-                                        }
+                                        onClick={() => onMoveUp(arrIndex)}
+                                        ref={caretUpRefs[arrIndex]}
                                       >
                                         <FontAwesomeIcon
                                           id={`${widget.id}-move-up`}
@@ -328,12 +328,8 @@ function WidgetList(props: Props) {
                                         ariaLabel={t("MoveContentItemDown", {
                                           name: widget.name,
                                         })}
-                                        onClick={() =>
-                                          onMoveDown(index + indexChild + 1)
-                                        }
-                                        ref={
-                                          caretDownRefs[index + indexChild + 1]
-                                        }
+                                        onClick={() => onMoveDown(arrIndex)}
+                                        ref={caretDownRefs[arrIndex]}
                                       >
                                         <FontAwesomeIcon
                                           id={`${widget.id}-move-down`}

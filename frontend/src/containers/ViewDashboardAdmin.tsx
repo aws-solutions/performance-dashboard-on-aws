@@ -754,7 +754,7 @@ function ViewDashboardAdmin() {
               stickyPosition={80}
               offset={240}
               area={2}
-              marginRight={27}
+              marginRight={0}
               widgetNameIds={dashboard.widgets
                 .filter(
                   (w) =>
@@ -780,8 +780,17 @@ function ViewDashboardAdmin() {
               .filter((w) => !w.section)
               .map((widget, index) => {
                 return (
-                  <div key={index}>
-                    {widget.widgetType == WidgetType.Section &&
+                  <div
+                    key={index}
+                    style={{
+                      width:
+                        windowSize.width <= moveNavBarWidth ||
+                        !dashboard.displayTableOfContents
+                          ? "100%"
+                          : "75%",
+                    }}
+                  >
+                    {widget.widgetType === WidgetType.Section &&
                     !widget.content.showWithTabs ? (
                       <div className="margin-top-6 usa-prose" id={widget.id}>
                         <WidgetRender

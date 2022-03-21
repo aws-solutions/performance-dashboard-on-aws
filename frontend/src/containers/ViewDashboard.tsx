@@ -25,6 +25,7 @@ function ViewDashboard() {
   const [activeWidgetId, setActiveWidgetId] = useState("");
   const [activeTabId, setActiveTabId] = useState("");
   const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const moveNavBarWidth = 1024;
 
@@ -93,7 +94,7 @@ function ViewDashboard() {
         stickyPosition={80}
         offset={80}
         area={2}
-        marginRight={27}
+        marginRight={0}
         widgetNameIds={dashboard.widgets
           .filter(
             (w) =>
@@ -119,8 +120,16 @@ function ViewDashboard() {
         .filter((w) => !w.section)
         .map((widget, index) => {
           return (
-            <div key={index}>
-              {widget.widgetType == WidgetType.Section &&
+            <div
+              key={index}
+              style={{
+                width:
+                  isMobile || !dashboard.displayTableOfContents
+                    ? "100%"
+                    : "75%",
+              }}
+            >
+              {widget.widgetType === WidgetType.Section &&
               !widget.content.showWithTabs ? (
                 <div className="margin-top-4 usa-prose" id={widget.id}>
                   <WidgetRender

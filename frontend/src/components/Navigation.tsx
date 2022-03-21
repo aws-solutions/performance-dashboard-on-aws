@@ -85,7 +85,7 @@ function Navigation({
             style={{
               fontSize: "0.9rem",
               borderStyle: "none",
-              marginLeft: 0,
+              margin: "3.5em 0 3.5em 0",
             }}
           >
             {widgetNameIds.map((widget) => {

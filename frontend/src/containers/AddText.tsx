@@ -6,6 +6,7 @@ import {
   useDashboard,
   useFullPreview,
   useChangeBackgroundColor,
+  useWindowSize,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -39,6 +40,8 @@ function AddText() {
   const [text, setText] = useState("");
   const [showTitle, setShowTitle] = useState(true);
   const { fullPreview, fullPreviewButton } = useFullPreview();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -112,8 +115,8 @@ function AddText() {
         />
       ) : (
         <>
-          <div className="grid-row width-desktop grid-gap">
-            <div className="grid-col-6" hidden={fullPreview}>
+          <div className="grid-row grid-gap">
+            <div className="tablet:grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
                 <h1 id="addTextFormHeader" className="margin-top-0">
                   {t("AddTextScreen.AddText")}
@@ -206,10 +209,12 @@ function AddText() {
               </PrimaryActionBar>
             </div>
             <section
-              className={fullPreview ? "grid-col-12" : "grid-col-6"}
+              className={
+                fullPreview ? "tablet:grid-col-12" : "tablet:grid-col-6"
+              }
               aria-label={t("ContentPreview")}
             >
-              {fullPreviewButton}
+              {isMobile ? <br /> : fullPreviewButton}
               {showTitle ? (
                 <h2 className="margin-top-3 margin-left-2px">{title}</h2>
               ) : (

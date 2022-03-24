@@ -15,6 +15,7 @@ import {
   useFullPreview,
   useChangeBackgroundColor,
   useScrollUp,
+  useWindowSize,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -59,6 +60,8 @@ function EditMetrics() {
     number | undefined
   >();
   const { fullPreview, fullPreviewButton } = useFullPreview();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const title = watch("title");
   const showTitle = watch("showTitle");
@@ -261,8 +264,8 @@ function EditMetrics() {
           }`}
         />
       ) : (
-        <div className="grid-row width-desktop grid-gap">
-          <div className="grid-col-6" hidden={fullPreview}>
+        <div className="grid-row grid-gap">
+          <div className="tablet:grid-col-6" hidden={fullPreview}>
             <PrimaryActionBar>
               <h1 id="editMetricsFormHeader" className="margin-top-0">
                 {t("EditMetricsScreen.EditMetrics")}
@@ -273,7 +276,11 @@ function EditMetrics() {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <fieldset className="usa-fieldset">
-                  <legend className="usa-hint grid-col-6">
+                  <legend
+                    className={`usa-hint ${
+                      isMobile ? "grid-col-12" : "grid-col-6"
+                    }`}
+                  >
                     {t("EditMetricsScreen.Configure")}
                   </legend>
                   {(errors.title || submittedMetricsNum === 0) && (
@@ -386,11 +393,11 @@ function EditMetrics() {
             </PrimaryActionBar>
           </div>
           <section
-            className={fullPreview ? "grid-col-12" : "grid-col-6"}
+            className={fullPreview ? "tablet:grid-col-12" : "tablet:grid-col-6"}
             aria-label={t("ContentPreview")}
           >
             <div hidden={false} className="sticky-preview">
-              {fullPreviewButton}
+              {isMobile ? <br /> : fullPreviewButton}
               <MetricsWidget
                 title={showTitle ? title : ""}
                 metrics={metrics}

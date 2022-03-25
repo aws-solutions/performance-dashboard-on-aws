@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import Button from "./Button";
@@ -10,6 +10,10 @@ interface Props {
   query?: string;
   results?: number;
   size: "big" | "small";
+  lastQuery?: string;
+  placeholder?: string;
+  label?: string;
+  wide?: boolean;
 }
 
 interface FormValues {
@@ -18,6 +22,7 @@ interface FormValues {
 
 function Search(props: Props) {
   const { register, handleSubmit, reset } = useForm<FormValues>();
+  const [lastQuery, setLastQuery] = useState<string>(props.lastQuery || "");
   const { t } = useTranslation();
 
   const onSubmit = (values: FormValues) => {
@@ -33,9 +38,14 @@ function Search(props: Props) {
     }
   };
 
-  const style: React.CSSProperties = {};
+  const buttonStyle: React.CSSProperties = {};
+  const searchBarStyle: React.CSSProperties = {};
   if (props.size === "small") {
-    style.height = "37px";
+    buttonStyle.height = "37px";
+    searchBarStyle.height = "37px";
+    if (props.wide) {
+      searchBarStyle.width = "260px";
+    }
   }
 
   return (
@@ -46,7 +56,7 @@ function Search(props: Props) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <label className="usa-sr-only" htmlFor={props.id}>
-          {t("SearchButton")}
+          {props.label ? props.label : `${t("SearchButton")}`}
         </label>
         <input
           className="usa-input"
@@ -54,12 +64,17 @@ function Search(props: Props) {
           type="search"
           ref={register}
           name="query"
-          style={style}
+          style={searchBarStyle}
+          placeholder={props.placeholder}
+          value={lastQuery}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setLastQuery(event.target.value)
+          }
         />
         <button
           className="usa-button usa-button--base"
           type="submit"
-          style={style}
+          style={buttonStyle}
         >
           <span
             className={

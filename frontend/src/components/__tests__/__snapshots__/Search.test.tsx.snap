@@ -17,6 +17,7 @@ exports[`renders a big input 1`] = `
       id="search"
       name="query"
       type="search"
+      value=""
     />
     <button
       class="usa-button usa-button--base"
@@ -50,6 +51,7 @@ exports[`renders a small search input 1`] = `
       name="query"
       style="height: 37px;"
       type="search"
+      value=""
     />
     <button
       class="usa-button usa-button--base"

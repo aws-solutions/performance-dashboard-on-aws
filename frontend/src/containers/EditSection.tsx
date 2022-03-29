@@ -11,6 +11,7 @@ import {
   useDashboard,
   useFullPreview,
   useChangeBackgroundColor,
+  useWindowSize,
 } from "../hooks";
 import Spinner from "../components/Spinner";
 import Link from "../components/Link";
@@ -41,6 +42,8 @@ function EditSection() {
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, setWidget } = useWidget(dashboardId, widgetId);
   const { fullPreview, fullPreviewButton } = useFullPreview();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const onSubmit = async (values: FormValues) => {
     if (!widget) {
@@ -135,8 +138,8 @@ function EditSection() {
         />
       ) : (
         <>
-          <div className="grid-row width-desktop grid-gap">
-            <div className="grid-col-6" hidden={fullPreview}>
+          <div className="grid-row rid-gap">
+            <div className="tablet:grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
                 <h1 id="editSectionFormHeader" className="margin-top-0">
                   {t("EditSectionScreen.EditSection")}
@@ -264,12 +267,16 @@ function EditSection() {
                   <br />
                   <br />
                   <hr />
-                  <Button disabled={editingWidget} type="submit">
+                  <Button
+                    disabled={editingWidget}
+                    type="submit"
+                    className="margin-top-1"
+                  >
                     {t("Save")}
                   </Button>
                   <Button
                     variant="unstyled"
-                    className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                    className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
                     type="button"
                     onClick={onCancel}
                   >
@@ -279,10 +286,12 @@ function EditSection() {
               </PrimaryActionBar>
             </div>
             <section
-              className={fullPreview ? "grid-col-12" : "grid-col-6"}
+              className={
+                fullPreview ? "tablet:grid-col-12" : "tablet:grid-col-6"
+              }
               aria-label={t("ContentPreview")}
             >
-              {fullPreviewButton}
+              {isMobile ? <br /> : fullPreviewButton}
               {widget.showTitle ? (
                 <h2 className="margin-top-3 margin-left-2px">
                   {widget.content.title}

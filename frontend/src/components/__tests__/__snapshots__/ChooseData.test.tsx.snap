@@ -235,6 +235,11 @@ exports[`renders the ChooseData component 1`] = `
         <div
           class="tablet:grid-col-4 padding-top-1px"
         >
+          <label
+            for="search"
+          >
+            Search dynamic datasets
+          </label>
           <div
             class="usa-search usa-search--small"
             role="search"

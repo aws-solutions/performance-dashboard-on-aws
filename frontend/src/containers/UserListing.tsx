@@ -159,6 +159,7 @@ function UserListing() {
                   id={t("GlobalSearch")}
                   onSubmit={onSearch}
                   size="small"
+                  placeholder={t("Search.SearchUsers")}
                 />
               </span>
             </li>

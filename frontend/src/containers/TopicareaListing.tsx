@@ -109,10 +109,7 @@ function TopicareaListing(props: Props) {
         count: props.topicareas.length,
       })} (${props.topicareas.length})`}</h2>
       <div className="grid-row margin-y-3">
-        <div className="tablet:grid-col-4 padding-top-1px">
-          <Search id="search" onSubmit={onSearch} size="small" />
-        </div>
-        <div className="tablet:grid-col-8 text-right">
+        <div className="tablet:grid-col-12 text-right">
           <span
             className="text-underline"
             data-for="delete"

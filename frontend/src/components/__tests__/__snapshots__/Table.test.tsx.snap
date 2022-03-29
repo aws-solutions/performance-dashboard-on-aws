@@ -891,6 +891,7 @@ exports[`sorting buttons are clickable 1`] = `
             role="cell"
           >
             <input
+              aria-labelledby="Vanilla"
               style="cursor: pointer;"
               title="Vanilla"
               type="checkbox"
@@ -919,6 +920,7 @@ exports[`sorting buttons are clickable 1`] = `
             role="cell"
           >
             <input
+              aria-labelledby="Chocolate"
               style="cursor: pointer;"
               title="Chocolate"
               type="checkbox"
@@ -947,6 +949,7 @@ exports[`sorting buttons are clickable 1`] = `
             role="cell"
           >
             <input
+              aria-labelledby="Banana"
               style="cursor: pointer;"
               title="Banana"
               type="checkbox"
@@ -1307,6 +1310,7 @@ exports[`sorting buttons are clickable 2`] = `
             role="cell"
           >
             <input
+              aria-labelledby="Banana"
               style="cursor: pointer;"
               title="Banana"
               type="checkbox"
@@ -1335,6 +1339,7 @@ exports[`sorting buttons are clickable 2`] = `
             role="cell"
           >
             <input
+              aria-labelledby="Chocolate"
               style="cursor: pointer;"
               title="Chocolate"
               type="checkbox"
@@ -1363,6 +1368,7 @@ exports[`sorting buttons are clickable 2`] = `
             role="cell"
           >
             <input
+              aria-labelledby="Vanilla"
               style="cursor: pointer;"
               title="Vanilla"
               type="checkbox"

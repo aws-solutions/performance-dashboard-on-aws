@@ -35,7 +35,7 @@ const Markdown = (props: MarkdownProps) => {
 
   return (
     <div className={`markdown ${formGroupClassName}`}>
-      <label htmlFor="markdownarea" className="usa-label text-bold">
+      <label htmlFor={props.id} className="usa-label text-bold">
         {props.label}
         {props.label && props.required && <span>&#42;</span>}
       </label>

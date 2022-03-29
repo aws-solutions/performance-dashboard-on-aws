@@ -149,6 +149,13 @@ function Table(props: Props) {
                     toggleAllRowsSelected(false);
                     row.toggleRowSelected();
                   }}
+                  aria-labelledby={
+                    props.rowTitleComponents
+                      ? createLongTitleName(row, props.rowTitleComponents)
+                      : props.screenReaderField
+                      ? row.values[props.screenReaderField]
+                      : null
+                  }
                   {...row.getToggleRowSelectedProps()}
                 />
               </div>
@@ -167,6 +174,13 @@ function Table(props: Props) {
               <IndeterminateCheckbox
                 {...row.getToggleRowSelectedProps()}
                 title={
+                  props.rowTitleComponents
+                    ? createLongTitleName(row, props.rowTitleComponents)
+                    : props.screenReaderField
+                    ? row.values[props.screenReaderField]
+                    : null
+                }
+                aria-labelledby={
                   props.rowTitleComponents
                     ? createLongTitleName(row, props.rowTitleComponents)
                     : props.screenReaderField

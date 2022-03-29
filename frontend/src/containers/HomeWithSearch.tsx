@@ -7,7 +7,8 @@ import Accordion from "../components/Accordion";
 import Search from "../components/Search";
 import { PublicHomepage, LocationState } from "../models";
 import Spinner from "../components/Spinner";
-import MarkdownRender from "../components/MarkdownRender";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./Home.css";
 
 function HomeWithSearch() {
@@ -21,11 +22,7 @@ function HomeWithSearch() {
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
   const onSearch = (query: string) => {
-    if (query == undefined || query == "") {
-      history.push("/");
-    } else {
-      history.push("/public/search?q=" + query);
-    }
+    history.push("/public/search?q=" + query);
   };
 
   const onClear = () => {
@@ -43,15 +40,14 @@ function HomeWithSearch() {
     />
   ) : (
     <div className="usa-prose">
+      <Link to="/">
+        <FontAwesomeIcon icon={faArrowLeft} /> {t("AllDashboardsLink")}
+      </Link>
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
           <h1 className="font-sans-3xl line-height-sans-2 margin-top-2">
-            {homepage.title}
+            {t("Search.SearchResults")}
           </h1>
-          <MarkdownRender
-            className="font-sans-lg usa-prose"
-            source={homepage.description}
-          />
         </div>
       </div>
       <div className="grid-row">
@@ -63,9 +59,10 @@ function HomeWithSearch() {
             size="big"
             query=""
             results={homepage.dashboards.length}
+            lastQuery={query ? query : undefined}
           />
-          {homepage.dashboards.length} dashboard(s) contain "{query}" &emsp;
-          <Link to={`/`}>{t("ClearSearchText")}</Link>
+          {homepage.dashboards.length} dashboard(s) contain "{query}". &ensp;
+          {query === "" ? t("Search.EnterSearchTerm") + "." : ""}
           <br />
         </div>
       </div>

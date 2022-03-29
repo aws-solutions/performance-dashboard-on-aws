@@ -378,12 +378,16 @@ function EditMetrics() {
                 <br />
                 <br />
                 <hr />
-                <Button disabled={editingWidget || fileLoading} type="submit">
+                <Button
+                  disabled={editingWidget || fileLoading}
+                  type="submit"
+                  className="margin-top-1"
+                >
                   {t("Save")}
                 </Button>
                 <Button
                   variant="unstyled"
-                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
                   type="button"
                   onClick={onCancel}
                 >

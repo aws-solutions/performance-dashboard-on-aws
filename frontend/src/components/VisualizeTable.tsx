@@ -12,6 +12,7 @@ import TableWidget from "./TableWidget";
 import Dropdown from "./Dropdown";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "./PrimaryActionBar";
+import { useWindowSize } from "../hooks";
 
 interface Props {
   errors: any;
@@ -47,6 +48,8 @@ interface Props {
 function VisualizeTable(props: Props) {
   const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(true);
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const handleSortDataChange = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
@@ -63,8 +66,8 @@ function VisualizeTable(props: Props) {
   };
 
   return (
-    <div className="grid-row width-desktop">
-      <div className="grid-col-5" hidden={props.fullPreview}>
+    <div className="grid-row">
+      <div className="tablet:grid-col-6" hidden={props.fullPreview}>
         <PrimaryActionBar>
           {props.configHeader}
           {props.errors.title && (
@@ -76,7 +79,9 @@ function VisualizeTable(props: Props) {
           )}
 
           <fieldset className="usa-fieldset">
-            <legend className="usa-hint grid-col-6">
+            <legend
+              className={`usa-hint ${isMobile ? "grid-col-12" : "grid-col-6"}`}
+            >
               {t("AddTableScreen.Configure")}
             </legend>
 
@@ -200,7 +205,12 @@ function VisualizeTable(props: Props) {
             <br />
             <br />
             <hr />
-            <Button variant="outline" type="button" onClick={props.backStep}>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={props.backStep}
+              className="margin-top-1"
+            >
               {t("BackButton")}
             </Button>
             <Button
@@ -210,12 +220,13 @@ function VisualizeTable(props: Props) {
                 props.fileLoading ||
                 props.processingWidget
               }
+              className="margin-top-1"
             >
               {props.submitButtonLabel}
             </Button>
             <Button
               variant="unstyled"
-              className="text-base-dark hover:text-base-darker active:text-base-darkest"
+              className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
               type="button"
               onClick={props.onCancel}
             >
@@ -226,7 +237,9 @@ function VisualizeTable(props: Props) {
       </div>
 
       <section
-        className={props.fullPreview ? "grid-col-12" : "grid-col-6"}
+        className={
+          props.fullPreview ? "tablet:grid-col-12" : "tablet:grid-col-6"
+        }
         aria-label={t("ContentPreview")}
       >
         <div
@@ -235,7 +248,7 @@ function VisualizeTable(props: Props) {
             !props.fullPreview ? "margin-left-4 sticky-preview" : ""
           }`}
         >
-          {props.fullPreviewButton}
+          {isMobile ? <br /> : props.fullPreviewButton}
           {props.datasetLoading ? (
             <Spinner
               className="text-center margin-top-6"

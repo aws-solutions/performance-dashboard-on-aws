@@ -88,7 +88,7 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
                       class="usa-radio__input usa-radio__input--tile"
@@ -116,7 +116,7 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
                       class="usa-radio__input usa-radio__input--tile"
@@ -144,7 +144,7 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
                       class="usa-radio__input usa-radio__input--tile"
@@ -172,7 +172,7 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
                       class="usa-radio__input usa-radio__input--tile"
@@ -200,7 +200,7 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
                       class="usa-radio__input usa-radio__input--tile"
@@ -228,7 +228,7 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
                       class="usa-radio__input usa-radio__input--tile"
@@ -359,7 +359,7 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
                     class="usa-radio__input usa-radio__input--tile"
@@ -387,7 +387,7 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
                     class="usa-radio__input usa-radio__input--tile"
@@ -415,7 +415,7 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
                     class="usa-radio__input usa-radio__input--tile"
@@ -443,7 +443,7 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
                     class="usa-radio__input usa-radio__input--tile"
@@ -471,7 +471,7 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
                     class="usa-radio__input usa-radio__input--tile"
@@ -499,7 +499,7 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
                     class="usa-radio__input usa-radio__input--tile"

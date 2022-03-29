@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import Button from "./Button";
+import styles from "./Search.module.scss";
 
 interface Props {
   id: string;
@@ -38,13 +39,13 @@ function Search(props: Props) {
     }
   };
 
-  const buttonStyle: React.CSSProperties = {};
-  const searchBarStyle: React.CSSProperties = {};
+  let searchBarClasses = ["usa-input"];
+  let buttonClasses = ["usa-button", "usa-button--base"];
   if (props.size === "small") {
-    buttonStyle.height = "37px";
-    searchBarStyle.height = "37px";
+    buttonClasses.push(styles.small);
+    searchBarClasses.push(styles.small);
     if (props.wide) {
-      searchBarStyle.width = "260px";
+      searchBarClasses.push(styles.wide);
     }
   }
 
@@ -56,26 +57,21 @@ function Search(props: Props) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <label className="usa-sr-only" htmlFor={props.id}>
-          {props.label ? props.label : `${t("SearchButton")}`}
+          {props.label || t("SearchButton")}
         </label>
         <input
-          className="usa-input"
+          className={searchBarClasses.join(" ")}
           id={props.id}
           type="search"
           ref={register}
           name="query"
-          style={searchBarStyle}
           placeholder={props.placeholder}
           value={lastQuery}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setLastQuery(event.target.value)
           }
         />
-        <button
-          className="usa-button usa-button--base"
-          type="submit"
-          style={buttonStyle}
-        >
+        <button className={buttonClasses.join(" ")} type="submit">
           <span
             className={
               props.size === "small" ? "usa-sr-only" : "usa-search__submit-text"

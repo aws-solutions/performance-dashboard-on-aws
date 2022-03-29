@@ -46,16 +46,14 @@ exports[`renders a small search input 1`] = `
       Search
     </label>
     <input
-      class="usa-input"
+      class="usa-input small"
       id="search"
       name="query"
-      style="height: 37px;"
       type="search"
       value=""
     />
     <button
-      class="usa-button usa-button--base"
-      style="height: 37px;"
+      class="usa-button usa-button--base small"
       type="submit"
     >
       <span

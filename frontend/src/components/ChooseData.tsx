@@ -163,6 +163,9 @@ function ChooseData(props: Props) {
         >
           <div className="grid-row margin-top-3 margin-bottom-1">
             <div className="tablet:grid-col-4 padding-top-1px">
+              <label htmlFor="search">
+                {`${t("Search.SearchDynamicDatasets")}`}
+              </label>
               <div role="search" className="usa-search usa-search--small">
                 <input
                   className="usa-input"

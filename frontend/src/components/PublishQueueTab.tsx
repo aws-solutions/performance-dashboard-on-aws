@@ -35,7 +35,18 @@ function PublishQueueTab(props: Props) {
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
               <span>
-                <Search id="search" onSubmit={onSearch} size="small" />
+                <Search
+                  id="search"
+                  onSubmit={onSearch}
+                  size="small"
+                  placeholder={t("Search.SearchDashboards", {
+                    state: t("publishQueue"),
+                  })}
+                  label={t("Search.SearchDashboards", {
+                    state: t("publishQueue"),
+                  })}
+                  wide={true}
+                />
               </span>
             </li>
           </ul>

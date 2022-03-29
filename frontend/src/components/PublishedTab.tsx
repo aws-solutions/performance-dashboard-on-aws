@@ -55,7 +55,18 @@ function PublishedTab(props: Props) {
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
                 <span>
-                  <Search id="search" onSubmit={onSearch} size="small" />
+                  <Search
+                    id="search"
+                    onSubmit={onSearch}
+                    size="small"
+                    placeholder={t("Search.SearchDashboards", {
+                      state: t("published"),
+                    })}
+                    label={t("Search.SearchDashboards", {
+                      state: t("published"),
+                    })}
+                    wide={true}
+                  />
                 </span>
               </li>
             </ul>
@@ -102,7 +113,18 @@ function PublishedTab(props: Props) {
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
                 <span>
-                  <Search id="search" onSubmit={onSearch} size="small" />
+                  <Search
+                    id="search"
+                    onSubmit={onSearch}
+                    size="small"
+                    placeholder={t("Search.SearchDashboards", {
+                      state: t("published"),
+                    })}
+                    label={t("Search.SearchDashboards", {
+                      state: t("published"),
+                    })}
+                    wide={true}
+                  />
                 </span>
               </li>
             </ul>

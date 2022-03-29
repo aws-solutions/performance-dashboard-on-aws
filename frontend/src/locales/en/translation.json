@@ -61,6 +61,10 @@
   "SkipToMainContent": "Skip to main content",
   "LastUpdatedLabel": "Last updated",
   "SearchButton": "Search",
+  "draft": "draft",
+  "published": "published",
+  "archived": "archived",
+  "publishQueue": "publish queue",
   "ArchiveButton": "Archive",
   "CopyButton": "Copy",
   "ClearSearchText": "Clear search terms",
@@ -1030,5 +1034,12 @@
     "PreviewDashboard": "Preview dashboard",
     "DataTableActions": "Data table actions"
   },
-  "percentage": "{{pct}}%"
+  "percentage": "{{pct}}%",
+  "Search": {
+    "SearchResults": "Search results",
+    "EnterSearchTerm": "Enter some search terms to get better results",
+    "SearchDashboards": "Search {{state}} dashboards",
+    "SearchUsers": "Search users",
+    "SearchDynamicDatasets": "Search dynamic datasets"
+  }
 }

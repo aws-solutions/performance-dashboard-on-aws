@@ -108,15 +108,17 @@ test("filters dashboards based on search input", async () => {
   expect(dashboard2).toBeInTheDocument();
 
   // Use search input to filter
-  const search = getByLabelText("Search");
+  const search = getByLabelText("Search published dashboards");
   await act(async () => {
     fireEvent.input(search, {
       target: {
         value: "Dashboard two",
       },
     });
+  });
 
-    const searchButton = getByRole("button", { name: "Search" });
+  const searchButton = getByRole("button", { name: "Search" });
+  await act(async () => {
     fireEvent.click(searchButton);
   });
 

@@ -513,7 +513,8 @@
   "PublishWorkflow": {
     "OverwriteWarning": "Também compreendo que isso substituirá a versão publicada existente do painel.",
     "InternalVersionNotes": "Notas internas de versão",
-    "InternalVersionNotesDescription": "Descreva as alterações que estão sendo publicadas no painel. As notas de versão só podem ser acessadas por administradores e editores.",
+    "InternalVersionNotesDescription": "Descreva quais alterações você está publicando no painel.",
+    "OnlyAccessedByAdmins": "As notas de versão só podem ser acessadas por administradores e editores.",
     "ConfirmURL": "Confirmar URL",
     "ReviewAndPublish": "Revisar e publicar",
     "InfoAlert": "Este painel agora está no estado pendente de publicação e só poderá ser editado se for retornado ao estado de rascunho.",

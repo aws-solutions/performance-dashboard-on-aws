@@ -252,40 +252,7 @@ exports[`topic area settings should match snapshot 1`] = `
             class="grid-row margin-y-3"
           >
             <div
-              class="tablet:grid-col-4 padding-top-1px"
-            >
-              <form
-                class="usa-search usa-search--small"
-                role="search"
-              >
-                <label
-                  class="usa-sr-only"
-                  for="search"
-                >
-                  Search
-                </label>
-                <input
-                  class="usa-input"
-                  id="search"
-                  name="query"
-                  style="height: 37px;"
-                  type="search"
-                />
-                <button
-                  class="usa-button usa-button--base"
-                  style="height: 37px;"
-                  type="submit"
-                >
-                  <span
-                    class="usa-sr-only"
-                  >
-                    Search
-                  </span>
-                </button>
-              </form>
-            </div>
-            <div
-              class="tablet:grid-col-8 text-right"
+              class="tablet:grid-col-12 text-right"
             >
               <span
                 class="text-underline"

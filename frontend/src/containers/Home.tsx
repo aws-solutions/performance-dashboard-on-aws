@@ -18,11 +18,7 @@ function Home() {
   const history = useHistory<LocationState>();
 
   const onSearch = (query: string) => {
-    if (query == undefined || query == "") {
-      history.push("/");
-    } else {
-      history.push("/public/search?q=" + query);
-    }
+    history.push("/public/search?q=" + query);
   };
 
   const onClear = () => {

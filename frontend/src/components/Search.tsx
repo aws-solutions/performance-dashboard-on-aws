@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import Button from "./Button";
+import styles from "./Search.module.scss";
 
 interface Props {
   id: string;
@@ -10,6 +11,10 @@ interface Props {
   query?: string;
   results?: number;
   size: "big" | "small";
+  lastQuery?: string;
+  placeholder?: string;
+  label?: string;
+  wide?: boolean;
 }
 
 interface FormValues {
@@ -18,6 +23,7 @@ interface FormValues {
 
 function Search(props: Props) {
   const { register, handleSubmit, reset } = useForm<FormValues>();
+  const [lastQuery, setLastQuery] = useState<string>(props.lastQuery || "");
   const { t } = useTranslation();
 
   const onSubmit = (values: FormValues) => {
@@ -33,9 +39,14 @@ function Search(props: Props) {
     }
   };
 
-  const style: React.CSSProperties = {};
+  let searchBarClasses = ["usa-input"];
+  let buttonClasses = ["usa-button", "usa-button--base"];
   if (props.size === "small") {
-    style.height = "37px";
+    buttonClasses.push(styles.small);
+    searchBarClasses.push(styles.small);
+    if (props.wide) {
+      searchBarClasses.push(styles.wide);
+    }
   }
 
   return (
@@ -46,21 +57,21 @@ function Search(props: Props) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <label className="usa-sr-only" htmlFor={props.id}>
-          {t("SearchButton")}
+          {props.label || t("SearchButton")}
         </label>
         <input
-          className="usa-input"
+          className={searchBarClasses.join(" ")}
           id={props.id}
           type="search"
           ref={register}
           name="query"
-          style={style}
+          placeholder={props.placeholder}
+          value={lastQuery}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setLastQuery(event.target.value)
+          }
         />
-        <button
-          className="usa-button usa-button--base"
-          type="submit"
-          style={style}
-        >
+        <button className={buttonClasses.join(" ")} type="submit">
           <span
             className={
               props.size === "small" ? "usa-sr-only" : "usa-search__submit-text"

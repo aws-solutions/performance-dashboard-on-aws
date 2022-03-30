@@ -49,18 +49,18 @@ exports[`renders the ChooseData component 1`] = `
       class="grid-row"
     >
       <div
-        class="grid-row"
+        class="padding-2px grid-row"
         role="radiogroup"
       >
         <div
-          class="grid-col-4 padding-right-2 padding-top-2"
+          class="tablet:grid-col-4 padding-1"
         >
           <div
             class="usa-radio"
             role="contentinfo"
           >
             <div
-              class="grid-col flex-5"
+              class="tablet:grid-col"
             >
               <input
                 class="usa-radio__input usa-radio__input--tile"
@@ -85,14 +85,14 @@ exports[`renders the ChooseData component 1`] = `
           </div>
         </div>
         <div
-          class="grid-col-4 padding-right-2 padding-top-2"
+          class="tablet:grid-col-4 padding-1"
         >
           <div
             class="usa-radio"
             role="contentinfo"
           >
             <div
-              class="grid-col flex-5"
+              class="tablet:grid-col"
             >
               <input
                 class="usa-radio__input usa-radio__input--tile"
@@ -128,7 +128,7 @@ exports[`renders the ChooseData component 1`] = `
         class="grid-row"
       >
         <div
-          class="grid-col-6"
+          class="tablet:grid-col-6"
         >
           <div
             class="usa-form-group"
@@ -213,10 +213,10 @@ exports[`renders the ChooseData component 1`] = `
           </div>
         </div>
         <div
-          class="grid-col-3 padding-left-3"
+          class="tablet:grid-col-3"
         >
           <button
-            class="usa-button usa-button--outline datasetsButton"
+            class="usa-button usa-button--outline vertCenter"
             type="button"
           >
             Browse datasets
@@ -683,19 +683,19 @@ exports[`renders the ChooseData component 1`] = `
   <br />
   <hr />
   <button
-    class="usa-button usa-button--outline"
+    class="usa-button usa-button--outline margin-top-1"
     type="button"
   >
     Back
   </button>
   <button
-    class="usa-button usa-button--base"
+    class="usa-button usa-button--base margin-top-1"
     type="button"
   >
     Continue
   </button>
   <button
-    class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
+    class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
     type="button"
   >
     Cancel

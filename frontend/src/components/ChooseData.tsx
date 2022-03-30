@@ -1,5 +1,5 @@
 import React, { useCallback, useState, MouseEvent } from "react";
-import { useDateTimeFormatter } from "../hooks";
+import { useDateTimeFormatter, useWindowSize } from "../hooks";
 import { Dataset, DatasetType } from "../models";
 import Button from "./Button";
 import RadioButtonsTile from "./RadioButtonsTile";
@@ -9,6 +9,7 @@ import Table from "./Table";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import styles from "./ChooseData.module.scss";
 
 interface Props {
   handleChange: React.FormEventHandler<HTMLFieldSetElement>;
@@ -37,6 +38,9 @@ function ChooseData(props: Props) {
   const dateFormatter = useDateTimeFormatter();
   const [filter, setFilter] = useState("");
   const [query, setQuery] = useState("");
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
+
   const onSelect = useCallback(
     (selectedDataset: Array<Dataset>) => {
       if (props.datasetType === DatasetType.DynamicDataset) {
@@ -72,7 +76,9 @@ function ChooseData(props: Props) {
   return (
     <>
       <fieldset className="usa-fieldset" onChange={props.handleChange}>
-        <legend className="usa-hint grid-col-6">
+        <legend
+          className={`usa-hint ${isMobile ? "grid-col-12" : "grid-col-6"}`}
+        >
           <label className="usa-label text-bold">{t("Data")}</label>
           <div className="usa-hint">
             {t("ChooseDataDescription", {
@@ -116,7 +122,7 @@ function ChooseData(props: Props) {
           aria-label={t("ChooseStaticDataset")}
         >
           <div className="grid-row">
-            <div className="grid-col-6">
+            <div className="tablet:grid-col-6">
               <FileInput
                 id="dataset"
                 name="dataset"
@@ -142,11 +148,11 @@ function ChooseData(props: Props) {
                 onFileProcessed={props.onFileProcessed}
               />
             </div>
-            <div className="grid-col-3 padding-left-3">
+            <div className="tablet:grid-col-3">
               <Button
                 variant="outline"
                 type="button"
-                className="datasetsButton"
+                className={isMobile ? "margin-top-1" : styles.vertCenter}
                 onClick={props.browseDatasets}
               >
                 {t("BrowseDatasets")}
@@ -241,15 +247,20 @@ function ChooseData(props: Props) {
       <br />
       <br />
       <hr />
-      <Button variant="outline" type="button" onClick={props.backStep}>
+      <Button
+        variant="outline"
+        type="button"
+        onClick={props.backStep}
+        className="margin-top-1"
+      >
         {t("BackButton")}
       </Button>
-      <Button type="button" onClick={onAdvanceStep}>
+      <Button type="button" onClick={onAdvanceStep} className="margin-top-1">
         {t("ContinueButton")}
       </Button>
       <Button
         variant="unstyled"
-        className="text-base-dark hover:text-base-darker active:text-base-darkest"
+        className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
         type="button"
         onClick={props.onCancel}
       >

@@ -34,8 +34,12 @@ exports[`renders a dashboard header for a published view 1`] = `
         </div>
       </div>
       <div
-        class="margin-top-2 margin-left-1"
-      />
+        class="display-flex flex-row flex-align-self-end margin-bottom-2"
+      >
+        <div
+          class=""
+        />
+      </div>
     </div>
   </div>
 </div>
@@ -75,8 +79,12 @@ exports[`renders a dashboard header for an unpublished view 1`] = `
         </div>
       </div>
       <div
-        class="margin-top-2 margin-left-1"
-      />
+        class="display-flex flex-row flex-align-self-end margin-bottom-2"
+      >
+        <div
+          class=""
+        />
+      </div>
     </div>
   </div>
 </div>
@@ -116,9 +124,13 @@ exports[`renders a dashboard header for an unpublished view with a link 1`] = `
         </div>
       </div>
       <div
-        class="margin-top-2 margin-left-1"
+        class="display-flex flex-row flex-align-self-end margin-bottom-2"
       >
-        A test link
+        <div
+          class=""
+        >
+          A test link
+        </div>
       </div>
     </div>
   </div>

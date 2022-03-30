@@ -202,12 +202,16 @@ function EditText() {
                   <br />
                   <br />
                   <hr />
-                  <Button disabled={editingWidget} type="submit">
+                  <Button
+                    disabled={editingWidget}
+                    type="submit"
+                    className="margin-top-1"
+                  >
                     {t("Save")}
                   </Button>
                   <Button
                     variant="unstyled"
-                    className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                    className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
                     type="button"
                     onClick={onCancel}
                   >

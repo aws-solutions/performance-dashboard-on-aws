@@ -80,7 +80,7 @@ Object {
               </legend>
               
               <div
-                class=""
+                class="padding-2px "
                 role="radiogroup"
               >
                 <div
@@ -256,13 +256,13 @@ Object {
             <br />
             <hr />
             <button
-              class="usa-button usa-button--base"
+              class="usa-button usa-button--base margin-top-1"
               type="submit"
             >
               Continue
             </button>
             <button
-              class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+              class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1 "
               type="button"
             >
               Cancel
@@ -270,7 +270,7 @@ Object {
           </form>
         </div>
         <div
-          class="tablet:grid-col-6 grid-col-12"
+          class="tablet:grid-col-6"
         />
       </div>
     </div>
@@ -351,7 +351,7 @@ Object {
             </legend>
             
             <div
-              class=""
+              class="padding-2px "
               role="radiogroup"
             >
               <div
@@ -527,13 +527,13 @@ Object {
           <br />
           <hr />
           <button
-            class="usa-button usa-button--base"
+            class="usa-button usa-button--base margin-top-1"
             type="submit"
           >
             Continue
           </button>
           <button
-            class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+            class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1 "
             type="button"
           >
             Cancel
@@ -541,7 +541,7 @@ Object {
         </form>
       </div>
       <div
-        class="tablet:grid-col-6 grid-col-12"
+        class="tablet:grid-col-6"
       />
     </div>
   </div>,

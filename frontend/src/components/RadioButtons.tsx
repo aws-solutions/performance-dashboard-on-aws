@@ -47,7 +47,7 @@ function RadioButtons(props: Props) {
             {props.error}
           </span>
         )}
-        <div className="margin-top-2">
+        <div className="margin-top-2 margin-left-2px">
           {props.options.map((option) => {
             const selected = props.defaultValue
               ? props.defaultValue === option.value

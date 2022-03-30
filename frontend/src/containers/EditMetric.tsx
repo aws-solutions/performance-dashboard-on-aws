@@ -302,9 +302,11 @@ function EditMetric() {
                 </fieldset>
                 <br />
                 <br />
-                <Button type="submit">{t("Save")}</Button>
+                <Button type="submit" className="margin-top-1">
+                  {t("Save")}
+                </Button>
                 <Button
-                  className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+                  className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
                   variant="unstyled"
                   type="button"
                   onClick={onCancel}

@@ -87,7 +87,7 @@ exports[`renders the VisualizeChart component 1`] = `
                 Choose a chart type.
               </div>
               <div
-                class="margin-top-2"
+                class="margin-top-2 margin-left-2px"
               >
                 <div
                   class="usa-radio"
@@ -624,7 +624,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
                 Choose a chart type.
               </div>
               <div
-                class="margin-top-2"
+                class="margin-top-2 margin-left-2px"
               >
                 <div
                   class="usa-radio"

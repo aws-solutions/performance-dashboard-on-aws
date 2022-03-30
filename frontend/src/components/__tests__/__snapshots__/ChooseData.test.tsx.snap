@@ -49,11 +49,11 @@ exports[`renders the ChooseData component 1`] = `
       class="grid-row"
     >
       <div
-        class="grid-row"
+        class="padding-2px grid-row"
         role="radiogroup"
       >
         <div
-          class="tablet:grid-col-4 padding-2"
+          class="tablet:grid-col-4 padding-1"
         >
           <div
             class="usa-radio"
@@ -85,7 +85,7 @@ exports[`renders the ChooseData component 1`] = `
           </div>
         </div>
         <div
-          class="tablet:grid-col-4 padding-2"
+          class="tablet:grid-col-4 padding-1"
         >
           <div
             class="usa-radio"

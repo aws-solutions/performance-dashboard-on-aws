@@ -7,6 +7,7 @@ import {
   useSettings,
   useChangeBackgroundColor,
   useFullPreview,
+  useWindowSize,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import TextField from "../components/TextField";
@@ -42,6 +43,8 @@ function EditDetails() {
   const { fullPreview, fullPreviewButton } = useFullPreview();
   const { register, errors, handleSubmit, watch, reset } =
     useForm<FormValues>();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const sortedTopicAreas = topicareas.sort((a, b) =>
     a.name > b.name ? 1 : -1
@@ -154,8 +157,8 @@ function EditDetails() {
         ]}
       />
 
-      <div className="grid-row width-desktop grid-gap">
-        <div className="grid-col-6" hidden={fullPreview}>
+      <div className="grid-row grid-gap">
+        <div className="tablet:grid-col-6" hidden={fullPreview}>
           <div className="grid-row">
             <div className="grid-col-12">
               <PrimaryActionBar>
@@ -262,13 +265,17 @@ function EditDetails() {
                   />
 
                   <br />
-                  <Button type="submit" disabled={loading}>
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="margin-top-1"
+                  >
                     {t("Save")}
                   </Button>
                   <Button
                     variant="unstyled"
                     type="button"
-                    className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+                    className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
                     onClick={onCancel}
                   >
                     {t("Cancel")}
@@ -279,10 +286,10 @@ function EditDetails() {
           </div>
         </div>
         <section
-          className={fullPreview ? "grid-col-12" : "grid-col-6"}
+          className={fullPreview ? "tablet:grid-col-12" : "tablet:grid-col-6"}
           aria-label={t("ContentPreview")}
         >
-          {fullPreviewButton}
+          {isMobile ? <br /> : fullPreviewButton}
           <div className="margin-top-2">
             <DashboardHeader
               name={name}
@@ -299,9 +306,9 @@ function EditDetails() {
             />
             <Navigation
               stickyPosition={80}
-              offset={240}
-              area={4}
-              marginRight={45}
+              offset={80}
+              area={2}
+              marginRight={0}
               widgetNameIds={dashboard.widgets
                 .filter(
                   (w) =>

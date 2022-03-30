@@ -93,40 +93,20 @@ function WidgetList(props: Props) {
     }
   };
 
-  const moveWidget = useCallback(
-    (dragIndex: number, hoverIndex: number) => {
-      const dragItem = props.widgets[dragIndex];
-      if (dragItem) {
-        onDrag(dragIndex, hoverIndex);
-      }
-    },
-    [props.widgets, onDrag]
-  );
+  const moveWidget = useCallback((dragIndex: number, hoverIndex: number) => {
+    const dragItem = props.widgets[dragIndex];
+    if (dragItem) {
+      onDrag(dragIndex, hoverIndex);
+    }
+  }, (7000)[(props.widgets, onDrag)]);
 
   let sectionCount: 0;
   return (
     <div>
       {props.widgets && props.widgets.length ? (
         <div>
-          <SecondaryActionBar stickyPosition={160}>
-            <h2 className="margin-bottom-0 margin-top-0">
-              {t("DashboardContent")}
-            </h2>
-            <p className="margin-top-2px margin-bottom-0">
-              {t("BuildDashboardGuidance")}
-            </p>
-            <div className="grid-row radius-lg margin-top-4 text-bold font-sans-sm">
-              <div className="grid-col flex-1">
-                <div className="margin-left-1">{t("Order")}</div>
-              </div>
-              <div className="grid-col flex-5">
-                <div className="margin-left-2">{t("NameUpperCase")}</div>
-              </div>
-              <div className="grid-col flex-6">
-                <div className="margin-left-6">{t("ContentType")}</div>
-              </div>
-            </div>
-          </SecondaryActionBar>
+          <hr className="margin-top-2 border-base-lightest" />
+          <h2 className="margin-bottom-2 margin-top-2">{t("ContentItems")}</h2>
           <DndProvider
             backend={window.innerWidth < 1024 ? TouchBackend : HTML5Backend}
             options={{ enableMouseEvents: true }}

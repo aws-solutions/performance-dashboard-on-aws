@@ -752,7 +752,7 @@ function ViewDashboardAdmin() {
             <hr />
             <Navigation
               stickyPosition={80}
-              offset={240}
+              offset={80}
               area={2}
               marginRight={0}
               widgetNameIds={dashboard.widgets

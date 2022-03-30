@@ -50,14 +50,8 @@ function DashboardHeader(props: Props) {
             />
           )}
         </div>
-        <div
-          className={
-            props.isMobile
-              ? "tablet:grid-col-2 margin-top-1"
-              : "margin-top-2 margin-left-1"
-          }
-        >
-          {props.link}
+        <div className="display-flex flex-row flex-align-self-end margin-bottom-2">
+          <div className="">{props.link}</div>
         </div>
       </div>
     </div>

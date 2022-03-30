@@ -3,10 +3,10 @@
 exports[`renders the VisualizeTable component 1`] = `
 <div>
   <div
-    class="grid-row width-desktop"
+    class="grid-row"
   >
     <div
-      class="grid-col-5"
+      class="tablet:grid-col-6"
     >
       <div
         class="border-base-lighter border-1px shadow-3 z-500 radius-md padding-2 bg-white position-sticky "
@@ -241,19 +241,19 @@ exports[`renders the VisualizeTable component 1`] = `
           <br />
           <hr />
           <button
-            class="usa-button usa-button--outline"
+            class="usa-button usa-button--outline margin-top-1"
             type="button"
           >
             Back
           </button>
           <button
-            class="usa-button usa-button--base"
+            class="usa-button usa-button--base margin-top-1"
             type="submit"
           >
             Add Table
           </button>
           <button
-            class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
+            class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
             type="button"
           >
             Cancel
@@ -263,7 +263,7 @@ exports[`renders the VisualizeTable component 1`] = `
     </div>
     <section
       aria-label="Content preview"
-      class="grid-col-6"
+      class="tablet:grid-col-6"
     >
       <div
         class="margin-left-4 sticky-preview"

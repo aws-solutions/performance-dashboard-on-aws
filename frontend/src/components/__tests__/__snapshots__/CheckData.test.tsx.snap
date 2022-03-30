@@ -6,17 +6,17 @@ exports[`renders the CheckData component 1`] = `
     class="usa-fieldset"
   >
     <legend
-      class="usa-hint grid-col-6 margin-top-3 margin-bottom-1"
+      class="usa-hint grid-col-6"
     >
       Please make sure that the system formats your data correctly. Select columns to format as numbers, dates, or text. Also select columns to hide or show from the chart.
     </legend>
     <div
-      class="grid-col-3 margin-top-3 font-sans-md text-bold"
+      class="grid-col-12 margin-top-3 font-sans-md text-bold"
     >
       Include in visualization
     </div>
     <div
-      class="check-data-table grid-col-9"
+      class="check-data-table grid-col-12"
     >
       <div
         class="overflow-x-hidden overflow-y-hidden"
@@ -522,7 +522,7 @@ exports[`renders the CheckData component 1`] = `
     </div>
     <br />
     <div
-      class="grid-col-3 margin-top-3 font-sans-md text-bold"
+      class="grid-col-12 margin-top-3 font-sans-md text-bold"
     >
       Format columns
     </div>
@@ -539,7 +539,7 @@ exports[`renders the CheckData component 1`] = `
           id
         </span>
         <div
-          class="grid-col-3"
+          class="grid-col-4"
         >
           <div
             class="usa-form-group margin-top-2"
@@ -597,7 +597,7 @@ exports[`renders the CheckData component 1`] = `
           name
         </span>
         <div
-          class="grid-col-3"
+          class="grid-col-4"
         >
           <div
             class="usa-form-group margin-top-2"
@@ -655,7 +655,7 @@ exports[`renders the CheckData component 1`] = `
           updatedAt
         </span>
         <div
-          class="grid-col-3"
+          class="grid-col-4"
         >
           <div
             class="usa-form-group margin-top-2"
@@ -706,19 +706,19 @@ exports[`renders the CheckData component 1`] = `
     </div>
     <br />
     <button
-      class="usa-button usa-button--outline"
+      class="usa-button usa-button--outline margin-top-1"
       type="button"
     >
       Back
     </button>
     <button
-      class="usa-button usa-button--base"
+      class="usa-button usa-button--base margin-top-1"
       type="button"
     >
       Continue
     </button>
     <button
-      class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest"
+      class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
       type="button"
     >
       Cancel

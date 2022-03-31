@@ -513,7 +513,8 @@
   "PublishWorkflow": {
     "OverwriteWarning": "También sé que esto sobrescribirá la versión publicada existente del panel.",
     "InternalVersionNotes": "Notas de la versión interna",
-    "InternalVersionNotesDescription": "Describa los cambios que va a publicar en el panel. Solo los administradores y editores pueden obtener acceso a las notas de la versión.",
+    "InternalVersionNotesDescription": "Describa los cambios que va a publicar en el panel.",
+    "OnlyAccessedByAdmins": "Solo los administradores y editores pueden acceder a las notas de la versión.",
     "ConfirmURL": "Confirmar URL",
     "ReviewAndPublish": "Revisar y publicar",
     "InfoAlert": "Este panel se encuentra ahora en estado de publicación pendiente y no se puede editar a menos que vuelva a estar en el estado de borrador.",

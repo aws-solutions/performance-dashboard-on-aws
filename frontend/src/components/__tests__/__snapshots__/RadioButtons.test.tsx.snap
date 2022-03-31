@@ -30,7 +30,7 @@ exports[`renders an error 1`] = `
         Something went wrong
       </span>
       <div
-        class="margin-top-2"
+        class="margin-top-2 margin-left-2px"
       >
         <div
           class="usa-radio"
@@ -80,7 +80,7 @@ exports[`renders radio buttons 1`] = `
         Select a historical figure
       </div>
       <div
-        class="margin-top-2"
+        class="margin-top-2 margin-left-2px"
       >
         <div
           class="usa-radio"

@@ -17,6 +17,7 @@ import {
   useFullPreview,
   useChangeBackgroundColor,
   useScrollUp,
+  useWindowSize,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -97,6 +98,8 @@ function AddMetrics() {
       (datasetType === DatasetType.DynamicDataset && !metrics.length)
     );
   }
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   useEffect(() => {
     if (datasetError && !hasDatasetErrors()) {
@@ -384,7 +387,7 @@ function AddMetrics() {
           }`}
         />
       ) : (
-        <div className="grid-row width-desktop">
+        <div className="grid-row">
           <form
             aria-labelledby="addMetricsFormHeader"
             onSubmit={handleSubmit(onSubmit)}
@@ -398,7 +401,11 @@ function AddMetrics() {
                   className="usa-fieldset"
                   onChange={handleChange}
                 >
-                  <legend className="usa-hint grid-col-6">
+                  <legend
+                    className={`usa-hint ${
+                      isMobile ? "grid-col-12" : "grid-col-6"
+                    }`}
+                  >
                     <span className="usa-label text-bold">
                       {t("AddMetricsScreen.Data")}
                     </span>
@@ -499,39 +506,51 @@ function AddMetrics() {
                 <br />
                 <br />
                 <hr />
-                <Button variant="outline" type="button" onClick={goBack}>
-                  {t("AddMetricsScreen.Back")}
-                </Button>
-                <Button
-                  type="button"
-                  onClick={advanceStep}
-                  disabledToolTip={
-                    datasetType === DatasetType.DynamicDataset
-                      ? t("AddMetricsScreen.SelectDataset")
-                      : t("AddMetricsScreen.ChooseDataset")
-                  }
-                >
-                  {t("AddMetricsScreen.Continue")}
-                </Button>
-                <Button
-                  variant="unstyled"
-                  className="text-base-dark hover:text-base-darker active:text-base-darkest"
-                  type="button"
-                  onClick={onCancel}
-                >
-                  {t("Cancel")}
-                </Button>
+                <div>
+                  <Button
+                    variant="outline"
+                    className="margin-top-1"
+                    type="button"
+                    onClick={goBack}
+                  >
+                    {t("AddMetricsScreen.Back")}
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={advanceStep}
+                    className="margin-top-1"
+                    disabledToolTip={
+                      datasetType === DatasetType.DynamicDataset
+                        ? t("AddMetricsScreen.SelectDataset")
+                        : t("AddMetricsScreen.ChooseDataset")
+                    }
+                  >
+                    {t("AddMetricsScreen.Continue")}
+                  </Button>
+                  <Button
+                    variant="unstyled"
+                    className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
+                    type="button"
+                    onClick={onCancel}
+                  >
+                    {t("Cancel")}
+                  </Button>
+                </div>
               </PrimaryActionBar>
             </div>
 
             <div hidden={step !== 1}>
-              <div className="grid-row width-desktop grid-gap">
-                <div className="grid-col-6" hidden={fullPreview}>
+              <div className="grid-row grid-gap">
+                <div className="tablet:grid-col-6" hidden={fullPreview}>
                   <PrimaryActionBar>
                     {configHeader}
 
                     <fieldset id="fieldset-visualize" className="usa-fieldset">
-                      <legend className="usa-hint grid-col-6">
+                      <legend
+                        className={`usa-hint ${
+                          isMobile ? "grid-col-12" : "grid-col-6"
+                        }`}
+                      >
                         {t("AddMetricsScreen.Configure")}
                       </legend>
 
@@ -630,18 +649,24 @@ function AddMetrics() {
                     <br />
                     <br />
                     <hr />
-                    <Button variant="outline" type="button" onClick={backStep}>
+                    <Button
+                      variant="outline"
+                      type="button"
+                      onClick={backStep}
+                      className="margin-top-1"
+                    >
                       {t("AddMetricsScreen.Back")}
                     </Button>
                     <Button
                       disabled={creatingWidget || fileLoading}
+                      className="margin-top-1"
                       type="submit"
                     >
                       {t("AddMetricsScreen.AddMetrics")}
                     </Button>
                     <Button
                       variant="unstyled"
-                      className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                      className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
                       type="button"
                       onClick={onCancel}
                     >
@@ -650,11 +675,13 @@ function AddMetrics() {
                   </PrimaryActionBar>
                 </div>
                 <section
-                  className={fullPreview ? "grid-col-12" : "grid-col-6"}
+                  className={
+                    fullPreview ? "tablet:grid-col-12" : "tablet:grid-col-6"
+                  }
                   aria-label={t("ContentPreview")}
                 >
                   <div className="sticky-preview">
-                    {fullPreviewButton}
+                    {isMobile ? <br /> : fullPreviewButton}
                     <MetricsWidget
                       title={showTitle ? title : ""}
                       metrics={metrics}

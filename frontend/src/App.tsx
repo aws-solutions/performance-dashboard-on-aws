@@ -63,7 +63,6 @@ import ChooseStaticDataset from "./containers/ChooseStaticDataset";
 import AccessDenied from "./containers/AccessDenied";
 import Page from "./components/Page";
 import { useTranslation } from "react-i18next";
-import { settings } from "cluster";
 import { useSettings } from "./hooks";
 
 interface AppRoute {

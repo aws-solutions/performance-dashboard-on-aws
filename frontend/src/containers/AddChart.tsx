@@ -23,7 +23,6 @@ import StepIndicator from "../components/StepIndicator";
 import CheckData from "../components/CheckData";
 import ChooseData from "../components/ChooseData";
 import VisualizeChart from "../components/VisualizeChart";
-import "./AddChart.css";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "../components/PrimaryActionBar";

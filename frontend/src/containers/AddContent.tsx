@@ -159,6 +159,7 @@ function AddContent() {
               disabledToolTip={
                 !widgetType ? t("AddContentScreen.DisabledToolTip") : ""
               }
+              className="margin-top-1"
             >
               {t("ContinueButton")}
             </Button>
@@ -166,13 +167,13 @@ function AddContent() {
               variant="unstyled"
               type="button"
               onClick={onCancel}
-              className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+              className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1 "
             >
               {t("Cancel")}
             </Button>
           </form>
         </PrimaryActionBar>
-        <div className="tablet:grid-col-6 grid-col-12">
+        <div className="tablet:grid-col-6">
           {widgetType === "text" && (
             <img
               src={`${process.env.PUBLIC_URL}/images/text-content-item.svg`}

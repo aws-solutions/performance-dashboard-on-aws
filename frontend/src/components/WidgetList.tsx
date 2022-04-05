@@ -2,7 +2,7 @@ import React, { createRef, useCallback } from "react";
 import { Widget, WidgetType } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faGripLinesVertical,
+  faGripLines,
   faArrowUp,
   faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
@@ -130,13 +130,10 @@ function WidgetList(props: Props) {
                   >
                     <div className="grid-row flex-1">
                       <div className="grid-row grid-col flex-1 padding-1">
-                        <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center">
-                          <FontAwesomeIcon
-                            icon={faGripLinesVertical}
-                            size="1x"
-                          />
+                        <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2">
+                          <FontAwesomeIcon icon={faGripLines} size="1x" />
                         </div>
-                        <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
+                        <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2">
                           {order}
                         </div>
                         <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2">
@@ -194,12 +191,12 @@ function WidgetList(props: Props) {
                             {widget.name}
                           </div>
                         </div>
-                        <div className="grid-col flex-3 text-italic">
-                          {t(
+                        <div className="grid-col flex-3 text-italic text-right">
+                          {`(${t(
                             widget.widgetType === WidgetType.Chart
                               ? widget.content.chartType
                               : widget.widgetType
-                          )}
+                          )})`}
                         </div>
                         <div className="grid-col flex-3 text-right">
                           <Link
@@ -274,13 +271,13 @@ function WidgetList(props: Props) {
                             >
                               <div className="grid-row flex-1">
                                 <div className="grid-row grid-col flex-1 padding-1">
-                                  <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center">
+                                  <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2">
                                     <FontAwesomeIcon
-                                      icon={faGripLinesVertical}
+                                      icon={faGripLines}
                                       size="1x"
                                     />
                                   </div>
-                                  <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
+                                  <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2">
                                     {`${order}.${childIndex + 1}`}
                                   </div>
                                   <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2">
@@ -331,12 +328,12 @@ function WidgetList(props: Props) {
                                       {widget.name}
                                     </div>
                                   </div>
-                                  <div className="grid-col flex-3 text-italic">
-                                    {t(
+                                  <div className="grid-col flex-3 text-italic text-right">
+                                    {`(${t(
                                       widget.widgetType === WidgetType.Chart
                                         ? widget.content.chartType
                                         : widget.widgetType
-                                    )}
+                                    )})`}
                                   </div>
                                   <div className="grid-col flex-3 text-right">
                                     <Link

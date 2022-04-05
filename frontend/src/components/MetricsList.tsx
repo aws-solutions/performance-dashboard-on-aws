@@ -2,7 +2,7 @@ import React, { createRef, useCallback } from "react";
 import { Metric } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faGripLinesVertical,
+  faGripLines,
   faArrowUp,
   faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
@@ -149,13 +149,13 @@ function MetricsList(props: Props) {
                   itemType="metric"
                 >
                   <div className="grid-row grid-col flex-2 padding-1">
-                    <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center">
-                      <FontAwesomeIcon icon={faGripLinesVertical} size="1x" />
+                    <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2">
+                      <FontAwesomeIcon icon={faGripLines} size="1x" />
                     </div>
-                    <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
+                    <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2">
                       {index + 1}
                     </div>
-                    <div className="grid-col flex-4 grid-row flex-column text-center">
+                    <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2">
                       <div className="grid-col flex-6">
                         {index > 0 && (
                           <Button

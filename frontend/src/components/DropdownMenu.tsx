@@ -9,7 +9,7 @@ import {
 import "@reach/menu-button/styles.css";
 import React, { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 type Variant =
   | "base"
@@ -26,6 +26,7 @@ interface DropdownProps {
   ariaLabel?: string;
   buttonText: string;
   disabled?: boolean;
+  icon?: IconDefinition;
 }
 
 function DropdownMenu(props: DropdownProps) {
@@ -64,7 +65,10 @@ function DropdownMenu(props: DropdownProps) {
         disabled={props.disabled}
       >
         {props.buttonText}
-        <FontAwesomeIcon icon={faCaretDown} className="margin-left-1" />
+        <FontAwesomeIcon
+          icon={props.icon ?? faCaretDown}
+          className="margin-left-1"
+        />
       </MenuButton>
       <MenuList className="font-sans-xs">{props.children}</MenuList>
     </Menu>

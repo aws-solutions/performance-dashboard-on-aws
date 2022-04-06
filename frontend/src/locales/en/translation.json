@@ -98,6 +98,7 @@
   "MoveInOut": "Move content items in and out of this section",
   "ChartsTablesMore": "charts, tables, text, and more as content.",
   "ContentType": "Content type",
+  "ActionsContent": "Actions for {{name}}",
   "DeleteContent": "Delete {{name}}",
   "EditContent": "Edit {{name}}",
   "Name": "name",

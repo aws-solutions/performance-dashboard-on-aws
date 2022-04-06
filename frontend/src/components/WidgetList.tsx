@@ -3,11 +3,14 @@ import { Widget, WidgetType } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGripLines,
+  faEllipsisV,
   faArrowUp,
   faArrowDown,
+  faTrash,
+  faCopy,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
-import "./WidgetList.css";
+import "./WidgetList.scss";
 import Link from "./Link";
 import SecondaryActionBar from "./SecondaryActionBar";
 import ContentItem from "./ContentItem";
@@ -15,6 +18,8 @@ import { useTranslation } from "react-i18next";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
+import DropdownMenu from "./DropdownMenu";
+import { MenuItem } from "@reach/menu-button";
 
 interface Props {
   onClick: Function;
@@ -93,6 +98,53 @@ function WidgetList(props: Props) {
     }
   };
 
+  function ActionMenu(widget: Widget) {
+    return (
+      <DropdownMenu
+        buttonText=""
+        icon={faEllipsisV}
+        variant="unstyled"
+        ariaLabel={t("ActionsContent", {
+          name: widget.name,
+        })}
+      >
+        <MenuItem>
+          <Button
+            variant="unstyled"
+            ariaLabel={t("CopyContent", {
+              name: widget.name,
+            })}
+            onClick={() => onDuplicate(widget)}
+          >
+            <FontAwesomeIcon
+              size="xs"
+              icon={faCopy}
+              className="margin-right-1"
+            />
+            {t("Copy")}
+          </Button>
+        </MenuItem>
+        <MenuItem>
+          <Button
+            variant="unstyled"
+            className="usa-link"
+            ariaLabel={t("DeleteContent", {
+              name: widget.name,
+            })}
+            onClick={() => onDelete(widget)}
+          >
+            <FontAwesomeIcon
+              size="xs"
+              icon={faTrash}
+              className="margin-right-1"
+            />
+            {t("Delete")}
+          </Button>
+        </MenuItem>
+      </DropdownMenu>
+    );
+  }
+
   const moveWidget = useCallback((dragIndex: number, hoverIndex: number) => {
     const dragItem = props.widgets[dragIndex];
     if (dragItem) {
@@ -130,13 +182,13 @@ function WidgetList(props: Props) {
                   >
                     <div className="grid-row flex-1">
                       <div className="grid-row grid-col flex-1 padding-1">
-                        <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2">
+                        <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2 margin-right-1 margin-top-1 margin-bottom-1">
                           <FontAwesomeIcon icon={faGripLines} size="1x" />
                         </div>
-                        <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2">
+                        <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2 margin-top-1 margin-bottom-1">
                           {order}
                         </div>
-                        <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2">
+                        <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2 margin-right-2">
                           <div className="grid-col flex-6">
                             {index > 0 && (
                               <Button
@@ -183,12 +235,23 @@ function WidgetList(props: Props) {
                       <div className="border-base-lighter border-left"></div>
                       <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
                         <div
-                          className="grid-col flex-6 usa-tooltip"
+                          className="grid-col flex-8 usa-tooltip"
                           data-position="bottom"
                           title={widget.name}
                         >
                           <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis text-bold">
-                            {widget.name}
+                            <Link
+                              ariaLabel={t("EditContent", {
+                                name: widget.name,
+                              })}
+                              to={`/admin/dashboard/${
+                                widget.dashboardId
+                              }/edit-${widget.widgetType.toLowerCase()}/${
+                                widget.id
+                              }`}
+                            >
+                              {widget.name}
+                            </Link>
                           </div>
                         </div>
                         <div className="grid-col flex-3 text-italic text-right">
@@ -198,39 +261,8 @@ function WidgetList(props: Props) {
                               : widget.widgetType
                           )})`}
                         </div>
-                        <div className="grid-col flex-3 text-right">
-                          <Link
-                            ariaLabel={t("EditContent", {
-                              name: widget.name,
-                            })}
-                            to={`/admin/dashboard/${
-                              widget.dashboardId
-                            }/edit-${widget.widgetType.toLowerCase()}/${
-                              widget.id
-                            }`}
-                          >
-                            {t("Edit")}
-                          </Link>
-                          <Button
-                            variant="unstyled"
-                            className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
-                            onClick={() => onDuplicate(widget)}
-                            ariaLabel={t("CopyContent", {
-                              name: widget.name,
-                            })}
-                          >
-                            {t("Copy")}
-                          </Button>
-                          <Button
-                            variant="unstyled"
-                            className="margin-left-2 text-base-dark hover:text-base-darker active:text-base-darkest"
-                            onClick={() => onDelete(widget)}
-                            ariaLabel={t("DeleteContent", {
-                              name: widget.name,
-                            })}
-                          >
-                            {t("Delete")}
-                          </Button>
+                        <div className="grid-col flex-1 margin-left-2 margin-right-2 text-right">
+                          {ActionMenu(widget)}
                         </div>
                       </div>
                     </div>
@@ -262,7 +294,7 @@ function WidgetList(props: Props) {
                           sectionCount++;
                           return (
                             <ContentItem
-                              className="grid-col margin-1 margin-left-2"
+                              className="grid-col margin-top-1 margin-bottom-1 margin-left-2 minus-2-margin"
                               key={widget.id}
                               index={arrIndex}
                               id={arrIndex}
@@ -271,16 +303,16 @@ function WidgetList(props: Props) {
                             >
                               <div className="grid-row flex-1">
                                 <div className="grid-row grid-col flex-1 padding-1">
-                                  <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2">
+                                  <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2 margin-right-2 margin-top-1 margin-bottom-1">
                                     <FontAwesomeIcon
                                       icon={faGripLines}
                                       size="1x"
                                     />
                                   </div>
-                                  <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2">
+                                  <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2 margin-top-1 margin-bottom-1">
                                     {`${order}.${childIndex + 1}`}
                                   </div>
-                                  <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2">
+                                  <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2 margin-right-1">
                                     <div className="grid-col flex-6">
                                       <Button
                                         variant="unstyled"
@@ -320,12 +352,23 @@ function WidgetList(props: Props) {
                                 <div className="border-base-lighter border-left"></div>
                                 <div className="grid-col flex-11 grid-row padding-1 margin-y-1">
                                   <div
-                                    className="grid-col flex-6 usa-tooltip"
+                                    className="grid-col flex-11 usa-tooltip"
                                     data-position="bottom"
                                     title={widget.name}
                                   >
-                                    <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
-                                      {widget.name}
+                                    <div className="margin-left-1 text-base text-no-wrap overflow-hidden text-overflow-ellipsis text-bold">
+                                      <Link
+                                        ariaLabel={t("EditContent", {
+                                          name: widget.name,
+                                        })}
+                                        to={`/admin/dashboard/${
+                                          widget.dashboardId
+                                        }/edit-${widget.widgetType.toLowerCase()}/${
+                                          widget.id
+                                        }`}
+                                      >
+                                        {widget.name}
+                                      </Link>
                                     </div>
                                   </div>
                                   <div className="grid-col flex-3 text-italic text-right">
@@ -335,39 +378,8 @@ function WidgetList(props: Props) {
                                         : widget.widgetType
                                     )})`}
                                   </div>
-                                  <div className="grid-col flex-3 text-right">
-                                    <Link
-                                      ariaLabel={t("EditContent", {
-                                        name: widget.name,
-                                      })}
-                                      to={`/admin/dashboard/${
-                                        widget.dashboardId
-                                      }/edit-${widget.widgetType.toLowerCase()}/${
-                                        widget.id
-                                      }`}
-                                    >
-                                      {t("Edit")}
-                                    </Link>
-                                    <Button
-                                      variant="unstyled"
-                                      className="margin-left-2 usa-link"
-                                      onClick={() => onDuplicate(widget)}
-                                      ariaLabel={t("CopyContent", {
-                                        name: widget.name,
-                                      })}
-                                    >
-                                      {t("Copy")}
-                                    </Button>
-                                    <Button
-                                      variant="unstyled"
-                                      className="margin-left-2 usa-link"
-                                      onClick={() => onDelete(widget)}
-                                      ariaLabel={t("DeleteContent", {
-                                        name: widget.name,
-                                      })}
-                                    >
-                                      {t("Delete")}
-                                    </Button>
+                                  <div className="grid-col flex-1 margin-left-2 margin-right-2 text-right">
+                                    {ActionMenu(widget)}
                                   </div>
                                 </div>
                               </div>

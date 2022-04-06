@@ -126,16 +126,13 @@ function MetricsList(props: Props) {
         <MenuItem>
           <Button
             variant="unstyled"
+            className="margin-1"
             ariaLabel={t("DeleteContent", {
               name: metric.title,
             })}
             onClick={() => onDelete(metric)}
           >
-            <FontAwesomeIcon
-              size="xs"
-              icon={faTrash}
-              className="margin-right-1"
-            />
+            <FontAwesomeIcon size="xs" icon={faTrash} />
             {t("Delete")}
           </Button>
         </MenuItem>
@@ -181,13 +178,13 @@ function MetricsList(props: Props) {
                   itemType="metric"
                 >
                   <div className="grid-row grid-col flex-2 padding-1">
-                    <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-1">
+                    <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-1">
                       <FontAwesomeIcon icon={faGripLines} size="xs" />
                     </div>
-                    <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-1">
+                    <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-1">
                       {index + 1}
                     </div>
-                    <div className="grid-col flex-4 grid-row flex-column text-center margin-1">
+                    <div className="grid-col flex-4 grid-row flex-column text-center margin-left-1 margin-right-1">
                       <div className="grid-col flex-6">
                         {index > 0 ? (
                           <Button

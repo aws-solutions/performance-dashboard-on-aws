@@ -45,7 +45,9 @@ test("calls the onClick callback when button is pressed", async () => {
 });
 
 test("calls onDelete when user clicks delete button", async () => {
-  const onDelete = jest.fn();
+  const onDelete = jest.fn().mockImplementation(() => {
+    console.log("!!!!!!!!!!!!!!!!!DELETED!!!!!!!!!!!!!!!!!!!");
+  });
   const onClick = jest.fn();
   const wrapper = render(
     <WidgetList widgets={widgets} onClick={onClick} onDelete={onDelete} />,
@@ -53,6 +55,12 @@ test("calls onDelete when user clicks delete button", async () => {
       wrapper: MemoryRouter,
     }
   );
+
+  await act(async () => {
+    fireEvent.click(
+      wrapper.getByLabelText("Actions for The benefits of bananas")
+    );
+  });
 
   await act(async () => {
     fireEvent.click(wrapper.getByLabelText("Delete The benefits of bananas"));

@@ -195,3 +195,11 @@ p {
 .usa-table thead th[aria-sort] {
   background-color: inherit !important;
 }
+
+[data-reach-menu-item][data-selected] a {
+  color: color("white") !important;
+}
+
+[data-reach-menu-item][data-selected] button {
+  color: color("white") !important;
+}

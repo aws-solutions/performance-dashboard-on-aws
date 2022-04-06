@@ -241,34 +241,20 @@ function MetricsList(props: Props) {
                       data-position="bottom"
                       title={metric.title}
                     >
-                      <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis text-bold">
-                        {metric.title}
+                      <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
+                        <Button
+                          variant="unstyled"
+                          type="button"
+                          className="margin-left-1 margin-top-0-important text-base-dark hover:text-base-darker active:text-base-darkest text-bold"
+                          onClick={() => onEdit(metric, index)}
+                          ariaLabel={`Edit ${metric.title}`}
+                        >
+                          {metric.title}
+                        </Button>
                       </div>
                     </div>
                     <div className="grid-col flex-1 margin-right-1 text-right">
                       {ActionMenu(metric)}
-                      {/* <div className="grid-col flex-6 text-right margin-right-1">
-                        <Button
-                          variant="unstyled"
-                          type="button"
-                          className="margin-left-1 margin-top-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
-                          onClick={() => onEdit(metric, index)}
-                          ariaLabel={`Edit ${metric.title}`}
-                        >
-                          {t("Edit")}
-                        </Button>
-                      </div>
-                      <div className="grid-col flex-6">
-                        <Button
-                          variant="unstyled"
-                          type="button"
-                          className="margin-right-2 margin-top-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
-                          onClick={() => onDelete(metric)}
-                          ariaLabel={`Delete ${metric.title}`}
-                        >
-                          {t("Delete")}
-                        </Button>
-                      </div> */}
                     </div>
                   </div>
                 </ContentItem>

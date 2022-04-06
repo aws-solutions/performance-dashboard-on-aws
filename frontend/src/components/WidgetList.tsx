@@ -190,7 +190,7 @@ function WidgetList(props: Props) {
                         </div>
                         <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2 margin-right-2">
                           <div className="grid-col flex-6">
-                            {index > 0 && (
+                            {index > 0 ? (
                               <Button
                                 variant="unstyled"
                                 className="text-base-darker hover:text-base-darkest active:text-base-darkest"
@@ -206,29 +206,33 @@ function WidgetList(props: Props) {
                                   icon={faArrowUp}
                                 />
                               </Button>
+                            ) : (
+                              <br />
                             )}
                           </div>
                           <div className="grid-col flex-6">
                             {index < props.widgets.length - 1 &&
-                              props.widgets.some(
-                                (w, i) => !w.section && i > index
-                              ) && (
-                                <Button
-                                  variant="unstyled"
-                                  className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                                  ariaLabel={t("MoveContentItemDown", {
-                                    name: widget.name,
-                                  })}
-                                  onClick={() => onMoveDown(index)}
-                                  ref={caretDownRefs[index]}
-                                >
-                                  <FontAwesomeIcon
-                                    id={`${widget.id}-move-down`}
-                                    size="xs"
-                                    icon={faArrowDown}
-                                  />
-                                </Button>
-                              )}
+                            props.widgets.some(
+                              (w, i) => !w.section && i > index
+                            ) ? (
+                              <Button
+                                variant="unstyled"
+                                className="text-base-darker hover:text-base-darkest active:text-base-darkest"
+                                ariaLabel={t("MoveContentItemDown", {
+                                  name: widget.name,
+                                })}
+                                onClick={() => onMoveDown(index)}
+                                ref={caretDownRefs[index]}
+                              >
+                                <FontAwesomeIcon
+                                  id={`${widget.id}-move-down`}
+                                  size="xs"
+                                  icon={faArrowDown}
+                                />
+                              </Button>
+                            ) : (
+                              <br />
+                            )}
                           </div>
                         </div>
                       </div>

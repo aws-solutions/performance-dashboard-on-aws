@@ -375,7 +375,7 @@ function WidgetList(props: Props) {
                                       </Link>
                                     </div>
                                   </div>
-                                  <div className="grid-col flex-3 text-italic text-right">
+                                  <div className="grid-col flex-3 text-italic text-right margin-right-2">
                                     {`(${t(
                                       widget.widgetType === WidgetType.Chart
                                         ? widget.content.chartType

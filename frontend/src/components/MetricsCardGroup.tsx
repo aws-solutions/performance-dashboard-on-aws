@@ -99,7 +99,7 @@ function MetricsCardGroup(props: Props) {
                       </div>
                       <div className="flex-2">
                         {metric.startDate && metric.endDate && (
-                          <div className="margin-top-2">
+                          <div className="margin-top-2px">
                             <span>
                               {dayjs(metric.startDate)
                                 .locale(window.navigator.language.toLowerCase())

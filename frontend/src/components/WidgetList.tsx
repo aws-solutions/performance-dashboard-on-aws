@@ -111,7 +111,7 @@ function WidgetList(props: Props) {
         <MenuItem>
           <Button
             variant="unstyled"
-            ariaLabel={t("CopyContent", {
+            ariaLabel={t("DuplicateContent", {
               name: widget.name,
             })}
             onClick={() => onDuplicate(widget)}
@@ -121,7 +121,7 @@ function WidgetList(props: Props) {
               icon={faCopy}
               className="margin-right-1"
             />
-            {t("Copy")}
+            {t("Duplicate")}
           </Button>
         </MenuItem>
         <MenuItem>

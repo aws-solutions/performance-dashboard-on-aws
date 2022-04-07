@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import TickFormatter from "../services/TickFormatter";
 import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import { useTranslation } from "react-i18next";
 import { useColors } from "../hooks";
 
+dayjs.extend(LocalizedFormat);
 interface Props {
   metrics: Array<Metric>;
   metricPerRow: number;
@@ -97,17 +99,17 @@ function MetricsCardGroup(props: Props) {
                       </div>
                       <div className="flex-2">
                         {metric.startDate && metric.endDate && (
-                          <div className="margin-top-1px">
+                          <div className="margin-top-2">
                             <span>
                               {dayjs(metric.startDate)
                                 .locale(window.navigator.language.toLowerCase())
-                                .format("MMM YYYY")}
+                                .format("ll")}
                             </span>{" "}
                             {t("To")}{" "}
                             <span>
                               {dayjs(metric.endDate)
                                 .locale(window.navigator.language.toLowerCase())
-                                .format("MMM YYYY")}
+                                .format("ll")}
                             </span>
                           </div>
                         )}

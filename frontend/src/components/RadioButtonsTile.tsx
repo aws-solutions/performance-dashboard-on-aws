@@ -28,10 +28,14 @@ function RadioButtonsTile(props: Props) {
             name={option.name}
             data-testid={option.dataTestId}
             ref={props.register()}
+            aria-describedby={`${option.id}-description`}
           />
           <label className="usa-radio__label" htmlFor={option.id}>
             {option.label}
-            <p className="text-base usa-prose usa-checkbox__label-description">
+            <p
+              className="text-base usa-prose usa-checkbox__label-description"
+              id={`${option.id}-description`}
+            >
               {option.description}
             </p>
           </label>

@@ -91,6 +91,7 @@ Object {
                     class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="text-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="textRadioButton"
                       id="text"
@@ -105,6 +106,7 @@ Object {
                       Text
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="text-description"
                       >
                         Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
                       </p>
@@ -119,6 +121,7 @@ Object {
                     class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="metrics-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="metricsRadioButton"
                       id="metrics"
@@ -133,6 +136,7 @@ Object {
                       Metrics
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="metrics-description"
                       >
                         Add one or more metrics to show point-in-time numerical data and trends.
                       </p>
@@ -147,6 +151,7 @@ Object {
                     class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="chart-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="chartRadioButton"
                       id="chart"
@@ -161,6 +166,7 @@ Object {
                       Chart
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="chart-description"
                       >
                         Display data as a visualization, including line, bar, column and part-to-whole charts.
                       </p>
@@ -175,6 +181,7 @@ Object {
                     class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="table-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="tableRadioButton"
                       id="table"
@@ -189,6 +196,7 @@ Object {
                       Table
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="table-description"
                       >
                         Display data formatted in rows and columns.
                       </p>
@@ -203,6 +211,7 @@ Object {
                     class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="image-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="imageRadioButton"
                       id="image"
@@ -217,6 +226,7 @@ Object {
                       Image
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="image-description"
                       >
                         Upload an image to display.
                       </p>
@@ -231,6 +241,7 @@ Object {
                     class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="section-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="sectionRadioButton"
                       id="section"
@@ -245,6 +256,7 @@ Object {
                       Section
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="section-description"
                       >
                         Add a section to group similar content items in a list.
                       </p>
@@ -362,6 +374,7 @@ Object {
                   class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="text-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="textRadioButton"
                     id="text"
@@ -376,6 +389,7 @@ Object {
                     Text
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="text-description"
                     >
                       Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
                     </p>
@@ -390,6 +404,7 @@ Object {
                   class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="metrics-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="metricsRadioButton"
                     id="metrics"
@@ -404,6 +419,7 @@ Object {
                     Metrics
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="metrics-description"
                     >
                       Add one or more metrics to show point-in-time numerical data and trends.
                     </p>
@@ -418,6 +434,7 @@ Object {
                   class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="chart-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="chartRadioButton"
                     id="chart"
@@ -432,6 +449,7 @@ Object {
                     Chart
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="chart-description"
                     >
                       Display data as a visualization, including line, bar, column and part-to-whole charts.
                     </p>
@@ -446,6 +464,7 @@ Object {
                   class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="table-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="tableRadioButton"
                     id="table"
@@ -460,6 +479,7 @@ Object {
                     Table
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="table-description"
                     >
                       Display data formatted in rows and columns.
                     </p>
@@ -474,6 +494,7 @@ Object {
                   class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="image-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="imageRadioButton"
                     id="image"
@@ -488,6 +509,7 @@ Object {
                     Image
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="image-description"
                     >
                       Upload an image to display.
                     </p>
@@ -502,6 +524,7 @@ Object {
                   class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="section-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="sectionRadioButton"
                     id="section"
@@ -516,6 +539,7 @@ Object {
                     Section
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="section-description"
                     >
                       Add a section to group similar content items in a list.
                     </p>

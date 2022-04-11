@@ -63,6 +63,7 @@ exports[`renders the ChooseData component 1`] = `
               class="tablet:grid-col"
             >
               <input
+                aria-describedby="staticDataset-description"
                 class="usa-radio__input usa-radio__input--tile"
                 data-testid="staticDatasetRadioButton"
                 id="staticDataset"
@@ -77,6 +78,7 @@ exports[`renders the ChooseData component 1`] = `
                 Static dataset
                 <p
                   class="text-base usa-prose usa-checkbox__label-description"
+                  id="staticDataset-description"
                 >
                   Upload a new dataset from file or elect an existing dataset.
                 </p>
@@ -95,6 +97,7 @@ exports[`renders the ChooseData component 1`] = `
               class="tablet:grid-col"
             >
               <input
+                aria-describedby="dynamicDataset-description"
                 class="usa-radio__input usa-radio__input--tile"
                 data-testid="dynamicDatasetRadioButton"
                 id="dynamicDataset"
@@ -109,6 +112,7 @@ exports[`renders the ChooseData component 1`] = `
                 Dynamic dataset
                 <p
                   class="text-base usa-prose usa-checkbox__label-description"
+                  id="dynamicDataset-description"
                 >
                   Choose from a list of continuously updated datasets.
                 </p>

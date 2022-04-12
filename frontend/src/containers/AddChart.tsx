@@ -467,7 +467,6 @@ function AddChart() {
                   staticFileName={undefined}
                   dynamicFileName={undefined}
                   setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
-                  addingNew={true}
                 />
               </PrimaryActionBar>
             </div>

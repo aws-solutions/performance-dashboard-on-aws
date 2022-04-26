@@ -1,13 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronDown,
-  faChevronUp,
-  faAngleLeft,
-  faAngleDoubleLeft,
-  faAngleRight,
-  faAngleDoubleRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import {
   useTable,
   useSortBy,
@@ -18,9 +11,9 @@ import {
 } from "react-table";
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
-import Button from "./Button";
 import { CSVLink } from "react-csv";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import Pagination from "./Pagination";
 
 interface Props {
   selection: "multiple" | "single" | "none";
@@ -64,7 +57,7 @@ function Table(props: Props) {
     ? " usa-table--borderless"
     : "";
   const className = props.className ? ` ${props.className}` : "";
-  const [currentPage, setCurrentPage] = useState<string>("1");
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const {
     initialSortByField,
@@ -360,265 +353,14 @@ function Table(props: Props) {
               </tr>
             );
           })}
-          {!props.disablePagination && rows.length ? (
-            <tr role="row">
-              <td
-                role="cell"
-                colSpan={
-                  props.columns.length +
-                  (props.title ? 0 : 1) -
-                  (!props.settingTable && props.hiddenColumns
-                    ? props.hiddenColumns.size
-                    : 0)
-                }
-                className={`button-cell-padding${
-                  props.keepBorderBottom ? "" : " button-cell-border"
-                }`}
-              >
-                <div
-                  className={`${
-                    isMobile ? "grid-col margin-top-2" : "grid-row margin-y-1"
-                  } font-sans-sm`}
-                >
-                  <div className={`${isMobile ? "text-center" : "grid-col-4"}`}>
-                    <label
-                      htmlFor="Page"
-                      className="margin-left-1 margin-right-2px"
-                    >{`${t("Page")} `}</label>
-                    <span className="margin-right-1">
-                      <input
-                        id="Page"
-                        type="text"
-                        value={`${currentPage}`}
-                        className="margin-right-2px"
-                        onChange={(e) => {
-                          setCurrentPage(e.target.value);
-                        }}
-                        style={{ width: "33px" }}
-                        pattern="\d*"
-                      />
-                      {` of ${pageOptions.length} `}
-                    </span>
-                    <button
-                      type="button"
-                      className={`${
-                        isMobile ? "" : "usa-button "
-                      }usa-button--unstyled margin-right-1 text-base-darker hover:text-base-darkest active:text-base-darkest`}
-                      onClick={() => {
-                        if (currentPage) {
-                          const currentPageNumber = Number(currentPage);
-                          if (
-                            !isNaN(currentPageNumber) &&
-                            currentPageNumber >= 1 &&
-                            currentPageNumber <= pageOptions.length
-                          ) {
-                            gotoPage(currentPageNumber - 1);
-                          }
-                        }
-                      }}
-                    >
-                      {t("Go")}
-                    </button>
-                  </div>
-                  <div
-                    className={`${
-                      isMobile ? "margin-left-05" : "grid-col-4"
-                    } text-center`}
-                  >
-                    {!isMobile && (
-                      <>
-                        <button
-                          type="button"
-                          className="margin-right-1"
-                          onClick={() => {
-                            setCurrentPage("1");
-                            gotoPage(0);
-                          }}
-                          disabled={!canPreviousPage}
-                          aria-label={t("GoToFirstPage")}
-                        >
-                          <FontAwesomeIcon
-                            icon={faAngleDoubleLeft}
-                            className="margin-top-2px"
-                            aria-label={t("GoToFirstPage")}
-                          />
-                        </button>
-                        <button
-                          type="button"
-                          className="margin-right-1"
-                          onClick={() => {
-                            setCurrentPage(`${pageIndex}`);
-                            previousPage();
-                          }}
-                          disabled={!canPreviousPage}
-                          aria-label={t("GoToPrevPage")}
-                        >
-                          <FontAwesomeIcon
-                            icon={faAngleLeft}
-                            className="margin-top-2px"
-                            aria-label={t("GoToPrevPage")}
-                          />
-                        </button>
-                      </>
-                    )}
-                    {isMobile ? <div className="margin-top-2" /> : ""}
-                    {isMobile && (
-                      <>
-                        <button
-                          type="button"
-                          className="margin-right-1"
-                          onClick={() => {
-                            setCurrentPage("1");
-                            gotoPage(0);
-                          }}
-                          disabled={!canPreviousPage}
-                          aria-label={t("GoToFirstPage")}
-                        >
-                          <FontAwesomeIcon
-                            icon={faAngleDoubleLeft}
-                            className="margin-top-2px"
-                            aria-label={t("GoToFirstPage")}
-                          />
-                        </button>
-                        <button
-                          type="button"
-                          className="margin-right-2"
-                          onClick={() => {
-                            setCurrentPage(`${pageIndex}`);
-                            previousPage();
-                          }}
-                          disabled={!canPreviousPage}
-                          aria-label={t("GoToPrevPage")}
-                        >
-                          <FontAwesomeIcon
-                            icon={faAngleLeft}
-                            className="margin-top-2px"
-                            aria-label={t("GoToPrevPage")}
-                          />
-                        </button>
-                      </>
-                    )}
-                    <button
-                      type="button"
-                      className="margin-right-1"
-                      onClick={() => {
-                        setCurrentPage(`${pageIndex + 2}`);
-                        nextPage();
-                      }}
-                      disabled={!canNextPage}
-                      aria-label={t("GoToNextPage")}
-                    >
-                      <FontAwesomeIcon
-                        icon={faAngleRight}
-                        className="margin-top-2px"
-                        aria-label={t("GoToNextPage")}
-                      />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCurrentPage(`${pageCount}`);
-                        gotoPage(pageCount - 1);
-                      }}
-                      disabled={!canNextPage}
-                      aria-label={t("GoToLastPage")}
-                    >
-                      <FontAwesomeIcon
-                        icon={faAngleDoubleRight}
-                        className="margin-top-2px"
-                        aria-label={t("GoToLastPage")}
-                      />
-                    </button>
-                  </div>
-                  <div
-                    className={`${
-                      isMobile
-                        ? "margin-top-2 margin-left-05 margin-y-2 text-center"
-                        : "grid-col-4 text-right"
-                    }`}
-                  >
-                    <select
-                      value={pageSize}
-                      onChange={(e) => {
-                        setPageSize(Number(e.target.value));
-                      }}
-                      className="margin-right-05"
-                      aria-label={t("SelectPageSize")}
-                    >
-                      {[5, 10, 20, 25, 50, 100].map((pageSize) => (
-                        <option key={pageSize} value={pageSize}>
-                          {t("Show")} {pageSize}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <hr className="border-top margin-0" />
-                <div
-                  className={`${
-                    isMobile ? "padding-left-05" : "grid-row"
-                  } text-base-darker text-italic padding-y-05 padding-right-1`}
-                >
-                  {isMobile && (
-                    <div className="text-center" role="status">
-                      {t("ShowingPages", {
-                        startItem: pageIndex * pageSize + 1,
-                        endItem: Math.min(
-                          pageIndex * pageSize + pageSize,
-                          rows.length
-                        ),
-                        totalItems: rows.length,
-                      })}
-                    </div>
-                  )}
-                  {props.title && (
-                    <div
-                      className={`${
-                        isMobile
-                          ? "text-center margin-top-05"
-                          : "grid-col-6 text-left"
-                      }`}
-                    >
-                      <div style={{ display: "inline-flex" }}>
-                        <FontAwesomeIcon
-                          icon={faDownload}
-                          className="margin-right-1"
-                          size="xs"
-                        />
-                      </div>
-                      <div style={{ display: "inline-flex" }}>
-                        <div className="margin-right-05">
-                          <CSVLink
-                            className="text-base-darker"
-                            data={props.rows}
-                            filename={props.title}
-                          >
-                            {t("DownloadCSV")}
-                          </CSVLink>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {!isMobile && (
-                    <div
-                      className={`grid-col-${
-                        props.title ? "6" : "12"
-                      } text-right`}
-                      role="status"
-                    >
-                      {t("ShowingPages", {
-                        startItem: pageIndex * pageSize + 1,
-                        endItem: Math.min(
-                          pageIndex * pageSize + pageSize,
-                          rows.length
-                        ),
-                        totalItems: rows.length,
-                      })}
-                    </div>
-                  )}
-                </div>
-              </td>
-            </tr>
+          {!props.disablePagination && rows.length && pageCount > 1 ? (
+            <Pagination
+              numPages={pageCount}
+              currentPage={currentPage}
+              numPageLinksShown={7}
+              gotoPage={gotoPage}
+              setCurrentPage={setCurrentPage}
+            />
           ) : (
             <>
               {props.title && (

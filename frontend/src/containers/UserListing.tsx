@@ -212,6 +212,7 @@ function UserListing() {
         onSelection={onSelect}
         initialSortAscending
         width="100%"
+        pageSize={10}
         columns={useMemo(
           () => [
             {

@@ -58,6 +58,7 @@ function ArchivedTab(props: Props) {
         screenReaderField="name"
         onSelection={onSelect}
         width="100%"
+        pageSize={10}
         columns={React.useMemo(
           () => [
             {

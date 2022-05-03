@@ -1044,5 +1044,10 @@
     "SearchDashboards": "Search {{state}} dashboards",
     "SearchUsers": "Search users",
     "SearchDynamicDatasets": "Search dynamic datasets"
+  },
+  "Pagination": {
+    "Previous": "Previous",
+    "Next": "Next",
+    "GoToPage": "Go to page {{page}}"
   }
 }

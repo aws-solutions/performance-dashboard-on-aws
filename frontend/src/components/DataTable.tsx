@@ -156,6 +156,7 @@ function DataTable({
           rows={tableRows}
           disablePagination={true}
           columns={tableColumns}
+          pageSize={50}
         />
       )}
     </>

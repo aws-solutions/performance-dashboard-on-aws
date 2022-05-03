@@ -1,0 +1,19 @@
+@import "../styles/base.scss";
+
+.paginationRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+ }
+
+.moveDirection {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.moveDirection:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

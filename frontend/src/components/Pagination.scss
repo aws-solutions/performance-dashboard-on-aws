@@ -1,36 +1,19 @@
-.pagination {
+@import "../styles/base.scss";
+
+.paginationRow {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
- }
- 
- .prevNextItem {
-  color: #005ea2;
-  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
  }
 
- .dots {
-  color: #005ea2;
- }
-
- .paginationItem {
-  height: 40px;
-  width: 40px;
-  color: #005ea2;
-  background: #fff;
-  border: 1px solid #a9aeb1;
-  border-radius: 25% 25% 25% 25%;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 40px;
-  position: relative;
-  margin: 5px;
+.moveDirection {
+  text-decoration: none;
   cursor: pointer;
- }
- 
- .paginationItem.current {
-  color: #fff;
-  background: #000;
- }
- 
+}
+
+.moveDirection:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

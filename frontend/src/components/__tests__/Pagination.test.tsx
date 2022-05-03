@@ -14,8 +14,8 @@ test("renders a small number of pages at first page", async () => {
       setCurrentPage={setCurrentPage}
     />
   );
-  expect(screen.queryByText("< Previous")).not.toBeInTheDocument();
-  expect(screen.getByText("Next >")).toBeInTheDocument();
+  expect(screen.queryByText("Previous")).not.toBeInTheDocument();
+  expect(screen.getByText("Next")).toBeInTheDocument();
   expect(screen.getByText("1")).toBeInTheDocument();
   expect(screen.getByText("2")).toBeInTheDocument();
   expect(screen.getByText("3")).toBeInTheDocument();
@@ -34,8 +34,8 @@ test("renders a small number of pages at last page", async () => {
       setCurrentPage={setCurrentPage}
     />
   );
-  expect(screen.getByText("< Previous")).toBeInTheDocument();
-  expect(screen.queryByText("Next >")).not.toBeInTheDocument();
+  expect(screen.getByText("Previous")).toBeInTheDocument();
+  expect(screen.queryByText("Next")).not.toBeInTheDocument();
   expect(screen.getByText("1")).toBeInTheDocument();
   expect(screen.getByText("2")).toBeInTheDocument();
   expect(screen.getByText("3")).toBeInTheDocument();
@@ -54,8 +54,8 @@ test("renders a large number of pages", async () => {
       setCurrentPage={setCurrentPage}
     />
   );
-  expect(screen.getByText("< Previous")).toBeInTheDocument();
-  expect(screen.getByText("Next >")).toBeInTheDocument();
+  expect(screen.getByText("Previous")).toBeInTheDocument();
+  expect(screen.getByText("Next")).toBeInTheDocument();
   expect(screen.queryByText("2")).not.toBeInTheDocument();
   expect(screen.getByText("9")).toBeInTheDocument();
   expect(screen.getByText("10")).toBeInTheDocument();

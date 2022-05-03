@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import Button from "./Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { useWindowSize } from "../hooks";
 import "./Pagination.scss";
 
 interface Props {
@@ -12,6 +16,8 @@ interface Props {
 
 function Pagination(props: Props) {
   const { t } = useTranslation();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const changePage = (page: number) => () => {
     props.gotoPage(page - 1);
@@ -78,45 +84,62 @@ function Pagination(props: Props) {
   }, [props]);
 
   return (
-    <div className="pagination margin-right-2 margin-left-2 text-center">
+    <div className="paginationRow text-center">
       {props.currentPage > 1 && (
-        <div
-          className="prevNextItem margin-right-2"
-          onClick={changePage(props.currentPage - 1)}
-          aria-label={t("GoToPrevPage")}
-        >
-          &lt; &thinsp; {t("Pagination.Previous")}
+        <div className="moveDirection margin-right-3">
+          <span
+            onClick={changePage(props.currentPage - 1)}
+            aria-label={t("GoToPrevPage")}
+          >
+            <FontAwesomeIcon className="margin-right-1" icon={faAngleLeft} />
+          </span>
+          {!isMobile && (
+            <span
+              onClick={changePage(props.currentPage - 1)}
+              aria-label={t("GoToPrevPage")}
+            >
+              {t("Pagination.Previous")}
+            </span>
+          )}
         </div>
       )}
 
       {pages.map((page) => {
         return page > -1 ? (
-          <div
-            className={`paginationItem ${
-              props.currentPage === page ? "current" : ""
-            }`}
+          <Button
+            variant={props.currentPage === page ? "base" : "outline"}
             onClick={changePage(page)}
+            onKeyDown={changePage(page)}
             key={page}
             aria-label={t("Pagination.GoToPage", {
               page: page,
             })}
           >
             {page}
-          </div>
+          </Button>
         ) : (
-          <div className="dots" key={`dots ${page}`}>
+          <div className="margin-right-1" key={`dots ${page}`}>
             &thinsp; &#8230; &thinsp;
           </div>
         );
       })}
 
       {props.currentPage < props.numPages && (
-        <div
-          className="prevNextItem margin-left-2"
-          onClick={changePage(props.currentPage + 1)}
-          aria-label={t("GoToNextPage")}
-        >
-          {t("Pagination.Next")} &thinsp; &gt;
+        <div className="moveDirection margin-left-3">
+          {!isMobile && (
+            <span
+              onClick={changePage(props.currentPage + 1)}
+              aria-label={t("GoToNextPage")}
+            >
+              {t("Pagination.Next")}
+            </span>
+          )}
+          <span
+            onClick={changePage(props.currentPage + 1)}
+            aria-label={t("GoToNextPage")}
+          >
+            <FontAwesomeIcon className="margin-left-1" icon={faAngleRight} />
+          </span>
         </div>
       )}
     </div>

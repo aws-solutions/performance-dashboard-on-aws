@@ -354,13 +354,20 @@ function Table(props: Props) {
             );
           })}
           {!props.disablePagination && rows.length && pageCount > 1 ? (
-            <Pagination
-              numPages={pageCount}
-              currentPage={currentPage}
-              numPageLinksShown={7}
-              gotoPage={gotoPage}
-              setCurrentPage={setCurrentPage}
-            />
+            <td
+              className={`${
+                props.keepBorderBottom ? "" : " button-cell-border"
+              }`}
+              colSpan={props.columns.length}
+            >
+              <Pagination
+                numPages={pageCount}
+                currentPage={currentPage}
+                numPageLinksShown={7}
+                gotoPage={gotoPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </td>
           ) : (
             <>
               {props.title && (

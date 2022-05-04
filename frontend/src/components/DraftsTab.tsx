@@ -175,6 +175,7 @@ function DraftsTab(props: Props) {
         rowTitleComponents={["name", "topicAreaName", "updatedAt", "createdBy"]}
         onSelection={onSelect}
         width="100%"
+        pageSize={10}
         columns={React.useMemo(
           () => [
             {

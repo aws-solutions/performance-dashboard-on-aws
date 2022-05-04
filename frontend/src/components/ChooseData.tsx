@@ -212,6 +212,7 @@ function ChooseData(props: Props) {
               )}
               screenReaderField="name"
               width="100%"
+              pageSize={50}
               onSelection={onSelect}
               columns={React.useMemo(
                 () => [

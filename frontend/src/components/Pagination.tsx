@@ -84,65 +84,85 @@ function Pagination(props: Props) {
   }, [props]);
 
   return (
-    <div className="paginationRow text-center">
-      {props.currentPage > 1 && (
-        <div className="moveDirection margin-right-3">
-          <span
-            onClick={changePage(props.currentPage - 1)}
-            aria-label={t("GoToPrevPage")}
+    <nav
+      className="paginationNav usa-pagination"
+      aria-label={t("Pagination.Pagination")}
+    >
+      <ul className="usa-pagination__list paginationList">
+        {props.currentPage > 1 && (
+          <li
+            className="paginationItem moveDirection usa-pagination__item margin-right-3 margin-top-1"
+            key="previous"
           >
-            <FontAwesomeIcon className="margin-right-1" icon={faAngleLeft} />
-          </span>
-          {!isMobile && (
             <span
               onClick={changePage(props.currentPage - 1)}
               aria-label={t("GoToPrevPage")}
             >
-              {t("Pagination.Previous")}
+              <FontAwesomeIcon className="margin-right-1" icon={faAngleLeft} />
             </span>
-          )}
-        </div>
-      )}
+            {!isMobile && (
+              <span
+                onClick={changePage(props.currentPage - 1)}
+                aria-label={t("GoToPrevPage")}
+              >
+                {t("Pagination.Previous")}
+              </span>
+            )}
+          </li>
+        )}
 
-      {pages.map((page) => {
-        return page > -1 ? (
-          <Button
-            variant={props.currentPage === page ? "base" : "outline"}
-            onClick={changePage(page)}
-            onKeyDown={changePage(page)}
-            key={page}
-            aria-label={t("Pagination.GoToPage", {
-              page: page,
-            })}
+        {pages.map((page) => {
+          return page > -1 ? (
+            <li
+              className="paginationItem usa-pagination__item usa-pagination__page-no"
+              key={page}
+            >
+              <Button
+                variant={props.currentPage === page ? "base" : "outline"}
+                onClick={changePage(page)}
+                onKeyDown={changePage(page)}
+                key={page}
+                ariaLabel={`${t("Pagination.GoToPage", { page: page })} ${
+                  page === props.numPages ? t("Pagination.LastPage") : ""
+                }`}
+                ariaCurrent={props.currentPage === page ? "page" : undefined}
+              >
+                {page}
+              </Button>
+            </li>
+          ) : (
+            <li
+              className="paginationItem usa-pagination__item usa-pagination__overflow margin-right-1 margin-top-1 text-bold"
+              key={`dots ${page}`}
+            >
+              &thinsp; &#8230; &thinsp;
+            </li>
+          );
+        })}
+
+        {props.currentPage < props.numPages && (
+          <li
+            className="paginationItem moveDirection usa-pagination__item margin-left-3 margin-top-1"
+            key="next"
           >
-            {page}
-          </Button>
-        ) : (
-          <div className="margin-right-1" key={`dots ${page}`}>
-            &thinsp; &#8230; &thinsp;
-          </div>
-        );
-      })}
-
-      {props.currentPage < props.numPages && (
-        <div className="moveDirection margin-left-3">
-          {!isMobile && (
+            {!isMobile && (
+              <span
+                onClick={changePage(props.currentPage + 1)}
+                aria-label={t("GoToNextPage")}
+              >
+                {t("Pagination.Next")}
+              </span>
+            )}
             <span
               onClick={changePage(props.currentPage + 1)}
               aria-label={t("GoToNextPage")}
             >
-              {t("Pagination.Next")}
+              <FontAwesomeIcon className="margin-left-1" icon={faAngleRight} />
             </span>
-          )}
-          <span
-            onClick={changePage(props.currentPage + 1)}
-            aria-label={t("GoToNextPage")}
-          >
-            <FontAwesomeIcon className="margin-left-1" icon={faAngleRight} />
-          </span>
-        </div>
-      )}
-    </div>
+          </li>
+        )}
+      </ul>
+    </nav>
   );
 }
 

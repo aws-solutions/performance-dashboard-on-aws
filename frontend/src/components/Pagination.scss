@@ -1,12 +1,20 @@
 @import "../styles/base.scss";
 
-.paginationRow {
+.paginationNav {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 10px;
   width: 100%;
- }
+}
+
+.paginationList {
+  list-style-type: none;
+}
+
+.paginationItem {
+  display: inline-block;
+}
 
 .moveDirection {
   text-decoration: none;

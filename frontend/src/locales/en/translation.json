@@ -298,11 +298,13 @@
     "MetricValueError": "Please specify a value",
     "MetricFormatHint": "Select a Format",
     "MetricCurrencyHint": "Select a Currency",
-    "ChangeOverTime": "Change over time (optional)",
+    "ShowTimeChange": "Show the change over time",
+    "ChangeOverTime": "Change over time",
     "ChangeOverTimeHint": "Indicate the increase or decrease since the previous time period. For example, +10.1% or -56%. It must include '+' or '-' sign.",
     "ChangeOverTimeError": "Must start with '+' or '-'.",
-    "StartDateOptional": "Start date (optional)",
-    "EndDateOptional": "End date (optional)",
+    "ShowDateRange": "Include a time period",
+    "StartDate": "Start date",
+    "EndDate": "End date",
     "MetricSuccessfullyAdded": "Metric successfully added."
   },
   "EditMetricScreen": {
@@ -314,11 +316,13 @@
     "MetricValue": "Metric value",
     "MetricValueHint": "Enter a number here.",
     "MetricValueError": "Please specify a value",
-    "ChangeOverTime": "Change over time (optional)",
+    "ShowTimeChange": "Show the change over time",
+    "ChangeOverTime": "Change over time",
     "ChangeOverTimeHint": "Indicate the increase or decrease since the previous time period. For example, +10.1% or -56%. It must include '+' or '-' sign.",
     "ChangeOverTimeError": "Must start with '+' or '-'.",
-    "StartDateOptional": "Start date (optional)",
-    "EndDateOptional": "End date (optional)",
+    "ShowDateRange": "Include a time period",
+    "StartDate": "Start date",
+    "EndDate": "End date",
     "MetricSuccessfullyEdited": "Metric successfully edited."
   },
   "AddMetricsScreen": {

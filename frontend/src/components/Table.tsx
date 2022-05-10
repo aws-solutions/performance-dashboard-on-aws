@@ -353,71 +353,51 @@ function Table(props: Props) {
               </tr>
             );
           })}
-          {!props.disablePagination && rows.length && pageCount > 1 ? (
-            <td
-              className={`${
-                props.keepBorderBottom ? "" : " button-cell-border"
-              }`}
-              colSpan={props.columns.length}
-            >
-              <Pagination
-                numPages={pageCount}
-                currentPage={currentPage}
-                numPageLinksShown={7}
-                gotoPage={gotoPage}
-                setCurrentPage={setCurrentPage}
-              />
-            </td>
-          ) : (
-            <>
-              {props.title && (
-                <tr role="row">
-                  <td
-                    role="cell"
-                    colSpan={
-                      props.columns.length -
-                      (props.hiddenColumns ? props.hiddenColumns.size : 0) +
-                      (props.title ? 0 : 1)
-                    }
-                    className={`button-cell-padding${
-                      props.keepBorderBottom ? "" : " button-cell-border"
-                    }`}
-                  >
-                    <div className="grid-row text-base-darker text-italic padding-y-05 padding-right-1">
-                      <div
-                        className={`${
-                          isMobile
-                            ? "text-center margin-top-05"
-                            : "grid-col-6 text-left"
-                        }`}
-                      >
-                        <div style={{ display: "inline-flex" }}>
-                          <FontAwesomeIcon
-                            icon={faDownload}
-                            className="margin-right-1"
-                            size="xs"
-                          />
-                        </div>
-                        <div style={{ display: "inline-flex" }}>
-                          <div className="margin-right-05">
-                            <CSVLink
-                              className="text-base-darker"
-                              data={props.rows}
-                              filename={props.title}
-                            >
-                              {t("DownloadCSV")}
-                            </CSVLink>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              )}
-            </>
-          )}
         </tbody>
       </table>
+
+      {!props.disablePagination && rows.length && pageCount > 1 ? (
+        <Pagination
+          numPages={pageCount}
+          currentPage={currentPage}
+          numPageLinksShown={7}
+          gotoPage={gotoPage}
+          setCurrentPage={setCurrentPage}
+        />
+      ) : (
+        <>
+          {props.title && (
+            <div className="grid-row text-base-darker text-italic padding-y-05 padding-right-1">
+              <div
+                className={`${
+                  isMobile
+                    ? "text-center margin-top-05"
+                    : "grid-col-6 text-left"
+                }`}
+              >
+                <div style={{ display: "inline-flex" }}>
+                  <FontAwesomeIcon
+                    icon={faDownload}
+                    className="margin-right-1"
+                    size="xs"
+                  />
+                </div>
+                <div style={{ display: "inline-flex" }}>
+                  <div className="margin-right-05">
+                    <CSVLink
+                      className="text-base-darker"
+                      data={props.rows}
+                      filename={props.title}
+                    >
+                      {t("DownloadCSV")}
+                    </CSVLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

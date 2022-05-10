@@ -198,6 +198,7 @@ async function publishDashboard(req: Request, res: Response) {
   const dashboard = await repo.getDashboardById(id);
 
   if (
+    dashboard.state !== DashboardState.Draft &&
     dashboard.state !== DashboardState.PublishPending &&
     dashboard.state !== DashboardState.Archived
   ) {

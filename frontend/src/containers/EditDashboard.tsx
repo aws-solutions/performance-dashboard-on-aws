@@ -17,6 +17,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import WidgetList from "../components/WidgetList";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
+import PublishDashboardModal from "../components/PublishDashboardModal";
 import Spinner from "../components/Spinner";
 import Tooltip from "../components/Tooltip";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
@@ -39,6 +40,7 @@ function EditDashboard() {
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [reordering, setReordering] = useState(false);
+  const [published, setPublished] = useState(false);
   const [widgetToDelete, setWidgetToDelete] = useState<Widget | undefined>(
     undefined
   );
@@ -60,8 +62,25 @@ function EditDashboard() {
     history.push(`/admin/dashboard/${dashboardId}`);
   };
 
-  const closePublishModal = () => {
+  const dashboardPublished = async () => {
+    setPublished(true);
+  };
+
+  const closePublishModal = async () => {
     setIsOpenPublishModal(false);
+
+    if (published) {
+      history.push(`/admin/dashboards?tab=published`, {
+        alert: {
+          type: "success",
+          message: t("PublishWorkflow.PublishedSuccessAlert", {
+            dashboardName: dashboard?.name,
+          }),
+          to: `/${dashboardId}`,
+          linkLabel: t("ViewPublishedDashboard"),
+        },
+      });
+    }
   };
 
   const closeDeleteModal = () => {
@@ -98,16 +117,6 @@ function EditDashboard() {
       });
 
       await reloadDashboard();
-    }
-  };
-
-  const publishDashboard = async () => {
-    closePublishModal();
-
-    if (dashboard) {
-      await BackendService.publishPending(dashboard.id, dashboard.updatedAt);
-
-      history.push(`/admin/dashboard/${dashboard.id}/publish`);
     }
   };
 
@@ -333,17 +342,11 @@ function EditDashboard() {
         ]}
       />
 
-      <Modal
+      <PublishDashboardModal
+        dashboardId={dashboardId}
         isOpen={isOpenPublishModal}
         closeModal={closePublishModal}
-        title={t("PreparePublishingModalTitle", {
-          dashboardName: dashboard?.name,
-        })}
-        message={t("PreparePublishingModalMessage", {
-          context: dashboard?.widgets.length.toString(),
-        })}
-        buttonType={t("PreparePublishingModalButton")}
-        buttonAction={publishDashboard}
+        dashboardPublished={dashboardPublished}
       />
 
       <Modal

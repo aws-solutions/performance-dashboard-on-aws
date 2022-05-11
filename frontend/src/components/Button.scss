@@ -23,7 +23,7 @@
 
 .usa-button--outline:disabled,
 .usa-button--outline.usa-button--disabled {
-  @include u-text("base-lighter", "!important");
+  @include u-text("base-light", "!important");
   background-color: transparent !important;
-  box-shadow: inset 0 0 0 2px color("base-lighter") !important;
+  box-shadow: inset 0 0 0 2px color("base-light") !important;
 }

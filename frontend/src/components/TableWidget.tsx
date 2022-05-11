@@ -126,6 +126,7 @@ const TableWidget = ({
         sortByDesc={sortByDesc}
         title={title}
         mobileNavigation={columns.length < 3}
+        pageSize={25}
       />
       {summaryBelow && (
         <MarkdownRender

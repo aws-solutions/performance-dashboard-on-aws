@@ -19,6 +19,16 @@ interface Props {
   disabled?: boolean;
   type?: "submit" | "reset" | "button";
   ariaLabel?: string;
+  ariaCurrent?:
+    | boolean
+    | "time"
+    | "false"
+    | "true"
+    | "page"
+    | "step"
+    | "location"
+    | "date"
+    | undefined;
   disabledToolTip?: string;
 }
 
@@ -54,6 +64,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
     <button
       data-testid={props.testid}
       aria-label={props.ariaLabel}
+      aria-current={props.ariaCurrent}
       className={`usa-button${variantClassName}${additionalClasses}`}
       disabled={props.disabled}
       ref={ref}

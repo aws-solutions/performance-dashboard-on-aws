@@ -179,6 +179,7 @@ function PublishedTab(props: Props) {
         ]}
         onSelection={onSelect}
         width="100%"
+        pageSize={10}
         columns={React.useMemo(
           () => [
             {

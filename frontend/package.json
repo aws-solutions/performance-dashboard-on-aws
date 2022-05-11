@@ -53,7 +53,7 @@
     "react-waypoint": "^10.1.0",
     "recharts": "^2.0.4",
     "typescript": "~3.7.2",
-    "uswds": "^2.13.3",
+    "uswds": "^2.11.2",
     "uuid": "^8.2.0"
   },
   "scripts": {

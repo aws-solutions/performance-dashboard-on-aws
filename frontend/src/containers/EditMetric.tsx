@@ -12,6 +12,7 @@ import { LocationState } from "../models";
 import { useTranslation } from "react-i18next";
 import Dropdown from "../components/Dropdown";
 import { CurrencyDataType, NumberDataType } from "../models";
+import "./EditMetric.scss"
 
 interface FormValues {
   title: string;

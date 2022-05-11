@@ -13,6 +13,7 @@ import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
 import Dropdown from "../components/Dropdown";
 import { CurrencyDataType, NumberDataType } from "../models";
+import "./EditMetric.scss";
 
 interface FormValues {
   title: string;
@@ -20,6 +21,8 @@ interface FormValues {
   changeOverTime: string;
   percentage: string;
   currency: string;
+  showTimeChange: boolean;
+  showDateRange: boolean;
 }
 
 interface PathParams {
@@ -37,17 +40,19 @@ function AddMetric() {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [symbolType, setsymbolType] = useState<string>("Percentage");
+  const [showTimeChange, setShowTimeChange] = useState<boolean>(false);
+  const [showDateRange, setShowDateRange] = useState<boolean>(false);
 
   const onSubmit = async (values: FormValues) => {
     const newMetrics = state && state.metrics ? [...state.metrics] : [];
     newMetrics.push({
       title: values.title,
       value: values.value,
-      changeOverTime: values.changeOverTime,
+      changeOverTime: showTimeChange ? values.changeOverTime : "",
       percentage: values.percentage,
       currency: values.currency,
-      startDate: startDate ? startDate.toISOString() : "",
-      endDate: endDate ? endDate.toISOString() : "",
+      startDate: showDateRange && startDate ? startDate.toISOString() : "",
+      endDate: showDateRange && endDate ? endDate.toISOString() : "",
     });
 
     history.push(
@@ -124,7 +129,7 @@ function AddMetric() {
       ) : (
         <>
           <div className="grid-row">
-            <div className="grid-col-auto">
+            <div className="grid-col-8">
               <PrimaryActionBar>
                 <h1 id="addMetricFormHeader" className="margin-top-0">
                   {t("AddMetricScreen.AddMetric")}
@@ -145,23 +150,25 @@ function AddMetric() {
                       id="title"
                       name="title"
                       label={t("AddMetricScreen.MetricTitle")}
-                      hint={t("AddMetricScreen.MetricTitleHint")}
                       register={register}
                       error={
                         errors.title && t("AddMetricScreen.MetricTitleError")
                       }
                       required
+                      aria-describedby="title-hint"
                     />
+                    <div className="usa-hint" id="title-hint">
+                      {t("AddMetricScreen.MetricTitleHint")}
+                    </div>
+
                     <NumberField
                       id="value"
                       name="value"
                       label={t("AddMetricScreen.MetricValue")}
-                      hint={t("AddMetricScreen.MetricValueHint")}
                       register={register}
                       error={
                         errors.value && t("AddMetricScreen.MetricValueError")
                       }
-                      className="width-50"
                       step={0.01}
                       required
                     />
@@ -170,7 +177,6 @@ function AddMetric() {
                       id="percentage"
                       name="percentage"
                       label={t("NumberFormat")}
-                      hint={t("AddMetricScreen.MetricFormatHint")}
                       options={[
                         { value: "", label: t("SelectAnOption") },
                         {
@@ -184,6 +190,7 @@ function AddMetric() {
                       ]}
                       onChange={handlePercentage}
                       register={register}
+                      className="tablet:grid-col-6"
                     />
 
                     {symbolType !== "Percentage" &&
@@ -192,7 +199,6 @@ function AddMetric() {
                           id="currency"
                           name="currency"
                           label={t("Currency")}
-                          hint={t("AddMetricScreen.MetricCurrencyHint")}
                           options={[
                             { value: "", label: t("SelectAnOption") },
                             {
@@ -212,47 +218,96 @@ function AddMetric() {
                           required
                         />
                       )}
-                    <TextField
-                      id="changeOverTime"
-                      name="changeOverTime"
-                      label={t("AddMetricScreen.ChangeOverTime")}
-                      hint={t("AddMetricScreen.ChangeOverTimeHint")}
-                      register={register}
-                      className="width-50"
-                      error={
-                        errors.changeOverTime &&
-                        errors.changeOverTime.type === "validate"
-                          ? t("AddMetricScreen.ChangeOverTimeError")
-                          : undefined
-                      }
-                      validate={(input: string) => {
-                        return !input || input[0] === "+" || input[0] === "-";
-                      }}
-                    />
-                    <DateRangePicker
-                      start={{
-                        id: "startDate",
-                        name: "startDate",
-                        label: t("AddMetricScreen.StartDateOptional"),
-                        hint: settings.dateTimeFormat.date,
-                        date: startDate,
-                        dateFormat: settings.dateTimeFormat.date
-                          .toLowerCase()
-                          .replace(/m/g, "M"),
-                        setDate: setStartDate,
-                      }}
-                      end={{
-                        id: "endDate",
-                        name: "endDate",
-                        label: t("AddMetricScreen.EndDateOptional"),
-                        hint: settings.dateTimeFormat.date,
-                        date: endDate,
-                        dateFormat: settings.dateTimeFormat.date
-                          .toLowerCase()
-                          .replace(/m/g, "M"),
-                        setDate: setEndDate,
-                      }}
-                    />
+
+                    <div className="usa-checkbox margin-top-4">
+                      <input
+                        className="usa-checkbox__input"
+                        type="checkbox"
+                        id="showTimeChange"
+                        name="showTimeChange"
+                        checked={showTimeChange}
+                        onClick={() => setShowTimeChange(!showTimeChange)}
+                        onChange={() => setShowTimeChange(!showTimeChange)}
+                      />
+                      <label
+                        className="usa-checkbox__label"
+                        htmlFor="showTimeChange"
+                      >
+                        {`${t("AddMetricScreen.ShowTimeChange")}`}
+                      </label>
+                    </div>
+
+                    {showTimeChange && (
+                      <>
+                        <TextField
+                          id="changeOverTime"
+                          name="changeOverTime"
+                          label={t("AddMetricScreen.ChangeOverTime")}
+                          register={register}
+                          error={
+                            errors.changeOverTime &&
+                            errors.changeOverTime.type === "validate"
+                              ? t("AddMetricScreen.ChangeOverTimeError")
+                              : undefined
+                          }
+                          validate={(input: string) => {
+                            return (
+                              !input || input[0] === "+" || input[0] === "-"
+                            );
+                          }}
+                          aria-describedby="changeOverTime-hint"
+                          required
+                        />
+                        <div className="usa-hint" id="changeOverTime-hint">
+                          {t("AddMetricScreen.ChangeOverTimeHint")}
+                        </div>
+                      </>
+                    )}
+
+                    <div className="usa-checkbox margin-top-4">
+                      <input
+                        className="usa-checkbox__input"
+                        type="checkbox"
+                        id="showDateRange"
+                        name="showDateRange"
+                        checked={showDateRange}
+                        onClick={() => setShowDateRange(!showDateRange)}
+                        onChange={() => setShowDateRange(!showDateRange)}
+                      />
+                      <label
+                        className="usa-checkbox__label"
+                        htmlFor="showDateRange"
+                      >
+                        {`${t("AddMetricScreen.ShowDateRange")}`}
+                      </label>
+                    </div>
+
+                    {showDateRange && (
+                      <DateRangePicker
+                        start={{
+                          id: "startDate",
+                          name: "startDate",
+                          label: t("AddMetricScreen.StartDate"),
+                          hint: settings.dateTimeFormat.date,
+                          date: startDate,
+                          dateFormat: settings.dateTimeFormat.date
+                            .toLowerCase()
+                            .replace(/m/g, "M"),
+                          setDate: setStartDate,
+                        }}
+                        end={{
+                          id: "endDate",
+                          name: "endDate",
+                          label: t("AddMetricScreen.EndDate"),
+                          hint: settings.dateTimeFormat.date,
+                          date: endDate,
+                          dateFormat: settings.dateTimeFormat.date
+                            .toLowerCase()
+                            .replace(/m/g, "M"),
+                          setDate: setEndDate,
+                        }}
+                      />
+                    )}
                   </fieldset>
                   <br />
                   <br />

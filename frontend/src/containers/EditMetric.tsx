@@ -12,6 +12,7 @@ import { LocationState } from "../models";
 import { useTranslation } from "react-i18next";
 import Dropdown from "../components/Dropdown";
 import { CurrencyDataType, NumberDataType } from "../models";
+import "./EditMetric.scss";
 
 interface FormValues {
   title: string;
@@ -19,6 +20,8 @@ interface FormValues {
   changeOverTime: string;
   percentage: string;
   currency: string;
+  showTimeChange: boolean;
+  showDateRange: boolean;
 }
 
 interface PathParams {
@@ -43,6 +46,30 @@ function EditMetric() {
   );
   const [symbolType, setsymbolType] = useState<string>("");
 
+  const hasTimeChange = () => {
+    if (
+      state.metric &&
+      state.metric.changeOverTime &&
+      state.metric.changeOverTime.length > 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const [showTimeChange, setShowTimeChange] = useState<boolean>(
+    hasTimeChange()
+  );
+
+  const hasDateRange = () => {
+    if (state.metric && state.metric.startDate) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const [showDateRange, setShowDateRange] = useState<boolean>(hasDateRange());
+
   const onSubmit = async (values: FormValues) => {
     const editedMetric =
       state && state.metrics && state.position !== undefined
@@ -53,9 +80,11 @@ function EditMetric() {
       editedMetric.value = values.value;
       editedMetric.percentage = values.percentage;
       editedMetric.currency = values.currency;
-      editedMetric.changeOverTime = values.changeOverTime;
-      editedMetric.startDate = startDate ? startDate.toISOString() : "";
-      editedMetric.endDate = endDate ? endDate.toISOString() : "";
+      editedMetric.changeOverTime = showTimeChange ? values.changeOverTime : "";
+      editedMetric.startDate =
+        showDateRange && startDate ? startDate.toISOString() : "";
+      editedMetric.endDate =
+        showDateRange && endDate ? endDate.toISOString() : "";
     }
 
     const newMetrics = state && state.metrics ? [...state.metrics] : [];
@@ -133,7 +162,7 @@ function EditMetric() {
       ) : (
         <>
           <div className="grid-row">
-            <div className="grid-col-auto">
+            <div className="grid-col-8">
               <h1 id="editMetricFormHeader">
                 {t("EditMetricScreen.EditMetric")}
               </h1>
@@ -153,25 +182,26 @@ function EditMetric() {
                     id="title"
                     name="title"
                     label={t("EditMetricScreen.MetricTitle")}
-                    hint={t("EditMetricScreen.MetricTitleHint")}
                     register={register}
                     defaultValue={state.metric.title}
                     error={
                       errors.title && t("EditMetricScreen.MetricTitleError")
                     }
                     required
+                    aria-describedby="title-hint"
                   />
+                  <div className="usa-hint" id="title-hint">
+                    {t("EditMetricScreen.MetricTitleHint")}
+                  </div>
 
                   <NumberField
                     id="value"
                     name="value"
                     label={t("EditMetricScreen.MetricValue")}
-                    hint={t("EditMetricScreen.MetricValueHint")}
                     register={register}
                     error={
                       errors.value && t("EditMetricScreen.MetricValueError")
                     }
-                    className="width-50"
                     defaultValue={state.metric.value}
                     step={0.01}
                     required
@@ -181,7 +211,6 @@ function EditMetric() {
                     id="percentage"
                     name="percentage"
                     label={t("NumberFormat")}
-                    hint={t("AddMetricScreen.MetricFormatHint")}
                     options={[
                       { value: "", label: t("SelectAnOption") },
                       {
@@ -196,6 +225,7 @@ function EditMetric() {
                     defaultValue={state.metric.percentage}
                     onChange={handleSymbol}
                     register={register}
+                    className="tablet:grid-col-6"
                   />
 
                   {symbolType === "Currency" &&
@@ -207,7 +237,6 @@ function EditMetric() {
                         id="currency"
                         name="currency"
                         label={t("Currency")}
-                        hint={t("AddMetricScreen.MetricCurrencyHint")}
                         options={[
                           { value: "", label: t("SelectAnOption") },
                           {
@@ -257,48 +286,94 @@ function EditMetric() {
                       />
                     )}
 
-                  <TextField
-                    id="changeOverTime"
-                    name="changeOverTime"
-                    label={t("EditMetricScreen.ChangeOverTime")}
-                    hint={t("EditMetricScreen.ChangeOverTimeHint")}
-                    register={register}
-                    className="width-50"
-                    defaultValue={state.metric.changeOverTime}
-                    error={
-                      errors.changeOverTime &&
-                      errors.changeOverTime.type === "validate"
-                        ? t("EditMetricScreen.ChangeOverTimeError")
-                        : undefined
-                    }
-                    validate={(input: string) => {
-                      return !input || input[0] === "+" || input[0] === "-";
-                    }}
-                  />
-                  <DateRangePicker
-                    start={{
-                      id: "startDate",
-                      name: "startDate",
-                      label: t("EditMetricScreen.StartDateOptional"),
-                      hint: settings.dateTimeFormat.date,
-                      date: startDate,
-                      dateFormat: settings.dateTimeFormat.date
-                        .toLowerCase()
-                        .replace(/m/g, "M"),
-                      setDate: setStartDate,
-                    }}
-                    end={{
-                      id: "endDate",
-                      name: "endDate",
-                      label: t("EditMetricScreen.EndDateOptional"),
-                      hint: settings.dateTimeFormat.date,
-                      date: endDate,
-                      dateFormat: settings.dateTimeFormat.date
-                        .toLowerCase()
-                        .replace(/m/g, "M"),
-                      setDate: setEndDate,
-                    }}
-                  />
+                  <div className="usa-checkbox margin-top-4">
+                    <input
+                      className="usa-checkbox__input"
+                      type="checkbox"
+                      id="showTimeChange"
+                      name="showTimeChange"
+                      checked={showTimeChange}
+                      onClick={() => setShowTimeChange(!showTimeChange)}
+                      onChange={() => setShowTimeChange(!showTimeChange)}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="showTimeChange"
+                    >
+                      {`${t("EditMetricScreen.ShowTimeChange")}`}
+                    </label>
+                  </div>
+
+                  {showTimeChange && (
+                    <>
+                      <TextField
+                        id="changeOverTime"
+                        name="changeOverTime"
+                        label={t("EditMetricScreen.ChangeOverTime")}
+                        register={register}
+                        defaultValue={state.metric.changeOverTime}
+                        error={
+                          errors.changeOverTime &&
+                          errors.changeOverTime.type === "validate"
+                            ? t("EditMetricScreen.ChangeOverTimeError")
+                            : undefined
+                        }
+                        validate={(input: string) => {
+                          return !input || input[0] === "+" || input[0] === "-";
+                        }}
+                        aria-describedby="changeOverTime-hint"
+                        required
+                      />
+                      <div className="usa-hint" id="changeOverTime-hint">
+                        {t("EditMetricScreen.ChangeOverTimeHint")}
+                      </div>
+                    </>
+                  )}
+
+                  <div className="usa-checkbox margin-top-4">
+                    <input
+                      className="usa-checkbox__input"
+                      type="checkbox"
+                      id="showDateRange"
+                      name="showDateRange"
+                      checked={showDateRange}
+                      onClick={() => setShowDateRange(!showDateRange)}
+                      onChange={() => setShowDateRange(!showDateRange)}
+                    />
+                    <label
+                      className="usa-checkbox__label"
+                      htmlFor="showDateRange"
+                    >
+                      {`${t("EditMetricScreen.ShowDateRange")}`}
+                    </label>
+                  </div>
+
+                  {showDateRange && (
+                    <DateRangePicker
+                      start={{
+                        id: "startDate",
+                        name: "startDate",
+                        label: t("EditMetricScreen.StartDate"),
+                        hint: settings.dateTimeFormat.date,
+                        date: startDate,
+                        dateFormat: settings.dateTimeFormat.date
+                          .toLowerCase()
+                          .replace(/m/g, "M"),
+                        setDate: setStartDate,
+                      }}
+                      end={{
+                        id: "endDate",
+                        name: "endDate",
+                        label: t("EditMetricScreen.EndDate"),
+                        hint: settings.dateTimeFormat.date,
+                        date: endDate,
+                        dateFormat: settings.dateTimeFormat.date
+                          .toLowerCase()
+                          .replace(/m/g, "M"),
+                        setDate: setEndDate,
+                      }}
+                    />
+                  )}
                 </fieldset>
                 <br />
                 <br />

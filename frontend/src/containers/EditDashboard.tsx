@@ -335,6 +335,7 @@ function EditDashboard() {
       />
 
       <PublishDashboardModal
+        id="publish-dashboard-modal"
         dashboardId={dashboardId}
         isOpen={isOpenPublishModal}
         closeModal={closePublishModal}

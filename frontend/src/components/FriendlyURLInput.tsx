@@ -1,6 +1,7 @@
 import React from "react";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useWindowSize } from "../hooks";
 
 interface Props {
   name: string;
@@ -15,10 +16,14 @@ interface Props {
   error?: string;
   onChange?: Function;
   className?: string;
+  groupClassName?: string;
   baseUrl?: string;
 }
 
 function FriendlyURLInput(props: Props) {
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
+
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     if (props.onChange) {
       props.onChange(event);
@@ -53,12 +58,14 @@ function FriendlyURLInput(props: Props) {
           {props.error}
         </span>
       )}
-      <div className="usa-input-group">
+      <div className={`usa-input-group ${props.groupClassName}`}>
         {props.baseUrl && (
-          <span className="usa-input-prefix bg-base-lighter padding-1">
-            <FontAwesomeIcon icon={faLock} className="margin-right-1" />
-            {props.baseUrl}
-          </span>
+          <div className="usa-input-prefix bg-base-lighter border-right height-full display-flex flex-row">
+            <span className="flex-align-self-center">
+              <FontAwesomeIcon icon={faLock} className="margin-right-1" />
+              {props.baseUrl}
+            </span>
+          </div>
         )}
         <input
           id={props.id}

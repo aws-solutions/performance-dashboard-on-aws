@@ -27,11 +27,11 @@ import Alert from "./Alert";
 import Link from "./Link";
 
 interface PathParams {
+  id: string;
   dashboardId: string;
   isOpen: boolean;
   closeModal: Function;
   dashboardPublished?: Function;
-  title?: string;
 }
 
 interface FormValues {
@@ -62,7 +62,7 @@ function PublishDashboardModal(props: PathParams) {
     resolver: yupResolver(validationSchema),
   });
 
-  const { dashboard, reloadDashboard } = useDashboard(props.dashboardId);
+  const { dashboard } = useDashboard(props.dashboardId);
   const { versions } = useDashboardVersions(dashboard?.parentDashboardId);
   const suggestedUrl = useFriendlyUrl(dashboard, versions);
 
@@ -103,73 +103,66 @@ function PublishDashboardModal(props: PathParams) {
     }
   };
 
+  const publishingGuidanceWithVersionOverride = `${
+    settings.publishingGuidance.endsWith(".")
+      ? settings.publishingGuidance
+      : settings.publishingGuidance + "."
+  }${
+    hasPublishedVersion()
+      ? " " + t("PublishDashboardModal.OverwriteWarning")
+      : ""
+  }`;
+
   return (
     <ReactModal
       isOpen={props.isOpen}
       onRequestClose={() => {
         props.closeModal();
       }}
-      className={`modal`}
-      overlayClassName="overlay"
+      className={`font-sans-md ${styles.modalLarge} ${
+        isMobile ? "margin-0 padding-0 border-0" : ""
+      }`}
+      overlayClassName={`${styles.modalOverlay} ${isMobile ? "padding-0" : ""}`}
+      portalClassName={styles.modalPortal}
       shouldFocusAfterRender={true}
       shouldReturnFocusAfterClose={true}
       aria={{
-        labelledby: "title",
-        describedby: "description",
+        labelledby: `${props.id}-header`,
+        describedby: `${props.id}-description`,
         modal: "true",
       }}
     >
-      <div className="clearfix" role="dialog">
+      <div className="usa-modal__content">
         <div
-          className="float-left"
-          style={{
-            maxWidth: "80%",
-          }}
+          className={`usa-modal__main margin-0 ${
+            isMobile ? "padding-left-2 padding-right-2" : ""
+          }`}
         >
           {isDraftDashboard && (
-            <h2 id="publishDashboardModalHeader" className="margin-top-0">
-              {props.title ?? t("PublishDashboardModal.Title")}
-            </h2>
-          )}
-        </div>
-        <div className="float-right font-sans-md">
-          <Button
-            variant="unstyled"
-            type="button"
-            className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-            ariaLabel={t("GlobalClose")}
-            onClick={props.closeModal}
-          >
-            <FontAwesomeIcon
-              icon={faTimes}
-              className="margin-right-1"
-              size="1x"
-              style={{ marginTop: "5px" }}
-            />
-          </Button>
-        </div>
-      </div>
-
-      {publishError && <Alert type="error" message={publishError} slim></Alert>}
-
-      {isDraftDashboard && (
-        <form
-          className="usa-form usa-form--large"
-          aria-labelledby="publishDashboardModalHeader"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <legend className="usa-hint margin-top-2">
-            {t("PublishDashboardModal.Description")}
-          </legend>
-
-          <div className="font-sans-md margin-top-2 margin-bottom-6">
-            <div>
-              <div className="margin-bottom-4">
+            <form
+              className={`usa-form ${styles.maxw40rem}`}
+              aria-labelledby={`${props.id}-header`}
+              aria-describedby={`${props.id}-description`}
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <div className={styles.minh35rem}>
+                <h1
+                  className="usa-modal__heading font-sans-lg"
+                  id={`${props.id}-header`}
+                >
+                  {isDraftDashboard && t("PublishDashboardModal.Title")}
+                </h1>
+                <div className="usa-prose" id={`${props.id}-description`}>
+                  {t("PublishDashboardModal.Description")}
+                </div>
+                {publishError && (
+                  <Alert type="error" message={publishError} slim></Alert>
+                )}
                 <TextField
                   id="releaseNotes"
                   name="releaseNotes"
-                  className={styles.wideTextArea}
-                  rows={5}
+                  className={styles.wideText}
+                  rows={3}
                   label={t("PublishDashboardModal.InternalVersionNotes")}
                   error={errors.releaseNotes?.message}
                   hint={t(
@@ -180,15 +173,12 @@ function PublishDashboardModal(props: PathParams) {
                   multiline
                   required
                 />
-              </div>
-
-              <div className="margin-bottom-4">
                 <FriendlyURLInput
                   id="friendlyURL"
                   name="friendlyURL"
+                  groupClassName={styles.maxw40rem}
                   label={t("PublishDashboardModal.FriendlyURL")}
                   error={errors.friendlyURL?.message}
-                  hint={t("PublishDashboardModal.FriendlyURLDescription")}
                   register={register}
                   baseUrl={`${window.location.protocol}//${
                     window.location.hostname
@@ -197,17 +187,14 @@ function PublishDashboardModal(props: PathParams) {
                   defaultValue={suggestedUrl.friendlyURL}
                   required
                 />
-              </div>
-
-              <div
-                className={`display-flex border-2px radius-md padding-1 ${
-                  acknowledge
-                    ? "border-base-dark bg-base-lighter"
-                    : "border-base-lighter"
-                }`}
-              >
                 <div
-                  className={errors.acknowledge ? "usa-form-group--error" : ""}
+                  className={`display-flex border-2px radius-md padding-1 usa-form-group ${
+                    acknowledge
+                      ? "border-base-dark bg-base-lighter"
+                      : "border-base-lighter"
+                  } ${styles.acknowledgeDiv} ${
+                    !isMobile ? styles.maxh10rem : ""
+                  }`}
                 >
                   <div className="usa-checkbox margin-top-neg-1">
                     <input
@@ -216,7 +203,6 @@ function PublishDashboardModal(props: PathParams) {
                       name="acknowledge"
                       className="usa-checkbox__input"
                       ref={register}
-                      required
                     />
                     <label
                       className="usa-checkbox__label"
@@ -225,81 +211,96 @@ function PublishDashboardModal(props: PathParams) {
                     >
                       <span className="font-sans-sm">
                         <MarkdownRender
-                          className={`margin-left-4 margin-top-neg-3 measure-2 ${styles.publishingGuidance}`}
-                          source={`${settings.publishingGuidance}${
-                            settings.publishingGuidance[
-                              settings.publishingGuidance.length - 1
-                            ] === "."
-                              ? ""
-                              : "."
-                          } ${
-                            hasPublishedVersion()
-                              ? t("PublishDashboardModal.OverwriteWarning")
-                              : ""
-                          }`}
+                          className={`margin-left-4 margin-top-neg-3 ${styles.publishingGuidance}`}
+                          source={publishingGuidanceWithVersionOverride}
                         />
                       </span>
                     </label>
                   </div>
                 </div>
+                {errors.acknowledge && (
+                  <span
+                    className="usa-error-message"
+                    id="input-error-message"
+                    role="alert"
+                  >
+                    {errors.acknowledge.message}
+                  </span>
+                )}
               </div>
-
-              {errors.acknowledge && (
-                <span
-                  className="usa-error-message"
-                  id="input-error-message"
-                  role="alert"
-                >
-                  {errors.acknowledge.message}
-                </span>
-              )}
-            </div>
-          </div>
-
-          <div className="padding-top-2 border-top border-base-lighter margin-top-4">
-            <Button type="submit" variant="base">
-              {t("PublishDashboardModal.PublishDashboardAction")}
-            </Button>
-          </div>
-        </form>
-      )}
-      {!isDraftDashboard && (
-        <>
-          <div className="font-sans-md display-flex flex-column flex-align-center height-mobile">
-            <img
-              src={`${process.env.PUBLIC_URL}/images/publish-success.svg`}
-              alt={t("PublishDashboardModal.PublishSuccess")}
-              className="margin-top-6"
-            />
-            <span className="font-ui-lg text-center margin-top-2">
-              {t("PublishDashboardModal.PublishSuccess")}
-            </span>
-            <span className="usa-hint text-center margin-top-1">
-              {t("PublishDashboardModal.PublishSuccessDescription")}
-            </span>
-            <div className="margin-top-1">
-              <Link
-                target="_blank"
-                to={`/${props.dashboardId}`}
-                ariaLabel={`${t(
-                  "PublishDashboardModal.ViewPublishedDashboard"
-                )} ${t("ARIA.OpenInNewTab")}`}
-                external
+              <div className="usa-modal__footer">
+                <ul className="usa-button-group">
+                  <li className="usa-button-group__item">
+                    <Button type="submit" variant="base">
+                      {t("PublishDashboardModal.PublishDashboardAction")}
+                    </Button>
+                  </li>
+                </ul>
+              </div>
+            </form>
+          )}
+          {!isDraftDashboard && (
+            <div className={`usa-form ${styles.maxw40rem}`}>
+              <div
+                className={`font-sans-md display-flex flex-row ${
+                  isMobile ? "" : "flex-align-center " + styles.minh35rem
+                } ${styles.minh35rem}`}
               >
-                {t("PublishDashboardModal.ViewPublishedDashboard")}
-              </Link>
+                <div
+                  className={`font-sans-md display-flex flex-column flex-align-center width-full`}
+                >
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/publish-success.svg`}
+                    alt={t("PublishDashboardModal.PublishSuccess")}
+                    className="margin-top-6"
+                  />
+                  <span className="font-ui-lg text-center margin-top-2">
+                    {t("PublishDashboardModal.PublishSuccess")}
+                  </span>
+                  <span className="usa-hint text-center margin-top-1">
+                    {t("PublishDashboardModal.PublishSuccessDescription")}
+                  </span>
+                  <div className="margin-top-1">
+                    <Link
+                      target="_blank"
+                      to={`/${props.dashboardId}`}
+                      ariaLabel={`${t(
+                        "PublishDashboardModal.ViewPublishedDashboard"
+                      )} ${t("ARIA.OpenInNewTab")}`}
+                      external
+                    >
+                      {t("PublishDashboardModal.ViewPublishedDashboard")}
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="usa-modal__footer">
+                <ul className="usa-button-group">
+                  <li className="usa-button-group__item">
+                    <Button
+                      type="button"
+                      variant="base"
+                      onClick={props.closeModal}
+                      className="padding-left-4 padding-right-4"
+                    >
+                      {t("GlobalClose")}
+                    </Button>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-          <Button
-            type="button"
-            variant="base"
-            onClick={props.closeModal}
-            className="padding-left-4 padding-right-4"
-          >
-            {t("GlobalClose")}
-          </Button>
-        </>
-      )}
+          )}
+        </div>
+        <Button
+          variant="unstyled"
+          type="button"
+          className="usa-modal__close"
+          ariaLabel={t("GlobalClose")}
+          onClick={props.closeModal}
+        >
+          <FontAwesomeIcon icon={faTimes} size="2x" />
+        </Button>
+      </div>
     </ReactModal>
   );
 }

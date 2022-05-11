@@ -1,15 +1,77 @@
 .modalLarge {
-  width: 600px !important;
+  max-width: 40em;
+
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  border-right: 2px solid #333;
+  border-bottom: 2px solid #333;
+  overflow: auto;
+  outline: none;
+  padding: 1rem;
+  -webkit-overflow-scrolling: touch;
+
+  font-size: 1.06rem;
+  line-height: 1.5;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #1b1b1b;
+  display: inline-block;
+  margin: 1.25rem auto;
+  position: relative;
+  text-align: left;
+  vertical-align: middle;
+  width: 100%;
 }
 
-.modalFull {
-  width: 100% !important;
+.minh35rem {
+  min-height: 35rem !important;
 }
 
-.wideTextArea {
+.maxh10rem {
+  max-height: 10rem !important;
+}
+
+.maxw40rem {
+  max-width: 40rem !important;
+}
+
+.modalPortal {
+  text-align: center;
+  transition: opacity 0.15s ease-in-out;
+  position: fixed;
+  z-index: 100001;
+}
+
+.modalOverlay {
+  background-color: rgba(0, 0, 0, 0.75);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: scroll;
+  padding: 1rem;
+  position: fixed;
+  scroll-behavior: smooth;
+}
+
+.wideText {
   max-width: 100% !important;
 }
 
 .publishingGuidance p {
   margin: 0;
+  height: 100%;
+}
+
+.acknowledgeDiv {
+  min-height: 10rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.overlayScroll {
+  z-index: 100001;
 }

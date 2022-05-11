@@ -1065,6 +1065,8 @@
     "OverwriteWarning": "I also understand that this will overwrite the existing published version of the dashboard.",
     "ResolveErrors": "Unable to publish dashboard. Please resolve try again later.",
     "PublishSuccess": "Dashboard was successfully published.",
-    "PublishSuccessDescription": "Visitors with a link can now view your published dashboard."
+    "PublishSuccessDescription": "Visitors with a link can now view your published dashboard.",
+    "PublishedSuccessAlert": "'{{dashboardName}}' dashboard was successfully published.",
+    "ViewPublishedDashboard": "View the published dashboard"
   }
 }

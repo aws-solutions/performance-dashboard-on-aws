@@ -37,10 +37,10 @@ function EditDashboard() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, reloadDashboard, setDashboard, loading } =
     useDashboard(dashboardId);
+
   const [isOpenPublishModal, setIsOpenPublishModal] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [reordering, setReordering] = useState(false);
-  const [published, setPublished] = useState(false);
   const [widgetToDelete, setWidgetToDelete] = useState<Widget | undefined>(
     undefined
   );
@@ -62,6 +62,7 @@ function EditDashboard() {
     history.push(`/admin/dashboard/${dashboardId}`);
   };
 
+  const [published, setPublished] = useState(false);
   const dashboardPublished = async () => {
     setPublished(true);
   };
@@ -70,16 +71,7 @@ function EditDashboard() {
     setIsOpenPublishModal(false);
 
     if (published) {
-      history.push(`/admin/dashboards?tab=published`, {
-        alert: {
-          type: "success",
-          message: t("PublishWorkflow.PublishedSuccessAlert", {
-            dashboardName: dashboard?.name,
-          }),
-          to: `/${dashboardId}`,
-          linkLabel: t("ViewPublishedDashboard"),
-        },
-      });
+      history.push("/admin/dashboards?tab=published");
     }
   };
 

@@ -24,12 +24,13 @@ import { DashboardState } from "../models";
 import styles from "./PublishDashboardModal.module.scss";
 import BackendService from "../services/BackendService";
 import Alert from "./Alert";
+import Link from "./Link";
 
 interface PathParams {
   dashboardId: string;
   isOpen: boolean;
   closeModal: Function;
-  dashboardPublished: Function;
+  dashboardPublished?: Function;
   title?: string;
 }
 
@@ -89,7 +90,9 @@ function PublishDashboardModal(props: PathParams) {
         );
 
         setIsDraftDashboard(false);
-        props?.dashboardPublished();
+        if (props.dashboardPublished) {
+          props.dashboardPublished();
+        }
       } catch (err) {
         setPublishError(
           err?.response?.status === 409
@@ -97,7 +100,6 @@ function PublishDashboardModal(props: PathParams) {
             : t("PublishDashboardModal.FailToPublishError")
         );
       }
-      await reloadDashboard();
     }
   };
 
@@ -223,7 +225,7 @@ function PublishDashboardModal(props: PathParams) {
                     >
                       <span className="font-sans-sm">
                         <MarkdownRender
-                          className="margin-left-4 margin-top-neg-3 measure-2 publishing-guidance"
+                          className={`margin-left-4 margin-top-neg-3 measure-2 ${styles.publishingGuidance}`}
                           source={`${settings.publishingGuidance}${
                             settings.publishingGuidance[
                               settings.publishingGuidance.length - 1
@@ -275,6 +277,18 @@ function PublishDashboardModal(props: PathParams) {
             <span className="usa-hint text-center margin-top-1">
               {t("PublishDashboardModal.PublishSuccessDescription")}
             </span>
+            <div className="margin-top-1">
+              <Link
+                target="_blank"
+                to={`/${props.dashboardId}`}
+                ariaLabel={`${t(
+                  "PublishDashboardModal.ViewPublishedDashboard"
+                )} ${t("ARIA.OpenInNewTab")}`}
+                external
+              >
+                {t("PublishDashboardModal.ViewPublishedDashboard")}
+              </Link>
+            </div>
           </div>
           <Button
             type="button"

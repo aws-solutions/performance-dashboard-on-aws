@@ -17,7 +17,6 @@ import EditDashboard from "./containers/EditDashboard";
 import DashboardHistory from "./containers/DashboardHistory";
 import ViewDashboard from "./containers/ViewDashboard";
 import ViewDashboardAdmin from "./containers/ViewDashboardAdmin";
-import PublishDashboard from "./containers/PublishDashboard";
 import AddChart from "./containers/AddChart";
 import AddImage from "./containers/AddImage";
 import EditImage from "./containers/EditImage";
@@ -290,11 +289,6 @@ function App() {
       path: "/admin/dashboard/:dashboardId/history",
       title: t("PageTitle.DashboardHistory"),
       component: DashboardHistory,
-    },
-    {
-      path: "/admin/dashboard/:dashboardId/publish",
-      title: t("PageTitle.PublishDashboard"),
-      component: PublishDashboard,
     },
     {
       path: "/admin/markdown",

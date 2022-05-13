@@ -604,14 +604,6 @@
     "RenamePluralExample": "For example, 'ministries'",
     "RenameError": "Please specify a title"
   },
-  "EditURLComponent": {
-    "EditURL": "Edit URL",
-    "DashboardURL": "Dashboard URL",
-    "AreYouSure": "Are you sure you want to edit this dashboard's URL? ",
-    "NoAccess": "Users will not be able to access the dashboard with the old URL.",
-    "Guidance": "Edit or confirm the URL that will be used to publish this dashboard. The domain name cannot be edited.",
-    "Error": "Please enter a valid URL"
-  },
   "SettingsTopicAreaEdit": "Edit topic area",
   "SettingsTopicAreaName": "Topic area name",
   "SettingsTopicAreaNameEdit": "Edit topic area name",
@@ -1055,5 +1047,26 @@
     "Next": "Next",
     "GoToPage": "Go to page {{page}}",
     "LastPage": "last page"
+  },
+  "PublishDashboardModal": {
+    "Title": "Publish Dashboard",
+    "Description": "This will publish the dashboard. Anyone with a link will be able to view.",
+    "PublishDashboardAction": "Publish dashboard",
+    "InternalVersionNotes": "Internal version notes",
+    "InternalVersionNotesDescription": "Describe what changes you are publishing to the dashboard. Only admins and editors can see these notes.",
+    "MissingVersionNotesError": "Please enter version notes.",
+    "FriendlyURL": "URL",
+    "FriendlyURLDescription": "Edit or confirm the URL that will be used to publish this dashboard. The domain name cannot be edited.",
+    "FriendlyURLRequired": "Please enter friendly url.",
+    "InvalidFriendlyURL": "Please enter a valid URL.",
+    "AcknowledgementRequired": "You must acknowledge the terms and conditions before publishing.",
+    "FailToPublishUrlAlreadyExists": "Failed to publish dashboard. The selected URL is already being used for an existing dashboard. Please change it and try again.",
+    "FailToPublishError": "Failed to publish dashboard. Please try again.",
+    "OverwriteWarning": "I also understand that this will overwrite the existing published version of the dashboard.",
+    "ResolveErrors": "Unable to publish dashboard. Please resolve try again later.",
+    "PublishSuccess": "Dashboard was successfully published.",
+    "PublishSuccessDescription": "Visitors with a link can now view your published dashboard.",
+    "PublishedSuccessAlert": "'{{dashboardName}}' dashboard was successfully published.",
+    "ViewPublishedDashboard": "View the published dashboard"
   }
 }

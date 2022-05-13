@@ -168,14 +168,6 @@ describe("Tabs tests", () => {
     expect(dashboard1).toBeInTheDocument();
   });
 
-  test("renders a publish queue tab", async () => {
-    const { getByText } = render(<DashboardListing />, {
-      wrapper: MemoryRouter,
-    });
-
-    expect(getByText("Publish queue (0)")).toBeInTheDocument();
-  });
-
   test("renders an archived tab", async () => {
     const { getByText } = render(<DashboardListing />, {
       wrapper: MemoryRouter,

@@ -52,7 +52,6 @@ type UseDashboardsHook = {
   dashboards: Array<Dashboard>;
   draftsDashboards: Array<Dashboard>;
   publishedDashboards: Array<Dashboard>;
-  pendingDashboards: Array<Dashboard>;
   archivedDashboards: Array<Dashboard>;
   reloadDashboards: Function;
 };
@@ -61,7 +60,6 @@ export function useDashboards(): UseDashboardsHook {
   const [loading, setLoading] = useState(false);
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   const [draftsDashboards, setDraftsDashboards] = useState<Dashboard[]>([]);
-  const [pendingDashboards, setPendingDashboards] = useState<Dashboard[]>([]);
   const [publishedDashboards, setPublishedDashboards] = useState<Dashboard[]>(
     []
   );
@@ -73,17 +71,15 @@ export function useDashboards(): UseDashboardsHook {
     if (data) {
       setDashboards(data);
       setDraftsDashboards(
-        data.filter((dashboard) => dashboard.state === DashboardState.Draft)
+        data.filter(
+          (dashboard) =>
+            dashboard.state === DashboardState.Draft ||
+            dashboard.state === DashboardState.PublishPending
+        )
       );
 
       setPublishedDashboards(
         data.filter((dashboard) => dashboard.state === DashboardState.Published)
-      );
-
-      setPendingDashboards(
-        data.filter(
-          (dashboard) => dashboard.state === DashboardState.PublishPending
-        )
       );
 
       setArchivedDashboards(
@@ -102,7 +98,6 @@ export function useDashboards(): UseDashboardsHook {
     dashboards,
     draftsDashboards,
     publishedDashboards,
-    pendingDashboards,
     archivedDashboards,
     reloadDashboards: fetchData,
   };

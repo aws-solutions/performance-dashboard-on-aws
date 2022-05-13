@@ -22,7 +22,6 @@ function DashboardListing() {
   const {
     draftsDashboards,
     publishedDashboards,
-    pendingDashboards,
     archivedDashboards,
     reloadDashboards,
     loading,
@@ -223,14 +222,6 @@ function DashboardListing() {
                 onDelete={onDeleteDashboards}
                 onCopy={onCopyDashboards}
               />
-            </div>
-            <div
-              id="pending"
-              label={`${t("DashboardListing.PublishQueue")} (${
-                pendingDashboards.length
-              })`}
-            >
-              <PublishQueueTab dashboards={pendingDashboards} />
             </div>
             <div
               id="published"

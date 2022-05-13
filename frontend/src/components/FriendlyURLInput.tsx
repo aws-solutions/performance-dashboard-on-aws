@@ -1,116 +1,85 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import Button from "./Button";
-import Modal from "./Modal";
-import { useTranslation } from "react-i18next";
+import React from "react";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useWindowSize } from "../hooks";
 
 interface Props {
-  value?: string;
+  name: string;
+  id: string;
+  label: string;
+  hint?: string | React.ReactNode;
+  register?: Function;
+  required?: boolean;
+  validate?: Function;
+  disabled?: boolean;
+  defaultValue?: string;
+  error?: string;
   onChange?: Function;
-  showWarning?: boolean;
+  className?: string;
+  groupClassName?: string;
+  baseUrl?: string;
 }
 
-interface FormValues {
-  friendlyURL: string;
-}
+function FriendlyURLInput(props: Props) {
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
-function FriendlyURLInput({ value, onChange, showWarning }: Props) {
-  const { t } = useTranslation();
-  const [isEditing, setIsEditing] = useState(false);
-  const { register, reset, errors, getValues, trigger, setValue } =
-    useForm<FormValues>({
-      defaultValues: {
-        friendlyURL: value,
-      },
-    });
-
-  useEffect(() => {
-    if (value) {
-      reset({
-        friendlyURL: value,
-      });
-    }
-  }, [value, reset]);
-
-  const onSubmit = async () => {
-    const isValid = await trigger();
-    if (isValid) {
-      if (onChange) {
-        const values = getValues();
-        onChange(values.friendlyURL);
-      }
-
-      setIsEditing(false);
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    if (props.onChange) {
+      props.onChange(event);
     }
   };
 
-  const sanitizeUrl = (value: string) => {
-    let sanitized = value || "";
-    sanitized = sanitized.replace(/ /g, "-");
-    sanitized = sanitized.toLocaleLowerCase();
-    sanitized = sanitized.replace(/[!#$&'\(\)\*\+,\/:;=\?@\[\]]+/g, "");
-    setValue("friendlyURL", sanitized);
-  };
+  let formGroupClassName = "usa-form-group";
+  if (props.error) {
+    formGroupClassName += " usa-form-group--error";
+  }
+
+  let className = "usa-input ";
+  if (props.className) {
+    className += props.className;
+  }
 
   return (
-    <>
-      <Modal
-        isOpen={isEditing}
-        title={t("EditURLComponent.EditURL")}
-        buttonType={t("Save")}
-        buttonAction={onSubmit}
-        closeModal={() => setIsEditing(false)}
-        message={
-          <div className="usa-form-group">
-            <label htmlFor="friendlyURL" className="usa-label text-bold">
-              {t("EditURLComponent.DashboardURL")}
-            </label>
-            <div className="usa-hint">
-              {showWarning
-                ? t("EditURLComponent.AreYouSure") +
-                  t("EditURLComponent.NoAccess")
-                : t("EditURLComponent.Guidance")}
-            </div>
-            {errors.friendlyURL && (
-              <span
-                className="usa-error-message"
-                id="input-error-message"
-                role="alert"
-              >
-                {t("EditURLComponent.Error")}
-              </span>
-            )}
-            <div className="usa-input-group">
-              <div className="usa-input-prefix">
-                {window.location.protocol}//{window.location.hostname}/
-              </div>
-              <input
-                id="friendlyURL"
-                className="usa-input"
-                name="friendlyURL"
-                type="text"
-                onChange={(e: any) => sanitizeUrl(e.target.value)}
-                ref={register({
-                  required: true,
-                })}
-              />
-            </div>
-          </div>
-        }
-      />
-      <div className="usa-hint">{t("EditURLComponent.Guidance")}</div>
-      <p className="font-sans-lg">
-        https://{window.location.hostname}/{value}
-        <Button
-          type="button"
-          variant="unstyled"
-          className="margin-left-2 text-bold text-base-dark hover:text-base-darker active:text-base-darkest"
-          onClick={() => setIsEditing(true)}
+    <div className={formGroupClassName} role="contentinfo">
+      <label htmlFor={props.id} className="usa-label text-bold">
+        {props.label}
+        {props.label && props.required && <span>&#42;</span>}
+      </label>
+      <div id={`${props.id}-description`} className="usa-hint">
+        {props.hint}
+      </div>
+      {props.error && (
+        <span
+          className="usa-error-message"
+          id="input-error-message"
+          role="alert"
         >
-          {t("EditURLComponent.EditURL")}
-        </Button>
-      </p>
-    </>
+          {props.error}
+        </span>
+      )}
+      <div className={`usa-input-group ${props.groupClassName}`}>
+        {props.baseUrl && (
+          <div className="usa-input-prefix bg-base-lighter border-right height-full display-flex flex-row">
+            <span className="flex-align-self-center">
+              <FontAwesomeIcon icon={faLock} className="margin-right-1" />
+              {props.baseUrl}
+            </span>
+          </div>
+        )}
+        <input
+          id={props.id}
+          aria-describedby={`${props.id}-description`}
+          className={className}
+          name={props.name}
+          type="text"
+          defaultValue={props.defaultValue}
+          ref={props.register}
+          disabled={props.disabled}
+          onChange={handleChange}
+        />
+      </div>
+    </div>
   );
 }
 

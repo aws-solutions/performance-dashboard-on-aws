@@ -198,6 +198,7 @@ async function publishDashboard(req: Request, res: Response) {
   const dashboard = await repo.getDashboardById(id);
 
   if (
+    dashboard.state !== DashboardState.Draft &&
     dashboard.state !== DashboardState.PublishPending &&
     dashboard.state !== DashboardState.Archived
   ) {
@@ -227,6 +228,9 @@ async function publishDashboard(req: Request, res: Response) {
   return res.send();
 }
 
+/**
+ * @deprecated Removing the pending state from the dashboard
+ */
 async function publishPendingDashboard(req: Request, res: Response) {
   const user = req.user;
   const { id } = req.params;

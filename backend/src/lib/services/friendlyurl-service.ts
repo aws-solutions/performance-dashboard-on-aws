@@ -55,6 +55,9 @@ async function isFriendlyURLAvailable(
   dashboard: Dashboard,
   friendlyURL: string
 ) {
+  if (friendlyURL.toLowerCase().trim() === "admin") {
+    return false;
+  }
   try {
     const repo = DashboardRepository.getInstance();
     const existingDashboard = await repo.getDashboardByFriendlyURL(friendlyURL);

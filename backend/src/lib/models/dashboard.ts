@@ -6,6 +6,10 @@ export enum DashboardState {
   Draft = "Draft",
   Published = "Published",
   Archived = "Archived",
+  /**
+   * @type {string}
+   * @deprecated in favor of {@link Draft}
+   */
   PublishPending = "PublishPending",
   Inactive = "Inactive",
 }

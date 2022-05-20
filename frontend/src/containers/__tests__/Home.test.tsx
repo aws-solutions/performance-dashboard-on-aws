@@ -21,8 +21,8 @@ test("renders homepage description", async () => {
 
 test("renders dashboards list", async () => {
   const { getByText } = render(<Home />, { wrapper: MemoryRouter });
-  expect(getByText("Topic Area Bananas")).toBeInTheDocument();
+  expect(getByText("Topic Area Bananas (1)")).toBeInTheDocument();
   expect(getByText("Dashboard One")).toBeInTheDocument();
-  expect(getByText("Topic Area Grapes")).toBeInTheDocument();
+  expect(getByText("Topic Area Grapes (1)")).toBeInTheDocument();
   expect(getByText("Dashboard Two")).toBeInTheDocument();
 });

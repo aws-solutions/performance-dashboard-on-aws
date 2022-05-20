@@ -1,5 +1,6 @@
 import React, { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
+import "./Tab.scss";
 
 interface Props {
   id: string;
@@ -25,14 +26,14 @@ function Tab(props: Props) {
   };
 
   let className =
-    "display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md";
+    "tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md";
 
   let ariaLabelStr = `${props.container} ${t("Tab")} ${
     props.label.split("(")[0]
   }`;
 
   if (props.activeTab === props.id) {
-    className += " border-base-dark border-x-0 border-top-0 border-bottom-05";
+    className += " tab-active ";
     ariaLabelStr = `${t("Active")} ${ariaLabelStr}`;
   }
 

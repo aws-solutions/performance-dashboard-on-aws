@@ -68,7 +68,10 @@ function Home() {
               <Accordion.Item
                 id={topicarea.id}
                 key={topicarea.id}
-                title={topicarea.name}
+                title={
+                  topicarea.name + " (" + topicarea.dashboards?.length + ")"
+                }
+                hidden={true}
               >
                 {topicarea.dashboards?.map((dashboard) => {
                   const updatedAt = dateFormatter(dashboard.updatedAt);

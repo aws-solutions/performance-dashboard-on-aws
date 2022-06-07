@@ -33,6 +33,7 @@
     "i18next": "^19.8.4",
     "papaparse": "^5.3.0",
     "react": "^16.14.0",
+    "react-beautiful-dnd": "^13.1.0",
     "react-csv": "^2.0.3",
     "react-datepicker": "^3.7.0",
     "react-dnd": "^14.0.2",

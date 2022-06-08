@@ -61,6 +61,10 @@
   "SkipToMainContent": "Pular para conteúdo principal",
   "LastUpdatedLabel": "Última atualização",
   "SearchButton": "Pesquisar",
+  "draft": "rascunho",
+  "published": "publicado",
+  "archived": "arquivado",
+  "publishQueue": "fila de publicação",
   "ArchiveButton": "Arquivar",
   "CopyButton": "Copiar",
   "ClearSearchText": "Limpar termos de pesquisa",
@@ -94,6 +98,7 @@
   "MoveInOut": "Mover itens de conteúdo para dentro e fora desta seção",
   "ChartsTablesMore": "gráficos, tabelas, texto e muito mais como conteúdo.",
   "ContentType": "Tipo de conteúdo",
+  "ActionsContent": "Ações para {{name}}",
   "DeleteContent": "Excluir {{name}}",
   "EditContent": "Editar {{name}}",
   "Name": "nome",
@@ -293,11 +298,13 @@
     "MetricValueError": "Especifique um valor",
     "MetricFormatHint": "Selecionar um formato",
     "MetricCurrencyHint": "Selecionar uma moeda",
-    "ChangeOverTime": "Alteração ao longo do tempo (opcional)",
-    "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo, +10,1% ou -56%. A maioria inclui “+” ou “-”.",
+    "ShowTimeChange": "Mostrar a alteração ao longo do tempo",
+    "ChangeOverTime": "Alteração ao longo do tempo",
+    "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo,+10,1% ou -56%. Ele deve incluir o sinal “+” ou “-”.",
     "ChangeOverTimeError": "Deve começar com “+” ou “-”.",
-    "StartDateOptional": "Data de início (opcional)",
-    "EndDateOptional": "Data de término (opcional)",
+    "ShowDateRange": "Incluir um período",
+    "StartDate": "Data de início",
+    "EndDate": "Data de término",
     "MetricSuccessfullyAdded": "Métrica adicionada com êxito."
   },
   "EditMetricScreen": {
@@ -309,11 +316,13 @@
     "MetricValue": "Valor da métrica",
     "MetricValueHint": "Insira um número aqui.",
     "MetricValueError": "Especifique um valor",
-    "ChangeOverTime": "Alteração ao longo do tempo (opcional)",
-    "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo, +10,1% ou -56%. A maioria inclui “+” ou “-”.",
+    "ShowTimeChange": "Mostrar a alteração ao longo do tempo",
+    "ChangeOverTime": "Alteração ao longo do tempo",
+    "ChangeOverTimeHint": "Indique o aumento ou a diminuição desde o período anterior. Por exemplo,+10,1% ou -56%. Ele deve incluir o sinal “+” ou “-”.",
     "ChangeOverTimeError": "Deve começar com “+” ou “-”.",
-    "StartDateOptional": "Data de início (opcional)",
-    "EndDateOptional": "Data de término (opcional)",
+    "ShowDateRange": "Incluir um período",
+    "StartDate": "Data de início",
+    "EndDate": "Data de término",
     "MetricSuccessfullyEdited": "Métrica editada com êxito."
   },
   "AddMetricsScreen": {
@@ -511,7 +520,7 @@
   "AcknowledgeStatement": "Declaração de confirmação",
   "EditAcknowledgeStatementError": "Especifique a declaração de confirmação",
   "PublishWorkflow": {
-    "OverwriteWarning": "Também compreendo que isso substituirá a versão publicada existente do painel.",
+    "OverwriteWarning": "Também entendo que isso substituirá a versão publicada existente do painel.",
     "InternalVersionNotes": "Notas internas de versão",
     "InternalVersionNotesDescription": "Descreva quais alterações você está publicando no painel.",
     "OnlyAccessedByAdmins": "As notas de versão só podem ser acessadas por administradores e editores.",
@@ -524,7 +533,7 @@
     "FailToSaveReleaseNotesError": "Falha ao salvar as notas de release. Tente novamente.",
     "MissingVersionNotesError": "Insira as notas da versão",
     "ReturnToDraftSuccessAlert": "Painel “{{dashboardName}}” retornado com êxito ao estado de rascunho.",
-    "PublishedSuccessAlert": "Painel “{{dashboardName}}” publicado com êxito.",
+    "PublishedSuccessAlert": "O painel '{{dashboardName}}' foi publicado com êxito.",
     "TitleLabel": "{{dashboard}}: {{step}}",
     "ActionBarLabel": "Barra de ferramentas"
   },
@@ -594,14 +603,6 @@
     "RenamePlural": "Renomear várias áreas de tópicos",
     "RenamePluralExample": "Por exemplo, “ministérios”",
     "RenameError": "Especifique um título"
-  },
-  "EditURLComponent": {
-    "EditURL": "Editar URL",
-    "DashboardURL": "URL do painel",
-    "AreYouSure": "Tem certeza de que deseja editar o URL deste painel? ",
-    "NoAccess": "Os usuários não poderão acessar o painel com o URL antigo.",
-    "Guidance": "Edite ou confirme o URL que será usado para publicar este painel. O nome do domínio não pode ser editado.",
-    "Error": "Insira um URL válido"
   },
   "SettingsTopicAreaEdit": "Editar a área de tópico",
   "SettingsTopicAreaName": "Nome da área do tópico",
@@ -952,6 +953,7 @@
   "SupportContactEmailEditSuccess": "E-mail do contato de suporte editado com êxito.",
   "Draft": "Rascunho",
   "DashboardContent": "Conteúdo do painel",
+  "ContentItems": "Itens de conteúdo",
   "ExpandPreview": "Visualização em tela cheia",
   "ClosePreview": "Sair da visualização em tela cheia",
   "Admin": "Administrador",
@@ -959,7 +961,8 @@
   "GlobalUser": "usuário",
   "DashboardWasCopied": "foi copiado com êxito.",
   "Copy": "Copiar",
-  "CopyContent": "Copiar {{name}}",
+  "Duplicate": "Duplicar",
+  "DuplicateContent": "Duplicar {{name}}",
   "DownloadCSV": "Baixar a tabela",
   "MobilePreview": "Pré-visualização para dispositivos móveis",
   "MetricsCenterAlign": "Exibição com alinhamento central",
@@ -1030,5 +1033,40 @@
     "PreviewDashboard": "Pré-visualizar painel",
     "DataTableActions": "Ações da tabela de dados"
   },
-  "percentage": "{{pct}}%"
+  "percentage": "{{pct}}%",
+  "Search": {
+    "SearchResults": "Resultados da pesquisa",
+    "EnterSearchTerm": "Insira alguns termos de pesquisa para obter melhores resultados",
+    "SearchDashboards": "Pesquisar painéis {{state}}",
+    "SearchUsers": "Pesquisar usuários",
+    "SearchDynamicDatasets": "Pesquisar conjuntos de dados dinâmicos"
+  },
+  "Pagination": {
+    "Pagination": "Paginação",
+    "Previous": "Anterior",
+    "Next": "Próximo",
+    "GoToPage": "Ir para a página {{page}}",
+    "LastPage": "última página"
+  },
+  "PublishDashboardModal": {
+    "Title": "Publicar painel",
+    "Description": "Isso publicará o painel. Qualquer pessoa com um link poderá visualizar.",
+    "PublishDashboardAction": "Publicar painel",
+    "InternalVersionNotes": "Notas internas de versão",
+    "InternalVersionNotesDescription": "Descreva as alterações que você está publicando no painel. Somente administradores e editores podem ver essas notas.",
+    "MissingVersionNotesError": "Insira as notas de versão.",
+    "FriendlyURL": "URL",
+    "FriendlyURLDescription": "Edite ou confirme o URL que será usado para publicar este painel. O nome do domínio não pode ser editado.",
+    "FriendlyURLRequired": "Insira URL amigável.",
+    "InvalidFriendlyURL": "Insira um URL válido",
+    "AcknowledgementRequired": "Você deve confirmar os termos e condições antes de publicar.",
+    "FailToPublishUrlAlreadyExists": "Falha ao publicar o painel. O URL selecionado já está sendo usado para um painel existente. Altere-o e tente novamente.",
+    "FailToPublishError": "Falha ao publicar o painel. Tente novamente.",
+    "OverwriteWarning": "Também entendo que isso substituirá a versão publicada existente do painel.",
+    "ResolveErrors": "Não foi possível publicar o painel. Tente novamente mais tarde.",
+    "PublishSuccess": "O painel foi publicado com êxito.",
+    "PublishSuccessDescription": "Os visitantes com um link agora podem visualizar seu painel publicado.",
+    "PublishedSuccessAlert": "O painel '{{dashboardName}}' foi publicado com êxito.",
+    "ViewPublishedDashboard": "Visualizar o painel publicado"
+  }
 }

@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2022-06-08
+
+- Made improvements to meet WCAG accessibility requirements
+  - Pagination
+  - Fix contrast colors in multiple components
+  - Associate hints with inputs
+  - Improve accessibility of text areas and table buttons
+  - Improve the search functionality's user experience and accessibility
+  - Add aria-role alert for Alert component
+  - Makes interactive legends accessible and programmatically available
+  - Add programmatic status messages to tables
+  - Make modal experience more accessible
+- Add a hover state to tabs and make topic areas hidden by default
+- Improve the layout of the add/edit metric screen
+- Add support for the new table pagination layout
+- Fix numbering logic
+- Fix the Save functionality in Edit Table/Chart
+- Perform html escape on the returned error message
+- Improves the UX for the CheckData component
+- Updated dependency libraries to address potential security vulnerabilities
+
+## [1.4.0]
+
 ## [1.3.0] - 2022-03-07
 
 - Made improvements to meet WCAG accessibility requirements

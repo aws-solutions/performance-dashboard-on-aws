@@ -18,11 +18,7 @@ function Home() {
   const history = useHistory<LocationState>();
 
   const onSearch = (query: string) => {
-    if (query == undefined || query == "") {
-      history.push("/");
-    } else {
-      history.push("/public/search?q=" + query);
-    }
+    history.push("/public/search?q=" + query);
   };
 
   const onClear = () => {
@@ -72,7 +68,10 @@ function Home() {
               <Accordion.Item
                 id={topicarea.id}
                 key={topicarea.id}
-                title={topicarea.name}
+                title={
+                  topicarea.name + " (" + topicarea.dashboards?.length + ")"
+                }
+                hidden={true}
               >
                 {topicarea.dashboards?.map((dashboard) => {
                   const updatedAt = dateFormatter(dashboard.updatedAt);

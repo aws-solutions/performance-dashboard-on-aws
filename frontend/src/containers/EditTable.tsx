@@ -474,9 +474,9 @@ function EditTable() {
           aria-controls="panel1"
         >
           <button
-            className={
-              step !== 0 ? "usa-button usa-button--outline" : "usa-button"
-            }
+            className={`usa-button tabSelector ${
+              step !== 0 ? "usa-button--outline" : ""
+            }`}
             type="button"
             onClick={() => setStep(0)}
             style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
@@ -492,9 +492,9 @@ function EditTable() {
           aria-controls="panel2"
         >
           <button
-            className={
-              step !== 1 ? "usa-button usa-button--outline" : "usa-button"
-            }
+            className={`usa-button tabSelector ${
+              step !== 1 ? "usa-button--outline" : ""
+            }`}
             type="button"
             onClick={() => setStep(1)}
             style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
@@ -511,9 +511,9 @@ function EditTable() {
           aria-controls="panel3"
         >
           <button
-            className={
-              step !== 2 ? "usa-button usa-button--outline" : "usa-button"
-            }
+            className={`usa-button tabSelector ${
+              step !== 2 ? "usa-button--outline" : ""
+            }`}
             type="button"
             onClick={() => setStep(2)}
             style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
@@ -546,7 +546,7 @@ function EditTable() {
         />
       ) : (
         <>
-          <div className="grid-row width-desktop">
+          <div className="grid-row">
             <form
               onSubmit={handleSubmit(onSubmit)}
               aria-labelledby="editTableFormHeader"

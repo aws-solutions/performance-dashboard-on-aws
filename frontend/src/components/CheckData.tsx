@@ -6,6 +6,7 @@ import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Table from "./Table";
 import { useTranslation } from "react-i18next";
+import { useWindowSize } from "../hooks";
 
 interface Props {
   hiddenColumns: Set<string>;
@@ -30,6 +31,8 @@ interface Props {
 
 function CheckData(props: Props) {
   const { t } = useTranslation();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const handleHideFromVisualizationChange = useCallback(
     (event: React.FormEvent<HTMLInputElement>) => {
@@ -198,15 +201,17 @@ function CheckData(props: Props) {
   return (
     <>
       <fieldset className="usa-fieldset">
-        <legend className="usa-hint grid-col-6 margin-top-3 margin-bottom-1">
+        <legend
+          className={`usa-hint ${isMobile ? "grid-col-12" : "grid-col-6"}`}
+        >
           {t("CheckDataDescription", { widgetType: props.widgetType })}
         </legend>
 
-        <div className="grid-col-3 margin-top-3 font-sans-md text-bold">
+        <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
           {t("IncludeInVisualization")}
         </div>
 
-        <div className="check-data-table grid-col-9">
+        <div className="check-data-table grid-col-12">
           <Table
             selection="none"
             rows={checkDataTableRows}
@@ -232,7 +237,7 @@ function CheckData(props: Props) {
         </div>
         <br />
 
-        <div className="grid-col-3 margin-top-3 font-sans-md text-bold">
+        <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
           {t("FormatColumns")}
         </div>
 
@@ -245,7 +250,7 @@ function CheckData(props: Props) {
               <div key={header} className="margin-top-4">
                 <span className="text-base">Column: {header}</span>
 
-                <div className="grid-col-3">
+                <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
                   <Dropdown
                     id={header}
                     name="dataType"
@@ -269,7 +274,7 @@ function CheckData(props: Props) {
                 </div>
 
                 {props.dataTypes.get(header) === ColumnDataType.Number && (
-                  <div className="grid-col-3">
+                  <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
                     <Dropdown
                       id={header}
                       name="numberType"
@@ -298,7 +303,7 @@ function CheckData(props: Props) {
 
                 {props.dataTypes.get(header) === ColumnDataType.Number &&
                   props.numberTypes.get(header) === NumberDataType.Currency && (
-                    <div className="grid-col-3">
+                    <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
                       <Dropdown
                         id={header}
                         name="currencyType"
@@ -332,19 +337,25 @@ function CheckData(props: Props) {
         </div>
 
         <br />
-        <Button variant="outline" type="button" onClick={props.backStep}>
+        <Button
+          variant="outline"
+          type="button"
+          onClick={props.backStep}
+          className="margin-top-1"
+        >
           {t("BackButton")}
         </Button>
         <Button
           type="button"
           onClick={props.advanceStep}
           disabled={!props.data.length}
+          className="margin-top-1"
         >
           {t("ContinueButton")}
         </Button>
         <Button
           variant="unstyled"
-          className="text-base-dark hover:text-base-darker active:text-base-darkest"
+          className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
           type="button"
           onClick={props.onCancel}
         >

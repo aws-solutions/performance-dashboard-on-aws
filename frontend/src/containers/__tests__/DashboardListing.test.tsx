@@ -82,16 +82,18 @@ describe("Tabs tests", () => {
     expect(dashboard1).toBeInTheDocument();
 
     // Use search input to filter
-    const search = getByLabelText("Search");
+    const search = getByLabelText("Search draft dashboards");
     await act(async () => {
       fireEvent.input(search, {
         target: {
           value: "Dashboard Two",
         },
       });
+    });
 
-      const searchButton = getByRole("button", { name: "Search" });
-      fireEvent.click(searchButton);
+    const searchButton2 = getByRole("button", { name: "Search" });
+    await act(async () => {
+      fireEvent.click(searchButton2);
     });
 
     // Dashboard one should dissapear
@@ -103,58 +105,14 @@ describe("Tabs tests", () => {
           value: "Dashboard One",
         },
       });
+    });
 
-      const searchButton = getByRole("button", { name: "Search" });
+    const searchButton = getByRole("button", { name: "Search" });
+    await act(async () => {
       fireEvent.click(searchButton);
     });
 
     dashboard1 = getByRole("link", { name: "Dashboard One" });
-
-    // Dashboard one should appear
-    expect(dashboard1).toBeInTheDocument();
-  });
-
-  test("filters dashboards based on topic area name search input", async () => {
-    const { getByLabelText, getByRole, getByText } = render(
-      <DashboardListing />,
-      {
-        wrapper: MemoryRouter,
-      }
-    );
-
-    let dashboard1 = getByText("Topic Area Bananas");
-
-    // Make sure the dashboard show up in the table
-    expect(dashboard1).toBeInTheDocument();
-
-    // Use search input to filter
-    const search = getByLabelText("Search");
-    await act(async () => {
-      fireEvent.input(search, {
-        target: {
-          value: "Topic Area Grapes",
-        },
-      });
-
-      const searchButton = getByRole("button", { name: "Search" });
-      fireEvent.click(searchButton);
-    });
-
-    // Dashboard one should dissapear
-    expect(dashboard1).not.toBeInTheDocument();
-
-    await act(async () => {
-      fireEvent.input(search, {
-        target: {
-          value: "Topic Area Bananas",
-        },
-      });
-
-      const searchButton = getByRole("button", { name: "Search" });
-      fireEvent.click(searchButton);
-    });
-
-    dashboard1 = getByText("Topic Area Bananas");
 
     // Dashboard one should appear
     expect(dashboard1).toBeInTheDocument();
@@ -174,29 +132,33 @@ describe("Tabs tests", () => {
     expect(dashboard1).toBeInTheDocument();
 
     // Use search input to filter
-    const search = getByLabelText("Search");
+    const search = getByLabelText("Search draft dashboards");
     await act(async () => {
       fireEvent.input(search, {
         target: {
           value: "another test user",
         },
       });
+    });
 
-      const searchButton = getByRole("button", { name: "Search" });
-      fireEvent.click(searchButton);
+    const searchButton3 = getByRole("button", { name: "Search" });
+    await act(async () => {
+      fireEvent.click(searchButton3);
     });
 
     // Dashboard one should dissapear
     expect(dashboard1).not.toBeInTheDocument();
 
     await act(async () => {
-      fireEvent.input(search, {
+      fireEvent.change(search, {
         target: {
           value: "test user",
         },
       });
+    });
 
-      const searchButton = getByRole("button", { name: "Search" });
+    const searchButton = getByRole("button", { name: "Search" });
+    await act(async () => {
       fireEvent.click(searchButton);
     });
 
@@ -204,14 +166,6 @@ describe("Tabs tests", () => {
 
     // Dashboard one should appear
     expect(dashboard1).toBeInTheDocument();
-  });
-
-  test("renders a publish queue tab", async () => {
-    const { getByText } = render(<DashboardListing />, {
-      wrapper: MemoryRouter,
-    });
-
-    expect(getByText("Publish queue (0)")).toBeInTheDocument();
   });
 
   test("renders an archived tab", async () => {

@@ -2,9 +2,11 @@ import React, { createRef, useCallback } from "react";
 import { Metric } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faGripLinesVertical,
+  faGripLines,
   faArrowUp,
   faArrowDown,
+  faEllipsisV,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import "./MetricsList.css";
@@ -13,6 +15,8 @@ import { useTranslation } from "react-i18next";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
+import DropdownMenu from "./DropdownMenu";
+import { MenuItem } from "@reach/menu-button";
 
 interface Props {
   onClick: Function;
@@ -111,6 +115,31 @@ function MetricsList(props: Props) {
     [props.metrics, onDrag]
   );
 
+  function ActionMenu(metric: Metric) {
+    return (
+      <DropdownMenu
+        buttonText=""
+        icon={faEllipsisV}
+        variant="unstyled"
+        ariaLabel={t("Actions")}
+      >
+        <MenuItem>
+          <Button
+            variant="unstyled"
+            className="margin-1"
+            ariaLabel={t("DeleteContent", {
+              name: metric.title,
+            })}
+            onClick={() => onDelete(metric)}
+          >
+            <FontAwesomeIcon size="xs" icon={faTrash} />
+            {t("Delete")}
+          </Button>
+        </MenuItem>
+      </DropdownMenu>
+    );
+  }
+
   return (
     <div className="display-block" role="group" aria-label={t("Metrics")}>
       <label className="margin-bottom-0 margin-top-2 usa-label text-bold">
@@ -149,15 +178,15 @@ function MetricsList(props: Props) {
                   itemType="metric"
                 >
                   <div className="grid-row grid-col flex-2 padding-1">
-                    <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center">
-                      <FontAwesomeIcon icon={faGripLinesVertical} size="1x" />
+                    <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-1">
+                      <FontAwesomeIcon icon={faGripLines} size="xs" />
                     </div>
-                    <div className="grid-col flex-5 text-center display-flex flex-align-center flex-justify-center font-sans-md">
+                    <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-1">
                       {index + 1}
                     </div>
-                    <div className="grid-col flex-4 grid-row flex-column text-center">
+                    <div className="grid-col flex-4 grid-row flex-column text-center margin-left-1 margin-right-1">
                       <div className="grid-col flex-6">
-                        {index > 0 && (
+                        {index > 0 ? (
                           <Button
                             variant="unstyled"
                             type="button"
@@ -174,10 +203,12 @@ function MetricsList(props: Props) {
                               icon={faArrowUp}
                             />
                           </Button>
+                        ) : (
+                          <br />
                         )}
                       </div>
                       <div className="grid-col flex-6">
-                        {index < props.metrics.length - 1 && (
+                        {index < props.metrics.length - 1 ? (
                           <Button
                             variant="unstyled"
                             type="button"
@@ -194,47 +225,33 @@ function MetricsList(props: Props) {
                               icon={faArrowDown}
                             />
                           </Button>
+                        ) : (
+                          <br />
                         )}
                       </div>
                     </div>
                   </div>
                   <div className="border-base-lighter border-left"></div>
-                  <div className="grid-col flex-10 grid-row padding-1 margin-y-1">
+                  <div className="grid-col flex-10 grid-row margin-y-1">
                     <div
-                      className="grid-col flex-8 font-important usa-tooltip text-bold"
+                      className="grid-col flex-11 usa-tooltip"
                       data-position="bottom"
                       title={metric.title}
                     >
-                      <div
-                        style={{ marginTop: "2px" }}
-                        className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis"
-                      >
-                        {metric.title}
-                      </div>
-                    </div>
-                    <div className="grid-col grid-row flex-4">
-                      <div className="grid-col flex-6 text-right margin-right-1">
+                      <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
                         <Button
                           variant="unstyled"
                           type="button"
-                          className="margin-left-1 margin-top-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                          className="margin-left-1 margin-top-0-important text-base-dark hover:text-base-darker active:text-base-darkest text-bold"
                           onClick={() => onEdit(metric, index)}
                           ariaLabel={`Edit ${metric.title}`}
                         >
-                          {t("Edit")}
+                          {metric.title}
                         </Button>
                       </div>
-                      <div className="grid-col flex-6">
-                        <Button
-                          variant="unstyled"
-                          type="button"
-                          className="margin-right-2 margin-top-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
-                          onClick={() => onDelete(metric)}
-                          ariaLabel={`Delete ${metric.title}`}
-                        >
-                          {t("Delete")}
-                        </Button>
-                      </div>
+                    </div>
+                    <div className="grid-col flex-1 margin-right-1 text-right">
+                      {ActionMenu(metric)}
                     </div>
                   </div>
                 </ContentItem>

@@ -297,6 +297,7 @@ class DashboardRepository extends BaseRepository {
   /**
    * Set a Dashboard identified by the param `dashboardId` to publish pending state.
    * Returns the updated dashboard object.
+   * @deprecated Removing the pending state from the dashboard
    */
   public async publishPendingDashboard(
     dashboardId: string,

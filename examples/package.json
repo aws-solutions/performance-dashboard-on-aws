@@ -8,7 +8,7 @@
     "test:ci": "jest --coverage --ci --passWithNoTests",
     "build": "npm run clean && tsc && npm run build:backend && npm run install:prod",
     "build:backend": "npm run build --prefix ../backend",
-    "install:prod": "npm install --production --prefix build && rm -rf backend/* && cp -R ../backend/build/* backend/",
+    "install:prod": "npm install --production --prefix build && mkdir -p ./build/backend && cp -R ../backend/build/* ./build/backend/ && rm ./build/node_modules/performance-dashboard-backend && ln -s $(pwd)/build/backend ./build/node_modules/performance-dashboard-backend",
     "clean": "rm -rf build && rm -rf backend",
     "export": "ts-node src/export.ts && prettier --write resources",
     "import": "ts-node src/import.ts"

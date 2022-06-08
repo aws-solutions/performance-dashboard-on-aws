@@ -17,6 +17,7 @@ import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
+import RenderLegendText from "./Legend";
 import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 
 type Props = {
@@ -224,6 +225,7 @@ const ColumnChartWidget = (props: Props) => {
                 onClick={toggleColumns}
                 onMouseLeave={() => setColumnsHover(null)}
                 onMouseEnter={(e: any) => setColumnsHover(e.dataKey)}
+                formatter={RenderLegendText}
               />
             )}
             {props.columns.length &&

@@ -13,6 +13,7 @@ import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
 import { ColumnMetadata, NumberDataType } from "../models";
+import RenderLegendText from "./Legend";
 
 type Props = {
   title: string;
@@ -212,7 +213,7 @@ const DonutChartWidget = (props: Props) => {
     );
   };
 
-  const renderLegendText = (value: string) => {
+  const renderLegendText = (value: string, entry: any) => {
     let columnMetadata;
     if (parts && parts.length > 1 && props.columnsMetadata) {
       columnMetadata = props.columnsMetadata.find(
@@ -223,7 +224,7 @@ const DonutChartWidget = (props: Props) => {
     return (
       <span>
         <span className="margin-left-05 font-sans-md text-bottom">
-          {value.toLocaleString()}
+          {RenderLegendText(value.toLocaleString(), entry)}
         </span>
         <div className="margin-left-4 margin-bottom-1 text-base-darker text-bold">
           {value && value !== "null" ? (

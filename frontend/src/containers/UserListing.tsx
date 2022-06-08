@@ -159,6 +159,7 @@ function UserListing() {
                   id={t("GlobalSearch")}
                   onSubmit={onSearch}
                   size="small"
+                  placeholder={t("Search.SearchUsers")}
                 />
               </span>
             </li>
@@ -211,6 +212,7 @@ function UserListing() {
         onSelection={onSelect}
         initialSortAscending
         width="100%"
+        pageSize={10}
         columns={useMemo(
           () => [
             {

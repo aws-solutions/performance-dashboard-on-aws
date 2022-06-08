@@ -9,16 +9,7 @@ test("Renders homepage title", async () => {
   const { getByRole } = render(<HomeWithSearch />, {
     wrapper: MemoryRouter,
   });
-  expect(
-    getByRole("heading", { name: "Kingdom of Wakanda" })
-  ).toBeInTheDocument();
-});
-
-test("Renders homepage description", async () => {
-  const { getByText } = render(<HomeWithSearch />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Welcome to our dashboard")).toBeInTheDocument();
+  expect(getByRole("heading", { name: "Search results" })).toBeInTheDocument();
 });
 
 test("Renders dashboards list", async () => {

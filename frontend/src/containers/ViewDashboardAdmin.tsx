@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +28,7 @@ import { Waypoint } from "react-waypoint";
 import Dropdown from "../components/Dropdown";
 import AlertContainer from "./AlertContainer";
 import DropdownMenu from "../components/DropdownMenu";
+import PublishDashboardModal from "../components/PublishDashboardModal";
 
 interface PathParams {
   dashboardId: string;
@@ -49,6 +50,13 @@ function ViewDashboardAdmin() {
   const [activeWidgetId, setActiveWidgetId] = useState("");
   const [activeTabId, setActiveTabId] = useState("");
   const [isOpenCopyModal, setIsOpenCopyModal] = useState(false);
+
+  const draftOrPublishPending = versions.find(
+    (v) =>
+      v.state === DashboardState.Draft ||
+      v.state === DashboardState.PublishPending
+  );
+
   const windowSize = useWindowSize();
 
   const { t } = useTranslation();
@@ -62,11 +70,16 @@ function ViewDashboardAdmin() {
     history.push(UtilsService.getDashboardUrlPath(dashboard));
   };
 
-  const onPublishDashboard = async () => {
+  const [published, setPublished] = useState(false);
+  const dashboardPublished = async () => {
+    setPublished(true);
+  };
+
+  const closePublishModal = async () => {
     setIsOpenPublishModal(false);
-    if (dashboard) {
-      await BackendService.publishPending(dashboard.id, dashboard.updatedAt);
-      history.push(`/admin/dashboard/${dashboard.id}/publish`);
+
+    if (published) {
+      history.push("/admin/dashboards?tab=published");
     }
   };
 
@@ -221,12 +234,6 @@ function ViewDashboardAdmin() {
       />
     );
   }
-
-  const draftOrPublishPending = versions.find(
-    (v) =>
-      v.state === DashboardState.Draft ||
-      v.state === DashboardState.PublishPending
-  );
 
   const statusAndVersion = (
     <ul
@@ -596,17 +603,11 @@ function ViewDashboardAdmin() {
         buttonAction={onRepublishDashboard}
       />
 
-      <Modal
+      <PublishDashboardModal
+        dashboardId={dashboardId}
         isOpen={isOpenPublishModal}
-        closeModal={() => setIsOpenPublishModal(false)}
-        title={t("PreparePublishingModalTitle", {
-          dashboardName: dashboard.name,
-        })}
-        message={t("PreparePublishingModalMessage", {
-          context: dashboard?.widgets.length.toString(),
-        })}
-        buttonType={t("PreparePublishingModalButton")}
-        buttonAction={onPublishDashboard}
+        closeModal={closePublishModal}
+        dashboardPublished={dashboardPublished}
       />
 
       <Modal
@@ -752,9 +753,9 @@ function ViewDashboardAdmin() {
             <hr />
             <Navigation
               stickyPosition={80}
-              offset={240}
+              offset={80}
               area={2}
-              marginRight={27}
+              marginRight={0}
               widgetNameIds={dashboard.widgets
                 .filter(
                   (w) =>
@@ -780,8 +781,17 @@ function ViewDashboardAdmin() {
               .filter((w) => !w.section)
               .map((widget, index) => {
                 return (
-                  <div key={index}>
-                    {widget.widgetType == WidgetType.Section &&
+                  <div
+                    key={index}
+                    style={{
+                      width:
+                        windowSize.width <= moveNavBarWidth ||
+                        !dashboard.displayTableOfContents
+                          ? "100%"
+                          : "75%",
+                    }}
+                  >
+                    {widget.widgetType === WidgetType.Section &&
                     !widget.content.showWithTabs ? (
                       <div className="margin-top-6 usa-prose" id={widget.id}>
                         <WidgetRender

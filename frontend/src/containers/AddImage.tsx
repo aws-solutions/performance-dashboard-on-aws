@@ -7,6 +7,7 @@ import {
   useDashboard,
   useFullPreview,
   useChangeBackgroundColor,
+  useWindowSize,
 } from "../hooks";
 import StorageService from "../services/StorageService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -54,6 +55,8 @@ function AddImage() {
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
   const { fullPreview, fullPreviewButton } = useFullPreview();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -128,8 +131,8 @@ function AddImage() {
   return (
     <>
       <Breadcrumbs crumbs={crumbs} />
-      <div className="grid-row width-desktop grid-gap">
-        <div className="grid-col-6" hidden={fullPreview}>
+      <div className="grid-row grid-gap">
+        <div className="tablet:grid-col-6" hidden={fullPreview}>
           <PrimaryActionBar>
             <h1 id="addImageFormHeader" className="margin-top-0">
               {t("AddImageScreen.AddImage")}
@@ -302,19 +305,25 @@ function AddImage() {
               </fieldset>
               <br />
               <hr />
-              <Button variant="outline" type="button" onClick={goBack}>
+              <Button
+                variant="outline"
+                type="button"
+                onClick={goBack}
+                className="margin-top-1"
+              >
                 {t("AddImageScreen.Back")}
               </Button>
               <Button
                 disabled={imageUploading}
                 type="submit"
                 disabledToolTip={t("AddImageScreen.DisabledToolTip")}
+                className="margin-top-1"
               >
                 {t("AddImageScreen.AddImage")}
               </Button>
               <Button
                 variant="unstyled"
-                className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
                 type="button"
                 onClick={onCancel}
               >
@@ -324,11 +333,11 @@ function AddImage() {
           </PrimaryActionBar>
         </div>
         <section
-          className={fullPreview ? "grid-col-12" : "grid-col-6"}
+          className={fullPreview ? "tablet:grid-col-12" : "tablet:grid-col-6"}
           aria-label={t("ContentPreview")}
         >
           <div className="sticky-preview">
-            {fullPreviewButton}
+            {isMobile ? <br /> : fullPreviewButton}
             <ImageWidget
               title={showTitle ? title : ""}
               summary={summary}

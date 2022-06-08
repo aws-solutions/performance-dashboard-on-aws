@@ -17,7 +17,6 @@ import EditDashboard from "./containers/EditDashboard";
 import DashboardHistory from "./containers/DashboardHistory";
 import ViewDashboard from "./containers/ViewDashboard";
 import ViewDashboardAdmin from "./containers/ViewDashboardAdmin";
-import PublishDashboard from "./containers/PublishDashboard";
 import AddChart from "./containers/AddChart";
 import AddImage from "./containers/AddImage";
 import EditImage from "./containers/EditImage";
@@ -63,7 +62,6 @@ import ChooseStaticDataset from "./containers/ChooseStaticDataset";
 import AccessDenied from "./containers/AccessDenied";
 import Page from "./components/Page";
 import { useTranslation } from "react-i18next";
-import { settings } from "cluster";
 import { useSettings } from "./hooks";
 
 interface AppRoute {
@@ -291,11 +289,6 @@ function App() {
       path: "/admin/dashboard/:dashboardId/history",
       title: t("PageTitle.DashboardHistory"),
       component: DashboardHistory,
-    },
-    {
-      path: "/admin/dashboard/:dashboardId/publish",
-      title: t("PageTitle.PublishDashboard"),
-      component: PublishDashboard,
     },
     {
       path: "/admin/markdown",

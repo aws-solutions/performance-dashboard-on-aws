@@ -35,7 +35,16 @@ function ArchivedTab(props: Props) {
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
               <span>
-                <Search id="search" onSubmit={onSearch} size="small" />
+                <Search
+                  id="search"
+                  onSubmit={onSearch}
+                  size="small"
+                  placeholder={t("Search.SearchDashboards", {
+                    state: t("archived"),
+                  })}
+                  label={t("Search.SearchDashboards", { state: t("archived") })}
+                  wide={true}
+                />
               </span>
             </li>
           </ul>
@@ -49,6 +58,7 @@ function ArchivedTab(props: Props) {
         screenReaderField="name"
         onSelection={onSelect}
         width="100%"
+        pageSize={10}
         columns={React.useMemo(
           () => [
             {

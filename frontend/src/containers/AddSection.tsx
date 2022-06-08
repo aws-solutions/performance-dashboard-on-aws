@@ -6,6 +6,7 @@ import {
   useDashboard,
   useFullPreview,
   useChangeBackgroundColor,
+  useWindowSize,
 } from "../hooks";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -44,6 +45,8 @@ function AddSection() {
   const [showWithTabs, setShowWithTabs] = useState(false);
   const [horizontally, setHorizontally] = useState("horizontally");
   const { fullPreview, fullPreviewButton } = useFullPreview();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const onSubmit = async (values: FormValues) => {
     try {
@@ -125,8 +128,8 @@ function AddSection() {
         />
       ) : (
         <>
-          <div className="grid-row width-desktop grid-gap">
-            <div className="grid-col-6" hidden={fullPreview}>
+          <div className="grid-row grid-gap">
+            <div className="tablet:grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
                 <h1 id="addSectionFormHeader" className="margin-top-0">
                   {t("AddSectionScreen.AddSection")}
@@ -249,15 +252,24 @@ function AddSection() {
                   <br />
                   <br />
                   <hr />
-                  <Button variant="outline" type="button" onClick={goBack}>
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={goBack}
+                    className="margin-top-1"
+                  >
                     {t("BackButton")}
                   </Button>
-                  <Button disabled={creatingWidget} type="submit">
+                  <Button
+                    disabled={creatingWidget}
+                    type="submit"
+                    className="margin-top-1"
+                  >
                     {t("AddSectionScreen.AddSection")}
                   </Button>
                   <Button
                     variant="unstyled"
-                    className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                    className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
                     type="button"
                     onClick={onCancel}
                   >
@@ -267,11 +279,13 @@ function AddSection() {
               </PrimaryActionBar>
             </div>
             <section
-              className={fullPreview ? "grid-col-12" : "grid-col-6"}
+              className={
+                fullPreview ? "tablet:grid-col-12" : "tablet:grid-col-6"
+              }
               aria-label={t("ContentPreview")}
             >
               <div>
-                {fullPreviewButton}
+                {isMobile ? <br /> : fullPreviewButton}
                 {showTitle ? (
                   <h2 className="margin-top-3 margin-left-2px">{title}</h2>
                 ) : (

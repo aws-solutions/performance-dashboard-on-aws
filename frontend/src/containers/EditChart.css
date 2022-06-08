@@ -1,3 +1,7 @@
 .margin-0-important {
   margin: 0 !important;
 }
+
+.tabSelector {
+  height: 50px;
+}

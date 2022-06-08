@@ -13,6 +13,7 @@ import {
   useImage,
   useFullPreview,
   useChangeBackgroundColor,
+  useWindowSize,
 } from "../hooks";
 import Spinner from "../components/Spinner";
 import ImageWidget from "../components/ImageWidget";
@@ -51,6 +52,8 @@ function EditImage() {
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
   const { fullPreview, fullPreviewButton } = useFullPreview();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 600;
 
   const onSubmit = async (values: FormValues) => {
     if (!widget) {
@@ -209,8 +212,8 @@ function EditImage() {
         />
       ) : (
         <>
-          <div className="grid-row width-desktop grid-gap">
-            <div className="grid-col-6" hidden={fullPreview}>
+          <div className="grid-row grid-gap">
+            <div className="tablet:grid-col-6" hidden={fullPreview}>
               <PrimaryActionBar>
                 <h1 id="editImageFormHeader" className="margin-top-0">
                   {t("EditImageScreen.EditImage")}
@@ -399,12 +402,16 @@ function EditImage() {
                   </fieldset>
                   <br />
                   <hr />
-                  <Button disabled={imageUploading} type="submit">
+                  <Button
+                    disabled={imageUploading}
+                    type="submit"
+                    className="margin-top-1"
+                  >
                     {t("Save")}
                   </Button>
                   <Button
                     variant="unstyled"
-                    className="text-base-dark hover:text-base-darker active:text-base-darkest"
+                    className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
                     type="button"
                     onClick={onCancel}
                   >
@@ -414,11 +421,13 @@ function EditImage() {
               </PrimaryActionBar>
             </div>
             <section
-              className={fullPreview ? "grid-col-12" : "grid-col-6"}
+              className={
+                fullPreview ? "tablet:grid-col-12" : "tablet:grid-col-6"
+              }
               aria-label={t("ContentPreview")}
             >
               <div hidden={false} className="sticky-preview">
-                {fullPreviewButton}
+                {isMobile ? <br /> : fullPreviewButton}
                 {loadingFile ? (
                   <Spinner
                     className="text-center margin-top-6"

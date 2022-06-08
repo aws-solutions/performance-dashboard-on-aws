@@ -51,7 +51,16 @@ function DraftsTab(props: Props) {
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
                 <span>
-                  <Search id="search" onSubmit={onSearch} size="small" />
+                  <Search
+                    id="search"
+                    onSubmit={onSearch}
+                    size="small"
+                    placeholder={t("Search.SearchDashboards", {
+                      state: t("draft"),
+                    })}
+                    label={t("Search.SearchDashboards", { state: t("draft") })}
+                    wide={true}
+                  />
                 </span>
               </li>
             </ul>
@@ -100,16 +109,25 @@ function DraftsTab(props: Props) {
       )}
       {!isMobile && (
         <div className="grid-row margin-y-3">
-          <div className="tablet:grid-col-3 padding-top-1px">
+          <div className="tablet:grid-col-4 padding-top-1px">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
                 <span>
-                  <Search id="search" onSubmit={onSearch} size="small" />
+                  <Search
+                    id="search"
+                    onSubmit={onSearch}
+                    size="small"
+                    placeholder={t("Search.SearchDashboards", {
+                      state: t("draft"),
+                    })}
+                    label={t("Search.SearchDashboards", { state: t("draft") })}
+                    wide={true}
+                  />
                 </span>
               </li>
             </ul>
           </div>
-          <div className="tablet:grid-col-9 text-right">
+          <div className="tablet:grid-col-8 text-right">
             <span>
               <DropdownMenu
                 buttonText={t("Actions")}
@@ -157,6 +175,7 @@ function DraftsTab(props: Props) {
         rowTitleComponents={["name", "topicAreaName", "updatedAt", "createdBy"]}
         onSelection={onSelect}
         width="100%"
+        pageSize={10}
         columns={React.useMemo(
           () => [
             {

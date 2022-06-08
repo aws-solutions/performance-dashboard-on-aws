@@ -80,7 +80,7 @@ Object {
               </legend>
               
               <div
-                class=""
+                class="padding-2px "
                 role="radiogroup"
               >
                 <div
@@ -88,9 +88,10 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="text-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="textRadioButton"
                       id="text"
@@ -105,6 +106,7 @@ Object {
                       Text
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="text-description"
                       >
                         Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
                       </p>
@@ -116,9 +118,10 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="metrics-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="metricsRadioButton"
                       id="metrics"
@@ -133,6 +136,7 @@ Object {
                       Metrics
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="metrics-description"
                       >
                         Add one or more metrics to show point-in-time numerical data and trends.
                       </p>
@@ -144,9 +148,10 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="chart-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="chartRadioButton"
                       id="chart"
@@ -161,6 +166,7 @@ Object {
                       Chart
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="chart-description"
                       >
                         Display data as a visualization, including line, bar, column and part-to-whole charts.
                       </p>
@@ -172,9 +178,10 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="table-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="tableRadioButton"
                       id="table"
@@ -189,6 +196,7 @@ Object {
                       Table
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="table-description"
                       >
                         Display data formatted in rows and columns.
                       </p>
@@ -200,9 +208,10 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="image-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="imageRadioButton"
                       id="image"
@@ -217,6 +226,7 @@ Object {
                       Image
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="image-description"
                       >
                         Upload an image to display.
                       </p>
@@ -228,9 +238,10 @@ Object {
                   role="contentinfo"
                 >
                   <div
-                    class="grid-col flex-5"
+                    class="tablet:grid-col"
                   >
                     <input
+                      aria-describedby="section-description"
                       class="usa-radio__input usa-radio__input--tile"
                       data-testid="sectionRadioButton"
                       id="section"
@@ -245,6 +256,7 @@ Object {
                       Section
                       <p
                         class="text-base usa-prose usa-checkbox__label-description"
+                        id="section-description"
                       >
                         Add a section to group similar content items in a list.
                       </p>
@@ -256,13 +268,13 @@ Object {
             <br />
             <hr />
             <button
-              class="usa-button usa-button--base"
+              class="usa-button usa-button--base margin-top-1"
               type="submit"
             >
               Continue
             </button>
             <button
-              class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+              class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1 "
               type="button"
             >
               Cancel
@@ -270,7 +282,7 @@ Object {
           </form>
         </div>
         <div
-          class="tablet:grid-col-6 grid-col-12"
+          class="tablet:grid-col-6"
         />
       </div>
     </div>
@@ -351,7 +363,7 @@ Object {
             </legend>
             
             <div
-              class=""
+              class="padding-2px "
               role="radiogroup"
             >
               <div
@@ -359,9 +371,10 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="text-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="textRadioButton"
                     id="text"
@@ -376,6 +389,7 @@ Object {
                     Text
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="text-description"
                     >
                       Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
                     </p>
@@ -387,9 +401,10 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="metrics-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="metricsRadioButton"
                     id="metrics"
@@ -404,6 +419,7 @@ Object {
                     Metrics
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="metrics-description"
                     >
                       Add one or more metrics to show point-in-time numerical data and trends.
                     </p>
@@ -415,9 +431,10 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="chart-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="chartRadioButton"
                     id="chart"
@@ -432,6 +449,7 @@ Object {
                     Chart
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="chart-description"
                     >
                       Display data as a visualization, including line, bar, column and part-to-whole charts.
                     </p>
@@ -443,9 +461,10 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="table-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="tableRadioButton"
                     id="table"
@@ -460,6 +479,7 @@ Object {
                     Table
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="table-description"
                     >
                       Display data formatted in rows and columns.
                     </p>
@@ -471,9 +491,10 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="image-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="imageRadioButton"
                     id="image"
@@ -488,6 +509,7 @@ Object {
                     Image
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="image-description"
                     >
                       Upload an image to display.
                     </p>
@@ -499,9 +521,10 @@ Object {
                 role="contentinfo"
               >
                 <div
-                  class="grid-col flex-5"
+                  class="tablet:grid-col"
                 >
                   <input
+                    aria-describedby="section-description"
                     class="usa-radio__input usa-radio__input--tile"
                     data-testid="sectionRadioButton"
                     id="section"
@@ -516,6 +539,7 @@ Object {
                     Section
                     <p
                       class="text-base usa-prose usa-checkbox__label-description"
+                      id="section-description"
                     >
                       Add a section to group similar content items in a list.
                     </p>
@@ -527,13 +551,13 @@ Object {
           <br />
           <hr />
           <button
-            class="usa-button usa-button--base"
+            class="usa-button usa-button--base margin-top-1"
             type="submit"
           >
             Continue
           </button>
           <button
-            class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
+            class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1 "
             type="button"
           >
             Cancel
@@ -541,7 +565,7 @@ Object {
         </form>
       </div>
       <div
-        class="tablet:grid-col-6 grid-col-12"
+        class="tablet:grid-col-6"
       />
     </div>
   </div>,

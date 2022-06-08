@@ -1,5 +1,6 @@
 import React, { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
+import "./Tab.scss";
 
 interface Props {
   id: string;
@@ -25,7 +26,7 @@ function TabVertical(props: Props) {
   };
 
   let className =
-    "display-block border-base-lighter border-y padding-x-2 padding-y-105 text-bold font-sans-md margin-bottom-neg-1px";
+    "tab display-block border-base-lighter border-y padding-x-2 padding-y-105 text-bold font-sans-md margin-bottom-neg-1px";
 
   let ariaLabelStr = `${props.container} ${t("Tab")} ${
     props.label.split("(")[0]

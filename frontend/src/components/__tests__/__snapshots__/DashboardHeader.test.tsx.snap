@@ -20,14 +20,25 @@ exports[`renders a dashboard header for a published view 1`] = `
       </div>
     </div>
     <div
-      class="margin-y-2"
+      class="grid-row"
     >
       <div
-        class="Markdown font-sans-lg usa-prose margin-top-0"
+        class="grid-col flex-12 margin-y-2"
       >
-        <p>
-          A test descripttion
-        </p>
+        <div
+          class="Markdown font-sans-lg usa-prose margin-top-0"
+        >
+          <p>
+            A test descripttion
+          </p>
+        </div>
+      </div>
+      <div
+        class="display-flex flex-row flex-align-self-end margin-bottom-2"
+      >
+        <div
+          class=""
+        />
       </div>
     </div>
   </div>
@@ -54,14 +65,25 @@ exports[`renders a dashboard header for an unpublished view 1`] = `
       </div>
     </div>
     <div
-      class=""
+      class="grid-row"
     >
       <div
-        class="Markdown "
+        class="grid-col flex-12 "
       >
-        <p>
-          A test descripttion
-        </p>
+        <div
+          class="Markdown "
+        >
+          <p>
+            A test descripttion
+          </p>
+        </div>
+      </div>
+      <div
+        class="display-flex flex-row flex-align-self-end margin-bottom-2"
+      >
+        <div
+          class=""
+        />
       </div>
     </div>
   </div>
@@ -81,7 +103,6 @@ exports[`renders a dashboard header for an unpublished view with a link 1`] = `
       >
         Dashboard 1
       </h1>
-      A test link
       <div
         class="text-base text-italic margin-bottom-2"
       >
@@ -89,14 +110,27 @@ exports[`renders a dashboard header for an unpublished view with a link 1`] = `
       </div>
     </div>
     <div
-      class=""
+      class="grid-row"
     >
       <div
-        class="Markdown "
+        class="grid-col flex-12 "
       >
-        <p>
-          A test descripttion
-        </p>
+        <div
+          class="Markdown "
+        >
+          <p>
+            A test descripttion
+          </p>
+        </div>
+      </div>
+      <div
+        class="display-flex flex-row flex-align-self-end margin-bottom-2"
+      >
+        <div
+          class=""
+        >
+          A test link
+        </div>
       </div>
     </div>
   </div>

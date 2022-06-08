@@ -195,3 +195,26 @@ p {
 .usa-table thead th[aria-sort] {
   background-color: inherit !important;
 }
+
+[data-reach-menu-item][data-selected] a {
+  color: color("white") !important;
+}
+
+[data-reach-menu-item][data-selected] button {
+  color: color("white") !important;
+}
+
+input[type="search"]::placeholder {
+  color: color("gray-cool-70") !important;
+  opacity: 1;
+}
+
+input::placeholder {
+  color: color("gray-cool-70") !important;
+  opacity: 1;
+}
+
+textarea::placeholder {
+  color: color("gray-cool-70") !important;
+  opacity: 1;
+}

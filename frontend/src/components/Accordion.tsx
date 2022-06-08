@@ -16,6 +16,7 @@ interface ItemProps {
   id: string;
   title: string;
   children: ReactNode;
+  hidden?: boolean;
 }
 
 function Item(props: ItemProps) {
@@ -24,13 +25,17 @@ function Item(props: ItemProps) {
       <h2 className="usa-accordion__heading">
         <button
           className="usa-accordion__button"
-          aria-expanded="true"
+          aria-expanded={props.hidden ? "false" : "true"}
           aria-controls={props.id}
         >
           {props.title}
         </button>
       </h2>
-      <div id={props.id} className="usa-accordion__content usa-prose">
+      <div
+        id={props.id}
+        className="usa-accordion__content usa-prose"
+        hidden={props.hidden ? true : false}
+      >
         <ul>{props.children}</ul>
       </div>
     </>

@@ -360,7 +360,7 @@ function AddTable() {
     <>
       <Breadcrumbs crumbs={crumbs} />
 
-      <div className="grid-row width-desktop">
+      <div className="grid-row">
         <form
           onSubmit={handleSubmit(onSubmit)}
           aria-labelledby="addTableFormHeader"

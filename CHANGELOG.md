@@ -26,8 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improves the UX for the CheckData component
 - Updated dependency libraries to address potential security vulnerabilities
 
-## [1.4.0]
-
 ## [1.3.0] - 2022-03-07
 
 - Made improvements to meet WCAG accessibility requirements

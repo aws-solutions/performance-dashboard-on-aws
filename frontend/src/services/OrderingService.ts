@@ -1,5 +1,21 @@
 import { Metric, Widget, WidgetType } from "../models";
 
+export interface WidgetTreeItemData {
+  id: string;
+  dragIndex: number;
+  label: string;
+  children: WidgetTreeItemData[];
+  /*
+   * If not widget the node is a section end
+   */
+  widget?: Widget;
+  section?: string;
+}
+export interface WidgetTreeData {
+  map: { [key: number]: WidgetTreeItemData };
+  nodes: Array<WidgetTreeItemData>;
+}
+
 function moveWidget(
   widgets: Array<Widget>,
   index: number,
@@ -329,9 +345,143 @@ function moveMetric(
   return reordered;
 }
 
+function buildTree(widgets: Widget[]) {
+  const data: WidgetTreeData = {
+    map: {},
+    nodes: [],
+  };
+  const sections: { [id: string]: WidgetTreeItemData } = {};
+
+  widgets
+    .filter((widget) => !widget.section)
+    .forEach((widget, index) => {
+      const node: WidgetTreeItemData = {
+        id: widget.id,
+        dragIndex: 0,
+        label: (index + 1).toString(),
+        children: [],
+        widget: widget,
+        section: "",
+      };
+      data.nodes.push(node);
+      sections[widget.id] = node;
+    });
+
+  widgets
+    .filter((widget) => widget.section)
+    .forEach((widget) => {
+      const parent = sections[widget.section ?? ""];
+      const node: WidgetTreeItemData = {
+        id: widget.id,
+        dragIndex: 0,
+        label: `${parent.label}.${parent.children.length + 1}`,
+        children: [],
+        widget: widget,
+        section: widget.section,
+      };
+      parent.children.push(node);
+    });
+
+  let lastIndex = 0;
+  data.nodes.forEach((node) => {
+    node.dragIndex = lastIndex++;
+    data.map[node.dragIndex] = node;
+
+    node.children.forEach((child) => {
+      child.dragIndex = lastIndex++;
+      data.map[child.dragIndex] = child;
+    });
+
+    if (node.widget && node.widget.widgetType === WidgetType.Section) {
+      const divider: WidgetTreeItemData = {
+        id: `end-${node.id}`,
+        dragIndex: lastIndex++,
+        label: "",
+        children: [],
+        section: node.id,
+      };
+      node.children.push(divider);
+    }
+  });
+
+  return data;
+}
+
+function mutateTree(
+  tree: WidgetTreeData,
+  sourceIndex: number,
+  destinationIndex: number
+): Widget[] | undefined {
+  const widgets: Widget[] = [];
+
+  if (sourceIndex === destinationIndex) {
+    return undefined;
+  }
+  if (tree.nodes.length === 0) {
+    return undefined;
+  }
+
+  const sourceNode = { ...tree.map[sourceIndex], section: "" };
+  if (!sourceNode || !sourceNode.widget) {
+    return undefined;
+  }
+  if (
+    sourceNode.widget.widgetType === WidgetType.Section &&
+    destinationIndex <= sourceIndex + sourceNode.children.length
+  ) {
+    /* Invalid case, user can drag section inside same section */
+    return undefined;
+  }
+
+  const queue: WidgetTreeItemData[] = tree.nodes
+    .filter((node) => node.id !== sourceNode.id)
+    .reverse();
+
+  while (queue.length > 0) {
+    let node = queue.pop()!;
+    if (node.dragIndex === destinationIndex) {
+      if (
+        !!node.section &&
+        sourceNode.widget.widgetType === WidgetType.Section
+      ) {
+        /* Invalid case, user can drag section inside a section */
+        return undefined;
+      }
+      if (destinationIndex > sourceIndex) {
+        if (node.section) {
+          queue.push({ ...sourceNode, section: node.section });
+        } else {
+          queue.push(sourceNode);
+        }
+      } else {
+        queue.push(node);
+        node = { ...sourceNode, section: node.section };
+      }
+      destinationIndex = -1;
+    }
+    if (!!node.widget) {
+      const newWidget = { ...node.widget };
+      newWidget.order = widgets.length;
+      newWidget.section = node.section;
+      widgets.push(newWidget);
+
+      node.children
+        .filter((child) => child.id !== sourceNode.id)
+        .reverse()
+        .forEach((child) => {
+          queue.push(child);
+        });
+    }
+  }
+
+  return widgets;
+}
+
 const OrderingService = {
   moveWidget,
   moveMetric,
+  buildTree,
+  mutateTree,
 };
 
 export default OrderingService;

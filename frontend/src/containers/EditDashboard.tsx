@@ -25,6 +25,7 @@ import AlertContainer from "../containers/AlertContainer";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import WidgetTree from "../components/WidgetTree";
 
 interface PathParams {
   dashboardId: string;
@@ -396,6 +397,16 @@ function EditDashboard() {
               </Link>
             }
             isMobile={isMobile}
+          />
+
+          <WidgetTree
+            widgets={dashboard ? dashboard.widgets : []}
+            onClick={onAddContent}
+            onDelete={onDeleteWidget}
+            onDuplicate={onDuplicateWidget}
+            onMoveUp={onMoveWidgetUp}
+            onMoveDown={onMoveWidgetDown}
+            onDrag={onDrag}
           />
 
           <WidgetList

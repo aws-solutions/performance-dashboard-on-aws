@@ -218,3 +218,15 @@ textarea::placeholder {
   color: color("gray-cool-70") !important;
   opacity: 1;
 }
+
+.minus-2-margin {
+  margin-right: -0.5em;
+}
+
+.margin-bottom-neg-2 {
+  margin-bottom: -12px;
+}
+
+.text-overflow-ellipsis {
+  text-overflow: ellipsis;
+}

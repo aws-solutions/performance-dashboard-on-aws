@@ -164,20 +164,9 @@ function EditDashboard() {
     }
   };
 
-  const onDrag = async (index: number, newIndex: number) => {
+  const onDrag = async (widgets: Widget[]) => {
     if (dashboard && !reordering) {
       setReordering(true);
-      const widgets = OrderingService.moveWidget(
-        dashboard.widgets,
-        index,
-        newIndex
-      );
-
-      // if no change in order ocurred, exit
-      if (widgets === dashboard.widgets) {
-        setReordering(false);
-        return;
-      }
 
       try {
         setDashboard({ ...dashboard, widgets });
@@ -400,16 +389,6 @@ function EditDashboard() {
           />
 
           <WidgetTree
-            widgets={dashboard ? dashboard.widgets : []}
-            onClick={onAddContent}
-            onDelete={onDeleteWidget}
-            onDuplicate={onDuplicateWidget}
-            onMoveUp={onMoveWidgetUp}
-            onMoveDown={onMoveWidgetDown}
-            onDrag={onDrag}
-          />
-
-          <WidgetList
             widgets={dashboard ? dashboard.widgets : []}
             onClick={onAddContent}
             onDelete={onDeleteWidget}

@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
-import { WidgetType } from "../models";
+import { Widget, WidgetType } from "../models";
 import { WidgetTreeItemData } from "../services/OrderingService";
 
 import WidgetTreeItemContent from "./WidgetTreeItemContent";
@@ -9,26 +9,47 @@ import WidgetTreeSectionDivider from "./WidgetTreeSectionDivider";
 
 import styles from "./WidgetTreeItem.module.scss";
 
-const WidgetTreeItem = (node: WidgetTreeItemData) => {
+interface WidgetTreeItemProps {
+  node: WidgetTreeItemData;
+  isDropDisabled?: boolean;
+  onDelete: (widget: Widget) => void;
+  onDuplicate: (widget: Widget) => void;
+}
+
+const WidgetTreeItem = (props: WidgetTreeItemProps) => {
   const { t } = useTranslation();
   const [isDragging, setIsDragging] = React.useState(false);
-
+  const node = props.node;
   const widget = node.widget;
   return (
     <div>
       {widget && (
-        <div>
+        <div className={props.isDropDisabled ? styles.dropDisable : ""}>
           <Draggable draggableId={widget.id} index={node.dragIndex}>
             {(provided, snapshot) => {
               if (isDragging !== snapshot.isDragging) {
                 setIsDragging(snapshot.isDragging);
               }
               return (
-                <div {...provided.draggableProps} ref={provided.innerRef}>
+                <div
+                  {...provided.draggableProps}
+                  ref={provided.innerRef}
+                  className={`margin-top-1 ${
+                    snapshot.isDragging ? "usa-focus" : ""
+                  }`}
+                  role="listitem"
+                  aria-label={`${node.label} ${t(
+                    widget.widgetType === WidgetType.Chart
+                      ? widget.content.chartType
+                      : widget.widgetType
+                  )} ${widget.name}`}
+                >
                   <WidgetTreeItemContent
                     label={node.label}
                     widget={widget}
                     dragHandleProps={provided.dragHandleProps}
+                    onDuplicate={props.onDuplicate}
+                    onDelete={props.onDelete}
                   />
                   {snapshot.isDragging &&
                     widget.widgetType === WidgetType.Section && (
@@ -70,7 +91,15 @@ const WidgetTreeItem = (node: WidgetTreeItemData) => {
                 </div>
               )}
               {node.children.map((child) => {
-                return <WidgetTreeItem key={child.id} {...child} />;
+                return (
+                  <WidgetTreeItem
+                    key={child.id}
+                    node={child}
+                    isDropDisabled={props.isDropDisabled}
+                    onDuplicate={props.onDuplicate}
+                    onDelete={props.onDelete}
+                  />
+                );
               })}
             </div>
           )}

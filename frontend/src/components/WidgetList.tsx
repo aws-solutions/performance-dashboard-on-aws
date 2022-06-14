@@ -298,7 +298,7 @@ function WidgetList(props: Props) {
                           sectionCount++;
                           return (
                             <ContentItem
-                              className="grid-col margin-top-1 margin-bottom-1 margin-left-2 minus-2-margin"
+                              className="grid-col margin-top-1 margin-bottom-1 margin-left-2 margin-right-neg-05em"
                               key={widget.id}
                               index={arrIndex}
                               id={arrIndex}
@@ -423,7 +423,7 @@ function WidgetList(props: Props) {
                 className="margin-top-1"
                 variant="base"
                 onClick={() => {
-                  if (props.onClick) {
+                  if (props.onClick) {  
                     props.onClick();
                   }
                 }}

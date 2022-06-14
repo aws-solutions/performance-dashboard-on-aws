@@ -412,68 +412,43 @@ function mutateTree(
   sourceIndex: number,
   destinationIndex: number
 ): Widget[] | undefined {
+  const nodes = tree.nodes.flatMap((node) => {
+    const list = [node];
+    if (node.widget?.widgetType === WidgetType.Section) {
+      node.children.forEach((child) => {
+        list.push(child);
+      });
+    }
+    return list;
+  });
+
+  let source = nodes[sourceIndex];
+  nodes.splice(sourceIndex, 1);
+  const destination = nodes[destinationIndex];
+  if (destination?.section) {
+    if (
+      source.widget?.widgetType === WidgetType.Section &&
+      destination.section !== source.id
+    ) {
+      // invalid case, move section inside another
+      return undefined;
+    }
+    source.section = destination.section;
+  } else {
+    source.section = "";
+  }
+
+  nodes.splice(destinationIndex, 0, source);
+
   const widgets: Widget[] = [];
-
-  if (sourceIndex === destinationIndex) {
-    return undefined;
-  }
-  if (tree.nodes.length === 0) {
-    return undefined;
-  }
-
-  const sourceNode = { ...tree.map[sourceIndex], section: "" };
-  if (!sourceNode || !sourceNode.widget) {
-    return undefined;
-  }
-  if (
-    sourceNode.widget.widgetType === WidgetType.Section &&
-    destinationIndex <= sourceIndex + sourceNode.children.length
-  ) {
-    /* Invalid case, user can drag section inside same section */
-    return undefined;
-  }
-
-  const queue: WidgetTreeItemData[] = tree.nodes
-    .filter((node) => node.id !== sourceNode.id)
-    .reverse();
-
-  while (queue.length > 0) {
-    let node = queue.pop()!;
-    if (node.dragIndex === destinationIndex) {
-      if (
-        !!node.section &&
-        sourceNode.widget.widgetType === WidgetType.Section
-      ) {
-        /* Invalid case, user can drag section inside a section */
-        return undefined;
+  nodes.forEach((node) => {
+    if (node.widget) {
+      if (node.section !== node.widget.section) {
+        node.widget = { ...node.widget, section: node.section };
       }
-      if (destinationIndex > sourceIndex) {
-        if (node.section) {
-          queue.push({ ...sourceNode, section: node.section });
-        } else {
-          queue.push(sourceNode);
-        }
-      } else {
-        queue.push(node);
-        node = { ...sourceNode, section: node.section };
-      }
-      destinationIndex = -1;
+      widgets.push(node.widget);
     }
-    if (!!node.widget) {
-      const newWidget = { ...node.widget };
-      newWidget.order = widgets.length;
-      newWidget.section = node.section;
-      widgets.push(newWidget);
-
-      node.children
-        .filter((child) => child.id !== sourceNode.id)
-        .reverse()
-        .forEach((child) => {
-          queue.push(child);
-        });
-    }
-  }
-
+  });
   return widgets;
 }
 

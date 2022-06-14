@@ -11,8 +11,19 @@ import DropdownMenu from "./DropdownMenu";
 import { MenuItem } from "@reach/menu-button";
 import Button from "./Button";
 
-function WidgetTreeActionMenu(widget: Widget) {
+interface WidgetTreeActionMenuProps {
+  widget: Widget;
+  onDelete: (widget: Widget) => void;
+  onDuplicate: (widget: Widget) => void;
+}
+
+function WidgetTreeActionMenu({
+  widget,
+  onDelete,
+  onDuplicate,
+}: WidgetTreeActionMenuProps) {
   const { t } = useTranslation();
+
   return (
     <DropdownMenu
       buttonText=""
@@ -28,6 +39,7 @@ function WidgetTreeActionMenu(widget: Widget) {
           ariaLabel={t("DuplicateContent", {
             name: widget.name,
           })}
+          onClick={() => onDuplicate(widget)}
         >
           <FontAwesomeIcon size="xs" icon={faCopy} className="margin-right-1" />
           {t("Duplicate")}
@@ -40,6 +52,7 @@ function WidgetTreeActionMenu(widget: Widget) {
           ariaLabel={t("DeleteContent", {
             name: widget.name,
           })}
+          onClick={() => onDelete(widget)}
         >
           <FontAwesomeIcon
             size="xs"

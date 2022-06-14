@@ -11,6 +11,9 @@ import WidgetTreeActionMenu from "./WidgetTreeActionMenu";
 interface WidgetTreeItemContentProps {
   label: string;
   widget: Widget;
+  onDelete: (widget: Widget) => void;
+  onDuplicate: (widget: Widget) => void;
+  className?: string;
   dragHandleProps?: DraggableProvidedDragHandleProps | undefined;
 }
 
@@ -18,11 +21,18 @@ const WidgetTreeItemContent = ({
   label,
   widget,
   dragHandleProps,
+  className,
+  onDelete,
+  onDuplicate,
 }: WidgetTreeItemContentProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-col margin-top-1">
+    <div
+      className={`border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-col ${
+        className ?? ""
+      }`}
+    >
       <div className="grid-row flex-1">
         <div className="grid-row grid-col flex-1 padding-1">
           <div
@@ -108,7 +118,11 @@ const WidgetTreeItemContent = ({
             )})`}
           </div>
           <div className="grid-col flex-1 margin-left-2 margin-right-2 text-right">
-            {WidgetTreeActionMenu(widget)}
+            <WidgetTreeActionMenu
+              widget={widget}
+              onDuplicate={onDuplicate}
+              onDelete={onDelete}
+            />
           </div>
         </div>
       </div>

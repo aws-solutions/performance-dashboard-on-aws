@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   DragDropContext,
   DragUpdate,
@@ -54,6 +54,25 @@ function WidgetTree(props: Props) {
     }
   };
 
+  const moveWidget = (sourceIndex: number, destinationIndex: number): void => {
+    console.log("moveWidget", sourceIndex, destinationIndex);
+    const widgets = OrderingService.mutateTree(
+      tree,
+      sourceIndex,
+      destinationIndex
+    );
+    if (sourceIndex < 0) {
+      sourceIndex = 0;
+    }
+    if (destinationIndex >= tree.nodes.length) {
+      destinationIndex = tree.nodes.length - 1;
+    }
+    if (widgets) {
+      setTree(OrderingService.buildTree(widgets));
+      props.onDrag(widgets);
+    }
+  };
+
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     setIsDropDisabled(false);
     const { destination, source } = result;
@@ -66,15 +85,7 @@ function WidgetTree(props: Props) {
     ) {
       return;
     }
-    const widgets = OrderingService.mutateTree(
-      tree,
-      source.index,
-      destination.index
-    );
-    if (widgets) {
-      setTree(OrderingService.buildTree(widgets));
-      props.onDrag(widgets);
-    }
+    moveWidget(source.index, destination.index);
   };
 
   useEffect(() => {
@@ -106,6 +117,9 @@ function WidgetTree(props: Props) {
                     isDropDisabled={isDropDisabled}
                     onDuplicate={props.onDuplicate}
                     onDelete={props.onDelete}
+                    onMove={moveWidget}
+                    canMoveUp={node.dragIndex > 0}
+                    canMoveDown={node.dragIndex < tree.length - 1}
                   />
                 );
               })}

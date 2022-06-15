@@ -14,6 +14,7 @@ export interface WidgetTreeItemData {
 export interface WidgetTreeData {
   map: { [key: number]: WidgetTreeItemData };
   nodes: Array<WidgetTreeItemData>;
+  length: number;
 }
 
 function moveWidget(
@@ -23,7 +24,7 @@ function moveWidget(
 ): Array<Widget> {
   // If new position is out of bounds, don't move anything.
   if (newIndex < 0 || newIndex >= widgets.length) {
-    if (newIndex == widgets.length && widgets[index].section) {
+    if (newIndex === widgets.length && widgets[index].section) {
       const widgetsCopy = widgets.map((widget) => ({
         ...widget,
       }));
@@ -349,6 +350,7 @@ function buildTree(widgets: Widget[]) {
   const data: WidgetTreeData = {
     map: {},
     nodes: [],
+    length: 0,
   };
   const sections: { [id: string]: WidgetTreeItemData } = {};
 
@@ -404,6 +406,7 @@ function buildTree(widgets: Widget[]) {
     }
   });
 
+  data.length = lastIndex;
   return data;
 }
 
@@ -423,21 +426,44 @@ function mutateTree(
   });
 
   let source = nodes[sourceIndex];
-  nodes.splice(sourceIndex, 1);
   const destination = nodes[destinationIndex];
-  if (destination?.section) {
-    if (
-      source.widget?.widgetType === WidgetType.Section &&
-      destination.section !== source.id
-    ) {
-      // invalid case, move section inside another
-      return undefined;
+  console.log("source", source);
+  console.log("destination", destination);
+  nodes.splice(sourceIndex, 1);
+  if (source.widget?.widgetType === WidgetType.Section) {
+    if (destination?.section) {
+      if (destination.section !== source.id) {
+        // invalid case, move section inside another
+        return undefined;
+      }
+      source.section = destination.section;
+    } else {
+      source.section = "";
     }
-    source.section = destination.section;
   } else {
-    source.section = "";
+    if (destination?.widget?.widgetType === WidgetType.Section) {
+      // entering or leaving a section from top
+      source.section = !!source.section ? "" : destination.id;
+    } else if (destination?.section && !destination.widget) {
+      // entering or leaving a section from bottom
+      source.section = !!source.section ? "" : destination.section;
+    } else if (destination?.section) {
+      // moving inside a section
+      if (
+        source.widget?.widgetType === WidgetType.Section &&
+        destination.section !== source.id
+      ) {
+        // invalid case, move section inside another
+        return undefined;
+      }
+      source.section = destination.section;
+    } else {
+      // moving outside a section
+      source.section = "";
+    }
   }
 
+  console.log("newSource", source);
   nodes.splice(destinationIndex, 0, source);
 
   const widgets: Widget[] = [];
@@ -446,7 +472,7 @@ function mutateTree(
       if (node.section !== node.widget.section) {
         node.widget = { ...node.widget, section: node.section };
       }
-      widgets.push(node.widget);
+      widgets.push({ ...node.widget, order: widgets.length });
     }
   });
   return widgets;

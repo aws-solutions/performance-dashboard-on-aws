@@ -12,8 +12,11 @@ import styles from "./WidgetTreeItem.module.scss";
 interface WidgetTreeItemProps {
   node: WidgetTreeItemData;
   isDropDisabled?: boolean;
+  canMoveUp?: boolean;
+  canMoveDown?: boolean;
   onDelete: (widget: Widget) => void;
   onDuplicate: (widget: Widget) => void;
+  onMove: (sourceIndex: number, destinationIndex: number) => void;
 }
 
 const WidgetTreeItem = (props: WidgetTreeItemProps) => {
@@ -21,6 +24,14 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
   const [isDragging, setIsDragging] = React.useState(false);
   const node = props.node;
   const widget = node.widget;
+
+  const onMoveUp = props.canMoveUp
+    ? () => props.onMove(node.dragIndex, node.dragIndex - 1)
+    : undefined;
+  const onMoveDown = props.canMoveDown
+    ? () => props.onMove(node.dragIndex, node.dragIndex + 1)
+    : undefined;
+
   return (
     <div>
       {widget && (
@@ -50,6 +61,8 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
                     dragHandleProps={provided.dragHandleProps}
                     onDuplicate={props.onDuplicate}
                     onDelete={props.onDelete}
+                    onMoveUp={onMoveUp}
+                    onMoveDown={onMoveDown}
                   />
                   {snapshot.isDragging &&
                     widget.widgetType === WidgetType.Section && (
@@ -68,6 +81,10 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
                               <WidgetTreeItemContent
                                 label={child.label}
                                 widget={child.widget}
+                                onDuplicate={props.onDuplicate}
+                                onDelete={props.onDelete}
+                                onMoveUp={onMoveUp}
+                                onMoveDown={onMoveDown}
                               />
                             );
                           })}
@@ -98,6 +115,9 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
                     isDropDisabled={props.isDropDisabled}
                     onDuplicate={props.onDuplicate}
                     onDelete={props.onDelete}
+                    onMove={props.onMove}
+                    canMoveUp={true}
+                    canMoveDown={true}
                   />
                 );
               })}

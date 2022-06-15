@@ -14,7 +14,6 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
 import OrderingService from "../services/OrderingService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import WidgetList from "../components/WidgetList";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import PublishDashboardModal from "../components/PublishDashboardModal";

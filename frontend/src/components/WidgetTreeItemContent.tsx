@@ -3,10 +3,15 @@ import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 import { Widget, WidgetType } from "../models";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGripVertical } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowDown,
+  faArrowUp,
+  faGripVertical,
+} from "@fortawesome/free-solid-svg-icons";
 import Link from "./Link";
 import { useTranslation } from "react-i18next";
 import WidgetTreeActionMenu from "./WidgetTreeActionMenu";
+import Button from "./Button";
 
 interface WidgetTreeItemContentProps {
   label: string;
@@ -15,6 +20,8 @@ interface WidgetTreeItemContentProps {
   onDuplicate: (widget: Widget) => void;
   className?: string;
   dragHandleProps?: DraggableProvidedDragHandleProps | undefined;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
 }
 
 const WidgetTreeItemContent = ({
@@ -24,6 +31,8 @@ const WidgetTreeItemContent = ({
   className,
   onDelete,
   onDuplicate,
+  onMoveUp,
+  onMoveDown,
 }: WidgetTreeItemContentProps) => {
   const { t } = useTranslation();
 
@@ -44,51 +53,48 @@ const WidgetTreeItemContent = ({
           <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2 margin-top-1 margin-bottom-1">
             {label}
           </div>
-          {/* <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2 margin-right-2">
-                    <div className="grid-col flex-6">
-                      {index > 0 ? (
-                        <Button
-                          variant="unstyled"
-                          className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                          ariaLabel={t("MoveContentItemUp", {
-                            name: widget.name,
-                          })}
-                          onClick={() => onMoveUp(index)}
-                          ref={caretUpRefs[index]}
-                        >
-                          <FontAwesomeIcon
-                            id={`${widget.id}-move-up`}
-                            size="xs"
-                            icon={faArrowUp}
-                          />
-                        </Button>
-                      ) : (
-                        <br />
-                      )}
-                    </div>
-                    <div className="grid-col flex-6">
-                      {index < props.widgets.length - 1 &&
-                      props.widgets.some((w, i) => !w.section && i > index) ? (
-                        <Button
-                          variant="unstyled"
-                          className="text-base-darker hover:text-base-darkest active:text-base-darkest"
-                          ariaLabel={t("MoveContentItemDown", {
-                            name: widget.name,
-                          })}
-                          onClick={() => onMoveDown(index)}
-                          ref={caretDownRefs[index]}
-                        >
-                          <FontAwesomeIcon
-                            id={`${widget.id}-move-down`}
-                            size="xs"
-                            icon={faArrowDown}
-                          />
-                        </Button>
-                      ) : (
-                        <br />
-                      )}
-                    </div>
-                  </div> */}
+          <div className="grid-col flex-4 grid-row flex-column text-center margin-left-2 margin-right-2">
+            <div className="grid-col flex-6">
+              {onMoveUp ? (
+                <Button
+                  variant="unstyled"
+                  className="text-base-darker hover:text-base-darkest active:text-base-darkest"
+                  ariaLabel={t("MoveContentItemUp", {
+                    name: widget.name,
+                  })}
+                  onClick={onMoveUp}
+                >
+                  <FontAwesomeIcon
+                    id={`${widget.id}-move-up`}
+                    size="xs"
+                    icon={faArrowUp}
+                  />
+                </Button>
+              ) : (
+                <br />
+              )}
+            </div>
+            <div className="grid-col flex-6">
+              {onMoveDown ? (
+                <Button
+                  variant="unstyled"
+                  className="text-base-darker hover:text-base-darkest active:text-base-darkest"
+                  ariaLabel={t("MoveContentItemDown", {
+                    name: widget.name,
+                  })}
+                  onClick={onMoveDown}
+                >
+                  <FontAwesomeIcon
+                    id={`${widget.id}-move-down`}
+                    size="xs"
+                    icon={faArrowDown}
+                  />
+                </Button>
+              ) : (
+                <br />
+              )}
+            </div>
+          </div>
         </div>
         <div className="border-base-lighter border-left"></div>
         <div className="grid-col flex-11 grid-row padding-1 margin-y-1">

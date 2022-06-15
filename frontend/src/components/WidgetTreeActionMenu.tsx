@@ -33,7 +33,7 @@ function WidgetTreeActionMenu({
         name: widget.name,
       })}
     >
-      <MenuItem>
+      <MenuItem onSelect={() => {}}>
         <Button
           variant="unstyled"
           ariaLabel={t("DuplicateContent", {
@@ -45,7 +45,7 @@ function WidgetTreeActionMenu({
           {t("Duplicate")}
         </Button>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onSelect={() => {}}>
         <Button
           variant="unstyled"
           className="usa-link"

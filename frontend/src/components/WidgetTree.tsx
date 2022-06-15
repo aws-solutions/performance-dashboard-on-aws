@@ -55,8 +55,7 @@ function WidgetTree(props: Props) {
   };
 
   const moveWidget = (sourceIndex: number, destinationIndex: number): void => {
-    console.log("moveWidget", sourceIndex, destinationIndex);
-    const widgets = OrderingService.mutateTree(
+    const widgets = OrderingService.moveWidget(
       tree,
       sourceIndex,
       destinationIndex

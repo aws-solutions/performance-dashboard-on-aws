@@ -121,78 +121,38 @@ function moveWidget(
   });
 
   let source = nodes[sourceIndex];
-  let destination = nodes[destinationIndex];
-  nodes.splice(sourceIndex, 1);
-
-  if (source.widget?.widgetType === WidgetType.Section) {
-    // source is a section, so we need to move all its children
-    if (destination?.widget?.widgetType === WidgetType.Section) {
-      if (sourceIndex < destinationIndex) {
-        // entering a section from top, move before the section
-        const children = nodes.splice(sourceIndex, source.children.length);
-        children.pop();
-        nodes.splice(
-          destinationIndex - children.length - 2,
-          0,
-          source,
-          ...children
-        );
-      } else {
-        // dropping section at the end of the section , insert before the section
-        const children = nodes.splice(sourceIndex, source.children.length);
-        children.pop();
-        nodes.splice(destinationIndex, 0, source, ...children);
-      }
-    } else if (destination?.section && !!destination.widget) {
-      // dropping inside a section, invalid move
-      return undefined;
-    } else {
-      const children = nodes.splice(sourceIndex, source.children.length);
-      children.pop();
-      nodes.splice(
-        sourceIndex < destinationIndex
-          ? destinationIndex - children.length - 1
-          : destinationIndex,
-        0,
-        source,
-        ...children
-      );
-    }
-  } else {
-    // source is a single widget, so we need to move it
-    if (destination?.widget?.widgetType === WidgetType.Section) {
-      if (sourceIndex < destinationIndex) {
-        // entering a section from top, move inside the section
-        source.section = destination.id;
-      } else {
-        // dropping item in the section position, insert before the section
-        source.section = "";
-      }
-    } else if (destination?.section && !destination.widget) {
-      // entering or leaving a section from bottom
-      if (sourceIndex < destinationIndex) {
-        source.section = "";
-      } else {
-        source.section = destination.section;
-      }
-    } else if (destination?.section) {
-      // moving inside a section
-      if (
-        source.widget?.widgetType === WidgetType.Section &&
-        destination.section !== source.id
-      ) {
-        // invalid case, move section inside another
-        return undefined;
-      }
-      source.section = destination.section;
-    } else {
-      // moving outside a section
-      source.section = "";
-    }
-
-    nodes.splice(destinationIndex, 0, source);
+  if (
+    destinationIndex > sourceIndex &&
+    destinationIndex < sourceIndex + source.children.length
+  ) {
+    return undefined;
   }
 
+  const items = nodes.splice(sourceIndex, 1 + source.children.length);
+  if (destinationIndex > sourceIndex) {
+    destinationIndex -= source.children.length;
+  }
+
+  let destination = nodes[destinationIndex];
+  if (destination) {
+    // insert before the destination
+    if (!!destination.section) {
+      // if destination is a section, invalid movement
+      if (source.widget?.widgetType === WidgetType.Section) {
+        return undefined;
+      } else {
+        // assign the new section to the widget
+        source.section = destination.section;
+      }
+    } else {
+      source.section = "";
+    }
+  }
+
+  // insert the items in the given position
+  nodes.splice(destinationIndex, 0, ...items);
+
+  // build the widget list
   const widgets: Widget[] = [];
   nodes.forEach((node) => {
     if (node.widget) {

@@ -941,7 +941,7 @@ describe("OrderingService", () => {
     const result = OrderingService.moveWidget(
       tree,
       indexes["mango"],
-      indexes["orange"]
+      indexes["tomato"]
     );
     expect(result?.map(getIdAndSection)).toEqual([
       {

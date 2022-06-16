@@ -26,13 +26,13 @@ interface Props {
 function WidgetTree(props: Props) {
   const { t } = useTranslation();
   const droppableId = "widget-tree";
-  const [tree, setTree] = useState<WidgetTreeData>({
-    map: {},
-    nodes: [],
-  });
+  const [tree, setTree] = useState<WidgetTreeData>();
   const [isDropDisabled, setIsDropDisabled] = useState(false);
 
   const onDragUpdate = (update: DragUpdate) => {
+    if (!tree) {
+      return;
+    }
     if (
       update.source.droppableId === droppableId &&
       update.destination &&
@@ -55,6 +55,9 @@ function WidgetTree(props: Props) {
   };
 
   const moveWidget = (sourceIndex: number, destinationIndex: number): void => {
+    if (!tree) {
+      return;
+    }
     const widgets = OrderingService.moveWidget(
       tree,
       sourceIndex,
@@ -108,7 +111,7 @@ function WidgetTree(props: Props) {
               <h2 className="margin-bottom-2 margin-top-2">
                 {t("ContentItems")}
               </h2>
-              {tree.nodes.map((node) => {
+              {tree?.nodes.map((node) => {
                 return (
                   <WidgetTreeItem
                     key={node.id}

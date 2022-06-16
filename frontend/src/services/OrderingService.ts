@@ -29,15 +29,10 @@ function moveMetric(
 
   // Create a new metrics array so we don't modify the one
   // passed as parameter.
-  const reordered = metrics.map((metric) => ({
-    ...metric,
-  }));
-
-  const metric = reordered[index];
-  const neighbor = reordered[newIndex];
-
-  reordered[newIndex] = metric;
-  reordered[index] = neighbor;
+  const reordered = [...metrics];
+  const source = reordered[index];
+  reordered.splice(index, 1);
+  reordered.splice(newIndex, 0, source);
 
   return reordered;
 }

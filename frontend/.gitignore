@@ -21,3 +21,4 @@ yarn-error.log*
 
 # Env variables
 public/env.js
+public/env*.js

@@ -1068,5 +1068,10 @@
     "PublishSuccessDescription": "Visitors with a link can now view your published dashboard.",
     "PublishedSuccessAlert": "'{{dashboardName}}' dashboard was successfully published.",
     "ViewPublishedDashboard": "View the published dashboard"
+  },
+  "WidgetTree": {
+    "ItemLifted": "You have lifted {{label}}-{{name}}.",
+    "ItemMoved": "You have moved {{sourceLabel}}-{{sourceName}} to {{destinationLabel}}-{{destinationName}}.",
+    "OutsideTheDroppableAreaError": "You are currently not over a droppable area {{label}}-{{name}}."
   }
 }

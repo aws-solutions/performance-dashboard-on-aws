@@ -14,7 +14,6 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
 import OrderingService from "../services/OrderingService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import WidgetList from "../components/WidgetList";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import PublishDashboardModal from "../components/PublishDashboardModal";
@@ -25,6 +24,7 @@ import AlertContainer from "../containers/AlertContainer";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import WidgetTree from "../components/WidgetTree";
 
 interface PathParams {
   dashboardId: string;
@@ -163,20 +163,9 @@ function EditDashboard() {
     }
   };
 
-  const onDrag = async (index: number, newIndex: number) => {
+  const onDrag = async (widgets: Widget[]) => {
     if (dashboard && !reordering) {
       setReordering(true);
-      const widgets = OrderingService.moveWidget(
-        dashboard.widgets,
-        index,
-        newIndex
-      );
-
-      // if no change in order ocurred, exit
-      if (widgets === dashboard.widgets) {
-        setReordering(false);
-        return;
-      }
 
       try {
         setDashboard({ ...dashboard, widgets });
@@ -398,7 +387,7 @@ function EditDashboard() {
             isMobile={isMobile}
           />
 
-          <WidgetList
+          <WidgetTree
             widgets={dashboard ? dashboard.widgets : []}
             onClick={onAddContent}
             onDelete={onDeleteWidget}

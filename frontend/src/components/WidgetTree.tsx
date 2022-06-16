@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {
   DragDropContext,
+  DragStart,
   DragUpdate,
   Droppable,
   DropResult,
@@ -29,27 +30,55 @@ function WidgetTree(props: Props) {
   const [tree, setTree] = useState<WidgetTreeData>();
   const [isDropDisabled, setIsDropDisabled] = useState(false);
 
-  const onDragUpdate = (update: DragUpdate) => {
+  const onDragStarted = (start: DragStart, provided: ResponderProvided) => {
     if (!tree) {
       return;
     }
+    const source = tree.map[start.source.index];
+    provided.announce(
+      t("WidgetTree.ItemLifted", {
+        label: source?.label,
+        name: source?.widget?.name,
+      })
+    );
+  };
+
+  const onDragUpdate = (update: DragUpdate, provided: ResponderProvided) => {
+    if (!tree) {
+      return;
+    }
+
+    const source = tree.map[update.source.index];
     if (
       update.source.droppableId === droppableId &&
       update.destination &&
       update.destination.droppableId === droppableId
     ) {
-      const startNode = tree.map[update.source.index];
-      const endNode = tree.map[update.destination.index];
+      const destination = tree.map[update.destination.index];
+      provided.announce(
+        t("WidgetTree.ItemMoved", {
+          sourceLabel: source?.label,
+          sourceName: source?.widget?.name,
+          destinationLabel: destination?.label,
+          destinationName: destination?.widget?.name,
+        })
+      );
       const isDisabled =
-        startNode &&
-        endNode &&
-        !!endNode.section &&
-        startNode.widget?.widgetType === WidgetType.Section &&
-        endNode.section !== startNode.id;
+        source &&
+        destination &&
+        !!destination.section &&
+        source.widget?.widgetType === WidgetType.Section &&
+        destination.section !== source.id;
       if (isDisabled !== isDropDisabled) {
         setIsDropDisabled(isDisabled);
       }
     } else {
+      provided.announce(
+        t("WidgetTree.OutsideTheDroppableAreaError", {
+          label: source?.label,
+          name: source?.widget?.name,
+        })
+      );
       setIsDropDisabled(false);
     }
   };
@@ -96,7 +125,11 @@ function WidgetTree(props: Props) {
   }, [props.widgets]);
 
   return (
-    <DragDropContext onDragUpdate={onDragUpdate} onDragEnd={onDragEnd}>
+    <DragDropContext
+      onDragStart={onDragStarted}
+      onDragUpdate={onDragUpdate}
+      onDragEnd={onDragEnd}
+    >
       {
         <Droppable droppableId={droppableId} isDropDisabled={false}>
           {(provided) => (

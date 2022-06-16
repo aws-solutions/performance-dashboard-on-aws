@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { Widget } from "../../models";
-import WidgetList from "../WidgetList";
+import WidgetTree from "../WidgetTree";
 import { MemoryRouter } from "react-router-dom";
 
 const widgets: Array<Widget> = [
@@ -27,20 +27,44 @@ const widgets: Array<Widget> = [
   },
 ];
 
+const renderWidgetTree = (
+  widgets: Array<Widget>,
+  {
+    onClick,
+    onDuplicate,
+    onDelete,
+    onDrag,
+  }: {
+    onClick?: Function;
+    onDuplicate?: Function;
+    onDelete?: Function;
+    onDrag?: Function;
+  }
+) => {
+  return render(
+    <WidgetTree
+      widgets={widgets}
+      onClick={onClick ?? jest.fn()}
+      onDuplicate={onDuplicate ?? jest.fn()}
+      onDelete={onDelete ?? jest.fn()}
+      onDrag={onDrag ?? jest.fn()}
+    />,
+    {
+      wrapper: MemoryRouter,
+    }
+  );
+};
+
 test("renders an empty box", async () => {
   const onClick = jest.fn();
-  const wrapper = render(<WidgetList widgets={[]} onClick={onClick} />, {
-    wrapper: MemoryRouter,
-  });
+  const wrapper = renderWidgetTree(widgets, { onClick });
   expect(wrapper.container).toMatchSnapshot();
 });
 
 test("calls the onClick callback when button is pressed", async () => {
   const onClick = jest.fn();
-  const wrapper = render(<WidgetList widgets={[]} onClick={onClick} />, {
-    wrapper: MemoryRouter,
-  });
-  fireEvent.click(wrapper.getByRole("button"));
+  const wrapper = renderWidgetTree(widgets, { onClick });
+  fireEvent.click(wrapper.getByText("+ Add content item"));
   expect(onClick).toBeCalled();
 });
 
@@ -49,12 +73,7 @@ test("calls onDelete when user clicks delete button", async () => {
     console.log("!!!!!!!!!!!!!!!!!DELETED!!!!!!!!!!!!!!!!!!!");
   });
   const onClick = jest.fn();
-  const wrapper = render(
-    <WidgetList widgets={widgets} onClick={onClick} onDelete={onDelete} />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
+  const wrapper = renderWidgetTree(widgets, { onClick, onDelete });
 
   await act(async () => {
     fireEvent.click(
@@ -67,46 +86,4 @@ test("calls onDelete when user clicks delete button", async () => {
   });
 
   expect(onDelete).toBeCalled();
-});
-
-test("calls onMoveUp when user clicks up arrow", async () => {
-  const onMoveUp = jest.fn();
-  const onClick = jest.fn();
-  const wrapper = render(
-    <WidgetList widgets={widgets} onClick={onClick} onMoveUp={onMoveUp} />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
-
-  await act(async () => {
-    fireEvent.click(
-      wrapper.getByRole("button", {
-        name: "Move The benefits of wine up",
-      })
-    );
-  });
-
-  expect(onMoveUp).toBeCalled();
-});
-
-test("calls onMoveDown when user clicks down arrow", async () => {
-  const onMoveDown = jest.fn();
-  const onClick = jest.fn();
-  const wrapper = render(
-    <WidgetList widgets={widgets} onClick={onClick} onMoveDown={onMoveDown} />,
-    {
-      wrapper: MemoryRouter,
-    }
-  );
-
-  await act(async () => {
-    fireEvent.click(
-      wrapper.getByRole("button", {
-        name: "Move The benefits of bananas down",
-      })
-    );
-  });
-
-  expect(onMoveDown).toBeCalled();
 });

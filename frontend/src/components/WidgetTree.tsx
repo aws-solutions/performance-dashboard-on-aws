@@ -142,6 +142,7 @@ function WidgetTree(props: Props) {
                             props.onClick();
                           }
                         }}
+                        ariaLabel={t("PlusAddContentItem")}
                       >
                         {t("PlusAddContentItem")}
                       </Button>
@@ -157,6 +158,7 @@ function WidgetTree(props: Props) {
                         props.onClick();
                       }
                     }}
+                    aria-label={t("PlusAddContentItem")}
                   >
                     {t("PlusAddContentItem")}
                   </button>

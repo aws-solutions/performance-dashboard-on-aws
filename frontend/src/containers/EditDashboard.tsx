@@ -12,7 +12,6 @@ import { Widget, LocationState, WidgetType, DashboardState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
-import OrderingService from "../services/OrderingService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
@@ -130,25 +129,6 @@ function EditDashboard() {
       });
 
       await reloadDashboard();
-    }
-  };
-
-  const onMoveWidgetUp = async (index: number) => {
-    return setWidgetOrder(index, index - 1);
-  };
-
-  const onMoveWidgetDown = async (index: number) => {
-    return setWidgetOrder(index, index + 1);
-  };
-
-  const setWidgetOrder = async (widgets: Widget[]) => {
-    if (dashboard) {
-      try {
-        setDashboard({ ...dashboard, widgets }); // optimistic ui
-        await BackendService.setWidgetOrder(dashboardId, widgets);
-      } finally {
-        await reloadDashboard(false);
-      }
     }
   };
 
@@ -381,8 +361,6 @@ function EditDashboard() {
             onClick={onAddContent}
             onDelete={onDeleteWidget}
             onDuplicate={onDuplicateWidget}
-            onMoveUp={onMoveWidgetUp}
-            onMoveDown={onMoveWidgetDown}
             onDrag={onDrag}
           />
         </>

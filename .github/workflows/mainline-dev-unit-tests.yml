@@ -5,7 +5,7 @@ name: Unit Tests
 on:
   push:
     branches:
-      - mainline
+      - mainline-dev
 
 jobs:
   tests:
@@ -28,4 +28,4 @@ jobs:
       - run: ./install.sh
 
       # Run unit tests
-      - run: RELEASE=1 ./test.sh
+      - run: ./test.sh

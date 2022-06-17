@@ -141,19 +141,8 @@ function EditDashboard() {
     return setWidgetOrder(index, index + 1);
   };
 
-  const setWidgetOrder = async (index: number, newIndex: number) => {
+  const setWidgetOrder = async (widgets: Widget[]) => {
     if (dashboard) {
-      const widgets = OrderingService.moveWidget(
-        dashboard.widgets,
-        index,
-        newIndex
-      );
-
-      // if no change in order ocurred, exit
-      if (widgets === dashboard.widgets) {
-        return;
-      }
-
       try {
         setDashboard({ ...dashboard, widgets }); // optimistic ui
         await BackendService.setWidgetOrder(dashboardId, widgets);

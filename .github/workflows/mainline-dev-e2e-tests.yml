@@ -15,16 +15,16 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14]
+        node-version: [14.x]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           ref: mainline-dev
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
 

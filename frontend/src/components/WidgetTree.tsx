@@ -19,8 +19,6 @@ interface Props {
   onDelete: (widget: Widget) => void;
   onDuplicate: (widget: Widget) => void;
   onDrag: (widgets: Widget[]) => void;
-  onMoveUp?: Function;
-  onMoveDown?: Function;
   widgets: Array<Widget>;
 }
 

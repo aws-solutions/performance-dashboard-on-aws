@@ -89,6 +89,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-helmet": "^6.1.2",
     "@types/react-router-hash-link": "^2.4.1",
     "css-loader": "^6.5.1",

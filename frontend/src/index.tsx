@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Amplify from "@aws-amplify/core";
+import { Amplify } from "@aws-amplify/core";
 import * as serviceWorker from "./serviceWorker";
 import { amplifyConfig } from "./amplify-config";
 import App from "./App";
@@ -21,6 +21,7 @@ import "dayjs/locale/pt-br";
 
 import "./index.scss";
 import "uswds/dist/js/uswds.min.js";
+import { Auth } from "@aws-amplify/auth";
 
 declare module "react" {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -33,6 +34,7 @@ ReactModal.setAppElement("#root"); //this is important for accessibility
 
 dayjs.extend(relativeTime);
 Amplify.configure(amplifyConfig());
+Auth.configure(amplifyConfig());
 i18n();
 
 ReactDOM.render(

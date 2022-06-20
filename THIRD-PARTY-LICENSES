@@ -210,7 +210,7 @@ limitations under the License.
 
 ---
 
-** @aws-amplify/ui-react; version ^0.2.10 --
+** @aws-amplify/ui-react; version ^1.2.5 --
 https://www.npmjs.com/package/@aws-amplify/ui-react
 ** aws-amplify; version 3.0.18 -- https://github.com/aws-amplify/amplify-js
 ** aws-sdk; version 2.714.0 -- https://github.com/aws/aws-sdk-js

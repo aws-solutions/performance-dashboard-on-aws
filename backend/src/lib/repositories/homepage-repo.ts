@@ -44,7 +44,6 @@ class HomepageRepository extends BaseRepository {
     lastUpdatedAt: string,
     user: User
   ) {
-
     try {
       await this.dynamodb.update({
         TableName: this.tableName,

@@ -43,6 +43,7 @@ describe("getPublicHomepage", () => {
     HomepageFactory.getDefaultHomepage = jest.fn().mockReturnValueOnce({
       title: "Performance Dashboard",
       description: "Welcome to the performance dashboard",
+      metricsScript: "<script></script>",
     });
 
     await HomepageCtrl.getPublicHomepage(req, res);
@@ -51,6 +52,7 @@ describe("getPublicHomepage", () => {
       expect.objectContaining({
         title: "Performance Dashboard",
         description: "Welcome to the performance dashboard",
+        metricsScript: "<script></script>",
       })
     );
   });
@@ -60,6 +62,7 @@ describe("getPublicHomepage", () => {
     repository.getHomepage = jest.fn().mockReturnValueOnce({
       title: "Kingdom of Wakanda",
       description: "Welcome to the performance dashboard of our kingdom",
+      metricsScript: "<script></script>",
     });
 
     await HomepageCtrl.getPublicHomepage(req, res);
@@ -68,6 +71,7 @@ describe("getPublicHomepage", () => {
       expect.objectContaining({
         title: "Kingdom of Wakanda",
         description: "Welcome to the performance dashboard of our kingdom",
+        metricsScript: "<script></script>",
       })
     );
   });
@@ -128,6 +132,7 @@ describe("getHomepage", () => {
     HomepageFactory.getDefaultHomepage = jest.fn().mockReturnValueOnce({
       title: "Performance Dashboard",
       description: "Welcome to the performance dashboard",
+      metricsScript: "<script></script>",
     });
 
     await HomepageCtrl.getHomepage(req, res);
@@ -136,6 +141,7 @@ describe("getHomepage", () => {
       expect.objectContaining({
         title: "Performance Dashboard",
         description: "Welcome to the performance dashboard",
+        metricsScript: "<script></script>",
       })
     );
   });
@@ -145,6 +151,7 @@ describe("getHomepage", () => {
     repository.getHomepage = jest.fn().mockReturnValueOnce({
       title: "Kingdom of Wakanda",
       description: "Welcome to the performance dashboard of our kingdom",
+      metricsScript: "<script></script>",
     });
 
     await HomepageCtrl.getHomepage(req, res);
@@ -153,6 +160,7 @@ describe("getHomepage", () => {
       expect.objectContaining({
         title: "Kingdom of Wakanda",
         description: "Welcome to the performance dashboard of our kingdom",
+        metricsScript: "<script></script>",
       })
     );
   });
@@ -169,6 +177,7 @@ describe("updateHomepage", () => {
       body: {
         title: "abc",
         description: "description test",
+        metricsScript: "<script></script>",
         updatedAt: now.toISOString(),
       },
     } as any as Request;
@@ -200,6 +209,7 @@ describe("updateHomepage", () => {
     expect(repository.updateHomepage).toHaveBeenCalledWith(
       "abc",
       "description test",
+      "<script></script>",
       now.toISOString(),
       user
     );

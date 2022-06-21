@@ -40,9 +40,11 @@ class HomepageRepository extends BaseRepository {
   public async updateHomepage(
     title: string,
     description: string,
+    metricsScript: string,
     lastUpdatedAt: string,
     user: User
   ) {
+    console.log("Mazen: " + title + " " + metricsScript);
     try {
       await this.dynamodb.update({
         TableName: this.tableName,
@@ -51,12 +53,13 @@ class HomepageRepository extends BaseRepository {
           sk: "Homepage",
         },
         UpdateExpression:
-          "set #title = :title, #description = :description, #type = :type, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #title = :title, #description = :description, #metricsScript = :metricsScript, #type = :type, #updatedAt = :updatedAt, #updatedBy = :userId",
         ConditionExpression:
           "attribute_not_exists(#updatedAt) or #updatedAt <= :lastUpdatedAt",
         ExpressionAttributeValues: {
           ":title": title,
           ":description": description,
+          ":metricsScript": metricsScript,
           ":lastUpdatedAt": lastUpdatedAt,
           ":updatedAt": new Date().toISOString(),
           ":userId": user.userId,
@@ -65,6 +68,7 @@ class HomepageRepository extends BaseRepository {
         ExpressionAttributeNames: {
           "#title": "title",
           "#description": "description",
+          "#metricsScript": "metricsScript",
           "#updatedBy": "updatedBy",
           "#updatedAt": "updatedAt",
           "#type": "type",

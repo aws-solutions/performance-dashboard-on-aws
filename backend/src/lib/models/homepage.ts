@@ -1,6 +1,7 @@
 export interface Homepage {
   title: string;
   description: string;
+  metricsScript?: string;
   updatedAt: Date;
 }
 
@@ -11,4 +12,5 @@ export interface HomepageItem {
   updatedAt?: string;
   title: string;
   description: string;
+  metricsScript?: string;
 }

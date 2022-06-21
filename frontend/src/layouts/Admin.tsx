@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useLayoutEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import Auth from "@aws-amplify/auth";
 import {
@@ -42,6 +42,10 @@ function AdminLayout(props: LayoutProps) {
   };
 
   useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
+
+  useLayoutEffect(() => {
+    document.getElementById("Home")?.focus();
+  });
 
   return (
     <>

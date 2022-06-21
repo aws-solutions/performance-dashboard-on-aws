@@ -114,7 +114,18 @@ function WidgetTree(props: Props) {
     ) {
       return;
     }
+    const sourceItem = tree?.map[source.index];
+    const destinationItem = tree?.map[destination.index];
     moveWidget(source.index, destination.index);
+
+    provided.announce(
+      t("WidgetTree.ItemDropped", {
+        sourceLabel: sourceItem?.label,
+        sourceName: sourceItem?.widget?.name,
+        destinationLabel: destinationItem?.label,
+        destinationName: destinationItem?.widget?.name,
+      })
+    );
   };
 
   useEffect(() => {

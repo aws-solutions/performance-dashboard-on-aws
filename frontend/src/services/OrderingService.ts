@@ -147,6 +147,8 @@ function moveWidget(
     } else {
       source.section = "";
     }
+  } else {
+    source.section = "";
   }
 
   // insert the items in the given position

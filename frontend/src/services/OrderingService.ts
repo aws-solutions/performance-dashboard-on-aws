@@ -134,7 +134,6 @@ function moveWidget(
   }
 
   let destination = nodes[destinationIndex];
-  console.log("source", source, "destination", destination);
   if (destination) {
     // insert before the destination
     if (!!destination.section) {

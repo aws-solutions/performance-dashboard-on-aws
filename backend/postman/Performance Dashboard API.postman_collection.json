@@ -1181,7 +1181,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"Performance Dashboard\",\n    \"description\": \"The Performance Dashboard makes data open and accessible to provide transparency and helps drive the ongoing improvement of digital services.\",\n    \"updatedAt\": \"2020-12-03T17:22:20.464Z\"\n}",
+              "raw": "{\n    \"title\": \"Performance Dashboard\",\n    \"description\": \"The Performance Dashboard makes data open and accessible to provide transparency and helps drive the ongoing improvement of digital services.\",\n    \"metricsScript\": \"<script></script>\",\n    \"updatedAt\": \"2020-12-03T17:22:20.464Z\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

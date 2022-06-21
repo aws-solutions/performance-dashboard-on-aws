@@ -15,6 +15,9 @@ function fromItem(item: HomepageItem): Homepage {
   return {
     title: item.title,
     description: item.description,
+    metricsScript: item.metricsScript
+      ? item.metricsScript
+      : "<script></script>",
     updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
   };
 }

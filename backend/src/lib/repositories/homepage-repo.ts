@@ -44,7 +44,7 @@ class HomepageRepository extends BaseRepository {
     lastUpdatedAt: string,
     user: User
   ) {
-    console.log("Mazen: " + title + " " + metricsScript);
+
     try {
       await this.dynamodb.update({
         TableName: this.tableName,

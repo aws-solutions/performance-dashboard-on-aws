@@ -417,6 +417,11 @@
     "Dashboard": "dashboard",
     "SuccessfullyCopied": "successfully copied."
   },
+  "DatePicker": {
+    "IncorrectDateFormat": "Date does not match the required format",
+    "DateBefore": "Date must be before",
+    "DateAfter": "Date must be after"
+  },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",
   "BrandingAndStylingLogo": "Logo",

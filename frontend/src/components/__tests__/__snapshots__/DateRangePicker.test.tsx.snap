@@ -3,61 +3,135 @@
 exports[`renders a date range input element 1`] = `
 <div>
   <div
-    class="usa-form-group"
-    role="contentinfo"
+    class="usa-date-range-picker"
   >
-    <label
-      class="usa-label text-bold"
-      for="startDate"
-    >
-      Select a start date
-    </label>
     <div
-      class="usa-hint"
-    />
-    <div>
+      class="usa-form-group grid-row"
+      role="contentinfo"
+    >
       <div
-        class="react-datepicker-wrapper"
+        class="tablet:grid-col-6"
       >
         <div
-          class="react-datepicker__input-container"
+          class="usa-form-group"
+          role="contentinfo"
         >
+          <label
+            class="usa-label text-bold"
+            for="startDate"
+          >
+            Select a start date
+          </label>
+          <div
+            class="usa-hint"
+            id="startDate-description"
+          />
           <input
-            class="usa-input"
+            aria-describedby="startDate-description"
+            class="usa-input usa-input usa-input"
             id="startDate"
+            name="startDate"
             type="text"
             value=""
           />
         </div>
       </div>
-    </div>
-  </div>
-  <div
-    class="usa-form-group"
-    role="contentinfo"
-  >
-    <label
-      class="usa-label text-bold"
-      for="endDate"
-    >
-      Select an end date
-    </label>
-    <div
-      class="usa-hint"
-    />
-    <div>
       <div
-        class="react-datepicker-wrapper"
+        class="tablet:grid-col-2 margin-top-8 margin-left-1"
       >
         <div
-          class="react-datepicker__input-container"
+          class="react-datepicker-wrapper"
         >
+          <div
+            class="react-datepicker__input-container"
+          >
+            <span
+              class="usa-input"
+              id="startDate"
+              value=""
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-calendar fa-w-14 fa-2x "
+                data-icon="calendar"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm436-44v-36c0-26.5-21.5-48-48-48h-48V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H160V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H48C21.5 64 0 85.5 0 112v36c0 6.6 5.4 12 12 12h424c6.6 0 12-5.4 12-12z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="usa-form-group grid-row"
+      role="contentinfo"
+    >
+      <div
+        class="tablet:grid-col-6"
+      >
+        <div
+          class="usa-form-group"
+          role="contentinfo"
+        >
+          <label
+            class="usa-label text-bold"
+            for="endDate"
+          >
+            Select an end date
+          </label>
+          <div
+            class="usa-hint"
+            id="endDate-description"
+          />
           <input
-            class="usa-input"
+            aria-describedby="endDate-description"
+            class="usa-input usa-input usa-input"
             id="endDate"
+            name="endDate"
             type="text"
             value=""
           />
+        </div>
+      </div>
+      <div
+        class="tablet:grid-col-2 margin-top-8 margin-left-1"
+      >
+        <div
+          class="react-datepicker-wrapper"
+        >
+          <div
+            class="react-datepicker__input-container"
+          >
+            <span
+              class="usa-input"
+              id="endDate"
+              value=""
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-calendar fa-w-14 fa-2x "
+                data-icon="calendar"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm436-44v-36c0-26.5-21.5-48-48-48h-48V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H160V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H48C21.5 64 0 85.5 0 112v36c0 6.6 5.4 12 12 12h424c6.6 0 12-5.4 12-12z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+          </div>
         </div>
       </div>
     </div>

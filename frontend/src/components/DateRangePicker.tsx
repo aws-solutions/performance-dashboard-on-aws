@@ -29,14 +29,14 @@ function DateRangePicker(props: Props) {
   }, [props.end.date]);
 
   return (
-    <>
+    <div className="usa-date-range-picker">
       <DatePicker
         data-testid="startDate"
         maxDate={maxStartDate}
         {...props.start}
       />
       <DatePicker data-testid="endDate" minDate={minEndDate} {...props.end} />
-    </>
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DatePicker1, { registerLocale } from "react-datepicker";
-import { format, isMatch, isBefore, isAfter, add } from "date-fns";
+import { format, isMatch, isBefore, isAfter, isEqual, add } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
@@ -81,7 +81,7 @@ function DatePicker(props: Props) {
     setErrors("");
 
     if (props.maxDate) {
-      if (!isBefore(date, props.maxDate)) {
+      if (!isBefore(date, props.maxDate) && !isEqual(date, props.maxDate)) {
         setErrors(
           t("DatePicker.DateBefore") +
             " " +
@@ -91,7 +91,7 @@ function DatePicker(props: Props) {
       }
     }
     if (props.minDate) {
-      if (!isAfter(date, props.minDate)) {
+      if (!isAfter(date, props.minDate) && !isEqual(date, props.minDate)) {
         setErrors(
           t("DatePicker.DateAfter") +
             " " +

@@ -419,8 +419,8 @@
   },
   "DatePicker": {
     "IncorrectDateFormat": "Date does not match the required format",
-    "DateBefore": "Date must be before",
-    "DateAfter": "Date must be after"
+    "DateBefore": "Date must be on or before",
+    "DateAfter": "Date must be on or after"
   },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",

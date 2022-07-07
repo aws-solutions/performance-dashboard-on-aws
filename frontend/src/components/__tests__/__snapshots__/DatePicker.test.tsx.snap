@@ -45,6 +45,7 @@ exports[`renders a date input element 1`] = `
           <span
             class="usa-input"
             id="date"
+            tabindex="0"
             value=""
           >
             <svg

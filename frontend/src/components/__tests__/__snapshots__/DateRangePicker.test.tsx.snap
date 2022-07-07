@@ -48,6 +48,7 @@ exports[`renders a date range input element 1`] = `
             <span
               class="usa-input"
               id="startDate"
+              tabindex="0"
               value=""
             >
               <svg
@@ -113,6 +114,7 @@ exports[`renders a date range input element 1`] = `
             <span
               class="usa-input"
               id="endDate"
+              tabindex="0"
               value=""
             >
               <svg

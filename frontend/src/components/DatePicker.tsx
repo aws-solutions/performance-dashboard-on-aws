@@ -77,6 +77,39 @@ function DatePicker(props: Props) {
 
   const className = `usa-input${props.className ? " " + props.className : ""}`;
 
+  const checkDate = (date: Date) => {
+    setErrors("");
+
+    if (props.maxDate) {
+      if (!isBefore(date, props.maxDate)) {
+        setErrors(
+          t("DatePicker.DateBefore") +
+            " " +
+            format(props.maxDate, props.dateFormat)
+        );
+        return false;
+      }
+    }
+    if (props.minDate) {
+      if (!isAfter(date, props.minDate)) {
+        setErrors(
+          t("DatePicker.DateAfter") +
+            " " +
+            format(props.minDate, props.dateFormat)
+        );
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  useEffect(() => {
+    if (props.date) {
+      checkDate(props.date);
+    }
+  }, [props.date, props.minDate, props.maxDate]);
+
   const handleChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -91,17 +124,8 @@ function DatePicker(props: Props) {
 
     const formattedDate = add(new Date(inputDate), { minutes: timeOffset });
 
-    if (props.maxDate) {
-      if (!isBefore(formattedDate, props.maxDate)) {
-        setErrors(t("DatePicker.DateBefore") + " " + props.maxDate.toString());
-        return false;
-      }
-    }
-    if (props.minDate) {
-      if (!isAfter(formattedDate, props.minDate)) {
-        setErrors(t("DatePicker.DateAfter") + " " + props.minDate.toString());
-        return false;
-      }
+    if (!checkDate(formattedDate)) {
+      return false;
     }
 
     props.setDate(formattedDate);
@@ -153,6 +177,7 @@ function DatePicker(props: Props) {
               <FontAwesomeIcon icon={faCalendar} size="2x" />
             </span>
           }
+          tabIndex={0}
         />
       </div>
     </div>

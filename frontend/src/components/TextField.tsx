@@ -12,6 +12,8 @@ interface Props {
   defaultValue?: string;
   error?: string;
   onChange?: Function;
+  onBlur?: Function;
+  onFocus?: Function;
   multiline?: boolean;
   rows?: number;
   className?: string;
@@ -28,6 +30,22 @@ function TextField(props: Props) {
   ) => {
     if (props.onChange) {
       props.onChange(event);
+    }
+  };
+
+  const handleBlur = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (props.onBlur) {
+      props.onBlur(event);
+    }
+  };
+
+  const handleFocus = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (props.onFocus) {
+      props.onFocus(event);
     }
   };
 
@@ -93,6 +111,8 @@ function TextField(props: Props) {
           }
           disabled={props.disabled}
           onChange={handleChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
         />
       )}
     </div>

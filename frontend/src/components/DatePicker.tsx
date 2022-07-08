@@ -83,9 +83,9 @@ function DatePicker(props: Props) {
     if (props.maxDate) {
       if (!isBefore(date, props.maxDate) && !isEqual(date, props.maxDate)) {
         setErrors(
-          t("DatePicker.DateBefore") +
-            " " +
-            format(props.maxDate, props.dateFormat)
+          t("DatePicker.DateBefore", {
+            date: format(props.maxDate, props.dateFormat),
+          })
         );
         return false;
       }
@@ -93,9 +93,9 @@ function DatePicker(props: Props) {
     if (props.minDate) {
       if (!isAfter(date, props.minDate) && !isEqual(date, props.minDate)) {
         setErrors(
-          t("DatePicker.DateAfter") +
-            " " +
-            format(props.minDate, props.dateFormat)
+          t("DatePicker.DateAfter", {
+            date: format(props.minDate, props.dateFormat),
+          })
         );
         return false;
       }

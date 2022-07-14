@@ -25,6 +25,7 @@ async function updateSettings(req: Request, res: Response) {
     colors,
     adminContactEmailAddress,
     contactEmailAddress,
+    contactUsContent,
   } = req.body;
 
   if (!updatedAt) {
@@ -131,6 +132,15 @@ async function updateSettings(req: Request, res: Response) {
     updatedAt = await repo.updateSetting(
       "contactEmailAddress",
       contactEmailAddress,
+      updatedAt,
+      user
+    );
+  }
+
+  if (contactUsContent) {
+    updatedAt = await repo.updateSetting(
+      "contactUsContent",
+      contactUsContent,
       updatedAt,
       user
     );

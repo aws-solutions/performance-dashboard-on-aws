@@ -72,7 +72,7 @@ export function useTopicAreas() {
 }
 
 export function useSettings() {
-  const [settings] = useState({
+  const [settings] = useState<Settings>({
     dateTimeFormat: {
       date: "YYYY-MM-DD",
       time: "HH:mm",
@@ -102,11 +102,16 @@ export function useSettings() {
 }
 
 export function usePublicSettings() {
-  const [settings] = useState({
+  const [settings] = useState<PublicSettings>({
     dateTimeFormat: {
       date: "YYYY-MM-DD",
       time: "HH:mm",
     },
+    colors: {
+      primary: "#ffffff",
+      secondary: "#0f6460",
+    },
+    contactUsContent: "",
   });
 
   return {

@@ -269,6 +269,39 @@ exports[`published site settings should match snapshot 1`] = `
               class="grid-col flex-3 text-right"
             />
           </div>
+          <div
+            class="grid-row margin-top-0-important"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <h3>
+                Contact us
+              </h3>
+            </div>
+          </div>
+          <div
+            class="grid-row margin-top-0-important margin-bottom-4"
+          >
+            <div
+              class="grid-col flex-9"
+            >
+              <div
+                class="published-site font-sans-lg"
+              >
+                <div
+                  class="Markdown undefined"
+                >
+                  <ul>
+                    <li />
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            />
+          </div>
           <hr
             style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
           />

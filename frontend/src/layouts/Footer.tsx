@@ -17,9 +17,10 @@ function Footer() {
             <hr className="margin-top-9 border-base-lightest" />
             {t("AdminFooter.HelpMessage")}{" "}
             <a
-              href={`mailto:${settings.adminContactEmailAddress}?subject=${t(
-                "AdminFooter.PerformanceDashboardAssistance"
-              )}`}
+              href={`mailto:${
+                settings.adminContactEmailAddress ??
+                settings.contactEmailAddress
+              }?subject=${t("AdminFooter.PerformanceDashboardAssistance")}`}
               className="usa-link"
             >
               {t("AdminFooter.ContactSupport")}

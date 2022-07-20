@@ -53,7 +53,7 @@ function PublicLayout(props: LayoutProps) {
                   <Logo />
                 </div>
 
-                <Link to="/" title="Home" aria-label="Home">
+                <Link to="/" title={t("Home")} aria-label={t("Home")}>
                   {settings.navbarTitle}
                 </Link>
               </em>
@@ -74,14 +74,13 @@ function PublicLayout(props: LayoutProps) {
             </button>
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
-                <a
-                  href={`mailto:${settings.contactEmailAddress}?subject=${t(
-                    "Public.PerformanceDashboardAssistance"
-                  )}`}
-                  className="usa-nav__link"
+                <Link
+                  to="/public/contact"
+                  title={t("Public.Contact")}
+                  aria-label={t("Public.Contact")}
                 >
                   {t("Public.Contact")}
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

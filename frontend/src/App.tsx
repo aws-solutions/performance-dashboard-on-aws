@@ -60,6 +60,7 @@ import EditFavicon from "./containers/EditFavicon";
 import UserStatus from "./containers/UserStatus";
 import ChooseStaticDataset from "./containers/ChooseStaticDataset";
 import AccessDenied from "./containers/AccessDenied";
+import ContactUs from "./containers/ContactUs";
 import Page from "./components/Page";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "./hooks";
@@ -357,6 +358,12 @@ function App() {
       path: "/",
       title: t("PageTitle.Home"),
       component: Home,
+      public: true,
+    },
+    {
+      path: "/public/contact",
+      title: t("PageTitle.ContactUs"),
+      component: ContactUs,
       public: true,
     },
   ];

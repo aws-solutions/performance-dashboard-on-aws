@@ -108,6 +108,32 @@ function PublishedSiteSettings() {
         </div>
       )}
 
+      <div className="grid-row margin-top-0-important">
+        <div className="grid-col flex-9">
+          <h3>{t("PublishedSiteSettings.ContactUsLabel")}</h3>
+        </div>
+      </div>
+
+      {loadingSettings ? (
+        <Spinner
+          className="margin-top-3 text-center"
+          label={t("LoadingSpinnerLabel")}
+        />
+      ) : (
+        <div className="grid-row margin-top-0-important margin-bottom-4">
+          <div className="grid-col flex-9">
+            <div className="published-site font-sans-lg">
+              <MarkdownRender
+                source={
+                  settings.contactUsContent ? settings.contactUsContent : "-"
+                }
+              />
+            </div>
+          </div>
+          <div className="grid-col flex-3 text-right"></div>
+        </div>
+      )}
+
       <hr
         style={{
           border: "none",

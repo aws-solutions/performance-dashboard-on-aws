@@ -1018,6 +1018,8 @@ components:
               type: string
         contactEmailAddress:
           type: string
+        contactUsContent:
+          type: string
 
     Settings:
       type: object
@@ -1057,6 +1059,8 @@ components:
           type: string
         adminContactEmailAddress:
           type: string
+        contactUsContent:
+          type: string
 
     UpdateSettingsRequest:
       type: object
@@ -1095,6 +1099,8 @@ components:
         contactEmailAddress:
           type: string
         adminContactEmailAddress:
+          type: string
+        contactUsContent:
           type: string
       required:
         - updatedAt

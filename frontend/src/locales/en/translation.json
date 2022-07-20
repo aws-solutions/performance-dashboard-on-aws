@@ -56,7 +56,8 @@
     "AccessDenied": "Access Denied",
     "ViewDashboard": "View Dashboard",
     "PageNotFound": "Page Not Found",
-    "Home": "Home"
+    "Home": "Home",
+    "ContactUs": "Contact Us"
   },
   "SkipToMainContent": "Skip to main content",
   "LastUpdatedLabel": "Last updated",
@@ -598,6 +599,8 @@
   "SettingsTitleError": "Please specify a title.",
   "SettingsContactEmailTitle": "Contact email address",
   "SettingsContactEmailHint": "Set an email address for users to reach out to your organization regarding published dashboards. This email address will appear as a 'contact' link in the navigation bar of the published site",
+  "SettingsContactUsTitle": "Contact us",
+  "SettingsContactUsHint": "Set the contact us page content for users to reach out to your organization regarding published dashboards. This content will appear in the contact us page of the published site",
   "SettingsTopicAreaDescription": "Dashboards are organized by topic areas. A dashboard must have a topic area and can have only one topic area.",
   "SettingsTopicAreaNameDescription": "You can customize the name 'topic area' and it will be replaced throughout the interface. For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc.",
   "EditSettingsTopicAreaNameScreen": {
@@ -664,6 +667,7 @@
     "NavagationBarDescription": "You can customize the header and navigation of the published site.",
     "Title": "Title",
     "ContactEmailAddressLabel": "Contact email address",
+    "ContactUsLabel": "Contact us",
     "HomepageContentHeader": "Homepage content",
     "HomepageContentDescription": "These components appear on the homepage of your published site and explain what your published site is about.",
     "Headline": "Headline",
@@ -1079,5 +1083,6 @@
     "ItemMoved": "You have moved {{sourceLabel}}-{{sourceName}} to {{destinationLabel}}-{{destinationName}}.",
     "ItemDropped": "You have dropped {{sourceLabel}}-{{sourceName}} to {{destinationLabel}}-{{destinationName}}.",
     "OutsideTheDroppableAreaError": "You are currently not over a droppable area {{label}}-{{name}}."
-  }
+  },
+  "ContactUs": "Contact Us"
 }

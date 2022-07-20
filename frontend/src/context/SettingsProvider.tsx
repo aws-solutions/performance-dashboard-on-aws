@@ -27,6 +27,8 @@ const defaultSettings: Settings = {
     primary: "#005EA2",
     secondary: "#54278f",
   },
+  contactUsContent:
+    "Please, collect all the relevant information of your issue and contact us using the following email address:",
 };
 
 interface SettingsContextProps {
@@ -71,6 +73,9 @@ const publicSettingsReducer = (
     dateTimeFormat: backendSettings.dateTimeFormat
       ? backendSettings.dateTimeFormat
       : defaultSettings.dateTimeFormat,
+    contactUsContent: backendSettings.contactUsContent
+      ? backendSettings.contactUsContent
+      : defaultSettings.contactUsContent,
   };
 };
 

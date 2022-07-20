@@ -49,9 +49,9 @@ function fromItem(item: SettingsItem): Settings {
       ? item.customFaviconS3Key
       : defaults.customFaviconS3Key,
     colors: item.colors ? item.colors : defaults.colors,
-    contactEmailAddress: item.contactEmailAddress && item.contactEmailAddress,
-    adminContactEmailAddress:
-      item.adminContactEmailAddress && item.adminContactEmailAddress,
+    contactEmailAddress: item.contactEmailAddress,
+    adminContactEmailAddress: item.adminContactEmailAddress,
+    contactUsContent: item.contactUsContent,
   };
 }
 
@@ -74,8 +74,8 @@ function toPublicSettings(settings: Settings): PublicSettings {
       ? settings.customFaviconS3Key
       : defaults.customFaviconS3Key,
     colors: settings.colors ? settings.colors : defaults.colors,
-    contactEmailAddress:
-      settings.contactEmailAddress && settings.contactEmailAddress,
+    contactEmailAddress: settings.contactEmailAddress,
+    contactUsContent: settings.contactUsContent,
   };
 }
 

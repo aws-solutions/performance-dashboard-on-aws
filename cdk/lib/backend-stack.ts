@@ -15,6 +15,7 @@ interface BackendStackProps extends cdk.StackProps {
   };
   datasetsBucketName: string;
   contentBucketName: string;
+  authenticationRequired: boolean;
 }
 
 export class BackendStack extends cdk.Stack {
@@ -28,13 +29,6 @@ export class BackendStack extends cdk.Stack {
 
   constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
     super(scope, id, props);
-
-    const exampleLanguage = new cdk.CfnParameter(this, "exampleLanguage", {
-      type: "String",
-      description: "Language for example dashboards",
-      minLength: 5,
-      default: "english",
-    });
 
     const dataStorage = new DatasetStorage(this, "DatasetStorage", {
       datasetsBucketName: props.datasetsBucketName,
@@ -51,12 +45,14 @@ export class BackendStack extends cdk.Stack {
       datasetsBucket: dataStorage.datasetsBucket,
       contentBucket: contentStorage.contentBucket,
       userPool: props.userPool,
+      authenticationRequired: props.authenticationRequired,
     });
 
     const backendApi = new BackendApi(this, "Api", {
       cognitoUserPoolArn: props.userPool.arn,
       apiFunction: lambdas.apiHandler,
       publicApiFunction: lambdas.publicApiHandler,
+      authenticationRequired: props.authenticationRequired,
     });
 
     /**

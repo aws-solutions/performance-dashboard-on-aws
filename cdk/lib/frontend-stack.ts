@@ -16,6 +16,7 @@ interface Props extends cdk.StackProps {
   identityPoolId: string;
   appClientId: string;
   backendApiUrl: string;
+  authenticationRequired: boolean;
 }
 
 export class FrontendStack extends cdk.Stack {
@@ -166,6 +167,7 @@ export class FrontendStack extends cdk.Stack {
         COGNITO_DOMAIN: "",
         SAML_PROVIDER: "",
         ENTERPRISE_LOGIN_LABEL: "Enterprise Sign-In",
+        AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
       },
     });
 

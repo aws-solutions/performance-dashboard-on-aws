@@ -15,6 +15,7 @@ interface Props {
     id: string;
     arn: string;
   };
+  authenticationRequired: boolean;
 }
 
 export class LambdaFunctions extends cdk.Construct {
@@ -42,6 +43,7 @@ export class LambdaFunctions extends cdk.Construct {
         CONTENT_BUCKET: props.contentBucket.bucketName,
         USER_POOL_ID: props.userPool.id,
         LOG_LEVEL: "info",
+        AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
       },
     });
 
@@ -62,6 +64,7 @@ export class LambdaFunctions extends cdk.Construct {
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
         CONTENT_BUCKET: props.contentBucket.bucketName,
         LOG_LEVEL: "info",
+        AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
       },
     });
 

@@ -1,10 +1,16 @@
 import { Router } from "express";
+import { env } from "process";
 import DashboardCtrl from "../controllers/dashboard-ctrl";
 import HomepageCtrl from "../controllers/homepage-ctrl";
 import SettingsCtrl from "../controllers/settings-ctrl";
 import errorHandler from "./middleware/error-handler";
+import auth from "./middleware/auth";
 
 const router = Router();
+const requiresAuth = process.env.AUTHENTICATION_REQUIRED === "true";
+if (requiresAuth) {
+  router.use(auth);
+}
 
 router.get(
   "/dashboard/:id",
@@ -19,6 +25,7 @@ router.get(
 router.get("/search", errorHandler(HomepageCtrl.getPublicHomepageWithQuery));
 
 router.get("/homepage", errorHandler(HomepageCtrl.getPublicHomepage));
+
 router.get("/settings", errorHandler(SettingsCtrl.getPublicSettings));
 
 export default router;

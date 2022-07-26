@@ -55,6 +55,7 @@ function getConfigContent(): string {
     cognitoDomain: process.env.COGNITO_DOMAIN,
     samlProvider: process.env.SAML_PROVIDER,
     enterpriseLoginLabel: process.env.ENTERPRISE_LOGIN_LABEL,
+    authenticationRequired: process.env.AUTHENTICATION_REQUIRED,
   };
 
   return `

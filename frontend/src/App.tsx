@@ -368,13 +368,17 @@ function App() {
     },
   ];
 
+  console.log("config: ", window.EnvironmentConfig);
+
   return (
     <SettingsProvider>
       <Router>
         <Switch>
           {routes.map((route) => {
             const component = route.public
-              ? withPublicLayout(route.component)
+              ? window.EnvironmentConfig.authenticationRequired
+                ? withSAMLAuthenticator(withPublicLayout(route.component))
+                : withPublicLayout(route.component)
               : withSAMLAuthenticator(withAdminLayout(route.component));
             return (
               <Page

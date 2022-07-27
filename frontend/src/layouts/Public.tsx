@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../components/Logo";
-import { usePublicSettings, useFavicon, useFileLoaded } from "../hooks";
+import { Auth } from "@aws-amplify/auth";
+import {
+  usePublicSettings,
+  useFavicon,
+  useFileLoaded,
+  useCurrentAuthenticatedUser,
+} from "../hooks";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet";
@@ -16,8 +22,21 @@ interface LayoutProps {
 function PublicLayout(props: LayoutProps) {
   const { settings, loadingSettings } = usePublicSettings();
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
+  const { username, isFederatedId } = useCurrentAuthenticatedUser();
   const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
+
+  const signOut = async (event: React.MouseEvent) => {
+    try {
+      if (isFederatedId) {
+        event.preventDefault();
+      }
+      await Auth.signOut();
+    } catch (error) {
+      console.log("error signing out: ", error);
+      event.preventDefault();
+    }
+  };
 
   useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
 
@@ -82,6 +101,28 @@ function PublicLayout(props: LayoutProps) {
                   {t("Public.Contact")}
                 </Link>
               </li>
+              {window.EnvironmentConfig?.authenticationRequired && (
+                <li className="usa-nav__primary-item">
+                  <button
+                    className="usa-accordion__button usa-nav__link"
+                    aria-expanded="false"
+                    aria-controls="basic-nav-section-one"
+                  >
+                    <span>{username}</span>
+                  </button>
+                  <ul
+                    id="basic-nav-section-one"
+                    className="usa-nav__submenu z-index-logout"
+                    hidden
+                  >
+                    <li className="usa-nav__submenu-item">
+                      <a href="/" onClick={signOut} className="usa-link">
+                        {t("Public.Logout")}
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              )}
             </ul>
           </nav>
         </div>

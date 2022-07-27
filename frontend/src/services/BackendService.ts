@@ -13,7 +13,7 @@ import {
 } from "../models";
 
 const apiName = "BackendApi";
-const publicPath = window.EnvironmentConfig.authenticationRequired
+const publicPath = window.EnvironmentConfig?.authenticationRequired
   ? "protected"
   : "public";
 
@@ -62,7 +62,7 @@ async function fetchPublicDashboardByURL(
   friendlyURL: string
 ): Promise<Dashboard> {
   let headers = {};
-  if (window.EnvironmentConfig.authenticationRequired) {
+  if (window.EnvironmentConfig?.authenticationRequired) {
     headers = await authHeaders();
   }
   return await API.get(
@@ -76,7 +76,7 @@ async function fetchPublicHomepageWithQuery(
   query: string
 ): Promise<PublicHomepage> {
   let headers = {};
-  if (window.EnvironmentConfig.authenticationRequired) {
+  if (window.EnvironmentConfig?.authenticationRequired) {
     headers = await authHeaders();
   }
   if (query == undefined || query == "") {
@@ -336,7 +336,7 @@ async function fetchHomepage() {
 
 async function fetchPublicHomepage() {
   let headers = {};
-  if (window.EnvironmentConfig.authenticationRequired) {
+  if (window.EnvironmentConfig?.authenticationRequired) {
     headers = await authHeaders();
   }
   return API.get(apiName, `${publicPath}/homepage`, { headers });
@@ -365,7 +365,7 @@ async function fetchSettings() {
 
 async function fetchPublicSettings() {
   let headers = {};
-  if (window.EnvironmentConfig.authenticationRequired) {
+  if (window.EnvironmentConfig?.authenticationRequired) {
     headers = await authHeaders();
   }
   return API.get(apiName, `${publicPath}/settings`, { headers });
@@ -401,7 +401,7 @@ async function fetchPublicDashboard(
   dashboardId: string
 ): Promise<PublicDashboard> {
   let headers = {};
-  if (window.EnvironmentConfig.authenticationRequired) {
+  if (window.EnvironmentConfig?.authenticationRequired) {
     headers = await authHeaders();
   }
   return API.get(apiName, `${publicPath}/dashboard/${dashboardId}`, {

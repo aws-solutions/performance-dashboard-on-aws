@@ -11,6 +11,8 @@ import publicapi from "./public-api";
 import settingsapi from "./settings-api";
 import userapi from "./user-api";
 
+const requiresAuth = process.env.AUTHENTICATION_REQUIRED === "true";
+
 const app = express();
 app.use(express.json());
 app.use(parserError);
@@ -22,7 +24,7 @@ app.use("/dashboard", dashboard);
 app.use("/topicarea", topicarea);
 app.use("/dataset", dataset);
 app.use("/ingestapi", ingestapi);
-app.use("/public", publicapi);
+app.use(requiresAuth ? "/protected" : "/public", publicapi);
 app.use("/settings", settingsapi);
 app.use("/user", userapi);
 

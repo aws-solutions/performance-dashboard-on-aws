@@ -1,6 +1,6 @@
 import React, { ReactNode, useLayoutEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import Auth from "@aws-amplify/auth";
+import { Auth } from "@aws-amplify/auth";
 import {
   useSettings,
   useCurrentAuthenticatedUser,

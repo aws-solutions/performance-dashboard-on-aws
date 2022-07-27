@@ -82,6 +82,8 @@ export class LambdaFunctions extends cdk.Construct {
         tracing: lambda.Tracing.ACTIVE,
         memorySize: 256,
         timeout: cdk.Duration.seconds(10),
+        // You may need to increase the lambda concurrent qouta of your AWS account
+        // https://{aws-region}.console.aws.amazon.com/servicequotas/home/services/lambda/quotas/L-B99A9384
         reservedConcurrentExecutions: 10,
         logRetention: logs.RetentionDays.TEN_YEARS,
         environment: {

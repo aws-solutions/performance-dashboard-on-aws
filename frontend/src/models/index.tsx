@@ -315,7 +315,12 @@ export type LocationState = {
 export enum UserRoles {
   Admin = "Admin",
   Editor = "Editor",
+  /**
+   * @type {string}
+   * @deprecated no longer supported
+   */
   Publisher = "Publisher",
+  Public = "Public",
 }
 
 export type User = {

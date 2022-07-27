@@ -452,6 +452,7 @@
   "AddUsersInvites": "Add user(s) and send invite",
   "AddUsersAdmin": "In addition to Editor permissions, can manage users and website settings.",
   "AddUsersEditor": "Can create, edit, and publish dashboards.",
+  "AddUsersPublic": "This role will give users access to the public website. Role is ignored in instances with authentication disabled for public dashboards.",
   "AddUsersRoleSelect": "Select a role for these users",
   "AddUsersEmailsHint": "Enter one or more user email addresses separated by a comma (,)",
   "AddUsersEmails": "User email address(es)",
@@ -465,6 +466,11 @@
     "Plural": "new users have been added as",
     "Final": "and will receive an invitation email."
   },
+  "UserRoles": {
+    "Editor": "Editor",
+    "Admin": "Admin",
+    "Public": "Public"
+  },
   "ChangeRole": {
     "Label": "Change role",
     "Singular": "user has",
@@ -476,7 +482,9 @@
     "Editor": "Editor",
     "EditorDescription": "Upcoming feature. Can create, edit, and publish dashboards.",
     "Admin": "Admin",
-    "AdminDescription": "In addition to Editor permissions, manage users and website settings."
+    "AdminDescription": "In addition to Editor permissions, manage users and website settings.",
+    "Public": "Public",
+    "PublicDescription": "This role will give users access to the public website. Role is ignored in instances with authentication disabled for public dashboards."
   },
   "UserListingAddUsers": "Add user(s)",
   "UserListingModalTitleResendInvites": "Resend invite email",
@@ -681,7 +689,8 @@
   "Public": {
     "Menu": "Menu",
     "PerformanceDashboardAssistance": "Performance Dashboard Assistance",
-    "Contact": "Contact"
+    "Contact": "Contact",
+    "Logout": "Logout"
   },
   "AdminMenu": {
     "Menu": "Menu",
@@ -967,6 +976,7 @@
   "ClosePreview": "Exit full screen preview",
   "Admin": "Admin",
   "Editor": "Editor",
+  "PublicRole": "Public",
   "GlobalUser": "user",
   "DashboardWasCopied": "was successfully copied.",
   "Copy": "Copy",
@@ -1060,6 +1070,7 @@
   "PublishDashboardModal": {
     "Title": "Publish Dashboard",
     "Description": "This will publish the dashboard. Anyone with a link will be able to view.",
+    "PrivateDescription": "This will publish the dashboard. Users with credentials will be able to view.",
     "PublishDashboardAction": "Publish dashboard",
     "InternalVersionNotes": "Internal version notes",
     "InternalVersionNotesDescription": "Describe what changes you are publishing to the dashboard. Only admins and editors can see these notes.",

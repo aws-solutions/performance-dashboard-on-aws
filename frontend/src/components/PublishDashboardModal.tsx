@@ -153,7 +153,9 @@ function PublishDashboardModal(props: PathParams) {
                   {isDraftDashboard && t("PublishDashboardModal.Title")}
                 </h1>
                 <div className="usa-prose" id={`${props.id}-description`}>
-                  {t("PublishDashboardModal.Description")}
+                  {window.EnvironmentConfig?.authenticationRequired
+                    ? t("PublishDashboardModal.PrivateDescription")
+                    : t("PublishDashboardModal.Description")}
                 </div>
                 {publishError && (
                   <Alert type="error" message={publishError} slim></Alert>

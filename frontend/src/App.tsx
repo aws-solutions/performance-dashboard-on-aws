@@ -368,8 +368,6 @@ function App() {
     },
   ];
 
-  console.log("config: ", window.EnvironmentConfig);
-
   return (
     <SettingsProvider>
       <Router>

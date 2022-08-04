@@ -125,9 +125,11 @@ function moveWidget(
     destinationIndex > sourceIndex &&
     destinationIndex < sourceIndex + source.children.length
   ) {
+    // only true for sections, invalid case you can't drag a section inside itself
     return undefined;
   }
 
+  // move items and it's children
   const items = nodes.splice(sourceIndex, 1 + source.children.length);
   if (destinationIndex > sourceIndex) {
     destinationIndex -= source.children.length;
@@ -156,12 +158,27 @@ function moveWidget(
 
   // build the widget list
   const widgets: Widget[] = [];
+  const sections: { [key: string]: Widget } = {};
   nodes.forEach((node) => {
     if (node.widget) {
       if (node.section !== node.widget.section) {
         node.widget = { ...node.widget, section: node.section };
       }
-      widgets.push({ ...node.widget, order: widgets.length });
+      const newWidget = { ...node.widget, order: widgets.length };
+      if (node.widget.widgetType === WidgetType.Section) {
+        sections[node.id] = newWidget;
+        newWidget.content.widgetIds = [];
+      }
+      widgets.push(newWidget);
+    }
+  });
+  // Fix widgetIds inside sections.
+  widgets.forEach((widget) => {
+    if (widget.section) {
+      const section = sections[widget.section];
+      if (section) {
+        section.content.widgetIds.push(widget.id);
+      }
     }
   });
   return widgets;

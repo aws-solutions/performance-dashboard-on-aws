@@ -5,7 +5,10 @@ import { validate } from "jsonschema";
 import RemoveUsersSchema from "../jsonschema/api/RemoveUsers.json";
 import { Role } from "../models/user";
 import logger from "../services/logger";
+import { env } from "process";
 var escapeHtml = require("escape-html");
+
+const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
 
 async function getUsers(req: Request, res: Response) {
   const repo = UserRepository.getInstance();
@@ -25,8 +28,18 @@ async function addUsers(req: Request, res: Response) {
     return;
   }
 
-  if (role !== Role.Admin && role !== Role.Editor && role !== Role.Publisher) {
+  if (
+    role !== Role.Admin &&
+    role !== Role.Editor &&
+    role !== Role.Publisher &&
+    role !== Role.Public
+  ) {
     res.status(400).send("Invalid role value");
+    return;
+  }
+
+  if (!authenticationRequired && role === Role.Public) {
+    res.status(400).send("Public role not enabled for instance");
     return;
   }
 
@@ -111,8 +124,18 @@ async function changeRole(req: Request, res: Response) {
     return;
   }
 
-  if (role !== Role.Admin && role !== Role.Editor && role !== Role.Publisher) {
+  if (
+    role !== Role.Admin &&
+    role !== Role.Editor &&
+    role !== Role.Publisher &&
+    role !== Role.Public
+  ) {
     res.status(400).send("Invalid role value");
+    return;
+  }
+
+  if (!authenticationRequired && role === Role.Public) {
+    res.status(400).send("Public role not enabled for instance");
     return;
   }
 

@@ -374,7 +374,9 @@ function App() {
         <Switch>
           {routes.map((route) => {
             const component = route.public
-              ? withPublicLayout(route.component)
+              ? window.EnvironmentConfig.authenticationRequired
+                ? withSAMLAuthenticator(withPublicLayout(route.component))
+                : withPublicLayout(route.component)
               : withSAMLAuthenticator(withAdminLayout(route.component));
             return (
               <Page

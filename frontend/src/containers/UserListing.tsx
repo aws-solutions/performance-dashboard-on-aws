@@ -30,6 +30,7 @@ function UserListing() {
   };
 
   const changeRole = () => {
+    console.log("selected: ", selected);
     history.push("/admin/users/changerole", {
       emails: selected.map((s) => s.email).join(", "),
       usernames: selected.map((s) => s.userId),
@@ -225,7 +226,7 @@ function UserListing() {
             },
             {
               Header: t("UserListingRole"),
-              accessor: (row: User) => t(row.roles[0]),
+              accessor: (row: User) => t(`UserRoles.${row.roles[0]}`),
             },
             {
               Header: t("UserListingStatus"),

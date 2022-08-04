@@ -13,6 +13,9 @@ import {
 } from "../models";
 
 const apiName = "BackendApi";
+const publicPath = window.EnvironmentConfig?.authenticationRequired
+  ? "protected"
+  : "public";
 
 async function authHeaders() {
   const token = await getAuthToken();
@@ -58,20 +61,30 @@ async function fetchDashboardById(dashboardId: string): Promise<Dashboard> {
 async function fetchPublicDashboardByURL(
   friendlyURL: string
 ): Promise<Dashboard> {
+  let headers = {};
+  if (window.EnvironmentConfig?.authenticationRequired) {
+    headers = await authHeaders();
+  }
   return await API.get(
     apiName,
-    `public/dashboard/friendly-url/${friendlyURL}`,
-    {}
+    `${publicPath}/dashboard/friendly-url/${friendlyURL}`,
+    { headers }
   );
 }
 
 async function fetchPublicHomepageWithQuery(
   query: string
 ): Promise<PublicHomepage> {
+  let headers = {};
+  if (window.EnvironmentConfig?.authenticationRequired) {
+    headers = await authHeaders();
+  }
   if (query == undefined || query == "") {
-    return API.get(apiName, "public/homepage", {});
+    return API.get(apiName, `${publicPath}/homepage`, { headers });
   } else {
-    return await API.get(apiName, `public/search?q=${query}`, {});
+    return await API.get(apiName, `${publicPath}/search?q=${query}`, {
+      headers,
+    });
   }
 }
 
@@ -322,7 +335,11 @@ async function fetchHomepage() {
 }
 
 async function fetchPublicHomepage() {
-  return API.get(apiName, "public/homepage", {});
+  let headers = {};
+  if (window.EnvironmentConfig?.authenticationRequired) {
+    headers = await authHeaders();
+  }
+  return API.get(apiName, `${publicPath}/homepage`, { headers });
 }
 
 async function editHomepage(
@@ -347,7 +364,11 @@ async function fetchSettings() {
 }
 
 async function fetchPublicSettings() {
-  return API.get(apiName, "public/settings", {});
+  let headers = {};
+  if (window.EnvironmentConfig?.authenticationRequired) {
+    headers = await authHeaders();
+  }
+  return API.get(apiName, `${publicPath}/settings`, { headers });
 }
 
 async function editSettings(publishingGuidance: string, updatedAt: Date) {
@@ -379,7 +400,13 @@ async function updateSetting(
 async function fetchPublicDashboard(
   dashboardId: string
 ): Promise<PublicDashboard> {
-  return API.get(apiName, `public/dashboard/${dashboardId}`, {});
+  let headers = {};
+  if (window.EnvironmentConfig?.authenticationRequired) {
+    headers = await authHeaders();
+  }
+  return API.get(apiName, `${publicPath}/dashboard/${dashboardId}`, {
+    headers,
+  });
 }
 
 async function createDraft(dashboardId: string): Promise<Dashboard> {

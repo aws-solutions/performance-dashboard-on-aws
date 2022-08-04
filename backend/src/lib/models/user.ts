@@ -1,7 +1,12 @@
 export enum Role {
   Admin = "Admin",
   Editor = "Editor",
+  /**
+   * @type {string}
+   * @deprecated no longer supported
+   */
   Publisher = "Publisher",
+  Public = "Public",
 }
 
 export interface User {

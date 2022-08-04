@@ -12,6 +12,7 @@ import { PolicyInvalidWarningSuppressor } from "../lib/constructs/policy-aspect"
 
 const APP_ID = "Performance Dashboard on AWS";
 const envName = process.env.CDK_ENV_NAME;
+const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
 
 if (!envName) {
   throw new Error("CDK_ENV_NAME environment variable missing");
@@ -38,6 +39,7 @@ const backend = new BackendStack(app, "Backend", {
   },
   datasetsBucketName: datasetsBucketName,
   contentBucketName: contentBucketName,
+  authenticationRequired: authenticationRequired,
 });
 
 const frontend = new FrontendStack(app, "Frontend", {
@@ -48,6 +50,7 @@ const frontend = new FrontendStack(app, "Frontend", {
   identityPoolId: auth.identityPoolId,
   appClientId: auth.appClientId,
   backendApiUrl: backend.restApi.url,
+  authenticationRequired: authenticationRequired,
 });
 
 const operations = new OpsStack(app, "Ops", {

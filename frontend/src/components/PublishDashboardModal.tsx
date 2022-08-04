@@ -153,7 +153,9 @@ function PublishDashboardModal(props: PathParams) {
                   {isDraftDashboard && t("PublishDashboardModal.Title")}
                 </h1>
                 <div className="usa-prose" id={`${props.id}-description`}>
-                  {t("PublishDashboardModal.Description")}
+                  {window.EnvironmentConfig?.authenticationRequired
+                    ? t("PublishDashboardModal.PrivateDescription")
+                    : t("PublishDashboardModal.Description")}
                 </div>
                 {publishError && (
                   <Alert type="error" message={publishError} slim></Alert>
@@ -196,7 +198,7 @@ function PublishDashboardModal(props: PathParams) {
                     !isMobile ? styles.maxh10rem : ""
                   }`}
                 >
-                  <div className="usa-checkbox margin-top-neg-1">
+                  <div className="usa-checkbox margin-top-2">
                     <input
                       type="checkbox"
                       id="acknowledge"

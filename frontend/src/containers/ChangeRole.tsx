@@ -21,8 +21,40 @@ function ChangeRole() {
   const { register, handleSubmit } = useForm<FormValues>();
   const [role, setRole] = useState("");
 
+  const roleOptions = [
+    {
+      id: "editor",
+      value: UserRoles.Editor,
+      name: "role",
+      dataTestId: "editorRadioButton",
+      label: t(`ChangeRole.${UserRoles.Editor}`),
+      description: t("ChangeRole.EditorDescription"),
+    },
+    {
+      id: "admin",
+      value: UserRoles.Admin,
+      name: "role",
+      dataTestId: "adminRadioButton",
+      label: t(`ChangeRole.${UserRoles.Admin}`),
+      description: t("ChangeRole.AdminDescription"),
+    },
+  ];
+
+  if (window.EnvironmentConfig?.authenticationRequired) {
+    roleOptions.push({
+      id: "public",
+      value: UserRoles.Public,
+      name: "role",
+      dataTestId: "publicRadioButton",
+      label: t(`ChangeRole.${UserRoles.Public}`),
+      description: t("ChangeRole.PublicDescription"),
+    });
+  }
+
   const onSubmit = async (values: FormValues) => {
-    const emails = values.emails.split(",").map((email) => email.trim());
+    const emails = (values.emails ?? state.emails)
+      .split(",")
+      .map((email) => email.trim());
     await BackendService.changeRole(values.role, state.usernames!);
 
     history.push("/admin/users", {
@@ -97,24 +129,7 @@ function ChangeRole() {
               <RadioButtonsTile
                 isHorizontally={false}
                 register={register}
-                options={[
-                  {
-                    id: "editor",
-                    value: UserRoles.Editor,
-                    name: "role",
-                    dataTestId: "editorRadioButton",
-                    label: t(`ChangeRole.${UserRoles.Editor}`),
-                    description: t("ChangeRole.EditorDescription"),
-                  },
-                  {
-                    id: "admin",
-                    value: UserRoles.Admin,
-                    name: "role",
-                    dataTestId: "adminRadioButton",
-                    label: t(`ChangeRole.${UserRoles.Admin}`),
-                    description: t("ChangeRole.AdminDescription"),
-                  },
-                ]}
+                options={roleOptions}
               />
             </fieldset>
 

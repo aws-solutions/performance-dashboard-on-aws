@@ -128,6 +128,16 @@ You can choose the default example language used by the lambda generator functio
 
 It will default to english language
 
+### Private instance
+
+You can deploy a private version of Performance Dashboard. The private instance will ask for credentials to navigate to the published website too. There is a new role available to assign to users that can view the publish website only (Public).
+
+```bash
+./deploy.sh dev english true
+```
+
+It will default to not request credentials for published website
+
 ## Installation Completed
 
 Once the installation has completed (whether using CFT or CDK), head to the AWS CFT console to view the resources and stacks created. If you're not familiar with using the CFT console, review the CFT [documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-view-stack-data-resources.html). In the CFT Console, click on "Stacks" to view the stacks created. Click on a created stack, then click on "Outputs" to view the resources created.

@@ -50,6 +50,36 @@ function AddUsers() {
     setRole((event.target as HTMLInputElement).value);
   };
 
+  const roleOptions = [
+    {
+      id: "editor",
+      value: UserRoles.Editor,
+      name: "role",
+      dataTestId: "editorRadioButton",
+      label: t(UserRoles.Editor),
+      description: t("AddUsersEditor"),
+    },
+    {
+      id: "admin",
+      value: UserRoles.Admin,
+      name: "role",
+      dataTestId: "adminRadioButton",
+      label: t(UserRoles.Admin),
+      description: t("AddUsersAdmin"),
+    },
+  ];
+
+  if (window.EnvironmentConfig?.authenticationRequired) {
+    roleOptions.push({
+      id: "public",
+      value: UserRoles.Public,
+      name: "role",
+      dataTestId: "publicRadioButton",
+      label: t("PublicRole"),
+      description: t("AddUsersPublic"),
+    });
+  }
+
   useChangeBackgroundColor();
 
   return (
@@ -103,24 +133,7 @@ function AddUsers() {
               <RadioButtonsTile
                 isHorizontally={false}
                 register={register}
-                options={[
-                  {
-                    id: "editor",
-                    value: UserRoles.Editor,
-                    name: "role",
-                    dataTestId: "editorRadioButton",
-                    label: t(UserRoles.Editor),
-                    description: t("AddUsersEditor"),
-                  },
-                  {
-                    id: "admin",
-                    value: UserRoles.Admin,
-                    name: "role",
-                    dataTestId: "adminRadioButton",
-                    label: t(UserRoles.Admin),
-                    description: t("AddUsersAdmin"),
-                  },
-                ]}
+                options={roleOptions}
               />
             </fieldset>
 

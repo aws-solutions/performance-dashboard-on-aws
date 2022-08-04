@@ -8,12 +8,12 @@ import {
   PolicyDocument,
   PolicyStatement,
 } from "@aws-cdk/aws-iam";
-import { LogGroup } from "@aws-cdk/aws-logs";
 
 interface ApiProps {
   apiFunction: lambda.Function;
   publicApiFunction: lambda.Function;
   cognitoUserPoolArn: string;
+  authenticationRequired: boolean;
 }
 
 export class BackendApi extends cdk.Construct {
@@ -105,7 +105,11 @@ export class BackendApi extends cdk.Construct {
     });
 
     this.addPrivateEndpoints(apiIntegration, authorizer);
-    this.addPublicEndpoints(publicApiIntegration);
+    this.addPublicEndpoints(
+      publicApiIntegration,
+      authorizer,
+      props.authenticationRequired
+    );
 
     const key = this.api.addApiKey("PerfDashIngestApiKey");
     const plan = this.api.addUsagePlan("PerfDashIngestUsagePlan", {
@@ -252,26 +256,66 @@ export class BackendApi extends cdk.Construct {
     );
   }
 
-  private addPublicEndpoints(apiIntegration: apigateway.LambdaIntegration) {
-    // Public endpoints that do not require authentication.
-    // Not passing `methodProps` is what makes the endpoint public.
-    const publicapi = this.api.root.addResource("public");
+  private addPublicEndpoints(
+    apiIntegration: apigateway.LambdaIntegration,
+    authorizer: apigateway.CfnAuthorizer,
+    authenticationRequired?: boolean
+  ) {
+    const methodProps: apigateway.MethodOptions = {
+      authorizationType: apigateway.AuthorizationType.COGNITO,
+      authorizer: { authorizerId: authorizer.ref },
+    };
+
+    // Public endpoints that do not require authentication if auth is not required.
+    const publicapi = this.api.root.addResource(
+      authenticationRequired ? "protected" : "public"
+    );
     const dashboards = publicapi.addResource("dashboard");
     const friendlyURLs = dashboards.addResource("friendly-url");
 
     const dashboard = dashboards.addResource("{id}");
-    this.cfn_nag_warn_w59(dashboard.addMethod("GET", apiIntegration));
+    this.cfn_nag_warn_w59(
+      dashboard.addMethod(
+        "GET",
+        apiIntegration,
+        authenticationRequired ? methodProps : {}
+      )
+    );
 
     const byfriendlyURL = friendlyURLs.addResource("{friendlyURL}");
-    this.cfn_nag_warn_w59(byfriendlyURL.addMethod("GET", apiIntegration));
+    this.cfn_nag_warn_w59(
+      byfriendlyURL.addMethod(
+        "GET",
+        apiIntegration,
+        authenticationRequired ? methodProps : {}
+      )
+    );
 
     const homepage = publicapi.addResource("homepage");
-    this.cfn_nag_warn_w59(homepage.addMethod("GET", apiIntegration));
+    this.cfn_nag_warn_w59(
+      homepage.addMethod(
+        "GET",
+        apiIntegration,
+        authenticationRequired ? methodProps : {}
+      )
+    );
 
     const settings = publicapi.addResource("settings");
-    this.cfn_nag_warn_w59(settings.addMethod("GET", apiIntegration));
+    this.cfn_nag_warn_w59(
+      settings.addMethod(
+        "GET",
+        apiIntegration,
+        authenticationRequired ? methodProps : {}
+      )
+    );
 
     const search = publicapi.addResource("search");
-    this.cfn_nag_warn_w59(search.addMethod("GET", apiIntegration));
+    this.cfn_nag_warn_w59(
+      search.addMethod(
+        "GET",
+        apiIntegration,
+        authenticationRequired ? methodProps : {}
+      )
+    );
   }
 }

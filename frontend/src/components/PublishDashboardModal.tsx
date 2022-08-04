@@ -198,7 +198,7 @@ function PublishDashboardModal(props: PathParams) {
                     !isMobile ? styles.maxh10rem : ""
                   }`}
                 >
-                  <div className="usa-checkbox margin-top-neg-1">
+                  <div className="usa-checkbox margin-top-2">
                     <input
                       type="checkbox"
                       id="acknowledge"

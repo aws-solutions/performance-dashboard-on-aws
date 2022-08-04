@@ -54,7 +54,7 @@ This repository is a monorepo that includes 3 different applications: Backend, F
 
 ### Requirements
 
-- [Node.js 14](https://nodejs.org/en/download)
+- [Node.js 12](https://nodejs.org/en/download)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [An AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
 

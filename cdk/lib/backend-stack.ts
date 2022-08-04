@@ -30,13 +30,6 @@ export class BackendStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
     super(scope, id, props);
 
-    const exampleLanguage = new cdk.CfnParameter(this, "exampleLanguage", {
-      type: "String",
-      description: "Language for example dashboards",
-      minLength: 5,
-      default: "english",
-    });
-
     const dataStorage = new DatasetStorage(this, "DatasetStorage", {
       datasetsBucketName: props.datasetsBucketName,
     });

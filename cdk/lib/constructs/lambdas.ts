@@ -27,7 +27,7 @@ export class LambdaFunctions extends cdk.Construct {
     super(scope, id);
 
     this.apiHandler = new lambda.Function(this, "PrivateApi", {
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_12_X,
       description: "Handles API Gateway traffic from admin users",
       code: lambda.Code.fromAsset("../backend/build"),
       handler: "src/lambda/api.handler",
@@ -51,7 +51,7 @@ export class LambdaFunctions extends cdk.Construct {
     // It provides flexibility to define specific throttling limits
     // between this lambda vs the one that handles private traffic.
     this.publicApiHandler = new lambda.Function(this, "PublicApi", {
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_12_X,
       description: "Handles API Gateway traffic from public users",
       code: lambda.Code.fromAsset("../backend/build"),
       handler: "src/lambda/api.handler",
@@ -75,7 +75,7 @@ export class LambdaFunctions extends cdk.Construct {
       this,
       "DynamoDBStreamProcessor",
       {
-        runtime: lambda.Runtime.NODEJS_14_X,
+        runtime: lambda.Runtime.NODEJS_12_X,
         description: "Handles messages from the main table's DynamoDB stream",
         code: lambda.Code.fromAsset("../backend/build"),
         handler: "src/lambda/streams.handler",

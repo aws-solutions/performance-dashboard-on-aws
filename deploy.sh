@@ -42,7 +42,7 @@ verify_prereqs() {
     echo "npm version"
     npm --version
     echo "cdk version"
-    npm run cdk -- --version
+    $CDK_DIR/node_modules/aws-cdk/bin/cdk --version
 }
 
 create_build_directories() {

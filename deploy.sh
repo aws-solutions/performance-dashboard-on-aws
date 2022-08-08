@@ -42,7 +42,7 @@ verify_prereqs() {
     echo "npm version"
     npm --version
     echo "cdk version"
-    cdk --version
+    npm run cdk -- --version
 }
 
 create_build_directories() {

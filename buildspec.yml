@@ -17,6 +17,10 @@ phases:
       - ./test.sh
       - ./install.sh
 
+  pre_deploy:
+    commands:
+      - ./install.sh --production
+
   build:
     commands:
       # Deploy

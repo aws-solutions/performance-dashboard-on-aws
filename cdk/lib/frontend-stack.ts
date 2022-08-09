@@ -17,6 +17,7 @@ interface Props extends cdk.StackProps {
   appClientId: string;
   backendApiUrl: string;
   authenticationRequired: boolean;
+  adminEmail: string;
 }
 
 export class FrontendStack extends cdk.Stack {
@@ -159,7 +160,7 @@ export class FrontendStack extends cdk.Stack {
         DATASETS_BUCKET: props.datasetsBucket,
         CONTENT_BUCKET: props.contentBucket,
         IDENTITY_POOL_ID: props.identityPoolId,
-        CONTACT_EMAIL: "support@example.com",
+        CONTACT_EMAIL: props.adminEmail,
         BRAND_NAME: "Performance Dashboard",
         TOPIC_AREA_LABEL: "Topic area",
         TOPIC_AREAS_LABEL: "Topic areas",

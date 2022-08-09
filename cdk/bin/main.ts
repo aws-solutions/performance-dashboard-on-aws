@@ -51,6 +51,7 @@ const frontend = new FrontendStack(app, "Frontend", {
   appClientId: auth.appClientId,
   backendApiUrl: backend.restApi.url,
   authenticationRequired: authenticationRequired,
+  adminEmail: auth.adminEmail,
 });
 
 const operations = new OpsStack(app, "Ops", {

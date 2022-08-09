@@ -43,6 +43,7 @@ export class PipelineStack extends cdk.Stack {
 
     const sourceOutput = new codepipeline.Artifact();
     const buildOutput = new codepipeline.Artifact();
+    const secureBuildOutput = new codepipeline.Artifact();
     const sourceAction = createSourceAction(scope, props, sourceOutput);
 
     pipeline.addStage({
@@ -62,10 +63,44 @@ export class PipelineStack extends cdk.Stack {
         ENVIRONMENT: {
           value: "Gamma",
         },
+        LANGUAGE: {
+          value: "english",
+        },
+        AUTH: {
+          value: "false",
+        },
+      },
+    });
+
+    const buildSecure = new codebuild.PipelineProject(this, "Build-Secure", {
+      environment: {
+        buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_2,
+        computeType: codebuild.ComputeType.LARGE,
+      },
+      environmentVariables: {
+        CDK_ADMIN_EMAIL: {
+          value: "johndoe@example.com",
+        },
+        ENVIRONMENT: {
+          value: "GammaSecure",
+        },
+        LANGUAGE: {
+          value: "english",
+        },
+        AUTH: {
+          value: "true",
+        },
       },
     });
 
     build.addToRolePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["*"],
+        resources: ["*"],
+      })
+    );
+    buildSecure.addToRolePolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["*"],
@@ -83,6 +118,13 @@ export class PipelineStack extends cdk.Stack {
           outputs: [buildOutput],
           runOrder: 1,
         }),
+        new CodeBuildAction({
+          actionName: "Build.and.Deploy.Secure",
+          project: buildSecure,
+          input: sourceOutput,
+          outputs: [secureBuildOutput],
+          runOrder: 2,
+        }),
       ],
     });
 
@@ -97,6 +139,22 @@ export class PipelineStack extends cdk.Stack {
         detailType: "BASIC",
         resource: build.projectArn,
         name: "BuildNotifications",
+        eventTypeIds: ["codebuild-project-build-state-failed"],
+        targets: [
+          {
+            targetType: "SNS",
+            targetAddress: notificationsTopic.topicArn,
+          },
+        ],
+      }
+    );
+    new codestarnotifications.CfnNotificationRule(
+      this,
+      "BuildNotificationRuleSecure",
+      {
+        detailType: "BASIC",
+        resource: buildSecure.projectArn,
+        name: "BuildNotificationsSecure",
         eventTypeIds: ["codebuild-project-build-state-failed"],
         targets: [
           {

@@ -164,7 +164,7 @@ function AdminLayout(props: LayoutProps) {
       </Header>
       <main className="padding-y-3" aria-label={t("ARIA.Main")}>
         <div id="main" tabIndex={-1}></div>
-        {!hasRole && <Redirect to="/403/access-denied" />}
+        {!isAdmin && !isEditor && <Redirect to="/403/access-denied" />}
         <div className="grid-container">{props.children}</div>
       </main>
       <Footer />

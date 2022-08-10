@@ -1,29 +1,16 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import Button from "../components/Button";
 import CardGroup from "../components/CardGroup";
-import { usePublicSettings } from "../hooks";
 import Link from "../components/Link";
 
 const { Card, CardFooter, CardBody } = CardGroup;
 
 function AccessDenied() {
   const { t } = useTranslation();
-  const { settings } = usePublicSettings();
 
   const onRequestAccess = () => {
-    window.location.href = "mailto:".concat(
-      settings.contactEmailAddress ? settings.contactEmailAddress : ""
-    );
-  };
-
-  const onViewPublicWebsite = () => {
-    const win = window.open("/", "_blank");
-    if (!!win) {
-      win.focus();
-    }
+    window.location.href = "/public/contact";
   };
 
   return (

@@ -27,15 +27,18 @@ function PublicLayout(props: LayoutProps) {
   const { t } = useTranslation();
 
   const signOut = async (event: React.MouseEvent) => {
-    try {
-      if (isFederatedId) {
+    event.preventDefault();
+    setTimeout(async () => {
+      try {
+        await Auth.signOut();
+        if (!isFederatedId) {
+          window.location.href = "/admin";
+        }
+      } catch (error) {
+        console.log("error signing out: ", error);
         event.preventDefault();
       }
-      await Auth.signOut();
-    } catch (error) {
-      console.log("error signing out: ", error);
-      event.preventDefault();
-    }
+    });
   };
 
   useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
@@ -116,7 +119,7 @@ function PublicLayout(props: LayoutProps) {
                     hidden
                   >
                     <li className="usa-nav__submenu-item">
-                      <a href="/" onClick={signOut} className="usa-link">
+                      <a href="/" onClick={signOut}>
                         {t("Public.Logout")}
                       </a>
                     </li>

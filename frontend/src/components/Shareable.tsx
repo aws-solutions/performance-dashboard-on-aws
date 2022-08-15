@@ -53,8 +53,6 @@ function Shareable(props: Props) {
 
   function copyWidgetUrlToClipboard(event: MouseEvent) {
     navigator.clipboard.writeText(getWidgetUrl());
-    console.log(window.location.href);
-    console.log(window.location.href.replace(window.location.hash, ""));
     history.replace(window.location.pathname, {
       alert: {
         type: "success",

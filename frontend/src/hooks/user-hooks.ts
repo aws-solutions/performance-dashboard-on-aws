@@ -39,12 +39,6 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
       setIsAdmin(userRoles.includes(UserRoles.Admin));
       setIsEditor(userRoles.includes(UserRoles.Editor));
       setIsPublic(userRoles.includes(UserRoles.Public));
-
-      console.log("user: ", {
-        isAdmin: userRoles.includes(UserRoles.Admin),
-        isEditor: userRoles.includes(UserRoles.Editor),
-        isPublic: userRoles.includes(UserRoles.Public),
-      });
     } else {
       setHasRole(false);
     }

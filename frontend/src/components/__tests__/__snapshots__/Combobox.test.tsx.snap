@@ -41,7 +41,6 @@ exports[`renders a combobox 1`] = `
       </select>
       <input
         aria-autocomplete="list"
-        aria-controls="1--list"
         aria-describedby="1--assistiveHint"
         aria-expanded="false"
         aria-owns="1--list"
@@ -52,8 +51,6 @@ exports[`renders a combobox 1`] = `
         role="combobox"
         type="text"
       />
-      
-    
       <span
         class="usa-combo-box__clear-input__wrapper"
         tabindex="-1"
@@ -70,15 +67,11 @@ exports[`renders a combobox 1`] = `
         
       
       </span>
-      
-      
       <span
         class="usa-combo-box__input-button-separator"
       >
          
       </span>
-      
-      
       <span
         class="usa-combo-box__toggle-list__wrapper"
         tabindex="-1"
@@ -96,8 +89,6 @@ exports[`renders a combobox 1`] = `
         
       
       </span>
-      
-      
       <ul
         aria-labelledby="1-label"
         class="usa-combo-box__list"
@@ -109,14 +100,10 @@ exports[`renders a combobox 1`] = `
         
       
       </ul>
-      
-      
       <div
         class="usa-combo-box__status usa-sr-only"
         role="status"
       />
-      
-      
       <span
         class="usa-sr-only"
         id="1--assistiveHint"
@@ -179,7 +166,6 @@ exports[`shows an error message 1`] = `
       </select>
       <input
         aria-autocomplete="list"
-        aria-controls="1--list"
         aria-describedby="1--assistiveHint"
         aria-expanded="false"
         aria-owns="1--list"
@@ -190,8 +176,6 @@ exports[`shows an error message 1`] = `
         role="combobox"
         type="text"
       />
-      
-    
       <span
         class="usa-combo-box__clear-input__wrapper"
         tabindex="-1"
@@ -208,15 +192,11 @@ exports[`shows an error message 1`] = `
         
       
       </span>
-      
-      
       <span
         class="usa-combo-box__input-button-separator"
       >
          
       </span>
-      
-      
       <span
         class="usa-combo-box__toggle-list__wrapper"
         tabindex="-1"
@@ -234,8 +214,6 @@ exports[`shows an error message 1`] = `
         
       
       </span>
-      
-      
       <ul
         aria-labelledby="1-label"
         class="usa-combo-box__list"
@@ -247,14 +225,10 @@ exports[`shows an error message 1`] = `
         
       
       </ul>
-      
-      
       <div
         class="usa-combo-box__status usa-sr-only"
         role="status"
       />
-      
-      
       <span
         class="usa-sr-only"
         id="1--assistiveHint"

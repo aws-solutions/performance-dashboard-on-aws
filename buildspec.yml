@@ -15,7 +15,7 @@ phases:
   pre_build:
     commands:
       - ./test.sh
-      - ./install.sh --production
+      - ./install.sh
 
   build:
     commands:

@@ -10,10 +10,10 @@ exports[`Tabs tests renders the Tabs component 1`] = `
       class="react-horizontal-scrolling-menu--wrapper border-base-lighter border-bottom margin-top-1"
     >
       <div
-        class="react-horizontal-scrolling-menu--scroll-container "
+        class="react-horizontal-scrolling-menu--scroll-container"
       >
         <div
-          class="react-horizontal-scrolling-menu--item "
+          class="react-horizontal-scrolling-menu--item"
           data-index="0"
           data-key="tab1"
         >
@@ -28,12 +28,12 @@ exports[`Tabs tests renders the Tabs component 1`] = `
           </div>
         </div>
         <div
-          class="react-horizontal-scrolling-menu--separator "
+          class="react-horizontal-scrolling-menu--separator"
           data-index="0.1"
           data-key="tab1-separator"
         />
         <div
-          class="react-horizontal-scrolling-menu--item "
+          class="react-horizontal-scrolling-menu--item"
           data-index="1"
           data-key="tab2"
         >
@@ -69,10 +69,10 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
       class="react-horizontal-scrolling-menu--wrapper border-base-lighter border-bottom margin-top-1"
     >
       <div
-        class="react-horizontal-scrolling-menu--scroll-container "
+        class="react-horizontal-scrolling-menu--scroll-container"
       >
         <div
-          class="react-horizontal-scrolling-menu--item "
+          class="react-horizontal-scrolling-menu--item"
           data-index="0"
           data-key="tab1"
         >
@@ -87,12 +87,12 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
           </div>
         </div>
         <div
-          class="react-horizontal-scrolling-menu--separator "
+          class="react-horizontal-scrolling-menu--separator"
           data-index="0.1"
           data-key="tab1-separator"
         />
         <div
-          class="react-horizontal-scrolling-menu--item "
+          class="react-horizontal-scrolling-menu--item"
           data-index="1"
           data-key="tab2"
         >

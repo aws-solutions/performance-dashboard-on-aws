@@ -7,9 +7,7 @@ exports[`renders a tooltip at the bottom 1`] = `
     data-id="tooltip"
     id="test"
   >
-    <style
-      aria-hidden="true"
-    >
+    <style>
       
   	.test {
 	    color: #fff;
@@ -97,9 +95,7 @@ exports[`renders a tooltip at the left 1`] = `
     data-id="tooltip"
     id="test"
   >
-    <style
-      aria-hidden="true"
-    >
+    <style>
       
   	.test {
 	    color: #fff;
@@ -187,9 +183,7 @@ exports[`renders a tooltip at the right 1`] = `
     data-id="tooltip"
     id="test"
   >
-    <style
-      aria-hidden="true"
-    >
+    <style>
       
   	.test {
 	    color: #fff;
@@ -277,9 +271,7 @@ exports[`renders a tooltip at the top (default) 1`] = `
     data-id="tooltip"
     id="test"
   >
-    <style
-      aria-hidden="true"
-    >
+    <style>
       
   	.test {
 	    color: #fff;

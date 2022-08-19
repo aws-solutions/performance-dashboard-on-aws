@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import Auth from "@aws-amplify/auth";
+import { Auth } from "@aws-amplify/auth";
 import { User, UserRoles } from "../models";
 import BackendService from "../services/BackendService";
 
@@ -7,8 +7,8 @@ type CurrentUserHook = {
   username: string;
   isAdmin: boolean;
   isEditor: boolean;
-  isPublisher: boolean;
   isFederatedId: boolean;
+  isPublic: boolean;
   hasRole: boolean;
 };
 
@@ -16,15 +16,9 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
   const [username, setUser] = useState<string>("");
   const [federated, setFederated] = useState(false);
   const [hasRole, setHasRole] = useState(true);
-  const [roles, setRoles] = useState<{
-    isAdmin: boolean;
-    isEditor: boolean;
-    isPublisher: boolean;
-  }>({
-    isAdmin: false,
-    isEditor: false,
-    isPublisher: false,
-  });
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isEditor, setIsEditor] = useState(false);
+  const [isPublic, setIsPublic] = useState(false);
 
   const fetchData = useCallback(async () => {
     const user = await Auth.currentAuthenticatedUser();
@@ -40,14 +34,11 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
     } else {
       setFederated(false);
     }
-
     if (user.attributes && user.attributes["custom:roles"]) {
-      const userRoles = user.attributes["custom:roles"];
-      setRoles({
-        isAdmin: userRoles.includes(UserRoles.Admin),
-        isEditor: userRoles.includes(UserRoles.Editor),
-        isPublisher: userRoles.includes(UserRoles.Publisher),
-      });
+      const userRoles: string = user.attributes["custom:roles"];
+      setIsAdmin(userRoles.includes(UserRoles.Admin));
+      setIsEditor(userRoles.includes(UserRoles.Editor));
+      setIsPublic(userRoles.includes(UserRoles.Public));
     } else {
       setHasRole(false);
     }
@@ -59,10 +50,10 @@ export function useCurrentAuthenticatedUser(): CurrentUserHook {
 
   return {
     username,
-    isAdmin: roles.isAdmin,
+    isAdmin: isAdmin,
     isFederatedId: federated,
-    isEditor: roles.isEditor,
-    isPublisher: roles.isPublisher,
+    isEditor: isEditor,
+    isPublic: isPublic,
     hasRole,
   };
 }

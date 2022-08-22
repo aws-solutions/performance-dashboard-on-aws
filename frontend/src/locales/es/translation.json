@@ -56,7 +56,8 @@
     "AccessDenied": "Acceso denegado",
     "ViewDashboard": "Ver panel",
     "PageNotFound": "Página no encontrada",
-    "Home": "Inicio"
+    "Home": "Inicio",
+    "ContactUs": "Contacto"
   },
   "SkipToMainContent": "Saltar al contenido principal",
   "LastUpdatedLabel": "Última actualización",
@@ -300,7 +301,7 @@
     "MetricCurrencyHint": "Seleccione una divisa",
     "ShowTimeChange": "Mostrar el cambio a lo largo del tiempo",
     "ChangeOverTime": "Cambio a lo largo del tiempo",
-    "ChangeOverTimeHint": "Indique el aumento o la disminución desde el periodo de tiempo anterior. Por ejemplo, +10,1 % o -56 %. Debe incluir el signo “+” o “-”.",
+    "ChangeOverTimeHint": "Indique el aumento o la disminución desde el periodo de tiempo anterior. Por ejemplo, +10,1 % o -56 %. Debe incluir el signo “+” o “-”.",
     "ChangeOverTimeError": "Debe comenzar por “+” o “-”.",
     "ShowDateRange": "Incluir un periodo",
     "StartDate": "Fecha de inicio",
@@ -318,7 +319,7 @@
     "MetricValueError": "Especifique un valor",
     "ShowTimeChange": "Mostrar el cambio a lo largo del tiempo",
     "ChangeOverTime": "Cambio a lo largo del tiempo",
-    "ChangeOverTimeHint": "Indique el aumento o la disminución desde el periodo de tiempo anterior. Por ejemplo, +10,1 % o -56 %. Debe incluir el signo “+” o “-”.",
+    "ChangeOverTimeHint": "Indique el aumento o la disminución desde el periodo de tiempo anterior. Por ejemplo, +10,1 % o -56 %. Debe incluir el signo “+” o “-”.",
     "ChangeOverTimeError": "Debe comenzar por “+” o “-”.",
     "ShowDateRange": "Incluir un periodo",
     "StartDate": "Fecha de inicio",
@@ -417,6 +418,11 @@
     "Dashboard": "panel",
     "SuccessfullyCopied": "copiado correctamente."
   },
+  "DatePicker": {
+    "IncorrectDateFormat": "La fecha no coincide con el formato requerido",
+    "DateBefore": "La fecha debe ser el {{date}} o anterior",
+    "DateAfter": "La fecha debe ser el {{date}} o posterior"
+  },
   "BrandingAndStyling": "Marca y estilo",
   "BrandingAndStylingDescription": "Personalice el panel de rendimiento.",
   "BrandingAndStylingLogo": "Logotipo",
@@ -430,7 +436,7 @@
   "BrandingAndStylingPrimaryColor": "Color principal",
   "BuildDashboardGuidance": "Cree el panel agregando gráficos, tablas, texto y mucho más como contenido.",
   "SortData": "Ordenar datos (opcional)",
-  "SignificantDigitLabels": "Etiquetas de dígitos significativos (123 000, 1,2 millones)",
+  "SignificantDigitLabels": "Etiquetas de dígitos significativos (123 000, 1,2 millones)",
   "ChartOptionsLabel": "Opciones de gráfico (opcional)",
   "ChartOptionsDescription": "Formatear el gráfico",
   "TableOptionsLabel": "Opciones de tabla (opcional)",
@@ -446,6 +452,7 @@
   "AddUsersInvites": "Agregar usuarios y enviar invitaciones",
   "AddUsersAdmin": "Además de los permisos del editor, puede administrar los usuarios y la configuración del sitio web.",
   "AddUsersEditor": "Puede crear, editar y publicar paneles.",
+  "AddUsersPublic": "Este rol concederá acceso a la página web pública a los usuarios. El rol se ignora en las instancias con la autenticación desactivada para los paneles públicos.",
   "AddUsersRoleSelect": "Seleccionar un rol para estos usuarios",
   "AddUsersEmailsHint": "Escriba una o varias direcciones de correo electrónico de usuario separadas por una coma (,)",
   "AddUsersEmails": "Dirección de correo electrónico del usuario",
@@ -459,6 +466,11 @@
     "Plural": "se han agregado nuevos usuarios como",
     "Final": "y recibirá un correo electrónico de invitación."
   },
+  "UserRoles": {
+    "Editor": "Editor",
+    "Admin": "Administrador",
+    "Public": "Público"
+  },
   "ChangeRole": {
     "Label": "Cambiar rol",
     "Singular": "usuario ha",
@@ -470,7 +482,9 @@
     "Editor": "Editor",
     "EditorDescription": "Característica por incorporar para crear, editar y publicar paneles.",
     "Admin": "Administrador",
-    "AdminDescription": "Además de los permisos del editor, administre los usuarios y la configuración del sitio web."
+    "AdminDescription": "Además de los permisos del editor, administre los usuarios y la configuración del sitio web.",
+    "Public": "Público",
+    "PublicDescription": "Este rol concederá acceso a la página web pública a los usuarios. El rol se ignora en las instancias con la autenticación desactivada para los paneles públicos."
   },
   "UserListingAddUsers": "Agregar usuario/s",
   "UserListingModalTitleResendInvites": "Volver a enviar el correo electrónico de invitación",
@@ -533,7 +547,7 @@
     "FailToSaveReleaseNotesError": "No se pudieron guardar las notas de la versión; inténtelo de nuevo.",
     "MissingVersionNotesError": "Escriba las notas de la versión",
     "ReturnToDraftSuccessAlert": "El panel {{dashboardName}} se ha devuelto al estado de borrador.",
-    "PublishedSuccessAlert": "El panel {{dashboardName}} se ha publicado correctamente.",
+    "PublishedSuccessAlert": "El panel “{{dashboardName}}” se publicó correctamente.",
     "TitleLabel": "{{dashboard}} - {{step}}",
     "ActionBarLabel": "Barra de herramientas"
   },
@@ -593,6 +607,8 @@
   "SettingsTitleError": "Especifique un título.",
   "SettingsContactEmailTitle": "Dirección de correo electrónico de contacto",
   "SettingsContactEmailHint": "Establezca una dirección de correo electrónico para que los usuarios se pongan en contacto con su organización en relación con los paneles publicados. Esta dirección de correo electrónico aparecerá como un enlace de “contacto” en la barra de navegación del sitio publicado.",
+  "SettingsContactUsTitle": "Contacto",
+  "SettingsContactUsHint": "Establezca el contenido de la página de contacto para que los usuarios se pongan en contacto con su organización en relación con los paneles publicados. Este contenido aparecerá en la página de contacto del sitio publicado.",
   "SettingsTopicAreaDescription": "Los paneles están organizados por áreas de temas. Un panel debe tener un área de tema y solo puede tener un área de tema.",
   "SettingsTopicAreaNameDescription": "Puede personalizar el nombre “área de tema” y se sustituirá en toda la interfaz. Por ejemplo, el nombre de “área de tema” se puede cambiar a “departamento”, “Ministerio”, “programa”, “agencia”, etc.",
   "EditSettingsTopicAreaNameScreen": {
@@ -659,6 +675,7 @@
     "NavagationBarDescription": "Puede personalizar el encabezado y la navegación del sitio publicado.",
     "Title": "Título",
     "ContactEmailAddressLabel": "Dirección de correo electrónico de contacto",
+    "ContactUsLabel": "Contacto",
     "HomepageContentHeader": "Contenido de la página de inicio",
     "HomepageContentDescription": "Estos componentes aparecen en la página de inicio del sitio publicado y explican de qué se trata el sitio publicado.",
     "Headline": "Encabezado",
@@ -672,7 +689,8 @@
   "Public": {
     "Menu": "Menú",
     "PerformanceDashboardAssistance": "Asistencia del panel de rendimiento",
-    "Contact": "Contacto"
+    "Contact": "Contacto",
+    "Logout": "Cerrar sesión"
   },
   "AdminMenu": {
     "Menu": "Menú",
@@ -958,6 +976,7 @@
   "ClosePreview": "Salir de la vista previa en pantalla completa",
   "Admin": "Administrador",
   "Editor": "Editor",
+  "PublicRole": "Público",
   "GlobalUser": "Usuario",
   "DashboardWasCopied": "se ha copiado correctamente.",
   "Copy": "Copiar",
@@ -1051,6 +1070,7 @@
   "PublishDashboardModal": {
     "Title": "Publicar panel",
     "Description": "Esta acción publicará el panel. Cualquier persona con un enlace podrá verlo.",
+    "PrivateDescription": "Esta acción publicará el panel. Los usuarios con credenciales podrán verlo.",
     "PublishDashboardAction": "Publicar panel",
     "InternalVersionNotes": "Notas de la versión interna",
     "InternalVersionNotesDescription": "Describa los cambios que va a publicar en el panel. Solo los administradores y editores pueden ver estas notas.",
@@ -1068,5 +1088,12 @@
     "PublishSuccessDescription": "Los visitantes con un enlace ahora pueden ver el panel publicado.",
     "PublishedSuccessAlert": "El panel “{{dashboardName}}” se publicó correctamente.",
     "ViewPublishedDashboard": "Ver el panel publicado"
-  }
+  },
+  "WidgetTree": {
+    "ItemLifted": "Ha levantado {{label}}-{{name}}",
+    "ItemMoved": "Ha trasladado {{sourceLabel}}-{{sourceName}} a {{destinationLabel}}-{{destinationName}}.",
+    "ItemDropped": "Ha soltado {{sourceLabel}}-{{sourceName}} en {{destinationLabel}}-{{destinationName}}.",
+    "OutsideTheDroppableAreaError": "Actualmente no se encuentra en un área en la que se pueda soltar {{label}}-{{name}}."
+  },
+  "ContactUs": "Contacto"
 }

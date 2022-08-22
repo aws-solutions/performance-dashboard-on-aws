@@ -33,7 +33,7 @@ PDoA comes with pre-built code to provision an instance in your AWS account. You
 
 | Region               | Launch                                                                                                                                                                                                                                                                                                                             |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Install in us-east-1 | [![Install in us-east-1](docs/images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.5.0/performance-dashboard-on-aws.template) |
+| Install in us-east-1 | [![Install in us-east-1](docs/images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/performance-dashboard-on-aws.template) |
 
 ### Clone this repository
 

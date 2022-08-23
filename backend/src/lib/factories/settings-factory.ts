@@ -22,6 +22,7 @@ function getDefaultSettings(): Settings {
       primary: "#005EA2",
       secondary: "#54278f",
     },
+    analyticsTrackingId: undefined,
   };
 }
 
@@ -52,6 +53,9 @@ function fromItem(item: SettingsItem): Settings {
     contactEmailAddress: item.contactEmailAddress,
     adminContactEmailAddress: item.adminContactEmailAddress,
     contactUsContent: item.contactUsContent,
+    analyticsTrackingId: item.analyticsTrackingId
+      ? item.analyticsTrackingId
+      : defaults.analyticsTrackingId,
   };
 }
 
@@ -76,6 +80,9 @@ function toPublicSettings(settings: Settings): PublicSettings {
     colors: settings.colors ? settings.colors : defaults.colors,
     contactEmailAddress: settings.contactEmailAddress,
     contactUsContent: settings.contactUsContent,
+    analyticsTrackingId: settings.analyticsTrackingId
+      ? settings.analyticsTrackingId
+      : defaults.analyticsTrackingId,
   };
 }
 

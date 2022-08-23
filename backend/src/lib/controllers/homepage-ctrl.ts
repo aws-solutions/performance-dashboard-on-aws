@@ -24,7 +24,6 @@ async function getPublicHomepage(req: Request, res: Response) {
   return res.json({
     title: homepage.title,
     description: homepage.description,
-    metricsScript: homepage.metricsScript,
     dashboards: publicDashboards,
   });
 }
@@ -43,7 +42,7 @@ async function getHomepage(req: Request, res: Response) {
 
 async function updateHomepage(req: Request, res: Response) {
   const user = req.user;
-  const { title, description, metricsScript, updatedAt } = req.body;
+  const { title, description, updatedAt } = req.body;
 
   if (!title) {
     res.status(400).send("Missing required body `title`");
@@ -61,7 +60,7 @@ async function updateHomepage(req: Request, res: Response) {
   }
 
   const repo = HomepageRepository.getInstance();
-  await repo.updateHomepage(title, description, metricsScript, updatedAt, user);
+  await repo.updateHomepage(title, description, updatedAt, user);
 
   res.send();
 }
@@ -157,7 +156,6 @@ async function getPublicHomepageWithQuery(req: Request, res: Response) {
   return res.json({
     title: homepage.title,
     description: homepage.description,
-    metricsScript: homepage.metricsScript,
     dashboards: publicDashboards,
   });
 }

@@ -186,6 +186,17 @@ describe("updateSettings", () => {
       user
     );
   });
+
+  it("updates analytics tracking id", async () => {
+    req.body.analyticsTrackingId = "UA123";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "analyticsTrackingId",
+      "UA123",
+      now.toISOString(),
+      user
+    );
+  });
 });
 
 describe("getPublicSettings", () => {

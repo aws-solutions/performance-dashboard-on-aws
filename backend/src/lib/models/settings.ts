@@ -20,6 +20,7 @@ export interface Settings {
   contactEmailAddress?: string;
   adminContactEmailAddress?: string;
   contactUsContent?: string;
+  analyticsTrackingId?: string; // Only Google Analytics is supported at this time.
 }
 
 export interface PublicSettings {
@@ -40,6 +41,7 @@ export interface PublicSettings {
   };
   contactEmailAddress?: string;
   contactUsContent?: string;
+  analyticsTrackingId?: string; // Only Google Analytics is supported at this time.
 }
 
 export interface SettingsItem {
@@ -67,4 +69,5 @@ export interface SettingsItem {
   contactEmailAddress?: string;
   adminContactEmailAddress?: string;
   contactUsContent?: string;
+  analyticsTrackingId?: string; // Only Google Analytics is supported at this time.
 }

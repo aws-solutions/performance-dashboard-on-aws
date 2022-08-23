@@ -39,7 +39,6 @@ describe("getHomepage", () => {
       type: "Homepage",
       title: "Kingdom of Wakanda",
       description: "Welcome to our kingdom",
-      metricsScript: "<script></script>",
     };
 
     dynamodb.get = jest.fn().mockReturnValueOnce({ Item: item });
@@ -47,7 +46,6 @@ describe("getHomepage", () => {
 
     expect(homepage.title).toEqual("Kingdom of Wakanda");
     expect(homepage.description).toEqual("Welcome to our kingdom");
-    expect(homepage.metricsScript).toEqual("<script></script>");
   });
 });
 
@@ -57,7 +55,6 @@ describe("updateHomepage", () => {
     await repo.updateHomepage(
       "abc",
       "description test",
-      "<script></script>",
       now.toISOString(),
       user
     );
@@ -79,18 +76,16 @@ describe("updateHomepage", () => {
     await repo.updateHomepage(
       "abc",
       "description test",
-      "<script></script>",
       now.toISOString(),
       user
     );
     expect(dynamodb.update).toHaveBeenCalledWith(
       expect.objectContaining({
         UpdateExpression:
-          "set #title = :title, #description = :description, #metricsScript = :metricsScript, #type = :type, #updatedAt = :updatedAt, #updatedBy = :userId",
+          "set #title = :title, #description = :description, #type = :type, #updatedAt = :updatedAt, #updatedBy = :userId",
         ExpressionAttributeValues: {
           ":title": "abc",
           ":description": "description test",
-          ":metricsScript": "<script></script>",
           ":lastUpdatedAt": now.toISOString(),
           ":updatedAt": now.toISOString(),
           ":userId": user.userId,

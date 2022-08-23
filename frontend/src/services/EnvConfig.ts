@@ -24,6 +24,7 @@ interface EnvConfig {
   cognitoDomain: string;
   samlProvider: string;
   enterpriseLoginLabel: string;
+  authenticationRequired: boolean;
 }
 
 const config = window.EnvironmentConfig;

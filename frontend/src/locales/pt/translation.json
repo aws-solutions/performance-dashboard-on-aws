@@ -56,7 +56,8 @@
     "AccessDenied": "Acesso negado",
     "ViewDashboard": "Visualizar painel",
     "PageNotFound": "Página não encontrada",
-    "Home": "Página inicial"
+    "Home": "Página inicial",
+    "ContactUs": "Entre em contato conosco"
   },
   "SkipToMainContent": "Pular para conteúdo principal",
   "LastUpdatedLabel": "Última atualização",
@@ -247,7 +248,7 @@
   },
   "AddSectionScreen": {
     "AddSection": "Adicionar seção",
-    "AddSectionSuccess": "A imagem “{{title}}” foi adicionada com êxito.",
+    "AddSectionSuccess": "A seção “{{title}}” foi adicionada com êxito.",
     "CreatingSection": "Criando seção",
     "AddSectionError": "Resolver erro(s) para adicionar a seção",
     "Configure": "Configurar conteúdo da seção",
@@ -417,6 +418,11 @@
     "Dashboard": "painel",
     "SuccessfullyCopied": "copiado com êxito."
   },
+  "DatePicker": {
+    "IncorrectDateFormat": "A data não corresponde ao formato necessário",
+    "DateBefore": "A data deve ser igual ou anterior a {{date}}",
+    "DateAfter": "A data deve ser igual ou posterior a {{date}}"
+  },
   "BrandingAndStyling": "Marca e estilo",
   "BrandingAndStylingDescription": "Personalize seu painel de performance.",
   "BrandingAndStylingLogo": "Logotipo",
@@ -446,6 +452,7 @@
   "AddUsersInvites": "Adicionar usuário(s) e enviar convite",
   "AddUsersAdmin": "Além das permissões de Editor, pode gerenciar usuários e configurações de sites.",
   "AddUsersEditor": "Pode criar, editar e publicar painéis.",
+  "AddUsersPublic": "Essa função dará aos usuários acesso ao site público. A função é ignorada em instâncias com autenticação desabilitada para painéis públicos.",
   "AddUsersRoleSelect": "Selecione uma função para esses usuários",
   "AddUsersEmailsHint": "Insira um ou mais endereços de e-mail de usuário separados por vírgula (,)",
   "AddUsersEmails": "Endereço(s) de e-mail de usuário",
@@ -459,6 +466,11 @@
     "Plural": "novos usuários foram adicionados como",
     "Final": "e receberá(ão) um e-mail de convite."
   },
+  "UserRoles": {
+    "Editor": "Editor",
+    "Admin": "Administrador",
+    "Public": "Público"
+  },
   "ChangeRole": {
     "Label": "Alterar função",
     "Singular": "usuário alterou",
@@ -470,7 +482,9 @@
     "Editor": "Editor",
     "EditorDescription": "Recurso futuro. Pode criar, editar e publicar painéis.",
     "Admin": "Administrador",
-    "AdminDescription": "Além das permissões de Editor, pode gerenciar usuários e configurações de sites."
+    "AdminDescription": "Além das permissões de Editor, pode gerenciar usuários e configurações de sites.",
+    "Public": "Público",
+    "PublicDescription": "Essa função dará aos usuários acesso ao site público. A função é ignorada em instâncias com autenticação desabilitada para painéis públicos."
   },
   "UserListingAddUsers": "Adicionar usuário(s)",
   "UserListingModalTitleResendInvites": "Reenviar convite por e-mail",
@@ -593,6 +607,8 @@
   "SettingsTitleError": "Especifique um título.",
   "SettingsContactEmailTitle": "Endereço de e-mail do contato",
   "SettingsContactEmailHint": "Defina um endereço de e-mail para os usuários entrarem em contato com a sua organização em relação a painéis publicados. Esse endereço de e-mail será exibido como um link de “contato” na barra de navegação do site publicado",
+  "SettingsContactUsTitle": "Entre em contato conosco",
+  "SettingsContactUsHint": "Defina o conteúdo da página Entre em contato conosco para que os usuários entrem em contato com a sua organização a respeito de painéis publicados. Esse conteúdo será exibido na página Entre em contato conosco do site publicado.",
   "SettingsTopicAreaDescription": "Os painéis são organizados por áreas de tópicos. Um painel precisa ter uma área de tópico, e só pode ter uma área de tópico.",
   "SettingsTopicAreaNameDescription": "Você pode personalizar o nome da área do tópico e ele será substituído em toda a interface. Por exemplo, o componente “área do tópico” pode ser renomeado como “departamento”, “ministério”, “programa”, “agência” etc.",
   "EditSettingsTopicAreaNameScreen": {
@@ -659,6 +675,7 @@
     "NavagationBarDescription": "Você pode personalizar o cabeçalho e a navegação do site publicado.",
     "Title": "Título",
     "ContactEmailAddressLabel": "Endereço de e-mail do contato",
+    "ContactUsLabel": "Entre em contato conosco",
     "HomepageContentHeader": "Conteúdo da página inicial",
     "HomepageContentDescription": "Estes componentes aparecem na página inicial do site publicado e explicam o conteúdo do site.",
     "Headline": "Manchete",
@@ -672,7 +689,8 @@
   "Public": {
     "Menu": "Menu",
     "PerformanceDashboardAssistance": "Assistência do painel de performance",
-    "Contact": "Contato"
+    "Contact": "Contato",
+    "Logout": "Logout"
   },
   "AdminMenu": {
     "Menu": "Menu",
@@ -958,6 +976,7 @@
   "ClosePreview": "Sair da visualização em tela cheia",
   "Admin": "Administrador",
   "Editor": "Editor",
+  "PublicRole": "Público",
   "GlobalUser": "usuário",
   "DashboardWasCopied": "foi copiado com êxito.",
   "Copy": "Copiar",
@@ -966,7 +985,7 @@
   "DownloadCSV": "Baixar a tabela",
   "MobilePreview": "Pré-visualização para dispositivos móveis",
   "MetricsCenterAlign": "Exibição com alinhamento central",
-  "DisplayTableOfContents": "Exibir índice",
+  "DisplayTableOfContents": "Editar índice",
   "Current": "Atual",
   "SectionOptionsLabel": "Opções da seção (opcionais)",
   "SectionOptionsDescription": "Formatar a seção",
@@ -975,7 +994,7 @@
   "Vertically": "Verticalmente",
   "TableOfContents": "Índice (opcional)",
   "TableOfContentsDescription": "Adiciona um índice para exibir uma visão geral do painel",
-  "EditTableOfContents": "Exibir índice",
+  "EditTableOfContents": "Editar índice",
   "TableOfContentsSuccessfullyEdited": "Índice editado com êxito.",
   "NoTableOfContentsItems": "O painel não tem itens de conteúdo. Os itens de conteúdo devem ser adicionados ao painel antes de serem incluídos no índice.",
   "SelectAll": "Selecionar tudo",
@@ -1051,6 +1070,7 @@
   "PublishDashboardModal": {
     "Title": "Publicar painel",
     "Description": "Isso publicará o painel. Qualquer pessoa com um link poderá visualizar.",
+    "PrivateDescription": "Isso publicará o painel. Os usuários com credenciais poderão visualizar.",
     "PublishDashboardAction": "Publicar painel",
     "InternalVersionNotes": "Notas internas de versão",
     "InternalVersionNotesDescription": "Descreva as alterações que você está publicando no painel. Somente administradores e editores podem ver essas notas.",
@@ -1068,5 +1088,12 @@
     "PublishSuccessDescription": "Os visitantes com um link agora podem visualizar seu painel publicado.",
     "PublishedSuccessAlert": "O painel '{{dashboardName}}' foi publicado com êxito.",
     "ViewPublishedDashboard": "Visualizar o painel publicado"
-  }
+  },
+  "WidgetTree": {
+    "ItemLifted": "Você levantou {{label}}-{{name}}.",
+    "ItemMoved": "Você moveu {{sourceLabel}}-{{sourceName}} para {{destinationLabel}}-{{destinationName}}.",
+    "ItemDropped": "Você descartou {{sourceLabel}}-{{sourceName}} para {{destinationLabel}}-{{destinationName}}.",
+    "OutsideTheDroppableAreaError": "No momento, você não está em uma área que permita soltar {{label}}-{{name}}."
+  },
+  "ContactUs": "Entre em contato conosco"
 }

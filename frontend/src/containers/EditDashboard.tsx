@@ -12,9 +12,7 @@ import { Widget, LocationState, WidgetType, DashboardState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
-import OrderingService from "../services/OrderingService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import WidgetList from "../components/WidgetList";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import PublishDashboardModal from "../components/PublishDashboardModal";
@@ -25,6 +23,7 @@ import AlertContainer from "../containers/AlertContainer";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
+import WidgetTree from "../components/WidgetTree";
 
 interface PathParams {
   dashboardId: string;
@@ -133,50 +132,9 @@ function EditDashboard() {
     }
   };
 
-  const onMoveWidgetUp = async (index: number) => {
-    return setWidgetOrder(index, index - 1);
-  };
-
-  const onMoveWidgetDown = async (index: number) => {
-    return setWidgetOrder(index, index + 1);
-  };
-
-  const setWidgetOrder = async (index: number, newIndex: number) => {
-    if (dashboard) {
-      const widgets = OrderingService.moveWidget(
-        dashboard.widgets,
-        index,
-        newIndex
-      );
-
-      // if no change in order ocurred, exit
-      if (widgets === dashboard.widgets) {
-        return;
-      }
-
-      try {
-        setDashboard({ ...dashboard, widgets }); // optimistic ui
-        await BackendService.setWidgetOrder(dashboardId, widgets);
-      } finally {
-        await reloadDashboard(false);
-      }
-    }
-  };
-
-  const onDrag = async (index: number, newIndex: number) => {
+  const onDrag = async (widgets: Widget[]) => {
     if (dashboard && !reordering) {
       setReordering(true);
-      const widgets = OrderingService.moveWidget(
-        dashboard.widgets,
-        index,
-        newIndex
-      );
-
-      // if no change in order ocurred, exit
-      if (widgets === dashboard.widgets) {
-        setReordering(false);
-        return;
-      }
 
       try {
         setDashboard({ ...dashboard, widgets });
@@ -398,13 +356,11 @@ function EditDashboard() {
             isMobile={isMobile}
           />
 
-          <WidgetList
+          <WidgetTree
             widgets={dashboard ? dashboard.widgets : []}
             onClick={onAddContent}
             onDelete={onDeleteWidget}
             onDuplicate={onDuplicateWidget}
-            onMoveUp={onMoveWidgetUp}
-            onMoveDown={onMoveWidgetDown}
             onDrag={onDrag}
           />
         </>

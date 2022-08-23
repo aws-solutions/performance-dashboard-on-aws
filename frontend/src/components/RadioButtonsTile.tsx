@@ -7,6 +7,7 @@ interface Option {
   value: string;
   name: string;
   dataTestId: string;
+  disabled?: boolean;
 }
 
 interface Props {
@@ -29,6 +30,7 @@ function RadioButtonsTile(props: Props) {
             data-testid={option.dataTestId}
             ref={props.register()}
             aria-describedby={`${option.id}-description`}
+            disabled={option.disabled}
           />
           <label className="usa-radio__label" htmlFor={option.id}>
             {option.label}

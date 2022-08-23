@@ -22,7 +22,16 @@ exampleLanguage=${2:-english}
 if [ "$exampleLanguage" != "" ]; then
     echo "Example Language = $exampleLanguage"
 else
-    echo "Please specify an example language name as second argument (i.e. en|es|pt)"
+    echo "Please specify an example language name as second argument (i.e. english|spanish|portuguese)"
+    exit 0
+fi
+
+authenticationRequired=${3:-false}
+if [ "$authenticationRequired" != "" ]; then
+    echo "Authentication Required = $authenticationRequired"
+    export AUTHENTICATION_REQUIRED=$authenticationRequired
+else
+    echo "Please specify if authentication is required (true|false)"
     exit 0
 fi
 
@@ -33,7 +42,7 @@ verify_prereqs() {
     echo "npm version"
     npm --version
     echo "cdk version"
-    cdk --version
+    $CDK_DIR/node_modules/aws-cdk/bin/cdk --version
 }
 
 create_build_directories() {

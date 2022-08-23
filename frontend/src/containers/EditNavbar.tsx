@@ -9,10 +9,12 @@ import Spinner from "../components/Spinner";
 import TextField from "../components/TextField";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
+import Markdown from "../components/Markdown";
 
 interface FormValues {
   title: string;
   contactEmail: string;
+  contactUs: string;
 }
 
 function EditNavBar() {
@@ -37,6 +39,17 @@ function EditNavBar() {
       await BackendService.updateSetting(
         "contactEmailAddress",
         values.contactEmail,
+        new Date()
+      );
+    }
+
+    if (
+      !settings.contactUsContent ||
+      settings.contactUsContent !== values.contactUs
+    ) {
+      await BackendService.updateSetting(
+        "contactUsContent",
+        values.contactUs,
         new Date()
       );
     }
@@ -109,6 +122,17 @@ function EditNavBar() {
                 error={errors.contactEmail && t("EmailInvalid")}
                 required
                 validate={UtilsService.validateEmails}
+              />
+
+              <Markdown
+                id="contactUs"
+                name="contactUs"
+                label={t("SettingsContactUsTitle")}
+                hint={t("SettingsContactUsHint")}
+                defaultValue={settings.contactUsContent || ""}
+                register={register}
+                error={errors.contactUs?.message}
+                required
               />
 
               <br />

@@ -51,7 +51,6 @@ function Tabs(props: Props) {
   }
 
   const onKeyDown = (e: KeyboardEvent<HTMLElement>) => {
-    console.log(e.key);
     if (e.key === "ArrowRight") {
       const index = getActiveTabIndex();
       if (index < tabsMap.size - 1) {

@@ -16,6 +16,8 @@ interface Props extends cdk.StackProps {
   identityPoolId: string;
   appClientId: string;
   backendApiUrl: string;
+  authenticationRequired: boolean;
+  adminEmail: string;
 }
 
 export class FrontendStack extends cdk.Stack {
@@ -113,7 +115,7 @@ export class FrontendStack extends cdk.Stack {
       {
         sources: [s3Deploy.Source.asset("../frontend/build")],
         destinationBucket: this.frontendBucket,
-        memoryLimit: 4096,
+        memoryLimit: 2048,
         prune: false,
         distribution,
       }
@@ -158,7 +160,7 @@ export class FrontendStack extends cdk.Stack {
         DATASETS_BUCKET: props.datasetsBucket,
         CONTENT_BUCKET: props.contentBucket,
         IDENTITY_POOL_ID: props.identityPoolId,
-        CONTACT_EMAIL: "support@example.com",
+        CONTACT_EMAIL: props.adminEmail,
         BRAND_NAME: "Performance Dashboard",
         TOPIC_AREA_LABEL: "Topic area",
         TOPIC_AREAS_LABEL: "Topic areas",
@@ -166,6 +168,7 @@ export class FrontendStack extends cdk.Stack {
         COGNITO_DOMAIN: "",
         SAML_PROVIDER: "",
         ENTERPRISE_LOGIN_LABEL: "Enterprise Sign-In",
+        AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
       },
     });
 

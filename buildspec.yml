@@ -15,11 +15,12 @@ phases:
   pre_build:
     commands:
       - ./test.sh
+      - ./install.sh
 
   build:
     commands:
       # Deploy
-      ./deploy.sh $ENVIRONMENT
+      ./deploy.sh $ENVIRONMENT $LANGUAGE $AUTH
 
 artifacts:
   base-directory: cdk/cdk.out

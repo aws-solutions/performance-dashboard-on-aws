@@ -1,22 +1,25 @@
-import React, { createRef, useCallback } from "react";
+import React, { createRef } from "react";
 import { Metric } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faGripLines,
   faArrowUp,
   faArrowDown,
   faEllipsisV,
   faTrash,
+  faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import "./MetricsList.css";
-import ContentItem from "./ContentItem";
 import { useTranslation } from "react-i18next";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { TouchBackend } from "react-dnd-touch-backend";
 import DropdownMenu from "./DropdownMenu";
 import { MenuItem } from "@reach/menu-button";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+  ResponderProvided,
+} from "react-beautiful-dnd";
 
 interface Props {
   onClick: Function;
@@ -46,21 +49,6 @@ function MetricsList(props: Props) {
   const onEdit = (metric: Metric, position: number) => {
     if (props.onEdit) {
       props.onEdit(metric, position);
-    }
-  };
-
-  const onDrag = useCallback(
-    (index: number, newIndex: number) => {
-      if (props.onDrag) {
-        props.onDrag(index, newIndex);
-      }
-    },
-    [props]
-  );
-
-  const onDrop = () => {
-    if (props.onDrop) {
-      props.onDrop();
     }
   };
 
@@ -105,16 +93,6 @@ function MetricsList(props: Props) {
     }
   };
 
-  const moveMetric = useCallback(
-    (dragIndex: number, hoverIndex: number) => {
-      const dragItem = props.metrics[dragIndex];
-      if (dragItem) {
-        onDrag(dragIndex, hoverIndex);
-      }
-    },
-    [props.metrics, onDrag]
-  );
-
   function ActionMenu(metric: Metric) {
     return (
       <DropdownMenu
@@ -122,23 +100,43 @@ function MetricsList(props: Props) {
         icon={faEllipsisV}
         variant="unstyled"
         ariaLabel={t("Actions")}
+        className="margin-1"
       >
-        <MenuItem>
+        <MenuItem onSelect={() => {}}>
           <Button
             variant="unstyled"
-            className="margin-1"
             ariaLabel={t("DeleteContent", {
               name: metric.title,
             })}
             onClick={() => onDelete(metric)}
           >
-            <FontAwesomeIcon size="xs" icon={faTrash} />
+            <FontAwesomeIcon
+              size="xs"
+              icon={faTrash}
+              className="margin-right-1"
+            />
             {t("Delete")}
           </Button>
         </MenuItem>
       </DropdownMenu>
     );
   }
+
+  const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
+    const { destination, source } = result;
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+    if (props.onDrag) {
+      props.onDrag(source.index, destination.index);
+    }
+  };
 
   return (
     <div className="display-block" role="group" aria-label={t("Metrics")}>
@@ -161,103 +159,131 @@ function MetricsList(props: Props) {
         </label>
       </div>
       {props.metrics && props.metrics.length ? (
-        <div role="list">
-          <DndProvider
-            backend={window.innerWidth < 1024 ? TouchBackend : HTML5Backend}
-            options={{ enableMouseEvents: true }}
-          >
-            {props.metrics.map((metric, index) => {
-              return (
-                <ContentItem
-                  className="grid-row margin-y-1"
-                  key={metric.title + metric.value}
-                  index={index}
-                  id={index}
-                  moveItem={moveMetric}
-                  onDrop={onDrop}
-                  itemType="metric"
-                >
-                  <div className="grid-row grid-col flex-2 padding-1">
-                    <div className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-1">
-                      <FontAwesomeIcon icon={faGripLines} size="xs" />
-                    </div>
-                    <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-1">
-                      {index + 1}
-                    </div>
-                    <div className="grid-col flex-4 grid-row flex-column text-center margin-left-1 margin-right-1">
-                      <div className="grid-col flex-6">
-                        {index > 0 ? (
-                          <Button
-                            variant="unstyled"
-                            type="button"
-                            className="margin-top-0-important text-base-darker hover:text-base-darkest active:text-base-darkest"
-                            ariaLabel={t("ARIA.MoveUp", {
-                              metric: metric.title,
-                            })}
-                            onClick={() => onMoveUp(index)}
-                            ref={caretUpRefs[index]}
-                          >
-                            <FontAwesomeIcon
-                              id={`${metric.title}-move-up`}
-                              size="xs"
-                              icon={faArrowUp}
-                            />
-                          </Button>
-                        ) : (
-                          <br />
-                        )}
-                      </div>
-                      <div className="grid-col flex-6">
-                        {index < props.metrics.length - 1 ? (
-                          <Button
-                            variant="unstyled"
-                            type="button"
-                            className="margin-top-0-important text-base-darker hover:text-base-darkest active:text-base-darkest"
-                            ariaLabel={t("ARIA.MoveDown", {
-                              metric: metric.title,
-                            })}
-                            onClick={() => onMoveDown(index)}
-                            ref={caretDownRefs[index]}
-                          >
-                            <FontAwesomeIcon
-                              id={`${metric.title}-move-down`}
-                              size="xs"
-                              icon={faArrowDown}
-                            />
-                          </Button>
-                        ) : (
-                          <br />
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="border-base-lighter border-left"></div>
-                  <div className="grid-col flex-10 grid-row margin-y-1">
-                    <div
-                      className="grid-col flex-11 usa-tooltip"
-                      data-position="bottom"
-                      title={metric.title}
-                    >
-                      <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
-                        <Button
-                          variant="unstyled"
-                          type="button"
-                          className="margin-left-1 margin-top-0-important text-base-dark hover:text-base-darker active:text-base-darkest text-bold"
-                          onClick={() => onEdit(metric, index)}
-                          ariaLabel={`Edit ${metric.title}`}
+        <div>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="metrics-list">
+              {(provided) => {
+                return (
+                  <div
+                    role="list"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className="padding-top-2 padding-bottom-2"
+                  >
+                    {props.metrics.map((metric, index) => {
+                      return (
+                        <Draggable
+                          draggableId={index.toString()}
+                          index={index}
+                          key={index}
                         >
-                          {metric.title}
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="grid-col flex-1 margin-right-1 text-right">
-                      {ActionMenu(metric)}
-                    </div>
+                          {(provided, snapshot) => {
+                            return (
+                              <div
+                                {...provided.draggableProps}
+                                ref={provided.innerRef}
+                                role="listitem"
+                                aria-label={(index + 1)?.toString()}
+                                className={`${
+                                  snapshot.isDragging ? "usa-focus " : ""
+                                }border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-row margin-y-1`}
+                              >
+                                <div className="grid-row grid-col flex-2 padding-1">
+                                  <div
+                                    className="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-1"
+                                    {...provided.dragHandleProps}
+                                  >
+                                    <FontAwesomeIcon
+                                      icon={faGripVertical}
+                                      size="xs"
+                                    />
+                                  </div>
+                                  <div className="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-1">
+                                    {index + 1}
+                                  </div>
+                                  <div className="grid-col flex-4 grid-row flex-column text-center margin-left-1 margin-right-1">
+                                    <div className="grid-col flex-6">
+                                      {index > 0 ? (
+                                        <Button
+                                          variant="unstyled"
+                                          type="button"
+                                          className="margin-top-0-important text-base-darker hover:text-base-darkest active:text-base-darkest"
+                                          ariaLabel={t("ARIA.MoveUp", {
+                                            metric: metric.title,
+                                          })}
+                                          onClick={() => onMoveUp(index)}
+                                          ref={caretUpRefs[index]}
+                                        >
+                                          <FontAwesomeIcon
+                                            id={`${metric.title}-move-up`}
+                                            size="xs"
+                                            icon={faArrowUp}
+                                          />
+                                        </Button>
+                                      ) : (
+                                        <br />
+                                      )}
+                                    </div>
+                                    <div className="grid-col flex-6">
+                                      {index < props.metrics.length - 1 ? (
+                                        <Button
+                                          variant="unstyled"
+                                          type="button"
+                                          className="margin-top-0-important text-base-darker hover:text-base-darkest active:text-base-darkest"
+                                          ariaLabel={t("ARIA.MoveDown", {
+                                            metric: metric.title,
+                                          })}
+                                          onClick={() => onMoveDown(index)}
+                                          ref={caretDownRefs[index]}
+                                        >
+                                          <FontAwesomeIcon
+                                            id={`${metric.title}-move-down`}
+                                            size="xs"
+                                            icon={faArrowDown}
+                                          />
+                                        </Button>
+                                      ) : (
+                                        <br />
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="border-base-lighter border-left"></div>
+                                <div className="grid-col flex-10 grid-row margin-y-1">
+                                  <div
+                                    className="grid-col flex-11 usa-tooltip"
+                                    data-position="bottom"
+                                    title={metric.title}
+                                  >
+                                    <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis">
+                                      <Button
+                                        variant="unstyled"
+                                        type="button"
+                                        className="margin-left-1 margin-top-0-important text-base-dark hover:text-base-darker active:text-base-darkest text-bold"
+                                        onClick={() => onEdit(metric, index)}
+                                        ariaLabel={`Edit ${metric.title}`}
+                                      >
+                                        {metric.title}
+                                      </Button>
+                                    </div>
+                                  </div>
+                                  <div className="grid-col flex-1 text-right">
+                                    {ActionMenu(metric)}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          }}
+                        </Draggable>
+                      );
+                    })}
+                    {provided.placeholder}
                   </div>
-                </ContentItem>
-              );
-            })}
-          </DndProvider>
+                );
+              }}
+            </Droppable>
+          </DragDropContext>
+
           {props.allowAddMetric && (
             <div className="text-center margin-top-2">
               <Button

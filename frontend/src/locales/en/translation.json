@@ -56,7 +56,8 @@
     "AccessDenied": "Access Denied",
     "ViewDashboard": "View Dashboard",
     "PageNotFound": "Page Not Found",
-    "Home": "Home"
+    "Home": "Home",
+    "ContactUs": "Contact Us"
   },
   "SkipToMainContent": "Skip to main content",
   "LastUpdatedLabel": "Last updated",
@@ -417,6 +418,11 @@
     "Dashboard": "dashboard",
     "SuccessfullyCopied": "successfully copied."
   },
+  "DatePicker": {
+    "IncorrectDateFormat": "Date does not match the required format",
+    "DateBefore": "Date must be on or before {{date}}",
+    "DateAfter": "Date must be on or after {{date}}"
+  },
   "BrandingAndStyling": "Branding and styling",
   "BrandingAndStylingDescription": "Customize your performance dashboard.",
   "BrandingAndStylingLogo": "Logo",
@@ -446,6 +452,7 @@
   "AddUsersInvites": "Add user(s) and send invite",
   "AddUsersAdmin": "In addition to Editor permissions, can manage users and website settings.",
   "AddUsersEditor": "Can create, edit, and publish dashboards.",
+  "AddUsersPublic": "This role will give users access to the public website. Role is ignored in instances with authentication disabled for public dashboards.",
   "AddUsersRoleSelect": "Select a role for these users",
   "AddUsersEmailsHint": "Enter one or more user email addresses separated by a comma (,)",
   "AddUsersEmails": "User email address(es)",
@@ -459,6 +466,11 @@
     "Plural": "new users have been added as",
     "Final": "and will receive an invitation email."
   },
+  "UserRoles": {
+    "Editor": "Editor",
+    "Admin": "Admin",
+    "Public": "Public"
+  },
   "ChangeRole": {
     "Label": "Change role",
     "Singular": "user has",
@@ -470,7 +482,9 @@
     "Editor": "Editor",
     "EditorDescription": "Upcoming feature. Can create, edit, and publish dashboards.",
     "Admin": "Admin",
-    "AdminDescription": "In addition to Editor permissions, manage users and website settings."
+    "AdminDescription": "In addition to Editor permissions, manage users and website settings.",
+    "Public": "Public",
+    "PublicDescription": "This role will give users access to the public website. Role is ignored in instances with authentication disabled for public dashboards."
   },
   "UserListingAddUsers": "Add user(s)",
   "UserListingModalTitleResendInvites": "Resend invite email",
@@ -593,6 +607,8 @@
   "SettingsTitleError": "Please specify a title.",
   "SettingsContactEmailTitle": "Contact email address",
   "SettingsContactEmailHint": "Set an email address for users to reach out to your organization regarding published dashboards. This email address will appear as a 'contact' link in the navigation bar of the published site",
+  "SettingsContactUsTitle": "Contact us",
+  "SettingsContactUsHint": "Set the contact us page content for users to reach out to your organization regarding published dashboards. This content will appear in the contact us page of the published site",
   "SettingsTopicAreaDescription": "Dashboards are organized by topic areas. A dashboard must have a topic area and can have only one topic area.",
   "SettingsTopicAreaNameDescription": "You can customize the name 'topic area' and it will be replaced throughout the interface. For example, 'topic area' can be renamed to 'department', 'ministry', 'program', 'agency', etc.",
   "EditSettingsTopicAreaNameScreen": {
@@ -659,6 +675,7 @@
     "NavagationBarDescription": "You can customize the header and navigation of the published site.",
     "Title": "Title",
     "ContactEmailAddressLabel": "Contact email address",
+    "ContactUsLabel": "Contact us",
     "HomepageContentHeader": "Homepage content",
     "HomepageContentDescription": "These components appear on the homepage of your published site and explain what your published site is about.",
     "Headline": "Headline",
@@ -672,7 +689,8 @@
   "Public": {
     "Menu": "Menu",
     "PerformanceDashboardAssistance": "Performance Dashboard Assistance",
-    "Contact": "Contact"
+    "Contact": "Contact",
+    "Logout": "Logout"
   },
   "AdminMenu": {
     "Menu": "Menu",
@@ -958,6 +976,7 @@
   "ClosePreview": "Exit full screen preview",
   "Admin": "Admin",
   "Editor": "Editor",
+  "PublicRole": "Public",
   "GlobalUser": "user",
   "DashboardWasCopied": "was successfully copied.",
   "Copy": "Copy",
@@ -1051,6 +1070,7 @@
   "PublishDashboardModal": {
     "Title": "Publish Dashboard",
     "Description": "This will publish the dashboard. Anyone with a link will be able to view.",
+    "PrivateDescription": "This will publish the dashboard. Users with credentials will be able to view.",
     "PublishDashboardAction": "Publish dashboard",
     "InternalVersionNotes": "Internal version notes",
     "InternalVersionNotesDescription": "Describe what changes you are publishing to the dashboard. Only admins and editors can see these notes.",
@@ -1068,5 +1088,12 @@
     "PublishSuccessDescription": "Visitors with a link can now view your published dashboard.",
     "PublishedSuccessAlert": "'{{dashboardName}}' dashboard was successfully published.",
     "ViewPublishedDashboard": "View the published dashboard"
-  }
+  },
+  "WidgetTree": {
+    "ItemLifted": "You have lifted {{label}}-{{name}}.",
+    "ItemMoved": "You have moved {{sourceLabel}}-{{sourceName}} to {{destinationLabel}}-{{destinationName}}.",
+    "ItemDropped": "You have dropped {{sourceLabel}}-{{sourceName}} to {{destinationLabel}}-{{destinationName}}.",
+    "OutsideTheDroppableAreaError": "You are currently not over a droppable area {{label}}-{{name}}."
+  },
+  "ContactUs": "Contact Us"
 }

@@ -218,7 +218,9 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
 
 test("fetchPublicHomepage makes a GET request to widget API", async () => {
   await BackendService.fetchPublicHomepage();
-  expect(API.get).toHaveBeenCalledWith("BackendApi", "public/homepage", {});
+  expect(API.get).toHaveBeenCalledWith("BackendApi", "public/homepage", {
+    headers: {},
+  });
 });
 
 test("fetchHomepage makes a GET request to widget API", async () => {
@@ -252,11 +254,9 @@ test("editHomepage should make a PUT request with payload", async () => {
 
 test("fetchPublicDashboard makes a GET request to public API", async () => {
   await BackendService.fetchPublicDashboard("123");
-  expect(API.get).toHaveBeenCalledWith(
-    "BackendApi",
-    "public/dashboard/123",
-    {}
-  );
+  expect(API.get).toHaveBeenCalledWith("BackendApi", "public/dashboard/123", {
+    headers: {},
+  });
 });
 
 test("createDraft makes a POST request to dashboard API", async () => {
@@ -364,13 +364,15 @@ test("fetchDashboardByFriendlyURL makes a GET request to public API", async () =
   expect(API.get).toHaveBeenCalledWith(
     "BackendApi",
     `public/dashboard/friendly-url/my-friendly-url`,
-    {}
+    { headers: {} }
   );
 });
 
 test("fetchPublicSettings makes a GET request to public API", async () => {
   await BackendService.fetchPublicSettings();
-  expect(API.get).toHaveBeenCalledWith("BackendApi", `public/settings`, {});
+  expect(API.get).toHaveBeenCalledWith("BackendApi", `public/settings`, {
+    headers: {},
+  });
 });
 
 test("fetchUsers makes a GET request to users API", async () => {

@@ -57,7 +57,7 @@ export class DashboardExamplesStack extends cdk.Stack {
       {
         sources: [s3Deploy.Source.asset("../examples/resources/")],
         destinationBucket: exampleBucket,
-        memoryLimit: 4096,
+        memoryLimit: 2048,
         prune: false,
       }
     );

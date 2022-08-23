@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../components/Logo";
-import { usePublicSettings, useFavicon, useFileLoaded } from "../hooks";
+import { Auth } from "@aws-amplify/auth";
+import {
+  usePublicSettings,
+  useFavicon,
+  useFileLoaded,
+  useCurrentAuthenticatedUser,
+} from "../hooks";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet";
@@ -16,8 +22,24 @@ interface LayoutProps {
 function PublicLayout(props: LayoutProps) {
   const { settings, loadingSettings } = usePublicSettings();
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
+  const { username, isFederatedId } = useCurrentAuthenticatedUser();
   const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
+
+  const signOut = async (event: React.MouseEvent) => {
+    event.preventDefault();
+    setTimeout(async () => {
+      try {
+        await Auth.signOut();
+        if (!isFederatedId) {
+          window.location.href = "/admin";
+        }
+      } catch (error) {
+        console.log("error signing out: ", error);
+        event.preventDefault();
+      }
+    });
+  };
 
   useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
 
@@ -53,7 +75,7 @@ function PublicLayout(props: LayoutProps) {
                   <Logo />
                 </div>
 
-                <Link to="/" title="Home" aria-label="Home">
+                <Link to="/" title={t("Home")} aria-label={t("Home")}>
                   {settings.navbarTitle}
                 </Link>
               </em>
@@ -74,15 +96,36 @@ function PublicLayout(props: LayoutProps) {
             </button>
             <ul className="usa-nav__primary usa-accordion">
               <li className="usa-nav__primary-item">
-                <a
-                  href={`mailto:${settings.contactEmailAddress}?subject=${t(
-                    "Public.PerformanceDashboardAssistance"
-                  )}`}
-                  className="usa-nav__link"
+                <Link
+                  to="/public/contact"
+                  title={t("Public.Contact")}
+                  aria-label={t("Public.Contact")}
                 >
                   {t("Public.Contact")}
-                </a>
+                </Link>
               </li>
+              {window.EnvironmentConfig?.authenticationRequired && (
+                <li className="usa-nav__primary-item">
+                  <button
+                    className="usa-accordion__button usa-nav__link"
+                    aria-expanded="false"
+                    aria-controls="basic-nav-section-one"
+                  >
+                    <span>{username}</span>
+                  </button>
+                  <ul
+                    id="basic-nav-section-one"
+                    className="usa-nav__submenu z-index-logout"
+                    hidden
+                  >
+                    <li className="usa-nav__submenu-item">
+                      <a href="/" onClick={signOut}>
+                        {t("Public.Logout")}
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              )}
             </ul>
           </nav>
         </div>

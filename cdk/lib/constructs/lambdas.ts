@@ -15,6 +15,7 @@ interface Props {
     id: string;
     arn: string;
   };
+  authenticationRequired: boolean;
 }
 
 export class LambdaFunctions extends cdk.Construct {
@@ -42,6 +43,7 @@ export class LambdaFunctions extends cdk.Construct {
         CONTENT_BUCKET: props.contentBucket.bucketName,
         USER_POOL_ID: props.userPool.id,
         LOG_LEVEL: "info",
+        AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
       },
     });
 
@@ -62,6 +64,7 @@ export class LambdaFunctions extends cdk.Construct {
         DATASETS_BUCKET: props.datasetsBucket.bucketName,
         CONTENT_BUCKET: props.contentBucket.bucketName,
         LOG_LEVEL: "info",
+        AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
       },
     });
 
@@ -79,6 +82,8 @@ export class LambdaFunctions extends cdk.Construct {
         tracing: lambda.Tracing.ACTIVE,
         memorySize: 256,
         timeout: cdk.Duration.seconds(10),
+        // You may need to increase the lambda concurrent qouta of your AWS account
+        // https://{aws-region}.console.aws.amazon.com/servicequotas/home/services/lambda/quotas/L-B99A9384
         reservedConcurrentExecutions: 10,
         logRetention: logs.RetentionDays.TEN_YEARS,
         environment: {

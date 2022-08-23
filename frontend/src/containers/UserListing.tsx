@@ -225,7 +225,7 @@ function UserListing() {
             },
             {
               Header: t("UserListingRole"),
-              accessor: (row: User) => t(row.roles[0]),
+              accessor: (row: User) => t(`UserRoles.${row.roles[0]}`),
             },
             {
               Header: t("UserListingStatus"),

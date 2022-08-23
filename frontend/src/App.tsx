@@ -60,6 +60,7 @@ import EditFavicon from "./containers/EditFavicon";
 import UserStatus from "./containers/UserStatus";
 import ChooseStaticDataset from "./containers/ChooseStaticDataset";
 import AccessDenied from "./containers/AccessDenied";
+import ContactUs from "./containers/ContactUs";
 import Page from "./components/Page";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "./hooks";
@@ -359,6 +360,12 @@ function App() {
       component: Home,
       public: true,
     },
+    {
+      path: "/public/contact",
+      title: t("PageTitle.ContactUs"),
+      component: ContactUs,
+      public: true,
+    },
   ];
 
   return (
@@ -367,7 +374,9 @@ function App() {
         <Switch>
           {routes.map((route) => {
             const component = route.public
-              ? withPublicLayout(route.component)
+              ? window.EnvironmentConfig.authenticationRequired
+                ? withSAMLAuthenticator(withPublicLayout(route.component))
+                : withPublicLayout(route.component)
               : withSAMLAuthenticator(withAdminLayout(route.component));
             return (
               <Page

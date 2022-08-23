@@ -25,7 +25,7 @@ If you're not familiar with deploying resources on AWS using CFT, start by revie
 
 | Region                | Launch                                                                                                                                                                                                                                                                                                                        |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| US East (N. Virginia) | [![Install in us-east-1](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.5.0/performance-dashboard-on-aws.template) |
+| US East (N. Virginia) | [![Install in us-east-1](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/performance-dashboard-on-aws.template) |
 
 You will be directed to the CloudFormation console on your browser. Enter the stack name such as "MyCorp-PerfDash", and enter the email of the user who will initially administer PDoA in the "adminEmail" field, then press the "Next" button. Accept the default values on the next page, and press the Next button. Finally, check on the two "Capabilities" checkboxes at the bottom of the page. Press the "Create Stack" button. It will take about 25 minutes for the compute, storage, and database resources on AWS to be provisioned.
 
@@ -41,10 +41,10 @@ If you prefer to deploy PDoA in a region other than US East (N. Virginia), you m
 
 | Region                                          | Launch                                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Install this first in US East (N. Virginia)** | [![Install this first](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.5.0/LambdaEdge.template)                                               |
-| Install PDoA in South America (São Paulo)       | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=sa-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.5.0/performance-dashboard-on-aws.template)    |
-| Install PDoA in Canada (Central)                | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=ca-central-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.5.0/performance-dashboard-on-aws.template) |
-| Install PDoA in Europe (London)                 | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.5.0/performance-dashboard-on-aws.template)    |
+| **Install this first in US East (N. Virginia)** | [![Install this first](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/LambdaEdge.template)                                               |
+| Install PDoA in South America (São Paulo)       | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=sa-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/performance-dashboard-on-aws.template)    |
+| Install PDoA in Canada (Central)                | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=ca-central-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/performance-dashboard-on-aws.template) |
+| Install PDoA in Europe (London)                 | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/performance-dashboard-on-aws.template)    |
 
 ## Deploying with AWS Cloud Development Kit (CDK)
 
@@ -127,6 +127,16 @@ You can choose the default example language used by the lambda generator functio
 ```
 
 It will default to english language
+
+### Private instance
+
+You can deploy a private version of Performance Dashboard. The private instance will ask for credentials to navigate to the published website too. There is a new role available to assign to users that can view the publish website only (Public).
+
+```bash
+./deploy.sh dev english true
+```
+
+It will default to not request credentials for published website
 
 ## Installation Completed
 

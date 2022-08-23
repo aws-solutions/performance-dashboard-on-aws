@@ -246,6 +246,7 @@ export type PublicSettings = {
   customLogoS3Key?: string;
   customFaviconS3Key?: string;
   contactEmailAddress?: string;
+  contactUsContent?: string;
 };
 
 export type Settings = {
@@ -269,6 +270,7 @@ export type Settings = {
   customFaviconS3Key?: string;
   contactEmailAddress?: string;
   adminContactEmailAddress?: string;
+  contactUsContent?: string;
 };
 
 export type Metric = {
@@ -313,7 +315,12 @@ export type LocationState = {
 export enum UserRoles {
   Admin = "Admin",
   Editor = "Editor",
+  /**
+   * @type {string}
+   * @deprecated no longer supported
+   */
   Publisher = "Publisher",
+  Public = "Public",
 }
 
 export type User = {

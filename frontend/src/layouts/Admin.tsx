@@ -1,6 +1,6 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useLayoutEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import Auth from "@aws-amplify/auth";
+import { Auth } from "@aws-amplify/auth";
 import {
   useSettings,
   useCurrentAuthenticatedUser,
@@ -16,32 +16,40 @@ import Header from "../components/Header";
 import { Helmet } from "react-helmet";
 import defaultFavicon from "../favicon.svg";
 import "./Admin.scss";
+import Button from "../components/Button";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 function AdminLayout(props: LayoutProps) {
-  const { username, isAdmin, isFederatedId, isEditor, hasRole } =
-    useCurrentAuthenticatedUser();
   const { settings, loadingSettings } = useSettings();
   const { favicon, loadingFile } = useFavicon(settings.customFaviconS3Key);
   const [toHide, setToHide] = useState<boolean>(true);
   const { t } = useTranslation();
+  const { username, isAdmin, isFederatedId, isEditor, isPublic, hasRole } =
+    useCurrentAuthenticatedUser();
 
   const signOut = async (event: React.MouseEvent) => {
-    try {
-      if (isFederatedId) {
+    event.preventDefault();
+    setTimeout(async () => {
+      try {
+        await Auth.signOut();
+        if (!isFederatedId) {
+          window.location.href = "/admin";
+        }
+      } catch (error) {
+        console.log("error signing out: ", error);
         event.preventDefault();
       }
-      await Auth.signOut();
-    } catch (error) {
-      console.log("error signing out: ", error);
-      event.preventDefault();
-    }
+    });
   };
 
   useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
+
+  useLayoutEffect(() => {
+    document.getElementById("Home")?.focus();
+  });
 
   return (
     <>
@@ -148,7 +156,7 @@ function AdminLayout(props: LayoutProps) {
                   hidden
                 >
                   <li className="usa-nav__submenu-item">
-                    <a href="/admin" onClick={signOut} className="usa-link">
+                    <a href="/admin" onClick={signOut}>
                       {t("AdminMenu.Logout")}
                     </a>
                   </li>
@@ -160,7 +168,7 @@ function AdminLayout(props: LayoutProps) {
       </Header>
       <main className="padding-y-3" aria-label={t("ARIA.Main")}>
         <div id="main" tabIndex={-1}></div>
-        {!hasRole && <Redirect to="/403/access-denied" />}
+        {(!hasRole || isPublic) && <Redirect to="/403/access-denied" />}
         <div className="grid-container">{props.children}</div>
       </main>
       <Footer />

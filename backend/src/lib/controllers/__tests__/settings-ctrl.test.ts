@@ -175,6 +175,17 @@ describe("updateSettings", () => {
       user
     );
   });
+
+  it("updates contact us content", async () => {
+    req.body.contactUsContent = "test content";
+    await SettingsCtrl.updateSettings(req, res);
+    expect(repository.updateSetting).toHaveBeenCalledWith(
+      "contactUsContent",
+      "test content",
+      now.toISOString(),
+      user
+    );
+  });
 });
 
 describe("getPublicSettings", () => {

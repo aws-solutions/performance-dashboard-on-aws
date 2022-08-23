@@ -47,6 +47,7 @@ describe("fromItem", () => {
       customFaviconS3Key: "12345",
       contactEmailAddress: "test@aol.com",
       adminContactEmailAddress: "admin@aol.com",
+      contactUsContent: "test content",
     };
 
     const settings = SettingsFactory.fromItem(item);
@@ -71,6 +72,7 @@ describe("fromItem", () => {
       },
       contactEmailAddress: "test@aol.com",
       adminContactEmailAddress: "admin@aol.com",
+      contactUsContent: "test content",
     });
   });
 });
@@ -97,6 +99,7 @@ describe("toPublicSettings", () => {
         secondary: "#ffffff",
       },
       contactEmailAddress: "test@aol.com",
+      contactUsContent: "test content",
     };
 
     const publicSettings = SettingsFactory.toPublicSettings(settings);
@@ -117,6 +120,7 @@ describe("toPublicSettings", () => {
         secondary: "#ffffff",
       },
       contactEmailAddress: "test@aol.com",
+      contactUsContent: "test content",
     });
   });
 });

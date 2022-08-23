@@ -35,11 +35,14 @@ test("submits form with the entered values", async () => {
     "test1234@hotmail.com"
   );
 
+  userEvent.clear(screen.getByLabelText("Contact us*"));
+  userEvent.type(screen.getByLabelText("Contact us*"), "something");
+
   await act(async () => {
     fireEvent.submit(screen.getByTestId("EditNavbarForm"));
   });
 
-  expect(BackendService.updateSetting).toBeCalledTimes(2);
+  expect(BackendService.updateSetting).toBeCalledTimes(3);
   expect(BackendService.updateSetting).toHaveBeenNthCalledWith(
     1,
     "navbarTitle",
@@ -50,6 +53,12 @@ test("submits form with the entered values", async () => {
     2,
     "contactEmailAddress",
     "test1234@hotmail.com",
+    expect.anything()
+  );
+  expect(BackendService.updateSetting).toHaveBeenNthCalledWith(
+    3,
+    "contactUsContent",
+    "something",
     expect.anything()
   );
 });

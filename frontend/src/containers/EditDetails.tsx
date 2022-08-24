@@ -56,15 +56,6 @@ function EditDetails() {
   const displayTableOfContents = watch("displayTableOfContents");
 
   useEffect(() => {
-    const routeTableOfContents = (history.location.state as any)
-      ?.tableOfContents;
-    if (dashboard && routeTableOfContents) {
-      dashboard.displayTableOfContents = true;
-      dashboard.tableOfContents = routeTableOfContents;
-    }
-  }, [dashboard, history.location.state]);
-
-  useEffect(() => {
     if (dashboard) {
       const name = dashboard.name;
       const description = dashboard.description;
@@ -115,12 +106,6 @@ function EditDetails() {
 
   const getTopicAreaName = (topicAreaId: string) => {
     return topicareas.find((t) => t.id === topicAreaId)?.name || "";
-  };
-
-  const onTableOfContentsEdit = () => {
-    history.push(`/admin/dashboard/edit/${dashboardId}/tableofcontents`, {
-      tableOfContents: dashboard?.tableOfContents,
-    });
   };
 
   const onCancel = () => {
@@ -233,15 +218,6 @@ function EditDetails() {
                             {t("DisplayTableOfContents")}
                           </label>
                         </div>
-                      </div>
-                      <div className="grid-col text-right">
-                        <Button
-                          variant="outline"
-                          disabled={!displayTableOfContents}
-                          onClick={onTableOfContentsEdit}
-                        >
-                          {t("Edit")}
-                        </Button>
                       </div>
                     </div>
                   </div>

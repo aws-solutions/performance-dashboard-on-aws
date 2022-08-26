@@ -39,6 +39,10 @@ export type Dashboard = {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  /**
+   * @type {any}
+   * @deprecated no longer supported
+   */
   tableOfContents?: any;
   description?: string;
   releaseNotes?: string;
@@ -59,6 +63,10 @@ export type PublicDashboard = {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  /**
+   * @type {any}
+   * @deprecated no longer supported
+   */
   tableOfContents?: any;
   description?: string;
   widgets: Array<Widget>;

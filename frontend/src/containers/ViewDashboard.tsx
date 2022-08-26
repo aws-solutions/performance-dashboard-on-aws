@@ -95,21 +95,14 @@ function ViewDashboard() {
         offset={80}
         area={2}
         marginRight={0}
-        widgetNameIds={dashboard.widgets
-          .filter(
-            (w) =>
-              dashboard &&
-              dashboard.tableOfContents &&
-              dashboard.tableOfContents[w.id]
-          )
-          .map((widget) => {
-            return {
-              name: widget.name,
-              id: widget.id,
-              isInsideSection: !!widget.section,
-              sectionWithTabs: getSectionWithTabs(widget, dashboard),
-            };
-          })}
+        widgetNameIds={dashboard.widgets.map((widget) => {
+          return {
+            name: widget.name,
+            id: widget.id,
+            isInsideSection: !!widget.section,
+            sectionWithTabs: getSectionWithTabs(widget, dashboard),
+          };
+        })}
         activeWidgetId={activeWidgetId}
         onBottomOfThePage={onBottomOfThePage}
         isTop={windowSize.width <= moveNavBarWidth}

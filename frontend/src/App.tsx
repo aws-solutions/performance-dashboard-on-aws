@@ -11,7 +11,6 @@ import HomeWithSearch from "./containers/HomeWithSearch";
 import DashboardListing from "./containers/DashboardListing";
 import CreateDashboard from "./containers/CreateDashboard";
 import EditDetails from "./containers/EditDetails";
-import EditTableOfContents from "./containers/EditTableOfContents";
 import AddContent from "./containers/AddContent";
 import EditDashboard from "./containers/EditDashboard";
 import DashboardHistory from "./containers/DashboardHistory";
@@ -200,11 +199,6 @@ function App() {
       path: "/admin/dashboard/edit/:dashboardId/header",
       title: t("PageTitle.EditDashboardHeader"),
       component: EditDetails,
-    },
-    {
-      path: "/admin/dashboard/edit/:dashboardId/tableofcontents",
-      title: t("PageTitle.EditTableOfContents"),
-      component: EditTableOfContents,
     },
     {
       path: "/admin/dashboard/:dashboardId/edit-table/:widgetId",

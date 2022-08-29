@@ -60,6 +60,13 @@ test("renders the headline statement", async () => {
   expect(getByText("Kingdom of Wakanda")).toBeInTheDocument();
 });
 
+test("renders the analytics section", async () => {
+  const { getByText } = render(<PublishedSiteSettings />, {
+    wrapper: MemoryRouter,
+  });
+  expect(getByText("Web analytics")).toBeInTheDocument();
+});
+
 test("renders a button to edit", async () => {
   const { getAllByRole } = render(<PublishedSiteSettings />, {
     wrapper: MemoryRouter,

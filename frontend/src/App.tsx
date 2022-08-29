@@ -36,6 +36,7 @@ import TopicareaSettings from "./containers/TopicareaSettings";
 import PublishingGuidanceSettings from "./containers/PublishingGuidanceSettings";
 import PublishedSiteSettings from "./containers/PublishedSiteSettings";
 import EditPublishingGuidance from "./containers/EditPublishingGuidance";
+import EditAnalytics from "./containers/EditAnalytics";
 import EditHomepageContent from "./containers/EditHomepageContent";
 import CreateTopicArea from "./containers/CreateTopicArea";
 import EditTopicArea from "./containers/EditTopicArea";
@@ -126,6 +127,11 @@ function App() {
       path: "/admin/settings/publishedsite/contentedit",
       title: t("PageTitle.EditHomepageContent"),
       component: EditHomepageContent,
+    },
+    {
+      path: "/admin/settings/publishedsite/analyticsedit",
+      title: t("PageTitle.EditAnalytics"),
+      component: EditAnalytics,
     },
     {
       path: "/admin/settings/publishedsite/navbaredit",

@@ -374,6 +374,32 @@ exports[`published site settings should match snapshot 1`] = `
               class="grid-col flex-3 text-right"
             />
           </div>
+          <hr
+            style="height: 1px; background-color: rgb(223, 225, 226); margin: 2rem 0px;"
+          />
+          <h2
+            class="margin-top-2-important"
+          >
+            Web analytics
+          </h2>
+          <div
+            class="grid-row margin-top-3-important"
+          >
+            <div
+              class="grid-col flex-9 text-left"
+            >
+              Add your web analytics tracking ID to get insights into how your visitors are interacting with Performance Dashboard.
+            </div>
+            <div
+              class="grid-col flex-3 text-right"
+            >
+              <button
+                class="usa-button usa-button--outline margin-top-0"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
         </main>
       </div>
     </div>

@@ -11,6 +11,7 @@
     "EditPublishingGuidance": "Edit Publishing Guidance",
     "PublishedSiteSettings": "Published Site Settings",
     "EditHomepageContent": "Edit Homepage Content",
+    "EditAnalytics": "Analytics",
     "EditNavbar": "Edit Navigation Bar",
     "CreateTopicArea": "Create {{topicArea}}",
     "EditTopicArea": "Edit {{topicArea}}",
@@ -109,6 +110,7 @@
   "Delete": "Delete",
   "Save": "Save",
   "Edit": "Edit",
+  "ClearAndSave": "Clear and Save",
   "CopyLink": "Copy link: {{title}}",
   "LinkCopied": "Link copied: {{title}}",
   "EditHeader": "Edit header",
@@ -627,6 +629,11 @@
   "SettingsTopicAreaNameEditError": "Please specify a name",
   "SettingsTopicAreaNameEditProblem": "There was a problem editing topic area {{name}}. Please retry.",
   "SettingsTopicAreaNameEditSuccess": "Topic area {{name}} was successfully edited.",
+  "SettingsAnalyticsEdit": "Web analytics",
+  "SettingsAnalyticsDescription": "Add an existing Google Analytics tracking ID to your Performance Dashboard and view the usage data in your Google Analytics account. Performance Dashboard currently only supports Google Analytics tracking.",
+  "SettingsAnalyticsHint": "Google Universal Analytics tracking ID",
+  "SettingsAnalyticsEditSuccess": "Analytics tracking ID successfully edited.",
+  "SettingsAnalyticsEditError": "Invalid Google Universal Analytics tracking ID",
   "TopicArea": "Topic area",
   "TopicArea_plural": "Topic areas",
   "TopicAreas": "Topic areas",
@@ -679,7 +686,9 @@
     "HomepageContentHeader": "Homepage content",
     "HomepageContentDescription": "These components appear on the homepage of your published site and explain what your published site is about.",
     "Headline": "Headline",
-    "Edit": "Edit"
+    "Edit": "Edit",
+    "Analytics": "Web analytics",
+    "AnalyticsDescription": "Add your web analytics tracking ID to get insights into how your visitors are interacting with Performance Dashboard."
   },
   "AdminFooter": {
     "HelpMessage": "Having technical issues with the system?",

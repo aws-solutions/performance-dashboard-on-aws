@@ -6,8 +6,6 @@ import Spinner from "../components/Spinner";
 import Button from "../components/Button";
 import MarkdownRender from "../components/MarkdownRender";
 import Link from "../components/Link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import "./PublishedSiteSettings.css";
 
@@ -23,6 +21,10 @@ function PublishedSiteSettings() {
 
   const onNavbarEdit = () => {
     history.push("/admin/settings/publishedsite/navbaredit");
+  };
+
+  const onAnalyticsEdit = () => {
+    history.push("/admin/settings/publishedsite/analyticsedit");
   };
 
   return (
@@ -186,6 +188,41 @@ function PublishedSiteSettings() {
             </div>
           </div>
           <div className="grid-col flex-3 text-right"></div>
+        </div>
+      )}
+
+      <hr
+        style={{
+          border: "none",
+          height: "1px",
+          backgroundColor: "#dfe1e2",
+          margin: "2rem 0",
+        }}
+      />
+
+      <h2 className="margin-top-2-important">
+        {t("PublishedSiteSettings.Analytics")}
+      </h2>
+
+      {loading ? (
+        <Spinner
+          className="margin-top-3 text-center"
+          label={t("LoadingSpinnerLabel")}
+        />
+      ) : (
+        <div className="grid-row margin-top-3-important">
+          <div className="grid-col flex-9 text-left">
+            {t("PublishedSiteSettings.AnalyticsDescription")}
+          </div>
+          <div className="grid-col flex-3 text-right">
+            <Button
+              className="margin-top-0"
+              variant="outline"
+              onClick={onAnalyticsEdit}
+            >
+              {t("Edit")}
+            </Button>
+          </div>
         </div>
       )}
     </SettingsLayout>

@@ -19,13 +19,13 @@ exports[`renders a create draft type Modal 1`] = `
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay ReactModal__Overlay--after-open overlay"
+      class="ReactModal__Overlay overlay"
     >
       <div
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content ReactModal__Content--after-open modal"
+        class="ReactModal__Content modal"
         role="dialog"
         tabindex="-1"
       >
@@ -114,13 +114,13 @@ exports[`renders a delete type Modal 1`] = `
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay ReactModal__Overlay--after-open overlay"
+      class="ReactModal__Overlay overlay"
     >
       <div
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content ReactModal__Content--after-open modal"
+        class="ReactModal__Content modal"
         role="dialog"
         tabindex="-1"
       >
@@ -209,13 +209,13 @@ exports[`renders a publish type Modal 1`] = `
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay ReactModal__Overlay--after-open overlay"
+      class="ReactModal__Overlay overlay"
     >
       <div
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content ReactModal__Content--after-open modal"
+        class="ReactModal__Content modal"
         role="dialog"
         tabindex="-1"
       >
@@ -304,13 +304,13 @@ exports[`renders a re-publish type Modal 1`] = `
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay ReactModal__Overlay--after-open overlay"
+      class="ReactModal__Overlay overlay"
     >
       <div
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content ReactModal__Content--after-open modal"
+        class="ReactModal__Content modal"
         role="dialog"
         tabindex="-1"
       >
@@ -399,13 +399,13 @@ exports[`renders an archive type Modal 1`] = `
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay ReactModal__Overlay--after-open overlay"
+      class="ReactModal__Overlay overlay"
     >
       <div
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content ReactModal__Content--after-open modal"
+        class="ReactModal__Content modal"
         role="dialog"
         tabindex="-1"
       >

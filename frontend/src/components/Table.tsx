@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, MouseEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -8,6 +8,7 @@ import {
   useGlobalFilter,
   usePagination,
   Row,
+  Column,
 } from "react-table";
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
@@ -29,13 +30,7 @@ interface Props {
   disablePagination?: boolean;
   disableBorderless?: boolean;
   width?: string | number | undefined;
-  columns: Array<{
-    accessor?: string | Function;
-    Header: string;
-    Cell?: Function;
-    id?: string;
-    minWidth?: string | number | undefined;
-  }>;
+  columns: ReadonlyArray<any>;
   hiddenColumns?: Set<string>;
   addNumbersColumn?: boolean;
   sortByColumn?: string;
@@ -261,9 +256,9 @@ function Table(props: Props) {
                   aria-sort={
                     column.isSorted
                       ? column.isSortedDesc
-                        ? "desc"
-                        : "asc"
-                      : ""
+                        ? "descending"
+                        : "ascending"
+                      : "none"
                   }
                   style={
                     props.selection !== "none"
@@ -423,7 +418,7 @@ const IndeterminateRadio = React.forwardRef<
     indeterminate?: boolean;
     title?: string;
     checked?: boolean;
-    onClick?: Function;
+    onClick?: (event: MouseEvent<HTMLInputElement>) => void;
   }
 >(({ indeterminate, ...rest }, ref) => {
   const defaultRef = React.useRef();

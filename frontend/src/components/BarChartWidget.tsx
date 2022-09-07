@@ -165,7 +165,7 @@ const BarChartWidget = (props: Props) => {
             <CartesianGrid horizontal={false} />
             <XAxis
               type="number"
-              tickFormatter={(tick) =>
+              tickFormatter={(tick: any) =>
                 TickFormatter.format(
                   Number(tick),
                   xAxisLargestValue,

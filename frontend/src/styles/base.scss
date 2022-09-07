@@ -1,12 +1,12 @@
-@import "node_modules/uswds/src/stylesheets/theme/uswds-theme-general";
-@import "node_modules/uswds/src/stylesheets/theme/uswds-theme-typography";
-@import "node_modules/uswds/src/stylesheets/theme/uswds-theme-spacing";
-@import "node_modules/uswds/src/stylesheets/theme/uswds-theme-color";
-@import "node_modules/uswds/src/stylesheets/theme/uswds-theme-utilities";
+@import "uswds/src/stylesheets/theme/uswds-theme-general";
+@import "uswds/src/stylesheets/theme/uswds-theme-typography";
+@import "uswds/src/stylesheets/theme/uswds-theme-spacing";
+@import "uswds/src/stylesheets/theme/uswds-theme-color";
+@import "uswds/src/stylesheets/theme/uswds-theme-utilities";
 @import "./settings";
 
-@import "node_modules/uswds/src/stylesheets/theme/uswds-theme-components";
-@import "node_modules/uswds/dist/scss/uswds.scss";
+@import "uswds/src/stylesheets/theme/uswds-theme-components";
+@import "uswds";
 
 // -------------------------------------
 // Import theme custom styles

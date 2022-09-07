@@ -95,11 +95,11 @@
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-helmet": "^6.1.2",
     "@types/react-router-hash-link": "^2.4.1",
-    "css-loader": "^6.5.1",
+    "css-loader": "^6.7.1",
     "mini-css-extract-plugin": "^2.4.4",
     "mutationobserver-shim": "^0.3.7",
-    "sass": "^1.49.0",
-    "sass-loader": "^12.3.0",
+    "sass": "^1.54.8",
+    "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1"
   }
 }

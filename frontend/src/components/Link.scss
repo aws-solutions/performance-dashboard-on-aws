@@ -1,4 +1,4 @@
-@import "../styles/base.scss";
+@forward "../styles/base.scss";
 
 .action-link:visited {
   @include u-text("base-dark", "!important");

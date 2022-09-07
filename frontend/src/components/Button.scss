@@ -1,4 +1,4 @@
-@import "../styles/base.scss";
+@forward "../styles/base.scss";
 
 .usa-button--outline {
   @include u-text("base", "!important");

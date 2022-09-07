@@ -20,7 +20,7 @@ import "dayjs/locale/pt";
 import "dayjs/locale/pt-br";
 
 import "./index.scss";
-import "uswds/dist/js/uswds.min.js";
+import "@uswds/uswds";
 import { Auth } from "@aws-amplify/auth";
 
 declare module "react" {

@@ -1,4 +1,4 @@
-@import "../styles/base.scss";
+@forward "../styles/base.scss";
 
 [data-reach-menu-item][data-selected] a {
   color: color("white") !important;

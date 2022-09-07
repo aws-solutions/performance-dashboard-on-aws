@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 // @ts-ignore
-import comboBox from "uswds/src/js/components/combo-box";
+import { init } from "@uswds/uswds/packages/usa-combo-box/src/index.js";
 import "./Combobox.css";
 import { useTranslation } from "react-i18next";
 
@@ -26,7 +26,7 @@ function Combobox(props: Props) {
   useEffect(() => {
     // initialize
     if (formGroupRef.current) {
-      comboBox.init(formGroupRef.current);
+      init(formGroupRef.current);
     }
   }, [formGroupRef]);
 

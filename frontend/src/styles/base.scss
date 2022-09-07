@@ -1,14 +1,9 @@
-@import "uswds/src/stylesheets/theme/uswds-theme-general";
-@import "uswds/src/stylesheets/theme/uswds-theme-typography";
-@import "uswds/src/stylesheets/theme/uswds-theme-spacing";
-@import "uswds/src/stylesheets/theme/uswds-theme-color";
-@import "uswds/src/stylesheets/theme/uswds-theme-utilities";
-@import "./settings";
+// Include a USWDS settings file (required)
+@forward "_settings.scss";
 
-@import "uswds/src/stylesheets/theme/uswds-theme-components";
-@import "uswds";
+// Point to the USWDS source code (required)
+@forward "uswds";
 
-// -------------------------------------
-// Import theme custom styles
-@import "./backgrounds";
-@import "./type";
+// Include your project's custom Sass (optional)
+@forward "_type.scss";
+@forward "_background.scss";

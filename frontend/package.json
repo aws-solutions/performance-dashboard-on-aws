@@ -31,6 +31,7 @@
     "@types/react-table": "^7.0.26",
     "@types/recharts": "^1.8.13",
     "@types/uuid": "^8.0.0",
+    "@uswds/uswds": "^3.1.0",
     "aws-amplify": "^4.3.26",
     "dayjs": "^1.8.36",
     "i18next": "^19.8.4",
@@ -55,7 +56,6 @@
     "react-waypoint": "^10.1.0",
     "recharts": "2.0.10",
     "typescript": "~3.7.2",
-    "uswds": "^2.11.2",
     "uuid": "^8.2.0",
     "yup": "^0.32.11"
   },
@@ -95,6 +95,7 @@
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-helmet": "^6.1.2",
     "@types/react-router-hash-link": "^2.4.1",
+    "@uswds/compile": "^1.0.0-beta.3",
     "css-loader": "^6.7.1",
     "mini-css-extract-plugin": "^2.4.4",
     "mutationobserver-shim": "^0.3.7",

@@ -1,4 +1,4 @@
-@import "../styles/base.scss";
+@forward "../styles/base.scss";
 
 .tab {
   @include u-text("base", "!important");

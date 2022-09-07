@@ -14,7 +14,22 @@ module.exports = {
       },
       {
         test: /\.(s(a|c)ss)$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+              sassOptions: {
+                includePaths: [
+                  "./node_modules/@uswds",
+                  "./node_modules/@uswds/uswds/packages",
+                ],
+              },
+            },
+          },
+        ],
       },
     ],
   },

@@ -13,7 +13,22 @@ module.exports = {
       },
       {
         test: /\.(s(a|c)ss)$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+              sassOptions: {
+                includePaths: [
+                  "./node_modules/@uswds",
+                  "./node_modules/@uswds/uswds/packages",
+                ],
+              },
+            },
+          },
+        ],
       },
     ],
   },

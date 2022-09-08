@@ -182,7 +182,7 @@ const PartWholeChartWidget = (props: Props) => {
               interval="preserveStartEnd"
               type="number"
               padding={{ left: 2, right: 2 }}
-              tickFormatter={(tick) =>
+              tickFormatter={(tick: any) =>
                 TickFormatter.format(
                   Number(tick),
                   xAxisLargestValue,

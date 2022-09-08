@@ -4,7 +4,6 @@ import { LocationState } from "../models";
 import Tabs from "../components/Tabs";
 import DraftsTab from "../components/DraftsTab";
 import PublishedTab from "../components/PublishedTab";
-import PublishQueueTab from "../components/PublishQueueTab";
 import ArchivedTab from "../components/ArchivedTab";
 import { useLocation, useHistory } from "react-router-dom";
 import AlertContainer from "../containers/AlertContainer";

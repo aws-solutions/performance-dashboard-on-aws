@@ -31,7 +31,7 @@ exports[`table preview should match snapshot 1`] = `
             role="row"
           >
             <th
-              aria-sort=""
+              aria-sort="none"
               colspan="1"
               role="columnheader"
               scope="col"
@@ -65,7 +65,7 @@ exports[`table preview should match snapshot 1`] = `
               </button>
             </th>
             <th
-              aria-sort=""
+              aria-sort="none"
               colspan="1"
               role="columnheader"
               scope="col"
@@ -99,7 +99,7 @@ exports[`table preview should match snapshot 1`] = `
               </button>
             </th>
             <th
-              aria-sort=""
+              aria-sort="none"
               colspan="1"
               role="columnheader"
               scope="col"

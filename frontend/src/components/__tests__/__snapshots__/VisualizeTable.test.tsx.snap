@@ -299,7 +299,7 @@ exports[`renders the VisualizeTable component 1`] = `
                   role="row"
                 >
                   <th
-                    aria-sort=""
+                    aria-sort="none"
                     colspan="1"
                     role="columnheader"
                     scope="col"
@@ -333,7 +333,7 @@ exports[`renders the VisualizeTable component 1`] = `
                     </button>
                   </th>
                   <th
-                    aria-sort=""
+                    aria-sort="none"
                     colspan="1"
                     role="columnheader"
                     scope="col"
@@ -367,7 +367,7 @@ exports[`renders the VisualizeTable component 1`] = `
                     </button>
                   </th>
                   <th
-                    aria-sort=""
+                    aria-sort="none"
                     colspan="1"
                     role="columnheader"
                     scope="col"

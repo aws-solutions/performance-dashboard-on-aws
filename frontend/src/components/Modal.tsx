@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "../components/Button";
@@ -8,11 +8,11 @@ import { useTranslation } from "react-i18next";
 
 interface PathParams {
   isOpen: boolean;
-  closeModal: Function;
+  closeModal: () => void;
   title: string;
   message: string | React.ReactNode;
   buttonType: string;
-  buttonAction: Function;
+  buttonAction: () => void;
   ariaHideApp?: boolean;
 }
 

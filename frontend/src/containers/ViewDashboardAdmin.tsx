@@ -604,6 +604,7 @@ function ViewDashboardAdmin() {
       />
 
       <PublishDashboardModal
+        id={`publish-${dashboardId}`}
         dashboardId={dashboardId}
         isOpen={isOpenPublishModal}
         closeModal={closePublishModal}

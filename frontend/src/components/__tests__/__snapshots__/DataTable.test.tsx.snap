@@ -44,7 +44,7 @@ exports[`renders a Data Table element 1`] = `
           role="row"
         >
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -78,7 +78,7 @@ exports[`renders a Data Table element 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -112,7 +112,7 @@ exports[`renders a Data Table element 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -260,7 +260,7 @@ exports[`renders a Data Table element on mobile 1`] = `
           role="row"
         >
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -294,7 +294,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -328,7 +328,7 @@ exports[`renders a Data Table element on mobile 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"

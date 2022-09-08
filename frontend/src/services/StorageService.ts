@@ -1,4 +1,4 @@
-import Storage from "@aws-amplify/storage";
+import { Storage } from "@aws-amplify/storage";
 import { v4 as uuidv4 } from "uuid";
 import EnvConfig from "../services/EnvConfig";
 
@@ -44,12 +44,10 @@ async function downloadFile(
         bucket: alternativeBucket,
         download: true,
         level: accessLevel,
-        serverSideEncryption,
       })
     : await Storage.get(path, {
         download: true,
         level: accessLevel,
-        serverSideEncryption,
       });
   if (!data || !data.Body) {
     throw new Error(t("DownloadFileError"));
@@ -76,7 +74,6 @@ async function downloadJson(s3Key: string): Promise<Array<any>> {
   const data: any = await Storage.get(s3Key, {
     download: true,
     level: accessLevel,
-    serverSideEncryption,
   });
 
   if (!data || !data.Body) {
@@ -194,7 +191,6 @@ async function uploadLogo(
   if (oldCustomLogoS3Key) {
     await Storage.remove("logo/".concat(oldCustomLogoS3Key), {
       bucket: EnvConfig.contentBucket,
-      serverSideEncryption,
       level: accessLevel,
     });
   }
@@ -209,7 +205,6 @@ async function uploadFavicon(
   if (oldCustomFaviconS3Key) {
     await Storage.remove("favicon/".concat(oldCustomFaviconS3Key), {
       bucket: EnvConfig.contentBucket,
-      serverSideEncryption,
       level: accessLevel,
     });
   }

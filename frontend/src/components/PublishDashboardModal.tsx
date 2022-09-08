@@ -30,7 +30,7 @@ interface PathParams {
   id: string;
   dashboardId: string;
   isOpen: boolean;
-  closeModal: Function;
+  closeModal: () => void;
   dashboardPublished?: Function;
 }
 

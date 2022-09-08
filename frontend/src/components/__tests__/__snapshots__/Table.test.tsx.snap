@@ -14,7 +14,7 @@ exports[`renders a basic table 1`] = `
           role="row"
         >
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -48,7 +48,7 @@ exports[`renders a basic table 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -82,7 +82,7 @@ exports[`renders a basic table 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -200,7 +200,7 @@ exports[`renders a basic table with mobile navigation 1`] = `
           role="row"
         >
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -234,7 +234,7 @@ exports[`renders a basic table with mobile navigation 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -268,7 +268,7 @@ exports[`renders a basic table with mobile navigation 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -386,7 +386,7 @@ exports[`renders a basic table without pagination 1`] = `
           role="row"
         >
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -420,7 +420,7 @@ exports[`renders a basic table without pagination 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -454,7 +454,7 @@ exports[`renders a basic table without pagination 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -572,7 +572,7 @@ exports[`sorting buttons are clickable 1`] = `
           role="row"
         >
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -587,7 +587,7 @@ exports[`sorting buttons are clickable 1`] = `
             </span>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -621,7 +621,7 @@ exports[`sorting buttons are clickable 1`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -655,7 +655,7 @@ exports[`sorting buttons are clickable 1`] = `
             </button>
           </th>
           <th
-            aria-sort="asc"
+            aria-sort="ascending"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -800,7 +800,7 @@ exports[`sorting buttons are clickable 2`] = `
           role="row"
         >
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -815,7 +815,7 @@ exports[`sorting buttons are clickable 2`] = `
             </span>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -849,7 +849,7 @@ exports[`sorting buttons are clickable 2`] = `
             </button>
           </th>
           <th
-            aria-sort=""
+            aria-sort="none"
             colspan="1"
             role="columnheader"
             scope="col"
@@ -883,7 +883,7 @@ exports[`sorting buttons are clickable 2`] = `
             </button>
           </th>
           <th
-            aria-sort="desc"
+            aria-sort="descending"
             colspan="1"
             role="columnheader"
             scope="col"

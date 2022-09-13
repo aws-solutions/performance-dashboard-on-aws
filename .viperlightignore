@@ -24,6 +24,7 @@ source/frontend/src/locales/en/translation.json:476
 source/frontend/src/locales/en/translation.json:478
 source/frontend/src/locales/en/translation.json:487
 source/frontend/src/locales/en/translation.json:492
+source/frontend/src/locales/en/translation.json:535
 # Amazon Internal: Potential confidential designation found  Check line number: 475
 CODE_OF_CONDUCT.md:4
 # Potential email address discovered                         Check line number: 4                       
@@ -51,18 +52,23 @@ source/backend/src/lib/factories/__tests__/settings-factory.test.ts:46
 # Potential email address discovered                         Check line number: 46                      
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:48
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:49
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:50
 # Potential email address discovered                         Check line number: 48                      
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:70
 # Potential email address discovered                         Check line number: 70                      
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:71
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:72
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:73
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:75
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:76
 # Potential email address discovered                         Check line number: 71
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:96
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:99
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:104
 # Potential email address discovered                         Check line number: 96                      
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:116
 source/backend/src/lib/factories/__tests__/settings-factory.test.ts:119
+source/backend/src/lib/factories/__tests__/settings-factory.test.ts:126
 # Potential email address discovered                         Check line number: 116                      
 source/backend/src/lib/controllers/__tests__/user-ctrl.test.ts:31
 # Potential email address discovered                         Check line number: 31                      
@@ -113,6 +119,7 @@ source/frontend/src/containers/__tests__/ChangeRole.test.tsx:18
 source/frontend/src/containers/__tests__/EditNavbar.test.tsx:35
 # Potential email address discovered                         Check line number: 35                      
 source/frontend/src/containers/__tests__/EditNavbar.test.tsx:52
+source/frontend/src/containers/__tests__/EditNavbar.test.tsx:55
 # Potential email address discovered                         Check line number: 52
 source/frontend/src/containers/__tests__/EditSupportContactEmail.test.tsx:32
 # Potential email address discovered                         Check line number: 32                      
@@ -130,14 +137,18 @@ source/frontend/src/services/__tests__/BackendService.test.ts:372
 # Potential email address discovered                         Check line number: 372                      
 source/frontend/src/services/__tests__/BackendService.test.ts:379
 # Potential email address discovered                         Check line number: 379
+source/frontend/src/services/__tests__/BackendService.test.ts:384
 source/frontend/src/services/__tests__/BackendService.test.ts:386
 # Potential email address discovered                         Check line number: 386  
+source/frontend/src/services/__tests__/BackendService.test.ts:391
 source/frontend/src/services/__tests__/BackendService.test.ts:392
 # Potential email address discovered                         Check line number: 392                       
 source/frontend/src/services/__tests__/BackendService.test.ts:382
 source/frontend/src/services/__tests__/BackendService.test.ts:389
 source/frontend/src/services/__tests__/BackendService.test.ts:396
+source/frontend/src/services/__tests__/BackendService.test.ts:398
 source/frontend/src/services/__tests__/BackendService.test.ts:402
+source/frontend/src/services/__tests__/BackendService.test.ts:404
 source/frontend/src/services/__tests__/EnvConfig.test.ts:14
 # Potential email address discovered                         Check line number: 14                      
 docs/user-guide.pdf
@@ -166,5 +177,7 @@ THIRD-PARTY-LICENSES:877
 THIRD-PARTY-LICENSES:878
 THIRD-PARTY-LICENSES:879
 THIRD-PARTY-LICENSES:1021
+THIRD-PARTY-LICENSES:1020
+THIRD-PARTY-LICENSES:1024
 THIRD-PARTY-LICENSES:1025
 source/examples/README.md:49

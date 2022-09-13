@@ -1,6 +1,10 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
+<<<<<<< HEAD
   "Description": "(SO0157) Performance Dashboard on AWS Solution Implementation v1.0.3",
+=======
+  "Description": "(SO0157) Performance Dashboard on AWS Solution Implementation v1.7.0",
+>>>>>>> 3761ec0 (release-1.7.0 (#864))
   "Parameters": {
     "AdminEmail": {
       "Type": "String",

@@ -36,19 +36,25 @@ function createNew(
   };
 }
 
-function createDraftFromDashboard(
+function createNewFromDashboard(
   dashboard: Dashboard,
-  user: User,
-  version: number
+  id: string,
+  name: string,
+  version: number,
+  parentDashboardId: string,
+  user: User
 ): Dashboard {
-  const id = uuidv4();
-
   let widgets: Array<Widget> = [];
+  const tableOfContents: { [key: string]: boolean } = {};
   if (dashboard.widgets) {
     // Duplicate all widgets related to this dashboard
-    widgets = dashboard.widgets.map((widget) =>
-      WidgetFactory.createFromWidget(id, widget)
-    );
+    widgets = dashboard.widgets.map((widget) => {
+      const newWidget = WidgetFactory.createFromWidget(id, widget);
+      if (dashboard.tableOfContents) {
+        tableOfContents[newWidget.id] = dashboard.tableOfContents[widget.id];
+      }
+      return newWidget;
+    });
     for (const widget of widgets) {
       if (widget.section) {
         const sectionIndex = dashboard.widgets.findIndex(
@@ -69,13 +75,13 @@ function createDraftFromDashboard(
 
   return {
     id,
-    name: dashboard.name,
-    version: version,
-    parentDashboardId: dashboard.parentDashboardId,
+    name,
+    version,
+    parentDashboardId,
     topicAreaId: dashboard.topicAreaId,
     topicAreaName: dashboard.topicAreaName,
     displayTableOfContents: dashboard.displayTableOfContents,
-    tableOfContents: dashboard.tableOfContents,
+    tableOfContents,
     description: dashboard.description,
     state: DashboardState.Draft,
     createdBy: user.userId,
@@ -86,53 +92,26 @@ function createDraftFromDashboard(
   };
 }
 
+function createDraftFromDashboard(
+  dashboard: Dashboard,
+  user: User,
+  version: number
+): Dashboard {
+  return createNewFromDashboard(
+    dashboard,
+    uuidv4(),
+    dashboard.name,
+    version,
+    dashboard.parentDashboardId,
+    user
+  );
+}
+
 function createCopyFromDashboard(dashboard: Dashboard, user: User): Dashboard {
   const id = uuidv4();
-
-  // Copy all widgets associated with the dashboard.
-  let widgets: Array<Widget> = [];
-  if (dashboard.widgets) {
-    widgets = dashboard.widgets.map((widget) =>
-      WidgetFactory.createFromWidget(id, widget)
-    );
-    for (const widget of widgets) {
-      if (widget.section) {
-        const sectionIndex = dashboard.widgets.findIndex(
-          (w) => w.id === widget.section
-        );
-        widget.section = widgets[sectionIndex].id;
-      }
-      if (widget.content && widget.content.widgetIds) {
-        const widgetIds: string[] = [];
-        for (const id of widget.content.widgetIds) {
-          const widgetIndex = dashboard.widgets.findIndex((w) => w.id === id);
-          widgetIds.push(widgets[widgetIndex].id);
-        }
-        widget.content.widgetIds = widgetIds;
-      }
-    }
-  }
-
-  return {
-    id,
-    name: "Copy of " + dashboard.name,
-    version: 1,
-    parentDashboardId: id,
-    topicAreaId: dashboard.topicAreaId,
-    topicAreaName: dashboard.topicAreaName,
-    displayTableOfContents: dashboard.displayTableOfContents,
-    tableOfContents: dashboard.tableOfContents,
-    description: dashboard.description,
-    state: DashboardState.Draft,
-    createdBy: user.userId,
-    updatedAt: new Date(),
-    updatedBy: user.userId,
-    submittedBy: undefined,
-    publishedBy: undefined,
-    archivedBy: undefined,
-    widgets,
-    friendlyURL: undefined,
-  };
+  const name = "Copy of " + dashboard.name;
+  const version = 1;
+  return createNewFromDashboard(dashboard, id, name, version, id, user);
 }
 
 /**

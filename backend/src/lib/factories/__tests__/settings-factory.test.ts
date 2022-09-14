@@ -21,6 +21,7 @@ describe("getDefaultSettings", () => {
         primary: "#005EA2",
         secondary: "#54278f",
       },
+      analyticsTrackingId: undefined,
     });
   });
 });
@@ -48,6 +49,7 @@ describe("fromItem", () => {
       contactEmailAddress: "test@aol.com",
       adminContactEmailAddress: "admin@aol.com",
       contactUsContent: "test content",
+      analyticsTrackingId: "UA123",
     };
 
     const settings = SettingsFactory.fromItem(item);
@@ -73,6 +75,7 @@ describe("fromItem", () => {
       contactEmailAddress: "test@aol.com",
       adminContactEmailAddress: "admin@aol.com",
       contactUsContent: "test content",
+      analyticsTrackingId: "UA123",
     });
   });
 });
@@ -100,6 +103,7 @@ describe("toPublicSettings", () => {
       },
       contactEmailAddress: "test@aol.com",
       contactUsContent: "test content",
+      analyticsTrackingId: "UA123",
     };
 
     const publicSettings = SettingsFactory.toPublicSettings(settings);
@@ -121,6 +125,7 @@ describe("toPublicSettings", () => {
       },
       contactEmailAddress: "test@aol.com",
       contactUsContent: "test content",
+      analyticsTrackingId: "UA123",
     });
   });
 });

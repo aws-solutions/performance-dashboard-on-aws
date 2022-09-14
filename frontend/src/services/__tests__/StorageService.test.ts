@@ -1,4 +1,4 @@
-import Storage from "@aws-amplify/storage";
+import { Storage } from "@aws-amplify/storage";
 import * as uuid from "uuid";
 import StorageService from "../StorageService";
 
@@ -98,7 +98,6 @@ describe("downloadDataset", () => {
       expect(Storage.get).toBeCalledWith("123.csv", {
         download: true,
         level: "public",
-        serverSideEncryption: "aws:kms",
       });
     }
   });
@@ -110,7 +109,6 @@ describe("downloadJson", () => {
     expect(Storage.get).toBeCalledWith("123.json", {
       download: true,
       level: "public",
-      serverSideEncryption: "aws:kms",
     });
   });
 
@@ -145,7 +143,6 @@ describe("download logo", () => {
     expect(Storage.get).toBeCalledWith("logo/123.json", {
       download: true,
       level: "public",
-      serverSideEncryption: "aws:kms",
     });
   });
 });

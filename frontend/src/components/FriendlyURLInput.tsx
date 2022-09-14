@@ -1,4 +1,4 @@
-import React from "react";
+import React, { LegacyRef } from "react";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useWindowSize } from "../hooks";
@@ -8,7 +8,7 @@ interface Props {
   id: string;
   label: string;
   hint?: string | React.ReactNode;
-  register?: Function;
+  register?: LegacyRef<HTMLInputElement>;
   required?: boolean;
   validate?: Function;
   disabled?: boolean;

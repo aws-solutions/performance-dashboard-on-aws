@@ -78,14 +78,16 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
                           .filter((child) => !!child.widget)
                           .map((child) => {
                             return (
-                              <WidgetTreeItemContent
-                                label={child.label}
-                                widget={child.widget}
-                                onDuplicate={props.onDuplicate}
-                                onDelete={props.onDelete}
-                                onMoveUp={onMoveUp}
-                                onMoveDown={onMoveDown}
-                              />
+                              child.widget && (
+                                <WidgetTreeItemContent
+                                  label={child.label}
+                                  widget={child.widget}
+                                  onDuplicate={props.onDuplicate}
+                                  onDelete={props.onDelete}
+                                  onMoveUp={onMoveUp}
+                                  onMoveDown={onMoveDown}
+                                />
+                              )
                             );
                           })}
                       </div>

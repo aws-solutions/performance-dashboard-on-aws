@@ -25,7 +25,7 @@ If you're not familiar with deploying resources on AWS using CFT, start by revie
 
 | Region                | Launch                                                                                                                                                                                                                                                                                                                        |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| US East (N. Virginia) | [![Install in us-east-1](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/performance-dashboard-on-aws.template) |
+| US East (N. Virginia) | [![Install in us-east-1](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.7.0/performance-dashboard-on-aws.template) |
 
 You will be directed to the CloudFormation console on your browser. Enter the stack name such as "MyCorp-PerfDash", and enter the email of the user who will initially administer PDoA in the "adminEmail" field, then press the "Next" button. Accept the default values on the next page, and press the Next button. Finally, check on the two "Capabilities" checkboxes at the bottom of the page. Press the "Create Stack" button. It will take about 25 minutes for the compute, storage, and database resources on AWS to be provisioned.
 
@@ -41,10 +41,10 @@ If you prefer to deploy PDoA in a region other than US East (N. Virginia), you m
 
 | Region                                          | Launch                                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Install this first in US East (N. Virginia)** | [![Install this first](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/LambdaEdge.template)                                               |
-| Install PDoA in South America (São Paulo)       | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=sa-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/performance-dashboard-on-aws.template)    |
-| Install PDoA in Canada (Central)                | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=ca-central-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/performance-dashboard-on-aws.template) |
-| Install PDoA in Europe (London)                 | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.6.0/performance-dashboard-on-aws.template)    |
+| **Install this first in US East (N. Virginia)** | [![Install this first](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.7.0/LambdaEdge.template)                                               |
+| Install PDoA in South America (São Paulo)       | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=sa-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.7.0/performance-dashboard-on-aws.template)    |
+| Install PDoA in Canada (Central)                | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=ca-central-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.7.0/performance-dashboard-on-aws.template) |
+| Install PDoA in Europe (London)                 | [![Install in non US East (N. Virginia) region](images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.7.0/performance-dashboard-on-aws.template)    |
 
 ## Deploying with AWS Cloud Development Kit (CDK)
 
@@ -54,7 +54,7 @@ This repository is a monorepo that includes 3 different applications: Backend, F
 
 ### Requirements
 
-- [Node.js 12](https://nodejs.org/en/download)
+- [Node.js 14](https://nodejs.org/en/download)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [An AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
 

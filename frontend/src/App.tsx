@@ -11,7 +11,6 @@ import HomeWithSearch from "./containers/HomeWithSearch";
 import DashboardListing from "./containers/DashboardListing";
 import CreateDashboard from "./containers/CreateDashboard";
 import EditDetails from "./containers/EditDetails";
-import EditTableOfContents from "./containers/EditTableOfContents";
 import AddContent from "./containers/AddContent";
 import EditDashboard from "./containers/EditDashboard";
 import DashboardHistory from "./containers/DashboardHistory";
@@ -36,6 +35,7 @@ import TopicareaSettings from "./containers/TopicareaSettings";
 import PublishingGuidanceSettings from "./containers/PublishingGuidanceSettings";
 import PublishedSiteSettings from "./containers/PublishedSiteSettings";
 import EditPublishingGuidance from "./containers/EditPublishingGuidance";
+import EditAnalytics from "./containers/EditAnalytics";
 import EditHomepageContent from "./containers/EditHomepageContent";
 import CreateTopicArea from "./containers/CreateTopicArea";
 import EditTopicArea from "./containers/EditTopicArea";
@@ -128,6 +128,11 @@ function App() {
       component: EditHomepageContent,
     },
     {
+      path: "/admin/settings/publishedsite/analyticsedit",
+      title: t("PageTitle.EditAnalytics"),
+      component: EditAnalytics,
+    },
+    {
       path: "/admin/settings/publishedsite/navbaredit",
       title: t("PageTitle.EditNavbar"),
       component: EditNavbar,
@@ -200,11 +205,6 @@ function App() {
       path: "/admin/dashboard/edit/:dashboardId/header",
       title: t("PageTitle.EditDashboardHeader"),
       component: EditDetails,
-    },
-    {
-      path: "/admin/dashboard/edit/:dashboardId/tableofcontents",
-      title: t("PageTitle.EditTableOfContents"),
-      component: EditTableOfContents,
     },
     {
       path: "/admin/dashboard/:dashboardId/edit-table/:widgetId",

@@ -604,6 +604,7 @@ function ViewDashboardAdmin() {
       />
 
       <PublishDashboardModal
+        id={`publish-${dashboardId}`}
         dashboardId={dashboardId}
         isOpen={isOpenPublishModal}
         closeModal={closePublishModal}
@@ -756,21 +757,14 @@ function ViewDashboardAdmin() {
               offset={80}
               area={2}
               marginRight={0}
-              widgetNameIds={dashboard.widgets
-                .filter(
-                  (w) =>
-                    dashboard &&
-                    dashboard.tableOfContents &&
-                    dashboard.tableOfContents[w.id]
-                )
-                .map((widget) => {
-                  return {
-                    name: widget.name,
-                    id: widget.id,
-                    isInsideSection: !!widget.section,
-                    sectionWithTabs: getSectionWithTabs(widget, dashboard),
-                  };
-                })}
+              widgetNameIds={dashboard.widgets.map((widget) => {
+                return {
+                  name: widget.name,
+                  id: widget.id,
+                  isInsideSection: !!widget.section,
+                  sectionWithTabs: getSectionWithTabs(widget, dashboard),
+                };
+              })}
               activeWidgetId={activeWidgetId}
               onBottomOfThePage={onBottomOfThePage}
               isTop={showMobilePreview || windowSize.width <= moveNavBarWidth}

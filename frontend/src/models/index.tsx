@@ -39,6 +39,10 @@ export type Dashboard = {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  /**
+   * @type {any}
+   * @deprecated no longer supported
+   */
   tableOfContents?: any;
   description?: string;
   releaseNotes?: string;
@@ -59,6 +63,10 @@ export type PublicDashboard = {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  /**
+   * @type {any}
+   * @deprecated no longer supported
+   */
   tableOfContents?: any;
   description?: string;
   widgets: Array<Widget>;
@@ -247,6 +255,7 @@ export type PublicSettings = {
   customFaviconS3Key?: string;
   contactEmailAddress?: string;
   contactUsContent?: string;
+  analyticsTrackingId?: string;
 };
 
 export type Settings = {
@@ -271,6 +280,7 @@ export type Settings = {
   contactEmailAddress?: string;
   adminContactEmailAddress?: string;
   contactUsContent?: string;
+  analyticsTrackingId?: string;
 };
 
 export type Metric = {

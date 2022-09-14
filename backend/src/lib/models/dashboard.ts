@@ -29,6 +29,10 @@ export interface Dashboard {
   topicAreaId: string;
   topicAreaName: string;
   displayTableOfContents: boolean;
+  /**
+   * @type {any}
+   * @deprecated no longer supported
+   */
   tableOfContents?: any;
   description: string;
   createdBy: string;

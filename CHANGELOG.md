@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Security vulnerabilities were addressed by upgrading the following libraries:
   - node v14.x
   - react-scripts 5.0.1
+- Dashboard creation simplifications
+- Support for Google Analytics tracking was added.
 
 
 ## [1.6.0] - 2022-08-22

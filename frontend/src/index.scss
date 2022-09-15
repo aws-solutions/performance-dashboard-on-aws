@@ -1,5 +1,11 @@
 @import "./styles/base";
 
+:root {
+  --amplify-primary-color: #{color("base-dark")};
+  --amplify-primary-shade: #{color("base-darker")};
+  --amplify-primary-tint: #{color("base")};
+}
+
 p {
   line-height: 1.4;
 }

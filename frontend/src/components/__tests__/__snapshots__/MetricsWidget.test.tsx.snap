@@ -27,7 +27,6 @@ exports[`metrics preview should match snapshot 1`] = `
             >
               <div
                 class="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-auto"
-                tabindex="0"
               >
                 <div
                   class="flex-5"
@@ -43,12 +42,12 @@ exports[`metrics preview should match snapshot 1`] = `
                   data-position="bottom"
                   title="1"
                 >
-                  <h1
-                    class="margin-0 text-no-wrap"
+                  <span
+                    class="margin-0 text-no-wrap font-sans-xl text-bold"
                     style="color: rgb(41, 180, 187);"
                   >
                     1
-                  </h1>
+                  </span>
                 </div>
                 <div
                   class="flex-2"

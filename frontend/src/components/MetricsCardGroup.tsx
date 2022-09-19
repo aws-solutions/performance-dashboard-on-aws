@@ -53,10 +53,7 @@ function MetricsCardGroup(props: Props) {
                     className={`grid-col-${12 / props.metricPerRow} padding-05`}
                     key={j}
                   >
-                    <div
-                      className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-auto"
-                      tabIndex={0}
-                    >
+                    <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-auto">
                       <div className="flex-5">
                         <p className="text-base-darker text-bold margin-0 text-no-wrap">
                           {metric.title}
@@ -67,8 +64,8 @@ function MetricsCardGroup(props: Props) {
                         data-position="bottom"
                         title={metric.value ? metric.value.toString() : ""}
                       >
-                        <h1
-                          className="margin-0 text-no-wrap"
+                        <span
+                          className="margin-0 text-no-wrap font-sans-xl text-bold"
                           style={{ color: primaryColor }}
                         >
                           {TickFormatter.formatNumber(
@@ -79,7 +76,7 @@ function MetricsCardGroup(props: Props) {
                             metric.percentage,
                             metric.currency
                           )}
-                        </h1>
+                        </span>
                       </div>
                       <div className="flex-2">
                         {metric.changeOverTime && (

@@ -32,6 +32,7 @@ function Tooltip(props: Props) {
       globalEventOff="click"
       className="padding-x-2-important cursor-default shadow-3"
       borderColor="#dfe1e2"
+      role="tooltip"
     />
   );
 }

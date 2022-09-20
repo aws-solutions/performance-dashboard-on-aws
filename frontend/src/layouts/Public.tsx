@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet";
 import defaultFavicon from "../favicon.svg";
+import ReactGA from "react-ga";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -42,6 +43,23 @@ function PublicLayout(props: LayoutProps) {
   };
 
   useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
+
+  let collectAnalytics = false;
+  if (settings.analyticsTrackingId && settings.analyticsTrackingId != "NA") {
+    collectAnalytics = true;
+    ReactGA.initialize(settings.analyticsTrackingId, {
+      debug: false,
+      gaOptions: {
+        siteSpeedSampleRate: 100,
+      },
+    });
+  }
+
+  useEffect(() => {
+    if (collectAnalytics) {
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    }
+  }, []);
 
   return (
     <>

@@ -45,6 +45,7 @@
     "react-datepicker": "^3.7.0",
     "react-dom": "^16.14.0",
     "react-excel-renderer": "^1.1.0",
+    "react-ga": "^3.3.1",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^6.3.1",
     "react-horizontal-scrolling-menu": "^2.1.1",
@@ -95,6 +96,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {}
+  }
 }

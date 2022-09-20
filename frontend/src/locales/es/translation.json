@@ -1022,9 +1022,7 @@
   "CloseMenu": "Cerrar menú",
   "ARIA": {
     "Header": "Encabezado",
-    "Main": "Principal",
     "Logo": "Logotipo",
-    "Footer": "Pie de página",
     "OpenInNewTab": "(se abre en una pestaña nueva)",
     "DraftDashboardActions": "Borrador de acciones del panel",
     "ViewDraftHistory": "Ver historial del borrador del panel",

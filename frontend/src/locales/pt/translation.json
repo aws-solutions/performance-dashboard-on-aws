@@ -1022,9 +1022,7 @@
   "CloseMenu": "Fechar menu",
   "ARIA": {
     "Header": "Cabeçalho",
-    "Main": "Principal",
     "Logo": "Logotipo",
-    "Footer": "Rodapé",
     "OpenInNewTab": "(abre em uma nova guia)",
     "DraftDashboardActions": "Rascunhar ações do painel",
     "ViewDraftHistory": "Visualizar o histórico do painel de rascunho",

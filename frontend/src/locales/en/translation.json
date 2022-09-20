@@ -1031,9 +1031,7 @@
   "CloseMenu": "Close Menu",
   "ARIA": {
     "Header": "Header",
-    "Main": "Main",
     "Logo": "Logo",
-    "Footer": "Footer",
     "OpenInNewTab": "(opens in a new tab)",
     "DraftDashboardActions": "Draft dashboard actions",
     "ViewDraftHistory": "View draft dashboard's history",

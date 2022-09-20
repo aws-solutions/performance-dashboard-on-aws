@@ -6,6 +6,7 @@ exports[`renders a tooltip at the bottom 1`] = `
     class="__react_component_tooltip test place-bottom type-dark"
     data-id="tooltip"
     id="test"
+    role="tooltip"
   >
     <style
       aria-hidden="true"
@@ -96,6 +97,7 @@ exports[`renders a tooltip at the left 1`] = `
     class="__react_component_tooltip test place-left type-dark"
     data-id="tooltip"
     id="test"
+    role="tooltip"
   >
     <style
       aria-hidden="true"
@@ -186,6 +188,7 @@ exports[`renders a tooltip at the right 1`] = `
     class="__react_component_tooltip test place-right type-dark"
     data-id="tooltip"
     id="test"
+    role="tooltip"
   >
     <style
       aria-hidden="true"
@@ -276,6 +279,7 @@ exports[`renders a tooltip at the top (default) 1`] = `
     class="__react_component_tooltip test place-top type-dark"
     data-id="tooltip"
     id="test"
+    role="tooltip"
   >
     <style
       aria-hidden="true"

@@ -41,7 +41,7 @@ export class FrontendStack extends cdk.Stack {
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {
       httpHeaders: {
         "Content-Security-Policy":
-          "default-src 'self'; img-src 'self' blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com; block-all-mixed-content;",
+          "default-src 'self'; img-src 'self' https://*.google-analytics.com blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com https://*.google-analytics.com; script-src 'self' https://*.google-analytics.com; block-all-mixed-content;",
         "Strict-Transport-Security": "max-age=31540000; includeSubdomains",
         "X-XSS-Protection": "1; mode=block",
         "X-Frame-Options": "DENY",

@@ -197,9 +197,11 @@ function EditDashboard() {
                     state: publishedOrArchived.state.toLowerCase(),
                   })}
                   <FontAwesomeIcon
-                    className="margin-left-1"
                     icon={faExternalLinkAlt}
+                    className="margin-left-1"
                     size="sm"
+                    aria-label={t("ARIA.OpenInNewTab")}
+                    aria-hidden={false}
                   />
                 </Link>
               </div>

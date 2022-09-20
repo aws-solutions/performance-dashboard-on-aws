@@ -1,6 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { useCurrentAuthenticatedUser } from "../hooks";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";

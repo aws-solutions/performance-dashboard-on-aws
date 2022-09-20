@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState, MouseEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronCircleDown,
+  faChevronCircleUp,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   useTable,
   useSortBy,
@@ -300,13 +304,12 @@ function Table(props: Props) {
                       type="button"
                     >
                       <FontAwesomeIcon
-                        className={`hover:text-base ${
-                          column.isSorted ? "text-base-darker" : "text-base"
-                        }`}
                         icon={
-                          column.isSorted && column.isSortedDesc
+                          !column.isSorted
                             ? faChevronDown
-                            : faChevronUp
+                            : column.isSortedDesc
+                            ? faChevronCircleDown
+                            : faChevronCircleUp
                         }
                       />
                     </button>

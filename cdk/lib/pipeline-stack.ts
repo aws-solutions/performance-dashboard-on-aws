@@ -53,7 +53,7 @@ export class PipelineStack extends cdk.Stack {
 
     const build = new codebuild.PipelineProject(this, "Build", {
       environment: {
-        buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_2,
+        buildImage: codebuild.LinuxBuildImage.STANDARD_5_0,
         computeType: codebuild.ComputeType.LARGE,
       },
       environmentVariables: {

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Search from "../components/Search";
 import { LocationState, TopicArea } from "../models";
 import Button from "../components/Button";
 import TopicareasTable from "../components/TopicareasTable";

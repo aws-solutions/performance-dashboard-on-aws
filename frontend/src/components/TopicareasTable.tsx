@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useSettings } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faChevronCircleUp,
+  faChevronCircleDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { TopicArea } from "../models";
 import Button from "./Button";
 import { useTranslation } from "react-i18next";
@@ -57,58 +61,58 @@ function TopicareasTable(props: Props) {
         <tr>
           <th></th>
           <th>
-            <span className="font-sans-xs">{t("TopicArea")}</span>
             <Button
               variant="unstyled"
-              className={`margin-left-1 hover:text-base-light ${
-                sortedBy === "name" ? "text-base-darker" : "text-white"
-              }`}
+              className="margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
               onClick={() => sortBy("name")}
               ariaLabel={t("SortTopicAreaName")}
             >
+              <span className="margin-1">{t("TopicArea")}</span>
               <FontAwesomeIcon
                 icon={
-                  sortedBy === "name" && direction === "up"
-                    ? faChevronUp
-                    : faChevronDown
+                  sortedBy !== "name"
+                    ? faChevronDown
+                    : direction === "up"
+                    ? faChevronCircleUp
+                    : faChevronCircleDown
                 }
               />
             </Button>
           </th>
           <th>
-            <span className="font-sans-xs">{t("Dashboards")}</span>
             <Button
               variant="unstyled"
-              className={`margin-left-1 hover:text-base-light ${
-                sortedBy === "dashboards" ? "text-base-darker" : "text-white"
-              }`}
+              className="margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
               onClick={() => sortBy("dashboards")}
               ariaLabel={t("SortDashboards")}
             >
+              <span className="margin-1">{t("Dashboards")}</span>
               <FontAwesomeIcon
                 icon={
-                  sortedBy === "dashboards" && direction === "up"
-                    ? faChevronUp
-                    : faChevronDown
+                  sortedBy !== "dashboards"
+                    ? faChevronDown
+                    : direction === "up"
+                    ? faChevronCircleUp
+                    : faChevronCircleDown
                 }
               />
             </Button>
           </th>
           <th>
-            <span className="font-sans-xs">{t("CreatedBy")}</span>
             <Button
               variant="unstyled"
-              className={`margin-left-1 hover:text-base-light ${
-                sortedBy === "createdBy" ? "text-base-darker" : "text-white"
-              }`}
+              className="margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
               onClick={() => sortBy("createdBy")}
               ariaLabel={t("SortCreatedBy")}
             >
+              <span className="margin-1">{t("CreatedBy")}</span>
               <FontAwesomeIcon
                 icon={
-                  sortedBy === "createdBy" && direction === "up"
-                    ? faChevronUp
-                    : faChevronDown
+                  sortedBy !== "createdBy"
+                    ? faChevronDown
+                    : direction === "up"
+                    ? faChevronCircleUp
+                    : faChevronCircleDown
                 }
               />
             </Button>

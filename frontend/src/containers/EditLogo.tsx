@@ -194,7 +194,7 @@ function EditLogo() {
             </form>
           </div>
           <div className="grid-col-5">
-            <h4 className="margin-top-4">{t("SettingsLogoPreview")}</h4>
+            <h2 className="margin-top-4">{t("SettingsLogoPreview")}</h2>
             <div className="grid-row">
               <Header className="usa-header usa-header--basic padding-left-2 padding-right-2">
                 <div className="usa-logo margin-top-2" id="basic-logo">

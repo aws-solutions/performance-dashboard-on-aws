@@ -4,7 +4,6 @@ exports[`renders an error 1`] = `
 <div>
   <div
     class="usa-form-group usa-form-group--error"
-    role="radiogroup"
   >
     <fieldset
       class="usa-fieldset"
@@ -59,7 +58,6 @@ exports[`renders radio buttons 1`] = `
 <div>
   <div
     class="usa-form-group"
-    role="radiogroup"
   >
     <fieldset
       class="usa-fieldset"

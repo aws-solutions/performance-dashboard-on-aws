@@ -10,7 +10,15 @@ type MarkdownRenderProps = {
 const MarkdownRender = (props: MarkdownRenderProps) => {
   return (
     <ReactMarkdown
-      allowedTypes={["link", "list", "listItem", "paragraph", "strong", "text"]}
+      allowedTypes={[
+        "link",
+        "list",
+        "listItem",
+        "paragraph",
+        "strong",
+        "text",
+        "heading",
+      ]}
       linkTarget="_blank"
       className={`Markdown ${props.className}`}
       source={props.source || ""}

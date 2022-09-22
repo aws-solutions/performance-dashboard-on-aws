@@ -55,9 +55,9 @@ function MetricsCardGroup(props: Props) {
                   >
                     <div className="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-auto">
                       <div className="flex-5">
-                        <p className="text-base-darker text-bold margin-0 text-no-wrap">
+                        <h3 className="text-base-darker text-bold margin-0 text-no-wrap">
                           {metric.title}
-                        </p>
+                        </h3>
                       </div>
                       <div
                         className="flex-3 usa-tooltip"

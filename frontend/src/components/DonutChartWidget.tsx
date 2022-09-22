@@ -286,82 +286,84 @@ const DonutChartWidget = (props: Props) => {
         />
       )}
       {donutData.current.length && (
-        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
-          <PieChart>
-            <Legend
-              verticalAlign="top"
-              formatter={renderLegendText}
-              iconSize={24}
-              wrapperStyle={{
-                top: 0,
-                right: 0,
-                width: "100%",
-              }}
-              onClick={toggleParts}
-              onMouseLeave={() => setPartsHover(null)}
-              onMouseEnter={(e: any) => setPartsHover(e.value)}
-              layout={
-                windowSize.width <= smallScreenPixels || showMobilePreview
-                  ? "vertical"
-                  : undefined
-              }
-            />
-            <Pie
-              data={donutData.current.map((d: any) => {
-                return !hiddenParts.includes(d.name)
-                  ? d
-                  : { name: d.name, value: 0 };
-              })}
-              dataKey="value"
-              nameKey="name"
-              cx={
-                props.isPreview ||
-                windowSize.width <= smallScreenPixels ||
-                showMobilePreview
-                  ? "50%"
-                  : "28%"
-              }
-              cy="50%"
-              outerRadius={120}
-              innerRadius={80}
-              label={renderCustomizedLabel}
-              labelLine={renderCustomizedLine}
-              isAnimationActive={false}
-            >
-              {donutParts.current.map((part: string, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={!hiddenParts.includes(part) ? colors[index] : "#ccc"}
-                  fillOpacity={getOpacity(part)}
-                  onMouseLeave={() => setPartsHover(null)}
-                  onMouseEnter={() => setPartsHover(part)}
-                />
-              ))}
-              {props.showTotal && (
-                <Label
-                  className="text-base-darker text-bold"
-                  value={getTotal()}
-                  offset={0}
-                  position="center"
-                />
-              )}
-            </Pie>
-            <Tooltip
-              itemStyle={{ color: "#1b1b1b" }}
-              isAnimationActive={false}
-              formatter={(value: Number | String) => {
-                // Check if there is metadata for this column
-                let columnMetadata;
-                if (parts && parts.length > 1 && props.columnsMetadata) {
-                  columnMetadata = props.columnsMetadata.find(
-                    (cm) => cm.columnName === parts[1]
-                  );
+        <div aria-hidden="true">
+          <ResponsiveContainer width="100%" height={calculateChartHeight()}>
+            <PieChart>
+              <Legend
+                verticalAlign="top"
+                formatter={renderLegendText}
+                iconSize={24}
+                wrapperStyle={{
+                  top: 0,
+                  right: 0,
+                  width: "100%",
+                }}
+                onClick={toggleParts}
+                onMouseLeave={() => setPartsHover(null)}
+                onMouseEnter={(e: any) => setPartsHover(e.value)}
+                layout={
+                  windowSize.width <= smallScreenPixels || showMobilePreview
+                    ? "vertical"
+                    : undefined
                 }
-                return displayedAmount(value, columnMetadata);
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+              />
+              <Pie
+                data={donutData.current.map((d: any) => {
+                  return !hiddenParts.includes(d.name)
+                    ? d
+                    : { name: d.name, value: 0 };
+                })}
+                dataKey="value"
+                nameKey="name"
+                cx={
+                  props.isPreview ||
+                  windowSize.width <= smallScreenPixels ||
+                  showMobilePreview
+                    ? "50%"
+                    : "28%"
+                }
+                cy="50%"
+                outerRadius={120}
+                innerRadius={80}
+                label={renderCustomizedLabel}
+                labelLine={renderCustomizedLine}
+                isAnimationActive={false}
+              >
+                {donutParts.current.map((part: string, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={!hiddenParts.includes(part) ? colors[index] : "#ccc"}
+                    fillOpacity={getOpacity(part)}
+                    onMouseLeave={() => setPartsHover(null)}
+                    onMouseEnter={() => setPartsHover(part)}
+                  />
+                ))}
+                {props.showTotal && (
+                  <Label
+                    className="text-base-darker text-bold"
+                    value={getTotal()}
+                    offset={0}
+                    position="center"
+                  />
+                )}
+              </Pie>
+              <Tooltip
+                itemStyle={{ color: "#1b1b1b" }}
+                isAnimationActive={false}
+                formatter={(value: Number | String) => {
+                  // Check if there is metadata for this column
+                  let columnMetadata;
+                  if (parts && parts.length > 1 && props.columnsMetadata) {
+                    columnMetadata = props.columnsMetadata.find(
+                      (cm) => cm.columnName === parts[1]
+                    );
+                  }
+                  return displayedAmount(value, columnMetadata);
+                }}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       )}
       <div>
         <DataTable

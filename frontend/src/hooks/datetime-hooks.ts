@@ -23,12 +23,9 @@ export function CalculateDuration(date: Date, t: TFunction): string {
   if (timeDiffMin < 5) {
     return [t("Updated"), t("JustNow")].join(" ");
   } else if (timeDiffMin < 60) {
-    return [
-      t("Updated"),
-      Math.floor(timeDiffMin),
-      t("Minutes"),
-      t("Ago"),
-    ].join(" ");
+    return [t("Updated"), Math.floor(timeDiffMin), t("Minutes"), t("Ago")].join(
+      " "
+    );
   } else if (timeDiffMin < 60 * 24) {
     return [
       t("Updated"),
@@ -60,4 +57,4 @@ export function CalculateDuration(date: Date, t: TFunction): string {
   } else {
     return [t("Updated"), t("OverThreeYears"), t("Ago")].join(" ");
   }
-};
+}

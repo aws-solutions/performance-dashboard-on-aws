@@ -7,6 +7,7 @@ exports[`renders an empty box 1`] = `
     class="padding-top-2 padding-bottom-2"
     data-rbd-droppable-context-id="0"
     data-rbd-droppable-id="widget-tree"
+    role="list"
   >
     <hr
       class="margin-top-2 border-base-lightest"
@@ -25,6 +26,7 @@ exports[`renders an empty box 1`] = `
           class="margin-top-1 "
           data-rbd-draggable-context-id="0"
           data-rbd-draggable-id="123"
+          role="listitem"
         >
           <div
             class="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-col "
@@ -176,6 +178,7 @@ exports[`renders an empty box 1`] = `
           class="margin-top-1 "
           data-rbd-draggable-context-id="0"
           data-rbd-draggable-id="456"
+          role="listitem"
         >
           <div
             class="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-col "

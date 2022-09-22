@@ -494,10 +494,14 @@ exports[`renders the VisualizeChart component 1`] = `
             </p>
           </div>
           <div
-            class="recharts-responsive-container"
-            id="title"
-            style="width: 100%; height: 300px;"
-          />
+            aria-hidden="true"
+          >
+            <div
+              class="recharts-responsive-container"
+              id="title"
+              style="width: 100%; height: 300px;"
+            />
+          </div>
           <div>
             <div
               class="text-right margin-right-05"
@@ -1030,10 +1034,14 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             </p>
           </div>
           <div
-            class="recharts-responsive-container"
-            id="title"
-            style="width: 100%; height: 300px;"
-          />
+            aria-hidden="true"
+          >
+            <div
+              class="recharts-responsive-container"
+              id="title"
+              style="width: 100%; height: 300px;"
+            />
+          </div>
           <div>
             <div
               class="text-right margin-right-05"

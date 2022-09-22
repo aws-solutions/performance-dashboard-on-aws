@@ -13,6 +13,49 @@ exports[`renders the markdown syntax component 1`] = `
   <h2
     class="margin-top-5"
   >
+    Heading
+  </h2>
+  <p>
+    To create headings, add the number sign from one (#) up to six (######) ocurrences and space in front of the line.
+  </p>
+  <table
+    class="usa-table usa-table--borderless"
+    width="100%"
+  >
+    <thead>
+      <tr>
+        <th
+          style="width: 50%;"
+        >
+          Markdown
+        </th>
+        <th
+          style="width: 50%;"
+        >
+          Rendered output
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          ### I love heading text
+        </td>
+        <td>
+          <div
+            class="Markdown undefined"
+          >
+            <h3>
+              I love heading text
+            </h3>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h2
+    class="margin-top-5"
+  >
     Bold
   </h2>
   <p>

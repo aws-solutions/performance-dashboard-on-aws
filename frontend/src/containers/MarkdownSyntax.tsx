@@ -10,6 +10,27 @@ const MarkdownSyntax = () => {
       <h1>{t("MarkdownSyntax.Label")}</h1>
       <p className="font-sans-lg">{t("MarkdownSyntax.Description")}</p>
 
+      <h2 className="margin-top-5">{t("MarkdownSyntax.Heading")}</h2>
+      <p>{t("MarkdownSyntax.HeadingDescription")}</p>
+      <table className="usa-table usa-table--borderless" width="100%">
+        <thead>
+          <tr>
+            <th style={{ width: "50%" }}>{t("MarkdownSyntax.Markdown")}</th>
+            <th style={{ width: "50%" }}>
+              {t("MarkdownSyntax.RenderedOutput")}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{t("MarkdownSyntax.ILoveHeadingText")}</td>
+            <td>
+              <MarkdownRender source={t("MarkdownSyntax.ILoveHeadingText")} />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
       <h2 className="margin-top-5">{t("MarkdownSyntax.Bold")}</h2>
       <p>{t("MarkdownSyntax.BoldDescription")}</p>
       <table className="usa-table usa-table--borderless" width="100%">

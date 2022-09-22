@@ -143,7 +143,7 @@ function EditFavicon() {
             </form>
           </div>
           <div className="grid-col-5">
-            <h4 className="margin-top-4">{t("SettingsFaviconPreview")}</h4>
+            <h2 className="margin-top-4">{t("SettingsFaviconPreview")}</h2>
             <div className="grid-row">
               <div className="logo">
                 {currentFavicon && (

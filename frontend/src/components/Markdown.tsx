@@ -44,9 +44,11 @@ const Markdown = (props: MarkdownProps) => {
         <Link target="_blank" to={"/admin/markdown"}>
           {t("AddTextScreen.ViewMarkdownSyntax")}
           <FontAwesomeIcon
-            className="margin-left-05"
             icon={faExternalLinkAlt}
+            className="margin-left-05"
             size="xs"
+            aria-label={t("ARIA.OpenInNewTab")}
+            aria-hidden={false}
           />
         </Link>
       </span>

@@ -397,7 +397,8 @@ exports[`renders the VisualizeChart component 1`] = `
                   View Markdown Syntax
                 </span>
                 <svg
-                  aria-hidden="true"
+                  aria-hidden="false"
+                  aria-label="(opens in a new tab)"
                   class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
                   data-icon="external-link-alt"
                   data-prefix="fas"
@@ -493,10 +494,14 @@ exports[`renders the VisualizeChart component 1`] = `
             </p>
           </div>
           <div
-            class="recharts-responsive-container"
-            id="title"
-            style="width: 100%; height: 300px;"
-          />
+            aria-hidden="true"
+          >
+            <div
+              class="recharts-responsive-container"
+              id="title"
+              style="width: 100%; height: 300px;"
+            />
+          </div>
           <div>
             <div
               class="text-right margin-right-05"
@@ -932,7 +937,8 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
                   View Markdown Syntax
                 </span>
                 <svg
-                  aria-hidden="true"
+                  aria-hidden="false"
+                  aria-label="(opens in a new tab)"
                   class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
                   data-icon="external-link-alt"
                   data-prefix="fas"
@@ -1028,10 +1034,14 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             </p>
           </div>
           <div
-            class="recharts-responsive-container"
-            id="title"
-            style="width: 100%; height: 300px;"
-          />
+            aria-hidden="true"
+          >
+            <div
+              class="recharts-responsive-container"
+              id="title"
+              style="width: 100%; height: 300px;"
+            />
+          </div>
           <div>
             <div
               class="text-right margin-right-05"

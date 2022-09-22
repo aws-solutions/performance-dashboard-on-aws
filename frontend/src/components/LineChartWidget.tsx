@@ -134,94 +134,98 @@ const LineChartWidget = (props: Props) => {
         />
       )}
       {data && data.length && (
-        <ResponsiveContainer
-          id={props.title}
-          width={
-            props.horizontalScroll ? `${Math.max(widthPercent, 100)}%` : "100%"
-          }
-          height={300}
-          data-testid="chartContainer"
-        >
-          <LineChart
-            className="line-chart"
-            data={props.data}
-            margin={{ right: 0, left: yAxisMargin }}
-            ref={(el: CategoricalChartWrapper) => {
-              chartRef.current = el;
-              setChartLoaded(!!el);
-            }}
+        <div aria-hidden="true">
+          <ResponsiveContainer
+            id={props.title}
+            width={
+              props.horizontalScroll
+                ? `${Math.max(widthPercent, 100)}%`
+                : "100%"
+            }
+            height={300}
+            data-testid="chartContainer"
           >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey={props.lines.length ? props.lines[0] : ""}
-              type={xAxisType()}
-              padding={{ left: padding, right: padding }}
-              domain={["dataMin", "dataMax"]}
-              interval={props.horizontalScroll ? 0 : "preserveStartEnd"}
-              scale={xAxisType() === "number" ? "linear" : "auto"}
-            />
-            <YAxis
-              type="number"
-              tickFormatter={(tick: any) => {
-                return TickFormatter.format(
-                  Number(tick),
-                  yAxisLargestValue,
-                  props.significantDigitLabels,
-                  "",
-                  ""
-                );
+            <LineChart
+              className="line-chart"
+              data={props.data}
+              margin={{ right: 0, left: yAxisMargin }}
+              ref={(el: CategoricalChartWrapper) => {
+                chartRef.current = el;
+                setChartLoaded(!!el);
               }}
-            />
-
-            <Tooltip
-              itemStyle={{ color: "#1b1b1b" }}
-              isAnimationActive={false}
-              formatter={(value: Number | String, name: string) => {
-                // Check if there is metadata for this column
-                let columnMetadata;
-                if (props.columnsMetadata) {
-                  columnMetadata = props.columnsMetadata.find(
-                    (cm) => cm.columnName === name
+            >
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey={props.lines.length ? props.lines[0] : ""}
+                type={xAxisType()}
+                padding={{ left: padding, right: padding }}
+                domain={["dataMin", "dataMax"]}
+                interval={props.horizontalScroll ? 0 : "preserveStartEnd"}
+                scale={xAxisType() === "number" ? "linear" : "auto"}
+              />
+              <YAxis
+                type="number"
+                tickFormatter={(tick: any) => {
+                  return TickFormatter.format(
+                    Number(tick),
+                    yAxisLargestValue,
+                    props.significantDigitLabels,
+                    "",
+                    ""
                   );
-                }
+                }}
+              />
 
-                return TickFormatter.format(
-                  Number(value),
-                  yAxisLargestValue,
-                  props.significantDigitLabels,
-                  "",
-                  "",
-                  columnMetadata
-                );
-              }}
-            />
-            <Legend
-              verticalAlign="top"
-              onClick={toggleLines}
-              iconType="plainline"
-              onMouseLeave={() => setLinesHover(null)}
-              onMouseEnter={(e: any) => setLinesHover(e.dataKey)}
-              formatter={RenderLegendText}
-            />
-            {props.lines.length &&
-              props.lines.slice(1).map((line, index) => {
-                return (
-                  <Line
-                    dataKey={line}
-                    type="monotone"
-                    stroke={colors[index]}
-                    key={index}
-                    strokeWidth={2}
-                    dot={{ strokeDasharray: "1 0" }}
-                    strokeDasharray={`${index * 5} ${index * 5}`}
-                    strokeOpacity={getOpacity(line)}
-                    hide={hiddenLines.includes(line)}
-                    isAnimationActive={false}
-                  />
-                );
-              })}
-          </LineChart>
-        </ResponsiveContainer>
+              <Tooltip
+                itemStyle={{ color: "#1b1b1b" }}
+                isAnimationActive={false}
+                formatter={(value: Number | String, name: string) => {
+                  // Check if there is metadata for this column
+                  let columnMetadata;
+                  if (props.columnsMetadata) {
+                    columnMetadata = props.columnsMetadata.find(
+                      (cm) => cm.columnName === name
+                    );
+                  }
+
+                  return TickFormatter.format(
+                    Number(value),
+                    yAxisLargestValue,
+                    props.significantDigitLabels,
+                    "",
+                    "",
+                    columnMetadata
+                  );
+                }}
+              />
+              <Legend
+                verticalAlign="top"
+                onClick={toggleLines}
+                iconType="plainline"
+                onMouseLeave={() => setLinesHover(null)}
+                onMouseEnter={(e: any) => setLinesHover(e.dataKey)}
+                formatter={RenderLegendText}
+              />
+              {props.lines.length &&
+                props.lines.slice(1).map((line, index) => {
+                  return (
+                    <Line
+                      dataKey={line}
+                      type="monotone"
+                      stroke={colors[index]}
+                      key={index}
+                      strokeWidth={2}
+                      dot={{ strokeDasharray: "1 0" }}
+                      strokeDasharray={`${index * 5} ${index * 5}`}
+                      strokeOpacity={getOpacity(line)}
+                      hide={hiddenLines.includes(line)}
+                      isAnimationActive={false}
+                    />
+                  );
+                })}
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       )}
       <div>
         <DataTable

@@ -17,8 +17,11 @@ import MarkdownRender from "../components/MarkdownRender";
 import CardGroup from "../components/CardGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { CalculateDuration } from "../hooks/datetime-hooks";
-import "./Home.css";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import "./Home.scss";
+
+dayjs.extend(LocalizedFormat);
 
 function Home() {
   const { homepage, loading } = usePublicHomepage();
@@ -113,10 +116,9 @@ function Home() {
                                 <CardBody>
                                   <p>
                                     <i>
-                                      {CalculateDuration(
-                                        dashboard.updatedAt,
-                                        t
-                                      )}
+                                      {t("Updated") +
+                                        " " +
+                                        dayjs(dashboard.updatedAt).fromNow()}
                                     </i>
                                     <br />
                                   </p>

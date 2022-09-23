@@ -15,9 +15,13 @@ import {
 import Spinner from "../components/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import "./Home.css";
 import MarkdownRender from "../components/MarkdownRender";
-import { CalculateDuration } from "../hooks/datetime-hooks";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import "./Home.scss";
+import "../styles/base.scss";
+
+dayjs.extend(LocalizedFormat);
 
 function HomeWithSearch() {
   const params = new URLSearchParams(window.location.search);
@@ -79,7 +83,7 @@ function HomeWithSearch() {
       </div>
 
       <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8 padding-y-3 usa-prose">
+        <div className="grid-col-12 padding-y-3 usa-prose">
           <Search
             id="search"
             onSubmit={onSearch}
@@ -95,7 +99,7 @@ function HomeWithSearch() {
         </div>
       </div>
 
-      <div className="grid-row divborder">
+      <div className="grid-row border">
         <div className="grid-col-12 tablet:grid-col-12 usa-prose margin-left-2 margin-right-2">
           <div className="border-bottom border-base-light padding-2">
             <p className="font-sans-xl line-height-sans-2 margin-top-1">
@@ -114,7 +118,7 @@ function HomeWithSearch() {
                       key={dashboard.id}
                       className="border-bottom border-base-light padding-2 margin-top-1"
                     >
-                      <span className="divbackground">{topicarea.name}</span>
+                      <span className="bg-info-light">{topicarea.name}</span>
                       <div className="grid-row margin-bottom-1">
                         <div className="grid-col-11 text-bold margin-top-1">
                           <Link to={getDashboardLink(dashboard)}>
@@ -131,7 +135,9 @@ function HomeWithSearch() {
                         </div>
                       </div>
                       <span className="text-base text-italic">
-                        {CalculateDuration(dashboard.updatedAt, t)}
+                        {t("Updated") +
+                          " " +
+                          dayjs(dashboard.updatedAt).fromNow()}
                         <br />
                       </span>
                       {dashboard.queryMatches?.map((queryMatch) => {

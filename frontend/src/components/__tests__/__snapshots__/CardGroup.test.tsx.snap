@@ -7,6 +7,7 @@ exports[`renders a card group with 1 card 1`] = `
   >
     <li
       class="usa-card cursor-default tablet:grid-col-12"
+      id="Hello World-card"
     >
       <div
         class="usa-card__container"
@@ -43,6 +44,7 @@ exports[`renders a card group with multiple cards 1`] = `
   >
     <li
       class="usa-card cursor-default tablet:grid-col-4"
+      id="Hello World-card"
     >
       <div
         class="usa-card__container"
@@ -70,6 +72,7 @@ exports[`renders a card group with multiple cards 1`] = `
     </li>
     <li
       class="usa-card cursor-default tablet:grid-col-4"
+      id="Hola Mundo-card"
     >
       <div
         class="usa-card__container"
@@ -97,6 +100,7 @@ exports[`renders a card group with multiple cards 1`] = `
     </li>
     <li
       class="usa-card cursor-default tablet:grid-col-4"
+      id="Bonjour le monde-card"
     >
       <div
         class="usa-card__container"
@@ -133,6 +137,7 @@ exports[`renders a card without footer 1`] = `
   >
     <li
       class="usa-card cursor-default tablet:grid-col-4"
+      id="Hello World-card"
     >
       <div
         class="usa-card__container"

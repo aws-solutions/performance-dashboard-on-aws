@@ -6,16 +6,29 @@ import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
-import { PublicDashboard, LocationState } from "../models";
+import {
+  PublicDashboard,
+  LocationState,
+  PublicTopicArea,
+  Dashboard,
+} from "../models";
 import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
-import "./Home.css";
+import CardGroup from "../components/CardGroup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import "./Home.scss";
+
+dayjs.extend(LocalizedFormat);
 
 function Home() {
   const { homepage, loading } = usePublicHomepage();
   const { t } = useTranslation();
   const dateFormatter = useDateTimeFormatter();
   const history = useHistory<LocationState>();
+  const { Card, CardFooter, CardBody } = CardGroup;
 
   const onSearch = (query: string) => {
     history.push("/public/search?q=" + query);
@@ -26,6 +39,21 @@ function Home() {
   };
 
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
+
+  // Sort topic areas and their dashboards in ascending alphabetical order.
+  topicareas.sort((a: PublicTopicArea, b: PublicTopicArea) =>
+    a.name.localeCompare(b.name)
+  );
+  for (let topicArea of topicareas) {
+    topicArea.dashboards?.sort((a: PublicDashboard, b: PublicDashboard) =>
+      a.name.localeCompare(b.name)
+    );
+  }
+
+  const getDashboardLink = (dashboard: PublicDashboard | Dashboard): string => {
+    const link = dashboard.friendlyURL ? dashboard.friendlyURL : dashboard.id;
+    return link;
+  };
 
   return loading ? (
     <Spinner
@@ -50,7 +78,7 @@ function Home() {
         </div>
       </div>
       <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8 padding-y-3 usa-prose">
+        <div className="grid-col-12 padding-y-3 usa-prose">
           <Search
             id="search"
             onSubmit={onSearch}
@@ -58,11 +86,12 @@ function Home() {
             onClear={onClear}
             query=""
             results={homepage.dashboards.length}
+            wide
           />
         </div>
       </div>
       <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8 usa-prose">
+        <div className="grid-col-12 usa-prose">
           <Accordion>
             {topicareas.map((topicarea) => (
               <Accordion.Item
@@ -73,30 +102,44 @@ function Home() {
                 }
                 hidden={true}
               >
-                {topicarea.dashboards?.map((dashboard) => {
-                  const updatedAt = dateFormatter(dashboard.updatedAt);
-                  return (
-                    <li key={dashboard.id} style={{ listStyleType: "none" }}>
-                      <div
-                        key={dashboard.id}
-                        className="border-bottom border-base-light padding-2"
-                      >
-                        {dashboard.friendlyURL ? (
-                          <Link to={`/${dashboard.friendlyURL}`}>
-                            {dashboard.name}
-                          </Link>
-                        ) : (
-                          // If dashboard doesn't have a friendlyURL, use the dashboardId.
-                          <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
-                        )}
-                        <br />
-                        <span className="text-base text-italic">
-                          {t("LastUpdatedLabel")} {updatedAt}
-                        </span>
-                      </div>
-                    </li>
-                  );
-                })}
+                <div className="cards">
+                  <ul>
+                    {topicarea.dashboards
+                      ? topicarea.dashboards.map((dashboard) => {
+                          return (
+                            <>
+                              <Card
+                                title={dashboard.name}
+                                link={getDashboardLink(dashboard)}
+                                col={4}
+                              >
+                                <CardBody>
+                                  <p>
+                                    <i>
+                                      {t("Updated") +
+                                        " " +
+                                        dayjs(dashboard.updatedAt).fromNow()}
+                                    </i>
+                                    <br />
+                                  </p>
+                                </CardBody>
+                                <CardFooter>
+                                  <p key={dashboard.id}>
+                                    <Link to={getDashboardLink(dashboard)}>
+                                      <FontAwesomeIcon
+                                        icon={faArrowRight}
+                                        className="margin-right-1"
+                                      />
+                                    </Link>
+                                  </p>
+                                </CardFooter>
+                              </Card>
+                            </>
+                          );
+                        })
+                      : ""}
+                  </ul>
+                </div>
               </Accordion.Item>
             ))}
           </Accordion>

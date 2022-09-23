@@ -5,11 +5,23 @@ import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
-import { PublicHomepage, LocationState } from "../models";
+import {
+  PublicHomepage,
+  LocationState,
+  PublicTopicArea,
+  PublicDashboard,
+  Dashboard,
+} from "../models";
 import Spinner from "../components/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import "./Home.css";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import MarkdownRender from "../components/MarkdownRender";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import "./Home.scss";
+import "../styles/base.scss";
+
+dayjs.extend(LocalizedFormat);
 
 function HomeWithSearch() {
   const params = new URLSearchParams(window.location.search);
@@ -21,12 +33,27 @@ function HomeWithSearch() {
 
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
 
+  // Sort topic areas and their dashboards in ascending alphabetical order.
+  topicareas.sort((a: PublicTopicArea, b: PublicTopicArea) =>
+    a.name.localeCompare(b.name)
+  );
+  for (let topicArea of topicareas) {
+    topicArea.dashboards?.sort((a: PublicDashboard, b: PublicDashboard) =>
+      a.name.localeCompare(b.name)
+    );
+  }
+
   const onSearch = (query: string) => {
     history.push("/public/search?q=" + query);
   };
 
   const onClear = () => {
     history.push("/");
+  };
+
+  const getDashboardLink = (dashboard: PublicDashboard | Dashboard): string => {
+    const link = dashboard.friendlyURL ? dashboard.friendlyURL : dashboard.id;
+    return "/" + link;
   };
 
   return loading ? (
@@ -46,12 +73,17 @@ function HomeWithSearch() {
       <div className="grid-row">
         <div className="grid-col-12 tablet:grid-col-8">
           <h1 className="font-sans-3xl line-height-sans-2 margin-top-2">
-            {t("Search.SearchResults")}
+            {homepage.title}
           </h1>
+          <MarkdownRender
+            className="font-sans-lg usa-prose"
+            source={homepage.description}
+          />
         </div>
       </div>
+
       <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8 padding-y-3 usa-prose">
+        <div className="grid-col-12 padding-y-3 usa-prose">
           <Search
             id="search"
             onSubmit={onSearch}
@@ -60,61 +92,72 @@ function HomeWithSearch() {
             query=""
             results={homepage.dashboards.length}
             lastQuery={query ? query : undefined}
+            wide
           />
-          {homepage.dashboards.length} dashboard(s) contain "{query}". &ensp;
           {query === "" ? t("Search.EnterSearchTerm") + "." : ""}
           <br />
         </div>
       </div>
-      <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8 usa-prose">
-          <Accordion>
-            {topicareas.map((topicarea) => (
-              <Accordion.Item
-                id={topicarea.id}
-                key={topicarea.id}
-                title={topicarea.name}
-              >
-                {topicarea.dashboards?.map((dashboard) => {
-                  const updatedAt = dateFormatter(dashboard.updatedAt);
-                  return (
-                    <li key={dashboard.id} style={{ listStyleType: "none" }}>
-                      <div
-                        key={dashboard.id}
-                        className="border-bottom border-base-light padding-2"
-                      >
-                        {dashboard.friendlyURL ? (
-                          <Link to={`/${dashboard.friendlyURL}`}>
-                            {dashboard.name}
+
+      <div className="grid-row border">
+        <div className="grid-col-12 tablet:grid-col-12 usa-prose margin-left-2 margin-right-2">
+          <div className="border-bottom border-base-light padding-2">
+            <p className="font-sans-xl line-height-sans-2 margin-top-1">
+              <b>{t("Search.SearchResults")}</b>
+            </p>
+            {homepage.dashboards.length} dashboard(s) contain "{query}" &ensp;
+          </div>
+
+          {topicareas.map((topicarea) => (
+            <div id={topicarea.id} key={topicarea.id} title={topicarea.name}>
+              {topicarea.dashboards?.map((dashboard) => {
+                const updatedAt = dateFormatter(dashboard.updatedAt);
+                return (
+                  <li key={dashboard.id} style={{ listStyleType: "none" }}>
+                    <div
+                      key={dashboard.id}
+                      className="border-bottom border-base-light padding-2 margin-top-1"
+                    >
+                      <span className="bg-info-light">{topicarea.name}</span>
+                      <div className="grid-row margin-bottom-1">
+                        <div className="grid-col-11 text-bold margin-top-1">
+                          <Link to={getDashboardLink(dashboard)}>
+                            <b>{dashboard.name}</b>
                           </Link>
-                        ) : (
-                          // If dashboard doesn't have a friendlyURL, use the dashboardId.
-                          <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
-                        )}
-                        <br />
-                        <span className="text-base text-italic">
-                          {t("LastUpdatedLabel")} {updatedAt}
-                          <br />
-                        </span>
-                        {dashboard.queryMatches?.map((queryMatch) => {
-                          return (
-                            <p
-                              key={queryMatch}
-                              className="text-base margin-left-2 margin-right-2"
-                            >
-                              {" "}
-                              ... {queryMatch} ...
-                              <br />
-                            </p>
-                          );
-                        })}
+                        </div>
+                        <div className="grid-col-1">
+                          <Link to={getDashboardLink(dashboard)}>
+                            <FontAwesomeIcon
+                              icon={faArrowRight}
+                              className="margin-right-1"
+                            />
+                          </Link>
+                        </div>
                       </div>
-                    </li>
-                  );
-                })}
-              </Accordion.Item>
-            ))}
-          </Accordion>
+                      <span className="text-base text-italic">
+                        {t("Updated") +
+                          " " +
+                          dayjs(dashboard.updatedAt).fromNow()}
+                        <br />
+                      </span>
+                      {dashboard.queryMatches?.map((queryMatch) => {
+                        return (
+                          <p
+                            key={queryMatch}
+                            className="text-base margin-left-2 margin-right-2"
+                          >
+                            {" "}
+                            ... {queryMatch} ...
+                            <br />
+                          </p>
+                        );
+                      })}
+                    </div>
+                  </li>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </div>
     </div>

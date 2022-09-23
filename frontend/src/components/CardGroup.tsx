@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface CardGroupProps {
   children: React.ReactNode;
@@ -20,14 +21,25 @@ interface CardProps {
   title: string;
   col: number;
   children: React.ReactNode;
+  link?: string;
 }
 
 function Card(props: CardProps) {
   return (
-    <li className={`usa-card cursor-default tablet:grid-col-${props.col}`}>
+    <li
+      key={`${props.title}-card`}
+      id={`${props.title}-card`}
+      className={`usa-card cursor-default tablet:grid-col-${props.col}`}
+    >
       <div className="usa-card__container">
         <header className="usa-card__header">
-          <h2 className="usa-card__heading font-family-sans">{props.title}</h2>
+          <h2 className="usa-card__heading font-family-sans">
+            {props.link ? (
+              <Link to={props.link}>{props.title}</Link>
+            ) : (
+              props.title
+            )}
+          </h2>
         </header>
         {React.Children.map(props.children, (child) => {
           if ((child as React.ReactElement).type === CardBody) {

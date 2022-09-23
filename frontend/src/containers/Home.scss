@@ -1,0 +1,14 @@
+.usa-search__submit-text {
+  vertical-align: text-top !important;
+}
+
+.cards ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+}
+
+.cards ul li {
+  list-style: none;
+  flex: 0 0 33.333333%;
+}

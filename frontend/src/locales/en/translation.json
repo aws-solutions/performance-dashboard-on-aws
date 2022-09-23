@@ -880,9 +880,6 @@
   "MarkdownSyntax": {
     "Label": "Markdown Syntax",
     "Description": "Supported Markdown is limited to bold, hyperlinks and single-level unordered lists. All other text and markdown will be rendered as plain text.",
-    "Heading": "Heading",
-    "HeadingDescription": "To create headings, add the number sign from one (#) up to six (######) ocurrences and space in front of the line.",
-    "ILoveHeadingText": "### I love heading text",
     "Bold": "Bold",
     "BoldDescription": "To bold text, add two asterisks or underscores before and after a word or phrase. To bold the middle of a word for emphasis, add two asterisks without spaces around the letters.",
     "Markdown": "Markdown",
@@ -1031,7 +1028,7 @@
   "SortTopicAreaName": "Sort by topic area name",
   "DeleteTopicArea": "Delete {{name}} topic area?",
   "ConfirmDeleteTopicArea": "Are you sure you want to delete this topic area?",
-  "OnlyEmptyTopicAreasCanBeDeleted": "You can only delete topic areas without dashboards.",
+  "TopicAreaListingDescription": "These are all of the topic areas. You can add, edit and delete it, but you can only delete topic areas without dashboards.",
   "CloseMenu": "Close Menu",
   "ARIA": {
     "Header": "Header",
@@ -1061,7 +1058,10 @@
     "MoveUp": "Move {{metric}} up",
     "MoveDown": "Move {{metric}} down",
     "PreviewDashboard": "Preview dashboard",
-    "DataTableActions": "Data table actions"
+    "DataTableActions": "Data table actions",
+    "TopicAreaListingActions": "Topic area listing actions",
+    "TopicAreaListingDelete": "Delete topic area",
+    "TopicAreaListingEdit": "Edit topic area"
   },
   "percentage": "{{pct}}%",
   "Search": {

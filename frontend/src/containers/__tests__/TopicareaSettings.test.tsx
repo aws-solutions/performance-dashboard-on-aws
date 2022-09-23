@@ -1,5 +1,11 @@
 import React from "react";
-import { render, fireEvent, act, getByText } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  act,
+  getByText,
+  screen,
+} from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import TopicareaSettings from "../TopicareaSettings";
 
@@ -57,13 +63,12 @@ test("render single topic area name header", async () => {
   expect(getByText("Single topic area name")).toBeInTheDocument();
 });
 
-test("renders two edit buttons, one for the topci area label, another for the topic areas", async () => {
+test("renders an edit button for the topci area label", async () => {
   const { getAllByRole } = render(<TopicareaSettings />, {
     wrapper: MemoryRouter,
   });
   const button = getAllByRole("button", { name: "Edit" });
   expect(button[0]).toBeInTheDocument();
-  expect(button[1]).toBeInTheDocument();
 });
 
 test("render multiple topic areas name header", async () => {
@@ -73,12 +78,11 @@ test("render multiple topic areas name header", async () => {
   expect(getByText("Multiple topic areas name")).toBeInTheDocument();
 });
 
-test("renders a button to delete", async () => {
+test("renders the dropdown menu", async () => {
   const { getByRole } = render(<TopicareaSettings />, {
     wrapper: MemoryRouter,
   });
-  const button = getByRole("button", { name: "Delete" });
-  expect(button).toBeInTheDocument();
+  expect(screen.getByText("Actions")).toBeInTheDocument();
 });
 
 test("renders a button to create topic area", async () => {

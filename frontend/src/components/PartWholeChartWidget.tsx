@@ -165,80 +165,82 @@ const PartWholeChartWidget = (props: Props) => {
         />
       )}
       {partWholeData.current.length && (
-        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
-          <BarChart
-            className="part-to-whole-chart"
-            data={partWholeData.current}
-            layout="vertical"
-            margin={{ right: -50, left: -50 }}
-            barSize={100}
-          >
-            <CartesianGrid horizontal={false} vertical={false} />
-            <XAxis
-              tickLine={false}
-              domain={[0, "dataMax"]}
-              ticks={[0, total.current]}
-              axisLine={false}
-              interval="preserveStartEnd"
-              type="number"
-              padding={{ left: 2, right: 2 }}
-              tickFormatter={(tick: any) =>
-                TickFormatter.format(
-                  Number(tick),
-                  xAxisLargestValue,
-                  props.significantDigitLabels,
-                  "",
-                  ""
-                )
-              }
-            />
-            <YAxis
-              orientation="left"
-              yAxisId="left"
-              tick={false}
-              tickLine={false}
-              type="category"
-              padding={{ top: 40 }}
-            />
-            <YAxis
-              yAxisId="right"
-              orientation="right"
-              tick={false}
-              tickLine={false}
-              type="category"
-              padding={{ top: 40 }}
-            />
-            <Legend
-              verticalAlign="top"
-              formatter={renderLegendText}
-              iconSize={24}
-              wrapperStyle={{
-                top: 0,
-                right: 0,
-                width: "100%",
-              }}
-              onClick={toggleParts}
-              onMouseLeave={() => setPartsHover(null)}
-              onMouseEnter={(e: any) => setPartsHover(e.dataKey)}
-            />
-            {partWholeParts.current.map((part, index) => {
-              return (
-                <Bar
-                  yAxisId="left"
-                  stackId={"a"}
-                  dataKey={part}
-                  key={index}
-                  fill={colors[index]}
-                  fillOpacity={getOpacity(part)}
-                  stroke="white"
-                  strokeWidth={2}
-                  hide={hiddenParts.includes(part)}
-                  isAnimationActive={false}
-                />
-              );
-            })}
-          </BarChart>
-        </ResponsiveContainer>
+        <div aria-hidden="true">
+          <ResponsiveContainer width="100%" height={calculateChartHeight()}>
+            <BarChart
+              className="part-to-whole-chart"
+              data={partWholeData.current}
+              layout="vertical"
+              margin={{ right: -50, left: -50 }}
+              barSize={100}
+            >
+              <CartesianGrid horizontal={false} vertical={false} />
+              <XAxis
+                tickLine={false}
+                domain={[0, "dataMax"]}
+                ticks={[0, total.current]}
+                axisLine={false}
+                interval="preserveStartEnd"
+                type="number"
+                padding={{ left: 2, right: 2 }}
+                tickFormatter={(tick: any) =>
+                  TickFormatter.format(
+                    Number(tick),
+                    xAxisLargestValue,
+                    props.significantDigitLabels,
+                    "",
+                    ""
+                  )
+                }
+              />
+              <YAxis
+                orientation="left"
+                yAxisId="left"
+                tick={false}
+                tickLine={false}
+                type="category"
+                padding={{ top: 40 }}
+              />
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                tick={false}
+                tickLine={false}
+                type="category"
+                padding={{ top: 40 }}
+              />
+              <Legend
+                verticalAlign="top"
+                formatter={renderLegendText}
+                iconSize={24}
+                wrapperStyle={{
+                  top: 0,
+                  right: 0,
+                  width: "100%",
+                }}
+                onClick={toggleParts}
+                onMouseLeave={() => setPartsHover(null)}
+                onMouseEnter={(e: any) => setPartsHover(e.dataKey)}
+              />
+              {partWholeParts.current.map((part, index) => {
+                return (
+                  <Bar
+                    yAxisId="left"
+                    stackId={"a"}
+                    dataKey={part}
+                    key={index}
+                    fill={colors[index]}
+                    fillOpacity={getOpacity(part)}
+                    stroke="white"
+                    strokeWidth={2}
+                    hide={hiddenParts.includes(part)}
+                    isAnimationActive={false}
+                  />
+                );
+              })}
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       )}
       <div>
         <DataTable

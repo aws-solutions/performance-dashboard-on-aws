@@ -166,7 +166,7 @@ function AdminLayout(props: LayoutProps) {
           </nav>
         </div>
       </Header>
-      <main className="padding-y-3" aria-label={t("ARIA.Main")}>
+      <main className="padding-y-3">
         <div id="main" tabIndex={-1}></div>
         {(!hasRole || isPublic) && <Redirect to="/403/access-denied" />}
         <div className="grid-container">{props.children}</div>

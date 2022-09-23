@@ -170,7 +170,8 @@ exports[`published site settings should match snapshot 1`] = `
                 View published site
               </span>
               <svg
-                aria-hidden="true"
+                aria-hidden="false"
+                aria-label="(opens in a new tab)"
                 class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
                 data-icon="external-link-alt"
                 data-prefix="fas"

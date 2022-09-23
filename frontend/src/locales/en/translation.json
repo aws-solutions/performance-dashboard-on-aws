@@ -880,6 +880,9 @@
   "MarkdownSyntax": {
     "Label": "Markdown Syntax",
     "Description": "Supported Markdown is limited to bold, hyperlinks and single-level unordered lists. All other text and markdown will be rendered as plain text.",
+    "Heading": "Heading",
+    "HeadingDescription": "To create headings, add the number sign from one (#) up to six (######) ocurrences and space in front of the line.",
+    "ILoveHeadingText": "### I love heading text",
     "Bold": "Bold",
     "BoldDescription": "To bold text, add two asterisks or underscores before and after a word or phrase. To bold the middle of a word for emphasis, add two asterisks without spaces around the letters.",
     "Markdown": "Markdown",
@@ -1032,9 +1035,7 @@
   "CloseMenu": "Close Menu",
   "ARIA": {
     "Header": "Header",
-    "Main": "Main",
     "Logo": "Logo",
-    "Footer": "Footer",
     "OpenInNewTab": "(opens in a new tab)",
     "DraftDashboardActions": "Draft dashboard actions",
     "ViewDraftHistory": "View draft dashboard's history",

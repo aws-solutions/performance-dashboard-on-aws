@@ -101,12 +101,14 @@ function SectionWidget(props: Props) {
                   fireOnRapidScroll={false}
                 >
                   <div className="margin-top-4 usa-prose" id={id}>
+                    <h3 className="margin-bottom-1">{widget.content.title}</h3>
                     <WidgetRender
                       widget={widget}
                       showMobilePreview={props.showMobilePreview}
                       bottomOffset={props.bottomOffset}
                       topOffset={props.topOffset}
                       disableShare={true}
+                      hideTitle={true}
                     />
                   </div>
                 </Waypoint>

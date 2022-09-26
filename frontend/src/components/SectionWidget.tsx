@@ -4,9 +4,8 @@ import { Widget } from "../models";
 import WidgetRender from "./WidgetRender";
 import Tabs from "./Tabs";
 import TabsVertical from "./TabsVertical";
-import { useWindowSize, useColors } from "../hooks";
+import { useWindowSize } from "../hooks";
 import { Waypoint } from "react-waypoint";
-import { useTranslation } from "react-i18next";
 
 interface Props {
   widget: Widget;
@@ -19,10 +18,8 @@ interface Props {
 }
 
 function SectionWidget(props: Props) {
-  const { t } = useTranslation();
   const { content, showTitle } = props.widget;
   const windowSize = useWindowSize();
-  const primaryColor = useColors(1)[0];
 
   let activeTabId = "0";
   if (props.widgets && props.defaultActive) {
@@ -126,8 +123,7 @@ function SectionWidget(props: Props) {
           <Tabs
             defaultActive={activeTabId}
             showArrows
-            activeColor={`${primaryColor}`}
-            container={t("Section")}
+            ariaLabel={content.title}
           >
             {content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
@@ -152,10 +148,7 @@ function SectionWidget(props: Props) {
         !props.showMobilePreview &&
         windowSize.width > 600 &&
         content.widgetIds && (
-          <TabsVertical
-            defaultActive={activeTabId}
-            activeColor={`${primaryColor}`}
-          >
+          <TabsVertical defaultActive={activeTabId} ariaLabel={content.title}>
             {content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {

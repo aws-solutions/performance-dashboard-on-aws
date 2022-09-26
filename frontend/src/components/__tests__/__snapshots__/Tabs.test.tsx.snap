@@ -18,10 +18,12 @@ exports[`Tabs tests renders the Tabs component 1`] = `
           data-key="tab1"
         >
           <div
-            aria-label="Active tab1test Tab Tab 1"
-            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md tab-active "
+            aria-controls="tab1-panel"
+            aria-label="Active Tab Tab 1"
+            aria-selected="true"
+            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-bottom-05 border-base-darker"
+            id="tab1-tab"
             role="tab"
-            style="cursor: pointer; white-space: nowrap;"
             tabindex="0"
           >
             Tab 1
@@ -38,10 +40,12 @@ exports[`Tabs tests renders the Tabs component 1`] = `
           data-key="tab2"
         >
           <div
-            aria-label="tab1test Tab Tab 2"
+            aria-controls="tab2-panel"
+            aria-label="Tab Tab 2"
+            aria-selected="false"
             class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+            id="tab2-tab"
             role="tab"
-            style="cursor: pointer; white-space: nowrap;"
             tabindex="0"
           >
             Tab 2
@@ -51,10 +55,15 @@ exports[`Tabs tests renders the Tabs component 1`] = `
     </div>
     <div
       class="tab-content"
+      id="tab1-panel"
       role="tabpanel"
     >
       Tab 1
     </div>
+    <div
+      id="tab2-panel"
+      role="tabpanel"
+    />
   </div>
 </div>
 `;
@@ -77,10 +86,12 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
           data-key="tab1"
         >
           <div
-            aria-label="tab2test Tab Tab 1"
+            aria-controls="tab1-panel"
+            aria-label="Tab Tab 1"
+            aria-selected="false"
             class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+            id="tab1-tab"
             role="tab"
-            style="cursor: pointer; white-space: nowrap;"
             tabindex="0"
           >
             Tab 1
@@ -97,10 +108,12 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
           data-key="tab2"
         >
           <div
-            aria-label="Active tab2test Tab Tab 2"
-            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md tab-active "
+            aria-controls="tab2-panel"
+            aria-label="Active Tab Tab 2"
+            aria-selected="true"
+            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-bottom-05 border-base-darker"
+            id="tab2-tab"
             role="tab"
-            style="cursor: pointer; white-space: nowrap;"
             tabindex="0"
           >
             Tab 2
@@ -109,7 +122,12 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
       </div>
     </div>
     <div
+      id="tab1-panel"
+      role="tabpanel"
+    />
+    <div
       class="tab-content"
+      id="tab2-panel"
       role="tabpanel"
     >
       Tab 2

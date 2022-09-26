@@ -6,9 +6,8 @@ import { LeftArrow, RightArrow } from "./Arrows";
 interface Props {
   children: React.ReactNode;
   defaultActive: string;
+  ariaLabel: string;
   showArrows?: boolean;
-  activeColor?: string;
-  container?: string;
 }
 
 type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
@@ -82,7 +81,12 @@ function Tabs(props: Props) {
   };
 
   return (
-    <div className="tabs" onKeyDown={onKeyDown} role="tablist">
+    <div
+      className="tabs"
+      onKeyDown={onKeyDown}
+      role="tablist"
+      aria-label={props.ariaLabel}
+    >
       <ScrollMenu
         LeftArrow={props.showArrows && LeftArrow}
         RightArrow={props.showArrows && RightArrow}
@@ -94,26 +98,28 @@ function Tabs(props: Props) {
           tabsMap.set(index, child.props.id);
           return (
             <Tab
-              aria-controls={child.props.id}
-              id={child.props.id}
               itemId={child.props.id}
               activeTab={activeTab}
               key={child.props.id}
               label={child.props.label}
               onClick={onClickTabItem}
               onEnter={onEnterTabItem}
-              activeColor={props.activeColor}
-              container={props.container}
             />
           );
         })}
       </ScrollMenu>
-      <div className="tab-content" role="tabpanel">
-        {React.Children.map(props.children, (child) => {
-          if ((child as any).props.id !== activeTab) return undefined;
-          return (child as any).props.children;
-        })}
-      </div>
+
+      {React.Children.map(props.children, (child) => {
+        const childId = (child as any).props.id;
+        if (childId !== activeTab) {
+          return <div id={`${childId}-panel`} role="tabpanel"></div>;
+        }
+        return (
+          <div id={`${childId}-panel`} className="tab-content" role="tabpanel">
+            {(child as any).props.children}
+          </div>
+        );
+      })}
     </div>
   );
 }

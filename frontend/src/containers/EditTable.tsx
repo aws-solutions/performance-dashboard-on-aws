@@ -467,14 +467,12 @@ function EditTable() {
         role="tablist"
         aria-labelledby={`editTableFormHeader_${suffix}`}
       >
-        <li
-          id={`editTableFormHeaderStep1_${suffix}`}
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 0}
-          aria-controls="panel1"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editTableFormHeaderStep1_${suffix}`}
+            role="tab"
+            aria-selected={step === 0}
+            aria-controls="panel1"
             className={`usa-button tabSelector ${
               step !== 0 ? "usa-button--outline" : ""
             }`}
@@ -485,14 +483,12 @@ function EditTable() {
             {t("EditTableScreen.ChooseData")}
           </button>
         </li>
-        <li
-          id={`editTableFormHeaderStep2_${suffix}`}
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 1}
-          aria-controls="panel2"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editTableFormHeaderStep2_${suffix}`}
+            role="tab"
+            aria-selected={step === 1}
+            aria-controls="panel2"
             className={`usa-button tabSelector ${
               step !== 1 ? "usa-button--outline" : ""
             }`}
@@ -504,14 +500,12 @@ function EditTable() {
             {t("EditTableScreen.CheckData")}
           </button>
         </li>
-        <li
-          id={`editTableFormHeaderStep3_${suffix}`}
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 2}
-          aria-controls="panel3"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editTableFormHeaderStep3_${suffix}`}
+            role="tab"
+            aria-selected={step === 2}
+            aria-controls="panel3"
             className={`usa-button tabSelector ${
               step !== 2 ? "usa-button--outline" : ""
             }`}

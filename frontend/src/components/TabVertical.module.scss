@@ -1,0 +1,11 @@
+@import "../styles/base.scss";
+
+.tab {
+  @include u-text("base", "!important");
+  cursor: pointer;
+  background-color: transparent !important;
+
+  &:hover {
+    @include u-text("base-dark", "!important");
+  }
+}

@@ -21,10 +21,7 @@ function TopicareaListing(props: Props) {
 
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
-  const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<TopicArea | undefined>(undefined);
-
-  const { settings } = useSettings();
 
   const { t } = useTranslation();
 
@@ -36,10 +33,6 @@ function TopicareaListing(props: Props) {
     if (selected) {
       history.push(`/admin/settings/topicarea/${selected.id}/edit`);
     }
-  };
-
-  const onSearch = (query: string) => {
-    setFilter(query);
   };
 
   const onSelect = (selectedTopicArea: Array<TopicArea>) => {
@@ -73,20 +66,6 @@ function TopicareaListing(props: Props) {
 
       await props.reloadTopicAreas();
     }
-  };
-
-  const filterTopicAreas = (topicAreas: Array<TopicArea>): Array<TopicArea> => {
-    return topicAreas.filter((topicarea) => {
-      const name = topicarea.name.toLowerCase().trim();
-      const dashboardCount = topicarea.dashboardCount.toString().trim();
-      const createdBy = topicarea.createdBy.toLowerCase().trim();
-      const query = filter.toLowerCase();
-      return (
-        name.includes(query) ||
-        dashboardCount.includes(query) ||
-        createdBy.includes(query)
-      );
-    });
   };
 
   const sortTopicareas = (topicAreas: Array<TopicArea>): Array<TopicArea> => {
@@ -146,7 +125,7 @@ function TopicareaListing(props: Props) {
         </div>
       </div>
       <TopicareasTable
-        topicAreas={sortTopicareas(filterTopicAreas(props.topicareas))}
+        topicAreas={sortTopicareas(props.topicareas)}
         onSelect={onSelect}
       />
     </>

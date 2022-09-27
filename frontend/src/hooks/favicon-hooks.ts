@@ -27,7 +27,7 @@ export function useFavicon(s3Key?: string): UseFaviconHook {
         setLoading(false);
       }
     }
-  }, [s3Key]);
+  }, [s3Key, t]);
 
   useEffect(() => {
     fetchData();

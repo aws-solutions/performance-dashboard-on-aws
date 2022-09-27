@@ -230,21 +230,17 @@ function EditDashboard() {
           </div>
           <div className="grid-col-6 padding-left-05">
             <span data-for="publish" data-tip="">
-              <Button variant="base" onClick={onPublishDashboard}>
+              <Button
+                variant="base"
+                aria-describedby="publish-desc"
+                onClick={onPublishDashboard}
+              >
                 {t("PublishButton")}
               </Button>
+              <span id="publish-desc" className="usa-sr-only">
+                {t("PrepareDashboardForPublishing")}
+              </span>
             </span>
-            <Tooltip
-              id="publish"
-              place="bottom"
-              effect="solid"
-              offset={{ bottom: 8 }}
-              getContent={() => (
-                <div className="font-sans-sm">
-                  {t("PrepareDashboardForPublishing")}
-                </div>
-              )}
-            />
           </div>
         </div>
       )}
@@ -258,21 +254,17 @@ function EditDashboard() {
             {t("PreviewButton")}
           </Button>
           <span data-for="publish" data-tip="">
-            <Button variant="base" onClick={onPublishDashboard}>
+            <Button
+              variant="base"
+              aria-describedby="publish-desc"
+              onClick={onPublishDashboard}
+            >
               {t("PublishButton")}
             </Button>
+            <span id="publish-desc" className="usa-sr-only">
+              {t("PrepareDashboardForPublishing")}
+            </span>
           </span>
-          <Tooltip
-            id="publish"
-            place="bottom"
-            effect="solid"
-            offset={{ bottom: 8 }}
-            getContent={() => (
-              <div className="font-sans-sm">
-                {t("PrepareDashboardForPublishing")}
-              </div>
-            )}
-          />
         </>
       )}
     </>

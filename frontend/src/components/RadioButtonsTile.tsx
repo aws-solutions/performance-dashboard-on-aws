@@ -41,7 +41,6 @@ function RadioButtonsTile(props: Props) {
               {option.description}
             </span>
           </label>
-          
         </div>
       </div>
     );

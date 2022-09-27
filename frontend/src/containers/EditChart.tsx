@@ -528,17 +528,18 @@ function EditChart() {
     });
   }
 
-  const configHeader = (
+  const configHeader = (suffix: string) => (
     <div>
-      <h1 id="editChartFormHeader" className="margin-top-0">
+      <h1 id={`editChartFormHeader_${suffix}`} className="margin-top-0">
         {t("EditChartScreen.EditChart")}
       </h1>
       <ul
         className="usa-button-group usa-button-group--segmented"
         role="tablist"
+        aria-labelledby={`editChartFormHeader_${suffix}`}
       >
         <li
-          id="editChartFormHeaderStep1"
+          id={`editChartFormHeaderStep1_${suffix}`}
           className="usa-button-group__item"
           role="tab"
           aria-selected={step === 0}
@@ -556,7 +557,7 @@ function EditChart() {
           </button>
         </li>
         <li
-          id="editChartFormHeaderStep2"
+          id={`editChartFormHeaderStep2_${suffix}`}
           className="usa-button-group__item"
           role="tab"
           aria-selected={step === 1}
@@ -575,7 +576,7 @@ function EditChart() {
           </button>
         </li>
         <li
-          id="editChartFormHeaderStep3"
+          id={`editChartFormHeaderStep3_${suffix}`}
           className="usa-button-group__item"
           role="tab"
           aria-selected={step === 2}
@@ -617,19 +618,19 @@ function EditChart() {
       ) : (
         <div className="grid-row">
           <div className="grid-col-12">
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              aria-labelledby="editChartFormHeader"
+            <div
+              id="panel1"
+              hidden={step !== 0}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editChartFormHeaderStep1_chooseDdata"
             >
-              <div
-                id="panel1"
-                hidden={step !== 0}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editChartFormHeaderStep1"
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editChartFormHeader_chooseDdata"
               >
                 <PrimaryActionBar>
-                  {configHeader}
+                  {configHeader("chooseDdata")}
                   <div className="margin-y-3" hidden={!showColumnHeaderAlert}>
                     <Alert
                       type="error"
@@ -665,16 +666,21 @@ function EditChart() {
                     setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
                   />
                 </PrimaryActionBar>
-              </div>
-              <div
-                id="panel2"
-                hidden={step !== 1}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editChartFormHeaderStep2"
+              </form>
+            </div>
+            <div
+              id="panel2"
+              hidden={step !== 1}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editChartFormHeaderStep2_checkDdata"
+            >
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editChartFormHeader_checkDdata"
               >
                 <PrimaryActionBar>
-                  {configHeader}
+                  {configHeader("checkDdata")}
                   <CheckData
                     data={displayedJson}
                     advanceStep={advanceStep}
@@ -696,13 +702,18 @@ function EditChart() {
                     widgetType={t("CheckDataDescriptionChart")}
                   />
                 </PrimaryActionBar>
-              </div>
-              <div
-                id="panel3"
-                hidden={step !== 2}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editChartFormHeaderStep3"
+              </form>
+            </div>
+            <div
+              id="panel3"
+              hidden={step !== 2}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editChartFormHeaderStep3_visualizeChart"
+            >
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editChartFormHeader_visualizeChart"
               >
                 <VisualizeChart
                   errors={errors}
@@ -746,10 +757,10 @@ function EditChart() {
                     numberTypes,
                     currencyTypes
                   )}
-                  configHeader={configHeader}
+                  configHeader={configHeader("visualizeChart")}
                 />
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       )}

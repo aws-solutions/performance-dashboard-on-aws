@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 export function useFullPreview() {
   const [fullPreview, setFullPreview] = useState(false);
+  const [ariaControls, setAriaControls] = useState<string>();
   const { t } = useTranslation();
 
   const fullPreviewToggle = () => {
@@ -18,16 +19,24 @@ export function useFullPreview() {
       variant="outline"
       type="button"
       className="margin-top-1"
+      ariaExpanded={true}
+      ariaControls={ariaControls}
     >
       <FontAwesomeIcon icon={faMinusSquare} className={"margin-right-1"} />
       {t("ClosePreview")}
     </Button>
   ) : (
-    <Button onClick={fullPreviewToggle} variant="outline" type="button">
+    <Button
+      onClick={fullPreviewToggle}
+      variant="outline"
+      type="button"
+      ariaExpanded={false}
+      ariaControls={ariaControls}
+    >
       <FontAwesomeIcon icon={faPlusSquare} className={"margin-right-1"} />
       {t("ExpandPreview")}
     </Button>
   );
 
-  return { fullPreviewToggle, fullPreviewButton, fullPreview };
+  return { fullPreviewToggle, fullPreviewButton, fullPreview, setAriaControls };
 }

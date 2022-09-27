@@ -208,7 +208,7 @@ function DashboardListing() {
           <Tabs
             defaultActive={activeTab}
             showArrows={windowSize.width <= 600}
-            container={t("DashboardListing.Dashboard")}
+            ariaLabel={t("DashboardListing.Dashboard")}
           >
             <div
               id="drafts"

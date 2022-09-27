@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -184,7 +184,7 @@ function ViewDashboardAdmin() {
 
   const getSectionWithTabs = (widget: Widget, dashboard: Dashboard): string => {
     const section: Widget | undefined = dashboard.widgets.find(
-      (w) => w.id == widget.section
+      (w) => w.id === widget.section
     );
     if (section) {
       return section.content.showWithTabs ? section.id : "";

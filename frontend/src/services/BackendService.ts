@@ -79,7 +79,7 @@ async function fetchPublicHomepageWithQuery(
   if (window.EnvironmentConfig?.authenticationRequired) {
     headers = await authHeaders();
   }
-  if (query == undefined || query == "") {
+  if (query === undefined || query === "") {
     return API.get(apiName, `${publicPath}/homepage`, { headers });
   } else {
     return await API.get(apiName, `${publicPath}/search?q=${query}`, {

@@ -10,5 +10,5 @@ export function useScrollUp(
       window.scrollTo(0, 0);
       setOldStep(step);
     }
-  }, [step]);
+  }, [oldStep, setOldStep, step]);
 }

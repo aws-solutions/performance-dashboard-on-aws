@@ -16,7 +16,6 @@ import Header from "../components/Header";
 import { Helmet } from "react-helmet";
 import defaultFavicon from "../favicon.svg";
 import "./Admin.scss";
-import Button from "../components/Button";
 
 interface LayoutProps {
   children: ReactNode;

@@ -41,7 +41,8 @@ function EditSection() {
   const { t } = useTranslation();
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, setWidget } = useWidget(dashboardId, widgetId);
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-section-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -292,23 +293,25 @@ function EditSection() {
               aria-label={t("ContentPreview")}
             >
               {isMobile ? <br /> : fullPreviewButton}
-              {widget.showTitle ? (
-                <h2 className="margin-top-3 margin-left-2px">
-                  {widget.content.title}
-                </h2>
-              ) : (
-                ""
-              )}
-              {widget.content.summary ? (
-                <div className="padding-left-05">
-                  <MarkdownRender
-                    className="usa-prose textOrSummary"
-                    source={widget.content.summary}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
+              <div id={previewPanelId}>
+                {widget.showTitle ? (
+                  <h2 className="margin-top-3 margin-left-2px">
+                    {widget.content.title}
+                  </h2>
+                ) : (
+                  ""
+                )}
+                {widget.content.summary ? (
+                  <div className="padding-left-05">
+                    <MarkdownRender
+                      className="usa-prose textOrSummary"
+                      source={widget.content.summary}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </section>
           </div>
         </>

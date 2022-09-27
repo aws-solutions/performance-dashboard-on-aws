@@ -92,7 +92,8 @@ function EditTable() {
     setDynamicJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-table-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
 
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
@@ -649,6 +650,7 @@ function EditTable() {
                   processingWidget={editingWidget}
                   fullPreviewButton={fullPreviewButton}
                   fullPreview={fullPreview}
+                  previewPanelId={previewPanelId}
                   submitButtonLabel={t("Save")}
                   title={title}
                   summary={summary}

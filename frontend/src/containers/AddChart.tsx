@@ -95,7 +95,8 @@ function AddChart() {
     undefined
   );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
-  const { fullPreviewButton, fullPreview } = useFullPreview();
+  const previewPanelId = "preview-chart-panel";
+  const { fullPreviewButton, fullPreview } = useFullPreview(previewPanelId);
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
@@ -518,6 +519,7 @@ function AddChart() {
                 processingWidget={creatingWidget}
                 fullPreviewButton={fullPreviewButton}
                 fullPreview={fullPreview}
+                previewPanelId={previewPanelId}
                 submitButtonLabel={t("AddChartScreen.AddChart")}
                 sortByColumn={sortByColumn}
                 sortByDesc={sortByDesc}

@@ -27,7 +27,7 @@ export function useLogo(s3Key?: string): UseLogoHook {
         setLoading(false);
       }
     }
-  }, [s3Key]);
+  }, [s3Key, t]);
 
   useEffect(() => {
     fetchData();

@@ -38,7 +38,7 @@ function ViewDashboard() {
     dashboard: PublicDashboard
   ): string => {
     const section: Widget | undefined = dashboard.widgets.find(
-      (w) => w.id == widget.section
+      (w) => w.id === widget.section
     );
     if (section) {
       return section.content.showWithTabs ? section.id : "";

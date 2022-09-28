@@ -59,7 +59,8 @@ function EditMetrics() {
   const [submittedMetricsNum, setSubmittedMetricsNum] = useState<
     number | undefined
   >();
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-metrics-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -402,13 +403,15 @@ function EditMetrics() {
           >
             <div hidden={false} className="sticky-preview">
               {isMobile ? <br /> : fullPreviewButton}
-              <MetricsWidget
-                title={showTitle ? title : ""}
-                metrics={metrics}
-                metricPerRow={oneMetricPerRow ? 1 : 3}
-                significantDigitLabels={significantDigitLabels}
-                metricsCenterAlign={metricsCenterAlign}
-              />
+              <div id={previewPanelId}>
+                <MetricsWidget
+                  title={showTitle ? title : ""}
+                  metrics={metrics}
+                  metricPerRow={oneMetricPerRow ? 1 : 3}
+                  significantDigitLabels={significantDigitLabels}
+                  metricsCenterAlign={metricsCenterAlign}
+                />
+              </div>
             </div>
           </section>
         </div>

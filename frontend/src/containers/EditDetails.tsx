@@ -40,7 +40,8 @@ function EditDetails() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const [activeWidgetId, setActiveWidgetId] = useState("");
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-details-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const { register, errors, handleSubmit, watch, reset } =
     useForm<FormValues>();
   const windowSize = useWindowSize();
@@ -266,7 +267,7 @@ function EditDetails() {
           aria-label={t("ContentPreview")}
         >
           {isMobile ? <br /> : fullPreviewButton}
-          <div className="margin-top-2">
+          <div id={previewPanelId} className="margin-top-2">
             <DashboardHeader
               name={name}
               topicAreaName={getTopicAreaName(topicAreaId)}

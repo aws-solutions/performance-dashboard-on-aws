@@ -51,7 +51,8 @@ function EditImage() {
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-image-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -428,21 +429,23 @@ function EditImage() {
             >
               <div hidden={false} className="sticky-preview">
                 {isMobile ? <br /> : fullPreviewButton}
-                {loadingFile ? (
-                  <Spinner
-                    className="text-center margin-top-6"
-                    label={t("LoadingSpinnerLabel")}
-                  />
-                ) : (
-                  <ImageWidget
-                    title={widget.showTitle ? widget.content.title : ""}
-                    summary={widget.content.summary}
-                    file={newImageFile ? newImageFile : file}
-                    summaryBelow={widget.content.summaryBelow}
-                    altText={widget.content.imageAltText}
-                    scalePct={widget.content.scalePct}
-                  />
-                )}
+                <div id={previewPanelId}>
+                  {loadingFile ? (
+                    <Spinner
+                      className="text-center margin-top-6"
+                      label={t("LoadingSpinnerLabel")}
+                    />
+                  ) : (
+                    <ImageWidget
+                      title={widget.showTitle ? widget.content.title : ""}
+                      summary={widget.content.summary}
+                      file={newImageFile ? newImageFile : file}
+                      summaryBelow={widget.content.summaryBelow}
+                      altText={widget.content.imageAltText}
+                      scalePct={widget.content.scalePct}
+                    />
+                  )}
+                </div>
               </div>
             </section>
           </div>

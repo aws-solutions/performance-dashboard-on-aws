@@ -30,6 +30,7 @@ interface Props {
   processingWidget: boolean;
   fullPreviewButton: JSX.Element;
   fullPreview: boolean;
+  previewPanelId: string;
   submitButtonLabel: string;
   sortByColumn?: string;
   sortByDesc?: boolean;
@@ -249,59 +250,61 @@ function VisualizeTable(props: Props) {
           }`}
         >
           {isMobile ? <br /> : props.fullPreviewButton}
-          {props.datasetLoading ? (
-            <Spinner
-              className="text-center margin-top-6"
-              label={t("LoadingSpinnerLabel")}
-            />
-          ) : (
-            <>
-              {showAlert &&
-              props.datasetType === DatasetType.StaticDataset &&
-              props.csvJson.length ? (
-                <Alert
-                  type="info"
-                  message={
-                    <div className="grid-row margin-left-6">
-                      <div className="grid-col-11">
-                        {t("VisualizeTableComponent.TableCorrectDisplay")}{" "}
-                        <Link to="/admin/formatting" target="_blank" external>
-                          {t("LearnHowToFormatCSV")}
-                        </Link>
-                      </div>
-                      <div className="grid-col-1">
-                        <div className="margin-1">
-                          <Button
-                            variant="unstyled"
-                            className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
-                            onClick={() => setShowAlert(false)}
-                            type="button"
-                            ariaLabel={t("GlobalClose")}
-                          >
-                            <FontAwesomeIcon icon={faTimes} size="sm" />
-                          </Button>
+          <div id={props.previewPanelId}>
+            {props.datasetLoading ? (
+              <Spinner
+                className="text-center margin-top-6"
+                label={t("LoadingSpinnerLabel")}
+              />
+            ) : (
+              <>
+                {showAlert &&
+                props.datasetType === DatasetType.StaticDataset &&
+                props.csvJson.length ? (
+                  <Alert
+                    type="info"
+                    message={
+                      <div className="grid-row margin-left-6">
+                        <div className="grid-col-11">
+                          {t("VisualizeTableComponent.TableCorrectDisplay")}{" "}
+                          <Link to="/admin/formatting" target="_blank" external>
+                            {t("LearnHowToFormatCSV")}
+                          </Link>
+                        </div>
+                        <div className="grid-col-1">
+                          <div className="margin-1">
+                            <Button
+                              variant="unstyled"
+                              className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                              onClick={() => setShowAlert(false)}
+                              type="button"
+                              ariaLabel={t("GlobalClose")}
+                            >
+                              <FontAwesomeIcon icon={faTimes} size="sm" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  }
-                  slim
+                    }
+                    slim
+                  />
+                ) : (
+                  ""
+                )}
+                <TableWidget
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
+                  summaryBelow={props.summaryBelow}
+                  data={props.json}
+                  columnsMetadata={props.columnsMetadata}
+                  sortByColumn={props.sortByColumn}
+                  sortByDesc={props.sortByDesc}
+                  significantDigitLabels={props.significantDigitLabels}
+                  displayWithPages={props.displayWithPages}
                 />
-              ) : (
-                ""
-              )}
-              <TableWidget
-                title={props.showTitle ? props.title : ""}
-                summary={props.summary}
-                summaryBelow={props.summaryBelow}
-                data={props.json}
-                columnsMetadata={props.columnsMetadata}
-                sortByColumn={props.sortByColumn}
-                sortByDesc={props.sortByDesc}
-                significantDigitLabels={props.significantDigitLabels}
-                displayWithPages={props.displayWithPages}
-              />
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </section>
     </div>

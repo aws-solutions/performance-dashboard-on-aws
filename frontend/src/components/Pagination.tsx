@@ -58,8 +58,8 @@ function Pagination(props: Props) {
       numLinksRight >= props.numPages - props.currentPage - 1
     ) {
       pages[1] = -1; // Dots
-      for (var i = 2; i < numLinks - 1; ++i) {
-        pages[i] = props.numPages - numLinks + i + 1;
+      for (var j = 2; j < numLinks - 1; ++j) {
+        pages[j] = props.numPages - numLinks + j + 1;
       }
       return pages;
     }
@@ -67,11 +67,11 @@ function Pagination(props: Props) {
     // Case 4: Both left and right dots needed.
     pages[1] = -1; // Dots
     for (
-      var i = 2, page = props.currentPage - numLinksLeft + 1;
-      i < numLinks - 2;
-      ++i, ++page
+      var k = 2, page = props.currentPage - numLinksLeft + 1;
+      k < numLinks - 2;
+      ++k, ++page
     ) {
-      pages[i] = page;
+      pages[k] = page;
     }
     pages[numLinks - 2] = -2; // Dots
     return pages;

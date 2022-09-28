@@ -101,7 +101,9 @@ function EditChart() {
     setDynamicJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
-  const { fullPreviewButton, fullPreview } = useFullPreview();
+
+  const previewPanelId = "preview-chart-panel";
+  const { fullPreviewButton, fullPreview } = useFullPreview(previewPanelId);
 
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
@@ -729,6 +731,7 @@ function EditChart() {
                   showTitle={showTitle}
                   fullPreviewButton={fullPreviewButton}
                   fullPreview={fullPreview}
+                  previewPanelId={previewPanelId}
                   submitButtonLabel={t("Save")}
                   sortByColumn={sortByColumn}
                   sortByDesc={sortByDesc}

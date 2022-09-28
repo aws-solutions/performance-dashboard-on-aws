@@ -54,7 +54,8 @@ function AddImage() {
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-image-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -338,14 +339,16 @@ function AddImage() {
         >
           <div className="sticky-preview">
             {isMobile ? <br /> : fullPreviewButton}
-            <ImageWidget
-              title={showTitle ? title : ""}
-              summary={summary}
-              file={imageFile && imageFile[0]}
-              summaryBelow={summaryBelow}
-              altText={altText}
-              scalePct={scalePct}
-            />
+            <div id={previewPanelId}>
+              <ImageWidget
+                title={showTitle ? title : ""}
+                summary={summary}
+                file={imageFile && imageFile[0]}
+                summaryBelow={summaryBelow}
+                altText={altText}
+                scalePct={scalePct}
+              />
+            </div>
           </div>
         </section>
       </div>

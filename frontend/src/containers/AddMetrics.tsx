@@ -107,7 +107,8 @@ function AddMetrics() {
     }
   }, [datasetError, datasetType, metrics]);
 
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-metrics-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const [oldStep, setOldStep] = useState<number>(-1);
   const title = watch("title");
   const showTitle = watch("showTitle");
@@ -682,13 +683,15 @@ function AddMetrics() {
                 >
                   <div className="sticky-preview">
                     {isMobile ? <br /> : fullPreviewButton}
-                    <MetricsWidget
-                      title={showTitle ? title : ""}
-                      metrics={metrics}
-                      metricPerRow={oneMetricPerRow ? 1 : 3}
-                      significantDigitLabels={significantDigitLabels}
-                      metricsCenterAlign={metricsCenterAlign}
-                    />
+                    <div id={previewPanelId}>
+                      <MetricsWidget
+                        title={showTitle ? title : ""}
+                        metrics={metrics}
+                        metricPerRow={oneMetricPerRow ? 1 : 3}
+                        significantDigitLabels={significantDigitLabels}
+                        metricsCenterAlign={metricsCenterAlign}
+                      />
+                    </div>
                   </div>
                 </section>
               </div>

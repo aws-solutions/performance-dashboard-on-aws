@@ -14,7 +14,6 @@ import {
   useWidget,
   useFullPreview,
   useChangeBackgroundColor,
-  useScrollUp,
   useWindowSize,
 } from "../hooks";
 import BackendService from "../services/BackendService";

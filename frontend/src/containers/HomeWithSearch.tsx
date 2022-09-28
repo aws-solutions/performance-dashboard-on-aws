@@ -1,12 +1,10 @@
 import React, { useHistory } from "react-router-dom";
 import Link from "../components/Link";
-import { useDateTimeFormatter, usePublicHomepageSearch } from "../hooks";
+import { usePublicHomepageSearch } from "../hooks";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
-import Accordion from "../components/Accordion";
 import Search from "../components/Search";
 import {
-  PublicHomepage,
   LocationState,
   PublicTopicArea,
   PublicDashboard,
@@ -28,7 +26,6 @@ function HomeWithSearch() {
   const query = params.get("q");
   const { homepage, loading } = usePublicHomepageSearch(query as string);
   const { t } = useTranslation();
-  const dateFormatter = useDateTimeFormatter();
   const history = useHistory<LocationState>();
 
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
@@ -109,9 +106,8 @@ function HomeWithSearch() {
           </div>
 
           {topicareas.map((topicarea) => (
-            <div id={topicarea.id} key={topicarea.id} title={topicarea.name}>
+            <ul id={topicarea.id} key={topicarea.id} title={topicarea.name}>
               {topicarea.dashboards?.map((dashboard) => {
-                const updatedAt = dateFormatter(dashboard.updatedAt);
                 return (
                   <li key={dashboard.id} style={{ listStyleType: "none" }}>
                     <div
@@ -156,7 +152,7 @@ function HomeWithSearch() {
                   </li>
                 );
               })}
-            </div>
+            </ul>
           ))}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, MouseEvent, ReactElement } from "react";
+import React, { ReactNode, useEffect, MouseEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 import "./Shareable.scss";
@@ -15,7 +15,7 @@ interface Props {
 function Shareable(props: Props) {
   const history = useHistory();
   const { t } = useTranslation();
-  const { pathname, hash, key, state } = useLocation();
+  const { pathname, hash, key } = useLocation();
 
   const shortId = props.id.substring(0, 8);
   const anchorId = `section-${shortId}`;

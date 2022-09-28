@@ -29,6 +29,8 @@ interface Props {
     | "location"
     | "date"
     | undefined;
+  ariaExpanded?: boolean;
+  ariaControls?: string;
   disabledToolTip?: string;
 }
 
@@ -65,6 +67,8 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       data-testid={props.testid}
       aria-label={props.ariaLabel}
       aria-current={props.ariaCurrent}
+      aria-expanded={props.ariaExpanded}
+      aria-controls={props.ariaControls}
       className={`usa-button${variantClassName}${additionalClasses}`}
       disabled={props.disabled}
       ref={ref}

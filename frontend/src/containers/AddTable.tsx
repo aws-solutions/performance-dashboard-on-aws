@@ -88,7 +88,8 @@ function AddTable() {
     undefined
   );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-table-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
@@ -451,6 +452,7 @@ function AddTable() {
               processingWidget={creatingWidget}
               fullPreviewButton={fullPreviewButton}
               fullPreview={fullPreview}
+              previewPanelId={previewPanelId}
               submitButtonLabel={t("AddTableScreen.AddTable")}
               sortByColumn={sortByColumn}
               sortByDesc={sortByDesc}

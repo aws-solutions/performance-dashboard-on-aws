@@ -44,7 +44,8 @@ function AddSection() {
   const [summary, setSummary] = useState("");
   const [showWithTabs, setShowWithTabs] = useState(false);
   const [horizontally, setHorizontally] = useState("horizontally");
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-section-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -286,21 +287,23 @@ function AddSection() {
             >
               <div>
                 {isMobile ? <br /> : fullPreviewButton}
-                {showTitle ? (
-                  <h2 className="margin-top-3 margin-left-2px">{title}</h2>
-                ) : (
-                  ""
-                )}
-                {summary ? (
-                  <div className="padding-left-05">
-                    <MarkdownRender
-                      className="usa-prose textOrSummary"
-                      source={summary}
-                    />
-                  </div>
-                ) : (
-                  ""
-                )}
+                <div id={previewPanelId}>
+                  {showTitle ? (
+                    <h2 className="margin-top-3 margin-left-2px">{title}</h2>
+                  ) : (
+                    ""
+                  )}
+                  {summary ? (
+                    <div className="padding-left-05">
+                      <MarkdownRender
+                        className="usa-prose textOrSummary"
+                        source={summary}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </section>
           </div>

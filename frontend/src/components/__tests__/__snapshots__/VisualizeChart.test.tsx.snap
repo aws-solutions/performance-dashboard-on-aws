@@ -475,63 +475,65 @@ exports[`renders the VisualizeChart component 1`] = `
         >
           Full preview
         </button>
-        
-        <div
-          aria-label="title"
-          class="overflow-x-hidden overflow-y-hidden"
-          tabindex="-1"
-        >
-          <h2
-            class="margin-bottom-1"
-          >
-            title
-          </h2>
+        <div>
+          
           <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            aria-label="title"
+            class="overflow-x-hidden overflow-y-hidden"
+            tabindex="-1"
           >
-            <p>
-              summary
-            </p>
-          </div>
-          <div
-            aria-hidden="true"
-          >
-            <div
-              class="recharts-responsive-container"
-              id="title"
-              style="width: 100%; height: 300px;"
-            />
-          </div>
-          <div>
-            <div
-              class="text-right margin-right-05"
+            <h2
+              class="margin-bottom-1"
             >
-              <button
-                aria-controls="menu--1"
-                aria-haspopup="true"
-                aria-label="Data table actions"
-                class="usa-button usa-button--unstyled text-base"
-                data-reach-menu-button=""
-                id="menu-button--menu--1"
-                type="button"
+              title
+            </h2>
+            <div
+              class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            >
+              <p>
+                summary
+              </p>
+            </div>
+            <div
+              aria-hidden="true"
+            >
+              <div
+                class="recharts-responsive-container"
+                id="title"
+                style="width: 100%; height: 300px;"
+              />
+            </div>
+            <div>
+              <div
+                class="text-right margin-right-05"
               >
-                Actions
-                <svg
-                  aria-hidden="true"
-                  class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
-                  data-icon="caret-down"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  viewBox="0 0 320 512"
-                  xmlns="http://www.w3.org/2000/svg"
+                <button
+                  aria-controls="menu--1"
+                  aria-haspopup="true"
+                  aria-label="Data table actions"
+                  class="usa-button usa-button--unstyled text-base"
+                  data-reach-menu-button=""
+                  id="menu-button--menu--1"
+                  type="button"
                 >
-                  <path
-                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </button>
+                  Actions
+                  <svg
+                    aria-hidden="true"
+                    class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+                    data-icon="caret-down"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    viewBox="0 0 320 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1015,63 +1017,65 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         >
           Full preview
         </button>
-        
-        <div
-          aria-label="title"
-          class="overflow-x-hidden overflow-y-hidden"
-          tabindex="-1"
-        >
-          <h2
-            class="margin-bottom-1"
-          >
-            title
-          </h2>
+        <div>
+          
           <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            aria-label="title"
+            class="overflow-x-hidden overflow-y-hidden"
+            tabindex="-1"
           >
-            <p>
-              summary
-            </p>
-          </div>
-          <div
-            aria-hidden="true"
-          >
-            <div
-              class="recharts-responsive-container"
-              id="title"
-              style="width: 100%; height: 300px;"
-            />
-          </div>
-          <div>
-            <div
-              class="text-right margin-right-05"
+            <h2
+              class="margin-bottom-1"
             >
-              <button
-                aria-controls="menu--7"
-                aria-haspopup="true"
-                aria-label="Data table actions"
-                class="usa-button usa-button--unstyled text-base"
-                data-reach-menu-button=""
-                id="menu-button--menu--7"
-                type="button"
+              title
+            </h2>
+            <div
+              class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            >
+              <p>
+                summary
+              </p>
+            </div>
+            <div
+              aria-hidden="true"
+            >
+              <div
+                class="recharts-responsive-container"
+                id="title"
+                style="width: 100%; height: 300px;"
+              />
+            </div>
+            <div>
+              <div
+                class="text-right margin-right-05"
               >
-                Actions
-                <svg
-                  aria-hidden="true"
-                  class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
-                  data-icon="caret-down"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  viewBox="0 0 320 512"
-                  xmlns="http://www.w3.org/2000/svg"
+                <button
+                  aria-controls="menu--7"
+                  aria-haspopup="true"
+                  aria-label="Data table actions"
+                  class="usa-button usa-button--unstyled text-base"
+                  data-reach-menu-button=""
+                  id="menu-button--menu--7"
+                  type="button"
                 >
-                  <path
-                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </button>
+                  Actions
+                  <svg
+                    aria-hidden="true"
+                    class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+                    data-icon="caret-down"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    viewBox="0 0 320 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>

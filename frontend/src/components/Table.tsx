@@ -133,7 +133,7 @@ function Table(props: Props) {
         hooks.visibleColumns.push((columns) => [
           {
             id: "selection",
-            Header: ({}) => <div></div>,
+            Header: ({}) => <></>,
             Cell: ({ row }) => (
               <div>
                 <IndeterminateRadio

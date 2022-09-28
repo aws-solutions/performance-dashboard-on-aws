@@ -13,7 +13,7 @@ exports[`renders the ChooseData component 1`] = `
       >
         Data
       </label>
-      <div
+      <span
         class="usa-hint"
       >
         Choose an existing dataset or create a new one to populate this chart.
@@ -44,7 +44,7 @@ exports[`renders the ChooseData component 1`] = `
             />
           </svg>
         </a>
-      </div>
+      </span>
     </legend>
     <div
       class="grid-row"
@@ -77,12 +77,12 @@ exports[`renders the ChooseData component 1`] = `
                 for="staticDataset"
               >
                 Static dataset
-                <p
+                <span
                   class="text-base usa-prose usa-checkbox__label-description"
                   id="staticDataset-description"
                 >
                   Upload a new dataset from file or elect an existing dataset.
-                </p>
+                </span>
               </label>
             </div>
           </div>
@@ -111,12 +111,12 @@ exports[`renders the ChooseData component 1`] = `
                 for="dynamicDataset"
               >
                 Dynamic dataset
-                <p
+                <span
                   class="text-base usa-prose usa-checkbox__label-description"
                   id="dynamicDataset-description"
                 >
                   Choose from a list of continuously updated datasets.
-                </p>
+                </span>
               </label>
             </div>
           </div>
@@ -308,9 +308,7 @@ exports[`renders the ChooseData component 1`] = `
                   scope="col"
                   style="padding: 0.5rem 1rem;"
                 >
-                  <span>
-                    <div />
-                  </span>
+                  <span />
                 </th>
                 <th
                   aria-sort="none"

@@ -79,14 +79,14 @@ function ChooseData(props: Props) {
           className={`usa-hint ${isMobile ? "grid-col-12" : "grid-col-6"}`}
         >
           <label className="usa-label text-bold">{t("Data")}</label>
-          <div className="usa-hint">
+          <span className="usa-hint">
             {t("ChooseDataDescription", {
               widgetType: props.widgetType,
             })}{" "}
             <Link to="/admin/apihelp" target="_blank" external>
               {t("HowDoIAddDatasets")}
             </Link>
-          </div>
+          </span>
         </legend>
 
         <div className="grid-row">

@@ -458,23 +458,22 @@ function EditTable() {
     });
   }
 
-  const configHeader = (
+  const configHeader = (suffix: string) => (
     <div>
-      <h1 id="editTableFormHeader" className="margin-top-0">
+      <h1 id={`editTableFormHeader_${suffix}`} className="margin-top-0">
         {t("EditTableScreen.EditTable")}
       </h1>
       <ul
         className="usa-button-group usa-button-group--segmented"
         role="tablist"
+        aria-labelledby={`editTableFormHeader_${suffix}`}
       >
-        <li
-          id="editTableFormHeaderStep1"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 0}
-          aria-controls="panel1"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editTableFormHeaderStep1_${suffix}`}
+            role="tab"
+            aria-selected={step === 0}
+            aria-controls="panel1"
             className={`usa-button tabSelector ${
               step !== 0 ? "usa-button--outline" : ""
             }`}
@@ -485,14 +484,12 @@ function EditTable() {
             {t("EditTableScreen.ChooseData")}
           </button>
         </li>
-        <li
-          id="editTableFormHeaderStep2"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 1}
-          aria-controls="panel2"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editTableFormHeaderStep2_${suffix}`}
+            role="tab"
+            aria-selected={step === 1}
+            aria-controls="panel2"
             className={`usa-button tabSelector ${
               step !== 1 ? "usa-button--outline" : ""
             }`}
@@ -504,14 +501,12 @@ function EditTable() {
             {t("EditTableScreen.CheckData")}
           </button>
         </li>
-        <li
-          id="editTableFormHeaderStep3"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 2}
-          aria-controls="panel3"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editTableFormHeaderStep3_${suffix}`}
+            role="tab"
+            aria-selected={step === 2}
+            aria-controls="panel3"
             className={`usa-button tabSelector ${
               step !== 2 ? "usa-button--outline" : ""
             }`}
@@ -548,19 +543,19 @@ function EditTable() {
       ) : (
         <>
           <div className="grid-row">
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              aria-labelledby="editTableFormHeader"
+            <div
+              id="panel1"
+              hidden={step !== 0}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editTableFormHeaderStep1_chooseDdata"
             >
-              <div
-                id="panel1"
-                hidden={step !== 0}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editTableFormHeaderStep1"
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editTableFormHeader_chooseDdata"
               >
                 <PrimaryActionBar>
-                  {configHeader}
+                  {configHeader("chooseDdata")}
                   <div className="margin-y-3" hidden={!showNoDatasetTypeAlert}>
                     <Alert
                       type="error"
@@ -589,17 +584,22 @@ function EditTable() {
                     setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
                   />
                 </PrimaryActionBar>
-              </div>
+              </form>
+            </div>
 
-              <div
-                id="panel2"
-                hidden={step !== 1}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editTableFormHeaderStep2"
+            <div
+              id="panel2"
+              hidden={step !== 1}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editTableFormHeaderStep2_checkDdata"
+            >
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editTableFormHeader_checkDdata"
               >
                 <PrimaryActionBar>
-                  {configHeader}
+                  {configHeader("checkDdata")}
                   <CheckData
                     data={displayedJson}
                     advanceStep={advanceStep}
@@ -621,14 +621,19 @@ function EditTable() {
                     widgetType={t("CheckDataDescriptionTable")}
                   />
                 </PrimaryActionBar>
-              </div>
+              </form>
+            </div>
 
-              <div
-                id="panel3"
-                hidden={step !== 2}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editTableFormHeaderStep3"
+            <div
+              id="panel3"
+              hidden={step !== 2}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editTableFormHeaderStep3_visualize"
+            >
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editTableFormHeader_visualize"
               >
                 <Visualize
                   errors={errors}
@@ -668,10 +673,10 @@ function EditTable() {
                     numberTypes,
                     currencyTypes
                   )}
-                  configHeader={configHeader}
+                  configHeader={configHeader("visualize")}
                 />
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </>
       )}

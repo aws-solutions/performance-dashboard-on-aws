@@ -59,7 +59,7 @@ function AddMetrics() {
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicMetricDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset, watch } = useForm<FormValues>({
+  const { register, errors, handleSubmit, watch } = useForm<FormValues>({
     defaultValues: {
       title: state && state.metricTitle !== undefined ? state.metricTitle : "",
       showTitle:

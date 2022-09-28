@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import Link from "../components/Link";
-import { usePublicHomepage, useDateTimeFormatter } from "../hooks";
+import { usePublicHomepage } from "../hooks";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
@@ -26,7 +26,6 @@ dayjs.extend(LocalizedFormat);
 function Home() {
   const { homepage, loading } = usePublicHomepage();
   const { t } = useTranslation();
-  const dateFormatter = useDateTimeFormatter();
   const history = useHistory<LocationState>();
   const { Card, CardFooter, CardBody } = CardGroup;
 
@@ -45,9 +44,7 @@ function Home() {
     a.name.localeCompare(b.name)
   );
   for (let topicArea of topicareas) {
-    topicArea.dashboards?.sort((a: PublicDashboard, b: PublicDashboard) =>
-      a.name.localeCompare(b.name)
-    );
+    topicArea.dashboards?.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   const getDashboardLink = (dashboard: PublicDashboard | Dashboard): string => {

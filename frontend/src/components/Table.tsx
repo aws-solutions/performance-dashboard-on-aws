@@ -12,7 +12,6 @@ import {
   useGlobalFilter,
   usePagination,
   Row,
-  Column,
 } from "react-table";
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
@@ -81,7 +80,7 @@ function Table(props: Props) {
 
   const createLongTitleName = (row: Row<object>, accessors: Array<string>) => {
     let title = "";
-    accessors.map((accessor: string) => {
+    accessors.forEach((accessor: string) => {
       title += row.values[accessor] + " - ";
     });
     return title.substring(0, title.length - 3);
@@ -95,15 +94,8 @@ function Table(props: Props) {
     prepareRow,
     rows,
     page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
     pageCount,
     gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
     selectedFlatRows,
     setGlobalFilter,
     toggleAllRowsSelected,
@@ -133,7 +125,7 @@ function Table(props: Props) {
         hooks.visibleColumns.push((columns) => [
           {
             id: "selection",
-            Header: ({}) => <></>,
+            Header: () => <></>,
             Cell: ({ row }) => (
               <div>
                 <IndeterminateRadio

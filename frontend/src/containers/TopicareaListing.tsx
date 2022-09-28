@@ -5,8 +5,6 @@ import TopicareasTable from "../components/TopicareasTable";
 import BackendService from "../services/BackendService";
 import Modal from "../components/Modal";
 import { useHistory } from "react-router-dom";
-import Tooltip from "../components/Tooltip";
-import { useSettings } from "../hooks";
 import { useTranslation } from "react-i18next";
 import DropdownMenu from "../components/DropdownMenu";
 

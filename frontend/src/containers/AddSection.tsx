@@ -43,7 +43,6 @@ function AddSection() {
   const [showTitle, setShowTitle] = useState(true);
   const [summary, setSummary] = useState("");
   const [showWithTabs, setShowWithTabs] = useState(false);
-  const [horizontally, setHorizontally] = useState("horizontally");
   const previewPanelId = "preview-section-panel";
   const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
@@ -85,13 +84,11 @@ function AddSection() {
   };
 
   const onFormChange = () => {
-    const { title, showTitle, summary, showWithTabs, horizontally } =
-      getValues();
+    const { title, showTitle, summary, showWithTabs } = getValues();
     setTitle(title);
     setShowTitle(showTitle);
     setSummary(summary);
     setShowWithTabs(showWithTabs);
-    setHorizontally(horizontally);
   };
 
   const goBack = () => {

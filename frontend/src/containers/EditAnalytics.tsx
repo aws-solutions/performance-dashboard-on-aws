@@ -19,7 +19,7 @@ function EditAnalytics() {
   const { register, handleSubmit, errors } = useForm<FormValues>();
   const { t } = useTranslation();
 
-  if (settings.analyticsTrackingId == "NA") {
+  if (settings.analyticsTrackingId === "NA") {
     settings.analyticsTrackingId = "";
   }
 

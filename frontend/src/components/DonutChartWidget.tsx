@@ -226,7 +226,8 @@ const DonutChartWidget = (props: Props) => {
         <span className="margin-left-05 font-sans-md text-bottom">
           {RenderLegendText(value.toLocaleString(), entry)}
         </span>
-        <div className="margin-left-4 margin-bottom-1 text-base-darker text-bold">
+        <br />
+        <span className="margin-left-5 margin-bottom-1 text-base-darker text-bold">
           {value && value !== "null" ? (
             TickFormatter.format(
               Number(
@@ -242,7 +243,7 @@ const DonutChartWidget = (props: Props) => {
           ) : (
             <br />
           )}
-        </div>
+        </span>
       </span>
     );
   };

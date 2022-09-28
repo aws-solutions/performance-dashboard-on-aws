@@ -15,7 +15,6 @@ import SectionWidget from "../components/SectionWidget";
 import ImageWidgetComponent from "../components/ImageWidget";
 import MetricsWidgetComponent from "../components/MetricsWidget";
 import Shareable from "./Shareable";
-import { isPropertySignature } from "typescript";
 
 interface Props {
   widget: Widget;

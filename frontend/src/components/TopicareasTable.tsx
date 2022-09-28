@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSettings } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -27,8 +26,6 @@ function TopicareasTable(props: Props) {
   const [selected, setSelected] = useState<SelectionHashMap>({});
   const [sortedBy, setSortedBy] = useState<ColumnType>("dashboards");
   const [direction, setDirection] = useState<Direction>("down");
-
-  const { settings } = useSettings();
 
   const onSelect = (topicarea: TopicArea) => {
     const selection = { [topicarea.id]: topicarea };

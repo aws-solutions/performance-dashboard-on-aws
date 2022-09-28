@@ -34,12 +34,12 @@ function RadioButtonsTile(props: Props) {
           />
           <label className="usa-radio__label" htmlFor={option.id}>
             {option.label}
-            <p
+            <span
               className="text-base usa-prose usa-checkbox__label-description"
               id={`${option.id}-description`}
             >
               {option.description}
-            </p>
+            </span>
           </label>
         </div>
       </div>

@@ -44,6 +44,6 @@ test("renders a textfield for chart title", async () => {
 test("renders a file upload input", async () => {
   render(<EditChart />, { wrapper: MemoryRouter });
   expect(
-    await screen.findByRole("button", { name: "Choose data" })
+    await screen.findByRole("tab", { name: "Choose data" })
   ).toBeInTheDocument();
 });

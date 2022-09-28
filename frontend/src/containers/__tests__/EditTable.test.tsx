@@ -36,6 +36,6 @@ test("renders a textfield for table title", async () => {
 test("renders a choose data button", async () => {
   render(<EditTable />, { wrapper: MemoryRouter });
   expect(
-    await screen.findByRole("button", { name: "Choose data" })
+    await screen.findByRole("tab", { name: "Choose data" })
   ).toBeInTheDocument();
 });

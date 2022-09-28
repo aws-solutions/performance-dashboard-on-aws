@@ -18,7 +18,7 @@ import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
 import RenderLegendText from "./Legend";
-import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
+import { ColumnDataType } from "../models";
 
 type Props = {
   title: string;

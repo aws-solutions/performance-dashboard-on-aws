@@ -110,7 +110,8 @@ const PartWholeChartWidget = (props: Props) => {
         <span className="margin-left-05 font-sans-md text-bottom">
           {RenderLegendText(label.toLocaleString(), entry)}
         </span>
-        <div className="margin-left-4 margin-bottom-1 text-base-darker text-bold">
+        <br />
+        <span className="margin-left-5 margin-bottom-1 text-base-darker text-bold">
           {amount && amount !== "null" ? (
             TickFormatter.format(
               Number(amount),
@@ -123,7 +124,7 @@ const PartWholeChartWidget = (props: Props) => {
           ) : (
             <br />
           )}
-        </div>
+        </span>
       </span>
     );
   };

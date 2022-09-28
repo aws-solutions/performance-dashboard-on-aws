@@ -1,5 +1,5 @@
 import React from "react";
-import { Metric, NumberDataType } from "../models";
+import { Metric } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import TickFormatter from "../services/TickFormatter";

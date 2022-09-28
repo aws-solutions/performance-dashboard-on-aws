@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, MouseEvent } from "react";
+import React, { useCallback, useMemo, MouseEvent } from "react";
 import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";

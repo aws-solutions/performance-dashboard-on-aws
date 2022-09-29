@@ -65,7 +65,7 @@ exports[`renders the ChooseData component 1`] = `
             >
               <input
                 aria-describedby="staticDataset-description"
-                class="usa-radio__input usa-radio__input--tile"
+                class="usa-radio__input usa-radio__input--tile radio"
                 data-testid="staticDatasetRadioButton"
                 id="staticDataset"
                 name="datasetType"
@@ -99,7 +99,7 @@ exports[`renders the ChooseData component 1`] = `
             >
               <input
                 aria-describedby="dynamicDataset-description"
-                class="usa-radio__input usa-radio__input--tile"
+                class="usa-radio__input usa-radio__input--tile radio"
                 data-testid="dynamicDatasetRadioButton"
                 id="dynamicDataset"
                 name="datasetType"

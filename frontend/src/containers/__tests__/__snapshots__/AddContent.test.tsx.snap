@@ -92,7 +92,7 @@ Object {
                   >
                     <input
                       aria-describedby="text-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="textRadioButton"
                       id="text"
                       name="widgetType"
@@ -122,7 +122,7 @@ Object {
                   >
                     <input
                       aria-describedby="metrics-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="metricsRadioButton"
                       id="metrics"
                       name="widgetType"
@@ -152,7 +152,7 @@ Object {
                   >
                     <input
                       aria-describedby="chart-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="chartRadioButton"
                       id="chart"
                       name="widgetType"
@@ -182,7 +182,7 @@ Object {
                   >
                     <input
                       aria-describedby="table-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="tableRadioButton"
                       id="table"
                       name="widgetType"
@@ -212,7 +212,7 @@ Object {
                   >
                     <input
                       aria-describedby="image-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="imageRadioButton"
                       id="image"
                       name="widgetType"
@@ -242,7 +242,7 @@ Object {
                   >
                     <input
                       aria-describedby="section-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="sectionRadioButton"
                       id="section"
                       name="widgetType"
@@ -375,7 +375,7 @@ Object {
                 >
                   <input
                     aria-describedby="text-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="textRadioButton"
                     id="text"
                     name="widgetType"
@@ -405,7 +405,7 @@ Object {
                 >
                   <input
                     aria-describedby="metrics-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="metricsRadioButton"
                     id="metrics"
                     name="widgetType"
@@ -435,7 +435,7 @@ Object {
                 >
                   <input
                     aria-describedby="chart-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="chartRadioButton"
                     id="chart"
                     name="widgetType"
@@ -465,7 +465,7 @@ Object {
                 >
                   <input
                     aria-describedby="table-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="tableRadioButton"
                     id="table"
                     name="widgetType"
@@ -495,7 +495,7 @@ Object {
                 >
                   <input
                     aria-describedby="image-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="imageRadioButton"
                     id="image"
                     name="widgetType"
@@ -525,7 +525,7 @@ Object {
                 >
                   <input
                     aria-describedby="section-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="sectionRadioButton"
                     id="section"
                     name="widgetType"

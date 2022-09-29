@@ -81,7 +81,11 @@ function SettingsLayout(props: LayoutProps) {
                 <nav aria-label="Left navigation">
                   <ul className="usa-sidenav">
                     <li className="usa-sidenav__item">
-                      <Link to="/admin/settings" className="usa-current">
+                      <Link
+                        to="/admin/settings"
+                        className="usa-current"
+                        aria-current="page"
+                      >
                         {t("Settings")}
                       </Link>
                       <ul className="usa-sidenav__sublist">
@@ -93,6 +97,7 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/topicarea"
+                            aria-current="page"
                           >
                             {`${validSettings["topicarea"]}`}
                           </Link>
@@ -107,6 +112,7 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/publishingguidance"
+                            aria-current="page"
                           >
                             {`${validSettings["publishingguidance"]}`}
                           </Link>
@@ -121,6 +127,7 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/brandingandstyling"
+                            aria-current="page"
                           >
                             {`${validSettings["brandingandstyling"]}`}
                           </Link>
@@ -135,6 +142,7 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/publishedsite"
+                            aria-current="page"
                           >
                             {`${validSettings["publishedsite"]}`}
                           </Link>
@@ -149,6 +157,7 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/dateformat"
+                            aria-current="page"
                           >
                             {`${validSettings["dateformat"]}`}
                           </Link>
@@ -163,6 +172,7 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/adminsite"
+                            aria-current="page"
                           >
                             {`${validSettings["adminsite"]}`}
                           </Link>

@@ -57,6 +57,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
                 class="usa-sidenav__item"
               >
                 <a
+                  aria-current="page"
                   class="usa-current"
                   href="/admin/settings"
                 >
@@ -69,6 +70,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
+                      aria-current="page"
                       class="usa-current"
                       href="/admin/settings/topicarea"
                     >
@@ -83,6 +85,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
+                      aria-current="page"
                       class=""
                       href="/admin/settings/publishingguidance"
                     >
@@ -97,6 +100,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
+                      aria-current="page"
                       class=""
                       href="/admin/settings/brandingandstyling"
                     >
@@ -111,6 +115,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
+                      aria-current="page"
                       class=""
                       href="/admin/settings/publishedsite"
                     >
@@ -125,6 +130,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
+                      aria-current="page"
                       class=""
                       href="/admin/settings/dateformat"
                     >
@@ -139,6 +145,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
+                      aria-current="page"
                       class=""
                       href="/admin/settings/adminsite"
                     >

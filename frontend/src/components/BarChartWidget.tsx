@@ -152,7 +152,11 @@ const BarChartWidget = (props: Props) => {
       )}
       {data && data.length && (
         <div aria-hidden="true">
-          <ResponsiveContainer width="100%" height={dims.chartHeight}>
+          <ResponsiveContainer
+            width="100%"
+            height={dims.chartHeight}
+            id={`${props.title}-bar-chart`}
+          >
             <BarChart
               className="bar-chart"
               data={props.data}

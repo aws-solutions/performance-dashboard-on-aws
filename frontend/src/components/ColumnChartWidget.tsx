@@ -169,6 +169,7 @@ const ColumnChartWidget = (props: Props) => {
                 : "100%"
             }
             height={300}
+            id={`${props.title}-column-chart`}
           >
             <BarChart
               className="column-chart"

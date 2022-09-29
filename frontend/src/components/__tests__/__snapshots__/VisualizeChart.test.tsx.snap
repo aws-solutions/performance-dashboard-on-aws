@@ -499,7 +499,7 @@ exports[`renders the VisualizeChart component 1`] = `
             >
               <div
                 class="recharts-responsive-container"
-                id="title"
+                id="title-line-chart"
                 style="width: 100%; height: 300px;"
               />
             </div>
@@ -1041,7 +1041,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             >
               <div
                 class="recharts-responsive-container"
-                id="title"
+                id="title-line-chart"
                 style="width: 100%; height: 300px;"
               />
             </div>

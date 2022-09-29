@@ -263,7 +263,11 @@ const PieChartWidget = (props: Props) => {
       )}
       {pieData.current.length && (
         <div aria-hidden="true">
-          <ResponsiveContainer width="100%" height={calculateChartHeight()}>
+          <ResponsiveContainer
+            width="100%"
+            height={calculateChartHeight()}
+            id={`${props.title}-pie-chart`}
+          >
             <PieChart>
               <Legend
                 verticalAlign="top"

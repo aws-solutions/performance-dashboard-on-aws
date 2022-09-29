@@ -288,7 +288,11 @@ const DonutChartWidget = (props: Props) => {
       )}
       {donutData.current.length && (
         <div aria-hidden="true">
-          <ResponsiveContainer width="100%" height={calculateChartHeight()}>
+          <ResponsiveContainer
+            width="100%"
+            height={calculateChartHeight()}
+            id={`${props.title}-donut-chart`}
+          >
             <PieChart>
               <Legend
                 verticalAlign="top"

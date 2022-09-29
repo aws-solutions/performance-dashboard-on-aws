@@ -136,7 +136,7 @@ const LineChartWidget = (props: Props) => {
       {data && data.length && (
         <div aria-hidden="true">
           <ResponsiveContainer
-            id={props.title}
+            id={`${props.title}-line-chart`}
             width={
               props.horizontalScroll
                 ? `${Math.max(widthPercent, 100)}%`

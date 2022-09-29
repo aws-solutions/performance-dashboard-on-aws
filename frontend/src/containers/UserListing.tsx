@@ -154,14 +154,12 @@ function UserListing() {
         <div className="tablet:grid-col-4 text-left padding-top-1px">
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
-              <span>
-                <Search
-                  id={t("GlobalSearch")}
-                  onSubmit={onSearch}
-                  size="small"
-                  placeholder={t("Search.SearchUsers")}
-                />
-              </span>
+              <Search
+                id={t("GlobalSearch")}
+                onSubmit={onSearch}
+                size="small"
+                placeholder={t("Search.SearchUsers")}
+              />
             </li>
           </ul>
         </div>

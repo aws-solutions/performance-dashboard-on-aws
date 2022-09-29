@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./RadioButtonsTile.module.scss";
 
 interface Option {
   id: string;
@@ -22,7 +23,7 @@ function RadioButtonsTile(props: Props) {
       <div className="usa-radio" role="contentinfo" key={index}>
         <div className="tablet:grid-col">
           <input
-            className="usa-radio__input usa-radio__input--tile"
+            className={`usa-radio__input usa-radio__input--tile ${styles.radio}`}
             id={option.id}
             value={option.value}
             type="radio"

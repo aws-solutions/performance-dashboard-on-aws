@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import Link from "../components/Link";
 import { usePublicHomepage } from "../hooks";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
@@ -15,8 +14,6 @@ import {
 import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
 import CardGroup from "../components/CardGroup";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import "./Home.scss";
@@ -27,7 +24,7 @@ function Home() {
   const { homepage, loading } = usePublicHomepage();
   const { t } = useTranslation();
   const history = useHistory<LocationState>();
-  const { Card, CardFooter, CardBody } = CardGroup;
+  const { Card, CardBody } = CardGroup;
 
   const onSearch = (query: string) => {
     history.push("/public/search?q=" + query);
@@ -44,7 +41,9 @@ function Home() {
     a.name.localeCompare(b.name)
   );
   for (let topicArea of topicareas) {
-    topicArea.dashboards?.sort((a, b) => a.name.localeCompare(b.name));
+    topicArea.dashboards?.sort((a: PublicDashboard, b: PublicDashboard) =>
+      a.name.localeCompare(b.name)
+    );
   }
 
   const getDashboardLink = (dashboard: PublicDashboard | Dashboard): string => {
@@ -94,49 +93,37 @@ function Home() {
               <Accordion.Item
                 id={topicarea.id}
                 key={topicarea.id}
-                title={
-                  topicarea.name + " (" + topicarea.dashboards?.length + ")"
-                }
+                title={`${topicarea.name} (${
+                  topicarea.dashboards?.length ?? 0
+                })`}
                 hidden={true}
               >
-                <div className="cards">
-                  <ul>
-                    {topicarea.dashboards
-                      ? topicarea.dashboards.map((dashboard) => {
-                          return (
-                            <>
-                              <Card
-                                title={dashboard.name}
-                                link={getDashboardLink(dashboard)}
-                                col={4}
-                              >
-                                <CardBody>
-                                  <p>
-                                    <i>
-                                      {t("Updated") +
-                                        " " +
-                                        dayjs(dashboard.updatedAt).fromNow()}
-                                    </i>
-                                    <br />
-                                  </p>
-                                </CardBody>
-                                <CardFooter>
-                                  <p key={dashboard.id}>
-                                    <Link to={getDashboardLink(dashboard)}>
-                                      <FontAwesomeIcon
-                                        icon={faArrowRight}
-                                        className="margin-right-1"
-                                      />
-                                    </Link>
-                                  </p>
-                                </CardFooter>
-                              </Card>
-                            </>
-                          );
-                        })
-                      : ""}
-                  </ul>
-                </div>
+                <ul className="usa-card-group">
+                  {topicarea?.dashboards?.map((dashboard) => (
+                    <Card
+                      id={dashboard.id}
+                      title={dashboard.name}
+                      col={4}
+                      link={getDashboardLink(dashboard)}
+                    >
+                      <CardBody>
+                        <p className="text-base text-italic margin-bottom-2">
+                          {`${t("LastUpdatedLabel")} ${dayjs(
+                            dashboard.updatedAt
+                          ).fromNow()}`}
+                        </p>
+                        {dashboard.description && (
+                          <p>
+                            <MarkdownRender
+                              source={dashboard.description}
+                              className="font-sans-md usa-prose margin-top-0"
+                            />
+                          </p>
+                        )}
+                      </CardBody>
+                    </Card>
+                  ))}
+                </ul>
               </Accordion.Item>
             ))}
           </Accordion>

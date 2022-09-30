@@ -85,7 +85,6 @@ exports[`topic area settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      aria-current="page"
                       class=""
                       href="/admin/settings/publishingguidance"
                     >
@@ -100,7 +99,6 @@ exports[`topic area settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      aria-current="page"
                       class=""
                       href="/admin/settings/brandingandstyling"
                     >
@@ -115,7 +113,6 @@ exports[`topic area settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      aria-current="page"
                       class=""
                       href="/admin/settings/publishedsite"
                     >
@@ -130,7 +127,6 @@ exports[`topic area settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      aria-current="page"
                       class=""
                       href="/admin/settings/dateformat"
                     >
@@ -145,7 +141,6 @@ exports[`topic area settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      aria-current="page"
                       class=""
                       href="/admin/settings/adminsite"
                     >

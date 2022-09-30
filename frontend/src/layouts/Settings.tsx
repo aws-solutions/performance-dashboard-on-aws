@@ -97,7 +97,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/topicarea"
-                            aria-current="page"
+                            {...(currentSetting === "topicarea" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["topicarea"]}`}
                           </Link>
@@ -112,7 +114,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/publishingguidance"
-                            aria-current="page"
+                            {...(currentSetting === "publishingguidance" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["publishingguidance"]}`}
                           </Link>
@@ -127,7 +131,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/brandingandstyling"
-                            aria-current="page"
+                            {...(currentSetting === "brandingandstyling" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["brandingandstyling"]}`}
                           </Link>
@@ -142,7 +148,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/publishedsite"
-                            aria-current="page"
+                            {...(currentSetting === "publishedsite" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["publishedsite"]}`}
                           </Link>
@@ -157,7 +165,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/dateformat"
-                            aria-current="page"
+                            {...(currentSetting === "dateformat" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["dateformat"]}`}
                           </Link>
@@ -172,7 +182,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/adminsite"
-                            aria-current="page"
+                            {...(currentSetting === "adminsite" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["adminsite"]}`}
                           </Link>

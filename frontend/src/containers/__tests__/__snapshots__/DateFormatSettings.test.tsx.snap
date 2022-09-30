@@ -2,39 +2,39 @@
 
 exports[`date format settings should match snapshot 1`] = `
 <div>
-  <nav
-    aria-label="Breadcrumbs"
-    class="usa-breadcrumb padding-top-0"
+  <div
+    class="padding-1"
   >
-    <ol
-      class="usa-breadcrumb__list"
+    <nav
+      aria-label="Breadcrumbs"
+      class="usa-breadcrumb usa-breadcrumb--wrap"
     >
-      <li
-        class="usa-breadcrumb__list-item"
+      <ol
+        class="usa-breadcrumb__list"
       >
-        <a
-          aria-label=""
-          class="usa-link action-link"
-          href="/admin/settings/topicarea"
-          target=""
+        <li
+          class="usa-breadcrumb__list-item"
         >
-          <span>
+          <a
+            class="usa-breadcrumb__link"
+            href="/admin/settings/topicarea"
+          >
             <span>
               Settings
             </span>
+          </a>
+        </li>
+        <li
+          aria-current="page"
+          class="usa-breadcrumb__list-item usa-current"
+        >
+          <span>
+            Topic areas
           </span>
-        </a>
-      </li>
-      <li
-        aria-current="page"
-        class="usa-breadcrumb__list-item usa-current cursor-default"
-      >
-        <span>
-          Topic areas
-        </span>
-      </li>
-    </ol>
-  </nav>
+        </li>
+      </ol>
+    </nav>
+  </div>
   <div
     class="usa-section padding-top-3"
   >

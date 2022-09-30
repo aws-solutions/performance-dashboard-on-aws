@@ -5,55 +5,51 @@ Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <nav
-        aria-label="Breadcrumbs"
-        class="usa-breadcrumb padding-top-0"
+      <div
+        class="padding-1"
       >
-        <ol
-          class="usa-breadcrumb__list"
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
         >
-          <li
-            class="usa-breadcrumb__list-item"
+          <ol
+            class="usa-breadcrumb__list"
           >
-            <a
-              aria-label=""
-              class="usa-link action-link"
-              href="/admin/dashboards"
-              target=""
+            <li
+              class="usa-breadcrumb__list-item"
             >
-              <span>
+              <a
+                class="usa-breadcrumb__link"
+                href="/admin/dashboards"
+              >
                 <span>
                   Dashboards
                 </span>
-              </span>
-            </a>
-          </li>
-          <li
-            class="usa-breadcrumb__list-item"
-          >
-            <a
-              aria-label=""
-              class="usa-link action-link"
-              href="/admin/dashboard/edit/undefined"
-              target=""
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
             >
-              <span>
+              <a
+                class="usa-breadcrumb__link"
+                href="/admin/dashboard/edit/undefined"
+              >
                 <span>
                   My AWS Dashboard
                 </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              <span>
+                Add content item
               </span>
-            </a>
-          </li>
-          <li
-            aria-current="page"
-            class="usa-breadcrumb__list-item usa-current cursor-default"
-          >
-            <span>
-              Add content item
-            </span>
-          </li>
-        </ol>
-      </nav>
+            </li>
+          </ol>
+        </nav>
+      </div>
       <div
         class="grid-row"
       >
@@ -288,55 +284,51 @@ Object {
     </div>
   </body>,
   "container": <div>
-    <nav
-      aria-label="Breadcrumbs"
-      class="usa-breadcrumb padding-top-0"
+    <div
+      class="padding-1"
     >
-      <ol
-        class="usa-breadcrumb__list"
+      <nav
+        aria-label="Breadcrumbs"
+        class="usa-breadcrumb usa-breadcrumb--wrap"
       >
-        <li
-          class="usa-breadcrumb__list-item"
+        <ol
+          class="usa-breadcrumb__list"
         >
-          <a
-            aria-label=""
-            class="usa-link action-link"
-            href="/admin/dashboards"
-            target=""
+          <li
+            class="usa-breadcrumb__list-item"
           >
-            <span>
+            <a
+              class="usa-breadcrumb__link"
+              href="/admin/dashboards"
+            >
               <span>
                 Dashboards
               </span>
-            </span>
-          </a>
-        </li>
-        <li
-          class="usa-breadcrumb__list-item"
-        >
-          <a
-            aria-label=""
-            class="usa-link action-link"
-            href="/admin/dashboard/edit/undefined"
-            target=""
+            </a>
+          </li>
+          <li
+            class="usa-breadcrumb__list-item"
           >
-            <span>
+            <a
+              class="usa-breadcrumb__link"
+              href="/admin/dashboard/edit/undefined"
+            >
               <span>
                 My AWS Dashboard
               </span>
+            </a>
+          </li>
+          <li
+            aria-current="page"
+            class="usa-breadcrumb__list-item usa-current"
+          >
+            <span>
+              Add content item
             </span>
-          </a>
-        </li>
-        <li
-          aria-current="page"
-          class="usa-breadcrumb__list-item usa-current cursor-default"
-        >
-          <span>
-            Add content item
-          </span>
-        </li>
-      </ol>
-    </nav>
+          </li>
+        </ol>
+      </nav>
+    </div>
     <div
       class="grid-row"
     >

@@ -450,6 +450,7 @@ function VisualizeChart(props: Props) {
                     setWidthPercent={setWidthPercent}
                     significantDigitLabels={props.significantDigitLabels}
                     columnsMetadata={props.columnsMetadata}
+                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.ColumnChart && (
@@ -471,6 +472,7 @@ function VisualizeChart(props: Props) {
                     significantDigitLabels={props.significantDigitLabels}
                     columnsMetadata={props.columnsMetadata || []}
                     hideDataLabels={!props.dataLabels}
+                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.BarChart && (
@@ -489,6 +491,7 @@ function VisualizeChart(props: Props) {
                     columnsMetadata={props.columnsMetadata || []}
                     hideDataLabels={!props.dataLabels}
                     stackedChart={props.stackedChart}
+                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.PartWholeChart && (
@@ -505,6 +508,7 @@ function VisualizeChart(props: Props) {
                     summaryBelow={props.summaryBelow}
                     significantDigitLabels={props.significantDigitLabels}
                     columnsMetadata={props.columnsMetadata}
+                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.PieChart && (
@@ -524,6 +528,7 @@ function VisualizeChart(props: Props) {
                     isPreview={!props.fullPreview}
                     columnsMetadata={props.columnsMetadata}
                     computePercentages={props.computePercentages}
+                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.DonutChart && (
@@ -544,6 +549,7 @@ function VisualizeChart(props: Props) {
                     isPreview={!props.fullPreview}
                     columnsMetadata={props.columnsMetadata}
                     computePercentages={props.computePercentages}
+                    widgetId="visualization"
                   />
                 )}
               </>

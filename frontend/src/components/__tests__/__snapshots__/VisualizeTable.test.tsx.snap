@@ -307,19 +307,19 @@ exports[`renders the VisualizeTable component 1`] = `
                       scope="col"
                       style="min-width: 150px;"
                     >
-                      <span>
-                        id
-                      </span>
                       <button
                         aria-label="Toggle SortBy: id"
-                        class="margin-left-1 usa-button usa-button--unstyled"
+                        class="usa-button usa-button--unstyled text-no-underline"
                         style="cursor: pointer;"
                         title="Toggle SortBy: id"
                         type="button"
                       >
+                        <span>
+                          id
+                        </span>
                         <svg
                           aria-hidden="true"
-                          class="svg-inline--fa fa-chevron-down fa-w-14 "
+                          class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                           data-icon="chevron-down"
                           data-prefix="fas"
                           focusable="false"
@@ -341,19 +341,19 @@ exports[`renders the VisualizeTable component 1`] = `
                       scope="col"
                       style="min-width: 150px;"
                     >
-                      <span>
-                        name
-                      </span>
                       <button
                         aria-label="Toggle SortBy: name"
-                        class="margin-left-1 usa-button usa-button--unstyled"
+                        class="usa-button usa-button--unstyled text-no-underline"
                         style="cursor: pointer;"
                         title="Toggle SortBy: name"
                         type="button"
                       >
+                        <span>
+                          name
+                        </span>
                         <svg
                           aria-hidden="true"
-                          class="svg-inline--fa fa-chevron-down fa-w-14 "
+                          class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                           data-icon="chevron-down"
                           data-prefix="fas"
                           focusable="false"
@@ -375,19 +375,19 @@ exports[`renders the VisualizeTable component 1`] = `
                       scope="col"
                       style="min-width: 150px;"
                     >
-                      <span>
-                        updatedAt
-                      </span>
                       <button
                         aria-label="Toggle SortBy: updatedAt"
-                        class="margin-left-1 usa-button usa-button--unstyled"
+                        class="usa-button usa-button--unstyled text-no-underline"
                         style="cursor: pointer;"
                         title="Toggle SortBy: updatedAt"
                         type="button"
                       >
+                        <span>
+                          updatedAt
+                        </span>
                         <svg
                           aria-hidden="true"
-                          class="svg-inline--fa fa-chevron-down fa-w-14 "
+                          class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                           data-icon="chevron-down"
                           data-prefix="fas"
                           focusable="false"

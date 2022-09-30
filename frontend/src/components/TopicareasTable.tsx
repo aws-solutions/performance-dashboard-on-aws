@@ -64,8 +64,9 @@ function TopicareasTable(props: Props) {
               onClick={() => sortBy("name")}
               ariaLabel={t("SortTopicAreaName")}
             >
-              <span className="margin-1">{t("TopicArea")}</span>
+              <span>{t("TopicArea")}</span>
               <FontAwesomeIcon
+                className="margin-left-1"
                 icon={
                   sortedBy !== "name"
                     ? faChevronDown
@@ -83,8 +84,9 @@ function TopicareasTable(props: Props) {
               onClick={() => sortBy("dashboards")}
               ariaLabel={t("SortDashboards")}
             >
-              <span className="margin-1">{t("Dashboards")}</span>
+              <span>{t("Dashboards")}</span>
               <FontAwesomeIcon
+                className="margin-left-1"
                 icon={
                   sortedBy !== "dashboards"
                     ? faChevronDown
@@ -102,8 +104,9 @@ function TopicareasTable(props: Props) {
               onClick={() => sortBy("createdBy")}
               ariaLabel={t("SortCreatedBy")}
             >
-              <span className="margin-1">{t("CreatedBy")}</span>
+              <span>{t("CreatedBy")}</span>
               <FontAwesomeIcon
+                className="margin-left-1"
                 icon={
                   sortedBy !== "createdBy"
                     ? faChevronDown

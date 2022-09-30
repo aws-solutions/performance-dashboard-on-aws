@@ -50,19 +50,19 @@ exports[`renders a Data Table element 1`] = `
             scope="col"
             style="min-width: 150px;"
           >
-            <span>
-              year
-            </span>
             <button
               aria-label="Toggle SortBy: year"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: year"
               type="button"
             >
+              <span>
+                year
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -84,19 +84,19 @@ exports[`renders a Data Table element 1`] = `
             scope="col"
             style="min-width: 150px;"
           >
-            <span>
-              sales
-            </span>
             <button
               aria-label="Toggle SortBy: sales"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: sales"
               type="button"
             >
+              <span>
+                sales
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -118,19 +118,19 @@ exports[`renders a Data Table element 1`] = `
             scope="col"
             style="min-width: 150px;"
           >
-            <span>
-              revenue
-            </span>
             <button
               aria-label="Toggle SortBy: revenue"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: revenue"
               type="button"
             >
+              <span>
+                revenue
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -266,19 +266,19 @@ exports[`renders a Data Table element on mobile 1`] = `
             scope="col"
             style="min-width: 150px;"
           >
-            <span>
-              year
-            </span>
             <button
               aria-label="Toggle SortBy: year"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: year"
               type="button"
             >
+              <span>
+                year
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -300,19 +300,19 @@ exports[`renders a Data Table element on mobile 1`] = `
             scope="col"
             style="min-width: 150px;"
           >
-            <span>
-              sales
-            </span>
             <button
               aria-label="Toggle SortBy: sales"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: sales"
               type="button"
             >
+              <span>
+                sales
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -334,19 +334,19 @@ exports[`renders a Data Table element on mobile 1`] = `
             scope="col"
             style="min-width: 150px;"
           >
-            <span>
-              revenue
-            </span>
             <button
               aria-label="Toggle SortBy: revenue"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: revenue"
               type="button"
             >
+              <span>
+                revenue
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"

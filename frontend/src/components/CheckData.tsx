@@ -200,168 +200,164 @@ function CheckData(props: Props) {
 
   return (
     <>
-      <fieldset className="usa-fieldset">
-        <legend
-          className={`usa-hint ${isMobile ? "grid-col-12" : "grid-col-6"}`}
-        >
-          {t("CheckDataDescription", { widgetType: props.widgetType })}
-        </legend>
+      <div className={`usa-hint ${isMobile ? "grid-col-12" : "grid-col-6"}`}>
+        {t("CheckDataDescription", { widgetType: props.widgetType })}
+      </div>
 
-        <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
-          {t("IncludeInVisualization")}
-        </div>
+      <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
+        {t("IncludeInVisualization")}
+      </div>
 
-        <div className="check-data-table grid-col-12">
-          <Table
-            selection="none"
-            rows={checkDataTableRows}
-            initialSortAscending={
-              props.sortByDesc !== undefined ? !props.sortByDesc : true
-            }
-            initialSortByField={props.sortByColumn}
-            pageSize={50}
-            disablePagination={false}
-            disableBorderless={true}
-            columns={checkDataTableColumns}
-            hiddenColumns={props.hiddenColumns}
-            addNumbersColumn={true}
-            sortByColumn={props.sortByColumn}
-            sortByDesc={props.sortByDesc}
-            setSortByColumn={props.setSortByColumn}
-            setSortByDesc={props.setSortByDesc}
-            reset={props.reset}
-            keepBorderBottom
-            mobileNavigation
-            settingTable={true}
-          />
-        </div>
-        <br />
+      <div className="check-data-table grid-col-12">
+        <Table
+          selection="none"
+          rows={checkDataTableRows}
+          initialSortAscending={
+            props.sortByDesc !== undefined ? !props.sortByDesc : true
+          }
+          initialSortByField={props.sortByColumn}
+          pageSize={50}
+          disablePagination={false}
+          disableBorderless={true}
+          columns={checkDataTableColumns}
+          hiddenColumns={props.hiddenColumns}
+          addNumbersColumn={true}
+          sortByColumn={props.sortByColumn}
+          sortByDesc={props.sortByDesc}
+          setSortByColumn={props.setSortByColumn}
+          setSortByDesc={props.setSortByDesc}
+          reset={props.reset}
+          keepBorderBottom
+          mobileNavigation
+          settingTable={true}
+        />
+      </div>
+      <br />
 
-        <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
-          {t("FormatColumns")}
-        </div>
+      <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
+        {t("FormatColumns")}
+      </div>
 
-        <div className="grid-col-12 font-sans-md font-sans-md text-bold">
-          {(props.data.length
-            ? (Object.keys(props.data[0]) as Array<string>)
-            : []
-          ).map((header: string) => {
-            return (
-              <div key={header} className="margin-top-4">
-                <span className="text-base">Column: {header}</span>
+      <div className="grid-col-12 font-sans-md font-sans-md text-bold">
+        {(props.data.length
+          ? (Object.keys(props.data[0]) as Array<string>)
+          : []
+        ).map((header: string) => {
+          return (
+            <div key={header} className="margin-top-4">
+              <span className="text-base">Column: {header}</span>
 
+              <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
+                <Dropdown
+                  id={header}
+                  name="dataType"
+                  label={t("DataFormat")}
+                  options={[
+                    { value: "", label: t("SelectAnOption") },
+                    { value: ColumnDataType.Text, label: t("Text") },
+                    {
+                      value: ColumnDataType.Number,
+                      label: t("Number"),
+                    },
+                    {
+                      value: ColumnDataType.Date,
+                      label: t("Date"),
+                    },
+                  ]}
+                  value={props.dataTypes.get(header)}
+                  onChange={handleDataTypeChange}
+                  className="margin-top-2"
+                />
+              </div>
+
+              {props.dataTypes.get(header) === ColumnDataType.Number && (
                 <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
                   <Dropdown
                     id={header}
-                    name="dataType"
-                    label={t("DataFormat")}
+                    name="numberType"
+                    label={t("NumberFormat")}
                     options={[
                       { value: "", label: t("SelectAnOption") },
-                      { value: ColumnDataType.Text, label: t("Text") },
                       {
-                        value: ColumnDataType.Number,
-                        label: t("Number"),
+                        value: NumberDataType.Percentage,
+                        label: t("Percentage"),
                       },
                       {
-                        value: ColumnDataType.Date,
-                        label: t("Date"),
+                        value: NumberDataType.Currency,
+                        label: t("Currency"),
+                      },
+                      {
+                        value: NumberDataType["With thousands separators"],
+                        label: t("WithThousandsSeparators"),
                       },
                     ]}
-                    value={props.dataTypes.get(header)}
-                    onChange={handleDataTypeChange}
-                    className="margin-top-2"
+                    value={props.numberTypes.get(header)}
+                    onChange={handleNumberTypeChange}
+                    className="margin-top-3"
                   />
                 </div>
+              )}
 
-                {props.dataTypes.get(header) === ColumnDataType.Number && (
+              {props.dataTypes.get(header) === ColumnDataType.Number &&
+                props.numberTypes.get(header) === NumberDataType.Currency && (
                   <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
                     <Dropdown
                       id={header}
-                      name="numberType"
-                      label={t("NumberFormat")}
+                      name="currencyType"
+                      label={t("Currency")}
                       options={[
                         { value: "", label: t("SelectAnOption") },
                         {
-                          value: NumberDataType.Percentage,
-                          label: t("Percentage"),
+                          value: CurrencyDataType["Dollar $"],
+                          label: t("Dollar"),
                         },
                         {
-                          value: NumberDataType.Currency,
-                          label: t("Currency"),
+                          value: CurrencyDataType["Euro €"],
+                          label: t("Euro"),
                         },
                         {
-                          value: NumberDataType["With thousands separators"],
-                          label: t("WithThousandsSeparators"),
+                          value: CurrencyDataType["Pound £"],
+                          label: t("Pound"),
                         },
                       ]}
-                      value={props.numberTypes.get(header)}
-                      onChange={handleNumberTypeChange}
+                      value={props.currencyTypes.get(header)}
+                      onChange={handleCurrencyTypeChange}
                       className="margin-top-3"
                     />
                   </div>
                 )}
+              <br />
+              <hr />
+            </div>
+          );
+        })}
+      </div>
 
-                {props.dataTypes.get(header) === ColumnDataType.Number &&
-                  props.numberTypes.get(header) === NumberDataType.Currency && (
-                    <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
-                      <Dropdown
-                        id={header}
-                        name="currencyType"
-                        label={t("Currency")}
-                        options={[
-                          { value: "", label: t("SelectAnOption") },
-                          {
-                            value: CurrencyDataType["Dollar $"],
-                            label: t("Dollar"),
-                          },
-                          {
-                            value: CurrencyDataType["Euro €"],
-                            label: t("Euro"),
-                          },
-                          {
-                            value: CurrencyDataType["Pound £"],
-                            label: t("Pound"),
-                          },
-                        ]}
-                        value={props.currencyTypes.get(header)}
-                        onChange={handleCurrencyTypeChange}
-                        className="margin-top-3"
-                      />
-                    </div>
-                  )}
-                <br />
-                <hr />
-              </div>
-            );
-          })}
-        </div>
-
-        <br />
-        <Button
-          variant="outline"
-          type="button"
-          onClick={props.backStep}
-          className="margin-top-1"
-        >
-          {t("BackButton")}
-        </Button>
-        <Button
-          type="button"
-          onClick={props.advanceStep}
-          disabled={!props.data.length}
-          className="margin-top-1"
-        >
-          {t("ContinueButton")}
-        </Button>
-        <Button
-          variant="unstyled"
-          className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
-          type="button"
-          onClick={props.onCancel}
-        >
-          {t("Cancel")}
-        </Button>
-      </fieldset>
+      <br />
+      <Button
+        variant="outline"
+        type="button"
+        onClick={props.backStep}
+        className="margin-top-1"
+      >
+        {t("BackButton")}
+      </Button>
+      <Button
+        type="button"
+        onClick={props.advanceStep}
+        disabled={!props.data.length}
+        className="margin-top-1"
+      >
+        {t("ContinueButton")}
+      </Button>
+      <Button
+        variant="unstyled"
+        className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
+        type="button"
+        onClick={props.onCancel}
+      >
+        {t("Cancel")}
+      </Button>
     </>
   );
 }

@@ -81,7 +81,7 @@ Object {
               >
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
@@ -111,7 +111,7 @@ Object {
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
@@ -141,7 +141,7 @@ Object {
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
@@ -171,7 +171,7 @@ Object {
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
@@ -201,7 +201,7 @@ Object {
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
@@ -231,7 +231,7 @@ Object {
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
@@ -360,7 +360,7 @@ Object {
             >
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
@@ -390,7 +390,7 @@ Object {
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
@@ -420,7 +420,7 @@ Object {
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
@@ -450,7 +450,7 @@ Object {
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
@@ -480,7 +480,7 @@ Object {
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
@@ -510,7 +510,7 @@ Object {
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"

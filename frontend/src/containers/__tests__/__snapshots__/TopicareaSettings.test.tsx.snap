@@ -69,6 +69,7 @@ exports[`topic area settings should match snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
+                      aria-current="page"
                       class="usa-current"
                       href="/admin/settings/topicarea"
                     >

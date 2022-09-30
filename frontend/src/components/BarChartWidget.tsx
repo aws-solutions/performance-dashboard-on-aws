@@ -38,6 +38,7 @@ type Props = {
   hideDataLabels?: boolean;
   showMobilePreview?: boolean;
   stackedChart?: boolean;
+  widgetId?: string;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -155,7 +156,7 @@ const BarChartWidget = (props: Props) => {
           <ResponsiveContainer
             width="100%"
             height={dims.chartHeight}
-            id={`${props.title}-bar-chart`}
+            id={`bar-chart-${props.widgetId}`}
           >
             <BarChart
               className="bar-chart"

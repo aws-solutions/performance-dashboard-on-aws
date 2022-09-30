@@ -31,6 +31,7 @@ type Props = {
   isPreview?: boolean;
   showMobilePreview?: boolean;
   computePercentages?: boolean;
+  widgetId?: string;
 };
 
 const PieChartWidget = (props: Props) => {
@@ -266,7 +267,7 @@ const PieChartWidget = (props: Props) => {
           <ResponsiveContainer
             width="100%"
             height={calculateChartHeight()}
-            id={`${props.title}-pie-chart`}
+            id={`pie-chart-${props.widgetId}`}
           >
             <PieChart>
               <Legend

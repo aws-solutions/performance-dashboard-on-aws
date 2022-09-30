@@ -36,6 +36,7 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   showMobilePreview?: boolean;
+  widgetId?: string;
 };
 
 const LineChartWidget = (props: Props) => {
@@ -136,7 +137,7 @@ const LineChartWidget = (props: Props) => {
       {data && data.length && (
         <div aria-hidden="true">
           <ResponsiveContainer
-            id={`${props.title}-line-chart`}
+            id={`line-chart-${props.widgetId}`}
             width={
               props.horizontalScroll
                 ? `${Math.max(widthPercent, 100)}%`

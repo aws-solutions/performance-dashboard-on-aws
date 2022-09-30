@@ -33,6 +33,7 @@ type Props = {
   isPreview?: boolean;
   showMobilePreview?: boolean;
   computePercentages?: boolean;
+  widgetId?: string;
 };
 
 const DonutChartWidget = (props: Props) => {
@@ -291,7 +292,7 @@ const DonutChartWidget = (props: Props) => {
           <ResponsiveContainer
             width="100%"
             height={calculateChartHeight()}
-            id={`${props.title}-donut-chart`}
+            id={`donut-chart-${props.widgetId}`}
           >
             <PieChart>
               <Legend

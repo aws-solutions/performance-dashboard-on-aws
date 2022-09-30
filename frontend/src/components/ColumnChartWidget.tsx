@@ -40,6 +40,7 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   showMobilePreview?: boolean;
+  widgetId?: string;
 };
 
 const ColumnChartWidget = (props: Props) => {
@@ -169,7 +170,7 @@ const ColumnChartWidget = (props: Props) => {
                 : "100%"
             }
             height={300}
-            id={`${props.title}-column-chart`}
+            id={`column-chart-${props.widgetId}`}
           >
             <BarChart
               className="column-chart"

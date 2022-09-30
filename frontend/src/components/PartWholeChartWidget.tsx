@@ -28,6 +28,7 @@ type Props = {
     secondary: string | undefined;
   };
   showMobilePreview?: boolean;
+  widgetId?: string;
 };
 
 const PartWholeChartWidget = (props: Props) => {
@@ -170,7 +171,7 @@ const PartWholeChartWidget = (props: Props) => {
           <ResponsiveContainer
             width="100%"
             height={calculateChartHeight()}
-            id={`${props.title}-part-to-whole-chart`}
+            id={`part-to-whole-chart-${props.widgetId}`}
           >
             <BarChart
               className="part-to-whole-chart"

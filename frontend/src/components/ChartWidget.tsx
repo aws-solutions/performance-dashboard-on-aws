@@ -70,6 +70,7 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           columnsMetadata={content.columnsMetadata}
           showMobilePreview={showMobilePreview}
+          widgetId={props.widget.id}
         />
       );
 
@@ -90,6 +91,7 @@ function ChartWidgetComponent(props: Props) {
           columnsMetadata={content.columnsMetadata || []}
           hideDataLabels={!content.dataLabels}
           showMobilePreview={showMobilePreview}
+          widgetId={props.widget.id}
         />
       );
 
@@ -109,6 +111,7 @@ function ChartWidgetComponent(props: Props) {
           hideDataLabels={!content.dataLabels}
           showMobilePreview={showMobilePreview}
           stackedChart={content.stackedChart}
+          widgetId={props.widget.id}
         />
       );
 
@@ -126,6 +129,7 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           showMobilePreview={showMobilePreview}
           columnsMetadata={content.columnsMetadata}
+          widgetId={props.widget.id}
         />
       );
 
@@ -145,6 +149,7 @@ function ChartWidgetComponent(props: Props) {
           columnsMetadata={content.columnsMetadata}
           computePercentages={content.computePercentages}
           showMobilePreview={showMobilePreview}
+          widgetId={props.widget.id}
         />
       );
 
@@ -165,6 +170,7 @@ function ChartWidgetComponent(props: Props) {
           showTotal={content.showTotal}
           computePercentages={content.computePercentages}
           showMobilePreview={showMobilePreview}
+          widgetId={props.widget.id}
         />
       );
 

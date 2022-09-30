@@ -317,19 +317,19 @@ exports[`renders the ChooseData component 1`] = `
                   scope="col"
                   style="padding: 0.5rem 1rem;"
                 >
-                  <span>
-                    Name
-                  </span>
                   <button
                     aria-label="Toggle SortBy: Name"
-                    class="margin-left-1 usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled text-no-underline"
                     style="cursor: pointer;"
                     title="Toggle SortBy: Name"
                     type="button"
                   >
+                    <span>
+                      Name
+                    </span>
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-down fa-w-14 "
+                      class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                       data-icon="chevron-down"
                       data-prefix="fas"
                       focusable="false"
@@ -351,19 +351,19 @@ exports[`renders the ChooseData component 1`] = `
                   scope="col"
                   style="padding: 0.5rem 1rem;"
                 >
-                  <span>
-                    Last updated
-                  </span>
                   <button
                     aria-label="Toggle SortBy: Last updated"
-                    class="margin-left-1 usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled text-no-underline"
                     style="cursor: pointer;"
                     title="Toggle SortBy: Last updated"
                     type="button"
                   >
+                    <span>
+                      Last updated
+                    </span>
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-circle-down fa-w-16 "
+                      class="svg-inline--fa fa-chevron-circle-down fa-w-16 margin-left-1"
                       data-icon="chevron-circle-down"
                       data-prefix="fas"
                       focusable="false"
@@ -385,19 +385,19 @@ exports[`renders the ChooseData component 1`] = `
                   scope="col"
                   style="padding: 0.5rem 1rem;"
                 >
-                  <span>
-                    Description
-                  </span>
                   <button
                     aria-label="Toggle SortBy: Description"
-                    class="margin-left-1 usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled text-no-underline"
                     style="cursor: pointer;"
                     title="Toggle SortBy: Description"
                     type="button"
                   >
+                    <span>
+                      Description
+                    </span>
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-down fa-w-14 "
+                      class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                       data-icon="chevron-down"
                       data-prefix="fas"
                       focusable="false"
@@ -419,19 +419,19 @@ exports[`renders the ChooseData component 1`] = `
                   scope="col"
                   style="padding: 0.5rem 1rem;"
                 >
-                  <span>
-                    Tags
-                  </span>
                   <button
                     aria-label="Toggle SortBy: Tags"
-                    class="margin-left-1 usa-button usa-button--unstyled"
+                    class="usa-button usa-button--unstyled text-no-underline"
                     style="cursor: pointer;"
                     title="Toggle SortBy: Tags"
                     type="button"
                   >
+                    <span>
+                      Tags
+                    </span>
                     <svg
                       aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-down fa-w-14 "
+                      class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                       data-icon="chevron-down"
                       data-prefix="fas"
                       focusable="false"

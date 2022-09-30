@@ -1,6 +1,7 @@
 import React from "react";
-import Link from "./Link";
+import { Link } from "react-router-dom";
 import "./Breadcrumbs.scss";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   crumbs: Array<{
@@ -10,31 +11,37 @@ interface Props {
 }
 
 function Breadcrumbs(props: Props) {
+  const { t } = useTranslation();
   return (
-    <nav className="usa-breadcrumb padding-top-0" aria-label="Breadcrumbs">
-      <ol className="usa-breadcrumb__list">
-        {props.crumbs?.map((crumb, index) => {
-          return crumb.url ? (
-            <li
-              className="usa-breadcrumb__list-item"
-              key={crumb.label || index}
-            >
-              <Link to={crumb.url}>
+    <div className="padding-1">
+      <nav
+        className="usa-breadcrumb usa-breadcrumb--wrap"
+        aria-label={t("Breadcrumbs")}
+      >
+        <ol className="usa-breadcrumb__list">
+          {props.crumbs?.map((crumb, index) => {
+            return crumb.url ? (
+              <li
+                className="usa-breadcrumb__list-item"
+                key={crumb.label || index}
+              >
+                <Link to={crumb.url} className="usa-breadcrumb__link">
+                  <span>{crumb.label}</span>
+                </Link>
+              </li>
+            ) : (
+              <li
+                className="usa-breadcrumb__list-item usa-current"
+                aria-current="page"
+                key={crumb.label || index}
+              >
                 <span>{crumb.label}</span>
-              </Link>
-            </li>
-          ) : (
-            <li
-              className="usa-breadcrumb__list-item usa-current cursor-default"
-              aria-current="page"
-              key={crumb.label || index}
-            >
-              <span>{crumb.label}</span>
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+    </div>
   );
 }
 

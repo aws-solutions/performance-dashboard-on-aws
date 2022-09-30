@@ -12,6 +12,8 @@ import {
   useGlobalFilter,
   usePagination,
   Row,
+  Column,
+  HeaderGroup,
 } from "react-table";
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
@@ -235,6 +237,17 @@ function Table(props: Props) {
 
   const currentRows = props.disablePagination ? rows : page;
 
+  function getColumnName(column: HeaderGroup) {
+    /**
+     * The split is to remove the quotes from the
+     * string, the filter to remove the resulted
+     * empty ones, and the join to form it again.
+     */
+    return typeof column.render("Header") === "string"
+      ? (column.render("Header") as string).split('"').filter(Boolean).join()
+      : column.render("Header");
+  }
+
   return (
     <div className="overflow-x-hidden overflow-y-hidden">
       <table
@@ -267,27 +280,13 @@ function Table(props: Props) {
                         }
                   }
                 >
-                  <span>
-                    {
-                      /**
-                       * The split is to remove the quotes from the
-                       * string, the filter to remove the resulted
-                       * empty ones, and the join to form it again.
-                       */
-                      typeof column.render("Header") === "string"
-                        ? (column.render("Header") as string)
-                            .split('"')
-                            .filter(Boolean)
-                            .join()
-                        : column.render("Header")
-                    }
-                  </span>
                   {(props.selection !== "none" && i === 0) ||
                   (column.id && column.id.startsWith("checkbox")) ||
-                  (column.id &&
-                    column.id.startsWith("numbersListing")) ? null : (
+                  (column.id && column.id.startsWith("numbersListing")) ? (
+                    <span>{getColumnName(column)}</span>
+                  ) : (
                     <button
-                      className="margin-left-1 usa-button usa-button--unstyled"
+                      className="usa-button usa-button--unstyled text-no-underline"
                       {...column.getSortByToggleProps()}
                       title={t("ToggleSortBy", { columnName: column.Header })}
                       aria-label={t("ToggleSortBy", {
@@ -295,7 +294,9 @@ function Table(props: Props) {
                       })}
                       type="button"
                     >
+                      <span>{getColumnName(column)}</span>
                       <FontAwesomeIcon
+                        className="margin-left-1"
                         icon={
                           !column.isSorted
                             ? faChevronDown

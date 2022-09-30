@@ -14,14 +14,12 @@ exports[`renders a table with topic areas 1`] = `
             aria-label="Sort by topic area name"
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
           >
-            <span
-              class="margin-1"
-            >
+            <span>
               Topic area
             </span>
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
               data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
@@ -41,14 +39,12 @@ exports[`renders a table with topic areas 1`] = `
             aria-label="Sort by dashboard name"
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
           >
-            <span
-              class="margin-1"
-            >
+            <span>
               Dashboards
             </span>
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-circle-down fa-w-16 "
+              class="svg-inline--fa fa-chevron-circle-down fa-w-16 margin-left-1"
               data-icon="chevron-circle-down"
               data-prefix="fas"
               focusable="false"
@@ -68,14 +64,12 @@ exports[`renders a table with topic areas 1`] = `
             aria-label="Sort by created by name"
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
           >
-            <span
-              class="margin-1"
-            >
+            <span>
               Created by
             </span>
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
               data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
@@ -147,14 +141,12 @@ exports[`renders an empty table 1`] = `
             aria-label="Sort by topic area name"
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
           >
-            <span
-              class="margin-1"
-            >
+            <span>
               Topic area
             </span>
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
               data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"
@@ -174,14 +166,12 @@ exports[`renders an empty table 1`] = `
             aria-label="Sort by dashboard name"
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
           >
-            <span
-              class="margin-1"
-            >
+            <span>
               Dashboards
             </span>
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-circle-down fa-w-16 "
+              class="svg-inline--fa fa-chevron-circle-down fa-w-16 margin-left-1"
               data-icon="chevron-circle-down"
               data-prefix="fas"
               focusable="false"
@@ -201,14 +191,12 @@ exports[`renders an empty table 1`] = `
             aria-label="Sort by created by name"
             class="usa-button usa-button--unstyled margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
           >
-            <span
-              class="margin-1"
-            >
+            <span>
               Created by
             </span>
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-chevron-down fa-w-14 "
+              class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
               data-icon="chevron-down"
               data-prefix="fas"
               focusable="false"

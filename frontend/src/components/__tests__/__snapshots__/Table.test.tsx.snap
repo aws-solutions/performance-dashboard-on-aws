@@ -20,19 +20,19 @@ exports[`renders a basic table 1`] = `
             scope="col"
             style="min-width: 0;"
           >
-            <span>
-              ID
-            </span>
             <button
               aria-label="Toggle SortBy: ID"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: ID"
               type="button"
             >
+              <span>
+                ID
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -54,19 +54,19 @@ exports[`renders a basic table 1`] = `
             scope="col"
             style="min-width: 0;"
           >
-            <span>
-              Name
-            </span>
             <button
               aria-label="Toggle SortBy: Name"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Name"
               type="button"
             >
+              <span>
+                Name
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -88,19 +88,19 @@ exports[`renders a basic table 1`] = `
             scope="col"
             style="min-width: 0;"
           >
-            <span>
-              Last Updated
-            </span>
             <button
               aria-label="Toggle SortBy: Last Updated"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Last Updated"
               type="button"
             >
+              <span>
+                Last Updated
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -206,19 +206,19 @@ exports[`renders a basic table with mobile navigation 1`] = `
             scope="col"
             style="min-width: 0;"
           >
-            <span>
-              ID
-            </span>
             <button
               aria-label="Toggle SortBy: ID"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: ID"
               type="button"
             >
+              <span>
+                ID
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -240,19 +240,19 @@ exports[`renders a basic table with mobile navigation 1`] = `
             scope="col"
             style="min-width: 0;"
           >
-            <span>
-              Name
-            </span>
             <button
               aria-label="Toggle SortBy: Name"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Name"
               type="button"
             >
+              <span>
+                Name
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -274,19 +274,19 @@ exports[`renders a basic table with mobile navigation 1`] = `
             scope="col"
             style="min-width: 0;"
           >
-            <span>
-              Last Updated
-            </span>
             <button
               aria-label="Toggle SortBy: Last Updated"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Last Updated"
               type="button"
             >
+              <span>
+                Last Updated
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -575,19 +575,19 @@ exports[`renders a basic table without pagination 1`] = `
             scope="col"
             style="min-width: 0;"
           >
-            <span>
-              ID
-            </span>
             <button
               aria-label="Toggle SortBy: ID"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: ID"
               type="button"
             >
+              <span>
+                ID
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -609,19 +609,19 @@ exports[`renders a basic table without pagination 1`] = `
             scope="col"
             style="min-width: 0;"
           >
-            <span>
-              Name
-            </span>
             <button
               aria-label="Toggle SortBy: Name"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Name"
               type="button"
             >
+              <span>
+                Name
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -643,19 +643,19 @@ exports[`renders a basic table without pagination 1`] = `
             scope="col"
             style="min-width: 0;"
           >
-            <span>
-              Last Updated
-            </span>
             <button
               aria-label="Toggle SortBy: Last Updated"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Last Updated"
               type="button"
             >
+              <span>
+                Last Updated
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -776,19 +776,19 @@ exports[`sorting buttons are clickable 1`] = `
             scope="col"
             style="padding: 0.5rem 1rem;"
           >
-            <span>
-              ID
-            </span>
             <button
               aria-label="Toggle SortBy: ID"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: ID"
               type="button"
             >
+              <span>
+                ID
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -810,19 +810,19 @@ exports[`sorting buttons are clickable 1`] = `
             scope="col"
             style="padding: 0.5rem 1rem;"
           >
-            <span>
-              Name
-            </span>
             <button
               aria-label="Toggle SortBy: Name"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Name"
               type="button"
             >
+              <span>
+                Name
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -844,19 +844,19 @@ exports[`sorting buttons are clickable 1`] = `
             scope="col"
             style="padding: 0.5rem 1rem;"
           >
-            <span>
-              Last Updated
-            </span>
             <button
               aria-label="Toggle SortBy: Last Updated"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Last Updated"
               type="button"
             >
+              <span>
+                Last Updated
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-circle-up fa-w-16 "
+                class="svg-inline--fa fa-chevron-circle-up fa-w-16 margin-left-1"
                 data-icon="chevron-circle-up"
                 data-prefix="fas"
                 focusable="false"
@@ -1004,19 +1004,19 @@ exports[`sorting buttons are clickable 2`] = `
             scope="col"
             style="padding: 0.5rem 1rem;"
           >
-            <span>
-              ID
-            </span>
             <button
               aria-label="Toggle SortBy: ID"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: ID"
               type="button"
             >
+              <span>
+                ID
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -1038,19 +1038,19 @@ exports[`sorting buttons are clickable 2`] = `
             scope="col"
             style="padding: 0.5rem 1rem;"
           >
-            <span>
-              Name
-            </span>
             <button
               aria-label="Toggle SortBy: Name"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Name"
               type="button"
             >
+              <span>
+                Name
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-down fa-w-14 "
+                class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
                 data-icon="chevron-down"
                 data-prefix="fas"
                 focusable="false"
@@ -1072,19 +1072,19 @@ exports[`sorting buttons are clickable 2`] = `
             scope="col"
             style="padding: 0.5rem 1rem;"
           >
-            <span>
-              Last Updated
-            </span>
             <button
               aria-label="Toggle SortBy: Last Updated"
-              class="margin-left-1 usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled text-no-underline"
               style="cursor: pointer;"
               title="Toggle SortBy: Last Updated"
               type="button"
             >
+              <span>
+                Last Updated
+              </span>
               <svg
                 aria-hidden="true"
-                class="svg-inline--fa fa-chevron-circle-down fa-w-16 "
+                class="svg-inline--fa fa-chevron-circle-down fa-w-16 margin-left-1"
                 data-icon="chevron-circle-down"
                 data-prefix="fas"
                 focusable="false"

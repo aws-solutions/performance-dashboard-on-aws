@@ -34,18 +34,16 @@ function ArchivedTab(props: Props) {
         <div className="tablet:grid-col-7 text-left padding-top-1px">
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
-              <span>
-                <Search
-                  id="search"
-                  onSubmit={onSearch}
-                  size="small"
-                  placeholder={t("Search.SearchDashboards", {
-                    state: t("archived"),
-                  })}
-                  label={t("Search.SearchDashboards", { state: t("archived") })}
-                  wide={true}
-                />
-              </span>
+              <Search
+                id="search"
+                onSubmit={onSearch}
+                size="small"
+                placeholder={t("Search.SearchDashboards", {
+                  state: t("archived"),
+                })}
+                label={t("Search.SearchDashboards", { state: t("archived") })}
+                wide={true}
+              />
             </li>
           </ul>
         </div>

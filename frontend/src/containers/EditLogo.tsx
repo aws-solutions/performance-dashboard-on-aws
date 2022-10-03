@@ -197,7 +197,7 @@ function EditLogo() {
             <h2 className="margin-top-4">{t("SettingsLogoPreview")}</h2>
             <div className="grid-row">
               <Header className="usa-header usa-header--basic padding-left-2 padding-right-2">
-                <div className="usa-logo margin-top-2" id="basic-logo">
+                <div className="usa-logo margin-top-2" id="basic-logo-preview">
                   <em className="usa-logo__text display-flex flex-align-center">
                     <div className="logo">
                       {currentLogo && (

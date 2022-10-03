@@ -63,7 +63,7 @@ function Shareable(props: Props) {
   }
 
   return (
-    <div className={`shareable-container ${props.className}`}>
+    <div className={`shareable-container ${props.className ?? ""}`}>
       <span id={anchorId} className="anchor"></span>
       <a
         className="share-button text-base-darker"

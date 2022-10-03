@@ -54,20 +54,18 @@ function PublishedTab(props: Props) {
           <div className="text-left padding-top-1px">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
-                <span>
-                  <Search
-                    id="search"
-                    onSubmit={onSearch}
-                    size="small"
-                    placeholder={t("Search.SearchDashboards", {
-                      state: t("published"),
-                    })}
-                    label={t("Search.SearchDashboards", {
-                      state: t("published"),
-                    })}
-                    wide={true}
-                  />
-                </span>
+                <Search
+                  id="search"
+                  onSubmit={onSearch}
+                  size="small"
+                  placeholder={t("Search.SearchDashboards", {
+                    state: t("published"),
+                  })}
+                  label={t("Search.SearchDashboards", {
+                    state: t("published"),
+                  })}
+                  wide={true}
+                />
               </li>
             </ul>
           </div>
@@ -112,20 +110,18 @@ function PublishedTab(props: Props) {
           <div className="tablet:grid-col-7 text-left padding-top-1px">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
-                <span>
-                  <Search
-                    id="search"
-                    onSubmit={onSearch}
-                    size="small"
-                    placeholder={t("Search.SearchDashboards", {
-                      state: t("published"),
-                    })}
-                    label={t("Search.SearchDashboards", {
-                      state: t("published"),
-                    })}
-                    wide={true}
-                  />
-                </span>
+                <Search
+                  id="search"
+                  onSubmit={onSearch}
+                  size="small"
+                  placeholder={t("Search.SearchDashboards", {
+                    state: t("published"),
+                  })}
+                  label={t("Search.SearchDashboards", {
+                    state: t("published"),
+                  })}
+                  wide={true}
+                />
               </li>
             </ul>
           </div>

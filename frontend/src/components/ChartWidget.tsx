@@ -36,7 +36,7 @@ function ChartWidgetComponent(props: Props) {
         obj[key] = row[key];
         return obj;
       }, {});
-      if (filteredRow !== {}) {
+      if (Object.keys(filteredRow).length > 0) {
         newFilteredJson.push(filteredRow);
       }
     }
@@ -54,10 +54,12 @@ function ChartWidgetComponent(props: Props) {
   }
 
   const keys = Object.keys(filteredJson[0] as Array<string>);
+  const chartId = `chart-${props.widget.id.substring(0, 8)}`;
   switch (content.chartType) {
     case ChartType.LineChart:
       return (
         <LineChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -76,6 +78,7 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.ColumnChart:
       return (
         <ColumnChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -96,6 +99,7 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.BarChart:
       return (
         <BarChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -115,6 +119,7 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.PartWholeChart:
       return (
         <PartWholeChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -132,6 +137,7 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.PieChart:
       return (
         <PieChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -151,6 +157,7 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.DonutChart:
       return (
         <DonutChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }

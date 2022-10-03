@@ -15,6 +15,7 @@ import { ColumnMetadata, NumberDataType } from "../models";
 import RenderLegendText from "./Legend";
 
 type Props = {
+  id: string;
   title: string;
   downloadTitle: string;
   summary: string;
@@ -31,7 +32,6 @@ type Props = {
   isPreview?: boolean;
   showMobilePreview?: boolean;
   computePercentages?: boolean;
-  widgetId?: string;
 };
 
 const PieChartWidget = (props: Props) => {
@@ -265,9 +265,9 @@ const PieChartWidget = (props: Props) => {
       {pieData.current.length && (
         <div aria-hidden="true">
           <ResponsiveContainer
+            id={props.id}
             width="100%"
             height={calculateChartHeight()}
-            id={`pie-chart-${props.widgetId}`}
           >
             <PieChart>
               <Legend

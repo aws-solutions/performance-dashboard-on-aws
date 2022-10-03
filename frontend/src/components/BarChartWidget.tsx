@@ -22,6 +22,7 @@ import { ColumnDataType } from "../models";
 import RulerService from "../services/RulerService";
 
 type Props = {
+  id: string;
   title: string;
   downloadTitle: string;
   summary: string;
@@ -38,7 +39,6 @@ type Props = {
   hideDataLabels?: boolean;
   showMobilePreview?: boolean;
   stackedChart?: boolean;
-  widgetId?: string;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -154,9 +154,9 @@ const BarChartWidget = (props: Props) => {
       {data && data.length && (
         <div aria-hidden="true">
           <ResponsiveContainer
+            id={props.id}
             width="100%"
             height={dims.chartHeight}
-            id={`bar-chart-${props.widgetId}`}
           >
             <BarChart
               className="bar-chart"

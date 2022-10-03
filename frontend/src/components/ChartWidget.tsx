@@ -36,7 +36,7 @@ function ChartWidgetComponent(props: Props) {
         obj[key] = row[key];
         return obj;
       }, {});
-      if (filteredRow !== {}) {
+      if (Object.keys(filteredRow).length > 0) {
         newFilteredJson.push(filteredRow);
       }
     }
@@ -54,10 +54,12 @@ function ChartWidgetComponent(props: Props) {
   }
 
   const keys = Object.keys(filteredJson[0] as Array<string>);
+  const chartId = `chart-${props.widget.id.substring(0, 8)}`;
   switch (content.chartType) {
     case ChartType.LineChart:
       return (
         <LineChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -70,13 +72,13 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           columnsMetadata={content.columnsMetadata}
           showMobilePreview={showMobilePreview}
-          widgetId={props.widget.id}
         />
       );
 
     case ChartType.ColumnChart:
       return (
         <ColumnChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -91,13 +93,13 @@ function ChartWidgetComponent(props: Props) {
           columnsMetadata={content.columnsMetadata || []}
           hideDataLabels={!content.dataLabels}
           showMobilePreview={showMobilePreview}
-          widgetId={props.widget.id}
         />
       );
 
     case ChartType.BarChart:
       return (
         <BarChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -111,13 +113,13 @@ function ChartWidgetComponent(props: Props) {
           hideDataLabels={!content.dataLabels}
           showMobilePreview={showMobilePreview}
           stackedChart={content.stackedChart}
-          widgetId={props.widget.id}
         />
       );
 
     case ChartType.PartWholeChart:
       return (
         <PartWholeChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -129,13 +131,13 @@ function ChartWidgetComponent(props: Props) {
           significantDigitLabels={content.significantDigitLabels}
           showMobilePreview={showMobilePreview}
           columnsMetadata={content.columnsMetadata}
-          widgetId={props.widget.id}
         />
       );
 
     case ChartType.PieChart:
       return (
         <PieChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -149,13 +151,13 @@ function ChartWidgetComponent(props: Props) {
           columnsMetadata={content.columnsMetadata}
           computePercentages={content.computePercentages}
           showMobilePreview={showMobilePreview}
-          widgetId={props.widget.id}
         />
       );
 
     case ChartType.DonutChart:
       return (
         <DonutChartWidget
+          id={chartId}
           title={
             !props.hideTitle && props.widget.showTitle ? content.title : ""
           }
@@ -170,7 +172,6 @@ function ChartWidgetComponent(props: Props) {
           showTotal={content.showTotal}
           computePercentages={content.computePercentages}
           showMobilePreview={showMobilePreview}
-          widgetId={props.widget.id}
         />
       );
 

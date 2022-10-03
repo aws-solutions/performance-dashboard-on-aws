@@ -21,6 +21,7 @@ import DonutChartWidget from "./DonutChartWidget";
 import { useWindowSize } from "../hooks";
 
 interface Props {
+  widgetId: string;
   errors: any;
   register: Function;
   json: Array<any>;
@@ -435,6 +436,7 @@ function VisualizeChart(props: Props) {
                 )}
                 {props.chartType === ChartType.LineChart && (
                   <LineChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -450,11 +452,11 @@ function VisualizeChart(props: Props) {
                     setWidthPercent={setWidthPercent}
                     significantDigitLabels={props.significantDigitLabels}
                     columnsMetadata={props.columnsMetadata}
-                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.ColumnChart && (
                   <ColumnChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -472,11 +474,11 @@ function VisualizeChart(props: Props) {
                     significantDigitLabels={props.significantDigitLabels}
                     columnsMetadata={props.columnsMetadata || []}
                     hideDataLabels={!props.dataLabels}
-                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.BarChart && (
                   <BarChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -491,11 +493,11 @@ function VisualizeChart(props: Props) {
                     columnsMetadata={props.columnsMetadata || []}
                     hideDataLabels={!props.dataLabels}
                     stackedChart={props.stackedChart}
-                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.PartWholeChart && (
                   <PartWholeChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -508,11 +510,11 @@ function VisualizeChart(props: Props) {
                     summaryBelow={props.summaryBelow}
                     significantDigitLabels={props.significantDigitLabels}
                     columnsMetadata={props.columnsMetadata}
-                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.PieChart && (
                   <PieChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -528,11 +530,11 @@ function VisualizeChart(props: Props) {
                     isPreview={!props.fullPreview}
                     columnsMetadata={props.columnsMetadata}
                     computePercentages={props.computePercentages}
-                    widgetId="visualization"
                   />
                 )}
                 {props.chartType === ChartType.DonutChart && (
                   <DonutChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -549,7 +551,6 @@ function VisualizeChart(props: Props) {
                     isPreview={!props.fullPreview}
                     columnsMetadata={props.columnsMetadata}
                     computePercentages={props.computePercentages}
-                    widgetId="visualization"
                   />
                 )}
               </>

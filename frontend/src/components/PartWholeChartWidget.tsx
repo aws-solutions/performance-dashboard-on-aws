@@ -15,6 +15,7 @@ import DataTable from "./DataTable";
 import RenderLegendText from "./Legend";
 
 type Props = {
+  id: string;
   title: string;
   downloadTitle: string;
   summary: string;
@@ -28,7 +29,6 @@ type Props = {
     secondary: string | undefined;
   };
   showMobilePreview?: boolean;
-  widgetId?: string;
 };
 
 const PartWholeChartWidget = (props: Props) => {
@@ -169,9 +169,9 @@ const PartWholeChartWidget = (props: Props) => {
       {partWholeData.current.length && (
         <div aria-hidden="true">
           <ResponsiveContainer
+            id={props.id}
             width="100%"
             height={calculateChartHeight()}
-            id={`part-to-whole-chart-${props.widgetId}`}
           >
             <BarChart
               className="part-to-whole-chart"

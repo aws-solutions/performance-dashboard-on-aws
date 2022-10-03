@@ -21,6 +21,7 @@ import RenderLegendText from "./Legend";
 import { ColumnDataType } from "../models";
 
 type Props = {
+  id: string;
   title: string;
   downloadTitle: string;
   summary: string;
@@ -40,7 +41,6 @@ type Props = {
   };
   columnsMetadata: Array<any>;
   showMobilePreview?: boolean;
-  widgetId?: string;
 };
 
 const ColumnChartWidget = (props: Props) => {
@@ -164,13 +164,13 @@ const ColumnChartWidget = (props: Props) => {
       {data && data.length && (
         <div aria-hidden="true">
           <ResponsiveContainer
+            id={props.id}
             width={
               props.horizontalScroll
                 ? `${Math.max(widthPercent, 100)}%`
                 : "100%"
             }
             height={300}
-            id={`column-chart-${props.widgetId}`}
           >
             <BarChart
               className="column-chart"

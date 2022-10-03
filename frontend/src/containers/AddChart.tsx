@@ -500,6 +500,7 @@ function AddChart() {
 
             <div hidden={step !== 2}>
               <VisualizeChart
+                widgetId={`add-new-${chartType}`}
                 errors={errors}
                 register={register}
                 json={filteredJson}

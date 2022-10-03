@@ -186,6 +186,7 @@ function EditColors() {
             <div className="grid-row">
               <div className="grid-col-5">
                 <BarChartWidget
+                  id="edit-color-bar-chart-sample"
                   title=""
                   downloadTitle="Edit colors bar sample"
                   summary=""
@@ -201,6 +202,7 @@ function EditColors() {
               </div>
               <div className="grid-col-7">
                 <ColumnChartWidget
+                  id="edit-color-column-chart-sample"
                   title=""
                   downloadTitle="Edit colors column sample"
                   summary=""

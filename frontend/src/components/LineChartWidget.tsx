@@ -20,6 +20,7 @@ import RenderLegendText from "./Legend";
 import { ColumnDataType } from "../models";
 
 type Props = {
+  id: string;
   title: string;
   downloadTitle: string;
   summary: string;
@@ -136,7 +137,7 @@ const LineChartWidget = (props: Props) => {
       {data && data.length && (
         <div aria-hidden="true">
           <ResponsiveContainer
-            id={props.title}
+            id={props.id}
             width={
               props.horizontalScroll
                 ? `${Math.max(widthPercent, 100)}%`

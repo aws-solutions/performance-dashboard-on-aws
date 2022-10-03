@@ -21,6 +21,7 @@ import DonutChartWidget from "./DonutChartWidget";
 import { useWindowSize } from "../hooks";
 
 interface Props {
+  widgetId: string;
   errors: any;
   register: Function;
   json: Array<any>;
@@ -435,6 +436,7 @@ function VisualizeChart(props: Props) {
                 )}
                 {props.chartType === ChartType.LineChart && (
                   <LineChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -454,6 +456,7 @@ function VisualizeChart(props: Props) {
                 )}
                 {props.chartType === ChartType.ColumnChart && (
                   <ColumnChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -475,6 +478,7 @@ function VisualizeChart(props: Props) {
                 )}
                 {props.chartType === ChartType.BarChart && (
                   <BarChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -493,6 +497,7 @@ function VisualizeChart(props: Props) {
                 )}
                 {props.chartType === ChartType.PartWholeChart && (
                   <PartWholeChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -509,6 +514,7 @@ function VisualizeChart(props: Props) {
                 )}
                 {props.chartType === ChartType.PieChart && (
                   <PieChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
@@ -528,6 +534,7 @@ function VisualizeChart(props: Props) {
                 )}
                 {props.chartType === ChartType.DonutChart && (
                   <DonutChartWidget
+                    id={props.widgetId}
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}

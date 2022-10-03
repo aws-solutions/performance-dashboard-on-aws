@@ -712,6 +712,7 @@ function EditChart() {
                 aria-labelledby="editChartFormHeader_visualizeChart"
               >
                 <VisualizeChart
+                  widgetId={`chart-${widgetId?.substring(0, 8)}`}
                   errors={errors}
                   register={register}
                   json={filteredJson}

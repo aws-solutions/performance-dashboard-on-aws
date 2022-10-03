@@ -16,6 +16,7 @@ import { ColumnMetadata, NumberDataType } from "../models";
 import RenderLegendText from "./Legend";
 
 type Props = {
+  id: string;
   title: string;
   downloadTitle: string;
   summary: string;
@@ -288,7 +289,11 @@ const DonutChartWidget = (props: Props) => {
       )}
       {donutData.current.length && (
         <div aria-hidden="true">
-          <ResponsiveContainer width="100%" height={calculateChartHeight()}>
+          <ResponsiveContainer
+            id={props.id}
+            width="100%"
+            height={calculateChartHeight()}
+          >
             <PieChart>
               <Legend
                 verticalAlign="top"

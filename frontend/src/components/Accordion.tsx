@@ -5,11 +5,7 @@ interface AccordionProps {
 }
 
 function Accordion(props: AccordionProps) {
-  return (
-    <div className="usa-accordion" aria-multiselectable="true">
-      {props.children}
-    </div>
-  );
+  return <div className="usa-accordion">{props.children}</div>;
 }
 
 interface ItemProps {

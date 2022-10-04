@@ -572,7 +572,7 @@
   "SettingsColorsPrimaryColorInvalid": "Color is not a valid HEX color value",
   "SettingsColorsPrimaryColorEmpty": "Please specify a color",
   "SettingsColorsSecondColor": "Data visualization second color (optional)",
-  "SettingsColorsSecondColorDescription": "Choose a color that will follow your primary color in categorical data visualizations. These color were chosen to meet accessibility standards.",
+  "SettingsColorsSecondColorDescription": "Choose a color that will follow your primary color in categorical data visualizations. These colors were chosen to meet accessibility standards.",
   "SettingsLogoEditSuccess": "Logo successfully modified.",
   "SettingsLogoEditFailed": "Failed to update logo.",
   "SettingsLogoEdit": "Edit logo",

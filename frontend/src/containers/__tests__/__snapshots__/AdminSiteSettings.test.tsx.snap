@@ -151,7 +151,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
             </ul>
           </nav>
         </div>
-        <main
+        <div
           class="desktop:grid-col-9 usa-prose mobile-margin-top-2"
           id="main-content"
         >
@@ -197,7 +197,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
               class="grid-col flex-3 text-right"
             />
           </div>
-        </main>
+        </div>
       </div>
     </div>
   </div>

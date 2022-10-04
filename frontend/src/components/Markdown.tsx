@@ -39,7 +39,7 @@ const Markdown = (props: MarkdownProps) => {
         {props.label}
         {props.label && props.required && <span>&#42;</span>}
       </label>
-      <span className="usa-hint">
+      <span id="makdownSupportHint" className="usa-hint">
         {props.hint} {t("MarkdownSupport")}{" "}
         <Link target="_blank" to={"/admin/markdown"}>
           {t("AddTextScreen.ViewMarkdownSyntax")}
@@ -89,6 +89,7 @@ const Markdown = (props: MarkdownProps) => {
             text.current = e;
           }}
           className="usa-textarea"
+          aria-describedby="makdownSupportHint"
         />
       </div>
       <div

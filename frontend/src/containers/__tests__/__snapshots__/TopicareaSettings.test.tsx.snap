@@ -151,7 +151,7 @@ exports[`topic area settings should match snapshot 1`] = `
             </ul>
           </nav>
         </div>
-        <main
+        <div
           class="desktop:grid-col-9 usa-prose mobile-margin-top-2"
           id="main-content"
         >
@@ -459,7 +459,7 @@ exports[`topic area settings should match snapshot 1`] = `
               </tr>
             </tbody>
           </table>
-        </main>
+        </div>
       </div>
     </div>
   </div>

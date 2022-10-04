@@ -8,6 +8,7 @@ import PartWholeChartWidget from "./PartWholeChartWidget";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PieChartWidget from "./PieChartWidget";
 import DonutChartWidget from "./DonutChartWidget";
+import Utils from "../services/UtilsService";
 
 interface Props {
   widget: ChartWidget;
@@ -54,7 +55,7 @@ function ChartWidgetComponent(props: Props) {
   }
 
   const keys = Object.keys(filteredJson[0] as Array<string>);
-  const chartId = `chart-${props.widget.id.substring(0, 8)}`;
+  const chartId = `chart-${Utils.getShorterId(props.widget.id)}`;
   switch (content.chartType) {
     case ChartType.LineChart:
       return (

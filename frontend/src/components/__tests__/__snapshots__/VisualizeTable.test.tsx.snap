@@ -187,7 +187,6 @@ exports[`renders the VisualizeTable component 1`] = `
               Give your table a summary to explain it in more depth. It can also be read by screen readers to describe the table for those with visual impairments. This field supports markdown.
                
               <a
-                aria-label=""
                 class="usa-link action-link"
                 href="/admin/markdown"
                 target="_blank"

@@ -69,3 +69,15 @@ describe("getDashboardUrlPath", () => {
     expect(path).toEqual("/admin/dashboard/001");
   });
 });
+
+describe("getShorterId", () => {
+  const id = "305907af-08fc-484f-add9-f24afd5f9c4a";
+
+  test("returns the first 8 characters of the id", () => {
+    expect(UtilsService.getShorterId(id)).toEqual("305907af");
+  });
+
+  test("returns undefined when id not specified", () => {
+    expect(UtilsService.getShorterId(null)).toBeUndefined();
+  });
+});

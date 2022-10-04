@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "../components/Link";
+import Utils from "../services/UtilsService";
 
 interface CardGroupProps {
   children: React.ReactNode;
@@ -29,7 +30,7 @@ function Card(props: CardProps) {
   return (
     <li
       key={`card-${props.id}`}
-      id={`card-${props.id}`}
+      id={`card-${Utils.getShorterId(props.id)}`}
       className={`usa-card cursor-default tablet:grid-col-${props.col}`}
     >
       <div className="usa-card__container">

@@ -19,7 +19,6 @@ exports[`renders a FourZeroFour component 1`] = `
       You may want to double-check your link and try again, or return to the
        
       <a
-        aria-label=""
         class="usa-link action-link"
         href="/"
         target=""

@@ -59,7 +59,6 @@ exports[`renders the API Help Page component 1`] = `
       Upload a CSV or Excel file to create a new dataset. If you want to use a dataset that has already been uploaded, you can choose “select a static dataset” and browse existing datasets. If you need help formatting your file,
        
       <a
-        aria-label=""
         class="usa-link action-link"
         href="/admin/formatting"
         target="_blank"

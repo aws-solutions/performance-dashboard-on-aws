@@ -55,7 +55,11 @@ function AdminHome() {
       <div className="grid-row margin-top-2">
         {currentAuthenticatedUser.isEditor ? (
           <CardGroup>
-            <Card title={t("CreateANewDashboard")} col={7}>
+            <Card
+              id="create-dashboard"
+              title={t("CreateANewDashboard")}
+              col={7}
+            >
               <CardBody>
                 <p>
                   {t("BuildDraftDashboards")}
@@ -73,7 +77,7 @@ function AdminHome() {
                 </Button>
               </CardFooter>
             </Card>
-            <Card title={t("ViewExistingDashboards")} col={5}>
+            <Card id="dashboards" title={t("ViewExistingDashboards")} col={5}>
               <CardBody>
                 <p>{t("ViewDashboardsCreatedByOthers")}</p>
               </CardBody>
@@ -93,7 +97,7 @@ function AdminHome() {
         )}
         {currentAuthenticatedUser.isAdmin ? (
           <CardGroup>
-            <Card title={t("CreateANewDashboard")} col={4}>
+            <Card id="dashboards" title={t("CreateANewDashboard")} col={4}>
               <CardBody>
                 <p>
                   {t("BuildDraftDashboards")}
@@ -111,7 +115,7 @@ function AdminHome() {
                 </Button>
               </CardFooter>
             </Card>
-            <Card title={t("AddOtherUsers")} col={4}>
+            <Card id="users" title={t("AddOtherUsers")} col={4}>
               <CardBody>
                 <p>{t("AllowOtherUsers")}</p>
               </CardBody>
@@ -121,7 +125,7 @@ function AdminHome() {
                 </Button>
               </CardFooter>
             </Card>
-            <Card title={t("CustomizeSettings")} col={4}>
+            <Card id="settings" title={t("CustomizeSettings")} col={4}>
               <CardBody>
                 <p>{t("PersonalizeDashboard")}</p>
               </CardBody>

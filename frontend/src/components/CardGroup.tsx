@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "../components/Link";
+import Utils from "../services/UtilsService";
 
 interface CardGroupProps {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ function CardGroup(props: CardGroupProps) {
 }
 
 interface CardProps {
+  id: string;
   title: string;
   col: number;
   children: React.ReactNode;
@@ -27,8 +29,8 @@ interface CardProps {
 function Card(props: CardProps) {
   return (
     <li
-      key={`${props.title}-card`}
-      id={`${props.title}-card`}
+      key={`card-${props.id}`}
+      id={`card-${Utils.getShorterId(props.id)}`}
       className={`usa-card cursor-default tablet:grid-col-${props.col}`}
     >
       <div className="usa-card__container">

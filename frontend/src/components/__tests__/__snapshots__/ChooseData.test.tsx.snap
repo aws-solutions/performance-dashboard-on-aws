@@ -19,7 +19,6 @@ exports[`renders the ChooseData component 1`] = `
         Choose an existing dataset or create a new one to populate this chart.
          
         <a
-          aria-label=""
           class="usa-link action-link"
           href="/admin/apihelp"
           target="_blank"
@@ -151,7 +150,6 @@ exports[`renders the ChooseData component 1`] = `
                 Upload a dataset from a CSV or Excel file, or choose an existing static dataset.
                  
                 <a
-                  aria-label=""
                   class="usa-link action-link"
                   href="/admin/formatting"
                   target="_blank"

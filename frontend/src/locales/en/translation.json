@@ -1062,7 +1062,8 @@
     "TopicAreaListingActions": "Topic area listing actions",
     "TopicAreaListingDelete": "Delete topic area",
     "TopicAreaListingEdit": "Edit topic area",
-    "Breadcrumbs": "Breadcrumbs"
+    "Breadcrumbs": "Breadcrumbs",
+    "ViewDashboard": "View dashboard: {{dashboard}}"
   },
   "percentage": "{{pct}}%",
   "Search": {

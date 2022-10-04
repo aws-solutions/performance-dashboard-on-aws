@@ -161,6 +161,10 @@ function calculateBarDimentions(
   };
 }
 
+function getShorterId(id: string) {
+  return id?.substring(0, 8);
+}
+
 export interface ComputedDimensions {
   labelWidth: number;
   chartHeight: number;
@@ -176,6 +180,7 @@ const UtilsService = {
   isCellEmpty,
   getTranslationUserStatusValue,
   calculateBarDimentions,
+  getShorterId,
 };
 
 export default UtilsService;

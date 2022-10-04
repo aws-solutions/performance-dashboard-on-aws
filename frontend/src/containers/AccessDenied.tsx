@@ -22,7 +22,11 @@ function AccessDenied() {
       </div>
       <div className="grid-row">
         <CardGroup>
-          <Card title={t("AccessDeniedScreen.CardTitle")} col={7}>
+          <Card
+            id="access-denied"
+            title={t("AccessDeniedScreen.CardTitle")}
+            col={7}
+          >
             <CardBody>
               <p>
                 {t("AccessDeniedScreen.Message")}

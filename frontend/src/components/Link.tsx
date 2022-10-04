@@ -21,7 +21,7 @@ function Link(props: Props) {
       target={props.target || ""}
       to={props.to}
       className="usa-link action-link"
-      aria-label={props.ariaLabel || ""}
+      aria-label={props.ariaLabel}
     >
       <span>{props.children}</span>
       {props.external && (

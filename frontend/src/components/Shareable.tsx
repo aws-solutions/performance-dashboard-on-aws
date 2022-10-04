@@ -4,6 +4,7 @@ import { faLink } from "@fortawesome/free-solid-svg-icons";
 import "./Shareable.scss";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Utils from "../services/UtilsService";
 
 interface Props {
   children: ReactNode | string;
@@ -17,7 +18,7 @@ function Shareable(props: Props) {
   const { t } = useTranslation();
   const { pathname, hash, key } = useLocation();
 
-  const shortId = props.id.substring(0, 8);
+  const shortId = Utils.getShorterId(props.id);
   const anchorId = `section-${shortId}`;
 
   function scrollElementIntoView(element: HTMLElement | null) {

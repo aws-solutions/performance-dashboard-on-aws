@@ -1,10 +1,10 @@
 import React, { ReactNode, useEffect, MouseEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
-import "./Shareable.scss";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Utils from "../services/UtilsService";
+import styles from "./Shareable.module.scss";
 
 interface Props {
   children: ReactNode | string;
@@ -64,13 +64,14 @@ function Shareable(props: Props) {
   }
 
   return (
-    <div className={`shareable-container ${props.className ?? ""}`}>
-      <span id={anchorId} className="anchor"></span>
+    <div className={`${styles.shareableContainer} ${props.className ?? ""}`}>
+      <span id={anchorId} className={styles.anchor}></span>
       <a
-        className="share-button text-base-darker"
+        className={`text-base-darker ${styles.shareButton}`}
         onClick={copyWidgetUrlToClipboard}
         href={getWidgetUrl()}
         aria-label={t("CopyLink", { title: props.title })}
+        tabIndex={0}
       >
         <FontAwesomeIcon icon={faLink} />
       </a>

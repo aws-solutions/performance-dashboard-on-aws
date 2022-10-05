@@ -37,6 +37,7 @@ exports[`renders a Data Table element 1`] = `
   >
     <table
       class="usa-table usa-table--borderless"
+      id="items"
       role="table"
     >
       <thead>
@@ -253,6 +254,7 @@ exports[`renders a Data Table element on mobile 1`] = `
   >
     <table
       class="usa-table usa-table--borderless"
+      id="items"
       role="table"
     >
       <thead>

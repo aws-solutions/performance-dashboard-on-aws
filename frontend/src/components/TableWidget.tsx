@@ -5,8 +5,10 @@ import MarkdownRender from "./MarkdownRender";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
 import Table from "./Table";
+import ShareButton from "./ShareButton";
 
 type Props = {
+  id: string;
   title: string;
   summary: string;
   data?: Array<object>;
@@ -20,6 +22,7 @@ type Props = {
 };
 
 const TableWidget = ({
+  id,
   data,
   summaryBelow,
   summary,
@@ -106,9 +109,21 @@ const TableWidget = ({
     <div
       aria-label={title}
       tabIndex={-1}
-      className="overflow-x-hidden overflow-y-hidden"
+      className={`overflow-x-hidden overflow-y-hidden ${
+        title ? "" : "padding-top-2"
+      }`}
     >
-      <h2 className="margin-bottom-1">{title}</h2>
+      {title && (
+        <h2 className={`margin-bottom-${summaryBelow ? "4" : "1"}`}>
+          {title}
+          <ShareButton
+            id={`${id}a`}
+            title={title}
+            size="1x"
+            className="margin-1 text-middle"
+          />
+        </h2>
+      )}
       {!summaryBelow && (
         <MarkdownRender
           source={summary}
@@ -116,6 +131,7 @@ const TableWidget = ({
         />
       )}
       <Table
+        id={id}
         selection="none"
         rows={rows}
         initialSortAscending={sortByDesc !== undefined ? !sortByDesc : true}

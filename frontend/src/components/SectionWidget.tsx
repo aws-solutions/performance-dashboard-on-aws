@@ -6,6 +6,8 @@ import Tabs from "./Tabs";
 import TabsVertical from "./TabsVertical";
 import { useWindowSize } from "../hooks";
 import { Waypoint } from "react-waypoint";
+import ShareButton from "./ShareButton";
+import Utils from "../services/UtilsService";
 
 interface Props {
   widget: Widget;
@@ -41,6 +43,7 @@ function SectionWidget(props: Props) {
     }
   }
 
+  const chartId = `chart-${Utils.getShorterId(props.widget.id)}`;
   return (
     <div aria-label={content.title}>
       {!content.showWithTabs ? (
@@ -55,7 +58,17 @@ function SectionWidget(props: Props) {
           fireOnRapidScroll={false}
         >
           <div>
-            {showTitle && <h2>{content.title}</h2>}
+            {showTitle && (
+              <h2>
+                {content.title}
+                <ShareButton
+                  id={`${chartId}a`}
+                  title={content.title}
+                  size="1x"
+                  className="margin-1 text-middle"
+                />
+              </h2>
+            )}
             {content.summary ? (
               <div className="padding-left-05">
                 <MarkdownRender
@@ -70,7 +83,17 @@ function SectionWidget(props: Props) {
         </Waypoint>
       ) : (
         <>
-          {showTitle && <h2>{content.title}</h2>}
+          {showTitle && (
+            <h2>
+              {content.title}
+              <ShareButton
+                id={`${chartId}a`}
+                title={content.title}
+                size="1x"
+                className="margin-1 text-middle"
+              />
+            </h2>
+          )}
           {content.summary ? (
             <div className="padding-left-05">
               <MarkdownRender
@@ -101,7 +124,15 @@ function SectionWidget(props: Props) {
                   fireOnRapidScroll={false}
                 >
                   <div className="margin-top-4 usa-prose" id={id}>
-                    <h3 className="margin-bottom-1">{widget.content.title}</h3>
+                    <h3 className="margin-bottom-1">
+                      {widget.content.title}
+                      <ShareButton
+                        id={`${Utils.getShorterId(widget.id)}a`}
+                        title={content.title}
+                        size="sm"
+                        className="margin-1 text-middle"
+                      />
+                    </h3>
                     <WidgetRender
                       widget={widget}
                       showMobilePreview={props.showMobilePreview}

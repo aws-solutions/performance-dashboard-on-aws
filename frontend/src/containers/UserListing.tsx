@@ -203,6 +203,7 @@ function UserListing() {
         </div>
       </div>
       <Table
+        id="users"
         selection="multiple"
         screenReaderField="userId"
         filterQuery={filter}

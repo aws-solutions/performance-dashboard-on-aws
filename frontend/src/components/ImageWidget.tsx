@@ -1,7 +1,9 @@
 import React from "react";
 import MarkdownRender from "./MarkdownRender";
+import ShareButton from "./ShareButton";
 
 type Props = {
+  id: string;
   title: string;
   summary: string;
   file: File | undefined;
@@ -14,8 +16,22 @@ const ImageWidget = (props: Props) => {
   const { file, summaryBelow, summary, title, altText, scalePct } = props;
 
   return (
-    <div aria-label={title} className="preview-container" tabIndex={-1}>
-      <h2 className="margin-top-3">{title}</h2>
+    <div
+      aria-label={title}
+      className={`preview-container ${title ? "" : "padding-top-2"}`}
+      tabIndex={-1}
+    >
+      {title && (
+        <h2 className="margin-top-3">
+          {title}
+          <ShareButton
+            id={`${props.id}a`}
+            title={title}
+            size="1x"
+            className="margin-1 text-middle"
+          />
+        </h2>
+      )}
       {!summaryBelow && (
         <MarkdownRender
           source={summary}

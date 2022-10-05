@@ -432,6 +432,7 @@ function EditImage() {
                     />
                   ) : (
                     <ImageWidget
+                      id={widgetId}
                       title={widget.showTitle ? widget.content.title : ""}
                       summary={widget.content.summary}
                       file={newImageFile ? newImageFile : file}

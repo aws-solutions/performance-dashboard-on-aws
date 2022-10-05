@@ -20,6 +20,7 @@ import DataTable from "./DataTable";
 import RenderLegendText from "./Legend";
 import { ColumnDataType } from "../models";
 import RulerService from "../services/RulerService";
+import ShareButton from "./ShareButton";
 
 type Props = {
   id: string;
@@ -141,10 +142,22 @@ const BarChartWidget = (props: Props) => {
   }
 
   return (
-    <div aria-label={props.title} tabIndex={-1}>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
-        {props.title}
-      </h2>
+    <div
+      aria-label={props.title}
+      tabIndex={-1}
+      className={props.title ? "" : "padding-top-2"}
+    >
+      {props.title && (
+        <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+          {props.title}
+          <ShareButton
+            id={`${props.id}a`}
+            title={props.title}
+            size="1x"
+            className="margin-1 text-middle"
+          />
+        </h2>
+      )}
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

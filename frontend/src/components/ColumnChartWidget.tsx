@@ -19,6 +19,7 @@ import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
 import RenderLegendText from "./Legend";
 import { ColumnDataType } from "../models";
+import ShareButton from "./ShareButton";
 
 type Props = {
   id: string;
@@ -150,11 +151,19 @@ const ColumnChartWidget = (props: Props) => {
       tabIndex={-1}
       className={`overflow-x-hidden overflow-y-hidden${
         widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
-      }`}
+      } ${props.title ? "" : "padding-top-2"}`}
     >
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
-        {props.title}
-      </h2>
+      {props.title && (
+        <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+          {props.title}
+          <ShareButton
+            id={`${props.id}a`}
+            title={props.title}
+            size="1x"
+            className="margin-1 text-middle"
+          />
+        </h2>
+      )}
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}

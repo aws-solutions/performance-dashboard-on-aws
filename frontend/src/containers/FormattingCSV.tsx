@@ -274,6 +274,7 @@ function FormattingCSV() {
       <hr />
       <div>
         <TableWidget
+          id="sample-table"
           title="Table sample"
           summary=""
           data={table.dataset.data}

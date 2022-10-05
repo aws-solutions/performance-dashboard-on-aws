@@ -26,8 +26,7 @@ function TextWidget(props: Props) {
           <ShareButton
             id={`${textId}a`}
             title={name}
-            size="1x"
-            className="margin-1 text-middle"
+            className="margin-left-1"
           />
         </h2>
       )}

@@ -116,12 +116,7 @@ const TableWidget = ({
       {title && (
         <h2 className={`margin-bottom-${summaryBelow ? "4" : "1"}`}>
           {title}
-          <ShareButton
-            id={`${id}a`}
-            title={title}
-            size="1x"
-            className="margin-1 text-middle"
-          />
+          <ShareButton id={`${id}a`} title={title} className="margin-left-1" />
         </h2>
       )}
       {!summaryBelow && (

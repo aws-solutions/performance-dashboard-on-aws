@@ -10,20 +10,6 @@ interface Props {
   id: string;
   title: string;
   className?: string;
-  size?:
-    | "xs"
-    | "lg"
-    | "sm"
-    | "1x"
-    | "2x"
-    | "3x"
-    | "4x"
-    | "5x"
-    | "6x"
-    | "7x"
-    | "8x"
-    | "9x"
-    | "10x";
 }
 
 const scrollElementIntoView = (element: HTMLElement | null) => {
@@ -75,14 +61,14 @@ function ShareButton(props: Props) {
 
   return (
     <>
-      <Button
-        variant="unstyled"
-        className={`text-base-darker ${styles.shareButton} ${props.className}`}
+      <a
+        className={`${styles.shareButton} ${props.className}`}
         onClick={copyWidgetUrlToClipboard}
-        ariaLabel={t("CopyLink", { title: props.title })}
+        aria-label={t("CopyLink", { title: props.title })}
+        href={getWidgetUrl()}
       >
-        <FontAwesomeIcon icon={faLink} size={props.size} />
-      </Button>
+        <FontAwesomeIcon icon={faLink} size="xs" />
+      </a>
       <span id={props.id} className={styles.anchor}></span>
     </>
   );

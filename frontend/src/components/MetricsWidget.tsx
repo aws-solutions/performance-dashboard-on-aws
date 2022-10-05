@@ -29,12 +29,7 @@ const MetricsWidget = ({
       {title && (
         <h2 className="margin-top-3">
           {title}
-          <ShareButton
-            id={`${id}a`}
-            title={title}
-            size="1x"
-            className="margin-1 text-middle"
-          />
+          <ShareButton id={`${id}a`} title={title} className="margin-left-1" />
         </h2>
       )}
       {metrics.length ? (

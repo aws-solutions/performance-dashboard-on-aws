@@ -27,8 +27,7 @@ const ImageWidget = (props: Props) => {
           <ShareButton
             id={`${props.id}a`}
             title={title}
-            size="1x"
-            className="margin-1 text-middle"
+            className="margin-left-1"
           />
         </h2>
       )}

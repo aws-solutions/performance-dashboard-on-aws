@@ -60,13 +60,14 @@ function SectionWidget(props: Props) {
           <div>
             {showTitle && (
               <h2>
-                {content.title}
-                <ShareButton
-                  id={`${chartId}a`}
-                  title={content.title}
-                  size="1x"
-                  className="margin-1 text-middle"
-                />
+                <span>
+                  {content.title}
+                  <ShareButton
+                    id={`${chartId}a`}
+                    title={content.title}
+                    className="margin-left-1"
+                  />
+                </span>
               </h2>
             )}
             {content.summary ? (
@@ -89,8 +90,7 @@ function SectionWidget(props: Props) {
               <ShareButton
                 id={`${chartId}a`}
                 title={content.title}
-                size="1x"
-                className="margin-1 text-middle"
+                className="margin-left-1"
               />
             </h2>
           )}
@@ -129,8 +129,7 @@ function SectionWidget(props: Props) {
                       <ShareButton
                         id={`${Utils.getShorterId(widget.id)}a`}
                         title={content.title}
-                        size="sm"
-                        className="margin-1 text-middle"
+                        className="margin-left-1"
                       />
                     </h3>
                     <WidgetRender

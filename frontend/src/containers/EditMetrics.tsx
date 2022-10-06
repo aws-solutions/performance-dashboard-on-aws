@@ -404,6 +404,7 @@ function EditMetrics() {
               {isMobile ? <br /> : fullPreviewButton}
               <div id={previewPanelId}>
                 <MetricsWidget
+                  id={widgetId}
                   title={showTitle ? title : ""}
                   metrics={metrics}
                   metricPerRow={oneMetricPerRow ? 1 : 3}

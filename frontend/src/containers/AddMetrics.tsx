@@ -492,6 +492,7 @@ function AddMetrics() {
 
                     <div className="overflow-hidden">
                       <Table
+                        id="items"
                         selection="single"
                         initialSortByField="updatedAt"
                         filterQuery={filter}
@@ -685,6 +686,7 @@ function AddMetrics() {
                     {isMobile ? <br /> : fullPreviewButton}
                     <div id={previewPanelId}>
                       <MetricsWidget
+                        id="add-new-metrics"
                         title={showTitle ? title : ""}
                         metrics={metrics}
                         metricPerRow={oneMetricPerRow ? 1 : 3}

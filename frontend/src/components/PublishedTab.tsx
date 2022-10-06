@@ -162,6 +162,7 @@ function PublishedTab(props: Props) {
         </div>
       )}
       <Table
+        id="published-dashboards"
         selection="multiple"
         initialSortByField="updatedAt"
         filterQuery={filter}

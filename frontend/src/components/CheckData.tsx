@@ -210,6 +210,7 @@ function CheckData(props: Props) {
 
       <div className="check-data-table grid-col-12">
         <Table
+          id="items"
           selection="none"
           rows={checkDataTableRows}
           initialSortAscending={

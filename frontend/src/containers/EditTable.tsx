@@ -636,6 +636,7 @@ function EditTable() {
                 aria-labelledby="editTableFormHeader_visualize"
               >
                 <Visualize
+                  widgetId={widgetId}
                   errors={errors}
                   register={register}
                   json={filteredJson}

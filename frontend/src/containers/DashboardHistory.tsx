@@ -90,6 +90,7 @@ function DashboardHistory() {
       </div>
 
       <Table
+        id="history"
         width="100%"
         selection="none"
         rows={auditlogs}

@@ -292,6 +292,7 @@ exports[`renders the ChooseData component 1`] = `
         >
           <table
             class="usa-table usa-table--borderless"
+            id="items"
             role="table"
             width="100%"
           >

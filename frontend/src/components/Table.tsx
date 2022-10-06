@@ -22,6 +22,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "./Pagination";
 
 interface Props {
+  id: string;
   selection: "multiple" | "single" | "none";
   initialSortByField?: string;
   initialSortAscending?: boolean;
@@ -251,6 +252,7 @@ function Table(props: Props) {
   return (
     <div className="overflow-x-hidden overflow-y-hidden">
       <table
+        id={props.id}
         className={`usa-table${borderlessClassName}${className}`}
         width={props.width}
         {...getTableProps()}

@@ -106,6 +106,7 @@ function ChooseStaticDataset() {
       </div>
 
       <Table
+        id="items"
         selection="single"
         initialSortByField="updatedAt"
         filterQuery={filter}

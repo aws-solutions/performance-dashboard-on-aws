@@ -163,6 +163,7 @@ function DraftsTab(props: Props) {
         </div>
       )}
       <Table
+        id="draft-dashboards"
         selection="multiple"
         initialSortByField="updatedAt"
         filterQuery={filter}

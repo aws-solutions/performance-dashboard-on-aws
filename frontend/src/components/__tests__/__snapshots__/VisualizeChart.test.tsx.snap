@@ -485,13 +485,14 @@ exports[`renders the VisualizeChart component 1`] = `
               class="margin-bottom-1"
             >
               title
-              <button
+              <a
                 aria-label="Copy link: title"
-                class="usa-button usa-button--unstyled text-base-darker shareButton margin-1 text-middle"
+                class="shareButton margin-left-1"
+                href="http://localhost/#undefineda"
               >
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-link fa-w-16 fa-1x "
+                  class="svg-inline--fa fa-link fa-w-16 fa-xs "
                   data-icon="link"
                   data-prefix="fas"
                   focusable="false"
@@ -504,7 +505,7 @@ exports[`renders the VisualizeChart component 1`] = `
                     fill="currentColor"
                   />
                 </svg>
-              </button>
+              </a>
               <span
                 class="anchor"
                 id="undefineda"
@@ -1049,13 +1050,14 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               class="margin-bottom-1"
             >
               title
-              <button
+              <a
                 aria-label="Copy link: title"
-                class="usa-button usa-button--unstyled text-base-darker shareButton margin-1 text-middle"
+                class="shareButton margin-left-1"
+                href="http://localhost/#undefineda"
               >
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-link fa-w-16 fa-1x "
+                  class="svg-inline--fa fa-link fa-w-16 fa-xs "
                   data-icon="link"
                   data-prefix="fas"
                   focusable="false"
@@ -1068,7 +1070,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
                     fill="currentColor"
                   />
                 </svg>
-              </button>
+              </a>
               <span
                 class="anchor"
                 id="undefineda"

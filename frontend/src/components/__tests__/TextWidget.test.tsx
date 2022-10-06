@@ -16,14 +16,13 @@ const widget: Widget = {
 };
 
 test("renders widget name as title", async () => {
-  const { getByRole } = render(
+  const { container } = render(
     <MemoryRouter>
       <TextWidget widget={widget} />
     </MemoryRouter>
   );
-  expect(
-    getByRole("heading", { name: "Benefits of Bananas" })
-  ).toBeInTheDocument();
+
+  expect(container.innerHTML.includes("Benefits of Bananas")).toBe(true);
 });
 
 test("renders plain text", async () => {

@@ -11,13 +11,14 @@ exports[`table preview should match snapshot 1`] = `
       class="margin-bottom-1"
     >
       test title
-      <button
+      <a
         aria-label="Copy link: test title"
-        class="usa-button usa-button--unstyled text-base-darker shareButton margin-1 text-middle"
+        class="shareButton margin-left-1"
+        href="http://localhost/#undefineda"
       >
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-link fa-w-16 fa-1x "
+          class="svg-inline--fa fa-link fa-w-16 fa-xs "
           data-icon="link"
           data-prefix="fas"
           focusable="false"
@@ -30,7 +31,7 @@ exports[`table preview should match snapshot 1`] = `
             fill="currentColor"
           />
         </svg>
-      </button>
+      </a>
       <span
         class="anchor"
         id="undefineda"

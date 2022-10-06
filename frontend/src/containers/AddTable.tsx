@@ -433,6 +433,7 @@ function AddTable() {
 
           <div hidden={step !== 2}>
             <Visualize
+              widgetId="add-new-table"
               errors={errors}
               register={register}
               json={filteredJson}

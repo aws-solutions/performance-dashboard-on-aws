@@ -20,6 +20,7 @@ exports[`renders the CheckData component 1`] = `
     >
       <table
         class="usa-table"
+        id="items"
         role="table"
       >
         <thead>

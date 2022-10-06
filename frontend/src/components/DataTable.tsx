@@ -152,6 +152,7 @@ function DataTable({
       </div>
       {showDataTable && (
         <Table
+          id="items"
           selection="none"
           rows={tableRows}
           disablePagination={true}

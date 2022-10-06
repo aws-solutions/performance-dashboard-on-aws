@@ -49,6 +49,7 @@ function ArchivedTab(props: Props) {
         </div>
       </div>
       <Table
+        id="archived-dashboards"
         selection="none"
         initialSortByField="updatedAt"
         filterQuery={filter}

@@ -203,6 +203,7 @@ function ChooseData(props: Props) {
 
           <div className="overflow-hidden">
             <Table
+              id="items"
               selection="single"
               initialSortByField="updatedAt"
               filterQuery={filter}

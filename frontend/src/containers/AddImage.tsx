@@ -341,6 +341,7 @@ function AddImage() {
             {isMobile ? <br /> : fullPreviewButton}
             <div id={previewPanelId}>
               <ImageWidget
+                id="add-new-image"
                 title={showTitle ? title : ""}
                 summary={summary}
                 file={imageFile && imageFile[0]}

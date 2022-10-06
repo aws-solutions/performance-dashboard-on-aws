@@ -1,40 +1,36 @@
-import React, { ReactNode, useEffect, MouseEvent } from "react";
+import React, { useEffect, MouseEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
-import "./Shareable.scss";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Utils from "../services/UtilsService";
+import styles from "./ShareButton.module.scss";
+import Button from "./Button";
 
 interface Props {
-  children: ReactNode | string;
   id: string;
   title: string;
   className?: string;
 }
 
-function Shareable(props: Props) {
+const scrollElementIntoView = (element: HTMLElement | null) => {
+  if (element) {
+    element.scrollIntoView({ block: "start", behavior: "smooth" });
+    const top = element.getBoundingClientRect().top;
+    if (top <= 0 && top >= window.innerHeight) {
+      setTimeout(() => scrollElementIntoView(element), 100);
+    }
+  }
+};
+
+function ShareButton(props: Props) {
   const history = useHistory();
   const { t } = useTranslation();
   const { pathname, hash, key } = useLocation();
 
-  const shortId = Utils.getShorterId(props.id);
-  const anchorId = `section-${shortId}`;
-
-  function scrollElementIntoView(element: HTMLElement | null) {
-    if (element) {
-      element.scrollIntoView({ block: "start", behavior: "smooth" });
-      const top = element.getBoundingClientRect().top;
-      if (top <= 0 && top >= window.innerHeight) {
-        setTimeout(() => scrollElementIntoView(element), 100);
-      }
-    }
-  }
-
   useEffect(() => {
     // if not a hash link, scroll to top
-    if (hash === `#${anchorId}`) {
-      const element = document.getElementById(anchorId);
+    if (hash === `#${props.id}`) {
+      const element = document.getElementById(props.id);
       setTimeout(() => {
         scrollElementIntoView(element);
       }, 500);
@@ -42,13 +38,13 @@ function Shareable(props: Props) {
         scrollElementIntoView(element);
       }, 1000);
     }
-  }, [pathname, hash, key, anchorId]);
+  }, [pathname, hash, key, props.id]);
 
   function getWidgetUrl() {
     const widgetUrl = `${window.location.href.replace(
       window.location.hash,
       ""
-    )}#${anchorId}`;
+    )}#${props.id}`;
     return widgetUrl;
   }
 
@@ -64,19 +60,18 @@ function Shareable(props: Props) {
   }
 
   return (
-    <div className={`shareable-container ${props.className ?? ""}`}>
-      <span id={anchorId} className="anchor"></span>
+    <>
       <a
-        className="share-button text-base-darker"
+        className={`${styles.shareButton} ${props.className}`}
         onClick={copyWidgetUrlToClipboard}
-        href={getWidgetUrl()}
         aria-label={t("CopyLink", { title: props.title })}
+        href={getWidgetUrl()}
       >
-        <FontAwesomeIcon icon={faLink} />
+        <FontAwesomeIcon icon={faLink} size="xs" />
       </a>
-      <div className="shareable-content">{props.children}</div>
-    </div>
+      <span id={props.id} className={styles.anchor}></span>
+    </>
   );
 }
 
-export default Shareable;
+export default ShareButton;

@@ -15,6 +15,7 @@ import PrimaryActionBar from "./PrimaryActionBar";
 import { useWindowSize } from "../hooks";
 
 interface Props {
+  widgetId: string;
   errors: any;
   register: Function;
   json: Array<any>;
@@ -292,6 +293,7 @@ function VisualizeTable(props: Props) {
                   ""
                 )}
                 <TableWidget
+                  id={props.widgetId}
                   title={props.showTitle ? props.title : ""}
                   summary={props.summary}
                   summaryBelow={props.summaryBelow}

@@ -35,7 +35,7 @@ function Modal(props: PathParams) {
       }}
       ariaHideApp={true}
     >
-      <div className="clearfix" role="dialog">
+      <div className="clearfix">
         <div
           className="float-left"
           style={{

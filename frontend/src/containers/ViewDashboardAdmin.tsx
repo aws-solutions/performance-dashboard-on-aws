@@ -252,7 +252,7 @@ function ViewDashboardAdmin() {
             : ""
         }`}
       >
-        <span className="usa-tag text-middle" style={{ cursor: "text" }}>
+        <span className="usa-tag text-middle text-cursor">
           {t(dashboard.state)}
         </span>
       </li>
@@ -264,7 +264,7 @@ function ViewDashboardAdmin() {
             : ""
         }`}
       >
-        <span className="text-middle" style={{ cursor: "default" }}>
+        <span className="text-middle default-cursor">
           {(dashboard.state === DashboardState.Draft ||
             dashboard.state === DashboardState.PublishPending) && (
             <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
@@ -491,8 +491,7 @@ function ViewDashboardAdmin() {
         dashboard.state === DashboardState.PublishPending) && (
         <>
           <span
-            className="usa-checkbox"
-            style={{ marginRight: "8px" }}
+            className="usa-checkbox margin-right-1"
             hidden={windowSize.width < maxMobileViewportWidth}
           >
             <input

@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "color: color(\"base-dark\", \"!important\")",
+          "color: color(\"gray-cool-70\")",
+          "color: color(\"white\")"
+        ]
+      }
+    ]
+  }
+}

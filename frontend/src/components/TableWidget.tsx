@@ -51,7 +51,7 @@ const TableWidget = ({
         obj[key] = row[key];
         return obj;
       }, {});
-      if (filteredRow !== {}) {
+      if (Object.keys(filteredRow).length > 0) {
         newFilteredJson.push(filteredRow);
       }
     }

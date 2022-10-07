@@ -12,7 +12,6 @@ import {
   useGlobalFilter,
   usePagination,
   Row,
-  Column,
   HeaderGroup,
 } from "react-table";
 import { useTranslation } from "react-i18next";

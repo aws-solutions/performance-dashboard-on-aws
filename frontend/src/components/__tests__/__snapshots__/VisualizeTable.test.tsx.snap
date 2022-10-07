@@ -132,43 +132,47 @@ exports[`renders the VisualizeTable component 1`] = `
             >
               Table Options (optional)
             </label>
-            <div
-              class="usa-hint"
+            <fieldset
+              class="usa-fieldset"
             >
-              Format your table
-            </div>
-            <div
-              class="usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="significantDigitLabels"
-                name="significantDigitLabels"
-                type="checkbox"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="significantDigitLabels"
+              <legend
+                class="usa-hint"
               >
-                Significant digit labels (123K, 1.2M)
-              </label>
-            </div>
-            <div
-              class="usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="displayWithPages"
-                name="displayWithPages"
-                type="checkbox"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="displayWithPages"
+                Format your table
+              </legend>
+              <div
+                class="usa-checkbox"
               >
-                Display with pages
-              </label>
-            </div>
+                <input
+                  class="usa-checkbox__input"
+                  id="significantDigitLabels"
+                  name="significantDigitLabels"
+                  type="checkbox"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="significantDigitLabels"
+                >
+                  Significant digit labels (123K, 1.2M)
+                </label>
+              </div>
+              <div
+                class="usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="displayWithPages"
+                  name="displayWithPages"
+                  type="checkbox"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="displayWithPages"
+                >
+                  Display with pages
+                </label>
+              </div>
+            </fieldset>
           </div>
           <div
             class="usa-form-group"

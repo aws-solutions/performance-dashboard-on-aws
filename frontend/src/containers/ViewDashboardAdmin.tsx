@@ -654,15 +654,15 @@ function ViewDashboardAdmin() {
 
         {(dashboard.state === DashboardState.Draft ||
           dashboard.state === DashboardState.PublishPending) && (
-          <Alert
-            type="info"
-            message={t("DashboardPreviewPublishedMessage")}
-            slim
-          />
+          <div className="border-left-1 bg-accent-cool-lighter padding-x-2 padding-y-1 border-left-1 border-accent-cool">
+            {t("DashboardPreviewPublishedMessage")}
+          </div>
         )}
 
         {dashboard.state === DashboardState.Archived && (
-          <Alert type="info" message={t("RepublishDashboardToView")} slim />
+          <div className="border-left-1 bg-accent-cool-lighter padding-x-2 padding-y-1 border-left-1 border-accent-cool">
+            {t("RepublishDashboardToView")}
+          </div>
         )}
 
         {isMobile && (

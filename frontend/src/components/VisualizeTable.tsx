@@ -140,39 +140,43 @@ function VisualizeTable(props: Props) {
               <label className="usa-label text-bold">
                 {t("TableOptionsLabel")}
               </label>
-              <div className="usa-hint">{t("TableOptionsDescription")}</div>
-              <div className="usa-checkbox">
-                <input
-                  className="usa-checkbox__input"
-                  id="significantDigitLabels"
-                  type="checkbox"
-                  name="significantDigitLabels"
-                  defaultChecked={false}
-                  ref={props.register()}
-                />
-                <label
-                  className="usa-checkbox__label"
-                  htmlFor="significantDigitLabels"
-                >
-                  {t("SignificantDigitLabels")}
-                </label>
-              </div>
-              <div className="usa-checkbox">
-                <input
-                  className="usa-checkbox__input"
-                  id="displayWithPages"
-                  type="checkbox"
-                  name="displayWithPages"
-                  defaultChecked={false}
-                  ref={props.register()}
-                />
-                <label
-                  className="usa-checkbox__label"
-                  htmlFor="displayWithPages"
-                >
-                  {t("DisplayWithPages")}
-                </label>
-              </div>
+              <fieldset className="usa-fieldset">
+                <legend className="usa-hint">
+                  {t("TableOptionsDescription")}
+                </legend>
+                <div className="usa-checkbox">
+                  <input
+                    className="usa-checkbox__input"
+                    id="significantDigitLabels"
+                    type="checkbox"
+                    name="significantDigitLabels"
+                    defaultChecked={false}
+                    ref={props.register()}
+                  />
+                  <label
+                    className="usa-checkbox__label"
+                    htmlFor="significantDigitLabels"
+                  >
+                    {t("SignificantDigitLabels")}
+                  </label>
+                </div>
+                <div className="usa-checkbox">
+                  <input
+                    className="usa-checkbox__input"
+                    id="displayWithPages"
+                    type="checkbox"
+                    name="displayWithPages"
+                    defaultChecked={false}
+                    ref={props.register()}
+                  />
+                  <label
+                    className="usa-checkbox__label"
+                    htmlFor="displayWithPages"
+                  >
+                    {t("DisplayWithPages")}
+                  </label>
+                </div>
+              </fieldset>
             </div>
 
             <TextField

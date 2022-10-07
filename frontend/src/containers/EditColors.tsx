@@ -91,25 +91,12 @@ function EditColors() {
               data-testid="EditColorsForm"
               aria-labelledby="settingsColorsLabel"
             >
-              <label htmlFor="primary" className="usa-label text-bold">
-                {t("SettingsColorsPrimaryColor")}
-                <span>&#42;</span>
-              </label>
-              <div className="usa-hint">
-                {t("SettingsColorsPrimaryColorDescription")}
-                <div>
-                  <Link to="/admin/colorshelp" target="_blank" external>
-                    {t("SettingsColorsPrimaryColorLink")}
-                  </Link>
-                </div>
-              </div>
-
               <div className="grid-row">
                 <div className="grid-col flex-11">
                   <TextField
                     id="primary"
                     name="primary"
-                    label=""
+                    label={t("SettingsColorsPrimaryColor")}
                     error={
                       errors.primary &&
                       (errors.primary.type === "validate"
@@ -120,9 +107,19 @@ function EditColors() {
                     register={register}
                     required
                     validate={ColorPaletteService.rgbHexColorIsValid}
+                    hint={
+                      <>
+                        {t("SettingsColorsPrimaryColorDescription")}
+                        <div>
+                          <Link to="/admin/colorshelp" target="_blank" external>
+                            {t("SettingsColorsPrimaryColorLink")}
+                          </Link>
+                        </div>
+                      </>
+                    }
                   />
                 </div>
-                <div className="grid-col flex-1">
+                <div className="grid-col flex-1 flex-align-self-end">
                   <div
                     className="radius-md"
                     style={{

@@ -45,7 +45,7 @@ function PublicLayout(props: LayoutProps) {
   useFileLoaded(setToHide, loadingFile, loadingSettings, settings, "favicon");
 
   let collectAnalytics = false;
-  if (settings.analyticsTrackingId && settings.analyticsTrackingId != "NA") {
+  if (settings.analyticsTrackingId && settings.analyticsTrackingId !== "NA") {
     collectAnalytics = true;
     ReactGA.initialize(settings.analyticsTrackingId, {
       debug: false,

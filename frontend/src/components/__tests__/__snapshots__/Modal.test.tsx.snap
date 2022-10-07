@@ -31,7 +31,6 @@ exports[`renders a create draft type Modal 1`] = `
       >
         <div
           class="clearfix"
-          role="dialog"
         >
           <div
             class="float-left"
@@ -126,7 +125,6 @@ exports[`renders a delete type Modal 1`] = `
       >
         <div
           class="clearfix"
-          role="dialog"
         >
           <div
             class="float-left"
@@ -221,7 +219,6 @@ exports[`renders a publish type Modal 1`] = `
       >
         <div
           class="clearfix"
-          role="dialog"
         >
           <div
             class="float-left"
@@ -316,7 +313,6 @@ exports[`renders a re-publish type Modal 1`] = `
       >
         <div
           class="clearfix"
-          role="dialog"
         >
           <div
             class="float-left"
@@ -411,7 +407,6 @@ exports[`renders an archive type Modal 1`] = `
       >
         <div
           class="clearfix"
-          role="dialog"
         >
           <div
             class="float-left"

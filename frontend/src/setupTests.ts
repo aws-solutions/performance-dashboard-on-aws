@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ReactModal from "react-modal";
 import i18n from "./i18n";
+import { MockedResizeObserver } from "./testUtils";
 
 jest.mock("./hooks");
 jest.mock("../package.json", () => ({
@@ -17,3 +18,5 @@ jest.mock("../package.json", () => ({
 dayjs.extend(relativeTime);
 ReactModal.setAppElement(document.createElement("div"));
 i18n("en"); // run unit tests with English translations
+
+window.ResizeObserver = MockedResizeObserver;

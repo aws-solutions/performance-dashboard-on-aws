@@ -6,6 +6,7 @@ import DonutChartWidget from "../DonutChartWidget";
 test("renders the chart title", async () => {
   render(
     <DonutChartWidget
+      id="donut-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -23,6 +24,7 @@ test("renders the chart title", async () => {
 test("renders the summary above the chart", async () => {
   render(
     <DonutChartWidget
+      id="donut-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -43,6 +45,7 @@ test("renders the summary above the chart", async () => {
 test("renders the summary below the chart", async () => {
   render(
     <DonutChartWidget
+      id="donut-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"

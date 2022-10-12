@@ -5,6 +5,23 @@ import ViewDashboard from "../ViewDashboard";
 
 jest.mock("../../hooks");
 
+const { ResizeObserver } = window;
+
+beforeEach(() => {
+  //@ts-ignore
+  delete window.ResizeObserver;
+  window.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  }));
+});
+
+afterEach(() => {
+  window.ResizeObserver = ResizeObserver;
+  jest.restoreAllMocks();
+});
+
 test("renders dashboard title", () => {
   const { getByRole } = render(<ViewDashboard />, {
     wrapper: MemoryRouter,

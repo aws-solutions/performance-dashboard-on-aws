@@ -6,6 +6,23 @@ import { MemoryRouter } from "react-router-dom";
 
 jest.mock("../../hooks");
 
+const { ResizeObserver } = window;
+
+beforeEach(() => {
+  //@ts-ignore
+  delete window.ResizeObserver;
+  window.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  }));
+});
+
+afterEach(() => {
+  window.ResizeObserver = ResizeObserver;
+  jest.restoreAllMocks();
+});
+
 const chart: ChartWidget = {
   id: "123",
   name: "Bananas chart",
@@ -28,6 +45,7 @@ const chart: ChartWidget = {
     significantDigitLabels: false,
     dataLabels: false,
     showTotal: true,
+    computePercentages: false,
   },
 };
 

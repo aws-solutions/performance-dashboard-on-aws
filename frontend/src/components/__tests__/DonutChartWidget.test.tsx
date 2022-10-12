@@ -3,9 +3,27 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import DonutChartWidget from "../DonutChartWidget";
 
+const { ResizeObserver } = window;
+
+beforeEach(() => {
+  //@ts-ignore
+  delete window.ResizeObserver;
+  window.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  }));
+});
+
+afterEach(() => {
+  window.ResizeObserver = ResizeObserver;
+  jest.restoreAllMocks();
+});
+
 test("renders the chart title", async () => {
   render(
     <DonutChartWidget
+      id="donut-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -23,6 +41,7 @@ test("renders the chart title", async () => {
 test("renders the summary above the chart", async () => {
   render(
     <DonutChartWidget
+      id="donut-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -43,6 +62,7 @@ test("renders the summary above the chart", async () => {
 test("renders the summary below the chart", async () => {
   render(
     <DonutChartWidget
+      id="donut-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"

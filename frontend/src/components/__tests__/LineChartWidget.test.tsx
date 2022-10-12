@@ -3,9 +3,27 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import LineChartWidget from "../LineChartWidget";
 
+const { ResizeObserver } = window;
+
+beforeEach(() => {
+  //@ts-ignore
+  delete window.ResizeObserver;
+  window.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  }));
+});
+
+afterEach(() => {
+  window.ResizeObserver = ResizeObserver;
+  jest.restoreAllMocks();
+});
+
 test("renders the chart title", async () => {
   render(
     <LineChartWidget
+      id="line-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -23,6 +41,7 @@ test("renders the chart title", async () => {
 test("renders chart summary above the chart", async () => {
   render(
     <LineChartWidget
+      id="line-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -43,6 +62,7 @@ test("renders chart summary above the chart", async () => {
 test("renders chart summary below the chart", async () => {
   render(
     <LineChartWidget
+      id="line-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"

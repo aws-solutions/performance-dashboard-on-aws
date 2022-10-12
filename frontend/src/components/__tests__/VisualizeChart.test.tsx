@@ -5,6 +5,23 @@ import { MemoryRouter } from "react-router-dom";
 import { ChartType, DatasetType } from "../../models";
 import Button from "../Button";
 
+const { ResizeObserver } = window;
+
+beforeEach(() => {
+  //@ts-ignore
+  delete window.ResizeObserver;
+  window.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  }));
+});
+
+afterEach(() => {
+  window.ResizeObserver = ResizeObserver;
+  jest.restoreAllMocks();
+});
+
 test("renders the VisualizeChart component", async () => {
   const wrapper = render(
     <VisualizeChart
@@ -69,6 +86,10 @@ test("renders the VisualizeChart component", async () => {
       configHeader={<></>}
       dataLabels={false}
       showTotal={true}
+      widgetId="widget-id"
+      previewPanelId="panel-id"
+      computePercentages={false}
+      stackedChart={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -139,6 +160,10 @@ test("renders the VisualizeChart component without horizontal scrolling", async 
       configHeader={<></>}
       dataLabels={false}
       showTotal={true}
+      widgetId="widget-id"
+      previewPanelId="panel-id"
+      computePercentages={false}
+      stackedChart={false}
     />,
     { wrapper: MemoryRouter }
   );

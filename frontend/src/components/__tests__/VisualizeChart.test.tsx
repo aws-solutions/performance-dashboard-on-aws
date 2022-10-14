@@ -69,6 +69,10 @@ test("renders the VisualizeChart component", async () => {
       configHeader={<></>}
       dataLabels={false}
       showTotal={true}
+      widgetId="widget-id"
+      previewPanelId="panel-id"
+      computePercentages={false}
+      stackedChart={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -139,6 +143,10 @@ test("renders the VisualizeChart component without horizontal scrolling", async 
       configHeader={<></>}
       dataLabels={false}
       showTotal={true}
+      widgetId="widget-id"
+      previewPanelId="panel-id"
+      computePercentages={false}
+      stackedChart={false}
     />,
     { wrapper: MemoryRouter }
   );

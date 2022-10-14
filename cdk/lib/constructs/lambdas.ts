@@ -27,7 +27,7 @@ export class LambdaFunctions extends cdk.Construct {
     super(scope, id);
 
     this.apiHandler = new lambda.Function(this, "PrivateApi", {
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_16_X,
       description: "Handles API Gateway traffic from admin users",
       code: lambda.Code.fromAsset("../backend/build"),
       handler: "src/lambda/api.handler",

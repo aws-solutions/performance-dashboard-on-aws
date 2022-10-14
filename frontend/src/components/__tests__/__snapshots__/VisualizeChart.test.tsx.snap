@@ -474,7 +474,9 @@ exports[`renders the VisualizeChart component 1`] = `
         >
           Full preview
         </button>
-        <div>
+        <div
+          id="panel-id"
+        >
           
           <div
             aria-label="title"
@@ -488,7 +490,7 @@ exports[`renders the VisualizeChart component 1`] = `
               <a
                 aria-label="Copy link: title"
                 class="shareButton margin-left-1"
-                href="http://localhost/#undefineda"
+                href="http://localhost/#widget-ida"
               >
                 <svg
                   aria-hidden="true"
@@ -508,7 +510,7 @@ exports[`renders the VisualizeChart component 1`] = `
               </a>
               <span
                 class="anchor"
-                id="undefineda"
+                id="widget-ida"
               />
             </h2>
             <div
@@ -523,6 +525,7 @@ exports[`renders the VisualizeChart component 1`] = `
             >
               <div
                 class="recharts-responsive-container"
+                id="widget-id"
                 style="width: 100%; height: 300px;"
               />
             </div>
@@ -1039,7 +1042,9 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         >
           Full preview
         </button>
-        <div>
+        <div
+          id="panel-id"
+        >
           
           <div
             aria-label="title"
@@ -1053,7 +1058,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               <a
                 aria-label="Copy link: title"
                 class="shareButton margin-left-1"
-                href="http://localhost/#undefineda"
+                href="http://localhost/#widget-ida"
               >
                 <svg
                   aria-hidden="true"
@@ -1073,7 +1078,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               </a>
               <span
                 class="anchor"
-                id="undefineda"
+                id="widget-ida"
               />
             </h2>
             <div
@@ -1088,6 +1093,7 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
             >
               <div
                 class="recharts-responsive-container"
+                id="widget-id"
                 style="width: 100%; height: 300px;"
               />
             </div>

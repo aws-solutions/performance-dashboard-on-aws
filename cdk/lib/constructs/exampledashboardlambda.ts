@@ -21,7 +21,7 @@ export class ExampleDashboardLambda extends cdk.Construct {
     super(scope, id);
 
     this.exampleSetupLambda = new lambda.Function(this, "SetupExamples", {
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_16_X,
       description: "Inserts examples into database for end users",
       code: lambda.Code.fromAsset("../examples/build"),
       handler: "src/index.handler",

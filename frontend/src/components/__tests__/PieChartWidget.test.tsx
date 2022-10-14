@@ -6,6 +6,7 @@ import PieChartWidget from "../PieChartWidget";
 test("renders the chart title", async () => {
   render(
     <PieChartWidget
+      id="pie-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -23,6 +24,7 @@ test("renders the chart title", async () => {
 test("renders the summary above the chart", async () => {
   render(
     <PieChartWidget
+      id="pie-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -43,6 +45,7 @@ test("renders the summary above the chart", async () => {
 test("renders the summary below the chart", async () => {
   render(
     <PieChartWidget
+      id="pie-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"

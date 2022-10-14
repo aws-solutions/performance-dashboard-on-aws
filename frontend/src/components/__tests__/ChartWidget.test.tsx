@@ -28,6 +28,7 @@ const chart: ChartWidget = {
     significantDigitLabels: false,
     dataLabels: false,
     showTotal: true,
+    computePercentages: false,
   },
 };
 

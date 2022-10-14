@@ -48,3 +48,15 @@ export function traceMethodCalls(obj: object | Function, calls: any = {}) {
   };
   return new Proxy(obj, handler);
 }
+
+export class MockedResizeObserver {
+  observe() {
+    // do nothing
+  }
+  unobserve() {
+    // do nothing
+  }
+  disconnect() {
+    // do nothing
+  }
+}

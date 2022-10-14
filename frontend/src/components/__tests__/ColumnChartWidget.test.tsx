@@ -6,6 +6,7 @@ import ColumnChartWidget from "../ColumnChartWidget";
 test("renders the chart title", async () => {
   render(
     <ColumnChartWidget
+      id="column-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -23,6 +24,7 @@ test("renders the chart title", async () => {
 test("renders chart summary above the chart", async () => {
   render(
     <ColumnChartWidget
+      id="column-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"
@@ -43,6 +45,7 @@ test("renders chart summary above the chart", async () => {
 test("renders chart summary below the chart", async () => {
   render(
     <ColumnChartWidget
+      id="column-chart"
       title="test title"
       downloadTitle="test title"
       summary="test summary"

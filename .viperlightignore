@@ -182,5 +182,7 @@ THIRD-PARTY-LICENSES:1020
 THIRD-PARTY-LICENSES:1024
 THIRD-PARTY-LICENSES:1025
 examples/README.md:49
-.vscode:*
 frontend/public/env.*:*
+.vscode/*
+node_modules/*
+coverage/*

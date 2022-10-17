@@ -16,7 +16,7 @@ jobs:
           rm -r ./viperlight.zip
           ls . -la
           ls .. -la
-          ls performance-dashboard-on-aws -la
+          ls ../performance-dashboard-on-aws -la
           echo "Content scanning utility installation complete `date`"
           echo "Starting content scanning `date` in `pwd`"
           ../viperlight/bin/viperlight scan -m files-contents -m files-aws -m files-binary -m files-entropy -m files-secrets

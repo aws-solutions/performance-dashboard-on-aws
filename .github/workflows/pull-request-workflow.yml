@@ -14,6 +14,7 @@ jobs:
           wget -q https://viperlight-scanner.s3.amazonaws.com/latest/viperlight.zip
           unzip -q viperlight.zip -d ../viperlight
           rm -r ./viperlight.zip
+          cat .viperlightrc
           echo "Content scanning utility installation complete `date`"
           echo "Starting content scanning `date` in `pwd`"
           ../viperlight/bin/viperlight scan -m files-contents -m files-aws -m files-binary -m files-entropy -m files-secrets

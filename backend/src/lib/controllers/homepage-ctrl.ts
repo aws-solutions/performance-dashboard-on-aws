@@ -120,7 +120,7 @@ async function getPublicHomepageWithQuery(req: Request, res: Response) {
       }
 
       if (dashboardWithWidgets.widgets) {
-        for (var widget of dashboardWithWidgets.widgets) {
+        for (const widget of dashboardWithWidgets.widgets) {
           if (widget.content.text) {
             let matches = splitAndSearch(widget.content.text, query);
             if (matches.length) {

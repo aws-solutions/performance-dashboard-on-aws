@@ -107,8 +107,8 @@ class TopicAreaRepository extends BaseRepository {
       return 0;
     }
 
-    const dashboards: Dashboard[] = result.Items.map((item: DashboardItem) =>
-      DashboardFactory.fromItem(item)
+    const dashboards: Dashboard[] = result.Items.map((item) =>
+      DashboardFactory.fromItem(item as DashboardItem)
     );
 
     // Count the number of dashboards in the query result grouped by parentDashboardId.

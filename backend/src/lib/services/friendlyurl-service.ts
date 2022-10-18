@@ -48,7 +48,7 @@ function generateFriendlyURL(dashboardName: string): string {
     .replace(/[!#$&'\(\)\*\+,\/:;=\?@\[\]]+/g, " ") // remove RFC-3986 reserved characters
     .replace(/\s+/g, "-") // replace spaces for dashes
     .replace(/-+/g, "-") // convert consecutive dashes to singular dash
-    .replace(/^-+|-+$/g, ""); // remove dashes at the end and beginning
+    .replace(/^(-)+|(-)+$/g, ""); // remove dashes at the end and beginning
 }
 
 async function isFriendlyURLAvailable(

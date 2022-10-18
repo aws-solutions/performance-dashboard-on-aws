@@ -4,8 +4,8 @@ import DatasetRepository from "../repositories/dataset-repo";
 import DatasetService from "../services/dataset-service";
 import DatasetFactory from "../factories/dataset-factory";
 import pino from "../services/logger";
-var escapeHtml = require("escape-html");
 import { CurrencyDataType, NumberDataType } from "../models/widget";
+const escapeHtml = require("escape-html");
 
 // Add an identifier so that any log from the ingest API is easy
 // to find in CloudWatch logs.

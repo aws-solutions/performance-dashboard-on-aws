@@ -46,7 +46,7 @@ const PieChartWidget = (props: Props) => {
 
   const { data, parts, showMobilePreview } = props;
   useMemo(() => {
-    if (data && data.length) {
+    if (data && data.length > 0) {
       let pie = {};
       total.current = 0;
       pieParts.current = [];
@@ -274,7 +274,7 @@ const PieChartWidget = (props: Props) => {
           className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
-      {pieData.current.length && (
+      {pieData.current.length > 0 && (
         <div aria-hidden="true">
           <ResponsiveContainer
             id={props.id}

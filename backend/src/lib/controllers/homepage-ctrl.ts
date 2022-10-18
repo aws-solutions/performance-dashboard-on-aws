@@ -70,7 +70,7 @@ async function updateHomepage(req: Request, res: Response) {
 function splitAndSearch(paragraph: string, query: string) {
   let matches: Array<string> = [];
   let sentences = paragraph.replace(/([.?!:])\s*(?=[A-Z])/g, "$1|").split("|");
-  for (var sentence of sentences) {
+  for (const sentence of sentences) {
     if (sentence.toLowerCase().includes(query)) {
       matches.push(sentence);
     }
@@ -98,7 +98,7 @@ async function getPublicHomepageWithQuery(req: Request, res: Response) {
   let publicDashboards = dashboards.map(DashboardFactory.toPublic);
 
   if (publicDashboards) {
-    var index = publicDashboards.length;
+    let index = publicDashboards.length;
 
     while (index--) {
       let found = false;
@@ -120,7 +120,7 @@ async function getPublicHomepageWithQuery(req: Request, res: Response) {
       }
 
       if (dashboardWithWidgets.widgets) {
-        for (var widget of dashboardWithWidgets.widgets) {
+        for (const widget of dashboardWithWidgets.widgets) {
           if (widget.content.text) {
             let matches = splitAndSearch(widget.content.text, query);
             if (matches.length) {

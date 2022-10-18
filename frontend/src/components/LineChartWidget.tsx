@@ -142,7 +142,7 @@ const LineChartWidget = (props: Props) => {
           className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
-      {data && data.length && (
+      {data && data.length > 0 && (
         <div aria-hidden="true">
           <ResponsiveContainer
             id={props.id}
@@ -215,7 +215,7 @@ const LineChartWidget = (props: Props) => {
                 onMouseEnter={(e: any) => setLinesHover(e.dataKey)}
                 formatter={RenderLegendText}
               />
-              {props.lines.length &&
+              {props.lines.length > 0 &&
                 props.lines.slice(1).map((line, index) => {
                   return (
                     <Line

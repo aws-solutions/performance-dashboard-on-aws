@@ -163,7 +163,7 @@ const BarChartWidget = (props: Props) => {
           className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
-      {data && data.length && (
+      {data && data.length > 0 && (
         <div aria-hidden="true">
           <ResponsiveContainer
             id={props.id}
@@ -234,7 +234,7 @@ const BarChartWidget = (props: Props) => {
                   formatter={RenderLegendText}
                 />
               )}
-              {props.bars.length &&
+              {props.bars.length > 0 &&
                 props.bars.slice(1).map((bar, index) => {
                   return (
                     <Bar

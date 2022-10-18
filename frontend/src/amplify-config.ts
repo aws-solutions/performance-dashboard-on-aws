@@ -50,7 +50,7 @@ export const samlConfig = {
 };
 
 export function amplifyConfig(): {} {
-  var configuration: { [k: string]: any } = config;
+  const configuration: { [k: string]: any } = config;
 
   if (EnvConfig.samlProvider) {
     configuration.oauth = oauthConfig;

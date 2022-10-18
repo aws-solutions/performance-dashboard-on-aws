@@ -39,13 +39,13 @@ function Pagination(props: Props) {
       return Array.from({ length: props.numPages }, (_, i) => i + 1);
     }
 
-    var pages: number[] = new Array(numLinks);
+    const pages: number[] = new Array(numLinks);
     pages[0] = 1;
     pages[numLinks - 1] = props.numPages;
 
     // Case 2: No left dots. Right dots needed.
     if (props.currentPage <= 3 || numLinksLeft >= props.currentPage - 2) {
-      for (var i = 1; i < numLinks - 2; ++i) {
+      for (let i = 1; i < numLinks - 2; ++i) {
         pages[i] = i + 1;
       }
       pages[numLinks - 2] = -1; // Dots
@@ -58,7 +58,7 @@ function Pagination(props: Props) {
       numLinksRight >= props.numPages - props.currentPage - 1
     ) {
       pages[1] = -1; // Dots
-      for (var j = 2; j < numLinks - 1; ++j) {
+      for (let j = 2; j < numLinks - 1; ++j) {
         pages[j] = props.numPages - numLinks + j + 1;
       }
       return pages;
@@ -67,7 +67,7 @@ function Pagination(props: Props) {
     // Case 4: Both left and right dots needed.
     pages[1] = -1; // Dots
     for (
-      var k = 2, page = props.currentPage - numLinksLeft + 1;
+      let k = 2, page = props.currentPage - numLinksLeft + 1;
       k < numLinks - 2;
       ++k, ++page
     ) {

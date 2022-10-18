@@ -1,44 +1,18 @@
 version: 0.2
+
 phases:
   install:
     runtime-versions:
       nodejs: 14
     commands:
-      # For debugging purposes
       - ls -al
       - npm --version
       - node --version
-
   pre_build:
     commands:
       - echo "Installing dependencies and executing unit tests - `pwd`"
       - echo "node use 16"
       - n 16
-      - ./test.sh
-      - ./install.sh
-
-  build:
-    commands:
-      # Deploy
-      ./deploy.sh $ENVIRONMENT $LANGUAGE $AUTH
-
-artifacts:
-  base-directory: cdk/cdk.out
-  files:
-    - "**/*"
-
-
-version: 0.2
-
-phases:
-  install:
-    runtime-versions:
-      nodejs: 16
-    commands:
-      - echo "nothing to do in install"
-  pre_build:
-    commands:
-      - echo "Installing dependencies and executing unit tests - `pwd`"
       - chmod +x ./install.sh && ./install.sh
       - chmod +x ./test.sh && ./test.sh
       - echo "Installing dependencies and executing unit tests completed `date`"
@@ -56,7 +30,7 @@ phases:
     commands:
       - echo "Retrieving next stage buildspec `date` in `pwd`"
       - aws s3 cp s3://solutions-build-assets/changelog-spec.yml ../buildspec.yml
-            - echo "Retrieving next stage buildspec complete"
+      - echo "Retrieving next stage buildspec complete"
       - echo "Post build completed on `date`"
 
 artifacts:

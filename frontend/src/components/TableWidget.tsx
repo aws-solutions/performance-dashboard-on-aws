@@ -38,7 +38,7 @@ const TableWidget = ({
 
   useMemo(() => {
     let headers =
-      data && data.length ? (Object.keys(data[0]) as Array<string>) : [];
+      data && data.length > 0 ? (Object.keys(data[0]) as Array<string>) : [];
     headers = headers.filter((h) => {
       const metadata = columnsMetadata
         ? columnsMetadata.find((c) => c.columnName === h)

@@ -169,7 +169,7 @@ const ColumnChartWidget = (props: Props) => {
           className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
-      {data && data.length && (
+      {data && data.length > 0 && (
         <div aria-hidden="true">
           <ResponsiveContainer
             id={props.id}
@@ -241,7 +241,7 @@ const ColumnChartWidget = (props: Props) => {
                   formatter={RenderLegendText}
                 />
               )}
-              {props.columns.length &&
+              {props.columns.length > 0 &&
                 props.columns.slice(1).map((column, index) => {
                   return (
                     <Bar

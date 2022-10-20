@@ -13,9 +13,55 @@ const logger = pino.child({
   api: "ingestapi",
 });
 
+/**
+ * Validates the metrics schema.
+ * @param data any
+ * @returns string error message
+ */
+function validateMetricsSchema(data: any): string | null {
+  for (let datum in data) {
+    //symbol should be valid input or empty
+    if (
+      !["", NumberDataType.Percentage, NumberDataType.Currency].includes(
+        data[datum].percentage
+      )
+    ) {
+      return "Invalid symbol type. Choose either `Currency`, `Percentage` or ``";
+    }
+    //currency should be valid input or empty
+    if (
+      ![
+        "",
+        CurrencyDataType["Dollar $"],
+        CurrencyDataType["Euro €"],
+        CurrencyDataType["Pound £"],
+      ].includes(data[datum].currency)
+    ) {
+      return "Invalid symbol type. Choose either ``, `Dollar $`, `Euro €` or `Pound £`";
+    }
+
+    //if symbol is currency, then a currency should be indicated
+    if (
+      data[datum].percentage === NumberDataType.Currency &&
+      data[datum].currency === ""
+    ) {
+      return "Missing optional field `currency`";
+    }
+    //if currencies are indicated, then symbol should be currency
+    if (
+      data[datum].percentage !== NumberDataType.Currency &&
+      (data[datum].currency === CurrencyDataType["Dollar $"] ||
+        data[datum].currency === CurrencyDataType["Euro €"] ||
+        data[datum].currency === CurrencyDataType["Pound £"])
+    ) {
+      return "Can only input currency type along with `Currency`";
+    }
+  }
+  return null;
+}
+
 async function createDataset(req: Request, res: Response) {
   const { metadata, data } = req.body;
-
   if (!metadata.name) {
     return res.status(400).send("Missing required field `metadata.name`");
   }
@@ -25,53 +71,9 @@ async function createDataset(req: Request, res: Response) {
   }
 
   if (metadata.schema === "Metrics") {
-    for (let datum in data) {
-      //symbol should be valid input or empty
-      if (
-        !["", NumberDataType.Percentage, NumberDataType.Currency].includes(
-          data[datum].percentage
-        )
-      ) {
-        return res
-          .status(400)
-          .send(
-            "Invalid symbol type. Choose either `Currency`, `Percentage` or ``"
-          );
-      }
-      //currency should be valid input or empty
-      if (
-        ![
-          "",
-          CurrencyDataType["Dollar $"],
-          CurrencyDataType["Euro €"],
-          CurrencyDataType["Pound £"],
-        ].includes(data[datum].currency)
-      ) {
-        return res
-          .status(400)
-          .send(
-            "Invalid symbol type. Choose either ``, `Dollar $`, `Euro €` or `Pound £`"
-          );
-      }
-
-      //if symbol is currency, then a currency should be indicated
-      if (
-        data[datum].percentage === NumberDataType.Currency &&
-        data[datum].currency === ""
-      ) {
-        return res.status(400).send("Missing optional field `currency`");
-      }
-      //if currencies are indicated, then symbol should be currency
-      if (
-        data[datum].percentage !== NumberDataType.Currency &&
-        (data[datum].currency === CurrencyDataType["Dollar $"] ||
-          data[datum].currency === CurrencyDataType["Euro €"] ||
-          data[datum].currency === CurrencyDataType["Pound £"])
-      ) {
-        return res
-          .status(400)
-          .send("Can only input currency type along with `Currency`");
-      }
+    const errorMessage = validateMetricsSchema(data);
+    if (errorMessage) {
+      return res.status(400).send(errorMessage);
     }
   }
 
@@ -133,53 +135,9 @@ async function updateDataset(req: Request, res: Response) {
   }
 
   if (metadata.schema === "Metrics") {
-    for (let datum in data) {
-      //symbol should be valid input or empty
-      if (
-        !["", NumberDataType.Percentage, NumberDataType.Currency].includes(
-          data[datum].percentage
-        )
-      ) {
-        return res
-          .status(400)
-          .send(
-            "Invalid symbol type. Choose either `Currency`, `Percentage` or ``"
-          );
-      }
-      //currency should be valid input or empty
-      if (
-        ![
-          "",
-          CurrencyDataType["Dollar $"],
-          CurrencyDataType["Euro €"],
-          CurrencyDataType["Pound £"],
-        ].includes(data[datum].currency)
-      ) {
-        return res
-          .status(400)
-          .send(
-            "Invalid symbol type. Choose either ``, `Dollar $`, `Euro €` or `Pound £`"
-          );
-      }
-
-      //if symbol is currency, then a currency should be indicated
-      if (
-        data[datum].percentage === NumberDataType.Currency &&
-        data[datum].currency === ""
-      ) {
-        return res.status(400).send("Missing optional field `currency`");
-      }
-      //if currencies are indicated, then symbol should be currency
-      if (
-        data[datum].percentage !== NumberDataType.Currency &&
-        (data[datum].currency === CurrencyDataType["Dollar $"] ||
-          data[datum].currency === CurrencyDataType["Euro €"] ||
-          data[datum].currency === CurrencyDataType["Pound £"])
-      ) {
-        return res
-          .status(400)
-          .send("Can only input currency type along with `Currency`");
-      }
+    const errorMessage = validateMetricsSchema(data);
+    if (errorMessage) {
+      return res.status(400).send(errorMessage);
     }
   }
 

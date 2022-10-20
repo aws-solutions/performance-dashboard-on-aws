@@ -30,7 +30,7 @@ class UserRepository {
       UserPoolId: this.userPoolId,
     });
 
-    if (!result.Users || !result.Users.length) {
+    if (!result.Users || result.Users.length === 0) {
       return [];
     }
 

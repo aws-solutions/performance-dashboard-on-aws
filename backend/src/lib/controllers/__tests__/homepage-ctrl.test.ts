@@ -240,7 +240,7 @@ describe("getPublicHomepageWithQuery", () => {
       topicAreaId: "abc",
       topicAreaName: "Europe",
       displayTableOfContents: false,
-      description: "All about the United Kingdom. Also know as UK.",
+      description: "All about the United Kingdom. a.k.a. UK.",
       updatedAt: now,
     };
 
@@ -323,11 +323,11 @@ describe("getPublicHomepageWithQuery", () => {
         topicAreaId: "abc",
         topicAreaName: "Europe",
         displayTableOfContents: false,
-        description: "All about the United Kingdom. Also know as UK.",
+        description: "All about the United Kingdom. a.k.a. UK.",
         updatedAt: now,
         queryMatches: [
           "UK",
-          "All about the United Kingdom. Also know as UK.",
+          "All about the United Kingdom. a.k.a. UK.",
           "The UK is in Europe.",
           "The capital of the UK is London.",
           "The UK geography insights.",

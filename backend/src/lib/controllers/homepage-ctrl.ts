@@ -97,28 +97,32 @@ function getDashboardQueryMatches(
     return queryMatches;
   }
 
-  for (const widget of dashboard.widgets) {
+  const widgetsMatches = dashboard.widgets.flatMap((widget) => {
+    const widgetMatches = [];
     if (widget.content.text) {
       const matches = splitAndSearch(widget.content.text, query);
       if (matches.length) {
-        queryMatches.push(...matches);
+        widgetMatches.push(...matches);
       }
     }
 
     if (widget.content.title) {
       const matches = splitAndSearch(widget.content.title, query);
       if (matches.length) {
-        queryMatches.push(...matches);
+        widgetMatches.push(...matches);
       }
     }
 
     if (widget.content.summary) {
       const matches = splitAndSearch(widget.content.summary, query);
       if (matches.length) {
-        queryMatches.push(...matches);
+        widgetMatches.push(...matches);
       }
     }
-  }
+    return widgetMatches;
+  });
+
+  queryMatches.push(...widgetsMatches);
 
   return queryMatches;
 }

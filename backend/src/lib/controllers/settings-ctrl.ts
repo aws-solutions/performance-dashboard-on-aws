@@ -28,6 +28,7 @@ function validateSetting(
       if (!settingValue.primary || !settingValue.secondary) {
         return "Missing fields `primary` or `secondary` in colors";
       }
+      return null;
     default:
       return null;
   }

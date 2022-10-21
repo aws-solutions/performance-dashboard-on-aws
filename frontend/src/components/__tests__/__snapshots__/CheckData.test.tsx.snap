@@ -340,8 +340,7 @@ exports[`renders the CheckData component 1`] = `
       <span
         class="text-base"
       >
-        Column: 
-        id
+        Column: id
       </span>
       <div
         class="grid-col-4"
@@ -398,8 +397,7 @@ exports[`renders the CheckData component 1`] = `
       <span
         class="text-base"
       >
-        Column: 
-        name
+        Column: name
       </span>
       <div
         class="grid-col-4"
@@ -456,8 +454,7 @@ exports[`renders the CheckData component 1`] = `
       <span
         class="text-base"
       >
-        Column: 
-        updatedAt
+        Column: updatedAt
       </span>
       <div
         class="grid-col-4"

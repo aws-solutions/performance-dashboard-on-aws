@@ -10,7 +10,7 @@ import {
 } from "../hooks";
 import { Widget, LocationState, WidgetType, DashboardState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faCopy, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
@@ -18,7 +18,6 @@ import Modal from "../components/Modal";
 import PublishDashboardModal from "../components/PublishDashboardModal";
 import Spinner from "../components/Spinner";
 import Tooltip from "../components/Tooltip";
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import AlertContainer from "../containers/AlertContainer";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";

@@ -19,9 +19,9 @@ import {
   useFullPreview,
   useChangeBackgroundColor,
   useScrollUp,
+  useDatasets,
 } from "../hooks";
 import Spinner from "../components/Spinner";
-import { useDatasets } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import ParsingFileService from "../services/ParsingFileService";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
@@ -642,9 +642,7 @@ function EditTable() {
                   json={filteredJson}
                   originalJson={displayedJson}
                   headers={
-                    displayedJson.length
-                      ? (Object.keys(displayedJson[0]) as Array<string>)
-                      : []
+                    displayedJson.length ? Object.keys(displayedJson[0]) : []
                   }
                   csvJson={csvJson}
                   datasetLoading={datasetLoading}

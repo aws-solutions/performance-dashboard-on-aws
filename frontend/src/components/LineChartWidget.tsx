@@ -188,7 +188,7 @@ const LineChartWidget = (props: Props) => {
               <Tooltip
                 itemStyle={{ color: "#1b1b1b" }}
                 isAnimationActive={false}
-                formatter={(value: Number | String, name: string) => {
+                formatter={(value: number | string, name: string) => {
                   // Check if there is metadata for this column
                   let columnMetadata;
                   if (props.columnsMetadata) {

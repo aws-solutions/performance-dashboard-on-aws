@@ -14,13 +14,12 @@ import {
   usePublicHomepageSearch,
 } from "./homepage-hooks";
 import { useSettings, usePublicSettings } from "./settings-hooks";
-import { useJsonDataset, useSampleDataset } from "./dataset-hooks";
+import { useDatasets, useJsonDataset, useSampleDataset } from "./dataset-hooks";
 import { useUsers, useCurrentAuthenticatedUser } from "./user-hooks";
 import { useDateTimeFormatter } from "./datetime-hooks";
 import { useImage } from "./image-hooks";
 import { useLogo } from "./logo-hooks";
 import { useFavicon } from "./favicon-hooks";
-import { useDatasets } from "./dataset-hooks";
 import { useFullPreview } from "./dashboard-preview-hooks";
 import {
   useYAxisMetadata,

@@ -4,6 +4,7 @@ import {
   faChevronCircleDown,
   faChevronCircleUp,
   faChevronDown,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   useTable,
@@ -17,7 +18,6 @@ import {
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
 import { CSVLink } from "react-csv";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "./Pagination";
 
 interface Props {

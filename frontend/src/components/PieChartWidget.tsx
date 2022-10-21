@@ -98,7 +98,7 @@ const PieChartWidget = (props: Props) => {
   };
 
   const displayedAmount = (
-    value: Number | String,
+    value: number | string,
     columnMetadata: ColumnMetadata
   ): string => {
     const displayedAmount = TickFormatter.format(
@@ -334,7 +334,7 @@ const PieChartWidget = (props: Props) => {
               <Tooltip
                 itemStyle={{ color: "#1b1b1b" }}
                 isAnimationActive={false}
-                formatter={(value: Number | String) => {
+                formatter={(value: number | string) => {
                   // Check if there is metadata for this column
                   let columnMetadata;
                   if (parts && parts.length > 1 && props.columnsMetadata) {

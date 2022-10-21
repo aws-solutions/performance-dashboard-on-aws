@@ -5,7 +5,14 @@
  */
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { useState, useCallback, useEffect, useRef } from "react";
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import {
   DashboardState,
   DatasetType,
@@ -600,11 +607,11 @@ export function useChangeBackgroundColor() {}
 export function useScrollUp(
   oldStep: number,
   step: number,
-  setOldStep: React.Dispatch<React.SetStateAction<number>>
+  setOldStep: Dispatch<SetStateAction<number>>
 ) {}
 
 export function useFileLoaded(
-  setToHide: React.Dispatch<React.SetStateAction<boolean>>,
+  setToHide: Dispatch<SetStateAction<boolean>>,
   loadingFile: boolean,
   loadingSettings: boolean,
   settings: PublicSettings | Settings,

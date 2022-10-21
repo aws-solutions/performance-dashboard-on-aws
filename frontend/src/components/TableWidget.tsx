@@ -37,8 +37,7 @@ const TableWidget = ({
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
 
   useMemo(() => {
-    let headers =
-      data && data.length > 0 ? (Object.keys(data[0]) as Array<string>) : [];
+    let headers = data && data.length > 0 ? Object.keys(data[0]) : [];
     headers = headers.filter((h) => {
       const metadata = columnsMetadata
         ? columnsMetadata.find((c) => c.columnName === h)

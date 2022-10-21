@@ -3,11 +3,7 @@ import HomepageFactory from "../factories/homepage-factory";
 import HomepageRepository from "../repositories/homepage-repo";
 import DashboardRepository from "../repositories/dashboard-repo";
 import DashboardFactory from "../factories/dashboard-factory";
-import DashboardCtrl from "../controllers/dashboard-ctrl";
-import AuthService from "../services/auth";
-import { RSA_NO_PADDING } from "constants";
-import { setUncaughtExceptionCaptureCallback } from "process";
-import { convertCompilerOptionsFromJson } from "typescript";
+import { Dashboard } from "../models/dashboard";
 
 async function getPublicHomepage(req: Request, res: Response) {
   const repo = HomepageRepository.getInstance();
@@ -78,6 +74,55 @@ function splitAndSearch(paragraph: string, query: string) {
   return matches;
 }
 
+/**
+ * Get a list of matches of a query in a Dashboard.
+ * @param query string
+ * @param dashboard Dashboard
+ * @returns string[] of matches
+ */
+function getDashboardQueryMatches(
+  query: string,
+  dashboard: Dashboard
+): string[] {
+  const queryMatches: string[] = [];
+  if (dashboard.name.toLowerCase().includes(query)) {
+    queryMatches.push(dashboard.name);
+  }
+
+  if (dashboard.description.toLowerCase().includes(query)) {
+    queryMatches.push(dashboard.description);
+  }
+
+  if (!dashboard.widgets) {
+    return queryMatches;
+  }
+
+  for (const widget of dashboard.widgets) {
+    if (widget.content.text) {
+      const matches = splitAndSearch(widget.content.text, query);
+      if (matches.length) {
+        queryMatches.push(...matches);
+      }
+    }
+
+    if (widget.content.title) {
+      const matches = splitAndSearch(widget.content.title, query);
+      if (matches.length) {
+        queryMatches.push(...matches);
+      }
+    }
+
+    if (widget.content.summary) {
+      const matches = splitAndSearch(widget.content.summary, query);
+      if (matches.length) {
+        queryMatches.push(...matches);
+      }
+    }
+  }
+
+  return queryMatches;
+}
+
 // Returns homepage title, description and a list of dashboards
 // with content that matches a search query.
 async function getPublicHomepageWithQuery(req: Request, res: Response) {
@@ -101,53 +146,18 @@ async function getPublicHomepageWithQuery(req: Request, res: Response) {
     let index = publicDashboards.length;
 
     while (index--) {
-      let found = false;
       let dashboard = publicDashboards[index];
-      dashboard.queryMatches = [];
 
       const dashboardWithWidgets = await dashboardRepo.getDashboardWithWidgets(
         dashboard.id
       );
 
-      if (dashboardWithWidgets.name.toLowerCase().includes(query)) {
-        dashboard.queryMatches.push(dashboardWithWidgets.name);
-        found = true;
-      }
+      dashboard.queryMatches = getDashboardQueryMatches(
+        query,
+        dashboardWithWidgets
+      );
 
-      if (dashboardWithWidgets.description.toLowerCase().includes(query)) {
-        dashboard.queryMatches.push(dashboardWithWidgets.description);
-        found = true;
-      }
-
-      if (dashboardWithWidgets.widgets) {
-        for (const widget of dashboardWithWidgets.widgets) {
-          if (widget.content.text) {
-            let matches = splitAndSearch(widget.content.text, query);
-            if (matches.length) {
-              dashboard.queryMatches = dashboard.queryMatches.concat(matches);
-              found = true;
-            }
-          }
-
-          if (widget.content.title) {
-            let matches = splitAndSearch(widget.content.title, query);
-            if (matches.length) {
-              dashboard.queryMatches = dashboard.queryMatches.concat(matches);
-              found = true;
-            }
-          }
-
-          if (widget.content.summary) {
-            let matches = splitAndSearch(widget.content.summary, query);
-            if (matches.length) {
-              dashboard.queryMatches = dashboard.queryMatches.concat(matches);
-              found = true;
-            }
-          }
-        }
-      }
-
-      if (!found) {
+      if (dashboard.queryMatches.length === 0) {
         publicDashboards.splice(index, 1);
       }
     }

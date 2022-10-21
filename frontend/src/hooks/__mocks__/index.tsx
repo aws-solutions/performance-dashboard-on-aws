@@ -602,13 +602,17 @@ export function useWindowSize() {
   return size;
 }
 
-export function useChangeBackgroundColor() {}
+export function useChangeBackgroundColor() {
+  return document.body.style.background;
+}
 
 export function useScrollUp(
   oldStep: number,
   step: number,
   setOldStep: Dispatch<SetStateAction<number>>
-) {}
+) {
+  return window;
+}
 
 export function useFileLoaded(
   setToHide: Dispatch<SetStateAction<boolean>>,

@@ -794,6 +794,7 @@
   "OrganizationLogo": "Organization logo",
   "OrganizationFavicon": "Organization favicon",
   "CSVFileNotSpecified": "File not specified",
+  "CheckDataHeader": "Column: {{header}}",
   "CheckDataDescription": "Please make sure that the system formats your data correctly. Select columns to format as numbers, dates, or text. Also select columns to hide or show from {{widgetType}}.",
   "CheckDataDescriptionTable": "the table",
   "CheckDataDescriptionChart": "the chart",

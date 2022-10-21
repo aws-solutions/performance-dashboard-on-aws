@@ -39,14 +39,14 @@ backend/integtests/IntegrationTestSuite.postman_collection.json:2302
 # Potential email address discovered                         Check line number: 2302                    
 backend/postman/Performance Dashboard API.postman_collection.json:1433
 # Potential email address discovered                         Check line number: 1433                    
-backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:147
-# Potential email address discovered                         Check line number: 147
-backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:158
-# Potential email address discovered Check line number:158
-backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:162
-# Potential email address discovered Check line number:162                     
-backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:169
-# Potential email address discovered Check line number:169                     
+backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:215
+# Potential email address discovered                         Check line number: 215
+backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:219
+# Potential email address discovered Check line number:219
+backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:226
+# Potential email address discovered Check line number:226                     
+backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:230
+# Potential email address discovered Check line number:230                     
 backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:173
 # Potential email address discovered Check line number:173 
 backend/src/lib/factories/__tests__/settings-factory.test.ts:46

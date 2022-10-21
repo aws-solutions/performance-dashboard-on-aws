@@ -4,10 +4,10 @@ import {
   DatasetItem,
   DatasetList,
   DatasetContent,
+  SourceType,
 } from "../models/dataset";
 import DatasetFactory from "../factories/dataset-factory";
 import BaseRepository from "./base";
-import { SourceType } from "../models/dataset";
 import { v4 as uuidv4 } from "uuid";
 import logger from "../services/logger";
 import WidgetRepository from "./widget-repo";

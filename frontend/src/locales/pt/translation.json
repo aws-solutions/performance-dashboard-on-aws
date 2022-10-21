@@ -784,6 +784,7 @@
   "OrganizationLogo": "Logotipo da organização",
   "OrganizationFavicon": "Favicon da organização",
   "CSVFileNotSpecified": "Arquivo não especificado",
+  "CheckDataHeader": "Coluna: {{header}}",
   "CheckDataDescription": "Certifique-se de que o sistema formate seus dados corretamente. Selecione colunas para formatar como números, datas ou texto. Selecione também colunas para serem ocultadas ou mostradas no {{widgetType}}.",
   "CheckDataDescriptionTable": "a tabela",
   "CheckDataDescriptionChart": "o gráfico",

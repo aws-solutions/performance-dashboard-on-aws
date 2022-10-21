@@ -6,8 +6,11 @@ import {
   CurrencyDataType,
   LocationState,
   NumberDataType,
+  Dataset,
+  WidgetType,
+  DatasetType,
+  ColumnDataType,
 } from "../models";
-import { Dataset, WidgetType, DatasetType, ColumnDataType } from "../models";
 import {
   useDashboard,
   useDatasets,
@@ -508,11 +511,7 @@ function AddChart() {
                 errors={errors}
                 register={register}
                 json={filteredJson}
-                headers={
-                  currentJson.length
-                    ? (Object.keys(currentJson[0]) as Array<string>)
-                    : []
-                }
+                headers={currentJson.length ? Object.keys(currentJson[0]) : []}
                 originalJson={currentJson}
                 csvJson={csvJson}
                 datasetLoading={datasetLoading}

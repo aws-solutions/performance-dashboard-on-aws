@@ -6,20 +6,22 @@ import {
   CurrencyDataType,
   LocationState,
   NumberDataType,
+  Dataset,
+  DatasetType,
+  WidgetType,
 } from "../models";
-import { Dataset, DatasetType, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
 import {
   useDashboard,
   useFullPreview,
   useChangeBackgroundColor,
   useScrollUp,
+  useDatasets,
 } from "../hooks";
 import StorageService from "../services/StorageService";
 import ParsingFileService from "../services/ParsingFileService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useDatasets } from "../hooks";
 import StepIndicator from "../components/StepIndicator";
 import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
@@ -438,11 +440,7 @@ function AddTable() {
               register={register}
               json={filteredJson}
               originalJson={currentJson}
-              headers={
-                currentJson.length
-                  ? (Object.keys(currentJson[0]) as Array<string>)
-                  : []
-              }
+              headers={currentJson.length ? Object.keys(currentJson[0]) : []}
               csvJson={csvJson}
               datasetLoading={datasetLoading}
               datasetType={datasetType}

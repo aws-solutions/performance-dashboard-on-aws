@@ -125,7 +125,7 @@ export function useSampleDataset(sampleCSV: string): SampleDatasetsHook {
           if (results.errors.length === 0) {
             setDataset({
               data: results.data,
-              headers: Object.keys(results.data[0]) as string[],
+              headers: Object.keys(results.data[0]),
             });
           }
         },

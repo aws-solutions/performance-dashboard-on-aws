@@ -29,7 +29,7 @@ function getFilteredJson(
   json: Array<any>,
   hiddenColumns: Set<string>
 ): Array<any> {
-  let headers = json.length ? (Object.keys(json[0]) as Array<string>) : [];
+  let headers = json.length ? Object.keys(json[0]) : [];
   headers = headers.filter((h) => !hiddenColumns.has(h));
   const newFilteredJson = new Array<any>();
   for (const row of json) {

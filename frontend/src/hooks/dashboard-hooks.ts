@@ -218,9 +218,7 @@ export function useDashboardHistory(
         );
 
         // Filter out noisy logs first
-        const logs = AuditTrailService.removeNosiyAuditLogs(
-          data as DashboardAuditLog[]
-        );
+        const logs = AuditTrailService.removeNosiyAuditLogs(data);
 
         setAuditlogs(logs);
         setLoading(false);

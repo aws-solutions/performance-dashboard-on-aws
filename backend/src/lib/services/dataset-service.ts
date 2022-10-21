@@ -14,7 +14,10 @@ const logger = pino.child({
   api: "ingestapi",
 });
 
-function parse(dataset: any, schema = DatasetSchema.None): DatasetContent {
+function parse(
+  dataset: any,
+  schema: DatasetSchema = DatasetSchema.None
+): DatasetContent {
   const schemaValidator = new Validator();
   let result: ValidatorResult;
 

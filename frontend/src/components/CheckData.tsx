@@ -241,7 +241,9 @@ function CheckData(props: Props) {
           (header: string) => {
             return (
               <div key={header} className="margin-top-4">
-                <span className="text-base">Column: {header}</span>
+                <span className="text-base">
+                  {t("CheckDataHeader", { header })}
+                </span>
 
                 <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
                   <Dropdown

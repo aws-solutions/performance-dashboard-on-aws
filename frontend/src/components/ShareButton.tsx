@@ -4,7 +4,6 @@ import { faLink } from "@fortawesome/free-solid-svg-icons";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "./ShareButton.module.scss";
-import Button from "./Button";
 
 interface Props {
   id: string;

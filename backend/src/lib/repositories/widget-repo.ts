@@ -50,7 +50,7 @@ class WidgetRepository extends BaseRepository {
     return WidgetFactory.fromItem(result.Item as WidgetItem);
   }
 
-  public async getAssociatedWidgets(datasetId: String): Promise<Widget[]> {
+  public async getAssociatedWidgets(datasetId: string): Promise<Widget[]> {
     const input: DocumentClient.QueryInput = {
       TableName: this.tableName,
       IndexName: "byType",

@@ -34,7 +34,6 @@ import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
 import Alert from "../components/Alert";
 import ParsingFileService from "../services/ParsingFileService";
-import Utils from "../services/UtilsService";
 
 interface FormValues {
   title: string;
@@ -713,15 +712,13 @@ function EditChart() {
                 aria-labelledby="editChartFormHeader_visualizeChart"
               >
                 <VisualizeChart
-                  widgetId={`chart-${Utils.getShorterId(widgetId)}`}
+                  widgetId={`chart-${UtilsService.getShorterId(widgetId)}`}
                   errors={errors}
                   register={register}
                   json={filteredJson}
                   originalJson={displayedJson}
                   headers={
-                    displayedJson.length
-                      ? (Object.keys(displayedJson[0]) as Array<string>)
-                      : []
+                    displayedJson.length ? Object.keys(displayedJson[0]) : []
                   }
                   csvJson={csvJson}
                   datasetLoading={datasetLoading}

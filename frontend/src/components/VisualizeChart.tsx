@@ -440,11 +440,7 @@ function VisualizeChart(props: Props) {
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
-                    lines={
-                      props.json.length
-                        ? (Object.keys(props.json[0]) as Array<string>)
-                        : []
-                    }
+                    lines={props.json.length ? Object.keys(props.json[0]) : []}
                     data={props.json}
                     summaryBelow={props.summaryBelow}
                     isPreview={!props.fullPreview}
@@ -461,9 +457,7 @@ function VisualizeChart(props: Props) {
                     downloadTitle={props.title}
                     summary={props.summary}
                     columns={
-                      props.json.length
-                        ? (Object.keys(props.json[0]) as Array<string>)
-                        : []
+                      props.json.length ? Object.keys(props.json[0]) : []
                     }
                     data={props.json}
                     summaryBelow={props.summaryBelow}
@@ -482,11 +476,7 @@ function VisualizeChart(props: Props) {
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
-                    bars={
-                      props.json.length
-                        ? (Object.keys(props.json[0]) as Array<string>)
-                        : []
-                    }
+                    bars={props.json.length ? Object.keys(props.json[0]) : []}
                     data={props.json}
                     summaryBelow={props.summaryBelow}
                     significantDigitLabels={props.significantDigitLabels}
@@ -501,11 +491,7 @@ function VisualizeChart(props: Props) {
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
-                    parts={
-                      props.json.length
-                        ? (Object.keys(props.json[0]) as Array<string>)
-                        : []
-                    }
+                    parts={props.json.length ? Object.keys(props.json[0]) : []}
                     data={props.json}
                     summaryBelow={props.summaryBelow}
                     significantDigitLabels={props.significantDigitLabels}
@@ -518,11 +504,7 @@ function VisualizeChart(props: Props) {
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
-                    parts={
-                      props.json.length
-                        ? (Object.keys(props.json[0]) as Array<string>)
-                        : []
-                    }
+                    parts={props.json.length ? Object.keys(props.json[0]) : []}
                     data={props.json}
                     summaryBelow={props.summaryBelow}
                     significantDigitLabels={props.significantDigitLabels}
@@ -538,11 +520,7 @@ function VisualizeChart(props: Props) {
                     title={props.showTitle ? props.title : ""}
                     downloadTitle={props.title}
                     summary={props.summary}
-                    parts={
-                      props.json.length
-                        ? (Object.keys(props.json[0]) as Array<string>)
-                        : []
-                    }
+                    parts={props.json.length ? Object.keys(props.json[0]) : []}
                     data={props.json}
                     summaryBelow={props.summaryBelow}
                     significantDigitLabels={props.significantDigitLabels}

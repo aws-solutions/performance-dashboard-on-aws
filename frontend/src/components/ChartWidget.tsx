@@ -23,7 +23,7 @@ function ChartWidgetComponent(props: Props) {
   const [filteredJson, setFilteredJson] = useState<Array<any>>([]);
 
   useMemo(() => {
-    let headers = json.length ? (Object.keys(json[0]) as Array<string>) : [];
+    let headers = json.length ? Object.keys(json[0]) : [];
     headers = headers.filter((h) => {
       const metadata = content.columnsMetadata
         ? content.columnsMetadata.find((c) => c.columnName === h)

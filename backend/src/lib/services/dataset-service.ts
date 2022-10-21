@@ -18,7 +18,7 @@ function parse(dataset: any, schema = DatasetSchema.None): DatasetContent {
   const schemaValidator = new Validator();
   let result: ValidatorResult;
 
-  switch (schema as DatasetSchema) {
+  switch (schema) {
     case DatasetSchema.Metrics:
       logger.info("Validating dataset against Metrics schema %o", dataset);
       result = schemaValidator.validate(dataset, MetricsSchema);

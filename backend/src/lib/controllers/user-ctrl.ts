@@ -5,7 +5,6 @@ import { validate } from "jsonschema";
 import RemoveUsersSchema from "../jsonschema/api/RemoveUsers.json";
 import { Role } from "../models/user";
 import logger from "../services/logger";
-import { env } from "process";
 const escapeHtml = require("escape-html");
 
 const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";

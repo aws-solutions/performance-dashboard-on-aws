@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from "uuid";
 import { User } from "../models/user";
 import TopicareaFactory from "./topicarea-factory";
 import WidgetFactory from "./widget-factory";
-import { Widget } from "../models/widget";
 import {
   Dashboard,
   DashboardItem,

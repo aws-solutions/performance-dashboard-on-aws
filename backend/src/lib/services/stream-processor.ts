@@ -109,7 +109,7 @@ function getTimestampFromRecord(record: StreamRecord): Date {
     return new Date();
   }
 
-  const epochTime = record.ApproximateCreationDateTime as number;
+  const epochTime = record.ApproximateCreationDateTime;
   return new Date(epochTime * 1000);
 }
 

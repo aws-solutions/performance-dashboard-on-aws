@@ -114,10 +114,7 @@ function CheckData(props: Props) {
   const checkDataTableRows = useMemo(() => props.data || [], [props.data]);
   const checkDataTableColumns = useMemo(
     () =>
-      (props.data.length
-        ? (Object.keys(props.data[0]) as Array<string>)
-        : []
-      ).map((header, i) => {
+      (props.data.length ? Object.keys(props.data[0]) : []).map((header, i) => {
         return {
           Header: () => (
             <span className="text-center usa-checkbox margin-bottom-1">
@@ -240,98 +237,97 @@ function CheckData(props: Props) {
       </div>
 
       <div className="grid-col-12 font-sans-md font-sans-md text-bold">
-        {(props.data.length
-          ? (Object.keys(props.data[0]) as Array<string>)
-          : []
-        ).map((header: string) => {
-          return (
-            <div key={header} className="margin-top-4">
-              <span className="text-base">Column: {header}</span>
+        {(props.data.length ? Object.keys(props.data[0]) : []).map(
+          (header: string) => {
+            return (
+              <div key={header} className="margin-top-4">
+                <span className="text-base">Column: {header}</span>
 
-              <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
-                <Dropdown
-                  id={header}
-                  name="dataType"
-                  label={t("DataFormat")}
-                  options={[
-                    { value: "", label: t("SelectAnOption") },
-                    { value: ColumnDataType.Text, label: t("Text") },
-                    {
-                      value: ColumnDataType.Number,
-                      label: t("Number"),
-                    },
-                    {
-                      value: ColumnDataType.Date,
-                      label: t("Date"),
-                    },
-                  ]}
-                  value={props.dataTypes.get(header)}
-                  onChange={handleDataTypeChange}
-                  className="margin-top-2"
-                />
-              </div>
-
-              {props.dataTypes.get(header) === ColumnDataType.Number && (
                 <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
                   <Dropdown
                     id={header}
-                    name="numberType"
-                    label={t("NumberFormat")}
+                    name="dataType"
+                    label={t("DataFormat")}
                     options={[
                       { value: "", label: t("SelectAnOption") },
+                      { value: ColumnDataType.Text, label: t("Text") },
                       {
-                        value: NumberDataType.Percentage,
-                        label: t("Percentage"),
+                        value: ColumnDataType.Number,
+                        label: t("Number"),
                       },
                       {
-                        value: NumberDataType.Currency,
-                        label: t("Currency"),
-                      },
-                      {
-                        value: NumberDataType["With thousands separators"],
-                        label: t("WithThousandsSeparators"),
+                        value: ColumnDataType.Date,
+                        label: t("Date"),
                       },
                     ]}
-                    value={props.numberTypes.get(header)}
-                    onChange={handleNumberTypeChange}
-                    className="margin-top-3"
+                    value={props.dataTypes.get(header)}
+                    onChange={handleDataTypeChange}
+                    className="margin-top-2"
                   />
                 </div>
-              )}
 
-              {props.dataTypes.get(header) === ColumnDataType.Number &&
-                props.numberTypes.get(header) === NumberDataType.Currency && (
+                {props.dataTypes.get(header) === ColumnDataType.Number && (
                   <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
                     <Dropdown
                       id={header}
-                      name="currencyType"
-                      label={t("Currency")}
+                      name="numberType"
+                      label={t("NumberFormat")}
                       options={[
                         { value: "", label: t("SelectAnOption") },
                         {
-                          value: CurrencyDataType["Dollar $"],
-                          label: t("Dollar"),
+                          value: NumberDataType.Percentage,
+                          label: t("Percentage"),
                         },
                         {
-                          value: CurrencyDataType["Euro €"],
-                          label: t("Euro"),
+                          value: NumberDataType.Currency,
+                          label: t("Currency"),
                         },
                         {
-                          value: CurrencyDataType["Pound £"],
-                          label: t("Pound"),
+                          value: NumberDataType["With thousands separators"],
+                          label: t("WithThousandsSeparators"),
                         },
                       ]}
-                      value={props.currencyTypes.get(header)}
-                      onChange={handleCurrencyTypeChange}
+                      value={props.numberTypes.get(header)}
+                      onChange={handleNumberTypeChange}
                       className="margin-top-3"
                     />
                   </div>
                 )}
-              <br />
-              <hr />
-            </div>
-          );
-        })}
+
+                {props.dataTypes.get(header) === ColumnDataType.Number &&
+                  props.numberTypes.get(header) === NumberDataType.Currency && (
+                    <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
+                      <Dropdown
+                        id={header}
+                        name="currencyType"
+                        label={t("Currency")}
+                        options={[
+                          { value: "", label: t("SelectAnOption") },
+                          {
+                            value: CurrencyDataType["Dollar $"],
+                            label: t("Dollar"),
+                          },
+                          {
+                            value: CurrencyDataType["Euro €"],
+                            label: t("Euro"),
+                          },
+                          {
+                            value: CurrencyDataType["Pound £"],
+                            label: t("Pound"),
+                          },
+                        ]}
+                        value={props.currencyTypes.get(header)}
+                        onChange={handleCurrencyTypeChange}
+                        className="margin-top-3"
+                      />
+                    </div>
+                  )}
+                <br />
+                <hr />
+              </div>
+            );
+          }
+        )}
       </div>
 
       <br />

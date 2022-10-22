@@ -4,6 +4,7 @@ import HomepageRepository from "../repositories/homepage-repo";
 import DashboardRepository from "../repositories/dashboard-repo";
 import DashboardFactory from "../factories/dashboard-factory";
 import { Dashboard } from "../models/dashboard";
+import { Widget } from "../models/widget";
 
 async function getPublicHomepage(req: Request, res: Response) {
   const repo = HomepageRepository.getInstance();
@@ -75,6 +76,37 @@ function splitAndSearch(paragraph: string, query: string) {
 }
 
 /**
+ * Get a list of matches of a query in a Widget.
+ * @param query string
+ * @param widget Widget
+ * @returns string[] of matches
+ */
+function getWidgetQueryMatches(query: string, widget: Widget): string[] {
+  const widgetMatches = [];
+  if (widget.content.text) {
+    const matches = splitAndSearch(widget.content.text, query);
+    if (matches.length) {
+      widgetMatches.push(...matches);
+    }
+  }
+
+  if (widget.content.title) {
+    const matches = splitAndSearch(widget.content.title, query);
+    if (matches.length) {
+      widgetMatches.push(...matches);
+    }
+  }
+
+  if (widget.content.summary) {
+    const matches = splitAndSearch(widget.content.summary, query);
+    if (matches.length) {
+      widgetMatches.push(...matches);
+    }
+  }
+  return widgetMatches;
+}
+
+/**
  * Get a list of matches of a query in a Dashboard.
  * @param query string
  * @param dashboard Dashboard
@@ -97,30 +129,9 @@ function getDashboardQueryMatches(
     return queryMatches;
   }
 
-  const widgetsMatches = dashboard.widgets.flatMap((widget) => {
-    const widgetMatches = [];
-    if (widget.content.text) {
-      const matches = splitAndSearch(widget.content.text, query);
-      if (matches.length) {
-        widgetMatches.push(...matches);
-      }
-    }
-
-    if (widget.content.title) {
-      const matches = splitAndSearch(widget.content.title, query);
-      if (matches.length) {
-        widgetMatches.push(...matches);
-      }
-    }
-
-    if (widget.content.summary) {
-      const matches = splitAndSearch(widget.content.summary, query);
-      if (matches.length) {
-        widgetMatches.push(...matches);
-      }
-    }
-    return widgetMatches;
-  });
+  const widgetsMatches = dashboard.widgets.flatMap((widget) =>
+    getWidgetQueryMatches(query, widget)
+  );
 
   queryMatches.push(...widgetsMatches);
 

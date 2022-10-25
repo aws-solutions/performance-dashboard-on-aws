@@ -13,7 +13,7 @@ interface Props {
   required?: boolean;
   disabled?: boolean;
   fileName?: string;
-  staticFileName?: string | undefined;
+  staticFileName?: string;
   hint?: string | React.ReactNode;
   accept?: string;
   errors?: any;

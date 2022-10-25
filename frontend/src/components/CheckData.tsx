@@ -112,9 +112,10 @@ function CheckData(props: Props) {
   );
 
   const checkDataTableRows = useMemo(() => props.data || [], [props.data]);
+  const dataColumns = props.data.length ? Object.keys(props.data[0]) : [];
   const checkDataTableColumns = useMemo(
     () =>
-      (props.data.length ? Object.keys(props.data[0]) : []).map((header, i) => {
+      dataColumns.map((header, i) => {
         return {
           Header: () => (
             <span className="text-center usa-checkbox margin-bottom-1">
@@ -142,6 +143,9 @@ function CheckData(props: Props) {
               minWidth: 150,
               Cell: (properties: any) => {
                 const row = properties.row.original;
+                const cellHeader = !UtilsService.isCellEmpty(row[header])
+                  ? row[header].toLocaleString()
+                  : "-";
                 if (props.dataTypes.has(header)) {
                   if (props.dataTypes.get(header) === ColumnDataType.Number) {
                     return typeof row[header] === "number" ? (
@@ -153,11 +157,7 @@ function CheckData(props: Props) {
                         currencyType: props.currencyTypes.get(header),
                       })
                     ) : (
-                      <div className="text-secondary-vivid">{`! ${
-                        !UtilsService.isCellEmpty(row[header])
-                          ? row[header].toLocaleString()
-                          : "-"
-                      }`}</div>
+                      <div className="text-secondary-vivid">{`! ${cellHeader}`}</div>
                     );
                   } else if (
                     props.dataTypes.get(header) === ColumnDataType.Date
@@ -165,27 +165,17 @@ function CheckData(props: Props) {
                     return !isNaN(Date.parse(row[header])) ? (
                       row[header].toLocaleString()
                     ) : (
-                      <div className="text-secondary-vivid">{`! ${
-                        !UtilsService.isCellEmpty(row[header])
-                          ? row[header].toLocaleString()
-                          : "-"
-                      }`}</div>
+                      <div className="text-secondary-vivid">{`! ${cellHeader}`}</div>
                     );
                   } else if (
                     props.dataTypes.get(header) === ColumnDataType.Text
                   ) {
-                    return !UtilsService.isCellEmpty(row[header])
-                      ? row[header]
-                      : "-";
+                    return cellHeader;
                   } else {
-                    return !UtilsService.isCellEmpty(row[header])
-                      ? row[header].toLocaleString()
-                      : "-";
+                    return cellHeader;
                   }
                 } else {
-                  return !UtilsService.isCellEmpty(row[header])
-                    ? row[header].toLocaleString()
-                    : "-";
+                  return cellHeader;
                 }
               },
             },

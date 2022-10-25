@@ -27,8 +27,7 @@ interface Props {
     | "page"
     | "step"
     | "location"
-    | "date"
-    | undefined;
+    | "date";
   ariaExpanded?: boolean;
   ariaControls?: string;
   disabledToolTip?: string;

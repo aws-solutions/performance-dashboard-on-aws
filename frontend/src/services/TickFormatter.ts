@@ -184,7 +184,7 @@ function stackedFormat(
         cm.currencyType === CurrencyDataType["Pound £"]
     )
   );
-  const getCurreny = (
+  const getCurrency = (
     allCurrencyDollar: boolean,
     allCurrencyEuro: boolean,
     allCurrencyPound: boolean
@@ -202,7 +202,7 @@ function stackedFormat(
     largestTick,
     significantDigitLabels,
     allPercentage ? NumberDataType.Percentage : "",
-    getCurreny(allCurrencyDollar, allCurrencyEuro, allCurrencyPound)
+    getCurrency(allCurrencyDollar, allCurrencyEuro, allCurrencyPound)
   );
 }
 

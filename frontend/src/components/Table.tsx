@@ -34,7 +34,7 @@ interface Props {
   pageSize?: 5 | 10 | 20 | 25 | 50 | 100;
   disablePagination?: boolean;
   disableBorderless?: boolean;
-  width?: string | number | undefined;
+  width?: string | number;
   columns: ReadonlyArray<any>;
   hiddenColumns?: Set<string>;
   addNumbersColumn?: boolean;
@@ -88,6 +88,13 @@ function Table(props: Props) {
     return title.substring(0, title.length - 3);
   };
 
+  const getTitle = (props: Props, row: Row<object>) => {
+    if (props.rowTitleComponents) {
+      return createLongTitleName(row, props.rowTitleComponents);
+    }
+    return props.screenReaderField ? row.values[props.screenReaderField] : null;
+  };
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -135,13 +142,7 @@ function Table(props: Props) {
                     toggleAllRowsSelected(false);
                     row.toggleRowSelected();
                   }}
-                  aria-labelledby={
-                    props.rowTitleComponents
-                      ? createLongTitleName(row, props.rowTitleComponents)
-                      : props.screenReaderField
-                      ? row.values[props.screenReaderField]
-                      : null
-                  }
+                  aria-labelledby={getTitle(props, row)}
                   {...row.getToggleRowSelectedProps()}
                 />
               </div>
@@ -159,20 +160,8 @@ function Table(props: Props) {
             Cell: ({ row }) => (
               <IndeterminateCheckbox
                 {...row.getToggleRowSelectedProps()}
-                title={
-                  props.rowTitleComponents
-                    ? createLongTitleName(row, props.rowTitleComponents)
-                    : props.screenReaderField
-                    ? row.values[props.screenReaderField]
-                    : null
-                }
-                aria-labelledby={
-                  props.rowTitleComponents
-                    ? createLongTitleName(row, props.rowTitleComponents)
-                    : props.screenReaderField
-                    ? row.values[props.screenReaderField]
-                    : null
-                }
+                title={getTitle(props, row)}
+                aria-labelledby={getTitle(props, row)}
               />
             ),
           },
@@ -205,7 +194,7 @@ function Table(props: Props) {
           ) {
             reset({
               sortData: header.id
-                ? `${header.id}###${header.isSortedDesc ? "desc" : "asc"}`
+                ? `${header.id}###${getSortingAttributes(header).direction}`
                 : "",
             });
             setSortByColumn(header.id);
@@ -237,6 +226,19 @@ function Table(props: Props) {
 
   const currentRows = props.disablePagination ? rows : page;
 
+  const getSortingAttributes = (column: HeaderGroup) => {
+    if (column.isSorted) {
+      return column.isSortedDesc
+        ? {
+            ariaSort: "descending",
+            icon: faChevronCircleDown,
+            direction: "desc",
+          }
+        : { ariaSort: "ascending", icon: faChevronCircleUp, direction: "asc" };
+    }
+    return { ariaSort: "none", icon: faChevronDown, direction: "" };
+  };
+
   function getColumnName(column: HeaderGroup) {
     /**
      * The split is to remove the quotes from the
@@ -263,13 +265,7 @@ function Table(props: Props) {
                 <th
                   scope="col"
                   {...column.getHeaderProps()}
-                  aria-sort={
-                    column.isSorted
-                      ? column.isSortedDesc
-                        ? "descending"
-                        : "ascending"
-                      : "none"
-                  }
+                  aria-sort={getSortingAttributes(column).ariaSort}
                   style={
                     props.selection !== "none"
                       ? {
@@ -298,13 +294,7 @@ function Table(props: Props) {
                       <span>{getColumnName(column)}</span>
                       <FontAwesomeIcon
                         className="margin-left-1"
-                        icon={
-                          !column.isSorted
-                            ? faChevronDown
-                            : column.isSortedDesc
-                            ? faChevronCircleDown
-                            : faChevronCircleUp
-                        }
+                        icon={getSortingAttributes(column).icon}
                       />
                     </button>
                   )}

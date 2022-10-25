@@ -27,9 +27,6 @@ function parse(
       result = schemaValidator.validate(dataset, MetricsSchema);
       break;
     case DatasetSchema.None:
-      logger.info("Validating dataset against None schema %o", dataset);
-      result = schemaValidator.validate(dataset, NoneSchema);
-      break;
     default:
       logger.info("Validating dataset against None schema %o", dataset);
       result = schemaValidator.validate(dataset, NoneSchema);

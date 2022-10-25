@@ -7,4 +7,6 @@ const app = new cdk.App();
 
 new GitHubIntegrationStack(app, "GitHubIntegration", {
   githubOrg: "aws-solutions",
+  serviceRoleArn: "pipeline-service-roles-arn",
+  artifactsBucketArn: "artifacts-bucket-arn",
 });

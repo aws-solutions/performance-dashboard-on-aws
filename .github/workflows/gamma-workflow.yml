@@ -4,9 +4,8 @@ env:
   REGION: us-east-1
 
 on:
-  pull_request:
+  push:
     branches:
-      - mainline
       - mainline-dev
 
 jobs:

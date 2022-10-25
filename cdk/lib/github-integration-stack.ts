@@ -8,7 +8,8 @@ import * as s3 from "@aws-cdk/aws-s3";
 
 export interface GitHubIntegrationProps extends cdk.StackProps {
   readonly githubOrg: string;
-  readonly pipelineRoleArn?: string;
+  readonly serviceRoleArn: string;
+  readonly artifactsBucketArn: string;
 }
 
 export class GitHubIntegrationStack extends cdk.Stack {
@@ -28,7 +29,11 @@ export class GitHubIntegrationStack extends cdk.Stack {
       throw new Error("Missing GitHub organization");
     }
 
-    const artifactsBucket = new s3.Bucket(this, "ArtifactsBucket");
+    const artifactsBucket = s3.Bucket.fromBucketArn(
+      this,
+      "ArtifactsBucket",
+      props.artifactsBucketArn
+    );
     const artifactsEncryptionKey = new kms.Key(this, "ArtifactsEncryptionKey", {
       description:
         "KMS key for the Dispatcher CodeBuild project to use for encrypting artifacts",
@@ -36,9 +41,9 @@ export class GitHubIntegrationStack extends cdk.Stack {
       enableKeyRotation: true,
     });
 
-    if (props.pipelineRoleArn) {
+    if (props.serviceRoleArn) {
       artifactsEncryptionKey.grantEncryptDecrypt(
-        new iam.ArnPrincipal(props.pipelineRoleArn)
+        new iam.ArnPrincipal(props.serviceRoleArn)
       );
     }
 

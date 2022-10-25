@@ -56,14 +56,13 @@ function ChartWidgetComponent(props: Props) {
 
   const keys = Object.keys(filteredJson[0] as Array<string>);
   const chartId = `chart-${Utils.getShorterId(props.widget.id)}`;
+  const title = !props.hideTitle && props.widget.showTitle ? content.title : "";
   switch (content.chartType) {
     case ChartType.LineChart:
       return (
         <LineChartWidget
           id={chartId}
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -80,9 +79,7 @@ function ChartWidgetComponent(props: Props) {
       return (
         <ColumnChartWidget
           id={chartId}
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -101,9 +98,7 @@ function ChartWidgetComponent(props: Props) {
       return (
         <BarChartWidget
           id={chartId}
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -121,9 +116,7 @@ function ChartWidgetComponent(props: Props) {
       return (
         <PartWholeChartWidget
           id={chartId}
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -139,9 +132,7 @@ function ChartWidgetComponent(props: Props) {
       return (
         <PieChartWidget
           id={chartId}
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -159,9 +150,7 @@ function ChartWidgetComponent(props: Props) {
       return (
         <DonutChartWidget
           id={chartId}
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}

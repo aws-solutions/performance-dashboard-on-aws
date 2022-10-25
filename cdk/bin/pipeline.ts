@@ -7,9 +7,7 @@ const app = new cdk.App();
 
 new PipelineStack(app, "Pipeline", {
   stackName: "PerformanceDash-Pipeline",
+  githubOrg: "aws-solutions",
   repoName: "performance-dashboard-on-aws",
-  sourceProvider: "GitHub",
   branch: "mainline-dev",
-  githubOwner: "awslabs",
-  githubOAuthToken: "github-oauth-token-secret",
 });

@@ -16,14 +16,12 @@ function TabsVertical(props: Props) {
   }, [props.defaultActive]);
 
   function getActiveTabIndex(): number {
-    let index = 0;
-    tabsMap.forEach((value: string, key: number) => {
+    for (let [key, value] of Array.from(tabsMap.entries())) {
       if (value === activeTab) {
-        index = key;
-        return;
+        return key;
       }
-    });
-    return index;
+    }
+    return 0;
   }
 
   const onKeyDown = (e: KeyboardEvent<HTMLElement>) => {

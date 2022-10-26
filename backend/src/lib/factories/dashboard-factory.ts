@@ -44,9 +44,6 @@ function duplicateWidgetsInplace(dashboard: Dashboard, newId: string) {
   // Duplicate all widgets related to this dashboard
   const widgets = dashboard.widgets.map((widget) => {
     const newWidget = WidgetFactory.createFromWidget(newId, widget);
-    if (dashboard.tableOfContents) {
-      tableOfContents[newWidget.id] = dashboard.tableOfContents[widget.id];
-    }
     return newWidget;
   });
   for (const widget of widgets) {
@@ -133,7 +130,6 @@ function toItem(dashboard: Dashboard): DashboardItem {
     topicAreaName: dashboard.topicAreaName,
     topicAreaId: TopicareaFactory.itemId(dashboard.topicAreaId),
     displayTableOfContents: dashboard.displayTableOfContents,
-    tableOfContents: dashboard.tableOfContents,
     description: dashboard.description,
     state: dashboard.state,
     createdBy: dashboard.createdBy,
@@ -190,7 +186,6 @@ function toPublic(dashboard: Dashboard): PublicDashboard {
     topicAreaId: dashboard.topicAreaId,
     topicAreaName: dashboard.topicAreaName,
     displayTableOfContents: dashboard.displayTableOfContents,
-    tableOfContents: dashboard.tableOfContents,
     description: dashboard.description,
     updatedAt: dashboard.updatedAt,
     widgets: dashboard.widgets,

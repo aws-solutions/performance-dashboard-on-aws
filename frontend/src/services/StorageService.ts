@@ -62,12 +62,12 @@ async function downloadFile(
 
 async function downloadLogo(s3Key: string, t: Function) {
   const path = "logo/".concat(s3Key);
-  return await downloadFile(path, t, EnvConfig.contentBucket);
+  return downloadFile(path, t, EnvConfig.contentBucket);
 }
 
 async function downloadFavicon(s3Key: string, t: Function) {
   const path = "favicon/".concat(s3Key);
-  return await downloadFile(path, t, EnvConfig.contentBucket);
+  return downloadFile(path, t, EnvConfig.contentBucket);
 }
 
 async function downloadJson(s3Key: string): Promise<Array<any>> {
@@ -195,7 +195,7 @@ async function uploadLogo(
     });
   }
 
-  return await uploadImage(rawFile, "logo", EnvConfig.contentBucket);
+  return uploadImage(rawFile, "logo", EnvConfig.contentBucket);
 }
 
 async function uploadFavicon(
@@ -209,7 +209,7 @@ async function uploadFavicon(
     });
   }
 
-  return await uploadImage(rawFile, "favicon", EnvConfig.contentBucket);
+  return uploadImage(rawFile, "favicon", EnvConfig.contentBucket);
 }
 
 const StorageService = {

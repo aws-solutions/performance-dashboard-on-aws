@@ -277,7 +277,14 @@ function EditChart() {
     dynamicDataset,
     staticDataset,
   ]);
-
+  const areValidCsvColumnNames = (firstRow: any): boolean => {
+    for (let columnName in firstRow) {
+      if (columnName === "") {
+        return false;
+      }
+    }
+    return true;
+  };
   const onFileProcessed = useCallback(
     async (data: File) => {
       if (!data) {
@@ -287,14 +294,7 @@ function EditChart() {
       ParsingFileService.parseFile(data, true, (errors: any, results: any) => {
         initializeColumnsMetadata();
 
-        let wrongCSV = false;
-        const firstRow = results[0];
-        for (let columnName in firstRow) {
-          if (columnName === "") {
-            wrongCSV = true;
-            break;
-          }
-        }
+        let wrongCSV = !areValidCsvColumnNames(results[0]);
 
         if (wrongCSV) {
           setEnableContinueButton(false);

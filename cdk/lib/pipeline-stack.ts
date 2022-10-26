@@ -4,6 +4,7 @@ import * as iam from "@aws-cdk/aws-iam";
 import * as codepipeline from "@aws-cdk/aws-codepipeline";
 import * as codebuild from "@aws-cdk/aws-codebuild";
 import * as codestarnotifications from "@aws-cdk/aws-codestarnotifications";
+import * as cloudtrail from "@aws-cdk/aws-cloudtrail";
 import * as sns from "@aws-cdk/aws-sns";
 import {
   CodeBuildAction,
@@ -33,7 +34,9 @@ export class PipelineStack extends cdk.Stack {
       })
     );
 
-    const artifactsBucket = new s3.Bucket(this, "ArtifactsBucket");
+    const artifactsBucket = new s3.Bucket(this, "ArtifactsBucket", {
+      versioned: true,
+    });
     new cdk.CfnOutput(this, "ArtifactsBucketARN", {
       description: "ARN of the artifact's bucket",
       value: artifactsBucket.bucketArn,
@@ -50,18 +53,40 @@ export class PipelineStack extends cdk.Stack {
     const sourceOutput = new codepipeline.Artifact();
     const buildOutput = new codepipeline.Artifact();
     const secureBuildOutput = new codepipeline.Artifact();
+
+    const bucketKey = `github/${props.githubOrg}/${props.repoName}/${props.branch}/artifact.zip`;
+    const trail = new cloudtrail.Trail(this, "CloudTrail");
+    trail.addS3EventSelector(
+      [
+        {
+          bucket: artifactsBucket,
+          objectPrefix: bucketKey,
+        },
+      ],
+      {
+        readWriteType: cloudtrail.ReadWriteType.WRITE_ONLY,
+      }
+    );
+
     const sourceAction = new S3SourceAction({
       actionName: "Source",
-      trigger: S3Trigger.POLL,
-      bucketKey: `github/${props.githubOrg}/${props.repoName}/${props.branch}/artifact.zip`,
+      trigger: S3Trigger.EVENTS,
       bucket: artifactsBucket,
       output: sourceOutput,
+      bucketKey,
     });
 
     pipeline.addStage({
       stageName: "Source",
       actions: [sourceAction],
     });
+    pipeline.addToRolePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["*"],
+        resources: ["*"],
+      })
+    );
 
     const build = new codebuild.PipelineProject(this, "Build", {
       environment: {
@@ -146,37 +171,37 @@ export class PipelineStack extends cdk.Stack {
      * CodeBuild notification configuration taken from documentation:
      * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codestarnotifications-notificationrule.html
      */
-    // new codestarnotifications.CfnNotificationRule(
-    //   this,
-    //   "BuildNotificationRule",
-    //   {
-    //     detailType: "BASIC",
-    //     resource: build.projectArn,
-    //     name: "BuildNotifications",
-    //     eventTypeIds: ["codebuild-project-build-state-failed"],
-    //     targets: [
-    //       {
-    //         targetType: "SNS",
-    //         targetAddress: notificationsTopic.topicArn,
-    //       },
-    //     ],
-    //   }
-    // );
-    // new codestarnotifications.CfnNotificationRule(
-    //   this,
-    //   "BuildNotificationRuleSecure",
-    //   {
-    //     detailType: "BASIC",
-    //     resource: buildSecure.projectArn,
-    //     name: "BuildNotificationsSecure",
-    //     eventTypeIds: ["codebuild-project-build-state-failed"],
-    //     targets: [
-    //       {
-    //         targetType: "SNS",
-    //         targetAddress: notificationsTopic.topicArn,
-    //       },
-    //     ],
-    //   }
-    // );
+    new codestarnotifications.CfnNotificationRule(
+      this,
+      "BuildNotificationRule",
+      {
+        detailType: "BASIC",
+        resource: build.projectArn,
+        name: "BuildNotifications",
+        eventTypeIds: ["codebuild-project-build-state-failed"],
+        targets: [
+          {
+            targetType: "SNS",
+            targetAddress: notificationsTopic.topicArn,
+          },
+        ],
+      }
+    );
+    new codestarnotifications.CfnNotificationRule(
+      this,
+      "BuildNotificationRuleSecure",
+      {
+        detailType: "BASIC",
+        resource: buildSecure.projectArn,
+        name: "BuildNotificationsSecure",
+        eventTypeIds: ["codebuild-project-build-state-failed"],
+        targets: [
+          {
+            targetType: "SNS",
+            targetAddress: notificationsTopic.topicArn,
+          },
+        ],
+      }
+    );
   }
 }

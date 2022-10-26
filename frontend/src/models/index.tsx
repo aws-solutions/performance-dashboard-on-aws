@@ -5,6 +5,9 @@ export type TopicArea = {
   dashboardCount: number;
 };
 
+export const TopicAreaSortingCriteria = (a: TopicArea, b: TopicArea) =>
+  a.name > b.name ? 1 : -1;
+
 export type PublicTopicArea = {
   id: string;
   name: string;
@@ -316,7 +319,7 @@ export type LocationState = {
   metricTitle?: string;
   origin?: string;
   json?: Array<any>;
-  staticDataset?: Dataset | undefined;
+  staticDataset?: Dataset;
   redirectUrl?: string;
   crumbLabel?: string;
   datasetType?: DatasetType;

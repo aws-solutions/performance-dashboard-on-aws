@@ -5,7 +5,7 @@
  */
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import {
+import React, {
   useState,
   useCallback,
   useEffect,
@@ -22,7 +22,6 @@ import {
   Settings,
   PublicSettings,
 } from "../../models";
-import React from "react";
 
 const dummyDashboard = {
   id: "123",

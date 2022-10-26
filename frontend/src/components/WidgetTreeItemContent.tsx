@@ -19,7 +19,7 @@ interface WidgetTreeItemContentProps {
   onDelete: (widget: Widget) => void;
   onDuplicate: (widget: Widget) => void;
   className?: string;
-  dragHandleProps?: DraggableProvidedDragHandleProps | undefined;
+  dragHandleProps?: DraggableProvidedDragHandleProps;
   onMoveUp?: () => void;
   onMoveDown?: () => void;
 }

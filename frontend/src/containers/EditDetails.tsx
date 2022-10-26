@@ -77,12 +77,6 @@ function EditDetails() {
     if (!dashboard) {
       return;
     }
-    if (!dashboard.tableOfContents) {
-      dashboard.tableOfContents = {};
-    }
-    for (const widget of dashboard.widgets || []) {
-      dashboard.tableOfContents[widget.id] = value;
-    }
   };
 
   const onSubmit = async (values: FormValues) => {
@@ -93,7 +87,7 @@ function EditDetails() {
       values.displayTableOfContents,
       values.description || "",
       dashboard ? dashboard.updatedAt : new Date(),
-      dashboard && dashboard.tableOfContents ? dashboard.tableOfContents : {}
+      {}
     );
 
     history.push(`/admin/dashboard/edit/${dashboardId}`, {
@@ -286,21 +280,14 @@ function EditDetails() {
               offset={80}
               area={2}
               marginRight={0}
-              widgetNameIds={dashboard.widgets
-                .filter(
-                  (w) =>
-                    dashboard &&
-                    dashboard.tableOfContents &&
-                    dashboard.tableOfContents[w.id]
-                )
-                .map((widget) => {
-                  return {
-                    name: widget.name,
-                    id: widget.id,
-                    isInsideSection: !!widget.section,
-                    sectionWithTabs: "",
-                  };
-                })}
+              widgetNameIds={dashboard.widgets.map((widget) => {
+                return {
+                  name: widget.name,
+                  id: widget.id,
+                  isInsideSection: !!widget.section,
+                  sectionWithTabs: "",
+                };
+              })}
               activeWidgetId={activeWidgetId}
               isTop={false}
               displayTableOfContents={displayTableOfContents}

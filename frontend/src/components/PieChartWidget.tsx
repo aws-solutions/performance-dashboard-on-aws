@@ -52,9 +52,9 @@ const PieChartWidget = (props: Props) => {
       pieParts.current = [];
       pieData.current = [];
       let maxTick = -Infinity;
-      for (let i = 0; i < data.length; i++) {
-        const key = data[i][parts[0] as keyof object];
-        const value = data[i][parts[1] as keyof object];
+      for (let dataItem of data) {
+        const key = dataItem[parts[0] as keyof object];
+        const value = dataItem[parts[1] as keyof object];
         const barKey = `${key}`;
         pie = {
           ...pie,

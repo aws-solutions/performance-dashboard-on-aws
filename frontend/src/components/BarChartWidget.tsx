@@ -1,6 +1,4 @@
 import React, { useCallback, useState, useRef, useEffect } from "react";
-// @ts-ignore
-import { CategoricalChartWrapper } from "recharts";
 import {
   XAxis,
   YAxis,
@@ -11,6 +9,8 @@ import {
   ResponsiveContainer,
   CartesianGrid,
   Tooltip,
+  // @ts-ignore
+  CategoricalChartWrapper,
 } from "recharts";
 import { useColors, useXAxisMetadata } from "../hooks";
 import UtilsService, { ComputedDimensions } from "../services/UtilsService";

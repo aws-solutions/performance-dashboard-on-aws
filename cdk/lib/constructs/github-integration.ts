@@ -1,23 +1,23 @@
-import { Construct } from "constructs";
-
 import * as cdk from "@aws-cdk/core";
 import * as kms from "@aws-cdk/aws-kms";
 import * as codebuild from "@aws-cdk/aws-codebuild";
 import * as iam from "@aws-cdk/aws-iam";
 import * as s3 from "@aws-cdk/aws-s3";
 
-export interface GitHubIntegrationProps extends cdk.StackProps {
+export interface GitHubIntegrationProps {
   readonly githubOrg: string;
-  readonly serviceRoleArn: string;
-  readonly artifactsBucketArn: string;
+  readonly bucketArn: string;
+  readonly region: string;
+  readonly accountId: string;
+  readonly decryptArns: string[];
 }
 
-export class GitHubIntegrationStack extends cdk.Stack {
+export class GitHubIntegration extends cdk.Construct {
   private readonly props: GitHubIntegrationProps;
   private readonly idp: iam.OpenIdConnectProvider;
   public readonly dispatcherCodeBuildProject: codebuild.Project;
 
-  constructor(scope: Construct, id: string, props: GitHubIntegrationProps) {
+  constructor(scope: cdk.Construct, id: string, props: GitHubIntegrationProps) {
     super(scope, id);
     this.props = props;
     this.idp = new iam.OpenIdConnectProvider(this, "OidProvider", {
@@ -32,7 +32,7 @@ export class GitHubIntegrationStack extends cdk.Stack {
     const artifactsBucket = s3.Bucket.fromBucketArn(
       this,
       "ArtifactsBucket",
-      props.artifactsBucketArn
+      props.bucketArn
     );
     const artifactsEncryptionKey = new kms.Key(this, "ArtifactsEncryptionKey", {
       description:
@@ -41,11 +41,9 @@ export class GitHubIntegrationStack extends cdk.Stack {
       enableKeyRotation: true,
     });
 
-    if (props.serviceRoleArn) {
-      artifactsEncryptionKey.grantEncryptDecrypt(
-        new iam.ArnPrincipal(props.serviceRoleArn)
-      );
-    }
+    props.decryptArns.forEach((roleArn) => {
+      artifactsEncryptionKey.grantEncryptDecrypt(new iam.ArnPrincipal(roleArn));
+    });
 
     this.dispatcherCodeBuildProject = new codebuild.Project(
       this,
@@ -126,7 +124,7 @@ export class GitHubIntegrationStack extends cdk.Stack {
               effect: iam.Effect.ALLOW,
               actions: ["logs:GetLogEvents"],
               resources: [
-                `arn:aws:logs:${this.region}:${this.account}:log-group:/aws/codebuild/${codeBuildProject.projectName}:*`,
+                `arn:aws:logs:${this.props.region}:${this.props.accountId}:log-group:/aws/codebuild/${codeBuildProject.projectName}:*`,
               ],
             }),
           ],

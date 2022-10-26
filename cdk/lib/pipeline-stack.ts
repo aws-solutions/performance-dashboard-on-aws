@@ -11,6 +11,7 @@ import {
   S3SourceAction,
   S3Trigger,
 } from "@aws-cdk/aws-codepipeline-actions";
+import { GitHubIntegration } from "./constructs/github-integration";
 
 interface Props extends cdk.StackProps {
   githubOrg: string;
@@ -165,6 +166,14 @@ export class PipelineStack extends cdk.Stack {
           runOrder: 2,
         }),
       ],
+    });
+
+    const github = new GitHubIntegration(this, "GitHubIntegration", {
+      githubOrg: props.githubOrg,
+      bucketArn: artifactsBucket.bucketArn,
+      region: this.region,
+      accountId: this.account,
+      decryptArns: [pipeline.role.roleArn],
     });
 
     /**

@@ -42,6 +42,10 @@ export class PipelineStack extends cdk.Stack {
     const pipeline = new codepipeline.Pipeline(this, "Pipeline", {
       artifactBucket: artifactsBucket,
     });
+    new cdk.CfnOutput(this, "ServiceRoleARN", {
+      description: "ARN the service role",
+      value: pipeline.role.roleArn,
+    });
 
     const sourceOutput = new codepipeline.Artifact();
     const buildOutput = new codepipeline.Artifact();
@@ -49,7 +53,7 @@ export class PipelineStack extends cdk.Stack {
     const sourceAction = new S3SourceAction({
       actionName: "Source",
       trigger: S3Trigger.POLL,
-      bucketKey: `github/${props.githubOrg}/${props.repoName}/refs/${props.branch}/artifact.zip`,
+      bucketKey: `github/${props.githubOrg}/${props.repoName}/${props.branch}/artifact.zip`,
       bucket: artifactsBucket,
       output: sourceOutput,
     });

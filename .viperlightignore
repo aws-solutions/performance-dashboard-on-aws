@@ -128,10 +128,10 @@ frontend/src/containers/__tests__/EditSupportContactEmail.test.tsx:41
 # Potential email address discovered                         Check line number: 41                      
 frontend/src/containers/__tests__/UserListing.test.tsx:41
 # Potential email address discovered                         Check line number: 41
+frontend/src/hooks/__mocks__/index.tsx:99
+# Potential email address discovered                         Check line number: 99                      
 frontend/src/hooks/__mocks__/index.tsx:100
 # Potential email address discovered                         Check line number: 100                      
-frontend/src/hooks/__mocks__/index.tsx:101
-# Potential email address discovered                         Check line number: 101                      
 frontend/src/services/EnvConfig.ts:38
 # Potential email address discovered                         Check line number: 38
 frontend/src/services/__tests__/BackendService.test.ts:372

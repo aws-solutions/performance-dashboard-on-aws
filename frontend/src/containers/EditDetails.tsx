@@ -21,6 +21,7 @@ import Link from "../components/Link";
 import { useTranslation } from "react-i18next";
 import Navigation from "../components/Navigation";
 import AlertContainer from "./AlertContainer";
+import { TopicAreaSortingCriteria } from "../models";
 
 interface FormValues {
   name: string;
@@ -47,9 +48,7 @@ function EditDetails() {
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
-  const sortedTopicAreas = topicareas.sort((a, b) =>
-    a.name > b.name ? 1 : -1
-  );
+  const sortedTopicAreas = topicareas.sort(TopicAreaSortingCriteria);
 
   const name = watch("name");
   const description = watch("description");

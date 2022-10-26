@@ -4,6 +4,7 @@ import {
   faChevronDown,
   faChevronCircleUp,
   faChevronCircleDown,
+  IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { TopicArea } from "../models";
 import Button from "./Button";
@@ -52,6 +53,17 @@ function TopicareasTable(props: Props) {
     }
   };
 
+  const sortByIcon = (
+    actualColunmName: string,
+    expectedColumnName: string,
+    direction: Direction
+  ): IconDefinition => {
+    if (actualColunmName !== expectedColumnName) {
+      return faChevronDown;
+    }
+    return direction === "up" ? faChevronCircleUp : faChevronCircleDown;
+  };
+
   return (
     <table className="usa-table usa-table--borderless" width="100%">
       <thead>
@@ -67,13 +79,7 @@ function TopicareasTable(props: Props) {
               <span>{t("TopicArea")}</span>
               <FontAwesomeIcon
                 className="margin-left-1"
-                icon={
-                  sortedBy !== "name"
-                    ? faChevronDown
-                    : direction === "up"
-                    ? faChevronCircleUp
-                    : faChevronCircleDown
-                }
+                icon={sortByIcon(sortedBy, "name", direction)}
               />
             </Button>
           </th>
@@ -87,13 +93,7 @@ function TopicareasTable(props: Props) {
               <span>{t("Dashboards")}</span>
               <FontAwesomeIcon
                 className="margin-left-1"
-                icon={
-                  sortedBy !== "dashboards"
-                    ? faChevronDown
-                    : direction === "up"
-                    ? faChevronCircleUp
-                    : faChevronCircleDown
-                }
+                icon={sortByIcon(sortedBy, "dashboards", direction)}
               />
             </Button>
           </th>
@@ -107,13 +107,7 @@ function TopicareasTable(props: Props) {
               <span>{t("CreatedBy")}</span>
               <FontAwesomeIcon
                 className="margin-left-1"
-                icon={
-                  sortedBy !== "createdBy"
-                    ? faChevronDown
-                    : direction === "up"
-                    ? faChevronCircleUp
-                    : faChevronCircleDown
-                }
+                icon={sortByIcon(sortedBy, "createdBy", direction)}
               />
             </Button>
           </th>

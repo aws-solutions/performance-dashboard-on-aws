@@ -75,7 +75,7 @@ function calculateYAxisMargin(
   const pixelsByCharacter = significantDigitLabels ? 2 : 8;
   const tickLocaleString: string = largestTick.toLocaleString();
   const numberOfCommas: number =
-    (tickLocaleString.match(/,|\./g)?.length || 0) + 3;
+    (tickLocaleString.match(/[,\.]/g)?.length || 0) + 3;
   return numberOfCommas * pixelsByCharacter;
 }
 

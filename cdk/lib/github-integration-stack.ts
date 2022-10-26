@@ -59,7 +59,7 @@ export class GitHubIntegrationStack extends cdk.Stack {
           version: "0.2",
           artifacts: {
             files: ["**/*"],
-            name: "$GITHUB_REPOSITORY/$GITHUB_REF_NAME/artifact.zip",
+            name: "github/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/artifact.zip",
           },
         }),
         artifacts: codebuild.Artifacts.s3({

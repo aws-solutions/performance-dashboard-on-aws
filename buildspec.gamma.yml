@@ -2,7 +2,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 16
+      nodejs: 14
     commands:
       # For debugging purposes
       - ls -al
@@ -12,6 +12,8 @@ phases:
   pre_build:
     commands:
       - echo "Installing dependencies and executing unit tests - `pwd`"
+      - echo "node use 16"
+      - n 16
       - ./install.sh
 
   build:

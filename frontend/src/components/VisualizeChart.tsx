@@ -19,6 +19,7 @@ import PrimaryActionBar from "./PrimaryActionBar";
 import PieChartWidget from "./PieChartWidget";
 import DonutChartWidget from "./DonutChartWidget";
 import { useWindowSize } from "../hooks";
+import UtilsService from "../services/UtilsService";
 
 interface Props {
   widgetId: string;
@@ -177,13 +178,10 @@ function VisualizeChart(props: Props) {
                   props.chartType
                 )}
                 onChange={handleSortDataChange}
-                defaultValue={
-                  props.sortByColumn
-                    ? `${props.sortByColumn}###${
-                        props.sortByDesc ? "desc" : "asc"
-                      }`
-                    : ""
-                }
+                defaultValue={UtilsService.getSortData(
+                  props.sortByColumn,
+                  props.sortByDesc
+                )}
                 register={props.register}
               />
             </div>

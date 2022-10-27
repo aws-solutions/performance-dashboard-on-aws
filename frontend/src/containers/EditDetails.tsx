@@ -48,7 +48,7 @@ function EditDetails() {
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
-  const sortedTopicAreas = topicareas.sort(TopicAreaSortingCriteria);
+  const sortedTopicAreas = [...topicareas].sort(TopicAreaSortingCriteria);
 
   const name = watch("name");
   const description = watch("description");

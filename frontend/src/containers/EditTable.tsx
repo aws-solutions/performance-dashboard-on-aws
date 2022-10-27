@@ -184,11 +184,10 @@ function EditTable() {
           widget.content.datasetType === DatasetType.StaticDataset
             ? widget.content.s3Key.json
             : "",
-        sortData: widget.content.sortByColumn
-          ? `${widget.content.sortByColumn}###${
-              widget.content.sortByDesc ? "desc" : "asc"
-            }`
-          : "",
+        sortData: UtilsService.getSortData(
+          widget.content.sortByColumn,
+          widget.content.sortByDesc
+        ),
       });
 
       if (!displayedDatasetType) {

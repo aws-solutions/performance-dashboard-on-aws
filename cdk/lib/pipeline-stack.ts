@@ -76,6 +76,10 @@ export class PipelineStack extends cdk.Stack {
       output: sourceOutput,
       bucketKey,
     });
+    new cdk.CfnOutput(this, "SourceRoleARN", {
+      description: "ARN of the source action.",
+      value: sourceAction.actionProperties.role?.roleArn ?? "",
+    });
 
     pipeline.addStage({
       stageName: "Source",
@@ -168,12 +172,17 @@ export class PipelineStack extends cdk.Stack {
       ],
     });
 
-    const github = new GitHubIntegration(this, "GitHubIntegration", {
+    const decryptArns = [pipeline.role.roleArn];
+    if (sourceAction.actionProperties.role?.roleArn) {
+      decryptArns.push(sourceAction.actionProperties.role.roleArn);
+    }
+
+    new GitHubIntegration(this, "GitHubIntegration", {
       githubOrg: props.githubOrg,
       bucketArn: artifactsBucket.bucketArn,
       region: this.region,
       accountId: this.account,
-      decryptArns: [pipeline.role.roleArn],
+      decryptArns,
     });
 
     /**

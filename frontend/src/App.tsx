@@ -373,11 +373,14 @@ function App() {
       <Router>
         <Switch>
           {routes.map((route) => {
-            const component = route.public
-              ? window.EnvironmentConfig.authenticationRequired
+            let component = withSAMLAuthenticator(
+              withAdminLayout(route.component)
+            );
+            if (route.public) {
+              component = window.EnvironmentConfig.authenticationRequired
                 ? withSAMLAuthenticator(withPublicLayout(route.component))
-                : withPublicLayout(route.component)
-              : withSAMLAuthenticator(withAdminLayout(route.component));
+                : withPublicLayout(route.component);
+            }
             return (
               <Page
                 title={route.title}

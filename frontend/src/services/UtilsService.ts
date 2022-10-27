@@ -165,6 +165,16 @@ function getShorterId(id: string) {
   return id?.substring(0, 8);
 }
 
+function getSortData(
+  columnName: string | undefined,
+  isDescending: boolean | undefined
+): string {
+  if (!columnName) {
+    return "";
+  }
+  return `${columnName}###${isDescending ? "desc" : "asc"}`;
+}
+
 export interface ComputedDimensions {
   labelWidth: number;
   chartHeight: number;
@@ -181,6 +191,7 @@ const UtilsService = {
   getTranslationUserStatusValue,
   calculateBarDimentions,
   getShorterId,
+  getSortData,
 };
 
 export default UtilsService;

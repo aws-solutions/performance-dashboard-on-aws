@@ -156,9 +156,7 @@ function EditLogo() {
                 required
                 hint={<span>{t("SettingsLogoFileUploadHint")}</span>}
                 fileName={
-                  currentLogo
-                    ? currentLogo.name
-                    : logoFileName
+                  logoFileName
                     ? logoFileName
                     : defaultLogo.replace(/^.*[\\/]/, "")
                 }

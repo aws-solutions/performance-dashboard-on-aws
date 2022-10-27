@@ -13,6 +13,7 @@ import Dropdown from "./Dropdown";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "./PrimaryActionBar";
 import { useWindowSize } from "../hooks";
+import UtilsService from "../services/UtilsService";
 
 interface Props {
   widgetId: string;
@@ -125,13 +126,10 @@ function VisualizeTable(props: Props) {
                   t
                 )}
                 onChange={handleSortDataChange}
-                defaultValue={
-                  props.sortByColumn
-                    ? `${props.sortByColumn}###${
-                        props.sortByDesc ? "desc" : "asc"
-                      }`
-                    : ""
-                }
+                defaultValue={UtilsService.getSortData(
+                  props.sortByColumn,
+                  props.sortByDesc
+                )}
                 register={props.register}
               />
             </div>

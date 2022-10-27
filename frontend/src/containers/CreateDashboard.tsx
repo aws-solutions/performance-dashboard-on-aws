@@ -26,7 +26,7 @@ function CreateDashboard() {
   const { topicareas, loading } = useTopicAreas();
   const { register, errors, handleSubmit, watch } = useForm<FormValues>();
 
-  const sortedTopicAreas = topicareas.sort(TopicAreaSortingCriteria);
+  const sortedTopicAreas = [...topicareas].sort(TopicAreaSortingCriteria);
   const name = watch("name");
   const description = watch("description");
   const topicAreaId = watch("topicAreaId");

@@ -119,9 +119,7 @@ function EditFavicon() {
                 required
                 hint={<span>{t("SettingsFaviconFileUploadHint")}</span>}
                 fileName={
-                  currentFavicon
-                    ? currentFavicon.name
-                    : faviconFileName
+                  faviconFileName
                     ? faviconFileName
                     : defaultFavicon.replace(/^.*[\\/]/, "")
                 }

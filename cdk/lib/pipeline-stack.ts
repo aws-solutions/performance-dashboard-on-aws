@@ -85,17 +85,10 @@ export class PipelineStack extends cdk.Stack {
       stageName: "Source",
       actions: [sourceAction],
     });
-    pipeline.addToRolePolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["*"],
-        resources: ["*"],
-      })
-    );
 
     const build = new codebuild.PipelineProject(this, "Build", {
       environment: {
-        buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2,
+        buildImage: codebuild.LinuxBuildImage.STANDARD_5_0,
         computeType: codebuild.ComputeType.LARGE,
       },
       environmentVariables: {
@@ -117,7 +110,7 @@ export class PipelineStack extends cdk.Stack {
 
     const buildSecure = new codebuild.PipelineProject(this, "Build-Secure", {
       environment: {
-        buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2,
+        buildImage: codebuild.LinuxBuildImage.STANDARD_5_0,
         computeType: codebuild.ComputeType.LARGE,
       },
       environmentVariables: {

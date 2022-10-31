@@ -1,7 +1,7 @@
 name: Gamma Pipeline Workflow
 
 env:
-  REGION: us-east-1
+  REGION: us-west-2
 
 on:
   push:

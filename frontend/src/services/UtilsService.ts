@@ -1,6 +1,8 @@
 import {
   Dashboard,
   DashboardState,
+  Dataset,
+  DatasetType,
   PublicDashboard,
   PublicTopicArea,
 } from "../models";
@@ -175,6 +177,18 @@ function getSortData(
   return `${columnName}###${isDescending ? "desc" : "asc"}`;
 }
 
+function getDatasetPropertyByDatasetType(
+  datasetType: DatasetType | undefined,
+  propertyName: string,
+  dynamicDataset: Dataset | undefined,
+  staticDataset: Dataset | undefined
+): any {
+  const propertyAccessor = propertyName as keyof Dataset;
+  return datasetType === DatasetType.DynamicDataset
+    ? dynamicDataset && dynamicDataset[propertyAccessor]
+    : staticDataset && staticDataset[propertyAccessor];
+}
+
 export interface ComputedDimensions {
   labelWidth: number;
   chartHeight: number;
@@ -192,6 +206,7 @@ const UtilsService = {
   calculateBarDimentions,
   getShorterId,
   getSortData,
+  getDatasetPropertyByDatasetType,
 };
 
 export default UtilsService;

@@ -40,8 +40,15 @@ function validateEmails(input: string): boolean {
   return emails.every(emailIsValid);
 }
 
+/**
+ * The most effective method consists in checking for @-sign somewhere in the email address.
+ * Then sending a verification email to given email address.
+ * If the end user can follow the validation instructions in the email message, the email address is correct.
+ * @param email
+ * @returns boolean
+ */
 function emailIsValid(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  return /^[^\s@]+@[^\s@]+$/.test(email);
 }
 
 function timeout(delay: number) {

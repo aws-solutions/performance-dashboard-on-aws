@@ -35,6 +35,10 @@ describe("generateFromDashboardName", () => {
         dashboardName: "!	#	$	&	'	(	)	*	+	,	/	:	;	=	?	@	[	] hi",
         expectedUrl: "hi",
       },
+      {
+        dashboardName: "-test-name-",
+        expectedUrl: "test-name",
+      },
     ];
 
     scenarios.forEach((scenario) => {

@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
 import { CSVLink } from "react-csv";
 import Pagination from "./Pagination";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface Props {
   id: string;
@@ -227,16 +228,30 @@ function Table(props: Props) {
   const currentRows = props.disablePagination ? rows : page;
 
   const getSortingAttributes = (column: HeaderGroup) => {
+    type AriaSortType =
+      | "none"
+      | "ascending"
+      | "descending"
+      | "other"
+      | undefined;
     if (column.isSorted) {
       return column.isSortedDesc
         ? {
-            ariaSort: "descending",
-            icon: faChevronCircleDown,
+            ariaSort: "descending" as AriaSortType,
+            icon: faChevronCircleDown as IconProp,
             direction: "desc",
           }
-        : { ariaSort: "ascending", icon: faChevronCircleUp, direction: "asc" };
+        : {
+            ariaSort: "ascending" as AriaSortType,
+            icon: faChevronCircleUp as IconProp,
+            direction: "asc",
+          };
     }
-    return { ariaSort: "none", icon: faChevronDown, direction: "" };
+    return {
+      ariaSort: "none" as AriaSortType,
+      icon: faChevronDown as IconProp,
+      direction: "",
+    };
   };
 
   function getColumnName(column: HeaderGroup) {

@@ -208,19 +208,28 @@ function AddChart() {
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
-            : datasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.id
-            : staticDataset?.id,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "id",
+                dynamicDataset,
+                staticDataset
+              ),
           s3Key: newDataset
             ? newDataset.s3Key
-            : datasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.s3Key
-            : staticDataset?.s3Key,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "s3Key",
+                dynamicDataset,
+                staticDataset
+              ),
           fileName: csvFile
             ? csvFile.name
-            : datasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.fileName
-            : staticDataset?.fileName,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "fileName",
+                dynamicDataset,
+                staticDataset
+              ),
           sortByColumn,
           sortByDesc,
           significantDigitLabels: values.significantDigitLabels,

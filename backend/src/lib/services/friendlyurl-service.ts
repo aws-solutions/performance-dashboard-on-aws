@@ -43,12 +43,11 @@ function isValid(friendlyURL: string): boolean {
 
 function generateFriendlyURL(dashboardName: string): string {
   return dashboardName
-    .trim()
     .toLocaleLowerCase()
-    .replace(/[!#$&'\(\)\*\+,\/:;=\?@\[\]]+/g, " ") // remove RFC-3986 reserved characters
+    .replace(/[!#$&'\(\)\*\+,\/:;=\?@\[\]-]+/g, " ") // replace RFC-3986 reserved characters and dashes with white spaces.
+    .trim() // remove spaces from the beginning and the end.
     .replace(/\s+/g, "-") // replace spaces for dashes
-    .replace(/-+/g, "-") // convert consecutive dashes to singular dash
-    .replace(/^(-)+|(-)+$/g, ""); // remove dashes at the end and beginning
+    .replace(/-+/g, "-"); // convert consecutive dashes to singular dash
 }
 
 async function isFriendlyURLAvailable(

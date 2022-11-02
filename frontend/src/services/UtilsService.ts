@@ -5,6 +5,7 @@ import {
   DatasetType,
   PublicDashboard,
   PublicTopicArea,
+  LocationState,
 } from "../models";
 import RulerService from "./RulerService";
 
@@ -196,6 +197,16 @@ function getDatasetPropertyByDatasetType(
     : staticDataset && staticDataset[propertyAccessor];
 }
 
+function getDatasetTypeFromState(
+  state: LocationState | undefined,
+  fallbackValue: DatasetType | undefined
+): DatasetType | undefined {
+  if (state && state.json) {
+    return DatasetType.StaticDataset;
+  }
+  return fallbackValue;
+}
+
 export interface ComputedDimensions {
   labelWidth: number;
   chartHeight: number;
@@ -214,6 +225,7 @@ const UtilsService = {
   getShorterId,
   getSortData,
   getDatasetPropertyByDatasetType,
+  getDatasetTypeFromState,
 };
 
 export default UtilsService;

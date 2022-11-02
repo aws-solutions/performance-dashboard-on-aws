@@ -169,9 +169,7 @@ function EditTable() {
         showTitle,
         datasetType: displayedDatasetType
           ? displayedDatasetType
-          : state && state.json
-          ? DatasetType.StaticDataset
-          : datasetType,
+          : UtilsService.getDatasetTypeFromState(state, datasetType),
         summary,
         summaryBelow,
         significantDigitLabels,

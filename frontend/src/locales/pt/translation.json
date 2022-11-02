@@ -631,6 +631,7 @@
   "SettingsTopicAreaNameEditProblem": "Houve um problema ao editar a área de tópico {{name}}. Tente novamente.",
   "SettingsTopicAreaNameEditSuccess": "A área de tópico {{name}} foi editada com êxito.",
   "SettingsAnalyticsEdit": "Análises da Web",
+  "SettingsAnalyticsDescription": "Adicione um ID de rastreamento do Google Analytics existente ao Performance Dashboard e visualize os dados de uso em sua conta do Google Analytics. No momento, o Performance Dashboard oferece suporte apenas ao rastreamento do Google Analytics.",
   "SettingsAnalyticsHint": "ID de rastreamento do Google Universal Analytics",
   "SettingsAnalyticsEditSuccess": "ID de rastreamento de análise editado com êxito.",
   "SettingsAnalyticsEditError": "ID de rastreamento do Google Universal Analytics inválido",

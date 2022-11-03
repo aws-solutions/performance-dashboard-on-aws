@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import StorageService from "../services/StorageService";
 import { useTranslation } from "react-i18next";
 
-type UseLogoHook = {
+export type UseLogoHook = {
   loadingFile: boolean;
   logo: File | undefined;
   logoFileName: string | undefined;

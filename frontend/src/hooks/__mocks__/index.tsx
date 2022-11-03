@@ -22,6 +22,8 @@ import {
   Settings,
   PublicSettings,
 } from "../../models";
+import { UseLogoHook } from "../logo-hooks";
+import { UseFaviconHook } from "../favicon-hooks";
 
 const dummyDashboard = {
   id: "123",
@@ -223,18 +225,18 @@ export function useWidgets(dashboardId: string) {
   return;
 }
 
-export function useLogo(s3Key: string | undefined) {
+export function useLogo(s3Key: string | undefined): UseLogoHook {
   return {
     loadingFile: false,
     logo: undefined,
-  };
+  } as UseLogoHook;
 }
 
-export function useFavicon(s3Key: string | undefined) {
+export function useFavicon(s3Key: string | undefined): UseFaviconHook {
   return {
     loadingFile: false,
-    logo: undefined,
-  };
+    favicon: undefined,
+  } as UseFaviconHook;
 }
 
 export function usePublicHomepage() {

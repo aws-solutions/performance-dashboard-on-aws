@@ -21,23 +21,6 @@ function Tabs(props: Props) {
     setActiveTab(props.defaultActive);
   }, [props.defaultActive]);
 
-  const onClickTabItem = (tab: string, currentTab: HTMLElement) => {
-    const rect = currentTab.getBoundingClientRect();
-    const wrapper = scrollMenuObj?.scrollContainer?.current;
-    if (rect && wrapper) {
-      const wrapperRect = wrapper.getBoundingClientRect();
-      if (rect.left < wrapperRect.left) {
-        scrollMenuObj?.scrollPrev();
-      } else {
-        const shownWidth = wrapperRect.right - rect.left;
-        if (shownWidth < rect.width) {
-          scrollMenuObj?.scrollNext();
-        }
-      }
-    }
-    setActiveTab(tab);
-  };
-
   function getActiveTabIndex(): number {
     for (let [key, value] of Array.from(tabsMap.entries())) {
       if (value === activeTab) {
@@ -61,7 +44,7 @@ function Tabs(props: Props) {
     }
   };
 
-  const onEnterTabItem = (tab: string, currentTab: HTMLElement) => {
+  const activateTabItem = (tab: string, currentTab: HTMLElement) => {
     const rect = currentTab.getBoundingClientRect();
     const wrapper = scrollMenuObj?.scrollContainer?.current;
     if (rect && wrapper) {
@@ -100,8 +83,8 @@ function Tabs(props: Props) {
               activeTab={activeTab}
               key={child.props.id}
               label={child.props.label}
-              onClick={onClickTabItem}
-              onEnter={onEnterTabItem}
+              onClick={activateTabItem}
+              onEnter={activateTabItem}
             />
           );
         })}

@@ -238,6 +238,18 @@ function EditMetrics() {
     },
   ];
 
+  const getSpinnerLabel = (
+    fileLoading: boolean,
+    editingWidget: boolean
+  ): string => {
+    if (fileLoading) {
+      return t("EditMetricsScreen.UploadingFile");
+    }
+    return editingWidget
+      ? t("EditMetricsScreen.EditingMetrics")
+      : t("LoadingSpinnerLabel");
+  };
+
   useChangeBackgroundColor();
 
   if (!loading && widget) {
@@ -255,13 +267,7 @@ function EditMetrics() {
       {loading || !widget || !currentJson || fileLoading || editingWidget ? (
         <Spinner
           className="text-center margin-top-9"
-          label={`${
-            fileLoading
-              ? t("EditMetricsScreen.UploadingFile")
-              : editingWidget
-              ? t("EditMetricsScreen.EditingMetrics")
-              : t("LoadingSpinnerLabel")
-          }`}
+          label={`${getSpinnerLabel(fileLoading, editingWidget)}`}
         />
       ) : (
         <div className="grid-row grid-gap">

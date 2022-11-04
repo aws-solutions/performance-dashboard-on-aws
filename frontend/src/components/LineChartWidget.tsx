@@ -57,9 +57,6 @@ function LineChartWidget(props: Props) {
     props.colors?.secondary
   );
 
-  const pixelsByCharacter = 8;
-  const previewWidth = 480;
-  const fullWidth = 960;
   const padding = 60;
 
   const getOpacity = useCallback(
@@ -103,14 +100,10 @@ function LineChartWidget(props: Props) {
    * depending on the container. Width: (largestHeader + 1) *
    * headersCount * pixelsByCharacter + marginLeft + marginRight
    */
-  const widthPercent =
-    (((UtilsService.getLargestHeader(lines, data) + 1) *
-      (data ? data.length : 0) *
-      pixelsByCharacter +
-      50 +
-      50) *
-      100) /
-    (props.isPreview ? previewWidth : fullWidth);
+  const widthPercent = UtilsService.computeChartWidgetWidthPercent({
+    ...props,
+    headers: props.lines,
+  });
 
   useEffect(() => {
     if (props.setWidthPercent) {

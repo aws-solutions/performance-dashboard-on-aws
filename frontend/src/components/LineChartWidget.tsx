@@ -40,7 +40,7 @@ type Props = {
   showMobilePreview?: boolean;
 };
 
-const LineChartWidget = (props: Props) => {
+function LineChartWidget(props: Props) {
   const chartRef = useRef(null);
   const [linesHover, setLinesHover] = useState(null);
   const [hiddenLines, setHiddenLines] = useState<Array<string>>([]);
@@ -255,6 +255,6 @@ const LineChartWidget = (props: Props) => {
       )}
     </div>
   );
-};
+}
 
 export default LineChartWidget;

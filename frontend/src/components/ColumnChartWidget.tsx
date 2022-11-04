@@ -44,7 +44,7 @@ type Props = {
   showMobilePreview?: boolean;
 };
 
-const ColumnChartWidget = (props: Props) => {
+function ColumnChartWidget(props: Props) {
   const chartRef = useRef(null);
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
@@ -312,6 +312,6 @@ const ColumnChartWidget = (props: Props) => {
       )}
     </div>
   );
-};
+}
 
 export default ColumnChartWidget;

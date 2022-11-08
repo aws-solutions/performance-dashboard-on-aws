@@ -31,8 +31,8 @@ CODE_OF_CONDUCT.md:4
 # Potential email address discovered                         Check line number: 4                       
 CONTRIBUTING.md:49
 # Potential email address discovered                         Check line number: 49                      
-README.md:62
-# Potential email address discovered                         Check line number: 60                      
+README.md:63
+# Potential email address discovered                         Check line number: 63                      
 docs/installation.md:117
 # Potential email address discovered                         Check line number: 117                     
 backend/integtests/IntegrationTestSuite.postman_collection.json:2302

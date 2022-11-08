@@ -232,11 +232,6 @@ function AddTable() {
 
   const goBack = () => {
     history.push(`/admin/dashboard/${dashboardId}/add-content`);
-    document.getElementById("Home")?.focus();
-  };
-
-  const goBack = () => {
-    history.push(`/admin/dashboard/${dashboardId}/add-content`);
   };
 
   const selectDynamicDataset = async (selectedDataset: Dataset) => {

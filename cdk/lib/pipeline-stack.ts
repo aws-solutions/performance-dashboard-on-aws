@@ -17,6 +17,8 @@ interface Props extends cdk.StackProps {
   githubOrg: string;
   repoName: string;
   branch: string;
+  environment: string;
+  secure?: boolean;
 }
 
 export class PipelineStack extends cdk.Stack {
@@ -96,7 +98,7 @@ export class PipelineStack extends cdk.Stack {
           value: "johndoe@example.com",
         },
         ENVIRONMENT: {
-          value: "Gamma",
+          value: props.environment,
         },
         LANGUAGE: {
           value: "english",
@@ -105,7 +107,7 @@ export class PipelineStack extends cdk.Stack {
           value: "false",
         },
       },
-      buildSpec: codebuild.BuildSpec.fromSourceFilename("buildspec.gamma.yml"),
+      buildSpec: codebuild.BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
     });
 
     const buildSecure = new codebuild.PipelineProject(this, "Build-Secure", {
@@ -118,7 +120,7 @@ export class PipelineStack extends cdk.Stack {
           value: "johndoe@example.com",
         },
         ENVIRONMENT: {
-          value: "GammaSecure",
+          value: `${props.environment}Secure`,
         },
         LANGUAGE: {
           value: "english",
@@ -127,7 +129,7 @@ export class PipelineStack extends cdk.Stack {
           value: "true",
         },
       },
-      buildSpec: codebuild.BuildSpec.fromSourceFilename("buildspec.gamma.yml"),
+      buildSpec: codebuild.BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
     });
 
     build.addToRolePolicy(
@@ -145,24 +147,30 @@ export class PipelineStack extends cdk.Stack {
       })
     );
 
-    pipeline.addStage({
-      stageName: "Gamma",
-      actions: [
-        new CodeBuildAction({
-          actionName: "Build.and.Deploy",
-          project: build,
-          input: sourceOutput,
-          outputs: [buildOutput],
-          runOrder: 1,
-        }),
+    const actions: CodeBuildAction[] = [
+      new CodeBuildAction({
+        actionName: "Build.and.Deploy",
+        project: build,
+        input: sourceOutput,
+        outputs: [buildOutput],
+        runOrder: 1,
+      }),
+    ];
+
+    if (props.secure) {
+      actions.push(
         new CodeBuildAction({
           actionName: "Build.and.Deploy.Secure",
           project: buildSecure,
           input: sourceOutput,
           outputs: [secureBuildOutput],
           runOrder: 2,
-        }),
-      ],
+        })
+      );
+    }
+    pipeline.addStage({
+      stageName: "Deploy",
+      actions,
     });
 
     const decryptArns = [pipeline.role.roleArn];

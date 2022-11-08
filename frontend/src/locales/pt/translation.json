@@ -11,6 +11,7 @@
     "EditPublishingGuidance": "Editar instruções de publicação",
     "PublishedSiteSettings": "Configurações do site publicado",
     "EditHomepageContent": "Editar conteúdo da página inicial",
+    "EditAnalytics": "Análises",
     "EditNavbar": "Editar barra de navegação",
     "CreateTopicArea": "Criar {{topicArea}}",
     "EditTopicArea": "Editar {{topicArea}}",
@@ -61,6 +62,7 @@
   },
   "SkipToMainContent": "Pular para conteúdo principal",
   "LastUpdatedLabel": "Última atualização",
+  "Updated": "Atualizado",
   "SearchButton": "Pesquisar",
   "draft": "rascunho",
   "published": "publicado",
@@ -109,6 +111,7 @@
   "Delete": "Excluir",
   "Save": "Salvar",
   "Edit": "Editar",
+  "ClearAndSave": "Limpar e salvar",
   "CopyLink": "Copiar link: {{title}}",
   "LinkCopied": "Link copiado: {{title}}",
   "EditHeader": "Editar cabeçalho",
@@ -627,6 +630,11 @@
   "SettingsTopicAreaNameEditError": "Especifique um nome",
   "SettingsTopicAreaNameEditProblem": "Houve um problema ao editar a área de tópico {{name}}. Tente novamente.",
   "SettingsTopicAreaNameEditSuccess": "A área de tópico {{name}} foi editada com êxito.",
+  "SettingsAnalyticsEdit": "Análises da Web",
+  "SettingsAnalyticsDescription": "Adicione um ID de rastreamento do Google Analytics existente ao Performance Dashboard e visualize os dados de uso em sua conta do Google Analytics. No momento, o Performance Dashboard oferece suporte apenas ao rastreamento do Google Analytics.",
+  "SettingsAnalyticsHint": "ID de rastreamento do Google Universal Analytics",
+  "SettingsAnalyticsEditSuccess": "ID de rastreamento de análise editado com êxito.",
+  "SettingsAnalyticsEditError": "ID de rastreamento do Google Universal Analytics inválido",
   "TopicArea": "Área de tópico",
   "TopicArea_plural": "Áreas de tópicos",
   "TopicAreas": "Áreas de tópicos",
@@ -679,7 +687,9 @@
     "HomepageContentHeader": "Conteúdo da página inicial",
     "HomepageContentDescription": "Estes componentes aparecem na página inicial do site publicado e explicam o conteúdo do site.",
     "Headline": "Manchete",
-    "Edit": "Editar"
+    "Edit": "Editar",
+    "Analytics": "Análises da Web",
+    "AnalyticsDescription": "Adicione seu ID de rastreamento de análises da Web para obter insights sobre como os visitantes interagem com o Performance Dashboard."
   },
   "AdminFooter": {
     "HelpMessage": "Está tendo problemas técnicos com o sistema?",
@@ -1019,7 +1029,7 @@
   "SortTopicAreaName": "Classificar por nome da área de tópico",
   "DeleteTopicArea": "Excluir área de tópico {{name}}?",
   "ConfirmDeleteTopicArea": "Tem certeza de que deseja excluir esta área de tópico?",
-  "OnlyEmptyTopicAreasCanBeDeleted": "Você só pode excluir áreas de tópicos sem painéis.",
+  "TopicAreaListingDescription": "Essas são todas as áreas de tópicos. Você pode adicioná-las, editá-las e excluí-las, mas só pode excluir áreas de tópicos sem painéis.",
   "CloseMenu": "Fechar menu",
   "ARIA": {
     "Header": "Cabeçalho",
@@ -1049,7 +1059,12 @@
     "MoveUp": "Mover {{metric}} para cima",
     "MoveDown": "Mover {{metric}} para baixo",
     "PreviewDashboard": "Pré-visualizar painel",
-    "DataTableActions": "Ações da tabela de dados"
+    "DataTableActions": "Ações da tabela de dados",
+    "TopicAreaListingActions": "Ações de listagem de área de tópico",
+    "TopicAreaListingDelete": "Excluir área de tópico",
+    "TopicAreaListingEdit": "Editar a área de tópico",
+    "Breadcrumbs": "Rastros",
+    "ViewDashboard": "Visualizar painel {{dashboard}}"
   },
   "percentage": "{{pct}}%",
   "Search": {

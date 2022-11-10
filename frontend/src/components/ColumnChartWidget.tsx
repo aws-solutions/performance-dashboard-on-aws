@@ -44,7 +44,7 @@ type Props = {
   showMobilePreview?: boolean;
 };
 
-const ColumnChartWidget = (props: Props) => {
+function ColumnChartWidget(props: Props) {
   const chartRef = useRef(null);
   const [columnsHover, setColumnsHover] = useState(null);
   const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
@@ -60,10 +60,6 @@ const ColumnChartWidget = (props: Props) => {
     props.colors?.primary,
     props.colors?.secondary
   );
-
-  const pixelsByCharacter = 8;
-  const previewWidth = 480;
-  const fullWidth = 960;
 
   const getOpacity = useCallback(
     (dataKey) => {
@@ -85,14 +81,16 @@ const ColumnChartWidget = (props: Props) => {
     columnsMetadataDict.set(el.columnName, el)
   );
 
-  let padding;
-  if (showMobilePreview || windowSize.width < smallScreenPixels) {
-    padding = 20;
-  } else if (props.isPreview) {
-    padding = 60;
-  } else {
-    padding = 120;
-  }
+  const computePadding = () => {
+    if (showMobilePreview || windowSize.width < smallScreenPixels) {
+      return 20;
+    }
+    if (props.isPreview) {
+      return 60;
+    }
+    return 120;
+  };
+  const padding = computePadding();
 
   const xAxisType = useCallback(() => {
     let columnMetadata;
@@ -124,14 +122,10 @@ const ColumnChartWidget = (props: Props) => {
    * depending on the container. Width: (largestHeader + 1) *
    * headersCount * pixelsByCharacter + marginLeft + marginRight
    */
-  const widthPercent =
-    (((UtilsService.getLargestHeader(columns, data) + 1) *
-      (data ? data.length : 0) *
-      pixelsByCharacter +
-      50 +
-      50) *
-      100) /
-    (props.isPreview ? previewWidth : fullWidth);
+  const widthPercent = UtilsService.computeChartWidgetWidthPercent({
+    ...props,
+    headers: props.columns,
+  });
 
   const valueAccessor =
     (attribute: string) =>
@@ -312,6 +306,6 @@ const ColumnChartWidget = (props: Props) => {
       )}
     </div>
   );
-};
+}
 
 export default ColumnChartWidget;

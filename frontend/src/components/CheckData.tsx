@@ -111,6 +111,40 @@ function CheckData(props: Props) {
     [props.currencyTypes]
   );
 
+  const handleCell = (properties: any, header: any) => {
+    const row = properties.row.original;
+    const cellHeader = !UtilsService.isCellEmpty(row[header])
+      ? row[header].toLocaleString()
+      : "-";
+    if (!props.dataTypes.has(header)) {
+      return cellHeader;
+    }
+    if (props.dataTypes.get(header) === ColumnDataType.Number) {
+      return typeof row[header] === "number" ? (
+        TickFormatter.format(row[header], 0, false, "", "", {
+          columnName: header,
+          hidden: props.hiddenColumns.has(header),
+          dataType: ColumnDataType.Number,
+          numberType: props.numberTypes.get(header),
+          currencyType: props.currencyTypes.get(header),
+        })
+      ) : (
+        <div className="text-secondary-vivid">{`! ${cellHeader}`}</div>
+      );
+    }
+    if (props.dataTypes.get(header) === ColumnDataType.Date) {
+      return !isNaN(Date.parse(row[header])) ? (
+        row[header].toLocaleString()
+      ) : (
+        <div className="text-secondary-vivid">{`! ${cellHeader}`}</div>
+      );
+    }
+    if (props.dataTypes.get(header) === ColumnDataType.Text) {
+      return cellHeader;
+    }
+    return cellHeader;
+  };
+
   const checkDataTableRows = useMemo(() => props.data || [], [props.data]);
   const dataColumns = props.data.length ? Object.keys(props.data[0]) : [];
   const checkDataTableColumns = useMemo(
@@ -142,41 +176,7 @@ function CheckData(props: Props) {
               accessor: header,
               minWidth: 150,
               Cell: (properties: any) => {
-                const row = properties.row.original;
-                const cellHeader = !UtilsService.isCellEmpty(row[header])
-                  ? row[header].toLocaleString()
-                  : "-";
-                if (props.dataTypes.has(header)) {
-                  if (props.dataTypes.get(header) === ColumnDataType.Number) {
-                    return typeof row[header] === "number" ? (
-                      TickFormatter.format(row[header], 0, false, "", "", {
-                        columnName: header,
-                        hidden: props.hiddenColumns.has(header),
-                        dataType: ColumnDataType.Number,
-                        numberType: props.numberTypes.get(header),
-                        currencyType: props.currencyTypes.get(header),
-                      })
-                    ) : (
-                      <div className="text-secondary-vivid">{`! ${cellHeader}`}</div>
-                    );
-                  } else if (
-                    props.dataTypes.get(header) === ColumnDataType.Date
-                  ) {
-                    return !isNaN(Date.parse(row[header])) ? (
-                      row[header].toLocaleString()
-                    ) : (
-                      <div className="text-secondary-vivid">{`! ${cellHeader}`}</div>
-                    );
-                  } else if (
-                    props.dataTypes.get(header) === ColumnDataType.Text
-                  ) {
-                    return cellHeader;
-                  } else {
-                    return cellHeader;
-                  }
-                } else {
-                  return cellHeader;
-                }
+                return handleCell(properties, header);
               },
             },
           ],

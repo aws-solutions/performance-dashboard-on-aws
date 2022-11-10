@@ -207,6 +207,37 @@ function getDatasetTypeFromState(
   return fallbackValue;
 }
 
+/**
+ * Calculate the width percent out of the total width
+ * depending on the container. Width: (largestHeader + 1) *
+ * headersCount * pixelsByCharacter + marginLeft + marginRight
+ * @param props { data?: Array<any>; headers: Array<string>; isPreview?: boolean }
+ * @param pixelsByCharacter number
+ * @param marginLeft number
+ * @param marginRight number
+ * @param previewWidth number
+ * @param fullWidth number
+ * @returns number
+ */
+function computeChartWidgetWidthPercent(
+  props: { data?: Array<any>; headers: Array<string>; isPreview?: boolean },
+  pixelsByCharacter: number = 8,
+  marginLeft: number = 50,
+  marginRight: number = 50,
+  previewWidth: number = 480,
+  fullWidth: number = 960
+): number {
+  const { data, headers, isPreview } = props;
+  const largestHeader = UtilsService.getLargestHeader(headers, data);
+  const headersCount = data ? data.length : 0;
+  const actualWidth =
+    (largestHeader + 1) * headersCount * pixelsByCharacter +
+    marginLeft +
+    marginRight;
+  const totalWidth = isPreview ? previewWidth : fullWidth;
+  return (actualWidth * 100) / totalWidth;
+}
+
 export interface ComputedDimensions {
   labelWidth: number;
   chartHeight: number;
@@ -226,6 +257,7 @@ const UtilsService = {
   getSortData,
   getDatasetPropertyByDatasetType,
   getDatasetTypeFromState,
+  computeChartWidgetWidthPercent,
 };
 
 export default UtilsService;

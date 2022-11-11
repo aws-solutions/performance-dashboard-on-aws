@@ -113,6 +113,31 @@ exports[`renders the CheckData component 1`] = `
                 </span>
               </span>
             </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+            >
+              <span>
+                <span
+                  class="text-center usa-checkbox margin-bottom-1"
+                >
+                  <input
+                    aria-label="icon CheckBox"
+                    checked=""
+                    class="usa-checkbox__input"
+                    id="checkbox-header-3"
+                    name="icon"
+                    type="checkbox"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="checkbox-header-3"
+                  />
+                </span>
+              </span>
+            </th>
           </tr>
           <tr
             role="row"
@@ -232,6 +257,40 @@ exports[`renders the CheckData component 1`] = `
                 </svg>
               </button>
             </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+              style="min-width: 150px;"
+            >
+              <button
+                aria-label="Toggle SortBy: icon"
+                class="usa-button usa-button--unstyled text-no-underline"
+                style="cursor: pointer;"
+                title="Toggle SortBy: icon"
+                type="button"
+              >
+                <span>
+                  icon
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
+                  data-icon="chevron-down"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody
@@ -252,7 +311,11 @@ exports[`renders the CheckData component 1`] = `
             <td
               role="cell"
             >
-              1
+              <div
+                class="text-secondary-vivid"
+              >
+                ! 1
+              </div>
             </td>
             <td
               role="cell"
@@ -263,6 +326,11 @@ exports[`renders the CheckData component 1`] = `
               role="cell"
             >
               2021-11-11
+            </td>
+            <td
+              role="cell"
+            >
+              fa-banana
             </td>
           </tr>
           <tr
@@ -280,7 +348,11 @@ exports[`renders the CheckData component 1`] = `
             <td
               role="cell"
             >
-              2
+              <div
+                class="text-secondary-vivid"
+              >
+                ! 2
+              </div>
             </td>
             <td
               role="cell"
@@ -291,6 +363,11 @@ exports[`renders the CheckData component 1`] = `
               role="cell"
             >
               2020-11-11
+            </td>
+            <td
+              role="cell"
+            >
+              fa-candy-bar
             </td>
           </tr>
           <tr
@@ -308,7 +385,11 @@ exports[`renders the CheckData component 1`] = `
             <td
               role="cell"
             >
-              3
+              <div
+                class="text-secondary-vivid"
+              >
+                ! 3
+              </div>
             </td>
             <td
               role="cell"
@@ -319,6 +400,11 @@ exports[`renders the CheckData component 1`] = `
               role="cell"
             >
               2019-11-11
+            </td>
+            <td
+              role="cell"
+            >
+              fa-ice-cream
             </td>
           </tr>
         </tbody>
@@ -384,6 +470,52 @@ exports[`renders the CheckData component 1`] = `
               value="Date"
             >
               Date
+            </option>
+          </select>
+        </div>
+      </div>
+      <div
+        class="grid-col-4"
+      >
+        <div
+          class="usa-form-group margin-top-3"
+          role="contentinfo"
+        >
+          <label
+            class="usa-label text-bold"
+            for="id"
+          >
+            Number format (optional)
+          </label>
+          <div
+            class="usa-hint"
+            id="id-description"
+          />
+          <select
+            aria-describedby="id-description"
+            class="usa-select"
+            id="id"
+            name="numberType"
+          >
+            <option
+              value=""
+            >
+              Select an option
+            </option>
+            <option
+              value="Percentage"
+            >
+              Percentage
+            </option>
+            <option
+              value="Currency"
+            >
+              Currency
+            </option>
+            <option
+              value="With thousands separators"
+            >
+              With thousands separators
             </option>
           </select>
         </div>
@@ -477,6 +609,63 @@ exports[`renders the CheckData component 1`] = `
             aria-describedby="updatedAt-description"
             class="usa-select"
             id="updatedAt"
+            name="dataType"
+          >
+            <option
+              value=""
+            >
+              Select an option
+            </option>
+            <option
+              value="Text"
+            >
+              Text
+            </option>
+            <option
+              value="Number"
+            >
+              Number
+            </option>
+            <option
+              value="Date"
+            >
+              Date
+            </option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <hr />
+    </div>
+    <div
+      class="margin-top-4"
+    >
+      <span
+        class="text-base"
+      >
+        Column: icon
+      </span>
+      <div
+        class="grid-col-4"
+      >
+        <div
+          class="usa-form-group margin-top-2"
+          role="contentinfo"
+        >
+          <label
+            class="usa-label text-bold"
+            for="icon"
+          >
+            Data format
+          </label>
+          <div
+            class="usa-hint"
+            id="icon-description"
+          />
+          <select
+            aria-describedby="icon-description"
+            class="usa-select"
+            id="icon"
             name="dataType"
           >
             <option

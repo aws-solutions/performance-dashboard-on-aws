@@ -28,7 +28,7 @@ describe("ChangeRoleForm", () => {
     );
   });
 
-  test.skip("submits form with the entered values", async () => {
+  test("submits form with the entered values", async () => {
     fireEvent.input(screen.getByTestId("adminRadioButton"), {
       target: {
         checked: true,

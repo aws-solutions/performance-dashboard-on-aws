@@ -2,7 +2,7 @@ import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter, Router } from "react-router-dom";
 import BackendService from "../../services/BackendService";
-import EditText from "../EditText";
+import EditSection from "../EditSection";
 import { createMemoryHistory } from "history";
 
 jest.mock("../../services/BackendService");
@@ -13,41 +13,23 @@ beforeEach(() => {
 });
 
 test("renders title", async () => {
-  const { getByRole } = render(<EditText />, {
+  const { getByText, getByRole, getByLabelText } = render(<EditSection />, {
     wrapper: MemoryRouter,
   });
-  expect(getByRole("heading", { name: "Edit text" })).toBeInTheDocument();
-});
-
-test("renders a text input for title", async () => {
-  const { getByLabelText } = render(<EditText />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Text title*")).toBeInTheDocument();
-});
-
-test("renders a text input for content", async () => {
-  const { getByLabelText } = render(<EditText />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Text*")).toBeInTheDocument();
-});
-
-test("renders the expand preview button", async () => {
-  const { getByRole } = render(<EditText />, { wrapper: MemoryRouter });
-  expect(getByRole("button", { name: "Expand preview" })).toBeInTheDocument();
+  expect(getByRole("heading", { name: "Edit section" })).toBeInTheDocument();
+  expect(getByText("Configure section content")).toBeInTheDocument();
+  expect(getByLabelText("Section title*")).toBeInTheDocument();
+  expect(getByLabelText("Section summary (optional)")).toBeInTheDocument();
 });
 
 test("on submit, it calls editWidget api", async () => {
-  const { getByRole, getByLabelText } = render(<EditText />, {
+  const { getByRole, getByLabelText } = render(<EditSection />, {
     wrapper: MemoryRouter,
   });
 
-  fireEvent.input(getByLabelText("Text title*"), {
+  fireEvent.input(getByLabelText("Section title*"), {
     target: {
       value: "Content title goes here",
-    },
-  });
-
-  fireEvent.change(getByLabelText("Text*"), {
-    target: {
-      value: "Text content here",
     },
   });
 
@@ -64,7 +46,7 @@ test("cancel link takes you to Edit Dashboard screen", async () => {
 
   const { findByRole } = render(
     <Router history={history}>
-      <EditText />
+      <EditSection />
     </Router>
   );
 

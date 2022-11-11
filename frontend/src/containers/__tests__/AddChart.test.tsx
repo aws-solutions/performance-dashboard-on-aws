@@ -6,11 +6,12 @@ import {
   waitFor,
   screen,
 } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Router } from "react-router-dom";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
 import AddChart from "../AddChart";
 import papaparse from "papaparse";
+import { createMemoryHistory } from "history";
 
 jest.mock("../../services/BackendService");
 jest.mock("../../services/StorageService");
@@ -135,4 +136,22 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
   expect(BackendService.createWidget).toHaveBeenCalled();
   expect(StorageService.uploadDataset).toHaveBeenCalled();
   expect(BackendService.createDataset).toHaveBeenCalled();
+});
+
+test("cancel link takes you to Edit Dashboard screen", async () => {
+  const history = createMemoryHistory();
+  jest.spyOn(history, "push");
+
+  const { findByRole } = render(
+    <Router history={history}>
+      <AddChart />
+    </Router>
+  );
+
+  await act(async () => {
+    const cancelButton = await findByRole("button", { name: "Cancel" });
+    fireEvent.click(cancelButton);
+  });
+
+  expect(history.push).toHaveBeenCalledWith("/admin/dashboard/edit/undefined");
 });

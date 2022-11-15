@@ -35,4 +35,5 @@ phases:
 
 artifacts:
   files:
+    - deployment/**/*
     - "**/*"

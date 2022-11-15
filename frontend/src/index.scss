@@ -237,13 +237,6 @@ textarea::placeholder {
   text-overflow: ellipsis;
 }
 
-@media (min-width: 64em) {
-  .usa-nav-container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-}
-
 .usa-table {
   margin: 0.75rem 0 !important;
 }

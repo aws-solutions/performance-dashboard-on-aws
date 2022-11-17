@@ -473,8 +473,6 @@ exports[`renders the CheckData component 1`] = `
             </option>
           </select>
         </div>
-        <br />
-        <hr />
       </div>
       <div
         class="grid-col-4"

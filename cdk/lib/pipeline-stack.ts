@@ -106,33 +106,6 @@ export class PipelineStack extends cdk.Stack {
         AUTH: {
           value: "false",
         },
-        LANGUAGE: {
-          value: "english",
-        },
-        AUTH: {
-          value: "false",
-        },
-      },
-    });
-
-    const buildSecure = new codebuild.PipelineProject(this, "Build-Secure", {
-      environment: {
-        buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_2,
-        computeType: codebuild.ComputeType.LARGE,
-      },
-      environmentVariables: {
-        CDK_ADMIN_EMAIL: {
-          value: "johndoe@example.com",
-        },
-        ENVIRONMENT: {
-          value: "GammaSecure",
-        },
-        LANGUAGE: {
-          value: "english",
-        },
-        AUTH: {
-          value: "true",
-        },
       },
       buildSpec: codebuild.BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
     });

@@ -8,7 +8,7 @@ function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer aria-label={t("ARIA.Footer")}>
+    <footer>
       <div className="grid-container margin-bottom-9 text-base font-sans-sm">
         {loadingSettings ? (
           ""

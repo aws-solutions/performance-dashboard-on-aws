@@ -33,7 +33,7 @@ function RadioButtons(props: Props) {
   };
 
   return (
-    <div role="radiogroup" className={formGroupClassName}>
+    <div className={formGroupClassName}>
       <fieldset className="usa-fieldset" onChange={handleChange}>
         <legend className="usa-sr-only">{props.label}</legend>
         <span className="usa-label text-bold">{props.label}</span>

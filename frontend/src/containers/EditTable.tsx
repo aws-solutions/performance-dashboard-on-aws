@@ -490,13 +490,7 @@ function EditTable() {
             {t("EditTableScreen.ChooseData")}
           </button>
         </li>
-        <li
-          id="editTableFormHeaderStep2"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 1}
-          aria-controls="panel2"
-        >
+        <li className="usa-button-group__item">
           <button
             id={`editTableFormHeaderStep2_${suffix}`}
             role="tab"
@@ -513,13 +507,7 @@ function EditTable() {
             {t("EditTableScreen.CheckData")}
           </button>
         </li>
-        <li
-          id="editTableFormHeaderStep3"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 2}
-          aria-controls="panel3"
-        >
+        <li className="usa-button-group__item">
           <button
             id={`editTableFormHeaderStep3_${suffix}`}
             role="tab"

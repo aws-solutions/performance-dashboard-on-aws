@@ -1,0 +1,301 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PublicLayout renders the component 1`] = `
+<div>
+  <div
+    class="usa-overlay"
+  />
+  <header
+    aria-label="Header"
+    class="border-base-lighter border-width-1px shadow-2 z-top position-sticky top-0 bg-white usa-header usa-header--basic"
+    role="contentinfo"
+  >
+    <div
+      class="usa-nav-container"
+    >
+      <div
+        class="usa-navbar navbar-long"
+      >
+        <div>
+          <a
+            class="usa-skipnav"
+            href="#main"
+          >
+            Skip to main content
+          </a>
+        </div>
+        <div
+          class="usa-logo"
+          id="basic-logo"
+        >
+          <em
+            class="usa-logo__text display-flex flex-align-center"
+          >
+            <div
+              class="logo"
+            >
+              <img
+                alt="Organization logo"
+                data-testid="logoImage"
+                src="logo.svg"
+              />
+            </div>
+            <a
+              aria-label="Home"
+              href="/"
+              title="Home"
+            />
+          </em>
+        </div>
+        <button
+          class="usa-menu-btn bg-primary-dark"
+        >
+          Menu
+        </button>
+      </div>
+      <nav
+        aria-label="Primary navigation"
+        class="usa-nav"
+      >
+        <button
+          aria-label="Close Menu"
+          class="usa-nav__close"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Close Menu"
+            class="svg-inline--fa fa-window-close fa-w-16 fa-lg "
+            data-icon="window-close"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+        <ul
+          class="usa-nav__primary usa-accordion"
+        >
+          <li
+            class="usa-nav__primary-item"
+          >
+            <a
+              aria-label="Contact"
+              href="/public/contact"
+              title="Contact"
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main
+    class="padding-y-3"
+  >
+    <div
+      id="main"
+      tabindex="-1"
+    />
+    <div
+      class="grid-container"
+    >
+      <div
+        class="usa-prose"
+      >
+        <div
+          class="grid-row"
+        >
+          <div
+            class="grid-col-12 tablet:grid-col-8"
+          >
+            <h1
+              class="font-sans-3xl line-height-sans-2 margin-top-2"
+            >
+              Kingdom of Wakanda
+            </h1>
+            <div
+              class="Markdown font-sans-lg usa-prose"
+            >
+              <p>
+                Welcome to our dashboard
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="grid-row"
+        >
+          <div
+            class="grid-col-12 padding-y-3 usa-prose"
+          >
+            <form
+              class="usa-search usa-search--big bigwide"
+              role="search"
+            >
+              <label
+                class="usa-sr-only"
+                for="search"
+              >
+                Search
+              </label>
+              <input
+                class="usa-input"
+                id="search"
+                name="query"
+                type="search"
+                value=""
+              />
+              <button
+                class="usa-button usa-button--base"
+                type="submit"
+              >
+                <span
+                  class="usa-search__submit-text"
+                >
+                  Search
+                </span>
+              </button>
+            </form>
+            
+          </div>
+        </div>
+        <div
+          class="grid-row"
+        >
+          <div
+            class="grid-col-12 usa-prose"
+          >
+            <div
+              class="usa-accordion"
+            >
+              <h2
+                class="usa-accordion__heading"
+              >
+                <button
+                  aria-controls="123456789"
+                  aria-expanded="false"
+                  class="usa-accordion__button"
+                >
+                  Topic Area Bananas (1)
+                </button>
+              </h2>
+              <div
+                class="usa-accordion__content usa-prose"
+                hidden=""
+                id="123456789"
+              >
+                <ul>
+                  <ul
+                    class="usa-card-group"
+                  >
+                    <li
+                      class="usa-card cursor-default tablet:grid-col-4"
+                      id="card-abc"
+                    >
+                      <div
+                        class="usa-card__container"
+                      >
+                        <header
+                          class="usa-card__header"
+                        >
+                          <h2
+                            class="usa-card__heading font-family-sans"
+                          >
+                            <a
+                              class="usa-link action-link"
+                              href="/abc"
+                              target=""
+                            >
+                              <span>
+                                Dashboard One
+                              </span>
+                            </a>
+                          </h2>
+                        </header>
+                        <div
+                          class="usa-card__body"
+                        >
+                          <p
+                            class="text-base text-italic margin-bottom-2"
+                          >
+                            Last updated a few seconds ago
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </ul>
+              </div>
+              <h2
+                class="usa-accordion__heading"
+              >
+                <button
+                  aria-controls="987654321"
+                  aria-expanded="false"
+                  class="usa-accordion__button"
+                >
+                  Topic Area Grapes (1)
+                </button>
+              </h2>
+              <div
+                class="usa-accordion__content usa-prose"
+                hidden=""
+                id="987654321"
+              >
+                <ul>
+                  <ul
+                    class="usa-card-group"
+                  >
+                    <li
+                      class="usa-card cursor-default tablet:grid-col-4"
+                      id="card-xyz"
+                    >
+                      <div
+                        class="usa-card__container"
+                      >
+                        <header
+                          class="usa-card__header"
+                        >
+                          <h2
+                            class="usa-card__heading font-family-sans"
+                          >
+                            <a
+                              class="usa-link action-link"
+                              href="/xyz"
+                              target=""
+                            >
+                              <span>
+                                Dashboard Two
+                              </span>
+                            </a>
+                          </h2>
+                        </header>
+                        <div
+                          class="usa-card__body"
+                        >
+                          <p
+                            class="text-base text-italic margin-bottom-2"
+                          >
+                            Last updated a few seconds ago
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+`;

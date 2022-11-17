@@ -35,8 +35,8 @@ mkdir -p $dist_template_dir
 echo "------------------------------------------------------------------------------"
 echo "[Packing] Templates"
 echo "------------------------------------------------------------------------------"
-echo "cp $source_template_dir/operations-conductor.template $dist_template_dir/operations-conductor.template"
-cp $source_template_dir/operations-conductor.template $dist_template_dir/operations-conductor.template
+echo "cp $source_template_dir/performance-dashboard-on-aws.template $dist_template_dir/performance-dashboard-on-aws.template"
+cp $source_template_dir/performance-dashboard-on-aws.template $dist_template_dir/performance-dashboard-on-aws.template
 
 echo "------------------------------------------------------------------------------"
 echo "[Packing] Build Script"
@@ -75,6 +75,8 @@ echo "cp $source_template_dir/../CHANGELOG.md $dist_dir"
 cp $source_template_dir/../CHANGELOG.md $dist_dir
 echo "cp $source_template_dir/../.gitignore $dist_dir"
 cp $source_template_dir/../.gitignore $dist_dir
+echo "cp $source_template_dir/../test.sh $dist_dir"
+cp $source_template_dir/../test.sh $dist_dir
 
 echo "------------------------------------------------------------------------------"
 echo "[Packing] Clean build, node_modules and coverage folders"

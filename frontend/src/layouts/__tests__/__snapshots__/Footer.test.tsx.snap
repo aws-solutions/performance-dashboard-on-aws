@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FooterLayout renders the component 1`] = `
+<div>
+  <footer>
+    <div
+      class="grid-container margin-bottom-9 text-base font-sans-sm"
+    >
+      <hr
+        class="margin-top-9 border-base-lightest"
+      />
+      Having technical issues with the system?
+       
+      <a
+        class="usa-link"
+        href="mailto:admin1@aol.com?subject=Performance Dashboard Assistance"
+      >
+        Contact support.
+      </a>
+      <span
+        class="float-right"
+      >
+        v
+        v1.0.0
+      </span>
+    </div>
+  </footer>
+</div>
+`;

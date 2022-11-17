@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SAMLAuthenticatorLayout renders the component 1`] = `
+<div>
+  <amplify-container>
+    <amplify-authenticator>
+      <amplify-sign-in
+        slot="sign-in"
+      />
+    </amplify-authenticator>
+  </amplify-container>
+</div>
+`;

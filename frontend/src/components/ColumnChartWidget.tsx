@@ -133,6 +133,12 @@ function ColumnChartWidget(props: Props) {
       return payload;
     };
 
+  const valueAccessor =
+    (attribute: string) =>
+    ({ payload }: any) => {
+      return payload;
+    };
+
   useEffect(() => {
     if (props.setWidthPercent) {
       props.setWidthPercent(widthPercent);

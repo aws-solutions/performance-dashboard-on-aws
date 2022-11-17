@@ -562,7 +562,13 @@ function EditChart() {
             {t("EditChartScreen.ChooseData")}
           </button>
         </li>
-        <li className="usa-button-group__item">
+        <li
+          id="editChartFormHeaderStep2"
+          className="usa-button-group__item"
+          role="tab"
+          aria-selected={step === 1}
+          aria-controls="panel2"
+        >
           <button
             id={`editChartFormHeaderStep2_${suffix}`}
             role="tab"
@@ -579,7 +585,13 @@ function EditChart() {
             {t("EditChartScreen.CheckData")}
           </button>
         </li>
-        <li className="usa-button-group__item">
+        <li
+          id="editChartFormHeaderStep3"
+          className="usa-button-group__item"
+          role="tab"
+          aria-selected={step === 2}
+          aria-controls="panel3"
+        >
           <button
             id={`editChartFormHeaderStep3_${suffix}`}
             role="tab"

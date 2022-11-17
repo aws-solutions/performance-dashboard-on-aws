@@ -1,3 +1,4 @@
+import { Label } from "recharts";
 import {
   Dashboard,
   DashboardState,

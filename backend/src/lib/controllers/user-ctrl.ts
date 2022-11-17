@@ -9,6 +9,8 @@ const escapeHtml = require("escape-html");
 
 const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
 
+const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
+
 async function getUsers(req: Request, res: Response) {
   const repo = UserRepository.getInstance();
   try {

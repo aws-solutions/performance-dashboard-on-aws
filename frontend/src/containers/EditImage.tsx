@@ -177,6 +177,11 @@ function EditImage() {
     }
   };
 
+  const getScaleImageUrl = (scalePct: string) => {
+    let url =
+      "${process.env.PUBLIC_URL}/images/image-scale-" + scalePct + ".svg";
+  };
+
   const crumbs = [
     {
       label: t("Dashboards"),

@@ -30,9 +30,7 @@ exports[`renders a FourZeroFour component 1`] = `
       .
     </p>
   </div>
-  <footer
-    aria-label="Footer"
-  >
+  <footer>
     <div
       class="grid-container margin-bottom-9 text-base font-sans-sm"
     >

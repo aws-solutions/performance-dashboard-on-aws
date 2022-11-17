@@ -76,24 +76,6 @@ async function updateSettings(req: Request, res: Response) {
     }
   }
 
-  if (contactUsContent) {
-    updatedAt = await repo.updateSetting(
-      "contactUsContent",
-      contactUsContent,
-      updatedAt,
-      user
-    );
-  }
-
-  if (analyticsTrackingId) {
-    updatedAt = await repo.updateSetting(
-      "analyticsTrackingId",
-      analyticsTrackingId,
-      updatedAt,
-      user
-    );
-  }
-
   res.send();
 }
 

@@ -20,7 +20,6 @@ interface Props {
 }
 
 function SectionWidget(props: Props) {
-  const { t } = useTranslation();
   const { content, showTitle } = props.widget;
   const windowSize = useWindowSize();
 

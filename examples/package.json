@@ -2,6 +2,7 @@
   "name": "lambda",
   "version": "1.8.0",
   "description": "test project for lambda",
+  "license": "Apache-2.0",
   "main": "index.js",
   "scripts": {
     "test": "LOG_LEVEL=SILENT jest --coverage --watchAll",
@@ -14,7 +15,6 @@
     "import": "ts-node src/import.ts"
   },
   "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.57",
     "@types/aws-sdk": "^2.7.0",

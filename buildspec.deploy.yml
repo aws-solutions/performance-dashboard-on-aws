@@ -15,6 +15,7 @@ phases:
       - echo "node use 16"
       - n 16
       - ./install.sh
+      - ./check-license.sh
       - ./test.sh
 
   build:

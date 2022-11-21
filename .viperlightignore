@@ -54,7 +54,9 @@ backend/src/lib/factories/__tests__/settings-factory.test.ts:80
 backend/src/lib/factories/__tests__/settings-factory.test.ts:81
 # Potential email address discovered                         Check line number: 81                      
 backend/src/lib/factories/__tests__/settings-factory.test.ts:109
-# Potential email address discovered                         Check line number: 109                      
+# Potential email address discovered                         Check line number: 109
+backend/src/lib/factories/__tests__/settings-factory.test.ts:131
+# Potential email address discovered                         Check line number: 131
 backend/src/lib/controllers/__tests__/user-ctrl.test.ts:36
 # Potential email address discovered                         Check line number: 36                      
 backend/src/lib/controllers/__tests__/user-ctrl.test.ts:79

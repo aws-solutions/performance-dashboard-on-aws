@@ -11,7 +11,7 @@ for d in $dirs; do
         if ! grep -q "Copyright Amazon.com, Inc." $f
         then
             echo "update: $f"
-            cat tools/copyright-notice.txt | cat - $f > temp && mv temp $f
+            cat tools/copyright-file-header.txt | cat - $f > temp && mv temp $f
         fi
     done
 done

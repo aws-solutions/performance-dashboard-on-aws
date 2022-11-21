@@ -62,7 +62,11 @@ export class PipelineStack extends cdk.Stack {
     trail.addS3EventSelector(
       [
         {
-          bucket: artifactsBucket,
+          bucket: s3.Bucket.fromBucketArn(
+            this,
+            "ArtifactsBucket",
+            artifactsBucket.bucketArn
+          ),
           objectPrefix: bucketKey,
         },
       ],

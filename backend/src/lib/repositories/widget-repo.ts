@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { Widget, WidgetItem, WidgetType } from "../models/widget";
 import BaseRepository from "./base";

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useState, KeyboardEvent } from "react";
 import TabVertical from "./TabVertical";
 

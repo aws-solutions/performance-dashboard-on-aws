@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useRef } from "react";
 // @ts-ignore
 import comboBox from "uswds/src/js/components/combo-box";

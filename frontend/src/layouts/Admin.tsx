@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { ReactNode, useLayoutEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Auth } from "@aws-amplify/auth";

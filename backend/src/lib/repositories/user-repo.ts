@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { User } from "../models/user";
 import UserFactory from "../factories/user-factory";
 import CognitoService from "../services/cognito";

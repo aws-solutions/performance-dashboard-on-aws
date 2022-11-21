@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useCallback, useState, MouseEvent } from "react";
 import { useDateTimeFormatter, useWindowSize } from "../hooks";
 import { Dataset, DatasetType } from "../models";

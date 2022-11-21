@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Useful mocks of our custom hook to make our unit
  * testing easier. Prevents the actual backend API

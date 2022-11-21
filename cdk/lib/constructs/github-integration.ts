@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import * as cdk from "@aws-cdk/core";
 import * as kms from "@aws-cdk/aws-kms";
 import * as codebuild from "@aws-cdk/aws-codebuild";

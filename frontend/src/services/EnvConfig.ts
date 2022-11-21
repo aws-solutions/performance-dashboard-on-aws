@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 // Reads environment variables from the Window object.
 // These variables are coming from `public/env.js` which
 // is imported in the `public/index.html` file.

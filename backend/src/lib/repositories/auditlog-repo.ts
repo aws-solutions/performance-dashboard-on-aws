@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { AuditLog, AuditLogItem } from "../models/auditlog";
 import DynamoDBService from "../services/dynamodb";
 import AuditLogFactory from "../factories/auditlog-factory";

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import LoginPage from "../pages/Login";
 import SettingsPage from "../pages/Settings";
 import * as Chance from "chance";

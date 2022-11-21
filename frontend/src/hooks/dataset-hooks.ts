@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { useCallback, useEffect, useState } from "react";
 import Papa, { ParseResult } from "papaparse";
 import StorageService from "../services/StorageService";

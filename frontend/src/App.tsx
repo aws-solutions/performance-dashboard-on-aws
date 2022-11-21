@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import SettingsProvider from "./context/SettingsProvider";

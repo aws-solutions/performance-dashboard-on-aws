@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import SettingsFactory from "../factories/settings-factory";
 import SettingsRepository from "../repositories/settings-repo";

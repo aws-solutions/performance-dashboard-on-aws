@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 class PublishedSitePage {
   startEditNavBar() {
     cy.get("button").contains("Edit").click();

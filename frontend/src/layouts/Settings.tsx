@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { ReactNode, useState } from "react";
 import "./Settings.css";
 import { Link, useLocation } from "react-router-dom";

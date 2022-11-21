@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { DatasetItem, SourceType, DatasetSchema } from "../../models/dataset";
 import * as uuid from "uuid";
 import DatasetFactory from "../dataset-factory";

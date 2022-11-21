@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import { Role } from "../../models/user";
 import { mocked } from "ts-jest/utils";

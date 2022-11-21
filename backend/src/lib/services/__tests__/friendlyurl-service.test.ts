@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { mocked } from "ts-jest/utils";
 import { InvalidFriendlyURL, ItemNotFound } from "../../errors";
 import { Dashboard } from "../../models/dashboard";

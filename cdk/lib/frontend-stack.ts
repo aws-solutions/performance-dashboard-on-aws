@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import * as cdk from "@aws-cdk/core";
 import s3 = require("@aws-cdk/aws-s3");
 import s3Deploy = require("@aws-cdk/aws-s3-deployment");

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Dashboard, DASHBOARD_ITEM_TYPE } from "../models/dashboard";
 import { ItemEvent } from "../models/auditlog";
 import DashboardFactory from "../factories/dashboard-factory";

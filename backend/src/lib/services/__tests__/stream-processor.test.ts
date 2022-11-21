@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import StreamProcessor from "../stream-processor";
 import AuditTrailService from "../audit-trail";
 import { ItemEvent } from "../../models/auditlog";

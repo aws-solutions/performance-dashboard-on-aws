@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { DynamoDBRecord, StreamRecord } from "aws-lambda";
 import DynamoDBService from "./dynamodb";
 import AuditTrailService from "./audit-trail";

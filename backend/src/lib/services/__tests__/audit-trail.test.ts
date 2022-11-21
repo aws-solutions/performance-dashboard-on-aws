@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Dashboard, DASHBOARD_ITEM_TYPE } from "../../models/dashboard";
 import AuditTrailService from "../audit-trail";
 import AuditLogFactory from "../../factories/auditlog-factory";

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Dashboard, DashboardState, PublicDashboard } from "../../models";
 import UtilsService from "../UtilsService";
 

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Router } from "express";
 import { Role } from "../models/user";
 import DashboardCtrl from "../controllers/dashboard-ctrl";

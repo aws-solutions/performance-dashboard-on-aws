@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { useEffect, useState, useCallback } from "react";
 import { DatasetType, Widget, WidgetType } from "../models";
 import BackendService from "../services/BackendService";

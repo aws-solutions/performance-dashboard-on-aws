@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useMemo, useState } from "react";
 import { ColumnMetadata } from "../models";
 import { useTableMetadata } from "../hooks";

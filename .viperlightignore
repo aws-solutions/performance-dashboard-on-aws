@@ -117,6 +117,10 @@ frontend/src/hooks/__mocks__/index.tsx:107
 # Potential email address discovered                         Check line number: 107
 frontend/src/services/EnvConfig.ts:38
 # Potential email address discovered                         Check line number: 38
+frontend/src/services/__tests__/BackendService.test.ts:389
+# Potential email address discovered                         Check line number: 389
+frontend/src/services/__tests__/BackendService.test.ts:396
+# Potential email address discovered                         Check line number: 396
 frontend/src/services/__tests__/BackendService.test.ts:403
 # Potential email address discovered                         Check line number: 403
 frontend/src/services/__tests__/BackendService.test.ts:409

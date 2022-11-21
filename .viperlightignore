@@ -1,163 +1,79 @@
-backend/README.md:21
-# Potential AWS credentials [SECRET_ACCESS_KEY]              Check line number: 21                      
-backend/README.md:20
-# Potential AWS credentials [ACCESS_KEY_ID]                  Check line number: 20                      
-backend/integtests/Versioning Edge Cases.postman_collection.json:1063
-# Potential AWS Account Id                                   Check line number: 1063
-backend/integtests/Versioning Edge Cases.postman_collection.json:1497
-# Potential AWS Account Id                                   Check line number: 1497                    
-cdk/package-lock.json:2227
-# Potential AWS Account Id                                   Check line number: 1063                    
-cdk/package-lock.json:1928
-# Potential AWS Account Id                                   Check line number: 1928
-frontend/README.md:17
-# Potential AWS Account Id                                   Check line number: 17                      
-frontend/src/containers/__tests__/PublishingGuidanceSettings.test.tsx:30
-# Amazon Internal: Potential confidential designation found  Check line number: 25                      
-frontend/src/locales/en/translation.json:394
-# Amazon Internal: Potential confidential designation found  Check line number: 394                     
-frontend/src/locales/en/translation.json:396
-# Amazon Internal: Potential confidential designation found  Check line number: 396
-frontend/src/locales/en/translation.json:427
-frontend/src/locales/en/translation.json:475
-frontend/src/locales/en/translation.json:476
-frontend/src/locales/en/translation.json:478
-frontend/src/locales/en/translation.json:487
-frontend/src/locales/en/translation.json:492
-frontend/src/locales/en/translation.json:535
-frontend/src/locales/en/translation.json:536
-# Amazon Internal: Potential confidential designation found  Check line number: 475
-CODE_OF_CONDUCT.md:4
-# Potential email address discovered                         Check line number: 4                       
-CONTRIBUTING.md:49
-# Potential email address discovered                         Check line number: 49                      
-README.md:63
-# Potential email address discovered                         Check line number: 63                      
-docs/installation.md:117
-# Potential email address discovered                         Check line number: 117                     
-backend/integtests/IntegrationTestSuite.postman_collection.json:2302
-# Potential email address discovered                         Check line number: 2302                    
-backend/postman/Performance Dashboard API.postman_collection.json:1433
-# Potential email address discovered                         Check line number: 1433                    
+.vscode/*
+
+backend/integtests/IntegrationTestSuite.postman_collection.json:1769
+
 backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:220
-# Potential email address discovered                         Check line number: 220
 backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:224
-# Potential email address discovered                         Check line number: 224
 backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:231
-# Potential email address discovered                         Check line number: 231                     
 backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:235
-# Potential email address discovered                         Check line number:235                     
+
+backend/src/lib/controllers/__tests__/user-ctrl.test.ts:180
+backend/src/lib/controllers/__tests__/user-ctrl.test.ts:36
+backend/src/lib/controllers/__tests__/user-ctrl.test.ts:79
+backend/src/lib/controllers/__tests__/user-ctrl.test.ts:80
+backend/src/lib/controllers/__tests__/user-ctrl.test.ts:95
+
+backend/src/lib/factories/__tests__/settings-factory.test.ts:109
+backend/src/lib/factories/__tests__/settings-factory.test.ts:131
 backend/src/lib/factories/__tests__/settings-factory.test.ts:54
-# Potential email address discovered                         Check line number: 54                      
 backend/src/lib/factories/__tests__/settings-factory.test.ts:55
 backend/src/lib/factories/__tests__/settings-factory.test.ts:80
 backend/src/lib/factories/__tests__/settings-factory.test.ts:81
-# Potential email address discovered                         Check line number: 81                      
-backend/src/lib/factories/__tests__/settings-factory.test.ts:109
-# Potential email address discovered                         Check line number: 109
-backend/src/lib/factories/__tests__/settings-factory.test.ts:131
-# Potential email address discovered                         Check line number: 131
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:36
-# Potential email address discovered                         Check line number: 36                      
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:79
-# Potential email address discovered                         Check line number: 79
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:80
-# Potential email address discovered                         Check line number: 80                      
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:95
-# Potential email address discovered                         Check line number: 95
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:180
-# Potential email address discovered                         Check line number: 180
+
 backend/src/lib/factories/__tests__/user-factory.test.ts:12
-# Potential email address discovered                         Check line number: 12                                           
 backend/src/lib/factories/__tests__/user-factory.test.ts:14
-# Potential email address discovered                         Check line number: 14
 backend/src/lib/factories/__tests__/user-factory.test.ts:31
-# Potential email address discovered                         Check line number: 31
 backend/src/lib/factories/__tests__/user-factory.test.ts:44
-# Potential email address discovered                         Check line number: 44                       
+
 backend/src/lib/repositories/__tests__/user-repo.test.ts:55
-# Potential email address discovered                         Check line number: 55
 backend/src/lib/repositories/__tests__/user-repo.test.ts:72
-# Potential email address discovered                         Check line number: 72
 backend/src/lib/repositories/__tests__/user-repo.test.ts:83
-# Potential email address discovered                         Check line number: 83
 backend/src/lib/repositories/__tests__/user-repo.test.ts:89
-# Potential email address discovered                         Check line number: 89     
+
 backend/src/lib/services/__tests__/auth.test.ts:28
-# Potential email address discovered                         Check line number: 28
 backend/src/lib/services/__tests__/auth.test.ts:57
-# Potential email address discovered                         Check line number: 57
-backend/src/lib/services/auth.ts:73
-# Potential email address discovered                         Check line number: 73                      
-cdk/lib/frontend-stack.ts:164
-# Potential email address discovered                         Check line number: 164                     
-cdk/lib/pipeline-stack.ts:60
-# Potential email address discovered                         Check line number: 60                      
-frontend/README.md:19
-# Potential email address discovered                         Check line number: 19                      
-frontend/src/containers/__tests__/AddUsers.test.tsx:34
-# Potential email address discovered                         Check line number: 34
-frontend/src/containers/__tests__/AddUsers.test.tsx:48
-# Potential email address discovered                         Check line number: 48
-frontend/src/containers/__tests__/AdminSiteSettings.test.tsx:40
-# Potential email address discovered                         Check line number: 40
-frontend/src/containers/__tests__/ChangeRole.test.tsx:23
-# Potential email address discovered                         Check line number: 23
-frontend/src/containers/__tests__/EditNavbar.test.tsx:40
-# Potential email address discovered                         Check line number: 40
-frontend/src/containers/__tests__/EditNavbar.test.tsx:60
-# Potential email address discovered                         Check line number: 60
-frontend/src/containers/__tests__/EditSupportContactEmail.test.tsx:37
-# Potential email address discovered                         Check line number: 37
-frontend/src/containers/__tests__/EditSupportContactEmail.test.tsx:46
-# Potential email address discovered                         Check line number: 46
-frontend/src/containers/__tests__/UserListing.test.tsx:41
-# Potential email address discovered                         Check line number: 41
-frontend/src/hooks/__mocks__/index.tsx:106
-# Potential email address discovered                         Check line number: 106
-frontend/src/hooks/__mocks__/index.tsx:107
-# Potential email address discovered                         Check line number: 107
-frontend/src/services/EnvConfig.ts:38
-# Potential email address discovered                         Check line number: 38
-frontend/src/services/__tests__/BackendService.test.ts:389
-# Potential email address discovered                         Check line number: 389
-frontend/src/services/__tests__/BackendService.test.ts:396
-# Potential email address discovered                         Check line number: 396
-frontend/src/services/__tests__/BackendService.test.ts:403
-# Potential email address discovered                         Check line number: 403
-frontend/src/services/__tests__/BackendService.test.ts:409
-# Potential email address discovered                         Check line number: 409
-frontend/src/services/__tests__/EnvConfig.test.ts:19
-# Potential email address discovered                         Check line number: 19
-docs/user-guide.pdf
-# PDF file [binary] voilation                                PDF file that might contain sensitive data.
-e2e-tests/README.md:20
-# Potential password in file                                 Check line number: 20                      
-frontend/src/services/StorageService.ts:129
-# Potential AWS Key in file                                  Check line number: 129                     
-docs/installation.md:112
-# Potential email address discovered Check line number: 112
-backend/integtests/IntegrationTestSuite.postman_collection.json:1897
-# Potential email address discovered Check line number: 1897
-frontend/src/locales/en/translation.json:396
-# Amazon Internal: Potential confidential designation found
-backend/integtests/IntegrationTestSuite.postman_collection.json:3
-# Potential AWS Account Id Check line number:3
-frontend/src/locales/en/translation.json:402
-# Amazon Internal: Potential confidential designation found  Check line number:402
-backend/integtests/IntegrationTestSuite.postman_collection.json:1769
-# Potential email address discovered Check line number:1769
-THIRD-PARTY-LICENSES:739
-THIRD-PARTY-LICENSES:743
-THIRD-PARTY-LICENSES:877
-THIRD-PARTY-LICENSES:878
-THIRD-PARTY-LICENSES:879
-THIRD-PARTY-LICENSES:1021
-THIRD-PARTY-LICENSES:1020
-THIRD-PARTY-LICENSES:1024
-THIRD-PARTY-LICENSES:1025
-examples/README.md:49
-frontend/public/env.*:*
-.vscode/*
-node_modules/*
+
+cdk/outputs-backend.json:3
+cdk/outputs-backend.json:5
+cdk/outputs-backend.json:9
+cdk/outputs-backend.json:12
+cdk/outputs-backend.json:15
+
 coverage/*
+
+docs/user-guide.pdf
+
+examples/README.md:49
+
+frontend/public/env.*:*
+
+frontend/src/containers/__tests__/AddUsers.test.tsx:34
+frontend/src/containers/__tests__/AddUsers.test.tsx:48
+
+frontend/src/containers/__tests__/AdminSiteSettings.test.tsx:40
+
+frontend/src/containers/__tests__/ChangeRole.test.tsx:23
+
+frontend/src/containers/__tests__/EditNavbar.test.tsx:40
+frontend/src/containers/__tests__/EditNavbar.test.tsx:60
+
+frontend/src/containers/__tests__/EditSupportContactEmail.test.tsx:37
+frontend/src/containers/__tests__/EditSupportContactEmail.test.tsx:46
+
+frontend/src/containers/__tests__/PublishingGuidanceSettings.test.tsx:30
+
+frontend/src/hooks/__mocks__/index.tsx:106
+frontend/src/hooks/__mocks__/index.tsx:107
+
+frontend/src/locales/en/translation.json:536
+
+frontend/src/services/__tests__/BackendService.test.ts:389
+frontend/src/services/__tests__/BackendService.test.ts:396
+frontend/src/services/__tests__/BackendService.test.ts:403
+frontend/src/services/__tests__/BackendService.test.ts:409
+
+frontend/src/services/__tests__/EnvConfig.test.ts:19
+
+node_modules/*
+
+README.md:63

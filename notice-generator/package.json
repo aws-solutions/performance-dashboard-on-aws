@@ -1,0 +1,17 @@
+{
+  "name": "notice-generator",
+  "description": "generate notice file",
+  "license": "Apache-2.0",
+  "scripts": {
+    "generate": "npm install && generate-attribution ."
+  },
+  "author": "",
+  "devDependencies": {
+    "oss-attribution-generator": "^1.7.1"
+  },
+  "dependencies": {
+    "performance-dashboard-backend": "file:../backend",
+    "performance-dashboard-cdk": "file:../cdk",
+    "performance-dashboard-frontend": "file:../frontend"
+  }
+}

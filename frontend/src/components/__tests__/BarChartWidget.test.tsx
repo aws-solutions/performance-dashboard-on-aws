@@ -13,8 +13,9 @@ test("renders the chart title", async () => {
       bars={["test"]}
       data={[{ col: "column name", test: 1 }]}
       summaryBelow={false}
-      columnsMetadata={[]}
-      significantDigitLabels={false}
+      columnsMetadata={[{ columnName: "test" }]}
+      significantDigitLabels={true}
+      stackedChart={true}
     />,
     { wrapper: MemoryRouter }
   );

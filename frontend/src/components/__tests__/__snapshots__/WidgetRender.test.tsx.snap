@@ -1,0 +1,300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a chart widget 1`] = `
+<div>
+  <div
+    class="widgetContainer"
+  />
+</div>
+`;
+
+exports[`renders a metrics widget 1`] = `
+<div>
+  <div
+    class="widgetContainer"
+  >
+    <div
+      aria-label=""
+      class="padding-top-2"
+      tabindex="-1"
+    >
+      
+      <div>
+        <div
+          class="grid-col"
+        >
+          <div
+            class="grid-row flex-column"
+          >
+            <div
+              class="grid-col grid-row flex-row"
+            >
+              <div
+                class="grid-col-4 padding-05"
+              >
+                <div
+                  class="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-auto"
+                >
+                  <div
+                    class="flex-5"
+                  >
+                    <h3
+                      class="text-base-darker text-bold margin-0 text-no-wrap"
+                    />
+                  </div>
+                  <div
+                    class="flex-3 usa-tooltip"
+                    data-position="bottom"
+                    title=""
+                  >
+                    <span
+                      class="margin-0 text-no-wrap font-sans-xl text-bold"
+                      style="color: rgb(41, 180, 187);"
+                    />
+                  </div>
+                  <div
+                    class="flex-2"
+                  />
+                  <div
+                    class="flex-2"
+                  />
+                </div>
+              </div>
+              <div
+                class="grid-col-4 padding-05"
+              >
+                <div
+                  class="display-flex flex-column border-base-lightest border-2px height-card padding-1 overflow-x-auto overflow-y-auto"
+                >
+                  <div
+                    class="flex-5"
+                  >
+                    <h3
+                      class="text-base-darker text-bold margin-0 text-no-wrap"
+                    />
+                  </div>
+                  <div
+                    class="flex-3 usa-tooltip"
+                    data-position="bottom"
+                    title=""
+                  >
+                    <span
+                      class="margin-0 text-no-wrap font-sans-xl text-bold"
+                      style="color: rgb(41, 180, 187);"
+                    />
+                  </div>
+                  <div
+                    class="flex-2"
+                  />
+                  <div
+                    class="flex-2"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a section widget 1`] = `
+<div>
+  <div
+    class="widgetContainer"
+  >
+    <div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a table widget 1`] = `
+<div>
+  <div
+    class="widgetContainer"
+  >
+    <div
+      aria-label=""
+      class="overflow-x-hidden overflow-y-hidden padding-top-2"
+      tabindex="-1"
+    >
+      
+      <div
+        class="Markdown usa-prose margin-top-0 margin-bottom-3 tableSummaryAbove textOrSummary"
+      />
+      <div
+        class="overflow-x-hidden overflow-y-hidden"
+      >
+        <table
+          class="usa-table usa-table--borderless"
+          id="table-undefined"
+          role="table"
+        >
+          <thead>
+            <tr
+              role="row"
+            >
+              <th
+                aria-sort="none"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="min-width: 150px;"
+              >
+                <button
+                  aria-label="Toggle SortBy: City"
+                  class="usa-button usa-button--unstyled text-no-underline"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy: City"
+                  type="button"
+                >
+                  <span>
+                    City
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
+                    data-icon="chevron-down"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="min-width: 150px;"
+              >
+                <button
+                  aria-label="Toggle SortBy: Jobs"
+                  class="usa-button usa-button--unstyled text-no-underline"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy: Jobs"
+                  type="button"
+                >
+                  <span>
+                    Jobs
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
+                    data-icon="chevron-down"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            role="rowgroup"
+          >
+            <tr
+              role="row"
+            >
+              <th
+                role="cell"
+                scope="row"
+              >
+                Seattle
+              </th>
+              <td
+                role="cell"
+              >
+                300
+              </td>
+            </tr>
+            <tr
+              role="row"
+            >
+              <th
+                role="cell"
+                scope="row"
+              >
+                San Francisco
+              </th>
+              <td
+                role="cell"
+              >
+                150
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a text widget 1`] = `
+<div>
+  <div
+    class="widgetContainer"
+  >
+    <div
+      class=""
+      id="text-undefined"
+      tabindex="-1"
+    >
+      <div
+        class="Markdown usa-prose textOrSummary"
+      >
+        <p>
+          Text widget
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders an image widget 1`] = `
+<div>
+  <div
+    class="widgetContainer"
+  >
+    <div
+      aria-label=""
+      class="preview-container padding-top-2"
+      tabindex="-1"
+    >
+      
+      <div
+        class="Markdown usa-prose margin-top-0 margin-bottom-3 imageSummaryAbove textOrSummary"
+      />
+      <div>
+        <img
+          height="auto"
+          width="auto"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -38,7 +38,6 @@ class DashboardListingPage {
   }
 
   deleteDashboard(dashboardName: string) {
-
     //Setup intercepts early
     cy.intercept({
       method: "DELETE",

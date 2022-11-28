@@ -8,6 +8,7 @@ THIRD PARTY COMPONENTS
 This software includes third party software subject to the following copyrights:
 
 ******************************
+
 @aws-amplify/api@4.0.53 under the Apache-2.0
 @aws-amplify/auth@4.6.6 under the Apache-2.0
 @aws-amplify/core@4.7.4 under the Apache-2.0

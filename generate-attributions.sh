@@ -2,7 +2,7 @@
 
 npm install -g license-report@6.3.0
 
-cat "" > NOTICE.txt
+echo "" > NOTICE.txt
 
 dirs="backend cdk examples frontend"
 for d in $dirs; do

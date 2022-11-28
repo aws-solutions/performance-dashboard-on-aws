@@ -8,6 +8,7 @@ THIRD PARTY COMPONENTS
 This software includes third party software subject to the following copyrights:
 
 ******************************
+
 @aws-amplify/api@4.0.53 under the Apache-2.0
 @aws-amplify/auth@4.6.6 under the Apache-2.0
 @aws-amplify/core@4.7.4 under the Apache-2.0
@@ -90,6 +91,7 @@ fs-extra@10.1.0 under the MIT
 i18next@19.9.2 under the MIT
 jest@27.5.1 under the MIT
 jsonschema@1.4.1 under the MIT
+license-report@6.3.0 under MIT
 mutationobserver-shim@0.3.7 under the MIT
 papaparse@5.3.2 under the MIT
 performance-dashboard-backend@1.8.0 under the Apache-2.0

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the legend 1`] = `
+<div>
+  <span
+    class="recharts-legend-item-text"
+  >
+    <button
+      aria-label="Hide/unhide data for Legend"
+      style="background-color: transparent; color: red; border-width: 0px;"
+    >
+      Legend
+    </button>
+  </span>
+</div>
+`;

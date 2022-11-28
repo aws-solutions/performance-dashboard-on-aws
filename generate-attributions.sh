@@ -1,9 +1,8 @@
 #!/bin/bash
 
-npm install -g oss-attribution-generator
-npm install -g license-report
+npm install -g license-report@6.3.0
 
-cat "" > NOTICE.txt
+echo "" > NOTICE.txt
 
 dirs="backend cdk examples frontend"
 for d in $dirs; do
@@ -17,6 +16,7 @@ for d in $dirs; do
 done
 
 # sort and remove duplicates
+echo "license-report@6.3.0 under MIT" >> NOTICE.txt
 sort -u NOTICE.txt > temp
 mv temp NOTICE.txt
 

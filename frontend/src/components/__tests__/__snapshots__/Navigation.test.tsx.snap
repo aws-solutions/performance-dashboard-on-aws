@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation renders the component 1`] = `
+<div>
+  <div
+    class="tablet:grid-col-2"
+    style="position: sticky; top: 0px; float: right; margin-right: -0%; border-left: 1px solid rgba(200, 200, 200, 1);"
+  >
+    <nav
+      aria-label="Secondary navigation"
+    >
+      <ul
+        class="usa-sidenav"
+        style="font-size: 0.9rem; border-style: none; margin: 3.5em 0px 3.5em 0px;"
+      >
+        <li
+          class="usa-sidenav__item usa-current"
+          style="border-style: none;"
+        >
+          <a
+            href="/#uuid"
+            style="padding-left: 10px;"
+          >
+            first widget
+          </a>
+        </li>
+        <li
+          class="usa-sidenav__item "
+          style="border-style: none;"
+        >
+          <a
+            href="/#uuid-2"
+            style="padding-left: 10px;"
+          >
+            second widget
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+`;
+
+exports[`Navigation renders the component at the top 1`] = `
+<div>
+  <nav
+    aria-label="Secondary navigation"
+  >
+    <ul
+      class="usa-sidenav"
+      style="font-size: 0.9rem; border-style: none; margin-left: 0px;"
+    >
+      <li
+        class="usa-sidenav__item usa-current"
+        style="border-style: none;"
+      >
+        <a
+          href="/#uuid"
+          style="padding-left: 16px;"
+        >
+          first widget
+        </a>
+      </li>
+      <li
+        class="usa-sidenav__item "
+        style="border-style: none;"
+      >
+        <a
+          href="/#uuid-2"
+          style="padding-left: 16px;"
+        >
+          second widget
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+`;

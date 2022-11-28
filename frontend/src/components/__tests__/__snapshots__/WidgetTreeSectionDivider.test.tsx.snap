@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the component 1`] = `
+<div>
+  <div
+    aria-describedby="rbd-hidden-text-0-hidden-text-0"
+    class="grid-row flex-1 bg-base-lightest flex-align-center flex-justify-center"
+    data-rbd-drag-handle-context-id="0"
+    data-rbd-drag-handle-draggable-id="uuid"
+    data-rbd-draggable-context-id="0"
+    data-rbd-draggable-id="uuid"
+    draggable="false"
+    role="button"
+    tabindex="0"
+  />
+</div>
+`;

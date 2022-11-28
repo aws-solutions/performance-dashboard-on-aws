@@ -16,7 +16,7 @@ test("non default environment config values", () => {
   (global as any).EnvironmentConfig = {
     topicAreaLabel: "Category",
     topicAreasLabel: "Categories",
-    contactEmail: "hello@hello.com",
+    contactEmail: "hello@example.com",
     brandName: "Amazon Web Services",
   };
 

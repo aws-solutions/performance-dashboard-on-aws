@@ -20,7 +20,7 @@ describe("ChangeRoleForm", () => {
     // Mocks
     history.location.state = {
       ...history.location.state,
-      emails: "test@test.com",
+      emails: "test@example.com",
       usernames: ["test1"],
     };
     jest.spyOn(history, "push");

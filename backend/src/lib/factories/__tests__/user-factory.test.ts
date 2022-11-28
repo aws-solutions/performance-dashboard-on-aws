@@ -9,9 +9,9 @@ import UserFactory from "../user-factory";
 
 describe("createNew", () => {
   it("should create a new user with userId and email", () => {
-    const user = UserFactory.createNew("test@test.com", "Admin");
+    const user = UserFactory.createNew("test@example.com", "Admin");
     expect(user.userId).toEqual("test");
-    expect(user.email).toEqual("test@test.com");
+    expect(user.email).toEqual("test@example.com");
     expect(user.roles).toEqual([Role.Admin]);
   });
 });
@@ -28,7 +28,7 @@ describe("fromCognitoUser", () => {
           Name: "sub",
           Value: "123",
         },
-        { Name: "email", Value: "test@test.com" },
+        { Name: "email", Value: "test@example.com" },
         { Name: "custom:roles", Value: '["Admin"]' },
       ],
       UserCreateDate: now,
@@ -41,7 +41,7 @@ describe("fromCognitoUser", () => {
       enabled: true,
       userStatus: "CONFIRMED",
       sub: "123",
-      email: "test@test.com",
+      email: "test@example.com",
       roles: [Role.Admin],
       createdAt: now,
       updatedAt: now,

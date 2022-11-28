@@ -103,8 +103,8 @@ export function useSettings() {
       singular: "Ministry",
       plural: "Ministries",
     },
-    adminContactEmailAddress: "admin1@aol.com",
-    contactEmailAddress: "contact@aol.com",
+    adminContactEmailAddress: "admin1@example.com",
+    contactEmailAddress: "contact@example.com",
   });
 
   return {

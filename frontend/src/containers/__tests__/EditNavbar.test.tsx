@@ -37,7 +37,7 @@ test("submits form with the entered values", async () => {
   userEvent.clear(screen.getByLabelText("Contact email address*"));
   userEvent.type(
     screen.getByLabelText("Contact email address*"),
-    "test1234@hotmail.com"
+    "test1234@example.com"
   );
 
   userEvent.clear(screen.getByLabelText("Contact us*"));
@@ -57,7 +57,7 @@ test("submits form with the entered values", async () => {
   expect(BackendService.updateSetting).toHaveBeenNthCalledWith(
     2,
     "contactEmailAddress",
-    "test1234@hotmail.com",
+    "test1234@example.com",
     expect.anything()
   );
   expect(BackendService.updateSetting).toHaveBeenNthCalledWith(

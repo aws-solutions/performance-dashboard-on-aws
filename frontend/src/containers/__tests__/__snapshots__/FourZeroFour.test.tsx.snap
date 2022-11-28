@@ -41,7 +41,7 @@ exports[`renders a FourZeroFour component 1`] = `
        
       <a
         class="usa-link"
-        href="mailto:admin1@aol.com?subject=Performance Dashboard Assistance"
+        href="mailto:admin1@example.com?subject=Performance Dashboard Assistance"
       >
         Contact support.
       </a>

@@ -1,38 +1,5 @@
 .vscode/*
 
-backend/integtests/IntegrationTestSuite.postman_collection.json:1769
-
-backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:220
-backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:224
-backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:231
-backend/src/lib/controllers/__tests__/settings-ctrl.test.ts:235
-
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:180
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:36
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:79
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:80
-backend/src/lib/controllers/__tests__/user-ctrl.test.ts:95
-
-backend/src/lib/factories/__tests__/settings-factory.test.ts:109
-backend/src/lib/factories/__tests__/settings-factory.test.ts:131
-backend/src/lib/factories/__tests__/settings-factory.test.ts:54
-backend/src/lib/factories/__tests__/settings-factory.test.ts:55
-backend/src/lib/factories/__tests__/settings-factory.test.ts:80
-backend/src/lib/factories/__tests__/settings-factory.test.ts:81
-
-backend/src/lib/factories/__tests__/user-factory.test.ts:12
-backend/src/lib/factories/__tests__/user-factory.test.ts:14
-backend/src/lib/factories/__tests__/user-factory.test.ts:31
-backend/src/lib/factories/__tests__/user-factory.test.ts:44
-
-backend/src/lib/repositories/__tests__/user-repo.test.ts:55
-backend/src/lib/repositories/__tests__/user-repo.test.ts:72
-backend/src/lib/repositories/__tests__/user-repo.test.ts:83
-backend/src/lib/repositories/__tests__/user-repo.test.ts:89
-
-backend/src/lib/services/__tests__/auth.test.ts:28
-backend/src/lib/services/__tests__/auth.test.ts:57
-
 cdk/outputs-backend.json:3
 cdk/outputs-backend.json:5
 cdk/outputs-backend.json:9
@@ -47,23 +14,7 @@ examples/README.md:49
 
 frontend/public/env.*:*
 
-frontend/src/containers/__tests__/AddUsers.test.tsx:34
-frontend/src/containers/__tests__/AddUsers.test.tsx:48
-
-frontend/src/containers/__tests__/AdminSiteSettings.test.tsx:40
-
-frontend/src/containers/__tests__/ChangeRole.test.tsx:23
-
-frontend/src/containers/__tests__/EditNavbar.test.tsx:40
-frontend/src/containers/__tests__/EditNavbar.test.tsx:60
-
-frontend/src/containers/__tests__/EditSupportContactEmail.test.tsx:37
-frontend/src/containers/__tests__/EditSupportContactEmail.test.tsx:46
-
 frontend/src/containers/__tests__/PublishingGuidanceSettings.test.tsx:30
-
-frontend/src/hooks/__mocks__/index.tsx:106
-frontend/src/hooks/__mocks__/index.tsx:107
 
 frontend/src/locales/en/translation.json:536
 
@@ -71,8 +22,6 @@ frontend/src/services/__tests__/BackendService.test.ts:389
 frontend/src/services/__tests__/BackendService.test.ts:396
 frontend/src/services/__tests__/BackendService.test.ts:403
 frontend/src/services/__tests__/BackendService.test.ts:409
-
-frontend/src/services/__tests__/EnvConfig.test.ts:19
 
 node_modules/*
 

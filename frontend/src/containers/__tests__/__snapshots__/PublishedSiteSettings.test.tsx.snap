@@ -262,7 +262,7 @@ exports[`published site settings should match snapshot 1`] = `
                   class="Markdown undefined"
                 >
                   <p>
-                    contact@aol.com
+                    contact@example.com
                   </p>
                 </div>
               </div>

@@ -37,7 +37,7 @@ test("renders the acknowledgement statement", async () => {
   const { getByText } = render(<AdminSiteSettings />, {
     wrapper: MemoryRouter,
   });
-  expect(getByText("admin1@aol.com")).toBeInTheDocument();
+  expect(getByText("admin1@example.com")).toBeInTheDocument();
 });
 
 test("renders a button to edit", async () => {

@@ -52,7 +52,7 @@ describe("listUsers", () => {
           Name: "sub",
           Value: "123",
         },
-        { Name: "email", Value: "test@test.com" },
+        { Name: "email", Value: "test@example.com" },
         { Name: "custom:roles", Value: '["Admin"]' },
       ],
       UserCreateDate: now,
@@ -69,7 +69,7 @@ describe("listUsers", () => {
       enabled: true,
       userStatus: "CONFIRMED",
       sub: "123",
-      email: "test@test.com",
+      email: "test@example.com",
       roles: [Role.Admin],
       createdAt: now,
       updatedAt: now,
@@ -80,13 +80,13 @@ describe("listUsers", () => {
 describe("addUsers", () => {
   it("should call addUser with the correct parameters", async () => {
     await repo.addUsers([
-      { userId: "test", email: "test@test.com", roles: [Role.Admin] },
+      { userId: "test", email: "test@example.com", roles: [Role.Admin] },
     ]);
     expect(cognito.addUser).toHaveBeenCalledWith({
       UserPoolId: "abc",
       Username: "test",
       UserAttributes: [
-        { Name: "email", Value: "test@test.com" },
+        { Name: "email", Value: "test@example.com" },
         { Name: "custom:roles", Value: JSON.stringify([Role.Admin]) },
       ],
     });

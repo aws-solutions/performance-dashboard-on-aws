@@ -57,9 +57,8 @@ declare module "react-table" {
   // Source: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-table#example-type-file
   // take this file as-is, or comment out the sections that don't apply to your plugin configuration
 
-  export interface TableOptions<
-    D extends Record<string, unknown>
-  > extends UseExpandedOptions<D>,
+  export interface TableOptions<D extends Record<string, unknown>>
+    extends UseExpandedOptions<D>,
       UseFiltersOptions<D>,
       UseGlobalFiltersOptions<D>,
       UseGroupByOptions<D>,

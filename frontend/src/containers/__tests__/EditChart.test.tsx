@@ -16,12 +16,12 @@ import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
 import EditChart from "../EditChart";
 import { createMemoryHistory } from "history";
-import papaparse from "papaparse";
+import ParsingFileService from "../../services/ParsingFileService";
 
 jest.mock("../../services/BackendService");
 jest.mock("../../services/StorageService");
+jest.mock("../../services/ParsingFileService");
 jest.mock("../../hooks");
-jest.mock("papaparse");
 
 beforeEach(() => {
   BackendService.editWidget = jest.fn();
@@ -63,7 +63,6 @@ test("renders a file upload input", async () => {
 });
 
 test("on submit, it calls editWidget api and uploads dataset", async () => {
-  const parseSpy = jest.spyOn(papaparse, "parse");
   const { getByRole, getByText, getByLabelText, getAllByText, getByTestId } =
     render(<EditChart />, {
       wrapper: MemoryRouter,
@@ -128,7 +127,7 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
   const submitButton = getAllByText("Save")[0];
 
   await waitFor(() => {
-    expect(parseSpy).toHaveBeenCalled();
+    expect(ParsingFileService.parseFile).toHaveBeenCalled();
     submitButton.removeAttribute("disabled");
   });
 
@@ -158,4 +157,156 @@ test("cancel link takes you to Edit Dashboard screen", async () => {
   });
 
   expect(history.push).toHaveBeenCalledWith("/admin/dashboard/edit/undefined");
+});
+
+test("on wrong CSV, it should display the proper error message", async () => {
+  ParsingFileService.parseFile = jest
+    .fn()
+    .mockImplementation((_data: File, _header: boolean, onParse: Function) =>
+      onParse(null, [["country", ""]])
+    );
+
+  const { getByRole, getByText, getByLabelText, getAllByText, getByTestId } =
+    render(<EditChart />, {
+      wrapper: MemoryRouter,
+    });
+
+  await act(async () => {
+    fireEvent.click(getByRole("tab", { name: "Choose data" }));
+  });
+
+  await waitFor(() => {
+    expect(
+      getByText(
+        "Choose an existing dataset or create a new one to populate this chart."
+      )
+    ).toBeInTheDocument();
+  });
+
+  let continueButton = getByRole("button", { name: "Continue" });
+
+  const radioButton = getByTestId("staticDatasetRadioButton");
+
+  await waitFor(() => {
+    continueButton.removeAttribute("disabled");
+    fireEvent.click(radioButton);
+  });
+
+  const file = new File(["dummy content"], "test.csv", {
+    type: "text/csv",
+  });
+  const uploadFile = getByLabelText("Static datasets");
+  Object.defineProperty(uploadFile, "files", { value: [file] });
+  Object.defineProperty(uploadFile, "value", {
+    value: file.name,
+  });
+  fireEvent.change(uploadFile);
+
+  await act(async () => {
+    fireEvent.click(continueButton);
+  });
+
+  await waitFor(() => {
+    expect(
+      getByText(
+        "Please make sure that the system formats your data correctly." +
+          " Select columns to format as numbers, dates, or text. Also select" +
+          " columns to hide or show from the chart."
+      )
+    ).toBeInTheDocument();
+  });
+
+  await waitFor(() => {
+    continueButton = getAllByText("Continue")[1];
+    fireEvent.click(continueButton);
+  });
+
+  fireEvent.input(getByLabelText("Chart title*"), {
+    target: {
+      value: "COVID Cases",
+    },
+  });
+
+  await waitFor(() => {
+    expect(ParsingFileService.parseFile).toHaveBeenCalled();
+    expect(
+      getByText(
+        "Failed to upload file. Please make sure there are values for all column headers."
+      )
+    ).toBeInTheDocument();
+  });
+});
+
+test("when the file has parsing errors, it should display the proper error message", async () => {
+  ParsingFileService.parseFile = jest
+    .fn()
+    .mockImplementation((_data: File, _header: boolean, onParse: Function) =>
+      onParse(["Parsing errors found."], null)
+    );
+
+  const { getByRole, getByText, getByLabelText, getAllByText, getByTestId } =
+    render(<EditChart />, {
+      wrapper: MemoryRouter,
+    });
+
+  await act(async () => {
+    fireEvent.click(getByRole("tab", { name: "Choose data" }));
+  });
+
+  await waitFor(() => {
+    expect(
+      getByText(
+        "Choose an existing dataset or create a new one to populate this chart."
+      )
+    ).toBeInTheDocument();
+  });
+
+  let continueButton = getByRole("button", { name: "Continue" });
+
+  const radioButton = getByTestId("staticDatasetRadioButton");
+
+  await waitFor(() => {
+    continueButton.removeAttribute("disabled");
+    fireEvent.click(radioButton);
+  });
+
+  const file = new File(["dummy content"], "test.csv", {
+    type: "text/csv",
+  });
+  const uploadFile = getByLabelText("Static datasets");
+  Object.defineProperty(uploadFile, "files", { value: [file] });
+  Object.defineProperty(uploadFile, "value", {
+    value: file.name,
+  });
+  fireEvent.change(uploadFile);
+
+  await act(async () => {
+    fireEvent.click(continueButton);
+  });
+
+  await waitFor(() => {
+    expect(
+      getByText(
+        "Please make sure that the system formats your data correctly." +
+          " Select columns to format as numbers, dates, or text. Also select" +
+          " columns to hide or show from the chart."
+      )
+    ).toBeInTheDocument();
+  });
+
+  await waitFor(() => {
+    continueButton = getAllByText("Continue")[1];
+    fireEvent.click(continueButton);
+  });
+
+  fireEvent.input(getByLabelText("Chart title*"), {
+    target: {
+      value: "COVID Cases",
+    },
+  });
+
+  await waitFor(() => {
+    expect(ParsingFileService.parseFile).toHaveBeenCalled();
+    expect(getByText("Parsing errors found.")).toBeInTheDocument();
+  });
 });

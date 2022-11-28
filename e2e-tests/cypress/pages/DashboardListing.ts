@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import selectors from "../utils/selectors";
 import CreateDashboardPage from "./CreateDashboard";
 
@@ -33,7 +38,6 @@ class DashboardListingPage {
   }
 
   deleteDashboard(dashboardName: string) {
-
     //Setup intercepts early
     cy.intercept({
       method: "DELETE",

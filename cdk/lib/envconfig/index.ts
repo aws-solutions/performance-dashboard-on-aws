@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import AWS = require("aws-sdk");
 
 const frontendBucket = process.env.FRONTEND_BUCKET;

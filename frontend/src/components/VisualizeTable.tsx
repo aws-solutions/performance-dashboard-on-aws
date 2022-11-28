@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, MouseEvent } from "react";
 import { DatasetType } from "../models";

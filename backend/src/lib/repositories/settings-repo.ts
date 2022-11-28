@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { User } from "../models/user";
 import { Settings, SettingsItem } from "../models/settings";
 import SettingsFactory from "../factories/settings-factory";

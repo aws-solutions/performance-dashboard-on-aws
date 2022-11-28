@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useHistory } from "react-router-dom";
 import Link from "../components/Link";
 import { usePublicHomepageSearch } from "../hooks";

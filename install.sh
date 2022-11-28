@@ -15,6 +15,14 @@ npm i $@
 cd ..
 
 #
+# E2ETests
+#
+echo "npm install on e2e-tests"
+cd e2e-tests
+npm i $@
+cd ..
+
+#
 # Examples
 #
 echo "npm install on examples"

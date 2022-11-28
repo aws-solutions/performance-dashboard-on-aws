@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import Breadcrumbs from "../components/Breadcrumbs";

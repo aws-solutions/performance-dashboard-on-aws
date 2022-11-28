@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Useful mocks of our custom hook to make our unit
  * testing easier. Prevents the actual backend API
@@ -98,8 +103,8 @@ export function useSettings() {
       singular: "Ministry",
       plural: "Ministries",
     },
-    adminContactEmailAddress: "admin1@aol.com",
-    contactEmailAddress: "contact@aol.com",
+    adminContactEmailAddress: "admin1@example.com",
+    contactEmailAddress: "contact@example.com",
   });
 
   return {

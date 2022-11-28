@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { DashboardSnapshot } from "../common";
 import { Readable } from "stream";
 import fs from "fs-extra";

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import { DatasetContent, SourceType, DatasetSchema } from "../models/dataset";
 import DatasetRepository from "../repositories/dataset-repo";

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter, Router } from "react-router-dom";

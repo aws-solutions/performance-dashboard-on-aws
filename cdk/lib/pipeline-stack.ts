@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import * as cdk from "@aws-cdk/core";
 import * as s3 from "@aws-cdk/aws-s3";
 import * as iam from "@aws-cdk/aws-iam";
@@ -62,7 +67,11 @@ export class PipelineStack extends cdk.Stack {
     trail.addS3EventSelector(
       [
         {
-          bucket: artifactsBucket,
+          bucket: s3.Bucket.fromBucketArn(
+            this,
+            "ArtifactsBucket",
+            artifactsBucket.bucketArn
+          ),
           objectPrefix: bucketKey,
         },
       ],

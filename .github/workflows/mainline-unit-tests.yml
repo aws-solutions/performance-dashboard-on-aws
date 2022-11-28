@@ -27,5 +27,8 @@ jobs:
       # Install npm dependencies
       - run: ./install.sh
 
+      # Check license
+      - run: ./check-license.sh
+
       # Run unit tests
       - run: RELEASE=1 ./test.sh

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { User } from "../models/user";
 import TopicAreaFactory from "../factories/topicarea-factory";
 import DashboardFactory from "../factories/dashboard-factory";

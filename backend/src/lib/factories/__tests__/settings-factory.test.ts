@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { SettingsItem, Settings } from "../../models/settings";
 import SettingsFactory from "../settings-factory";
 
@@ -46,8 +51,8 @@ describe("fromItem", () => {
       customLogoS3Key: "12345",
       customLogoAltText: "Alt text",
       customFaviconS3Key: "12345",
-      contactEmailAddress: "test@aol.com",
-      adminContactEmailAddress: "admin@aol.com",
+      contactEmailAddress: "test@example.com",
+      adminContactEmailAddress: "admin@example.com",
       contactUsContent: "test content",
       analyticsTrackingId: "UA123",
     };
@@ -72,8 +77,8 @@ describe("fromItem", () => {
         primary: "#005EA2",
         secondary: "#54278f",
       },
-      contactEmailAddress: "test@aol.com",
-      adminContactEmailAddress: "admin@aol.com",
+      contactEmailAddress: "test@example.com",
+      adminContactEmailAddress: "admin@example.com",
       contactUsContent: "test content",
       analyticsTrackingId: "UA123",
     });
@@ -101,7 +106,7 @@ describe("toPublicSettings", () => {
         primary: "#ffffff",
         secondary: "#ffffff",
       },
-      contactEmailAddress: "test@aol.com",
+      contactEmailAddress: "test@example.com",
       contactUsContent: "test content",
       analyticsTrackingId: "UA123",
     };
@@ -123,7 +128,7 @@ describe("toPublicSettings", () => {
         primary: "#ffffff",
         secondary: "#ffffff",
       },
-      contactEmailAddress: "test@aol.com",
+      contactEmailAddress: "test@example.com",
       contactUsContent: "test content",
       analyticsTrackingId: "UA123",
     });

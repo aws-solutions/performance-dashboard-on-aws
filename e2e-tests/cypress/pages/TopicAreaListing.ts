@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import selectors from "../utils/selectors";
 import EditTopicAreaLabelPage from "./EditTopicAreaLabel";
 import CreateTopicAreaPage from "./CreateTopicArea";
@@ -10,7 +15,7 @@ class TopicAreaListingPage {
   }
 
   goToEditTopicAreaLabel(): EditTopicAreaLabelPage {
-    cy.get("[data-testid='edittopicarealabel']",).click();
+    cy.get("[data-testid='edittopicarealabel']").click();
     cy.contains("Edit topic area name");
     return new EditTopicAreaLabelPage();
   }
@@ -54,7 +59,7 @@ class TopicAreaListingPage {
     // Capture the http requests
     cy.intercept({
       method: "DELETE",
-      url: new RegExp('/prod/topicarea/'),
+      url: new RegExp("/prod/topicarea/"),
     }).as("deleteTopicAreaRequest");
 
     cy.intercept({

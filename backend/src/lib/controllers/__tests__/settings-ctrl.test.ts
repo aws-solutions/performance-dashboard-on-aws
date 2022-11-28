@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
@@ -212,22 +217,22 @@ describe("updateSettings", () => {
   });
 
   it("updates contact email", async () => {
-    req.body.contactEmailAddress = "test@aol.com";
+    req.body.contactEmailAddress = "test@example.com";
     await SettingsCtrl.updateSettings(req, res);
     expect(repository.updateSetting).toHaveBeenCalledWith(
       "contactEmailAddress",
-      "test@aol.com",
+      "test@example.com",
       now.toISOString(),
       user
     );
   });
 
   it("updates admin contact email", async () => {
-    req.body.adminContactEmailAddress = "test@hotmail.com";
+    req.body.adminContactEmailAddress = "test@example.com";
     await SettingsCtrl.updateSettings(req, res);
     expect(repository.updateSetting).toHaveBeenCalledWith(
       "adminContactEmailAddress",
-      "test@hotmail.com",
+      "test@example.com",
       now.toISOString(),
       user
     );

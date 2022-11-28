@@ -14,6 +14,7 @@ phases:
       - echo "node use 16"
       - n 16
       - chmod +x ./install.sh && ./install.sh
+      - chmod +x ./check-license.sh && ./check-license.sh
       - chmod +x ./test.sh && ./test.sh
       - echo "Installing dependencies and executing unit tests completed `date`"
   build:

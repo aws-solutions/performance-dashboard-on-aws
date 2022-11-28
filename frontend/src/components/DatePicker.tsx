@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useState } from "react";
 import DatePicker1, { registerLocale } from "react-datepicker";
 import { format, isMatch, isBefore, isAfter, isEqual, add } from "date-fns";

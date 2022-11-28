@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import EnvConfig from "../EnvConfig";
 
 test("default environment config values", () => {
@@ -11,7 +16,7 @@ test("non default environment config values", () => {
   (global as any).EnvironmentConfig = {
     topicAreaLabel: "Category",
     topicAreasLabel: "Categories",
-    contactEmail: "hello@hello.com",
+    contactEmail: "hello@example.com",
     brandName: "Amazon Web Services",
   };
 

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { InvalidDatasetContent } from "../errors";
 import { DatasetContent, DatasetSchema } from "../models/dataset";
 import { User } from "../models/user";

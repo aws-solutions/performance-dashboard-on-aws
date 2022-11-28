@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Dataset } from "performance-dashboard-backend/src/lib/models/dataset";
 import { Dashboard } from "performance-dashboard-backend/src/lib/models/dashboard";
 

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
@@ -32,7 +37,7 @@ test("renders the acknowledgement statement", async () => {
   const { getByText } = render(<AdminSiteSettings />, {
     wrapper: MemoryRouter,
   });
-  expect(getByText("admin1@aol.com")).toBeInTheDocument();
+  expect(getByText("admin1@example.com")).toBeInTheDocument();
 });
 
 test("renders a button to edit", async () => {

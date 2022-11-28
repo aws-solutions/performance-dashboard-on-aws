@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 type CharWidthMap = { [ch: string]: number };
 type FontSizeWidthMap = { [fontSize: string]: CharWidthMap };
 type FontWidthMap = { [font: string]: FontSizeWidthMap };

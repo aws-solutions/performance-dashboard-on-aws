@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import HomepageFactory from "../factories/homepage-factory";
 import HomepageRepository from "../repositories/homepage-repo";

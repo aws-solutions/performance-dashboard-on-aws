@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import AuthService from "../auth";
 import { Role } from "../../models/user";
 
@@ -20,7 +25,7 @@ test("extracts the user roles from the JWT token", () => {
             "cognito:username": "johndoe",
             exp: "Wed Jan 13 19:33:21 UTC 2021",
             iat: "Wed Jan 13 18:33:21 UTC 2021",
-            email: "johndoe@amazon.com",
+            email: "johndoe@example.com",
           },
         },
       },
@@ -49,7 +54,7 @@ test("handles the case of roles not being present in claims", () => {
             "cognito:username": "johndoe",
             exp: "Wed Jan 13 19:33:21 UTC 2021",
             iat: "Wed Jan 13 18:33:21 UTC 2021",
-            email: "johndoe@amazon.com",
+            email: "johndoe@example.com",
           },
         },
       },

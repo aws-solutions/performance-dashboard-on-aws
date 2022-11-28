@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
@@ -15,7 +20,7 @@ describe("ChangeRoleForm", () => {
     // Mocks
     history.location.state = {
       ...history.location.state,
-      emails: "test@test.com",
+      emails: "test@example.com",
       usernames: ["test1"],
     };
     jest.spyOn(history, "push");

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -32,7 +37,7 @@ test("submits form with the entered values", async () => {
   userEvent.clear(screen.getByLabelText("Contact email address*"));
   userEvent.type(
     screen.getByLabelText("Contact email address*"),
-    "test1234@hotmail.com"
+    "test1234@example.com"
   );
 
   userEvent.clear(screen.getByLabelText("Contact us*"));
@@ -52,7 +57,7 @@ test("submits form with the entered values", async () => {
   expect(BackendService.updateSetting).toHaveBeenNthCalledWith(
     2,
     "contactEmailAddress",
-    "test1234@hotmail.com",
+    "test1234@example.com",
     expect.anything()
   );
   expect(BackendService.updateSetting).toHaveBeenNthCalledWith(

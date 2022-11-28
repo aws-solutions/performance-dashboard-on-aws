@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import AWSXRay from "aws-xray-sdk";
 import S3 from "aws-sdk/clients/s3";
 

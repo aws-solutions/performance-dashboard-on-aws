@@ -81,6 +81,8 @@ echo "cd $source_dir"
 cd $source_dir
 echo "chmod +x ./install.sh && ./install.sh"
 chmod +x ./install.sh && ./install.sh
+echo "chmod +x ./check-license.sh && ./check-license.sh"
+chmod +x ./check-license.sh && ./check-license.sh
 echo "chmod +x ./package.sh && ./package.sh release $staging_dist_dir"
 chmod +x ./package.sh && ./package.sh release $staging_dist_dir
 

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { env } from "../env";
 import { S3 } from "aws-sdk";
 import { DashboardSnapshot } from "../common";

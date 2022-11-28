@@ -190,7 +190,7 @@ exports[`publishing guidance settings should match snapshot 1`] = `
               <div
                 class="published-site font-sans-lg"
               >
-                admin1@aol.com
+                admin1@example.com
               </div>
             </div>
             <div

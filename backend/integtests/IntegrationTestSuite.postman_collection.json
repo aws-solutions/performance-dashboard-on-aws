@@ -1766,7 +1766,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"role\": \"Editor\",\n    \"emails\": \"john@doe.com\"\n}",
+          "raw": "{\n    \"role\": \"Editor\",\n    \"emails\": \"john@example.com\"\n}",
           "options": {
             "raw": {
               "language": "json"

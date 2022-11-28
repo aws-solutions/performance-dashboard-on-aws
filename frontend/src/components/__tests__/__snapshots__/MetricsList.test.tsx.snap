@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the component 1`] = `
+<div>
+  <div
+    aria-label="Metrics"
+    class="display-block"
+    role="group"
+  >
+    <label
+      class="margin-bottom-0 margin-top-2 usa-label text-bold"
+    >
+      Metrics
+      <span>
+        *
+      </span>
+    </label>
+    <p
+      class="margin-top-2px usa-hint"
+    >
+      Add metrics here and reorder them. Multiple metrics will automatically scale to fit and wrap according to the order.
+    </p>
+    <div
+      class="usa-checkbox margin-bottom-2"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="oneMetricPerRow"
+        name="oneMetricPerRow"
+        type="checkbox"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="oneMetricPerRow"
+      >
+        One metric per row
+      </label>
+    </div>
+    <div>
+      <div
+        class="padding-top-2 padding-bottom-2"
+        data-rbd-droppable-context-id="0"
+        data-rbd-droppable-id="metrics-list"
+        role="list"
+      >
+        <div
+          aria-label="1"
+          class="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-row margin-y-1"
+          data-rbd-draggable-context-id="0"
+          data-rbd-draggable-id="0"
+          role="listitem"
+        >
+          <div
+            class="grid-row grid-col flex-2 padding-1"
+          >
+            <div
+              aria-describedby="rbd-hidden-text-0-hidden-text-0"
+              class="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-1"
+              data-rbd-drag-handle-context-id="0"
+              data-rbd-drag-handle-draggable-id="0"
+              draggable="false"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                aria-hidden="true"
+                class="svg-inline--fa fa-grip-vertical fa-w-10 fa-xs "
+                data-icon="grip-vertical"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 320 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32H32C14.33 32 0 46.33 0 64v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zM288 32h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-1"
+            >
+              1
+            </div>
+            <div
+              class="grid-col flex-4 grid-row flex-column text-center margin-left-1 margin-right-1"
+            >
+              <div
+                class="grid-col flex-6"
+              >
+                <br />
+              </div>
+              <div
+                class="grid-col flex-6"
+              >
+                <br />
+              </div>
+            </div>
+          </div>
+          <div
+            class="border-base-lighter border-left"
+          />
+          <div
+            class="grid-col flex-10 grid-row margin-y-1"
+          >
+            <div
+              class="grid-col flex-11 usa-tooltip"
+              data-position="bottom"
+              title="temperature"
+            >
+              <div
+                class="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis"
+              >
+                <button
+                  aria-label="Edit temperature"
+                  class="usa-button usa-button--unstyled margin-left-1 margin-top-0-important text-base-dark hover:text-base-darker active:text-base-darkest text-bold"
+                  type="button"
+                >
+                  temperature
+                </button>
+              </div>
+            </div>
+            <div
+              class="grid-col flex-1 text-right"
+            >
+              <button
+                aria-controls="menu--1"
+                aria-haspopup="true"
+                aria-label="Actions"
+                class="usa-button usa-button--unstyled margin-1"
+                data-reach-menu-button=""
+                id="menu-button--menu--1"
+                type="button"
+              >
+                
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-ellipsis-v fa-w-6 margin-left-1"
+                  data-icon="ellipsis-v"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 192 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

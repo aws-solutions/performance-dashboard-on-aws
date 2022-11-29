@@ -1,6 +1,16 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useMemo, useState, MouseEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronCircleDown,
+  faChevronCircleUp,
+  faChevronDown,
+  faDownload,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   useTable,
   useSortBy,
@@ -8,15 +18,16 @@ import {
   useGlobalFilter,
   usePagination,
   Row,
-  Column,
+  HeaderGroup,
 } from "react-table";
 import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../hooks";
 import { CSVLink } from "react-csv";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "./Pagination";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface Props {
+  id: string;
   selection: "multiple" | "single" | "none";
   initialSortByField?: string;
   initialSortAscending?: boolean;
@@ -29,7 +40,7 @@ interface Props {
   pageSize?: 5 | 10 | 20 | 25 | 50 | 100;
   disablePagination?: boolean;
   disableBorderless?: boolean;
-  width?: string | number | undefined;
+  width?: string | number;
   columns: ReadonlyArray<any>;
   hiddenColumns?: Set<string>;
   addNumbersColumn?: boolean;
@@ -77,10 +88,17 @@ function Table(props: Props) {
 
   const createLongTitleName = (row: Row<object>, accessors: Array<string>) => {
     let title = "";
-    accessors.map((accessor: string) => {
+    accessors.forEach((accessor: string) => {
       title += row.values[accessor] + " - ";
     });
     return title.substring(0, title.length - 3);
+  };
+
+  const getTitle = (props: Props, row: Row<object>) => {
+    if (props.rowTitleComponents) {
+      return createLongTitleName(row, props.rowTitleComponents);
+    }
+    return props.screenReaderField ? row.values[props.screenReaderField] : null;
   };
 
   const {
@@ -91,15 +109,8 @@ function Table(props: Props) {
     prepareRow,
     rows,
     page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
     pageCount,
     gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
     selectedFlatRows,
     setGlobalFilter,
     toggleAllRowsSelected,
@@ -129,7 +140,7 @@ function Table(props: Props) {
         hooks.visibleColumns.push((columns) => [
           {
             id: "selection",
-            Header: ({}) => <div></div>,
+            Header: () => <></>,
             Cell: ({ row }) => (
               <div>
                 <IndeterminateRadio
@@ -137,13 +148,7 @@ function Table(props: Props) {
                     toggleAllRowsSelected(false);
                     row.toggleRowSelected();
                   }}
-                  aria-labelledby={
-                    props.rowTitleComponents
-                      ? createLongTitleName(row, props.rowTitleComponents)
-                      : props.screenReaderField
-                      ? row.values[props.screenReaderField]
-                      : null
-                  }
+                  aria-labelledby={getTitle(props, row)}
                   {...row.getToggleRowSelectedProps()}
                 />
               </div>
@@ -161,20 +166,8 @@ function Table(props: Props) {
             Cell: ({ row }) => (
               <IndeterminateCheckbox
                 {...row.getToggleRowSelectedProps()}
-                title={
-                  props.rowTitleComponents
-                    ? createLongTitleName(row, props.rowTitleComponents)
-                    : props.screenReaderField
-                    ? row.values[props.screenReaderField]
-                    : null
-                }
-                aria-labelledby={
-                  props.rowTitleComponents
-                    ? createLongTitleName(row, props.rowTitleComponents)
-                    : props.screenReaderField
-                    ? row.values[props.screenReaderField]
-                    : null
-                }
+                title={getTitle(props, row)}
+                aria-labelledby={getTitle(props, row)}
               />
             ),
           },
@@ -207,7 +200,7 @@ function Table(props: Props) {
           ) {
             reset({
               sortData: header.id
-                ? `${header.id}###${header.isSortedDesc ? "desc" : "asc"}`
+                ? `${header.id}###${getSortingAttributes(header).direction}`
                 : "",
             });
             setSortByColumn(header.id);
@@ -239,9 +232,48 @@ function Table(props: Props) {
 
   const currentRows = props.disablePagination ? rows : page;
 
+  const getSortingAttributes = (column: HeaderGroup) => {
+    type AriaSortType =
+      | "none"
+      | "ascending"
+      | "descending"
+      | "other"
+      | undefined;
+    if (column.isSorted) {
+      return column.isSortedDesc
+        ? {
+            ariaSort: "descending" as AriaSortType,
+            icon: faChevronCircleDown as IconProp,
+            direction: "desc",
+          }
+        : {
+            ariaSort: "ascending" as AriaSortType,
+            icon: faChevronCircleUp as IconProp,
+            direction: "asc",
+          };
+    }
+    return {
+      ariaSort: "none" as AriaSortType,
+      icon: faChevronDown as IconProp,
+      direction: "",
+    };
+  };
+
+  function getColumnName(column: HeaderGroup) {
+    /**
+     * The split is to remove the quotes from the
+     * string, the filter to remove the resulted
+     * empty ones, and the join to form it again.
+     */
+    return typeof column.render("Header") === "string"
+      ? (column.render("Header") as string).split('"').filter(Boolean).join()
+      : column.render("Header");
+  }
+
   return (
     <div className="overflow-x-hidden overflow-y-hidden">
       <table
+        id={props.id}
         className={`usa-table${borderlessClassName}${className}`}
         width={props.width}
         {...getTableProps()}
@@ -253,13 +285,7 @@ function Table(props: Props) {
                 <th
                   scope="col"
                   {...column.getHeaderProps()}
-                  aria-sort={
-                    column.isSorted
-                      ? column.isSortedDesc
-                        ? "descending"
-                        : "ascending"
-                      : "none"
-                  }
+                  aria-sort={getSortingAttributes(column).ariaSort}
                   style={
                     props.selection !== "none"
                       ? {
@@ -271,27 +297,13 @@ function Table(props: Props) {
                         }
                   }
                 >
-                  <span>
-                    {
-                      /**
-                       * The split is to remove the quotes from the
-                       * string, the filter to remove the resulted
-                       * empty ones, and the join to form it again.
-                       */
-                      typeof column.render("Header") === "string"
-                        ? (column.render("Header") as string)
-                            .split('"')
-                            .filter(Boolean)
-                            .join()
-                        : column.render("Header")
-                    }
-                  </span>
                   {(props.selection !== "none" && i === 0) ||
                   (column.id && column.id.startsWith("checkbox")) ||
-                  (column.id &&
-                    column.id.startsWith("numbersListing")) ? null : (
+                  (column.id && column.id.startsWith("numbersListing")) ? (
+                    <span>{getColumnName(column)}</span>
+                  ) : (
                     <button
-                      className="margin-left-1 usa-button usa-button--unstyled"
+                      className="usa-button usa-button--unstyled text-no-underline"
                       {...column.getSortByToggleProps()}
                       title={t("ToggleSortBy", { columnName: column.Header })}
                       aria-label={t("ToggleSortBy", {
@@ -299,15 +311,10 @@ function Table(props: Props) {
                       })}
                       type="button"
                     >
+                      <span>{getColumnName(column)}</span>
                       <FontAwesomeIcon
-                        className={`hover:text-base ${
-                          column.isSorted ? "text-base-darker" : "text-base"
-                        }`}
-                        icon={
-                          column.isSorted && column.isSortedDesc
-                            ? faChevronDown
-                            : faChevronUp
-                        }
+                        className="margin-left-1"
+                        icon={getSortingAttributes(column).icon}
                       />
                     </button>
                   )}

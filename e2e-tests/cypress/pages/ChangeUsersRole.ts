@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 class ChangeUsersRolePage {
   constructor() {
     cy.get("h1").contains("Change role");

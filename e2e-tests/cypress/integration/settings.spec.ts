@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import LoginPage from "../pages/Login";
 import SettingsPage from "../pages/Settings";
 import * as Chance from "chance";
@@ -46,7 +51,7 @@ describe("Admin user", () => {
     topicAreaListingPage.waitUntilTopicAreasTableLoads();
 
     topicAreaListingPage.verifyTopicAreaLabel(newName, newNames);
-    
+
     cy.reload();
 
     // Customize topic area label to old name
@@ -88,9 +93,8 @@ describe("Admin user", () => {
     topicAreaListingPage.verifyTopicArea(topicAreaName);
 
     // Edit the created topic area
-    let editTopicAreaPage = topicAreaListingPage.goToEditTopicArea(
-      topicAreaName
-    );
+    let editTopicAreaPage =
+      topicAreaListingPage.goToEditTopicArea(topicAreaName);
 
     const newTopicAreaName = random.word();
     editTopicAreaPage.editTopicArea(newTopicAreaName);
@@ -283,7 +287,7 @@ describe("Admin user", () => {
     dateTimeFormatPage.verifyFormat(newDateFormat, newTimeFormat);
 
     cy.reload();
-    
+
     // Change to US date and time format and verify
     cy.get("@oldDateFormat").then((oldDateFormat) => {
       cy.get("@oldTimeFormat").then((oldTimeFormat) => {

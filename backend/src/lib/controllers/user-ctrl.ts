@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import UserRepository from "../repositories/user-repo";
 import UserFactory from "../factories/user-factory";
@@ -5,8 +10,7 @@ import { validate } from "jsonschema";
 import RemoveUsersSchema from "../jsonschema/api/RemoveUsers.json";
 import { Role } from "../models/user";
 import logger from "../services/logger";
-import { env } from "process";
-var escapeHtml = require("escape-html");
+const escapeHtml = require("escape-html");
 
 const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
 
@@ -155,8 +159,15 @@ async function changeRole(req: Request, res: Response) {
   }
 }
 
-function emailIsValid(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+/**
+ * The most effective method consists in checking for @-sign somewhere in the email address.
+ * Then sending a verification email to given email address.
+ * If the end user can follow the validation instructions in the email message, the email address is correct.
+ * @param email
+ * @returns boolean
+ */
+function emailIsValid(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+$/.test(email);
 }
 
 export default {

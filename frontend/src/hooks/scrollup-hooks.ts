@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { useEffect } from "react";
 
 export function useScrollUp(
@@ -10,5 +15,5 @@ export function useScrollUp(
       window.scrollTo(0, 0);
       setOldStep(step);
     }
-  }, [step]);
+  }, [oldStep, setOldStep, step]);
 }

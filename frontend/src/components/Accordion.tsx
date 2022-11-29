@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { ReactNode } from "react";
 
 interface AccordionProps {
@@ -5,11 +10,7 @@ interface AccordionProps {
 }
 
 function Accordion(props: AccordionProps) {
-  return (
-    <div className="usa-accordion" aria-multiselectable="true">
-      {props.children}
-    </div>
-  );
+  return <div className="usa-accordion">{props.children}</div>;
 }
 
 interface ItemProps {

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import EnvConfig from "./services/EnvConfig";
 
 const config = {
@@ -50,7 +55,7 @@ export const samlConfig = {
 };
 
 export function amplifyConfig(): {} {
-  var configuration: { [k: string]: any } = config;
+  const configuration: { [k: string]: any } = config;
 
   if (EnvConfig.samlProvider) {
     configuration.oauth = oauthConfig;

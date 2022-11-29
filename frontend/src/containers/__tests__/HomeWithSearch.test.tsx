@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
@@ -6,10 +11,8 @@ import HomeWithSearch from "../HomeWithSearch";
 jest.mock("../../hooks");
 
 test("Renders homepage title", async () => {
-  const { getByRole } = render(<HomeWithSearch />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByRole("heading", { name: "Search results" })).toBeInTheDocument();
+  const { getByText } = render(<HomeWithSearch />, { wrapper: MemoryRouter });
+  expect(getByText("Search results")).toBeInTheDocument();
 });
 
 test("Renders dashboards list", async () => {

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { ChartType } from "../models";
 
 /**
@@ -29,7 +34,7 @@ function getFilteredJson(
   json: Array<any>,
   hiddenColumns: Set<string>
 ): Array<any> {
-  let headers = json.length ? (Object.keys(json[0]) as Array<string>) : [];
+  let headers = json.length ? Object.keys(json[0]) : [];
   headers = headers.filter((h) => !hiddenColumns.has(h));
   const newFilteredJson = new Array<any>();
   for (const row of json) {
@@ -85,24 +90,19 @@ function sortFilteredJson(
   sortByColumn: string | undefined,
   sortByDesc: boolean | undefined
 ): void {
-  if (sortByColumn !== undefined && sortByDesc !== undefined) {
-    filteredJson.sort((row1: any, row2: any) => {
-      if (
-        row1[sortByColumn || ""] !== undefined &&
-        row2[sortByColumn || ""] !== undefined
-      ) {
-        return row1[sortByColumn || ""] < row2[sortByColumn || ""]
-          ? sortByDesc
-            ? 1
-            : -1
-          : sortByDesc
-          ? -1
-          : 1;
-      } else {
-        return 0;
-      }
-    });
+  if (sortByColumn === undefined || sortByDesc === undefined) {
+    return;
   }
+  filteredJson.sort((row1: any, row2: any) => {
+    const elementKey = sortByColumn || "";
+    if (row1[elementKey] === undefined || row2[elementKey] === undefined) {
+      return 0;
+    }
+    if (row1[elementKey] < row2[elementKey]) {
+      return sortByDesc ? 1 : -1;
+    }
+    return sortByDesc ? -1 : 1;
+  });
 }
 
 const DatasetParsingService = {

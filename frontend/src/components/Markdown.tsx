@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useEffect, useRef } from "react";
 import MarkdownRender from "./MarkdownRender";
 import Link from "./Link";
@@ -39,14 +44,16 @@ const Markdown = (props: MarkdownProps) => {
         {props.label}
         {props.label && props.required && <span>&#42;</span>}
       </label>
-      <span className="usa-hint">
+      <span id="makdownSupportHint" className="usa-hint">
         {props.hint} {t("MarkdownSupport")}{" "}
         <Link target="_blank" to={"/admin/markdown"}>
           {t("AddTextScreen.ViewMarkdownSyntax")}
           <FontAwesomeIcon
-            className="margin-left-05"
             icon={faExternalLinkAlt}
+            className="margin-left-05"
             size="xs"
+            aria-label={t("ARIA.OpenInNewTab")}
+            aria-hidden={false}
           />
         </Link>
       </span>
@@ -87,6 +94,7 @@ const Markdown = (props: MarkdownProps) => {
             text.current = e;
           }}
           className="usa-textarea"
+          aria-describedby="makdownSupportHint"
         />
       </div>
       <div

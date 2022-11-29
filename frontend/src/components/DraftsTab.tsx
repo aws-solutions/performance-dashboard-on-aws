@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { Dashboard } from "../models";
@@ -50,18 +55,16 @@ function DraftsTab(props: Props) {
           <div className="padding-top-1px">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
-                <span>
-                  <Search
-                    id="search"
-                    onSubmit={onSearch}
-                    size="small"
-                    placeholder={t("Search.SearchDashboards", {
-                      state: t("draft"),
-                    })}
-                    label={t("Search.SearchDashboards", { state: t("draft") })}
-                    wide={true}
-                  />
-                </span>
+                <Search
+                  id="search"
+                  onSubmit={onSearch}
+                  size="small"
+                  placeholder={t("Search.SearchDashboards", {
+                    state: t("draft"),
+                  })}
+                  label={t("Search.SearchDashboards", { state: t("draft") })}
+                  wide={true}
+                />
               </li>
             </ul>
           </div>
@@ -112,18 +115,16 @@ function DraftsTab(props: Props) {
           <div className="tablet:grid-col-4 padding-top-1px">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
-                <span>
-                  <Search
-                    id="search"
-                    onSubmit={onSearch}
-                    size="small"
-                    placeholder={t("Search.SearchDashboards", {
-                      state: t("draft"),
-                    })}
-                    label={t("Search.SearchDashboards", { state: t("draft") })}
-                    wide={true}
-                  />
-                </span>
+                <Search
+                  id="search"
+                  onSubmit={onSearch}
+                  size="small"
+                  placeholder={t("Search.SearchDashboards", {
+                    state: t("draft"),
+                  })}
+                  label={t("Search.SearchDashboards", { state: t("draft") })}
+                  wide={true}
+                />
               </li>
             </ul>
           </div>
@@ -167,6 +168,7 @@ function DraftsTab(props: Props) {
         </div>
       )}
       <Table
+        id="draft-dashboards"
         selection="multiple"
         initialSortByField="updatedAt"
         filterQuery={filter}

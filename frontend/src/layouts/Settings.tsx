@@ -1,8 +1,12 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { ReactNode, useState } from "react";
 import "./Settings.css";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { Link } from "react-router-dom";
 import { useSettings, useFavicon, useFileLoaded } from "../hooks";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
@@ -93,6 +97,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/topicarea"
+                            {...(currentSetting === "topicarea" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["topicarea"]}`}
                           </Link>
@@ -107,6 +114,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/publishingguidance"
+                            {...(currentSetting === "publishingguidance" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["publishingguidance"]}`}
                           </Link>
@@ -121,6 +131,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/brandingandstyling"
+                            {...(currentSetting === "brandingandstyling" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["brandingandstyling"]}`}
                           </Link>
@@ -135,6 +148,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/publishedsite"
+                            {...(currentSetting === "publishedsite" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["publishedsite"]}`}
                           </Link>
@@ -149,6 +165,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/dateformat"
+                            {...(currentSetting === "dateformat" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["dateformat"]}`}
                           </Link>
@@ -163,6 +182,9 @@ function SettingsLayout(props: LayoutProps) {
                                 : ""
                             }
                             to="/admin/settings/adminsite"
+                            {...(currentSetting === "adminsite" && {
+                              "aria-current": "page",
+                            })}
                           >
                             {`${validSettings["adminsite"]}`}
                           </Link>
@@ -173,12 +195,12 @@ function SettingsLayout(props: LayoutProps) {
                 </nav>
               </div>
 
-              <main
+              <div
                 className="desktop:grid-col-9 usa-prose mobile-margin-top-2"
                 id="main-content"
               >
                 {props.children}
-              </main>
+              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Link from "../components/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -184,7 +189,7 @@ function ViewDashboardAdmin() {
 
   const getSectionWithTabs = (widget: Widget, dashboard: Dashboard): string => {
     const section: Widget | undefined = dashboard.widgets.find(
-      (w) => w.id == widget.section
+      (w) => w.id === widget.section
     );
     if (section) {
       return section.content.showWithTabs ? section.id : "";
@@ -252,7 +257,7 @@ function ViewDashboardAdmin() {
             : ""
         }`}
       >
-        <span className="usa-tag text-middle" style={{ cursor: "text" }}>
+        <span className="usa-tag text-middle text-cursor">
           {t(dashboard.state)}
         </span>
       </li>
@@ -264,7 +269,7 @@ function ViewDashboardAdmin() {
             : ""
         }`}
       >
-        <span className="text-middle" style={{ cursor: "default" }}>
+        <span className="text-middle default-cursor">
           {(dashboard.state === DashboardState.Draft ||
             dashboard.state === DashboardState.PublishPending) && (
             <FontAwesomeIcon icon={faCopy} className="margin-right-1" />
@@ -491,8 +496,7 @@ function ViewDashboardAdmin() {
         dashboard.state === DashboardState.PublishPending) && (
         <>
           <span
-            className="usa-checkbox"
-            style={{ marginRight: "8px" }}
+            className="usa-checkbox margin-right-1"
             hidden={windowSize.width < maxMobileViewportWidth}
           >
             <input
@@ -654,15 +658,15 @@ function ViewDashboardAdmin() {
 
         {(dashboard.state === DashboardState.Draft ||
           dashboard.state === DashboardState.PublishPending) && (
-          <Alert
-            type="info"
-            message={t("DashboardPreviewPublishedMessage")}
-            slim
-          />
+          <div className="border-left-1 bg-accent-cool-lighter padding-x-2 padding-y-1 border-left-1 border-accent-cool">
+            {t("DashboardPreviewPublishedMessage")}
+          </div>
         )}
 
         {dashboard.state === DashboardState.Archived && (
-          <Alert type="info" message={t("RepublishDashboardToView")} slim />
+          <div className="border-left-1 bg-accent-cool-lighter padding-x-2 padding-y-1 border-left-1 border-accent-cool">
+            {t("RepublishDashboardToView")}
+          </div>
         )}
 
         {isMobile && (

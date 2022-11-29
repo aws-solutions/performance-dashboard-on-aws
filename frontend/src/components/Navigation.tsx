@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect } from "react";
 import { NavHashLink } from "react-router-hash-link";
 
@@ -55,7 +60,7 @@ function Navigation({
   }, []);
 
   const scrollWithOffset = (el: HTMLElement) => {
-    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+    const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
     const yOffset = -offset;
     window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
   };

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { useRef, useEffect } from "react";
 import { PublicSettings, Settings } from "../models";
 
@@ -22,7 +27,7 @@ export function useFileLoaded(
       return;
     }
     setToHide(false);
-  }, [loadingFile]);
+  }, [loadingFile, setToHide]);
 
   // firstSettingsUpdate stops useEffect from executing after the first render
   // secondSettingsFileUpdate stops useEffect from executing when resource starts loading
@@ -45,5 +50,5 @@ export function useFileLoaded(
     if (logoOrFav === "favicon" && settings.customFaviconS3Key === undefined) {
       setToHide(false);
     }
-  }, [loadingSettings]);
+  }, [loadingSettings, logoOrFav, setToHide, settings]);
 }

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import * as cdk from "@aws-cdk/core";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as iam from "@aws-cdk/aws-iam";
@@ -27,7 +32,7 @@ export class LambdaFunctions extends cdk.Construct {
     super(scope, id);
 
     this.apiHandler = new lambda.Function(this, "PrivateApi", {
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_16_X,
       description: "Handles API Gateway traffic from admin users",
       code: lambda.Code.fromAsset("../backend/build"),
       handler: "src/lambda/api.handler",

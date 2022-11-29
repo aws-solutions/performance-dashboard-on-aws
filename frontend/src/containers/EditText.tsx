@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -38,7 +43,8 @@ function EditText() {
   const { t } = useTranslation();
   const [editingWidget, setEditingWidget] = useState(false);
   const { widget, setWidget } = useWidget(dashboardId, widgetId);
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-text-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -231,16 +237,18 @@ function EditText() {
               ) : (
                 ""
               )}
-              {widget.content.text ? (
-                <div className="padding-left-05">
-                  <MarkdownRender
-                    className="usa-prose textOrSummary"
-                    source={widget.content.text}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
+              <div id={previewPanelId}>
+                {widget.content.text ? (
+                  <div className="padding-left-05">
+                    <MarkdownRender
+                      className="usa-prose textOrSummary"
+                      source={widget.content.text}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </section>
           </div>
         </>

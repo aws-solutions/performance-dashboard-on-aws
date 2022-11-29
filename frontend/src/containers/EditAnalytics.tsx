@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -19,7 +24,7 @@ function EditAnalytics() {
   const { register, handleSubmit, errors } = useForm<FormValues>();
   const { t } = useTranslation();
 
-  if (settings.analyticsTrackingId == "NA") {
+  if (settings.analyticsTrackingId === "NA") {
     settings.analyticsTrackingId = "";
   }
 

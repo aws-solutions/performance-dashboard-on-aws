@@ -1,4 +1,10 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
+import styles from "./RadioButtonsTile.module.scss";
 
 interface Option {
   id: string;
@@ -19,10 +25,10 @@ interface Props {
 function RadioButtonsTile(props: Props) {
   const getUsaRatio = (option: Option, index: number) => {
     return (
-      <div className="usa-radio" role="contentinfo" key={index}>
+      <div className="usa-radio" role="radio" key={index}>
         <div className="tablet:grid-col">
           <input
-            className="usa-radio__input usa-radio__input--tile"
+            className={`usa-radio__input usa-radio__input--tile ${styles.radio}`}
             id={option.id}
             value={option.value}
             type="radio"
@@ -34,12 +40,12 @@ function RadioButtonsTile(props: Props) {
           />
           <label className="usa-radio__label" htmlFor={option.id}>
             {option.label}
-            <p
+            <span
               className="text-base usa-prose usa-checkbox__label-description"
               id={`${option.id}-description`}
             >
               {option.description}
-            </p>
+            </span>
           </label>
         </div>
       </div>

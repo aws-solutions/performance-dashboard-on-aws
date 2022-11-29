@@ -2,73 +2,81 @@
 
 exports[`renders a breadcrumb with no crumbs 1`] = `
 <div>
-  <nav
-    aria-label="Breadcrumbs"
-    class="usa-breadcrumb padding-top-0"
+  <div
+    class="padding-1"
   >
-    <ol
-      class="usa-breadcrumb__list"
-    />
-  </nav>
+    <nav
+      aria-label="Breadcrumbs"
+      class="usa-breadcrumb usa-breadcrumb--wrap"
+    >
+      <ol
+        class="usa-breadcrumb__list"
+      />
+    </nav>
+  </div>
 </div>
 `;
 
 exports[`renders a breadcrumb with one crumb 1`] = `
 <div>
-  <nav
-    aria-label="Breadcrumbs"
-    class="usa-breadcrumb padding-top-0"
+  <div
+    class="padding-1"
   >
-    <ol
-      class="usa-breadcrumb__list"
+    <nav
+      aria-label="Breadcrumbs"
+      class="usa-breadcrumb usa-breadcrumb--wrap"
     >
-      <li
-        aria-current="location"
-        class="usa-breadcrumb__list-item usa-current cursor-default"
+      <ol
+        class="usa-breadcrumb__list"
       >
-        <span>
-          Add content
-        </span>
-      </li>
-    </ol>
-  </nav>
+        <li
+          aria-current="page"
+          class="usa-breadcrumb__list-item usa-current"
+        >
+          <span>
+            Add content
+          </span>
+        </li>
+      </ol>
+    </nav>
+  </div>
 </div>
 `;
 
 exports[`renders a breadcrumb with two crumbs 1`] = `
 <div>
-  <nav
-    aria-label="Breadcrumbs"
-    class="usa-breadcrumb padding-top-0"
+  <div
+    class="padding-1"
   >
-    <ol
-      class="usa-breadcrumb__list"
+    <nav
+      aria-label="Breadcrumbs"
+      class="usa-breadcrumb usa-breadcrumb--wrap"
     >
-      <li
-        class="usa-breadcrumb__list-item"
+      <ol
+        class="usa-breadcrumb__list"
       >
-        <a
-          aria-label=""
-          class="usa-link action-link"
-          href="/home"
-          target=""
+        <li
+          class="usa-breadcrumb__list-item"
         >
-          <span>
+          <a
+            class="usa-breadcrumb__link"
+            href="/home"
+          >
             <span>
               Home
             </span>
+          </a>
+        </li>
+        <li
+          aria-current="page"
+          class="usa-breadcrumb__list-item usa-current"
+        >
+          <span>
+            Add content
           </span>
-        </a>
-      </li>
-      <li
-        aria-current="location"
-        class="usa-breadcrumb__list-item usa-current cursor-default"
-      >
-        <span>
-          Add content
-        </span>
-      </li>
-    </ol>
-  </nav>
+        </li>
+      </ol>
+    </nav>
+  </div>
 </div>
 `;

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   XAxis,
@@ -13,8 +18,10 @@ import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
 import RenderLegendText from "./Legend";
+import ShareButton from "./ShareButton";
 
 type Props = {
+  id: string;
   title: string;
   downloadTitle: string;
   summary: string;
@@ -42,15 +49,15 @@ const PartWholeChartWidget = (props: Props) => {
 
   const { data, parts, showMobilePreview } = props;
   useMemo(() => {
-    if (data && data.length) {
+    if (data && data.length > 0) {
       let bar = {};
       total.current = 0;
       partWholeParts.current = [];
       partWholeData.current = [];
       let maxTick = -Infinity;
-      for (let i = 0; i < data.length; i++) {
-        const key = data[i][parts[0] as keyof object];
-        const value = data[i][parts[1] as keyof object];
+      for (let dataItem of data) {
+        const key = dataItem[parts[0] as keyof object];
+        const value = dataItem[parts[1] as keyof object];
         const barKey = `${key} ${value}`;
         bar = {
           ...bar,
@@ -110,7 +117,8 @@ const PartWholeChartWidget = (props: Props) => {
         <span className="margin-left-05 font-sans-md text-bottom">
           {RenderLegendText(label.toLocaleString(), entry)}
         </span>
-        <div className="margin-left-4 margin-bottom-1 text-base-darker text-bold">
+        <br />
+        <span className="margin-left-5 margin-bottom-1 text-base-darker text-bold">
           {amount && amount !== "null" ? (
             TickFormatter.format(
               Number(amount),
@@ -123,7 +131,7 @@ const PartWholeChartWidget = (props: Props) => {
           ) : (
             <br />
           )}
-        </div>
+        </span>
       </span>
     );
   };
@@ -154,91 +162,108 @@ const PartWholeChartWidget = (props: Props) => {
   };
 
   return (
-    <div aria-label={props.title} tabIndex={-1}>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
-        {props.title}
-      </h2>
+    <div
+      aria-label={props.title}
+      tabIndex={-1}
+      className={props.title ? "" : "padding-top-2"}
+    >
+      {props.title && (
+        <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+          {props.title}
+          <ShareButton
+            id={`${props.id}a`}
+            title={props.title}
+            className="margin-left-1"
+          />
+        </h2>
+      )}
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
           className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
-      {partWholeData.current.length && (
-        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
-          <BarChart
-            className="part-to-whole-chart"
-            data={partWholeData.current}
-            layout="vertical"
-            margin={{ right: -50, left: -50 }}
-            barSize={100}
+      {partWholeData.current.length > 0 && (
+        <div aria-hidden="true">
+          <ResponsiveContainer
+            id={props.id}
+            width="100%"
+            height={calculateChartHeight()}
           >
-            <CartesianGrid horizontal={false} vertical={false} />
-            <XAxis
-              tickLine={false}
-              domain={[0, "dataMax"]}
-              ticks={[0, total.current]}
-              axisLine={false}
-              interval="preserveStartEnd"
-              type="number"
-              padding={{ left: 2, right: 2 }}
-              tickFormatter={(tick: any) =>
-                TickFormatter.format(
-                  Number(tick),
-                  xAxisLargestValue,
-                  props.significantDigitLabels,
-                  "",
-                  ""
-                )
-              }
-            />
-            <YAxis
-              orientation="left"
-              yAxisId="left"
-              tick={false}
-              tickLine={false}
-              type="category"
-              padding={{ top: 40 }}
-            />
-            <YAxis
-              yAxisId="right"
-              orientation="right"
-              tick={false}
-              tickLine={false}
-              type="category"
-              padding={{ top: 40 }}
-            />
-            <Legend
-              verticalAlign="top"
-              formatter={renderLegendText}
-              iconSize={24}
-              wrapperStyle={{
-                top: 0,
-                right: 0,
-                width: "100%",
-              }}
-              onClick={toggleParts}
-              onMouseLeave={() => setPartsHover(null)}
-              onMouseEnter={(e: any) => setPartsHover(e.dataKey)}
-            />
-            {partWholeParts.current.map((part, index) => {
-              return (
-                <Bar
-                  yAxisId="left"
-                  stackId={"a"}
-                  dataKey={part}
-                  key={index}
-                  fill={colors[index]}
-                  fillOpacity={getOpacity(part)}
-                  stroke="white"
-                  strokeWidth={2}
-                  hide={hiddenParts.includes(part)}
-                  isAnimationActive={false}
-                />
-              );
-            })}
-          </BarChart>
-        </ResponsiveContainer>
+            <BarChart
+              className="part-to-whole-chart"
+              data={partWholeData.current}
+              layout="vertical"
+              margin={{ right: -50, left: -50 }}
+              barSize={100}
+            >
+              <CartesianGrid horizontal={false} vertical={false} />
+              <XAxis
+                tickLine={false}
+                domain={[0, "dataMax"]}
+                ticks={[0, total.current]}
+                axisLine={false}
+                interval="preserveStartEnd"
+                type="number"
+                padding={{ left: 2, right: 2 }}
+                tickFormatter={(tick: any) =>
+                  TickFormatter.format(
+                    Number(tick),
+                    xAxisLargestValue,
+                    props.significantDigitLabels,
+                    "",
+                    ""
+                  )
+                }
+              />
+              <YAxis
+                orientation="left"
+                yAxisId="left"
+                tick={false}
+                tickLine={false}
+                type="category"
+                padding={{ top: 40 }}
+              />
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                tick={false}
+                tickLine={false}
+                type="category"
+                padding={{ top: 40 }}
+              />
+              <Legend
+                verticalAlign="top"
+                formatter={renderLegendText}
+                iconSize={24}
+                wrapperStyle={{
+                  top: 0,
+                  right: 0,
+                  width: "100%",
+                }}
+                onClick={toggleParts}
+                onMouseLeave={() => setPartsHover(null)}
+                onMouseEnter={(e: any) => setPartsHover(e.dataKey)}
+              />
+              {partWholeParts.current.map((part, index) => {
+                return (
+                  <Bar
+                    yAxisId="left"
+                    stackId={"a"}
+                    dataKey={part}
+                    key={index}
+                    fill={colors[index]}
+                    fillOpacity={getOpacity(part)}
+                    stroke="white"
+                    strokeWidth={2}
+                    hide={hiddenParts.includes(part)}
+                    isAnimationActive={false}
+                  />
+                );
+              })}
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       )}
       <div>
         <DataTable

@@ -2,534 +2,717 @@
 
 exports[`renders the CheckData component 1`] = `
 <div>
-  <fieldset
-    class="usa-fieldset"
+  <div
+    class="usa-hint grid-col-6"
   >
-    <legend
-      class="usa-hint grid-col-6"
-    >
-      Please make sure that the system formats your data correctly. Select columns to format as numbers, dates, or text. Also select columns to hide or show from the chart.
-    </legend>
+    Please make sure that the system formats your data correctly. Select columns to format as numbers, dates, or text. Also select columns to hide or show from the chart.
+  </div>
+  <div
+    class="grid-col-12 margin-top-3 font-sans-md text-bold"
+  >
+    Include in visualization
+  </div>
+  <div
+    class="check-data-table grid-col-12"
+  >
     <div
-      class="grid-col-12 margin-top-3 font-sans-md text-bold"
+      class="overflow-x-hidden overflow-y-hidden"
     >
-      Include in visualization
-    </div>
-    <div
-      class="check-data-table grid-col-12"
-    >
-      <div
-        class="overflow-x-hidden overflow-y-hidden"
+      <table
+        class="usa-table"
+        id="items"
+        role="table"
       >
-        <table
-          class="usa-table"
-          role="table"
-        >
-          <thead>
-            <tr
-              role="row"
+        <thead>
+          <tr
+            role="row"
+          >
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+              style="min-width: 0;"
             >
-              <th
-                aria-sort="none"
-                colspan="1"
-                role="columnheader"
-                scope="col"
-                style="min-width: 0;"
-              >
-                <span>
-                   
-                </span>
-              </th>
-              <th
-                aria-sort="none"
-                colspan="1"
-                role="columnheader"
-                scope="col"
-              >
-                <span>
-                  <span
-                    class="text-center usa-checkbox margin-bottom-1"
-                  >
-                    <input
-                      aria-label="id CheckBox"
-                      checked=""
-                      class="usa-checkbox__input"
-                      id="checkbox-header-0"
-                      name="id"
-                      type="checkbox"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="checkbox-header-0"
-                    />
-                  </span>
-                </span>
-              </th>
-              <th
-                aria-sort="none"
-                colspan="1"
-                role="columnheader"
-                scope="col"
-              >
-                <span>
-                  <span
-                    class="text-center usa-checkbox margin-bottom-1"
-                  >
-                    <input
-                      aria-label="name CheckBox"
-                      checked=""
-                      class="usa-checkbox__input"
-                      id="checkbox-header-1"
-                      name="name"
-                      type="checkbox"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="checkbox-header-1"
-                    />
-                  </span>
-                </span>
-              </th>
-              <th
-                aria-sort="none"
-                colspan="1"
-                role="columnheader"
-                scope="col"
-              >
-                <span>
-                  <span
-                    class="text-center usa-checkbox margin-bottom-1"
-                  >
-                    <input
-                      aria-label="updatedAt CheckBox"
-                      checked=""
-                      class="usa-checkbox__input"
-                      id="checkbox-header-2"
-                      name="updatedAt"
-                      type="checkbox"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="checkbox-header-2"
-                    />
-                  </span>
-                </span>
-              </th>
-            </tr>
-            <tr
-              role="row"
+              <span>
+                 
+              </span>
+            </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
             >
-              <th
-                aria-sort="none"
-                colspan="1"
-                role="columnheader"
-                scope="col"
-                style="min-width: 0;"
-              >
-                <span>
-                  <div>
-                    1
-                  </div>
+              <span>
+                <span
+                  class="text-center usa-checkbox margin-bottom-1"
+                >
+                  <input
+                    aria-label="id CheckBox"
+                    checked=""
+                    class="usa-checkbox__input"
+                    id="checkbox-header-0"
+                    name="id"
+                    type="checkbox"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="checkbox-header-0"
+                  />
                 </span>
-              </th>
-              <th
-                aria-sort="none"
-                colspan="1"
-                role="columnheader"
-                scope="col"
-                style="min-width: 150px;"
+              </span>
+            </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+            >
+              <span>
+                <span
+                  class="text-center usa-checkbox margin-bottom-1"
+                >
+                  <input
+                    aria-label="name CheckBox"
+                    checked=""
+                    class="usa-checkbox__input"
+                    id="checkbox-header-1"
+                    name="name"
+                    type="checkbox"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="checkbox-header-1"
+                  />
+                </span>
+              </span>
+            </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+            >
+              <span>
+                <span
+                  class="text-center usa-checkbox margin-bottom-1"
+                >
+                  <input
+                    aria-label="updatedAt CheckBox"
+                    checked=""
+                    class="usa-checkbox__input"
+                    id="checkbox-header-2"
+                    name="updatedAt"
+                    type="checkbox"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="checkbox-header-2"
+                  />
+                </span>
+              </span>
+            </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+            >
+              <span>
+                <span
+                  class="text-center usa-checkbox margin-bottom-1"
+                >
+                  <input
+                    aria-label="icon CheckBox"
+                    checked=""
+                    class="usa-checkbox__input"
+                    id="checkbox-header-3"
+                    name="icon"
+                    type="checkbox"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="checkbox-header-3"
+                  />
+                </span>
+              </span>
+            </th>
+          </tr>
+          <tr
+            role="row"
+          >
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+              style="min-width: 0;"
+            >
+              <span>
+                <div>
+                  1
+                </div>
+              </span>
+            </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+              style="min-width: 150px;"
+            >
+              <button
+                aria-label="Toggle SortBy: id"
+                class="usa-button usa-button--unstyled text-no-underline"
+                style="cursor: pointer;"
+                title="Toggle SortBy: id"
+                type="button"
               >
                 <span>
                   id
                 </span>
-                <button
-                  aria-label="Toggle SortBy: id"
-                  class="margin-left-1 usa-button usa-button--unstyled"
-                  style="cursor: pointer;"
-                  title="Toggle SortBy: id"
-                  type="button"
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
+                  data-icon="chevron-down"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
-                    data-icon="chevron-up"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    viewBox="0 0 448 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </button>
-              </th>
-              <th
-                aria-sort="none"
-                colspan="1"
-                role="columnheader"
-                scope="col"
-                style="min-width: 150px;"
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+            </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+              style="min-width: 150px;"
+            >
+              <button
+                aria-label="Toggle SortBy: name"
+                class="usa-button usa-button--unstyled text-no-underline"
+                style="cursor: pointer;"
+                title="Toggle SortBy: name"
+                type="button"
               >
                 <span>
                   name
                 </span>
-                <button
-                  aria-label="Toggle SortBy: name"
-                  class="margin-left-1 usa-button usa-button--unstyled"
-                  style="cursor: pointer;"
-                  title="Toggle SortBy: name"
-                  type="button"
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
+                  data-icon="chevron-down"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
-                    data-icon="chevron-up"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    viewBox="0 0 448 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </button>
-              </th>
-              <th
-                aria-sort="none"
-                colspan="1"
-                role="columnheader"
-                scope="col"
-                style="min-width: 150px;"
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+            </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+              style="min-width: 150px;"
+            >
+              <button
+                aria-label="Toggle SortBy: updatedAt"
+                class="usa-button usa-button--unstyled text-no-underline"
+                style="cursor: pointer;"
+                title="Toggle SortBy: updatedAt"
+                type="button"
               >
                 <span>
                   updatedAt
                 </span>
-                <button
-                  aria-label="Toggle SortBy: updatedAt"
-                  class="margin-left-1 usa-button usa-button--unstyled"
-                  style="cursor: pointer;"
-                  title="Toggle SortBy: updatedAt"
-                  type="button"
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
+                  data-icon="chevron-down"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="svg-inline--fa fa-chevron-up fa-w-14 hover:text-base text-base"
-                    data-icon="chevron-up"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    viewBox="0 0 448 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </button>
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            role="rowgroup"
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+            </th>
+            <th
+              aria-sort="none"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+              style="min-width: 150px;"
+            >
+              <button
+                aria-label="Toggle SortBy: icon"
+                class="usa-button usa-button--unstyled text-no-underline"
+                style="cursor: pointer;"
+                title="Toggle SortBy: icon"
+                type="button"
+              >
+                <span>
+                  icon
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
+                  data-icon="chevron-down"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          role="rowgroup"
+        >
+          <tr
+            role="row"
           >
-            <tr
-              role="row"
+            <th
+              role="cell"
+              scope="row"
+              style="background-color: rgb(240, 240, 240);"
             >
-              <th
-                role="cell"
-                scope="row"
-                style="background-color: rgb(240, 240, 240);"
-              >
-                <div>
-                  2
-                </div>
-              </th>
-              <td
-                role="cell"
-              >
-                1
-              </td>
-              <td
-                role="cell"
-              >
-                Banana
-              </td>
-              <td
-                role="cell"
-              >
-                2021-11-11
-              </td>
-            </tr>
-            <tr
-              role="row"
-            >
-              <th
-                role="cell"
-                scope="row"
-                style="background-color: rgb(240, 240, 240);"
-              >
-                <div>
-                  3
-                </div>
-              </th>
-              <td
-                role="cell"
-              >
+              <div>
                 2
-              </td>
-              <td
-                role="cell"
-              >
-                Chocolate
-              </td>
-              <td
-                role="cell"
-              >
-                2020-11-11
-              </td>
-            </tr>
-            <tr
-              role="row"
+              </div>
+            </th>
+            <td
+              role="cell"
             >
-              <th
-                role="cell"
-                scope="row"
-                style="background-color: rgb(240, 240, 240);"
+              <div
+                class="text-secondary-vivid"
               >
-                <div>
-                  4
-                </div>
-              </th>
-              <td
-                role="cell"
-              >
+                ! 1
+              </div>
+            </td>
+            <td
+              role="cell"
+            >
+              Banana
+            </td>
+            <td
+              role="cell"
+            >
+              2021-11-11
+            </td>
+            <td
+              role="cell"
+            >
+              fa-banana
+            </td>
+          </tr>
+          <tr
+            role="row"
+          >
+            <th
+              role="cell"
+              scope="row"
+              style="background-color: rgb(240, 240, 240);"
+            >
+              <div>
                 3
-              </td>
-              <td
-                role="cell"
+              </div>
+            </th>
+            <td
+              role="cell"
+            >
+              <div
+                class="text-secondary-vivid"
               >
-                Vanilla
-              </td>
-              <td
-                role="cell"
+                ! 2
+              </div>
+            </td>
+            <td
+              role="cell"
+            >
+              Chocolate
+            </td>
+            <td
+              role="cell"
+            >
+              2020-11-11
+            </td>
+            <td
+              role="cell"
+            >
+              fa-candy-bar
+            </td>
+          </tr>
+          <tr
+            role="row"
+          >
+            <th
+              role="cell"
+              scope="row"
+              style="background-color: rgb(240, 240, 240);"
+            >
+              <div>
+                4
+              </div>
+            </th>
+            <td
+              role="cell"
+            >
+              <div
+                class="text-secondary-vivid"
               >
-                2019-11-11
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                ! 3
+              </div>
+            </td>
+            <td
+              role="cell"
+            >
+              Vanilla
+            </td>
+            <td
+              role="cell"
+            >
+              2019-11-11
+            </td>
+            <td
+              role="cell"
+            >
+              fa-ice-cream
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <br />
+  </div>
+  <br />
+  <div
+    class="grid-col-12 margin-top-3 font-sans-md text-bold"
+  >
+    Format columns
+  </div>
+  <div
+    class="grid-col-12 font-sans-md font-sans-md text-bold"
+  >
     <div
-      class="grid-col-12 margin-top-3 font-sans-md text-bold"
+      class="margin-top-4"
     >
-      Format columns
+      <span
+        class="text-base"
+      >
+        Column: id
+      </span>
+      <div
+        class="grid-col-4"
+      >
+        <div
+          class="usa-form-group margin-top-2"
+          role="contentinfo"
+        >
+          <label
+            class="usa-label text-bold"
+            for="id"
+          >
+            Data format
+          </label>
+          <div
+            class="usa-hint"
+            id="id-description"
+          />
+          <select
+            aria-describedby="id-description"
+            class="usa-select"
+            id="id"
+            name="dataType"
+          >
+            <option
+              value=""
+            >
+              Select an option
+            </option>
+            <option
+              value="Text"
+            >
+              Text
+            </option>
+            <option
+              value="Number"
+            >
+              Number
+            </option>
+            <option
+              value="Date"
+            >
+              Date
+            </option>
+          </select>
+        </div>
+      </div>
+      <div
+        class="grid-col-4"
+      >
+        <div
+          class="usa-form-group margin-top-3"
+          role="contentinfo"
+        >
+          <label
+            class="usa-label text-bold"
+            for="id"
+          >
+            Number format (optional)
+          </label>
+          <div
+            class="usa-hint"
+            id="id-description"
+          />
+          <select
+            aria-describedby="id-description"
+            class="usa-select"
+            id="id"
+            name="numberType"
+          >
+            <option
+              value=""
+            >
+              Select an option
+            </option>
+            <option
+              value="Percentage"
+            >
+              Percentage
+            </option>
+            <option
+              value="Currency"
+            >
+              Currency
+            </option>
+            <option
+              value="With thousands separators"
+            >
+              With thousands separators
+            </option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <hr />
     </div>
     <div
-      class="grid-col-12 font-sans-md font-sans-md text-bold"
+      class="margin-top-4"
     >
-      <div
-        class="margin-top-4"
+      <span
+        class="text-base"
       >
-        <span
-          class="text-base"
-        >
-          Column: 
-          id
-        </span>
-        <div
-          class="grid-col-4"
-        >
-          <div
-            class="usa-form-group margin-top-2"
-            role="contentinfo"
-          >
-            <label
-              class="usa-label text-bold"
-              for="id"
-            >
-              Data format
-            </label>
-            <div
-              class="usa-hint"
-              id="id-description"
-            />
-            <select
-              aria-describedby="id-description"
-              class="usa-select"
-              id="id"
-              name="dataType"
-            >
-              <option
-                value=""
-              >
-                Select an option
-              </option>
-              <option
-                value="Text"
-              >
-                Text
-              </option>
-              <option
-                value="Number"
-              >
-                Number
-              </option>
-              <option
-                value="Date"
-              >
-                Date
-              </option>
-            </select>
-          </div>
-        </div>
-        <br />
-        <hr />
-      </div>
+        Column: name
+      </span>
       <div
-        class="margin-top-4"
+        class="grid-col-4"
       >
-        <span
-          class="text-base"
-        >
-          Column: 
-          name
-        </span>
         <div
-          class="grid-col-4"
+          class="usa-form-group margin-top-2"
+          role="contentinfo"
         >
-          <div
-            class="usa-form-group margin-top-2"
-            role="contentinfo"
+          <label
+            class="usa-label text-bold"
+            for="name"
           >
-            <label
-              class="usa-label text-bold"
-              for="name"
-            >
-              Data format
-            </label>
-            <div
-              class="usa-hint"
-              id="name-description"
-            />
-            <select
-              aria-describedby="name-description"
-              class="usa-select"
-              id="name"
-              name="dataType"
-            >
-              <option
-                value=""
-              >
-                Select an option
-              </option>
-              <option
-                value="Text"
-              >
-                Text
-              </option>
-              <option
-                value="Number"
-              >
-                Number
-              </option>
-              <option
-                value="Date"
-              >
-                Date
-              </option>
-            </select>
-          </div>
-        </div>
-        <br />
-        <hr />
-      </div>
-      <div
-        class="margin-top-4"
-      >
-        <span
-          class="text-base"
-        >
-          Column: 
-          updatedAt
-        </span>
-        <div
-          class="grid-col-4"
-        >
+            Data format
+          </label>
           <div
-            class="usa-form-group margin-top-2"
-            role="contentinfo"
+            class="usa-hint"
+            id="name-description"
+          />
+          <select
+            aria-describedby="name-description"
+            class="usa-select"
+            id="name"
+            name="dataType"
           >
-            <label
-              class="usa-label text-bold"
-              for="updatedAt"
+            <option
+              value=""
             >
-              Data format
-            </label>
-            <div
-              class="usa-hint"
-              id="updatedAt-description"
-            />
-            <select
-              aria-describedby="updatedAt-description"
-              class="usa-select"
-              id="updatedAt"
-              name="dataType"
+              Select an option
+            </option>
+            <option
+              value="Text"
             >
-              <option
-                value=""
-              >
-                Select an option
-              </option>
-              <option
-                value="Text"
-              >
-                Text
-              </option>
-              <option
-                value="Number"
-              >
-                Number
-              </option>
-              <option
-                value="Date"
-              >
-                Date
-              </option>
-            </select>
-          </div>
+              Text
+            </option>
+            <option
+              value="Number"
+            >
+              Number
+            </option>
+            <option
+              value="Date"
+            >
+              Date
+            </option>
+          </select>
         </div>
-        <br />
-        <hr />
       </div>
+      <br />
+      <hr />
     </div>
-    <br />
-    <button
-      class="usa-button usa-button--outline margin-top-1"
-      type="button"
+    <div
+      class="margin-top-4"
     >
-      Back
-    </button>
-    <button
-      class="usa-button usa-button--base margin-top-1"
-      type="button"
+      <span
+        class="text-base"
+      >
+        Column: updatedAt
+      </span>
+      <div
+        class="grid-col-4"
+      >
+        <div
+          class="usa-form-group margin-top-2"
+          role="contentinfo"
+        >
+          <label
+            class="usa-label text-bold"
+            for="updatedAt"
+          >
+            Data format
+          </label>
+          <div
+            class="usa-hint"
+            id="updatedAt-description"
+          />
+          <select
+            aria-describedby="updatedAt-description"
+            class="usa-select"
+            id="updatedAt"
+            name="dataType"
+          >
+            <option
+              value=""
+            >
+              Select an option
+            </option>
+            <option
+              value="Text"
+            >
+              Text
+            </option>
+            <option
+              value="Number"
+            >
+              Number
+            </option>
+            <option
+              value="Date"
+            >
+              Date
+            </option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <hr />
+    </div>
+    <div
+      class="margin-top-4"
     >
-      Continue
-    </button>
-    <button
-      class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
-      type="button"
-    >
-      Cancel
-    </button>
-  </fieldset>
+      <span
+        class="text-base"
+      >
+        Column: icon
+      </span>
+      <div
+        class="grid-col-4"
+      >
+        <div
+          class="usa-form-group margin-top-2"
+          role="contentinfo"
+        >
+          <label
+            class="usa-label text-bold"
+            for="icon"
+          >
+            Data format
+          </label>
+          <div
+            class="usa-hint"
+            id="icon-description"
+          />
+          <select
+            aria-describedby="icon-description"
+            class="usa-select"
+            id="icon"
+            name="dataType"
+          >
+            <option
+              value=""
+            >
+              Select an option
+            </option>
+            <option
+              value="Text"
+            >
+              Text
+            </option>
+            <option
+              value="Number"
+            >
+              Number
+            </option>
+            <option
+              value="Date"
+            >
+              Date
+            </option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <hr />
+    </div>
+  </div>
+  <br />
+  <button
+    class="usa-button usa-button--outline margin-top-1"
+    type="button"
+  >
+    Back
+  </button>
+  <button
+    class="usa-button usa-button--base margin-top-1"
+    type="button"
+  >
+    Continue
+  </button>
+  <button
+    class="usa-button usa-button--unstyled text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
+    type="button"
+  >
+    Cancel
+  </button>
 </div>
 `;

@@ -1,13 +1,17 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useCallback } from "react";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useHistory, useParams } from "react-router-dom";
-import { LocationState } from "../models";
+import { Dataset, LocationState } from "../models";
 import { useDashboard, useDateTimeFormatter, useDatasets } from "../hooks";
 import Table from "../components/Table";
 import Button from "../components/Button";
 import Search from "../components/Search";
 import StorageService from "../services/StorageService";
-import { Dataset } from "../models";
 import { useTranslation } from "react-i18next";
 
 interface PathParams {
@@ -106,6 +110,7 @@ function ChooseStaticDataset() {
       </div>
 
       <Table
+        id="items"
         selection="single"
         initialSortByField="updatedAt"
         filterQuery={filter}

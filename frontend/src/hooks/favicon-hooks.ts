@@ -1,8 +1,13 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { useEffect, useState, useCallback } from "react";
 import StorageService from "../services/StorageService";
 import { useTranslation } from "react-i18next";
 
-type UseFaviconHook = {
+export type UseFaviconHook = {
   loadingFile: boolean;
   favicon: File | undefined;
   faviconFileName: string | undefined;
@@ -27,7 +32,7 @@ export function useFavicon(s3Key?: string): UseFaviconHook {
         setLoading(false);
       }
     }
-  }, [s3Key]);
+  }, [s3Key, t]);
 
   useEffect(() => {
     fetchData();

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import "./Button.scss";
 
@@ -27,8 +32,9 @@ interface Props {
     | "page"
     | "step"
     | "location"
-    | "date"
-    | undefined;
+    | "date";
+  ariaExpanded?: boolean;
+  ariaControls?: string;
   disabledToolTip?: string;
 }
 
@@ -65,6 +71,8 @@ const Button = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
       data-testid={props.testid}
       aria-label={props.ariaLabel}
       aria-current={props.ariaCurrent}
+      aria-expanded={props.ariaExpanded}
+      aria-controls={props.ariaControls}
       className={`usa-button${variantClassName}${additionalClasses}`}
       disabled={props.disabled}
       ref={ref}

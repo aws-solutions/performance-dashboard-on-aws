@@ -1,0 +1,372 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdminLayout renders the component 1`] = `
+<div>
+  <div
+    class="usa-overlay"
+  />
+  <header
+    aria-label="Header"
+    class="border-base-lighter border-width-1px shadow-2 z-top position-sticky top-0 bg-white usa-header usa-header--basic"
+    role="contentinfo"
+  >
+    <div
+      aria-label="Header"
+      aria-modal="true"
+      class="usa-nav-container hidden"
+      role="dialog"
+    >
+      <div
+        class="usa-navbar navbar-long"
+      >
+        <div>
+          <a
+            class="usa-skipnav"
+            href="#main"
+          >
+            Skip to main content
+          </a>
+        </div>
+        <div
+          aria-label="Logo"
+          class="usa-logo"
+          id="basic-logo"
+        >
+          <em
+            class="usa-logo__text display-flex flex-align-center"
+          >
+            <div
+              class="logo"
+            >
+              <img
+                alt="Organization logo"
+                data-testid="logoImage"
+                src="logo.svg"
+              />
+            </div>
+            <a
+              aria-label="Home"
+              class=""
+              href="/admin"
+              id="Home"
+              title="Home"
+            >
+              Performance Dashboard
+            </a>
+          </em>
+        </div>
+        <button
+          class="usa-menu-btn bg-primary-dark"
+        >
+          Menu
+        </button>
+      </div>
+      <nav
+        aria-label="Primary navigation"
+        class="usa-nav"
+      >
+        <button
+          aria-label="Close Menu"
+          class="usa-nav__close"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Close Menu"
+            class="svg-inline--fa fa-window-close fa-w-16 fa-lg "
+            data-icon="window-close"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+        <ul
+          class="usa-nav__primary usa-accordion"
+        >
+          <li
+            class="usa-nav__primary-item"
+          >
+            <a
+              class="usa-nav__link"
+              href="/admin/dashboards"
+            >
+              Dashboards
+            </a>
+          </li>
+          <li
+            class="usa-nav__primary-item"
+          >
+            <a
+              class="usa-nav__link"
+              href="/admin/users"
+            >
+              Manage users
+            </a>
+          </li>
+          <li
+            class="usa-nav__primary-item"
+          >
+            <a
+              class="usa-nav__link"
+              href="/admin/settings"
+            >
+              Settings
+            </a>
+          </li>
+          <li
+            class="usa-nav__primary-item"
+          >
+            <button
+              aria-controls="basic-nav-section-one"
+              aria-expanded="false"
+              class="usa-accordion__button usa-nav__link"
+            >
+              <span>
+                johndoe
+              </span>
+            </button>
+            <ul
+              class="usa-nav__submenu z-index-logout"
+              hidden=""
+              id="basic-nav-section-one"
+            >
+              <li
+                class="usa-nav__submenu-item"
+              >
+                <a
+                  href="/admin"
+                >
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main
+    class="padding-y-3"
+  >
+    <div
+      id="main"
+      tabindex="-1"
+    />
+    <div
+      class="grid-container"
+    >
+      <div
+        class="usa-prose"
+      >
+        <div
+          class="grid-row"
+        >
+          <div
+            class="grid-col-12 tablet:grid-col-8"
+          >
+            <h1
+              class="font-sans-3xl line-height-sans-2 margin-top-2"
+            >
+              Welcome to the Performance Dashboard
+            </h1>
+            <p
+              class="font-sans-lg usa-prose"
+            >
+              Your role is Admin. Below are some of the things you can do as an Admin to get you started.
+            </p>
+          </div>
+        </div>
+        <div
+          class="grid-row margin-top-2"
+        >
+          
+          <ul
+            class="usa-card-group"
+          >
+            <li
+              class="usa-card cursor-default tablet:grid-col-4"
+              id="card-dashboar"
+            >
+              <div
+                class="usa-card__container"
+              >
+                <header
+                  class="usa-card__header"
+                >
+                  <h2
+                    class="usa-card__heading font-family-sans"
+                  >
+                    Create a new dashboard
+                  </h2>
+                </header>
+                <div
+                  class="usa-card__body"
+                >
+                  <p>
+                    Build draft dashboards by adding charts, tables, text, and more as content. Publish dashboards to share results, track progress, or provide insights about a project, program, service, etc.
+                    <br />
+                    <br />
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer"
+                >
+                  <button
+                    class="usa-button usa-button--base"
+                    type="button"
+                  >
+                    Create dashboard
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-card cursor-default tablet:grid-col-4"
+              id="card-users"
+            >
+              <div
+                class="usa-card__container"
+              >
+                <header
+                  class="usa-card__header"
+                >
+                  <h2
+                    class="usa-card__heading font-family-sans"
+                  >
+                    Add users
+                  </h2>
+                </header>
+                <div
+                  class="usa-card__body"
+                >
+                  <p>
+                    Allow other users in your organization to create, edit, and publish dashboards. Manage their access to dashboards and set their roles. You may also add other Admins.
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer"
+                >
+                  <button
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Manage users
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-card cursor-default tablet:grid-col-4"
+              id="card-settings"
+            >
+              <div
+                class="usa-card__container"
+              >
+                <header
+                  class="usa-card__header"
+                >
+                  <h2
+                    class="usa-card__heading font-family-sans"
+                  >
+                    Customize settings
+                  </h2>
+                </header>
+                <div
+                  class="usa-card__body"
+                >
+                  <p>
+                    Personalize the dashboard homepage, configure how users get approval to publish dashboards, and access other settings.
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer"
+                >
+                  <button
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    View settings
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <hr />
+        <div
+          class="grid-row text-center"
+        >
+          <div
+            class="grid-col"
+          >
+            <p
+              class="font-sans-md"
+            >
+              This site is where you manage the performance dashboard.
+               
+              <br />
+               
+              Do you want to see what your audience sees?
+            </p>
+            <a
+              aria-label="View the published site (opens in a new tab)"
+              class="usa-link action-link"
+              href="/"
+              target="_blank"
+            >
+              <span>
+                View the published site
+              </span>
+              <svg
+                aria-hidden="false"
+                aria-label="(opens in a new tab)"
+                class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
+                data-icon="external-link-alt"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div
+      class="grid-container margin-bottom-9 text-base font-sans-sm"
+    >
+      <hr
+        class="margin-top-9 border-base-lightest"
+      />
+      Having technical issues with the system?
+       
+      <a
+        class="usa-link"
+        href="mailto:admin1@example.com?subject=Performance Dashboard Assistance"
+      >
+        Contact support.
+      </a>
+      <span
+        class="float-right"
+      >
+        v
+        v1.0.0
+      </span>
+    </div>
+  </footer>
+</div>
+`;

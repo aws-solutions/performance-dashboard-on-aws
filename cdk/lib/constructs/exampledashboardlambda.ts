@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import * as cdk from "@aws-cdk/core";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as iam from "@aws-cdk/aws-iam";
@@ -21,7 +26,7 @@ export class ExampleDashboardLambda extends cdk.Construct {
     super(scope, id);
 
     this.exampleSetupLambda = new lambda.Function(this, "SetupExamples", {
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_16_X,
       description: "Inserts examples into database for end users",
       code: lambda.Code.fromAsset("../examples/build"),
       handler: "src/index.handler",

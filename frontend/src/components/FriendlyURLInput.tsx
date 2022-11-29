@@ -1,7 +1,11 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { LegacyRef } from "react";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useWindowSize } from "../hooks";
 
 interface Props {
   name: string;
@@ -21,9 +25,6 @@ interface Props {
 }
 
 function FriendlyURLInput(props: Props) {
-  const windowSize = useWindowSize();
-  const isMobile = windowSize.width <= 600;
-
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     if (props.onChange) {
       props.onChange(event);

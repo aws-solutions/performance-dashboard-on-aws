@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import ReactTooltip, {
   Place,
@@ -32,6 +37,7 @@ function Tooltip(props: Props) {
       globalEventOff="click"
       className="padding-x-2-important cursor-default shadow-3"
       borderColor="#dfe1e2"
+      role="tooltip"
     />
   );
 }

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 const defaultColors = [
   "#005ea2",
   "#54278f",
@@ -40,7 +45,7 @@ const getSecondaryOptions = (primaryColor?: string) => {
 };
 
 function rgbHexColorIsValid(color: string): boolean {
-  return /^#(?:[0-9a-fA-F]{3}){1,2}$/i.test(color);
+  return /^#(?:[0-9A-F]{3}){1,2}$/i.test(color);
 }
 
 const ColorPaletteService = {

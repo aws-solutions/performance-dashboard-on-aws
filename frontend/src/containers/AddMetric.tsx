@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from "react";
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";
@@ -8,11 +13,10 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { useDashboard, useSettings } from "../hooks";
 import Spinner from "../components/Spinner";
 import DateRangePicker from "../components/DateRangePicker";
-import { LocationState } from "../models";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import { useTranslation } from "react-i18next";
 import Dropdown from "../components/Dropdown";
-import { CurrencyDataType, NumberDataType } from "../models";
+import { CurrencyDataType, LocationState, NumberDataType } from "../models";
 import "./EditMetric.scss";
 
 interface FormValues {

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -54,7 +59,8 @@ function AddImage() {
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-image-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -338,14 +344,17 @@ function AddImage() {
         >
           <div className="sticky-preview">
             {isMobile ? <br /> : fullPreviewButton}
-            <ImageWidget
-              title={showTitle ? title : ""}
-              summary={summary}
-              file={imageFile && imageFile[0]}
-              summaryBelow={summaryBelow}
-              altText={altText}
-              scalePct={scalePct}
-            />
+            <div id={previewPanelId}>
+              <ImageWidget
+                id="add-new-image"
+                title={showTitle ? title : ""}
+                summary={summary}
+                file={imageFile && imageFile[0]}
+                summaryBelow={summaryBelow}
+                altText={altText}
+                scalePct={scalePct}
+              />
+            </div>
           </div>
         </section>
       </div>

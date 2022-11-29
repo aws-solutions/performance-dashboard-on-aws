@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, MouseEvent } from "react";
 import { DatasetType } from "../models";
@@ -13,8 +18,10 @@ import Dropdown from "./Dropdown";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PrimaryActionBar from "./PrimaryActionBar";
 import { useWindowSize } from "../hooks";
+import UtilsService from "../services/UtilsService";
 
 interface Props {
+  widgetId: string;
   errors: any;
   register: Function;
   json: Array<any>;
@@ -30,6 +37,7 @@ interface Props {
   processingWidget: boolean;
   fullPreviewButton: JSX.Element;
   fullPreview: boolean;
+  previewPanelId: string;
   submitButtonLabel: string;
   sortByColumn?: string;
   sortByDesc?: boolean;
@@ -123,13 +131,10 @@ function VisualizeTable(props: Props) {
                   t
                 )}
                 onChange={handleSortDataChange}
-                defaultValue={
-                  props.sortByColumn
-                    ? `${props.sortByColumn}###${
-                        props.sortByDesc ? "desc" : "asc"
-                      }`
-                    : ""
-                }
+                defaultValue={UtilsService.getSortData(
+                  props.sortByColumn,
+                  props.sortByDesc
+                )}
                 register={props.register}
               />
             </div>
@@ -138,39 +143,43 @@ function VisualizeTable(props: Props) {
               <label className="usa-label text-bold">
                 {t("TableOptionsLabel")}
               </label>
-              <div className="usa-hint">{t("TableOptionsDescription")}</div>
-              <div className="usa-checkbox">
-                <input
-                  className="usa-checkbox__input"
-                  id="significantDigitLabels"
-                  type="checkbox"
-                  name="significantDigitLabels"
-                  defaultChecked={false}
-                  ref={props.register()}
-                />
-                <label
-                  className="usa-checkbox__label"
-                  htmlFor="significantDigitLabels"
-                >
-                  {t("SignificantDigitLabels")}
-                </label>
-              </div>
-              <div className="usa-checkbox">
-                <input
-                  className="usa-checkbox__input"
-                  id="displayWithPages"
-                  type="checkbox"
-                  name="displayWithPages"
-                  defaultChecked={false}
-                  ref={props.register()}
-                />
-                <label
-                  className="usa-checkbox__label"
-                  htmlFor="displayWithPages"
-                >
-                  {t("DisplayWithPages")}
-                </label>
-              </div>
+              <fieldset className="usa-fieldset">
+                <legend className="usa-hint">
+                  {t("TableOptionsDescription")}
+                </legend>
+                <div className="usa-checkbox">
+                  <input
+                    className="usa-checkbox__input"
+                    id="significantDigitLabels"
+                    type="checkbox"
+                    name="significantDigitLabels"
+                    defaultChecked={false}
+                    ref={props.register()}
+                  />
+                  <label
+                    className="usa-checkbox__label"
+                    htmlFor="significantDigitLabels"
+                  >
+                    {t("SignificantDigitLabels")}
+                  </label>
+                </div>
+                <div className="usa-checkbox">
+                  <input
+                    className="usa-checkbox__input"
+                    id="displayWithPages"
+                    type="checkbox"
+                    name="displayWithPages"
+                    defaultChecked={false}
+                    ref={props.register()}
+                  />
+                  <label
+                    className="usa-checkbox__label"
+                    htmlFor="displayWithPages"
+                  >
+                    {t("DisplayWithPages")}
+                  </label>
+                </div>
+              </fieldset>
             </div>
 
             <TextField
@@ -249,59 +258,62 @@ function VisualizeTable(props: Props) {
           }`}
         >
           {isMobile ? <br /> : props.fullPreviewButton}
-          {props.datasetLoading ? (
-            <Spinner
-              className="text-center margin-top-6"
-              label={t("LoadingSpinnerLabel")}
-            />
-          ) : (
-            <>
-              {showAlert &&
-              props.datasetType === DatasetType.StaticDataset &&
-              props.csvJson.length ? (
-                <Alert
-                  type="info"
-                  message={
-                    <div className="grid-row margin-left-6">
-                      <div className="grid-col-11">
-                        {t("VisualizeTableComponent.TableCorrectDisplay")}{" "}
-                        <Link to="/admin/formatting" target="_blank" external>
-                          {t("LearnHowToFormatCSV")}
-                        </Link>
-                      </div>
-                      <div className="grid-col-1">
-                        <div className="margin-1">
-                          <Button
-                            variant="unstyled"
-                            className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
-                            onClick={() => setShowAlert(false)}
-                            type="button"
-                            ariaLabel={t("GlobalClose")}
-                          >
-                            <FontAwesomeIcon icon={faTimes} size="sm" />
-                          </Button>
+          <div id={props.previewPanelId}>
+            {props.datasetLoading ? (
+              <Spinner
+                className="text-center margin-top-6"
+                label={t("LoadingSpinnerLabel")}
+              />
+            ) : (
+              <>
+                {showAlert &&
+                props.datasetType === DatasetType.StaticDataset &&
+                props.csvJson.length ? (
+                  <Alert
+                    type="info"
+                    message={
+                      <div className="grid-row margin-left-6">
+                        <div className="grid-col-11">
+                          {t("VisualizeTableComponent.TableCorrectDisplay")}{" "}
+                          <Link to="/admin/formatting" target="_blank" external>
+                            {t("LearnHowToFormatCSV")}
+                          </Link>
+                        </div>
+                        <div className="grid-col-1">
+                          <div className="margin-1">
+                            <Button
+                              variant="unstyled"
+                              className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                              onClick={() => setShowAlert(false)}
+                              type="button"
+                              ariaLabel={t("GlobalClose")}
+                            >
+                              <FontAwesomeIcon icon={faTimes} size="sm" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  }
-                  slim
+                    }
+                    slim
+                  />
+                ) : (
+                  ""
+                )}
+                <TableWidget
+                  id={props.widgetId}
+                  title={props.showTitle ? props.title : ""}
+                  summary={props.summary}
+                  summaryBelow={props.summaryBelow}
+                  data={props.json}
+                  columnsMetadata={props.columnsMetadata}
+                  sortByColumn={props.sortByColumn}
+                  sortByDesc={props.sortByDesc}
+                  significantDigitLabels={props.significantDigitLabels}
+                  displayWithPages={props.displayWithPages}
                 />
-              ) : (
-                ""
-              )}
-              <TableWidget
-                title={props.showTitle ? props.title : ""}
-                summary={props.summary}
-                summaryBelow={props.summaryBelow}
-                data={props.json}
-                columnsMetadata={props.columnsMetadata}
-                sortByColumn={props.sortByColumn}
-                sortByDesc={props.sortByDesc}
-                significantDigitLabels={props.significantDigitLabels}
-                displayWithPages={props.displayWithPages}
-              />
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </section>
     </div>

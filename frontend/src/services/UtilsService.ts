@@ -1,9 +1,16 @@
-import { Label } from "recharts";
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import {
   Dashboard,
   DashboardState,
+  Dataset,
+  DatasetType,
   PublicDashboard,
   PublicTopicArea,
+  LocationState,
 } from "../models";
 import RulerService from "./RulerService";
 
@@ -39,8 +46,15 @@ function validateEmails(input: string): boolean {
   return emails.every(emailIsValid);
 }
 
+/**
+ * The most effective method consists in checking for @-sign somewhere in the email address.
+ * Then sending a verification email to given email address.
+ * If the end user can follow the validation instructions in the email message, the email address is correct.
+ * @param email
+ * @returns boolean
+ */
 function emailIsValid(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  return /^[^\s@]+@[^\s@]+$/.test(email);
 }
 
 function timeout(delay: number) {
@@ -76,7 +90,7 @@ function calculateYAxisMargin(
   const pixelsByCharacter = significantDigitLabels ? 2 : 8;
   const tickLocaleString: string = largestTick.toLocaleString();
   const numberOfCommas: number =
-    (tickLocaleString.match(/,|\./g)?.length || 0) + 3;
+    (tickLocaleString.match(/[,\.]/g)?.length || 0) + 3;
   return numberOfCommas * pixelsByCharacter;
 }
 
@@ -162,6 +176,73 @@ function calculateBarDimentions(
   };
 }
 
+function getShorterId(id: string) {
+  return id?.substring(0, 8);
+}
+
+function getSortData(
+  columnName: string | undefined,
+  isDescending: boolean | undefined
+): string {
+  if (!columnName) {
+    return "";
+  }
+  return `${columnName}###${isDescending ? "desc" : "asc"}`;
+}
+
+function getDatasetPropertyByDatasetType(
+  datasetType: DatasetType | undefined,
+  propertyName: string,
+  dynamicDataset: Dataset | undefined,
+  staticDataset: Dataset | undefined
+): any {
+  const propertyAccessor = propertyName as keyof Dataset;
+  return datasetType === DatasetType.DynamicDataset
+    ? dynamicDataset && dynamicDataset[propertyAccessor]
+    : staticDataset && staticDataset[propertyAccessor];
+}
+
+function getDatasetTypeFromState(
+  state: LocationState | undefined,
+  fallbackValue: DatasetType | undefined
+): DatasetType | undefined {
+  if (state && state.json) {
+    return DatasetType.StaticDataset;
+  }
+  return fallbackValue;
+}
+
+/**
+ * Calculate the width percent out of the total width
+ * depending on the container. Width: (largestHeader + 1) *
+ * headersCount * pixelsByCharacter + marginLeft + marginRight
+ * @param props { data?: Array<any>; headers: Array<string>; isPreview?: boolean }
+ * @param pixelsByCharacter number
+ * @param marginLeft number
+ * @param marginRight number
+ * @param previewWidth number
+ * @param fullWidth number
+ * @returns number
+ */
+function computeChartWidgetWidthPercent(
+  props: { data?: Array<any>; headers: Array<string>; isPreview?: boolean },
+  pixelsByCharacter: number = 8,
+  marginLeft: number = 50,
+  marginRight: number = 50,
+  previewWidth: number = 480,
+  fullWidth: number = 960
+): number {
+  const { data, headers, isPreview } = props;
+  const largestHeader = UtilsService.getLargestHeader(headers, data);
+  const headersCount = data ? data.length : 0;
+  const actualWidth =
+    (largestHeader + 1) * headersCount * pixelsByCharacter +
+    marginLeft +
+    marginRight;
+  const totalWidth = isPreview ? previewWidth : fullWidth;
+  return (actualWidth * 100) / totalWidth;
+}
+
 export interface ComputedDimensions {
   labelWidth: number;
   chartHeight: number;
@@ -177,6 +258,11 @@ const UtilsService = {
   isCellEmpty,
   getTranslationUserStatusValue,
   calculateBarDimentions,
+  getShorterId,
+  getSortData,
+  getDatasetPropertyByDatasetType,
+  getDatasetTypeFromState,
+  computeChartWidgetWidthPercent,
 };
 
 export default UtilsService;

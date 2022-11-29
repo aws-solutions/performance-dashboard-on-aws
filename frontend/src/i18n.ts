@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { I18n } from "@aws-amplify/core";

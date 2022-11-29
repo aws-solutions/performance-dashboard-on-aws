@@ -1,11 +1,15 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useState, KeyboardEvent } from "react";
 import TabVertical from "./TabVertical";
 
 interface Props {
   children: React.ReactNode;
   defaultActive: string;
-  activeColor?: string;
-  container?: string;
+  ariaLabel: string;
 }
 
 function TabsVertical(props: Props) {
@@ -17,14 +21,12 @@ function TabsVertical(props: Props) {
   }, [props.defaultActive]);
 
   function getActiveTabIndex(): number {
-    let index = 0;
-    tabsMap.forEach((value: string, key: number) => {
+    for (let [key, value] of Array.from(tabsMap.entries())) {
       if (value === activeTab) {
-        index = key;
-        return;
+        return key;
       }
-    });
-    return index;
+    }
+    return 0;
   }
 
   const onKeyDown = (e: KeyboardEvent<HTMLElement>) => {
@@ -55,31 +57,39 @@ function TabsVertical(props: Props) {
         className="grid-col-2 padding-left-0"
         onKeyDown={onKeyDown}
         role="tablist"
+        aria-orientation="vertical"
+        aria-label={props.ariaLabel}
       >
         {React.Children.map(props.children, (child: any, index) => {
           tabsMap.set(index, child.props.id);
           return (
             <TabVertical
-              aria-controls={child.props.id}
-              id={child.props.id}
               itemId={child.props.id}
               activeTab={activeTab}
               key={child.props.id}
               label={child.props.label}
               onClick={onClickTabItem}
               onEnter={onEnterTabItem}
-              activeColor={props.activeColor}
-              container={props.container}
             />
           );
         })}
       </ol>
-      <div className="grid-col-10 tab-content padding-left-4" role="tabpanel">
-        {React.Children.map(props.children, (child) => {
-          if ((child as any).props.id !== activeTab) return undefined;
-          return (child as any).props.children;
-        })}
-      </div>
+
+      {React.Children.map(props.children, (child) => {
+        const childId = (child as any).props.id;
+        if (childId !== activeTab) {
+          return <div id={`${childId}-panel`} role="tabpanel"></div>;
+        }
+        return (
+          <div
+            id={`${childId}-panel`}
+            className="grid-col-10 tab-content padding-left-4"
+            role="tabpanel"
+          >
+            {(child as any).props.children}
+          </div>
+        );
+      })}
     </div>
   );
 }

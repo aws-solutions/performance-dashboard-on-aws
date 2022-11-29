@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
@@ -90,6 +95,25 @@ describe("updateSettings", () => {
     );
   });
 
+  it("returns a 400 error when dateTimeFormat setting is not valid", async () => {
+    const invalidDateTimeFormatPayloads = [
+      {
+        time: "hh:mm",
+      },
+      {
+        date: "YYYY-MM-DD",
+      },
+    ];
+    for (const invalidPayload of invalidDateTimeFormatPayloads) {
+      req.body.dateTimeFormat = invalidPayload;
+      await SettingsCtrl.updateSettings(req, res);
+      expect(res.status).toBeCalledWith(400);
+      expect(res.send).toBeCalledWith(
+        "Missing fields `date` or `time` in dateTimeFormat"
+      );
+    }
+  });
+
   it("updates navbarTitle setting", async () => {
     req.body.navbarTitle = "New Title";
     await SettingsCtrl.updateSettings(req, res);
@@ -116,6 +140,25 @@ describe("updateSettings", () => {
       now.toISOString(),
       user
     );
+  });
+
+  it("returns a 400 error when topicAreaLabels setting is not valid", async () => {
+    const invalidTopicAreaLabelsPayloads = [
+      {
+        singular: "Topic Area",
+      },
+      {
+        plural: "Topic Areas",
+      },
+    ];
+    for (const invalidPayload of invalidTopicAreaLabelsPayloads) {
+      req.body.topicAreaLabels = invalidPayload;
+      await SettingsCtrl.updateSettings(req, res);
+      expect(res.status).toBeCalledWith(400);
+      expect(res.send).toBeCalledWith(
+        "Missing fields `singular` or `plural` in topicAreaLabels"
+      );
+    }
   });
 
   it("updates customLogoS3Key setting", async () => {
@@ -154,23 +197,42 @@ describe("updateSettings", () => {
     );
   });
 
+  it("returns a 400 error when colors setting is not valid", async () => {
+    const invalidColorsPayloads = [
+      {
+        primary: "#ffffff",
+      },
+      {
+        secondary: "#fff",
+      },
+    ];
+    for (const invalidPayload of invalidColorsPayloads) {
+      req.body.colors = invalidPayload;
+      await SettingsCtrl.updateSettings(req, res);
+      expect(res.status).toBeCalledWith(400);
+      expect(res.send).toBeCalledWith(
+        "Missing fields `primary` or `secondary` in colors"
+      );
+    }
+  });
+
   it("updates contact email", async () => {
-    req.body.contactEmailAddress = "test@aol.com";
+    req.body.contactEmailAddress = "test@example.com";
     await SettingsCtrl.updateSettings(req, res);
     expect(repository.updateSetting).toHaveBeenCalledWith(
       "contactEmailAddress",
-      "test@aol.com",
+      "test@example.com",
       now.toISOString(),
       user
     );
   });
 
   it("updates admin contact email", async () => {
-    req.body.adminContactEmailAddress = "test@hotmail.com";
+    req.body.adminContactEmailAddress = "test@example.com";
     await SettingsCtrl.updateSettings(req, res);
     expect(repository.updateSetting).toHaveBeenCalledWith(
       "adminContactEmailAddress",
-      "test@hotmail.com",
+      "test@example.com",
       now.toISOString(),
       user
     );

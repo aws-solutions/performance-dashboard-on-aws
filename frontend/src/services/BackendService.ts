@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import API from "@aws-amplify/api";
 import Auth from "@aws-amplify/auth";
 import {
@@ -32,14 +37,14 @@ async function getAuthToken() {
 
 async function fetchDashboards(): Promise<Array<Dashboard>> {
   const headers = await authHeaders();
-  return await API.get(apiName, "dashboard", { headers });
+  return API.get(apiName, "dashboard", { headers });
 }
 
 async function fetchDashboardVersions(
   parentDashboardId: string
 ): Promise<Array<DashboardVersion>> {
   const headers = await authHeaders();
-  return await API.get(apiName, `dashboard/${parentDashboardId}/versions`, {
+  return API.get(apiName, `dashboard/${parentDashboardId}/versions`, {
     headers,
   });
 }
@@ -48,14 +53,14 @@ async function fetchDashboardHistory(
   parentDashboardId: string
 ): Promise<Array<DashboardAuditLog>> {
   const headers = await authHeaders();
-  return await API.get(apiName, `dashboard/${parentDashboardId}/auditlogs`, {
+  return API.get(apiName, `dashboard/${parentDashboardId}/auditlogs`, {
     headers,
   });
 }
 
 async function fetchDashboardById(dashboardId: string): Promise<Dashboard> {
   const headers = await authHeaders();
-  return await API.get(apiName, `dashboard/${dashboardId}`, { headers });
+  return API.get(apiName, `dashboard/${dashboardId}`, { headers });
 }
 
 async function fetchPublicDashboardByURL(
@@ -65,7 +70,7 @@ async function fetchPublicDashboardByURL(
   if (window.EnvironmentConfig?.authenticationRequired) {
     headers = await authHeaders();
   }
-  return await API.get(
+  return API.get(
     apiName,
     `${publicPath}/dashboard/friendly-url/${friendlyURL}`,
     { headers }
@@ -79,10 +84,10 @@ async function fetchPublicHomepageWithQuery(
   if (window.EnvironmentConfig?.authenticationRequired) {
     headers = await authHeaders();
   }
-  if (query == undefined || query == "") {
+  if (query === undefined || query === "") {
     return API.get(apiName, `${publicPath}/homepage`, { headers });
   } else {
-    return await API.get(apiName, `${publicPath}/search?q=${query}`, {
+    return API.get(apiName, `${publicPath}/search?q=${query}`, {
       headers,
     });
   }
@@ -90,12 +95,12 @@ async function fetchPublicHomepageWithQuery(
 
 async function fetchTopicAreas() {
   const headers = await authHeaders();
-  return await API.get(apiName, "topicarea", { headers });
+  return API.get(apiName, "topicarea", { headers });
 }
 
 async function fetchTopicAreaById(topicAreaId: string) {
   const headers = await authHeaders();
-  return await API.get(apiName, `topicarea/${topicAreaId}`, { headers });
+  return API.get(apiName, `topicarea/${topicAreaId}`, { headers });
 }
 
 async function fetchWidgetById(
@@ -103,14 +108,14 @@ async function fetchWidgetById(
   widgetId: string
 ): Promise<Widget> {
   const headers = await authHeaders();
-  return await API.get(apiName, `dashboard/${dashboardId}/widget/${widgetId}`, {
+  return API.get(apiName, `dashboard/${dashboardId}/widget/${widgetId}`, {
     headers,
   });
 }
 
 async function fetchWidgets(dashboardId: string) {
   const headers = await authHeaders();
-  return await API.get(apiName, `dashboard/${dashboardId}/widgets`, {
+  return API.get(apiName, `dashboard/${dashboardId}/widgets`, {
     headers,
   });
 }
@@ -121,7 +126,7 @@ async function createDashboard(
   description: string
 ) {
   const headers = await authHeaders();
-  return await API.post(apiName, "dashboard", {
+  return API.post(apiName, "dashboard", {
     headers,
     body: {
       name,
@@ -141,7 +146,7 @@ async function editDashboard(
   tableOfContents?: any
 ) {
   const headers = await authHeaders();
-  return await API.put(apiName, `dashboard/${dashboardId}`, {
+  return API.put(apiName, `dashboard/${dashboardId}`, {
     headers,
     body: {
       name,
@@ -161,7 +166,7 @@ async function publishDashboard(
   friendlyURL?: string
 ) {
   const headers = await authHeaders();
-  return await API.put(apiName, `dashboard/${dashboardId}/publish`, {
+  return API.put(apiName, `dashboard/${dashboardId}/publish`, {
     headers,
     body: {
       updatedAt,
@@ -173,14 +178,14 @@ async function publishDashboard(
 
 async function deleteDashboards(dashboards: Array<string>) {
   const headers = await authHeaders();
-  return await API.del(apiName, `dashboard?ids=${dashboards.join(",")}`, {
+  return API.del(apiName, `dashboard?ids=${dashboards.join(",")}`, {
     headers,
   });
 }
 
 async function createTopicArea(name: string) {
   const headers = await authHeaders();
-  return await API.post(apiName, "topicarea", {
+  return API.post(apiName, "topicarea", {
     headers,
     body: {
       name,
@@ -190,7 +195,7 @@ async function createTopicArea(name: string) {
 
 async function renameTopicArea(topicAreaId: string, name: string) {
   const headers = await authHeaders();
-  return await API.put(apiName, `topicarea/${topicAreaId}`, {
+  return API.put(apiName, `topicarea/${topicAreaId}`, {
     headers,
     body: {
       name,
@@ -200,7 +205,7 @@ async function renameTopicArea(topicAreaId: string, name: string) {
 
 async function deleteTopicArea(topicareaId: string) {
   const headers = await authHeaders();
-  return await API.del(apiName, `topicarea/${topicareaId}`, {
+  return API.del(apiName, `topicarea/${topicareaId}`, {
     headers,
   });
 }
@@ -210,7 +215,7 @@ async function archive(
   lastUpdatedAt: Date
 ): Promise<Dashboard> {
   const headers = await authHeaders();
-  return await API.put(apiName, `dashboard/${dashboardId}/archive`, {
+  return API.put(apiName, `dashboard/${dashboardId}/archive`, {
     headers,
     body: {
       updatedAt: lastUpdatedAt,
@@ -226,7 +231,7 @@ async function createWidget(
   content: object
 ) {
   const headers = await authHeaders();
-  return await API.post(apiName, `dashboard/${dashboardId}/widget`, {
+  return API.post(apiName, `dashboard/${dashboardId}/widget`, {
     headers,
     body: {
       name,
@@ -246,7 +251,7 @@ async function editWidget(
   updatedAt: Date
 ) {
   const headers = await authHeaders();
-  return await API.put(apiName, `dashboard/${dashboardId}/widget/${widgetId}`, {
+  return API.put(apiName, `dashboard/${dashboardId}/widget/${widgetId}`, {
     headers,
     body: {
       name,
@@ -264,23 +269,19 @@ async function duplicateWidget(
   copyLabel: string
 ) {
   const headers = await authHeaders();
-  return await API.post(
-    apiName,
-    `dashboard/${dashboardId}/widget/${widgetId}`,
-    {
-      headers,
-      body: {
-        updatedAt,
-        copyLabel,
-      },
-    }
-  );
+  return API.post(apiName, `dashboard/${dashboardId}/widget/${widgetId}`, {
+    headers,
+    body: {
+      updatedAt,
+      copyLabel,
+    },
+  });
 }
 
 async function deleteWidget(dashboardId: string, widgetId: string) {
   const headers = await authHeaders();
   const url = `dashboard/${dashboardId}/widget/${widgetId}`;
-  return await API.del(apiName, url, {
+  return API.del(apiName, url, {
     headers,
   });
 }
@@ -297,7 +298,7 @@ async function setWidgetOrder(
     section: widget.section,
     content: widget.content,
   }));
-  return await API.put(apiName, `dashboard/${dashboardId}/widgetorder`, {
+  return API.put(apiName, `dashboard/${dashboardId}/widgetorder`, {
     headers,
     body: {
       widgets: payload,
@@ -307,7 +308,7 @@ async function setWidgetOrder(
 
 async function fetchDatasets(): Promise<Array<Dataset>> {
   const headers = await authHeaders();
-  return await API.get(apiName, "dataset", { headers });
+  return API.get(apiName, "dataset", { headers });
 }
 
 async function createDataset(
@@ -316,7 +317,7 @@ async function createDataset(
   schema = DatasetSchema.None
 ): Promise<Dataset> {
   const headers = await authHeaders();
-  return await API.post(apiName, "dataset", {
+  return API.post(apiName, "dataset", {
     headers,
     body: {
       fileName,
@@ -348,7 +349,7 @@ async function editHomepage(
   updatedAt: Date
 ) {
   const headers = await authHeaders();
-  return await API.put(apiName, "settings/homepage", {
+  return API.put(apiName, "settings/homepage", {
     headers,
     body: {
       title,
@@ -373,7 +374,7 @@ async function fetchPublicSettings() {
 
 async function editSettings(publishingGuidance: string, updatedAt: Date) {
   const headers = await authHeaders();
-  return await API.put(apiName, "settings", {
+  return API.put(apiName, "settings", {
     headers,
     body: {
       publishingGuidance,
@@ -388,7 +389,7 @@ async function updateSetting(
   updatedAt: Date
 ) {
   const headers = await authHeaders();
-  return await API.put(apiName, "settings", {
+  return API.put(apiName, "settings", {
     headers,
     body: {
       [settingKey]: settingValue,
@@ -411,7 +412,7 @@ async function fetchPublicDashboard(
 
 async function createDraft(dashboardId: string): Promise<Dashboard> {
   const headers = await authHeaders();
-  return await API.post(apiName, `dashboard/${dashboardId}`, {
+  return API.post(apiName, `dashboard/${dashboardId}`, {
     headers,
   });
 }
@@ -422,7 +423,7 @@ async function publishPending(
   releaseNotes?: string
 ): Promise<Dashboard> {
   const headers = await authHeaders();
-  return await API.put(apiName, `dashboard/${dashboardId}/publishpending`, {
+  return API.put(apiName, `dashboard/${dashboardId}/publishpending`, {
     headers,
     body: {
       updatedAt: lastUpdatedAt,
@@ -436,7 +437,7 @@ async function moveToDraft(
   lastUpdatedAt: Date
 ): Promise<Dashboard> {
   const headers = await authHeaders();
-  return await API.put(apiName, `dashboard/${dashboardId}/draft`, {
+  return API.put(apiName, `dashboard/${dashboardId}/draft`, {
     headers,
     body: {
       updatedAt: lastUpdatedAt,
@@ -446,12 +447,12 @@ async function moveToDraft(
 
 async function fetchUsers(): Promise<User[]> {
   const headers = await authHeaders();
-  return await API.get(apiName, "user", { headers });
+  return API.get(apiName, "user", { headers });
 }
 
 async function addUsers(role: string, emails: Array<string>) {
   const headers = await authHeaders();
-  return await API.post(apiName, "user", {
+  return API.post(apiName, "user", {
     headers,
     body: {
       role,
@@ -462,7 +463,7 @@ async function addUsers(role: string, emails: Array<string>) {
 
 async function removeUsers(usernames: Array<string>) {
   const headers = await authHeaders();
-  return await API.del(apiName, "user", {
+  return API.del(apiName, "user", {
     headers,
     body: {
       usernames,
@@ -472,7 +473,7 @@ async function removeUsers(usernames: Array<string>) {
 
 async function resendInvite(emails: Array<string>) {
   const headers = await authHeaders();
-  return await API.post(apiName, "user/invite", {
+  return API.post(apiName, "user/invite", {
     headers,
     body: {
       emails: emails.join(","),
@@ -482,7 +483,7 @@ async function resendInvite(emails: Array<string>) {
 
 async function changeRole(role: string, usernames: Array<string>) {
   const headers = await authHeaders();
-  return await API.put(apiName, "user/role", {
+  return API.put(apiName, "user/role", {
     headers,
     body: {
       role,
@@ -493,7 +494,7 @@ async function changeRole(role: string, usernames: Array<string>) {
 
 async function copyDashboard(dashboardId: string): Promise<Dashboard> {
   const headers = await authHeaders();
-  return await API.post(apiName, `dashboard/${dashboardId}/copy`, { headers });
+  return API.post(apiName, `dashboard/${dashboardId}/copy`, { headers });
 }
 
 const BackendService = {

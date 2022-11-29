@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 export type IntersectionObserverCB = (
   arg1: IntersectionObserverEntry[]
 ) => void;
@@ -47,4 +52,16 @@ export function traceMethodCalls(obj: object | Function, calls: any = {}) {
     },
   };
   return new Proxy(obj, handler);
+}
+
+export class MockedResizeObserver {
+  observe() {
+    // do nothing
+  }
+  unobserve() {
+    // do nothing
+  }
+  disconnect() {
+    // do nothing
+  }
 }

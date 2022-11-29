@@ -1,2 +1,8 @@
 .vscode/
 .DS_Store
+
+deployment/regional-s3-assets
+deployment/global-s3-assets
+deployment/open-source
+
+oss-attribution

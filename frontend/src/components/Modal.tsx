@@ -1,4 +1,9 @@
-import React, { MouseEvent } from "react";
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "../components/Button";
@@ -35,7 +40,7 @@ function Modal(props: PathParams) {
       }}
       ariaHideApp={true}
     >
-      <div className="clearfix" role="dialog">
+      <div className="clearfix">
         <div
           className="float-left"
           style={{

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -51,7 +56,8 @@ function EditImage() {
 
   const supportedImageFileTypes = Object.values(StorageService.imageFileTypes);
 
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-image-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -174,11 +180,6 @@ function EditImage() {
     if (data) {
       setNewImageFile(data);
     }
-  };
-
-  const getScaleImageUrl = (scalePct: string) => {
-    let url =
-      "${process.env.PUBLIC_URL}/images/image-scale-" + scalePct + ".svg";
   };
 
   const crumbs = [
@@ -428,21 +429,24 @@ function EditImage() {
             >
               <div hidden={false} className="sticky-preview">
                 {isMobile ? <br /> : fullPreviewButton}
-                {loadingFile ? (
-                  <Spinner
-                    className="text-center margin-top-6"
-                    label={t("LoadingSpinnerLabel")}
-                  />
-                ) : (
-                  <ImageWidget
-                    title={widget.showTitle ? widget.content.title : ""}
-                    summary={widget.content.summary}
-                    file={newImageFile ? newImageFile : file}
-                    summaryBelow={widget.content.summaryBelow}
-                    altText={widget.content.imageAltText}
-                    scalePct={widget.content.scalePct}
-                  />
-                )}
+                <div id={previewPanelId}>
+                  {loadingFile ? (
+                    <Spinner
+                      className="text-center margin-top-6"
+                      label={t("LoadingSpinnerLabel")}
+                    />
+                  ) : (
+                    <ImageWidget
+                      id={widgetId}
+                      title={widget.showTitle ? widget.content.title : ""}
+                      summary={widget.content.summary}
+                      file={newImageFile ? newImageFile : file}
+                      summaryBelow={widget.content.summaryBelow}
+                      altText={widget.content.imageAltText}
+                      scalePct={widget.content.scalePct}
+                    />
+                  )}
+                </div>
               </div>
             </section>
           </div>

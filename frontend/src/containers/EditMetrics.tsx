@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -14,7 +19,6 @@ import {
   useWidget,
   useFullPreview,
   useChangeBackgroundColor,
-  useScrollUp,
   useWindowSize,
 } from "../hooks";
 import BackendService from "../services/BackendService";
@@ -59,7 +63,8 @@ function EditMetrics() {
   const [submittedMetricsNum, setSubmittedMetricsNum] = useState<
     number | undefined
   >();
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-metrics-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -238,6 +243,18 @@ function EditMetrics() {
     },
   ];
 
+  const getSpinnerLabel = (
+    fileLoading: boolean,
+    editingWidget: boolean
+  ): string => {
+    if (fileLoading) {
+      return t("EditMetricsScreen.UploadingFile");
+    }
+    return editingWidget
+      ? t("EditMetricsScreen.EditingMetrics")
+      : t("LoadingSpinnerLabel");
+  };
+
   useChangeBackgroundColor();
 
   if (!loading && widget) {
@@ -255,13 +272,7 @@ function EditMetrics() {
       {loading || !widget || !currentJson || fileLoading || editingWidget ? (
         <Spinner
           className="text-center margin-top-9"
-          label={`${
-            fileLoading
-              ? t("EditMetricsScreen.UploadingFile")
-              : editingWidget
-              ? t("EditMetricsScreen.EditingMetrics")
-              : t("LoadingSpinnerLabel")
-          }`}
+          label={`${getSpinnerLabel(fileLoading, editingWidget)}`}
         />
       ) : (
         <div className="grid-row grid-gap">
@@ -402,13 +413,16 @@ function EditMetrics() {
           >
             <div hidden={false} className="sticky-preview">
               {isMobile ? <br /> : fullPreviewButton}
-              <MetricsWidget
-                title={showTitle ? title : ""}
-                metrics={metrics}
-                metricPerRow={oneMetricPerRow ? 1 : 3}
-                significantDigitLabels={significantDigitLabels}
-                metricsCenterAlign={metricsCenterAlign}
-              />
+              <div id={previewPanelId}>
+                <MetricsWidget
+                  id={widgetId}
+                  title={showTitle ? title : ""}
+                  metrics={metrics}
+                  metricPerRow={oneMetricPerRow ? 1 : 3}
+                  significantDigitLabels={significantDigitLabels}
+                  metricsCenterAlign={metricsCenterAlign}
+                />
+              </div>
             </div>
           </section>
         </div>

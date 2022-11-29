@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 type CharWidthMap = { [ch: string]: number };
 type FontSizeWidthMap = { [fontSize: string]: CharWidthMap };
 type FontWidthMap = { [font: string]: FontSizeWidthMap };
@@ -33,18 +38,18 @@ function getVisualWidth(label: any, font?: string, fontSize?: string) {
   let count = 0;
   const ruler = getRuler();
   const map = getCharWidthMap(font, fontSize);
-  for (let i = 0; i < str.length; i++) {
-    if (map[str[i]] === undefined) {
+  for (let char of str) {
+    if (map[char] === undefined) {
       if (font !== ruler.style.font) {
         ruler.style.font = font || "";
       }
       if (fontSize !== ruler.style.fontSize) {
         ruler.style.fontSize = fontSize || "";
       }
-      ruler.innerText = str[i];
-      map[str[i]] = ruler.clientWidth + 1;
+      ruler.innerText = char;
+      map[char] = ruler.clientWidth + 1;
     }
-    count += map[str[i]];
+    count += map[char];
   }
   return count;
 }

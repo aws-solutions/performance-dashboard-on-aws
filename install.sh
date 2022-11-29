@@ -3,7 +3,7 @@
 #
 cd backend
 echo "npm install on backend"
-npm ci $@
+npm i $@
 cd ..
 
 #
@@ -11,7 +11,15 @@ cd ..
 #
 cd frontend
 echo "npm install on frontend"
-npm ci $@
+npm i $@
+cd ..
+
+#
+# E2ETests
+#
+echo "npm install on e2e-tests"
+cd e2e-tests
+npm i $@
 cd ..
 
 #
@@ -19,7 +27,7 @@ cd ..
 #
 echo "npm install on examples"
 cd examples
-npm ci $@
+npm i $@
 cd ..
 
 #
@@ -27,5 +35,5 @@ cd ..
 #
 echo "npm install on cdk"
 cd cdk
-npm ci
+npm i
 cd ..

@@ -6,6 +6,7 @@ WORKSPACE=$(pwd)
 CDK_DIR=$WORKSPACE/cdk
 FRONTEND_DIR=$WORKSPACE/frontend
 BACKEND_DIR=$WORKSPACE/backend
+EXAMPLES_DIR=$WORKSPACE/examples
 
 # Validate release version from input
 newVersion=$1
@@ -33,6 +34,10 @@ update_package_jsons() {
     npm version $newVersion
 
     cd $BACKEND_DIR
+    echo "Updating package.json in backend"
+    npm version $newVersion
+
+    cd $EXAMPLES_DIR
     echo "Updating package.json in backend"
     npm version $newVersion
 }

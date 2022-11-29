@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { render } from "@testing-library/react";
 import VisualizeChart from "../VisualizeChart";
@@ -69,6 +74,10 @@ test("renders the VisualizeChart component", async () => {
       configHeader={<></>}
       dataLabels={false}
       showTotal={true}
+      widgetId="widget-id"
+      previewPanelId="panel-id"
+      computePercentages={false}
+      stackedChart={false}
     />,
     { wrapper: MemoryRouter }
   );
@@ -139,6 +148,10 @@ test("renders the VisualizeChart component without horizontal scrolling", async 
       configHeader={<></>}
       dataLabels={false}
       showTotal={true}
+      widgetId="widget-id"
+      previewPanelId="panel-id"
+      computePercentages={false}
+      stackedChart={false}
     />,
     { wrapper: MemoryRouter }
   );

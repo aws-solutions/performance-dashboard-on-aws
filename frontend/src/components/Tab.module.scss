@@ -1,0 +1,12 @@
+@import "../styles/base";
+
+.tab {
+  @include u-text("base", "!important");
+  cursor: pointer;
+  background-color: transparent !important;
+  white-space: nowrap;
+
+  &:hover {
+    @include u-text("base-dark", "!important");
+  }
+}

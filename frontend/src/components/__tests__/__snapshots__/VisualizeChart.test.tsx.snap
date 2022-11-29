@@ -66,7 +66,6 @@ exports[`renders the VisualizeChart component 1`] = `
           </div>
           <div
             class="usa-form-group"
-            role="radiogroup"
           >
             <fieldset
               class="usa-fieldset"
@@ -389,7 +388,6 @@ exports[`renders the VisualizeChart component 1`] = `
               Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
                
               <a
-                aria-label=""
                 class="usa-link action-link"
                 href="/admin/markdown"
                 target="_blank"
@@ -398,7 +396,8 @@ exports[`renders the VisualizeChart component 1`] = `
                   View Markdown Syntax
                 </span>
                 <svg
-                  aria-hidden="true"
+                  aria-hidden="false"
+                  aria-label="(opens in a new tab)"
                   class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
                   data-icon="external-link-alt"
                   data-prefix="fas"
@@ -475,59 +474,92 @@ exports[`renders the VisualizeChart component 1`] = `
         >
           Full preview
         </button>
-        
         <div
-          aria-label="title"
-          class="overflow-x-hidden overflow-y-hidden"
-          tabindex="-1"
+          id="panel-id"
         >
-          <h2
-            class="margin-bottom-1"
-          >
-            title
-          </h2>
+          
           <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            aria-label="title"
+            class="overflow-x-hidden overflow-y-hidden "
+            tabindex="-1"
           >
-            <p>
-              summary
-            </p>
-          </div>
-          <div
-            class="recharts-responsive-container"
-            id="title"
-            style="width: 100%; height: 300px;"
-          />
-          <div>
-            <div
-              class="text-right margin-right-05"
+            <h2
+              class="margin-bottom-1"
             >
-              <button
-                aria-controls="menu--1"
-                aria-haspopup="true"
-                aria-label="Data table actions"
-                class="usa-button usa-button--unstyled text-base"
-                data-reach-menu-button=""
-                id="menu-button--menu--1"
-                type="button"
+              title
+              <a
+                aria-label="Copy link: title"
+                class="shareButton margin-left-1"
+                href="http://localhost/#widget-ida"
               >
-                Actions
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
-                  data-icon="caret-down"
+                  class="svg-inline--fa fa-link fa-w-16 fa-xs "
+                  data-icon="link"
                   data-prefix="fas"
                   focusable="false"
                   role="img"
-                  viewBox="0 0 320 512"
+                  viewBox="0 0 512 512"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                    d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
                     fill="currentColor"
                   />
                 </svg>
-              </button>
+              </a>
+              <span
+                class="anchor"
+                id="widget-ida"
+              />
+            </h2>
+            <div
+              class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            >
+              <p>
+                summary
+              </p>
+            </div>
+            <div
+              aria-hidden="true"
+            >
+              <div
+                class="recharts-responsive-container"
+                id="widget-id"
+                style="width: 100%; height: 300px;"
+              />
+            </div>
+            <div>
+              <div
+                class="text-right margin-right-05"
+              >
+                <button
+                  aria-controls="menu--1"
+                  aria-haspopup="true"
+                  aria-label="Data table actions"
+                  class="usa-button usa-button--unstyled text-base"
+                  data-reach-menu-button=""
+                  id="menu-button--menu--1"
+                  type="button"
+                >
+                  Actions
+                  <svg
+                    aria-hidden="true"
+                    class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+                    data-icon="caret-down"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    viewBox="0 0 320 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -603,7 +635,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
           </div>
           <div
             class="usa-form-group"
-            role="radiogroup"
           >
             <fieldset
               class="usa-fieldset"
@@ -925,7 +956,6 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
               Give your chart a summary to explain it in more depth. It can also be read by screen readers to describe the chart for those with visual impairments. This field supports markdown.
                
               <a
-                aria-label=""
                 class="usa-link action-link"
                 href="/admin/markdown"
                 target="_blank"
@@ -934,7 +964,8 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
                   View Markdown Syntax
                 </span>
                 <svg
-                  aria-hidden="true"
+                  aria-hidden="false"
+                  aria-label="(opens in a new tab)"
                   class="svg-inline--fa fa-external-link-alt fa-w-16 fa-xs margin-left-05"
                   data-icon="external-link-alt"
                   data-prefix="fas"
@@ -1011,59 +1042,92 @@ exports[`renders the VisualizeChart component without horizontal scrolling 1`] =
         >
           Full preview
         </button>
-        
         <div
-          aria-label="title"
-          class="overflow-x-hidden overflow-y-hidden"
-          tabindex="-1"
+          id="panel-id"
         >
-          <h2
-            class="margin-bottom-1"
-          >
-            title
-          </h2>
+          
           <div
-            class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            aria-label="title"
+            class="overflow-x-hidden overflow-y-hidden "
+            tabindex="-1"
           >
-            <p>
-              summary
-            </p>
-          </div>
-          <div
-            class="recharts-responsive-container"
-            id="title"
-            style="width: 100%; height: 300px;"
-          />
-          <div>
-            <div
-              class="text-right margin-right-05"
+            <h2
+              class="margin-bottom-1"
             >
-              <button
-                aria-controls="menu--7"
-                aria-haspopup="true"
-                aria-label="Data table actions"
-                class="usa-button usa-button--unstyled text-base"
-                data-reach-menu-button=""
-                id="menu-button--menu--7"
-                type="button"
+              title
+              <a
+                aria-label="Copy link: title"
+                class="shareButton margin-left-1"
+                href="http://localhost/#widget-ida"
               >
-                Actions
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
-                  data-icon="caret-down"
+                  class="svg-inline--fa fa-link fa-w-16 fa-xs "
+                  data-icon="link"
                   data-prefix="fas"
                   focusable="false"
                   role="img"
-                  viewBox="0 0 320 512"
+                  viewBox="0 0 512 512"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                    d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
                     fill="currentColor"
                   />
                 </svg>
-              </button>
+              </a>
+              <span
+                class="anchor"
+                id="widget-ida"
+              />
+            </h2>
+            <div
+              class="Markdown usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
+            >
+              <p>
+                summary
+              </p>
+            </div>
+            <div
+              aria-hidden="true"
+            >
+              <div
+                class="recharts-responsive-container"
+                id="widget-id"
+                style="width: 100%; height: 300px;"
+              />
+            </div>
+            <div>
+              <div
+                class="text-right margin-right-05"
+              >
+                <button
+                  aria-controls="menu--7"
+                  aria-haspopup="true"
+                  aria-label="Data table actions"
+                  class="usa-button usa-button--unstyled text-base"
+                  data-reach-menu-button=""
+                  id="menu-button--menu--7"
+                  type="button"
+                >
+                  Actions
+                  <svg
+                    aria-hidden="true"
+                    class="svg-inline--fa fa-caret-down fa-w-10 margin-left-1"
+                    data-icon="caret-down"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    viewBox="0 0 320 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>

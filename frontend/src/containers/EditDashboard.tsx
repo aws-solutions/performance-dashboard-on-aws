@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { useHistory, useParams } from "react-router-dom";
@@ -10,7 +15,7 @@ import {
 } from "../hooks";
 import { Widget, LocationState, WidgetType, DashboardState } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faCopy, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import BackendService from "../services/BackendService";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Button from "../components/Button";
@@ -18,7 +23,6 @@ import Modal from "../components/Modal";
 import PublishDashboardModal from "../components/PublishDashboardModal";
 import Spinner from "../components/Spinner";
 import Tooltip from "../components/Tooltip";
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import AlertContainer from "../containers/AlertContainer";
 import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
@@ -197,9 +201,11 @@ function EditDashboard() {
                     state: publishedOrArchived.state.toLowerCase(),
                   })}
                   <FontAwesomeIcon
-                    className="margin-left-1"
                     icon={faExternalLinkAlt}
+                    className="margin-left-1"
                     size="sm"
+                    aria-label={t("ARIA.OpenInNewTab")}
+                    aria-hidden={false}
                   />
                 </Link>
               </div>
@@ -228,21 +234,17 @@ function EditDashboard() {
           </div>
           <div className="grid-col-6 padding-left-05">
             <span data-for="publish" data-tip="">
-              <Button variant="base" onClick={onPublishDashboard}>
+              <Button
+                variant="base"
+                aria-describedby="publish-desc"
+                onClick={onPublishDashboard}
+              >
                 {t("PublishButton")}
               </Button>
+              <span id="publish-desc" className="usa-sr-only">
+                {t("PrepareDashboardForPublishing")}
+              </span>
             </span>
-            <Tooltip
-              id="publish"
-              place="bottom"
-              effect="solid"
-              offset={{ bottom: 8 }}
-              getContent={() => (
-                <div className="font-sans-sm">
-                  {t("PrepareDashboardForPublishing")}
-                </div>
-              )}
-            />
           </div>
         </div>
       )}
@@ -256,21 +258,17 @@ function EditDashboard() {
             {t("PreviewButton")}
           </Button>
           <span data-for="publish" data-tip="">
-            <Button variant="base" onClick={onPublishDashboard}>
+            <Button
+              variant="base"
+              aria-describedby="publish-desc"
+              onClick={onPublishDashboard}
+            >
               {t("PublishButton")}
             </Button>
+            <span id="publish-desc" className="usa-sr-only">
+              {t("PrepareDashboardForPublishing")}
+            </span>
           </span>
-          <Tooltip
-            id="publish"
-            place="bottom"
-            effect="solid"
-            offset={{ bottom: 8 }}
-            getContent={() => (
-              <div className="font-sans-sm">
-                {t("PrepareDashboardForPublishing")}
-              </div>
-            )}
-          />
         </>
       )}
     </>

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
@@ -240,7 +245,7 @@ describe("getPublicHomepageWithQuery", () => {
       topicAreaId: "abc",
       topicAreaName: "Europe",
       displayTableOfContents: false,
-      description: "All about the United Kingdom.",
+      description: "All about the United Kingdom. a.k.a. UK.",
       updatedAt: now,
     };
 
@@ -288,7 +293,9 @@ describe("getPublicHomepageWithQuery", () => {
           order: 1,
           updatedAt: now,
           content: {
+            title: "The UK geography insights.",
             text: "The UK is in Europe. The capital of the UK is London.",
+            summary: "The UK is localted in north-west of Europe.",
           },
         },
       ],
@@ -321,12 +328,15 @@ describe("getPublicHomepageWithQuery", () => {
         topicAreaId: "abc",
         topicAreaName: "Europe",
         displayTableOfContents: false,
-        description: "All about the United Kingdom.",
+        description: "All about the United Kingdom. a.k.a. UK.",
         updatedAt: now,
         queryMatches: [
           "UK",
+          "All about the United Kingdom. a.k.a. UK.",
           "The UK is in Europe.",
           "The capital of the UK is London.",
+          "The UK geography insights.",
+          "The UK is localted in north-west of Europe.",
         ],
       },
     ];

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 
 interface Props {
@@ -33,7 +38,7 @@ function RadioButtons(props: Props) {
   };
 
   return (
-    <div role="radiogroup" className={formGroupClassName}>
+    <div className={formGroupClassName}>
       <fieldset className="usa-fieldset" onChange={handleChange}>
         <legend className="usa-sr-only">{props.label}</legend>
         <span className="usa-label text-bold">{props.label}</span>

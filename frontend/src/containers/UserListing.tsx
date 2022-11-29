@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useMemo, useCallback } from "react";
 import { useUsers } from "../hooks";
 import Button from "../components/Button";
@@ -154,14 +159,12 @@ function UserListing() {
         <div className="tablet:grid-col-4 text-left padding-top-1px">
           <ul className="usa-button-group">
             <li className="usa-button-group__item">
-              <span>
-                <Search
-                  id={t("GlobalSearch")}
-                  onSubmit={onSearch}
-                  size="small"
-                  placeholder={t("Search.SearchUsers")}
-                />
-              </span>
+              <Search
+                id={t("GlobalSearch")}
+                onSubmit={onSearch}
+                size="small"
+                placeholder={t("Search.SearchUsers")}
+              />
             </li>
           </ul>
         </div>
@@ -205,6 +208,7 @@ function UserListing() {
         </div>
       </div>
       <Table
+        id="users"
         selection="multiple"
         screenReaderField="userId"
         filterQuery={filter}

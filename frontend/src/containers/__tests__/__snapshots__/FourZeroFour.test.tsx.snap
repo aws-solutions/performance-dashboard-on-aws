@@ -19,7 +19,6 @@ exports[`renders a FourZeroFour component 1`] = `
       You may want to double-check your link and try again, or return to the
        
       <a
-        aria-label=""
         class="usa-link action-link"
         href="/"
         target=""
@@ -31,9 +30,7 @@ exports[`renders a FourZeroFour component 1`] = `
       .
     </p>
   </div>
-  <footer
-    aria-label="Footer"
-  >
+  <footer>
     <div
       class="grid-container margin-bottom-9 text-base font-sans-sm"
     >
@@ -44,7 +41,7 @@ exports[`renders a FourZeroFour component 1`] = `
        
       <a
         class="usa-link"
-        href="mailto:admin1@aol.com?subject=Performance Dashboard Assistance"
+        href="mailto:admin1@example.com?subject=Performance Dashboard Assistance"
       >
         Contact support.
       </a>

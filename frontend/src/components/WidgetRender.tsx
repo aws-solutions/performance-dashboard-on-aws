@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import {
   Widget,
@@ -14,8 +19,8 @@ import TextWidget from "../components/TextWidget";
 import SectionWidget from "../components/SectionWidget";
 import ImageWidgetComponent from "../components/ImageWidget";
 import MetricsWidgetComponent from "../components/MetricsWidget";
-import Shareable from "./Shareable";
-import { isPropertySignature } from "typescript";
+import Utils from "../services/UtilsService";
+import styles from "./WidgetRender.module.scss";
 
 interface Props {
   widget: Widget;
@@ -89,11 +94,7 @@ function WidgetRender({
     return getWidget();
   }
 
-  return (
-    <Shareable id={widget.id} title={widget.name}>
-      {getWidget()}
-    </Shareable>
-  );
+  return <div className={styles.widgetContainer}>{getWidget()}</div>;
 }
 
 function WidgetWithImage({ widget, hideTitle }: Props) {
@@ -101,8 +102,10 @@ function WidgetWithImage({ widget, hideTitle }: Props) {
   const content = imageWidget.content;
   const file = useImage(content.s3Key.raw);
 
+  const imageId = `image-${Utils.getShorterId(widget.id)}`;
   return (
     <ImageWidgetComponent
+      id={imageId}
       title={!hideTitle && imageWidget.showTitle ? content.title : ""}
       summary={content.summary ? content.summary : ""}
       summaryBelow={content.summaryBelow}
@@ -118,8 +121,10 @@ function WidgetWithDataset({ widget, showMobilePreview, hideTitle }: Props) {
   switch (widget.widgetType) {
     case WidgetType.Table:
       const tableWidget = widget as TableWidget;
+      const tableId = `table-${Utils.getShorterId(widget.id)}`;
       return (
         <TableWidgetComponent
+          id={tableId}
           title={
             !hideTitle && tableWidget.showTitle ? tableWidget.content.title : ""
           }
@@ -136,8 +141,10 @@ function WidgetWithDataset({ widget, showMobilePreview, hideTitle }: Props) {
       );
     case WidgetType.Metrics:
       const metricsWidget = widget as MetricsWidget;
+      const metricsId = `metrics-${Utils.getShorterId(widget.id)}`;
       return (
         <MetricsWidgetComponent
+          id={metricsId}
           title={
             !hideTitle && metricsWidget.showTitle
               ? metricsWidget.content.title

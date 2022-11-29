@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Storage } from "@aws-amplify/storage";
 import * as uuid from "uuid";
 import StorageService from "../StorageService";

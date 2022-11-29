@@ -1,0 +1,14 @@
+@import "../styles/base";
+
+.radio {
+  &:hover,
+  &:active,
+  &:checked {
+    & + [class*="__label"] {
+      @include u-bg("base-lighter", "!important");
+    }
+    &:not([disabled]):focus {
+      outline: 0.25rem solid color("primary") !important;
+    }
+  }
+}

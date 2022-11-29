@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 import { Widget, WidgetType } from "../models";
@@ -19,7 +24,7 @@ interface WidgetTreeItemContentProps {
   onDelete: (widget: Widget) => void;
   onDuplicate: (widget: Widget) => void;
   className?: string;
-  dragHandleProps?: DraggableProvidedDragHandleProps | undefined;
+  dragHandleProps?: DraggableProvidedDragHandleProps;
   onMoveUp?: () => void;
   onMoveDown?: () => void;
 }

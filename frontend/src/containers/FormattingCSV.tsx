@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
@@ -70,6 +75,7 @@ function FormattingCSV() {
       <hr />
       <div>
         <LineChartWidget
+          id="sample-line-chart"
           title=""
           downloadTitle="Line chart sample"
           summary=""
@@ -103,6 +109,7 @@ function FormattingCSV() {
       <hr />
       <div>
         <BarChartWidget
+          id="sample-bar-chart"
           title=""
           downloadTitle="Bar chart sample"
           summary=""
@@ -136,6 +143,7 @@ function FormattingCSV() {
       <hr />
       <div>
         <ColumnChartWidget
+          id="sample-column-chart"
           title=""
           downloadTitle="Column chart sample"
           summary=""
@@ -169,6 +177,7 @@ function FormattingCSV() {
       <hr />
       <div>
         <PartWholeChartWidget
+          id="sample-part-whole-chart"
           title=""
           downloadTitle="Part-to-whole chart sample"
           summary=""
@@ -202,6 +211,7 @@ function FormattingCSV() {
       <hr />
       <div>
         <PieChartWidget
+          id="sample-pie-chart"
           title=""
           downloadTitle="Pie chart sample"
           summary=""
@@ -235,6 +245,7 @@ function FormattingCSV() {
       <hr />
       <div>
         <DonutChartWidget
+          id="sample-donut-chart"
           title=""
           downloadTitle="Donut chart sample"
           summary=""
@@ -268,6 +279,7 @@ function FormattingCSV() {
       <hr />
       <div>
         <TableWidget
+          id="sample-table"
           title="Table sample"
           summary=""
           data={table.dataset.data}

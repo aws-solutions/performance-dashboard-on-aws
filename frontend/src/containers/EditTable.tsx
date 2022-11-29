@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -19,9 +24,9 @@ import {
   useFullPreview,
   useChangeBackgroundColor,
   useScrollUp,
+  useDatasets,
 } from "../hooks";
 import Spinner from "../components/Spinner";
-import { useDatasets } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import ParsingFileService from "../services/ParsingFileService";
 import ColumnsMetadataService from "../services/ColumnsMetadataService";
@@ -92,7 +97,8 @@ function EditTable() {
     setDynamicJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-table-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
 
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
@@ -168,9 +174,7 @@ function EditTable() {
         showTitle,
         datasetType: displayedDatasetType
           ? displayedDatasetType
-          : state && state.json
-          ? DatasetType.StaticDataset
-          : datasetType,
+          : UtilsService.getDatasetTypeFromState(state, datasetType),
         summary,
         summaryBelow,
         significantDigitLabels,
@@ -183,11 +187,10 @@ function EditTable() {
           widget.content.datasetType === DatasetType.StaticDataset
             ? widget.content.s3Key.json
             : "",
-        sortData: widget.content.sortByColumn
-          ? `${widget.content.sortByColumn}###${
-              widget.content.sortByDesc ? "desc" : "asc"
-            }`
-          : "",
+        sortData: UtilsService.getSortData(
+          widget.content.sortByColumn,
+          widget.content.sortByDesc
+        ),
       });
 
       if (!displayedDatasetType) {
@@ -331,19 +334,28 @@ function EditTable() {
           displayWithPages: values.displayWithPages,
           datasetId: newDataset
             ? newDataset.id
-            : displayedDatasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.id
-            : staticDataset?.id,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "id",
+                dynamicDataset,
+                staticDataset
+              ),
           s3Key: newDataset
             ? newDataset.s3Key
-            : displayedDatasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.s3Key
-            : staticDataset?.s3Key,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "s3Key",
+                dynamicDataset,
+                staticDataset
+              ),
           fileName: csvFile
             ? csvFile.name
-            : displayedDatasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.fileName
-            : staticDataset?.fileName,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "fileName",
+                dynamicDataset,
+                staticDataset
+              ),
           sortByColumn,
           sortByDesc,
           columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
@@ -457,23 +469,22 @@ function EditTable() {
     });
   }
 
-  const configHeader = (
+  const configHeader = (suffix: string) => (
     <div>
-      <h1 id="editTableFormHeader" className="margin-top-0">
+      <h1 id={`editTableFormHeader_${suffix}`} className="margin-top-0">
         {t("EditTableScreen.EditTable")}
       </h1>
       <ul
         className="usa-button-group usa-button-group--segmented"
         role="tablist"
+        aria-labelledby={`editTableFormHeader_${suffix}`}
       >
-        <li
-          id="editTableFormHeaderStep1"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 0}
-          aria-controls="panel1"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editTableFormHeaderStep1_${suffix}`}
+            role="tab"
+            aria-selected={step === 0}
+            aria-controls="panel1"
             className={`usa-button tabSelector ${
               step !== 0 ? "usa-button--outline" : ""
             }`}
@@ -484,14 +495,12 @@ function EditTable() {
             {t("EditTableScreen.ChooseData")}
           </button>
         </li>
-        <li
-          id="editTableFormHeaderStep2"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 1}
-          aria-controls="panel2"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editTableFormHeaderStep2_${suffix}`}
+            role="tab"
+            aria-selected={step === 1}
+            aria-controls="panel2"
             className={`usa-button tabSelector ${
               step !== 1 ? "usa-button--outline" : ""
             }`}
@@ -503,14 +512,12 @@ function EditTable() {
             {t("EditTableScreen.CheckData")}
           </button>
         </li>
-        <li
-          id="editTableFormHeaderStep3"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 2}
-          aria-controls="panel3"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editTableFormHeaderStep3_${suffix}`}
+            role="tab"
+            aria-selected={step === 2}
+            aria-controls="panel3"
             className={`usa-button tabSelector ${
               step !== 2 ? "usa-button--outline" : ""
             }`}
@@ -547,19 +554,19 @@ function EditTable() {
       ) : (
         <>
           <div className="grid-row">
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              aria-labelledby="editTableFormHeader"
+            <div
+              id="panel1"
+              hidden={step !== 0}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editTableFormHeaderStep1_chooseDdata"
             >
-              <div
-                id="panel1"
-                hidden={step !== 0}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editTableFormHeaderStep1"
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editTableFormHeader_chooseDdata"
               >
                 <PrimaryActionBar>
-                  {configHeader}
+                  {configHeader("chooseDdata")}
                   <div className="margin-y-3" hidden={!showNoDatasetTypeAlert}>
                     <Alert
                       type="error"
@@ -588,17 +595,22 @@ function EditTable() {
                     setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
                   />
                 </PrimaryActionBar>
-              </div>
+              </form>
+            </div>
 
-              <div
-                id="panel2"
-                hidden={step !== 1}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editTableFormHeaderStep2"
+            <div
+              id="panel2"
+              hidden={step !== 1}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editTableFormHeaderStep2_checkDdata"
+            >
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editTableFormHeader_checkDdata"
               >
                 <PrimaryActionBar>
-                  {configHeader}
+                  {configHeader("checkDdata")}
                   <CheckData
                     data={displayedJson}
                     advanceStep={advanceStep}
@@ -620,24 +632,28 @@ function EditTable() {
                     widgetType={t("CheckDataDescriptionTable")}
                   />
                 </PrimaryActionBar>
-              </div>
+              </form>
+            </div>
 
-              <div
-                id="panel3"
-                hidden={step !== 2}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editTableFormHeaderStep3"
+            <div
+              id="panel3"
+              hidden={step !== 2}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editTableFormHeaderStep3_visualize"
+            >
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editTableFormHeader_visualize"
               >
                 <Visualize
+                  widgetId={widgetId}
                   errors={errors}
                   register={register}
                   json={filteredJson}
                   originalJson={displayedJson}
                   headers={
-                    displayedJson.length
-                      ? (Object.keys(displayedJson[0]) as Array<string>)
-                      : []
+                    displayedJson.length ? Object.keys(displayedJson[0]) : []
                   }
                   csvJson={csvJson}
                   datasetLoading={datasetLoading}
@@ -649,6 +665,7 @@ function EditTable() {
                   processingWidget={editingWidget}
                   fullPreviewButton={fullPreviewButton}
                   fullPreview={fullPreview}
+                  previewPanelId={previewPanelId}
                   submitButtonLabel={t("Save")}
                   title={title}
                   summary={summary}
@@ -666,10 +683,10 @@ function EditTable() {
                     numberTypes,
                     currencyTypes
                   )}
-                  configHeader={configHeader}
+                  configHeader={configHeader("visualize")}
                 />
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </>
       )}

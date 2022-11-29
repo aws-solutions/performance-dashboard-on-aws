@@ -1,7 +1,16 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
-import { useSettings } from "../hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faChevronCircleUp,
+  faChevronCircleDown,
+  IconDefinition,
+} from "@fortawesome/free-solid-svg-icons";
 import { TopicArea } from "../models";
 import Button from "./Button";
 import { useTranslation } from "react-i18next";
@@ -23,8 +32,6 @@ function TopicareasTable(props: Props) {
   const [selected, setSelected] = useState<SelectionHashMap>({});
   const [sortedBy, setSortedBy] = useState<ColumnType>("dashboards");
   const [direction, setDirection] = useState<Direction>("down");
-
-  const { settings } = useSettings();
 
   const onSelect = (topicarea: TopicArea) => {
     const selection = { [topicarea.id]: topicarea };
@@ -51,65 +58,61 @@ function TopicareasTable(props: Props) {
     }
   };
 
+  const sortByIcon = (
+    actualColunmName: string,
+    expectedColumnName: string,
+    direction: Direction
+  ): IconDefinition => {
+    if (actualColunmName !== expectedColumnName) {
+      return faChevronDown;
+    }
+    return direction === "up" ? faChevronCircleUp : faChevronCircleDown;
+  };
+
   return (
     <table className="usa-table usa-table--borderless" width="100%">
       <thead>
         <tr>
           <th></th>
           <th>
-            <span className="font-sans-xs">{t("TopicArea")}</span>
             <Button
               variant="unstyled"
-              className={`margin-left-1 hover:text-base-light ${
-                sortedBy === "name" ? "text-base-darker" : "text-white"
-              }`}
+              className="margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
               onClick={() => sortBy("name")}
               ariaLabel={t("SortTopicAreaName")}
             >
+              <span>{t("TopicArea")}</span>
               <FontAwesomeIcon
-                icon={
-                  sortedBy === "name" && direction === "up"
-                    ? faChevronUp
-                    : faChevronDown
-                }
+                className="margin-left-1"
+                icon={sortByIcon(sortedBy, "name", direction)}
               />
             </Button>
           </th>
           <th>
-            <span className="font-sans-xs">{t("Dashboards")}</span>
             <Button
               variant="unstyled"
-              className={`margin-left-1 hover:text-base-light ${
-                sortedBy === "dashboards" ? "text-base-darker" : "text-white"
-              }`}
+              className="margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
               onClick={() => sortBy("dashboards")}
               ariaLabel={t("SortDashboards")}
             >
+              <span>{t("Dashboards")}</span>
               <FontAwesomeIcon
-                icon={
-                  sortedBy === "dashboards" && direction === "up"
-                    ? faChevronUp
-                    : faChevronDown
-                }
+                className="margin-left-1"
+                icon={sortByIcon(sortedBy, "dashboards", direction)}
               />
             </Button>
           </th>
           <th>
-            <span className="font-sans-xs">{t("CreatedBy")}</span>
             <Button
               variant="unstyled"
-              className={`margin-left-1 hover:text-base-light ${
-                sortedBy === "createdBy" ? "text-base-darker" : "text-white"
-              }`}
+              className="margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
               onClick={() => sortBy("createdBy")}
               ariaLabel={t("SortCreatedBy")}
             >
+              <span>{t("CreatedBy")}</span>
               <FontAwesomeIcon
-                icon={
-                  sortedBy === "createdBy" && direction === "up"
-                    ? faChevronUp
-                    : faChevronDown
-                }
+                className="margin-left-1"
+                icon={sortByIcon(sortedBy, "createdBy", direction)}
               />
             </Button>
           </th>

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import * as cdk from "@aws-cdk/core";
 import s3 = require("@aws-cdk/aws-s3");
 import s3Deploy = require("@aws-cdk/aws-s3-deployment");
@@ -41,7 +46,7 @@ export class FrontendStack extends cdk.Stack {
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {
       httpHeaders: {
         "Content-Security-Policy":
-          "default-src 'self'; img-src 'self' blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com; block-all-mixed-content;",
+          "default-src 'self'; img-src 'self' https://*.google-analytics.com blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com https://*.google-analytics.com; script-src 'self' https://*.google-analytics.com; block-all-mixed-content;",
         "Strict-Transport-Security": "max-age=31540000; includeSubdomains",
         "X-XSS-Protection": "1; mode=block",
         "X-Frame-Options": "DENY",
@@ -143,7 +148,7 @@ export class FrontendStack extends cdk.Stack {
     // the React code is deployed.
 
     const lambdaFunction = new lambda.Function(this, "EnvConfig", {
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_16_X,
       description: "Deploys env.js file on S3 with environment configuration",
       code: lambda.Code.fromAsset("build/lib/envconfig"),
       handler: "index.handler",

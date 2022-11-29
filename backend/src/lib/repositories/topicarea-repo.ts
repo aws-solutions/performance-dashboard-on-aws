@@ -1,10 +1,15 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { User } from "../models/user";
 import TopicAreaFactory from "../factories/topicarea-factory";
 import DashboardFactory from "../factories/dashboard-factory";
 import BaseRepository from "./base";
 import { TopicArea, TopicAreaList, TopicAreaItem } from "../models/topicarea";
 import { ItemNotFound } from "../errors";
-import { DashboardItem } from "../models/dashboard";
+import { Dashboard, DashboardItem } from "../models/dashboard";
 import DashboardRepository from "./dashboard-repo";
 
 class TopicAreaRepository extends BaseRepository {
@@ -107,7 +112,7 @@ class TopicAreaRepository extends BaseRepository {
       return 0;
     }
 
-    const dashboards = result.Items.map((item) =>
+    const dashboards: Dashboard[] = result.Items.map((item) =>
       DashboardFactory.fromItem(item as DashboardItem)
     );
 
@@ -115,7 +120,7 @@ class TopicAreaRepository extends BaseRepository {
     // We don't want to count every dashboard version. We only want to count 1 for
     // every "dashboard family".
     const uniqueParents = new Set();
-    dashboards.map((dashboard) =>
+    dashboards.forEach((dashboard) =>
       uniqueParents.add(dashboard.parentDashboardId)
     );
     return uniqueParents.size;

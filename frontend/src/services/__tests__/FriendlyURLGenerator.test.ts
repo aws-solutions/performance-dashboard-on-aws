@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import FriendlyURLGenerator from "../FriendlyURLGenerator";
 
 describe("generateFromDashboardName", () => {
@@ -34,6 +39,10 @@ describe("generateFromDashboardName", () => {
       {
         dashboardName: "!	#	$	&	'	(	)	*	+	,	/	:	;	=	?	@	[	] hi",
         expectedUrl: "hi",
+      },
+      {
+        dashboardName: "-test-name-",
+        expectedUrl: "test-name",
       },
     ];
 

@@ -46,7 +46,7 @@ Welcome to Performance Dashboard on AWS Import Tool
 ✔ Do you want to use the default config? … yes
 Using default config: {} {
   example: 'english',
-  author: 'some@email.com',
+  author: 'some@example.comom',
   reuseTopicArea: true,
   reuseDashboard: false,
   reuseDataset: false

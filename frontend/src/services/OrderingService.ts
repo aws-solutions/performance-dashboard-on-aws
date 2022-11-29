@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Metric, Widget, WidgetType } from "../models";
 
 export interface WidgetTreeItemData {
@@ -101,6 +106,39 @@ function buildTree(widgets: Widget[]) {
   return data;
 }
 
+/**
+ * Builds the widget list
+ * @param nodes WidgetTreeItemData[]
+ * @returns Widget[]
+ */
+function buildWidgetList(nodes: WidgetTreeItemData[]): Widget[] {
+  const widgets: Widget[] = [];
+  const sections: { [key: string]: Widget } = {};
+  nodes.forEach((node) => {
+    if (node.widget) {
+      if (node.section !== node.widget.section) {
+        node.widget = { ...node.widget, section: node.section };
+      }
+      const newWidget = { ...node.widget, order: widgets.length };
+      if (node.widget.widgetType === WidgetType.Section) {
+        sections[node.id] = newWidget;
+        newWidget.content.widgetIds = [];
+      }
+      widgets.push(newWidget);
+    }
+  });
+  // Fix widgetIds inside sections.
+  widgets.forEach((widget) => {
+    if (widget.section) {
+      const section = sections[widget.section];
+      if (section) {
+        section.content.widgetIds.push(widget.id);
+      }
+    }
+  });
+  return widgets;
+}
+
 function moveWidget(
   tree: WidgetTreeData,
   sourceIndex: number,
@@ -156,32 +194,7 @@ function moveWidget(
   // insert the items in the given position
   nodes.splice(destinationIndex, 0, ...items);
 
-  // build the widget list
-  const widgets: Widget[] = [];
-  const sections: { [key: string]: Widget } = {};
-  nodes.forEach((node) => {
-    if (node.widget) {
-      if (node.section !== node.widget.section) {
-        node.widget = { ...node.widget, section: node.section };
-      }
-      const newWidget = { ...node.widget, order: widgets.length };
-      if (node.widget.widgetType === WidgetType.Section) {
-        sections[node.id] = newWidget;
-        newWidget.content.widgetIds = [];
-      }
-      widgets.push(newWidget);
-    }
-  });
-  // Fix widgetIds inside sections.
-  widgets.forEach((widget) => {
-    if (widget.section) {
-      const section = sections[widget.section];
-      if (section) {
-        section.content.widgetIds.push(widget.id);
-      }
-    }
-  });
-  return widgets;
+  return buildWidgetList(nodes);
 }
 
 const OrderingService = {

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import { Role, User } from "../../models/user";
@@ -28,7 +33,7 @@ describe("addUser", () => {
       user,
       body: {
         role: "Admin",
-        emails: "test1@test.com,test2@test.com",
+        emails: "test1@example.com,test2@example.com",
       },
     } as any as Request;
   });
@@ -71,8 +76,8 @@ describe("addUser", () => {
   });
 
   it("create the users", async () => {
-    const user1 = UserFactory.createNew("test1@test.com", "Admin");
-    const user2 = UserFactory.createNew("test2@test.com", "Editor");
+    const user1 = UserFactory.createNew("test1@example.com", "Admin");
+    const user2 = UserFactory.createNew("test2@example.com", "Editor");
     UserFactory.createNew = jest
       .fn()
       .mockReturnValueOnce(user1)
@@ -87,7 +92,7 @@ describe("resendInvite", () => {
     req = {
       user,
       body: {
-        emails: "test1@test.com,test2@test.com",
+        emails: "test1@example.com,test2@example.com",
       },
     } as any as Request;
   });
@@ -172,7 +177,7 @@ describe("getUsers", () => {
       enabled: true,
       userStatus: "CONFIRMED",
       sub: "123",
-      email: "test@test.com",
+      email: "test@example.com",
       roles: [Role.Admin],
       createdAt: now,
       updatedAt: now,

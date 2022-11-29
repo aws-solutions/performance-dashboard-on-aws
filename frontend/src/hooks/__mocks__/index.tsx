@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Useful mocks of our custom hook to make our unit
  * testing easier. Prevents the actual backend API
@@ -5,7 +10,14 @@
  */
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { useState, useCallback, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import {
   DashboardState,
   DatasetType,
@@ -15,7 +27,8 @@ import {
   Settings,
   PublicSettings,
 } from "../../models";
-import React from "react";
+import { UseLogoHook } from "../logo-hooks";
+import { UseFaviconHook } from "../favicon-hooks";
 
 const dummyDashboard = {
   id: "123",
@@ -90,8 +103,8 @@ export function useSettings() {
       singular: "Ministry",
       plural: "Ministries",
     },
-    adminContactEmailAddress: "admin1@aol.com",
-    contactEmailAddress: "contact@aol.com",
+    adminContactEmailAddress: "admin1@example.com",
+    contactEmailAddress: "contact@example.com",
   });
 
   return {
@@ -217,18 +230,18 @@ export function useWidgets(dashboardId: string) {
   return;
 }
 
-export function useLogo(s3Key: string | undefined) {
+export function useLogo(s3Key: string | undefined): UseLogoHook {
   return {
     loadingFile: false,
     logo: undefined,
-  };
+  } as UseLogoHook;
 }
 
-export function useFavicon(s3Key: string | undefined) {
+export function useFavicon(s3Key: string | undefined): UseFaviconHook {
   return {
     loadingFile: false,
-    logo: undefined,
-  };
+    favicon: undefined,
+  } as UseFaviconHook;
 }
 
 export function usePublicHomepage() {
@@ -595,16 +608,20 @@ export function useWindowSize() {
   return size;
 }
 
-export function useChangeBackgroundColor() {}
+export function useChangeBackgroundColor() {
+  return document.body.style.background;
+}
 
 export function useScrollUp(
   oldStep: number,
   step: number,
-  setOldStep: React.Dispatch<React.SetStateAction<number>>
-) {}
+  setOldStep: Dispatch<SetStateAction<number>>
+) {
+  return window;
+}
 
 export function useFileLoaded(
-  setToHide: React.Dispatch<React.SetStateAction<boolean>>,
+  setToHide: Dispatch<SetStateAction<boolean>>,
   loadingFile: boolean,
   loadingSettings: boolean,
   settings: PublicSettings | Settings,

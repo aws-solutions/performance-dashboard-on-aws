@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -43,8 +48,8 @@ function AddSection() {
   const [showTitle, setShowTitle] = useState(true);
   const [summary, setSummary] = useState("");
   const [showWithTabs, setShowWithTabs] = useState(false);
-  const [horizontally, setHorizontally] = useState("horizontally");
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-section-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -84,13 +89,11 @@ function AddSection() {
   };
 
   const onFormChange = () => {
-    const { title, showTitle, summary, showWithTabs, horizontally } =
-      getValues();
+    const { title, showTitle, summary, showWithTabs } = getValues();
     setTitle(title);
     setShowTitle(showTitle);
     setSummary(summary);
     setShowWithTabs(showWithTabs);
-    setHorizontally(horizontally);
   };
 
   const goBack = () => {
@@ -286,21 +289,23 @@ function AddSection() {
             >
               <div>
                 {isMobile ? <br /> : fullPreviewButton}
-                {showTitle ? (
-                  <h2 className="margin-top-3 margin-left-2px">{title}</h2>
-                ) : (
-                  ""
-                )}
-                {summary ? (
-                  <div className="padding-left-05">
-                    <MarkdownRender
-                      className="usa-prose textOrSummary"
-                      source={summary}
-                    />
-                  </div>
-                ) : (
-                  ""
-                )}
+                <div id={previewPanelId}>
+                  {showTitle ? (
+                    <h2 className="margin-top-3 margin-left-2px">{title}</h2>
+                  ) : (
+                    ""
+                  )}
+                  {summary ? (
+                    <div className="padding-left-05">
+                      <MarkdownRender
+                        className="usa-prose textOrSummary"
+                        source={summary}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </section>
           </div>

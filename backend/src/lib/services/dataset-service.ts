@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { InvalidDatasetContent } from "../errors";
 import { DatasetContent, DatasetSchema } from "../models/dataset";
 import { User } from "../models/user";
@@ -14,19 +19,19 @@ const logger = pino.child({
   api: "ingestapi",
 });
 
-function parse(dataset: any, schema = DatasetSchema.None): DatasetContent {
+function parse(
+  dataset: any,
+  schema: DatasetSchema = DatasetSchema.None
+): DatasetContent {
   const schemaValidator = new Validator();
   let result: ValidatorResult;
 
-  switch (schema as DatasetSchema) {
+  switch (schema) {
     case DatasetSchema.Metrics:
       logger.info("Validating dataset against Metrics schema %o", dataset);
       result = schemaValidator.validate(dataset, MetricsSchema);
       break;
     case DatasetSchema.None:
-      logger.info("Validating dataset against None schema %o", dataset);
-      result = schemaValidator.validate(dataset, NoneSchema);
-      break;
     default:
       logger.info("Validating dataset against None schema %o", dataset);
       result = schemaValidator.validate(dataset, NoneSchema);

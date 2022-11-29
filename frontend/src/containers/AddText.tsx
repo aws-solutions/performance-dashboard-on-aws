@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -39,7 +44,8 @@ function AddText() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [showTitle, setShowTitle] = useState(true);
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-text-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
@@ -215,21 +221,23 @@ function AddText() {
               aria-label={t("ContentPreview")}
             >
               {isMobile ? <br /> : fullPreviewButton}
-              {showTitle ? (
-                <h2 className="margin-top-3 margin-left-2px">{title}</h2>
-              ) : (
-                ""
-              )}
-              {text ? (
-                <div className="padding-left-05">
-                  <MarkdownRender
-                    className="usa-prose textOrSummary"
-                    source={text}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
+              <div id={previewPanelId}>
+                {showTitle ? (
+                  <h2 className="margin-top-3 margin-left-2px">{title}</h2>
+                ) : (
+                  ""
+                )}
+                {text ? (
+                  <div className="padding-left-05">
+                    <MarkdownRender
+                      className="usa-prose textOrSummary"
+                      source={text}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </section>
           </div>
         </>

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   ResponsiveContainer,
@@ -13,8 +18,10 @@ import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
 import { ColumnMetadata, NumberDataType } from "../models";
 import RenderLegendText from "./Legend";
+import ShareButton from "./ShareButton";
 
 type Props = {
+  id: string;
   title: string;
   downloadTitle: string;
   summary: string;
@@ -44,15 +51,15 @@ const PieChartWidget = (props: Props) => {
 
   const { data, parts, showMobilePreview } = props;
   useMemo(() => {
-    if (data && data.length) {
+    if (data && data.length > 0) {
       let pie = {};
       total.current = 0;
       pieParts.current = [];
       pieData.current = [];
       let maxTick = -Infinity;
-      for (let i = 0; i < data.length; i++) {
-        const key = data[i][parts[0] as keyof object];
-        const value = data[i][parts[1] as keyof object];
+      for (let dataItem of data) {
+        const key = dataItem[parts[0] as keyof object];
+        const value = dataItem[parts[1] as keyof object];
         const barKey = `${key}`;
         pie = {
           ...pie,
@@ -96,7 +103,7 @@ const PieChartWidget = (props: Props) => {
   };
 
   const displayedAmount = (
-    value: Number | String,
+    value: number | string,
     columnMetadata: ColumnMetadata
   ): string => {
     const displayedAmount = TickFormatter.format(
@@ -201,7 +208,8 @@ const PieChartWidget = (props: Props) => {
         <span className="margin-left-05 font-sans-md text-bottom">
           {RenderLegendText(value.toLocaleString(), entry)}
         </span>
-        <div className="margin-left-4 margin-bottom-1 text-base-darker text-bold">
+        <br />
+        <span className="margin-left-5 margin-bottom-1 text-base-darker text-bold">
           {value && value !== "null" ? (
             TickFormatter.format(
               Number(
@@ -217,7 +225,7 @@ const PieChartWidget = (props: Props) => {
           ) : (
             <br />
           )}
-        </div>
+        </span>
       </span>
     );
   };
@@ -250,84 +258,101 @@ const PieChartWidget = (props: Props) => {
   };
 
   return (
-    <div aria-label={props.title} tabIndex={-1}>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
-        {props.title}
-      </h2>
+    <div
+      aria-label={props.title}
+      tabIndex={-1}
+      className={props.title ? "" : "padding-top-2"}
+    >
+      {props.title && (
+        <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+          {props.title}
+          <ShareButton
+            id={`${props.id}a`}
+            title={props.title}
+            className="margin-left-1"
+          />
+        </h2>
+      )}
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
           className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
-      {pieData.current.length && (
-        <ResponsiveContainer width="100%" height={calculateChartHeight()}>
-          <PieChart>
-            <Legend
-              verticalAlign="top"
-              formatter={renderLegendText}
-              iconSize={24}
-              wrapperStyle={{
-                top: 0,
-                right: 0,
-                width: "100%",
-              }}
-              onClick={toggleParts}
-              onMouseLeave={() => setPartsHover(null)}
-              onMouseEnter={(e: any) => setPartsHover(e.value)}
-              layout={
-                windowSize.width <= smallScreenPixels || showMobilePreview
-                  ? "vertical"
-                  : undefined
-              }
-            />
-            <Pie
-              data={pieData.current.map((d: any) => {
-                return !hiddenParts.includes(d.name)
-                  ? d
-                  : { name: d.name, value: 0 };
-              })}
-              dataKey="value"
-              nameKey="name"
-              cx={
-                props.isPreview ||
-                windowSize.width <= smallScreenPixels ||
-                showMobilePreview
-                  ? "50%"
-                  : "28%"
-              }
-              cy="50%"
-              outerRadius={120}
-              label={renderCustomizedLabel}
-              labelLine={renderCustomizedLine}
-              isAnimationActive={false}
-            >
-              {pieParts.current.map((part: any, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={!hiddenParts.includes(part) ? colors[index] : "#ccc"}
-                  fillOpacity={getOpacity(part)}
-                  onMouseLeave={() => setPartsHover(null)}
-                  onMouseEnter={() => setPartsHover(part)}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              itemStyle={{ color: "#1b1b1b" }}
-              isAnimationActive={false}
-              formatter={(value: Number | String) => {
-                // Check if there is metadata for this column
-                let columnMetadata;
-                if (parts && parts.length > 1 && props.columnsMetadata) {
-                  columnMetadata = props.columnsMetadata.find(
-                    (cm) => cm.columnName === parts[1]
-                  );
+      {pieData.current.length > 0 && (
+        <div aria-hidden="true">
+          <ResponsiveContainer
+            id={props.id}
+            width="100%"
+            height={calculateChartHeight()}
+          >
+            <PieChart>
+              <Legend
+                verticalAlign="top"
+                formatter={renderLegendText}
+                iconSize={24}
+                wrapperStyle={{
+                  top: 0,
+                  right: 0,
+                  width: "100%",
+                }}
+                onClick={toggleParts}
+                onMouseLeave={() => setPartsHover(null)}
+                onMouseEnter={(e: any) => setPartsHover(e.value)}
+                layout={
+                  windowSize.width <= smallScreenPixels || showMobilePreview
+                    ? "vertical"
+                    : undefined
                 }
-                return displayedAmount(value, columnMetadata);
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+              />
+              <Pie
+                data={pieData.current.map((d: any) => {
+                  return !hiddenParts.includes(d.name)
+                    ? d
+                    : { name: d.name, value: 0 };
+                })}
+                dataKey="value"
+                nameKey="name"
+                cx={
+                  props.isPreview ||
+                  windowSize.width <= smallScreenPixels ||
+                  showMobilePreview
+                    ? "50%"
+                    : "28%"
+                }
+                cy="50%"
+                outerRadius={120}
+                label={renderCustomizedLabel}
+                labelLine={renderCustomizedLine}
+                isAnimationActive={false}
+              >
+                {pieParts.current.map((part: any, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={!hiddenParts.includes(part) ? colors[index] : "#ccc"}
+                    fillOpacity={getOpacity(part)}
+                    onMouseLeave={() => setPartsHover(null)}
+                    onMouseEnter={() => setPartsHover(part)}
+                  />
+                ))}
+              </Pie>
+              <Tooltip
+                itemStyle={{ color: "#1b1b1b" }}
+                isAnimationActive={false}
+                formatter={(value: number | string) => {
+                  // Check if there is metadata for this column
+                  let columnMetadata;
+                  if (parts && parts.length > 1 && props.columnsMetadata) {
+                    columnMetadata = props.columnsMetadata.find(
+                      (cm) => cm.columnName === parts[1]
+                    );
+                  }
+                  return displayedAmount(value, columnMetadata);
+                }}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       )}
       <div>
         <DataTable

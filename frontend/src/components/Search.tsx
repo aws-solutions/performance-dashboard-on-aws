@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -39,20 +44,27 @@ function Search(props: Props) {
     }
   };
 
+  let formClasses = ["usa-search"];
   let searchBarClasses = ["usa-input"];
   let buttonClasses = ["usa-button", "usa-button--base"];
   if (props.size === "small") {
+    formClasses.push("usa-search--small");
     buttonClasses.push(styles.small);
     searchBarClasses.push(styles.small);
     if (props.wide) {
-      searchBarClasses.push(styles.wide);
+      searchBarClasses.push(styles.smallwide);
+    }
+  } else {
+    formClasses.push("usa-search--big");
+    if (props.wide) {
+      formClasses.push(styles.bigwide);
     }
   }
 
   return (
     <>
       <form
-        className={`usa-search usa-search--${props.size}`}
+        className={formClasses.join(" ")}
         role="search"
         onSubmit={handleSubmit(onSubmit)}
       >

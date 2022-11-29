@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import DashboardRepository from "performance-dashboard-backend/src/lib/repositories/dashboard-repo";
 import DatasetRepository from "performance-dashboard-backend/src/lib/repositories/dataset-repo";
 import TopicAreaRepository from "performance-dashboard-backend/src/lib/repositories/topicarea-repo";

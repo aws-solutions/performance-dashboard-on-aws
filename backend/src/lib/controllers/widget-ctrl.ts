@@ -1,8 +1,13 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import WidgetFactory from "../factories/widget-factory";
 import WidgetRepository from "../repositories/widget-repo";
 import DashboardRepository from "../repositories/dashboard-repo";
-import { WidgetType } from "../models/widget";
+import { Widget, WidgetType } from "../models/widget";
 
 async function getWidgetById(req: Request, res: Response) {
   const { id, widgetId } = req.params;
@@ -144,11 +149,12 @@ async function duplicateWidget(req: Request, res: Response) {
     return res.send("Someone else updated the widget before us");
   }
 
-  let newWidget;
+  let newWidget: Widget;
   let newWidgets = [];
+  const newLabel = `${copyLabel || "Copy"}`;
   try {
     newWidget = WidgetFactory.createWidget({
-      name: `(${copyLabel || "Copy"}) ${widget.name}`,
+      name: `(${newLabel}) ${widget.name}`,
       dashboardId,
       widgetType: widget.widgetType,
       showTitle: widget.showTitle,
@@ -156,35 +162,33 @@ async function duplicateWidget(req: Request, res: Response) {
     });
     newWidget.updatedAt = widget.updatedAt;
     if (newWidget.content.title) {
-      newWidget.content.title = `(${copyLabel || "Copy"}) ${
-        newWidget.content.title
-      }`;
+      newWidget.content.title = `(${newLabel}) ${newWidget.content.title}`;
     }
     if (
       widget.widgetType === WidgetType.Section &&
       widget.content.widgetIds &&
       widget.content.widgetIds.length
     ) {
-      for (const id of widget.content.widgetIds) {
-        const childWidget = await repo.getWidgetById(dashboardId, id);
-        const newChildWidget = WidgetFactory.createWidget({
-          name: `(${copyLabel || "Copy"}) ${childWidget.name}`,
-          dashboardId,
-          widgetType: childWidget.widgetType,
-          showTitle: childWidget.showTitle,
-          content: childWidget.content,
-          section: newWidget.id,
-        });
-        newChildWidget.updatedAt = childWidget.updatedAt;
-        if (newChildWidget.content.title) {
-          newChildWidget.content.title = `(${copyLabel || "Copy"}) ${
-            newChildWidget.content.title
-          }`;
+      newWidgets = await widget.content.widgetIds.map(
+        async (widgetId: string) => {
+          const childWidget = await repo.getWidgetById(dashboardId, widgetId);
+          const newChildWidget = WidgetFactory.createWidget({
+            name: `(${newLabel}) ${childWidget.name}`,
+            dashboardId,
+            widgetType: childWidget.widgetType,
+            showTitle: childWidget.showTitle,
+            content: childWidget.content,
+            section: newWidget.id,
+          });
+          newChildWidget.updatedAt = childWidget.updatedAt;
+          if (newChildWidget.content.title) {
+            newChildWidget.content.title = `(${newLabel}) ${newChildWidget.content.title}`;
+          }
+          return newChildWidget;
         }
-        newWidgets.push(newChildWidget);
-      }
+      );
       if (newWidgets.length) {
-        newWidget.content.widgetIds = newWidgets.map((w) => w.id);
+        newWidget.content.widgetIds = newWidgets.map((w: Widget) => w.id);
       }
     }
   } catch (err) {

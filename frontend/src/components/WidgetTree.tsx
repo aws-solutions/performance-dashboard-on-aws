@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useEffect } from "react";
 import {
   DragDropContext,
@@ -85,17 +90,18 @@ function WidgetTree(props: Props) {
     if (!tree) {
       return;
     }
-    const widgets = OrderingService.moveWidget(
-      tree,
-      sourceIndex,
-      destinationIndex
-    );
     if (sourceIndex < 0) {
       sourceIndex = 0;
     }
     if (destinationIndex >= tree.nodes.length) {
       destinationIndex = tree.nodes.length - 1;
     }
+
+    const widgets = OrderingService.moveWidget(
+      tree,
+      sourceIndex,
+      destinationIndex
+    );
     if (widgets) {
       setTree(OrderingService.buildTree(widgets));
       props.onDrag(widgets);

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { useContext, useEffect } from "react";
 import { Settings, PublicSettings } from "../models";
 import { SettingsContext } from "../context/SettingsProvider";

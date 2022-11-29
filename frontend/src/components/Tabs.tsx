@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useState, KeyboardEvent } from "react";
 import Tab from "./Tab";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
@@ -6,9 +11,8 @@ import { LeftArrow, RightArrow } from "./Arrows";
 interface Props {
   children: React.ReactNode;
   defaultActive: string;
+  ariaLabel: string;
   showArrows?: boolean;
-  activeColor?: string;
-  container?: string;
 }
 
 type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
@@ -22,32 +26,13 @@ function Tabs(props: Props) {
     setActiveTab(props.defaultActive);
   }, [props.defaultActive]);
 
-  const onClickTabItem = (tab: string, currentTab: HTMLElement) => {
-    const rect = currentTab.getBoundingClientRect();
-    const wrapper = scrollMenuObj?.scrollContainer?.current;
-    if (rect && wrapper) {
-      const wrapperRect = wrapper.getBoundingClientRect();
-      if (rect.left < wrapperRect.left) {
-        scrollMenuObj?.scrollPrev();
-      } else {
-        const shownWidth = wrapperRect.right - rect.left;
-        if (shownWidth < rect.width) {
-          scrollMenuObj?.scrollNext();
-        }
+  function getActiveTabIndex(): number {
+    for (let [key, value] of Array.from(tabsMap.entries())) {
+      if (value === activeTab) {
+        return key;
       }
     }
-    setActiveTab(tab);
-  };
-
-  function getActiveTabIndex(): number {
-    let index = 0;
-    tabsMap.forEach((value: string, key: number) => {
-      if (value === activeTab) {
-        index = key;
-        return;
-      }
-    });
-    return index;
+    return 0;
   }
 
   const onKeyDown = (e: KeyboardEvent<HTMLElement>) => {
@@ -64,7 +49,7 @@ function Tabs(props: Props) {
     }
   };
 
-  const onEnterTabItem = (tab: string, currentTab: HTMLElement) => {
+  const activateTabItem = (tab: string, currentTab: HTMLElement) => {
     const rect = currentTab.getBoundingClientRect();
     const wrapper = scrollMenuObj?.scrollContainer?.current;
     if (rect && wrapper) {
@@ -82,7 +67,12 @@ function Tabs(props: Props) {
   };
 
   return (
-    <div className="tabs" onKeyDown={onKeyDown} role="tablist">
+    <div
+      className="tabs"
+      onKeyDown={onKeyDown}
+      role="tablist"
+      aria-label={props.ariaLabel}
+    >
       <ScrollMenu
         LeftArrow={props.showArrows && LeftArrow}
         RightArrow={props.showArrows && RightArrow}
@@ -94,26 +84,28 @@ function Tabs(props: Props) {
           tabsMap.set(index, child.props.id);
           return (
             <Tab
-              aria-controls={child.props.id}
-              id={child.props.id}
               itemId={child.props.id}
               activeTab={activeTab}
               key={child.props.id}
               label={child.props.label}
-              onClick={onClickTabItem}
-              onEnter={onEnterTabItem}
-              activeColor={props.activeColor}
-              container={props.container}
+              onClick={activateTabItem}
+              onEnter={activateTabItem}
             />
           );
         })}
       </ScrollMenu>
-      <div className="tab-content" role="tabpanel">
-        {React.Children.map(props.children, (child) => {
-          if ((child as any).props.id !== activeTab) return undefined;
-          return (child as any).props.children;
-        })}
-      </div>
+
+      {React.Children.map(props.children, (child) => {
+        const childId = (child as any).props.id;
+        if (childId !== activeTab) {
+          return <div id={`${childId}-panel`} role="tabpanel"></div>;
+        }
+        return (
+          <div id={`${childId}-panel`} className="tab-content" role="tabpanel">
+            {(child as any).props.children}
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Dashboard } from "../models";
@@ -54,20 +59,18 @@ function PublishedTab(props: Props) {
           <div className="text-left padding-top-1px">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
-                <span>
-                  <Search
-                    id="search"
-                    onSubmit={onSearch}
-                    size="small"
-                    placeholder={t("Search.SearchDashboards", {
-                      state: t("published"),
-                    })}
-                    label={t("Search.SearchDashboards", {
-                      state: t("published"),
-                    })}
-                    wide={true}
-                  />
-                </span>
+                <Search
+                  id="search"
+                  onSubmit={onSearch}
+                  size="small"
+                  placeholder={t("Search.SearchDashboards", {
+                    state: t("published"),
+                  })}
+                  label={t("Search.SearchDashboards", {
+                    state: t("published"),
+                  })}
+                  wide={true}
+                />
               </li>
             </ul>
           </div>
@@ -112,20 +115,18 @@ function PublishedTab(props: Props) {
           <div className="tablet:grid-col-7 text-left padding-top-1px">
             <ul className="usa-button-group">
               <li className="usa-button-group__item">
-                <span>
-                  <Search
-                    id="search"
-                    onSubmit={onSearch}
-                    size="small"
-                    placeholder={t("Search.SearchDashboards", {
-                      state: t("published"),
-                    })}
-                    label={t("Search.SearchDashboards", {
-                      state: t("published"),
-                    })}
-                    wide={true}
-                  />
-                </span>
+                <Search
+                  id="search"
+                  onSubmit={onSearch}
+                  size="small"
+                  placeholder={t("Search.SearchDashboards", {
+                    state: t("published"),
+                  })}
+                  label={t("Search.SearchDashboards", {
+                    state: t("published"),
+                  })}
+                  wide={true}
+                />
               </li>
             </ul>
           </div>
@@ -166,6 +167,7 @@ function PublishedTab(props: Props) {
         </div>
       )}
       <Table
+        id="published-dashboards"
         selection="multiple"
         initialSortByField="updatedAt"
         filterQuery={filter}

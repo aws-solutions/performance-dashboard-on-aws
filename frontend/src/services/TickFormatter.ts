@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import {
   ColumnMetadata,
   ColumnDataType,
@@ -61,6 +66,17 @@ function formatString(tick: string) {
   return String(tick).toLocaleString();
 }
 
+function formatCurrency(formattedNum: string, currency: string): string {
+  if (currency === CurrencyDataType["Dollar $"] || currency === "$") {
+    return `$` + formattedNum;
+  } else if (currency === CurrencyDataType["Euro €"] || currency === "€") {
+    return `€` + formattedNum;
+  } else if (currency === CurrencyDataType["Pound £"] || currency === "£") {
+    return `£` + formattedNum;
+  }
+  return "";
+}
+
 function formatNumber(
   num: number,
   largestTick: number,
@@ -103,13 +119,7 @@ function formatNumber(
   }
 
   if (currency) {
-    if (currency === CurrencyDataType["Dollar $"] || currency === "$") {
-      return `$` + formattedNum;
-    } else if (currency === CurrencyDataType["Euro €"] || currency === "€") {
-      return `€` + formattedNum;
-    } else if (currency === CurrencyDataType["Pound £"] || currency === "£") {
-      return `£` + formattedNum;
-    }
+    return formatCurrency(formattedNum, currency);
   }
 
   return num.toLocaleString();
@@ -179,18 +189,25 @@ function stackedFormat(
         cm.currencyType === CurrencyDataType["Pound £"]
     )
   );
+  const getCurrency = (
+    allCurrencyDollar: boolean,
+    allCurrencyEuro: boolean,
+    allCurrencyPound: boolean
+  ): string => {
+    if (allCurrencyDollar) {
+      return CurrencyDataType["Dollar $"];
+    }
+    if (allCurrencyEuro) {
+      return CurrencyDataType["Euro €"];
+    }
+    return allCurrencyPound ? CurrencyDataType["Pound £"] : "";
+  };
   return format(
     sum,
     largestTick,
     significantDigitLabels,
     allPercentage ? NumberDataType.Percentage : "",
-    allCurrencyDollar
-      ? CurrencyDataType["Dollar $"]
-      : allCurrencyEuro
-      ? CurrencyDataType["Euro €"]
-      : allCurrencyPound
-      ? CurrencyDataType["Pound £"]
-      : ""
+    getCurrency(allCurrencyDollar, allCurrencyEuro, allCurrencyPound)
   );
 }
 

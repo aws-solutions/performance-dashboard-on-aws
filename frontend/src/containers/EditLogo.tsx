@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -156,9 +161,7 @@ function EditLogo() {
                 required
                 hint={<span>{t("SettingsLogoFileUploadHint")}</span>}
                 fileName={
-                  currentLogo
-                    ? currentLogo.name
-                    : logoFileName
+                  logoFileName
                     ? logoFileName
                     : defaultLogo.replace(/^.*[\\/]/, "")
                 }
@@ -194,10 +197,10 @@ function EditLogo() {
             </form>
           </div>
           <div className="grid-col-5">
-            <h4 className="margin-top-4">{t("SettingsLogoPreview")}</h4>
+            <h2 className="margin-top-4">{t("SettingsLogoPreview")}</h2>
             <div className="grid-row">
               <Header className="usa-header usa-header--basic padding-left-2 padding-right-2">
-                <div className="usa-logo margin-top-2" id="basic-logo">
+                <div className="usa-logo margin-top-2" id="basic-logo-preview">
                   <em className="usa-logo__text display-flex flex-align-center">
                     <div className="logo">
                       {currentLogo && (

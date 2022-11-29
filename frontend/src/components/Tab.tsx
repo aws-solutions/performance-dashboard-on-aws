@@ -1,55 +1,52 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
-import "./Tab.scss";
+import styles from "./Tab.module.scss";
 
 interface Props {
-  id: string;
   itemId: string;
   activeTab: string;
   label: string;
   onClick: Function;
   onEnter: Function;
-  activeColor?: string;
-  container?: string;
 }
 
 function Tab(props: Props) {
   const { t } = useTranslation();
   const onClick = (e: MouseEvent<HTMLElement>) => {
-    props.onClick(props.id, e.currentTarget);
+    props.onClick(props.itemId, e.currentTarget);
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {
-      props.onEnter(props.id, e.currentTarget);
+      props.onEnter(props.itemId, e.currentTarget);
     }
   };
 
-  let className =
-    "tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md";
+  let className = `${styles.tab} display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md`;
 
-  let ariaLabelStr = `${props.container} ${t("Tab")} ${
-    props.label.split("(")[0]
-  }`;
+  let ariaLabelStr = `${t("Tab")} ${props.label.split("(")[0]}`;
 
-  if (props.activeTab === props.id) {
-    className += " tab-active ";
+  if (props.activeTab === props.itemId) {
+    className += " border-bottom-05 border-base-darker";
     ariaLabelStr = `${t("Active")} ${ariaLabelStr}`;
   }
 
   return (
     <div
+      id={`${props.itemId}-tab`}
+      aria-label={ariaLabelStr}
+      aria-controls={`${props.itemId}-panel`}
+      aria-selected={props.activeTab === props.itemId}
       role="tab"
       className={className}
       onClick={onClick}
       onKeyDown={onKeyDown}
       tabIndex={0}
-      aria-label={ariaLabelStr}
-      style={{
-        cursor: "pointer",
-        whiteSpace: "nowrap",
-        borderColor: `${props.activeColor}`,
-      }}
     >
       {props.label}
     </div>

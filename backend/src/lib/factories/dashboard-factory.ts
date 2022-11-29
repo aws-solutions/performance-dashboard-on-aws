@@ -1,8 +1,12 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { v4 as uuidv4 } from "uuid";
 import { User } from "../models/user";
 import TopicareaFactory from "./topicarea-factory";
 import WidgetFactory from "./widget-factory";
-import { Widget } from "../models/widget";
 import {
   Dashboard,
   DashboardItem,
@@ -36,6 +40,37 @@ function createNew(
   };
 }
 
+function duplicateWidgetsInplace(dashboard: Dashboard, newId: string) {
+  const tableOfContents: { [key: string]: boolean } = {};
+  if (!dashboard.widgets) {
+    return tableOfContents;
+  }
+
+  // Duplicate all widgets related to this dashboard
+  const widgets = dashboard.widgets.map((widget) => {
+    const newWidget = WidgetFactory.createFromWidget(newId, widget);
+    return newWidget;
+  });
+  for (const widget of widgets) {
+    if (widget.section) {
+      const sectionIndex = dashboard.widgets.findIndex(
+        (w) => w.id === widget.section
+      );
+      widget.section = widgets[sectionIndex].id;
+    }
+    if (widget.content && widget.content.widgetIds) {
+      const widgetIds: string[] = [];
+      for (const id of widget.content.widgetIds) {
+        const widgetIndex = dashboard.widgets.findIndex((w) => w.id === id);
+        widgetIds.push(widgets[widgetIndex].id);
+      }
+      widget.content.widgetIds = widgetIds;
+    }
+    dashboard.widgets = widgets;
+    return tableOfContents;
+  }
+}
+
 function createNewFromDashboard(
   dashboard: Dashboard,
   id: string,
@@ -44,35 +79,7 @@ function createNewFromDashboard(
   parentDashboardId: string,
   user: User
 ): Dashboard {
-  let widgets: Array<Widget> = [];
-  const tableOfContents: { [key: string]: boolean } = {};
-  if (dashboard.widgets) {
-    // Duplicate all widgets related to this dashboard
-    widgets = dashboard.widgets.map((widget) => {
-      const newWidget = WidgetFactory.createFromWidget(id, widget);
-      if (dashboard.tableOfContents) {
-        tableOfContents[newWidget.id] = dashboard.tableOfContents[widget.id];
-      }
-      return newWidget;
-    });
-    for (const widget of widgets) {
-      if (widget.section) {
-        const sectionIndex = dashboard.widgets.findIndex(
-          (w) => w.id === widget.section
-        );
-        widget.section = widgets[sectionIndex].id;
-      }
-      if (widget.content && widget.content.widgetIds) {
-        const widgetIds: string[] = [];
-        for (const id of widget.content.widgetIds) {
-          const widgetIndex = dashboard.widgets.findIndex((w) => w.id === id);
-          widgetIds.push(widgets[widgetIndex].id);
-        }
-        widget.content.widgetIds = widgetIds;
-      }
-    }
-  }
-
+  const tableOfContents = duplicateWidgetsInplace(dashboard, id);
   return {
     id,
     name,
@@ -87,7 +94,7 @@ function createNewFromDashboard(
     createdBy: user.userId,
     updatedAt: new Date(),
     updatedBy: user.userId,
-    widgets,
+    widgets: dashboard.widgets,
     friendlyURL: undefined, // new draft should not have friendlyURL
   };
 }
@@ -128,7 +135,6 @@ function toItem(dashboard: Dashboard): DashboardItem {
     topicAreaName: dashboard.topicAreaName,
     topicAreaId: TopicareaFactory.itemId(dashboard.topicAreaId),
     displayTableOfContents: dashboard.displayTableOfContents,
-    tableOfContents: dashboard.tableOfContents,
     description: dashboard.description,
     state: dashboard.state,
     createdBy: dashboard.createdBy,
@@ -185,7 +191,6 @@ function toPublic(dashboard: Dashboard): PublicDashboard {
     topicAreaId: dashboard.topicAreaId,
     topicAreaName: dashboard.topicAreaName,
     displayTableOfContents: dashboard.displayTableOfContents,
-    tableOfContents: dashboard.tableOfContents,
     description: dashboard.description,
     updatedAt: dashboard.updatedAt,
     widgets: dashboard.widgets,

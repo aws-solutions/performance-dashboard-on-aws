@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -6,8 +11,11 @@ import {
   CurrencyDataType,
   LocationState,
   NumberDataType,
+  Dataset,
+  WidgetType,
+  DatasetType,
+  ColumnDataType,
 } from "../models";
-import { Dataset, WidgetType, DatasetType, ColumnDataType } from "../models";
 import {
   useDashboard,
   useDatasets,
@@ -95,7 +103,8 @@ function AddChart() {
     undefined
   );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
-  const { fullPreviewButton, fullPreview } = useFullPreview();
+  const previewPanelId = "preview-chart-panel";
+  const { fullPreviewButton, fullPreview } = useFullPreview(previewPanelId);
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
@@ -204,19 +213,28 @@ function AddChart() {
           datasetType: datasetType,
           datasetId: newDataset
             ? newDataset.id
-            : datasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.id
-            : staticDataset?.id,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "id",
+                dynamicDataset,
+                staticDataset
+              ),
           s3Key: newDataset
             ? newDataset.s3Key
-            : datasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.s3Key
-            : staticDataset?.s3Key,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "s3Key",
+                dynamicDataset,
+                staticDataset
+              ),
           fileName: csvFile
             ? csvFile.name
-            : datasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.fileName
-            : staticDataset?.fileName,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "fileName",
+                dynamicDataset,
+                staticDataset
+              ),
           sortByColumn,
           sortByDesc,
           significantDigitLabels: values.significantDigitLabels,
@@ -499,14 +517,11 @@ function AddChart() {
 
             <div hidden={step !== 2}>
               <VisualizeChart
+                widgetId={`add-new-${chartType}`}
                 errors={errors}
                 register={register}
                 json={filteredJson}
-                headers={
-                  currentJson.length
-                    ? (Object.keys(currentJson[0]) as Array<string>)
-                    : []
-                }
+                headers={currentJson.length ? Object.keys(currentJson[0]) : []}
                 originalJson={currentJson}
                 csvJson={csvJson}
                 datasetLoading={datasetLoading}
@@ -518,6 +533,7 @@ function AddChart() {
                 processingWidget={creatingWidget}
                 fullPreviewButton={fullPreviewButton}
                 fullPreview={fullPreview}
+                previewPanelId={previewPanelId}
                 submitButtonLabel={t("AddChartScreen.AddChart")}
                 sortByColumn={sortByColumn}
                 sortByDesc={sortByDesc}

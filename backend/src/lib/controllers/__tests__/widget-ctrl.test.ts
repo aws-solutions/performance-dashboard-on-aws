@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import { mocked } from "ts-jest/utils";
 import { User } from "../../models/user";
@@ -22,6 +27,40 @@ const res = {
 beforeEach(() => {
   WidgetRepository.getInstance = jest.fn().mockReturnValue(repository);
   DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
+});
+
+describe("getWidgetById", () => {
+  let req: Request;
+  beforeEach(() => {
+    req = {
+      user,
+      params: {
+        id: "090b0410",
+        widgetId: "14507073",
+      },
+    } as any as Request;
+  });
+
+  it("returns a 400 error when dashboardId is missing", async () => {
+    delete req.params.id;
+    await WidgetCtrl.getWidgetById(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `id`");
+  });
+
+  it("returns a 400 error when widgetId is missing", async () => {
+    delete req.params.widgetId;
+    await WidgetCtrl.getWidgetById(req, res);
+    expect(res.status).toBeCalledWith(400);
+    expect(res.send).toBeCalledWith("Missing required field `widgetId`");
+  });
+
+  it("gets the widget", async () => {
+    const { id, widgetId } = req.params;
+
+    await WidgetCtrl.getWidgetById(req, res);
+    expect(repository.getWidgetById).toBeCalledWith(id, widgetId);
+  });
 });
 
 describe("createWidget", () => {

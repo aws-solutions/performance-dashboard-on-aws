@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useCallback, useState, MouseEvent } from "react";
 import { useDateTimeFormatter, useWindowSize } from "../hooks";
 import { Dataset, DatasetType } from "../models";
@@ -79,14 +84,14 @@ function ChooseData(props: Props) {
           className={`usa-hint ${isMobile ? "grid-col-12" : "grid-col-6"}`}
         >
           <label className="usa-label text-bold">{t("Data")}</label>
-          <div className="usa-hint">
+          <span className="usa-hint">
             {t("ChooseDataDescription", {
               widgetType: props.widgetType,
             })}{" "}
             <Link to="/admin/apihelp" target="_blank" external>
               {t("HowDoIAddDatasets")}
             </Link>
-          </div>
+          </span>
         </legend>
 
         <div className="grid-row">
@@ -203,6 +208,7 @@ function ChooseData(props: Props) {
 
           <div className="overflow-hidden">
             <Table
+              id="items"
               selection="single"
               initialSortByField="updatedAt"
               filterQuery={filter}

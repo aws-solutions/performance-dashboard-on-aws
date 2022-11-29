@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { DynamoDBRecord, StreamRecord } from "aws-lambda";
 import DynamoDBService from "./dynamodb";
 import AuditTrailService from "./audit-trail";
@@ -109,7 +114,7 @@ function getTimestampFromRecord(record: StreamRecord): Date {
     return new Date();
   }
 
-  const epochTime = record.ApproximateCreationDateTime as number;
+  const epochTime = record.ApproximateCreationDateTime;
   return new Date(epochTime * 1000);
 }
 

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useMemo, useState } from "react";
 import { ColumnMetadata } from "../models";
 import { useTableMetadata } from "../hooks";
@@ -5,8 +10,10 @@ import MarkdownRender from "./MarkdownRender";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
 import Table from "./Table";
+import ShareButton from "./ShareButton";
 
 type Props = {
+  id: string;
   title: string;
   summary: string;
   data?: Array<object>;
@@ -20,6 +27,7 @@ type Props = {
 };
 
 const TableWidget = ({
+  id,
   data,
   summaryBelow,
   summary,
@@ -34,8 +42,7 @@ const TableWidget = ({
   const [filteredJson, setFilteredJson] = useState<any[]>([]);
 
   useMemo(() => {
-    let headers =
-      data && data.length ? (Object.keys(data[0]) as Array<string>) : [];
+    let headers = data && data.length > 0 ? Object.keys(data[0]) : [];
     headers = headers.filter((h) => {
       const metadata = columnsMetadata
         ? columnsMetadata.find((c) => c.columnName === h)
@@ -48,7 +55,7 @@ const TableWidget = ({
         obj[key] = row[key];
         return obj;
       }, {});
-      if (filteredRow !== {}) {
+      if (Object.keys(filteredRow).length > 0) {
         newFilteredJson.push(filteredRow);
       }
     }
@@ -106,9 +113,16 @@ const TableWidget = ({
     <div
       aria-label={title}
       tabIndex={-1}
-      className="overflow-x-hidden overflow-y-hidden"
+      className={`overflow-x-hidden overflow-y-hidden ${
+        title ? "" : "padding-top-2"
+      }`}
     >
-      <h2 className="margin-bottom-1">{title}</h2>
+      {title && (
+        <h2 className={`margin-bottom-${summaryBelow ? "4" : "1"}`}>
+          {title}
+          <ShareButton id={`${id}a`} title={title} className="margin-left-1" />
+        </h2>
+      )}
       {!summaryBelow && (
         <MarkdownRender
           source={summary}
@@ -116,6 +130,7 @@ const TableWidget = ({
         />
       )}
       <Table
+        id={id}
         selection="none"
         rows={rows}
         initialSortAscending={sortByDesc !== undefined ? !sortByDesc : true}

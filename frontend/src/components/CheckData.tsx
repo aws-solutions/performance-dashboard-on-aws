@@ -1,4 +1,9 @@
-import React, { useCallback, useMemo, useState, MouseEvent } from "react";
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useCallback, useMemo, MouseEvent } from "react";
 import { ColumnDataType, CurrencyDataType, NumberDataType } from "../models";
 import TickFormatter from "../services/TickFormatter";
 import UtilsService from "../services/UtilsService";
@@ -111,13 +116,45 @@ function CheckData(props: Props) {
     [props.currencyTypes]
   );
 
+  const handleCell = (properties: any, header: any) => {
+    const row = properties.row.original;
+    const cellHeader = !UtilsService.isCellEmpty(row[header])
+      ? row[header].toLocaleString()
+      : "-";
+    if (!props.dataTypes.has(header)) {
+      return cellHeader;
+    }
+    if (props.dataTypes.get(header) === ColumnDataType.Number) {
+      return typeof row[header] === "number" ? (
+        TickFormatter.format(row[header], 0, false, "", "", {
+          columnName: header,
+          hidden: props.hiddenColumns.has(header),
+          dataType: ColumnDataType.Number,
+          numberType: props.numberTypes.get(header),
+          currencyType: props.currencyTypes.get(header),
+        })
+      ) : (
+        <div className="text-secondary-vivid">{`! ${cellHeader}`}</div>
+      );
+    }
+    if (props.dataTypes.get(header) === ColumnDataType.Date) {
+      return !isNaN(Date.parse(row[header])) ? (
+        row[header].toLocaleString()
+      ) : (
+        <div className="text-secondary-vivid">{`! ${cellHeader}`}</div>
+      );
+    }
+    if (props.dataTypes.get(header) === ColumnDataType.Text) {
+      return cellHeader;
+    }
+    return cellHeader;
+  };
+
   const checkDataTableRows = useMemo(() => props.data || [], [props.data]);
+  const dataColumns = props.data.length ? Object.keys(props.data[0]) : [];
   const checkDataTableColumns = useMemo(
     () =>
-      (props.data.length
-        ? (Object.keys(props.data[0]) as Array<string>)
-        : []
-      ).map((header, i) => {
+      dataColumns.map((header, i) => {
         return {
           Header: () => (
             <span className="text-center usa-checkbox margin-bottom-1">
@@ -144,52 +181,7 @@ function CheckData(props: Props) {
               accessor: header,
               minWidth: 150,
               Cell: (properties: any) => {
-                const row = properties.row.original;
-                if (props.dataTypes.has(header)) {
-                  if (props.dataTypes.get(header) === ColumnDataType.Number) {
-                    return typeof row[header] === "number" ? (
-                      TickFormatter.format(row[header], 0, false, "", "", {
-                        columnName: header,
-                        hidden: props.hiddenColumns.has(header),
-                        dataType: ColumnDataType.Number,
-                        numberType: props.numberTypes.get(header),
-                        currencyType: props.currencyTypes.get(header),
-                      })
-                    ) : (
-                      <div className="text-secondary-vivid">{`! ${
-                        !UtilsService.isCellEmpty(row[header])
-                          ? row[header].toLocaleString()
-                          : "-"
-                      }`}</div>
-                    );
-                  } else if (
-                    props.dataTypes.get(header) === ColumnDataType.Date
-                  ) {
-                    return !isNaN(Date.parse(row[header])) ? (
-                      row[header].toLocaleString()
-                    ) : (
-                      <div className="text-secondary-vivid">{`! ${
-                        !UtilsService.isCellEmpty(row[header])
-                          ? row[header].toLocaleString()
-                          : "-"
-                      }`}</div>
-                    );
-                  } else if (
-                    props.dataTypes.get(header) === ColumnDataType.Text
-                  ) {
-                    return !UtilsService.isCellEmpty(row[header])
-                      ? row[header]
-                      : "-";
-                  } else {
-                    return !UtilsService.isCellEmpty(row[header])
-                      ? row[header].toLocaleString()
-                      : "-";
-                  }
-                } else {
-                  return !UtilsService.isCellEmpty(row[header])
-                    ? row[header].toLocaleString()
-                    : "-";
-                }
+                return handleCell(properties, header);
               },
             },
           ],
@@ -200,55 +192,53 @@ function CheckData(props: Props) {
 
   return (
     <>
-      <fieldset className="usa-fieldset">
-        <legend
-          className={`usa-hint ${isMobile ? "grid-col-12" : "grid-col-6"}`}
-        >
-          {t("CheckDataDescription", { widgetType: props.widgetType })}
-        </legend>
+      <div className={`usa-hint ${isMobile ? "grid-col-12" : "grid-col-6"}`}>
+        {t("CheckDataDescription", { widgetType: props.widgetType })}
+      </div>
 
-        <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
-          {t("IncludeInVisualization")}
-        </div>
+      <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
+        {t("IncludeInVisualization")}
+      </div>
 
-        <div className="check-data-table grid-col-12">
-          <Table
-            selection="none"
-            rows={checkDataTableRows}
-            initialSortAscending={
-              props.sortByDesc !== undefined ? !props.sortByDesc : true
-            }
-            initialSortByField={props.sortByColumn}
-            pageSize={50}
-            disablePagination={false}
-            disableBorderless={true}
-            columns={checkDataTableColumns}
-            hiddenColumns={props.hiddenColumns}
-            addNumbersColumn={true}
-            sortByColumn={props.sortByColumn}
-            sortByDesc={props.sortByDesc}
-            setSortByColumn={props.setSortByColumn}
-            setSortByDesc={props.setSortByDesc}
-            reset={props.reset}
-            keepBorderBottom
-            mobileNavigation
-            settingTable={true}
-          />
-        </div>
-        <br />
+      <div className="check-data-table grid-col-12">
+        <Table
+          id="items"
+          selection="none"
+          rows={checkDataTableRows}
+          initialSortAscending={
+            props.sortByDesc !== undefined ? !props.sortByDesc : true
+          }
+          initialSortByField={props.sortByColumn}
+          pageSize={50}
+          disablePagination={false}
+          disableBorderless={true}
+          columns={checkDataTableColumns}
+          hiddenColumns={props.hiddenColumns}
+          addNumbersColumn={true}
+          sortByColumn={props.sortByColumn}
+          sortByDesc={props.sortByDesc}
+          setSortByColumn={props.setSortByColumn}
+          setSortByDesc={props.setSortByDesc}
+          reset={props.reset}
+          keepBorderBottom
+          mobileNavigation
+          settingTable={true}
+        />
+      </div>
+      <br />
 
-        <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
-          {t("FormatColumns")}
-        </div>
+      <div className="grid-col-12 margin-top-3 font-sans-md text-bold">
+        {t("FormatColumns")}
+      </div>
 
-        <div className="grid-col-12 font-sans-md font-sans-md text-bold">
-          {(props.data.length
-            ? (Object.keys(props.data[0]) as Array<string>)
-            : []
-          ).map((header: string) => {
+      <div className="grid-col-12 font-sans-md font-sans-md text-bold">
+        {(props.data.length ? Object.keys(props.data[0]) : []).map(
+          (header: string) => {
             return (
               <div key={header} className="margin-top-4">
-                <span className="text-base">Column: {header}</span>
+                <span className="text-base">
+                  {t("CheckDataHeader", { header })}
+                </span>
 
                 <div className={isMobile ? "grid-col-8" : "grid-col-4"}>
                   <Dropdown
@@ -333,35 +323,35 @@ function CheckData(props: Props) {
                 <hr />
               </div>
             );
-          })}
-        </div>
+          }
+        )}
+      </div>
 
-        <br />
-        <Button
-          variant="outline"
-          type="button"
-          onClick={props.backStep}
-          className="margin-top-1"
-        >
-          {t("BackButton")}
-        </Button>
-        <Button
-          type="button"
-          onClick={props.advanceStep}
-          disabled={!props.data.length}
-          className="margin-top-1"
-        >
-          {t("ContinueButton")}
-        </Button>
-        <Button
-          variant="unstyled"
-          className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
-          type="button"
-          onClick={props.onCancel}
-        >
-          {t("Cancel")}
-        </Button>
-      </fieldset>
+      <br />
+      <Button
+        variant="outline"
+        type="button"
+        onClick={props.backStep}
+        className="margin-top-1"
+      >
+        {t("BackButton")}
+      </Button>
+      <Button
+        type="button"
+        onClick={props.advanceStep}
+        disabled={!props.data.length}
+        className="margin-top-1"
+      >
+        {t("ContinueButton")}
+      </Button>
+      <Button
+        variant="unstyled"
+        className="text-base-dark hover:text-base-darker active:text-base-darkest margin-top-1"
+        type="button"
+        onClick={props.onCancel}
+      >
+        {t("Cancel")}
+      </Button>
     </>
   );
 }

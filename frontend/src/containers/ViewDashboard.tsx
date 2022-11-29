@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import { useParams, Redirect } from "react-router-dom";
 import Link from "../components/Link";
@@ -38,7 +43,7 @@ function ViewDashboard() {
     dashboard: PublicDashboard
   ): string => {
     const section: Widget | undefined = dashboard.widgets.find(
-      (w) => w.id == widget.section
+      (w) => w.id === widget.section
     );
     if (section) {
       return section.content.showWithTabs ? section.id : "";

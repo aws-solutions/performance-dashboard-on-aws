@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -21,6 +26,7 @@ import Link from "../components/Link";
 import { useTranslation } from "react-i18next";
 import Navigation from "../components/Navigation";
 import AlertContainer from "./AlertContainer";
+import { TopicAreaSortingCriteria } from "../models";
 
 interface FormValues {
   name: string;
@@ -40,15 +46,14 @@ function EditDetails() {
   const { dashboardId } = useParams<PathParams>();
   const { dashboard, loading } = useDashboard(dashboardId);
   const [activeWidgetId, setActiveWidgetId] = useState("");
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-details-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const { register, errors, handleSubmit, watch, reset } =
     useForm<FormValues>();
   const windowSize = useWindowSize();
   const isMobile = windowSize.width <= 600;
 
-  const sortedTopicAreas = topicareas.sort((a, b) =>
-    a.name > b.name ? 1 : -1
-  );
+  const sortedTopicAreas = [...topicareas].sort(TopicAreaSortingCriteria);
 
   const name = watch("name");
   const description = watch("description");
@@ -76,12 +81,6 @@ function EditDetails() {
     if (!dashboard) {
       return;
     }
-    if (!dashboard.tableOfContents) {
-      dashboard.tableOfContents = {};
-    }
-    for (const widget of dashboard.widgets || []) {
-      dashboard.tableOfContents[widget.id] = value;
-    }
   };
 
   const onSubmit = async (values: FormValues) => {
@@ -92,7 +91,7 @@ function EditDetails() {
       values.displayTableOfContents,
       values.description || "",
       dashboard ? dashboard.updatedAt : new Date(),
-      dashboard && dashboard.tableOfContents ? dashboard.tableOfContents : {}
+      {}
     );
 
     history.push(`/admin/dashboard/edit/${dashboardId}`, {
@@ -266,7 +265,7 @@ function EditDetails() {
           aria-label={t("ContentPreview")}
         >
           {isMobile ? <br /> : fullPreviewButton}
-          <div className="margin-top-2">
+          <div id={previewPanelId} className="margin-top-2">
             <DashboardHeader
               name={name}
               topicAreaName={getTopicAreaName(topicAreaId)}
@@ -285,21 +284,14 @@ function EditDetails() {
               offset={80}
               area={2}
               marginRight={0}
-              widgetNameIds={dashboard.widgets
-                .filter(
-                  (w) =>
-                    dashboard &&
-                    dashboard.tableOfContents &&
-                    dashboard.tableOfContents[w.id]
-                )
-                .map((widget) => {
-                  return {
-                    name: widget.name,
-                    id: widget.id,
-                    isInsideSection: !!widget.section,
-                    sectionWithTabs: "",
-                  };
-                })}
+              widgetNameIds={dashboard.widgets.map((widget) => {
+                return {
+                  name: widget.name,
+                  id: widget.id,
+                  isInsideSection: !!widget.section,
+                  sectionWithTabs: "",
+                };
+              })}
               activeWidgetId={activeWidgetId}
               isTop={false}
               displayTableOfContents={displayTableOfContents}

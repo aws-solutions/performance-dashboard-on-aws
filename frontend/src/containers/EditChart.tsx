@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -101,7 +106,9 @@ function EditChart() {
     setDynamicJson,
     setCsvJson,
   } = useWidget(dashboardId, widgetId);
-  const { fullPreviewButton, fullPreview } = useFullPreview();
+
+  const previewPanelId = "preview-chart-panel";
+  const { fullPreviewButton, fullPreview } = useFullPreview(previewPanelId);
 
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
     new Set<string>()
@@ -191,9 +198,7 @@ function EditChart() {
         showTitle,
         datasetType: displayedDatasetType
           ? displayedDatasetType
-          : state && state.json
-          ? DatasetType.StaticDataset
-          : datasetType,
+          : UtilsService.getDatasetTypeFromState(state, datasetType),
         summary,
         summaryBelow,
         chartType,
@@ -211,11 +216,10 @@ function EditChart() {
           widget.content.datasetType === DatasetType.StaticDataset
             ? widget.content.s3Key.json
             : "",
-        sortData: widget.content.sortByColumn
-          ? `${widget.content.sortByColumn}###${
-              widget.content.sortByDesc ? "desc" : "asc"
-            }`
-          : "",
+        sortData: UtilsService.getSortData(
+          widget.content.sortByColumn,
+          widget.content.sortByDesc
+        ),
       });
 
       if (!displayedDatasetType) {
@@ -275,7 +279,14 @@ function EditChart() {
     dynamicDataset,
     staticDataset,
   ]);
-
+  const areValidCsvColumnNames = (firstRow: any): boolean => {
+    for (let columnName in firstRow) {
+      if (columnName === "") {
+        return false;
+      }
+    }
+    return true;
+  };
   const onFileProcessed = useCallback(
     async (data: File) => {
       if (!data) {
@@ -285,14 +296,7 @@ function EditChart() {
       ParsingFileService.parseFile(data, true, (errors: any, results: any) => {
         initializeColumnsMetadata();
 
-        let wrongCSV = false;
-        const firstRow = results[0];
-        for (let columnName in firstRow) {
-          if (columnName === "") {
-            wrongCSV = true;
-            break;
-          }
-        }
+        let wrongCSV = !areValidCsvColumnNames(results[0]);
 
         if (wrongCSV) {
           setEnableContinueButton(false);
@@ -401,19 +405,28 @@ function EditChart() {
           datasetType: displayedDatasetType,
           datasetId: newDataset
             ? newDataset.id
-            : displayedDatasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.id
-            : staticDataset?.id,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "id",
+                dynamicDataset,
+                staticDataset
+              ),
           s3Key: newDataset
             ? newDataset.s3Key
-            : displayedDatasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.s3Key
-            : staticDataset?.s3Key,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "s3Key",
+                dynamicDataset,
+                staticDataset
+              ),
           fileName: csvFile
             ? csvFile.name
-            : displayedDatasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.fileName
-            : staticDataset?.fileName,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "fileName",
+                dynamicDataset,
+                staticDataset
+              ),
           sortByColumn,
           sortByDesc,
           significantDigitLabels: values.significantDigitLabels,
@@ -528,23 +541,22 @@ function EditChart() {
     });
   }
 
-  const configHeader = (
+  const configHeader = (suffix: string) => (
     <div>
-      <h1 id="editChartFormHeader" className="margin-top-0">
+      <h1 id={`editChartFormHeader_${suffix}`} className="margin-top-0">
         {t("EditChartScreen.EditChart")}
       </h1>
       <ul
         className="usa-button-group usa-button-group--segmented"
         role="tablist"
+        aria-labelledby={`editChartFormHeader_${suffix}`}
       >
-        <li
-          id="editChartFormHeaderStep1"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 0}
-          aria-controls="panel1"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editChartFormHeaderStep1_${suffix}`}
+            role="tab"
+            aria-selected={step === 0}
+            aria-controls="panel1"
             className={`usa-button tabSelector ${
               step !== 0 ? "usa-button--outline" : ""
             }`}
@@ -555,14 +567,12 @@ function EditChart() {
             {t("EditChartScreen.ChooseData")}
           </button>
         </li>
-        <li
-          id="editChartFormHeaderStep2"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 1}
-          aria-controls="panel2"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editChartFormHeaderStep2_${suffix}`}
+            role="tab"
+            aria-selected={step === 1}
+            aria-controls="panel2"
             className={`usa-button tabSelector ${
               step !== 1 ? "usa-button--outline" : ""
             }`}
@@ -574,14 +584,12 @@ function EditChart() {
             {t("EditChartScreen.CheckData")}
           </button>
         </li>
-        <li
-          id="editChartFormHeaderStep3"
-          className="usa-button-group__item"
-          role="tab"
-          aria-selected={step === 2}
-          aria-controls="panel3"
-        >
+        <li className="usa-button-group__item">
           <button
+            id={`editChartFormHeaderStep3_${suffix}`}
+            role="tab"
+            aria-selected={step === 2}
+            aria-controls="panel3"
             className={`usa-button tabSelector ${
               step !== 2 ? "usa-button--outline" : ""
             }`}
@@ -617,19 +625,19 @@ function EditChart() {
       ) : (
         <div className="grid-row">
           <div className="grid-col-12">
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              aria-labelledby="editChartFormHeader"
+            <div
+              id="panel1"
+              hidden={step !== 0}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editChartFormHeaderStep1_chooseDdata"
             >
-              <div
-                id="panel1"
-                hidden={step !== 0}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editChartFormHeaderStep1"
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editChartFormHeader_chooseDdata"
               >
                 <PrimaryActionBar>
-                  {configHeader}
+                  {configHeader("chooseDdata")}
                   <div className="margin-y-3" hidden={!showColumnHeaderAlert}>
                     <Alert
                       type="error"
@@ -665,16 +673,21 @@ function EditChart() {
                     setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
                   />
                 </PrimaryActionBar>
-              </div>
-              <div
-                id="panel2"
-                hidden={step !== 1}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editChartFormHeaderStep2"
+              </form>
+            </div>
+            <div
+              id="panel2"
+              hidden={step !== 1}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editChartFormHeaderStep2_checkDdata"
+            >
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editChartFormHeader_checkDdata"
               >
                 <PrimaryActionBar>
-                  {configHeader}
+                  {configHeader("checkDdata")}
                   <CheckData
                     data={displayedJson}
                     advanceStep={advanceStep}
@@ -696,23 +709,27 @@ function EditChart() {
                     widgetType={t("CheckDataDescriptionChart")}
                   />
                 </PrimaryActionBar>
-              </div>
-              <div
-                id="panel3"
-                hidden={step !== 2}
-                role="tabpanel"
-                tabIndex={0}
-                aria-labelledby="editChartFormHeaderStep3"
+              </form>
+            </div>
+            <div
+              id="panel3"
+              hidden={step !== 2}
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby="editChartFormHeaderStep3_visualizeChart"
+            >
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                aria-labelledby="editChartFormHeader_visualizeChart"
               >
                 <VisualizeChart
+                  widgetId={`chart-${UtilsService.getShorterId(widgetId)}`}
                   errors={errors}
                   register={register}
                   json={filteredJson}
                   originalJson={displayedJson}
                   headers={
-                    displayedJson.length
-                      ? (Object.keys(displayedJson[0]) as Array<string>)
-                      : []
+                    displayedJson.length ? Object.keys(displayedJson[0]) : []
                   }
                   csvJson={csvJson}
                   datasetLoading={datasetLoading}
@@ -729,6 +746,7 @@ function EditChart() {
                   showTitle={showTitle}
                   fullPreviewButton={fullPreviewButton}
                   fullPreview={fullPreview}
+                  previewPanelId={previewPanelId}
                   submitButtonLabel={t("Save")}
                   sortByColumn={sortByColumn}
                   sortByDesc={sortByDesc}
@@ -746,10 +764,10 @@ function EditChart() {
                     numberTypes,
                     currencyTypes
                   )}
-                  configHeader={configHeader}
+                  configHeader={configHeader("visualizeChart")}
                 />
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       )}

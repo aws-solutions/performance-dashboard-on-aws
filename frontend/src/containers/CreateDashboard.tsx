@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -12,6 +17,7 @@ import DashboardHeader from "../components/DashboardHeader";
 import PrimaryActionBar from "../components/PrimaryActionBar";
 import Link from "../components/Link";
 import { useTranslation } from "react-i18next";
+import { TopicAreaSortingCriteria } from "../models";
 
 interface FormValues {
   name: string;
@@ -25,9 +31,7 @@ function CreateDashboard() {
   const { topicareas, loading } = useTopicAreas();
   const { register, errors, handleSubmit, watch } = useForm<FormValues>();
 
-  const sortedTopicAreas = topicareas.sort((a, b) =>
-    a.name > b.name ? 1 : -1
-  );
+  const sortedTopicAreas = [...topicareas].sort(TopicAreaSortingCriteria);
   const name = watch("name");
   const description = watch("description");
   const topicAreaId = watch("topicAreaId");

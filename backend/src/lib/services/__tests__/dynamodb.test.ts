@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { mocked } from "ts-jest/utils";
 import DynamoDBService from "../dynamodb";

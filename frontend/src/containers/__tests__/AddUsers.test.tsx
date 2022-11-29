@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { render, fireEvent, act, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
@@ -26,7 +31,7 @@ describe("AddUsersForm", () => {
   test("submits form with the entered values", async () => {
     fireEvent.input(screen.getByLabelText("User email address(es)*"), {
       target: {
-        value: "test@test.com",
+        value: "test@example.com",
       },
     });
 
@@ -40,7 +45,9 @@ describe("AddUsersForm", () => {
       fireEvent.submit(screen.getByTestId("AddUsersForm"));
     });
 
-    expect(BackendService.addUsers).toBeCalledWith("Editor", ["test@test.com"]);
+    expect(BackendService.addUsers).toBeCalledWith("Editor", [
+      "test@example.com",
+    ]);
   });
 
   test("invokes cancel function when use clicks cancel", async () => {

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import SettingsProvider from "./context/SettingsProvider";
@@ -373,11 +378,14 @@ function App() {
       <Router>
         <Switch>
           {routes.map((route) => {
-            const component = route.public
-              ? window.EnvironmentConfig.authenticationRequired
+            let component = withSAMLAuthenticator(
+              withAdminLayout(route.component)
+            );
+            if (route.public) {
+              component = window.EnvironmentConfig.authenticationRequired
                 ? withSAMLAuthenticator(withPublicLayout(route.component))
-                : withPublicLayout(route.component)
-              : withSAMLAuthenticator(withAdminLayout(route.component));
+                : withPublicLayout(route.component);
+            }
             return (
               <Page
                 title={route.title}

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { useCallback, useEffect, useState } from "react";
 import Papa, { ParseResult } from "papaparse";
 import StorageService from "../services/StorageService";
@@ -125,7 +130,7 @@ export function useSampleDataset(sampleCSV: string): SampleDatasetsHook {
           if (results.errors.length === 0) {
             setDataset({
               data: results.data,
-              headers: Object.keys(results.data[0]) as string[],
+              headers: Object.keys(results.data[0]),
             });
           }
         },

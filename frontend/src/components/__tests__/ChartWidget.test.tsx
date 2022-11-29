@@ -1,7 +1,13 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { render } from "@testing-library/react";
 import { ChartType, WidgetType, ChartWidget } from "../../models";
 import ChartWidgetComponent from "../ChartWidget";
+import { MemoryRouter } from "react-router-dom";
 
 jest.mock("../../hooks");
 
@@ -27,10 +33,15 @@ const chart: ChartWidget = {
     significantDigitLabels: false,
     dataLabels: false,
     showTotal: true,
+    computePercentages: false,
   },
 };
 
 test("renders a chart with title", async () => {
-  const { getByText } = render(<ChartWidgetComponent widget={chart} />);
+  const { getByText } = render(
+    <MemoryRouter>
+      <ChartWidgetComponent widget={chart} />
+    </MemoryRouter>
+  );
   expect(getByText("Bananas chart")).toBeInTheDocument();
 });

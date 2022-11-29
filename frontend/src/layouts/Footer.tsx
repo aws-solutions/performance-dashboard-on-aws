@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import packagejson from "../../package.json";
 import { useSettings } from "../hooks";
@@ -8,7 +13,7 @@ function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer aria-label={t("ARIA.Footer")}>
+    <footer>
       <div className="grid-container margin-bottom-9 text-base font-sans-sm">
         {loadingSettings ? (
           ""

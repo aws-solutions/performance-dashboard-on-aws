@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, MouseEvent } from "react";
 import { ChartType, DatasetType } from "../models";
@@ -19,8 +24,10 @@ import PrimaryActionBar from "./PrimaryActionBar";
 import PieChartWidget from "./PieChartWidget";
 import DonutChartWidget from "./DonutChartWidget";
 import { useWindowSize } from "../hooks";
+import UtilsService from "../services/UtilsService";
 
 interface Props {
+  widgetId: string;
   errors: any;
   register: Function;
   json: Array<any>;
@@ -35,6 +42,7 @@ interface Props {
   fileLoading: boolean;
   processingWidget: boolean;
   fullPreviewButton: JSX.Element;
+  previewPanelId: string;
   fullPreview: boolean;
   submitButtonLabel: string;
   sortByColumn?: string;
@@ -175,13 +183,10 @@ function VisualizeChart(props: Props) {
                   props.chartType
                 )}
                 onChange={handleSortDataChange}
-                defaultValue={
-                  props.sortByColumn
-                    ? `${props.sortByColumn}###${
-                        props.sortByDesc ? "desc" : "asc"
-                      }`
-                    : ""
-                }
+                defaultValue={UtilsService.getSortData(
+                  props.sortByColumn,
+                  props.sortByDesc
+                )}
                 register={props.register}
               />
             </div>
@@ -391,161 +396,147 @@ function VisualizeChart(props: Props) {
           }`}
         >
           {isMobile ? <br /> : props.fullPreviewButton}
-          {props.datasetLoading ? (
-            <Spinner
-              className="text-center margin-top-6"
-              label={t("LoadingSpinnerLabel")}
-            />
-          ) : (
-            <>
-              {showAlert &&
-              props.datasetType === DatasetType.StaticDataset &&
-              props.csvJson.length ? (
-                <Alert
-                  type="info"
-                  message={
-                    <div className="grid-row margin-left-6">
-                      <div className="grid-col-11">
-                        {t("VisualizeChartComponent.ChartCorrectDisplay")}{" "}
-                        <Link to="/admin/formatting" target="_blank" external>
-                          {t("LearnHowToFormatCSV")}
-                        </Link>
-                      </div>
-                      <div className="grid-col-1">
-                        <div className="margin-1">
-                          <Button
-                            variant="unstyled"
-                            className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
-                            onClick={() => setShowAlert(false)}
-                            type="button"
-                            ariaLabel={t("GlobalClose")}
-                          >
-                            <FontAwesomeIcon icon={faTimes} size="sm" />
-                          </Button>
+          <div id={props.previewPanelId}>
+            {props.datasetLoading ? (
+              <Spinner
+                className="text-center margin-top-6"
+                label={t("LoadingSpinnerLabel")}
+              />
+            ) : (
+              <>
+                {showAlert &&
+                props.datasetType === DatasetType.StaticDataset &&
+                props.csvJson.length ? (
+                  <Alert
+                    type="info"
+                    message={
+                      <div className="grid-row margin-left-6">
+                        <div className="grid-col-11">
+                          {t("VisualizeChartComponent.ChartCorrectDisplay")}{" "}
+                          <Link to="/admin/formatting" target="_blank" external>
+                            {t("LearnHowToFormatCSV")}
+                          </Link>
+                        </div>
+                        <div className="grid-col-1">
+                          <div className="margin-1">
+                            <Button
+                              variant="unstyled"
+                              className="margin-0-important text-base-dark hover:text-base-darker active:text-base-darkest"
+                              onClick={() => setShowAlert(false)}
+                              type="button"
+                              ariaLabel={t("GlobalClose")}
+                            >
+                              <FontAwesomeIcon icon={faTimes} size="sm" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  }
-                  slim
-                />
-              ) : (
-                ""
-              )}
-              {props.chartType === ChartType.LineChart && (
-                <LineChartWidget
-                  title={props.showTitle ? props.title : ""}
-                  downloadTitle={props.title}
-                  summary={props.summary}
-                  lines={
-                    props.json.length
-                      ? (Object.keys(props.json[0]) as Array<string>)
-                      : []
-                  }
-                  data={props.json}
-                  summaryBelow={props.summaryBelow}
-                  isPreview={!props.fullPreview}
-                  horizontalScroll={props.horizontalScroll}
-                  setWidthPercent={setWidthPercent}
-                  significantDigitLabels={props.significantDigitLabels}
-                  columnsMetadata={props.columnsMetadata}
-                />
-              )}
-              {props.chartType === ChartType.ColumnChart && (
-                <ColumnChartWidget
-                  title={props.showTitle ? props.title : ""}
-                  downloadTitle={props.title}
-                  summary={props.summary}
-                  columns={
-                    props.json.length
-                      ? (Object.keys(props.json[0]) as Array<string>)
-                      : []
-                  }
-                  data={props.json}
-                  summaryBelow={props.summaryBelow}
-                  isPreview={!props.fullPreview}
-                  horizontalScroll={props.horizontalScroll}
-                  stackedChart={props.stackedChart}
-                  setWidthPercent={setWidthPercent}
-                  significantDigitLabels={props.significantDigitLabels}
-                  columnsMetadata={props.columnsMetadata || []}
-                  hideDataLabels={!props.dataLabels}
-                />
-              )}
-              {props.chartType === ChartType.BarChart && (
-                <BarChartWidget
-                  title={props.showTitle ? props.title : ""}
-                  downloadTitle={props.title}
-                  summary={props.summary}
-                  bars={
-                    props.json.length
-                      ? (Object.keys(props.json[0]) as Array<string>)
-                      : []
-                  }
-                  data={props.json}
-                  summaryBelow={props.summaryBelow}
-                  significantDigitLabels={props.significantDigitLabels}
-                  columnsMetadata={props.columnsMetadata || []}
-                  hideDataLabels={!props.dataLabels}
-                  stackedChart={props.stackedChart}
-                />
-              )}
-              {props.chartType === ChartType.PartWholeChart && (
-                <PartWholeChartWidget
-                  title={props.showTitle ? props.title : ""}
-                  downloadTitle={props.title}
-                  summary={props.summary}
-                  parts={
-                    props.json.length
-                      ? (Object.keys(props.json[0]) as Array<string>)
-                      : []
-                  }
-                  data={props.json}
-                  summaryBelow={props.summaryBelow}
-                  significantDigitLabels={props.significantDigitLabels}
-                  columnsMetadata={props.columnsMetadata}
-                />
-              )}
-              {props.chartType === ChartType.PieChart && (
-                <PieChartWidget
-                  title={props.showTitle ? props.title : ""}
-                  downloadTitle={props.title}
-                  summary={props.summary}
-                  parts={
-                    props.json.length
-                      ? (Object.keys(props.json[0]) as Array<string>)
-                      : []
-                  }
-                  data={props.json}
-                  summaryBelow={props.summaryBelow}
-                  significantDigitLabels={props.significantDigitLabels}
-                  hideDataLabels={!props.dataLabels}
-                  isPreview={!props.fullPreview}
-                  columnsMetadata={props.columnsMetadata}
-                  computePercentages={props.computePercentages}
-                />
-              )}
-              {props.chartType === ChartType.DonutChart && (
-                <DonutChartWidget
-                  title={props.showTitle ? props.title : ""}
-                  downloadTitle={props.title}
-                  summary={props.summary}
-                  parts={
-                    props.json.length
-                      ? (Object.keys(props.json[0]) as Array<string>)
-                      : []
-                  }
-                  data={props.json}
-                  summaryBelow={props.summaryBelow}
-                  significantDigitLabels={props.significantDigitLabels}
-                  hideDataLabels={!props.dataLabels}
-                  showTotal={props.showTotal}
-                  isPreview={!props.fullPreview}
-                  columnsMetadata={props.columnsMetadata}
-                  computePercentages={props.computePercentages}
-                />
-              )}
-            </>
-          )}
+                    }
+                    slim
+                  />
+                ) : (
+                  ""
+                )}
+                {props.chartType === ChartType.LineChart && (
+                  <LineChartWidget
+                    id={props.widgetId}
+                    title={props.showTitle ? props.title : ""}
+                    downloadTitle={props.title}
+                    summary={props.summary}
+                    lines={props.json.length ? Object.keys(props.json[0]) : []}
+                    data={props.json}
+                    summaryBelow={props.summaryBelow}
+                    isPreview={!props.fullPreview}
+                    horizontalScroll={props.horizontalScroll}
+                    setWidthPercent={setWidthPercent}
+                    significantDigitLabels={props.significantDigitLabels}
+                    columnsMetadata={props.columnsMetadata}
+                  />
+                )}
+                {props.chartType === ChartType.ColumnChart && (
+                  <ColumnChartWidget
+                    id={props.widgetId}
+                    title={props.showTitle ? props.title : ""}
+                    downloadTitle={props.title}
+                    summary={props.summary}
+                    columns={
+                      props.json.length ? Object.keys(props.json[0]) : []
+                    }
+                    data={props.json}
+                    summaryBelow={props.summaryBelow}
+                    isPreview={!props.fullPreview}
+                    horizontalScroll={props.horizontalScroll}
+                    stackedChart={props.stackedChart}
+                    setWidthPercent={setWidthPercent}
+                    significantDigitLabels={props.significantDigitLabels}
+                    columnsMetadata={props.columnsMetadata || []}
+                    hideDataLabels={!props.dataLabels}
+                  />
+                )}
+                {props.chartType === ChartType.BarChart && (
+                  <BarChartWidget
+                    id={props.widgetId}
+                    title={props.showTitle ? props.title : ""}
+                    downloadTitle={props.title}
+                    summary={props.summary}
+                    bars={props.json.length ? Object.keys(props.json[0]) : []}
+                    data={props.json}
+                    summaryBelow={props.summaryBelow}
+                    significantDigitLabels={props.significantDigitLabels}
+                    columnsMetadata={props.columnsMetadata || []}
+                    hideDataLabels={!props.dataLabels}
+                    stackedChart={props.stackedChart}
+                  />
+                )}
+                {props.chartType === ChartType.PartWholeChart && (
+                  <PartWholeChartWidget
+                    id={props.widgetId}
+                    title={props.showTitle ? props.title : ""}
+                    downloadTitle={props.title}
+                    summary={props.summary}
+                    parts={props.json.length ? Object.keys(props.json[0]) : []}
+                    data={props.json}
+                    summaryBelow={props.summaryBelow}
+                    significantDigitLabels={props.significantDigitLabels}
+                    columnsMetadata={props.columnsMetadata}
+                  />
+                )}
+                {props.chartType === ChartType.PieChart && (
+                  <PieChartWidget
+                    id={props.widgetId}
+                    title={props.showTitle ? props.title : ""}
+                    downloadTitle={props.title}
+                    summary={props.summary}
+                    parts={props.json.length ? Object.keys(props.json[0]) : []}
+                    data={props.json}
+                    summaryBelow={props.summaryBelow}
+                    significantDigitLabels={props.significantDigitLabels}
+                    hideDataLabels={!props.dataLabels}
+                    isPreview={!props.fullPreview}
+                    columnsMetadata={props.columnsMetadata}
+                    computePercentages={props.computePercentages}
+                  />
+                )}
+                {props.chartType === ChartType.DonutChart && (
+                  <DonutChartWidget
+                    id={props.widgetId}
+                    title={props.showTitle ? props.title : ""}
+                    downloadTitle={props.title}
+                    summary={props.summary}
+                    parts={props.json.length ? Object.keys(props.json[0]) : []}
+                    data={props.json}
+                    summaryBelow={props.summaryBelow}
+                    significantDigitLabels={props.significantDigitLabels}
+                    hideDataLabels={!props.dataLabels}
+                    showTotal={props.showTotal}
+                    isPreview={!props.fullPreview}
+                    columnsMetadata={props.columnsMetadata}
+                    computePercentages={props.computePercentages}
+                  />
+                )}
+              </>
+            )}
+          </div>
         </div>
       </section>
     </div>

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
 import { Configuration } from "./common";
 import { env } from "./env";

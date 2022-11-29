@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { ReactNode, useLayoutEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Auth } from "@aws-amplify/auth";
@@ -16,7 +21,6 @@ import Header from "../components/Header";
 import { Helmet } from "react-helmet";
 import defaultFavicon from "../favicon.svg";
 import "./Admin.scss";
-import Button from "../components/Button";
 
 interface LayoutProps {
   children: ReactNode;
@@ -166,7 +170,7 @@ function AdminLayout(props: LayoutProps) {
           </nav>
         </div>
       </Header>
-      <main className="padding-y-3" aria-label={t("ARIA.Main")}>
+      <main className="padding-y-3">
         <div id="main" tabIndex={-1}></div>
         {(!hasRole || isPublic) && <Redirect to="/403/access-denied" />}
         <div className="grid-container">{props.children}</div>

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../components/Button";
@@ -22,7 +27,11 @@ function AccessDenied() {
       </div>
       <div className="grid-row">
         <CardGroup>
-          <Card title={t("AccessDeniedScreen.CardTitle")} col={7}>
+          <Card
+            id="access-denied"
+            title={t("AccessDeniedScreen.CardTitle")}
+            col={7}
+          >
             <CardBody>
               <p>
                 {t("AccessDeniedScreen.Message")}

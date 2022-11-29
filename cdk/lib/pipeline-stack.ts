@@ -1,23 +1,29 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import * as cdk from "@aws-cdk/core";
 import * as s3 from "@aws-cdk/aws-s3";
-import { Repository } from "@aws-cdk/aws-codecommit";
 import * as iam from "@aws-cdk/aws-iam";
 import * as codepipeline from "@aws-cdk/aws-codepipeline";
 import * as codebuild from "@aws-cdk/aws-codebuild";
 import * as codestarnotifications from "@aws-cdk/aws-codestarnotifications";
+import * as cloudtrail from "@aws-cdk/aws-cloudtrail";
 import * as sns from "@aws-cdk/aws-sns";
 import {
-  CodeCommitSourceAction,
   CodeBuildAction,
-  GitHubSourceAction,
+  S3SourceAction,
+  S3Trigger,
 } from "@aws-cdk/aws-codepipeline-actions";
+import { GitHubIntegration } from "./constructs/github-integration";
 
 interface Props extends cdk.StackProps {
+  githubOrg: string;
   repoName: string;
-  sourceProvider: "GitHub" | "CodeCommit";
   branch: string;
-  githubOwner?: string;
-  githubOAuthToken?: string;
+  environment: string;
+  secure?: boolean;
 }
 
 export class PipelineStack extends cdk.Stack {
@@ -36,15 +42,55 @@ export class PipelineStack extends cdk.Stack {
       })
     );
 
-    const artifactsBucket = new s3.Bucket(this, "ArtifactsBucket");
+    const artifactsBucket = new s3.Bucket(this, "ArtifactsBucket", {
+      versioned: true,
+    });
+    new cdk.CfnOutput(this, "ArtifactsBucketARN", {
+      description: "ARN of the artifact's bucket",
+      value: artifactsBucket.bucketArn,
+    });
+
     const pipeline = new codepipeline.Pipeline(this, "Pipeline", {
       artifactBucket: artifactsBucket,
+    });
+    new cdk.CfnOutput(this, "ServiceRoleARN", {
+      description: "ARN the service role",
+      value: pipeline.role.roleArn,
     });
 
     const sourceOutput = new codepipeline.Artifact();
     const buildOutput = new codepipeline.Artifact();
     const secureBuildOutput = new codepipeline.Artifact();
-    const sourceAction = createSourceAction(scope, props, sourceOutput);
+
+    const bucketKey = `github/${props.githubOrg}/${props.repoName}/${props.branch}/artifact.zip`;
+    const trail = new cloudtrail.Trail(this, "CloudTrail");
+    trail.addS3EventSelector(
+      [
+        {
+          bucket: s3.Bucket.fromBucketArn(
+            this,
+            "ArtifactsBucket",
+            artifactsBucket.bucketArn
+          ),
+          objectPrefix: bucketKey,
+        },
+      ],
+      {
+        readWriteType: cloudtrail.ReadWriteType.WRITE_ONLY,
+      }
+    );
+
+    const sourceAction = new S3SourceAction({
+      actionName: "Source",
+      trigger: S3Trigger.EVENTS,
+      bucket: artifactsBucket,
+      output: sourceOutput,
+      bucketKey,
+    });
+    new cdk.CfnOutput(this, "SourceRoleARN", {
+      description: "ARN of the source action.",
+      value: sourceAction.actionProperties.role?.roleArn ?? "",
+    });
 
     pipeline.addStage({
       stageName: "Source",
@@ -53,7 +99,7 @@ export class PipelineStack extends cdk.Stack {
 
     const build = new codebuild.PipelineProject(this, "Build", {
       environment: {
-        buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_2,
+        buildImage: codebuild.LinuxBuildImage.STANDARD_5_0,
         computeType: codebuild.ComputeType.LARGE,
       },
       environmentVariables: {
@@ -61,7 +107,7 @@ export class PipelineStack extends cdk.Stack {
           value: "johndoe@example.com",
         },
         ENVIRONMENT: {
-          value: "Gamma",
+          value: props.environment,
         },
         LANGUAGE: {
           value: "english",
@@ -70,11 +116,12 @@ export class PipelineStack extends cdk.Stack {
           value: "false",
         },
       },
+      buildSpec: codebuild.BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
     });
 
     const buildSecure = new codebuild.PipelineProject(this, "Build-Secure", {
       environment: {
-        buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_2,
+        buildImage: codebuild.LinuxBuildImage.STANDARD_5_0,
         computeType: codebuild.ComputeType.LARGE,
       },
       environmentVariables: {
@@ -82,7 +129,7 @@ export class PipelineStack extends cdk.Stack {
           value: "johndoe@example.com",
         },
         ENVIRONMENT: {
-          value: "GammaSecure",
+          value: `${props.environment}Secure`,
         },
         LANGUAGE: {
           value: "english",
@@ -91,6 +138,7 @@ export class PipelineStack extends cdk.Stack {
           value: "true",
         },
       },
+      buildSpec: codebuild.BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
     });
 
     build.addToRolePolicy(
@@ -108,24 +156,43 @@ export class PipelineStack extends cdk.Stack {
       })
     );
 
-    pipeline.addStage({
-      stageName: "Gamma",
-      actions: [
-        new CodeBuildAction({
-          actionName: "Build.and.Deploy",
-          project: build,
-          input: sourceOutput,
-          outputs: [buildOutput],
-          runOrder: 1,
-        }),
+    const actions: CodeBuildAction[] = [
+      new CodeBuildAction({
+        actionName: "Build.and.Deploy",
+        project: build,
+        input: sourceOutput,
+        outputs: [buildOutput],
+        runOrder: 1,
+      }),
+    ];
+
+    if (props.secure) {
+      actions.push(
         new CodeBuildAction({
           actionName: "Build.and.Deploy.Secure",
           project: buildSecure,
           input: sourceOutput,
           outputs: [secureBuildOutput],
           runOrder: 2,
-        }),
-      ],
+        })
+      );
+    }
+    pipeline.addStage({
+      stageName: "Deploy",
+      actions,
+    });
+
+    const decryptArns = [pipeline.role.roleArn];
+    if (sourceAction.actionProperties.role?.roleArn) {
+      decryptArns.push(sourceAction.actionProperties.role.roleArn);
+    }
+
+    new GitHubIntegration(this, "GitHubIntegration", {
+      githubOrg: props.githubOrg,
+      bucketArn: artifactsBucket.bucketArn,
+      region: this.region,
+      accountId: this.account,
+      decryptArns,
     });
 
     /**
@@ -165,63 +232,4 @@ export class PipelineStack extends cdk.Stack {
       }
     );
   }
-}
-
-function createSourceAction(
-  scope: cdk.Construct,
-  props: Props,
-  output: codepipeline.Artifact
-): codepipeline.IAction {
-  if (props.sourceProvider === "CodeCommit") {
-    return createCodeCommitSourceAction(
-      scope,
-      props.repoName,
-      props.branch,
-      output
-    );
-  }
-
-  if (!props.githubOAuthToken || !props.githubOwner) {
-    throw new Error("Missing GitHub props owner and/or oauthtoken");
-  }
-
-  return createGitHubSourceAction(
-    props.repoName,
-    props.githubOwner,
-    props.branch,
-    props.githubOAuthToken,
-    output
-  );
-}
-
-function createGitHubSourceAction(
-  repo: string,
-  owner: string,
-  branch: string,
-  oauthToken: string,
-  sourceOutput: codepipeline.Artifact
-): GitHubSourceAction {
-  return new GitHubSourceAction({
-    actionName: "Source",
-    repo: repo,
-    output: sourceOutput,
-    owner,
-    branch,
-    oauthToken: cdk.SecretValue.secretsManager(oauthToken),
-  });
-}
-
-function createCodeCommitSourceAction(
-  scope: cdk.Construct,
-  repo: string,
-  branch: string,
-  sourceOutput: codepipeline.Artifact
-): CodeCommitSourceAction {
-  const codeRepo = Repository.fromRepositoryName(scope, "Repository", repo);
-  return new CodeCommitSourceAction({
-    actionName: "Source",
-    repository: codeRepo,
-    branch,
-    output: sourceOutput,
-  });
 }

@@ -1,8 +1,15 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { Metric } from "../models";
 import MetricsCardGroup from "../components/MetricsCardGroup";
+import ShareButton from "./ShareButton";
 
 type Props = {
+  id: string;
   title: string;
   metrics: Array<Metric>;
   metricPerRow: number;
@@ -11,6 +18,7 @@ type Props = {
 };
 
 const MetricsWidget = ({
+  id,
   title,
   metrics,
   metricPerRow,
@@ -18,8 +26,17 @@ const MetricsWidget = ({
   metricsCenterAlign,
 }: Props) => {
   return (
-    <div aria-label={title} tabIndex={-1}>
-      <h2 className="margin-top-3">{title}</h2>
+    <div
+      aria-label={title}
+      tabIndex={-1}
+      className={title ? "" : "padding-top-2"}
+    >
+      {title && (
+        <h2 className="margin-top-3">
+          {title}
+          <ShareButton id={`${id}a`} title={title} className="margin-left-1" />
+        </h2>
+      )}
       {metrics.length ? (
         <div>
           <MetricsCardGroup

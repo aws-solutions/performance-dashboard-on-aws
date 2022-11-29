@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import Spinner from "./Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +18,7 @@ interface Props {
   required?: boolean;
   disabled?: boolean;
   fileName?: string;
-  staticFileName?: string | undefined;
+  staticFileName?: string;
   hint?: string | React.ReactNode;
   accept?: string;
   errors?: any;

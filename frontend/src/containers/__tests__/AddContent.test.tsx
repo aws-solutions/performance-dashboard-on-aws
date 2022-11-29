@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import {
   render,
@@ -104,6 +109,109 @@ describe("Add content screen", () => {
     fireEvent.click(screen.getByTestId("sectionRadioButton"));
     thumbnail = screen.getByAltText("Section Content Item Preview");
     expect(thumbnail).toBeInTheDocument();
+  });
+});
+
+describe("'Continue' button navigation", () => {
+  let history;
+  beforeEach(() => {
+    history = createMemoryHistory();
+    jest.spyOn(history, "push");
+    render(
+      <Router history={history}>
+        <AddContent />
+      </Router>
+    );
+  });
+
+  test("takes you to add-chart screen, when Chart option is selected", async () => {
+    fireEvent.click(screen.getByTestId("chartRadioButton"));
+
+    await act(async () => {
+      const continueButton = await screen.findByRole("button", {
+        name: "Continue",
+      });
+      fireEvent.click(continueButton);
+    });
+
+    expect(history.push).toHaveBeenCalledWith(
+      "/admin/dashboard/undefined/add-chart"
+    );
+  });
+
+  test("takes you to add-table screen, when Table option is selected", async () => {
+    fireEvent.click(screen.getByTestId("tableRadioButton"));
+
+    await act(async () => {
+      const continueButton = await screen.findByRole("button", {
+        name: "Continue",
+      });
+      fireEvent.click(continueButton);
+    });
+
+    expect(history.push).toHaveBeenCalledWith(
+      "/admin/dashboard/undefined/add-table"
+    );
+  });
+
+  test("takes you to add-text screen, when Text option is selected", async () => {
+    fireEvent.click(screen.getByTestId("textRadioButton"));
+
+    await act(async () => {
+      const continueButton = await screen.findByRole("button", {
+        name: "Continue",
+      });
+      fireEvent.click(continueButton);
+    });
+
+    expect(history.push).toHaveBeenCalledWith(
+      "/admin/dashboard/undefined/add-text"
+    );
+  });
+
+  test("takes you to add-image screen, when Image option is selected", async () => {
+    fireEvent.click(screen.getByTestId("imageRadioButton"));
+
+    await act(async () => {
+      const continueButton = await screen.findByRole("button", {
+        name: "Continue",
+      });
+      fireEvent.click(continueButton);
+    });
+
+    expect(history.push).toHaveBeenCalledWith(
+      "/admin/dashboard/undefined/add-image"
+    );
+  });
+
+  test("takes you to add-metrics screen, when Metrics option is selected", async () => {
+    fireEvent.click(screen.getByTestId("metricsRadioButton"));
+
+    await act(async () => {
+      const continueButton = await screen.findByRole("button", {
+        name: "Continue",
+      });
+      fireEvent.click(continueButton);
+    });
+
+    expect(history.push).toHaveBeenCalledWith(
+      "/admin/dashboard/undefined/add-metrics"
+    );
+  });
+
+  test("takes you to add-section screen, when Section option is selected", async () => {
+    fireEvent.click(screen.getByTestId("sectionRadioButton"));
+
+    await act(async () => {
+      const continueButton = await screen.findByRole("button", {
+        name: "Continue",
+      });
+      fireEvent.click(continueButton);
+    });
+
+    expect(history.push).toHaveBeenCalledWith(
+      "/admin/dashboard/undefined/add-section"
+    );
   });
 });
 

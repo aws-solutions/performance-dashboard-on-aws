@@ -1,9 +1,14 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Request, Response } from "express";
 import DatasetRepository from "../repositories/dataset-repo";
 import DatasetFactory from "../factories/dataset-factory";
 import { SourceType, DatasetSchema } from "../models/dataset";
 import { ItemNotFound } from "../errors";
-var escapeHtml = require("escape-html");
+const escapeHtml = require("escape-html");
 
 async function listDatasets(req: Request, res: Response) {
   const repo = DatasetRepository.getInstance();

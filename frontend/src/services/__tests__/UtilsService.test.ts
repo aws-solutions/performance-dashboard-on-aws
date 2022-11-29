@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { Dashboard, DashboardState, PublicDashboard } from "../../models";
 import UtilsService from "../UtilsService";
 
@@ -67,5 +72,17 @@ describe("getDashboardUrlPath", () => {
     dashboard.state = DashboardState.Archived;
     const path = UtilsService.getDashboardUrlPath(dashboard);
     expect(path).toEqual("/admin/dashboard/001");
+  });
+});
+
+describe("getShorterId", () => {
+  const id = "305907af-08fc-484f-add9-f24afd5f9c4a";
+
+  test("returns the first 8 characters of the id", () => {
+    expect(UtilsService.getShorterId(id)).toEqual("305907af");
+  });
+
+  test("returns undefined when id not specified", () => {
+    expect(UtilsService.getShorterId(null)).toBeUndefined();
   });
 });

@@ -5,55 +5,51 @@ Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <nav
-        aria-label="Breadcrumbs"
-        class="usa-breadcrumb padding-top-0"
+      <div
+        class="padding-1"
       >
-        <ol
-          class="usa-breadcrumb__list"
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
         >
-          <li
-            class="usa-breadcrumb__list-item"
+          <ol
+            class="usa-breadcrumb__list"
           >
-            <a
-              aria-label=""
-              class="usa-link action-link"
-              href="/admin/dashboards"
-              target=""
+            <li
+              class="usa-breadcrumb__list-item"
             >
-              <span>
+              <a
+                class="usa-breadcrumb__link"
+                href="/admin/dashboards"
+              >
                 <span>
                   Dashboards
                 </span>
-              </span>
-            </a>
-          </li>
-          <li
-            class="usa-breadcrumb__list-item"
-          >
-            <a
-              aria-label=""
-              class="usa-link action-link"
-              href="/admin/dashboard/edit/undefined"
-              target=""
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
             >
-              <span>
+              <a
+                class="usa-breadcrumb__link"
+                href="/admin/dashboard/edit/undefined"
+              >
                 <span>
                   My AWS Dashboard
                 </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              <span>
+                Add content item
               </span>
-            </a>
-          </li>
-          <li
-            aria-current="location"
-            class="usa-breadcrumb__list-item usa-current cursor-default"
-          >
-            <span>
-              Add content item
-            </span>
-          </li>
-        </ol>
-      </nav>
+            </li>
+          </ol>
+        </nav>
+      </div>
       <div
         class="grid-row"
       >
@@ -85,14 +81,14 @@ Object {
               >
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
                   >
                     <input
                       aria-describedby="text-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="textRadioButton"
                       id="text"
                       name="widgetType"
@@ -104,25 +100,25 @@ Object {
                       for="text"
                     >
                       Text
-                      <p
+                      <span
                         class="text-base usa-prose usa-checkbox__label-description"
                         id="text-description"
                       >
                         Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
-                      </p>
+                      </span>
                     </label>
                   </div>
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
                   >
                     <input
                       aria-describedby="metrics-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="metricsRadioButton"
                       id="metrics"
                       name="widgetType"
@@ -134,25 +130,25 @@ Object {
                       for="metrics"
                     >
                       Metrics
-                      <p
+                      <span
                         class="text-base usa-prose usa-checkbox__label-description"
                         id="metrics-description"
                       >
                         Add one or more metrics to show point-in-time numerical data and trends.
-                      </p>
+                      </span>
                     </label>
                   </div>
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
                   >
                     <input
                       aria-describedby="chart-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="chartRadioButton"
                       id="chart"
                       name="widgetType"
@@ -164,25 +160,25 @@ Object {
                       for="chart"
                     >
                       Chart
-                      <p
+                      <span
                         class="text-base usa-prose usa-checkbox__label-description"
                         id="chart-description"
                       >
                         Display data as a visualization, including line, bar, column and part-to-whole charts.
-                      </p>
+                      </span>
                     </label>
                   </div>
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
                   >
                     <input
                       aria-describedby="table-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="tableRadioButton"
                       id="table"
                       name="widgetType"
@@ -194,25 +190,25 @@ Object {
                       for="table"
                     >
                       Table
-                      <p
+                      <span
                         class="text-base usa-prose usa-checkbox__label-description"
                         id="table-description"
                       >
                         Display data formatted in rows and columns.
-                      </p>
+                      </span>
                     </label>
                   </div>
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
                   >
                     <input
                       aria-describedby="image-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="imageRadioButton"
                       id="image"
                       name="widgetType"
@@ -224,25 +220,25 @@ Object {
                       for="image"
                     >
                       Image
-                      <p
+                      <span
                         class="text-base usa-prose usa-checkbox__label-description"
                         id="image-description"
                       >
                         Upload an image to display.
-                      </p>
+                      </span>
                     </label>
                   </div>
                 </div>
                 <div
                   class="usa-radio"
-                  role="contentinfo"
+                  role="radio"
                 >
                   <div
                     class="tablet:grid-col"
                   >
                     <input
                       aria-describedby="section-description"
-                      class="usa-radio__input usa-radio__input--tile"
+                      class="usa-radio__input usa-radio__input--tile radio"
                       data-testid="sectionRadioButton"
                       id="section"
                       name="widgetType"
@@ -254,12 +250,12 @@ Object {
                       for="section"
                     >
                       Section
-                      <p
+                      <span
                         class="text-base usa-prose usa-checkbox__label-description"
                         id="section-description"
                       >
                         Add a section to group similar content items in a list.
-                      </p>
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -288,55 +284,51 @@ Object {
     </div>
   </body>,
   "container": <div>
-    <nav
-      aria-label="Breadcrumbs"
-      class="usa-breadcrumb padding-top-0"
+    <div
+      class="padding-1"
     >
-      <ol
-        class="usa-breadcrumb__list"
+      <nav
+        aria-label="Breadcrumbs"
+        class="usa-breadcrumb usa-breadcrumb--wrap"
       >
-        <li
-          class="usa-breadcrumb__list-item"
+        <ol
+          class="usa-breadcrumb__list"
         >
-          <a
-            aria-label=""
-            class="usa-link action-link"
-            href="/admin/dashboards"
-            target=""
+          <li
+            class="usa-breadcrumb__list-item"
           >
-            <span>
+            <a
+              class="usa-breadcrumb__link"
+              href="/admin/dashboards"
+            >
               <span>
                 Dashboards
               </span>
-            </span>
-          </a>
-        </li>
-        <li
-          class="usa-breadcrumb__list-item"
-        >
-          <a
-            aria-label=""
-            class="usa-link action-link"
-            href="/admin/dashboard/edit/undefined"
-            target=""
+            </a>
+          </li>
+          <li
+            class="usa-breadcrumb__list-item"
           >
-            <span>
+            <a
+              class="usa-breadcrumb__link"
+              href="/admin/dashboard/edit/undefined"
+            >
               <span>
                 My AWS Dashboard
               </span>
+            </a>
+          </li>
+          <li
+            aria-current="page"
+            class="usa-breadcrumb__list-item usa-current"
+          >
+            <span>
+              Add content item
             </span>
-          </a>
-        </li>
-        <li
-          aria-current="location"
-          class="usa-breadcrumb__list-item usa-current cursor-default"
-        >
-          <span>
-            Add content item
-          </span>
-        </li>
-      </ol>
-    </nav>
+          </li>
+        </ol>
+      </nav>
+    </div>
     <div
       class="grid-row"
     >
@@ -368,14 +360,14 @@ Object {
             >
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
                 >
                   <input
                     aria-describedby="text-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="textRadioButton"
                     id="text"
                     name="widgetType"
@@ -387,25 +379,25 @@ Object {
                     for="text"
                   >
                     Text
-                    <p
+                    <span
                       class="text-base usa-prose usa-checkbox__label-description"
                       id="text-description"
                     >
                       Add a formatted block of text. Input supports Markdown including links, bullets, bolding, and headings.
-                    </p>
+                    </span>
                   </label>
                 </div>
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
                 >
                   <input
                     aria-describedby="metrics-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="metricsRadioButton"
                     id="metrics"
                     name="widgetType"
@@ -417,25 +409,25 @@ Object {
                     for="metrics"
                   >
                     Metrics
-                    <p
+                    <span
                       class="text-base usa-prose usa-checkbox__label-description"
                       id="metrics-description"
                     >
                       Add one or more metrics to show point-in-time numerical data and trends.
-                    </p>
+                    </span>
                   </label>
                 </div>
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
                 >
                   <input
                     aria-describedby="chart-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="chartRadioButton"
                     id="chart"
                     name="widgetType"
@@ -447,25 +439,25 @@ Object {
                     for="chart"
                   >
                     Chart
-                    <p
+                    <span
                       class="text-base usa-prose usa-checkbox__label-description"
                       id="chart-description"
                     >
                       Display data as a visualization, including line, bar, column and part-to-whole charts.
-                    </p>
+                    </span>
                   </label>
                 </div>
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
                 >
                   <input
                     aria-describedby="table-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="tableRadioButton"
                     id="table"
                     name="widgetType"
@@ -477,25 +469,25 @@ Object {
                     for="table"
                   >
                     Table
-                    <p
+                    <span
                       class="text-base usa-prose usa-checkbox__label-description"
                       id="table-description"
                     >
                       Display data formatted in rows and columns.
-                    </p>
+                    </span>
                   </label>
                 </div>
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
                 >
                   <input
                     aria-describedby="image-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="imageRadioButton"
                     id="image"
                     name="widgetType"
@@ -507,25 +499,25 @@ Object {
                     for="image"
                   >
                     Image
-                    <p
+                    <span
                       class="text-base usa-prose usa-checkbox__label-description"
                       id="image-description"
                     >
                       Upload an image to display.
-                    </p>
+                    </span>
                   </label>
                 </div>
               </div>
               <div
                 class="usa-radio"
-                role="contentinfo"
+                role="radio"
               >
                 <div
                   class="tablet:grid-col"
                 >
                   <input
                     aria-describedby="section-description"
-                    class="usa-radio__input usa-radio__input--tile"
+                    class="usa-radio__input usa-radio__input--tile radio"
                     data-testid="sectionRadioButton"
                     id="section"
                     name="widgetType"
@@ -537,12 +529,12 @@ Object {
                     for="section"
                   >
                     Section
-                    <p
+                    <span
                       class="text-base usa-prose usa-checkbox__label-description"
                       id="section-description"
                     >
                       Add a section to group similar content items in a list.
-                    </p>
+                    </span>
                   </label>
                 </div>
               </div>

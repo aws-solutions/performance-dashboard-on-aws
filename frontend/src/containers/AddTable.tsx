@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -6,20 +11,22 @@ import {
   CurrencyDataType,
   LocationState,
   NumberDataType,
+  Dataset,
+  DatasetType,
+  WidgetType,
 } from "../models";
-import { Dataset, DatasetType, WidgetType } from "../models";
 import BackendService from "../services/BackendService";
 import {
   useDashboard,
   useFullPreview,
   useChangeBackgroundColor,
   useScrollUp,
+  useDatasets,
 } from "../hooks";
 import StorageService from "../services/StorageService";
 import ParsingFileService from "../services/ParsingFileService";
 import DatasetParsingService from "../services/DatasetParsingService";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useDatasets } from "../hooks";
 import StepIndicator from "../components/StepIndicator";
 import ChooseData from "../components/ChooseData";
 import CheckData from "../components/CheckData";
@@ -88,7 +95,8 @@ function AddTable() {
     undefined
   );
   const [sortByDesc, setSortByDesc] = useState<boolean | undefined>(undefined);
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-table-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const [dataTypes, setDataTypes] = useState<Map<string, ColumnDataType>>(
     new Map<string, ColumnDataType>()
   );
@@ -167,19 +175,28 @@ function AddTable() {
           displayWithPages: values.displayWithPages,
           datasetId: newDataset
             ? newDataset.id
-            : datasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.id
-            : staticDataset?.id,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "id",
+                dynamicDataset,
+                staticDataset
+              ),
           s3Key: newDataset
             ? newDataset.s3Key
-            : datasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.s3Key
-            : staticDataset?.s3Key,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "s3Key",
+                dynamicDataset,
+                staticDataset
+              ),
           fileName: csvFile
             ? csvFile.name
-            : datasetType === DatasetType.DynamicDataset
-            ? dynamicDataset?.fileName
-            : staticDataset?.fileName,
+            : UtilsService.getDatasetPropertyByDatasetType(
+                datasetType,
+                "fileName",
+                dynamicDataset,
+                staticDataset
+              ),
           sortByColumn,
           sortByDesc,
           columnsMetadata: ColumnsMetadataService.getColumnsMetadata(
@@ -428,15 +445,12 @@ function AddTable() {
 
           <div hidden={step !== 2}>
             <Visualize
+              widgetId="add-new-table"
               errors={errors}
               register={register}
               json={filteredJson}
               originalJson={currentJson}
-              headers={
-                currentJson.length
-                  ? (Object.keys(currentJson[0]) as Array<string>)
-                  : []
-              }
+              headers={currentJson.length ? Object.keys(currentJson[0]) : []}
               csvJson={csvJson}
               datasetLoading={datasetLoading}
               datasetType={datasetType}
@@ -447,6 +461,7 @@ function AddTable() {
               processingWidget={creatingWidget}
               fullPreviewButton={fullPreviewButton}
               fullPreview={fullPreview}
+              previewPanelId={previewPanelId}
               submitButtonLabel={t("AddTableScreen.AddTable")}
               sortByColumn={sortByColumn}
               sortByDesc={sortByDesc}

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
@@ -8,6 +13,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ReactModal from "react-modal";
 import i18n from "./i18n";
+import { MockedResizeObserver } from "./testUtils";
 
 jest.mock("./hooks");
 jest.mock("../package.json", () => ({
@@ -17,3 +23,5 @@ jest.mock("../package.json", () => ({
 dayjs.extend(relativeTime);
 ReactModal.setAppElement(document.createElement("div"));
 i18n("en"); // run unit tests with English translations
+
+window.ResizeObserver = MockedResizeObserver;

@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -119,9 +124,7 @@ function EditFavicon() {
                 required
                 hint={<span>{t("SettingsFaviconFileUploadHint")}</span>}
                 fileName={
-                  currentFavicon
-                    ? currentFavicon.name
-                    : faviconFileName
+                  faviconFileName
                     ? faviconFileName
                     : defaultFavicon.replace(/^.*[\\/]/, "")
                 }
@@ -143,7 +146,7 @@ function EditFavicon() {
             </form>
           </div>
           <div className="grid-col-5">
-            <h4 className="margin-top-4">{t("SettingsFaviconPreview")}</h4>
+            <h2 className="margin-top-4">{t("SettingsFaviconPreview")}</h2>
             <div className="grid-row">
               <div className="logo">
                 {currentFavicon && (

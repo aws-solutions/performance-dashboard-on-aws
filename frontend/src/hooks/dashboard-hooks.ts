@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { useEffect, useState, useCallback } from "react";
 import {
   Dashboard,
@@ -218,9 +223,7 @@ export function useDashboardHistory(
         );
 
         // Filter out noisy logs first
-        const logs = AuditTrailService.removeNosiyAuditLogs(
-          data as DashboardAuditLog[]
-        );
+        const logs = AuditTrailService.removeNosiyAuditLogs(data);
 
         setAuditlogs(logs);
         setLoading(false);

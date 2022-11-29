@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import { User } from "../models/user";
 import UserFactory from "../factories/user-factory";
 import CognitoService from "../services/cognito";
@@ -30,7 +35,7 @@ class UserRepository {
       UserPoolId: this.userPoolId,
     });
 
-    if (!result.Users || !result.Users.length) {
+    if (!result.Users || result.Users.length === 0) {
       return [];
     }
 
@@ -40,19 +45,15 @@ class UserRepository {
   }
 
   public async addUsers(users: Array<User>) {
-    try {
-      for (const user of users) {
-        await this.cognito.addUser({
-          UserPoolId: this.userPoolId,
-          Username: user.userId,
-          UserAttributes: [
-            { Name: "email", Value: user.email },
-            { Name: "custom:roles", Value: JSON.stringify(user.roles) },
-          ],
-        });
-      }
-    } catch (error) {
-      throw error;
+    for (const user of users) {
+      await this.cognito.addUser({
+        UserPoolId: this.userPoolId,
+        Username: user.userId,
+        UserAttributes: [
+          { Name: "email", Value: user.email },
+          { Name: "custom:roles", Value: JSON.stringify(user.roles) },
+        ],
+      });
     }
   }
 
@@ -72,32 +73,24 @@ class UserRepository {
   }
 
   public async resendInvite(usernames: Array<string>) {
-    try {
-      for (const username of usernames) {
-        await this.cognito.addUser({
-          UserPoolId: this.userPoolId,
-          Username: username,
-          MessageAction: "RESEND",
-        });
-      }
-    } catch (error) {
-      throw error;
+    for (const username of usernames) {
+      await this.cognito.addUser({
+        UserPoolId: this.userPoolId,
+        Username: username,
+        MessageAction: "RESEND",
+      });
     }
   }
 
   public async changeRole(usernames: Array<string>, role: string) {
-    try {
-      for (const username of usernames) {
-        await this.cognito.updateUserAttributes({
-          UserPoolId: this.userPoolId,
-          Username: username,
-          UserAttributes: [
-            { Name: "custom:roles", Value: JSON.stringify([role]) },
-          ],
-        });
-      }
-    } catch (error) {
-      throw error;
+    for (const username of usernames) {
+      await this.cognito.updateUserAttributes({
+        UserPoolId: this.userPoolId,
+        Username: username,
+        UserAttributes: [
+          { Name: "custom:roles", Value: JSON.stringify([role]) },
+        ],
+      });
     }
   }
 }

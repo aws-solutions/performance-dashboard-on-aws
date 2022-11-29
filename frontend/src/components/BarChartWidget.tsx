@@ -1,6 +1,9 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useCallback, useState, useRef, useEffect } from "react";
-// @ts-ignore
-import { CategoricalChartWrapper } from "recharts";
 import {
   XAxis,
   YAxis,
@@ -11,6 +14,8 @@ import {
   ResponsiveContainer,
   CartesianGrid,
   Tooltip,
+  // @ts-ignore
+  CategoricalChartWrapper,
 } from "recharts";
 import { useColors, useXAxisMetadata } from "../hooks";
 import UtilsService, { ComputedDimensions } from "../services/UtilsService";
@@ -20,8 +25,10 @@ import DataTable from "./DataTable";
 import RenderLegendText from "./Legend";
 import { ColumnDataType } from "../models";
 import RulerService from "../services/RulerService";
+import ShareButton from "./ShareButton";
 
 type Props = {
+  id: string;
   title: string;
   downloadTitle: string;
   summary: string;
@@ -50,15 +57,15 @@ const BarChartWidget = (props: Props) => {
     chartHeight: 500,
   });
 
-  function getCharContainer() {
+  function getChartContainer() {
     const instance = chartRef.current as CategoricalChartWrapper;
-    return instance?.container;
+    return instance?.container as HTMLElement;
   }
 
   useEffect(() => {
     setDims(
       UtilsService.calculateBarDimentions(
-        getCharContainer(),
+        getChartContainer(),
         !!props.stackedChart,
         props.bars,
         props.data
@@ -133,139 +140,156 @@ const BarChartWidget = (props: Props) => {
     };
 
   function formatYAxisLabel(label: any) {
-    const container = getCharContainer();
+    const container = getChartContainer();
     const style = container ? window.getComputedStyle(container) : undefined;
     const width = dims.labelWidth - RulerService.getVisualWidth("M");
     return RulerService.trimToWidth(label, width, style?.font, style?.fontSize);
   }
 
   return (
-    <div aria-label={props.title} tabIndex={-1}>
-      <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
-        {props.title}
-      </h2>
+    <div
+      aria-label={props.title}
+      tabIndex={-1}
+      className={props.title ? "" : "padding-top-2"}
+    >
+      {props.title && (
+        <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+          {props.title}
+          <ShareButton
+            id={`${props.id}a`}
+            title={props.title}
+            className="margin-left-1"
+          />
+        </h2>
+      )}
       {!props.summaryBelow && (
         <MarkdownRender
           source={props.summary}
           className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
         />
       )}
-      {data && data.length && (
-        <ResponsiveContainer width="100%" height={dims.chartHeight}>
-          <BarChart
-            className="bar-chart"
-            data={props.data}
-            layout="vertical"
-            margin={{ right: 0, left: 0 }}
-            ref={(el: CategoricalChartWrapper) => {
-              chartRef.current = el;
-              setChartLoaded(!!el);
-            }}
+      {data && data.length > 0 && (
+        <div aria-hidden="true">
+          <ResponsiveContainer
+            id={props.id}
+            width="100%"
+            height={dims.chartHeight}
           >
-            <CartesianGrid horizontal={false} />
-            <XAxis
-              type="number"
-              tickFormatter={(tick: any) =>
-                TickFormatter.format(
-                  Number(tick),
-                  xAxisLargestValue,
-                  props.significantDigitLabels,
-                  "",
-                  ""
-                )
-              }
-            />
-            <YAxis
-              dataKey={props.bars.length ? props.bars[0] : ""}
-              type={yAxisType()}
-              width={dims.labelWidth}
-              minTickGap={0}
-              domain={["dataMin - 1", "dataMax + 1"]}
-              scale={yAxisType() === "number" ? "linear" : "auto"}
-              tickFormatter={formatYAxisLabel}
-              reversed={true}
-            />
-            <Tooltip
-              itemStyle={{ color: "#1b1b1b" }}
-              isAnimationActive={false}
-              formatter={(value: Number | String, name: string) => {
-                // Check if there is metadata for this column
-                let columnMetadata;
-                if (props.columnsMetadata) {
-                  columnMetadata = props.columnsMetadata.find(
-                    (cm) => cm.columnName === name
-                  );
-                }
-
-                return TickFormatter.format(
-                  Number(value),
-                  xAxisLargestValue,
-                  props.significantDigitLabels,
-                  "",
-                  "",
-                  columnMetadata
-                );
+            <BarChart
+              className="bar-chart"
+              data={props.data}
+              layout="vertical"
+              margin={{ right: 0, left: 0 }}
+              ref={(el: CategoricalChartWrapper) => {
+                chartRef.current = el;
+                setChartLoaded(!!el);
               }}
-            />
-            {!props.hideLegend && (
-              <Legend
-                verticalAlign="top"
-                onClick={toggleBars}
-                onMouseLeave={() => setBarsHover(null)}
-                onMouseEnter={(e: any) => setBarsHover(e.dataKey)}
-                formatter={RenderLegendText}
+            >
+              <CartesianGrid horizontal={false} />
+              <XAxis
+                type="number"
+                tickFormatter={(tick: any) =>
+                  TickFormatter.format(
+                    Number(tick),
+                    xAxisLargestValue,
+                    props.significantDigitLabels,
+                    "",
+                    ""
+                  )
+                }
               />
-            )}
-            {props.bars.length &&
-              props.bars.slice(1).map((bar, index) => {
-                return (
-                  <Bar
-                    dataKey={bar}
-                    fill={colors[index]}
-                    key={index}
-                    fillOpacity={getOpacity(bar)}
-                    hide={hiddenBars.includes(bar)}
-                    stackId={props.stackedChart ? "a" : `${index}`}
-                    isAnimationActive={false}
-                  >
-                    {!props.hideDataLabels &&
-                      props.stackedChart &&
-                      index === props.bars.length - 2 && (
+              <YAxis
+                dataKey={props.bars.length ? props.bars[0] : ""}
+                type={yAxisType()}
+                width={dims.labelWidth}
+                minTickGap={0}
+                domain={["dataMin - 1", "dataMax + 1"]}
+                scale={yAxisType() === "number" ? "linear" : "auto"}
+                tickFormatter={formatYAxisLabel}
+                reversed={true}
+              />
+              <Tooltip
+                itemStyle={{ color: "#1b1b1b" }}
+                isAnimationActive={false}
+                formatter={(value: number | string, name: string) => {
+                  // Check if there is metadata for this column
+                  let columnMetadata;
+                  if (props.columnsMetadata) {
+                    columnMetadata = props.columnsMetadata.find(
+                      (cm) => cm.columnName === name
+                    );
+                  }
+
+                  return TickFormatter.format(
+                    Number(value),
+                    xAxisLargestValue,
+                    props.significantDigitLabels,
+                    "",
+                    "",
+                    columnMetadata
+                  );
+                }}
+              />
+              {!props.hideLegend && (
+                <Legend
+                  verticalAlign="top"
+                  onClick={toggleBars}
+                  onMouseLeave={() => setBarsHover(null)}
+                  onMouseEnter={(e: any) => setBarsHover(e.dataKey)}
+                  formatter={RenderLegendText}
+                />
+              )}
+              {props.bars.length > 0 &&
+                props.bars.slice(1).map((bar, index) => {
+                  return (
+                    <Bar
+                      dataKey={bar}
+                      fill={colors[index]}
+                      key={index}
+                      fillOpacity={getOpacity(bar)}
+                      hide={hiddenBars.includes(bar)}
+                      stackId={props.stackedChart ? "a" : `${index}`}
+                      isAnimationActive={false}
+                    >
+                      {!props.hideDataLabels &&
+                        props.stackedChart &&
+                        index === props.bars.length - 2 && (
+                          <LabelList
+                            position="right"
+                            valueAccessor={valueAccessor(bar)}
+                            formatter={(tick: any) => {
+                              return TickFormatter.stackedFormat(
+                                tick,
+                                xAxisLargestValue,
+                                props.significantDigitLabels,
+                                props.bars.slice(1),
+                                props.columnsMetadata
+                              );
+                            }}
+                          />
+                        )}
+                      {!props.hideDataLabels && !props.stackedChart && (
                         <LabelList
+                          dataKey={bar}
                           position="right"
-                          valueAccessor={valueAccessor(bar)}
-                          formatter={(tick: any) => {
-                            return TickFormatter.stackedFormat(
-                              tick,
+                          formatter={(tick: any) =>
+                            TickFormatter.format(
+                              Number(tick),
                               xAxisLargestValue,
                               props.significantDigitLabels,
-                              props.bars.slice(1),
-                              props.columnsMetadata
-                            );
-                          }}
+                              "",
+                              "",
+                              columnsMetadataDict.get(bar)
+                            )
+                          }
                         />
                       )}
-                    {!props.hideDataLabels && !props.stackedChart && (
-                      <LabelList
-                        dataKey={bar}
-                        position="right"
-                        formatter={(tick: any) =>
-                          TickFormatter.format(
-                            Number(tick),
-                            xAxisLargestValue,
-                            props.significantDigitLabels,
-                            "",
-                            "",
-                            columnsMetadataDict.get(bar)
-                          )
-                        }
-                      />
-                    )}
-                  </Bar>
-                );
-              })}
-          </BarChart>
-        </ResponsiveContainer>
+                    </Bar>
+                  );
+                })}
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       )}
       <div>
         <DataTable

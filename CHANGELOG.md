@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2022-11-21
+
+- Settings page enhancement
+- Accessibility enhancements across the app
+- Fixing SonarQube alarms
+- Move to Solutions GitHub release pipeline
+
 ## [1.7.0] - 2022-09-13
 
 - Security vulnerabilities were addressed by upgrading the following libraries:
@@ -12,7 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - react-scripts 5.0.1
 - Dashboard creation simplifications
 - Support for Google Analytics tracking was added.
-
 
 ## [1.6.0] - 2022-08-22
 

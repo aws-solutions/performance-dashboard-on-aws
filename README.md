@@ -1,7 +1,8 @@
 # Performance Dashboard on AWS
 
-![Unit Tests](https://github.com/awslabs/performance-dashboard-on-aws/workflows/Unit%20Tests/badge.svg?branch=mainline)
-![Version](https://img.shields.io/badge/version-beta-blue)
+![Mainline](https://github.com/awslabs/performance-dashboard-on-aws/workflows/Unit%20Tests/badge.svg?branch=mainline)
+![Version](https://img.shields.io/github/v/release/aws-solutions/performance-dashboard-on-aws)
+[![Quality Gate Status](https://sonarqube.nightswatch.dashboard.solutionsbuilder.aws.dev/api/project_badges/measure?project=com.amazon.aws%3Aperformance-dashboard-on-aws&metric=alert_status&token=7db63af1557d2512ec40345e6733d2914e39b5d5)](https://sonarqube.nightswatch.dashboard.solutionsbuilder.aws.dev/dashboard?id=com.amazon.aws%3Aperformance-dashboard-on-aws)
 
 <p align="center">
   <img src="docs/images/Dashboard_Images.jpg" alt="Performance Dashboard on AWS user interface image">
@@ -31,9 +32,9 @@ To access additional details on the system's features and workflows, please view
 
 PDoA comes with pre-built code to provision an instance in your AWS account. You can use the provided AWS CloudFormation [template](docs/installation.md#-deploying-with-aws-cloudformation-template) (CFT) to install PDoA in a few clicks. If you're in a developer or techops role and want to update or experiment with the source code, the provided AWS Cloud Development Kit (CDK) [script](docs/installation.md#deploying-with-aws-cloud-development-kit-cdk) makes it easy to deploy your changes. If you're already familiar with deploying resources on AWS using CFT, click the link below to deploy in the us-east-1 region. Refer to the [installation guide](docs/installation.md) for more detailed instructions.
 
-| Region               | Launch                                                                                                                                                                                                                                                                                                                             |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Install in us-east-1 | [![Install in us-east-1](docs/images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://performance-dashboard-on-aws-solution-releases-us-west-2.s3.us-west-2.amazonaws.com/performance-dashboard-on-aws/v1.7.0/performance-dashboard-on-aws.template) |
+| Region               | Launch                                                                                                                                                                                                                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Install in us-east-1 | [![Install in us-east-1](docs/images/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?&templateURL=https://s3.amazonaws.com/solutions-reference/performance-dashboard-on-aws/latest/performance-dashboard-on-aws.template) |
 
 ### Clone this repository
 

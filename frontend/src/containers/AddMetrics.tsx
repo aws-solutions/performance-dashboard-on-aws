@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -59,7 +64,7 @@ function AddMetrics() {
   const dateFormatter = useDateTimeFormatter();
   const { dashboard, loading } = useDashboard(dashboardId);
   const { dynamicMetricDatasets } = useDatasets();
-  const { register, errors, handleSubmit, reset, watch } = useForm<FormValues>({
+  const { register, errors, handleSubmit, watch } = useForm<FormValues>({
     defaultValues: {
       title: state && state.metricTitle !== undefined ? state.metricTitle : "",
       showTitle:
@@ -107,7 +112,8 @@ function AddMetrics() {
     }
   }, [datasetError, datasetType, metrics]);
 
-  const { fullPreview, fullPreviewButton } = useFullPreview();
+  const previewPanelId = "preview-metrics-panel";
+  const { fullPreview, fullPreviewButton } = useFullPreview(previewPanelId);
   const [oldStep, setOldStep] = useState<number>(-1);
   const title = watch("title");
   const showTitle = watch("showTitle");
@@ -491,6 +497,7 @@ function AddMetrics() {
 
                     <div className="overflow-hidden">
                       <Table
+                        id="items"
                         selection="single"
                         initialSortByField="updatedAt"
                         filterQuery={filter}
@@ -682,13 +689,16 @@ function AddMetrics() {
                 >
                   <div className="sticky-preview">
                     {isMobile ? <br /> : fullPreviewButton}
-                    <MetricsWidget
-                      title={showTitle ? title : ""}
-                      metrics={metrics}
-                      metricPerRow={oneMetricPerRow ? 1 : 3}
-                      significantDigitLabels={significantDigitLabels}
-                      metricsCenterAlign={metricsCenterAlign}
-                    />
+                    <div id={previewPanelId}>
+                      <MetricsWidget
+                        id="add-new-metrics"
+                        title={showTitle ? title : ""}
+                        metrics={metrics}
+                        metricPerRow={oneMetricPerRow ? 1 : 3}
+                        significantDigitLabels={significantDigitLabels}
+                        metricsCenterAlign={metricsCenterAlign}
+                      />
+                    </div>
                   </div>
                 </section>
               </div>

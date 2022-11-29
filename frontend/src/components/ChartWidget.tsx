@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useMemo, useState } from "react";
 import { useJsonDataset } from "../hooks";
 import { ChartWidget, ChartType } from "../models";
@@ -8,6 +13,7 @@ import PartWholeChartWidget from "./PartWholeChartWidget";
 import DatasetParsingService from "../services/DatasetParsingService";
 import PieChartWidget from "./PieChartWidget";
 import DonutChartWidget from "./DonutChartWidget";
+import Utils from "../services/UtilsService";
 
 interface Props {
   widget: ChartWidget;
@@ -22,7 +28,7 @@ function ChartWidgetComponent(props: Props) {
   const [filteredJson, setFilteredJson] = useState<Array<any>>([]);
 
   useMemo(() => {
-    let headers = json.length ? (Object.keys(json[0]) as Array<string>) : [];
+    let headers = json.length ? Object.keys(json[0]) : [];
     headers = headers.filter((h) => {
       const metadata = content.columnsMetadata
         ? content.columnsMetadata.find((c) => c.columnName === h)
@@ -36,7 +42,7 @@ function ChartWidgetComponent(props: Props) {
         obj[key] = row[key];
         return obj;
       }, {});
-      if (filteredRow !== {}) {
+      if (Object.keys(filteredRow).length > 0) {
         newFilteredJson.push(filteredRow);
       }
     }
@@ -54,13 +60,14 @@ function ChartWidgetComponent(props: Props) {
   }
 
   const keys = Object.keys(filteredJson[0] as Array<string>);
+  const chartId = `chart-${Utils.getShorterId(props.widget.id)}`;
+  const title = !props.hideTitle && props.widget.showTitle ? content.title : "";
   switch (content.chartType) {
     case ChartType.LineChart:
       return (
         <LineChartWidget
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          id={chartId}
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -76,9 +83,8 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.ColumnChart:
       return (
         <ColumnChartWidget
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          id={chartId}
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -96,9 +102,8 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.BarChart:
       return (
         <BarChartWidget
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          id={chartId}
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -115,9 +120,8 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.PartWholeChart:
       return (
         <PartWholeChartWidget
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          id={chartId}
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -132,9 +136,8 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.PieChart:
       return (
         <PieChartWidget
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          id={chartId}
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}
@@ -151,9 +154,8 @@ function ChartWidgetComponent(props: Props) {
     case ChartType.DonutChart:
       return (
         <DonutChartWidget
-          title={
-            !props.hideTitle && props.widget.showTitle ? content.title : ""
-          }
+          id={chartId}
+          title={title}
           downloadTitle={content.title}
           summary={content.summary}
           summaryBelow={content.summaryBelow}

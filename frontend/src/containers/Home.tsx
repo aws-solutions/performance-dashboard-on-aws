@@ -1,21 +1,35 @@
-import React, { useState } from "react";
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
+import React from "react";
 import { useHistory } from "react-router-dom";
-import Link from "../components/Link";
-import { usePublicHomepage, useDateTimeFormatter } from "../hooks";
+import { usePublicHomepage } from "../hooks";
 import { useTranslation } from "react-i18next";
 import UtilsService from "../services/UtilsService";
 import Accordion from "../components/Accordion";
 import Search from "../components/Search";
-import { PublicDashboard, LocationState } from "../models";
+import {
+  PublicDashboard,
+  LocationState,
+  PublicTopicArea,
+  Dashboard,
+} from "../models";
 import Spinner from "../components/Spinner";
 import MarkdownRender from "../components/MarkdownRender";
-import "./Home.css";
+import CardGroup from "../components/CardGroup";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import "./Home.scss";
+
+dayjs.extend(LocalizedFormat);
 
 function Home() {
   const { homepage, loading } = usePublicHomepage();
   const { t } = useTranslation();
-  const dateFormatter = useDateTimeFormatter();
   const history = useHistory<LocationState>();
+  const { Card, CardBody } = CardGroup;
 
   const onSearch = (query: string) => {
     history.push("/public/search?q=" + query);
@@ -26,6 +40,21 @@ function Home() {
   };
 
   const topicareas = UtilsService.groupByTopicArea(homepage.dashboards);
+
+  // Sort topic areas and their dashboards in ascending alphabetical order.
+  topicareas.sort((a: PublicTopicArea, b: PublicTopicArea) =>
+    a.name.localeCompare(b.name)
+  );
+  for (let topicArea of topicareas) {
+    topicArea.dashboards?.sort((a: PublicDashboard, b: PublicDashboard) =>
+      a.name.localeCompare(b.name)
+    );
+  }
+
+  const getDashboardLink = (dashboard: PublicDashboard | Dashboard): string => {
+    const link = dashboard.friendlyURL ? dashboard.friendlyURL : dashboard.id;
+    return link;
+  };
 
   return loading ? (
     <Spinner
@@ -50,7 +79,7 @@ function Home() {
         </div>
       </div>
       <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8 padding-y-3 usa-prose">
+        <div className="grid-col-12 padding-y-3 usa-prose">
           <Search
             id="search"
             onSubmit={onSearch}
@@ -58,45 +87,48 @@ function Home() {
             onClear={onClear}
             query=""
             results={homepage.dashboards.length}
+            wide
           />
         </div>
       </div>
       <div className="grid-row">
-        <div className="grid-col-12 tablet:grid-col-8 usa-prose">
+        <div className="grid-col-12 usa-prose">
           <Accordion>
             {topicareas.map((topicarea) => (
               <Accordion.Item
                 id={topicarea.id}
                 key={topicarea.id}
-                title={
-                  topicarea.name + " (" + topicarea.dashboards?.length + ")"
-                }
+                title={`${topicarea.name} (${
+                  topicarea.dashboards?.length ?? 0
+                })`}
                 hidden={true}
               >
-                {topicarea.dashboards?.map((dashboard) => {
-                  const updatedAt = dateFormatter(dashboard.updatedAt);
-                  return (
-                    <li key={dashboard.id} style={{ listStyleType: "none" }}>
-                      <div
-                        key={dashboard.id}
-                        className="border-bottom border-base-light padding-2"
-                      >
-                        {dashboard.friendlyURL ? (
-                          <Link to={`/${dashboard.friendlyURL}`}>
-                            {dashboard.name}
-                          </Link>
-                        ) : (
-                          // If dashboard doesn't have a friendlyURL, use the dashboardId.
-                          <Link to={`/${dashboard.id}`}>{dashboard.name}</Link>
+                <ul className="usa-card-group">
+                  {topicarea?.dashboards?.map((dashboard) => (
+                    <Card
+                      id={dashboard.id}
+                      title={dashboard.name}
+                      col={4}
+                      link={getDashboardLink(dashboard)}
+                    >
+                      <CardBody>
+                        <p className="text-base text-italic margin-bottom-2">
+                          {`${t("LastUpdatedLabel")} ${dayjs(
+                            dashboard.updatedAt
+                          ).fromNow()}`}
+                        </p>
+                        {dashboard.description && (
+                          <p>
+                            <MarkdownRender
+                              source={dashboard.description}
+                              className="font-sans-md usa-prose margin-top-0"
+                            />
+                          </p>
                         )}
-                        <br />
-                        <span className="text-base text-italic">
-                          {t("LastUpdatedLabel")} {updatedAt}
-                        </span>
-                      </div>
-                    </li>
-                  );
-                })}
+                      </CardBody>
+                    </Card>
+                  ))}
+                </ul>
               </Accordion.Item>
             ))}
           </Accordion>

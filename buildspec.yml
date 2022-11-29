@@ -1,28 +1,39 @@
 version: 0.2
+
 phases:
   install:
     runtime-versions:
       nodejs: 14
     commands:
-      # For debugging purposes
       - ls -al
       - npm --version
       - node --version
-      # Install dependencies
-      - npm install -g aws-cdk
-      - ./install.sh
-
   pre_build:
     commands:
-      - ./test.sh
-      - ./install.sh
-
+      - echo "Installing dependencies and executing unit tests - `pwd`"
+      - echo "node use 16"
+      - n 16
+      - chmod +x ./install.sh && ./install.sh
+      - chmod +x ./check-license.sh && ./check-license.sh
+      - chmod +x ./test.sh && ./test.sh
+      - echo "Installing dependencies and executing unit tests completed `date`"
   build:
     commands:
-      # Deploy
-      ./deploy.sh $ENVIRONMENT $LANGUAGE $AUTH
+      - echo "Starting build `date` in `pwd`"
+      - cd ./deployment
+      - chmod +x ./build-s3-dist.sh && ./build-s3-dist.sh $DIST_OUTPUT_BUCKET $SOLUTION_NAME $VERSION
+      - echo "Build completed `date`"
+      - echo "Starting open-source-dist `date` in `pwd`"
+      - chmod +x ./build-open-source-dist.sh && ./build-open-source-dist.sh $SOLUTION_NAME
+      - echo "Open Source Dist completed `date`"
+
+  post_build:
+    commands:
+      - echo "Retrieving next stage buildspec `date` in `pwd`"
+      - aws s3 cp s3://solutions-build-assets/changelog-spec.yml ../buildspec.yml
+      - echo "Retrieving next stage buildspec complete"
+      - echo "Post build completed on `date`"
 
 artifacts:
-  base-directory: cdk/cdk.out
   files:
     - "**/*"

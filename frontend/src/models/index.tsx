@@ -1,9 +1,17 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 export type TopicArea = {
   id: string;
   name: string;
   createdBy: string;
   dashboardCount: number;
 };
+
+export const TopicAreaSortingCriteria = (a: TopicArea, b: TopicArea) =>
+  a.name > b.name ? 1 : -1;
 
 export type PublicTopicArea = {
   id: string;
@@ -316,7 +324,7 @@ export type LocationState = {
   metricTitle?: string;
   origin?: string;
   json?: Array<any>;
-  staticDataset?: Dataset | undefined;
+  staticDataset?: Dataset;
   redirectUrl?: string;
   crumbLabel?: string;
   datasetType?: DatasetType;

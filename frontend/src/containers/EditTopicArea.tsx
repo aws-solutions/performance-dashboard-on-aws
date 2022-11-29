@@ -1,3 +1,8 @@
+/*
+ *  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -7,7 +12,6 @@ import TextField from "../components/TextField";
 import Button from "../components/Button";
 import Breadcrumbs from "../components/Breadcrumbs";
 import AlertContainer from "./AlertContainer";
-import { useSettings } from "../hooks";
 import { useTranslation } from "react-i18next";
 
 interface FormValues {
@@ -25,7 +29,6 @@ function EditTopicArea() {
   const { topicAreaId } = useParams<PathParams>();
   const { register, errors, handleSubmit } = useForm<FormValues>();
   const { topicarea } = useTopicArea(topicAreaId);
-  const { settings } = useSettings();
   const { t } = useTranslation();
 
   const onSubmit = async (values: FormValues) => {

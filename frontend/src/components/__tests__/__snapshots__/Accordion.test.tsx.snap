@@ -3,7 +3,6 @@
 exports[`renders an accordion with multiple elements 1`] = `
 <div>
   <div
-    aria-multiselectable="true"
     class="usa-accordion"
   >
     <h2

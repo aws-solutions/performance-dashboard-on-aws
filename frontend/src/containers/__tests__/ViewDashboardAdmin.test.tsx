@@ -4,13 +4,17 @@
  */
 
 import React from "react";
-import { render, screen, act, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { render, screen, act, fireEvent, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { MemoryRouter, Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
 import { DashboardState } from "../../models";
 import ViewDashboardAdmin from "../ViewDashboardAdmin";
 import * as hooks from "../../hooks";
+import BackendService from "../../services/BackendService";
 
 jest.mock("../../hooks");
+jest.mock("../../services/BackendService");
 
 const dummyDashboard = {
   id: "123",
@@ -192,6 +196,12 @@ describe("dashboard in draft", () => {
     expect(
       screen.getByRole("button", { name: "Publish dashboard" })
     ).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Close" }));
+    });
+
+    expect(screen.queryByText("Publish dashboard")).not.toBeInTheDocument();
   });
 });
 
@@ -394,6 +404,10 @@ describe("dashboard archived in mobile", () => {
 });
 
 test("renders the update modal", async () => {
+  BackendService.createDraft = jest.fn().mockReturnValue({
+    id: undefined,
+  });
+
   const published = { ...dummyDashboard, state: DashboardState.Published };
   (hooks.useDashboard as any) = jest.fn().mockReturnValue({
     loading: false,
@@ -419,13 +433,14 @@ test("renders the update modal", async () => {
     wrapper: MemoryRouter,
   });
 
-  await act(async () => {
-    fireEvent.click(screen.getByRole("button", { name: "Update" }));
-  });
+  fireEvent.click(screen.getByRole("button", { name: "Update" }));
 
-  expect(
-    screen.getByRole("button", { name: "Create draft" })
-  ).toBeInTheDocument();
+  const createDrafButton = screen.getByRole("button", { name: "Create draft" });
+  expect(createDrafButton).toBeInTheDocument();
+
+  fireEvent.click(createDrafButton);
+
+  expect(BackendService.createDraft).toHaveBeenCalled();
 });
 
 test("renders the update modal in mobile", async () => {
@@ -461,4 +476,356 @@ test("renders the update modal in mobile", async () => {
   expect(
     screen.getByRole("button", { name: "Create draft" })
   ).toBeInTheDocument();
+});
+
+describe("Update Modal", () => {
+  beforeEach(async () => {
+    BackendService.createDraft = jest.fn().mockReturnValue({
+      id: undefined,
+    });
+
+    const published = { ...dummyDashboard, state: DashboardState.Published };
+    (hooks.useDashboard as any) = jest.fn().mockReturnValue({
+      loading: false,
+      dashboard: published,
+    });
+    (hooks.useDashboardVersions as any) = jest.fn().mockReturnValue({
+      loading: false,
+      versions: [
+        { id: "af0dc34f", version: 1, state: "Inactive" },
+        {
+          id: "40db73f9",
+          version: 2,
+          state: "Published",
+          friendlyURL: "hello-world",
+        },
+      ],
+    });
+    (hooks.useWindowSize as any) = jest.fn().mockReturnValue({
+      width: 800,
+    });
+
+    render(<ViewDashboardAdmin />, {
+      wrapper: MemoryRouter,
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Update" }));
+  });
+
+  test("renders the modal", async () => {
+    const createDraftButton = screen.getByRole("button", {
+      name: "Create draft",
+    });
+    expect(createDraftButton).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole("button", { name: "Cancel" });
+    expect(cancelButton).toBeInTheDocument();
+  });
+
+  test("do click on 'Create draft' button submits the draft to the backend service", async () => {
+    const createDraftButton = screen.getByRole("button", {
+      name: "Create draft",
+    });
+
+    fireEvent.click(createDraftButton);
+
+    expect(BackendService.createDraft).toHaveBeenCalled();
+  });
+
+  test("do click on 'Cancel' do not submit the draft to the backend service", async () => {
+    const cancelButton = screen.getByRole("button", { name: "Cancel" });
+
+    fireEvent.click(cancelButton);
+
+    expect(BackendService.createDraft).toHaveBeenCalledTimes(0);
+  });
+});
+
+describe("Archive Modal", () => {
+  beforeEach(async () => {
+    BackendService.archive = jest.fn().mockReturnValue({
+      id: undefined,
+    });
+
+    const published = { ...dummyDashboard, state: DashboardState.Published };
+    (hooks.useDashboard as any) = jest.fn().mockReturnValue({
+      loading: false,
+      dashboard: published,
+    });
+    (hooks.useDashboardVersions as any) = jest.fn().mockReturnValue({
+      loading: false,
+      versions: [
+        { id: "af0dc34f", version: 1, state: "Inactive" },
+        {
+          id: "40db73f9",
+          version: 2,
+          state: "Published",
+          friendlyURL: "hello-world",
+        },
+      ],
+    });
+    (hooks.useWindowSize as any) = jest.fn().mockReturnValue({
+      width: 800,
+    });
+
+    render(<ViewDashboardAdmin />, {
+      wrapper: MemoryRouter,
+    });
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Published dashboard actions" })
+    );
+
+    const menuItem = screen.getByLabelText("Archive published dashboard");
+
+    userEvent.click(menuItem);
+  });
+
+  test("renders the modal", async () => {
+    const archiveButton = screen.getByRole("button", { name: "Archive" });
+    expect(archiveButton).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole("button", { name: "Cancel" });
+    expect(cancelButton).toBeInTheDocument();
+  });
+
+  test("do click on 'Archive' button submits the archive to the backend service", async () => {
+    const copyButton = screen.getByRole("button", { name: "Archive" });
+
+    fireEvent.click(copyButton);
+
+    expect(BackendService.archive).toHaveBeenCalled();
+  });
+
+  test("do click on 'Cancel' do not submit the archive to the backend service", async () => {
+    const cancelButton = screen.getByRole("button", { name: "Cancel" });
+
+    fireEvent.click(cancelButton);
+
+    expect(BackendService.archive).toHaveBeenCalledTimes(0);
+  });
+});
+
+describe("Copy Modal", () => {
+  beforeEach(async () => {
+    BackendService.copyDashboard = jest.fn().mockReturnValue({
+      id: undefined,
+    });
+
+    const published = { ...dummyDashboard, state: DashboardState.Published };
+    (hooks.useDashboard as any) = jest.fn().mockReturnValue({
+      loading: false,
+      dashboard: published,
+    });
+    (hooks.useDashboardVersions as any) = jest.fn().mockReturnValue({
+      loading: false,
+      versions: [
+        { id: "af0dc34f", version: 1, state: "Inactive" },
+        {
+          id: "40db73f9",
+          version: 2,
+          state: "Published",
+          friendlyURL: "hello-world",
+        },
+      ],
+    });
+    (hooks.useWindowSize as any) = jest.fn().mockReturnValue({
+      width: 800,
+    });
+
+    render(<ViewDashboardAdmin />, {
+      wrapper: MemoryRouter,
+    });
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Published dashboard actions" })
+    );
+
+    const menuItem = screen.getByLabelText("Copy published dashboard");
+
+    userEvent.click(menuItem);
+  });
+
+  test("renders the modal", async () => {
+    const copyButton = screen.getByRole("button", { name: "Copy" });
+    expect(copyButton).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole("button", { name: "Cancel" });
+    expect(cancelButton).toBeInTheDocument();
+  });
+
+  test("do click on 'Copy' button submits the copy to the backend service", async () => {
+    const copyButton = screen.getByRole("button", { name: "Copy" });
+
+    fireEvent.click(copyButton);
+
+    expect(BackendService.copyDashboard).toHaveBeenCalled();
+  });
+
+  test("do click on 'Cancel' do not submit the copy to the backend service", async () => {
+    //Cancel Button inside Copy Modal
+    const cancelButton = screen.getByRole("button", { name: "Cancel" });
+
+    //do click on Cancel button
+    fireEvent.click(cancelButton);
+
+    expect(BackendService.copyDashboard).toHaveBeenCalledTimes(0);
+  });
+});
+
+describe("Re-publish Modal", () => {
+  beforeEach(async () => {
+    BackendService.publishDashboard = jest.fn().mockReturnValue({
+      id: undefined,
+    });
+
+    const archived = { ...dummyDashboard, state: DashboardState.Archived };
+    (hooks.useDashboard as any) = jest.fn().mockReturnValue({
+      loading: false,
+      dashboard: archived,
+    });
+    (hooks.useDashboardVersions as any) = jest.fn().mockReturnValue({
+      loading: false,
+      versions: [
+        { id: "af0dc34f", version: 1, state: "Inactive" },
+        {
+          id: "40db73f9",
+          version: 2,
+          state: "Archived",
+          friendlyURL: "hello-world",
+        },
+      ],
+    });
+    (hooks.useWindowSize as any) = jest.fn().mockReturnValue({
+      width: 800,
+    });
+
+    render(<ViewDashboardAdmin />, {
+      wrapper: MemoryRouter,
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Re-publish" }));
+  });
+
+  test("renders the modal", async () => {
+    const dialog = screen.getByRole("dialog");
+    const rePublishButton = within(dialog).getByRole("button", {
+      name: "Re-publish",
+    });
+    expect(rePublishButton).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole("button", { name: "Cancel" });
+    expect(cancelButton).toBeInTheDocument();
+  });
+
+  test("do click on 'Re-publish' button submits the publish action to the backend service", async () => {
+    const dialog = screen.getByRole("dialog");
+    const rePublishButton = within(dialog).getByRole("button", {
+      name: "Re-publish",
+    });
+
+    fireEvent.click(rePublishButton);
+
+    expect(BackendService.publishDashboard).toHaveBeenCalled();
+  });
+
+  test("do click on 'Cancel' do not submit the publish action to the backend service", async () => {
+    const cancelButton = screen.getByRole("button", { name: "Cancel" });
+
+    fireEvent.click(cancelButton);
+
+    expect(BackendService.publishDashboard).toHaveBeenCalledTimes(0);
+  });
+});
+
+test("do click on 'View History' menu item navigates to dashboard history", async () => {
+  const history = createMemoryHistory();
+  jest.spyOn(history, "push");
+
+  const published = { ...dummyDashboard, state: DashboardState.Published };
+  (hooks.useDashboard as any) = jest.fn().mockReturnValue({
+    loading: false,
+    dashboard: published,
+  });
+  (hooks.useDashboardVersions as any) = jest.fn().mockReturnValue({
+    loading: false,
+    versions: [
+      { id: "af0dc34f", version: 1, state: "Inactive" },
+      {
+        id: "40db73f9",
+        version: 2,
+        state: "Published",
+        friendlyURL: "hello-world",
+      },
+    ],
+  });
+  (hooks.useWindowSize as any) = jest.fn().mockReturnValue({
+    width: 800,
+  });
+
+  render(
+    <Router history={history}>
+      <ViewDashboardAdmin />
+    </Router>
+  );
+
+  //do click on the actions menu
+  fireEvent.click(
+    screen.getByRole("button", { name: "Published dashboard actions" })
+  );
+
+  // find the Copy menu item
+  const copyMenuItem = screen.getByLabelText(
+    "View published dashboard's history"
+  );
+  expect(copyMenuItem).toBeInTheDocument();
+
+  //do click on the Copy menu item.
+  userEvent.click(copyMenuItem);
+
+  expect(history.push).toHaveBeenCalledWith(
+    `/admin/dashboard/${dummyDashboard.id}/history`
+  );
+});
+
+test("when selecting a diferent version the ui navigates to selected version", async () => {
+  const history = createMemoryHistory();
+  jest.spyOn(history, "push");
+
+  const published = { ...dummyDashboard, state: DashboardState.Published };
+  (hooks.useDashboard as any) = jest.fn().mockReturnValue({
+    loading: false,
+    dashboard: published,
+  });
+  (hooks.useDashboardVersions as any) = jest.fn().mockReturnValue({
+    loading: false,
+    versions: [
+      { id: "af0dc34f", version: 1, state: "Inactive" },
+      {
+        id: "40db73f9",
+        version: 2,
+        state: "Published",
+        friendlyURL: "hello-world",
+      },
+    ],
+  });
+  (hooks.useWindowSize as any) = jest.fn().mockReturnValue({
+    width: 800,
+  });
+
+  render(
+    <Router history={history}>
+      <ViewDashboardAdmin />
+    </Router>
+  );
+
+  const versionToSelect = { id: "af0dc34f", version: 1, state: "Inactive" };
+
+  userEvent.selectOptions(screen.getByRole("combobox"), [
+    `${versionToSelect.version}`,
+  ]);
+
+  expect(history.push).toHaveBeenCalledWith(
+    `/admin/dashboard/${versionToSelect.id}`
+  );
 });

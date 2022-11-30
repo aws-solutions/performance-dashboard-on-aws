@@ -296,6 +296,13 @@ function AddChart() {
       }
       setDatasetLoading(true);
       ParsingFileService.parseFile(data, true, (errors: any, results: any) => {
+        if (errors !== null && errors.length) {
+          setCsvErrors(errors);
+          setCsvJson([]);
+          setCurrentJson([]);
+          return;
+        }
+
         initializeColumnsMetadata();
 
         let wrongCSV = false;
@@ -317,19 +324,13 @@ function AddChart() {
           setShowColumnHeaderAlert(false);
         }
 
-        if (errors !== null && errors.length) {
-          setCsvErrors(errors);
-          setCsvJson([]);
-          setCurrentJson([]);
-        } else {
-          setShowNoDatasetTypeAlert(false);
-          setCsvErrors(undefined);
-          const csvJson = ParsingFileService.isExcelFile(data.type)
-            ? DatasetParsingService.createHeaderRowJson(results)
-            : results;
-          setCsvJson(csvJson);
-          setCurrentJson(csvJson);
-        }
+        setShowNoDatasetTypeAlert(false);
+        setCsvErrors(undefined);
+        const csvJson = ParsingFileService.isExcelFile(data.type)
+          ? DatasetParsingService.createHeaderRowJson(results)
+          : results;
+        setCsvJson(csvJson);
+        setCurrentJson(csvJson);
         setDatasetLoading(false);
       });
       setCsvFile(data);

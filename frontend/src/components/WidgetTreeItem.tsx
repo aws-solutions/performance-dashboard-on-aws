@@ -38,7 +38,7 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
     : undefined;
 
   return (
-    <div>
+    <li className="nostyle" aria-label={widget?.name}>
       {widget && (
         <div className={props.isDropDisabled ? styles.dropDisable : ""}>
           <Draggable draggableId={widget.id} index={node.dragIndex}>
@@ -53,12 +53,6 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
                   className={`margin-top-1 ${
                     snapshot.isDragging ? "usa-focus" : ""
                   }`}
-                  role="listitem"
-                  aria-label={`${node.label} ${t(
-                    widget.widgetType === WidgetType.Chart
-                      ? widget.content.chartType
-                      : widget.widgetType
-                  )} ${widget.name}`}
                 >
                   <WidgetTreeItemContent
                     label={node.label}
@@ -114,20 +108,24 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
                   </div>
                 </div>
               )}
-              {node.children.map((child) => {
-                return (
-                  <WidgetTreeItem
-                    key={child.id}
-                    node={child}
-                    isDropDisabled={props.isDropDisabled}
-                    onDuplicate={props.onDuplicate}
-                    onDelete={props.onDelete}
-                    onMove={props.onMove}
-                    canMoveUp={true}
-                    canMoveDown={true}
-                  />
-                );
-              })}
+              {node.children.length && (
+                <ol className="widget-tree" aria-label={t("SectionItems")}>
+                  {node.children.map((child) => {
+                    return (
+                      <WidgetTreeItem
+                        key={child.id}
+                        node={child}
+                        isDropDisabled={props.isDropDisabled}
+                        onDuplicate={props.onDuplicate}
+                        onDelete={props.onDelete}
+                        onMove={props.onMove}
+                        canMoveUp={true}
+                        canMoveDown={true}
+                      />
+                    );
+                  })}
+                </ol>
+              )}
             </div>
           )}
         </div>
@@ -135,7 +133,7 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
       {!widget && (
         <WidgetTreeSectionDivider id={node.id} dragIndex={node.dragIndex} />
       )}
-    </div>
+    </li>
   );
 };
 

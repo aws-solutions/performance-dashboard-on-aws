@@ -152,27 +152,27 @@ function WidgetTree(props: Props) {
               ref={provided.innerRef}
               {...provided.droppableProps}
               className="padding-top-2 padding-bottom-2"
-              role="list"
-              aria-label={t("ContentItems")}
             >
               <hr className="margin-top-2 border-base-lightest" />
               <h2 className="margin-bottom-2 margin-top-2">
                 {t("ContentItems")}
               </h2>
-              {tree?.nodes.map((node) => {
-                return (
-                  <WidgetTreeItem
-                    key={node.id}
-                    node={node}
-                    isDropDisabled={isDropDisabled}
-                    onDuplicate={props.onDuplicate}
-                    onDelete={props.onDelete}
-                    onMove={moveWidget}
-                    canMoveUp={node.dragIndex > 0}
-                    canMoveDown={node.dragIndex < tree.length - 1}
-                  />
-                );
-              })}
+              <ol className="widget-tree" aria-label={t("ContentItems")}>
+                {tree?.nodes.map((node) => {
+                  return (
+                    <WidgetTreeItem
+                      key={node.id}
+                      node={node}
+                      isDropDisabled={isDropDisabled}
+                      onDuplicate={props.onDuplicate}
+                      onDelete={props.onDelete}
+                      onMove={moveWidget}
+                      canMoveUp={node.dragIndex > 0}
+                      canMoveDown={node.dragIndex < tree.length - 1}
+                    />
+                  );
+                })}
+              </ol>
               {provided.placeholder}
               {!props.widgets || props.widgets.length === 0 ? (
                 <SecondaryActionBar className="text-center padding-5 margin-y-2">

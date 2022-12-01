@@ -3,11 +3,9 @@
 exports[`renders an empty box 1`] = `
 <div>
   <div
-    aria-label="Content Items"
     class="padding-top-2 padding-bottom-2"
     data-rbd-droppable-context-id="0"
     data-rbd-droppable-id="widget-tree"
-    role="list"
   >
     <hr
       class="margin-top-2 border-base-lightest"
@@ -17,84 +15,152 @@ exports[`renders an empty box 1`] = `
     >
       Content Items
     </h2>
-    <div>
-      <div
-        class=""
+    <ol
+      aria-label="Content Items"
+      class="widget-tree"
+    >
+      <li
+        aria-label="The benefits of bananas"
+        class="nostyle"
       >
         <div
-          aria-label="1 Text The benefits of bananas"
-          class="margin-top-1 "
-          data-rbd-draggable-context-id="0"
-          data-rbd-draggable-id="123"
-          role="listitem"
+          class=""
         >
           <div
-            class="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-col "
+            class="margin-top-1 "
+            data-rbd-draggable-context-id="0"
+            data-rbd-draggable-id="123"
           >
             <div
-              class="grid-row flex-1"
+              class="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-col "
             >
               <div
-                class="grid-row grid-col flex-1 padding-1"
+                class="grid-row flex-1"
               >
                 <div
-                  aria-describedby="rbd-hidden-text-0-hidden-text-0"
-                  class="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2 margin-right-1 margin-top-1 margin-bottom-1"
-                  data-rbd-drag-handle-context-id="0"
-                  data-rbd-drag-handle-draggable-id="123"
-                  draggable="false"
-                  role="button"
-                  tabindex="0"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="svg-inline--fa fa-grip-vertical fa-w-10 fa-1x "
-                    data-icon="grip-vertical"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    viewBox="0 0 320 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M96 32H32C14.33 32 0 46.33 0 64v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zM288 32h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2 margin-top-1 margin-bottom-1"
-                >
-                  1
-                </div>
-                <div
-                  class="grid-col flex-4 grid-row flex-column text-center margin-left-2 margin-right-2"
+                  class="grid-row grid-col flex-1 padding-1"
                 >
                   <div
-                    class="grid-col flex-6"
+                    aria-describedby="rbd-hidden-text-0-hidden-text-0"
+                    class="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2 margin-right-1 margin-top-1 margin-bottom-1"
+                    data-rbd-drag-handle-context-id="0"
+                    data-rbd-drag-handle-draggable-id="123"
+                    draggable="false"
+                    role="button"
+                    tabindex="0"
                   >
-                    <br />
+                    <svg
+                      aria-hidden="true"
+                      class="svg-inline--fa fa-grip-vertical fa-w-10 fa-1x "
+                      data-icon="grip-vertical"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      viewBox="0 0 320 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32H32C14.33 32 0 46.33 0 64v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zM288 32h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32z"
+                        fill="currentColor"
+                      />
+                    </svg>
                   </div>
                   <div
-                    class="grid-col flex-6"
+                    class="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2 margin-top-1 margin-bottom-1"
+                  >
+                    1
+                  </div>
+                  <div
+                    class="grid-col flex-4 grid-row flex-column text-center margin-left-2 margin-right-2"
+                  >
+                    <div
+                      class="grid-col flex-6"
+                    >
+                      <br />
+                    </div>
+                    <div
+                      class="grid-col flex-6"
+                    >
+                      <button
+                        aria-label="Move The benefits of bananas down"
+                        class="usa-button usa-button--unstyled text-base-darker hover:text-base-darkest active:text-base-darkest"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="svg-inline--fa fa-arrow-down fa-w-14 fa-xs "
+                          data-icon="arrow-down"
+                          data-prefix="fas"
+                          focusable="false"
+                          id="123-move-down"
+                          role="img"
+                          viewBox="0 0 448 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="border-base-lighter border-left"
+                />
+                <div
+                  class="grid-col flex-11 grid-row padding-1 margin-y-1"
+                >
+                  <div
+                    class="grid-col flex-8 usa-tooltip"
+                    data-position="bottom"
+                    title="The benefits of bananas"
+                  >
+                    <div
+                      class="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis text-bold"
+                    >
+                      <a
+                        aria-label="Edit The benefits of bananas"
+                        class="usa-link action-link"
+                        href="/admin/dashboard/abc/edit-text/123"
+                        target=""
+                      >
+                        <span>
+                          The benefits of bananas
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="grid-col flex-3 text-italic text-right"
+                  >
+                    (Text)
+                  </div>
+                  <div
+                    class="grid-col flex-1 margin-left-2 margin-right-2 text-right"
                   >
                     <button
-                      aria-label="Move The benefits of bananas down"
-                      class="usa-button usa-button--unstyled text-base-darker hover:text-base-darkest active:text-base-darkest"
+                      aria-controls="menu--1"
+                      aria-haspopup="true"
+                      aria-label="Actions for The benefits of bananas"
+                      class="usa-button usa-button--unstyled"
+                      data-reach-menu-button=""
+                      id="menu-button--menu--1"
+                      type="button"
                     >
+                      
                       <svg
                         aria-hidden="true"
-                        class="svg-inline--fa fa-arrow-down fa-w-14 fa-xs "
-                        data-icon="arrow-down"
+                        class="svg-inline--fa fa-ellipsis-v fa-w-6 margin-left-1"
+                        data-icon="ellipsis-v"
                         data-prefix="fas"
                         focusable="false"
-                        id="123-move-down"
                         role="img"
-                        viewBox="0 0 448 512"
+                        viewBox="0 0 192 512"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"
+                          d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"
                           fill="currentColor"
                         />
                       </svg>
@@ -102,225 +168,164 @@ exports[`renders an empty box 1`] = `
                   </div>
                 </div>
               </div>
-              <div
-                class="border-base-lighter border-left"
-              />
-              <div
-                class="grid-col flex-11 grid-row padding-1 margin-y-1"
-              >
-                <div
-                  class="grid-col flex-8 usa-tooltip"
-                  data-position="bottom"
-                  title="The benefits of bananas"
-                >
-                  <div
-                    class="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis text-bold"
-                  >
-                    <a
-                      aria-label="Edit The benefits of bananas"
-                      class="usa-link action-link"
-                      href="/admin/dashboard/abc/edit-text/123"
-                      target=""
-                    >
-                      <span>
-                        The benefits of bananas
-                      </span>
-                    </a>
-                  </div>
-                </div>
-                <div
-                  class="grid-col flex-3 text-italic text-right"
-                >
-                  (Text)
-                </div>
-                <div
-                  class="grid-col flex-1 margin-left-2 margin-right-2 text-right"
-                >
-                  <button
-                    aria-controls="menu--1"
-                    aria-haspopup="true"
-                    aria-label="Actions for The benefits of bananas"
-                    class="usa-button usa-button--unstyled"
-                    data-reach-menu-button=""
-                    id="menu-button--menu--1"
-                    type="button"
-                  >
-                    
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-ellipsis-v fa-w-6 margin-left-1"
-                      data-icon="ellipsis-v"
-                      data-prefix="fas"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 192 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div>
-      <div
-        class=""
+      </li>
+      <li
+        aria-label="The benefits of wine"
+        class="nostyle"
       >
         <div
-          aria-label="2 Text The benefits of wine"
-          class="margin-top-1 "
-          data-rbd-draggable-context-id="0"
-          data-rbd-draggable-id="456"
-          role="listitem"
+          class=""
         >
           <div
-            class="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-col "
+            class="margin-top-1 "
+            data-rbd-draggable-context-id="0"
+            data-rbd-draggable-id="456"
           >
             <div
-              class="grid-row flex-1"
+              class="border-base-lighter border-1px shadow-1 z-200 radius-lg bg-white grid-col "
             >
               <div
-                class="grid-row grid-col flex-1 padding-1"
+                class="grid-row flex-1"
               >
                 <div
-                  aria-describedby="rbd-hidden-text-0-hidden-text-0"
-                  class="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2 margin-right-1 margin-top-1 margin-bottom-1"
-                  data-rbd-drag-handle-context-id="0"
-                  data-rbd-drag-handle-draggable-id="456"
-                  draggable="false"
-                  role="button"
-                  tabindex="0"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="svg-inline--fa fa-grip-vertical fa-w-10 fa-1x "
-                    data-icon="grip-vertical"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    viewBox="0 0 320 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M96 32H32C14.33 32 0 46.33 0 64v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zM288 32h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2 margin-top-1 margin-bottom-1"
-                >
-                  2
-                </div>
-                <div
-                  class="grid-col flex-4 grid-row flex-column text-center margin-left-2 margin-right-2"
+                  class="grid-row grid-col flex-1 padding-1"
                 >
                   <div
-                    class="grid-col flex-6"
+                    aria-describedby="rbd-hidden-text-0-hidden-text-0"
+                    class="text-base-darker grid-col flex-3 text-center display-flex flex-align-center flex-justify-center margin-left-2 margin-right-1 margin-top-1 margin-bottom-1"
+                    data-rbd-drag-handle-context-id="0"
+                    data-rbd-drag-handle-draggable-id="456"
+                    draggable="false"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="svg-inline--fa fa-grip-vertical fa-w-10 fa-1x "
+                      data-icon="grip-vertical"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      viewBox="0 0 320 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32H32C14.33 32 0 46.33 0 64v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zM288 32h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32zm0 160h-64c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="grid-col flex-6 text-center display-flex flex-align-center flex-justify-center font-sans-md margin-left-2 margin-top-1 margin-bottom-1"
+                  >
+                    2
+                  </div>
+                  <div
+                    class="grid-col flex-4 grid-row flex-column text-center margin-left-2 margin-right-2"
+                  >
+                    <div
+                      class="grid-col flex-6"
+                    >
+                      <button
+                        aria-label="Move The benefits of wine up"
+                        class="usa-button usa-button--unstyled text-base-darker hover:text-base-darkest active:text-base-darkest"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="svg-inline--fa fa-arrow-up fa-w-14 fa-xs "
+                          data-icon="arrow-up"
+                          data-prefix="fas"
+                          focusable="false"
+                          id="456-move-up"
+                          role="img"
+                          viewBox="0 0 448 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <div
+                      class="grid-col flex-6"
+                    >
+                      <br />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="border-base-lighter border-left"
+                />
+                <div
+                  class="grid-col flex-11 grid-row padding-1 margin-y-1"
+                >
+                  <div
+                    class="grid-col flex-8 usa-tooltip"
+                    data-position="bottom"
+                    title="The benefits of wine"
+                  >
+                    <div
+                      class="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis text-bold"
+                    >
+                      <a
+                        aria-label="Edit The benefits of wine"
+                        class="usa-link action-link"
+                        href="/admin/dashboard/abc/edit-text/456"
+                        target=""
+                      >
+                        <span>
+                          The benefits of wine
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="grid-col flex-3 text-italic text-right"
+                  >
+                    (Text)
+                  </div>
+                  <div
+                    class="grid-col flex-1 margin-left-2 margin-right-2 text-right"
                   >
                     <button
-                      aria-label="Move The benefits of wine up"
-                      class="usa-button usa-button--unstyled text-base-darker hover:text-base-darkest active:text-base-darkest"
+                      aria-controls="menu--2"
+                      aria-haspopup="true"
+                      aria-label="Actions for The benefits of wine"
+                      class="usa-button usa-button--unstyled"
+                      data-reach-menu-button=""
+                      id="menu-button--menu--2"
+                      type="button"
                     >
+                      
                       <svg
                         aria-hidden="true"
-                        class="svg-inline--fa fa-arrow-up fa-w-14 fa-xs "
-                        data-icon="arrow-up"
+                        class="svg-inline--fa fa-ellipsis-v fa-w-6 margin-left-1"
+                        data-icon="ellipsis-v"
                         data-prefix="fas"
                         focusable="false"
-                        id="456-move-up"
                         role="img"
-                        viewBox="0 0 448 512"
+                        viewBox="0 0 192 512"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"
+                          d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"
                           fill="currentColor"
                         />
                       </svg>
                     </button>
                   </div>
-                  <div
-                    class="grid-col flex-6"
-                  >
-                    <br />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="border-base-lighter border-left"
-              />
-              <div
-                class="grid-col flex-11 grid-row padding-1 margin-y-1"
-              >
-                <div
-                  class="grid-col flex-8 usa-tooltip"
-                  data-position="bottom"
-                  title="The benefits of wine"
-                >
-                  <div
-                    class="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis text-bold"
-                  >
-                    <a
-                      aria-label="Edit The benefits of wine"
-                      class="usa-link action-link"
-                      href="/admin/dashboard/abc/edit-text/456"
-                      target=""
-                    >
-                      <span>
-                        The benefits of wine
-                      </span>
-                    </a>
-                  </div>
-                </div>
-                <div
-                  class="grid-col flex-3 text-italic text-right"
-                >
-                  (Text)
-                </div>
-                <div
-                  class="grid-col flex-1 margin-left-2 margin-right-2 text-right"
-                >
-                  <button
-                    aria-controls="menu--2"
-                    aria-haspopup="true"
-                    aria-label="Actions for The benefits of wine"
-                    class="usa-button usa-button--unstyled"
-                    data-reach-menu-button=""
-                    id="menu-button--menu--2"
-                    type="button"
-                  >
-                    
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-ellipsis-v fa-w-6 margin-left-1"
-                      data-icon="ellipsis-v"
-                      data-prefix="fas"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 192 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </li>
+    </ol>
     <div
       class="text-center margin-top-2"
     >

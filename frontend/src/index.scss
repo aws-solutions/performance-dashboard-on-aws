@@ -236,3 +236,10 @@ textarea::placeholder {
 .text-overflow-ellipsis {
   text-overflow: ellipsis;
 }
+
+li.nostyle {
+  list-style-type: none;
+}
+ol.widget-tree {
+  padding: 0;
+}

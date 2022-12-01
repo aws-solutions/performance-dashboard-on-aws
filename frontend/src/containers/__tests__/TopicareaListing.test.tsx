@@ -4,7 +4,13 @@
  */
 
 import React from "react";
-import { render, fireEvent, act, screen } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  act,
+  screen,
+  getByText,
+} from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import TopicareaListing from "../TopicareaListing";
 import userEvent from "@testing-library/user-event";
@@ -50,7 +56,7 @@ test("renders a button to create topic area", async () => {
 });
 
 test("renders a topic area table", async () => {
-  const { getByLabelText } = render(
+  const { getByText } = render(
     <TopicareaListing
       topicareas={[
         {
@@ -73,15 +79,15 @@ test("renders a topic area table", async () => {
     }
   );
 
-  const topicarea1 = getByLabelText("Topic Area Bananas");
+  const topicarea1 = getByText("Topic Area Bananas");
   expect(topicarea1).toBeInTheDocument();
 
-  const topicarea2 = getByLabelText("Topic Area Grapes");
+  const topicarea2 = getByText("Topic Area Grapes");
   expect(topicarea2).toBeInTheDocument();
 });
 
 test("dropdown menu delete option deletes a selected topic area without dashboards", async () => {
-  const { getByLabelText } = render(
+  render(
     <TopicareaListing
       topicareas={[
         {
@@ -117,7 +123,7 @@ test("dropdown menu delete option deletes a selected topic area without dashboar
 });
 
 test("dropdown menu delete option is disabled when the selected topic area has at least one dashboard", async () => {
-  const { getByLabelText } = render(
+  render(
     <TopicareaListing
       topicareas={[
         {

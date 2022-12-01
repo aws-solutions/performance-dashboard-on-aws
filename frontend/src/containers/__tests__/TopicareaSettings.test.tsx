@@ -99,11 +99,11 @@ test("renders a button to create topic area", async () => {
 });
 
 test("renders a topic area table", async () => {
-  const { getByLabelText } = render(<TopicareaSettings />, {
+  const { getByText } = render(<TopicareaSettings />, {
     wrapper: MemoryRouter,
   });
 
-  const topicarea = getByLabelText("Topic Area Bananas");
+  const topicarea = getByText("Topic Area Bananas");
   expect(topicarea).toBeInTheDocument();
 });
 

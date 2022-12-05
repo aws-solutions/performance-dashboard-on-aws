@@ -3,15 +3,15 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { LocationState, TopicArea } from "../models";
 import Button from "../components/Button";
-import TopicareasTable from "../components/TopicareasTable";
 import BackendService from "../services/BackendService";
 import Modal from "../components/Modal";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DropdownMenu from "../components/DropdownMenu";
+import Table from "../components/Table";
 
 const MenuItem = DropdownMenu.MenuItem;
 interface Props {
@@ -127,9 +127,47 @@ function TopicareaListing(props: Props) {
           </span>
         </div>
       </div>
-      <TopicareasTable
-        topicAreas={sortTopicareas(props.topicareas)}
-        onSelect={onSelect}
+      <Table
+        id="topicAreas"
+        selection="single"
+        screenReaderField="name"
+        initialSortByField="dashboardCount"
+        onSelection={onSelect}
+        initialSortAscending={false}
+        width="100%"
+        pageSize={10}
+        columns={useMemo(
+          () => [
+            {
+              Header: t("TopicArea"),
+              accessor: "name",
+              Cell: (props: any) => {
+                const topicArea = props.row.original as TopicArea;
+                return (
+                  <span className="text-bold text-base-darker">
+                    {topicArea.name}
+                  </span>
+                );
+              },
+            },
+            {
+              Header: t("Dashboards"),
+              accessor: "dashboardCount",
+              Cell: (props: any) => {
+                const topicArea = props.row.original as TopicArea;
+                return `${
+                  topicArea.dashboardCount ? topicArea.dashboardCount : "-"
+                }`;
+              },
+            },
+            {
+              Header: t("CreatedBy"),
+              accessor: "createdBy",
+            },
+          ],
+          [t]
+        )}
+        rows={props.topicareas}
       />
     </>
   );

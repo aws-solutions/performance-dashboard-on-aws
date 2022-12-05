@@ -148,8 +148,9 @@ function Table(props: Props) {
                     toggleAllRowsSelected(false);
                     row.toggleRowSelected();
                   }}
-                  aria-labelledby={getTitle(props, row)}
                   {...row.getToggleRowSelectedProps()}
+                  title={getTitle(props, row)}
+                  aria-labelledby={getTitle(props, row)}
                 />
               </div>
             ),
@@ -427,7 +428,7 @@ const IndeterminateRadio = React.forwardRef<
     checked?: boolean;
     onClick?: (event: MouseEvent<HTMLInputElement>) => void;
   }
->(({ indeterminate, ...rest }, ref) => {
+>(({ indeterminate, title, ...rest }, ref) => {
   const defaultRef = React.useRef();
   const resolvedRef = ref || defaultRef;
 
@@ -437,7 +438,7 @@ const IndeterminateRadio = React.forwardRef<
 
   return (
     <>
-      <input type="radio" ref={resolvedRef as any} {...rest} />
+      <input type="radio" title={title} ref={resolvedRef as any} {...rest} />
     </>
   );
 });

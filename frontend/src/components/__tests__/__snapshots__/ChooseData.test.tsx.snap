@@ -459,7 +459,6 @@ exports[`renders the ChooseData component 1`] = `
                   <div>
                     <input
                       style="cursor: pointer;"
-                      title="Toggle Row Selected"
                       type="radio"
                     />
                   </div>

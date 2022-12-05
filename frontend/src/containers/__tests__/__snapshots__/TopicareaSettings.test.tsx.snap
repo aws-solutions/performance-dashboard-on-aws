@@ -302,163 +302,208 @@ exports[`topic area settings should match snapshot 1`] = `
               </span>
             </div>
           </div>
-          <table
-            class="usa-table usa-table--borderless"
-            width="100%"
+          <div
+            class="overflow-x-hidden overflow-y-hidden"
           >
-            <thead>
-              <tr>
-                <th />
-                <th>
-                  <button
-                    aria-label="Sort by topic area name"
-                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
+            <table
+              class="usa-table usa-table--borderless"
+              id="topicAreas"
+              role="table"
+              width="100%"
+            >
+              <thead>
+                <tr
+                  role="row"
+                >
+                  <th
+                    aria-sort="none"
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="padding: 0.5rem 1rem;"
                   >
-                    <span>
-                      Topic area
-                    </span>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
-                      data-icon="chevron-down"
-                      data-prefix="fas"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 448 512"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <span />
+                  </th>
+                  <th
+                    aria-sort="none"
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="padding: 0.5rem 1rem;"
+                  >
+                    <button
+                      aria-label="Toggle SortBy: Topic area"
+                      class="usa-button usa-button--unstyled text-no-underline"
+                      style="cursor: pointer;"
+                      title="Toggle SortBy: Topic area"
+                      type="button"
                     >
-                      <path
-                        d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
-                </th>
-                <th>
-                  <button
-                    aria-label="Sort by dashboard name"
-                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
+                      <span>
+                        Topic area
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
+                        data-icon="chevron-down"
+                        data-prefix="fas"
+                        focusable="false"
+                        role="img"
+                        viewBox="0 0 448 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                  <th
+                    aria-sort="descending"
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="padding: 0.5rem 1rem;"
                   >
-                    <span>
-                      Dashboards
-                    </span>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-circle-down fa-w-16 margin-left-1"
-                      data-icon="chevron-circle-down"
-                      data-prefix="fas"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <button
+                      aria-label="Toggle SortBy: Dashboards"
+                      class="usa-button usa-button--unstyled text-no-underline"
+                      style="cursor: pointer;"
+                      title="Toggle SortBy: Dashboards"
+                      type="button"
                     >
-                      <path
-                        d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
-                </th>
-                <th>
-                  <button
-                    aria-label="Sort by created by name"
-                    class="usa-button usa-button--unstyled margin-left-1 hover:text-base-darker font-sans-md text-bold text-no-underline"
+                      <span>
+                        Dashboards
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        class="svg-inline--fa fa-chevron-circle-down fa-w-16 margin-left-1"
+                        data-icon="chevron-circle-down"
+                        data-prefix="fas"
+                        focusable="false"
+                        role="img"
+                        viewBox="0 0 512 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                  <th
+                    aria-sort="none"
+                    colspan="1"
+                    role="columnheader"
+                    scope="col"
+                    style="padding: 0.5rem 1rem;"
                   >
-                    <span>
-                      Created by
-                    </span>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
-                      data-icon="chevron-down"
-                      data-prefix="fas"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 448 512"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <button
+                      aria-label="Toggle SortBy: Created by"
+                      class="usa-button usa-button--unstyled text-no-underline"
+                      style="cursor: pointer;"
+                      title="Toggle SortBy: Created by"
+                      type="button"
                     >
-                      <path
-                        d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
-                        fill="currentColor"
+                      <span>
+                        Created by
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        class="svg-inline--fa fa-chevron-down fa-w-14 margin-left-1"
+                        data-icon="chevron-down"
+                        data-prefix="fas"
+                        focusable="false"
+                        role="img"
+                        viewBox="0 0 448 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                role="rowgroup"
+              >
+                <tr
+                  role="row"
+                >
+                  <td
+                    role="cell"
+                  >
+                    <div>
+                      <input
+                        aria-labelledby="Topic Area Grapes"
+                        style="cursor: pointer;"
+                        title="Topic Area Grapes"
+                        type="radio"
                       />
-                    </svg>
-                  </button>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <label
-                    class="usa-sr-only"
-                    for="987654321"
+                    </div>
+                  </td>
+                  <td
+                    role="cell"
                   >
-                    Topic Area Grapes
-                  </label>
-                  <input
-                    id="987654321"
-                    type="radio"
-                  />
-                </td>
-                <td>
-                  <span
-                    class="text-bold text-base-darker font-sans-md"
-                  >
-                    Topic Area Grapes
-                  </span>
-                </td>
-                <td>
-                  <span
-                    class="font-sans-md"
+                    <span
+                      class="text-bold text-base-darker"
+                    >
+                      Topic Area Grapes
+                    </span>
+                  </td>
+                  <td
+                    role="cell"
                   >
                     10
-                  </span>
-                </td>
-                <td>
-                  <span
-                    class="font-sans-md"
+                  </td>
+                  <td
+                    role="cell"
                   >
                     test user 2
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label
-                    class="usa-sr-only"
-                    for="123456789"
+                  </td>
+                </tr>
+                <tr
+                  role="row"
+                >
+                  <td
+                    role="cell"
                   >
-                    Topic Area Bananas
-                  </label>
-                  <input
-                    id="123456789"
-                    type="radio"
-                  />
-                </td>
-                <td>
-                  <span
-                    class="text-bold text-base-darker font-sans-md"
+                    <div>
+                      <input
+                        aria-labelledby="Topic Area Bananas"
+                        style="cursor: pointer;"
+                        title="Topic Area Bananas"
+                        type="radio"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    role="cell"
                   >
-                    Topic Area Bananas
-                  </span>
-                </td>
-                <td>
-                  <span
-                    class="font-sans-md"
+                    <span
+                      class="text-bold text-base-darker"
+                    >
+                      Topic Area Bananas
+                    </span>
+                  </td>
+                  <td
+                    role="cell"
                   >
                     4
-                  </span>
-                </td>
-                <td>
-                  <span
-                    class="font-sans-md"
+                  </td>
+                  <td
+                    role="cell"
                   >
                     test user 1
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

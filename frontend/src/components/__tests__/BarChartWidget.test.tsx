@@ -9,62 +9,62 @@ import { MemoryRouter } from "react-router-dom";
 import BarChartWidget from "../BarChartWidget";
 
 test("renders the chart title", async () => {
-  render(
-    <BarChartWidget
-      id="bar-chart"
-      title="test title"
-      downloadTitle="test title"
-      summary="test summary"
-      bars={["test"]}
-      data={[{ col: "column name", test: 1 }]}
-      summaryBelow={false}
-      columnsMetadata={[{ columnName: "test" }]}
-      significantDigitLabels={true}
-      stackedChart={true}
-    />,
-    { wrapper: MemoryRouter }
-  );
-  expect(screen.getByText("test title")).toBeInTheDocument();
+    render(
+        <BarChartWidget
+            id="bar-chart"
+            title="test title"
+            downloadTitle="test title"
+            summary="test summary"
+            bars={["test"]}
+            data={[{ col: "column name", test: 1 }]}
+            summaryBelow={false}
+            columnsMetadata={[{ columnName: "test" }]}
+            significantDigitLabels={true}
+            stackedChart={true}
+        />,
+        { wrapper: MemoryRouter },
+    );
+    expect(screen.getByText("test title")).toBeInTheDocument();
 });
 
 test("renders chart summary above the chart", async () => {
-  render(
-    <BarChartWidget
-      id="bar-chart"
-      title="test title"
-      downloadTitle="test title"
-      summary="test summary"
-      bars={["test"]}
-      data={[{ col: "column name", test: 1 }]}
-      summaryBelow={false}
-      columnsMetadata={[]}
-      significantDigitLabels={false}
-    />,
-    { wrapper: MemoryRouter }
-  );
+    render(
+        <BarChartWidget
+            id="bar-chart"
+            title="test title"
+            downloadTitle="test title"
+            summary="test summary"
+            bars={["test"]}
+            data={[{ col: "column name", test: 1 }]}
+            summaryBelow={false}
+            columnsMetadata={[]}
+            significantDigitLabels={false}
+        />,
+        { wrapper: MemoryRouter },
+    );
 
-  const summary = screen.getByText("test summary");
-  expect(summary).toBeInTheDocument();
-  expect(summary.closest("div")).toHaveClass("chartSummaryAbove");
+    const summary = screen.getByText("test summary");
+    expect(summary).toBeInTheDocument();
+    expect(summary.closest("div")).toHaveClass("chartSummaryAbove");
 });
 
 test("renders chart summary below the chart", async () => {
-  render(
-    <BarChartWidget
-      id="bar-chart"
-      title="test title"
-      downloadTitle="test title"
-      summary="test summary"
-      bars={["test"]}
-      data={[{ col: "column name", test: 1 }]}
-      summaryBelow={true}
-      columnsMetadata={[]}
-      significantDigitLabels={false}
-    />,
-    { wrapper: MemoryRouter }
-  );
+    render(
+        <BarChartWidget
+            id="bar-chart"
+            title="test title"
+            downloadTitle="test title"
+            summary="test summary"
+            bars={["test"]}
+            data={[{ col: "column name", test: 1 }]}
+            summaryBelow={true}
+            columnsMetadata={[]}
+            significantDigitLabels={false}
+        />,
+        { wrapper: MemoryRouter },
+    );
 
-  const summary = screen.getByText("test summary");
-  expect(summary).toBeInTheDocument();
-  expect(summary.closest("div")).toHaveClass("chartSummaryBelow");
+    const summary = screen.getByText("test summary");
+    expect(summary).toBeInTheDocument();
+    expect(summary.closest("div")).toHaveClass("chartSummaryBelow");
 });

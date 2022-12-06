@@ -11,65 +11,63 @@ import { ItemNotFound } from "../errors";
 const escapeHtml = require("escape-html");
 
 async function listDatasets(req: Request, res: Response) {
-  const repo = DatasetRepository.getInstance();
-  const datasets = await repo.listDatasets();
-  res.json(datasets);
+    const repo = DatasetRepository.getInstance();
+    const datasets = await repo.listDatasets();
+    res.json(datasets);
 }
 
 async function getDatasetById(req: Request, res: Response) {
-  const { id } = req.params;
-  const repo = DatasetRepository.getInstance();
+    const { id } = req.params;
+    const repo = DatasetRepository.getInstance();
 
-  try {
-    const dataset = await repo.getDatasetById(id);
-    return res.json(dataset);
-  } catch (err) {
-    if (err instanceof ItemNotFound) {
-      res.status(404);
-      return res.send("Dataset not found");
+    try {
+        const dataset = await repo.getDatasetById(id);
+        return res.json(dataset);
+    } catch (err) {
+        if (err instanceof ItemNotFound) {
+            res.status(404);
+            return res.send("Dataset not found");
+        }
+        throw err;
     }
-    throw err;
-  }
 }
 
 async function createDataset(req: Request, res: Response) {
-  const user = req.user;
-  const { fileName, s3Key, schema } = req.body;
+    const user = req.user;
+    const { fileName, s3Key, schema } = req.body;
 
-  if (!fileName) {
-    return res.status(400).send("Missing required field `fileName`");
-  }
+    if (!fileName) {
+        return res.status(400).send("Missing required field `fileName`");
+    }
 
-  if (!s3Key.raw || !s3Key.json) {
-    return res.status(400).send("Missing required field `s3Key`");
-  }
+    if (!s3Key.raw || !s3Key.json) {
+        return res.status(400).send("Missing required field `s3Key`");
+    }
 
-  if (schema && !Object.values(DatasetSchema).includes(schema)) {
-    return res
-      .status(400)
-      .send(`Unknown schema provided '${escapeHtml(schema)}'`);
-  }
+    if (schema && !Object.values(DatasetSchema).includes(schema)) {
+        return res.status(400).send(`Unknown schema provided '${escapeHtml(schema)}'`);
+    }
 
-  try {
-    const dataset = DatasetFactory.createNew({
-      fileName,
-      createdBy: user.userId,
-      s3Key,
-      sourceType: SourceType.FileUpload,
-      schema,
-    });
+    try {
+        const dataset = DatasetFactory.createNew({
+            fileName,
+            createdBy: user.userId,
+            s3Key,
+            sourceType: SourceType.FileUpload,
+            schema,
+        });
 
-    const repo = DatasetRepository.getInstance();
-    await repo.saveDataset(dataset);
-    res.json(dataset);
-  } catch (err) {
-    console.error(err);
-    res.status(400).send("Unable to create dataset");
-  }
+        const repo = DatasetRepository.getInstance();
+        await repo.saveDataset(dataset);
+        res.json(dataset);
+    } catch (err) {
+        console.error(err);
+        res.status(400).send("Unable to create dataset");
+    }
 }
 
 export default {
-  createDataset,
-  listDatasets,
-  getDatasetById,
+    createDataset,
+    listDatasets,
+    getDatasetById,
 };

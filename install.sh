@@ -1,5 +1,4 @@
-npm install --global husky lint-staged eslint-plugin-prettier eslint-config-prettier --save-dev
-npm install --global --save-dev --save-exact prettier
+npm i
 
 #
 # Backend

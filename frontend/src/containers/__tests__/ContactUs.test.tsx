@@ -9,6 +9,6 @@ import { MemoryRouter } from "react-router-dom";
 import ContactUs from "../ContactUs";
 
 test("renders the component", async () => {
-  const wrapper = render(<ContactUs />, { wrapper: MemoryRouter });
-  expect(wrapper.container).toMatchSnapshot();
+    const wrapper = render(<ContactUs />, { wrapper: MemoryRouter });
+    expect(wrapper.container).toMatchSnapshot();
 });

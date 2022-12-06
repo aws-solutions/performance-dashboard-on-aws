@@ -13,39 +13,39 @@ jest.mock("../../hooks");
 jest.mock("../../services/BackendService");
 
 beforeEach(async () => {
-  BackendService.updateSetting = jest.fn().mockReturnValue({ id: "123" });
-  await act(async () => {
-    render(<EditDateFormat />, { wrapper: MemoryRouter });
-  });
+    BackendService.updateSetting = jest.fn().mockReturnValue({ id: "123" });
+    await act(async () => {
+        render(<EditDateFormat />, { wrapper: MemoryRouter });
+    });
 });
 
 test("submits form with date and time format values", async () => {
-  fireEvent.change(screen.getByLabelText("Date format*"), {
-    target: {
-      value: "YYYY-MM-DD",
-    },
-  });
+    fireEvent.change(screen.getByLabelText("Date format*"), {
+        target: {
+            value: "YYYY-MM-DD",
+        },
+    });
 
-  fireEvent.change(screen.getByLabelText("Time format*"), {
-    target: {
-      value: "h:mm A",
-    },
-  });
+    fireEvent.change(screen.getByLabelText("Time format*"), {
+        target: {
+            value: "h:mm A",
+        },
+    });
 
-  await act(async () => {
-    fireEvent.submit(
-      screen.getByRole("button", {
-        name: "Save",
-      })
+    await act(async () => {
+        fireEvent.submit(
+            screen.getByRole("button", {
+                name: "Save",
+            }),
+        );
+    });
+
+    expect(BackendService.updateSetting).toBeCalledWith(
+        "dateTimeFormat",
+        {
+            date: "YYYY-MM-DD",
+            time: "h:mm A",
+        },
+        expect.anything(),
     );
-  });
-
-  expect(BackendService.updateSetting).toBeCalledWith(
-    "dateTimeFormat",
-    {
-      date: "YYYY-MM-DD",
-      time: "h:mm A",
-    },
-    expect.anything()
-  );
 });

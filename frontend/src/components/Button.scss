@@ -1,29 +1,29 @@
 @import "../styles/base";
 
 .usa-button--outline {
-  @include u-text("base", "!important");
-  background-color: transparent !important;
-  box-shadow: inset 0 0 0 2px color("base") !important;
+    @include u-text("base", "!important");
+    background-color: transparent !important;
+    box-shadow: inset 0 0 0 2px color("base") !important;
 }
 .usa-button--outline:visited {
-  @include u-text("base", "!important");
+    @include u-text("base", "!important");
 }
 .usa-button--outline:hover,
 .usa-button--outline.usa-button--hover {
-  @include u-text("base-dark", "!important");
-  background-color: transparent !important;
-  box-shadow: inset 0 0 0 2px color("base-dark") !important;
+    @include u-text("base-dark", "!important");
+    background-color: transparent !important;
+    box-shadow: inset 0 0 0 2px color("base-dark") !important;
 }
 .usa-button--outline:active,
 .usa-button--outline.usa-button--active {
-  @include u-text("base-dark", "!important");
-  background-color: transparent !important;
-  box-shadow: inset 0 0 0 2px color("base-dark") !important;
+    @include u-text("base-dark", "!important");
+    background-color: transparent !important;
+    box-shadow: inset 0 0 0 2px color("base-dark") !important;
 }
 
 .usa-button--outline:disabled,
 .usa-button--outline.usa-button--disabled {
-  @include u-text("base-light", "!important");
-  background-color: transparent !important;
-  box-shadow: inset 0 0 0 2px color("base-light") !important;
+    @include u-text("base-light", "!important");
+    background-color: transparent !important;
+    box-shadow: inset 0 0 0 2px color("base-light") !important;
 }

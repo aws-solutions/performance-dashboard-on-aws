@@ -13,17 +13,14 @@ import auth from "./middleware/auth";
 const router = Router();
 const requiresAuth = process.env.AUTHENTICATION_REQUIRED === "true";
 if (requiresAuth) {
-  router.use(auth);
+    router.use(auth);
 }
 
-router.get(
-  "/dashboard/:id",
-  errorHandler(DashboardCtrl.getPublicDashboardById)
-);
+router.get("/dashboard/:id", errorHandler(DashboardCtrl.getPublicDashboardById));
 
 router.get(
-  "/dashboard/friendly-url/:friendlyURL",
-  errorHandler(DashboardCtrl.getPublicDashboardByFriendlyURL)
+    "/dashboard/friendly-url/:friendlyURL",
+    errorHandler(DashboardCtrl.getPublicDashboardByFriendlyURL),
 );
 
 router.get("/search", errorHandler(HomepageCtrl.getPublicHomepageWithQuery));

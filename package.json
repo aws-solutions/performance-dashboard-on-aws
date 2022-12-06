@@ -1,0 +1,9 @@
+{
+    "devDependencies": {
+        "prettier": "2.8.0",
+        "husky": "^8.0.0"
+    },
+    "scripts": {
+        "prepare": "husky install"
+    }
+}

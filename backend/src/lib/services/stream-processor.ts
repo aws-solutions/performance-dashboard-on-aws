@@ -17,28 +17,28 @@ import logger from "./logger";
  * https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.Tutorial.html
  */
 async function processRecord(record: DynamoDBRecord) {
-  if (!record.dynamodb || record.eventSource != "aws:dynamodb") {
-    logger.error("Discarding invalid stream record");
-    return;
-  }
+    if (!record.dynamodb || record.eventSource != "aws:dynamodb") {
+        logger.error("Discarding invalid stream record");
+        return;
+    }
 
-  switch (record.eventName) {
-    case "MODIFY":
-      logger.info("Handling MODIFY stream record");
-      return handleModifyRecord(record.dynamodb);
+    switch (record.eventName) {
+        case "MODIFY":
+            logger.info("Handling MODIFY stream record");
+            return handleModifyRecord(record.dynamodb);
 
-    case "INSERT":
-      logger.info("Handling INSERT stream record");
-      return handleInsertRecord(record.dynamodb);
+        case "INSERT":
+            logger.info("Handling INSERT stream record");
+            return handleInsertRecord(record.dynamodb);
 
-    case "REMOVE":
-      logger.info("Handling REMOVE stream record");
-      return handleRemoveRecord(record.dynamodb);
+        case "REMOVE":
+            logger.info("Handling REMOVE stream record");
+            return handleRemoveRecord(record.dynamodb);
 
-    default:
-      logger.error("Discarding stream record, unknown eventName");
-      return;
-  }
+        default:
+            logger.error("Discarding stream record, unknown eventName");
+            return;
+    }
 }
 
 /**
@@ -47,22 +47,17 @@ async function processRecord(record: DynamoDBRecord) {
  * item (NewImage).
  */
 async function handleModifyRecord(record: StreamRecord) {
-  if (!record.OldImage || !record.NewImage) {
-    logger.error("Discarding stream record. Missing `OldImage` or `NewImage`");
-    return;
-  }
+    if (!record.OldImage || !record.NewImage) {
+        logger.error("Discarding stream record. Missing `OldImage` or `NewImage`");
+        return;
+    }
 
-  const dynamodb = DynamoDBService.getInstance();
-  const oldItem = dynamodb.unmarshall(record.OldImage);
-  const newItem = dynamodb.unmarshall(record.NewImage);
+    const dynamodb = DynamoDBService.getInstance();
+    const oldItem = dynamodb.unmarshall(record.OldImage);
+    const newItem = dynamodb.unmarshall(record.NewImage);
 
-  const timestamp = getTimestampFromRecord(record);
-  return AuditTrailService.handleItemEvent(
-    ItemEvent.Update,
-    oldItem,
-    newItem,
-    timestamp
-  );
+    const timestamp = getTimestampFromRecord(record);
+    return AuditTrailService.handleItemEvent(ItemEvent.Update, oldItem, newItem, timestamp);
 }
 
 /**
@@ -70,21 +65,16 @@ async function handleModifyRecord(record: StreamRecord) {
  * main table. The record contains the new item (NewImage).
  */
 async function handleInsertRecord(record: StreamRecord) {
-  if (!record.NewImage) {
-    logger.error("Discarding stream record. Missing `NewImage`");
-    return;
-  }
+    if (!record.NewImage) {
+        logger.error("Discarding stream record. Missing `NewImage`");
+        return;
+    }
 
-  const dynamodb = DynamoDBService.getInstance();
-  const newItem = dynamodb.unmarshall(record.NewImage);
+    const dynamodb = DynamoDBService.getInstance();
+    const newItem = dynamodb.unmarshall(record.NewImage);
 
-  const timestamp = getTimestampFromRecord(record);
-  return AuditTrailService.handleItemEvent(
-    ItemEvent.Create,
-    null,
-    newItem,
-    timestamp
-  );
+    const timestamp = getTimestampFromRecord(record);
+    return AuditTrailService.handleItemEvent(ItemEvent.Create, null, newItem, timestamp);
 }
 
 /**
@@ -92,32 +82,27 @@ async function handleInsertRecord(record: StreamRecord) {
  * main table. The record contains the deleted item (OldImage).
  */
 async function handleRemoveRecord(record: StreamRecord) {
-  if (!record.OldImage) {
-    logger.error("Discarding stream record. Missing `OldImage`");
-    return;
-  }
+    if (!record.OldImage) {
+        logger.error("Discarding stream record. Missing `OldImage`");
+        return;
+    }
 
-  const dynamodb = DynamoDBService.getInstance();
-  const oldItem = dynamodb.unmarshall(record.OldImage);
+    const dynamodb = DynamoDBService.getInstance();
+    const oldItem = dynamodb.unmarshall(record.OldImage);
 
-  const timestamp = getTimestampFromRecord(record);
-  return AuditTrailService.handleItemEvent(
-    ItemEvent.Delete,
-    oldItem,
-    null,
-    timestamp
-  );
+    const timestamp = getTimestampFromRecord(record);
+    return AuditTrailService.handleItemEvent(ItemEvent.Delete, oldItem, null, timestamp);
 }
 
 function getTimestampFromRecord(record: StreamRecord): Date {
-  if (!record.ApproximateCreationDateTime) {
-    return new Date();
-  }
+    if (!record.ApproximateCreationDateTime) {
+        return new Date();
+    }
 
-  const epochTime = record.ApproximateCreationDateTime;
-  return new Date(epochTime * 1000);
+    const epochTime = record.ApproximateCreationDateTime;
+    return new Date(epochTime * 1000);
 }
 
 export default {
-  processRecord,
+    processRecord,
 };

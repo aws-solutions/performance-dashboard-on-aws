@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+pushd backend && npm run lint-src && popd
+pushd frontend && npm run lint-src && popd

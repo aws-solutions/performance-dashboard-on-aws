@@ -1,1568 +1,1413 @@
 {
-	"info": {
-		"_postman_id": "bf9cd81c-3d73-4d0d-862a-c937195f218a",
-		"name": "Versioning Edge Cases",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Create topic area",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "2d585986-481d-4118-9f93-d2621672cb50",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "8fc61eed-587c-4bbb-8666-81038b529a4a",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns the topic area id\", () => {",
-							"    const topicarea = pm.response.json();",
-							"    pm.expect(topicarea.id).to.exist;",
-							"    pm.collectionVariables.set(\"topicarea.id\", topicarea.id);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{$randomJobArea}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/topicarea",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"topicarea"
-					]
-				},
-				"description": "Create new topic area for testing purposes"
-			},
-			"response": []
-		},
-		{
-			"name": "Create new dashboard v1",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "f0a93eee-848a-4e9e-97d0-f7f17aca644a",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "f6141a6e-4dbe-466e-a63a-8503adb42e8e",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns the dashboard\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.id).to.exist;",
-							"    pm.collectionVariables.set(\"dashboard.id\", dashboard.id);",
-							"",
-							"    pm.expect(dashboard.updatedAt).to.exist;",
-							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
-							"",
-							"    pm.expect(dashboard.version).to.equal(1);",
-							"});",
-							"",
-							"pm.test(\"dashboard is version 1\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.version).to.equal(1);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{$randomJobTitle}}\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"description\": \"{{$randomCatchPhrase}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard"
-					]
-				},
-				"description": "Creates a dashboard in the newly created topic area"
-			},
-			"response": []
-		},
-		{
-			"name": "Move v1 to publish pending",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d2cc84cc-ba11-4a4c-872d-626f417d568e",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publishpending",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}",
-						"publishpending"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v1 is in PublishPending state",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "63ff3dfb-8519-4156-8f53-f2f3a59a0001",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"state is publish pending\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"PublishPending\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Publish v1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "e64a1ffe-4ced-4660-9fbe-d729a78547c4",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publish",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}",
-						"publish"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v1 is Published",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "f41d72d8-55a4-46d4-bc5b-f54db080221a",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"dashboard is in published state\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"Published\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create new draft v2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "2ccdcf03-5db9-4d37-986b-0a299770b773",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns new draft dashboard\", () => {",
-							"    const draft = pm.response.json();",
-							"    pm.expect(draft.id).to.exist;",
-							"    pm.expect(draft.state).to.equal(\"Draft\");",
-							"    pm.collectionVariables.set(\"dashboardv2.id\", draft.id);",
-							"    pm.collectionVariables.set(\"dashboardv2.updatedAt\", draft.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"new draft dashboard has a new id\", () => {",
-							"    const dashboardId = pm.collectionVariables.get(\"dashboard.id\");",
-							"    const draft = pm.response.json();",
-							"    pm.expect(draft.id).not.to.equal(dashboardId);",
-							"});",
-							"",
-							"pm.test(\"new draft dashboard is version 2\", () => {",
-							"    const draft = pm.response.json();",
-							"    pm.expect(draft.version).to.equal(2);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Move v2 to publish pending",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "4c617e74-dc34-4558-af3b-60f1d1cee477",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboardv2.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}/publishpending",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv2.id}}",
-						"publishpending"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v2 is in PublishPending state",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "3c6009c4-2fb8-4eb6-8029-c9c4f892257e",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboardv2.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"state is publish pending\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"PublishPending\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv2.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Publish v2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0f21db92-8ca7-4d21-bf6c-fcdb5a98bf92",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboardv2.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}/publish",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv2.id}}",
-						"publish"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v2 is Published",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "aab12be3-2f85-4987-867e-82cd12b68667",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboardv2.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"dashboard is in published state\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"Published\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv2.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v1 is now Inactive",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c5833fd6-8862-44af-8d24-bb5d71671ec5",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"v1 is now Inactive\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"Inactive\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create new draft v3",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "f45d72ac-f036-463e-b540-1a1861ec59df",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"returns new draft dashboard\", () => {",
-							"    const draft = pm.response.json();",
-							"    pm.expect(draft.id).to.exist;",
-							"    pm.expect(draft.state).to.equal(\"Draft\");",
-							"    pm.collectionVariables.set(\"dashboardv3.id\", draft.id);",
-							"    pm.collectionVariables.set(\"dashboardv3.updatedAt\", draft.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"new draft dashboard has a new id\", () => {",
-							"    const dashboardId = pm.collectionVariables.get(\"dashboard.id\");",
-							"    const draft = pm.response.json();",
-							"    pm.expect(draft.id).not.to.equal(dashboardId);",
-							"});",
-							"",
-							"pm.test(\"new draft dashboard is version 3\", () => {",
-							"    const draft = pm.response.json();",
-							"    pm.expect(draft.version).to.equal(3);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv2.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Archive v2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "79cbb418-4d79-49c7-9b24-6062ab6a853d",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboardv2.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}/archive",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv2.id}}",
-						"archive"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v2 is Archived",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "e328c593-fb37-4122-a969-ecf9c5ddd45d",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboardv2.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"dashboard is in archived state\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"Archived\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv2.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Move v3 to publish pending",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "f3f86a01-233f-4408-8344-4eba3adcf104",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboardv3.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}/publishpending",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv3.id}}",
-						"publishpending"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v3 is in PublishPending state",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "1fde66f7-68f4-4460-8a40-97427bc3a945",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboardv3.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"state is publish pending\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"PublishPending\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv3.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Publish v3",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "81edec54-bc62-4be8-9263-21820c648428",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboardv3.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}/publish",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv3.id}}",
-						"publish"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v3 is Published",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "8ecabe07-95b4-40b7-90d0-b8965980b9f4",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboardv3.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"dashboard is in published state\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"Published\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv3.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v2 is Inactive",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "86762553-6732-413b-b152-d157cc1d9ac4",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboardv2.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"dashboard is in Inactive state\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"Inactive\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv2.id}}"
-					]
-				},
-				"description": "v2 should have moved to Inactive automatically when v3 was Published."
-			},
-			"response": []
-		},
-		{
-			"name": "Archive v3",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "45128330-47ca-498a-b86c-3f9c41f9efb0",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboardv3.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}/archive",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv3.id}}",
-						"archive"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v3 is Archived",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "517b404b-982b-40f5-a621-811f936f6854",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboardv3.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"state is archived\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"Archived\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv3.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Re-publish v3",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "cacde731-3cef-483e-94dd-c91f0efde109",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"updatedAt\": \"{{dashboardv3.updatedAt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}/publish",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv3.id}}",
-						"publish"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Verify v3 is Published",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "9eddd697-4af6-4a56-ae50-219a1755dde2",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"    const dashboard = pm.response.json();",
-							"    pm.collectionVariables.set(\"dashboardv3.updatedAt\", dashboard.updatedAt);",
-							"});",
-							"",
-							"pm.test(\"dashboard is in published state\", () => {",
-							"    const dashboard = pm.response.json();",
-							"    pm.expect(dashboard.state).to.equal(\"Published\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv3.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete v1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "04eabb4c-8beb-4a03-ac95-68b7a365bd15",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboard.id}}"
-					]
-				},
-				"description": "Deletes the test dashboard"
-			},
-			"response": []
-		},
-		{
-			"name": "Delete v2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "53b4b3b8-c055-4f23-bac4-a69aa2df138e",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv2.id}}"
-					]
-				},
-				"description": "Deletes the test dashboard"
-			},
-			"response": []
-		},
-		{
-			"name": "Delete v3",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "f1b3b122-3026-488b-b83d-b33a7c80534d",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"dashboard",
-						"{{dashboardv3.id}}"
-					]
-				},
-				"description": "Deletes the test dashboard"
-			},
-			"response": []
-		},
-		{
-			"name": "Delete topic area",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d8c572f1-1745-4038-ac42-2014bdb49598",
-						"exec": [
-							"pm.test(\"returns 200 OK\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/topicarea/{{topicarea.id}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"topicarea",
-						"{{topicarea.id}}"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"auth": {
-		"type": "bearer",
-		"bearer": [
-			{
-				"key": "token",
-				"value": "{{token}}",
-				"type": "string"
-			}
-		]
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "c64264c8-1916-4532-9910-8692d5a90248",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "f6277cfe-76de-478b-a7e8-21727deaa8cf",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"id": "8b2b942b-2cee-4c3b-bdfd-236f5b246010",
-			"key": "baseUrl",
-			"value": ""
-		},
-		{
-			"id": "a43436da-3033-4ccb-ba72-fc020935d8a9",
-			"key": "token",
-			"value": ""
-		},
-		{
-			"id": "c770a2dd-4570-4a99-a526-ecca28ba95ea",
-			"key": "topicarea.id",
-			"value": ""
-		},
-		{
-			"id": "8119f361-0c80-44bc-b067-4f3e8835eb6f",
-			"key": "topicarea.name",
-			"value": ""
-		},
-		{
-			"id": "9b3ca1af-28ed-4156-a150-88c011ea305b",
-			"key": "dashboard.id",
-			"value": ""
-		},
-		{
-			"id": "5e7b2585-f88d-4813-a36b-e630fb2316f9",
-			"key": "dashboard.updatedAt",
-			"value": ""
-		},
-		{
-			"id": "6bf5c1dc-af07-49b2-89b7-83ad6f727fd2",
-			"key": "dashboardv2.id",
-			"value": ""
-		},
-		{
-			"id": "91352179-fe54-42db-8fbe-eefec0e707e1",
-			"key": "dashboardv2.updatedAt",
-			"value": ""
-		},
-		{
-			"id": "923f094d-37e9-478b-b450-27a4e43645b2",
-			"key": "dashboardv3.id",
-			"value": ""
-		},
-		{
-			"id": "a71a0370-6134-4506-841d-5926ae275278",
-			"key": "dashboardv3.updatedAt",
-			"value": ""
-		}
-	],
-	"protocolProfileBehavior": {}
+    "info": {
+        "_postman_id": "bf9cd81c-3d73-4d0d-862a-c937195f218a",
+        "name": "Versioning Edge Cases",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create topic area",
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "id": "2d585986-481d-4118-9f93-d2621672cb50",
+                        "exec": [""],
+                        "type": "text/javascript"
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "8fc61eed-587c-4bbb-8666-81038b529a4a",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"returns the topic area id\", () => {",
+                            "    const topicarea = pm.response.json();",
+                            "    pm.expect(topicarea.id).to.exist;",
+                            "    pm.collectionVariables.set(\"topicarea.id\", topicarea.id);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"{{$randomJobArea}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/topicarea",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["topicarea"]
+                },
+                "description": "Create new topic area for testing purposes"
+            },
+            "response": []
+        },
+        {
+            "name": "Create new dashboard v1",
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "id": "f0a93eee-848a-4e9e-97d0-f7f17aca644a",
+                        "exec": [""],
+                        "type": "text/javascript"
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "f6141a6e-4dbe-466e-a63a-8503adb42e8e",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"returns the dashboard\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.id).to.exist;",
+                            "    pm.collectionVariables.set(\"dashboard.id\", dashboard.id);",
+                            "",
+                            "    pm.expect(dashboard.updatedAt).to.exist;",
+                            "    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+                            "",
+                            "    pm.expect(dashboard.version).to.equal(1);",
+                            "});",
+                            "",
+                            "pm.test(\"dashboard is version 1\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.version).to.equal(1);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"{{$randomJobTitle}}\",\n    \"topicAreaId\": \"{{topicarea.id}}\",\n    \"description\": \"{{$randomCatchPhrase}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard"]
+                },
+                "description": "Creates a dashboard in the newly created topic area"
+            },
+            "response": []
+        },
+        {
+            "name": "Move v1 to publish pending",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "d2cc84cc-ba11-4a4c-872d-626f417d568e",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publishpending",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboard.id}}", "publishpending"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v1 is in PublishPending state",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "63ff3dfb-8519-4156-8f53-f2f3a59a0001",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"state is publish pending\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"PublishPending\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboard.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Publish v1",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "e64a1ffe-4ced-4660-9fbe-d729a78547c4",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"updatedAt\": \"{{dashboard.updatedAt}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}/publish",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboard.id}}", "publish"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v1 is Published",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "f41d72d8-55a4-46d4-bc5b-f54db080221a",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"dashboard is in published state\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"Published\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboard.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create new draft v2",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "2ccdcf03-5db9-4d37-986b-0a299770b773",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"returns new draft dashboard\", () => {",
+                            "    const draft = pm.response.json();",
+                            "    pm.expect(draft.id).to.exist;",
+                            "    pm.expect(draft.state).to.equal(\"Draft\");",
+                            "    pm.collectionVariables.set(\"dashboardv2.id\", draft.id);",
+                            "    pm.collectionVariables.set(\"dashboardv2.updatedAt\", draft.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"new draft dashboard has a new id\", () => {",
+                            "    const dashboardId = pm.collectionVariables.get(\"dashboard.id\");",
+                            "    const draft = pm.response.json();",
+                            "    pm.expect(draft.id).not.to.equal(dashboardId);",
+                            "});",
+                            "",
+                            "pm.test(\"new draft dashboard is version 2\", () => {",
+                            "    const draft = pm.response.json();",
+                            "    pm.expect(draft.version).to.equal(2);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboard.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Move v2 to publish pending",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "4c617e74-dc34-4558-af3b-60f1d1cee477",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"updatedAt\": \"{{dashboardv2.updatedAt}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}/publishpending",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv2.id}}", "publishpending"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v2 is in PublishPending state",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "3c6009c4-2fb8-4eb6-8029-c9c4f892257e",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboardv2.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"state is publish pending\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"PublishPending\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv2.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Publish v2",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "0f21db92-8ca7-4d21-bf6c-fcdb5a98bf92",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"updatedAt\": \"{{dashboardv2.updatedAt}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}/publish",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv2.id}}", "publish"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v2 is Published",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "aab12be3-2f85-4987-867e-82cd12b68667",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboardv2.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"dashboard is in published state\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"Published\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv2.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v1 is now Inactive",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "c5833fd6-8862-44af-8d24-bb5d71671ec5",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboard.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"v1 is now Inactive\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"Inactive\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboard.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create new draft v3",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "f45d72ac-f036-463e-b540-1a1861ec59df",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"returns new draft dashboard\", () => {",
+                            "    const draft = pm.response.json();",
+                            "    pm.expect(draft.id).to.exist;",
+                            "    pm.expect(draft.state).to.equal(\"Draft\");",
+                            "    pm.collectionVariables.set(\"dashboardv3.id\", draft.id);",
+                            "    pm.collectionVariables.set(\"dashboardv3.updatedAt\", draft.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"new draft dashboard has a new id\", () => {",
+                            "    const dashboardId = pm.collectionVariables.get(\"dashboard.id\");",
+                            "    const draft = pm.response.json();",
+                            "    pm.expect(draft.id).not.to.equal(dashboardId);",
+                            "});",
+                            "",
+                            "pm.test(\"new draft dashboard is version 3\", () => {",
+                            "    const draft = pm.response.json();",
+                            "    pm.expect(draft.version).to.equal(3);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv2.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Archive v2",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "79cbb418-4d79-49c7-9b24-6062ab6a853d",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"updatedAt\": \"{{dashboardv2.updatedAt}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}/archive",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv2.id}}", "archive"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v2 is Archived",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "e328c593-fb37-4122-a969-ecf9c5ddd45d",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboardv2.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"dashboard is in archived state\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"Archived\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv2.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Move v3 to publish pending",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "f3f86a01-233f-4408-8344-4eba3adcf104",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"updatedAt\": \"{{dashboardv3.updatedAt}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}/publishpending",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv3.id}}", "publishpending"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v3 is in PublishPending state",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "1fde66f7-68f4-4460-8a40-97427bc3a945",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboardv3.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"state is publish pending\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"PublishPending\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv3.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Publish v3",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "81edec54-bc62-4be8-9263-21820c648428",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"updatedAt\": \"{{dashboardv3.updatedAt}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}/publish",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv3.id}}", "publish"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v3 is Published",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "8ecabe07-95b4-40b7-90d0-b8965980b9f4",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboardv3.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"dashboard is in published state\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"Published\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv3.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v2 is Inactive",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "86762553-6732-413b-b152-d157cc1d9ac4",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboardv2.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"dashboard is in Inactive state\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"Inactive\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv2.id}}"]
+                },
+                "description": "v2 should have moved to Inactive automatically when v3 was Published."
+            },
+            "response": []
+        },
+        {
+            "name": "Archive v3",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "45128330-47ca-498a-b86c-3f9c41f9efb0",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"updatedAt\": \"{{dashboardv3.updatedAt}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}/archive",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv3.id}}", "archive"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v3 is Archived",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "517b404b-982b-40f5-a621-811f936f6854",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboardv3.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"state is archived\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"Archived\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv3.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Re-publish v3",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "cacde731-3cef-483e-94dd-c91f0efde109",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            ""
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"updatedAt\": \"{{dashboardv3.updatedAt}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}/publish",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv3.id}}", "publish"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify v3 is Published",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "9eddd697-4af6-4a56-ae50-219a1755dde2",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.collectionVariables.set(\"dashboardv3.updatedAt\", dashboard.updatedAt);",
+                            "});",
+                            "",
+                            "pm.test(\"dashboard is in published state\", () => {",
+                            "    const dashboard = pm.response.json();",
+                            "    pm.expect(dashboard.state).to.equal(\"Published\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv3.id}}"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete v1",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "04eabb4c-8beb-4a03-ac95-68b7a365bd15",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboard.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboard.id}}"]
+                },
+                "description": "Deletes the test dashboard"
+            },
+            "response": []
+        },
+        {
+            "name": "Delete v2",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "53b4b3b8-c055-4f23-bac4-a69aa2df138e",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv2.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv2.id}}"]
+                },
+                "description": "Deletes the test dashboard"
+            },
+            "response": []
+        },
+        {
+            "name": "Delete v3",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "f1b3b122-3026-488b-b83d-b33a7c80534d",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/dashboard/{{dashboardv3.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["dashboard", "{{dashboardv3.id}}"]
+                },
+                "description": "Deletes the test dashboard"
+            },
+            "response": []
+        },
+        {
+            "name": "Delete topic area",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "d8c572f1-1745-4038-ac42-2014bdb49598",
+                        "exec": [
+                            "pm.test(\"returns 200 OK\", () => {",
+                            "    pm.response.to.have.status(200);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/topicarea/{{topicarea.id}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["topicarea", "{{topicarea.id}}"]
+                }
+            },
+            "response": []
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+            }
+        ]
+    },
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "id": "c64264c8-1916-4532-9910-8692d5a90248",
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "id": "f6277cfe-76de-478b-a7e8-21727deaa8cf",
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "id": "8b2b942b-2cee-4c3b-bdfd-236f5b246010",
+            "key": "baseUrl",
+            "value": ""
+        },
+        {
+            "id": "a43436da-3033-4ccb-ba72-fc020935d8a9",
+            "key": "token",
+            "value": ""
+        },
+        {
+            "id": "c770a2dd-4570-4a99-a526-ecca28ba95ea",
+            "key": "topicarea.id",
+            "value": ""
+        },
+        {
+            "id": "8119f361-0c80-44bc-b067-4f3e8835eb6f",
+            "key": "topicarea.name",
+            "value": ""
+        },
+        {
+            "id": "9b3ca1af-28ed-4156-a150-88c011ea305b",
+            "key": "dashboard.id",
+            "value": ""
+        },
+        {
+            "id": "5e7b2585-f88d-4813-a36b-e630fb2316f9",
+            "key": "dashboard.updatedAt",
+            "value": ""
+        },
+        {
+            "id": "6bf5c1dc-af07-49b2-89b7-83ad6f727fd2",
+            "key": "dashboardv2.id",
+            "value": ""
+        },
+        {
+            "id": "91352179-fe54-42db-8fbe-eefec0e707e1",
+            "key": "dashboardv2.updatedAt",
+            "value": ""
+        },
+        {
+            "id": "923f094d-37e9-478b-b450-27a4e43645b2",
+            "key": "dashboardv3.id",
+            "value": ""
+        },
+        {
+            "id": "a71a0370-6134-4506-841d-5926ae275278",
+            "key": "dashboardv3.updatedAt",
+            "value": ""
+        }
+    ],
+    "protocolProfileBehavior": {}
 }

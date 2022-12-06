@@ -11,8 +11,8 @@ import { LeftArrow, RightArrow } from "./Arrows";
 interface Props {
   children: React.ReactNode;
   defaultActive: string;
-  ariaLabel: string;
   showArrows?: boolean;
+  ariaLabelledById: string;
 }
 
 type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
@@ -71,7 +71,7 @@ function Tabs(props: Props) {
       className="tabs"
       onKeyDown={onKeyDown}
       role="tablist"
-      aria-label={props.ariaLabel}
+      aria-labelledbyid={props.ariaLabelledById}
     >
       <ScrollMenu
         LeftArrow={props.showArrows && LeftArrow}
@@ -101,7 +101,13 @@ function Tabs(props: Props) {
           return <div id={`${childId}-panel`} role="tabpanel"></div>;
         }
         return (
-          <div id={`${childId}-panel`} className="tab-content" role="tabpanel">
+          <div
+            id={`${childId}-panel`}
+            className="tab-content"
+            role="tabpanel"
+            tabIndex={0}
+            aria-labelledbyid={`${childId}-tab`}
+          >
             {(child as any).props.children}
           </div>
         );

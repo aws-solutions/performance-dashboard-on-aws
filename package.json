@@ -1,9 +1,24 @@
 {
     "devDependencies": {
-        "prettier": "2.8.0",
-        "husky": "^8.0.0"
+        "@commitlint/cli": "^17.3.0",
+        "@commitlint/config-conventional": "^17.3.0",
+        "commitizen": "^4.2.6",
+        "cz-conventional-changelog": "^3.3.0",
+        "husky": "^8.0.0",
+        "prettier": "2.8.0"
     },
     "scripts": {
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "cm": "cz"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
     }
 }

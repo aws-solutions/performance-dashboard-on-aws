@@ -20,7 +20,8 @@ async function getUsers(req: Request, res: Response) {
         const users = await repo.listUsers();
         return res.json(users);
     } catch (error) {
-        res.status(500).send(error);
+        logger.error(error);
+        res.status(500).send("Internal Server Error");
     }
 }
 
@@ -114,7 +115,8 @@ async function resendInvite(req: Request, res: Response) {
         await repo.resendInvite(userEmails.map((email) => email.split("@")[0]));
         return res.send();
     } catch (error) {
-        res.status(500).send(error);
+        logger.error(error);
+        res.status(500).send("Internal Server Error");
     }
 }
 

@@ -205,7 +205,7 @@ async function publishDashboard(req: Request, res: Response) {
         friendlyURL = await FriendlyUrlService.generateOrValidate(dashboard, friendlyURL);
     } catch (err) {
         res.status(409);
-        return res.send(err.message);
+        return res.send("Dashboard must have a unique friendly url");
     }
 
     await repo.publishDashboard(

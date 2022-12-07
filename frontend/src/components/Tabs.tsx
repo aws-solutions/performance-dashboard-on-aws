@@ -35,6 +35,37 @@ function Tabs(props: Props) {
         return 0;
     }
 
+    const onKeyDown = (e: KeyboardEvent<HTMLElement>) => {
+        if (e.key === "ArrowRight") {
+            const index = getActiveTabIndex();
+            if (index < tabsMap.size - 1) {
+                setActiveTab(tabsMap.get(index + 1) || props.defaultActive);
+            }
+        } else if (e.key === "ArrowLeft") {
+            const index = getActiveTabIndex();
+            if (index > 0) {
+                setActiveTab(tabsMap.get(index - 1) || props.defaultActive);
+            }
+        }
+    };
+
+    const activateTabItem = (tab: string, currentTab: HTMLElement) => {
+        const rect = currentTab.getBoundingClientRect();
+        const wrapper = scrollMenuObj?.scrollContainer?.current;
+        if (rect && wrapper) {
+            const wrapperRect = wrapper.getBoundingClientRect();
+            if (rect.left < wrapperRect.left) {
+                scrollMenuObj?.scrollPrev();
+            } else {
+                const shownWidth = wrapperRect.right - rect.left;
+                if (shownWidth < rect.width) {
+                    scrollMenuObj?.scrollNext();
+                }
+            }
+        }
+        setActiveTab(tab);
+    };
+
     return (
         <div
             className="tabs"

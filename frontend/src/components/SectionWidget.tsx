@@ -118,36 +118,30 @@ function SectionWidget(props: Props) {
                                 <Waypoint
                                     onEnter={() => {
                                         if (props.setActiveWidgetId) {
-                                            props.setActiveWidgetId(props.widget.id);
+                                            props.setActiveWidgetId(widget.id);
                                         }
                                     }}
                                     topOffset={props.topOffset}
                                     bottomOffset={props.bottomOffset}
                                     fireOnRapidScroll={false}
                                 >
-                                    <div>
-                                        {showTitle && (
-                                            <h2>
-                                                <span>
-                                                    {content.title}
-                                                    <ShareButton
-                                                        id={`${chartId}a`}
-                                                        title={content.title}
-                                                        className="margin-left-1"
-                                                    />
-                                                </span>
-                                            </h2>
-                                        )}
-                                        {content.summary ? (
-                                            <div className="padding-left-05">
-                                                <MarkdownRender
-                                                    className="usa-prose textOrSummary"
-                                                    source={content.summary}
-                                                />
-                                            </div>
-                                        ) : (
-                                            ""
-                                        )}
+                                    <div className="margin-top-4 usa-prose" id={id}>
+                                        <h3 className="margin-bottom-1">
+                                            {widget.content.title}
+                                            <ShareButton
+                                                id={`${Utils.getShorterId(widget.id)}a`}
+                                                title={content.title}
+                                                className="margin-left-1"
+                                            />
+                                        </h3>
+                                        <WidgetRender
+                                            widget={widget}
+                                            showMobilePreview={props.showMobilePreview}
+                                            bottomOffset={props.bottomOffset}
+                                            topOffset={props.topOffset}
+                                            disableShare={true}
+                                            hideTitle={true}
+                                        />
                                     </div>
                                 </Waypoint>
                             </div>

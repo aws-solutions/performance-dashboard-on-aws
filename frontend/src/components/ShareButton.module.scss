@@ -1,12 +1,12 @@
 @import "../styles/base";
 
 .anchor {
-  display: block;
-  position: relative;
-  top: -125px;
-  visibility: hidden;
+    display: block;
+    position: relative;
+    top: -125px;
+    visibility: hidden;
 }
 
 .shareButton {
-  @include u-text("base", "!important");
+    @include u-text("base", "!important");
 }

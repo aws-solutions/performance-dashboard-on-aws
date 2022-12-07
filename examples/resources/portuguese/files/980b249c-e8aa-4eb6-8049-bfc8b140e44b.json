@@ -1,52 +1,52 @@
 [
-  {
-    "Mês": "Março",
-    "Satisfação do usuário (online)": 73,
-    "Satisfação do usuário (presencial)": 64
-  },
-  {
-    "Mês": "Abril ",
-    "Satisfação do usuário (online)": 70,
-    "Satisfação do usuário (presencial)": 66
-  },
-  {
-    "Mês": "Maio ",
-    "Satisfação do usuário (online)": 72,
-    "Satisfação do usuário (presencial)": 62
-  },
-  {
-    "Mês": "Junho ",
-    "Satisfação do usuário (online)": 80,
-    "Satisfação do usuário (presencial)": 67
-  },
-  {
-    "Mês": "Julho",
-    "Satisfação do usuário (online)": 81,
-    "Satisfação do usuário (presencial)": 68
-  },
-  {
-    "Mês": "Agosto ",
-    "Satisfação do usuário (online)": 78,
-    "Satisfação do usuário (presencial)": 68
-  },
-  {
-    "Mês": "Setembro ",
-    "Satisfação do usuário (online)": 86,
-    "Satisfação do usuário (presencial)": 72
-  },
-  {
-    "Mês": "Outubro",
-    "Satisfação do usuário (online)": 82,
-    "Satisfação do usuário (presencial)": 70
-  },
-  {
-    "Mês": "Novembro ",
-    "Satisfação do usuário (online)": 93,
-    "Satisfação do usuário (presencial)": 61
-  },
-  {
-    "Mês": "Dezembro",
-    "Satisfação do usuário (online)": 94,
-    "Satisfação do usuário (presencial)": 61
-  }
+    {
+        "Mês": "Março",
+        "Satisfação do usuário (online)": 73,
+        "Satisfação do usuário (presencial)": 64
+    },
+    {
+        "Mês": "Abril ",
+        "Satisfação do usuário (online)": 70,
+        "Satisfação do usuário (presencial)": 66
+    },
+    {
+        "Mês": "Maio ",
+        "Satisfação do usuário (online)": 72,
+        "Satisfação do usuário (presencial)": 62
+    },
+    {
+        "Mês": "Junho ",
+        "Satisfação do usuário (online)": 80,
+        "Satisfação do usuário (presencial)": 67
+    },
+    {
+        "Mês": "Julho",
+        "Satisfação do usuário (online)": 81,
+        "Satisfação do usuário (presencial)": 68
+    },
+    {
+        "Mês": "Agosto ",
+        "Satisfação do usuário (online)": 78,
+        "Satisfação do usuário (presencial)": 68
+    },
+    {
+        "Mês": "Setembro ",
+        "Satisfação do usuário (online)": 86,
+        "Satisfação do usuário (presencial)": 72
+    },
+    {
+        "Mês": "Outubro",
+        "Satisfação do usuário (online)": 82,
+        "Satisfação do usuário (presencial)": 70
+    },
+    {
+        "Mês": "Novembro ",
+        "Satisfação do usuário (online)": 93,
+        "Satisfação do usuário (presencial)": 61
+    },
+    {
+        "Mês": "Dezembro",
+        "Satisfação do usuário (online)": 94,
+        "Satisfação do usuário (presencial)": 61
+    }
 ]

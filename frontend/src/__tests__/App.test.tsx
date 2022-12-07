@@ -13,11 +13,12 @@ jest.mock("../services/BackendService");
 jest.mock("../hooks");
 
 describe("App", () => {
-  test("renders the component", async () => {
-    (global as any).EnvironmentConfig = {
-      authenticationRequired: false,
-    };
-    const wrapper = render(<App />, { wrapper: MemoryRouter });
-    expect(wrapper.container).toMatchSnapshot();
-  });
+    test("renders the component", async () => {
+        // eslint-disable-next-line no-undef
+        (global as any).EnvironmentConfig = {
+            authenticationRequired: false,
+        };
+        const wrapper = render(<App />, { wrapper: MemoryRouter });
+        expect(wrapper.container).toMatchSnapshot();
+    });
 });

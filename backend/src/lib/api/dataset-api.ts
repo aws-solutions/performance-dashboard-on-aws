@@ -13,22 +13,10 @@ import rbac from "./middleware/rbac";
 const router = Router();
 router.use(auth);
 
-router.get(
-  "/",
-  rbac(Role.Admin, Role.Editor),
-  errorHandler(DatasetCtrl.listDatasets)
-);
+router.get("/", rbac(Role.Admin, Role.Editor), errorHandler(DatasetCtrl.listDatasets));
 
-router.get(
-  "/:id",
-  rbac(Role.Admin, Role.Editor),
-  errorHandler(DatasetCtrl.getDatasetById)
-);
+router.get("/:id", rbac(Role.Admin, Role.Editor), errorHandler(DatasetCtrl.getDatasetById));
 
-router.post(
-  "/",
-  rbac(Role.Admin, Role.Editor),
-  errorHandler(DatasetCtrl.createDataset)
-);
+router.post("/", rbac(Role.Admin, Role.Editor), errorHandler(DatasetCtrl.createDataset));
 
 export default router;

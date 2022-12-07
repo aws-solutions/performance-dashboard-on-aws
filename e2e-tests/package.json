@@ -1,19 +1,19 @@
 {
-  "name": "performance-dashboard-uitests",
-  "version": "0.8.0-beta",
-  "description": "Performance Dashboard on AWS UI Tests",
-  "license": "Apache-2.0",
-  "scripts": {
-    "start": "cypress open",
-    "test": "cypress run"
-  },
-  "devDependencies": {
-    "@testing-library/cypress": "^7.0.4",
-    "@types/chance": "^1.1.1",
-    "@types/node": "^16.11.7",
-    "chance": "^1.1.7",
-    "cypress": "^9.3.1",
-    "cypress-file-upload": "^5.0.8",
-    "typescript": "^3.8.1"
-  }
+    "name": "performance-dashboard-uitests",
+    "version": "0.8.0-beta",
+    "description": "Performance Dashboard on AWS UI Tests",
+    "license": "Apache-2.0",
+    "scripts": {
+        "start": "cypress open",
+        "test": "cypress run"
+    },
+    "devDependencies": {
+        "@testing-library/cypress": "^7.0.4",
+        "@types/chance": "^1.1.1",
+        "@types/node": "^16.11.7",
+        "chance": "^1.1.7",
+        "cypress": "^9.3.1",
+        "cypress-file-upload": "^5.0.8",
+        "typescript": "^3.8.1"
+    }
 }

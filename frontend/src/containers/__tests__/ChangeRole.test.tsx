@@ -16,41 +16,41 @@ jest.mock("../../services/BackendService");
 const history = createMemoryHistory();
 
 describe("ChangeRoleForm", () => {
-  beforeEach(async () => {
-    // Mocks
-    history.location.state = {
-      ...history.location.state,
-      emails: "test@example.com",
-      usernames: ["test1"],
-    };
-    jest.spyOn(history, "push");
-    BackendService.createDashboard = jest.fn();
+    beforeEach(async () => {
+        // Mocks
+        history.location.state = {
+            ...history.location.state,
+            emails: "test@example.com",
+            usernames: ["test1"],
+        };
+        jest.spyOn(history, "push");
+        BackendService.createDashboard = jest.fn();
 
-    render(
-      <Router history={history}>
-        <ChangeRole />
-      </Router>
-    );
-  });
-
-  test("submits form with the entered values", async () => {
-    fireEvent.input(screen.getByTestId("adminRadioButton"), {
-      target: {
-        checked: true,
-      },
+        render(
+            <Router history={history}>
+                <ChangeRole />
+            </Router>,
+        );
     });
 
-    await act(async () => {
-      fireEvent.submit(screen.getByTestId("ChangeRoleForm"));
+    test("submits form with the entered values", async () => {
+        fireEvent.input(screen.getByTestId("adminRadioButton"), {
+            target: {
+                checked: true,
+            },
+        });
+
+        await act(async () => {
+            fireEvent.submit(screen.getByTestId("ChangeRoleForm"));
+        });
+
+        expect(BackendService.changeRole).toBeCalledWith("Admin", ["test1"]);
     });
 
-    expect(BackendService.changeRole).toBeCalledWith("Admin", ["test1"]);
-  });
-
-  test("invokes cancel function when use clicks cancel", async () => {
-    await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    test("invokes cancel function when use clicks cancel", async () => {
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+        });
+        expect(history.push).toHaveBeenCalledWith("/admin/users");
     });
-    expect(history.push).toHaveBeenCalledWith("/admin/users");
-  });
 });

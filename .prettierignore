@@ -1,0 +1,4 @@
+build
+cdk.out
+coverage
+node_modules

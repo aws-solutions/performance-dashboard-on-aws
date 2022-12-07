@@ -11,116 +11,101 @@ import "./FileInput.css";
 import { useTranslation } from "react-i18next";
 
 interface Props {
-  id: string;
-  name: string;
-  label: string;
-  register?: Function;
-  required?: boolean;
-  disabled?: boolean;
-  fileName?: string;
-  staticFileName?: string;
-  hint?: string | React.ReactNode;
-  accept?: string;
-  errors?: any;
-  loading?: boolean;
-  onFileProcessed?: Function;
+    id: string;
+    name: string;
+    label: string;
+    register?: Function;
+    required?: boolean;
+    disabled?: boolean;
+    fileName?: string;
+    staticFileName?: string;
+    hint?: string | React.ReactNode;
+    accept?: string;
+    errors?: any;
+    loading?: boolean;
+    onFileProcessed?: Function;
 }
 
 function FileInput(props: Props) {
-  const { t } = useTranslation();
-  let content = (
-    <div className="usa-file-input__instructions" aria-hidden="true">
-      <span className="usa-file-input__drag-text">{`${t(
-        "DragFileHere"
-      )} `}</span>
-      <span className="usa-file-input__choose">{t("ChooseFromFolder")}</span>
-    </div>
-  );
-
-  if (props.loading) {
-    content = (
-      <Spinner
-        className="usa-file-input__instructions"
-        label={t("UploadingFile")}
-      />
-    );
-  } else if (props.fileName || props.staticFileName) {
-    content = (
-      <div>
-        <div className="usa-file-input__preview-heading">
-          {t("SelectedFile")}{" "}
-          <span className="usa-file-input__choose">{t("ChangeFile")}</span>
+    const { t } = useTranslation();
+    let content = (
+        <div className="usa-file-input__instructions" aria-hidden="true">
+            <span className="usa-file-input__drag-text">{`${t("DragFileHere")} `}</span>
+            <span className="usa-file-input__choose">{t("ChooseFromFolder")}</span>
         </div>
-        <div className="usa-file-input__preview">
-          <div className="usa-file-input__preview-image">
-            <div className="fileIcon" id="fileIconDiv">
-              <FontAwesomeIcon icon={faFile} size="lg" />
+    );
+
+    if (props.loading) {
+        content = <Spinner className="usa-file-input__instructions" label={t("UploadingFile")} />;
+    } else if (props.fileName || props.staticFileName) {
+        content = (
+            <div>
+                <div className="usa-file-input__preview-heading">
+                    {t("SelectedFile")}{" "}
+                    <span className="usa-file-input__choose">{t("ChangeFile")}</span>
+                </div>
+                <div className="usa-file-input__preview">
+                    <div className="usa-file-input__preview-image">
+                        <div className="fileIcon" id="fileIconDiv">
+                            <FontAwesomeIcon icon={faFile} size="lg" />
+                        </div>
+                    </div>
+                    <div></div>
+                    <label className="usa-label margin-top-0" htmlFor="fileIconDiv">
+                        {props.fileName || props.staticFileName}
+                    </label>
+                </div>
+                <div className="usa-file-input__box"></div>
             </div>
-          </div>
-          <div></div>
-          <label className="usa-label margin-top-0" htmlFor="fileIconDiv">
-            {props.fileName || props.staticFileName}
-          </label>
-        </div>
-        <div className="usa-file-input__box"></div>
-      </div>
-    );
-  }
+        );
+    }
 
-  return (
-    <div
-      className={`usa-form-group${
-        props.errors && props.errors.length > 0 ? " usa-form-group--error" : ""
-      }`}
-    >
-      <label className="usa-label text-bold" htmlFor={props.id}>
-        {props.label}
-        {props.label && props.required && <span>&#42;</span>}
-      </label>
-      <div className="usa-hint">{props.hint}</div>
-      {props.errors && (
-        <span
-          className="usa-error-message"
-          id="file-input-error-alert"
-          role="alert"
-        >
-          {props.errors}
-        </span>
-      )}
-      <div
-        className={`usa-file-input${
-          props.disabled ? " usa-file-input--disabled" : ""
-        }`}
-      >
+    return (
         <div
-          className={`${
-            props.errors && props.errors.length > 0
-              ? "usa-form-group--error margin-left-1px "
-              : ""
-          }usa-file-input__target`}
+            className={`usa-form-group${
+                props.errors && props.errors.length > 0 ? " usa-form-group--error" : ""
+            }`}
         >
-          {content}
-          <div className="usa-file-input__box"></div>
-          <input
-            id={props.id}
-            className="usa-file-input__input"
-            type="file"
-            name={props.name}
-            accept={props.accept}
-            disabled={props.disabled}
-            ref={props.register && props.register({ required: props.required })}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (props.onFileProcessed) {
-                props.onFileProcessed(
-                  event.target.files?.length && event.target.files[0]
-                );
-              }
-            }}
-          />
+            <label className="usa-label text-bold" htmlFor={props.id}>
+                {props.label}
+                {props.label && props.required && <span>&#42;</span>}
+            </label>
+            <div className="usa-hint">{props.hint}</div>
+            {props.errors && (
+                <span className="usa-error-message" id="file-input-error-alert" role="alert">
+                    {props.errors}
+                </span>
+            )}
+            <div className={`usa-file-input${props.disabled ? " usa-file-input--disabled" : ""}`}>
+                <div
+                    className={`${
+                        props.errors && props.errors.length > 0
+                            ? "usa-form-group--error margin-left-1px "
+                            : ""
+                    }usa-file-input__target`}
+                >
+                    {content}
+                    <div className="usa-file-input__box"></div>
+                    <input
+                        id={props.id}
+                        className="usa-file-input__input"
+                        type="file"
+                        name={props.name}
+                        accept={props.accept}
+                        disabled={props.disabled}
+                        ref={props.register && props.register({ required: props.required })}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            if (props.onFileProcessed) {
+                                props.onFileProcessed(
+                                    event.target.files?.length && event.target.files[0],
+                                );
+                            }
+                        }}
+                    />
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default FileInput;

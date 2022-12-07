@@ -9,5 +9,5 @@
  */
 
 export default {
-  navBar: "nav[aria-label='Primary navigation']",
+    navBar: "nav[aria-label='Primary navigation']",
 };

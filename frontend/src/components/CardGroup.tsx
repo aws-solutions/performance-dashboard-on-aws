@@ -8,75 +8,71 @@ import Link from "../components/Link";
 import Utils from "../services/UtilsService";
 
 interface CardGroupProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 function CardGroup(props: CardGroupProps) {
-  return (
-    <ul className="usa-card-group">
-      {React.Children.map(props.children, (child) => {
-        if ((child as React.ReactElement).type === Card) {
-          return child;
-        }
-      })}
-    </ul>
-  );
+    return (
+        <ul className="usa-card-group">
+            {React.Children.map(props.children, (child) => {
+                if ((child as React.ReactElement).type === Card) {
+                    return child;
+                }
+            })}
+        </ul>
+    );
 }
 
 interface CardProps {
-  id: string;
-  title: string;
-  col: number;
-  children: React.ReactNode;
-  link?: string;
+    id: string;
+    title: string;
+    col: number;
+    children: React.ReactNode;
+    link?: string;
 }
 
 function Card(props: CardProps) {
-  return (
-    <li
-      key={`card-${props.id}`}
-      id={`card-${Utils.getShorterId(props.id)}`}
-      className={`usa-card cursor-default tablet:grid-col-${props.col}`}
-    >
-      <div className="usa-card__container">
-        <header className="usa-card__header">
-          <h2 className="usa-card__heading font-family-sans">
-            {props.link ? (
-              <Link to={props.link}>{props.title}</Link>
-            ) : (
-              props.title
-            )}
-          </h2>
-        </header>
-        {React.Children.map(props.children, (child) => {
-          if ((child as React.ReactElement).type === CardBody) {
-            return child;
-          }
-        })}
-        {React.Children.map(props.children, (child) => {
-          if ((child as React.ReactElement).type === CardFooter) {
-            return child;
-          }
-        })}
-      </div>
-    </li>
-  );
+    return (
+        <li
+            key={`card-${props.id}`}
+            id={`card-${Utils.getShorterId(props.id)}`}
+            className={`usa-card cursor-default tablet:grid-col-${props.col}`}
+        >
+            <div className="usa-card__container">
+                <header className="usa-card__header">
+                    <h2 className="usa-card__heading font-family-sans">
+                        {props.link ? <Link to={props.link}>{props.title}</Link> : props.title}
+                    </h2>
+                </header>
+                {React.Children.map(props.children, (child) => {
+                    if ((child as React.ReactElement).type === CardBody) {
+                        return child;
+                    }
+                })}
+                {React.Children.map(props.children, (child) => {
+                    if ((child as React.ReactElement).type === CardFooter) {
+                        return child;
+                    }
+                })}
+            </div>
+        </li>
+    );
 }
 
 interface CardBodyProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 function CardBody(props: CardBodyProps) {
-  return <div className="usa-card__body">{props.children}</div>;
+    return <div className="usa-card__body">{props.children}</div>;
 }
 
 interface CardFooterProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 function CardFooter(props: CardFooterProps) {
-  return <div className="usa-card__footer">{props.children}</div>;
+    return <div className="usa-card__footer">{props.children}</div>;
 }
 
 CardGroup.CardFooter = CardFooter;

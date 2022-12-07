@@ -11,31 +11,29 @@ import ViewDashboard from "../ViewDashboard";
 jest.mock("../../hooks");
 
 test("renders dashboard title", () => {
-  const { getByRole } = render(<ViewDashboard />, {
-    wrapper: MemoryRouter,
-  });
-  expect(
-    getByRole("heading", { name: "My AWS Dashboard" })
-  ).toBeInTheDocument();
+    const { getByRole } = render(<ViewDashboard />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByRole("heading", { name: "My AWS Dashboard" })).toBeInTheDocument();
 });
 
 test("renders dashboard topic area", () => {
-  const { getByText } = render(<ViewDashboard />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Bananas")).toBeInTheDocument();
+    const { getByText } = render(<ViewDashboard />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByText("Bananas")).toBeInTheDocument();
 });
 
 test("renders dashboard description", () => {
-  const { getByText } = render(<ViewDashboard />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Some description")).toBeInTheDocument();
+    const { getByText } = render(<ViewDashboard />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByText("Some description")).toBeInTheDocument();
 });
 
 test("renders a back link to homepage", async () => {
-  const { getByRole } = render(<ViewDashboard />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByRole("link", { name: "All Dashboards" }));
+    const { getByRole } = render(<ViewDashboard />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByRole("link", { name: "All Dashboards" }));
 });

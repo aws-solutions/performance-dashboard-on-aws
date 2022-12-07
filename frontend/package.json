@@ -1,112 +1,131 @@
 {
-  "name": "performance-dashboard-frontend",
-  "version": "1.8.1",
-  "private": true,
-  "description": "Performance Dashboard on AWS Frontend",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "@aws-amplify/api": "^4.0.44",
-    "@aws-amplify/auth": "^4.5.8",
-    "@aws-amplify/core": "^4.5.8",
-    "@aws-amplify/interactions": "^4.0.44",
-    "@aws-amplify/storage": "^4.4.27",
-    "@aws-amplify/ui-components": "^1.9.6",
-    "@aws-amplify/ui-react": "^1.2.26",
-    "@fortawesome/fontawesome-svg-core": "^1.2.30",
-    "@fortawesome/free-solid-svg-icons": "^5.14.0",
-    "@fortawesome/react-fontawesome": "^0.1.11",
-    "@hookform/resolvers": "^1.3.8",
-    "@reach/menu-button": "^0.11.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^10.4.9",
-    "@testing-library/user-event": "^12.1.4",
-    "@types/d3-scale": "^3.0.0",
-    "@types/d3-shape": "^2.0.0",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^16.11.7",
-    "@types/papaparse": "^5.2.0",
-    "@types/react": "^16.9.0",
-    "@types/react-beautiful-dnd": "^13.1.2",
-    "@types/react-csv": "^1.1.2",
-    "@types/react-datepicker": "^3.1.8",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-helmet": "^6.1.2",
-    "@types/react-modal": "^3.10.6",
-    "@types/react-router-dom": "^5.1.5",
-    "@types/react-router-hash-link": "^2.4.1",
-    "@types/react-table": "^7.0.26",
-    "@types/recharts": "^1.8.13",
-    "@types/uuid": "^8.0.0",
-    "aws-amplify": "^4.3.26",
-    "d3-interpolate": "^3.0.1",
-    "d3-scale": "^4.0.2",
-    "dayjs": "^1.8.36",
-    "i18next": "^19.8.4",
-    "mutationobserver-shim": "^0.3.7",
-    "papaparse": "^5.3.0",
-    "react": "^16.14.0",
-    "react-beautiful-dnd": "^13.1.0",
-    "react-csv": "^2.0.3",
-    "react-datepicker": "^3.7.0",
-    "react-dom": "^16.14.0",
-    "react-excel-renderer": "^1.1.0",
-    "react-ga": "^3.3.1",
-    "react-helmet": "^6.1.0",
-    "react-hook-form": "^6.3.1",
-    "react-horizontal-scrolling-menu": "^2.1.1",
-    "react-i18next": "^11.10.0",
-    "react-markdown": "^5.0.3",
-    "react-modal": "^3.11.2",
-    "react-router-dom": "^5.2.0",
-    "react-router-hash-link": "^2.4.3",
-    "react-scripts": "^5.0.1",
-    "react-table": "^7.6.2",
-    "react-tooltip": "^4.2.10",
-    "react-waypoint": "^10.1.0",
-    "recharts": "2.1.15",
-    "sass": "^1.54.9",
-    "typescript": "~3.7.2",
-    "uswds": "^2.11.2",
-    "uuid": "^8.2.0",
-    "yup": "^0.32.11"
-  },
-  "overrides": {
-    "d3-interpolate": "$d3-interpolate",
-    "d3-scale": "$d3-scale"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "INLINE_RUNTIME_CHUNK=false react-scripts build",
-    "test": "react-scripts test",
-    "test:ci": "CI=true react-scripts test --coverage",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "jest": {
-    "coverageThreshold": {
-      "global": {
-        "branches": 45,
-        "functions": 45,
-        "lines": 55,
-        "statements": 55
-      }
+    "name": "performance-dashboard-frontend",
+    "version": "1.8.0",
+    "private": true,
+    "description": "Performance Dashboard on AWS Frontend",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@aws-amplify/api": "^4.0.44",
+        "@aws-amplify/auth": "^4.5.8",
+        "@aws-amplify/core": "^4.5.8",
+        "@aws-amplify/interactions": "^4.0.44",
+        "@aws-amplify/storage": "^4.4.27",
+        "@aws-amplify/ui-components": "^1.9.6",
+        "@aws-amplify/ui-react": "^1.2.26",
+        "@fortawesome/fontawesome-svg-core": "^1.2.30",
+        "@fortawesome/free-solid-svg-icons": "^5.14.0",
+        "@fortawesome/react-fontawesome": "^0.1.11",
+        "@hookform/resolvers": "^1.3.8",
+        "@reach/menu-button": "^0.11.0",
+        "@testing-library/jest-dom": "^5.11.4",
+        "@testing-library/react": "^10.4.9",
+        "@testing-library/user-event": "^12.1.4",
+        "@types/d3-scale": "^3.0.0",
+        "@types/d3-shape": "^2.0.0",
+        "@types/jest": "^24.0.0",
+        "@types/node": "^16.11.7",
+        "@types/papaparse": "^5.2.0",
+        "@types/react": "^16.9.0",
+        "@types/react-beautiful-dnd": "^13.1.2",
+        "@types/react-csv": "^1.1.2",
+        "@types/react-datepicker": "^3.1.8",
+        "@types/react-dom": "^16.9.0",
+        "@types/react-helmet": "^6.1.2",
+        "@types/react-modal": "^3.10.6",
+        "@types/react-router-dom": "^5.1.5",
+        "@types/react-router-hash-link": "^2.4.1",
+        "@types/react-table": "^7.0.26",
+        "@types/recharts": "^1.8.13",
+        "@types/uuid": "^8.0.0",
+        "aws-amplify": "^4.3.26",
+        "d3-interpolate": "^3.0.1",
+        "d3-scale": "^4.0.2",
+        "dayjs": "^1.8.36",
+        "i18next": "^19.8.4",
+        "mutationobserver-shim": "^0.3.7",
+        "papaparse": "^5.3.0",
+        "react": "^16.14.0",
+        "react-beautiful-dnd": "^13.1.0",
+        "react-csv": "^2.0.3",
+        "react-datepicker": "^3.7.0",
+        "react-dom": "^16.14.0",
+        "react-excel-renderer": "^1.1.0",
+        "react-ga": "^3.3.1",
+        "react-helmet": "^6.1.0",
+        "react-hook-form": "^6.3.1",
+        "react-horizontal-scrolling-menu": "^2.1.1",
+        "react-i18next": "^11.10.0",
+        "react-markdown": "^5.0.3",
+        "react-modal": "^3.11.2",
+        "react-router-dom": "^5.2.0",
+        "react-router-hash-link": "^2.4.3",
+        "react-scripts": "^5.0.1",
+        "react-table": "^7.6.2",
+        "react-tooltip": "^4.2.10",
+        "react-waypoint": "^10.1.0",
+        "recharts": "2.1.15",
+        "sass": "^1.54.9",
+        "uswds": "^2.11.2",
+        "uuid": "^8.2.0",
+        "yup": "^0.32.11"
     },
-    "transformIgnorePatterns": [
-      "node_modules/(?!d3-scale)/"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "overrides": {
+        "d3-interpolate": "$d3-interpolate",
+        "d3-scale": "$d3-scale"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "INLINE_RUNTIME_CHUNK=false react-scripts build",
+        "test": "react-scripts test",
+        "test:ci": "CI=true react-scripts test --coverage",
+        "eject": "react-scripts eject",
+        "lint-src": "lint-staged"
+    },
+    "lint-staged": {
+        "*.{js,ts,tsx, jsx}": [
+            "eslint --quiet --fix"
+        ],
+        "*.{json,md,html,js,jsx,ts,tsx}": [
+            "prettier --write"
+        ]
+    },
+    "jest": {
+        "coverageThreshold": {
+            "global": {
+                "branches": 45,
+                "functions": 45,
+                "lines": 55,
+                "statements": 55
+            }
+        },
+        "transformIgnorePatterns": [
+            "node_modules/(?!d3-scale)/"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.45.1",
+        "eslint": "^8.29.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-config-standard-with-typescript": "^23.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-n": "^15.6.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-promise": "^6.1.1",
+        "eslint-plugin-react": "^7.31.11",
+        "husky": "^8.0.0",
+        "lint-staged": "^13.1.0",
+        "typescript": "^4.9.3"
+    }
 }

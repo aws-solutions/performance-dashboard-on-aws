@@ -15,7 +15,7 @@ const envName = process.env.CDK_ENV_NAME;
 const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
 
 if (!envName) {
-  throw new Error("CDK_ENV_NAME environment variable missing");
+    throw new Error("CDK_ENV_NAME environment variable missing");
 }
 
 const app = new cdk.App();
@@ -26,52 +26,52 @@ const datasetsBucketName = `performancedash-${envName.toLowerCase()}-${accountId
 const contentBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-content`;
 
 const auth = new AuthStack(app, "Auth", {
-  stackName: stackPrefix.concat("-Auth"),
-  datasetsBucketName: datasetsBucketName,
-  contentBucketName: contentBucketName,
+    stackName: stackPrefix.concat("-Auth"),
+    datasetsBucketName: datasetsBucketName,
+    contentBucketName: contentBucketName,
 });
 
 const backend = new BackendStack(app, "Backend", {
-  stackName: stackPrefix.concat("-Backend"),
-  userPool: {
-    id: auth.userPoolId,
-    arn: auth.userPoolArn,
-  },
-  datasetsBucketName: datasetsBucketName,
-  contentBucketName: contentBucketName,
-  authenticationRequired: authenticationRequired,
+    stackName: stackPrefix.concat("-Backend"),
+    userPool: {
+        id: auth.userPoolId,
+        arn: auth.userPoolArn,
+    },
+    datasetsBucketName: datasetsBucketName,
+    contentBucketName: contentBucketName,
+    authenticationRequired: authenticationRequired,
 });
 
 const frontend = new FrontendStack(app, "Frontend", {
-  stackName: stackPrefix.concat("-Frontend"),
-  datasetsBucket: datasetsBucketName,
-  contentBucket: contentBucketName,
-  userPoolId: auth.userPoolId,
-  identityPoolId: auth.identityPoolId,
-  appClientId: auth.appClientId,
-  backendApiUrl: backend.restApi.url,
-  authenticationRequired: authenticationRequired,
-  adminEmail: auth.adminEmail,
+    stackName: stackPrefix.concat("-Frontend"),
+    datasetsBucket: datasetsBucketName,
+    contentBucket: contentBucketName,
+    userPoolId: auth.userPoolId,
+    identityPoolId: auth.identityPoolId,
+    appClientId: auth.appClientId,
+    backendApiUrl: backend.restApi.url,
+    authenticationRequired: authenticationRequired,
+    adminEmail: auth.adminEmail,
 });
 
 const operations = new OpsStack(app, "Ops", {
-  stackName: stackPrefix.concat("-Ops"),
-  privateApiFunction: backend.privateApiFunction,
-  publicApiFunction: backend.publicApiFunction,
-  dynamodbStreamsFunction: backend.dynamodbStreamsFunction,
-  restApi: backend.restApi,
-  mainTable: backend.mainTable,
-  auditTrailTable: backend.auditTrailTable,
-  environment: envName,
+    stackName: stackPrefix.concat("-Ops"),
+    privateApiFunction: backend.privateApiFunction,
+    publicApiFunction: backend.publicApiFunction,
+    dynamodbStreamsFunction: backend.dynamodbStreamsFunction,
+    restApi: backend.restApi,
+    mainTable: backend.mainTable,
+    auditTrailTable: backend.auditTrailTable,
+    environment: envName,
 });
 
 const examples = new DashboardExamplesStack(app, "DashboardExamples", {
-  stackName: stackPrefix.concat("-DashboardExamples"),
-  datasetsBucketName: datasetsBucketName,
-  datasetsBucketArn: backend.datasetsBucketArn,
-  databaseTableName: backend.mainTable.tableName,
-  databaseTableArn: backend.mainTable.tableArn,
-  adminEmail: auth.adminEmail,
+    stackName: stackPrefix.concat("-DashboardExamples"),
+    datasetsBucketName: datasetsBucketName,
+    datasetsBucketArn: backend.datasetsBucketArn,
+    databaseTableName: backend.mainTable.tableName,
+    databaseTableArn: backend.mainTable.tableArn,
+    adminEmail: auth.adminEmail,
 });
 
 Aspects.of(app).add(new PolicyInvalidWarningSuppressor());

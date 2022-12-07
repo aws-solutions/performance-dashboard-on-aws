@@ -12,52 +12,52 @@ import AddText from "../AddText";
 jest.mock("../../services/BackendService");
 
 beforeEach(() => {
-  BackendService.createWidget = jest.fn();
+    BackendService.createWidget = jest.fn();
 });
 
 test("renders title and subtitles", async () => {
-  const { getByText, getByRole } = render(<AddText />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByRole("heading", { name: "Add text" })).toBeInTheDocument();
-  expect(getByText("Configure text content")).toBeInTheDocument();
+    const { getByText, getByRole } = render(<AddText />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByRole("heading", { name: "Add text" })).toBeInTheDocument();
+    expect(getByText("Configure text content")).toBeInTheDocument();
 });
 
 test("renders a text input for title", async () => {
-  const { getByLabelText } = render(<AddText />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Text title*")).toBeInTheDocument();
+    const { getByLabelText } = render(<AddText />, { wrapper: MemoryRouter });
+    expect(getByLabelText("Text title*")).toBeInTheDocument();
 });
 
 test("renders a text input for content", async () => {
-  const { getByLabelText } = render(<AddText />, { wrapper: MemoryRouter });
-  expect(getByLabelText("Text*")).toBeInTheDocument();
+    const { getByLabelText } = render(<AddText />, { wrapper: MemoryRouter });
+    expect(getByLabelText("Text*")).toBeInTheDocument();
 });
 
 test("on submit, it calls createWidget api", async () => {
-  const { getByRole, getByLabelText } = render(<AddText />, {
-    wrapper: MemoryRouter,
-  });
+    const { getByRole, getByLabelText } = render(<AddText />, {
+        wrapper: MemoryRouter,
+    });
 
-  fireEvent.input(getByLabelText("Text title*"), {
-    target: {
-      value: "Content title goes here",
-    },
-  });
+    fireEvent.input(getByLabelText("Text title*"), {
+        target: {
+            value: "Content title goes here",
+        },
+    });
 
-  fireEvent.change(getByLabelText("Text*"), {
-    target: {
-      value: "Text content here",
-    },
-  });
+    fireEvent.change(getByLabelText("Text*"), {
+        target: {
+            value: "Text content here",
+        },
+    });
 
-  await act(async () => {
-    fireEvent.click(getByRole("button", { name: "Add text" }));
-  });
+    await act(async () => {
+        fireEvent.click(getByRole("button", { name: "Add text" }));
+    });
 
-  expect(BackendService.createWidget).toHaveBeenCalled();
+    expect(BackendService.createWidget).toHaveBeenCalled();
 });
 
 test("renders the expand preview button", async () => {
-  const { getByRole } = render(<AddText />, { wrapper: MemoryRouter });
-  expect(getByRole("button", { name: "Expand preview" })).toBeInTheDocument();
+    const { getByRole } = render(<AddText />, { wrapper: MemoryRouter });
+    expect(getByRole("button", { name: "Expand preview" })).toBeInTheDocument();
 });

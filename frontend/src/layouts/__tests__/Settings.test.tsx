@@ -12,8 +12,8 @@ jest.mock("../../services/BackendService");
 jest.mock("../../hooks");
 
 describe("SettingsLayout", () => {
-  test("renders the component", async () => {
-    const wrapper = render(<SettingsLayout />, { wrapper: MemoryRouter });
-    expect(wrapper.container).toMatchSnapshot();
-  });
+    test("renders the component", async () => {
+        const wrapper = render(<SettingsLayout />, { wrapper: MemoryRouter });
+        expect(wrapper.container).toMatchSnapshot();
+    });
 });

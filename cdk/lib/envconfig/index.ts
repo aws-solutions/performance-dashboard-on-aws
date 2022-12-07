@@ -9,7 +9,6 @@ const frontendBucket = process.env.FRONTEND_BUCKET;
 
 export const handler = (event: any) => {
     console.log("Event=", JSON.stringify(event));
-    console.log("Environment variables = ", JSON.stringify(process.env));
 
     const requestType = event.RequestType;
     if (requestType === "Create") {

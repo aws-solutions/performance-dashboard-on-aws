@@ -1,16 +1,15 @@
 #!/bin/bash
 
-npm install -g license-report@6.3.0
-
 echo "" > NOTICE.txt
 
-dirs="backend cdk examples frontend"
+parserTool="$PWD/scripts/parse-dependency.js"
+dirs="./ backend cdk examples frontend"
 for d in $dirs; do
     echo "$d"
     pushd $d
     if [ -f ./package.json ]; then
       echo "license report for $d"
-      license-report --package=package.json --fields=name --fields=licenseType --fields=installedVersion | node ../scripts/parse-dependency.js >> ../NOTICE.txt
+      license-report --package=package.json --fields=name --fields=licenseType --fields=installedVersion | node $parserTool >> ../NOTICE.txt
     fi
     popd
 done

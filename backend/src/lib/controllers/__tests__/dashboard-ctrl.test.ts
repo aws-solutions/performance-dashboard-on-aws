@@ -13,7 +13,6 @@ import DashboardFactory from "../../factories/dashboard-factory";
 import FriendlyURLService from "../../services/friendlyurl-service";
 import DashboardRepository from "../../repositories/dashboard-repo";
 import TopicAreaRepository from "../../repositories/topicarea-repo";
-import dashboardCtrl from "../dashboard-ctrl";
 import { WidgetType } from "../../models/widget";
 
 jest.mock("../../repositories/dashboard-repo");
@@ -194,7 +193,7 @@ describe("publishDashboard", () => {
         await DashboardCtrl.publishDashboard(req, res);
 
         expect(res.status).toBeCalledWith(409);
-        expect(res.send).toBeCalledWith("The friendlyURL my-dashboard is already being used");
+        expect(res.send).toBeCalledWith("Dashboard must have a unique friendly url");
     });
 
     it("returns a 409 error when dashboard state is not Publish Pending or Archived", async () => {
@@ -740,7 +739,7 @@ describe("getVersions", () => {
     });
 
     it("returns a list of versions", async () => {
-        const dashboards: Array<Dashboard> = [dashboard];
+        const dashboards: Dashboard[] = [dashboard];
 
         repository.getDashboardVersions = jest.fn().mockReturnValue(dashboards);
 
@@ -751,7 +750,7 @@ describe("getVersions", () => {
         };
 
         DashboardFactory.toVersion = jest.fn().mockReturnValue(version);
-        await dashboardCtrl.getVersions(req, res);
+        await DashboardCtrl.getVersions(req, res);
 
         expect(res.json).toBeCalledWith(expect.objectContaining([version]));
     });

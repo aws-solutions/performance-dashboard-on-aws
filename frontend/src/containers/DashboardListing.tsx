@@ -164,7 +164,7 @@ function DashboardListing() {
   return (
     <>
       <AlertContainer />
-      <h1>{t("DashboardListing.Dashboards")}</h1>
+      <h1 id="dashboard-listing-title">{t("DashboardListing.Dashboards")}</h1>
       <Modal
         isOpen={isOpenArchiveModal}
         closeModal={closeArchiveModal}
@@ -212,7 +212,7 @@ function DashboardListing() {
           <Tabs
             defaultActive={activeTab}
             showArrows={windowSize.width <= 600}
-            ariaLabel={t("DashboardListing.Dashboard")}
+            ariaLabelledById="dashboard-listing-title"
           >
             <div
               id="drafts"

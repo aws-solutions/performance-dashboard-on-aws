@@ -9,7 +9,7 @@ import TabVertical from "./TabVertical";
 interface Props {
   children: React.ReactNode;
   defaultActive: string;
-  ariaLabel: string;
+  ariaLabelledById: string;
 }
 
 function TabsVertical(props: Props) {
@@ -58,7 +58,7 @@ function TabsVertical(props: Props) {
         onKeyDown={onKeyDown}
         role="tablist"
         aria-orientation="vertical"
-        aria-label={props.ariaLabel}
+        aria-labelledbyid={props.ariaLabelledById}
       >
         {React.Children.map(props.children, (child: any, index) => {
           tabsMap.set(index, child.props.id);
@@ -85,6 +85,8 @@ function TabsVertical(props: Props) {
             id={`${childId}-panel`}
             className="grid-col-10 tab-content padding-left-4"
             role="tabpanel"
+            tabIndex={0}
+            aria-labelledbyid={`${childId}-tab`}
           >
             {(child as any).props.children}
           </div>

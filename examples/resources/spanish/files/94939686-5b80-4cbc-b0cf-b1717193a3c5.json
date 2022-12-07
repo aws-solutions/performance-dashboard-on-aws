@@ -1,13 +1,13 @@
 [
-  { "Año": 2009, "Distrito": 21.4, "Promedio del estado": 20.8 },
-  { "Año": 2010, "Distrito": 20.2, "Promedio del estado": 21 },
-  { "Año": 2011, "Distrito": 20.4, "Promedio del estado": 21.1 },
-  { "Año": 2012, "Distrito": 20.9, "Promedio del estado": 21 },
-  { "Año": 2013, "Distrito": 21.4, "Promedio del estado": 21.2 },
-  { "Año": 2014, "Distrito": 21.5, "Promedio del estado": 21.4 },
-  { "Año": 2015, "Distrito": 22.2, "Promedio del estado": 21.2 },
-  { "Año": 2016, "Distrito": 24.1, "Promedio del estado": 21.1 },
-  { "Año": 2017, "Distrito": 23.1, "Promedio del estado": 20.2 },
-  { "Año": 2018, "Distrito": 20, "Promedio del estado": 20 },
-  { "Año": 2019, "Distrito": 19.4, "Promedio del estado": 21.9 }
+    { "Año": 2009, "Distrito": 21.4, "Promedio del estado": 20.8 },
+    { "Año": 2010, "Distrito": 20.2, "Promedio del estado": 21 },
+    { "Año": 2011, "Distrito": 20.4, "Promedio del estado": 21.1 },
+    { "Año": 2012, "Distrito": 20.9, "Promedio del estado": 21 },
+    { "Año": 2013, "Distrito": 21.4, "Promedio del estado": 21.2 },
+    { "Año": 2014, "Distrito": 21.5, "Promedio del estado": 21.4 },
+    { "Año": 2015, "Distrito": 22.2, "Promedio del estado": 21.2 },
+    { "Año": 2016, "Distrito": 24.1, "Promedio del estado": 21.1 },
+    { "Año": 2017, "Distrito": 23.1, "Promedio del estado": 20.2 },
+    { "Año": 2018, "Distrito": 20, "Promedio del estado": 20 },
+    { "Año": 2019, "Distrito": 19.4, "Promedio del estado": 21.9 }
 ]

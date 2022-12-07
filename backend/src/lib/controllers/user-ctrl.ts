@@ -15,148 +15,148 @@ const escapeHtml = require("escape-html");
 const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
 
 async function getUsers(req: Request, res: Response) {
-  const repo = UserRepository.getInstance();
-  try {
-    const users = await repo.listUsers();
-    return res.json(users);
-  } catch (error) {
-    res.status(500).send(error);
-  }
+    const repo = UserRepository.getInstance();
+    try {
+        const users = await repo.listUsers();
+        return res.json(users);
+    } catch (error) {
+        logger.error(error);
+        res.status(500).send("Internal Server Error");
+    }
 }
 
 async function addUsers(req: Request, res: Response) {
-  const { role, emails } = req.body;
+    const { role, emails } = req.body;
 
-  if (!role) {
-    res.status(400).send("Missing required body `role`");
-    return;
-  }
-
-  if (
-    role !== Role.Admin &&
-    role !== Role.Editor &&
-    role !== Role.Publisher &&
-    role !== Role.Public
-  ) {
-    res.status(400).send("Invalid role value");
-    return;
-  }
-
-  if (!authenticationRequired && role === Role.Public) {
-    res.status(400).send("Public role not enabled for instance");
-    return;
-  }
-
-  if (!emails) {
-    res.status(400).send("Missing required body `emails`");
-    return;
-  }
-
-  const userEmails = (emails as string).split(",");
-  const escapedEmails = userEmails.map((email) => escapeHtml(email));
-
-  for (const userEmail of escapedEmails) {
-    if (!emailIsValid(userEmail)) {
-      res.status(400).send(`Invalid email: ${userEmail}`);
-      return;
+    if (!role) {
+        res.status(400).send("Missing required body `role`");
+        return;
     }
-  }
 
-  const repo = UserRepository.getInstance();
-  try {
-    await repo.addUsers(
-      userEmails.map((email) => UserFactory.createNew(email, role))
-    );
-    return res.send();
-  } catch (error) {
-    // Don't return error which may reveal that user already exists
-    logger.error(error);
-    res.status(400).send("Bad Request");
-  }
+    if (
+        role !== Role.Admin &&
+        role !== Role.Editor &&
+        role !== Role.Publisher &&
+        role !== Role.Public
+    ) {
+        res.status(400).send("Invalid role value");
+        return;
+    }
+
+    if (!authenticationRequired && role === Role.Public) {
+        res.status(400).send("Public role not enabled for instance");
+        return;
+    }
+
+    if (!emails) {
+        res.status(400).send("Missing required body `emails`");
+        return;
+    }
+
+    const userEmails = (emails as string).split(",");
+    const escapedEmails = userEmails.map((email) => escapeHtml(email));
+
+    for (const userEmail of escapedEmails) {
+        if (!emailIsValid(userEmail)) {
+            res.status(400).send(`Invalid email: ${userEmail}`);
+            return;
+        }
+    }
+
+    const repo = UserRepository.getInstance();
+    try {
+        await repo.addUsers(userEmails.map((email) => UserFactory.createNew(email, role)));
+        return res.send();
+    } catch (error) {
+        // Don't return error which may reveal that user already exists
+        logger.error(error);
+        res.status(400).send("Bad Request");
+    }
 }
 
 async function removeUsers(req: Request, res: Response) {
-  const validationResult = validate(req.body, RemoveUsersSchema);
-  if (!validationResult.valid) {
-    res.status(400);
-    logger.warn("Invalid request to remove users %o", validationResult.errors);
-    return res.send(validationResult.toString());
-  }
+    const validationResult = validate(req.body, RemoveUsersSchema);
+    if (!validationResult.valid) {
+        res.status(400);
+        logger.warn("Invalid request to remove users %o", validationResult.errors);
+        return res.send(validationResult.toString());
+    }
 
-  const { usernames } = req.body;
-  const repo = UserRepository.getInstance();
+    const { usernames } = req.body;
+    const repo = UserRepository.getInstance();
 
-  logger.info("Deleting users %o", usernames);
-  repo.removeUsers(usernames);
+    logger.info("Deleting users %o", usernames);
+    repo.removeUsers(usernames);
 
-  logger.info("Users deleted successfully");
-  return res.send();
+    logger.info("Users deleted successfully");
+    return res.send();
 }
 
 async function resendInvite(req: Request, res: Response) {
-  const { emails } = req.body;
+    const { emails } = req.body;
 
-  if (!emails) {
-    res.status(400).send("Missing required body `emails`");
-    return;
-  }
-
-  const userEmails = (emails as string).split(",");
-  const escapedEmails = userEmails.map((email) => escapeHtml(email));
-
-  for (const userEmail of escapedEmails) {
-    if (!emailIsValid(userEmail)) {
-      res.status(400).send(`Invalid email: ${userEmail}`);
-      return;
+    if (!emails) {
+        res.status(400).send("Missing required body `emails`");
+        return;
     }
-  }
 
-  const repo = UserRepository.getInstance();
-  try {
-    await repo.resendInvite(userEmails.map((email) => email.split("@")[0]));
-    return res.send();
-  } catch (error) {
-    res.status(500).send(error);
-  }
+    const userEmails = (emails as string).split(",");
+    const escapedEmails = userEmails.map((email) => escapeHtml(email));
+
+    for (const userEmail of escapedEmails) {
+        if (!emailIsValid(userEmail)) {
+            res.status(400).send(`Invalid email: ${userEmail}`);
+            return;
+        }
+    }
+
+    const repo = UserRepository.getInstance();
+    try {
+        await repo.resendInvite(userEmails.map((email) => email.split("@")[0]));
+        return res.send();
+    } catch (error) {
+        logger.error(error);
+        res.status(500).send("Internal Server Error");
+    }
 }
 
 async function changeRole(req: Request, res: Response) {
-  const { role, usernames } = req.body;
+    const { role, usernames } = req.body;
 
-  if (!role) {
-    res.status(400).send("Missing required body `role`");
-    return;
-  }
+    if (!role) {
+        res.status(400).send("Missing required body `role`");
+        return;
+    }
 
-  if (
-    role !== Role.Admin &&
-    role !== Role.Editor &&
-    role !== Role.Publisher &&
-    role !== Role.Public
-  ) {
-    res.status(400).send("Invalid role value");
-    return;
-  }
+    if (
+        role !== Role.Admin &&
+        role !== Role.Editor &&
+        role !== Role.Publisher &&
+        role !== Role.Public
+    ) {
+        res.status(400).send("Invalid role value");
+        return;
+    }
 
-  if (!authenticationRequired && role === Role.Public) {
-    res.status(400).send("Public role not enabled for instance");
-    return;
-  }
+    if (!authenticationRequired && role === Role.Public) {
+        res.status(400).send("Public role not enabled for instance");
+        return;
+    }
 
-  if (!usernames) {
-    res.status(400).send("Missing required body `usernames`");
-    return;
-  }
+    if (!usernames) {
+        res.status(400).send("Missing required body `usernames`");
+        return;
+    }
 
-  const repo = UserRepository.getInstance();
-  try {
-    await repo.changeRole(usernames, role);
-    return res.send();
-  } catch (error) {
-    // Don't return error which may reveal that user doesn't exists
-    logger.error(error);
-    res.status(400).send("Bad Request");
-  }
+    const repo = UserRepository.getInstance();
+    try {
+        await repo.changeRole(usernames, role);
+        return res.send();
+    } catch (error) {
+        // Don't return error which may reveal that user doesn't exists
+        logger.error(error);
+        res.status(400).send("Bad Request");
+    }
 }
 
 /**
@@ -167,13 +167,13 @@ async function changeRole(req: Request, res: Response) {
  * @returns boolean
  */
 function emailIsValid(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+$/.test(email);
+    return /^[^\s@]+@[^\s@]+$/.test(email);
 }
 
 export default {
-  getUsers,
-  addUsers,
-  resendInvite,
-  changeRole,
-  removeUsers,
+    getUsers,
+    addUsers,
+    resendInvite,
+    changeRole,
+    removeUsers,
 };

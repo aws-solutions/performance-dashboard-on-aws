@@ -16,44 +16,42 @@ jest.mock("../../services/BackendService");
 const history = createMemoryHistory();
 
 describe("AddUsersForm", () => {
-  beforeEach(async () => {
-    // Mocks
-    jest.spyOn(history, "push");
-    BackendService.createDashboard = jest.fn();
+    beforeEach(async () => {
+        // Mocks
+        jest.spyOn(history, "push");
+        BackendService.createDashboard = jest.fn();
 
-    render(
-      <Router history={history}>
-        <AddUsers />
-      </Router>
-    );
-  });
-
-  test("submits form with the entered values", async () => {
-    fireEvent.input(screen.getByLabelText("User email address(es)*"), {
-      target: {
-        value: "test@example.com",
-      },
+        render(
+            <Router history={history}>
+                <AddUsers />
+            </Router>,
+        );
     });
 
-    fireEvent.input(screen.getByTestId("editorRadioButton"), {
-      target: {
-        checked: true,
-      },
+    test("submits form with the entered values", async () => {
+        fireEvent.input(screen.getByLabelText("User email address(es)*"), {
+            target: {
+                value: "test@example.com",
+            },
+        });
+
+        fireEvent.input(screen.getByTestId("editorRadioButton"), {
+            target: {
+                checked: true,
+            },
+        });
+
+        await act(async () => {
+            fireEvent.submit(screen.getByTestId("AddUsersForm"));
+        });
+
+        expect(BackendService.addUsers).toBeCalledWith("Editor", ["test@example.com"]);
     });
 
-    await act(async () => {
-      fireEvent.submit(screen.getByTestId("AddUsersForm"));
+    test("invokes cancel function when use clicks cancel", async () => {
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+        });
+        expect(history.push).toHaveBeenCalledWith("/admin/users");
     });
-
-    expect(BackendService.addUsers).toBeCalledWith("Editor", [
-      "test@example.com",
-    ]);
-  });
-
-  test("invokes cancel function when use clicks cancel", async () => {
-    await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
-    });
-    expect(history.push).toHaveBeenCalledWith("/admin/users");
-  });
 });

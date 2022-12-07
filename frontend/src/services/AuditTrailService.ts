@@ -14,44 +14,41 @@ import { DashboardAuditLog, DashboardState } from "../models";
  * the action will be "Deleted version".
  */
 function getActionFromDashboardAuditLog(
-  { event, modifiedProperties }: DashboardAuditLog,
-  t: Function
+    { event, modifiedProperties }: DashboardAuditLog,
+    t: Function,
 ): string {
-  if (event === "Create") {
-    return t("Created");
-  }
-  if (event === "Delete") {
-    return t("Deleted");
-  }
-  if (!modifiedProperties || modifiedProperties.length === 0) {
-    return t("Edited");
-  }
-
-  let action = t("Edited");
-  // Find if there was a state change
-  modifiedProperties.forEach((modifiedProp) => {
-    if (
-      modifiedProp.property === "state" &&
-      modifiedProp.oldValue !== modifiedProp.newValue
-    ) {
-      switch (modifiedProp.newValue) {
-        case DashboardState.PublishPending:
-          action = t("MovedToPublishQueue");
-          break;
-        case DashboardState.Published:
-          action = t("Published");
-          break;
-        case DashboardState.Archived:
-          action = t("Archived");
-          break;
-        case DashboardState.Draft:
-          action = t("ReturnedToDraft");
-          break;
-      }
+    if (event === "Create") {
+        return t("Created");
     }
-  });
+    if (event === "Delete") {
+        return t("Deleted");
+    }
+    if (!modifiedProperties || modifiedProperties.length === 0) {
+        return t("Edited");
+    }
 
-  return action;
+    let action = t("Edited");
+    // Find if there was a state change
+    modifiedProperties.forEach((modifiedProp) => {
+        if (modifiedProp.property === "state" && modifiedProp.oldValue !== modifiedProp.newValue) {
+            switch (modifiedProp.newValue) {
+                case DashboardState.PublishPending:
+                    action = t("MovedToPublishQueue");
+                    break;
+                case DashboardState.Published:
+                    action = t("Published");
+                    break;
+                case DashboardState.Archived:
+                    action = t("Archived");
+                    break;
+                case DashboardState.Draft:
+                    action = t("ReturnedToDraft");
+                    break;
+            }
+        }
+    });
+
+    return action;
 }
 
 /**
@@ -60,26 +57,24 @@ function getActionFromDashboardAuditLog(
  * noise for users because `updatedAt` is a property that changes
  * too often and it doesn't add value to see all these records.
  */
-function removeNosiyAuditLogs(
-  auditlogs: DashboardAuditLog[]
-): DashboardAuditLog[] {
-  if (!auditlogs) return [];
-  const noisyProperties = ["updatedAt"];
-  return auditlogs.filter(({ event, modifiedProperties }) => {
-    if (event === "Create" || event === "Delete") return true;
-    if (!modifiedProperties) return false;
+function removeNosiyAuditLogs(auditlogs: DashboardAuditLog[]): DashboardAuditLog[] {
+    if (!auditlogs) return [];
+    const noisyProperties = ["updatedAt"];
+    return auditlogs.filter(({ event, modifiedProperties }) => {
+        if (event === "Create" || event === "Delete") return true;
+        if (!modifiedProperties) return false;
 
-    const remainingProperties = modifiedProperties.filter(
-      (prop) => !noisyProperties.includes(prop.property)
-    );
+        const remainingProperties = modifiedProperties.filter(
+            (prop) => !noisyProperties.includes(prop.property),
+        );
 
-    return remainingProperties.length > 0;
-  });
+        return remainingProperties.length > 0;
+    });
 }
 
 const AuditLogService = {
-  getActionFromDashboardAuditLog,
-  removeNosiyAuditLogs,
+    getActionFromDashboardAuditLog,
+    removeNosiyAuditLogs,
 };
 
 export default AuditLogService;

@@ -18,33 +18,31 @@ history.push("/admin/settings/publishingguidance/edit");
 jest.spyOn(history, "push");
 
 beforeEach(async () => {
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route path="/admin/settings/publishingguidance/edit">
-          <EditPublishingGuidance />
-        </Route>
-      </Router>
-    );
-  });
+    await act(async () => {
+        render(
+            <Router history={history}>
+                <Route path="/admin/settings/publishingguidance/edit">
+                    <EditPublishingGuidance />
+                </Route>
+            </Router>,
+        );
+    });
 });
 
 test("submits form with the entered values", async () => {
-  await act(async () => {
-    fireEvent.submit(screen.getByTestId("EditPublishingGuidanceForm"));
-  });
+    await act(async () => {
+        fireEvent.submit(screen.getByTestId("EditPublishingGuidanceForm"));
+    });
 
-  expect(BackendService.editSettings).toBeCalledWith(
-    "I acknowledge that I have reviewed the dashboard and it is ready to publish",
-    new Date("2020-12-08T22:56:13.721Z")
-  );
+    expect(BackendService.editSettings).toBeCalledWith(
+        "I acknowledge that I have reviewed the dashboard and it is ready to publish",
+        new Date("2020-12-08T22:56:13.721Z"),
+    );
 });
 
 test("invokes cancel function when use clicks cancel", async () => {
-  await act(async () => {
-    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
-  });
-  expect(history.push).toHaveBeenCalledWith(
-    "/admin/settings/publishingguidance"
-  );
+    await act(async () => {
+        fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    });
+    expect(history.push).toHaveBeenCalledWith("/admin/settings/publishingguidance");
 });

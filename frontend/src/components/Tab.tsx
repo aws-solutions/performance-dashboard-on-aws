@@ -46,7 +46,7 @@ function Tab(props: Props) {
       className={className}
       onClick={onClick}
       onKeyDown={onKeyDown}
-      tabIndex={0}
+      tabIndex={props.activeTab === props.itemId ? 0 : -1}
     >
       {props.label}
     </div>

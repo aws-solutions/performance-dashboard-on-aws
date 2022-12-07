@@ -49,6 +49,7 @@ function SectionWidget(props: Props) {
   }
 
   const chartId = `chart-${Utils.getShorterId(props.widget.id)}`;
+  const sectionHeaderId = `section-header-${props.widget.id}`;
   return (
     <div aria-label={content.title}>
       {!content.showWithTabs ? (
@@ -90,7 +91,7 @@ function SectionWidget(props: Props) {
       ) : (
         <>
           {showTitle && (
-            <h2>
+            <h2 id={sectionHeaderId}>
               {content.title}
               <ShareButton
                 id={`${chartId}a`}
@@ -160,7 +161,7 @@ function SectionWidget(props: Props) {
           <Tabs
             defaultActive={activeTabId}
             showArrows
-            ariaLabel={content.title}
+            ariaLabelledById={sectionHeaderId}
           >
             {content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
@@ -185,7 +186,10 @@ function SectionWidget(props: Props) {
         !props.showMobilePreview &&
         windowSize.width > 600 &&
         content.widgetIds && (
-          <TabsVertical defaultActive={activeTabId} ariaLabel={content.title}>
+          <TabsVertical
+            defaultActive={activeTabId}
+            ariaLabelledById={sectionHeaderId}
+          >
             {content.widgetIds.map((id: string, index: number) => {
               const widget = props.widgets?.find((w) => w.id === id);
               if (widget) {

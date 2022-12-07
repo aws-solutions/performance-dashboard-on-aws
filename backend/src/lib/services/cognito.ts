@@ -14,58 +14,52 @@ import packagejson from "../../../package.json";
  * is a pain because of the promise() response structure.
  */
 class CognitoService {
-  private cognitoIdentityServiceProvider: CognitoIdentityServiceProvider;
-  private static instance: CognitoService;
-  private options = {
-    customUserAgent: packagejson.awssdkUserAgent + packagejson.version,
-  };
+    private cognitoIdentityServiceProvider: CognitoIdentityServiceProvider;
+    private static instance: CognitoService;
+    private options = {
+        customUserAgent: packagejson.awssdkUserAgent + packagejson.version,
+    };
 
-  /**
-   * CognitoService is a Singleton, hence private constructor
-   * to prevent direct constructions calls with new operator.
-   */
-  private constructor() {
-    this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider(
-      this.options
-    );
-  }
-
-  /**
-   * Controls access to the singleton instance.
-   */
-  static getInstance() {
-    if (!CognitoService.instance) {
-      CognitoService.instance = new CognitoService();
+    /**
+     * CognitoService is a Singleton, hence private constructor
+     * to prevent direct constructions calls with new operator.
+     */
+    private constructor() {
+        this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider(this.options);
     }
 
-    return CognitoService.instance;
-  }
+    /**
+     * Controls access to the singleton instance.
+     */
+    static getInstance() {
+        if (!CognitoService.instance) {
+            CognitoService.instance = new CognitoService();
+        }
 
-  async listUsers(input: CognitoIdentityServiceProvider.ListUsersRequest) {
-    logger.debug("Cognito ListUsers %o", input);
-    return this.cognitoIdentityServiceProvider.listUsers(input).promise();
-  }
+        return CognitoService.instance;
+    }
 
-  async addUser(input: CognitoIdentityServiceProvider.AdminCreateUserRequest) {
-    logger.debug("Cognito AdminCreateUser %o", input);
-    return this.cognitoIdentityServiceProvider.adminCreateUser(input).promise();
-  }
+    async listUsers(input: CognitoIdentityServiceProvider.ListUsersRequest) {
+        logger.debug("Cognito ListUsers %o", input);
+        return this.cognitoIdentityServiceProvider.listUsers(input).promise();
+    }
 
-  async removeUser(
-    input: CognitoIdentityServiceProvider.AdminDeleteUserRequest
-  ) {
-    logger.debug("Cognito AdminDeleteUser %o", input);
-    return this.cognitoIdentityServiceProvider.adminDeleteUser(input).promise();
-  }
+    async addUser(input: CognitoIdentityServiceProvider.AdminCreateUserRequest) {
+        logger.debug("Cognito AdminCreateUser %o", input);
+        return this.cognitoIdentityServiceProvider.adminCreateUser(input).promise();
+    }
 
-  async updateUserAttributes(
-    input: CognitoIdentityServiceProvider.AdminUpdateUserAttributesRequest
-  ) {
-    logger.debug("Cognito AdminUpdateUserAttributes %o", input);
-    return this.cognitoIdentityServiceProvider
-      .adminUpdateUserAttributes(input)
-      .promise();
-  }
+    async removeUser(input: CognitoIdentityServiceProvider.AdminDeleteUserRequest) {
+        logger.debug("Cognito AdminDeleteUser %o", input);
+        return this.cognitoIdentityServiceProvider.adminDeleteUser(input).promise();
+    }
+
+    async updateUserAttributes(
+        input: CognitoIdentityServiceProvider.AdminUpdateUserAttributesRequest,
+    ) {
+        logger.debug("Cognito AdminUpdateUserAttributes %o", input);
+        return this.cognitoIdentityServiceProvider.adminUpdateUserAttributes(input).promise();
+    }
 }
 
 export default CognitoService;

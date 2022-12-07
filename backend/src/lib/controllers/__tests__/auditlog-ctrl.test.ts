@@ -14,26 +14,26 @@ let req: Request;
 let res: Response;
 
 beforeEach(() => {
-  res = {
-    send: jest.fn().mockReturnThis(),
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn().mockReturnThis(),
-  } as any as Response;
+    res = {
+        send: jest.fn().mockReturnThis(),
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
+    } as any as Response;
 });
 
 describe("listDashboardAuditLogs", () => {
-  it("calls the audit log repository with parentDashboardId and returns logs", async () => {
-    req = {
-      params: {
-        id: "001",
-      },
-    } as any as Request;
+    it("calls the audit log repository with parentDashboardId and returns logs", async () => {
+        req = {
+            params: {
+                id: "001",
+            },
+        } as any as Request;
 
-    const auditLogs = [] as AuditLog[];
-    AuditLogRepository.listAuditLogs = jest.fn().mockReturnValue(auditLogs);
-    await AuditLogCtrl.listDashboardAuditLogs(req, res);
+        const auditLogs = [] as AuditLog[];
+        AuditLogRepository.listAuditLogs = jest.fn().mockReturnValue(auditLogs);
+        await AuditLogCtrl.listDashboardAuditLogs(req, res);
 
-    expect(AuditLogRepository.listAuditLogs).toBeCalledWith("Dashboard#001");
-    expect(res.json).toBeCalledWith(auditLogs);
-  });
+        expect(AuditLogRepository.listAuditLogs).toBeCalledWith("Dashboard#001");
+        expect(res.json).toBeCalledWith(auditLogs);
+    });
 });

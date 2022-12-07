@@ -1,21 +1,21 @@
 @import "../styles/base";
 
 .Markdown a {
-  @include u-text("base", "!important");
+    @include u-text("base", "!important");
 }
 
 .Markdown a:hover {
-  @include u-text("base-dark", "!important");
+    @include u-text("base-dark", "!important");
 }
 
 .Markdown a:active {
-  @include u-text("base-darker", "!important");
+    @include u-text("base-darker", "!important");
 }
 
 .Markdown a:visited {
-  @include u-text("base-light", "!important");
+    @include u-text("base-light", "!important");
 }
 
 .textOrSummary p {
-  max-width: 100ex !important;
+    max-width: 100ex !important;
 }

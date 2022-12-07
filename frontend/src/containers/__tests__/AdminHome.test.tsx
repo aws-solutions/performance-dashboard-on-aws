@@ -12,60 +12,61 @@ import AdminHome from "../AdminHome";
 const history = createMemoryHistory();
 
 beforeEach(() => {
-  jest.spyOn(history, "push");
-  global.open = jest.fn();
-  render(
-    <Router history={history}>
-      <AdminHome />
-    </Router>
-  );
+    jest.spyOn(history, "push");
+    // eslint-disable-next-line no-undef
+    global.open = jest.fn();
+    render(
+        <Router history={history}>
+            <AdminHome />
+        </Router>,
+    );
 });
 
 test("renders a welcome title", async () => {
-  expect(
-    screen.getByText("Welcome to the Performance Dashboard")
-  ).toBeInTheDocument();
+    expect(screen.getByText("Welcome to the Performance Dashboard")).toBeInTheDocument();
 });
 
 test("renders a create dashboard button", async () => {
-  const createButton = screen.getByRole("button", { name: "Create dashboard" });
-  expect(createButton).toBeInTheDocument();
+    const createButton = screen.getByRole("button", {
+        name: "Create dashboard",
+    });
+    expect(createButton).toBeInTheDocument();
 
-  await act(async () => {
-    fireEvent.click(createButton);
-  });
+    await act(async () => {
+        fireEvent.click(createButton);
+    });
 
-  expect(history.push).toBeCalledWith("/admin/dashboard/create");
+    expect(history.push).toBeCalledWith("/admin/dashboard/create");
 });
 
 test("renders a view dashboard button", async () => {
-  const viewButton = screen.getByRole("button", { name: "Manage users" });
-  expect(viewButton).toBeInTheDocument();
+    const viewButton = screen.getByRole("button", { name: "Manage users" });
+    expect(viewButton).toBeInTheDocument();
 
-  await act(async () => {
-    fireEvent.click(viewButton);
-  });
+    await act(async () => {
+        fireEvent.click(viewButton);
+    });
 
-  expect(history.push).toBeCalledWith("/admin/users");
+    expect(history.push).toBeCalledWith("/admin/users");
 });
 
 test("renders a view dashboard button", async () => {
-  const viewButton = screen.getByRole("button", { name: "View settings" });
-  expect(viewButton).toBeInTheDocument();
+    const viewButton = screen.getByRole("button", { name: "View settings" });
+    expect(viewButton).toBeInTheDocument();
 
-  await act(async () => {
-    fireEvent.click(viewButton);
-  });
+    await act(async () => {
+        fireEvent.click(viewButton);
+    });
 
-  expect(history.push).toBeCalledWith("/admin/settings");
+    expect(history.push).toBeCalledWith("/admin/settings");
 });
 
 test("renders a view public site link", async () => {
-  const viewLink = screen.getByRole("link", {
-    name: "View the published site (opens in a new tab)",
-  });
+    const viewLink = screen.getByRole("link", {
+        name: "View the published site (opens in a new tab)",
+    });
 
-  expect(viewLink).toBeInTheDocument();
-  expect(viewLink).toHaveAttribute("target", "_blank");
-  expect(viewLink).toHaveAttribute("href", "/");
+    expect(viewLink).toBeInTheDocument();
+    expect(viewLink).toHaveAttribute("target", "_blank");
+    expect(viewLink).toHaveAttribute("href", "/");
 });

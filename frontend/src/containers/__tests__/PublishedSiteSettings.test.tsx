@@ -11,77 +11,77 @@ import PublishedSiteSettings from "../PublishedSiteSettings";
 jest.mock("../../hooks");
 
 test("renders the title", async () => {
-  const { getByRole } = render(<PublishedSiteSettings />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByRole("heading", { name: "Published site" })).toBeInTheDocument();
+    const { getByRole } = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByRole("heading", { name: "Published site" })).toBeInTheDocument();
 });
 
 test("renders the navbar title", async () => {
-  const { getByRole } = render(<PublishedSiteSettings />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByRole("heading", { name: "Navigation bar" })).toBeInTheDocument();
+    const { getByRole } = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByRole("heading", { name: "Navigation bar" })).toBeInTheDocument();
 });
 
 test("renders the navigation bar title", async () => {
-  const { getByText } = render(<PublishedSiteSettings />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Performance Dashboard")).toBeInTheDocument();
+    const { getByText } = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByText("Performance Dashboard")).toBeInTheDocument();
 });
 
 test("renders the homepage title", async () => {
-  const { getByRole } = render(<PublishedSiteSettings />, {
-    wrapper: MemoryRouter,
-  });
-  expect(
-    getByRole("heading", { name: "Homepage content" })
-  ).toBeInTheDocument();
+    const { getByRole } = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByRole("heading", { name: "Homepage content" })).toBeInTheDocument();
 });
 
 test("renders the homepage description", async () => {
-  const { getByText } = render(<PublishedSiteSettings />, {
-    wrapper: MemoryRouter,
-  });
-  expect(
-    getByText(
-      "These components appear on the homepage of your published site and explain what your published site is about."
-    )
-  ).toBeInTheDocument();
+    const { getByText } = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    expect(
+        getByText(
+            "These components appear on the homepage of your published site and explain what your published site is about.",
+        ),
+    ).toBeInTheDocument();
 });
 
 test("renders the headline header", async () => {
-  const { getByText } = render(<PublishedSiteSettings />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Headline")).toBeInTheDocument();
+    const { getByText } = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByText("Headline")).toBeInTheDocument();
 });
 
 test("renders the headline statement", async () => {
-  const { getByText } = render(<PublishedSiteSettings />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Kingdom of Wakanda")).toBeInTheDocument();
+    const { getByText } = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByText("Kingdom of Wakanda")).toBeInTheDocument();
 });
 
 test("renders the analytics section", async () => {
-  const { getByText } = render(<PublishedSiteSettings />, {
-    wrapper: MemoryRouter,
-  });
-  expect(getByText("Web analytics")).toBeInTheDocument();
+    const { getByText } = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    expect(getByText("Web analytics")).toBeInTheDocument();
 });
 
 test("renders a button to edit", async () => {
-  const { getAllByRole } = render(<PublishedSiteSettings />, {
-    wrapper: MemoryRouter,
-  });
-  const buttons = getAllByRole("button", { name: "Edit" });
-  expect(buttons[0]).toBeInTheDocument();
-  expect(buttons[1]).toBeInTheDocument();
+    const { getAllByRole } = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    const buttons = getAllByRole("button", { name: "Edit" });
+    expect(buttons[0]).toBeInTheDocument();
+    expect(buttons[1]).toBeInTheDocument();
 });
 
 test("published site settings should match snapshot", async () => {
-  const wrapper = render(<PublishedSiteSettings />, { wrapper: MemoryRouter });
-  expect(wrapper.container).toMatchSnapshot();
+    const wrapper = render(<PublishedSiteSettings />, {
+        wrapper: MemoryRouter,
+    });
+    expect(wrapper.container).toMatchSnapshot();
 });

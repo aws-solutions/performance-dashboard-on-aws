@@ -8,31 +8,31 @@ import parserError from "../parser-error-handler";
 
 const req = {} as Request;
 const res = {
-  status: jest.fn() as any,
-  send: jest.fn() as any,
+    status: jest.fn() as any,
+    send: jest.fn() as any,
 } as Response;
 const next = jest.fn();
 const noError = null;
 const parseError = new SyntaxError("JSON parser failed");
 
 afterEach(() => {
-  jest.clearAllMocks();
+    jest.clearAllMocks();
 });
 
 describe("parser-error", () => {
-  it("catches parser exception", () => {
-    parserError(parseError, req, res, next);
+    it("catches parser exception", () => {
+        parserError(parseError, req, res, next);
 
-    expect(res.status).toBeCalledWith(400);
-    expect(res.send).toBeCalledWith("Bad JSON");
-    expect(next).not.toBeCalled();
-  });
+        expect(res.status).toBeCalledWith(400);
+        expect(res.send).toBeCalledWith("Bad JSON");
+        expect(next).not.toBeCalled();
+    });
 
-  it("propagates successful parse", () => {
-    parserError(noError, req, res, next);
+    it("propagates successful parse", () => {
+        parserError(noError, req, res, next);
 
-    expect(next).toBeCalled();
-    expect(res.status).not.toBeCalled();
-    expect(res.send).not.toBeCalled();
-  });
+        expect(next).toBeCalled();
+        expect(res.status).not.toBeCalled();
+        expect(res.send).not.toBeCalled();
+    });
 });

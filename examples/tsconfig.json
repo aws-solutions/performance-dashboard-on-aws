@@ -1,17 +1,17 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "strict": true,
-    "baseUrl": "./",
-    "outDir": "build",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "inlineSourceMap": true,
-    "resolveJsonModule": true,
-    "types": ["node", "jest"],
-    "typeRoots": ["./src/lib/types", "node_modules/@types"],
-    "skipLibCheck": true
-  },
-  "include": ["./src/**/*.ts", "./package.json", "./package-lock.json"]
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "strict": true,
+        "baseUrl": "./",
+        "outDir": "build",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "inlineSourceMap": true,
+        "resolveJsonModule": true,
+        "types": ["node", "jest"],
+        "typeRoots": ["./src/lib/types", "node_modules/@types"],
+        "skipLibCheck": true
+    },
+    "include": ["./src/**/*.ts", "./package.json", "./package-lock.json"]
 }

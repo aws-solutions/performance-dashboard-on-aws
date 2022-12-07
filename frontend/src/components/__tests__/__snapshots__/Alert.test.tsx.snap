@@ -102,7 +102,7 @@ exports[`renders an alert with HTML content as message 1`] = `
     role="alert"
   >
     <a
-      href="#"
+      href="/"
     >
       This is a link
     </a>

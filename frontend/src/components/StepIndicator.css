@@ -16,7 +16,6 @@
 }
 
 .usa-step-indicator--counters .usa-step-indicator__segment--complete::before,
-.usa-step-indicator--counters-sm
-  .usa-step-indicator__segment--complete::before {
+.usa-step-indicator--counters-sm .usa-step-indicator__segment--complete::before {
   background-color: #1b1b1b !important;
 }

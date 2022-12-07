@@ -29,10 +29,10 @@ import "uswds";
 import { Auth } from "@aws-amplify/auth";
 
 declare module "react" {
-  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
-    // extends React's HTMLAttributes
-    label?: string;
-  }
+    interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+        // extends React's HTMLAttributes
+        label?: string;
+    }
 }
 
 ReactModal.setAppElement("#root"); //this is important for accessibility
@@ -43,10 +43,10 @@ Auth.configure(amplifyConfig());
 i18n();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change

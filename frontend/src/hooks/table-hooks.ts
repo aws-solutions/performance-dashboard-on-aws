@@ -6,40 +6,36 @@
 import React, { useState } from "react";
 
 type UseTableMetadata = {
-  largestTickByColumn: LargestTicksByColumn;
+    largestTickByColumn: LargestTicksByColumn;
 };
 
 type LargestTicksByColumn = {
-  [columnName: string]: number;
+    [columnName: string]: number;
 };
 
 export function useTableMetadata(data?: object[]): UseTableMetadata {
-  const [largestTickByColumn, setLargestTickByColumn] =
-    useState<LargestTicksByColumn>({});
+    const [largestTickByColumn, setLargestTickByColumn] = useState<LargestTicksByColumn>({});
 
-  React.useEffect(() => {
-    if (data) {
-      const largestByColumn: LargestTicksByColumn = {};
-      data.forEach((row: any) => {
-        Object.keys(row).forEach((columnName) => {
-          if (typeof row[columnName] === "number") {
-            const value = row[columnName];
-            if (!largestByColumn[columnName]) {
-              largestByColumn[columnName] = -Infinity;
-            }
+    React.useEffect(() => {
+        if (data) {
+            const largestByColumn: LargestTicksByColumn = {};
+            data.forEach((row: any) => {
+                Object.keys(row).forEach((columnName) => {
+                    if (typeof row[columnName] === "number") {
+                        const value = row[columnName];
+                        if (!largestByColumn[columnName]) {
+                            largestByColumn[columnName] = -Infinity;
+                        }
 
-            largestByColumn[columnName] = Math.max(
-              largestByColumn[columnName],
-              value
-            );
-          }
-        });
-      });
-      setLargestTickByColumn(largestByColumn);
-    }
-  }, [data]);
+                        largestByColumn[columnName] = Math.max(largestByColumn[columnName], value);
+                    }
+                });
+            });
+            setLargestTickByColumn(largestByColumn);
+        }
+    }, [data]);
 
-  return {
-    largestTickByColumn,
-  };
+    return {
+        largestTickByColumn,
+    };
 }

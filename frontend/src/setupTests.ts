@@ -17,7 +17,7 @@ import { MockedResizeObserver } from "./testUtils";
 
 jest.mock("./hooks");
 jest.mock("../package.json", () => ({
-  version: "v1.0.0",
+    version: "v1.0.0",
 }));
 
 dayjs.extend(relativeTime);

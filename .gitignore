@@ -1,5 +1,6 @@
 .vscode/
 .DS_Store
+node_modules
 
 deployment/regional-s3-assets
 deployment/global-s3-assets

@@ -1,3 +1,5 @@
+npm i
+
 #
 # Backend
 #

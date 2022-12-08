@@ -35,8 +35,8 @@ mkdir -p $dist_template_dir
 echo "------------------------------------------------------------------------------"
 echo "[Packing] Templates"
 echo "------------------------------------------------------------------------------"
-echo "cp $source_template_dir/performance-dashboard-on-aws.template $dist_template_dir/performance-dashboard-on-aws.template"
-cp $source_template_dir/performance-dashboard-on-aws.template $dist_template_dir/performance-dashboard-on-aws.template
+echo "cp $source_template_dir/performance-dashboard-on-aws.template.json $dist_template_dir/performance-dashboard-on-aws.template.json"
+cp $source_template_dir/performance-dashboard-on-aws.template.json $dist_template_dir/performance-dashboard-on-aws.template.json
 
 echo "------------------------------------------------------------------------------"
 echo "[Packing] Build Script"

@@ -3,17 +3,18 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as lambda from "@aws-cdk/aws-lambda";
-import * as dynamodb from "@aws-cdk/aws-dynamodb";
-import * as apigateway from "@aws-cdk/aws-apigateway";
 import { BackendApi } from "./constructs/api";
 import { Database } from "./constructs/database";
 import { LambdaFunctions } from "./constructs/lambdas";
 import { DatasetStorage } from "./constructs/datastorage";
 import { ContentStorage } from "./constructs/contentstorage";
+import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import { Function } from "aws-cdk-lib/aws-lambda";
+import { Table } from "aws-cdk-lib/aws-dynamodb";
+import { RestApi } from "aws-cdk-lib/aws-apigateway";
+import { Construct } from "constructs";
 
-interface BackendStackProps extends cdk.StackProps {
+interface BackendStackProps extends StackProps {
     userPool: {
         id: string;
         arn: string;
@@ -23,16 +24,16 @@ interface BackendStackProps extends cdk.StackProps {
     authenticationRequired: boolean;
 }
 
-export class BackendStack extends cdk.Stack {
-    public readonly privateApiFunction: lambda.Function;
-    public readonly publicApiFunction: lambda.Function;
-    public readonly dynamodbStreamsFunction: lambda.Function;
-    public readonly mainTable: dynamodb.Table;
-    public readonly auditTrailTable: dynamodb.Table;
-    public readonly restApi: apigateway.RestApi;
+export class BackendStack extends Stack {
+    public readonly privateApiFunction: Function;
+    public readonly publicApiFunction: Function;
+    public readonly dynamodbStreamsFunction: Function;
+    public readonly mainTable: Table;
+    public readonly auditTrailTable: Table;
+    public readonly restApi: RestApi;
     public readonly datasetsBucketArn: string;
 
-    constructor(scope: cdk.Construct, id: string, props: BackendStackProps) {
+    constructor(scope: Construct, id: string, props: BackendStackProps) {
         super(scope, id, props);
 
         const dataStorage = new DatasetStorage(this, "DatasetStorage", {
@@ -70,15 +71,15 @@ export class BackendStack extends cdk.Stack {
         this.restApi = backendApi.api;
         this.datasetsBucketArn = dataStorage.datasetsBucket.bucketArn;
 
-        new cdk.CfnOutput(this, "ApiGatewayEndpoint", {
+        new CfnOutput(this, "ApiGatewayEndpoint", {
             value: this.restApi.url,
         });
 
-        new cdk.CfnOutput(this, "DynamoDbTableName", {
+        new CfnOutput(this, "DynamoDbTableName", {
             value: database.mainTable.tableName,
         });
 
-        new cdk.CfnOutput(this, "DatasetsBucketName", {
+        new CfnOutput(this, "DatasetsBucketName", {
             value: dataStorage.datasetsBucket.bucketName,
         });
     }

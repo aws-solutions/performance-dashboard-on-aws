@@ -4,6 +4,7 @@ node_modules
 
 deployment/regional-s3-assets
 deployment/global-s3-assets
+deployment/staging
 deployment/open-source
 
 oss-attribution

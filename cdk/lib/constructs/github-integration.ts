@@ -3,11 +3,21 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as kms from "@aws-cdk/aws-kms";
-import * as codebuild from "@aws-cdk/aws-codebuild";
-import * as iam from "@aws-cdk/aws-iam";
-import * as s3 from "@aws-cdk/aws-s3";
+import { CfnOutput } from "aws-cdk-lib";
+import { Artifacts, BuildSpec, LinuxBuildImage, Project } from "aws-cdk-lib/aws-codebuild";
+import {
+    ArnPrincipal,
+    CfnRole,
+    Effect,
+    FederatedPrincipal,
+    OpenIdConnectProvider,
+    PolicyDocument,
+    PolicyStatement,
+    Role,
+} from "aws-cdk-lib/aws-iam";
+import { Key } from "aws-cdk-lib/aws-kms";
+import { Bucket } from "aws-cdk-lib/aws-s3";
+import { Construct } from "constructs";
 
 export interface GitHubIntegrationProps {
     readonly githubOrg: string;
@@ -17,15 +27,15 @@ export interface GitHubIntegrationProps {
     readonly decryptArns: string[];
 }
 
-export class GitHubIntegration extends cdk.Construct {
+export class GitHubIntegration extends Construct {
     private readonly props: GitHubIntegrationProps;
-    private readonly idp: iam.OpenIdConnectProvider;
-    public readonly dispatcherCodeBuildProject: codebuild.Project;
+    private readonly idp: OpenIdConnectProvider;
+    public readonly dispatcherCodeBuildProject: Project;
 
-    constructor(scope: cdk.Construct, id: string, props: GitHubIntegrationProps) {
+    constructor(scope: Construct, id: string, props: GitHubIntegrationProps) {
         super(scope, id);
         this.props = props;
-        this.idp = new iam.OpenIdConnectProvider(this, "OidProvider", {
+        this.idp = new OpenIdConnectProvider(this, "OidProvider", {
             url: "https://token.actions.githubusercontent.com",
             clientIds: ["sts.amazonaws.com"],
         });
@@ -34,8 +44,8 @@ export class GitHubIntegration extends cdk.Construct {
             throw new Error("Missing GitHub organization");
         }
 
-        const artifactsBucket = s3.Bucket.fromBucketArn(this, "ArtifactsBucket", props.bucketArn);
-        const artifactsEncryptionKey = new kms.Key(this, "ArtifactsEncryptionKey", {
+        const artifactsBucket = Bucket.fromBucketArn(this, "ArtifactsBucket", props.bucketArn);
+        const artifactsEncryptionKey = new Key(this, "ArtifactsEncryptionKey", {
             description:
                 "KMS key for the Dispatcher CodeBuild project to use for encrypting artifacts",
             alias: "github-dispatcher-codebuild-key",
@@ -43,34 +53,29 @@ export class GitHubIntegration extends cdk.Construct {
         });
 
         props.decryptArns.forEach((roleArn) => {
-            artifactsEncryptionKey.grantEncryptDecrypt(new iam.ArnPrincipal(roleArn));
+            artifactsEncryptionKey.grantEncryptDecrypt(new ArnPrincipal(roleArn));
         });
 
-        this.dispatcherCodeBuildProject = new codebuild.Project(
-            this,
-            "GitHubDispatcherCodeBuildProject",
-            {
-                projectName: "GitHubDispatcher",
-                environment: {
-                    buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2,
-                },
-                buildSpec: codebuild.BuildSpec.fromObject({
-                    version: "0.2",
-                    artifacts: {
-                        files: ["**/*"],
-                        name: "github/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/artifact.zip",
-                    },
-                }),
-                artifacts: codebuild.Artifacts.s3({
-                    bucket: artifactsBucket,
-                    packageZip: true,
-                    includeBuildId: false,
-                }),
-                encryptionKey: artifactsEncryptionKey,
+        this.dispatcherCodeBuildProject = new Project(this, "GitHubDispatcherCodeBuildProject", {
+            projectName: "GitHubDispatcher",
+            environment: {
+                buildImage: LinuxBuildImage.AMAZON_LINUX_2,
             },
-        );
-        const codeBuildCfnRole = this.dispatcherCodeBuildProject.role?.node
-            .defaultChild as iam.CfnRole;
+            buildSpec: BuildSpec.fromObject({
+                version: "0.2",
+                artifacts: {
+                    files: ["**/*"],
+                    name: "github/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/artifact.zip",
+                },
+            }),
+            artifacts: Artifacts.s3({
+                bucket: artifactsBucket,
+                packageZip: true,
+                includeBuildId: false,
+            }),
+            encryptionKey: artifactsEncryptionKey,
+        });
+        const codeBuildCfnRole = this.dispatcherCodeBuildProject.role?.node.defaultChild as CfnRole;
         codeBuildCfnRole?.addPropertyOverride("RoleName", "GitHubDispatcherCodeBuildServiceRole");
 
         const gitHubDispatcherRole = this.createGitHubRole(
@@ -78,27 +83,27 @@ export class GitHubIntegration extends cdk.Construct {
             this.dispatcherCodeBuildProject,
         );
 
-        new cdk.CfnOutput(this, "ArtifactsBucketARN", {
+        new CfnOutput(this, "ArtifactsBucketARN", {
             description: "ARN of the artifact's bucket",
             value: artifactsBucket.bucketArn,
         });
 
-        new cdk.CfnOutput(this, "GitHubDispatcherIamRole", {
+        new CfnOutput(this, "GitHubDispatcherIamRole", {
             description:
                 "ARN of the IAM Role that GitHub assumes to run the Dispatcher CodeBuild project",
             value: gitHubDispatcherRole.roleArn,
         });
 
-        new cdk.CfnOutput(this, "GitHubDispatcherCodeBuildProjectName", {
+        new CfnOutput(this, "GitHubDispatcherCodeBuildProjectName", {
             description: "Name of the GitHub Dispatcher CodeBuild Project",
             value: this.dispatcherCodeBuildProject.projectName,
         });
     }
 
-    createGitHubRole(type: string, codeBuildProject: codebuild.Project): iam.Role {
-        return new iam.Role(this, `GitHub${type}Role`, {
+    createGitHubRole(type: string, codeBuildProject: Project): Role {
+        return new Role(this, `GitHub${type}Role`, {
             roleName: `GitHubIntegration-CodeBuild-${type}-Role`,
-            assumedBy: new iam.FederatedPrincipal(
+            assumedBy: new FederatedPrincipal(
                 this.idp.openIdConnectProviderArn,
                 {
                     StringLike: {
@@ -108,15 +113,15 @@ export class GitHubIntegration extends cdk.Construct {
                 "sts:AssumeRoleWithWebIdentity",
             ),
             inlinePolicies: {
-                AllowBuilds: new iam.PolicyDocument({
+                AllowBuilds: new PolicyDocument({
                     statements: [
-                        new iam.PolicyStatement({
-                            effect: iam.Effect.ALLOW,
+                        new PolicyStatement({
+                            effect: Effect.ALLOW,
                             actions: ["codebuild:StartBuild", "codebuild:BatchGetBuilds"],
                             resources: [codeBuildProject.projectArn],
                         }),
-                        new iam.PolicyStatement({
-                            effect: iam.Effect.ALLOW,
+                        new PolicyStatement({
+                            effect: Effect.ALLOW,
                             actions: ["logs:GetLogEvents"],
                             resources: [
                                 `arn:aws:logs:${this.props.region}:${this.props.accountId}:log-group:/aws/codebuild/${codeBuildProject.projectName}:*`,

@@ -71,12 +71,6 @@ function TopicareaListing(props: Props) {
         }
     };
 
-    const sortTopicareas = (topicAreas: Array<TopicArea>): Array<TopicArea> => {
-        return [...topicAreas].sort((a, b) => {
-            return a.name > b.name ? -1 : 1;
-        });
-    };
-
     return (
         <>
             <Modal

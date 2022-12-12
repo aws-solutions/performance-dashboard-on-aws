@@ -14,9 +14,9 @@
   content: "pla";
 }
 
-.usa-combo-box__list-option[data-value="#c05600"]::after {
-  background-color: #c05600;
-  color: #c05600;
+.usa-combo-box__list-option[data-value="#BC4D01"]::after {
+  background-color: #BC4D01;
+  color: #BC4D01;
   margin: 5px;
   border-radius: 4px;
   content: "pla";

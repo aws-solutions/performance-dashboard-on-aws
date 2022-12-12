@@ -6,7 +6,7 @@
 const defaultColors = [
     "#005ea2",
     "#54278f",
-    "#c05600",
+    "#BC4D01",
     "#002d3f",
     "#136c66",
     "#996600",
@@ -23,7 +23,7 @@ const getColors = (
     numberOfColors: number,
     primaryColor: string,
     secondaryColor: string,
-): Array<string> => {
+): string[] => {
     const colors = new Array<string>();
     colors.push(primaryColor);
     const secondaryIndex = defaultColors.indexOf(secondaryColor);
@@ -36,7 +36,7 @@ const getColors = (
     return colors;
 };
 
-const getSecondaryOptions = (primaryColor?: string) => {
+const getSecondaryOptions = (primaryColor?: string): any => {
     return defaultColors
         .filter((d) => d !== primaryColor)
         .map((c) => {

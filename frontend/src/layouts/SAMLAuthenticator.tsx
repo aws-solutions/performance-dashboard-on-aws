@@ -33,7 +33,6 @@ export function withSAMLAuthenticator(
 
             // checkUser returns an "unsubscribe" function to stop side-effects
             return checkUser();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 
         function checkUser() {

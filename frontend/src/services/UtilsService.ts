@@ -55,7 +55,7 @@ function emailIsValid(email: string): boolean {
     return /^[^\s@]+@[^\s@]+$/.test(email);
 }
 
-function timeout(delay: number) {
+async function timeout(delay: number) {
     return new Promise((res) => setTimeout(res, delay));
 }
 

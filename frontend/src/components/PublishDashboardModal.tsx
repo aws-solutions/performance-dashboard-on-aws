@@ -95,7 +95,7 @@ function PublishDashboardModal(props: PathParams) {
                 }
             } catch (err) {
                 setPublishError(
-                    err?.response?.status === 409
+                    (err as any)?.response?.status === 409
                         ? t("PublishDashboardModal.FailToPublishUrlAlreadyExists")
                         : t("PublishDashboardModal.FailToPublishError"),
                 );

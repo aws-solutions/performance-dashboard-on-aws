@@ -39,7 +39,7 @@ function getFilteredJson(json: Array<any>, hiddenColumns: Set<string>): Array<an
             obj[key] = row[key];
             return obj;
         }, {});
-        if (filteredRow !== {}) {
+        if (Object.keys(filteredRow).length) {
             newFilteredJson.push(filteredRow);
         }
     }

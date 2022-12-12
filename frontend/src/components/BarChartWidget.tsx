@@ -276,6 +276,7 @@ const BarChartWidget = (props: Props) => {
                     columnsMetadata={props.columnsMetadata}
                     fileName={props.downloadTitle}
                     showMobilePreview={showMobilePreview}
+                    title={props.title}
                 />
             </div>
             {props.summaryBelow && (

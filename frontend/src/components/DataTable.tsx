@@ -24,9 +24,10 @@ interface Props {
     columnsMetadata?: ColumnMetadata[];
     fileName?: string;
     showMobilePreview?: boolean;
+    title: string;
 }
 
-function DataTable({ rows, columns, columnsMetadata, fileName, showMobilePreview }: Props) {
+function DataTable({ rows, columns, columnsMetadata, fileName, showMobilePreview, title }: Props) {
     const history = useHistory();
     const { t } = useTranslation();
     const [showDataTable, setShowDataTable] = useState(false);
@@ -67,7 +68,7 @@ function DataTable({ rows, columns, columnsMetadata, fileName, showMobilePreview
                     buttonText={t("Actions")}
                     disabled={false}
                     variant="unstyled"
-                    ariaLabel={t("ARIA.DataTableActions")}
+                    ariaLabel={`${title} - ${t("ARIA.DataTableActions")}`}
                 >
                     <MenuItem
                         onSelect={() =>

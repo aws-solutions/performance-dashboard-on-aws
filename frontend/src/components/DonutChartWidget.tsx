@@ -349,6 +349,7 @@ const DonutChartWidget = (props: Props) => {
                     fileName={props.downloadTitle}
                     columnsMetadata={props.columnsMetadata}
                     showMobilePreview={showMobilePreview}
+                    title={props.title}
                 />
             </div>
             {props.summaryBelow && (

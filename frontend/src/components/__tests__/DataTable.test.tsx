@@ -57,6 +57,7 @@ test("table should be hidden by default", async () => {
             columnsMetadata={columnsMetadata}
             fileName={"test-file-name"}
             showMobilePreview={false}
+            title={"test-title"}
         />,
     );
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
@@ -70,6 +71,7 @@ test("shows and hides table when button is clicked", async () => {
             columnsMetadata={columnsMetadata}
             fileName={"test-file-name"}
             showMobilePreview={false}
+            title={"test-title"}
         />,
     );
     const showTableBtn = screen.getByText("Show data table");
@@ -89,6 +91,7 @@ test("displays a table with values properly formatted", async () => {
             columnsMetadata={columnsMetadata}
             fileName={"test-file-name"}
             showMobilePreview={false}
+            title={"test-title"}
         />,
     );
     const showTableBtn = screen.getByText("Show data table");
@@ -118,6 +121,7 @@ test("renders a Data Table element with hidden table", async () => {
             columnsMetadata={columnsMetadata}
             fileName={"test-file-name"}
             showMobilePreview={false}
+            title={"test-title"}
         />,
     );
 
@@ -132,6 +136,7 @@ test("renders a Data Table element with hidden table on mobile", async () => {
             columnsMetadata={columnsMetadata}
             fileName={"test-file-name"}
             showMobilePreview={true}
+            title={"test-title"}
         />,
     );
 
@@ -146,6 +151,7 @@ test("renders a Data Table element", async () => {
             columnsMetadata={columnsMetadata}
             fileName={"test-file-name"}
             showMobilePreview={false}
+            title={"test-title"}
         />,
     );
 
@@ -163,6 +169,7 @@ test("renders a Data Table element on mobile", async () => {
             columnsMetadata={columnsMetadata}
             fileName={"test-file-name"}
             showMobilePreview={true}
+            title={"test-title"}
         />,
     );
 

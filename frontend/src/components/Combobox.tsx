@@ -6,7 +6,7 @@
 import React, { useEffect, useRef } from "react";
 // @ts-ignore
 import comboBox from "uswds/src/js/components/combo-box";
-import "./Combobox.css";
+import "./Combobox.scss";
 import { useTranslation } from "react-i18next";
 
 interface Props {

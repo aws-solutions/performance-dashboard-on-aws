@@ -47,6 +47,7 @@ function TopicareaSettings() {
                                 className="margin-top-2"
                                 variant="outline"
                                 onClick={onTopicAreaLabelEdit}
+                                ariaLabel={t("SettingsTopicAreaNameEditGeneric")}
                             >
                                 {t("Edit")}
                             </Button>

@@ -55,7 +55,6 @@ function Combobox(props: Props) {
                 htmlFor={props.id}
             >
                 {props.label}
-                {props.label && props.required && <span>&#42;</span>}
             </label>
             {props.error && (
                 <span className="usa-error-message" id="input-error-message" role="alert">

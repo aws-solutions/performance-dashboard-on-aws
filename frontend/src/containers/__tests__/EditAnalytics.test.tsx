@@ -31,8 +31,8 @@ beforeEach(async () => {
 });
 
 test("submits the analytics tracking id", async () => {
-    userEvent.clear(screen.getByLabelText("Google Universal Analytics tracking ID*"));
-    userEvent.type(screen.getByLabelText("Google Universal Analytics tracking ID*"), "UA12345");
+    userEvent.clear(screen.getByLabelText("Google Universal Analytics tracking ID"));
+    userEvent.type(screen.getByLabelText("Google Universal Analytics tracking ID"), "UA12345");
 
     await act(async () => {
         fireEvent.submit(screen.getByTestId("EditAnalyticsForm"));

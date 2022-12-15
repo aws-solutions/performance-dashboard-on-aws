@@ -29,13 +29,13 @@ describe("CreateDashboardForm", () => {
     });
 
     test("submits form with the entered values", async () => {
-        fireEvent.input(screen.getByLabelText("Dashboard Name*"), {
+        fireEvent.input(screen.getByLabelText("Dashboard Name"), {
             target: {
                 value: "AWS Dashboard",
             },
         });
 
-        fireEvent.input(screen.getByLabelText("Ministry*"), {
+        fireEvent.input(screen.getByLabelText("Ministry"), {
             target: {
                 value: "123456789",
             },
@@ -56,7 +56,7 @@ describe("CreateDashboardForm", () => {
     });
 
     test("renders a preview of dashboard name and description", async () => {
-        fireEvent.input(screen.getByLabelText("Dashboard Name*"), {
+        fireEvent.input(screen.getByLabelText("Dashboard Name"), {
             target: {
                 value: "Foo Bar",
             },

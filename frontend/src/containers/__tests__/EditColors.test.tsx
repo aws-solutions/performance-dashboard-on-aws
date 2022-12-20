@@ -49,7 +49,7 @@ test("submits form with the entered values", async () => {
         "colors",
         {
             primary: "#00ff00",
-            secondary: "#0f6460",
+            secondary: "",
         },
         expect.anything(),
     );

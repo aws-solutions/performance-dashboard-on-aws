@@ -31,8 +31,8 @@ beforeEach(async () => {
 });
 
 test("submits form with the entered values", async () => {
-    userEvent.clear(screen.getByLabelText("Support Contact Email Address*"));
-    userEvent.type(screen.getByLabelText("Support Contact Email Address*"), "test1234@example.com");
+    userEvent.clear(screen.getByLabelText("Support Contact Email Address"));
+    userEvent.type(screen.getByLabelText("Support Contact Email Address"), "test1234@example.com");
 
     await act(async () => {
         fireEvent.submit(screen.getByTestId("EditSupportContactEmailForm"));

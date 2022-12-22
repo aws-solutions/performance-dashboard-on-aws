@@ -34,7 +34,7 @@ test("renders title", async () => {
 
 test("renders a textfield for metric title", async () => {
     render(<EditMetrics />, { wrapper: MemoryRouter });
-    expect(await screen.findByLabelText("Metrics title*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Metrics title")).toBeInTheDocument();
 });
 
 test("on submit, it does not calls editWidget api and uploads dataset without a metric added", async () => {
@@ -44,7 +44,7 @@ test("on submit, it does not calls editWidget api and uploads dataset without a 
 
     const submitButton = getByRole("button", { name: "Save" });
 
-    fireEvent.input(getByLabelText("Metrics title*"), {
+    fireEvent.input(getByLabelText("Metrics title"), {
         target: {
             value: "Test Metrics",
         },

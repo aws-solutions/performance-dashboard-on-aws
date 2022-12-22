@@ -128,10 +128,7 @@ function AddUsers() {
                             validate={UtilsService.validateEmails}
                         />
 
-                        <label className="usa-label text-bold">
-                            {t("UserListingRole")}
-                            <span>&#42;</span>
-                        </label>
+                        <label className="usa-label text-bold">{t("UserListingRole")}</label>
 
                         <fieldset className="usa-fieldset" onChange={handleChange}>
                             <legend className="usa-hint">{t("AddUsersRoleSelect")}</legend>

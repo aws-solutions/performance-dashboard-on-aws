@@ -44,7 +44,7 @@ test("renders title and subtitles", async () => {
 
 test("renders a textfield for chart title", async () => {
     render(<EditChart />, { wrapper: MemoryRouter });
-    expect(await screen.findByLabelText("Chart title*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Chart title")).toBeInTheDocument();
 });
 
 test("renders a file upload input", async () => {
@@ -108,7 +108,7 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
         fireEvent.click(continueButton);
     });
 
-    fireEvent.input(getByLabelText("Chart title*"), {
+    fireEvent.input(getByLabelText("Chart title"), {
         target: {
             value: "COVID Cases",
         },
@@ -211,7 +211,7 @@ test("on wrong CSV, it should display the proper error message", async () => {
         fireEvent.click(continueButton);
     });
 
-    fireEvent.input(getByLabelText("Chart title*"), {
+    fireEvent.input(getByLabelText("Chart title"), {
         target: {
             value: "COVID Cases",
         },
@@ -289,7 +289,7 @@ test("when the file has parsing errors, it should display the proper error messa
         fireEvent.click(continueButton);
     });
 
-    fireEvent.input(getByLabelText("Chart title*"), {
+    fireEvent.input(getByLabelText("Chart title"), {
         target: {
             value: "COVID Cases",
         },

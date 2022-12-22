@@ -36,7 +36,7 @@ test("renders page description", async () => {
 
 test("renders a file upload input", async () => {
     render(<EditLogo />, { wrapper: MemoryRouter });
-    expect(await screen.findByLabelText("File upload*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
 });
 
 test("renders file upload description constraint", async () => {
@@ -46,7 +46,7 @@ test("renders file upload description constraint", async () => {
 
 test("renders a alt text input", async () => {
     render(<EditLogo />, { wrapper: MemoryRouter });
-    expect(await screen.findByLabelText("Logo alt text*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Logo alt text")).toBeInTheDocument();
 });
 
 test("renders alt text description constraint", async () => {
@@ -68,14 +68,14 @@ test("on submit, it calls updateSetting and upload logo", async () => {
     const file = new File(["dummy content"], "filename.png", {
         type: "image/png",
     });
-    const uploadFile = getByLabelText("File upload*");
+    const uploadFile = getByLabelText("File upload");
     Object.defineProperty(uploadFile, "files", { value: [file] });
     Object.defineProperty(uploadFile, "value", {
         value: file.name,
     });
     fireEvent.change(uploadFile);
 
-    fireEvent.change(getByLabelText("Logo alt text*"), {
+    fireEvent.change(getByLabelText("Logo alt text"), {
         target: {
             value: "Alt text",
         },

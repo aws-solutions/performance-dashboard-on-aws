@@ -25,12 +25,12 @@ test("renders title and subtitles", async () => {
 
 test("renders a text input for title", async () => {
     const { getByLabelText } = render(<AddText />, { wrapper: MemoryRouter });
-    expect(getByLabelText("Text title*")).toBeInTheDocument();
+    expect(getByLabelText("Text title")).toBeInTheDocument();
 });
 
 test("renders a text input for content", async () => {
     const { getByLabelText } = render(<AddText />, { wrapper: MemoryRouter });
-    expect(getByLabelText("Text*")).toBeInTheDocument();
+    expect(getByLabelText("Text")).toBeInTheDocument();
 });
 
 test("on submit, it calls createWidget api", async () => {
@@ -38,13 +38,13 @@ test("on submit, it calls createWidget api", async () => {
         wrapper: MemoryRouter,
     });
 
-    fireEvent.input(getByLabelText("Text title*"), {
+    fireEvent.input(getByLabelText("Text title"), {
         target: {
             value: "Content title goes here",
         },
     });
 
-    fireEvent.change(getByLabelText("Text*"), {
+    fireEvent.change(getByLabelText("Text"), {
         target: {
             value: "Text content here",
         },

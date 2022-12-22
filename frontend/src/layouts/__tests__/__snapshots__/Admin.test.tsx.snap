@@ -45,7 +45,7 @@ exports[`AdminLayout renders the component 1`] = `
               />
             </div>
             <a
-              aria-label="Home"
+              aria-label="Performance Dashboard"
               class=""
               href="/admin"
               id="Home"

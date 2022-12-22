@@ -37,7 +37,7 @@ test("renders title and subtitles", async () => {
 
 test("renders a textfield for metrics title", async () => {
     render(<AddMetrics />, { wrapper: MemoryRouter });
-    expect(await screen.findByLabelText("Metrics title*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Metrics title")).toBeInTheDocument();
 });
 
 test("renders the Metrics title", async () => {
@@ -65,7 +65,7 @@ test("on submit, it does not call createWidget api and upload dataset without a 
 
     const submitButton = getAllByText("Add metrics")[3];
 
-    fireEvent.input(getByLabelText("Metrics title*"), {
+    fireEvent.input(getByLabelText("Metrics title"), {
         target: {
             value: "Test Metrics",
         },

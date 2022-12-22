@@ -39,12 +39,12 @@ test("should render the dialog when close", async () => {
 
 test("renders a textfield for URL", async () => {
     renderModal(true);
-    expect(await screen.findByLabelText("URL*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("URL")).toBeInTheDocument();
 });
 
 test("renders a textfield for internal version notes", async () => {
     renderModal(true);
-    expect(await screen.findByLabelText("Internal version notes*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Internal version notes")).toBeInTheDocument();
 });
 
 test("renders a submit button", async () => {

@@ -91,7 +91,7 @@ function AdminLayout(props: LayoutProps) {
                                     to="/admin"
                                     id="Home"
                                     title="Home"
-                                    aria-label="Home"
+                                    aria-label={settings.navbarTitle}
                                     className=""
                                 >
                                     {settings.navbarTitle}

@@ -23,7 +23,7 @@ test("renders title", async () => {
     });
     expect(getByRole("heading", { name: "Edit section" })).toBeInTheDocument();
     expect(getByText("Configure section content")).toBeInTheDocument();
-    expect(getByLabelText("Section title*")).toBeInTheDocument();
+    expect(getByLabelText("Section title")).toBeInTheDocument();
     expect(getByLabelText("Section summary (optional)")).toBeInTheDocument();
 });
 
@@ -32,7 +32,7 @@ test("on submit, it calls editWidget api", async () => {
         wrapper: MemoryRouter,
     });
 
-    fireEvent.input(getByLabelText("Section title*"), {
+    fireEvent.input(getByLabelText("Section title"), {
         target: {
             value: "Content title goes here",
         },

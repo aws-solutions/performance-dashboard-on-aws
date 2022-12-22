@@ -31,11 +31,11 @@ beforeEach(async () => {
 });
 
 test("submits form with the entered values", async () => {
-    userEvent.clear(screen.getByLabelText("Rename single 'topic area'*"));
-    userEvent.type(screen.getByLabelText("Rename single 'topic area'*"), "Topic Area Test");
+    userEvent.clear(screen.getByLabelText("Rename single 'topic area'"));
+    userEvent.type(screen.getByLabelText("Rename single 'topic area'"), "Topic Area Test");
 
-    userEvent.clear(screen.getByLabelText("Rename multiple 'topic areas'*"));
-    userEvent.type(screen.getByLabelText("Rename multiple 'topic areas'*"), "Topic Areas Test");
+    userEvent.clear(screen.getByLabelText("Rename multiple 'topic areas'"));
+    userEvent.type(screen.getByLabelText("Rename multiple 'topic areas'"), "Topic Areas Test");
 
     await act(async () => {
         fireEvent.submit(screen.getByTestId("EditTopicAreaLabelForm"));

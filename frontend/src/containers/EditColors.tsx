@@ -27,7 +27,7 @@ interface FormValues {
 const EDIT_COLORS_CSV_COLUMN = "EditColors-CSV-Column.csv";
 const EDIT_COLORS_CSV_BAR = "EditColors-CSV-Bar.csv";
 
-function EditColors() {
+function EditColors(): any {
     const { t } = useTranslation();
     const history = useHistory();
     const { settings, loadingSettings } = useSettings();
@@ -37,7 +37,7 @@ function EditColors() {
     const primaryColor = watch("primary");
     const secondaryColor = watch("secondary");
 
-    const onSubmit = async (values: FormValues) => {
+    const onSubmit = async (values: FormValues): Promise<void> => {
         await BackendService.updateSetting(
             "colors",
             {
@@ -55,7 +55,7 @@ function EditColors() {
         });
     };
 
-    const onCancel = () => {
+    const onCancel = (): void => {
         history.push("/admin/settings/brandingandstyling");
     };
 
@@ -82,11 +82,11 @@ function EditColors() {
                 <p>{t("SettingsColorsDescription")}</p>
             </div>
 
-            {loadingSettings && datasetColumn && datasetBar ? (
+            {loadingSettings && datasetColumn.loading && datasetBar.loading ? (
                 <Spinner className="text-center margin-top-9" label={t("LoadingSpinnerLabel")} />
             ) : (
                 <div className="grid-row width-desktop">
-                    <div className="grid-col-6">
+                    <div className="tablet:grid-col-6">
                         <form
                             onSubmit={handleSubmit(onSubmit)}
                             className="edit-homepage-content-form usa-form usa-form--large"
@@ -100,12 +100,12 @@ function EditColors() {
                                         name="primary"
                                         label={t("SettingsColorsPrimaryColor")}
                                         error={
-                                            errors.primary &&
-                                            (errors.primary.type === "validate"
+                                            errors?.primary &&
+                                            (errors?.primary?.type === "validate"
                                                 ? t("SettingsColorsPrimaryColorInvalid")
                                                 : t("SettingsColorsPrimaryColorEmpty"))
                                         }
-                                        defaultValue={settings.colors && settings.colors.primary}
+                                        defaultValue={settings?.colors?.primary}
                                         register={register}
                                         required
                                         validate={ColorPaletteService.rgbHexColorIsValid}
@@ -154,7 +154,7 @@ function EditColors() {
                                         options={ColorPaletteService.getSecondaryOptions(
                                             primaryColor,
                                         )}
-                                        defaultValue={settings.colors && settings.colors.secondary}
+                                        defaultValue={settings?.colors?.secondary}
                                         register={register}
                                     />
                                 </div>
@@ -185,9 +185,9 @@ function EditColors() {
                             </Button>
                         </form>
                     </div>
-                    <div className="grid-col-6">
+                    <div className="tablet:grid-col-6">
                         <div className="grid-row">
-                            <div className="grid-col-5">
+                            <div className="tablet:grid-col-5">
                                 <BarChartWidget
                                     id="edit-color-bar-chart-sample"
                                     title=""
@@ -206,7 +206,7 @@ function EditColors() {
                                     hideDataLabels={true}
                                 />
                             </div>
-                            <div className="grid-col-7">
+                            <div className="tablet:grid-col-7">
                                 <ColumnChartWidget
                                     id="edit-color-column-chart-sample"
                                     title=""

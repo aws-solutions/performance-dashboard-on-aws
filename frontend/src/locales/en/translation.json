@@ -567,7 +567,7 @@
     "SettingsColorsEdit": "Edit colors",
     "SettingsColorsDescription": "Customize these colors to make your dashboards appear similar in style to your organization's brand or color palette.",
     "SettingsColorsPrimaryColor": "Primary color",
-    "SettingsColorsPrimaryColorDescription": "This color will be the first color used in data visualizations and the color of buttons. Must be a valid HEX color (Ex. #00FF00, #0f0).",
+    "SettingsColorsPrimaryColorDescription": "This color will be the first color used in data visualizations. Must be a valid HEX color (Ex. #00FF00, #0f0).",
     "SettingsColorsPrimaryColorLink": "Learn more about how color relates to accessibility.",
     "SettingsColorsPrimaryColorInvalid": "Color is not a valid HEX color value",
     "SettingsColorsPrimaryColorEmpty": "Please specify a color",

@@ -118,10 +118,7 @@ function ChangeRole() {
                             disabled
                         />
 
-                        <label className="usa-label text-bold">
-                            {t("ChangeRole.Role")}
-                            <span>&#42;</span>
-                        </label>
+                        <label className="usa-label text-bold">{t("ChangeRole.Role")}</label>
 
                         <fieldset className="usa-fieldset" onChange={handleChange}>
                             <legend className="usa-hint">{t("ChangeRole.RoleDescription")}</legend>

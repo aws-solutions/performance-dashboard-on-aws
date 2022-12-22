@@ -42,7 +42,6 @@ const Markdown = (props: MarkdownProps) => {
         <div className={`markdown ${formGroupClassName}`}>
             <label htmlFor={props.id} className="usa-label text-bold">
                 {props.label}
-                {props.label && props.required && <span>&#42;</span>}
             </label>
             <span id="makdownSupportHint" className="usa-hint">
                 {props.hint} {t("MarkdownSupport")}{" "}

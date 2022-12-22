@@ -42,7 +42,6 @@ function Dropdown(props: Props) {
         <div className={formGroupClassName} role="contentinfo">
             <label htmlFor={props.id} className="usa-label text-bold">
                 {props.label}
-                {props.label && props.required && <span>&#42;</span>}
             </label>
             <div id={`${props.id}-description`} className="usa-hint">
                 {props.hint}

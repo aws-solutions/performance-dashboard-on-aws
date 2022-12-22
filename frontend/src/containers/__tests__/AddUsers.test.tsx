@@ -29,7 +29,7 @@ describe("AddUsersForm", () => {
     });
 
     test("submits form with the entered values", async () => {
-        fireEvent.input(screen.getByLabelText("User email address(es)*"), {
+        fireEvent.input(screen.getByLabelText("User email address(es)"), {
             target: {
                 value: "test@example.com",
             },

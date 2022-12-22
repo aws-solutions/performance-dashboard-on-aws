@@ -66,7 +66,7 @@ test("renders an edit button for the topci area label", async () => {
     const { getAllByRole } = render(<TopicareaSettings />, {
         wrapper: MemoryRouter,
     });
-    const button = getAllByRole("button", { name: "Edit" });
+    const button = getAllByRole("button", { name: "Edit topic area name" });
     expect(button[0]).toBeInTheDocument();
 });
 

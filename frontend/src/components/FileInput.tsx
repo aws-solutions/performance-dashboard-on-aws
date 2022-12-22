@@ -68,7 +68,6 @@ function FileInput(props: Props) {
         >
             <label className="usa-label text-bold" htmlFor={props.id}>
                 {props.label}
-                {props.label && props.required && <span>&#42;</span>}
             </label>
             <div className="usa-hint">{props.hint}</div>
             {props.errors && (

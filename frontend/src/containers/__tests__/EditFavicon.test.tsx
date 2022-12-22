@@ -32,7 +32,7 @@ test("renders page description", async () => {
 
 test("renders a file upload input", async () => {
     render(<EditFavicon />, { wrapper: MemoryRouter });
-    expect(await screen.findByLabelText("File upload*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
 });
 
 test("renders file upload description constraint", async () => {
@@ -50,7 +50,7 @@ test("on submit, it calls updateSetting and upload favicon", async () => {
     const file = new File(["dummy content"], "filename.png", {
         type: "image/png",
     });
-    const uploadFile = getByLabelText("File upload*");
+    const uploadFile = getByLabelText("File upload");
     Object.defineProperty(uploadFile, "files", { value: [file] });
     Object.defineProperty(uploadFile, "value", {
         value: file.name,

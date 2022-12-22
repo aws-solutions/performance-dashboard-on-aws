@@ -31,7 +31,7 @@ beforeEach(async () => {
 });
 
 test("submits form with the entered values", async () => {
-    userEvent.selectOptions(screen.getByLabelText("Ministry*"), "123456789");
+    userEvent.selectOptions(screen.getByLabelText("Ministry"), "123456789");
 
     await act(async () => {
         fireEvent.submit(screen.getByTestId("EditDetailsForm"));
@@ -56,7 +56,7 @@ test("invokes cancel function when use clicks cancel", async () => {
 });
 
 test("renders a preview of dashboard name and description", async () => {
-    fireEvent.input(screen.getByLabelText("Dashboard Name*"), {
+    fireEvent.input(screen.getByLabelText("Dashboard Name"), {
         target: {
             value: "Foo Bar",
         },

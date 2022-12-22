@@ -31,14 +31,14 @@ beforeEach(async () => {
 });
 
 test("submits form with the entered values", async () => {
-    userEvent.clear(screen.getByLabelText("Title*"));
-    userEvent.type(screen.getByLabelText("Title*"), "A title for your navbar");
+    userEvent.clear(screen.getByLabelText("Title"));
+    userEvent.type(screen.getByLabelText("Title"), "A title for your navbar");
 
-    userEvent.clear(screen.getByLabelText("Contact email address*"));
-    userEvent.type(screen.getByLabelText("Contact email address*"), "test1234@example.com");
+    userEvent.clear(screen.getByLabelText("Contact email address"));
+    userEvent.type(screen.getByLabelText("Contact email address"), "test1234@example.com");
 
-    userEvent.clear(screen.getByLabelText("Contact us*"));
-    userEvent.type(screen.getByLabelText("Contact us*"), "something");
+    userEvent.clear(screen.getByLabelText("Contact us"));
+    userEvent.type(screen.getByLabelText("Contact us"), "something");
 
     await act(async () => {
         fireEvent.submit(screen.getByTestId("EditNavbarForm"));

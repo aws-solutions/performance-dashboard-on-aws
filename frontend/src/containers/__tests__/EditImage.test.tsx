@@ -27,7 +27,7 @@ test("renders title", async () => {
 
 test("renders Image title", async () => {
     render(<EditImage />, { wrapper: MemoryRouter });
-    expect(await screen.findByLabelText("Image title*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Image title")).toBeInTheDocument();
 });
 
 test("renders element descriptions", async () => {
@@ -48,7 +48,7 @@ test("renders element descriptions", async () => {
 
 test("renders a file upload input", async () => {
     render(<EditImage />, { wrapper: MemoryRouter });
-    expect(await screen.findByLabelText("File upload*")).toBeInTheDocument();
+    expect(await screen.findByLabelText("File upload")).toBeInTheDocument();
 });
 
 test("renders an image size/scale input", async () => {
@@ -66,13 +66,13 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
 
     const submitButton = getByRole("button", { name: "Save" });
 
-    fireEvent.input(getByLabelText("Image title*"), {
+    fireEvent.input(getByLabelText("Image title"), {
         target: {
             value: "Test Image",
         },
     });
 
-    fireEvent.input(getByLabelText("Image alt text*"), {
+    fireEvent.input(getByLabelText("Image alt text"), {
         target: {
             value: "Test alt text",
         },
@@ -81,7 +81,7 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
     const file = new File(["dummy content"], "filename.png", {
         type: "image/png",
     });
-    const uploadFile = getByLabelText("File upload*");
+    const uploadFile = getByLabelText("File upload");
     Object.defineProperty(uploadFile, "files", { value: [file] });
     Object.defineProperty(uploadFile, "value", {
         value: file.name,
@@ -96,7 +96,7 @@ test("on submit, it calls editWidget api and uploads dataset", async () => {
 
     await waitFor(() => expect(submitButton).toBeEnabled());
     await waitFor(() => {
-        expect(getByLabelText("Image alt text*")).toBeInTheDocument();
+        expect(getByLabelText("Image alt text")).toBeInTheDocument();
         expect(
             getByText(
                 "Provide a short description of the image for users with visual impairments using a screen reader. This description will not display on the dashboard.",

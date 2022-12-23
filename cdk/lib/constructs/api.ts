@@ -55,7 +55,7 @@ export class BackendApi extends Construct {
                     },
                 }),
 
-                //Need to change this policy for ingest API with specific values
+                // Need to change this policy for ingest API with specific values
                 new PolicyStatement({
                     effect: Effect.DENY,
                     actions: ["execute-api:Invoke"],
@@ -73,7 +73,7 @@ export class BackendApi extends Construct {
         const apigatewayLogGroup = new LogGroup(scope, "ApiAccessLogs", {
             retention: RetentionDays.TEN_YEARS,
         });
-        let logGroup: CfnLogGroup = apigatewayLogGroup.node.findChild("Resource") as CfnLogGroup;
+        const logGroup: CfnLogGroup = apigatewayLogGroup.node.findChild("Resource") as CfnLogGroup;
         logGroup.cfnOptions.metadata = {
             cfn_nag: {
                 rules_to_suppress: [
@@ -110,7 +110,7 @@ export class BackendApi extends Construct {
         this.addPrivateEndpoints(apiIntegration, authorizer);
         this.addPublicEndpoints(publicApiIntegration, authorizer, props.authenticationRequired);
 
-        const key = this.api.addApiKey("PerfDashIngestApiKey");
+        this.api.addApiKey("PerfDashIngestApiKey");
         const plan = this.api.addUsagePlan("PerfDashIngestUsagePlan", {
             name: "PerfDashIngestUsagePlan",
             throttle: {
@@ -127,7 +127,7 @@ export class BackendApi extends Construct {
 
     // Suppress cfn_nag Warn W59: AWS::ApiGateway::Method should not have AuthorizationType set to 'NONE' unless it is of HttpMethod: OPTIONS.
     private cfn_nag_warn_w59(method: Method) {
-        let apimethod: CfnMethod = method.node.findChild("Resource") as CfnMethod;
+        const apimethod: CfnMethod = method.node.findChild("Resource") as CfnMethod;
         apimethod.cfnOptions.metadata = {
             cfn_nag: {
                 rules_to_suppress: [

@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { CfnOutput, CustomResource, Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, CustomResource, Duration, Stack, StackProps } from "aws-cdk-lib";
 import {
     CfnDistribution,
     Distribution,
@@ -21,7 +21,7 @@ import {
 } from "aws-cdk-lib/aws-s3";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Construct } from "constructs";
-import { Code, Function, IVersion, Runtime } from "aws-cdk-lib/aws-lambda";
+import { Code, Function, Runtime } from "aws-cdk-lib/aws-lambda";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Provider } from "aws-cdk-lib/custom-resources";
@@ -115,7 +115,7 @@ export class FrontendStack extends Stack {
             },
         });
 
-        let cfnDist: CfnDistribution = distribution.node.defaultChild as CfnDistribution;
+        const cfnDist: CfnDistribution = distribution.node.defaultChild as CfnDistribution;
         cfnDist.cfnOptions.metadata = {
             cfn_nag: {
                 rules_to_suppress: [

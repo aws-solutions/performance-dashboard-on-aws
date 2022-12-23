@@ -19,7 +19,7 @@ export class Database extends Construct {
 
     // Suppress cfn_nag Warn W74: DynamoDB table should have encryption enabled using a CMK stored in KMS
     private cfn_nag_warn_w58(tbl: Table) {
-        let cfnTable: CfnTable = tbl.node.findChild("Resource") as CfnTable;
+        const cfnTable: CfnTable = tbl.node.findChild("Resource") as CfnTable;
         cfnTable.cfnOptions.metadata = {
             cfn_nag: {
                 rules_to_suppress: [

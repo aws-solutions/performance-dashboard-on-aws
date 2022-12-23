@@ -63,7 +63,7 @@ async function createWidget(req: Request, res: Response) {
         });
     } catch (err) {
         console.log("Invalid request to create widget", err);
-        return res.status(400).send(err.message);
+        return res.status(400).send("Bad Request");
     }
 
     const repo = WidgetRepository.getInstance();
@@ -191,7 +191,7 @@ async function duplicateWidget(req: Request, res: Response) {
         }
     } catch (err) {
         console.log("Invalid request to create widget", err);
-        return res.status(400).send(err.message);
+        return res.status(400).send("Bad Request");
     }
 
     const dashboardRepo = DashboardRepository.getInstance();

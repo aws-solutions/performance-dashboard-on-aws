@@ -3,18 +3,24 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as s3 from "@aws-cdk/aws-s3";
-import * as iam from "@aws-cdk/aws-iam";
-import * as codepipeline from "@aws-cdk/aws-codepipeline";
-import * as codebuild from "@aws-cdk/aws-codebuild";
-import * as codestarnotifications from "@aws-cdk/aws-codestarnotifications";
-import * as cloudtrail from "@aws-cdk/aws-cloudtrail";
-import * as sns from "@aws-cdk/aws-sns";
-import { CodeBuildAction, S3SourceAction, S3Trigger } from "@aws-cdk/aws-codepipeline-actions";
+import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import { ReadWriteType, Trail } from "aws-cdk-lib/aws-cloudtrail";
+import {
+    BuildSpec,
+    ComputeType,
+    LinuxBuildImage,
+    PipelineProject,
+} from "aws-cdk-lib/aws-codebuild";
+import { Artifact, Pipeline } from "aws-cdk-lib/aws-codepipeline";
+import { CodeBuildAction, S3SourceAction, S3Trigger } from "aws-cdk-lib/aws-codepipeline-actions";
+import { CfnNotificationRule } from "aws-cdk-lib/aws-codestarnotifications";
+import { Effect, PolicyStatement, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import { Bucket } from "aws-cdk-lib/aws-s3";
+import { Topic } from "aws-cdk-lib/aws-sns";
+import { Construct } from "constructs";
 import { GitHubIntegration } from "./constructs/github-integration";
 
-interface Props extends cdk.StackProps {
+interface Props extends StackProps {
     githubOrg: string;
     repoName: string;
     branch: string;
@@ -22,46 +28,46 @@ interface Props extends cdk.StackProps {
     secure?: boolean;
 }
 
-export class PipelineStack extends cdk.Stack {
-    constructor(scope: cdk.Construct, id: string, props: Props) {
+export class PipelineStack extends Stack {
+    constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
 
-        const notificationsTopic = new sns.Topic(this, "NotificationsTopic");
+        const notificationsTopic = new Topic(this, "NotificationsTopic");
         notificationsTopic.addToResourcePolicy(
-            new iam.PolicyStatement({
-                effect: iam.Effect.ALLOW,
+            new PolicyStatement({
+                effect: Effect.ALLOW,
                 actions: ["SNS:Publish"],
                 resources: [notificationsTopic.topicArn],
-                principals: [new iam.ServicePrincipal("codestar-notifications.amazonaws.com")],
+                principals: [new ServicePrincipal("codestar-notifications.amazonaws.com")],
             }),
         );
 
-        const artifactsBucket = new s3.Bucket(this, "ArtifactsBucket", {
+        const artifactsBucket = new Bucket(this, "ArtifactsBucket", {
             versioned: true,
         });
-        new cdk.CfnOutput(this, "ArtifactsBucketARN", {
+        new CfnOutput(this, "ArtifactsBucketARN", {
             description: "ARN of the artifact's bucket",
             value: artifactsBucket.bucketArn,
         });
 
-        const pipeline = new codepipeline.Pipeline(this, "Pipeline", {
+        const pipeline = new Pipeline(this, "Pipeline", {
             artifactBucket: artifactsBucket,
         });
-        new cdk.CfnOutput(this, "ServiceRoleARN", {
+        new CfnOutput(this, "ServiceRoleARN", {
             description: "ARN the service role",
             value: pipeline.role.roleArn,
         });
 
-        const sourceOutput = new codepipeline.Artifact();
-        const buildOutput = new codepipeline.Artifact();
-        const secureBuildOutput = new codepipeline.Artifact();
+        const sourceOutput = new Artifact();
+        const buildOutput = new Artifact();
+        const secureBuildOutput = new Artifact();
 
         const bucketKey = `github/${props.githubOrg}/${props.repoName}/${props.branch}/artifact.zip`;
-        const trail = new cloudtrail.Trail(this, "CloudTrail");
+        const trail = new Trail(this, "CloudTrail");
         trail.addS3EventSelector(
             [
                 {
-                    bucket: s3.Bucket.fromBucketArn(
+                    bucket: Bucket.fromBucketArn(
                         this,
                         "ArtifactsBucket",
                         artifactsBucket.bucketArn,
@@ -70,7 +76,7 @@ export class PipelineStack extends cdk.Stack {
                 },
             ],
             {
-                readWriteType: cloudtrail.ReadWriteType.WRITE_ONLY,
+                readWriteType: ReadWriteType.WRITE_ONLY,
             },
         );
 
@@ -81,7 +87,7 @@ export class PipelineStack extends cdk.Stack {
             output: sourceOutput,
             bucketKey,
         });
-        new cdk.CfnOutput(this, "SourceRoleARN", {
+        new CfnOutput(this, "SourceRoleARN", {
             description: "ARN of the source action.",
             value: sourceAction.actionProperties.role?.roleArn ?? "",
         });
@@ -91,10 +97,10 @@ export class PipelineStack extends cdk.Stack {
             actions: [sourceAction],
         });
 
-        const build = new codebuild.PipelineProject(this, "Build", {
+        const build = new PipelineProject(this, "Build", {
             environment: {
-                buildImage: codebuild.LinuxBuildImage.STANDARD_5_0,
-                computeType: codebuild.ComputeType.LARGE,
+                buildImage: LinuxBuildImage.STANDARD_5_0,
+                computeType: ComputeType.LARGE,
             },
             environmentVariables: {
                 CDK_ADMIN_EMAIL: {
@@ -110,13 +116,13 @@ export class PipelineStack extends cdk.Stack {
                     value: "false",
                 },
             },
-            buildSpec: codebuild.BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
+            buildSpec: BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
         });
 
-        const buildSecure = new codebuild.PipelineProject(this, "Build-Secure", {
+        const buildSecure = new PipelineProject(this, "Build-Secure", {
             environment: {
-                buildImage: codebuild.LinuxBuildImage.STANDARD_5_0,
-                computeType: codebuild.ComputeType.LARGE,
+                buildImage: LinuxBuildImage.STANDARD_5_0,
+                computeType: ComputeType.LARGE,
             },
             environmentVariables: {
                 CDK_ADMIN_EMAIL: {
@@ -132,19 +138,19 @@ export class PipelineStack extends cdk.Stack {
                     value: "true",
                 },
             },
-            buildSpec: codebuild.BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
+            buildSpec: BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
         });
 
         build.addToRolePolicy(
-            new iam.PolicyStatement({
-                effect: iam.Effect.ALLOW,
+            new PolicyStatement({
+                effect: Effect.ALLOW,
                 actions: ["*"],
                 resources: ["*"],
             }),
         );
         buildSecure.addToRolePolicy(
-            new iam.PolicyStatement({
-                effect: iam.Effect.ALLOW,
+            new PolicyStatement({
+                effect: Effect.ALLOW,
                 actions: ["*"],
                 resources: ["*"],
             }),
@@ -193,7 +199,7 @@ export class PipelineStack extends cdk.Stack {
          * CodeBuild notification configuration taken from documentation:
          * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codestarnotifications-notificationrule.html
          */
-        new codestarnotifications.CfnNotificationRule(this, "BuildNotificationRule", {
+        new CfnNotificationRule(this, "BuildNotificationRule", {
             detailType: "BASIC",
             resource: build.projectArn,
             name: "BuildNotifications",
@@ -205,7 +211,7 @@ export class PipelineStack extends cdk.Stack {
                 },
             ],
         });
-        new codestarnotifications.CfnNotificationRule(this, "BuildNotificationRuleSecure", {
+        new CfnNotificationRule(this, "BuildNotificationRuleSecure", {
             detailType: "BASIC",
             resource: buildSecure.projectArn,
             name: "BuildNotificationsSecure",

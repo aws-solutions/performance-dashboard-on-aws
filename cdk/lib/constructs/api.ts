@@ -3,30 +3,41 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as apigateway from "@aws-cdk/aws-apigateway";
-import * as lambda from "@aws-cdk/aws-lambda";
-import * as logs from "@aws-cdk/aws-logs";
-import { AnyPrincipal, Effect, PolicyDocument, PolicyStatement } from "@aws-cdk/aws-iam";
+import {
+    AccessLogFormat,
+    AuthorizationType,
+    CfnAuthorizer,
+    CfnMethod,
+    Cors,
+    LambdaIntegration,
+    LogGroupLogDestination,
+    Method,
+    MethodOptions,
+    RestApi,
+} from "aws-cdk-lib/aws-apigateway";
+import { AnyPrincipal, Effect, PolicyDocument, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { Function } from "aws-cdk-lib/aws-lambda";
+import { CfnLogGroup, LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
+import { Construct } from "constructs";
 
 interface ApiProps {
-    apiFunction: lambda.Function;
-    publicApiFunction: lambda.Function;
+    apiFunction: Function;
+    publicApiFunction: Function;
     cognitoUserPoolArn: string;
     authenticationRequired: boolean;
 }
 
-export class BackendApi extends cdk.Construct {
-    public readonly api: apigateway.RestApi;
+export class BackendApi extends Construct {
+    public readonly api: RestApi;
 
-    constructor(scope: cdk.Construct, id: string, props: ApiProps) {
+    constructor(scope: Construct, id: string, props: ApiProps) {
         super(scope, id);
 
-        const apiIntegration = new apigateway.LambdaIntegration(props.apiFunction, {
+        const apiIntegration = new LambdaIntegration(props.apiFunction, {
             allowTestInvoke: false,
         });
 
-        const publicApiIntegration = new apigateway.LambdaIntegration(props.publicApiFunction, {
+        const publicApiIntegration = new LambdaIntegration(props.publicApiFunction, {
             allowTestInvoke: false,
         });
 
@@ -59,12 +70,10 @@ export class BackendApi extends cdk.Construct {
             ],
         });
 
-        const apigatewayLogGroup = new logs.LogGroup(scope, "ApiAccessLogs", {
-            retention: logs.RetentionDays.TEN_YEARS,
+        const apigatewayLogGroup = new LogGroup(scope, "ApiAccessLogs", {
+            retention: RetentionDays.TEN_YEARS,
         });
-        let logGroup: logs.CfnLogGroup = apigatewayLogGroup.node.findChild(
-            "Resource",
-        ) as logs.CfnLogGroup;
+        let logGroup: CfnLogGroup = apigatewayLogGroup.node.findChild("Resource") as CfnLogGroup;
         logGroup.cfnOptions.metadata = {
             cfn_nag: {
                 rules_to_suppress: [
@@ -76,22 +85,22 @@ export class BackendApi extends cdk.Construct {
             },
         };
 
-        this.api = new apigateway.RestApi(scope, "ApiGateway", {
+        this.api = new RestApi(scope, "ApiGateway", {
             description: "Performance Dashboard backend API",
             deployOptions: {
                 tracingEnabled: true,
-                accessLogFormat: apigateway.AccessLogFormat.jsonWithStandardFields(),
-                accessLogDestination: new apigateway.LogGroupLogDestination(apigatewayLogGroup),
+                accessLogFormat: AccessLogFormat.jsonWithStandardFields(),
+                accessLogDestination: new LogGroupLogDestination(apigatewayLogGroup),
             },
             defaultCorsPreflightOptions: {
-                allowOrigins: apigateway.Cors.ALL_ORIGINS,
-                allowMethods: apigateway.Cors.ALL_METHODS,
+                allowOrigins: Cors.ALL_ORIGINS,
+                allowMethods: Cors.ALL_METHODS,
             },
             policy: apiPolicy,
         });
 
-        const authorizer = new apigateway.CfnAuthorizer(scope, "CognitoAuth", {
-            type: apigateway.AuthorizationType.COGNITO,
+        const authorizer = new CfnAuthorizer(scope, "CognitoAuth", {
+            type: AuthorizationType.COGNITO,
             name: "cognito-authorizer",
             restApiId: this.api.restApiId,
             providerArns: [props.cognitoUserPoolArn],
@@ -104,7 +113,6 @@ export class BackendApi extends cdk.Construct {
         const key = this.api.addApiKey("PerfDashIngestApiKey");
         const plan = this.api.addUsagePlan("PerfDashIngestUsagePlan", {
             name: "PerfDashIngestUsagePlan",
-            apiKey: key,
             throttle: {
                 rateLimit: 25,
                 burstLimit: 50,
@@ -118,10 +126,8 @@ export class BackendApi extends cdk.Construct {
     }
 
     // Suppress cfn_nag Warn W59: AWS::ApiGateway::Method should not have AuthorizationType set to 'NONE' unless it is of HttpMethod: OPTIONS.
-    private cfn_nag_warn_w59(method: apigateway.Method) {
-        let apimethod: apigateway.CfnMethod = method.node.findChild(
-            "Resource",
-        ) as apigateway.CfnMethod;
+    private cfn_nag_warn_w59(method: Method) {
+        let apimethod: CfnMethod = method.node.findChild("Resource") as CfnMethod;
         apimethod.cfnOptions.metadata = {
             cfn_nag: {
                 rules_to_suppress: [
@@ -134,14 +140,11 @@ export class BackendApi extends cdk.Construct {
         };
     }
 
-    private addPrivateEndpoints(
-        apiIntegration: apigateway.LambdaIntegration,
-        authorizer: apigateway.CfnAuthorizer,
-    ) {
+    private addPrivateEndpoints(apiIntegration: LambdaIntegration, authorizer: CfnAuthorizer) {
         // Defined resource props to the top level resources and they automatically
         // get applied recursively to their children endpoints.
-        const methodProps: apigateway.MethodOptions = {
-            authorizationType: apigateway.AuthorizationType.COGNITO,
+        const methodProps: MethodOptions = {
+            authorizationType: AuthorizationType.COGNITO,
             authorizer: { authorizerId: authorizer.ref },
         };
 
@@ -246,12 +249,12 @@ export class BackendApi extends cdk.Construct {
     }
 
     private addPublicEndpoints(
-        apiIntegration: apigateway.LambdaIntegration,
-        authorizer: apigateway.CfnAuthorizer,
+        apiIntegration: LambdaIntegration,
+        authorizer: CfnAuthorizer,
         authenticationRequired?: boolean,
     ) {
-        const methodProps: apigateway.MethodOptions = {
-            authorizationType: apigateway.AuthorizationType.COGNITO,
+        const methodProps: MethodOptions = {
+            authorizationType: AuthorizationType.COGNITO,
             authorizer: { authorizerId: authorizer.ref },
         };
 

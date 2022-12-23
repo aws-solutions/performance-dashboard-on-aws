@@ -3,16 +3,23 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as dynamodb from "@aws-cdk/aws-dynamodb";
+import {
+    AttributeType,
+    BillingMode,
+    CfnTable,
+    ProjectionType,
+    StreamViewType,
+    Table,
+} from "aws-cdk-lib/aws-dynamodb";
+import { Construct } from "constructs";
 
-export class Database extends cdk.Construct {
-    public readonly mainTable: dynamodb.Table;
-    public readonly auditTrailTable: dynamodb.Table;
+export class Database extends Construct {
+    public readonly mainTable: Table;
+    public readonly auditTrailTable: Table;
 
     // Suppress cfn_nag Warn W74: DynamoDB table should have encryption enabled using a CMK stored in KMS
-    private cfn_nag_warn_w58(tbl: dynamodb.Table) {
-        let cfnTable: dynamodb.CfnTable = tbl.node.findChild("Resource") as dynamodb.CfnTable;
+    private cfn_nag_warn_w58(tbl: Table) {
+        let cfnTable: CfnTable = tbl.node.findChild("Resource") as CfnTable;
         cfnTable.cfnOptions.metadata = {
             cfn_nag: {
                 rules_to_suppress: [
@@ -25,82 +32,82 @@ export class Database extends cdk.Construct {
         };
     }
 
-    constructor(scope: cdk.Construct, id: string) {
+    constructor(scope: Construct, id: string) {
         super(scope, id);
 
-        const mainTable = new dynamodb.Table(scope, "MainTable", {
-            billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+        const mainTable = new Table(scope, "MainTable", {
+            billingMode: BillingMode.PAY_PER_REQUEST,
             pointInTimeRecovery: true,
-            stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES,
+            stream: StreamViewType.NEW_AND_OLD_IMAGES,
             partitionKey: {
                 name: "pk",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
             sortKey: {
                 name: "sk",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
         });
         this.cfn_nag_warn_w58(mainTable);
 
         mainTable.addGlobalSecondaryIndex({
             indexName: "byType",
-            projectionType: dynamodb.ProjectionType.ALL,
+            projectionType: ProjectionType.ALL,
             partitionKey: {
                 name: "type",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
             sortKey: {
                 name: "sk",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
         });
 
         mainTable.addGlobalSecondaryIndex({
             indexName: "byParentDashboard",
-            projectionType: dynamodb.ProjectionType.ALL,
+            projectionType: ProjectionType.ALL,
             partitionKey: {
                 name: "parentDashboardId",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
             sortKey: {
                 name: "version",
-                type: dynamodb.AttributeType.NUMBER,
+                type: AttributeType.NUMBER,
             },
         });
 
         mainTable.addGlobalSecondaryIndex({
             indexName: "byTopicArea",
-            projectionType: dynamodb.ProjectionType.ALL,
+            projectionType: ProjectionType.ALL,
             partitionKey: {
                 name: "topicAreaId",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
             sortKey: {
                 name: "pk",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
         });
 
         mainTable.addGlobalSecondaryIndex({
             indexName: "byFriendlyURL",
-            projectionType: dynamodb.ProjectionType.ALL,
+            projectionType: ProjectionType.ALL,
             partitionKey: {
                 name: "friendlyURL",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
         });
 
-        const auditTrailTable = new dynamodb.Table(scope, "AuditTrail", {
-            billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+        const auditTrailTable = new Table(scope, "AuditTrail", {
+            billingMode: BillingMode.PAY_PER_REQUEST,
             pointInTimeRecovery: true,
             partitionKey: {
                 name: "pk",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
             sortKey: {
                 name: "sk",
-                type: dynamodb.AttributeType.STRING,
+                type: AttributeType.STRING,
             },
         });
         this.cfn_nag_warn_w58(auditTrailTable);

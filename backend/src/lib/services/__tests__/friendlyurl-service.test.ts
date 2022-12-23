@@ -24,13 +24,13 @@ beforeEach(() => {
 
 describe("generateOrValidate", () => {
     test("throws exception if provided URL is invalid", async () => {
-        expect(async () => {
+        return await expect(async () => {
             await FriendlyURLService.generateOrValidate(dashboard, "this is &? invalid");
         }).rejects.toThrow(InvalidFriendlyURL);
     });
 
-    test("throws exception if URL is already taken", () => {
-        expect(async () => {
+    test("throws exception if URL is already taken", async () => {
+        return await expect(async () => {
             const existingDashboard = { parentDashboardId: "001" } as Dashboard;
             repository.getDashboardByFriendlyURL = jest.fn().mockReturnValueOnce(existingDashboard);
             await FriendlyURLService.generateOrValidate(dashboard, "foobar");

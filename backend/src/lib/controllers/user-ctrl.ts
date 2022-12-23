@@ -10,7 +10,7 @@ import { validate } from "jsonschema";
 import RemoveUsersSchema from "../jsonschema/api/RemoveUsers.json";
 import { Role } from "../models/user";
 import logger from "../services/logger";
-const escapeHtml = require("escape-html");
+import EscapeHtml from "escape-html";
 
 const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
 
@@ -20,7 +20,7 @@ async function getUsers(req: Request, res: Response) {
         const users = await repo.listUsers();
         return res.json(users);
     } catch (error) {
-        logger.error(error);
+        logger.error("error", error);
         res.status(500).send("Internal Server Error");
     }
 }
@@ -54,7 +54,7 @@ async function addUsers(req: Request, res: Response) {
     }
 
     const userEmails = (emails as string).split(",");
-    const escapedEmails = userEmails.map((email) => escapeHtml(email));
+    const escapedEmails = userEmails.map((email) => EscapeHtml(email));
 
     for (const userEmail of escapedEmails) {
         if (!emailIsValid(userEmail)) {
@@ -69,7 +69,7 @@ async function addUsers(req: Request, res: Response) {
         return res.send();
     } catch (error) {
         // Don't return error which may reveal that user already exists
-        logger.error(error);
+        logger.error("error", error);
         res.status(400).send("Bad Request");
     }
 }
@@ -101,7 +101,7 @@ async function resendInvite(req: Request, res: Response) {
     }
 
     const userEmails = (emails as string).split(",");
-    const escapedEmails = userEmails.map((email) => escapeHtml(email));
+    const escapedEmails = userEmails.map((email) => EscapeHtml(email));
 
     for (const userEmail of escapedEmails) {
         if (!emailIsValid(userEmail)) {
@@ -115,7 +115,7 @@ async function resendInvite(req: Request, res: Response) {
         await repo.resendInvite(userEmails.map((email) => email.split("@")[0]));
         return res.send();
     } catch (error) {
-        logger.error(error);
+        logger.error("error", error);
         res.status(500).send("Internal Server Error");
     }
 }
@@ -154,7 +154,7 @@ async function changeRole(req: Request, res: Response) {
         return res.send();
     } catch (error) {
         // Don't return error which may reveal that user doesn't exists
-        logger.error(error);
+        logger.error("error", error);
         res.status(400).send("Bad Request");
     }
 }

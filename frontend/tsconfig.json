@@ -16,5 +16,6 @@
         "jsx": "react",
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src", "public/env*.js", ".eslintrc.js", "jest.config.js"]
+    "include": ["src", "public/env*.js", ".eslintrc.js", "jest.config.js"],
+    "exclude": ["node_modules"]
 }

@@ -75,7 +75,7 @@ class HomepageRepository extends BaseRepository {
                     "#type": "type",
                 },
             });
-        } catch (error) {
+        } catch (error: any) {
             if (error.code === "ConditionalCheckFailedException") {
                 logger.warn(
                     "ConditionalCheckFailed on update homepage=%s. Someone else updated the homepage before us",

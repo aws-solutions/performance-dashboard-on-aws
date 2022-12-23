@@ -3,23 +3,22 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as s3 from "@aws-cdk/aws-s3";
-import { BucketAccessControl } from "@aws-cdk/aws-s3";
-import { Effect, PolicyStatement, AnyPrincipal } from "@aws-cdk/aws-iam";
+import { Bucket, BucketAccessControl, BucketEncryption, HttpMethods } from "aws-cdk-lib/aws-s3";
+import { Effect, PolicyStatement, AnyPrincipal } from "aws-cdk-lib/aws-iam";
+import { Construct } from "constructs";
 
 interface Props {
     datasetsBucketName: string;
 }
 
-export class DatasetStorage extends cdk.Construct {
-    public readonly datasetsBucket: s3.Bucket;
+export class DatasetStorage extends Construct {
+    public readonly datasetsBucket: Bucket;
 
-    constructor(scope: cdk.Construct, id: string, props: Props) {
+    constructor(scope: Construct, id: string, props: Props) {
         super(scope, id);
 
-        this.datasetsBucket = new s3.Bucket(scope, "DatasetsBucket", {
-            encryption: s3.BucketEncryption.S3_MANAGED,
+        this.datasetsBucket = new Bucket(scope, "DatasetsBucket", {
+            encryption: BucketEncryption.S3_MANAGED,
             versioned: true,
             serverAccessLogsPrefix: "access_logs/",
             accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
@@ -42,7 +41,7 @@ export class DatasetStorage extends cdk.Construct {
             /**
              * CORS policy taken from Amplify Docs.
              * This bucket policy allows file uploads from the web browser.
-             * https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-s3.CorsRule.html
+             * https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-CorsRule.html
              */
             cors: [
                 {
@@ -50,10 +49,10 @@ export class DatasetStorage extends cdk.Construct {
                     allowedOrigins: ["*"],
                     allowedHeaders: ["*"],
                     allowedMethods: [
-                        s3.HttpMethods.GET,
-                        s3.HttpMethods.HEAD,
-                        s3.HttpMethods.PUT,
-                        s3.HttpMethods.POST,
+                        HttpMethods.GET,
+                        HttpMethods.HEAD,
+                        HttpMethods.PUT,
+                        HttpMethods.POST,
                     ],
                     exposedHeaders: [
                         "x-amz-server-side-encryption",

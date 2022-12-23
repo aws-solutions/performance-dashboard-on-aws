@@ -3,14 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as sns from "@aws-cdk/aws-sns";
-import * as lambda from "@aws-cdk/aws-lambda";
-import * as apigateway from "@aws-cdk/aws-apigateway";
-import * as dynamodb from "@aws-cdk/aws-dynamodb";
-import * as cloudwatch from "@aws-cdk/aws-cloudwatch";
-import { SnsAction } from "@aws-cdk/aws-cloudwatch-actions";
-import * as kms from "@aws-cdk/aws-kms";
+import { SnsAction } from "aws-cdk-lib/aws-cloudwatch-actions";
 import {
     Alarm,
     Metric,
@@ -22,15 +15,23 @@ import {
     Color,
     TreatMissingData,
     ComparisonOperator,
-} from "@aws-cdk/aws-cloudwatch";
+    HorizontalAnnotation,
+} from "aws-cdk-lib/aws-cloudwatch";
+import { CfnOutput, Duration, Stack, StackProps } from "aws-cdk-lib";
+import { Function } from "aws-cdk-lib/aws-lambda";
+import { RestApi } from "aws-cdk-lib/aws-apigateway";
+import { Table } from "aws-cdk-lib/aws-dynamodb";
+import { Topic } from "aws-cdk-lib/aws-sns";
+import { Construct } from "constructs";
+import { Key } from "aws-cdk-lib/aws-kms";
 
-interface Props extends cdk.StackProps {
-    privateApiFunction: lambda.Function;
-    publicApiFunction: lambda.Function;
-    dynamodbStreamsFunction: lambda.Function;
-    restApi: apigateway.RestApi;
-    mainTable: dynamodb.Table;
-    auditTrailTable: dynamodb.Table;
+interface Props extends StackProps {
+    privateApiFunction: Function;
+    publicApiFunction: Function;
+    dynamodbStreamsFunction: Function;
+    restApi: RestApi;
+    mainTable: Table;
+    auditTrailTable: Table;
     environment: string;
 }
 
@@ -42,23 +43,23 @@ const DASHBOARD_WIDGET_HEIGHT = 9;
 const DASHBOARD_DEFAULT_PERIOD = "-PT12H";
 const LAMBDA_THROTTLE_THRESHOLD = 10;
 
-export class OpsStack extends cdk.Stack {
-    private readonly opsNotifications: sns.Topic;
+export class OpsStack extends Stack {
+    private readonly opsNotifications: Topic;
     private readonly props: Props;
     private readonly alarms: Alarm[];
 
-    constructor(scope: cdk.Construct, id: string, props: Props) {
+    constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
 
         this.props = props;
         this.alarms = [];
 
-        const targetKmsKey = new kms.Key(this, "PDoA", {
+        const targetKmsKey = new Key(this, "PDoA", {
             enableKeyRotation: true,
         });
         targetKmsKey.addAlias(`PDoA/OpsNotifications-${props.environment}`);
 
-        this.opsNotifications = new sns.Topic(this, "OpsNotifications", {
+        this.opsNotifications = new Topic(this, "OpsNotifications", {
             masterKey: targetKmsKey,
         });
 
@@ -67,17 +68,17 @@ export class OpsStack extends cdk.Stack {
         this.createLambdaAlarms("DynamoDBStreamsFunction", props.dynamodbStreamsFunction);
         this.createOpsDashboard();
 
-        new cdk.CfnOutput(this, "OpsNotificationsTopic", {
+        new CfnOutput(this, "OpsNotificationsTopic", {
             value: this.opsNotifications.topicArn,
         });
     }
 
-    createLambdaAlarms(id: string, lambdaFunction: lambda.Function) {
+    createLambdaAlarms(id: string, lambdaFunction: Function) {
         const invocations = new Metric({
             namespace: "AWS/Lambda",
             metricName: "Invocations",
             statistic: "Sum",
-            dimensions: {
+            dimensionsMap: {
                 FunctionName: lambdaFunction.functionName,
             },
         });
@@ -86,7 +87,7 @@ export class OpsStack extends cdk.Stack {
             namespace: "AWS/Lambda",
             metricName: "Errors",
             statistic: "Sum",
-            dimensions: {
+            dimensionsMap: {
                 FunctionName: lambdaFunction.functionName,
             },
         });
@@ -106,7 +107,7 @@ export class OpsStack extends cdk.Stack {
                     errors: errors,
                 },
             }).with({
-                period: cdk.Duration.minutes(LAMBDA_ALARMS_EVALUATION_PERIOD_MINUTES),
+                period: Duration.minutes(LAMBDA_ALARMS_EVALUATION_PERIOD_MINUTES),
             }),
         });
 
@@ -121,11 +122,11 @@ export class OpsStack extends cdk.Stack {
                 namespace: "AWS/Lambda",
                 metricName: "Throttles",
                 statistic: "Sum",
-                dimensions: {
+                dimensionsMap: {
                     FunctionName: lambdaFunction.functionName,
                 },
             }).with({
-                period: cdk.Duration.minutes(LAMBDA_ALARMS_EVALUATION_PERIOD_MINUTES),
+                period: Duration.minutes(LAMBDA_ALARMS_EVALUATION_PERIOD_MINUTES),
             }),
         });
 
@@ -199,11 +200,11 @@ export class OpsStack extends cdk.Stack {
     }
 
     createLambdaInvocationsWidget(
-        lambdaFunction: lambda.Function,
+        lambdaFunction: Function,
         label: string,
         width: number = 12,
     ): GraphWidget {
-        const horizontalAnnotation: cloudwatch.HorizontalAnnotation = {
+        const horizontalAnnotation: HorizontalAnnotation = {
             value: LAMBDA_THROTTLE_THRESHOLD,
             color: Color.ORANGE,
             visible: true,
@@ -220,8 +221,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "Invocations",
                     statistic: "Sum",
                     color: Color.GREEN,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         FunctionName: lambdaFunction.functionName,
                     },
                 }),
@@ -230,8 +231,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "Errors",
                     statistic: "Sum",
                     color: Color.RED,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         FunctionName: lambdaFunction.functionName,
                     },
                 }),
@@ -240,8 +241,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "Throttles",
                     statistic: "Sum",
                     color: Color.ORANGE,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         FunctionName: lambdaFunction.functionName,
                     },
                 }),
@@ -250,8 +251,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "ConcurrentExecutions",
                     statistic: "Maximum",
                     color: Color.PURPLE,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         FunctionName: lambdaFunction.functionName,
                     },
                 }),
@@ -270,8 +271,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "Count",
                     statistic: "sum",
                     color: Color.GREEN,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         ApiName: "ApiGateway",
                     },
                 }),
@@ -280,8 +281,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "4XXError",
                     statistic: "sum",
                     color: Color.ORANGE,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         ApiName: "ApiGateway",
                     },
                 }),
@@ -290,8 +291,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "5XXError",
                     statistic: "sum",
                     color: Color.RED,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         ApiName: "ApiGateway",
                     },
                 }),
@@ -314,8 +315,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "Latency",
                     statistic: "p50",
                     color: Color.GREEN,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         ApiName: "ApiGateway",
                     },
                 }),
@@ -324,8 +325,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "Latency",
                     statistic: "p99",
                     color: Color.PURPLE,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         ApiName: "ApiGateway",
                     },
                 }),
@@ -333,7 +334,7 @@ export class OpsStack extends cdk.Stack {
         });
     }
 
-    createDynamoDBLatencyWidget(table: dynamodb.Table, title: string): GraphWidget {
+    createDynamoDBLatencyWidget(table: Table, title: string): GraphWidget {
         return new GraphWidget({
             title: title,
             width: 24,
@@ -344,8 +345,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "SuccessfulRequestLatency",
                     statistic: "Average",
                     color: Color.BLUE,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                         Operation: "Query",
                     },
@@ -355,8 +356,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "SuccessfulRequestLatency",
                     statistic: "Average",
                     color: Color.ORANGE,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                         Operation: "PutItem",
                     },
@@ -366,8 +367,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "SuccessfulRequestLatency",
                     statistic: "Average",
                     color: Color.GREEN,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                         Operation: "GetItem",
                     },
@@ -377,8 +378,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "SuccessfulRequestLatency",
                     statistic: "Average",
                     color: Color.PURPLE,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                         Operation: "UpdateItem",
                     },
@@ -388,8 +389,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "SuccessfulRequestLatency",
                     statistic: "Average",
                     color: Color.PINK,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                         Operation: "DeleteItem",
                     },
@@ -399,8 +400,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "SuccessfulRequestLatency",
                     statistic: "Average",
                     color: Color.GREY,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                         Operation: "TransactWriteItems",
                     },
@@ -409,7 +410,7 @@ export class OpsStack extends cdk.Stack {
         });
     }
 
-    createDynamoDBErrorsWidget(table: dynamodb.Table, title: string): GraphWidget {
+    createDynamoDBErrorsWidget(table: Table, title: string): GraphWidget {
         return new GraphWidget({
             title: title,
             width: 24,
@@ -420,8 +421,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "ThrottledRequests",
                     statistic: "Sum",
                     color: Color.ORANGE,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                         Operation: "GetItem",
                     },
@@ -431,8 +432,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "ThrottledRequests",
                     statistic: "Sum",
                     color: Color.PINK,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                         Operation: "Query",
                     },
@@ -442,8 +443,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "SystemErrors",
                     statistic: "Sum",
                     color: Color.RED,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                     },
                 }),
@@ -452,8 +453,8 @@ export class OpsStack extends cdk.Stack {
                     metricName: "UserErrors",
                     statistic: "Sum",
                     color: Color.RED,
-                    period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-                    dimensions: {
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
                         TableName: table.tableName,
                     },
                 }),
@@ -472,7 +473,7 @@ export class OpsStack extends cdk.Stack {
                     metricName: "Latency",
                     statistic: "p99",
                     label: "p99",
-                    dimensions: {
+                    dimensionsMap: {
                         ApiName: "ApiGateway",
                     },
                 }),
@@ -490,7 +491,7 @@ export class OpsStack extends cdk.Stack {
                     namespace: "AWS/ApiGateway",
                     metricName: "Count",
                     statistic: "Sum",
-                    dimensions: {
+                    dimensionsMap: {
                         ApiName: "ApiGateway",
                     },
                 }),
@@ -508,7 +509,7 @@ export class OpsStack extends cdk.Stack {
                     namespace: "AWS/ApiGateway",
                     metricName: "5XXError",
                     statistic: "Sum",
-                    dimensions: {
+                    dimensionsMap: {
                         ApiName: "ApiGateway",
                     },
                 }),

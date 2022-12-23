@@ -10,7 +10,7 @@ import DatasetService from "../services/dataset-service";
 import DatasetFactory from "../factories/dataset-factory";
 import pino from "../services/logger";
 import { CurrencyDataType, NumberDataType } from "../models/widget";
-const escapeHtml = require("escape-html");
+import EscapeHtml from "escape-html";
 
 // Add an identifier so that any log from the ingest API is easy
 // to find in CloudWatch logs.
@@ -24,8 +24,8 @@ const logger = pino.child({
  * @returns string error message
  */
 function validateMetricsSchema(data: any): string | null {
-    for (let datum in data) {
-        //symbol should be valid input or empty
+    for (const datum in data) {
+        // symbol should be valid input or empty
         if (
             !["", NumberDataType.Percentage, NumberDataType.Currency].includes(
                 data[datum].percentage,
@@ -33,7 +33,7 @@ function validateMetricsSchema(data: any): string | null {
         ) {
             return "Invalid symbol type. Choose either `Currency`, `Percentage` or ``";
         }
-        //currency should be valid input or empty
+        // currency should be valid input or empty
         if (
             ![
                 "",
@@ -45,11 +45,11 @@ function validateMetricsSchema(data: any): string | null {
             return "Invalid symbol type. Choose either ``, `Dollar $`, `Euro €` or `Pound £`";
         }
 
-        //if symbol is currency, then a currency should be indicated
+        // if symbol is currency, then a currency should be indicated
         if (data[datum].percentage === NumberDataType.Currency && data[datum].currency === "") {
             return "Missing optional field `currency`";
         }
-        //if currencies are indicated, then symbol should be currency
+        // if currencies are indicated, then symbol should be currency
         if (
             data[datum].percentage !== NumberDataType.Currency &&
             (data[datum].currency === CurrencyDataType["Dollar $"] ||
@@ -80,7 +80,7 @@ async function createDataset(req: Request, res: Response) {
     }
 
     if (metadata.schema && !Object.values(DatasetSchema).includes(metadata.schema)) {
-        return res.status(400).send(`Unknown schema provided '${escapeHtml(metadata.schema)}'`);
+        return res.status(400).send(`Unknown schema provided '${EscapeHtml(metadata.schema)}'`);
     }
 
     const repo = DatasetRepository.getInstance();
@@ -90,7 +90,7 @@ async function createDataset(req: Request, res: Response) {
         parsedData = DatasetService.parse(data, metadata.schema);
     } catch (err) {
         logger.warn("Unable to parse dataset %o", data);
-        return res.status(400).send(`Unable to parse dataset: ${escapeHtml(err.message)}`.trim());
+        return res.status(400).send("Unable to parse dataset");
     }
 
     try {

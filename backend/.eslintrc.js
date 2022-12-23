@@ -14,11 +14,11 @@ module.exports = {
     },
     rules: {
         "prettier/prettier": ["error"],
-        // "@typescript-eslint/explicit-function-return-type": ["off"],
-        // "@typescript-eslint/strict-boolean-expressions": "off",
-        // "@typescript-eslint/consistent-type-assertions": "off",
-        // "@typescript-eslint/no-floating-promises": "off",
-        // "@typescript-eslint/restrict-template-expressions": "off",
-        // "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/explicit-function-return-type": ["off"],
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/consistent-type-assertions": "off",
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/no-misused-promises": "off",
     },
 };

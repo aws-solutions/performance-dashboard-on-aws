@@ -21,7 +21,9 @@ const global_s3_assets = proc.argv[2];
 // For each template in global_s3_assets ...
 fs.readdirSync(global_s3_assets).forEach((file) => {
     // Import and parse template file
-    const raw_template = fs.readFileSync(`${global_s3_assets}/${file}`);
+    const templatePath = `${global_s3_assets}/${file}`;
+    console.log("processing template: ", templatePath);
+    const raw_template = fs.readFileSync(templatePath);
     let template = JSON.parse(raw_template);
 
     // Clean-up Lambda function code dependencies
@@ -30,12 +32,21 @@ fs.readdirSync(global_s3_assets).forEach((file) => {
         return resources[key].Type === "AWS::Lambda::Function";
     });
     lambdaFunctions.forEach(function (f) {
+        console.log("lambda: ", f);
         const fn = template.Resources[f];
         if (fn.Properties.Code.hasOwnProperty("S3Bucket")) {
             // Set the S3 key reference
-            let artifactHash = Object.assign(fn.Properties.Code.S3Bucket.Ref);
-            artifactHash = artifactHash.replace("AssetParameters", "");
-            artifactHash = artifactHash.substring(0, artifactHash.indexOf("S3Bucket"));
+            let artifactHash;
+            if (fn.Properties.Code.S3Bucket.Ref) {
+                artifactHash = Object.assign(fn.Properties.Code.S3Bucket.Ref);
+                artifactHash = artifactHash.replace("AssetParameters", "");
+                artifactHash = artifactHash.substring(0, artifactHash.indexOf("S3Bucket"));
+            } else {
+                artifactHash = fn.Properties.Code.S3Key;
+                if (artifactHash.endsWith(".zip")) {
+                    artifactHash = artifactHash.substring(0, artifactHash.length - 4);
+                }
+            }
             const assetPath = `asset.${artifactHash}`;
             fn.Properties.Code.S3Key = `%%SOLUTION_NAME%%/%%VERSION%%/${assetPath}.zip`;
             // Set the S3 bucket reference
@@ -56,9 +67,17 @@ fs.readdirSync(global_s3_assets).forEach((file) => {
         const fn = template.Resources[f];
         if (fn.Properties.Content.hasOwnProperty("S3Bucket")) {
             // Set the S3 key reference
-            let artifactHash = Object.assign(fn.Properties.Content.S3Bucket.Ref);
-            artifactHash = artifactHash.replace("AssetParameters", "");
-            artifactHash = artifactHash.substring(0, artifactHash.indexOf("S3Bucket"));
+            let artifactHash;
+            if (fn.Properties.Content.S3Bucket.Ref) {
+                artifactHash = Object.assign(fn.Properties.Content.S3Bucket.Ref);
+                artifactHash = artifactHash.replace("AssetParameters", "");
+                artifactHash = artifactHash.substring(0, artifactHash.indexOf("S3Bucket"));
+            } else {
+                artifactHash = fn.Properties.Content.S3Key;
+                if (artifactHash.endsWith(".zip")) {
+                    artifactHash = artifactHash.substring(0, artifactHash.length - 4);
+                }
+            }
             const assetPath = `asset.${artifactHash}`;
             fn.Properties.Content.S3Key = `%%SOLUTION_NAME%%/%%VERSION%%/${assetPath}.zip`;
             // Set the S3 bucket reference
@@ -96,9 +115,18 @@ fs.readdirSync(global_s3_assets).forEach((file) => {
         const fn = template.Resources[f];
         if (fn.Properties.hasOwnProperty("SourceBucketNames")) {
             // Set the S3 key reference
-            let artifactHash = Object.assign(fn.Properties.SourceBucketNames[0].Ref);
-            artifactHash = artifactHash.replace("AssetParameters", "");
-            artifactHash = artifactHash.substring(0, artifactHash.indexOf("S3Bucket"));
+            let artifactHash;
+            if (fn.Properties.SourceBucketNames[0].Ref) {
+                artifactHash = Object.assign(fn.Properties.SourceBucketNames[0].Ref);
+                artifactHash = artifactHash.replace("AssetParameters", "");
+                artifactHash = artifactHash.substring(0, artifactHash.indexOf("S3Bucket"));
+            } else {
+                artifactHash = fn.Properties.SourceObjectKeys[0];
+                if (artifactHash.endsWith(".zip")) {
+                    artifactHash = artifactHash.substring(0, artifactHash.length - 4);
+                }
+            }
+
             const assetPath = `asset.${artifactHash}`;
             fn.Properties.SourceObjectKeys = [`%%SOLUTION_NAME%%/%%VERSION%%/${assetPath}.zip`];
             // Set the S3 bucket reference

@@ -12,5 +12,6 @@
         "types": ["node", "jest"],
         "typeRoots": ["./src/lib/types", "node_modules/@types"]
     },
-    "include": ["./src/**/*.ts", ".eslintrc.js", "jest.config.js"]
+    "include": ["./src/**/*.ts", ".eslintrc.js", "jest.config.js"],
+    "exclude": ["node_modules"]
 }

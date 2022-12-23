@@ -3,40 +3,47 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as cognito from "@aws-cdk/aws-cognito";
-import * as iam from "@aws-cdk/aws-iam";
-import * as fs from "fs";
-import { StringAttribute } from "@aws-cdk/aws-cognito";
+import {
+    StringAttribute,
+    UserPool,
+    CfnIdentityPoolRoleAttachment,
+    CfnUserPoolUser,
+    UserPoolClient,
+    CfnIdentityPool,
+} from "aws-cdk-lib/aws-cognito";
+import { Construct } from "constructs";
+import { CfnParameter, Stack, StackProps, CfnOutput } from "aws-cdk-lib";
+import { readFileSync } from "fs";
+import { Effect, FederatedPrincipal, PolicyStatement, Role } from "aws-cdk-lib/aws-iam";
 
-interface Props extends cdk.StackProps {
+interface Props extends StackProps {
     datasetsBucketName: string;
     contentBucketName: string;
 }
 
-export class AuthStack extends cdk.Stack {
+export class AuthStack extends Stack {
     public readonly userPoolArn: string;
     public readonly appClientId: string;
     public readonly userPoolId: string;
     public readonly identityPoolId: string;
     public readonly adminEmail: string;
 
-    constructor(scope: cdk.Construct, id: string, props: Props) {
+    constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
 
         /**
          * CloudFormation parameters
          */
-        const adminEmail = new cdk.CfnParameter(this, "adminEmail", {
+        const adminEmail = new CfnParameter(this, "adminEmail", {
             type: "String",
             description: "Email address for the admin user",
             minLength: 5,
         });
-        const pool = new cognito.UserPool(this, "UserPool", {
+        const pool = new UserPool(this, "UserPool", {
             userInvitation: {
                 emailSubject:
                     "You have been invited to the {Organization} Performance Dashboard on AWS.",
-                emailBody: fs.readFileSync("lib/data/email-template.html").toString(),
+                emailBody: readFileSync("lib/data/email-template.html").toString(),
             },
             customAttributes: { roles: new StringAttribute({ mutable: true }) },
         });
@@ -57,7 +64,7 @@ export class AuthStack extends cdk.Stack {
             },
         };
 
-        const stack = cdk.Stack.of(this);
+        const stack = Stack.of(this);
         const datasetsBucketArn = `arn:${stack.partition}:s3:::${props.datasetsBucketName}`;
         const contentBucketArn = `arn:${stack.partition}:s3:::${props.contentBucketName}`;
 
@@ -69,7 +76,7 @@ export class AuthStack extends cdk.Stack {
 
         const publicRole = this.buildPublicRole(identityPool, datasetsBucketArn, contentBucketArn);
 
-        new cognito.CfnIdentityPoolRoleAttachment(this, "AuthRoleAttachment", {
+        new CfnIdentityPoolRoleAttachment(this, "AuthRoleAttachment", {
             identityPoolId: identityPool.ref,
             roles: {
                 authenticated: authenticatedRole.roleArn,
@@ -77,7 +84,7 @@ export class AuthStack extends cdk.Stack {
             },
         });
 
-        const adminUser = new cognito.CfnUserPoolUser(this, "AdminUser", {
+        const adminUser = new CfnUserPoolUser(this, "AdminUser", {
             userPoolId: pool.userPoolId,
             username: adminEmail.valueAsString,
             userAttributes: [
@@ -101,17 +108,17 @@ export class AuthStack extends cdk.Stack {
         this.adminEmail = adminEmail.valueAsString;
         this.identityPoolId = identityPool.ref;
 
-        new cdk.CfnOutput(this, "UserPoolArn", { value: this.userPoolArn });
-        new cdk.CfnOutput(this, "AppClientId", { value: this.appClientId });
-        new cdk.CfnOutput(this, "UserPoolId", { value: this.userPoolId });
-        new cdk.CfnOutput(this, "AdminUsername", { value: adminUser.ref });
-        new cdk.CfnOutput(this, "IdentityPoolId", {
+        new CfnOutput(this, "UserPoolArn", { value: this.userPoolArn });
+        new CfnOutput(this, "AppClientId", { value: this.appClientId });
+        new CfnOutput(this, "UserPoolId", { value: this.userPoolId });
+        new CfnOutput(this, "AdminUsername", { value: adminUser.ref });
+        new CfnOutput(this, "IdentityPoolId", {
             value: identityPool.ref,
         });
     }
 
-    private buildIdentityPool(userPool: cognito.UserPool, client: cognito.UserPoolClient) {
-        return new cognito.CfnIdentityPool(this, "IdentityPool", {
+    private buildIdentityPool(userPool: UserPool, client: UserPoolClient) {
+        return new CfnIdentityPool(this, "IdentityPool", {
             allowUnauthenticatedIdentities: true,
             cognitoIdentityProviders: [
                 {
@@ -124,10 +131,10 @@ export class AuthStack extends cdk.Stack {
     }
 
     private buildPublicRole(
-        identityPool: cognito.CfnIdentityPool,
+        identityPool: CfnIdentityPool,
         datasetsBucketArn: string,
         contentBucketArn: string,
-    ): iam.Role {
+    ): Role {
         const publicRole = this.buildIdentityPoolRole(
             "CognitoPublicRole",
             "unauthenticated",
@@ -140,8 +147,8 @@ export class AuthStack extends cdk.Stack {
         // restricted as possible.
 
         publicRole.addToPolicy(
-            new iam.PolicyStatement({
-                effect: iam.Effect.ALLOW,
+            new PolicyStatement({
+                effect: Effect.ALLOW,
                 actions: ["s3:GetObject"],
                 resources: [
                     datasetsBucketArn.concat("/public/*.json"),
@@ -161,10 +168,10 @@ export class AuthStack extends cdk.Stack {
     }
 
     private buildAuthRole(
-        identityPool: cognito.CfnIdentityPool,
+        identityPool: CfnIdentityPool,
         datasetsBucketArn: string,
         contentBucketArn: string,
-    ): iam.Role {
+    ): Role {
         const authRole = this.buildIdentityPoolRole(
             "CognitoAuthRole",
             "authenticated",
@@ -176,8 +183,8 @@ export class AuthStack extends cdk.Stack {
         // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#using-amazon-s3
 
         authRole.addToPolicy(
-            new iam.PolicyStatement({
-                effect: iam.Effect.ALLOW,
+            new PolicyStatement({
+                effect: Effect.ALLOW,
                 actions: ["s3:GetObject", "s3:PutObject"],
                 resources: [
                     datasetsBucketArn.concat("/public/*"),
@@ -192,8 +199,8 @@ export class AuthStack extends cdk.Stack {
         );
 
         authRole.addToPolicy(
-            new iam.PolicyStatement({
-                effect: iam.Effect.ALLOW,
+            new PolicyStatement({
+                effect: Effect.ALLOW,
                 actions: ["s3:DeleteObject"],
                 resources: [
                     contentBucketArn.concat("/public/logo/*"),
@@ -203,8 +210,8 @@ export class AuthStack extends cdk.Stack {
         );
 
         authRole.addToPolicy(
-            new iam.PolicyStatement({
-                effect: iam.Effect.ALLOW,
+            new PolicyStatement({
+                effect: Effect.ALLOW,
                 actions: ["s3:PutObject"],
                 resources: [
                     datasetsBucketArn.concat("/uploads/*"),
@@ -214,8 +221,8 @@ export class AuthStack extends cdk.Stack {
         );
 
         authRole.addToPolicy(
-            new iam.PolicyStatement({
-                effect: iam.Effect.ALLOW,
+            new PolicyStatement({
+                effect: Effect.ALLOW,
                 actions: ["s3:GetObject"],
                 resources: [
                     datasetsBucketArn.concat("/protected/*"),
@@ -230,10 +237,10 @@ export class AuthStack extends cdk.Stack {
     private buildIdentityPoolRole(
         name: string,
         type: "authenticated" | "unauthenticated",
-        identityPool: cognito.CfnIdentityPool,
-    ): iam.Role {
-        return new iam.Role(this, name, {
-            assumedBy: new iam.FederatedPrincipal(
+        identityPool: CfnIdentityPool,
+    ): Role {
+        return new Role(this, name, {
+            assumedBy: new FederatedPrincipal(
                 "cognito-identity.amazonaws.com",
                 {
                     StringEquals: {

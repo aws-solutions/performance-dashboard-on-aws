@@ -59,15 +59,16 @@ This software includes third party software subject to the following copyrights:
 @types/uuid@8.3.4 under the MIT
 @typescript-eslint/eslint-plugin@5.45.1 under the MIT
 @typescript-eslint/eslint-plugin@5.46.0 under the MIT
+@typescript-eslint/eslint-plugin@5.47.0 under the MIT
 aws-amplify@4.3.43 under the Apache-2.0
 aws-cdk-lib@2.56.0 under the Apache-2.0
 aws-cdk@2.56.0 under the Apache-2.0
 aws-sdk@2.1271.0 under the Apache-2.0
-aws-sdk@2.1279.0 under the Apache-2.0
+aws-sdk@2.1281.0 under the Apache-2.0
 aws-serverless-express@3.4.0 under the Apache-2.0
 aws-xray-sdk@3.3.7 under the Apache-2.0
 aws-xray-sdk@3.4.0 under the Apache-2.0
-constructs@10.1.196 under the Apache-2.0
+constructs@10.1.198 under the Apache-2.0
 cors@2.8.5 under the MIT
 d3-interpolate@3.0.1 under the ISC
 d3-scale@4.0.2 under the ISC
@@ -82,6 +83,7 @@ eslint-plugin-prettier@4.2.1 under the MIT
 eslint-plugin-promise@6.1.1 under the ISC
 eslint-plugin-react@7.31.11 under the MIT
 eslint@8.29.0 under the MIT
+eslint@8.30.0 under the MIT
 express@4.18.1 under the MIT
 express@4.18.2 under the MIT
 fs-extra@10.1.0 under the MIT

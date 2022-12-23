@@ -20,6 +20,12 @@
         "outDir": "build",
         "typeRoots": ["./node_modules/@types"]
     },
-    "exclude": ["cdk.out"],
-    "include": ["./lib/**/*.ts", "./bin/**/*.ts", "./test/**/*.ts"]
+    "exclude": ["cdk.out", "node_modules"],
+    "include": [
+        "./lib/**/*.ts",
+        "./bin/**/*.ts",
+        "./test/**/*.ts",
+        ".eslintrc.js",
+        "jest.config.js"
+    ]
 }

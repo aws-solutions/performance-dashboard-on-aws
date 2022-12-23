@@ -103,8 +103,8 @@ export class OpsStack extends Stack {
                 expression: "(errors / invocations) * 100",
                 label: "Error Rate (%)",
                 usingMetrics: {
-                    invocations: invocations,
-                    errors: errors,
+                    invocations,
+                    errors,
                 },
             }).with({
                 period: Duration.minutes(LAMBDA_ALARMS_EVALUATION_PERIOD_MINUTES),
@@ -336,7 +336,7 @@ export class OpsStack extends Stack {
 
     createDynamoDBLatencyWidget(table: Table, title: string): GraphWidget {
         return new GraphWidget({
-            title: title,
+            title,
             width: 24,
             height: DASHBOARD_WIDGET_HEIGHT,
             left: [
@@ -412,7 +412,7 @@ export class OpsStack extends Stack {
 
     createDynamoDBErrorsWidget(table: Table, title: string): GraphWidget {
         return new GraphWidget({
-            title: title,
+            title,
             width: 24,
             height: DASHBOARD_WIDGET_HEIGHT,
             left: [

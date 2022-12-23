@@ -23,7 +23,7 @@ class WidgetRepository extends BaseRepository {
         return WidgetRepository.instance;
     }
 
-    public async getWidgets(dashboardId: string): Promise<Array<Widget>> {
+    public async getWidgets(dashboardId: string): Promise<Widget[]> {
         const result = await this.dynamodb.query({
             TableName: this.tableName,
             KeyConditionExpression: "pk = :dashboardId and begins_with(sk, :sortKey)",
@@ -38,7 +38,7 @@ class WidgetRepository extends BaseRepository {
         }
 
         const items = result.Items.filter((item) => item.type === WIDGET_ITEM_TYPE);
-        return WidgetFactory.fromItems(items as Array<WidgetItem>);
+        return WidgetFactory.fromItems(items as WidgetItem[]);
     }
 
     public async getWidgetById(dashboardId: string, widgetId: string) {
@@ -137,7 +137,7 @@ class WidgetRepository extends BaseRepository {
                     "#showTitle": "showTitle",
                 },
             });
-        } catch (error) {
+        } catch (error: any) {
             if (error.code === "ConditionalCheckFailedException") {
                 logger.warn(
                     "ConditionalCheckFailed on update widget=%s. Someone else updated the widget before us",
@@ -150,10 +150,10 @@ class WidgetRepository extends BaseRepository {
 
     public async deleteWidget(dashboardId: string, widgetId: string) {
         const widget = await this.getWidgetById(dashboardId, widgetId);
-        let transactions: DocumentClient.TransactWriteItemList = [];
+        const transactions: DocumentClient.TransactWriteItemList = [];
 
         if (widget.widgetType === WidgetType.Section && widget.content.widgetIds) {
-            for (let id of widget.content.widgetIds) {
+            for (const id of widget.content.widgetIds) {
                 transactions.push({
                     Delete: {
                         TableName: this.tableName,

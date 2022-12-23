@@ -25,7 +25,7 @@ beforeEach(() => {
     DatasetRepository.getInstance = jest.fn().mockReturnValue(repository);
 });
 
-//Unit Test for metric api update dataset
+// Unit Test for metric api update dataset
 describe("updateDataset", () => {
     let req: Request;
     beforeEach(() => {
@@ -84,7 +84,7 @@ describe("updateDataset", () => {
     });
 });
 
-//Unit Test for metric api create dataset
+// Unit Test for metric api create dataset
 describe("createDataset", () => {
     let req: Request;
     beforeEach(() => {
@@ -186,9 +186,7 @@ describe("createDataset", () => {
         await IngestApiCtrl.createDataset(req, res);
 
         expect(res.status).toBeCalledWith(400);
-        expect(res.send).toHaveBeenLastCalledWith(
-            "Unable to parse dataset: 0: instance is not of a type(s) array",
-        );
+        expect(res.send).toHaveBeenLastCalledWith("Unable to parse dataset");
         expect(DatasetService.parse).toBeCalledWith("This is not a valid JSON", undefined);
     });
 

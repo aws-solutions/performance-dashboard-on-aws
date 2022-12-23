@@ -7,3 +7,4 @@
 
 pushd backend && npm run lint-src && popd
 pushd frontend && npm run lint-src && popd
+pushd cdk && npm run lint-src && popd

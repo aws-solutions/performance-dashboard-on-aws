@@ -93,7 +93,7 @@ function PublishDashboardModal(props: PathParams) {
                 if (props.dashboardPublished) {
                     props.dashboardPublished();
                 }
-            } catch (err) {
+            } catch (err: any) {
                 setPublishError(
                     (err as any)?.response?.status === 409
                         ? t("PublishDashboardModal.FailToPublishUrlAlreadyExists")

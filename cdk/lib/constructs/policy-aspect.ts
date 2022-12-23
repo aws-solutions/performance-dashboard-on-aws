@@ -3,10 +3,11 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as iam from "@aws-cdk/aws-iam";
+import { IAspect } from "aws-cdk-lib";
+import { CfnPolicy } from "aws-cdk-lib/aws-iam";
+import { IConstruct } from "constructs";
 
-export class PolicyInvalidWarningSuppressor implements cdk.IAspect {
+export class PolicyInvalidWarningSuppressor implements IAspect {
     policy_to_suppress = [
         "Backend.Functions.PublicApi.ServiceRole.DefaultPolicy.Resource",
         "Backend.Functions.PrivateApi.ServiceRole.DefaultPolicy.Resource",
@@ -18,8 +19,8 @@ export class PolicyInvalidWarningSuppressor implements cdk.IAspect {
         "Frontend.Custom::CDKBucketDeployment",
     ];
 
-    public visit(node: cdk.IConstruct): void {
-        if (node instanceof iam.CfnPolicy) {
+    public visit(node: IConstruct): void {
+        if (node instanceof CfnPolicy) {
             for (let policy of this.policy_to_suppress) {
                 if (node.logicalId.includes(policy)) {
                     node.cfnOptions.metadata = {

@@ -3,12 +3,11 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as lambda from "@aws-cdk/aws-lambda";
-import { LogRetention } from "@aws-cdk/aws-logs";
-import { CfnFunction } from "@aws-cdk/aws-lambda";
+import { CfnFunction } from "aws-cdk-lib/aws-lambda";
+import { IAspect } from "aws-cdk-lib";
+import { IConstruct } from "constructs";
 
-export class FunctionInvalidWarningSuppressor implements cdk.IAspect {
+export class FunctionInvalidWarningSuppressor implements IAspect {
     function_to_suppress = [
         "Frontend.Custom::WithConfigurationcloudcomponentscdklambdaatedgepatternwithconfiguration.Resource",
         "Frontend.Custom::CDKBucketDeployment",
@@ -26,7 +25,7 @@ export class FunctionInvalidWarningSuppressor implements cdk.IAspect {
      * Suppress cfn_nag Warn W89: Lambda functions should be deployed inside a VPC
      * Suppress cfn_nag Warn W92: Lambda functions should define ReservedConcurrentExecutions to reserve simultaneous executions
      */
-    private cfn_nag_warn(fcn: lambda.CfnFunction) {
+    private cfn_nag_warn(fcn: CfnFunction) {
         fcn.cfnOptions.metadata = {
             cfn_nag: {
                 rules_to_suppress: [
@@ -47,17 +46,15 @@ export class FunctionInvalidWarningSuppressor implements cdk.IAspect {
         };
     }
 
-    public visit(node: cdk.IConstruct): void {
+    public visit(node: IConstruct): void {
         if (
             (node.node.path.includes("Frontend/LogRetention") ||
                 node.node.path.includes("Backend/LogRetention")) &&
             node.node.id.includes("LogRetention")
         ) {
-            const cfnFcn: lambda.CfnFunction = node.node.findChild(
-                "Resource",
-            ) as lambda.CfnFunction;
+            const cfnFcn: CfnFunction = node.node.findChild("Resource") as CfnFunction;
             this.cfn_nag_warn(cfnFcn);
-        } else if (node instanceof lambda.CfnFunction) {
+        } else if (node instanceof CfnFunction) {
             for (let fcn of this.function_to_suppress) {
                 if (node.logicalId.includes(fcn)) {
                     this.cfn_nag_warn(node);

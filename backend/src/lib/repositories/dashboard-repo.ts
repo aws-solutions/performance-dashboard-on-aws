@@ -175,7 +175,7 @@ class DashboardRepository extends BaseRepository {
                     "#updatedAt": "updatedAt",
                 },
             });
-        } catch (error) {
+        } catch (error: any) {
             if (error.code === "ConditionalCheckFailedException") {
                 logger.warn(
                     "ConditionalCheckFailed when updating dashboard. Someone else updated the dashboard before us",
@@ -236,7 +236,7 @@ class DashboardRepository extends BaseRepository {
                 });
             }
 
-            //Set dashboard to Published state
+            // Set dashboard to Published state
             transactions.push({
                 Update: {
                     TableName: this.tableName,
@@ -271,7 +271,7 @@ class DashboardRepository extends BaseRepository {
             await this.dynamodb.transactWrite({
                 TransactItems: transactions,
             });
-        } catch (error) {
+        } catch (error: any) {
             if (error.code === "ConditionalCheckFailedException") {
                 logger.warn(
                     "ConditionalCheckFailed when moving dashboard to published state",
@@ -323,7 +323,7 @@ class DashboardRepository extends BaseRepository {
 
             // Return the updated dashboard
             return DashboardFactory.fromItem(result.Attributes as DashboardItem);
-        } catch (error) {
+        } catch (error: any) {
             if (error.code === "ConditionalCheckFailedException") {
                 logger.warn(
                     "ConditionalCheckFailed when moving dashboard to publish pending state",
@@ -363,7 +363,7 @@ class DashboardRepository extends BaseRepository {
                     "#friendlyURL": "friendlyURL",
                 },
             });
-        } catch (error) {
+        } catch (error: any) {
             if (error.code === "ConditionalCheckFailedException") {
                 logger.warn("ConditionalCheckFailed when archiving dashboard %s", dashboardId);
             }
@@ -399,7 +399,7 @@ class DashboardRepository extends BaseRepository {
                     "#updatedAt": "updatedAt",
                 },
             });
-        } catch (error) {
+        } catch (error: any) {
             if (error.code === "ConditionalCheckFailedException") {
                 logger.warn(
                     "ConditionalCheckFailed when moving dashboard to draft state",
@@ -451,11 +451,11 @@ class DashboardRepository extends BaseRepository {
      * Deletes the dashboards and widgets identified
      * by the params `ids`.
      */
-    public async deleteDashboardsAndWidgets(dashboardIds: Array<string>, user: User) {
+    public async deleteDashboardsAndWidgets(dashboardIds: string[], user: User) {
         let transactions: DocumentClient.TransactWriteItemList = [];
 
         const dashboards: DashboardList = [];
-        for (let dashboardId of dashboardIds) {
+        for (const dashboardId of dashboardIds) {
             const dashboard = await this.getDashboardWithWidgets(dashboardId);
 
             if (dashboard.state !== DashboardState.Draft) {
@@ -486,7 +486,7 @@ class DashboardRepository extends BaseRepository {
         });
 
         transactions = [];
-        for (let dashboard of dashboards) {
+        for (const dashboard of dashboards) {
             transactions.push({
                 Delete: {
                     TableName: this.tableName,
@@ -537,7 +537,7 @@ class DashboardRepository extends BaseRepository {
 
         // Parse the widgets and add them to the dashboard
         const items = result.Items.filter((item) => item.type === "Widget");
-        dashboard.widgets = WidgetFactory.fromItems(items as Array<WidgetItem>);
+        dashboard.widgets = WidgetFactory.fromItems(items as WidgetItem[]);
 
         return dashboard;
     }
@@ -620,11 +620,7 @@ class DashboardRepository extends BaseRepository {
      * This function is invoked by the TopicArea repository whenever
      * a topic area is renamed.
      */
-    public async updateTopicAreaName(
-        dashboards: Array<Dashboard>,
-        topicAreaName: string,
-        user: User,
-    ) {
+    public async updateTopicAreaName(dashboards: Dashboard[], topicAreaName: string, user: User) {
         const updates: DocumentClient.TransactWriteItem[] = dashboards.map((dashboard) => ({
             Update: {
                 TableName: this.tableName,
@@ -673,7 +669,7 @@ class DashboardRepository extends BaseRepository {
         // In theory, there should never be more than 1 item with the same
         // friendlyURL. However, GSIs don't enforce uniqueness so we can
         // assume that result.Items will only have 1 item in the result set.
-        const items = result.Items.filter((item) => item["type"] === "Dashboard");
+        const items = result.Items.filter((item) => item.type === "Dashboard");
         if (items.length === 0) {
             logger.warn("No dashboard found for friendlyURL %s", friendlyURL);
             throw new ItemNotFound();

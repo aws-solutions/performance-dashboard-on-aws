@@ -57,7 +57,7 @@ const WidgetTreeItem = (props: WidgetTreeItemProps) => {
                                     <WidgetTreeItemContent
                                         label={node.label}
                                         widget={widget}
-                                        dragHandleProps={provided.dragHandleProps}
+                                        dragHandleProps={provided.dragHandleProps ?? undefined}
                                         onDuplicate={props.onDuplicate}
                                         onDelete={props.onDelete}
                                         onMoveUp={onMoveUp}

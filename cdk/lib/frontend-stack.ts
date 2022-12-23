@@ -3,18 +3,31 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import s3 = require("@aws-cdk/aws-s3");
-import s3Deploy = require("@aws-cdk/aws-s3-deployment");
-import cloudFront = require("@aws-cdk/aws-cloudfront");
-import customResource = require("@aws-cdk/custom-resources");
-import lambda = require("@aws-cdk/aws-lambda");
-import iam = require("@aws-cdk/aws-iam");
-import logs = require("@aws-cdk/aws-logs");
-import { HttpHeaders } from "@cloudcomponents/cdk-lambda-at-edge-pattern";
-import { ObjectOwnership } from "@aws-cdk/aws-s3";
+import { CfnOutput, CustomResource, Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import {
+    CfnDistribution,
+    Distribution,
+    HeadersFrameOption,
+    OriginAccessIdentity,
+    ResponseHeadersPolicy,
+    AllowedMethods,
+    ViewerProtocolPolicy,
+} from "aws-cdk-lib/aws-cloudfront";
+import {
+    BlockPublicAccess,
+    Bucket,
+    BucketAccessControl,
+    BucketEncryption,
+} from "aws-cdk-lib/aws-s3";
+import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
+import { Construct } from "constructs";
+import { Code, Function, IVersion, Runtime } from "aws-cdk-lib/aws-lambda";
+import { RetentionDays } from "aws-cdk-lib/aws-logs";
+import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { Provider } from "aws-cdk-lib/custom-resources";
+import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
 
-interface Props extends cdk.StackProps {
+interface Props extends StackProps {
     datasetsBucket: string;
     contentBucket: string;
     userPoolId: string;
@@ -25,32 +38,53 @@ interface Props extends cdk.StackProps {
     adminEmail: string;
 }
 
-export class FrontendStack extends cdk.Stack {
-    private readonly frontendBucket: s3.Bucket;
+export class FrontendStack extends Stack {
+    private readonly frontendBucket: Bucket;
 
-    constructor(scope: cdk.Construct, id: string, props: Props) {
+    constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
 
-    /**
-     * S3 Bucket
-     * Hosts the React application code.
-     */
-    this.frontendBucket = new s3.Bucket(this, "ReactApp", {
-      websiteIndexDocument: "index.html",
-      websiteErrorDocument: "index.html",
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      serverAccessLogsPrefix: "access_logs/",
-      objectOwnership: ObjectOwnership.OBJECT_WRITER,
-    });
+        /**
+         * S3 Bucket
+         * Hosts the React application code.
+         */
+        this.frontendBucket = new Bucket(this, "ReactApp", {
+            encryption: BucketEncryption.S3_MANAGED,
+            serverAccessLogsPrefix: "access_logs/",
+            accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
+            blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+            versioned: false,
+        });
 
-        const httpHeaders = new HttpHeaders(this, "HttpHeaders", {
-            httpHeaders: {
-                "Content-Security-Policy":
-                    "default-src 'self'; img-src 'self' https://*.google-analytics.com blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com https://*.google-analytics.com; script-src 'self' https://*.google-analytics.com; block-all-mixed-content;",
-                "Strict-Transport-Security": "max-age=31540000; includeSubdomains",
-                "X-XSS-Protection": "1; mode=block",
-                "X-Frame-Options": "DENY",
-                "X-Content-Type-Options": "nosniff",
+        // Creating a custom response headers policy -- all parameters optional
+        const httpHeaders = new ResponseHeadersPolicy(this, "HttpHeaders", {
+            responseHeadersPolicyName: "ReactAppHeaders",
+            securityHeadersBehavior: {
+                // "Content-Security-Policy": "default-src 'self'; img-src 'self' https://*.google-analytics.com blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com https://*.google-analytics.com; script-src 'self' https://*.google-analytics.com; block-all-mixed-content;",
+                contentSecurityPolicy: {
+                    contentSecurityPolicy:
+                        "default-src 'self'; img-src 'self' https://*.google-analytics.com blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com https://*.google-analytics.com; script-src 'self' https://*.google-analytics.com; block-all-mixed-content;",
+                    override: true,
+                },
+                // "Strict-Transport-Security": "max-age=31540000; includeSubdomains",
+                strictTransportSecurity: {
+                    accessControlMaxAge: Duration.seconds(31540000),
+                    includeSubdomains: true,
+                    override: true,
+                },
+                // "X-Content-Type-Options": "nosniff",
+                contentTypeOptions: { override: true },
+                // "X-Frame-Options": "DENY",
+                frameOptions: {
+                    frameOption: HeadersFrameOption.DENY,
+                    override: true,
+                },
+                // "X-XSS-Protection": "1; mode=block",
+                xssProtection: {
+                    protection: true,
+                    modeBlock: true,
+                    override: true,
+                },
             },
         });
 
@@ -58,38 +92,30 @@ export class FrontendStack extends cdk.Stack {
          * CloudFront Distribution
          * Fronts the S3 bucket as CDN to provide caching and HTTPS.
          */
-        const originAccess = new cloudFront.OriginAccessIdentity(this, "CloudFrontOriginAccess");
+        const originAccess = new OriginAccessIdentity(this, "CloudFrontOriginAccess");
         this.frontendBucket.grantRead(originAccess);
 
-        const distribution = new cloudFront.CloudFrontWebDistribution(
-            this,
-            "CloudFrontDistribution",
-            {
-                errorConfigurations: [
-                    {
-                        errorCode: 404,
-                        responseCode: 200,
-                        responsePagePath: "/index.html",
-                    },
-                ],
-                originConfigs: [
-                    {
-                        behaviors: [
-                            {
-                                isDefaultBehavior: true,
-                                lambdaFunctionAssociations: [httpHeaders],
-                            },
-                        ],
-                        s3OriginSource: {
-                            s3BucketSource: this.frontendBucket,
-                            originAccessIdentity: originAccess,
-                        },
-                    },
-                ],
+        const distribution = new Distribution(this, "CloudFrontDistribution", {
+            defaultRootObject: "index.html",
+            errorResponses: [
+                {
+                    httpStatus: 404,
+                    responseHttpStatus: 200,
+                    responsePagePath: "/index.html",
+                },
+            ],
+            defaultBehavior: {
+                origin: new S3Origin(this.frontendBucket, {
+                    originAccessIdentity: originAccess,
+                    originPath: "",
+                }),
+                responseHeadersPolicy: httpHeaders,
+                allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+                viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
             },
-        );
-        let cfnDist: cloudFront.CfnDistribution = distribution.node
-            .defaultChild as cloudFront.CfnDistribution;
+        });
+
+        let cfnDist: CfnDistribution = distribution.node.defaultChild as CfnDistribution;
         cfnDist.cfnOptions.metadata = {
             cfn_nag: {
                 rules_to_suppress: [
@@ -109,8 +135,8 @@ export class FrontendStack extends cdk.Stack {
          * S3 Deploy
          * Uploads react built code to the S3 bucket and invalidates CloudFront
          */
-        const frontendDeploy = new s3Deploy.BucketDeployment(this, "Deploy-Frontend", {
-            sources: [s3Deploy.Source.asset("../frontend/build")],
+        const frontendDeploy = new BucketDeployment(this, "Deploy-Frontend", {
+            sources: [Source.asset("../frontend/build")],
             destinationBucket: this.frontendBucket,
             memoryLimit: 2048,
             prune: false,
@@ -125,31 +151,31 @@ export class FrontendStack extends cdk.Stack {
         /**
          * Stack Outputs
          */
-        new cdk.CfnOutput(this, "CloudFrontURL", {
+        new CfnOutput(this, "CloudFrontURL", {
             value: distribution.distributionDomainName,
         });
-        new cdk.CfnOutput(this, "ReactAppBucketName", {
+        new CfnOutput(this, "ReactAppBucketName", {
             value: this.frontendBucket.bucketName,
         });
     }
 
-    private deployEnvironmentConfig(props: Props): cdk.CustomResource {
+    private deployEnvironmentConfig(props: Props): CustomResource {
         // This CustomResource is a Lambda function that generates the `env.js`
         // with environment values. This file is uploaded to the bucket where
         // the React code is deployed.
 
-        const lambdaFunction = new lambda.Function(this, "EnvConfig", {
-            runtime: lambda.Runtime.NODEJS_16_X,
+        const lambdaFunction = new Function(this, "EnvConfig", {
+            runtime: Runtime.NODEJS_16_X,
             description: "Deploys env.js file on S3 with environment configuration",
-            code: lambda.Code.fromAsset("build/lib/envconfig"),
+            code: Code.fromAsset("build/lib/envconfig"),
             handler: "index.handler",
-            timeout: cdk.Duration.seconds(60),
+            timeout: Duration.seconds(60),
             memorySize: 128,
-            logRetention: logs.RetentionDays.TEN_YEARS,
+            logRetention: RetentionDays.TEN_YEARS,
             reservedConcurrentExecutions: 1,
             environment: {
                 FRONTEND_BUCKET: this.frontendBucket.bucketName,
-                REGION: cdk.Stack.of(this).region,
+                REGION: Stack.of(this).region,
                 BACKEND_API: props.backendApiUrl,
                 USER_POOL_ID: props.userPoolId,
                 APP_CLIENT_ID: props.appClientId,
@@ -169,18 +195,18 @@ export class FrontendStack extends cdk.Stack {
         });
 
         lambdaFunction.addToRolePolicy(
-            new iam.PolicyStatement({
-                effect: iam.Effect.ALLOW,
+            new PolicyStatement({
+                effect: Effect.ALLOW,
                 resources: [this.frontendBucket.arnForObjects("*")],
                 actions: ["s3:PutObject"],
             }),
         );
 
-        const provider = new customResource.Provider(this, "EnvConfigProvider", {
+        const provider = new Provider(this, "EnvConfigProvider", {
             onEventHandler: lambdaFunction,
         });
 
-        return new cdk.CustomResource(this, "EnvConfigDeployment", {
+        return new CustomResource(this, "EnvConfigDeployment", {
             serviceToken: provider.serviceToken,
         });
     }

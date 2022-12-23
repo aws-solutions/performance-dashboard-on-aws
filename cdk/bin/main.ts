@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 import "source-map-support/register";
-import * as cdk from "@aws-cdk/core";
 import { FrontendStack } from "../lib/frontend-stack";
 import { BackendStack } from "../lib/backend-stack";
 import { AuthStack } from "../lib/auth-stack";
 import { OpsStack } from "../lib/ops-stack";
 import { DashboardExamplesStack } from "../lib/dashboardexamples-stack";
-import { Aspects, Tags } from "@aws-cdk/core";
 import { FunctionInvalidWarningSuppressor } from "../lib/constructs/function-aspect";
 import { PolicyInvalidWarningSuppressor } from "../lib/constructs/policy-aspect";
+import { App, Aspects, Aws, DefaultStackSynthesizer, Tags } from "aws-cdk-lib";
 
 const APP_ID = "Performance Dashboard on AWS";
 const envName = process.env.CDK_ENV_NAME;
@@ -18,17 +17,20 @@ if (!envName) {
     throw new Error("CDK_ENV_NAME environment variable missing");
 }
 
-const app = new cdk.App();
+const app = new App();
 const stackPrefix = "PerformanceDash-".concat(envName);
-const accountId = cdk.Aws.ACCOUNT_ID;
-const region = cdk.Aws.REGION;
+const accountId = Aws.ACCOUNT_ID;
+const region = Aws.REGION;
 const datasetsBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-datasets`;
 const contentBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-content`;
 
 const auth = new AuthStack(app, "Auth", {
     stackName: stackPrefix.concat("-Auth"),
-    datasetsBucketName: datasetsBucketName,
-    contentBucketName: contentBucketName,
+    datasetsBucketName,
+    contentBucketName,
+    synthesizer: new DefaultStackSynthesizer({
+        generateBootstrapVersionRule: false,
+    }),
 });
 
 const backend = new BackendStack(app, "Backend", {
@@ -37,9 +39,12 @@ const backend = new BackendStack(app, "Backend", {
         id: auth.userPoolId,
         arn: auth.userPoolArn,
     },
-    datasetsBucketName: datasetsBucketName,
-    contentBucketName: contentBucketName,
-    authenticationRequired: authenticationRequired,
+    datasetsBucketName,
+    contentBucketName,
+    authenticationRequired,
+    synthesizer: new DefaultStackSynthesizer({
+        generateBootstrapVersionRule: false,
+    }),
 });
 
 const frontend = new FrontendStack(app, "Frontend", {
@@ -50,8 +55,11 @@ const frontend = new FrontendStack(app, "Frontend", {
     identityPoolId: auth.identityPoolId,
     appClientId: auth.appClientId,
     backendApiUrl: backend.restApi.url,
-    authenticationRequired: authenticationRequired,
+    authenticationRequired,
     adminEmail: auth.adminEmail,
+    synthesizer: new DefaultStackSynthesizer({
+        generateBootstrapVersionRule: false,
+    }),
 });
 
 const operations = new OpsStack(app, "Ops", {
@@ -63,15 +71,21 @@ const operations = new OpsStack(app, "Ops", {
     mainTable: backend.mainTable,
     auditTrailTable: backend.auditTrailTable,
     environment: envName,
+    synthesizer: new DefaultStackSynthesizer({
+        generateBootstrapVersionRule: false,
+    }),
 });
 
 const examples = new DashboardExamplesStack(app, "DashboardExamples", {
     stackName: stackPrefix.concat("-DashboardExamples"),
-    datasetsBucketName: datasetsBucketName,
+    datasetsBucketName,
     datasetsBucketArn: backend.datasetsBucketArn,
     databaseTableName: backend.mainTable.tableName,
     databaseTableArn: backend.mainTable.tableArn,
     adminEmail: auth.adminEmail,
+    synthesizer: new DefaultStackSynthesizer({
+        generateBootstrapVersionRule: false,
+    }),
 });
 
 Aspects.of(app).add(new PolicyInvalidWarningSuppressor());

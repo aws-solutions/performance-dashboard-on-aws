@@ -27,7 +27,7 @@
 #  - version-code: version of the package
 
 # Important: CDK global version number
-cdk_version=1.176.0
+cdk_version=2.56.0
 
 # Check to see if the required parameters have been provided:
 if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
@@ -100,7 +100,7 @@ echo "--------------------------------------------------------------------------
 echo "Move outputs from staging to build_dist_dir"
 echo "cp $staging_dist_dir/*.template.json $build_dist_dir/"
 cp $staging_dist_dir/*.template.json $build_dist_dir/
-cp $template_dir/performance-dashboard-on-aws.template $template_dist_dir/
+cp $template_dir/performance-dashboard-on-aws.template.json $template_dist_dir/
 rm *.template.json
 
 declare -a template_locations=("$template_dist_dir" "$build_dist_dir" )
@@ -138,11 +138,6 @@ for loc in ${template_locations[@]}; do
     echo "sed -i '' -e $replace $loc/*.template"
     sed -i '' -e $replace $loc/*.template
 done
-
-# Place in both regional and global folders.  Parent CFT embeds regional instance.
-# Customers can access it directly in global folder to install it independently of parent CFT
-cp $build_dist_dir/lambda-at-edge-support-stack.template $template_dist_dir/LambdaEdge.template
-mv $build_dist_dir/lambda-at-edge-support-stack.template $build_dist_dir/LambdaEdge.template
 
 echo "------------------------------------------------------------------------------"
 echo "[Packing] Source code artifacts"

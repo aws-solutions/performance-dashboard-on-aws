@@ -55,7 +55,7 @@ export class FunctionInvalidWarningSuppressor implements IAspect {
             const cfnFcn: CfnFunction = node.node.findChild("Resource") as CfnFunction;
             this.cfn_nag_warn(cfnFcn);
         } else if (node instanceof CfnFunction) {
-            for (let fcn of this.function_to_suppress) {
+            for (const fcn of this.function_to_suppress) {
                 if (node.logicalId.includes(fcn)) {
                     this.cfn_nag_warn(node);
                 }

@@ -21,7 +21,7 @@ export class PolicyInvalidWarningSuppressor implements IAspect {
 
     public visit(node: IConstruct): void {
         if (node instanceof CfnPolicy) {
-            for (let policy of this.policy_to_suppress) {
+            for (const policy of this.policy_to_suppress) {
                 if (node.logicalId.includes(policy)) {
                     node.cfnOptions.metadata = {
                         cfn_nag: {

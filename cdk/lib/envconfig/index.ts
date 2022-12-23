@@ -18,8 +18,6 @@ export const handler = (event: any) => {
     if (requestType === "Update") {
         return uploadConfig();
     }
-
-    return;
 };
 
 const uploadConfig = async () => {
@@ -39,7 +37,6 @@ const uploadConfig = async () => {
         .promise();
 
     console.log("S3 putObject result = ", result);
-    return;
 };
 
 function getConfigContent(): string {

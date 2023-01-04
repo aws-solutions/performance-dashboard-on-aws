@@ -58,7 +58,7 @@ export class FrontendStack extends Stack {
 
         // Creating a custom response headers policy -- all parameters optional
         const httpHeaders = new ResponseHeadersPolicy(this, "HttpHeaders", {
-            responseHeadersPolicyName: "ReactAppHeaders",
+            responseHeadersPolicyName: `ReactAppHeaders-${id}`,
             securityHeadersBehavior: {
                 // "Content-Security-Policy": "default-src 'self'; img-src 'self' https://*.google-analytics.com blob:; style-src 'unsafe-inline' 'self'; connect-src 'self' https://*.amazoncognito.com https://*.amazonaws.com https://*.google-analytics.com; script-src 'self' https://*.google-analytics.com; block-all-mixed-content;",
                 contentSecurityPolicy: {

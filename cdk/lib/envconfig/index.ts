@@ -7,17 +7,19 @@ import AWS = require("aws-sdk");
 
 const frontendBucket = process.env.FRONTEND_BUCKET;
 
-export const handler = (event: any) => {
+export const handler = async (event: any) => {
     console.log("Event=", JSON.stringify(event));
 
     const requestType = event.RequestType;
     if (requestType === "Create") {
-        return uploadConfig();
+        return await uploadConfig();
     }
 
     if (requestType === "Update") {
-        return uploadConfig();
+        return await uploadConfig();
     }
+
+    throw new Error("Unknown request type");
 };
 
 const uploadConfig = async () => {

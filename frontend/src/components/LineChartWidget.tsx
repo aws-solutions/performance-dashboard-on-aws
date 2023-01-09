@@ -13,6 +13,7 @@ import ShareButton from "./ShareButton";
 import LineChart from "@cloudscape-design/components/line-chart";
 import "./LineChartWidget.module.scss";
 import { ScaleType } from "@cloudscape-design/components/mixed-line-bar-chart/interfaces";
+import { useTranslation } from "react-i18next";
 
 type Props = {
     id: string;
@@ -35,6 +36,8 @@ type Props = {
 };
 
 function LineChartWidget(props: Props) {
+    const { t } = useTranslation();
+
     const chartRef = useRef(null);
     const [chartLoaded, setChartLoaded] = useState(false);
     const { yAxisLargestValue } = useYAxisMetadata(
@@ -125,13 +128,15 @@ function LineChartWidget(props: Props) {
                 />
             )}
             {data && data.length > 0 && (
-                <div aria-hidden="true">
+                <div>
                     <LineChart
                         height={300}
                         series={dataSeries(data)}
                         i18nStrings={{
-                            detailPopoverDismissAriaLabel: "Dismiss",
-                            legendAriaLabel: "Legend",
+                            detailPopoverDismissAriaLabel: t(
+                                "ChartAriaLabels.DetailPopoverDismissAriaLabel",
+                            ),
+                            legendAriaLabel: t("ChartAriaLabels.LegendAriaLabel"),
                             chartAriaRoleDescription: props.summary,
                             yTickFormatter: (tick: any) => {
                                 return TickFormatter.format(

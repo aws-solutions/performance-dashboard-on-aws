@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+function changed {
+  git diff --name-only HEAD@{1} HEAD | grep "^$1" > /dev/null 2>&1
+}
+
+if changed "NOTICE.txt"; then
+  echo "Include NOTICE changes in commit"
+fi
+
+if changed "backend/package-lock.json"; then
+  echo "Run ./install.sh to bring your dependencies up to date."
+fi
+if changed "cdk/package-lock.json"; then
+  echo "Run ./install.sh to bring your dependencies up to date."
+fi
+if changed "frontend/package-lock.json"; then
+  echo "Run ./install.sh to bring your dependencies up to date."
+fi

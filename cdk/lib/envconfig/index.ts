@@ -7,7 +7,7 @@ import AWS = require("aws-sdk");
 
 const frontendBucket = process.env.FRONTEND_BUCKET;
 
-export const handler = async (event: any) => {
+export const handler = async (event: any): Promise<void> => {
     console.log("Event=", JSON.stringify(event));
 
     const requestType = event.RequestType;
@@ -19,7 +19,7 @@ export const handler = async (event: any) => {
         return await uploadConfig();
     }
 
-    throw new Error("Unknown request type");
+    return await Promise.reject(new Error("Invalid config type"));
 };
 
 const uploadConfig = async () => {

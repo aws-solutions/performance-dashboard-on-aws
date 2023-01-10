@@ -61,11 +61,19 @@ deploy_auth() {
     # Auth stack definition is in cdk/lib/auth-stack.ts
     echo "Deploying auth stack"
     cd $CDK_DIR
+    npm run cdk -- deploy Auth --require-approval never
+}
+
+deploy_authz() {
+    # Deploys the Authorization stack with CDK.
+    # Authz stack definition is in cdk/lib/authz-stack.ts
+    echo "Deploying authz stack"
+    cd $CDK_DIR
 
     if [ "$CDK_ADMIN_EMAIL" != "" ]; then
-        npm run cdk -- deploy Auth --require-approval never --parameters adminEmail=$CDK_ADMIN_EMAIL
+        npm run cdk -- deploy Authz --require-approval never --parameters PerformanceDash-${environment}-Authz:adminEmail=$CDK_ADMIN_EMAIL
     else
-        npm run cdk -- deploy Auth --require-approval never
+        npm run cdk -- deploy Authz --require-approval never
     fi
 }
 
@@ -112,6 +120,7 @@ verify_prereqs
 create_build_directories
 build_cdk
 deploy_auth
+deploy_authz
 deploy_backend
 deploy_frontend
 deploy_ops

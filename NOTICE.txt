@@ -68,6 +68,7 @@ aws-sdk@2.1281.0 under the Apache-2.0
 aws-serverless-express@3.4.0 under the Apache-2.0
 aws-xray-sdk@3.3.7 under the Apache-2.0
 aws-xray-sdk@3.4.0 under the Apache-2.0
+cdk-nag@2.21.43 under the Apache-2.0
 constructs@10.1.198 under the Apache-2.0
 cors@2.8.5 under the MIT
 d3-interpolate@3.0.1 under the ISC

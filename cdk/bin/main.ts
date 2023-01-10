@@ -3,6 +3,7 @@ import "source-map-support/register";
 import { FrontendStack } from "../lib/frontend-stack";
 import { BackendStack } from "../lib/backend-stack";
 import { AuthStack } from "../lib/auth-stack";
+import { AuthorizationStack } from "../lib/authz-stack";
 import { OpsStack } from "../lib/ops-stack";
 import { DashboardExamplesStack } from "../lib/dashboardexamples-stack";
 import { FunctionInvalidWarningSuppressor } from "../lib/constructs/function-aspect";
@@ -28,6 +29,20 @@ const auth = new AuthStack(app, "Auth", {
     stackName: stackPrefix.concat("-Auth"),
     datasetsBucketName,
     contentBucketName,
+    authenticationRequired,
+    synthesizer: new DefaultStackSynthesizer({
+        generateBootstrapVersionRule: false,
+    }),
+});
+
+const authz = new AuthorizationStack(app, "Authz", {
+    stackName: stackPrefix.concat("-Authz"),
+    datasetsBucketName,
+    contentBucketName,
+    authenticationRequired,
+    userPoolArn: auth.userPoolArn,
+    appClientId: auth.appClientId,
+    identityPoolId: auth.identityPoolId,
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
@@ -56,7 +71,7 @@ const frontend = new FrontendStack(app, "Frontend", {
     appClientId: auth.appClientId,
     backendApiUrl: backend.restApi.url,
     authenticationRequired,
-    adminEmail: auth.adminEmail,
+    adminEmail: authz.adminEmail,
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
@@ -82,7 +97,7 @@ const examples = new DashboardExamplesStack(app, "DashboardExamples", {
     datasetsBucketArn: backend.datasetsBucketArn,
     databaseTableName: backend.mainTable.tableName,
     databaseTableArn: backend.mainTable.tableArn,
-    adminEmail: auth.adminEmail,
+    adminEmail: authz.adminEmail,
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
@@ -92,6 +107,7 @@ Aspects.of(app).add(new PolicyInvalidWarningSuppressor());
 Aspects.of(app).add(new FunctionInvalidWarningSuppressor());
 
 Tags.of(auth).add("app-id", APP_ID);
+Tags.of(authz).add("app-id", APP_ID);
 Tags.of(backend).add("app-id", APP_ID);
 Tags.of(frontend).add("app-id", APP_ID);
 Tags.of(operations).add("app-id", APP_ID);

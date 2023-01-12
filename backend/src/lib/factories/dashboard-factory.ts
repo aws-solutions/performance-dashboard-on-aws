@@ -15,6 +15,7 @@ import {
     PublicDashboard,
     DASHBOARD_ITEM_TYPE,
 } from "../models/dashboard";
+import { Widget } from "../models/widget";
 
 function createNew(
     name: string,
@@ -40,10 +41,9 @@ function createNew(
     };
 }
 
-function duplicateWidgetsInplace(dashboard: Dashboard, newId: string) {
-    const tableOfContents: { [key: string]: boolean } = {};
+function duplicateWidgets(dashboard: Dashboard, newId: string): Widget[] {
     if (!dashboard.widgets) {
-        return tableOfContents;
+        return [];
     }
 
     // Duplicate all widgets related to this dashboard
@@ -51,22 +51,22 @@ function duplicateWidgetsInplace(dashboard: Dashboard, newId: string) {
         const newWidget = WidgetFactory.createFromWidget(newId, widget);
         return newWidget;
     });
+    // Update the reference of the section widget for each child widget.
     for (const widget of widgets) {
         if (widget.section) {
             const sectionIndex = dashboard.widgets.findIndex((w) => w.id === widget.section);
             widget.section = widgets[sectionIndex].id;
         }
-        if (widget.content && widget.content.widgetIds) {
-            const widgetIds: string[] = [];
-            for (const id of widget.content.widgetIds) {
-                const widgetIndex = dashboard.widgets.findIndex((w) => w.id === id);
-                widgetIds.push(widgets[widgetIndex].id);
-            }
-            widget.content.widgetIds = widgetIds;
-        }
-        dashboard.widgets = widgets;
-        return tableOfContents;
     }
+    // Update the reference of the child widgets for each section widget.
+    for (const widget of widgets) {
+        if (widget?.content?.widgetIds) {
+            widget.content.widgetIds = widgets
+                .filter((w) => w.section === widget.id)
+                .map((w) => w.id);
+        }
+    }
+    return widgets;
 }
 
 function createNewFromDashboard(
@@ -77,7 +77,7 @@ function createNewFromDashboard(
     parentDashboardId: string,
     user: User,
 ): Dashboard {
-    const tableOfContents = duplicateWidgetsInplace(dashboard, id);
+    const newWidgets = duplicateWidgets(dashboard, id);
     return {
         id,
         name,
@@ -86,13 +86,12 @@ function createNewFromDashboard(
         topicAreaId: dashboard.topicAreaId,
         topicAreaName: dashboard.topicAreaName,
         displayTableOfContents: dashboard.displayTableOfContents,
-        tableOfContents,
         description: dashboard.description,
         state: DashboardState.Draft,
         createdBy: user.userId,
         updatedAt: new Date(),
         updatedBy: user.userId,
-        widgets: dashboard.widgets,
+        widgets: newWidgets,
         friendlyURL: undefined, // new draft should not have friendlyURL
     };
 }
@@ -119,7 +118,7 @@ function createCopyFromDashboard(dashboard: Dashboard, user: User): Dashboard {
  * Converts a Dashboard to a DynamoDB item.
  */
 function toItem(dashboard: Dashboard): DashboardItem {
-    let item: DashboardItem = {
+    const item: DashboardItem = {
         pk: itemId(dashboard.id),
         sk: itemId(dashboard.id),
         type: DASHBOARD_ITEM_TYPE,
@@ -146,7 +145,7 @@ function toItem(dashboard: Dashboard): DashboardItem {
 
 function fromItem(item: DashboardItem): Dashboard {
     const id = dashboardIdFromPk(item.pk);
-    let dashboard: Dashboard = {
+    const dashboard: Dashboard = {
         id,
         version: item.version,
         name: item.dashboardName,
@@ -159,9 +158,9 @@ function fromItem(item: DashboardItem): Dashboard {
         parentDashboardId: item.parentDashboardId,
         updatedAt: item.updatedAt ? new Date(item.updatedAt) : new Date(),
         updatedBy: item.updatedBy,
-        submittedBy: item.submittedBy || item.createdBy,
-        publishedBy: item.publishedBy || item.createdBy,
-        archivedBy: item.archivedBy || item.createdBy,
+        submittedBy: item.submittedBy ?? item.createdBy,
+        publishedBy: item.publishedBy ?? item.createdBy,
+        archivedBy: item.archivedBy ?? item.createdBy,
         deletedBy: item.deletedBy,
         state: (item.state as DashboardState) || DashboardState.Draft,
         releaseNotes: item.releaseNotes,

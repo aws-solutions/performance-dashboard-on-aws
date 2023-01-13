@@ -231,8 +231,6 @@ function VisualizeChart(props: Props) {
                             <div
                                 className="usa-checkbox"
                                 hidden={
-                                    props.chartType !== ChartType.BarChart &&
-                                    props.chartType !== ChartType.ColumnChart &&
                                     props.chartType !== ChartType.PieChart &&
                                     props.chartType !== ChartType.DonutChart
                                 }

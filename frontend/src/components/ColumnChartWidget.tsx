@@ -130,7 +130,7 @@ function ColumnChartWidget(props: Props) {
                 />
             )}
             {data && data.length > 0 && (
-                <div>
+                <div className="chart-container">
                     <BarChart
                         series={dataSeries(data)}
                         i18nStrings={{

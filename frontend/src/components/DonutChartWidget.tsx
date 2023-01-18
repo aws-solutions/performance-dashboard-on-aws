@@ -141,7 +141,7 @@ const DonutChartWidget = (props: Props) => {
                 />
             )}
             {data && data.length > 0 && (
-                <div>
+                <div className="chart-container">
                     <PieChart
                         data={dataSeries(props.data ?? [])}
                         segmentDescription={(datum) => {

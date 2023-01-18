@@ -128,7 +128,7 @@ function LineChartWidget(props: Props) {
                 />
             )}
             {data && data.length > 0 && (
-                <div>
+                <div className="chart-container">
                     <LineChart
                         height={300}
                         series={dataSeries(data)}

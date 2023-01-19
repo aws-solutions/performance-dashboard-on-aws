@@ -9,6 +9,7 @@ import { DashboardExamplesStack } from "../lib/dashboardexamples-stack";
 import { FunctionInvalidWarningSuppressor } from "../lib/constructs/function-aspect";
 import { PolicyInvalidWarningSuppressor } from "../lib/constructs/policy-aspect";
 import { App, Aspects, Aws, DefaultStackSynthesizer, Tags } from "aws-cdk-lib";
+import packagejson from "../package.json";
 
 const APP_ID = "Performance Dashboard on AWS";
 const envName = process.env.CDK_ENV_NAME;
@@ -79,6 +80,10 @@ const frontend = new FrontendStack(app, "Frontend", {
 
 const operations = new OpsStack(app, "Ops", {
     stackName: stackPrefix.concat("-Ops"),
+    solutionId: "performance-dashboard-on-aws",
+    solutionName: APP_ID,
+    solutionVersion: packagejson.version,
+    appRegistryName: stackPrefix.concat("-App"),
     privateApiFunction: backend.privateApiFunction,
     publicApiFunction: backend.publicApiFunction,
     dynamodbStreamsFunction: backend.dynamodbStreamsFunction,
@@ -102,6 +107,8 @@ const examples = new DashboardExamplesStack(app, "DashboardExamples", {
         generateBootstrapVersionRule: false,
     }),
 });
+
+operations.associateAppWithOtherStacks([auth, authz, backend, frontend, examples]);
 
 Aspects.of(app).add(new PolicyInvalidWarningSuppressor());
 Aspects.of(app).add(new FunctionInvalidWarningSuppressor());

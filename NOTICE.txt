@@ -16,6 +16,7 @@ This software includes third party software subject to the following copyrights:
 @aws-amplify/storage@4.5.14 under the Apache-2.0
 @aws-amplify/ui-components@1.9.40 under the Apache-2.0
 @aws-amplify/ui-react@1.2.26 under the n/a
+@aws-cdk/aws-servicecatalogappregistry-alpha@2.60.0-alpha.0 under the Apache-2.0
 @fortawesome/fontawesome-svg-core@1.2.36 under the MIT
 @fortawesome/free-solid-svg-icons@5.15.4 under the (CC-BY-4.0 AND MIT)
 @fortawesome/react-fontawesome@0.1.19 under the MIT
@@ -61,8 +62,8 @@ This software includes third party software subject to the following copyrights:
 @typescript-eslint/eslint-plugin@5.46.0 under the MIT
 @typescript-eslint/eslint-plugin@5.47.0 under the MIT
 aws-amplify@4.3.43 under the Apache-2.0
-aws-cdk-lib@2.57.0 under the Apache-2.0
-aws-cdk@2.56.0 under the Apache-2.0
+aws-cdk-lib@2.61.0 under the Apache-2.0
+aws-cdk@2.61.0 under the Apache-2.0
 aws-sdk@2.1271.0 under the Apache-2.0
 aws-sdk@2.1281.0 under the Apache-2.0
 aws-serverless-express@3.4.0 under the Apache-2.0

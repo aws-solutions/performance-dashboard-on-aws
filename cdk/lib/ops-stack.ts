@@ -24,8 +24,13 @@ import { Table } from "aws-cdk-lib/aws-dynamodb";
 import { Topic } from "aws-cdk-lib/aws-sns";
 import { Construct } from "constructs";
 import { Key } from "aws-cdk-lib/aws-kms";
+import { AppRegistryForSolution } from "../lib/constructs/appRegistry";
 
 interface Props extends StackProps {
+    solutionId: string;
+    solutionName: string;
+    solutionVersion: string;
+    appRegistryName: string;
     privateApiFunction: Function;
     publicApiFunction: Function;
     dynamodbStreamsFunction: Function;
@@ -44,6 +49,7 @@ const DASHBOARD_DEFAULT_PERIOD = "-PT12H";
 const LAMBDA_THROTTLE_THRESHOLD = 10;
 
 export class OpsStack extends Stack {
+    private readonly appRegistry: AppRegistryForSolution;
     private readonly opsNotifications: Topic;
     private readonly props: Props;
     private readonly alarms: Alarm[];
@@ -63,6 +69,15 @@ export class OpsStack extends Stack {
             masterKey: targetKmsKey,
         });
 
+        this.appRegistry = new AppRegistryForSolution(this, this.stackId, {
+            solutionId: this.props.solutionId,
+            solutionName: this.props.solutionName,
+            solutionVersion: this.props.solutionVersion,
+            appRegistryApplicationName: this.props.appRegistryName,
+            applicationType: "AWS-Solutions",
+            attributeGroupName: "Solution-Metadata",
+        });
+
         this.createLambdaAlarms("PrivateApiFunction", props.privateApiFunction);
         this.createLambdaAlarms("PublicApiFunction", props.publicApiFunction);
         this.createLambdaAlarms("DynamoDBStreamsFunction", props.dynamodbStreamsFunction);
@@ -70,6 +85,10 @@ export class OpsStack extends Stack {
 
         new CfnOutput(this, "OpsNotificationsTopic", {
             value: this.opsNotifications.topicArn,
+        });
+        new CfnOutput(this, "AppRegistryArn", {
+            description: "ARN of the application registry",
+            value: this.appRegistry.registryApplication.applicationArn,
         });
     }
 
@@ -197,6 +216,10 @@ export class OpsStack extends Stack {
         dashboard.addWidgets(auditTrailTableErrors);
 
         return dashboard;
+    }
+
+    public associateAppWithOtherStacks(stacks: Stack[]) {
+        this.appRegistry.associateAppWithOtherStacks(stacks);
     }
 
     createLambdaInvocationsWidget(

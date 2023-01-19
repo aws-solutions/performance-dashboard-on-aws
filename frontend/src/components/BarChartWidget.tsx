@@ -27,9 +27,9 @@ type Props = {
         secondary: string | undefined;
     };
     columnsMetadata: Array<any>;
-    hideDataLabels?: boolean;
     showMobilePreview?: boolean;
     stackedChart?: boolean;
+    height?: number;
 };
 
 const BarChartWidget = (props: Props) => {
@@ -110,12 +110,13 @@ const BarChartWidget = (props: Props) => {
                                 );
                             },
                         }}
-                        height={300}
                         ariaLabel={props.title}
                         hideFilter
                         xScaleType="categorical"
                         horizontalBars
                         stackedBars={props.stackedChart}
+                        hideLegend={props.hideLegend}
+                        height={props.height}
                     />
                 </div>
             )}

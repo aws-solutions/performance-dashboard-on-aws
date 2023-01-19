@@ -33,6 +33,7 @@ type Props = {
     };
     columnsMetadata: Array<any>;
     showMobilePreview?: boolean;
+    height?: number;
 };
 
 function LineChartWidget(props: Props) {
@@ -130,7 +131,7 @@ function LineChartWidget(props: Props) {
             {data && data.length > 0 && (
                 <div className="chart-container">
                     <LineChart
-                        height={300}
+                        height={props.height}
                         series={dataSeries(data)}
                         i18nStrings={{
                             detailPopoverDismissAriaLabel: t(

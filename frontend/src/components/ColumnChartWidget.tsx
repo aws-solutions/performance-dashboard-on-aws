@@ -25,7 +25,6 @@ type Props = {
     hideLegend?: boolean;
     horizontalScroll?: boolean;
     stackedChart?: boolean;
-    hideDataLabels?: boolean;
     setWidthPercent?: (widthPercent: number) => void;
     significantDigitLabels: boolean;
     colors?: {
@@ -34,6 +33,7 @@ type Props = {
     };
     columnsMetadata: Array<any>;
     showMobilePreview?: boolean;
+    height?: number;
 };
 
 function ColumnChartWidget(props: Props) {
@@ -149,11 +149,12 @@ function ColumnChartWidget(props: Props) {
                                 );
                             },
                         }}
-                        height={300}
                         ariaLabel={props.title}
                         hideFilter
                         xScaleType="categorical"
                         stackedBars={props.stackedChart}
+                        hideLegend={props.hideLegend}
+                        height={props.height}
                     />
                 </div>
             )}

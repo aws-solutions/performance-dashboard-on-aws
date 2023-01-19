@@ -441,6 +441,7 @@ function VisualizeChart(props: Props) {
                                         setWidthPercent={setWidthPercent}
                                         significantDigitLabels={props.significantDigitLabels}
                                         columnsMetadata={props.columnsMetadata}
+                                        height={250}
                                     />
                                 )}
                                 {props.chartType === ChartType.ColumnChart && (
@@ -460,7 +461,7 @@ function VisualizeChart(props: Props) {
                                         setWidthPercent={setWidthPercent}
                                         significantDigitLabels={props.significantDigitLabels}
                                         columnsMetadata={props.columnsMetadata || []}
-                                        hideDataLabels={!props.dataLabels}
+                                        height={250}
                                     />
                                 )}
                                 {props.chartType === ChartType.BarChart && (
@@ -474,8 +475,8 @@ function VisualizeChart(props: Props) {
                                         summaryBelow={props.summaryBelow}
                                         significantDigitLabels={props.significantDigitLabels}
                                         columnsMetadata={props.columnsMetadata || []}
-                                        hideDataLabels={!props.dataLabels}
                                         stackedChart={props.stackedChart}
+                                        height={250}
                                     />
                                 )}
                                 {props.chartType === ChartType.PartWholeChart && (

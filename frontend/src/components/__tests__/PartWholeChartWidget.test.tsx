@@ -15,9 +15,13 @@ test("renders the chart title", async () => {
             title="test title"
             downloadTitle="test title"
             summary="test summary"
-            parts={["test"]}
+            parts={["Device", "Usage"]}
             summaryBelow={false}
-            data={[{}]}
+            data={[
+                { Device: "Mobile", Usage: 54 },
+                { Device: "Tablet", Usage: 44 },
+                { Device: "Desktop", Usage: 2 },
+            ]}
             significantDigitLabels={false}
             columnsMetadata={[]}
         />,
@@ -33,9 +37,13 @@ test("renders the summary above the chart", async () => {
             title="test title"
             downloadTitle="test title"
             summary="test summary"
-            parts={["test"]}
+            parts={["Device", "Usage"]}
             summaryBelow={false}
-            data={[{}]}
+            data={[
+                { Device: "Mobile", Usage: 54 },
+                { Device: "Tablet", Usage: 44 },
+                { Device: "Desktop", Usage: 2 },
+            ]}
             significantDigitLabels={false}
             columnsMetadata={[]}
         />,
@@ -54,9 +62,13 @@ test("renders the summary below the chart", async () => {
             title="test title"
             downloadTitle="test title"
             summary="test summary"
-            parts={["test"]}
+            parts={["Device", "Usage"]}
             summaryBelow={true}
-            data={[{}]}
+            data={[
+                { Device: "Mobile", Usage: 54 },
+                { Device: "Tablet", Usage: 44 },
+                { Device: "Desktop", Usage: 2 },
+            ]}
             significantDigitLabels={false}
             columnsMetadata={[]}
         />,

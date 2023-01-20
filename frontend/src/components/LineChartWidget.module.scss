@@ -1,0 +1,13 @@
+svg[role="application"] {
+    > g[role="group"]{
+        > g[role="group"]{
+            @for $i from 1 through 10 {
+                & > g[role="group"]:nth-child(#{$i}) {
+                  > path {
+                    stroke-dasharray:#{($i - 1)*5} #{($i - 1)*5};
+                  }
+                }
+            }
+        }
+    }
+}

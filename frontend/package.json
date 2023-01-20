@@ -12,6 +12,8 @@
         "@aws-amplify/storage": "^4.4.27",
         "@aws-amplify/ui-components": "^1.9.6",
         "@aws-amplify/ui-react": "^1.2.26",
+        "@cloudscape-design/components": "^3.0.159",
+        "@cloudscape-design/global-styles": "^1.0.6",
         "@fortawesome/fontawesome-svg-core": "^1.2.30",
         "@fortawesome/free-solid-svg-icons": "^5.14.0",
         "@fortawesome/react-fontawesome": "^0.1.11",

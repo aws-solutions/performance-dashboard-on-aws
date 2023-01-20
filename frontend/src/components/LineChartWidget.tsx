@@ -3,27 +3,17 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-    XAxis,
-    YAxis,
-    LineChart,
-    Line,
-    Legend,
-    ResponsiveContainer,
-    CartesianGrid,
-    Tooltip,
-    // @ts-ignore
-    CategoricalChartWrapper,
-} from "recharts";
+import React, { useEffect, useRef, useState } from "react";
 import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import RenderLegendText from "./Legend";
-import { ColumnDataType } from "../models";
 import ShareButton from "./ShareButton";
+import LineChart from "@cloudscape-design/components/line-chart";
+import "./LineChartWidget.module.scss";
+import { ScaleType } from "@cloudscape-design/components/mixed-line-bar-chart/interfaces";
+import { useTranslation } from "react-i18next";
 
 type Props = {
     id: string;
@@ -43,14 +33,15 @@ type Props = {
     };
     columnsMetadata: Array<any>;
     showMobilePreview?: boolean;
+    height?: number;
 };
 
 function LineChartWidget(props: Props) {
+    const { t } = useTranslation();
+
     const chartRef = useRef(null);
-    const [linesHover, setLinesHover] = useState(null);
-    const [hiddenLines, setHiddenLines] = useState<Array<string>>([]);
     const [chartLoaded, setChartLoaded] = useState(false);
-    const { yAxisLargestValue, yAxisMargin } = useYAxisMetadata(
+    const { yAxisLargestValue } = useYAxisMetadata(
         chartRef,
         chartLoaded,
         props.significantDigitLabels,
@@ -58,40 +49,43 @@ function LineChartWidget(props: Props) {
 
     const colors = useColors(props.lines.length, props.colors?.primary, props.colors?.secondary);
 
-    const padding = 60;
-
-    const getOpacity = useCallback(
-        (dataKey) => {
-            if (!linesHover) {
-                return 1;
-            }
-            return linesHover === dataKey ? 1 : 0.2;
-        },
-        [linesHover],
-    );
-
     const { data, lines, showMobilePreview } = props;
-    const xAxisType = useCallback(() => {
-        let columnMetadata;
-        if (props.columnsMetadata && lines.length) {
-            columnMetadata = props.columnsMetadata.find((cm) => cm.columnName === lines[0]);
-        }
-        if (columnMetadata && columnMetadata.dataType === ColumnDataType.Text) {
-            return "category";
-        } else {
-            return data && data.every((row) => typeof row[lines[0]] === "number")
-                ? "number"
-                : "category";
-        }
-    }, [data, lines, props.columnsMetadata]);
 
-    const toggleLines = (e: any) => {
-        if (hiddenLines.includes(e.dataKey)) {
-            const hidden = hiddenLines.filter((line) => line !== e.dataKey);
-            setHiddenLines(hidden);
-        } else {
-            setHiddenLines([...hiddenLines, e.dataKey]);
-        }
+    const dataSeries = (data: any[]): any[] => {
+        const result = props.lines.slice(1).map((line, index) => {
+            return {
+                data: data.map((row, index) => {
+                    return {
+                        x: index,
+                        y: row[line],
+                    };
+                }),
+                title: line,
+                type: "line",
+                color: colors[index],
+                valueFormatter: (value: any) => {
+                    // Check if there is metadata for this column
+                    let columnMetadata;
+                    if (props.columnsMetadata) {
+                        columnMetadata = props.columnsMetadata.find((cm) => cm.columnName === line);
+                    }
+
+                    return TickFormatter.format(
+                        Number(value),
+                        yAxisLargestValue,
+                        props.significantDigitLabels,
+                        "",
+                        "",
+                        columnMetadata,
+                    );
+                },
+            };
+        });
+        return result;
+    };
+
+    const getXScaleType = (data: any[]): ScaleType => {
+        return data.length < 5 ? "categorical" : "linear";
     };
 
     /**
@@ -135,93 +129,33 @@ function LineChartWidget(props: Props) {
                 />
             )}
             {data && data.length > 0 && (
-                <div aria-hidden="true">
-                    <ResponsiveContainer
-                        id={props.id}
-                        width={props.horizontalScroll ? `${Math.max(widthPercent, 100)}%` : "100%"}
-                        height={300}
-                        data-testid="chartContainer"
-                    >
-                        <LineChart
-                            className="line-chart"
-                            data={props.data}
-                            margin={{ right: 0, left: yAxisMargin }}
-                            ref={(el: CategoricalChartWrapper) => {
-                                chartRef.current = el;
-                                setChartLoaded(!!el);
-                            }}
-                        >
-                            <CartesianGrid vertical={false} />
-                            <XAxis
-                                dataKey={props.lines.length ? props.lines[0] : ""}
-                                type={xAxisType()}
-                                padding={{ left: padding, right: padding }}
-                                domain={["dataMin", "dataMax"]}
-                                interval={props.horizontalScroll ? 0 : "preserveStartEnd"}
-                                scale={xAxisType() === "number" ? "linear" : "auto"}
-                            />
-                            <YAxis
-                                type="number"
-                                tickFormatter={(tick: any) => {
-                                    return TickFormatter.format(
-                                        Number(tick),
-                                        yAxisLargestValue,
-                                        props.significantDigitLabels,
-                                        "",
-                                        "",
-                                    );
-                                }}
-                            />
-
-                            <Tooltip
-                                itemStyle={{ color: "#1b1b1b" }}
-                                isAnimationActive={false}
-                                formatter={(value: number | string, name: string) => {
-                                    // Check if there is metadata for this column
-                                    let columnMetadata;
-                                    if (props.columnsMetadata) {
-                                        columnMetadata = props.columnsMetadata.find(
-                                            (cm) => cm.columnName === name,
-                                        );
-                                    }
-
-                                    return TickFormatter.format(
-                                        Number(value),
-                                        yAxisLargestValue,
-                                        props.significantDigitLabels,
-                                        "",
-                                        "",
-                                        columnMetadata,
-                                    );
-                                }}
-                            />
-                            <Legend
-                                verticalAlign="top"
-                                onClick={toggleLines}
-                                iconType="plainline"
-                                onMouseLeave={() => setLinesHover(null)}
-                                onMouseEnter={(e: any) => setLinesHover(e.dataKey)}
-                                formatter={RenderLegendText}
-                            />
-                            {props.lines.length > 0 &&
-                                props.lines.slice(1).map((line, index) => {
-                                    return (
-                                        <Line
-                                            dataKey={line}
-                                            type="monotone"
-                                            stroke={colors[index]}
-                                            key={index}
-                                            strokeWidth={2}
-                                            dot={{ strokeDasharray: "1 0" }}
-                                            strokeDasharray={`${index * 5} ${index * 5}`}
-                                            strokeOpacity={getOpacity(line)}
-                                            hide={hiddenLines.includes(line)}
-                                            isAnimationActive={false}
-                                        />
-                                    );
-                                })}
-                        </LineChart>
-                    </ResponsiveContainer>
+                <div className="chart-container">
+                    <LineChart
+                        height={props.height}
+                        series={dataSeries(data)}
+                        i18nStrings={{
+                            detailPopoverDismissAriaLabel: t(
+                                "ChartAriaLabels.DetailPopoverDismissAriaLabel",
+                            ),
+                            legendAriaLabel: t("ChartAriaLabels.LegendAriaLabel"),
+                            chartAriaRoleDescription: props.summary,
+                            yTickFormatter: (tick: any) => {
+                                return TickFormatter.format(
+                                    Number(tick),
+                                    yAxisLargestValue,
+                                    props.significantDigitLabels,
+                                    "",
+                                    "",
+                                );
+                            },
+                            xTickFormatter: (tick: any) => {
+                                return data[tick][props.lines[0]];
+                            },
+                        }}
+                        xScaleType={getXScaleType(data)}
+                        ariaLabel={props.title}
+                        hideFilter
+                    />
                 </div>
             )}
             <div>

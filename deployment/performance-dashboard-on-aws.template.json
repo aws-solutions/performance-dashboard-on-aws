@@ -21,6 +21,15 @@
                 "TemplateURL": {
                     "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Auth.template"
                 },
+                "TimeoutInMinutes": "60"
+            }
+        },
+        "authzStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": {
+                    "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Authz.template"
+                },
                 "TimeoutInMinutes": "60",
                 "Parameters": {
                     "adminEmail": {
@@ -39,32 +48,12 @@
                 "TimeoutInMinutes": "60"
             }
         },
-        "lambdaEdgeStack": {
-            "Type": "AWS::CloudFormation::Stack",
-            "DependsOn": "backendStack",
-            "Properties": {
-                "TemplateURL": {
-                    "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/LambdaEdge.template"
-                },
-                "TimeoutInMinutes": "60"
-            }
-        },
         "frontendStack": {
             "Type": "AWS::CloudFormation::Stack",
             "DependsOn": "lambdaEdgeStack",
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Frontend.template"
-                },
-                "TimeoutInMinutes": "60"
-            }
-        },
-        "opsStack": {
-            "Type": "AWS::CloudFormation::Stack",
-            "DependsOn": "frontendStack",
-            "Properties": {
-                "TemplateURL": {
-                    "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Ops.template"
                 },
                 "TimeoutInMinutes": "60"
             }
@@ -82,6 +71,16 @@
                         "Ref": "ExampleLanguage"
                     }
                 }
+            }
+        },
+        "opsStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "DependsOn": "frontendStack",
+            "Properties": {
+                "TemplateURL": {
+                    "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Ops.template"
+                },
+                "TimeoutInMinutes": "60"
             }
         }
     },

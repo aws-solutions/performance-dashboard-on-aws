@@ -97,11 +97,6 @@ deploy_frontend() {
     echo "Deploying frontend stack"
 }
 
-deploy_ops() {
-    echo "Deploying ops stack"
-    cd $CDK_DIR
-    npm run cdk -- deploy Ops --require-approval never
-}
 deploy_examples() {
     echo "Deploying examples"
     cd $EXAMPLES_DIR
@@ -110,6 +105,13 @@ deploy_examples() {
     cd $CDK_DIR
     npm run cdk -- deploy DashboardExamples --require-approval never --parameters PerformanceDash-${environment}-DashboardExamples:exampleLanguage=${exampleLanguage}
 }
+
+deploy_ops() {
+    echo "Deploying ops stack"
+    cd $CDK_DIR
+    npm run cdk -- deploy Ops --require-approval never
+}
+
 build_cdk() {
     cd $CDK_DIR
     npm run build
@@ -123,5 +125,5 @@ deploy_auth
 deploy_authz
 deploy_backend
 deploy_frontend
-deploy_ops
 deploy_examples
+deploy_ops

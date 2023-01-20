@@ -203,10 +203,10 @@ function EditColors(): any {
                                     }}
                                     columnsMetadata={[]}
                                     significantDigitLabels={false}
-                                    hideDataLabels={true}
+                                    height={150}
                                 />
                             </div>
-                            <div className="tablet:grid-col-7">
+                            <div className="tablet:grid-col-8">
                                 <ColumnChartWidget
                                     id="edit-color-column-chart-sample"
                                     title=""
@@ -222,8 +222,8 @@ function EditColors(): any {
                                     }}
                                     columnsMetadata={[]}
                                     significantDigitLabels={false}
-                                    hideDataLabels={true}
                                     isPreview={true}
+                                    height={200}
                                 />
                             </div>
                         </div>

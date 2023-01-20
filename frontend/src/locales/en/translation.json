@@ -1110,5 +1110,9 @@
         "ItemDropped": "You have dropped {{sourceLabel}}-{{sourceName}} to {{destinationLabel}}-{{destinationName}}.",
         "OutsideTheDroppableAreaError": "You are currently not over a droppable area {{label}}-{{name}}."
     },
-    "ContactUs": "Contact Us"
+    "ContactUs": "Contact Us",
+    "ChartAriaLabels": {
+        "DetailPopoverDismissAriaLabel": "Dismiss",
+        "LegendAriaLabel": "Legend"
+    }
 }

@@ -13,6 +13,8 @@
         "noUnusedParameters": false,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": false,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
         "inlineSourceMap": true,
         "inlineSources": true,
         "experimentalDecorators": true,

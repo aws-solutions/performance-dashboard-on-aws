@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Aws, CfnMapping, CfnResource, Fn, Stack, Tags } from "aws-cdk-lib";
+import { Aws, CfnMapping, CfnOutput, CfnResource, Fn, Stack, Tags } from "aws-cdk-lib";
 import { Application, AttributeGroup } from "@aws-cdk/aws-servicecatalogappregistry-alpha";
 import { Construct } from "constructs";
 import { CfnResourceAssociation } from "aws-cdk-lib/aws-servicecatalogappregistry";
@@ -75,6 +75,12 @@ export class AppRegistryForSolution extends Construct {
                 "Service Catalog application to track and manage all your resources for the solution",
         });
         application.associateApplicationWithStack(stack);
+
+        // TODO: remove after 2.61.0 (https://github.com/aws/aws-cdk/issues/23641)
+        const appRegistryCfnOutput = application.node.findChild(
+            "ApplicationManagerUrl",
+        ) as CfnOutput;
+        appRegistryCfnOutput.description = "Application Manager url";
 
         // App insights
         const appInsights = new CfnApplication(stack, "ApplicationInsightsConfiguration", {

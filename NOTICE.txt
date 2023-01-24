@@ -17,6 +17,8 @@ This software includes third party software subject to the following copyrights:
 @aws-amplify/ui-components@1.9.40 under the Apache-2.0
 @aws-amplify/ui-react@1.2.26 under the n/a
 @aws-cdk/aws-servicecatalogappregistry-alpha@2.60.0-alpha.0 under the Apache-2.0
+@cloudscape-design/components@n/a under the n/a
+@cloudscape-design/global-styles@n/a under the n/a
 @fortawesome/fontawesome-svg-core@1.2.36 under the MIT
 @fortawesome/free-solid-svg-icons@5.15.4 under the (CC-BY-4.0 AND MIT)
 @fortawesome/react-fontawesome@0.1.19 under the MIT

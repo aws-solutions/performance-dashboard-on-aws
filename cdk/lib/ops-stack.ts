@@ -75,7 +75,7 @@ export class OpsStack extends Stack {
             solutionVersion: this.props.solutionVersion,
             appRegistryApplicationName: this.props.appRegistryName,
             applicationType: "AWS-Solutions",
-            attributeGroupName: "Solution-Metadata",
+            attributeGroupName: `${this.stackName}-Solution-Metadata`,
         });
 
         this.createLambdaAlarms("PrivateApiFunction", props.privateApiFunction);

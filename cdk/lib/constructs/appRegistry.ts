@@ -3,11 +3,10 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Aws, CfnMapping, CfnOutput, CfnResource, Fn, Stack, Tags } from "aws-cdk-lib";
+import { Aws, CfnMapping, CfnOutput, Fn, Stack, Tags } from "aws-cdk-lib";
 import { Application, AttributeGroup } from "@aws-cdk/aws-servicecatalogappregistry-alpha";
 import { Construct } from "constructs";
 import { CfnResourceAssociation } from "aws-cdk-lib/aws-servicecatalogappregistry";
-import { CfnApplication } from "aws-cdk-lib/aws-applicationinsights";
 
 export interface AppRegistryProps {
     solutionId: string;
@@ -81,20 +80,6 @@ export class AppRegistryForSolution extends Construct {
             "ApplicationManagerUrl",
         ) as CfnOutput;
         appRegistryCfnOutput.description = "Application Manager url";
-
-        // App insights
-        const appInsights = new CfnApplication(stack, "ApplicationInsightsConfiguration", {
-            resourceGroupName: Fn.join("-", [
-                "AWS_AppRegistry_Application",
-                this.appRegMap.findInMap("Data", "AppRegistryApplicationName"),
-                Aws.REGION,
-                Aws.ACCOUNT_ID,
-            ]),
-            autoConfigurationEnabled: true,
-            cweMonitorEnabled: true,
-            opsCenterEnabled: true,
-        });
-        appInsights.addDependency(application.node.defaultChild as CfnResource);
 
         return application;
     }

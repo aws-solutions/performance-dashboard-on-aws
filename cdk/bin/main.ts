@@ -13,7 +13,6 @@ import packagejson from "../package.json";
 
 const APP_ID = "Performance Dashboard on AWS";
 const envName = process.env.CDK_ENV_NAME;
-const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
 
 if (!envName) {
     throw new Error("CDK_ENV_NAME environment variable missing");
@@ -30,7 +29,6 @@ const auth = new AuthStack(app, "Auth", {
     stackName: stackPrefix.concat("-Auth"),
     datasetsBucketName,
     contentBucketName,
-    authenticationRequired,
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
@@ -40,7 +38,6 @@ const authz = new AuthorizationStack(app, "Authz", {
     stackName: stackPrefix.concat("-Authz"),
     datasetsBucketName,
     contentBucketName,
-    authenticationRequired,
     userPoolArn: auth.userPoolArn,
     appClientId: auth.appClientId,
     identityPoolId: auth.identityPoolId,
@@ -57,7 +54,6 @@ const backend = new BackendStack(app, "Backend", {
     },
     datasetsBucketName,
     contentBucketName,
-    authenticationRequired,
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
@@ -71,7 +67,6 @@ const frontend = new FrontendStack(app, "Frontend", {
     identityPoolId: auth.identityPoolId,
     appClientId: auth.appClientId,
     backendApiUrl: backend.restApi.url,
-    authenticationRequired,
     adminEmail: authz.adminEmail,
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,

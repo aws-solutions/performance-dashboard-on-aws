@@ -12,7 +12,7 @@ import { Role } from "../models/user";
 import logger from "../services/logger";
 import EscapeHtml from "escape-html";
 
-const authenticationRequired = process.env.AUTHENTICATION_REQUIRED === "true";
+const authenticationRequired = process.env.AUTHENTICATION_REQUIRED?.toLowerCase() === "yes";
 
 async function getUsers(req: Request, res: Response) {
     const repo = UserRepository.getInstance();

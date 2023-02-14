@@ -3,6 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
+import { CfnCondition, Fn, IResolvable } from "aws-cdk-lib";
 import {
     AccessLogFormat,
     AuthorizationType,
@@ -24,7 +25,7 @@ interface ApiProps {
     apiFunction: Function;
     publicApiFunction: Function;
     cognitoUserPoolArn: string;
-    authenticationRequired: boolean;
+    authenticationRequiredCond: CfnCondition;
 }
 
 export class BackendApi extends Construct {
@@ -108,7 +109,7 @@ export class BackendApi extends Construct {
         });
 
         this.addPrivateEndpoints(apiIntegration, authorizer);
-        this.addPublicEndpoints(publicApiIntegration, authorizer, props.authenticationRequired);
+        this.addPublicEndpoints(publicApiIntegration, authorizer, props.authenticationRequiredCond);
 
         this.api.addApiKey("PerfDashIngestApiKey");
         const plan = this.api.addUsagePlan("PerfDashIngestUsagePlan", {
@@ -125,6 +126,17 @@ export class BackendApi extends Construct {
         });
     }
 
+    private assign_authorizer(
+        method: Method,
+        authenticationType: IResolvable,
+        authorizerId: IResolvable,
+    ) {
+        const apimethod: CfnMethod = method.node.findChild("Resource") as CfnMethod;
+        apimethod.authorizationType = authenticationType.toString();
+        apimethod.authorizerId = authorizerId.toString();
+        return method;
+    }
+
     // Suppress cfn_nag Warn W59: AWS::ApiGateway::Method should not have AuthorizationType set to 'NONE' unless it is of HttpMethod: OPTIONS.
     private cfn_nag_warn_w59(method: Method) {
         const apimethod: CfnMethod = method.node.findChild("Resource") as CfnMethod;
@@ -138,6 +150,7 @@ export class BackendApi extends Construct {
                 ],
             },
         };
+        return method;
     }
 
     private addPrivateEndpoints(apiIntegration: LambdaIntegration, authorizer: CfnAuthorizer) {
@@ -251,47 +264,67 @@ export class BackendApi extends Construct {
     private addPublicEndpoints(
         apiIntegration: LambdaIntegration,
         authorizer: CfnAuthorizer,
-        authenticationRequired?: boolean,
+        authenticationRequiredCond: CfnCondition,
     ) {
-        const methodProps: MethodOptions = {
-            authorizationType: AuthorizationType.COGNITO,
-            authorizer: { authorizerId: authorizer.ref },
-        };
+        const authorizationTypeValue = Fn.conditionIf(
+            authenticationRequiredCond.logicalId,
+            AuthorizationType.COGNITO,
+            "",
+        );
+        const authorizerIdValue = Fn.conditionIf(
+            authenticationRequiredCond.logicalId,
+            authorizer.ref,
+            "",
+        );
 
         // Public endpoints that do not require authentication if auth is not required.
-        const publicapi = this.api.root.addResource(
-            authenticationRequired ? "protected" : "public",
-        );
+        const publicapi = this.api.root.addResource("public");
         const dashboards = publicapi.addResource("dashboard");
         const friendlyURLs = dashboards.addResource("friendly-url");
 
         const dashboard = dashboards.addResource("{id}");
         this.cfn_nag_warn_w59(
-            dashboard.addMethod("GET", apiIntegration, authenticationRequired ? methodProps : {}),
+            this.assign_authorizer(
+                dashboard.addMethod("GET", apiIntegration),
+                authorizationTypeValue,
+                authorizerIdValue,
+            ),
         );
 
         const byfriendlyURL = friendlyURLs.addResource("{friendlyURL}");
         this.cfn_nag_warn_w59(
-            byfriendlyURL.addMethod(
-                "GET",
-                apiIntegration,
-                authenticationRequired ? methodProps : {},
+            this.assign_authorizer(
+                byfriendlyURL.addMethod("GET", apiIntegration),
+                authorizationTypeValue,
+                authorizerIdValue,
             ),
         );
 
         const homepage = publicapi.addResource("homepage");
         this.cfn_nag_warn_w59(
-            homepage.addMethod("GET", apiIntegration, authenticationRequired ? methodProps : {}),
+            this.assign_authorizer(
+                homepage.addMethod("GET", apiIntegration),
+                authorizationTypeValue,
+                authorizerIdValue,
+            ),
         );
 
         const settings = publicapi.addResource("settings");
         this.cfn_nag_warn_w59(
-            settings.addMethod("GET", apiIntegration, authenticationRequired ? methodProps : {}),
+            this.assign_authorizer(
+                settings.addMethod("GET", apiIntegration),
+                authorizationTypeValue,
+                authorizerIdValue,
+            ),
         );
 
         const search = publicapi.addResource("search");
         this.cfn_nag_warn_w59(
-            search.addMethod("GET", apiIntegration, authenticationRequired ? methodProps : {}),
+            this.assign_authorizer(
+                search.addMethod("GET", apiIntegration),
+                authorizationTypeValue,
+                authorizerIdValue,
+            ),
         );
     }
 }

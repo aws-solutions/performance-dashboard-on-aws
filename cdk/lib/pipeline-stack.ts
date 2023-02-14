@@ -113,7 +113,7 @@ export class PipelineStack extends Stack {
                     value: "english",
                 },
                 AUTH: {
-                    value: "false",
+                    value: "no",
                 },
             },
             buildSpec: BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
@@ -135,7 +135,7 @@ export class PipelineStack extends Stack {
                     value: "english",
                 },
                 AUTH: {
-                    value: "true",
+                    value: "yes",
                 },
             },
             buildSpec: BuildSpec.fromSourceFilename("buildspec.deploy.yml"),

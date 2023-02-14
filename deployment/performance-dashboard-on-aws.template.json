@@ -7,11 +7,17 @@
             "Description": "Email address for the admin user",
             "MinLength": 5
         },
+        "AuthenticationRequired": {
+            "Type": "String",
+            "Default": "no",
+            "AllowedValues": ["yes", "no"],
+            "Description": "If public part of the app will ask credentials to users"
+        },
         "ExampleLanguage": {
             "Type": "String",
+            "Default": "english",
             "AllowedValues": ["english", "spanish", "portuguese"],
-            "Description": "Language to use for examples",
-            "MinLength": 5
+            "Description": "Language for example dashboards"
         }
     },
     "Resources": {
@@ -21,11 +27,17 @@
                 "TemplateURL": {
                     "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Auth.template"
                 },
-                "TimeoutInMinutes": "60"
+                "TimeoutInMinutes": "60",
+                "Parameters": {
+                    "authenticationRequired": {
+                        "Ref": "AuthenticationRequired"
+                    }
+                }
             }
         },
         "authzStack": {
             "Type": "AWS::CloudFormation::Stack",
+            "DependsOn": "authStack",
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Authz.template"
@@ -34,6 +46,9 @@
                 "Parameters": {
                     "adminEmail": {
                         "Ref": "AdminEmail"
+                    },
+                    "authenticationRequired": {
+                        "Ref": "AuthenticationRequired"
                     }
                 }
             }
@@ -45,22 +60,32 @@
                 "TemplateURL": {
                     "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Backend.template"
                 },
-                "TimeoutInMinutes": "60"
+                "TimeoutInMinutes": "60",
+                "Parameters": {
+                    "authenticationRequired": {
+                        "Ref": "AuthenticationRequired"
+                    }
+                }
             }
         },
         "frontendStack": {
             "Type": "AWS::CloudFormation::Stack",
-            "DependsOn": "lambdaEdgeStack",
+            "DependsOn": ["backendStack", "authzStack", "authStack"],
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Frontend.template"
                 },
-                "TimeoutInMinutes": "60"
+                "TimeoutInMinutes": "60",
+                "Parameters": {
+                    "authenticationRequired": {
+                        "Ref": "AuthenticationRequired"
+                    }
+                }
             }
         },
         "examplesStack": {
             "Type": "AWS::CloudFormation::Stack",
-            "DependsOn": "opsStack",
+            "DependsOn": ["backendStack", "authzStack"],
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/DashboardExamples.template"
@@ -75,7 +100,13 @@
         },
         "opsStack": {
             "Type": "AWS::CloudFormation::Stack",
-            "DependsOn": "frontendStack",
+            "DependsOn": [
+                "authStack",
+                "authzStack",
+                "backendStack",
+                "frontendStack",
+                "examplesStack"
+            ],
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Ops.template"

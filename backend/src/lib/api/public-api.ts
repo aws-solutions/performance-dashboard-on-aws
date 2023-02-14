@@ -11,7 +11,7 @@ import errorHandler from "./middleware/error-handler";
 import auth from "./middleware/auth";
 
 const router = Router();
-const requiresAuth = process.env.AUTHENTICATION_REQUIRED === "true";
+const requiresAuth = process.env.AUTHENTICATION_REQUIRED?.toLowerCase() === "yes";
 if (requiresAuth) {
     router.use(auth);
 }

@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { CfnOutput, CustomResource, Duration, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, CfnParameter, CustomResource, Duration, Stack, StackProps } from "aws-cdk-lib";
 import {
     CfnDistribution,
     Distribution,
@@ -26,6 +26,7 @@ import { RetentionDays } from "aws-cdk-lib/aws-logs";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Provider } from "aws-cdk-lib/custom-resources";
 import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
+import { authenticationRequiredParameter } from "./constructs/parameters";
 
 interface Props extends StackProps {
     datasetsBucket: string;
@@ -34,7 +35,6 @@ interface Props extends StackProps {
     identityPoolId: string;
     appClientId: string;
     backendApiUrl: string;
-    authenticationRequired: boolean;
     adminEmail: string;
 }
 
@@ -43,6 +43,8 @@ export class FrontendStack extends Stack {
 
     constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
+
+        const authenticationRequired = authenticationRequiredParameter(this);
 
         /**
          * S3 Bucket
@@ -142,7 +144,7 @@ export class FrontendStack extends Stack {
             distribution,
         });
 
-        const deployConfig = this.deployEnvironmentConfig(props);
+        const deployConfig = this.deployEnvironmentConfig(props, authenticationRequired);
         // Make sure env.js gets deployed after the React code so
         // it doesn't get overwritten.
         deployConfig.node.addDependency(frontendDeploy);
@@ -158,7 +160,10 @@ export class FrontendStack extends Stack {
         });
     }
 
-    private deployEnvironmentConfig(props: Props): CustomResource {
+    private deployEnvironmentConfig(
+        props: Props,
+        authenticationRequired: CfnParameter,
+    ): CustomResource {
         // This CustomResource is a Lambda function that generates the `env.js`
         // with environment values. This file is uploaded to the bucket where
         // the React code is deployed.
@@ -189,7 +194,7 @@ export class FrontendStack extends Stack {
                 COGNITO_DOMAIN: "",
                 SAML_PROVIDER: "",
                 ENTERPRISE_LOGIN_LABEL: "Enterprise Sign-In",
-                AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
+                AUTHENTICATION_REQUIRED: authenticationRequired.valueAsString,
             },
         });
 

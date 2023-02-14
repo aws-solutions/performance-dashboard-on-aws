@@ -15,13 +15,13 @@ import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 interface Props {
     mainTable: Table;
     auditTrailTable: Table;
-    datasetsBucket: Bucket;
-    contentBucket: Bucket;
+    datasetsBucketArn: string;
+    contentBucketArn: string;
     userPool: {
         id: string;
         arn: string;
     };
-    authenticationRequired: boolean;
+    authenticationRequired: string;
 }
 
 export class LambdaFunctions extends Construct {
@@ -31,6 +31,14 @@ export class LambdaFunctions extends Construct {
 
     constructor(scope: Construct, id: string, props: Props) {
         super(scope, id);
+
+        const datasetsBucket = Bucket.fromBucketArn(
+            this,
+            "DatasetsBucket",
+            props.datasetsBucketArn,
+        );
+
+        const contentBucket = Bucket.fromBucketArn(this, "ContentBucket", props.contentBucketArn);
 
         this.apiHandler = new Function(this, "PrivateApi", {
             runtime: Runtime.NODEJS_16_X,
@@ -45,11 +53,11 @@ export class LambdaFunctions extends Construct {
             environment: {
                 MAIN_TABLE: props.mainTable.tableName,
                 AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
-                DATASETS_BUCKET: props.datasetsBucket.bucketName,
-                CONTENT_BUCKET: props.contentBucket.bucketName,
+                DATASETS_BUCKET: datasetsBucket.bucketName,
+                CONTENT_BUCKET: contentBucket.bucketName,
                 USER_POOL_ID: props.userPool.id,
                 LOG_LEVEL: "info",
-                AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
+                AUTHENTICATION_REQUIRED: props.authenticationRequired,
             },
         });
 
@@ -67,10 +75,12 @@ export class LambdaFunctions extends Construct {
             logRetention: RetentionDays.TEN_YEARS,
             environment: {
                 MAIN_TABLE: props.mainTable.tableName,
-                DATASETS_BUCKET: props.datasetsBucket.bucketName,
-                CONTENT_BUCKET: props.contentBucket.bucketName,
+                AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
+                DATASETS_BUCKET: datasetsBucket.bucketName,
+                CONTENT_BUCKET: contentBucket.bucketName,
+                USER_POOL_ID: props.userPool.id,
                 LOG_LEVEL: "info",
-                AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
+                AUTHENTICATION_REQUIRED: props.authenticationRequired,
             },
         });
 
@@ -133,7 +143,7 @@ export class LambdaFunctions extends Construct {
 
         const s3Policy = new PolicyStatement({
             effect: Effect.ALLOW,
-            resources: [props.datasetsBucket.arnForObjects("*")],
+            resources: [datasetsBucket.arnForObjects("*")],
             actions: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
         });
 

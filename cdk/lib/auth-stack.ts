@@ -11,14 +11,22 @@ import {
     CfnIdentityPool,
 } from "aws-cdk-lib/aws-cognito";
 import { Construct } from "constructs";
-import { Stack, StackProps, CfnOutput, Duration } from "aws-cdk-lib";
+import {
+    Stack,
+    StackProps,
+    CfnOutput,
+    Duration,
+    CfnParameter,
+    Fn,
+    CfnCondition,
+} from "aws-cdk-lib";
 import { readFileSync } from "fs";
 import { NagSuppressions } from "cdk-nag";
+import { authenticationRequiredParameter } from "./constructs/parameters";
 
 interface Props extends StackProps {
     datasetsBucketName: string;
     contentBucketName: string;
-    authenticationRequired: boolean;
 }
 
 export class AuthStack extends Stack {
@@ -29,6 +37,8 @@ export class AuthStack extends Stack {
 
     constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
+
+        const authenticationRequired = authenticationRequiredParameter(this);
 
         const pool = new UserPool(this, "UserPool", {
             userInvitation: {
@@ -51,7 +61,7 @@ export class AuthStack extends Stack {
         const client = pool.addClient("Frontend", {
             preventUserExistenceErrors: true,
         });
-        const identityPool = this.buildIdentityPool(pool, client, props.authenticationRequired);
+        const identityPool = this.buildIdentityPool(pool, client, authenticationRequired);
 
         /**
          * Outputs
@@ -70,10 +80,18 @@ export class AuthStack extends Stack {
     private buildIdentityPool(
         userPool: UserPool,
         userPoolClient: UserPoolClient,
-        authenticationRequired: boolean,
+        authenticationRequired: CfnParameter,
     ) {
+        const allowUnauthenticatedCond = new CfnCondition(this, "AllowUnauthenticatedCond", {
+            expression: Fn.conditionEquals(authenticationRequired, "no"),
+        });
+
         const identityPool = new CfnIdentityPool(this, "IdentityPool", {
-            allowUnauthenticatedIdentities: !authenticationRequired,
+            allowUnauthenticatedIdentities: Fn.conditionIf(
+                allowUnauthenticatedCond.logicalId,
+                true,
+                false,
+            ),
             cognitoIdentityProviders: [
                 {
                     clientId: userPoolClient.userPoolClientId,

@@ -64,8 +64,8 @@ This software includes third party software subject to the following copyrights:
 @typescript-eslint/eslint-plugin@5.46.0 under the MIT
 @typescript-eslint/eslint-plugin@5.47.0 under the MIT
 aws-amplify@4.3.43 under the Apache-2.0
-aws-cdk-lib@2.61.0 under the Apache-2.0
-aws-cdk@2.61.0 under the Apache-2.0
+aws-cdk-lib@2.62.2 under the Apache-2.0
+aws-cdk@2.62.2 under the Apache-2.0
 aws-sdk@2.1271.0 under the Apache-2.0
 aws-sdk@2.1281.0 under the Apache-2.0
 aws-serverless-express@3.4.0 under the Apache-2.0

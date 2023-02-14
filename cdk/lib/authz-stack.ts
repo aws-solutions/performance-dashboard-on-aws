@@ -5,13 +5,13 @@
 
 import { UserPool, CfnUserPoolUser, CfnIdentityPoolRoleAttachment } from "aws-cdk-lib/aws-cognito";
 import { Construct } from "constructs";
-import { CfnParameter, Stack, StackProps, CfnOutput } from "aws-cdk-lib";
+import { Stack, StackProps, CfnOutput, CfnCondition, Fn } from "aws-cdk-lib";
 import { Effect, FederatedPrincipal, PolicyStatement, Role } from "aws-cdk-lib/aws-iam";
+import { adminEmailParameter, authenticationRequiredParameter } from "./constructs/parameters";
 
 interface Props extends StackProps {
     datasetsBucketName: string;
     contentBucketName: string;
-    authenticationRequired: boolean;
     userPoolArn: string;
     appClientId: string;
     identityPoolId: string;
@@ -23,14 +23,8 @@ export class AuthorizationStack extends Stack {
     constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
 
-        /**
-         * CloudFormation parameters
-         */
-        const adminEmail = new CfnParameter(this, "adminEmail", {
-            type: "String",
-            description: "Email address for the admin user",
-            minLength: 5,
-        });
+        const authenticationRequired = authenticationRequiredParameter(this);
+        const adminEmail = adminEmailParameter(this);
 
         const pool = UserPool.fromUserPoolArn(this, "UserPool", props.userPoolArn);
 
@@ -57,7 +51,7 @@ export class AuthorizationStack extends Stack {
             true,
             props.identityPoolId,
         );
-        this.addPublicPolicies(protectedRole, datasetsBucketArn, contentBucketArn);
+        this.addProtectedPolicies(protectedRole, datasetsBucketArn, contentBucketArn);
 
         const publicRole = this.buildIdentityPoolRole(
             "CognitoPublicRole",
@@ -68,14 +62,22 @@ export class AuthorizationStack extends Stack {
 
         const denyRole = this.buildIdentityPoolRole("CognitoDenyRole", false, props.identityPoolId);
 
+        new CfnCondition(this, "AuthenticationRequiredCond", {
+            expression: Fn.conditionEquals(authenticationRequired, "yes"),
+        });
+
+        const unauthenticatedRole = Fn.conditionIf(
+            "AuthenticationRequiredCond",
+            denyRole.roleArn,
+            publicRole.roleArn,
+        );
+
         const providerUrl = `cognito-idp.${stack.region}.amazonaws.com/${pool.userPoolId}:${props.appClientId}`;
         new CfnIdentityPoolRoleAttachment(this, "AuthRoleAttachment", {
             identityPoolId: props.identityPoolId,
             roles: {
                 authenticated: protectedRole.roleArn,
-                unauthenticated: props.authenticationRequired
-                    ? denyRole.roleArn
-                    : publicRole.roleArn,
+                unauthenticated: unauthenticatedRole,
             },
             roleMappings: {
                 cognito: {
@@ -110,7 +112,7 @@ export class AuthorizationStack extends Stack {
 
         const adminUser = new CfnUserPoolUser(this, "AdminUser", {
             userPoolId: pool.userPoolId,
-            username: adminEmail.valueAsString,
+            username: Fn.select(0, Fn.split("@", adminEmail.valueAsString)),
             userAttributes: [
                 {
                     name: "email",
@@ -184,6 +186,8 @@ export class AuthorizationStack extends Stack {
                 ],
             }),
         );
+
+        this.addPublicPolicies(adminRole, datasetsBucketArn, contentBucketArn);
     }
 
     private addEditorPolicies(
@@ -232,6 +236,41 @@ export class AuthorizationStack extends Stack {
                 ],
             }),
         );
+
+        this.addPublicPolicies(editorRole, datasetsBucketArn, contentBucketArn);
+    }
+
+    private addProtectedPolicies(
+        protectedRole: Role,
+        datasetsBucketArn: string,
+        contentBucketArn: string,
+    ) {
+        protectedRole.addToPolicy(
+            new PolicyStatement({
+                effect: Effect.ALLOW,
+                actions: ["s3:GetObject", "s3:PutObject"],
+                resources: [
+                    datasetsBucketArn.concat("/protected/${cognito-identity.amazonaws.com:sub}/*"),
+                    datasetsBucketArn.concat("/private/${cognito-identity.amazonaws.com:sub}/*"),
+
+                    contentBucketArn.concat("/protected/${cognito-identity.amazonaws.com:sub}/*"),
+                    contentBucketArn.concat("/private/${cognito-identity.amazonaws.com:sub}/*"),
+                ],
+            }),
+        );
+
+        protectedRole.addToPolicy(
+            new PolicyStatement({
+                effect: Effect.ALLOW,
+                actions: ["s3:GetObject"],
+                resources: [
+                    datasetsBucketArn.concat("/protected/*"),
+                    contentBucketArn.concat("/protected/*"),
+                ],
+            }),
+        );
+
+        this.addPublicPolicies(protectedRole, datasetsBucketArn, contentBucketArn);
     }
 
     private addPublicPolicies(

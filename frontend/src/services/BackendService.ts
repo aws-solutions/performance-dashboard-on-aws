@@ -18,7 +18,7 @@ import {
 } from "../models";
 
 const apiName = "BackendApi";
-const publicPath = window.EnvironmentConfig?.authenticationRequired ? "protected" : "public";
+const publicPath = "public";
 
 async function authHeaders() {
     const token = await getAuthToken();

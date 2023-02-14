@@ -8,11 +8,12 @@ import { Database } from "./constructs/database";
 import { LambdaFunctions } from "./constructs/lambdas";
 import { DatasetStorage } from "./constructs/datastorage";
 import { ContentStorage } from "./constructs/contentstorage";
-import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import { CfnCondition, CfnOutput, Fn, Stack, StackProps } from "aws-cdk-lib";
 import { Function } from "aws-cdk-lib/aws-lambda";
 import { Table } from "aws-cdk-lib/aws-dynamodb";
 import { RestApi } from "aws-cdk-lib/aws-apigateway";
 import { Construct } from "constructs";
+import { authenticationRequiredParameter } from "./constructs/parameters";
 
 interface BackendStackProps extends StackProps {
     userPool: {
@@ -21,7 +22,6 @@ interface BackendStackProps extends StackProps {
     };
     datasetsBucketName: string;
     contentBucketName: string;
-    authenticationRequired: boolean;
 }
 
 export class BackendStack extends Stack {
@@ -36,6 +36,12 @@ export class BackendStack extends Stack {
     constructor(scope: Construct, id: string, props: BackendStackProps) {
         super(scope, id, props);
 
+        const authenticationRequired = authenticationRequiredParameter(this);
+
+        const authenticationRequiredCond = new CfnCondition(this, "AuthenticationRequiredCond", {
+            expression: Fn.conditionEquals(authenticationRequired, "yes"),
+        });
+
         const dataStorage = new DatasetStorage(this, "DatasetStorage", {
             datasetsBucketName: props.datasetsBucketName,
         });
@@ -48,17 +54,17 @@ export class BackendStack extends Stack {
         const lambdas = new LambdaFunctions(this, "Functions", {
             mainTable: database.mainTable,
             auditTrailTable: database.auditTrailTable,
-            datasetsBucket: dataStorage.datasetsBucket,
-            contentBucket: contentStorage.contentBucket,
+            datasetsBucketArn: dataStorage.datasetsBucket.bucketArn,
+            contentBucketArn: contentStorage.contentBucket.bucketArn,
             userPool: props.userPool,
-            authenticationRequired: props.authenticationRequired,
+            authenticationRequired: authenticationRequired.valueAsString,
         });
 
         const backendApi = new BackendApi(this, "Api", {
             cognitoUserPoolArn: props.userPool.arn,
             apiFunction: lambdas.apiHandler,
             publicApiFunction: lambdas.publicApiHandler,
-            authenticationRequired: props.authenticationRequired,
+            authenticationRequiredCond,
         });
 
         /**

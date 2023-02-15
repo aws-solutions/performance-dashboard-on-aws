@@ -60,18 +60,6 @@ function SettingsLayout(props: LayoutProps) {
 
             <AlertContainer />
 
-            <Breadcrumbs
-                crumbs={[
-                    {
-                        label: t("Settings"),
-                        url: "/admin/settings/topicarea",
-                    },
-                    {
-                        label: `${validSettings[currentSetting]}`,
-                    },
-                ]}
-            />
-
             {loadingSettings ? (
                 ""
             ) : (

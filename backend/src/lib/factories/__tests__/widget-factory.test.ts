@@ -15,6 +15,7 @@ import {
     MetricsWidget,
     ImageWidget,
     ColumnDataType,
+    SectionWidget,
 } from "../../models/widget";
 
 const dummyWidgetName = "Some widget";
@@ -149,6 +150,37 @@ describe("createChartWidget", () => {
                 content,
             });
         }).toThrowError("Chart widget must have `content.datasetId` field");
+    });
+
+    it("throws an error if s3Key is undefined", () => {
+        const content = { title: "My chart title", chartType: "LineChart", datasetId: "id" };
+        expect(() => {
+            WidgetFactory.createWidget({
+                name: dummyWidgetName,
+                dashboardId,
+                widgetType: WidgetType.Chart,
+                showTitle: true,
+                content,
+            });
+        }).toThrowError("Chart widget must have `content.s3Key` field");
+    });
+
+    it("throws an error if fileName is undefined", () => {
+        const content = {
+            title: "My chart title",
+            chartType: "LineChart",
+            datasetId: "id",
+            s3Key: "s3Key",
+        };
+        expect(() => {
+            WidgetFactory.createWidget({
+                name: dummyWidgetName,
+                dashboardId,
+                widgetType: WidgetType.Chart,
+                showTitle: true,
+                content,
+            });
+        }).toThrowError("Chart widget must have `content.fileName` field");
     });
 
     it("throws an error if chartType is undefined", () => {
@@ -304,6 +336,32 @@ describe("createTableWidget", () => {
             });
         }).toThrowError("Table widget must have `content.datasetId` field");
     });
+
+    it("throws an error if s3Key is undefined", () => {
+        const content = { title: "COVID cases", datasetId: "id" };
+        expect(() => {
+            WidgetFactory.createWidget({
+                name: dummyWidgetName,
+                dashboardId,
+                widgetType: WidgetType.Table,
+                showTitle: true,
+                content,
+            });
+        }).toThrowError("Table widget must have `content.s3Key` field");
+    });
+
+    it("throws an error if fileName is undefined", () => {
+        const content = { title: "COVID cases", datasetId: "id", s3Key: "s3Key" };
+        expect(() => {
+            WidgetFactory.createWidget({
+                name: dummyWidgetName,
+                dashboardId,
+                widgetType: WidgetType.Table,
+                showTitle: true,
+                content,
+            });
+        }).toThrowError("Table widget must have `content.fileName` field");
+    });
 });
 
 describe("fromItem", () => {
@@ -442,6 +500,84 @@ describe("fromItem", () => {
                 hidden: false,
             },
         ]);
+    });
+
+    it("converts a dynamodb item into a MetricsWidget object", () => {
+        const item: WidgetItem = {
+            pk: "Dashboard#abc",
+            sk: "Widget#xyz",
+            name: "Random name",
+            widgetType: "Metrics",
+            type: "Widget",
+            order: 1,
+            updatedAt: "2020-09-17T00:24:35.000Z",
+            showTitle: false,
+            content: {
+                title: "metrics",
+                datasetId: "123",
+                oneMetricPerRow: true,
+                significantDigitLabels: true,
+                metricsCenterAlign: true,
+                s3Key: {
+                    raw: "raw",
+                    json: "json",
+                },
+            },
+        };
+
+        const widget = WidgetFactory.fromItem(item) as MetricsWidget;
+
+        expect(widget.id).toEqual("xyz");
+        expect(widget.dashboardId).toEqual("abc");
+        expect(widget.name).toEqual("Random name");
+        expect(widget.widgetType).toEqual(WidgetType.Metrics);
+        expect(widget.order).toEqual(1);
+        expect(widget.showTitle).toBe(false);
+        expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
+        expect(widget.content.title).toEqual("metrics");
+        expect(widget.content.datasetId).toEqual("123");
+        expect(widget.content.oneMetricPerRow).toEqual(true);
+        expect(widget.content.significantDigitLabels).toEqual(true);
+        expect(widget.content.metricsCenterAlign).toEqual(true);
+        expect(widget.content.s3Key).toEqual({
+            raw: "raw",
+            json: "json",
+        });
+    });
+
+    it("converts a dynamodb item into a SectionWidget object", () => {
+        const item: WidgetItem = {
+            pk: "Dashboard#abc",
+            sk: "Widget#xyz",
+            name: "Random name",
+            widgetType: "Section",
+            type: "Widget",
+            order: 1,
+            updatedAt: "2020-09-17T00:24:35.000Z",
+            showTitle: false,
+            content: {
+                title: "section",
+                summary: "summary",
+                widgetIds: ["123"],
+                showWithTabs: true,
+                horizontally: true,
+            },
+        };
+
+        const widget = WidgetFactory.fromItem(item) as SectionWidget;
+
+        expect(widget.id).toEqual("xyz");
+        expect(widget.dashboardId).toEqual("abc");
+        expect(widget.name).toEqual("Random name");
+        expect(widget.widgetType).toEqual(WidgetType.Section);
+        expect(widget.order).toEqual(1);
+        expect(widget.showTitle).toBe(false);
+        expect(widget.updatedAt).toEqual(new Date("2020-09-17T00:24:35.000Z"));
+        expect(widget.content.title).toEqual("section");
+        expect(widget.content.summary).toEqual("summary");
+        expect(widget.content.widgetIds).toEqual(["123"]);
+        expect(widget.content.showWithTabs).toEqual(true);
+        expect(widget.content.horizontally).toEqual(true);
     });
 
     it("handles an invalid widget type gracefully", () => {
@@ -878,5 +1014,40 @@ describe("createImageWidget", () => {
                 },
             });
         }).toThrowError("Image widget must have `content.imageAltText` field");
+    });
+});
+
+describe("createSectionWidget", () => {
+    const content = {
+        title: "Section widget title",
+    };
+    it("builds a section widget", () => {
+        const widget = WidgetFactory.createWidget({
+            name: dummyWidgetName,
+            dashboardId,
+            widgetType: WidgetType.Section,
+            showTitle: true,
+            content,
+        }) as ImageWidget;
+
+        expect(widget.id).toBeDefined();
+        expect(widget.name).toEqual(dummyWidgetName);
+        expect(widget.dashboardId).toEqual(dashboardId);
+        expect(widget.widgetType).toEqual(WidgetType.Section);
+        expect(widget.showTitle).toBe(true);
+        expect(widget.content.title).toEqual("Section widget title");
+    });
+
+    it("throws an error if section title is undefined", () => {
+        const content = {};
+        expect(() => {
+            WidgetFactory.createWidget({
+                name: dummyWidgetName,
+                dashboardId,
+                widgetType: WidgetType.Section,
+                showTitle: true,
+                content,
+            });
+        }).toThrowError("Section widget must have `content.title` field");
     });
 });

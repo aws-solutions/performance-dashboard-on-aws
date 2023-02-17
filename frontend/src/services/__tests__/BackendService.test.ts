@@ -11,6 +11,8 @@ import { Widget } from "../../models";
 jest.mock("@aws-amplify/api");
 jest.mock("@aws-amplify/auth");
 
+let windowSpy: any;
+
 beforeEach(() => {
     const getJwtToken = jest.fn().mockReturnValue("eyJhbGciOiJIUzI1NiIsInR5c");
     const getIdToken = jest.fn().mockReturnValue({ getJwtToken });
@@ -21,6 +23,12 @@ beforeEach(() => {
     API.del = jest.fn();
     API.post = jest.fn();
     API.get = jest.fn();
+
+    windowSpy = jest.spyOn(window, "window", "get");
+});
+
+afterEach(() => {
+    windowSpy.mockRestore();
 });
 
 test("fetchDashboardById makes a GET request to dashboard API", async () => {
@@ -42,6 +50,27 @@ test("fetchPublicHomepageWithQuery makes a GET request to homepage API", async (
         `public/search?q=${query}`,
         expect.anything(),
     );
+});
+
+test("fetchPublicHomepageWithQuery(authenticationRequired) makes a GET request to homepage API", async () => {
+    windowSpy.mockImplementation(() => ({
+        EnvironmentConfig: {
+            authenticationRequired: true,
+        },
+    }));
+    const query = "Hello";
+    await BackendService.fetchPublicHomepageWithQuery(query);
+    expect(API.get).toHaveBeenCalledWith(
+        "BackendApi",
+        `public/search?q=${query}`,
+        expect.anything(),
+    );
+});
+
+test("fetchPublicHomepageWithQuery(empty query) makes a GET request to homepage API", async () => {
+    const query = "";
+    await BackendService.fetchPublicHomepageWithQuery(query);
+    expect(API.get).toHaveBeenCalledWith("BackendApi", "public/homepage", expect.anything());
 });
 
 test("createDashboard should make a POST request with payload", async () => {
@@ -215,6 +244,18 @@ test("fetchPublicHomepage makes a GET request to widget API", async () => {
     });
 });
 
+test("fetchPublicHomepage(authenticationRequired) makes a GET request to widget API", async () => {
+    windowSpy.mockImplementation(() => ({
+        EnvironmentConfig: {
+            authenticationRequired: true,
+        },
+    }));
+    await BackendService.fetchPublicHomepage();
+    expect(API.get).toHaveBeenCalledWith("BackendApi", "public/homepage", {
+        headers: { Authorization: expect.anything() },
+    });
+});
+
 test("fetchHomepage makes a GET request to widget API", async () => {
     await BackendService.fetchHomepage();
     expect(API.get).toHaveBeenCalledWith("BackendApi", "settings/homepage", expect.anything());
@@ -244,6 +285,18 @@ test("fetchPublicDashboard makes a GET request to public API", async () => {
     await BackendService.fetchPublicDashboard("123");
     expect(API.get).toHaveBeenCalledWith("BackendApi", "public/dashboard/123", {
         headers: {},
+    });
+});
+
+test("fetchPublicDashboard(authenticationRequired) makes a GET request to public API", async () => {
+    windowSpy.mockImplementation(() => ({
+        EnvironmentConfig: {
+            authenticationRequired: true,
+        },
+    }));
+    await BackendService.fetchPublicDashboard("123");
+    expect(API.get).toHaveBeenCalledWith("BackendApi", "public/dashboard/123", {
+        headers: { Authorization: expect.anything() },
     });
 });
 
@@ -348,10 +401,37 @@ test("fetchDashboardByFriendlyURL makes a GET request to public API", async () =
     );
 });
 
+test("fetchDashboardByFriendlyURL(authenticationRequired) makes a GET request to public API", async () => {
+    windowSpy.mockImplementation(() => ({
+        EnvironmentConfig: {
+            authenticationRequired: true,
+        },
+    }));
+    const friendlyURL = "my-friendly-url";
+    await BackendService.fetchPublicDashboardByURL(friendlyURL);
+    expect(API.get).toHaveBeenCalledWith(
+        "BackendApi",
+        `public/dashboard/friendly-url/my-friendly-url`,
+        { headers: { Authorization: expect.anything() } },
+    );
+});
+
 test("fetchPublicSettings makes a GET request to public API", async () => {
     await BackendService.fetchPublicSettings();
     expect(API.get).toHaveBeenCalledWith("BackendApi", `public/settings`, {
         headers: {},
+    });
+});
+
+test("fetchPublicSettings(authenticationRequired) makes a GET request to public API", async () => {
+    windowSpy.mockImplementation(() => ({
+        EnvironmentConfig: {
+            authenticationRequired: true,
+        },
+    }));
+    await BackendService.fetchPublicSettings();
+    expect(API.get).toHaveBeenCalledWith("BackendApi", `public/settings`, {
+        headers: { Authorization: expect.anything() },
     });
 });
 
@@ -424,4 +504,122 @@ test("copyDashboard makes a COPY request to dashboard API", async () => {
 
     await BackendService.copyDashboard(dashboardId);
     expect(API.post).toHaveBeenCalledWith("BackendApi", `dashboard/123/copy`, expect.anything());
+});
+
+test("archive makes a PUT request to dashboard API", async () => {
+    const dashboardId = "id";
+    await BackendService.archive(dashboardId, new Date());
+    expect(API.put).toBeCalledWith(
+        "BackendApi",
+        `dashboard/${dashboardId}/archive`,
+        expect.anything(),
+    );
+});
+
+test("fetchWidgets makes a GET request to dashboard API", async () => {
+    const dashboardId = "id";
+    await BackendService.fetchWidgets(dashboardId);
+    expect(API.get).toBeCalledWith("BackendApi", `dashboard/${dashboardId}/widgets`, {
+        headers: { Authorization: expect.anything() },
+    });
+});
+
+test("createWidget makes a POST request to dashboard API", async () => {
+    const dashboardId = "id";
+    const widget = {
+        name: "widget",
+        widgetType: "Text",
+        showTitle: true,
+        content: { text: "Title" },
+    };
+    await BackendService.createWidget(
+        dashboardId,
+        widget.name,
+        widget.widgetType,
+        widget.showTitle,
+        widget.content,
+    );
+    expect(API.post).toBeCalledWith(
+        "BackendApi",
+        `dashboard/${dashboardId}/widget`,
+        expect.anything(),
+    );
+});
+
+test("editWidget makes a PUT request to dashboard API", async () => {
+    const dashboardId = "id";
+    const widget = {
+        widgetId: "widget-id",
+        name: "widget",
+        widgetType: "Text",
+        showTitle: true,
+        content: { text: "Title" },
+        updatedAt: new Date(),
+    };
+    await BackendService.editWidget(
+        dashboardId,
+        widget.widgetId,
+        widget.name,
+        widget.showTitle,
+        widget.content,
+        widget.updatedAt,
+    );
+    expect(API.put).toBeCalledWith(
+        "BackendApi",
+        `dashboard/${dashboardId}/widget/${widget.widgetId}`,
+        expect.anything(),
+    );
+});
+
+test("duplicateWidget makes a PUT request to dashboard API", async () => {
+    const dashboardId = "id";
+    const widget = {
+        widgetId: "widget-id",
+        name: "widget",
+        widgetType: "Text",
+        showTitle: true,
+        content: { text: "Title" },
+        updatedAt: new Date(),
+    };
+    await BackendService.duplicateWidget(
+        dashboardId,
+        widget.widgetId,
+        widget.updatedAt,
+        "duplicate-label",
+    );
+    expect(API.post).toBeCalledWith(
+        "BackendApi",
+        `dashboard/${dashboardId}/widget/${widget.widgetId}`,
+        expect.anything(),
+    );
+});
+
+test("fetchDatasets makes a GET request to dashboard API", async () => {
+    await BackendService.fetchDatasets();
+    expect(API.get).toBeCalledWith("BackendApi", "dataset", expect.anything());
+});
+
+test("createDataset makes a POST request to dashboard API", async () => {
+    await BackendService.createDataset("filename", { raw: "", json: "" });
+    expect(API.post).toBeCalledWith("BackendApi", "dataset", expect.anything());
+});
+
+test("fetchDashboards makes a GET request to dashboard API", async () => {
+    await BackendService.fetchDashboards();
+    expect(API.get).toBeCalledWith("BackendApi", "dashboard", expect.anything());
+});
+
+test("fetchTopicAreas makes a GET request to dashboard API", async () => {
+    await BackendService.fetchTopicAreas();
+    expect(API.get).toBeCalledWith("BackendApi", "topicarea", expect.anything());
+});
+
+test("fetchSettings makes a GET request to dashboard API", async () => {
+    await BackendService.fetchSettings();
+    expect(API.get).toBeCalledWith("BackendApi", "settings", expect.anything());
+});
+
+test("editSettings makes a PUT request to dashboard API", async () => {
+    await BackendService.editSettings("publishingGuidance", new Date());
+    expect(API.put).toBeCalledWith("BackendApi", "settings", expect.anything());
 });

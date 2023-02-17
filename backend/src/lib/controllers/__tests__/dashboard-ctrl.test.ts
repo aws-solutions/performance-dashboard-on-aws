@@ -77,6 +77,36 @@ describe("createDashboard", () => {
     });
 });
 
+describe("getDashboardById", () => {
+    let req: Request;
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+    beforeEach(() => {
+        req = {
+            user,
+            params: {
+                id: "123",
+            },
+        } as any as Request;
+    });
+
+    it("returns the dashboard", async () => {
+        await DashboardCtrl.getDashboardById(req, res);
+        expect(repository.getDashboardWithWidgets).toHaveBeenCalledWith(req.params.id);
+    });
+
+    it("returns a 404 error when dashboard not found", async () => {
+        repository.getDashboardWithWidgets = jest.fn().mockImplementationOnce(() => {
+            throw new ItemNotFound();
+        });
+
+        await DashboardCtrl.getDashboardById(req, res);
+        expect(res.status).toBeCalledWith(404);
+        expect(res.send).toBeCalledWith("Dashboard not found");
+    });
+});
+
 describe("updateDashboard", () => {
     let req: Request;
     const now = new Date();
@@ -753,6 +783,16 @@ describe("getVersions", () => {
         await DashboardCtrl.getVersions(req, res);
 
         expect(res.json).toBeCalledWith(expect.objectContaining([version]));
+    });
+
+    it("returns a 404 error when dashboard not found", async () => {
+        repository.getDashboardVersions = jest.fn().mockImplementationOnce(() => {
+            throw new ItemNotFound();
+        });
+
+        await DashboardCtrl.getVersions(req, res);
+        expect(res.status).toBeCalledWith(404);
+        expect(res.send).toBeCalledWith("Dashboard versions not found");
     });
 });
 

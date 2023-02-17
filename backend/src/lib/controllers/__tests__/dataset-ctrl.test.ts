@@ -9,6 +9,7 @@ import { User } from "../../models/user";
 import DatasetCtrl from "../dataset-ctrl";
 import DatasetRepository from "../../repositories/dataset-repo";
 import DatasetFactory from "../../factories/dataset-factory";
+import { ItemNotFound } from "../../errors";
 
 jest.mock("../../repositories/dataset-repo");
 
@@ -23,6 +24,56 @@ beforeEach(() => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn().mockReturnThis(),
     } as any as Response;
+});
+
+describe("listDatasets", () => {
+    let req: Request;
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+    beforeEach(() => {
+        req = {
+            user,
+            params: {
+                id: "123",
+            },
+        } as any as Request;
+    });
+
+    it("returns the datasets", async () => {
+        await DatasetCtrl.listDatasets(req, res);
+        expect(repository.listDatasets).toHaveBeenCalled();
+    });
+});
+
+describe("getDatasetById", () => {
+    let req: Request;
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+    beforeEach(() => {
+        req = {
+            user,
+            params: {
+                id: "123",
+            },
+        } as any as Request;
+    });
+
+    it("returns the dataset", async () => {
+        await DatasetCtrl.getDatasetById(req, res);
+        expect(repository.getDatasetById).toHaveBeenCalledWith(req.params.id);
+    });
+
+    it("returns a 404 error when dataset not found", async () => {
+        repository.getDatasetById = jest.fn().mockImplementationOnce(() => {
+            throw new ItemNotFound();
+        });
+
+        await DatasetCtrl.getDatasetById(req, res);
+        expect(res.status).toBeCalledWith(404);
+        expect(res.send).toBeCalledWith("Dataset not found");
+    });
 });
 
 describe("createDataset", () => {

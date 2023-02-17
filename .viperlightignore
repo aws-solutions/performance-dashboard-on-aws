@@ -18,10 +18,10 @@ frontend/src/containers/__tests__/PublishingGuidanceSettings.test.tsx:28
 
 frontend/src/locales/en/translation.json:536
 
-frontend/src/services/__tests__/BackendService.test.ts:364
-frontend/src/services/__tests__/BackendService.test.ts:371
-frontend/src/services/__tests__/BackendService.test.ts:378
-frontend/src/services/__tests__/BackendService.test.ts:384
+frontend/src/services/__tests__/BackendService.test.ts:444
+frontend/src/services/__tests__/BackendService.test.ts:451
+frontend/src/services/__tests__/BackendService.test.ts:458
+frontend/src/services/__tests__/BackendService.test.ts:464
 
 node_modules/*
 

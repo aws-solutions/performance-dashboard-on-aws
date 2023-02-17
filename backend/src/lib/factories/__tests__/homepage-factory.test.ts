@@ -33,4 +33,19 @@ describe("fromItem", () => {
         expect(homepage.title).toEqual("Kingdom of Wakanda");
         expect(homepage.description).toEqual("Welcome to Wakanda");
     });
+
+    it("converts a previously updated dynamodb item to a Homepage object", () => {
+        const item: HomepageItem = {
+            pk: "Homepage",
+            sk: "Homepage",
+            type: "Homepage",
+            title: "Kingdom of Wakanda",
+            description: "Welcome to Wakanda",
+            updatedAt: "2023-02-15",
+        };
+
+        const homepage = HomepageFactory.fromItem(item);
+        expect(homepage.title).toEqual("Kingdom of Wakanda");
+        expect(homepage.description).toEqual("Welcome to Wakanda");
+    });
 });

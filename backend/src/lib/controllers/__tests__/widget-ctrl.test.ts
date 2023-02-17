@@ -18,15 +18,16 @@ jest.mock("../../repositories/dashboard-repo");
 const user: User = { userId: "johndoe" };
 const repository = mocked(WidgetRepository.prototype);
 const dashboardRepo = mocked(DashboardRepository.prototype);
-const res = {
-    send: jest.fn().mockReturnThis(),
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn().mockReturnThis(),
-} as any as Response;
+let res: Response;
 
 beforeEach(() => {
     WidgetRepository.getInstance = jest.fn().mockReturnValue(repository);
     DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
+    res = {
+        send: jest.fn().mockReturnThis(),
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
+    } as any as Response;
 });
 
 describe("getWidgetById", () => {
@@ -212,7 +213,7 @@ describe("duplicateWidget", () => {
                 widgetId: "14507073",
             },
             body: {
-                updatedAt: now,
+                updatedAt: "2023-02-16T01:06:25.788Z",
             },
         } as any as Request;
     });
@@ -238,16 +239,34 @@ describe("duplicateWidget", () => {
         expect(res.send).toBeCalledWith("Missing required field `updatedAt`");
     });
 
-    it("creates the new widget", async () => {
-        const widget = WidgetFactory.createWidget({
+    it("returns a 409 error when updatedAt has changed", async () => {
+        const widget = {
+            id: "6c6b53e2-3f08-41e3-9ba2-81daf6a9c529",
             name: "test",
+            order: 0,
+            updatedAt: now,
             dashboardId: "090b0410",
-            widgetType: WidgetType.Text,
+            widgetType: "Text",
             showTitle: false,
-            content: {
-                text: "123",
-            },
-        });
+        };
+        repository.getWidgetById = jest.fn().mockReturnValue(widget);
+
+        await WidgetCtrl.duplicateWidget(req, res);
+        expect(res.status).toBeCalledWith(409);
+        expect(res.send).toBeCalledWith("Someone else updated the widget before us");
+    });
+
+    it("creates the new widget", async () => {
+        const widget = {
+            id: "6c6b53e2-3f08-41e3-9ba2-81daf6a9c529",
+            name: "test",
+            order: 0,
+            updatedAt: "2023-02-16T01:06:25.788Z",
+            dashboardId: "090b0410",
+            widgetType: "Section",
+            showTitle: false,
+            content: { title: "123", widgetIds: ["14507073"] },
+        };
 
         WidgetFactory.createWidget = jest.fn().mockReturnValue(widget);
         repository.getWidgetById = jest.fn().mockReturnValue(widget);

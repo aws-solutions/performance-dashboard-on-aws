@@ -5,10 +5,11 @@
 
 import React from "react";
 import { render, act, screen } from "@testing-library/react";
-import { useWidget, useWidgetDataset } from "../widget-hooks";
+import { useWidget, useWidgetDataset, useColors } from "../widget-hooks";
 import BackendService from "../../services/BackendService";
 import StorageService from "../../services/StorageService";
 import { DatasetType, Widget, WidgetType } from "../../models";
+import ColorPaletteService from "../../services/ColorPaletteService";
 
 describe("useWidget", () => {
     interface Props {
@@ -36,6 +37,7 @@ describe("useWidget", () => {
     };
 
     test("should fetch a table widget", async () => {
+        sampleWdiget.content.datasetType = DatasetType.StaticDataset;
         const fetchWidgetByIdSpy = jest
             .spyOn(BackendService, "fetchWidgetById")
             .mockReturnValue(Promise.resolve(sampleWdiget));
@@ -90,6 +92,37 @@ describe("useWidget", () => {
         expect(fetchWidgetByIdSpy).toHaveBeenCalled();
         expect(downloadJsonSpy).toHaveBeenCalled();
         expect(screen.getByText(sampleWdiget.name)).toBeInTheDocument();
+    });
+});
+
+describe("useColors", () => {
+    interface Props {
+        numberOfColors: number;
+        primaryColor?: string;
+        secondaryColor?: string;
+    }
+    const FooComponent = (props: Props) => {
+        const { numberOfColors, primaryColor, secondaryColor } = props;
+        const colors = useColors(numberOfColors, primaryColor, secondaryColor);
+        return (
+            <>
+                <span>{colors?.length}</span>
+            </>
+        );
+    };
+
+    test("should get the colors", async () => {
+        const colorsSample = ["blue", "red"];
+        const getColorsSpy = jest
+            .spyOn(ColorPaletteService, "getColors")
+            .mockImplementation(() => colorsSample);
+
+        await act(async () => {
+            render(<FooComponent numberOfColors={2} />);
+        });
+
+        expect(getColorsSpy).toHaveBeenCalled();
+        expect(screen.getByText(colorsSample.length)).toBeInTheDocument();
     });
 });
 

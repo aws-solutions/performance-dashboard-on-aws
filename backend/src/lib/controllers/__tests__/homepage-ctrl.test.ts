@@ -75,7 +75,7 @@ describe("getPublicHomepage", () => {
 
     it("returns a list of published dashboards", async () => {
         const now = new Date();
-        const published: Array<Dashboard> = [
+        const published: Dashboard[] = [
             {
                 id: "123",
                 name: "Banana",
@@ -220,6 +220,23 @@ describe("getPublicHomepageWithQuery", () => {
         DashboardRepository.getInstance = jest.fn().mockReturnValue(dashboardRepo);
     });
 
+    it("returns values for homepage when query is missing", async () => {
+        delete req.query.q;
+        repository.getHomepage = jest.fn().mockReturnValueOnce({
+            title: "Performance Dashboard",
+            description: "Welcome to the performance dashboard",
+        });
+
+        await HomepageCtrl.getPublicHomepageWithQuery(req, res);
+        expect(repository.getHomepage).toBeCalled();
+        expect(res.json).toBeCalledWith(
+            expect.objectContaining({
+                title: "Performance Dashboard",
+                description: "Welcome to the performance dashboard",
+            }),
+        );
+    });
+
     it("returns a list of published dashboards with content matching a query", async () => {
         const now = new Date();
 
@@ -244,14 +261,14 @@ describe("getPublicHomepageWithQuery", () => {
         };
 
         // The two corresponding published dashboards.
-        let publishedDashboard1: Dashboard = {
+        const publishedDashboard1: Dashboard = {
             ...publicDashboard1,
             version: 1,
             parentDashboardId: "123",
             createdBy: "johndoe",
             state: DashboardState.Published,
         };
-        let publishedDashboard2: Dashboard = {
+        const publishedDashboard2: Dashboard = {
             ...publicDashboard2,
             version: 1,
             parentDashboardId: "456",
@@ -260,7 +277,7 @@ describe("getPublicHomepageWithQuery", () => {
         };
 
         // The two corresponding published dashboards with widgets.
-        let publishedDashboardWithWidget1: Dashboard = {
+        const publishedDashboardWithWidget1: Dashboard = {
             ...publishedDashboard1,
             widgets: [
                 {
@@ -276,7 +293,7 @@ describe("getPublicHomepageWithQuery", () => {
                 },
             ],
         };
-        let publishedDashboardWithWidget2: Dashboard = {
+        const publishedDashboardWithWidget2: Dashboard = {
             ...publishedDashboard2,
             widgets: [
                 {
@@ -338,6 +355,128 @@ describe("getPublicHomepageWithQuery", () => {
         await HomepageCtrl.getPublicHomepageWithQuery(req, res);
         expect(res.json).toBeCalledWith(
             expect.objectContaining({
+                dashboards: matchedDashboard,
+            }),
+        );
+    });
+
+    it("returns a list of published dashboards with content matching a query and default values for homepage", async () => {
+        const now = new Date();
+
+        // The two public dashboards.
+        const publicDashboard1: PublicDashboard = {
+            id: "123",
+            name: "USA",
+            topicAreaId: "xyz",
+            topicAreaName: "North America",
+            displayTableOfContents: false,
+            description: "All about the United States of America.",
+            updatedAt: now,
+        };
+        const publicDashboard2: PublicDashboard = {
+            id: "456",
+            name: "UK",
+            topicAreaId: "abc",
+            topicAreaName: "Europe",
+            displayTableOfContents: false,
+            description: "All about the United Kingdom. a.k.a. UK.",
+            updatedAt: now,
+        };
+
+        // The two corresponding published dashboards.
+        const publishedDashboard1: Dashboard = {
+            ...publicDashboard1,
+            version: 1,
+            parentDashboardId: "123",
+            createdBy: "johndoe",
+            state: DashboardState.Published,
+        };
+        const publishedDashboard2: Dashboard = {
+            ...publicDashboard2,
+            version: 1,
+            parentDashboardId: "456",
+            createdBy: "johndoe",
+            state: DashboardState.Published,
+        };
+
+        // The two corresponding published dashboards with widgets.
+        const publishedDashboardWithWidget1: Dashboard = {
+            ...publishedDashboard1,
+            widgets: [
+                {
+                    id: "111",
+                    name: "Geography of the USA",
+                    widgetType: WidgetType.Text,
+                    dashboardId: "123",
+                    order: 1,
+                    updatedAt: now,
+                    content: {
+                        text: "The USA is in North America. The capital of the USA is Washington, DC.",
+                    },
+                },
+            ],
+        };
+        const publishedDashboardWithWidget2: Dashboard = {
+            ...publishedDashboard2,
+            widgets: [
+                {
+                    id: "222",
+                    name: "Geography of the UK",
+                    widgetType: WidgetType.Text,
+                    dashboardId: "456",
+                    order: 1,
+                    updatedAt: now,
+                    content: {
+                        title: "The UK geography insights.",
+                        text: "The UK is in Europe. The capital of the UK is London.",
+                        summary: "The UK is localted in north-west of Europe.",
+                    },
+                },
+            ],
+        };
+
+        repository.getHomepage = jest.fn().mockReturnValueOnce(undefined);
+        HomepageFactory.getDefaultHomepage = jest.fn().mockReturnValueOnce({
+            title: "Default Dashboard",
+            description: "Welcome to the default dashboard",
+        });
+        dashboardRepo.listPublishedDashboards = jest
+            .fn()
+            .mockReturnValue([publishedDashboard1, publishedDashboard2]);
+        DashboardFactory.toPublic = jest
+            .fn()
+            .mockReturnValueOnce(publicDashboard1)
+            .mockReturnValueOnce(publicDashboard2);
+        dashboardRepo.getDashboardWithWidgets = jest
+            .fn()
+            .mockReturnValueOnce(publishedDashboardWithWidget2)
+            .mockReturnValueOnce(publishedDashboardWithWidget1);
+
+        const matchedDashboard: PublicDashboard[] = [
+            {
+                id: "456",
+                name: "UK",
+                topicAreaId: "abc",
+                topicAreaName: "Europe",
+                displayTableOfContents: false,
+                description: "All about the United Kingdom. a.k.a. UK.",
+                updatedAt: now,
+                queryMatches: [
+                    "UK",
+                    "All about the United Kingdom. a.k.a. UK.",
+                    "The UK is in Europe.",
+                    "The capital of the UK is London.",
+                    "The UK geography insights.",
+                    "The UK is localted in north-west of Europe.",
+                ],
+            },
+        ];
+
+        await HomepageCtrl.getPublicHomepageWithQuery(req, res);
+        expect(res.json).toBeCalledWith(
+            expect.objectContaining({
+                title: "Default Dashboard",
+                description: "Welcome to the default dashboard",
                 dashboards: matchedDashboard,
             }),
         );

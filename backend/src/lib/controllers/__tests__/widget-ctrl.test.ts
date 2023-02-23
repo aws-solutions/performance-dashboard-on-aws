@@ -110,6 +110,15 @@ describe("createWidget", () => {
         expect(res.send).toBeCalledWith("Missing required field `content`");
     });
 
+    it("returns 400 bad request error when underline error", async () => {
+        WidgetFactory.createWidget = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+        await WidgetCtrl.createWidget(req, res);
+        expect(res.status).toBeCalledWith(400);
+        expect(res.send).toBeCalledWith(expect.stringContaining("Bad Request"));
+    });
+
     it("creates the widget", async () => {
         const widget = WidgetFactory.createWidget({
             name: "test",
@@ -256,6 +265,27 @@ describe("duplicateWidget", () => {
         expect(res.send).toBeCalledWith("Someone else updated the widget before us");
     });
 
+    it("returns 400 bad request error when underline error", async () => {
+        WidgetFactory.createWidget = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+        const widget = {
+            id: "6c6b53e2-3f08-41e3-9ba2-81daf6a9c529",
+            name: "test",
+            order: 0,
+            updatedAt: "2023-02-16T01:06:25.788Z",
+            dashboardId: "090b0410",
+            widgetType: "Section",
+            showTitle: false,
+            content: { title: "123", widgetIds: ["14507073"] },
+        };
+        repository.getWidgetById = jest.fn().mockReturnValue(widget);
+
+        await WidgetCtrl.duplicateWidget(req, res);
+        expect(res.status).toBeCalledWith(400);
+        expect(res.send).toBeCalledWith(expect.stringContaining("Bad Request"));
+    });
+
     it("creates the new widget", async () => {
         const widget = {
             id: "6c6b53e2-3f08-41e3-9ba2-81daf6a9c529",
@@ -267,9 +297,10 @@ describe("duplicateWidget", () => {
             showTitle: false,
             content: { title: "123", widgetIds: ["14507073"] },
         };
-
+        repository.getWidgetById = jest.fn().mockReturnValue(widget);
         WidgetFactory.createWidget = jest.fn().mockReturnValue(widget);
         repository.getWidgetById = jest.fn().mockReturnValue(widget);
+
         await WidgetCtrl.duplicateWidget(req, res);
         expect(repository.saveWidget).toBeCalledWith(widget);
     });
@@ -342,6 +373,18 @@ describe("setWidgetOrder", () => {
         await WidgetCtrl.setWidgetOrder(req, res);
         expect(res.status).toBeCalledWith(400);
         expect(res.send).toBeCalledWith("Missing required field `widgets`");
+    });
+
+    it("returns 409 error when underline error", async () => {
+        repository.setWidgetOrder = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await WidgetCtrl.setWidgetOrder(req, res);
+        expect(res.status).toBeCalledWith(409);
+        expect(res.send).toBeCalledWith(
+            expect.stringContaining("Unable to reorder widgets, please refetch them and retry"),
+        );
     });
 
     it("sets widget order and updates updatedAt in dashboard", async () => {

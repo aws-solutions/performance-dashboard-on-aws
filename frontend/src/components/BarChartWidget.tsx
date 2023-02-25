@@ -10,6 +10,7 @@ import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
 import ShareButton from "./ShareButton";
 import BarChart from "@cloudscape-design/components/bar-chart";
+import styles from "./BarChartWidget.module.scss";
 import { useTranslation } from "react-i18next";
 
 type Props = {
@@ -91,7 +92,7 @@ const BarChartWidget = (props: Props) => {
                 />
             )}
             {data && data.length > 0 && (
-                <div className="chart-container">
+                <div className={`chart-container ${styles.barChart}`}>
                     <BarChart
                         series={dataSeries(data)}
                         i18nStrings={{

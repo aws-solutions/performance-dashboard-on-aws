@@ -72,7 +72,11 @@ function FileInput(props: Props) {
             <div className="usa-hint">{props.hint}</div>
             {props.errors && (
                 <span className="usa-error-message" id="file-input-error-alert" role="alert">
-                    {props.errors}
+                    {props.errors.reduce(
+                        (accumulator: string, currentValue: any) =>
+                            `${currentValue.message}\n${accumulator}`,
+                        "",
+                    )}
                 </span>
             )}
             <div className={`usa-file-input${props.disabled ? " usa-file-input--disabled" : ""}`}>

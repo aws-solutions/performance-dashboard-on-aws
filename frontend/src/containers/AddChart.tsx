@@ -427,7 +427,7 @@ function AddChart() {
             <div className="grid-row">
                 <div className="grid-col-12">
                     <form onSubmit={handleSubmit(onSubmit)} aria-labelledby="addChartFormHeader">
-                        <div hidden={step !== 0}>
+                        {step === 0 && (
                             <PrimaryActionBar>
                                 {configHeader}
                                 <div className="margin-y-3" hidden={!showColumnHeaderAlert}>
@@ -465,9 +465,9 @@ function AddChart() {
                                     setShowNoDatasetTypeAlert={setShowNoDatasetTypeAlert}
                                 />
                             </PrimaryActionBar>
-                        </div>
+                        )}
 
-                        <div hidden={step !== 1}>
+                        {step === 1 && (
                             <PrimaryActionBar>
                                 {configHeader}
                                 <CheckData
@@ -491,9 +491,9 @@ function AddChart() {
                                     widgetType={t("CheckDataDescriptionChart")}
                                 />
                             </PrimaryActionBar>
-                        </div>
+                        )}
 
-                        <div hidden={step !== 2}>
+                        {step === 2 && (
                             <VisualizeChart
                                 widgetId={`add-new-${chartType}`}
                                 errors={errors}
@@ -536,7 +536,7 @@ function AddChart() {
                                 )}
                                 configHeader={configHeader}
                             />
-                        </div>
+                        )}
                     </form>
                 </div>
             </div>

@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useMemo, useEffect, useRef, useState } from "react";
 import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
@@ -12,7 +12,6 @@ import DataTable from "./DataTable";
 import ShareButton from "./ShareButton";
 import LineChart from "@cloudscape-design/components/line-chart";
 import "./LineChartWidget.module.scss";
-import { ScaleType } from "@cloudscape-design/components/mixed-line-bar-chart/interfaces";
 import { useTranslation } from "react-i18next";
 
 type Props = {
@@ -39,25 +38,27 @@ type Props = {
 function LineChartWidget(props: Props) {
     const { t } = useTranslation();
 
-    const chartRef = useRef(null);
-    const [chartLoaded, setChartLoaded] = useState(false);
-    const { yAxisLargestValue } = useYAxisMetadata(
-        chartRef,
-        chartLoaded,
-        props.significantDigitLabels,
-    );
-
     const colors = useColors(props.lines.length, props.colors?.primary, props.colors?.secondary);
 
     const { data, lines, showMobilePreview } = props;
 
+    const [yAxisLargestValue, setYAxisLargestValue] = useState(0);
+    const [chartSeries, setChartSeries] = useState<any[]>([]);
+
     const dataSeries = (data: any[]): any[] => {
         const result = props.lines.slice(1).map((line, index) => {
             return {
-                data: data.map((row, index) => {
+                data: data.map((row) => {
+                    const xAxisValue: string = row[props.lines[0]];
+                    const yAxisValue: number = row[line] ?? 0;
+
+                    if (yAxisLargestValue < yAxisValue) {
+                        setYAxisLargestValue(yAxisValue);
+                    }
+
                     return {
-                        x: index,
-                        y: row[line],
+                        x: xAxisValue,
+                        y: yAxisValue,
                     };
                 }),
                 title: line,
@@ -83,10 +84,12 @@ function LineChartWidget(props: Props) {
         });
         return result;
     };
-
-    const getXScaleType = (data: any[]): ScaleType => {
-        return data.length < 5 ? "categorical" : "linear";
-    };
+    useMemo(() => {
+        if (data && data.length > 0) {
+            setChartSeries(dataSeries(data));
+            console.log(chartSeries);
+        }
+    }, [data]);
 
     /**
      * Calculate the width percent out of the total width
@@ -128,11 +131,11 @@ function LineChartWidget(props: Props) {
                     className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
                 />
             )}
-            {data && data.length > 0 && (
+            {chartSeries && chartSeries.length > 0 && (
                 <div className="chart-container">
                     <LineChart
                         height={props.height}
-                        series={dataSeries(data)}
+                        series={chartSeries}
                         i18nStrings={{
                             detailPopoverDismissAriaLabel: t(
                                 "ChartAriaLabels.DetailPopoverDismissAriaLabel",
@@ -148,11 +151,8 @@ function LineChartWidget(props: Props) {
                                     "",
                                 );
                             },
-                            xTickFormatter: (tick: any) => {
-                                return data[tick][props.lines[0]];
-                            },
                         }}
-                        xScaleType={getXScaleType(data)}
+                        xScaleType={"categorical"}
                         ariaLabel={props.title}
                         hideFilter
                     />

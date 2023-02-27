@@ -153,7 +153,7 @@ test("on wrong CSV, it should display the proper error message", async () => {
     ParsingFileService.parseFile = jest
         .fn()
         .mockImplementation((_data: File, _header: boolean, onParse: Function) =>
-            onParse(null, [["country", ""]]),
+            onParse(null, [{ "": "hello" }]),
         );
 
     const { getByRole, getByText, getByLabelText, getAllByText, getByTestId } = render(
@@ -231,7 +231,7 @@ test("when the file has parsing errors, it should display the proper error messa
     ParsingFileService.parseFile = jest
         .fn()
         .mockImplementation((_data: File, _header: boolean, onParse: Function) =>
-            onParse(["Parsing errors found."], null),
+            onParse([{ message: "Parsing errors found." }], null),
         );
 
     const { getByRole, getByText, getByLabelText, getAllByText, getByTestId } = render(

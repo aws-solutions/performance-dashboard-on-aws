@@ -441,7 +441,7 @@ function VisualizeChart(props: Props) {
                                         setWidthPercent={setWidthPercent}
                                         significantDigitLabels={props.significantDigitLabels}
                                         columnsMetadata={props.columnsMetadata}
-                                        height={250}
+                                        height={300}
                                     />
                                 )}
                                 {props.chartType === ChartType.ColumnChart && (
@@ -461,7 +461,7 @@ function VisualizeChart(props: Props) {
                                         setWidthPercent={setWidthPercent}
                                         significantDigitLabels={props.significantDigitLabels}
                                         columnsMetadata={props.columnsMetadata || []}
-                                        height={250}
+                                        height={300}
                                     />
                                 )}
                                 {props.chartType === ChartType.BarChart && (

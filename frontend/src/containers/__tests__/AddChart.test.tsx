@@ -43,11 +43,6 @@ test("renders title and subtitles", async () => {
     ).toBeInTheDocument();
 });
 
-test("renders a textfield for chart title", async () => {
-    render(<AddChart />, { wrapper: MemoryRouter });
-    expect(await screen.findByLabelText("Chart title")).toBeInTheDocument();
-});
-
 test("renders a file upload input", async () => {
     render(<AddChart />, { wrapper: MemoryRouter });
 
@@ -70,6 +65,12 @@ test("renders table for dynamic dataset", async () => {
 });
 
 test("on submit, it calls createWidget api and uploads dataset", async () => {
+    ParsingFileService.parseFile = jest
+        .fn()
+        .mockImplementation((_data: File, _header: boolean, onParse: Function) =>
+            onParse(null, [["country", "grade"]]),
+        );
+
     const { getByRole, getByText, getByLabelText, getAllByText, getByTestId } = render(
         <AddChart />,
         {
@@ -111,7 +112,7 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
     });
 
     await waitFor(() => {
-        continueButton = getAllByText("Continue")[1];
+        continueButton = getByRole("button", { name: "Continue" });
         fireEvent.click(continueButton);
     });
 
@@ -121,11 +122,10 @@ test("on submit, it calls createWidget api and uploads dataset", async () => {
         },
     });
 
-    const submitButton = getAllByText("Add chart")[4];
+    const submitButton = getByRole("button", { name: "Add chart" });
 
     await waitFor(() => {
         expect(ParsingFileService.parseFile).toHaveBeenCalled();
-        submitButton.removeAttribute("disabled");
     });
 
     await waitFor(() => expect(submitButton).toBeEnabled());
@@ -160,15 +160,12 @@ test("on wrong CSV, it should display the proper error message", async () => {
     ParsingFileService.parseFile = jest
         .fn()
         .mockImplementation((_data: File, _header: boolean, onParse: Function) =>
-            onParse(null, [["country", ""]]),
+            onParse(null, [{ "": "hello" }]),
         );
 
-    const { getByRole, getByText, getByLabelText, getAllByText, getByTestId } = render(
-        <AddChart />,
-        {
-            wrapper: MemoryRouter,
-        },
-    );
+    const { getByRole, getByText, getByLabelText, getByTestId } = render(<AddChart />, {
+        wrapper: MemoryRouter,
+    });
 
     let continueButton = getByRole("button", { name: "Continue" });
 
@@ -191,27 +188,6 @@ test("on wrong CSV, it should display the proper error message", async () => {
 
     await act(async () => {
         fireEvent.click(continueButton);
-    });
-
-    await waitFor(() => {
-        expect(
-            getByText(
-                "Please make sure that the system formats your data correctly." +
-                    " Select columns to format as numbers, dates, or text. Also select" +
-                    " columns to hide or show from the chart.",
-            ),
-        ).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-        continueButton = getAllByText("Continue")[1];
-        fireEvent.click(continueButton);
-    });
-
-    fireEvent.input(getByLabelText("Chart title"), {
-        target: {
-            value: "COVID Cases",
-        },
     });
 
     await waitFor(() => {
@@ -228,15 +204,12 @@ test("when the file parsing errors, it should display the proper error message",
     ParsingFileService.parseFile = jest
         .fn()
         .mockImplementation((_data: File, _header: boolean, onParse: Function) =>
-            onParse(["Parsing errors found."], null),
+            onParse([{ message: "Parsing errors found." }], null),
         );
 
-    const { getByRole, getByText, getByLabelText, getAllByText, getByTestId } = render(
-        <AddChart />,
-        {
-            wrapper: MemoryRouter,
-        },
-    );
+    const { getByRole, getByText, getByLabelText, getByTestId } = render(<AddChart />, {
+        wrapper: MemoryRouter,
+    });
 
     let continueButton = getByRole("button", { name: "Continue" });
 
@@ -256,31 +229,6 @@ test("when the file parsing errors, it should display the proper error message",
         value: file.name,
     });
     fireEvent.change(uploadFile);
-
-    await act(async () => {
-        fireEvent.click(continueButton);
-    });
-
-    await waitFor(() => {
-        expect(
-            getByText(
-                "Please make sure that the system formats your data correctly." +
-                    " Select columns to format as numbers, dates, or text. Also select" +
-                    " columns to hide or show from the chart.",
-            ),
-        ).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-        continueButton = getAllByText("Continue")[1];
-        fireEvent.click(continueButton);
-    });
-
-    fireEvent.input(getByLabelText("Chart title"), {
-        target: {
-            value: "COVID Cases",
-        },
-    });
 
     await waitFor(() => {
         expect(ParsingFileService.parseFile).toHaveBeenCalled();

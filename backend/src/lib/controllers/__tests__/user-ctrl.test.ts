@@ -73,6 +73,16 @@ describe("addUser", () => {
         expect(res.send).toBeCalledWith("Invalid email: &lt;script&gt;temp&lt;/script&gt;");
     });
 
+    it("returns 400 bad request error when underline error", async () => {
+        repository.addUsers = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await UserCtrl.addUsers(req, res);
+        expect(res.status).toBeCalledWith(400);
+        expect(res.send).toBeCalledWith(expect.stringContaining("Bad Request"));
+    });
+
     it("create the users", async () => {
         const user1 = UserFactory.createNew("test1@example.com", "Admin");
         const user2 = UserFactory.createNew("test2@example.com", "Editor");
@@ -113,6 +123,16 @@ describe("resendInvite", () => {
         expect(res.send).toBeCalledWith("Invalid email: &lt;script&gt;temp&lt;/script&gt;");
     });
 
+    it("returns 500 internal server error when underline error", async () => {
+        repository.resendInvite = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await UserCtrl.resendInvite(req, res);
+        expect(res.status).toBeCalledWith(500);
+        expect(res.send).toBeCalledWith(expect.stringContaining("Internal Server Error"));
+    });
+
     it("resend invite", async () => {
         await UserCtrl.resendInvite(req, res);
         expect(repository.resendInvite).toBeCalledWith(["test1", "test2"]);
@@ -151,6 +171,16 @@ describe("changeRole", () => {
         expect(res.send).toBeCalledWith("Missing required body `usernames`");
     });
 
+    it("returns 400 bad request error when underline error", async () => {
+        repository.changeRole = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await UserCtrl.changeRole(req, res);
+        expect(res.status).toBeCalledWith(400);
+        expect(res.send).toBeCalledWith(expect.stringContaining("Bad Request"));
+    });
+
     it("change role", async () => {
         await UserCtrl.changeRole(req, res);
         expect(repository.changeRole).toBeCalledWith(["test1", "test2"], Role.Editor);
@@ -176,6 +206,20 @@ describe("getUsers", () => {
 
         await UserCtrl.getUsers(req, res);
         expect(res.json).toBeCalledWith(expect.objectContaining([user]));
+    });
+
+    it("returns 500 internal server error when underline error", async () => {
+        const now = new Date();
+        jest.useFakeTimers("modern");
+        jest.setSystemTime(now);
+
+        repository.listUsers = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await UserCtrl.getUsers(req, res);
+        expect(res.status).toBeCalledWith(500);
+        expect(res.send).toBeCalledWith(expect.stringContaining("Internal Server Error"));
     });
 });
 

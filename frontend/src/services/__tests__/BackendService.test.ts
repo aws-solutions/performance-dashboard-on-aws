@@ -441,27 +441,27 @@ test("fetchUsers makes a GET request to users API", async () => {
 });
 
 test("addUsers makes a POST request to users API", async () => {
-    await BackendService.addUsers("Admin", ["test1@test.com", "test2@test.com"]);
+    await BackendService.addUsers("Admin", ["test1@example.com", "test2@example.com"]);
     expect(API.post).toHaveBeenCalledWith(
         "BackendApi",
         "user",
         expect.objectContaining({
             body: {
                 role: "Admin",
-                emails: "test1@test.com,test2@test.com",
+                emails: "test1@example.com,test2@example.com",
             },
         }),
     );
 });
 
 test("resendInvite makes a POST request to users API", async () => {
-    await BackendService.resendInvite(["test1@test.com", "test2@test.com"]);
+    await BackendService.resendInvite(["test1@example.com", "test2@example.com"]);
     expect(API.post).toHaveBeenCalledWith(
         "BackendApi",
         "user/invite",
         expect.objectContaining({
             body: {
-                emails: "test1@test.com,test2@test.com",
+                emails: "test1@example.com,test2@example.com",
             },
         }),
     );

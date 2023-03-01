@@ -6,7 +6,7 @@ for d in $dirs; do
     pushd $d
     if [ -f ./package.json ]; then
       echo "checking licenses in $d"
-      license-checker --production --exclude "$license"
+      ../node_modules/license-checker/bin/license-checker --production --exclude "$license"
     fi
     popd
 done

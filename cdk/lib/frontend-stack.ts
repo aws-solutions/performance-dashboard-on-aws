@@ -23,7 +23,7 @@ import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Construct } from "constructs";
 import { Code, Function, Runtime } from "aws-cdk-lib/aws-lambda";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
-import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { AnyPrincipal, Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Provider } from "aws-cdk-lib/custom-resources";
 import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
 import { authenticationRequiredParameter } from "./constructs/parameters";
@@ -57,6 +57,20 @@ export class FrontendStack extends Stack {
             blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
             versioned: false,
         });
+
+        this.frontendBucket.addToResourcePolicy(
+            new PolicyStatement({
+                effect: Effect.DENY,
+                actions: ["s3:*"],
+                principals: [new AnyPrincipal()],
+                resources: [this.frontendBucket.arnForObjects("*")],
+                conditions: {
+                    Bool: {
+                        "aws:SecureTransport": false,
+                    },
+                },
+            }),
+        );
 
         // Creating a custom response headers policy -- all parameters optional
         const httpHeaders = new ResponseHeadersPolicy(this, "HttpHeaders", {

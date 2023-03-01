@@ -6,11 +6,12 @@
 import { CfnOutput, CustomResource, Stack, StackProps } from "aws-cdk-lib";
 import { ExampleDashboardLambda } from "./constructs/exampledashboardlambda";
 import { Function } from "aws-cdk-lib/aws-lambda";
-import { Bucket, BucketEncryption } from "aws-cdk-lib/aws-s3";
+import { BlockPublicAccess, Bucket, BucketEncryption } from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Provider } from "aws-cdk-lib/custom-resources";
 import { exampleLanguageParameter } from "./constructs/parameters";
+import { AnyPrincipal, Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 interface DashboardExamplesProps extends StackProps {
     datasetsBucketName: string;
@@ -31,8 +32,23 @@ export class DashboardExamplesStack extends Stack {
 
         const exampleBucket = new Bucket(this, "ExampleBucket", {
             encryption: BucketEncryption.S3_MANAGED,
+            blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
             versioned: false,
         });
+
+        exampleBucket.addToResourcePolicy(
+            new PolicyStatement({
+                effect: Effect.DENY,
+                actions: ["s3:*"],
+                principals: [new AnyPrincipal()],
+                resources: [exampleBucket.arnForObjects("*")],
+                conditions: {
+                    Bool: {
+                        "aws:SecureTransport": false,
+                    },
+                },
+            }),
+        );
 
         const lambdas = new ExampleDashboardLambda(this, "SetupExampleDashboardLambda", {
             exampleBucketArn: exampleBucket.bucketArn,

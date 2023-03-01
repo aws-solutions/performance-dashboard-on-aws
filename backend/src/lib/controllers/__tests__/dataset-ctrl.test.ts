@@ -74,6 +74,14 @@ describe("getDatasetById", () => {
         expect(res.status).toBeCalledWith(404);
         expect(res.send).toBeCalledWith("Dataset not found");
     });
+
+    it("re-throws any generic error", async () => {
+        repository.getDatasetById = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await expect(DatasetCtrl.getDatasetById(req, res)).rejects.toEqual(new Error());
+    });
 });
 
 describe("createDataset", () => {
@@ -126,6 +134,15 @@ describe("createDataset", () => {
         expect(res.send).toBeCalledWith(
             "Unknown schema provided '&lt;script&gt;banana&lt;/script&gt;'",
         );
+    });
+
+    it("returns a 400 error if underline error", async () => {
+        repository.saveDataset = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+        await DatasetCtrl.createDataset(req, res);
+        expect(res.status).toBeCalledWith(400);
+        expect(res.send).toBeCalledWith("Unable to create dataset");
     });
 
     it("builds a new dataset object", async () => {

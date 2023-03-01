@@ -35,6 +35,23 @@ beforeEach(() => {
     } as any as Response;
 });
 
+describe("listDashboards", () => {
+    let req: Request;
+    const now = new Date();
+    jest.useFakeTimers("modern");
+    jest.setSystemTime(now);
+    beforeEach(() => {
+        req = {
+            user,
+        } as any as Request;
+    });
+
+    it("returns the dashboard", async () => {
+        await DashboardCtrl.listDashboards(req, res);
+        expect(repository.listDashboards).toHaveBeenCalled();
+    });
+});
+
 describe("createDashboard", () => {
     let req: Request;
     beforeEach(() => {
@@ -105,6 +122,14 @@ describe("getDashboardById", () => {
         expect(res.status).toBeCalledWith(404);
         expect(res.send).toBeCalledWith("Dashboard not found");
     });
+
+    it("re-throws any generic error", async () => {
+        repository.getDashboardWithWidgets = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await expect(DashboardCtrl.getDashboardById(req, res)).rejects.toEqual(new Error());
+    });
 });
 
 describe("updateDashboard", () => {
@@ -173,6 +198,14 @@ describe("updateDashboard", () => {
             now.toISOString(),
             user,
         );
+    });
+
+    it("re-throws any generic error", async () => {
+        topicareaRepo.getTopicAreaById = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await expect(DashboardCtrl.updateDashboard(req, res)).rejects.toEqual(new Error());
     });
 });
 
@@ -672,6 +705,14 @@ describe("getPublicDashboardById", () => {
         expect(res.status).toBeCalledWith(404);
         expect(res.send).toBeCalledWith("Dashboard not found");
     });
+
+    it("re-throws any generic error", async () => {
+        repository.getDashboardWithWidgets = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await expect(DashboardCtrl.getPublicDashboardById(req, res)).rejects.toEqual(new Error());
+    });
 });
 
 describe("createNewDraft", () => {
@@ -794,6 +835,14 @@ describe("getVersions", () => {
         expect(res.status).toBeCalledWith(404);
         expect(res.send).toBeCalledWith("Dashboard versions not found");
     });
+
+    it("re-throws any generic error", async () => {
+        repository.getDashboardVersions = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await expect(DashboardCtrl.getVersions(req, res)).rejects.toEqual(new Error());
+    });
 });
 
 describe("getPublicDashboardByFriendlyURL", () => {
@@ -854,6 +903,16 @@ describe("getPublicDashboardByFriendlyURL", () => {
         await DashboardCtrl.getPublicDashboardByFriendlyURL(req, res);
         expect(res.status).toBeCalledWith(404);
         expect(res.send).toBeCalledWith("Dashboard not found");
+    });
+
+    it("re-throws any generic error", async () => {
+        repository.getDashboardByFriendlyURL = jest.fn().mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        await expect(DashboardCtrl.getPublicDashboardByFriendlyURL(req, res)).rejects.toEqual(
+            new Error(),
+        );
     });
 });
 

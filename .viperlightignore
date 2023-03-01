@@ -18,11 +18,6 @@ frontend/src/containers/__tests__/PublishingGuidanceSettings.test.tsx:28
 
 frontend/src/locales/en/translation.json:536
 
-frontend/src/services/__tests__/BackendService.test.ts:444
-frontend/src/services/__tests__/BackendService.test.ts:451
-frontend/src/services/__tests__/BackendService.test.ts:458
-frontend/src/services/__tests__/BackendService.test.ts:464
-
 node_modules/*
 
 README.md:63

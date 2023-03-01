@@ -8,21 +8,18 @@ import { Effect, PolicyStatement, AnyPrincipal } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 
 interface Props {
-    contentBucketName: string;
-    serverAccessLogsBucket: Bucket;
+    bucketName: string;
 }
 
-export class ContentStorage extends Construct {
-    public readonly contentBucket: Bucket;
+export class ServerAccessLogsStorage extends Construct {
+    public readonly serverAccessLogsBucket: Bucket;
 
     constructor(scope: Construct, id: string, props: Props) {
         super(scope, id);
 
-        this.contentBucket = new Bucket(scope, "ContentBucket", {
+        this.serverAccessLogsBucket = new Bucket(scope, "ServerAccessLogsBucket", {
             encryption: BucketEncryption.S3_MANAGED,
             versioned: true,
-            serverAccessLogsBucket: props.serverAccessLogsBucket,
-            serverAccessLogsPrefix: "content_bucket/",
             accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
 
             /**
@@ -33,13 +30,8 @@ export class ContentStorage extends Construct {
              * Source:
              * https://aws.amazon.com/blogs/infrastructure-and-automation/handling-circular-dependency-errors-in-aws-cloudformation
              *
-             * In this case, this bucket is being referenced in the Auth stack to give
-             * Cognito Auth Role permissions to read/write to it, but the Backend stack
-             * already has a dependency on the Auth stack due to the Cognito User Pool,
-             * hence we cannot make the Auth stack depend on the Backend stack or a
-             * circular dependency is created.
              */
-            bucketName: props.contentBucketName,
+            bucketName: props.bucketName,
             /**
              * CORS policy taken from Amplify Docs.
              * This bucket policy allows file uploads from the web browser.
@@ -68,12 +60,12 @@ export class ContentStorage extends Construct {
             ],
         });
 
-        this.contentBucket.addToResourcePolicy(
+        this.serverAccessLogsBucket.addToResourcePolicy(
             new PolicyStatement({
                 effect: Effect.DENY,
                 actions: ["s3:*"],
                 principals: [new AnyPrincipal()],
-                resources: [this.contentBucket.arnForObjects("*")],
+                resources: [this.serverAccessLogsBucket.arnForObjects("*")],
                 conditions: {
                     Bool: {
                         "aws:SecureTransport": false,

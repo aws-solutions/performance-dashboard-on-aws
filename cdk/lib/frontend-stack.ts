@@ -36,6 +36,7 @@ interface Props extends StackProps {
     appClientId: string;
     backendApiUrl: string;
     adminEmail: string;
+    serverAccessLogsBucket: Bucket;
 }
 
 export class FrontendStack extends Stack {
@@ -52,7 +53,8 @@ export class FrontendStack extends Stack {
          */
         this.frontendBucket = new Bucket(this, "ReactApp", {
             encryption: BucketEncryption.S3_MANAGED,
-            serverAccessLogsPrefix: "access_logs/",
+            serverAccessLogsBucket: props.serverAccessLogsBucket,
+            serverAccessLogsPrefix: "reactapp_bucket/",
             accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
             blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
             versioned: false,

@@ -24,6 +24,7 @@ const accountId = Aws.ACCOUNT_ID;
 const region = Aws.REGION;
 const datasetsBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-datasets`;
 const contentBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-content`;
+const serverAccessLogsBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-logs`;
 
 const auth = new AuthStack(app, "Auth", {
     stackName: stackPrefix.concat("-Auth"),
@@ -57,6 +58,7 @@ const backend = new BackendStack(app, "Backend", {
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
+    serverAccessLogsBucketName,
 });
 
 const frontend = new FrontendStack(app, "Frontend", {
@@ -71,6 +73,7 @@ const frontend = new FrontendStack(app, "Frontend", {
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
+    serverAccessLogsBucket: backend.serverAccessLogsBucket,
 });
 
 const operations = new OpsStack(app, "Ops", {
@@ -101,6 +104,7 @@ const examples = new DashboardExamplesStack(app, "DashboardExamples", {
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
+    serverAccessLogsBucket: backend.serverAccessLogsBucket,
 });
 
 operations.associateAppWithOtherStacks([auth, authz, backend, frontend, examples]);

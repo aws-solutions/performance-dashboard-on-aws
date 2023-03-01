@@ -19,6 +19,7 @@ interface DashboardExamplesProps extends StackProps {
     databaseTableName: string;
     databaseTableArn: string;
     adminEmail: string;
+    serverAccessLogsBucket: Bucket;
 }
 
 export class DashboardExamplesStack extends Stack {
@@ -33,6 +34,8 @@ export class DashboardExamplesStack extends Stack {
         const exampleBucket = new Bucket(this, "ExampleBucket", {
             encryption: BucketEncryption.S3_MANAGED,
             blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+            serverAccessLogsBucket: props.serverAccessLogsBucket,
+            serverAccessLogsPrefix: "example_bucket/",
             versioned: false,
         });
 

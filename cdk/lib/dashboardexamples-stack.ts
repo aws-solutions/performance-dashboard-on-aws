@@ -58,20 +58,6 @@ export class DashboardExamplesStack extends Stack {
             noncurrentVersionExpiration: Duration.days(90),
         });
 
-        exampleBucket.addToResourcePolicy(
-            new PolicyStatement({
-                effect: Effect.DENY,
-                actions: ["s3:*"],
-                principals: [new AnyPrincipal()],
-                resources: [exampleBucket.arnForObjects("*")],
-                conditions: {
-                    Bool: {
-                        "aws:SecureTransport": false,
-                    },
-                },
-            }),
-        );
-
         const lambdas = new ExampleDashboardLambda(this, "SetupExampleDashboardLambda", {
             exampleBucketArn: exampleBucket.bucketArn,
             exampleBucketName: exampleBucket.bucketName,

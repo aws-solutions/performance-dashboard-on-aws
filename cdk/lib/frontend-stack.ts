@@ -79,20 +79,6 @@ export class FrontendStack extends Stack {
             noncurrentVersionExpiration: Duration.days(90),
         });
 
-        this.frontendBucket.addToResourcePolicy(
-            new PolicyStatement({
-                effect: Effect.DENY,
-                actions: ["s3:*"],
-                principals: [new AnyPrincipal()],
-                resources: [this.frontendBucket.arnForObjects("*")],
-                conditions: {
-                    Bool: {
-                        "aws:SecureTransport": false,
-                    },
-                },
-            }),
-        );
-
         // Creating a custom response headers policy -- all parameters optional
         const httpHeaders = new ResponseHeadersPolicy(this, "HttpHeaders", {
             securityHeadersBehavior: {

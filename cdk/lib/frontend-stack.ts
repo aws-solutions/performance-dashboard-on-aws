@@ -23,7 +23,7 @@ import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Construct } from "constructs";
 import { Code, Function, Runtime } from "aws-cdk-lib/aws-lambda";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
-import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { AnyPrincipal, Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Provider } from "aws-cdk-lib/custom-resources";
 import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
 import { authenticationRequiredParameter } from "./constructs/parameters";
@@ -36,6 +36,7 @@ interface Props extends StackProps {
     appClientId: string;
     backendApiUrl: string;
     adminEmail: string;
+    serverAccessLogsBucket: Bucket;
 }
 
 export class FrontendStack extends Stack {
@@ -52,10 +53,30 @@ export class FrontendStack extends Stack {
          */
         this.frontendBucket = new Bucket(this, "ReactApp", {
             encryption: BucketEncryption.S3_MANAGED,
-            serverAccessLogsPrefix: "access_logs/",
+            serverAccessLogsBucket: props.serverAccessLogsBucket,
+            serverAccessLogsPrefix: "reactapp_bucket/",
             accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
             blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-            versioned: false,
+            versioned: true,
+        });
+
+        this.frontendBucket.addToResourcePolicy(
+            new PolicyStatement({
+                effect: Effect.DENY,
+                actions: ["s3:*"],
+                principals: [new AnyPrincipal()],
+                resources: [this.frontendBucket.arnForObjects("*")],
+                conditions: {
+                    Bool: {
+                        "aws:SecureTransport": false,
+                    },
+                },
+            }),
+        );
+
+        this.frontendBucket.addLifecycleRule({
+            enabled: true,
+            noncurrentVersionExpiration: Duration.days(90),
         });
 
         // Creating a custom response headers policy -- all parameters optional

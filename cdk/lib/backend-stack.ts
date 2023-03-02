@@ -14,6 +14,8 @@ import { Table } from "aws-cdk-lib/aws-dynamodb";
 import { RestApi } from "aws-cdk-lib/aws-apigateway";
 import { Construct } from "constructs";
 import { authenticationRequiredParameter } from "./constructs/parameters";
+import { Bucket } from "aws-cdk-lib/aws-s3";
+import { ServerAccessLogsStorage } from "./constructs/serveraccesslogstorage";
 
 interface BackendStackProps extends StackProps {
     userPool: {
@@ -22,6 +24,7 @@ interface BackendStackProps extends StackProps {
     };
     datasetsBucketName: string;
     contentBucketName: string;
+    serverAccessLogsBucketName: string;
 }
 
 export class BackendStack extends Stack {
@@ -32,6 +35,7 @@ export class BackendStack extends Stack {
     public readonly auditTrailTable: Table;
     public readonly restApi: RestApi;
     public readonly datasetsBucketArn: string;
+    public readonly serverAccessLogsBucket: Bucket;
 
     constructor(scope: Construct, id: string, props: BackendStackProps) {
         super(scope, id, props);
@@ -42,12 +46,22 @@ export class BackendStack extends Stack {
             expression: Fn.conditionEquals(authenticationRequired, "yes"),
         });
 
+        const serveraccesslogStorage = new ServerAccessLogsStorage(
+            this,
+            "ServerAccessLogsStorage",
+            {
+                bucketName: props.serverAccessLogsBucketName,
+            },
+        );
+
         const dataStorage = new DatasetStorage(this, "DatasetStorage", {
             datasetsBucketName: props.datasetsBucketName,
+            serverAccessLogsBucket: serveraccesslogStorage.serverAccessLogsBucket,
         });
 
         const contentStorage = new ContentStorage(this, "ContentStorage", {
             contentBucketName: props.contentBucketName,
+            serverAccessLogsBucket: serveraccesslogStorage.serverAccessLogsBucket,
         });
 
         const database = new Database(this, "Database");
@@ -76,6 +90,7 @@ export class BackendStack extends Stack {
         this.mainTable = database.mainTable;
         this.restApi = backendApi.api;
         this.datasetsBucketArn = dataStorage.datasetsBucket.bucketArn;
+        this.serverAccessLogsBucket = serveraccesslogStorage.serverAccessLogsBucket;
 
         new CfnOutput(this, "ApiGatewayEndpoint", {
             value: this.restApi.url,

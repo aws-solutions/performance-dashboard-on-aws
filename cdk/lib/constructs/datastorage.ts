@@ -9,6 +9,7 @@ import { Construct } from "constructs";
 
 interface Props {
     datasetsBucketName: string;
+    serverAccessLogsBucket: Bucket;
 }
 
 export class DatasetStorage extends Construct {
@@ -20,7 +21,8 @@ export class DatasetStorage extends Construct {
         this.datasetsBucket = new Bucket(scope, "DatasetsBucket", {
             encryption: BucketEncryption.S3_MANAGED,
             versioned: true,
-            serverAccessLogsPrefix: "access_logs/",
+            serverAccessLogsBucket: props.serverAccessLogsBucket,
+            serverAccessLogsPrefix: "datasets_bucket/",
             accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
 
             /**

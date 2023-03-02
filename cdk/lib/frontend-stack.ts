@@ -57,7 +57,7 @@ export class FrontendStack extends Stack {
             serverAccessLogsPrefix: "reactapp_bucket/",
             accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
             blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-            versioned: false,
+            versioned: true,
         });
 
         this.frontendBucket.addToResourcePolicy(
@@ -73,6 +73,11 @@ export class FrontendStack extends Stack {
                 },
             }),
         );
+
+        this.frontendBucket.addLifecycleRule({
+            enabled: true,
+            noncurrentVersionExpiration: Duration.days(90),
+        });
 
         // Creating a custom response headers policy -- all parameters optional
         const httpHeaders = new ResponseHeadersPolicy(this, "HttpHeaders", {

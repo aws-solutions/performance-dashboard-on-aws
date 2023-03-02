@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { CfnOutput, CustomResource, Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, CustomResource, Duration, Stack, StackProps } from "aws-cdk-lib";
 import { ExampleDashboardLambda } from "./constructs/exampledashboardlambda";
 import { Function } from "aws-cdk-lib/aws-lambda";
 import { BlockPublicAccess, Bucket, BucketEncryption } from "aws-cdk-lib/aws-s3";
@@ -36,7 +36,7 @@ export class DashboardExamplesStack extends Stack {
             blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
             serverAccessLogsBucket: props.serverAccessLogsBucket,
             serverAccessLogsPrefix: "example_bucket/",
-            versioned: false,
+            versioned: true,
         });
 
         exampleBucket.addToResourcePolicy(
@@ -52,6 +52,11 @@ export class DashboardExamplesStack extends Stack {
                 },
             }),
         );
+
+        exampleBucket.addLifecycleRule({
+            enabled: true,
+            noncurrentVersionExpiration: Duration.days(90),
+        });
 
         const lambdas = new ExampleDashboardLambda(this, "SetupExampleDashboardLambda", {
             exampleBucketArn: exampleBucket.bucketArn,

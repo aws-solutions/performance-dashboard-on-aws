@@ -117,7 +117,7 @@ exports[`renders an empty box 1`] = `
                     title="The benefits of bananas"
                   >
                     <div
-                      class="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis text-bold"
+                      class="margin-left-1 text-wrap text-bold"
                     >
                       <a
                         aria-label="Edit The benefits of bananas"
@@ -270,7 +270,7 @@ exports[`renders an empty box 1`] = `
                     title="The benefits of wine"
                   >
                     <div
-                      class="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis text-bold"
+                      class="margin-left-1 text-wrap text-bold"
                     >
                       <a
                         aria-label="Edit The benefits of wine"

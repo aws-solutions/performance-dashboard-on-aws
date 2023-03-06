@@ -29,17 +29,9 @@ function Tab(props: Props) {
 
     let className = `${styles.tab} display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md`;
 
-    let ariaLabelStr = `${t("Tab")} ${props.label.split("(")[0]}`;
-
-    if (props.activeTab === props.itemId) {
-        className += " border-bottom-05 border-base-darker";
-        ariaLabelStr = `${t("Active")} ${ariaLabelStr}`;
-    }
-
     return (
         <div
             id={`${props.itemId}-tab`}
-            aria-label={ariaLabelStr}
             aria-controls={`${props.itemId}-panel`}
             aria-selected={props.activeTab === props.itemId}
             role="tab"

@@ -4,7 +4,6 @@ exports[`renders the Tab component 1`] = `
 <div>
   <div
     aria-controls="undefined-panel"
-    aria-label="Tab Tab 1"
     aria-selected="false"
     class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
     id="undefined-tab"
@@ -20,7 +19,6 @@ exports[`renders the Tab component with default tab 2 selected 1`] = `
 <div>
   <div
     aria-controls="undefined-panel"
-    aria-label="Tab Tab 1"
     aria-selected="false"
     class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
     id="undefined-tab"

@@ -511,8 +511,8 @@ describe("Update Modal", () => {
         });
         expect(createDraftButton).toBeInTheDocument();
 
-        const cancelButton = screen.getByRole("button", { name: "Cancel" });
-        expect(cancelButton).toBeInTheDocument();
+        const closeButton = screen.getByRole("button", { name: "Close" });
+        expect(closeButton).toBeInTheDocument();
     });
 
     test("do click on 'Create draft' button submits the draft to the backend service", async () => {
@@ -525,10 +525,10 @@ describe("Update Modal", () => {
         expect(BackendService.createDraft).toHaveBeenCalled();
     });
 
-    test("do click on 'Cancel' do not submit the draft to the backend service", async () => {
-        const cancelButton = screen.getByRole("button", { name: "Cancel" });
+    test("do click on 'Close' do not submit the draft to the backend service", async () => {
+        const closeButton = screen.getByRole("button", { name: "Close" });
 
-        fireEvent.click(cancelButton);
+        fireEvent.click(closeButton);
 
         expect(BackendService.createDraft).toHaveBeenCalledTimes(0);
     });
@@ -579,8 +579,8 @@ describe("Archive Modal", () => {
         const archiveButton = screen.getByRole("button", { name: "Archive" });
         expect(archiveButton).toBeInTheDocument();
 
-        const cancelButton = screen.getByRole("button", { name: "Cancel" });
-        expect(cancelButton).toBeInTheDocument();
+        const closeButton = screen.getByRole("button", { name: "Close" });
+        expect(closeButton).toBeInTheDocument();
     });
 
     test("do click on 'Archive' button submits the archive to the backend service", async () => {
@@ -591,10 +591,10 @@ describe("Archive Modal", () => {
         expect(BackendService.archive).toHaveBeenCalled();
     });
 
-    test("do click on 'Cancel' do not submit the archive to the backend service", async () => {
-        const cancelButton = screen.getByRole("button", { name: "Cancel" });
+    test("do click on 'Close' do not submit the archive to the backend service", async () => {
+        const closeButton = screen.getByRole("button", { name: "Close" });
 
-        fireEvent.click(cancelButton);
+        fireEvent.click(closeButton);
 
         expect(BackendService.archive).toHaveBeenCalledTimes(0);
     });
@@ -645,8 +645,8 @@ describe("Copy Modal", () => {
         const copyButton = screen.getByRole("button", { name: "Copy" });
         expect(copyButton).toBeInTheDocument();
 
-        const cancelButton = screen.getByRole("button", { name: "Cancel" });
-        expect(cancelButton).toBeInTheDocument();
+        const closeButton = screen.getByRole("button", { name: "Close" });
+        expect(closeButton).toBeInTheDocument();
     });
 
     test("do click on 'Copy' button submits the copy to the backend service", async () => {
@@ -657,12 +657,12 @@ describe("Copy Modal", () => {
         expect(BackendService.copyDashboard).toHaveBeenCalled();
     });
 
-    test("do click on 'Cancel' do not submit the copy to the backend service", async () => {
-        //Cancel Button inside Copy Modal
-        const cancelButton = screen.getByRole("button", { name: "Cancel" });
+    test("do click on 'Close' do not submit the copy to the backend service", async () => {
+        //Close Button inside Copy Modal
+        const closeButton = screen.getByRole("button", { name: "Close" });
 
-        //do click on Cancel button
-        fireEvent.click(cancelButton);
+        //do click on Close button
+        fireEvent.click(closeButton);
 
         expect(BackendService.copyDashboard).toHaveBeenCalledTimes(0);
     });
@@ -709,8 +709,8 @@ describe("Re-publish Modal", () => {
         });
         expect(rePublishButton).toBeInTheDocument();
 
-        const cancelButton = screen.getByRole("button", { name: "Cancel" });
-        expect(cancelButton).toBeInTheDocument();
+        const closeButton = screen.getByRole("button", { name: "Close" });
+        expect(closeButton).toBeInTheDocument();
     });
 
     test("do click on 'Re-publish' button submits the publish action to the backend service", async () => {
@@ -724,10 +724,10 @@ describe("Re-publish Modal", () => {
         expect(BackendService.publishDashboard).toHaveBeenCalled();
     });
 
-    test("do click on 'Cancel' do not submit the publish action to the backend service", async () => {
-        const cancelButton = screen.getByRole("button", { name: "Cancel" });
+    test("do click on 'Close' do not submit the publish action to the backend service", async () => {
+        const closeButton = screen.getByRole("button", { name: "Close" });
 
-        fireEvent.click(cancelButton);
+        fireEvent.click(closeButton);
 
         expect(BackendService.publishDashboard).toHaveBeenCalledTimes(0);
     });

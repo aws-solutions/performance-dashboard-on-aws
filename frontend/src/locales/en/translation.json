@@ -1114,5 +1114,6 @@
     "ChartAriaLabels": {
         "DetailPopoverDismissAriaLabel": "Dismiss",
         "LegendAriaLabel": "Legend"
-    }
+    },
+    "GlobalRemove": "Remove"
 }

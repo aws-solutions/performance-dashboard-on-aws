@@ -25,7 +25,7 @@ exports[`renders a create draft type Modal 1`] = `
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content modal"
+        class="ReactModal__Content modal usa-modal"
         role="dialog"
         tabindex="-1"
       >
@@ -47,6 +47,7 @@ exports[`renders a create draft type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
+              aria-label="Close"
               class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
@@ -66,7 +67,6 @@ exports[`renders a create draft type Modal 1`] = `
                   fill="currentColor"
                 />
               </svg>
-              Close
             </button>
           </div>
         </div>
@@ -81,12 +81,6 @@ exports[`renders a create draft type Modal 1`] = `
           type="button"
         >
           Create draft
-        </button>
-        <button
-          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-          type="button"
-        >
-          Cancel
         </button>
       </div>
     </div>
@@ -119,7 +113,7 @@ exports[`renders a delete type Modal 1`] = `
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content modal"
+        class="ReactModal__Content modal usa-modal"
         role="dialog"
         tabindex="-1"
       >
@@ -141,6 +135,7 @@ exports[`renders a delete type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
+              aria-label="Close"
               class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
@@ -160,7 +155,6 @@ exports[`renders a delete type Modal 1`] = `
                   fill="currentColor"
                 />
               </svg>
-              Close
             </button>
           </div>
         </div>
@@ -175,12 +169,6 @@ exports[`renders a delete type Modal 1`] = `
           type="button"
         >
           Delete
-        </button>
-        <button
-          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-          type="button"
-        >
-          Cancel
         </button>
       </div>
     </div>
@@ -213,7 +201,7 @@ exports[`renders a publish type Modal 1`] = `
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content modal"
+        class="ReactModal__Content modal usa-modal"
         role="dialog"
         tabindex="-1"
       >
@@ -235,6 +223,7 @@ exports[`renders a publish type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
+              aria-label="Close"
               class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
@@ -254,7 +243,6 @@ exports[`renders a publish type Modal 1`] = `
                   fill="currentColor"
                 />
               </svg>
-              Close
             </button>
           </div>
         </div>
@@ -269,12 +257,6 @@ exports[`renders a publish type Modal 1`] = `
           type="button"
         >
           Prepare for publishing
-        </button>
-        <button
-          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-          type="button"
-        >
-          Cancel
         </button>
       </div>
     </div>
@@ -307,7 +289,7 @@ exports[`renders a re-publish type Modal 1`] = `
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content modal"
+        class="ReactModal__Content modal usa-modal"
         role="dialog"
         tabindex="-1"
       >
@@ -329,6 +311,7 @@ exports[`renders a re-publish type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
+              aria-label="Close"
               class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
@@ -348,7 +331,6 @@ exports[`renders a re-publish type Modal 1`] = `
                   fill="currentColor"
                 />
               </svg>
-              Close
             </button>
           </div>
         </div>
@@ -363,12 +345,6 @@ exports[`renders a re-publish type Modal 1`] = `
           type="button"
         >
           Re-publish
-        </button>
-        <button
-          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-          type="button"
-        >
-          Cancel
         </button>
       </div>
     </div>
@@ -401,7 +377,7 @@ exports[`renders an archive type Modal 1`] = `
         aria-describedby="message"
         aria-labelledby="title"
         aria-modal="true"
-        class="ReactModal__Content modal"
+        class="ReactModal__Content modal usa-modal"
         role="dialog"
         tabindex="-1"
       >
@@ -423,6 +399,7 @@ exports[`renders an archive type Modal 1`] = `
             class="float-right font-sans-md"
           >
             <button
+              aria-label="Close"
               class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
               type="button"
             >
@@ -442,7 +419,6 @@ exports[`renders an archive type Modal 1`] = `
                   fill="currentColor"
                 />
               </svg>
-              Close
             </button>
           </div>
         </div>
@@ -457,12 +433,6 @@ exports[`renders an archive type Modal 1`] = `
           type="button"
         >
           Archive
-        </button>
-        <button
-          class="usa-button usa-button--unstyled margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-          type="button"
-        >
-          Cancel
         </button>
       </div>
     </div>

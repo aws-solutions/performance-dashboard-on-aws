@@ -29,7 +29,7 @@ function Modal(props: PathParams) {
             onRequestClose={() => {
                 props.closeModal();
             }}
-            className="modal"
+            className="modal usa-modal"
             overlayClassName="overlay"
             shouldFocusAfterRender={true}
             shouldReturnFocusAfterClose={true}
@@ -57,6 +57,7 @@ function Modal(props: PathParams) {
                         type="button"
                         className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
                         onClick={props.closeModal}
+                        ariaLabel={t("GlobalClose")}
                     >
                         <FontAwesomeIcon
                             icon={faTimes}
@@ -64,7 +65,6 @@ function Modal(props: PathParams) {
                             size="1x"
                             style={{ marginTop: "5px" }}
                         />
-                        {t("GlobalClose")}
                     </Button>
                 </div>
             </div>
@@ -74,14 +74,6 @@ function Modal(props: PathParams) {
 
             <Button type="button" variant="base" onClick={props.buttonAction}>
                 {props.buttonType}
-            </Button>
-            <Button
-                variant="unstyled"
-                type="button"
-                className="margin-left-1 text-base-dark hover:text-base-darker active:text-base-darkest"
-                onClick={props.closeModal}
-            >
-                {t("Cancel")}
             </Button>
         </ReactModal>
     );

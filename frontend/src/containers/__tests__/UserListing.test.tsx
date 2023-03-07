@@ -81,7 +81,7 @@ test("remove user button deletes selected users", async () => {
 
     // Wait for confirmation modal to show
     await screen.findByText("Are you sure you want to remove 1 user?");
-    const deleteButton = screen.getByRole("button", { name: "Delete" });
+    const deleteButton = screen.getByRole("button", { name: "Remove" });
     await act(async () => {
         fireEvent.click(deleteButton);
     });

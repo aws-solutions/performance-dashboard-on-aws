@@ -145,7 +145,7 @@ function UserListing() {
                 message={t("UserListingActionsRemoveUsersMessage", {
                     count: selected.length,
                 })}
-                buttonType={t("GlobalDelete")}
+                buttonType={t("GlobalRemove")}
                 buttonAction={removeUsers}
             />
             <p>

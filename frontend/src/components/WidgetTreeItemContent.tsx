@@ -104,7 +104,7 @@ const WidgetTreeItemContent = ({
                         data-position="bottom"
                         title={widget.name}
                     >
-                        <div className="margin-left-1 text-no-wrap overflow-hidden text-overflow-ellipsis text-bold">
+                        <div className="margin-left-1 text-wrap text-bold">
                             <Link
                                 ariaLabel={t("EditContent", {
                                     name: widget.name,

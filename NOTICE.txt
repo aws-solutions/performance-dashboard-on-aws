@@ -19,6 +19,8 @@ This software includes third party software subject to the following copyrights:
 @aws-cdk/aws-servicecatalogappregistry-alpha@2.60.0-alpha.0 under the Apache-2.0
 @cloudscape-design/components@3.0.159 under the Apache-2.0
 @cloudscape-design/global-styles@1.0.6 under the Apache-2.0
+@commitlint/cli@17.3.0 under the MIT
+@commitlint/config-conventional@17.3.0 under the MIT
 @fortawesome/fontawesome-svg-core@1.2.36 under the MIT
 @fortawesome/free-solid-svg-icons@5.15.4 under the (CC-BY-4.0 AND MIT)
 @fortawesome/react-fontawesome@0.1.19 under the MIT
@@ -72,8 +74,10 @@ aws-serverless-express@3.4.0 under the Apache-2.0
 aws-xray-sdk@3.3.7 under the Apache-2.0
 aws-xray-sdk@3.4.0 under the Apache-2.0
 cdk-nag@2.21.43 under the Apache-2.0
+commitizen@4.2.6 under the MIT
 constructs@10.1.198 under the Apache-2.0
 cors@2.8.5 under the MIT
+cz-conventional-changelog@3.3.0 under the MIT
 d3-interpolate@3.0.1 under the ISC
 d3-scale@4.0.2 under the ISC
 dayjs@1.11.7 under the MIT
@@ -95,12 +99,14 @@ husky@8.0.2 under the MIT
 i18next@19.9.2 under the MIT
 jest@27.5.1 under the MIT
 jsonschema@1.4.1 under the MIT
-license-report@6.3.0 under MIT
+license-checker@25.0.1 under the BSD-3-Clause
+license-report@6.3.0 under the MIT
 lint-staged@13.1.0 under the MIT
 mutationobserver-shim@0.3.7 under the MIT
 papaparse@5.3.2 under the MIT
 performance-dashboard-backend@1.8.0 under the Apache-2.0
 pino@6.14.0 under the MIT
+prettier@2.8.0 under the MIT
 prettier@2.8.1 under the MIT
 prompts@2.4.2 under the MIT
 react-beautiful-dnd@13.1.1 under the Apache-2.0

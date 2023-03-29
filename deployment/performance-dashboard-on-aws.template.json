@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "(SO0157) Performance Dashboard on AWS Solution Implementation v1.8.0",
+    "Description": "(SO0157) Performance Dashboard on AWS Solution Implementation v1.9.0",
     "Parameters": {
         "AdminEmail": {
             "Type": "String",
@@ -18,6 +18,10 @@
             "Default": "english",
             "AllowedValues": ["english", "spanish", "portuguese"],
             "Description": "Language for example dashboards"
+        },
+        "DomainName": {
+            "Type": "String",
+            "Description": "Domain name of the public url (www.example.com). The certificate for the given domain must exists. Value can be empty if no domain required."
         }
     },
     "Resources": {
@@ -53,9 +57,23 @@
                 }
             }
         },
+        "frontendStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": {
+                    "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Frontend.template"
+                },
+                "TimeoutInMinutes": "60",
+                "Parameters": {
+                    "domainName": {
+                        "Ref": "DomainName"
+                    }
+                }
+            }
+        },
         "backendStack": {
             "Type": "AWS::CloudFormation::Stack",
-            "DependsOn": "authStack",
+            "DependsOn": ["authStack", "frontendStack"],
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Backend.template"
@@ -64,16 +82,19 @@
                 "Parameters": {
                     "authenticationRequired": {
                         "Ref": "AuthenticationRequired"
+                    },
+                    "domainName": {
+                        "Ref": "DomainName"
                     }
                 }
             }
         },
-        "frontendStack": {
+        "frontendConfigStack": {
             "Type": "AWS::CloudFormation::Stack",
-            "DependsOn": ["backendStack", "authzStack", "authStack"],
+            "DependsOn": ["backendStack", "frontendStack", "authzStack", "authStack"],
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/Frontend.template"
+                    "Fn::Sub": "https://%%BUCKET_NAME%%-${AWS::Region}.s3.amazonaws.com/%%SOLUTION_NAME%%/%%VERSION%%/FrontendConfig.template"
                 },
                 "TimeoutInMinutes": "60",
                 "Parameters": {
@@ -103,8 +124,9 @@
             "DependsOn": [
                 "authStack",
                 "authzStack",
-                "backendStack",
                 "frontendStack",
+                "backendStack",
+                "frontendConfigStack",
                 "examplesStack"
             ],
             "Properties": {

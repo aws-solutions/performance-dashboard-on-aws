@@ -5,6 +5,7 @@
 
 import API from "@aws-amplify/api";
 import Auth from "@aws-amplify/auth";
+import { OutgoingHttpHeaders } from "http2";
 import {
     Dashboard,
     DashboardVersion,
@@ -25,6 +26,24 @@ async function authHeaders() {
     return {
         Authorization: "Bearer ".concat(token),
     };
+}
+
+async function fetchCsrfToken(): Promise<string> {
+    let headers = {};
+    if (window.EnvironmentConfig?.authenticationRequired) {
+        headers = await authHeaders();
+    }
+    const data = await API.get(apiName, `${publicPath}/csrf-token`, {
+        headers,
+        withCredentials: true,
+    });
+    return data.token;
+}
+
+async function addCsrfToken(headers: OutgoingHttpHeaders) {
+    const token = await fetchCsrfToken();
+    headers["x-csrf-token"] = token;
+    return headers;
 }
 
 async function getAuthToken() {
@@ -105,8 +124,10 @@ async function fetchWidgets(dashboardId: string) {
 
 async function createDashboard(name: string, topicAreaId: string, description: string) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.post(apiName, "dashboard", {
         headers,
+        withCredentials: true,
         body: {
             name,
             topicAreaId,
@@ -125,8 +146,10 @@ async function editDashboard(
     tableOfContents?: any,
 ) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, `dashboard/${dashboardId}`, {
         headers,
+        withCredentials: true,
         body: {
             name,
             topicAreaId,
@@ -145,8 +168,10 @@ async function publishDashboard(
     friendlyURL?: string,
 ) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, `dashboard/${dashboardId}/publish`, {
         headers,
+        withCredentials: true,
         body: {
             updatedAt,
             releaseNotes,
@@ -157,15 +182,19 @@ async function publishDashboard(
 
 async function deleteDashboards(dashboards: Array<string>) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.del(apiName, `dashboard?ids=${dashboards.join(",")}`, {
         headers,
+        withCredentials: true,
     });
 }
 
 async function createTopicArea(name: string) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.post(apiName, "topicarea", {
         headers,
+        withCredentials: true,
         body: {
             name,
         },
@@ -174,8 +203,10 @@ async function createTopicArea(name: string) {
 
 async function renameTopicArea(topicAreaId: string, name: string) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, `topicarea/${topicAreaId}`, {
         headers,
+        withCredentials: true,
         body: {
             name,
         },
@@ -184,15 +215,19 @@ async function renameTopicArea(topicAreaId: string, name: string) {
 
 async function deleteTopicArea(topicareaId: string) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.del(apiName, `topicarea/${topicareaId}`, {
         headers,
+        withCredentials: true,
     });
 }
 
 async function archive(dashboardId: string, lastUpdatedAt: Date): Promise<Dashboard> {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, `dashboard/${dashboardId}/archive`, {
         headers,
+        withCredentials: true,
         body: {
             updatedAt: lastUpdatedAt,
         },
@@ -207,8 +242,10 @@ async function createWidget(
     content: object,
 ) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.post(apiName, `dashboard/${dashboardId}/widget`, {
         headers,
+        withCredentials: true,
         body: {
             name,
             widgetType,
@@ -227,8 +264,10 @@ async function editWidget(
     updatedAt: Date,
 ) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, `dashboard/${dashboardId}/widget/${widgetId}`, {
         headers,
+        withCredentials: true,
         body: {
             name,
             showTitle,
@@ -245,8 +284,10 @@ async function duplicateWidget(
     copyLabel: string,
 ) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.post(apiName, `dashboard/${dashboardId}/widget/${widgetId}`, {
         headers,
+        withCredentials: true,
         body: {
             updatedAt,
             copyLabel,
@@ -257,8 +298,10 @@ async function duplicateWidget(
 async function deleteWidget(dashboardId: string, widgetId: string) {
     const headers = await authHeaders();
     const url = `dashboard/${dashboardId}/widget/${widgetId}`;
+    await addCsrfToken(headers);
     return API.del(apiName, url, {
         headers,
+        withCredentials: true,
     });
 }
 
@@ -271,8 +314,10 @@ async function setWidgetOrder(dashboardId: string, widgets: Array<Widget>): Prom
         section: widget.section,
         content: widget.content,
     }));
+    await addCsrfToken(headers);
     return API.put(apiName, `dashboard/${dashboardId}/widgetorder`, {
         headers,
+        withCredentials: true,
         body: {
             widgets: payload,
         },
@@ -290,8 +335,10 @@ async function createDataset(
     schema = DatasetSchema.None,
 ): Promise<Dataset> {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.post(apiName, "dataset", {
         headers,
+        withCredentials: true,
         body: {
             fileName,
             s3Key: {
@@ -318,8 +365,10 @@ async function fetchPublicHomepage() {
 
 async function editHomepage(title: string, description: string, updatedAt: Date) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, "settings/homepage", {
         headers,
+        withCredentials: true,
         body: {
             title,
             description,
@@ -343,8 +392,10 @@ async function fetchPublicSettings() {
 
 async function editSettings(publishingGuidance: string, updatedAt: Date) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, "settings", {
         headers,
+        withCredentials: true,
         body: {
             publishingGuidance,
             updatedAt,
@@ -354,8 +405,10 @@ async function editSettings(publishingGuidance: string, updatedAt: Date) {
 
 async function updateSetting(settingKey: string, settingValue: any, updatedAt: Date) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, "settings", {
         headers,
+        withCredentials: true,
         body: {
             [settingKey]: settingValue,
             updatedAt,
@@ -375,8 +428,10 @@ async function fetchPublicDashboard(dashboardId: string): Promise<PublicDashboar
 
 async function createDraft(dashboardId: string): Promise<Dashboard> {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.post(apiName, `dashboard/${dashboardId}`, {
         headers,
+        withCredentials: true,
     });
 }
 
@@ -386,19 +441,23 @@ async function publishPending(
     releaseNotes?: string,
 ): Promise<Dashboard> {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, `dashboard/${dashboardId}/publishpending`, {
         headers,
+        withCredentials: true,
         body: {
             updatedAt: lastUpdatedAt,
-            releaseNotes: releaseNotes,
+            releaseNotes,
         },
     });
 }
 
 async function moveToDraft(dashboardId: string, lastUpdatedAt: Date): Promise<Dashboard> {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, `dashboard/${dashboardId}/draft`, {
         headers,
+        withCredentials: true,
         body: {
             updatedAt: lastUpdatedAt,
         },
@@ -412,8 +471,10 @@ async function fetchUsers(): Promise<User[]> {
 
 async function addUsers(role: string, emails: Array<string>) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.post(apiName, "user", {
         headers,
+        withCredentials: true,
         body: {
             role,
             emails: emails.join(","),
@@ -423,8 +484,10 @@ async function addUsers(role: string, emails: Array<string>) {
 
 async function removeUsers(usernames: Array<string>) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.del(apiName, "user", {
         headers,
+        withCredentials: true,
         body: {
             usernames,
         },
@@ -433,8 +496,10 @@ async function removeUsers(usernames: Array<string>) {
 
 async function resendInvite(emails: Array<string>) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.post(apiName, "user/invite", {
         headers,
+        withCredentials: true,
         body: {
             emails: emails.join(","),
         },
@@ -443,18 +508,21 @@ async function resendInvite(emails: Array<string>) {
 
 async function changeRole(role: string, usernames: Array<string>) {
     const headers = await authHeaders();
+    await addCsrfToken(headers);
     return API.put(apiName, "user/role", {
         headers,
+        withCredentials: true,
         body: {
             role,
-            usernames: usernames,
+            usernames,
         },
     });
 }
 
 async function copyDashboard(dashboardId: string): Promise<Dashboard> {
     const headers = await authHeaders();
-    return API.post(apiName, `dashboard/${dashboardId}/copy`, { headers });
+    await addCsrfToken(headers);
+    return API.post(apiName, `dashboard/${dashboardId}/copy`, { headers, withCredentials: true });
 }
 
 const BackendService = {
@@ -501,6 +569,7 @@ const BackendService = {
     resendInvite,
     changeRole,
     copyDashboard,
+    fetchCsrfToken,
 };
 
 export default BackendService;

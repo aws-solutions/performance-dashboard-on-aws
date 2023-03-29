@@ -33,6 +33,7 @@ This software includes third party software subject to the following copyrights:
 @types/aws-lambda@8.10.109 under the MIT
 @types/aws-sdk@2.7.0 under the MIT
 @types/aws-serverless-express@3.3.5 under the MIT
+@types/cookie-parser@1.4.3 under the MIT
 @types/cors@2.8.12 under the MIT
 @types/cors@2.8.13 under the MIT
 @types/d3-scale@3.3.2 under the MIT
@@ -41,6 +42,7 @@ This software includes third party software subject to the following copyrights:
 @types/express@4.17.13 under the MIT
 @types/express@4.17.14 under the MIT
 @types/fs-extra@9.0.13 under the MIT
+@types/http-errors@2.0.1 under the MIT
 @types/jest@24.9.1 under the MIT
 @types/jest@27.5.2 under the MIT
 @types/node@16.11.65 under the MIT
@@ -66,8 +68,8 @@ This software includes third party software subject to the following copyrights:
 @typescript-eslint/eslint-plugin@5.46.0 under the MIT
 @typescript-eslint/eslint-plugin@5.47.0 under the MIT
 aws-amplify@4.3.43 under the Apache-2.0
-aws-cdk-lib@2.62.2 under the Apache-2.0
-aws-cdk@2.62.2 under the Apache-2.0
+aws-cdk-lib@2.72.1 under the Apache-2.0
+aws-cdk@2.72.1 under the Apache-2.0
 aws-sdk@2.1271.0 under the Apache-2.0
 aws-sdk@2.1281.0 under the Apache-2.0
 aws-serverless-express@3.4.0 under the Apache-2.0
@@ -76,7 +78,9 @@ aws-xray-sdk@3.4.0 under the Apache-2.0
 cdk-nag@2.21.43 under the Apache-2.0
 commitizen@4.2.6 under the MIT
 constructs@10.1.198 under the Apache-2.0
+cookie-parser@1.4.6 under the MIT
 cors@2.8.5 under the MIT
+csrf-csrf@2.2.4 under the ISC
 cz-conventional-changelog@3.3.0 under the MIT
 d3-interpolate@3.0.1 under the ISC
 d3-scale@4.0.2 under the ISC
@@ -104,7 +108,7 @@ license-report@6.3.0 under the MIT
 lint-staged@13.1.0 under the MIT
 mutationobserver-shim@0.3.7 under the MIT
 papaparse@5.3.2 under the MIT
-performance-dashboard-backend@1.8.0 under the Apache-2.0
+performance-dashboard-backend@1.9.0 under the Apache-2.0
 pino@6.14.0 under the MIT
 prettier@2.8.0 under the MIT
 prettier@2.8.1 under the MIT

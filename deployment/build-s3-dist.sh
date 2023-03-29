@@ -27,7 +27,7 @@
 #  - version-code: version of the package
 
 # Important: CDK global version number
-cdk_version=2.61.0
+cdk_version=2.72.1
 
 # Check to see if the required parameters have been provided:
 if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then

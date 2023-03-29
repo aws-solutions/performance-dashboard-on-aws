@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import "source-map-support/register";
 import { FrontendStack } from "../lib/frontend-stack";
+import { FrontendConfigStack } from "../lib/frontend-config-stack";
 import { BackendStack } from "../lib/backend-stack";
 import { AuthStack } from "../lib/auth-stack";
 import { AuthorizationStack } from "../lib/authz-stack";
@@ -24,7 +25,6 @@ const accountId = Aws.ACCOUNT_ID;
 const region = Aws.REGION;
 const datasetsBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-datasets`;
 const contentBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-content`;
-const serverAccessLogsBucketName = `performancedash-${envName.toLowerCase()}-${accountId}-${region}-logs`;
 
 const auth = new AuthStack(app, "Auth", {
     stackName: stackPrefix.concat("-Auth"),
@@ -47,6 +47,13 @@ const authz = new AuthorizationStack(app, "Authz", {
     }),
 });
 
+const frontend = new FrontendStack(app, "Frontend", {
+    stackName: stackPrefix.concat("-Frontend"),
+    synthesizer: new DefaultStackSynthesizer({
+        generateBootstrapVersionRule: false,
+    }),
+});
+
 const backend = new BackendStack(app, "Backend", {
     stackName: stackPrefix.concat("-Backend"),
     userPool: {
@@ -55,14 +62,16 @@ const backend = new BackendStack(app, "Backend", {
     },
     datasetsBucketName,
     contentBucketName,
+    serverAccessLogsBucketName: frontend.serverAccessLogsBucketName,
+    distributionDomainName: frontend.distributionDomainName,
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
-    serverAccessLogsBucketName,
 });
 
-const frontend = new FrontendStack(app, "Frontend", {
-    stackName: stackPrefix.concat("-Frontend"),
+const frontendConfig = new FrontendConfigStack(app, "FrontendConfig", {
+    stackName: stackPrefix.concat("-FrontendConfig"),
+    frontendBucket: frontend.reactBucketName,
     datasetsBucket: datasetsBucketName,
     contentBucket: contentBucketName,
     userPoolId: auth.userPoolId,
@@ -73,7 +82,6 @@ const frontend = new FrontendStack(app, "Frontend", {
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
-    serverAccessLogsBucket: backend.serverAccessLogsBucket,
 });
 
 const operations = new OpsStack(app, "Ops", {
@@ -101,20 +109,21 @@ const examples = new DashboardExamplesStack(app, "DashboardExamples", {
     databaseTableName: backend.mainTable.tableName,
     databaseTableArn: backend.mainTable.tableArn,
     adminEmail: authz.adminEmail,
+    serverAccessLogsBucketName: frontend.serverAccessLogsBucketName,
     synthesizer: new DefaultStackSynthesizer({
         generateBootstrapVersionRule: false,
     }),
-    serverAccessLogsBucket: backend.serverAccessLogsBucket,
 });
 
-operations.associateAppWithOtherStacks([auth, authz, backend, frontend, examples]);
+operations.associateAppWithOtherStacks([auth, authz, frontend, backend, frontendConfig, examples]);
 
 Aspects.of(app).add(new PolicyInvalidWarningSuppressor());
 Aspects.of(app).add(new FunctionInvalidWarningSuppressor());
 
 Tags.of(auth).add("app-id", APP_ID);
 Tags.of(authz).add("app-id", APP_ID);
-Tags.of(backend).add("app-id", APP_ID);
 Tags.of(frontend).add("app-id", APP_ID);
+Tags.of(backend).add("app-id", APP_ID);
+Tags.of(frontendConfig).add("app-id", APP_ID);
 Tags.of(operations).add("app-id", APP_ID);
 Tags.of(examples).add("app-id", APP_ID);

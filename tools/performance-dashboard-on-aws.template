@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "(SO0157) Performance Dashboard on AWS Solution Implementation v1.0.3",
+  "Description": "(SO0157) Performance Dashboard on AWS Solution Implementation v1.8.0",
   "Parameters": {
     "AdminEmail": {
       "Type": "String",
@@ -10,7 +10,9 @@
     "ExampleLanguage": {
       "Type": "String",
       "AllowedValues": [
-        "english"
+        "english",
+        "spanish",
+        "portuguese"
       ],
       "Description": "Language to use for examples",
       "MinLength": 5
@@ -21,7 +23,7 @@
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
         "TemplateURL": {
-          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.3/Auth.template"
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.8.0/Auth.template"
         },
         "TimeoutInMinutes": "60",
         "Parameters": {
@@ -36,7 +38,7 @@
       "DependsOn": "authStack",
       "Properties": {
         "TemplateURL": {
-          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.3/Backend.template"
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.8.0/Backend.template"
         },
         "TimeoutInMinutes": "60"
       }
@@ -46,7 +48,7 @@
       "DependsOn": "backendStack",
       "Properties": {
         "TemplateURL": {
-          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.3/LambdaEdge.template"
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.8.0/LambdaEdge.template"
         },
         "TimeoutInMinutes": "60"
       }
@@ -56,7 +58,7 @@
       "DependsOn": "lambdaEdgeStack",
       "Properties": {
         "TemplateURL": {
-          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.3/Frontend.template"
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.8.0/Frontend.template"
         },
         "TimeoutInMinutes": "60"
       }
@@ -66,17 +68,17 @@
       "DependsOn": "frontendStack",
       "Properties": {
         "TemplateURL": {
-          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.3/Ops.template"
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.8.0/Ops.template"
         },
         "TimeoutInMinutes": "60"
       }
     },
     "examplesStack": {
       "Type": "AWS::CloudFormation::Stack",
-      "DependsOn": "backendStack",
+      "DependsOn": "opsStack",
       "Properties": {
         "TemplateURL": {
-          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.0.3/Examples.template"
+          "Fn::Sub": "https://solutions-${AWS::Region}.s3.amazonaws.com/performance-dashboard-on-aws/v1.8.0/DashboardExamples.template"
         },
         "TimeoutInMinutes": "60",
         "Parameters": {

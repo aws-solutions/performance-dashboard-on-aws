@@ -8,7 +8,7 @@ import { DynamoEventSource } from "aws-cdk-lib/aws-lambda-event-sources";
 import { Bucket } from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
 import { Code, Function, Runtime, StartingPosition, Tracing } from "aws-cdk-lib/aws-lambda";
-import { Duration } from "aws-cdk-lib";
+import { Duration, Fn } from "aws-cdk-lib";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
@@ -22,6 +22,9 @@ interface Props {
         arn: string;
     };
     authenticationRequired: string;
+    csrfSecret: string;
+    cookiesSecret: string;
+    frontendOrigin: string[];
 }
 
 export class LambdaFunctions extends Construct {
@@ -58,6 +61,9 @@ export class LambdaFunctions extends Construct {
                 USER_POOL_ID: props.userPool.id,
                 LOG_LEVEL: "info",
                 AUTHENTICATION_REQUIRED: props.authenticationRequired,
+                CSRF_SECRET: props.csrfSecret,
+                COOKIES_SECRET: props.cookiesSecret,
+                CORS_ORIGIN: Fn.join(",", props.frontendOrigin),
             },
         });
 
@@ -81,6 +87,9 @@ export class LambdaFunctions extends Construct {
                 USER_POOL_ID: props.userPool.id,
                 LOG_LEVEL: "info",
                 AUTHENTICATION_REQUIRED: props.authenticationRequired,
+                CSRF_SECRET: props.csrfSecret,
+                COOKIES_SECRET: props.cookiesSecret,
+                CORS_ORIGIN: Fn.join(",", props.frontendOrigin),
             },
         });
 

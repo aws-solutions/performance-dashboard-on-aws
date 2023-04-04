@@ -26,6 +26,7 @@ interface ApiProps {
     publicApiFunction: Function;
     cognitoUserPoolArn: string;
     authenticationRequiredCond: CfnCondition;
+    frontendOrigin: string[];
 }
 
 export class BackendApi extends Construct {
@@ -94,8 +95,18 @@ export class BackendApi extends Construct {
                 accessLogDestination: new LogGroupLogDestination(apigatewayLogGroup),
             },
             defaultCorsPreflightOptions: {
-                allowOrigins: Cors.ALL_ORIGINS,
+                allowOrigins: props.frontendOrigin,
                 allowMethods: Cors.ALL_METHODS,
+                allowCredentials: true,
+                allowHeaders: [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "x-csrf-token",
+                ],
             },
             policy: apiPolicy,
         });
@@ -322,6 +333,15 @@ export class BackendApi extends Construct {
         this.cfn_nag_warn_w59(
             this.assign_authorizer(
                 search.addMethod("GET", apiIntegration),
+                authorizationTypeValue,
+                authorizerIdValue,
+            ),
+        );
+
+        const csrfToken = publicapi.addResource("csrf-token");
+        this.cfn_nag_warn_w59(
+            this.assign_authorizer(
+                csrfToken.addMethod("GET", apiIntegration),
                 authorizationTypeValue,
                 authorizerIdValue,
             ),

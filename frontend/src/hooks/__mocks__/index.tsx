@@ -77,6 +77,13 @@ export function useTopicAreas() {
     };
 }
 
+export function useCsrfToken() {
+    return {
+        loading: false,
+        csrfToken: "",
+    };
+}
+
 export function useSettings() {
     const [settings] = useState<Settings>({
         dateTimeFormat: {
